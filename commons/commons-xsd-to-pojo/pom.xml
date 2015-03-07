@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.enablix.commons</groupId>
+		<artifactId>commons-parent</artifactId>
+		<version>1.0-SNAPSHOT</version>
+	</parent>
+	<groupId>com.enablix.core.common.xsdToPojo</groupId>
+	<artifactId>commons-xsd-to-pojo</artifactId>
+	<name>commons-xsd-to-pojo</name>
+	<packaging>jar</packaging>
+	<url>http://maven.apache.org</url>
+	<dependencies>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+		</dependency>
+	</dependencies>
+	<!-- <build>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>jaxb2-maven-plugin</artifactId>
+				<version>1.5</version>
+				<executions>
+					<execution>
+						<id>id1</id>
+						<goals>
+							<goal>xjc</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>src/main/java</outputDirectory>
+							<packageName>com.enablix.core.commons.xsdtopojo</packageName>
+							<schemaDirectory>src/main/resources/xsd</schemaDirectory>
+							<bindingDirectory>src/main/resources/xjb</bindingDirectory>
+							<bindingFiles>binding.xjb</bindingFiles>
+							<extension>true</extension>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+		<finalName>enablix</finalName>
+	</build> -->
+</project>

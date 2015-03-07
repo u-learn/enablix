@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	elementFormDefault="qualified">
+	
+	<xs:element name="contentTemplate">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="dataDefinition" type="dataDefinitionType"/>
+				<xs:element name="uiDefinition" type="uiDefinitionType"/>
+			</xs:sequence>
+			<xs:attribute name="id" type="xs:string" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:complexType name="dataDefinitionType">
+		<xs:sequence>
+			<xs:element name="container" type="containerType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="baseContentType">
+		<xs:attribute name="id" type="xs:string" use="required"/>
+		<xs:attribute name="qualifiedId" type="xs:string"/><!-- only for internal use: not to be provided -->
+		<xs:attribute name="label" type="xs:string"/>
+	</xs:complexType>
+	
+	<xs:complexType name="containerType">
+		<xs:complexContent>
+			<xs:extension base="baseContentType">
+				<xs:sequence>
+					<xs:element name="contentItem" type="contentItemType" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="container" type="containerType" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+				<xs:attribute name="referenceable" type="xs:boolean" default="false"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	
+	<xs:complexType name="contentItemType">
+		<xs:complexContent>
+			<xs:extension base="baseContentType">
+				<xs:choice minOccurs="0">
+					<xs:element name="text" type="textType"/>
+					<xs:element name="bounded" type="boundedType"/>
+					<xs:element name="doc" type="docType"/>
+					<xs:element name="dateTime" type="dateTimeType"/>
+					<xs:element name="numeric" type="numericType"/>
+				</xs:choice>
+				<xs:attribute name="type" type="contentItemClassType" use="optional"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	
+	<xs:simpleType name="contentItemClassType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="text" />
+			<xs:enumeration value="bounded" />
+			<xs:enumeration value="doc" />
+			<xs:enumeration value="dateTime" />
+			<xs:enumeration value="numeric" />
+		</xs:restriction>
+	</xs:simpleType>
+		
+	<xs:complexType name="textType">
+		<!-- no definition as of now -->
+	</xs:complexType>
+	
+	<xs:complexType name="boundedType">
+		<xs:choice>
+			<xs:element name="fixedList" type="boundedFixedListType"/>
+			<xs:element name="refList" type="boundedRefListType"/>
+		</xs:choice>
+		<xs:attribute name="multivalued" type="xs:boolean"/>
+	</xs:complexType>
+	
+	<xs:complexType name="boundedFixedListType">
+		<xs:sequence>
+			<xs:element name="data" type="fixedListDataType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="fixedListDataType">
+		<xs:complexContent>
+			<xs:extension base="baseContentType"/>
+		</xs:complexContent>
+	</xs:complexType>
+	
+	<xs:complexType name="boundedRefListType">
+		<xs:choice>
+			<xs:element name="datastore" type="boundedListDatastoreType"/>
+		</xs:choice>
+	</xs:complexType>
+	
+	<xs:complexType name="boundedListDatastoreType">
+		<xs:sequence>
+			<xs:element name="storeId" type="xs:string"/>
+			<xs:element name="dataId" type="xs:string"/>
+			<xs:element name="dataLabel" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="docType">
+		<xs:choice>
+			<xs:element name="diskDoc" type="diskDocType"/>
+		</xs:choice>
+	</xs:complexType>
+	
+	<xs:complexType name="diskDocType">
+		<xs:sequence>
+			<xs:element name="location" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="dateTimeType">
+		<!-- no definition as of now -->
+	</xs:complexType>
+	
+	<xs:complexType name="numericType">
+		<!-- no definition as of now -->
+	</xs:complexType>
+	
+	<!-- #############  UI Definition types ############## -->
+	
+	<xs:complexType name="uiDefinitionType">
+		<xs:sequence>
+			<xs:element name="contentUIDef" type="contentUIDefType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="contentUIDefType">
+		<xs:choice>
+			<xs:element name="container" type="containerUIDefType"/>
+			<xs:element name="text" type="textUIDefType"/>
+			<xs:element name="bounded" type="boundedUIDefType"/>
+			<xs:element name="doc" type="docUIDefType"/>
+			<xs:element name="dateTime" type="dateTimeUIDefType"/>
+			<xs:element name="numeric" type="numericUIDefType"/>
+		</xs:choice>
+		<xs:attribute name="qualifiedId" type="xs:string" use="required"/>
+	</xs:complexType>
+	
+	<xs:complexType name="containerUIDefType">
+		<xs:attribute name="labelQualifierId" type="xs:string" use="required"/>
+	</xs:complexType>
+	
+	<xs:complexType name="textUIDefType">
+		<xs:attribute name="type" type="textUIClassType"/>
+	</xs:complexType>
+	
+	<xs:simpleType name="textUIClassType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="short" />
+			<xs:enumeration value="long" />
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:complexType name="boundedUIDefType">
+		<xs:choice>
+			<xs:element name="dropdown" type="dropdownType"/>
+			<xs:element name="radioButton" type="radioButtonType"/>
+			<xs:element name="checkbox" type="checkboxType"/>
+			<xs:element name="autoSuggest" type="autoSuggestType"/>
+		</xs:choice>
+	</xs:complexType>
+	
+	<xs:complexType name="dropdownType">
+		<!-- no definition as of now -->
+	</xs:complexType>
+	
+	<xs:complexType name="radioButtonType">
+		<!-- no definition as of now -->
+	</xs:complexType>
+	
+	<xs:complexType name="checkboxType">
+		<!-- no definition as of now -->
+	</xs:complexType>
+	
+	<xs:complexType name="autoSuggestType">
+		<!-- no definition as of now -->
+	</xs:complexType>
+	
+	<xs:complexType name="docUIDefType">
+		<!-- no definition as of now -->
+	</xs:complexType>
+	
+	<xs:complexType name="dateTimeUIDefType">
+		<!-- no definition as of now -->
+	</xs:complexType>
+	
+	<xs:complexType name="numericUIDefType">
+		<!-- no definition as of now -->
+	</xs:complexType>
+	
+</xs:schema>
