@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<contentTemplate id="amlSalesTemplate" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+				 	   xsi:noNamespaceSchemaLocation="content-template.xsd">
+  <dataDefinition>
+    <container id="product" label="Product" referenceable="true">
+      
+      <contentItem id="category" label="Product Category" type="text"/>
+      <container id="datasheet" label="Data Sheet" referenceable="false">
+      	
+      </container>
+    </container>
+  </dataDefinition>
+  <uiDefinition>
+    <contentUIDef qualifiedId="">
+      <container labelQualifierId=""/>
+    </contentUIDef>
+  </uiDefinition>
+</contentTemplate>
