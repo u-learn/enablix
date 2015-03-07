@@ -1,18 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <contentTemplate id="amlSalesTemplate" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-				 	   xsi:noNamespaceSchemaLocation="content-template.xsd">
+				 	   xsi:noNamespaceSchemaLocation="../xsd/content-template.xsd">
+  
   <dataDefinition>
     <container id="product" label="Product" referenceable="true">
-      
+      <contentItem id="name" label="Product Name" type="text"/>
       <contentItem id="category" label="Product Category" type="text"/>
       <container id="datasheet" label="Data Sheet" referenceable="false">
-      	
+      	<contentItem id="file" label="File" type="doc">
+      	  <doc>
+      	    <diskDoc/>
+      	  </doc>
+      	</contentItem>
+      	<contentItem id="shortDesc" label="Short Description" type="text"/>
+      	<contentItem id="publicURL" label="Public URL" type="text"/>
+      	<contentItem id="dealRelevance" label="Deal Relevance" type="bounded">
+      		<bounded>
+      			<fixedList>
+      				<data id="discovery" label="Discovery"/>
+      				<data id="closing" label="Closing"/>
+      			</fixedList>
+      		</bounded>
+      	</contentItem>
+      	<contentItem id="team" label="Team Contacts" type="bounded">
+      		<bounded multivalued="true">
+      			<refList>
+      				<datastore>
+      					<storeId>user</storeId>
+      					<dataId>userId</dataId>
+      					<dataLabel>userName</dataLabel>
+      				</datastore>
+      			</refList>
+      		</bounded>
+      	</contentItem>
       </container>
     </container>
   </dataDefinition>
+  
   <uiDefinition>
-    <contentUIDef qualifiedId="">
-      <container labelQualifierId=""/>
+    <contentUIDef qualifiedId="product">
+      <container labelQualifierId="product.name"/>
+    </contentUIDef>
+    <contentUIDef qualifiedId="product.name">
+      <text type="short"/>
+    </contentUIDef>
+    <contentUIDef qualifiedId="product.datasheet.shortDesc">
+      <text type="long"/>
+    </contentUIDef>
+    <contentUIDef qualifiedId="product.datasheet.team">
+      <bounded>
+        <autoSuggest/>
+      </bounded>
     </contentUIDef>
   </uiDefinition>
 </contentTemplate>
