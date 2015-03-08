@@ -7,7 +7,7 @@
 		<artifactId>commons-parent</artifactId>
 		<version>1.0-SNAPSHOT</version>
 	</parent>
-	<groupId>com.enablix.core.common.xsdToPojo</groupId>
+	<groupId>com.enablix.core.commons</groupId>
 	<artifactId>commons-xsd-to-pojo</artifactId>
 	<name>commons-xsd-to-pojo</name>
 	<packaging>jar</packaging>
