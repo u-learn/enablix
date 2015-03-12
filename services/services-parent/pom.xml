@@ -357,6 +357,11 @@
 			<artifactId>commons-domain</artifactId>
 			<version>1.0-SNAPSHOT</version>
 		</dependency>
+		<dependency>
+			<groupId>com.enablix.commons.mongo</groupId>
+			<artifactId>commons-mongo</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 	<repositories>
 		<repository>
