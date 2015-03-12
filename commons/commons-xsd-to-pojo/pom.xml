@@ -38,6 +38,7 @@
 						<configuration>
 							<outputDirectory>src/main/java</outputDirectory>
 							<packageName>com.enablix.core.commons.xsdtopojo</packageName>
+							<clearOutputDir>false</clearOutputDir>
 							<schemaDirectory>src/main/resources/xsd</schemaDirectory>
 							<bindingDirectory>src/main/resources/xjb</bindingDirectory>
 							<bindingFiles>binding.xjb</bindingFiles>
