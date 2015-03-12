@@ -9,7 +9,9 @@
       <container id="datasheet" label="Data Sheet" referenceable="false">
       	<contentItem id="file" label="File" type="doc">
       	  <doc>
-      	    <diskDoc/>
+      	    <diskDoc>
+      	    	<location>/usr/local/application/fileStorage</location>
+      	    </diskDoc>
       	  </doc>
       	</contentItem>
       	<contentItem id="shortDesc" label="Short Description" type="text"/>

@@ -6,6 +6,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.PropertySources;
+import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
 @EnableAutoConfiguration
 @Configuration
@@ -15,6 +16,7 @@ import org.springframework.context.annotation.PropertySources;
 		@PropertySource("file:${baseDir}/config/properties/security.properties"),
 		@PropertySource("file:${baseDir}/config/properties/log4j.properties")})
 @ComponentScan(basePackages = { "com.enablix" })
+@EnableMongoRepositories(basePackages = {"com.enablix.app.mongo.repository"})
 public class ApplicationInit {
 
 	public static void main(String[] args) {

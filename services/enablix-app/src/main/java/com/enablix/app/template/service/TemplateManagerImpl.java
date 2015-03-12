@@ -35,7 +35,7 @@ public class TemplateManagerImpl implements TemplateManager {
 		templateDoc.setIdentity(template.getId());
 		crudService.saveOrUpdate(templateDoc);
 	}
-
+	
 	@Override
 	public ContentTemplate getTemplate(String templateId) {
 		TemplateDocument template = crudService.findByIdentity(templateId);
