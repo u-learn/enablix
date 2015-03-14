@@ -11,6 +11,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.MongoDbFactory;
+import org.springframework.data.mongodb.core.MongoTemplate;
 
 import com.enablix.core.mongo.MultiTenantMongoDbFactory;
 import com.mongodb.Mongo;
@@ -47,5 +48,9 @@ public class MongoConfig {
 		return new MultiTenantMongoDbFactory(mongo(), AppConstants.BASE_DB_NAME);
 	}
 	
+	@Bean 
+	public MongoTemplate mongoTemplate() throws UnknownHostException {
+		return new MongoTemplate(multiTenantMongoDbFactory());
+	}
 	
 }

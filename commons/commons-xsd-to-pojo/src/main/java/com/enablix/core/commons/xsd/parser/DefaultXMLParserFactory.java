@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 
 import com.enablix.commons.util.beans.SpringBackedAbstractFactory;
 
+@SuppressWarnings("rawtypes")
 @Component
 public class DefaultXMLParserFactory extends SpringBackedAbstractFactory<XMLParser> implements XMLParserRegistry {
 
@@ -12,8 +13,9 @@ public class DefaultXMLParserFactory extends SpringBackedAbstractFactory<XMLPars
 		return XMLParser.class;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public XMLParser getXMLParser(Class<?> type) {
+	public <T> XMLParser<T> getXMLParser(Class<T> type) {
 		for (XMLParser parser : registeredInstances()) {
 			if (parser.parseType() == type) {
 				return parser;

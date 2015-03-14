@@ -1,6 +1,7 @@
 package com.enablix.core.commons.xsd.parser;
 
 import java.io.File;
+import java.io.InputStream;
 
 import javax.xml.XMLConstants;
 import javax.xml.bind.JAXBContext;
@@ -17,15 +18,15 @@ import org.xml.sax.SAXException;
 
 import com.enablix.core.commons.xsd.SchemaConstants;
 
-public class DefaultXMLParser implements XMLParser {
+public class DefaultXMLParser<T> implements XMLParser<T> {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(DefaultXMLParser.class);
 
 	private Unmarshaller unmarshaller;
 
-	private Class<?> type;
+	private Class<T> type;
 	
-	public DefaultXMLParser(String xsdFileLocation, Class<?> type) {
+	public DefaultXMLParser(String xsdFileLocation, Class<T> type) {
 
 		this.type = type;
 		
@@ -37,7 +38,6 @@ public class DefaultXMLParser implements XMLParser {
 		}
 	}
 
-	@Override
 	public Unmarshaller getUnmarshaller() {
 		return unmarshaller;
 	}
@@ -58,8 +58,14 @@ public class DefaultXMLParser implements XMLParser {
 	}
 
 	@Override
-	public Class<?> parseType() {
+	public Class<T> parseType() {
 		return type;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public T unmarshal(InputStream is) throws JAXBException {
+		return (T) getUnmarshaller().unmarshal(is);
 	}
 
 }

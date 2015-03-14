@@ -18,5 +18,10 @@ public class Error {
 	public String getErrorMessage() {
 		return errorMessage;
 	}
+
+	@Override
+	public String toString() {
+		return "Error [errorCode=" + errorCode + ", errorMessage=" + errorMessage + "]";
+	}
 	
 }

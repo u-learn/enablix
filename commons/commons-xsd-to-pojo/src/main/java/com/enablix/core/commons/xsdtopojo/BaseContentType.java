@@ -46,12 +46,22 @@ public class BaseContentType
 {
 
     private final static long serialVersionUID = 1L;
-    @XmlAttribute(name = "qualifiedId", required = true)
+    @XmlAttribute(name = "id", required = true)
+    protected String id;
+    @XmlAttribute(name = "qualifiedId")
     protected String qualifiedId;
     @XmlAttribute(name = "label")
     protected String label;
 
-    /**
+    public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	/**
      * Gets the value of the qualifiedId property.
      * 
      * @return

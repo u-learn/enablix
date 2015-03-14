@@ -2,10 +2,10 @@ package com.enablix.app.content;
 
 public interface ContentDataManager {
 
-	void saveData(String templateId, String dataItemQualifiedId, String dataJson);
+	void saveData(UpdateContentRequest request);
 	
-	String fetchDataJson(String templateId, String dataItemQualifiedId);
+	String fetchDataJson(FetchContentRequest request);
 	
-	void deleteData(String templateId, String dataItemQualifiedId, String dataIdentity);
+	void deleteData(String templateId, String containerQId, String dataIdentity);
 	
 }

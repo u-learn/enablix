@@ -1,11 +1,13 @@
 package com.enablix.core.commons.xsd.parser;
 
-import javax.xml.bind.Unmarshaller;
+import java.io.InputStream;
 
-public interface XMLParser {
+import javax.xml.bind.JAXBException;
 
-	Unmarshaller getUnmarshaller();
+public interface XMLParser<T> {
+
+	Class<T> parseType();
 	
-	Class<?> parseType();
+	T unmarshal(InputStream is) throws JAXBException;
 	
 }

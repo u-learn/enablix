@@ -3,7 +3,6 @@ package com.enablix.app.template.service;
 import java.io.InputStream;
 
 import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -57,14 +56,13 @@ public class TemplateManagerImpl implements TemplateManager {
 	@Override
 	public void saveXml(InputStream templateXmlInputStream) throws JAXBException {
 		
-		XMLParser parser = xmlParserRegistry.getXMLParser(ContentTemplate.class);
+		XMLParser<ContentTemplate> parser = xmlParserRegistry.getXMLParser(ContentTemplate.class);
 		if (parser == null) {
 			LOGGER.error("No xml parser found for ContentTemplate");
 			throw new IllegalStateException("No xml parser found for ContentTemplate");
 		}
 		
-		Unmarshaller unmarshaller = parser.getUnmarshaller();
-		ContentTemplate template = (ContentTemplate) unmarshaller.unmarshal(templateXmlInputStream);
+		ContentTemplate template = parser.unmarshal(templateXmlInputStream);
 
 		save(template);
 	}
