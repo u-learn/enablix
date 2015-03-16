@@ -11,6 +11,11 @@ import com.enablix.commons.validate.Validator;
 @Component
 public class UpdateContentRequestValidator implements Validator<UpdateContentRequest> {
 
+	/*
+	 * Validations:
+	 * 1. If new record, then containerQId should be of the root element
+	 */
+	
 	@Autowired
 	private TemplateManager templateMgr;
 	

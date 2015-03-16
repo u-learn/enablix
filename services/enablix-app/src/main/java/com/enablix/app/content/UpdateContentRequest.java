@@ -12,6 +12,10 @@ public class UpdateContentRequest {
 	
 	private String jsonData;
 
+	protected UpdateContentRequest() {
+		
+	}
+	
 	public UpdateContentRequest(String templateId, 
 			String contentQId, String jsonData) {
 		this(templateId, null, contentQId, jsonData);
@@ -40,6 +44,22 @@ public class UpdateContentRequest {
 
 	public String getJsonData() {
 		return jsonData;
+	}
+
+	public void setTemplateId(String templateId) {
+		this.templateId = templateId;
+	}
+
+	public void setRecordId(String recordId) {
+		this.recordId = recordId;
+	}
+
+	public void setContentQId(String contentQId) {
+		this.contentQId = contentQId;
+	}
+
+	public void setJsonData(String jsonData) {
+		this.jsonData = jsonData;
 	}
 
 	public boolean isNewRecord() {
