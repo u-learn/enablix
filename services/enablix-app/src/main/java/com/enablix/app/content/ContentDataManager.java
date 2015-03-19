@@ -1,5 +1,7 @@
 package com.enablix.app.content;
 
+import com.enablix.app.content.update.UpdateContentRequest;
+
 public interface ContentDataManager {
 
 	void saveData(UpdateContentRequest request);

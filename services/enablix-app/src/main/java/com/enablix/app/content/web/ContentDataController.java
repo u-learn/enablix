@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.enablix.app.content.ContentDataManager;
-import com.enablix.app.content.UpdateContentRequest;
+import com.enablix.app.content.update.UpdateContentRequest;
 import com.enablix.app.template.web.TemplateController;
 
 @RestController

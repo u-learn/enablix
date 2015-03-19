@@ -7,8 +7,10 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.data.mongodb.core.CollectionCallback;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.BasicQuery;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Component;
 
+import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
 import com.mongodb.MongoException;
@@ -33,7 +35,7 @@ public class ContentCrudServiceImpl implements ContentCrudService {
 
 			@Override
 			public String doInCollection(DBCollection collection) throws MongoException, DataAccessException {
-				BasicQuery query = new BasicQuery("{" + ID_FLD + ":'" + recordId + "'}");
+				BasicQuery query = createRecordIdQuery(recordId);
 				DBObject dbObj = collection.findOne(query.getQueryObject());
 				return dbObj == null ? null : dbObj.toString();
 			}
@@ -46,4 +48,15 @@ public class ContentCrudServiceImpl implements ContentCrudService {
 		mongoTemplate.insert(data, collectionName);
 	}
 
+	@Override
+	public void upsert(String collectionName, Map<String, Object> data, final String recordId) {
+		BasicQuery query = createRecordIdQuery(recordId);
+		BasicDBObject updateDbObj = new BasicDBObject(data);
+		mongoTemplate.upsert(query, Update.fromDBObject(updateDbObj), collectionName);
+	}
+	
+	private BasicQuery createRecordIdQuery(final String recordId) {
+		return new BasicQuery("{" + ID_FLD + ":'" + recordId + "'}");
+	}
+	
 }

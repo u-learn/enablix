@@ -1,4 +1,4 @@
-package com.enablix.app.content;
+package com.enablix.app.content.update;
 
 import java.util.Collection;
 

@@ -10,6 +10,10 @@ import org.springframework.stereotype.Component;
 
 import com.enablix.app.content.enrich.ContentEnricher;
 import com.enablix.app.content.enrich.ContentEnricherRegistry;
+import com.enablix.app.content.update.ContentUpdateHandler;
+import com.enablix.app.content.update.ContentUpdateHandlerFactory;
+import com.enablix.app.content.update.UpdateContentRequest;
+import com.enablix.app.content.update.UpdateContentRequestValidator;
 import com.enablix.app.template.service.TemplateManager;
 import com.enablix.commons.util.json.JsonUtil;
 import com.enablix.core.commons.xsdtopojo.ContentTemplate;
@@ -32,12 +36,15 @@ public class ContentDataManagerImpl implements ContentDataManager {
 	@Autowired
 	private ContentEnricherRegistry enricherRegistry;
 	
+	@Autowired
+	private ContentUpdateHandlerFactory handlerFactory;
+	
 	/*
-	 * Save algorithm:
-	 * 1. Find the collection in which the data needs to be stored
-	 * 2. If node is referenceable content, then find the record that needs to be updated
-	 * 3. If not, then find the container record that needs to be updated
-	 * 4. Update the record
+	 * Use cases:
+	 * 1. Insert top level container i.e. new record == Mongo Insert
+	 * 2. Insert sub-level container i.e. new data in existing record == Mongo $addToSet
+	 * 		(http://docs.mongodb.org/manual/reference/operator/update/addToSet/)
+	 * 3. Update existing container record attributes == Mongo update $set
 	 */
 	@Override
 	public void saveData(UpdateContentRequest request) {
@@ -48,8 +55,9 @@ public class ContentDataManagerImpl implements ContentDataManager {
 			throw new IllegalArgumentException("Update request validation error: " + errors);
 		}
 		
+		ContentUpdateHandler updateHandler = handlerFactory.getHandler(request);
+		
 		ContentTemplate template = templateMgr.getTemplate(request.getTemplateId());
-		String collectionName = TemplateUtil.resolveCollectionName(template, request.getContentQId());
 		
 		Map<String, Object> contentDataMap = JsonUtil.jsonToMap(request.getJsonData());
 		
@@ -58,13 +66,8 @@ public class ContentDataManagerImpl implements ContentDataManager {
 			enricher.enrich(contentDataMap, template);
 		}
 		
-		// save or update content
-		if (request.isNewRecord()) {
-			LOGGER.debug("Inserting new record in collection [{}]", collectionName);
-			crud.insert(collectionName, contentDataMap);
-		} else {
-			LOGGER.debug("Updating existing record");
-		}
+		updateHandler.updateContent(template, request.getRecordId(), 
+				request.getContentQId(), contentDataMap);
 		
 	}
 	
