@@ -345,7 +345,7 @@
 		<org.springframework.data.version>1.2.1.RELEASE</org.springframework.data.version>
 		<spring.batch.version>3.0.0.RELEASE</spring.batch.version>
 		<org.springframework.data.jpa.version>1.5.1.RELEASE</org.springframework.data.jpa.version>
-		<org.springframework.spring.data.mongodb.version>1.4.1.RELEASE</org.springframework.spring.data.mongodb.version>
+		<org.springframework.spring.data.mongodb.version>1.6.2.RELEASE</org.springframework.spring.data.mongodb.version>
 		<org.springframework.spring.test.version>4.1.5.RELEASE</org.springframework.spring.test.version>
 		<org.springframework.spring.boot.version>1.2.2.RELEASE</org.springframework.spring.boot.version>
 		<hibernate.validator.version>5.1.3.Final</hibernate.validator.version>

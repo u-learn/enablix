@@ -5,20 +5,20 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.enablix.app.content.ContentDataConstants;
+import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.commons.util.json.JsonUtil;
 
 @Component
 public class ContentUpdateHandlerFactory {
 
 	@Autowired
-	private InsertChildContentHandler insertChild;
+	private InsertChildContainerHandler insertChild;
 	
 	@Autowired
-	private InsertRootContentHandler insertRoot;
+	private InsertRootContainerHandler insertRoot;
 	
 	@Autowired
-	private UpdateContentAttributesHandler updateAttribs;
+	private UpdateContentAttributeHandler updateAttribs;
 	
 	public ContentUpdateHandler getHandler(UpdateContentRequest request) {
 		

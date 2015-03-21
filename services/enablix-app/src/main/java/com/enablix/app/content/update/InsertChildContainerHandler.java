@@ -8,13 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.enablix.app.content.TemplateUtil;
+import com.enablix.commons.util.StringUtil;
 import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 import com.enablix.core.mongo.content.ContentCrudService;
 
 @Component
-public class InsertChildContentHandler implements ContentUpdateHandler {
+public class InsertChildContainerHandler implements ContentUpdateHandler {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(InsertChildContentHandler.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(InsertChildContainerHandler.class);
 	
 	
 	@Autowired
@@ -24,10 +25,19 @@ public class InsertChildContentHandler implements ContentUpdateHandler {
 	public void updateContent(ContentTemplate template, String recordId, String contentQId,
 			Map<String, Object> contentDataMap) {
 		
+		LOGGER.debug("Insert child - templateId: {}, recordId: {}, contentQId: {}, data: {}",
+				template.getId(), recordId, contentQId, contentDataMap);
+		
 		String collectionName = TemplateUtil.resolveCollectionName(template, contentQId);
+		String relativeChildQId = TemplateUtil.getQIdRelativeToParentContainer(template, contentQId);
+		
+		if (StringUtil.isEmpty(relativeChildQId)) {
+			LOGGER.error("Relative Child QId is null or empty");
+			throw new IllegalArgumentException("Relative Child QId is null or empty");
+		}
 		
 		LOGGER.debug("Inserting new record in collection [{}]", collectionName);
-		crudService.insert(collectionName, contentDataMap);
+		crudService.insertChildContainer(collectionName, recordId, relativeChildQId, contentDataMap);
 		
 	}
 

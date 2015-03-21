@@ -1,12 +1,11 @@
 package com.enablix.core.commons.xsd.parser;
 
-import static com.enablix.core.commons.xsd.SchemaConstants.QUALIFIED_ID_SEP;
-
 import java.io.InputStream;
 import java.util.List;
 
 import javax.xml.bind.JAXBException;
 
+import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.commons.util.StringUtil;
 import com.enablix.core.commons.xsdtopojo.BaseContentType;
 import com.enablix.core.commons.xsdtopojo.ContainerType;
@@ -67,7 +66,7 @@ public class ContentTemplateXMLParser extends DefaultXMLParser<ContentTemplate> 
 	}
 	
 	public String createQualifiedId(String parentQualifiedId, String childId) {
-		return parentQualifiedId + QUALIFIED_ID_SEP + childId;
+		return parentQualifiedId + ContentDataConstants.QUALIFIED_ID_SEP + childId;
 	}
 	
 }

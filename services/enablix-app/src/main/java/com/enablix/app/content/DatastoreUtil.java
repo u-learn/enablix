@@ -1,6 +1,6 @@
 package com.enablix.app.content;
 
-import com.enablix.core.commons.xsd.SchemaConstants;
+import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.core.commons.xsdtopojo.ContainerType;
 
 public class DatastoreUtil {
@@ -12,7 +12,7 @@ public class DatastoreUtil {
 	}
 	
 	public static String getCollectionName(String templateId, String qualifiedId) {
-		String[] split = qualifiedId.split("\\" + SchemaConstants.QUALIFIED_ID_SEP);
+		String[] split = qualifiedId.split("\\" + ContentDataConstants.QUALIFIED_ID_SEP);
 		return templateId + COLL_NAME_SEP + split[split.length - 1];
 	}
 	
