@@ -1,5 +1,6 @@
 package com.enablix.app.content;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -61,6 +62,11 @@ public class TemplateUtil {
 			DataDefinitionType dataDef, String containerQId) {
 		
 		String[] idHierarchy = splitContentId(containerQId);
+		return findReferenceableParentContainer(dataDef, idHierarchy);
+	}
+	
+	private static ContainerType findReferenceableParentContainer(
+			DataDefinitionType dataDef, String[] idHierarchy) {
 		
 		List<ContainerType> containers = dataDef.getContainer();
 		ContainerType refContainer = null;
@@ -81,13 +87,43 @@ public class TemplateUtil {
 			containers = container.getContainer();
 		}
 		
-		return refContainer;
+		return refContainer;		
 	}
 	
 	public static String resolveCollectionName(ContentTemplate template, String containerQId) {
 		ContainerType holdingContainer = findReferenceableParentContainer(
 											template.getDataDefinition(), containerQId);
 		return DatastoreUtil.getCollectionName(template.getId(), holdingContainer);
+	}
+	
+	public static boolean isRootContainer(ContentTemplate template, String containerQId) {
+		for (ContainerType container : template.getDataDefinition().getContainer()) {
+			if (container.getQualifiedId().equals(containerQId)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public static boolean isRootElement(ContentTemplate template, String containerQId) {
+		
+		ContainerType container = findContainer(template.getDataDefinition(), containerQId);
+		
+		if (container == null) {
+			LOGGER.error("Invalid containerQId [{}] for template [{}]", containerQId, template.getId());
+			throw new IllegalArgumentException("Invalid containerQId [" + containerQId + "] for template ["
+					+ template.getId() + "]");
+		}
+		
+		return container.getQualifiedId().equals(containerQId) && container.isReferenceable();
+	}
+	
+	public static String findParentCollectionName(ContentTemplate template, String containerQId) {
+		String[] idHierarchy = splitContentId(containerQId);
+		ContainerType parentContainer = findReferenceableParentContainer(
+				template.getDataDefinition(), 
+				Arrays.copyOfRange(idHierarchy, 0, idHierarchy.length - 1));
+		return DatastoreUtil.getCollectionName(template.getId(), parentContainer);
 	}
 	
 	public static String getQIdRelativeToParentContainer(ContentTemplate template, String contentQId) {
@@ -108,7 +144,8 @@ public class TemplateUtil {
 					+ "] for parent QId [" + holdingContainerQId + "]");
 		}
 		
-		return holdingContainerQId.equals(contentQId) ? "" : 
+		return holdingContainerQId.equals(contentQId) ? "" :
+				// substring - +1 for excluding '.' after holding container QId
 				contentQId.substring(holdingContainerQId.length() + 1, contentQId.length());
 		
 	}

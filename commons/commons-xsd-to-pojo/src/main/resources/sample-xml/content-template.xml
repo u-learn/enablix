@@ -6,7 +6,7 @@
     <container id="product" label="Product" referenceable="true">
       <contentItem id="name" label="Product Name" type="text"/>
       <contentItem id="category" label="Product Category" type="text"/>
-      <container id="datasheet" label="Data Sheet" referenceable="false">
+      <container id="datasheet" label="Data Sheet" referenceable="true">
       	<contentItem id="file" label="File" type="doc">
       	  <doc>
       	    <diskDoc>

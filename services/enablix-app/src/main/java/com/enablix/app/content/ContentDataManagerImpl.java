@@ -63,7 +63,7 @@ public class ContentDataManagerImpl implements ContentDataManager {
 		
 		// Enrichment step
 		for (ContentEnricher enricher : enricherRegistry.getEnrichers()) {
-			enricher.enrich(contentDataMap, template);
+			enricher.enrich(request, contentDataMap, template);
 		}
 		
 		updateHandler.updateContent(template, request.getRecordId(), 

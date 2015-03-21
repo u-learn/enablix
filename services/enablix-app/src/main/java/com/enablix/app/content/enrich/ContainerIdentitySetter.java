@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.enablix.app.content.update.ContentUpdateContext;
 import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.commons.util.id.IdentityGenerator;
 import com.enablix.core.commons.xsdtopojo.ContentTemplate;
@@ -17,7 +18,8 @@ public class ContainerIdentitySetter implements ContentEnricher {
 	private IdentityGenerator identityGenerator;
 	
 	@Override
-	public void enrich(Map<String, Object> content, ContentTemplate contentTemplate) {
+	public void enrich(ContentUpdateContext updateCtx, 
+			Map<String, Object> content, ContentTemplate contentTemplate) {
 		setIdentityInHierarchy(content);
 	}
 	

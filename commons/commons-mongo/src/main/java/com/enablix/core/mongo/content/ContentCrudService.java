@@ -8,7 +8,7 @@ public interface ContentCrudService {
 	
 	void insert(String collectionName, Map<String, Object> data);
 	
-	String findRecord(String collectionName, String recordId);
+	Map<String, Object> findRecord(String collectionName, String recordId);
 
 	void upsert(String collectionName, Map<String, Object> data, String recordId);
 

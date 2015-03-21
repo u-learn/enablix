@@ -5,6 +5,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.enablix.app.template.service.TemplateManager;
 import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.commons.util.json.JsonUtil;
 
@@ -19,6 +20,9 @@ public class ContentUpdateHandlerFactory {
 	
 	@Autowired
 	private UpdateContentAttributeHandler updateAttribs;
+	
+	@Autowired
+	private TemplateManager templateMgr;
 	
 	public ContentUpdateHandler getHandler(UpdateContentRequest request) {
 		

@@ -2,7 +2,7 @@ package com.enablix.app.content.update;
 
 import com.enablix.commons.util.StringUtil;
 
-public class UpdateContentRequest {
+public class UpdateContentRequest implements ContentUpdateContext {
 
 	private String templateId;
 	
@@ -64,6 +64,21 @@ public class UpdateContentRequest {
 
 	public boolean isNewRecord() {
 		return StringUtil.isEmpty(getRecordId());
+	}
+
+	@Override
+	public String recordId() {
+		return getRecordId();
+	}
+
+	@Override
+	public String contentQId() {
+		return getContentQId();
+	}
+
+	@Override
+	public String templateId() {
+		return getTemplateId();
 	}
 	
 }

@@ -1,5 +1,6 @@
 package com.enablix.core.mongo.content;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,9 +35,10 @@ public class ContentCrudServiceImpl implements ContentCrudService {
 	}
 
 	@Override
-	public String findRecord(final String collectionName, final String recordId) {
-
-		return mongoTemplate.execute(collectionName, new CollectionCallback<String>() {
+	public Map<String, Object> findRecord(final String collectionName, final String recordId) {
+		Query query = createRecordIdQuery(recordId);
+		return mongoTemplate.findOne(query, HashMap.class, collectionName);
+		/*return mongoTemplate.execute(collectionName, new CollectionCallback<String>() {
 
 			@Override
 			public String doInCollection(DBCollection collection) throws MongoException, DataAccessException {
@@ -45,7 +47,7 @@ public class ContentCrudServiceImpl implements ContentCrudService {
 				return dbObj == null ? null : dbObj.toString();
 			}
 			
-		});
+		});*/
 	}
 
 	@Override

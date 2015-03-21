@@ -29,15 +29,26 @@ public class InsertChildContainerHandler implements ContentUpdateHandler {
 				template.getId(), recordId, contentQId, contentDataMap);
 		
 		String collectionName = TemplateUtil.resolveCollectionName(template, contentQId);
-		String relativeChildQId = TemplateUtil.getQIdRelativeToParentContainer(template, contentQId);
 		
-		if (StringUtil.isEmpty(relativeChildQId)) {
-			LOGGER.error("Relative Child QId is null or empty");
-			throw new IllegalArgumentException("Relative Child QId is null or empty");
+		// if content is a root element i.e. it has a separate collection
+		// then add an association to the parent collection record 
+		if (TemplateUtil.isRootElement(template, contentQId)) {
+			
+			LOGGER.debug("Inserting new record in collection [{}]", collectionName);
+			crudService.insert(collectionName, contentDataMap);
+			
+		} else {
+			
+			String relativeChildQId = TemplateUtil.getQIdRelativeToParentContainer(template, contentQId);
+
+			if (StringUtil.isEmpty(relativeChildQId)) {
+				LOGGER.error("Relative Child QId is null or empty");
+				throw new IllegalArgumentException("Relative Child QId is null or empty");
+			}
+
+			LOGGER.debug("Inserting child record in collection [{}]", collectionName);
+			crudService.insertChildContainer(collectionName, recordId, relativeChildQId, contentDataMap);
 		}
-		
-		LOGGER.debug("Inserting new record in collection [{}]", collectionName);
-		crudService.insertChildContainer(collectionName, recordId, relativeChildQId, contentDataMap);
 		
 	}
 
