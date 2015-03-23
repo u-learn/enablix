@@ -122,7 +122,7 @@ public class ContainerType
      */
     public boolean isReferenceable() {
         if (referenceable == null) {
-            return false;
+            return true;
         } else {
             return referenceable;
         }

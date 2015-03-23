@@ -10,6 +10,8 @@ import org.springframework.stereotype.Component;
 import com.enablix.app.content.TemplateUtil;
 import com.enablix.app.content.update.ContentUpdateContext;
 import com.enablix.commons.constants.ContentDataConstants;
+import com.enablix.commons.util.QIdUtil;
+import com.enablix.commons.util.StringUtil;
 import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 import com.enablix.core.mongo.content.ContentAssociation;
 import com.enablix.core.mongo.content.ContentCrudService;
@@ -28,12 +30,17 @@ public class ParentAssociationBuilder implements ContentAssociationBuilder {
 		
 		// if content is a root element i.e. it has a separate collection
 		// then add an association to the parent collection record 
-		if (!TemplateUtil.isRootContainer(template, request.contentQId()) 
+		if (!StringUtil.isEmpty(request.parentIdentity())
+				&& !TemplateUtil.isRootContainer(template, request.contentQId()) 
 				&& TemplateUtil.isRootElement(template, request.contentQId())) {
 			
 			String parentCollection = TemplateUtil.findParentCollectionName(template, request.contentQId());
 			
-			Map<String, Object> parent = crudService.findRecord(parentCollection, request.recordId());
+			String parentQId = TemplateUtil.getQIdRelativeToParentContainer(template, QIdUtil.getParentQId(request.contentQId()));
+			
+			Map<String, Object> parent = crudService.findRecord(parentCollection, 
+					parentQId, request.parentIdentity());
+			
 			String parentIdentity = (String) parent.get(ContentDataConstants.IDENTITY_KEY);
 			String parentId = String.valueOf(parent.get(ContentDataConstants.RECORD_ID_KEY));
 			

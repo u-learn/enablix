@@ -6,7 +6,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.enablix.commons.constants.ContentDataConstants;
+import com.enablix.commons.util.QIdUtil;
 import com.enablix.core.commons.xsdtopojo.ContainerType;
 import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 import com.enablix.core.commons.xsdtopojo.DataDefinitionType;
@@ -20,12 +20,9 @@ public class TemplateUtil {
 		return container != null ? container.isReferenceable() : false;
 	}
 	
-	public static String[] splitContentId(String contentQId) {
-		return contentQId.split("\\" + ContentDataConstants.QUALIFIED_ID_SEP);
-	}
 	
 	public static ContainerType findContainer(DataDefinitionType dataDef, String containerQId) {
-		String[] idHierarchy = splitContentId(containerQId);
+		String[] idHierarchy = QIdUtil.splitQId(containerQId);
 		
 		List<ContainerType> containers = dataDef.getContainer();
 		ContainerType container = null;
@@ -61,7 +58,7 @@ public class TemplateUtil {
 	private static ContainerType findReferenceableParentContainer(
 			DataDefinitionType dataDef, String containerQId) {
 		
-		String[] idHierarchy = splitContentId(containerQId);
+		String[] idHierarchy = QIdUtil.splitQId(containerQId);
 		return findReferenceableParentContainer(dataDef, idHierarchy);
 	}
 	
@@ -119,7 +116,7 @@ public class TemplateUtil {
 	}
 	
 	public static String findParentCollectionName(ContentTemplate template, String containerQId) {
-		String[] idHierarchy = splitContentId(containerQId);
+		String[] idHierarchy = QIdUtil.splitQId(containerQId);
 		ContainerType parentContainer = findReferenceableParentContainer(
 				template.getDataDefinition(), 
 				Arrays.copyOfRange(idHierarchy, 0, idHierarchy.length - 1));

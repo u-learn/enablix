@@ -31,7 +31,7 @@
 					<xs:element name="contentItem" type="contentItemType" minOccurs="0" maxOccurs="unbounded"/>
 					<xs:element name="container" type="containerType" minOccurs="0" maxOccurs="unbounded"/>
 				</xs:sequence>
-				<xs:attribute name="referenceable" type="xs:boolean" default="false"/>
+				<xs:attribute name="referenceable" type="xs:boolean" default="true"/>
 			</xs:extension>
 		</xs:complexContent>
 	</xs:complexType>

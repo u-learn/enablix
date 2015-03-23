@@ -1,16 +1,22 @@
 package com.enablix.app.content.update;
 
+import java.util.Map;
+
+import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.commons.util.StringUtil;
+import com.enablix.commons.util.json.JsonUtil;
 
 public class UpdateContentRequest implements ContentUpdateContext {
 
 	private String templateId;
 	
-	private String recordId;
+	private String parentIdentity;
 	
 	private String contentQId;
 	
 	private String jsonData;
+	
+	private Map<String, Object> dataAsMap;
 
 	protected UpdateContentRequest() {
 		
@@ -25,17 +31,18 @@ public class UpdateContentRequest implements ContentUpdateContext {
 			String recordId, String contentQId, String jsonData) {
 		super();
 		this.templateId = templateId;
-		this.recordId = recordId;
+		this.parentIdentity = recordId;
 		this.contentQId = contentQId;
 		this.jsonData = jsonData;
+		this.dataAsMap = JsonUtil.jsonToMap(jsonData);
 	}
 
 	public String getTemplateId() {
 		return templateId;
 	}
 
-	public String getRecordId() {
-		return recordId;
+	public String getParentIdentity() {
+		return parentIdentity;
 	}
 
 	public String getContentQId() {
@@ -50,8 +57,8 @@ public class UpdateContentRequest implements ContentUpdateContext {
 		this.templateId = templateId;
 	}
 
-	public void setRecordId(String recordId) {
-		this.recordId = recordId;
+	public void setParentIdentity(String recordId) {
+		this.parentIdentity = recordId;
 	}
 
 	public void setContentQId(String contentQId) {
@@ -62,13 +69,25 @@ public class UpdateContentRequest implements ContentUpdateContext {
 		this.jsonData = jsonData;
 	}
 
-	public boolean isNewRecord() {
-		return StringUtil.isEmpty(getRecordId());
+	public Map<String, Object> getDataAsMap() {
+		return dataAsMap;
+	}
+
+	public boolean isUpdateAttribRequest() {
+		return dataAsMap.containsKey(ContentDataConstants.IDENTITY_KEY);
+	}
+	
+	public boolean isInsertRootRequest() {
+		return !isUpdateAttribRequest() && StringUtil.isEmpty(parentIdentity);
+	}
+	
+	public boolean isInsertChildRequest() {
+		return !isUpdateAttribRequest() && !StringUtil.isEmpty(parentIdentity);
 	}
 
 	@Override
-	public String recordId() {
-		return getRecordId();
+	public String parentIdentity() {
+		return getParentIdentity();
 	}
 
 	@Override

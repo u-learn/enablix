@@ -15,7 +15,6 @@ import com.enablix.app.content.update.ContentUpdateHandlerFactory;
 import com.enablix.app.content.update.UpdateContentRequest;
 import com.enablix.app.content.update.UpdateContentRequestValidator;
 import com.enablix.app.template.service.TemplateManager;
-import com.enablix.commons.util.json.JsonUtil;
 import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 import com.enablix.core.mongo.content.ContentCrudService;
 
@@ -59,14 +58,14 @@ public class ContentDataManagerImpl implements ContentDataManager {
 		
 		ContentTemplate template = templateMgr.getTemplate(request.getTemplateId());
 		
-		Map<String, Object> contentDataMap = JsonUtil.jsonToMap(request.getJsonData());
+		Map<String, Object> contentDataMap = request.getDataAsMap();
 		
 		// Enrichment step
 		for (ContentEnricher enricher : enricherRegistry.getEnrichers()) {
 			enricher.enrich(request, contentDataMap, template);
 		}
 		
-		updateHandler.updateContent(template, request.getRecordId(), 
+		updateHandler.updateContent(template, request.getParentIdentity(), 
 				request.getContentQId(), contentDataMap);
 		
 	}

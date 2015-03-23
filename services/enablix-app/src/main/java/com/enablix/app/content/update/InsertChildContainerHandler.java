@@ -30,8 +30,6 @@ public class InsertChildContainerHandler implements ContentUpdateHandler {
 		
 		String collectionName = TemplateUtil.resolveCollectionName(template, contentQId);
 		
-		// if content is a root element i.e. it has a separate collection
-		// then add an association to the parent collection record 
 		if (TemplateUtil.isRootElement(template, contentQId)) {
 			
 			LOGGER.debug("Inserting new record in collection [{}]", collectionName);

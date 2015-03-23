@@ -1,13 +1,9 @@
 package com.enablix.app.content.update;
 
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.enablix.app.template.service.TemplateManager;
-import com.enablix.commons.constants.ContentDataConstants;
-import com.enablix.commons.util.json.JsonUtil;
 
 @Component
 public class ContentUpdateHandlerFactory {
@@ -26,17 +22,19 @@ public class ContentUpdateHandlerFactory {
 	
 	public ContentUpdateHandler getHandler(UpdateContentRequest request) {
 		
-		Map<String, Object> mapContent = JsonUtil.jsonToMap(request.getJsonData());
-		
-		if (request.isNewRecord()) {
-			return insertRoot;
-		} 
-		
-		if (mapContent.containsKey(ContentDataConstants.IDENTITY_KEY)) {
+		if (request.isUpdateAttribRequest()) {
 			return updateAttribs;
 		}
 		
-		return insertChild; 
+		if (request.isInsertRootRequest()) {
+			return insertRoot;
+		} 
+		
+		if (request.isInsertChildRequest()) {
+			return insertChild; 
+		}
+		
+		throw new IllegalStateException("No handler found for request: " + request);
 	}
 	
 }

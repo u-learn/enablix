@@ -4,8 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
-import org.springframework.data.mongodb.core.CollectionCallback;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -13,12 +11,9 @@ import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Component;
 
 import com.enablix.commons.constants.ContentDataConstants;
+import com.enablix.commons.util.QIdUtil;
 import com.enablix.commons.util.StringUtil;
 import com.enablix.commons.util.json.JsonUtil;
-import com.mongodb.BasicDBObject;
-import com.mongodb.DBCollection;
-import com.mongodb.DBObject;
-import com.mongodb.MongoException;
 
 @Component
 public class ContentCrudServiceImpl implements ContentCrudService {
@@ -34,10 +29,14 @@ public class ContentCrudServiceImpl implements ContentCrudService {
 		insert(collectionName, JsonUtil.jsonToMap(jsonData));
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public Map<String, Object> findRecord(final String collectionName, final String recordId) {
-		Query query = createRecordIdQuery(recordId);
+	public Map<String, Object> findRecord(final String collectionName, 
+			String elementQId, final String elementIdentity) {
+
+		Query query = createIdentityQuery(elementQId, elementIdentity);
 		return mongoTemplate.findOne(query, HashMap.class, collectionName);
+		
 		/*return mongoTemplate.execute(collectionName, new CollectionCallback<String>() {
 
 			@Override
@@ -55,45 +54,40 @@ public class ContentCrudServiceImpl implements ContentCrudService {
 		mongoTemplate.insert(data, collectionName);
 	}
 
-	@Override
-	public void upsert(String collectionName, Map<String, Object> data, final String recordId) {
-		Query query = createRecordIdQuery(recordId);
-		BasicDBObject updateDbObj = new BasicDBObject(data);
-		mongoTemplate.upsert(query, Update.fromDBObject(updateDbObj), collectionName);
-	}
-	
-	private Query createRecordIdQuery(final String recordId) {
-		return Query.query(Criteria.where(ID_FLD).is(recordId));
+	private Query createIdentityQuery(String elementQId, String identity) {
+		String elementIdentity = StringUtil.isEmpty(elementQId) ? ContentDataConstants.IDENTITY_KEY
+				: elementQId + "." + ContentDataConstants.IDENTITY_KEY;
+		return Query.query(Criteria.where(elementIdentity).is(identity));
 	}
 
 	@Override
-	public void insertChildContainer(String collectionName, String recordId, 
-			String relativeChildQId, Map<String, Object> data) {
-		Query query = createRecordIdQuery(recordId);
-		Update push = new Update().push(relativeChildQId).value(data);
+	public void insertChildContainer(String collectionName, String parentIdentity, 
+			String childQId, Map<String, Object> data) {
+		
+		String parentQId = QIdUtil.getParentQId(childQId);
+		String childId = QIdUtil.getElementId(childQId);
+		
+		Query query = createIdentityQuery(parentQId, parentIdentity);
+		
+		String pushId = createArrayUpdateKey(parentQId, childId);
+		Update push = new Update().push(pushId).value(data);
 		mongoTemplate.upsert(query, push, collectionName);
 	}
 	
+	private String createArrayUpdateKey(String parentId, String childId) {
+		return StringUtil.isEmpty(parentId) ? childId : parentId + "." + ARR_POSITIONAL_OP + "." + childId;
+	}
+	
 	@Override
-	public void updateAttributes(String collectionName, String recordId, 
-			String relativeChildQId, String childIdentity, Map<String, Object> data) {
+	public void updateAttributes(String collectionName, String elementQId, 
+			String elementIdentity, Map<String, Object> data) {
 		
-		Criteria criteria = Criteria.where(ID_FLD).is(recordId);
-		
-		boolean updatingChild = !StringUtil.isEmpty(relativeChildQId);
-		if (updatingChild) {
-			criteria = criteria.and(relativeChildQId + ContentDataConstants.QUALIFIED_ID_SEP 
-									+ ContentDataConstants.IDENTITY_KEY).is(childIdentity);
-		}
-		
-		Query query = Query.query(criteria);
+		Query query = createIdentityQuery(elementQId, elementIdentity);
 		
 		Update update = new Update();
 		for (Map.Entry<String, Object> entry : data.entrySet()) {
 			if (!ContentDataConstants.IDENTITY_KEY.equals(entry.getKey())) {
-				String updateKey = updatingChild ? 
-						relativeChildQId + "." + ARR_POSITIONAL_OP + "." + entry.getKey() 
-						: entry.getKey();
+				String updateKey = createArrayUpdateKey(elementQId, entry.getKey());
 				update.set(updateKey, entry.getValue());
 			}
 		}

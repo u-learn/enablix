@@ -23,12 +23,12 @@ public class ContentDataController {
 	private ContentDataManager dataMgr;
 	
 	@RequestMapping(method = RequestMethod.POST, 
-			value="/update/t/{templateId}/c/{contentQId}/r/{recordId}", 
+			value="/update/t/{templateId}/c/{contentQId}/r/{parentIdentity}", 
 			consumes = "application/json")
 	public String updateData(@PathVariable String templateId, @PathVariable String contentQId, 
-			@PathVariable String recordId, @RequestBody String jsonData) {
+			@PathVariable String parentIdentity, @RequestBody String jsonData) {
 		LOGGER.debug("Updating content data");
-		dataMgr.saveData(new UpdateContentRequest(templateId, recordId, contentQId, jsonData));
+		dataMgr.saveData(new UpdateContentRequest(templateId, parentIdentity, contentQId, jsonData));
 		return "success";
 	}
 	

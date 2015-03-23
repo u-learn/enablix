@@ -8,14 +8,11 @@ public interface ContentCrudService {
 	
 	void insert(String collectionName, Map<String, Object> data);
 	
-	Map<String, Object> findRecord(String collectionName, String recordId);
+	Map<String, Object> findRecord(String collectionName, String elementQId, String elementIdentity);
 
-	void upsert(String collectionName, Map<String, Object> data, String recordId);
+	void updateAttributes(String collectionName, String elementQId, String elementIdentity, Map<String, Object> data);
 
-	void insertChildContainer(String collectionName, String recordId, 
-			String childQId, Map<String, Object> data);
-
-	void updateAttributes(String collectionName, String recordId, 
-			String relativeChildQId, String childIdentity, Map<String, Object> data);
+	void insertChildContainer(String collectionName, String parentIdentity, String childQId,
+			Map<String, Object> data);
 	
 }

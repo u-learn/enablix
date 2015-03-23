@@ -37,8 +37,8 @@ public class UpdateContentAttributeHandler implements ContentUpdateHandler {
 			throw new IllegalArgumentException("Content identity is null or empty");
 		}
 		
-		crudService.updateAttributes(collectionName, recordId, 
-				relativeContentQId, contentIdentity, contentDataMap);
+		crudService.updateAttributes(collectionName, relativeContentQId, 
+				contentIdentity, contentDataMap);
 	}
 
 
