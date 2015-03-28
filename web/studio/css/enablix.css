@@ -14,13 +14,13 @@
 
 #main {
 	float:right;
-	width:480px;
+	width:75%;
 	padding:10px;
 }
 
 #sidebar {
 	float:left;
-	width:230px;
+	width:25%;
 	padding:10px;
 }
 

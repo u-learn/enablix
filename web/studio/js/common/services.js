@@ -21,7 +21,7 @@ var genereateRequestConfig = function(_resourceKey, _params) {
 	return returnJson;
 };
 
-enablix.RESTService = [
+enablix.studioApp.factory('RESTService', [
 		'$http', '$window',
 		function($http, $window) {	
 			
@@ -104,6 +104,5 @@ enablix.RESTService = [
 				postForData : postForData,
 				postForFile : postForFile
 			};
-		} ];
+		}]);
 
-enablix.studioApp.factory('RESTService', enablix.RESTService);

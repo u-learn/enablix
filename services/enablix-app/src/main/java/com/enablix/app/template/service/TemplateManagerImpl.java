@@ -1,6 +1,8 @@
 package com.enablix.app.template.service;
 
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.xml.bind.JAXBException;
 
@@ -9,8 +11,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.enablix.app.content.TemplateUtil;
+import com.enablix.commons.util.StringUtil;
 import com.enablix.core.commons.xsd.parser.XMLParser;
 import com.enablix.core.commons.xsd.parser.XMLParserRegistry;
+import com.enablix.core.commons.xsdtopojo.ContainerType;
 import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 import com.enablix.core.commons.xsdtopojo.DataDefinitionType;
 import com.enablix.core.commons.xsdtopojo.UiDefinitionType;
@@ -65,6 +70,30 @@ public class TemplateManagerImpl implements TemplateManager {
 		ContentTemplate template = parser.unmarshal(templateXmlInputStream);
 
 		save(template);
+	}
+
+	@Override
+	public List<ContainerType> getChildContainers(String templateId, String parentQId) {
+		
+		ContentTemplate template = getTemplate(templateId);
+		
+		if (template == null) {
+			LOGGER.error("Invalid template id : {}", templateId);
+			throw new IllegalArgumentException("Invalid template id [" + templateId + "]");
+		}
+		
+		List<ContainerType> containers = new ArrayList<>();
+		
+		if (StringUtil.isEmpty(parentQId)) {
+			containers = template.getDataDefinition().getContainer();
+			
+		} else {
+			ContainerType parentContainer = 
+					TemplateUtil.findContainer(template.getDataDefinition(), parentQId);
+			containers = parentContainer.getContainer();
+		}
+		
+		return containers;
 	}
 
 }
