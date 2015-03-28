@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en	">
+<head>
+	<meta charset="utf-8">
+	<title>Enablix Studio</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+	<link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="css/angular.treeview.css">
+	<link rel="stylesheet" type="text/css" href="css/enablix.css">
+	
+	<script type="text/javascript" src="js/vendor/jquery/jquery-1.11.2.min.js"></script>
+	<script type="text/javascript" src="js/vendor/bootstrap/bootstrap.min.js"></script>
+	
+	<!-- angular scripts -->
+	<script type="text/javascript" src="js/vendor/angular/angular.min.js"></script>
+	<script type="text/javascript" src="js/vendor/angular/angular-resource.min.js"></script>
+	<script type="text/javascript" src="js/vendor/angular/angular-route.min.js"></script>
+	<script type="text/javascript" src="js/vendor/angular/angular-ui-router.js"></script>
+	<script type="text/javascript" src="js/common/widgets/tree/angular.treeview.js"></script>
+	
+	<!-- application scripts -->
+	<script type="text/javascript" src="js/app.js"></script>
+	<script type="text/javascript" src="js/serverDomain.js"></script>
+	<script type="text/javascript" src="js/serviceUrl.js"></script>
+	<script type="text/javascript" src="js/common/services.js"></script>
+	
+	<script type="text/javascript" src="widgets/content/index/contentIndexController.js"></script>
+		
+</head>
+
+<body>
+<div id="wrap" ng-app="studio">
+	<div id="header"><h2>Enablix</h2></div>
+	<div id="nav"></div>
+	<div ng-controller="contentIndexCtrl">
+		<div id="sidebar">
+			<div
+		      data-angular-treeview="true"
+		      data-tree-id="contentIndex"
+		      data-tree-model="roleList"
+		      data-node-id="roleId"
+		      data-node-label="roleName"
+		      data-node-children="children" >
+		    </div>
+		</div>
+		<div id="main">
+			<p>Selected Node : {{contentIndex.currentNode.roleName}}</p>
+		</div>
+	</div>
+	<div id="footer"></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,30 @@
+
+#wrap {
+	width:100%;
+	margin:0 auto;
+}
+
+#header {
+   	padding:5px 10px;
+}
+
+#nav {
+	padding:5px 10px;
+}
+
+#main {
+	float:right;
+	width:480px;
+	padding:10px;
+}
+
+#sidebar {
+	float:left;
+	width:230px;
+	padding:10px;
+}
+
+#footer {
+	float:bottom;
+	padding:5px 10px;
+}
