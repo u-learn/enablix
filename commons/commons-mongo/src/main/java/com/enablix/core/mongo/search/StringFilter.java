@@ -1,9 +1,13 @@
 package com.enablix.core.mongo.search;
 
-import org.springframework.data.mongodb.core.query.Criteria;
 
 public class StringFilter extends SearchCondition<String> {
 
+	private static final ConditionOperator[] SUPPORTED_OP = {
+		ConditionOperator.EQ, ConditionOperator.NOT_EQ,
+		ConditionOperator.GT, ConditionOperator.GTE,
+		ConditionOperator.LT, ConditionOperator.LTE};
+	
 	protected StringFilter() { }
 	
 	public StringFilter(String propName, String propValue, ConditionOperator operator) {
@@ -13,17 +17,10 @@ public class StringFilter extends SearchCondition<String> {
 	public StringFilter(String propName, String propValue, String operator) {
 		super(propName, propValue, operator);
 	}
-	
-	@Override
-	public Criteria toPredicate() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	protected ConditionOperator[] supportedOperators() {
-		// TODO Auto-generated method stub
-		return null;
+		return SUPPORTED_OP;
 	}
 
 }

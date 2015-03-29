@@ -10,11 +10,13 @@ import org.springframework.stereotype.Component;
 
 import com.enablix.app.content.enrich.ContentEnricher;
 import com.enablix.app.content.enrich.ContentEnricherRegistry;
+import com.enablix.app.content.fetch.FetchContentRequest;
 import com.enablix.app.content.update.ContentUpdateHandler;
 import com.enablix.app.content.update.ContentUpdateHandlerFactory;
 import com.enablix.app.content.update.UpdateContentRequest;
 import com.enablix.app.content.update.UpdateContentRequestValidator;
 import com.enablix.app.template.service.TemplateManager;
+import com.enablix.commons.util.StringUtil;
 import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 import com.enablix.core.mongo.content.ContentCrudService;
 
@@ -78,9 +80,41 @@ public class ContentDataManagerImpl implements ContentDataManager {
 	}
 
 	@Override
-	public String fetchDataJson(FetchContentRequest request) {
-		// TODO Auto-generated method stub
-		return null;
+	public Object fetchDataJson(FetchContentRequest request) {
+		
+		Object data = null;
+		
+		String contentQId = request.getContentQId();
+		
+		ContentTemplate template = templateMgr.getTemplate(request.getTemplateId());
+		String collName = TemplateUtil.resolveCollectionName(template, contentQId);
+		String qIdRelativeToParent = TemplateUtil.getQIdRelativeToParentContainer(template, contentQId);
+		
+		if (StringUtil.isEmpty(request.getParentRecordIdentity())
+				&& StringUtil.isEmpty(request.getRecordIdentity())) {
+			
+			// Fetch all root elements for the template
+			data = crud.findAllRecord(collName);
+			
+		} else if (!StringUtil.isEmpty(request.getParentRecordIdentity())) {
+			
+			// Fetch all child containers
+			if (TemplateUtil.isRootElement(template, contentQId)) {
+				// content is in its own collection, hence query with parent id
+				data = crud.findAllRecordWithParentId(collName, request.getParentRecordIdentity());
+				
+			} else {
+				// content is a child array in parents collection, hence retrieve child elements
+				data = crud.findChildElements(collName, 
+						qIdRelativeToParent, request.getParentRecordIdentity());
+			}
+			
+		} else if (!StringUtil.isEmpty(request.getRecordIdentity())) {
+			// Fetch one record
+			data = crud.findRecord(collName, qIdRelativeToParent, request.getRecordIdentity());
+		} 
+		
+		return data;
 	}
 
 }

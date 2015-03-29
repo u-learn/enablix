@@ -1,5 +1,7 @@
 package com.enablix.core.mongo.search;
 
+import org.springframework.data.mongodb.core.query.Criteria;
+
 
 public abstract class SearchCondition<T> extends AbstractFilter {
 
@@ -46,6 +48,52 @@ public abstract class SearchCondition<T> extends AbstractFilter {
 			throw new IllegalArgumentException("invalid operator for " + this + " filter");
 		} 
 		this.operator = operator;
+	}
+	
+	@Override
+	public Criteria toPredicate(Criteria root) {
+		
+		Criteria criteria = Criteria.where(getPropertyName());
+		
+		switch (getOperator()) {
+		case EQ:
+			criteria.is(getPropertyValue());
+			break;
+
+		case NOT_EQ:
+			criteria.ne(getPropertyValue());
+			break;
+		
+		case GT:
+			criteria.gt(getPropertyValue());
+			break;	
+		
+		case GTE:
+			criteria.gte(getPropertyValue());
+			break;	
+			
+		case LT:
+			criteria.lt(getPropertyValue());
+			break;	
+			
+		case LTE:
+			criteria.lte(getPropertyValue());
+			break;	
+		
+		case IN:
+			criteria.in(getPropertyValue());
+			break;	
+			
+		case NOT_IN:
+			criteria.nin(getPropertyValue());
+			break;	
+			
+		default:
+			criteria.is(getPropertyValue());
+			break;
+		}
+		
+		return criteria;
 	}
 	
 	protected abstract ConditionOperator[] supportedOperators();

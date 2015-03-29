@@ -36,10 +36,7 @@ public class ParentAssociationBuilder implements ContentAssociationBuilder {
 			
 			String parentCollection = TemplateUtil.findParentCollectionName(template, request.contentQId());
 			
-			String parentQId = TemplateUtil.getQIdRelativeToParentContainer(template, QIdUtil.getParentQId(request.contentQId()));
-			
-			Map<String, Object> parent = crudService.findRecord(parentCollection, 
-					parentQId, request.parentIdentity());
+			Map<String, Object> parent = crudService.findRecord(parentCollection, request.parentIdentity());
 			
 			String parentIdentity = (String) parent.get(ContentDataConstants.IDENTITY_KEY);
 			String parentId = String.valueOf(parent.get(ContentDataConstants.RECORD_ID_KEY));

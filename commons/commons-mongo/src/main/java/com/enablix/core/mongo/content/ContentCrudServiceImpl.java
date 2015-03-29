@@ -1,6 +1,9 @@
 package com.enablix.core.mongo.content;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,13 +32,37 @@ public class ContentCrudServiceImpl implements ContentCrudService {
 		insert(collectionName, JsonUtil.jsonToMap(jsonData));
 	}
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public Map<String, Object> findRecord(final String collectionName, 
 			String elementQId, final String elementIdentity) {
 
 		Query query = createIdentityQuery(elementQId, elementIdentity);
-		return mongoTemplate.findOne(query, HashMap.class, collectionName);
+		setProjectedField(query, elementQId);
+		
+		Map<String, Object> result = mongoTemplate.findOne(query, HashMap.class, collectionName);
+		
+		if (result != null && !StringUtil.isEmpty(elementQId)) {
+		
+			// fetch the record from the map result 
+			if (result.containsKey(elementQId)) {
+			
+				Object elementValue = result.get(elementQId);
+				if (elementValue instanceof Collection) {
+				
+					Collection values = (Collection) elementValue;
+					
+					if (values.size() > 0) {
+						Object firstValue = values.iterator().next();
+						if (firstValue instanceof Map) {
+							result = (Map) firstValue;
+						}
+					}
+				}
+			}
+		}
+		
+		return result;
 		
 		/*return mongoTemplate.execute(collectionName, new CollectionCallback<String>() {
 
@@ -49,15 +76,25 @@ public class ContentCrudServiceImpl implements ContentCrudService {
 		});*/
 	}
 
+	private void setProjectedField(Query query, String fieldQId) {
+		if (!StringUtil.isEmpty(fieldQId)) {
+			query.fields().include(fieldQId + "." + ARR_POSITIONAL_OP);
+		}
+	}
+	
 	@Override
 	public void insert(String collectionName, Map<String, Object> data) {
 		mongoTemplate.insert(data, collectionName);
 	}
 
 	private Query createIdentityQuery(String elementQId, String identity) {
+		return Query.query(createIdentityCriteria(elementQId, identity));
+	}
+	
+	private Criteria createIdentityCriteria(String elementQId, String identity) {
 		String elementIdentity = StringUtil.isEmpty(elementQId) ? ContentDataConstants.IDENTITY_KEY
 				: elementQId + "." + ContentDataConstants.IDENTITY_KEY;
-		return Query.query(Criteria.where(elementIdentity).is(identity));
+		return Criteria.where(elementIdentity).is(identity);
 	}
 
 	@Override
@@ -93,6 +130,46 @@ public class ContentCrudServiceImpl implements ContentCrudService {
 		}
 		
 		mongoTemplate.updateFirst(query, update, collectionName);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public Map<String, Object> findRecord(String collectionName, String elementIdentity) {
+		Query query = createIdentityQuery(null, elementIdentity);
+		return mongoTemplate.findOne(query, HashMap.class, collectionName);
+	}
+
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@Override
+	public List<Map<String, Object>> findAllRecord(String collectionName) {
+		return (List) mongoTemplate.findAll(HashMap.class, collectionName);
+	}
+
+	private Criteria createParentCriteria(String parentIdentity) {
+		String criteriaKey = ContentDataConstants.ASSOCIATIONS_KEY + "." + ContentDataConstants.PARENT_ASSOCIATION
+				+ "." + ContentDataConstants.RECORD_IDENTITY_KEY;
+		return Criteria.where(criteriaKey).is(parentIdentity);
+	}
+	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@Override
+	public List<Map<String, Object>> findAllRecordWithParentId(String collectionName, String parentIdentity) {
+		Query query = Query.query(createParentCriteria(parentIdentity));
+		return (List) mongoTemplate.find(query, HashMap.class, collectionName);
+	}
+
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@Override
+	public List<Map<String, Object>> findChildElements(String collectionName, String childFieldId, String recordIdentity) {
+		
+		Map<String, Object> parentRecord = findRecord(collectionName, recordIdentity);
+		
+		Object childRecords = null;
+		if (parentRecord != null) {
+			childRecords = parentRecord.get(childFieldId);
+		}
+		
+		return childRecords instanceof List ? (List) childRecords : new ArrayList<>();
 	}
 	
 }

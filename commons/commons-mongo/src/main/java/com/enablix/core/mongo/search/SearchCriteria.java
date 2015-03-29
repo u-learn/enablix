@@ -13,11 +13,17 @@ public class SearchCriteria implements SearchFilter {
 	}
 	
 	@Override
-	public Criteria toPredicate() {
-		// TODO Auto-generated method stub
-		return null;
+	public Criteria toPredicate(Criteria rootCriteria) {
+		if (rootCriteria == null) {
+			rootCriteria = new Criteria();
+		}
+		return root.toPredicate(rootCriteria);
 	}
-
+	
+	public Criteria toPredicate() {
+		return toPredicate(null);
+	}
+	
 	@Override
 	public SearchFilter and(SearchFilter andWithFilter) {
 		root = root.and(andWithFilter);

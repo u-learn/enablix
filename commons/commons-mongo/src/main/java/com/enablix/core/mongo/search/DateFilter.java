@@ -2,10 +2,13 @@ package com.enablix.core.mongo.search;
 
 import java.util.Date;
 
-import org.springframework.data.mongodb.core.query.Criteria;
-
 public class DateFilter extends SearchCondition<Date> {
 
+	private static final ConditionOperator[] SUPPORTED_OP = {
+		ConditionOperator.EQ, ConditionOperator.NOT_EQ,
+		ConditionOperator.GT, ConditionOperator.GTE,
+		ConditionOperator.LT, ConditionOperator.LTE};
+	
 	protected DateFilter() { }
 	
 	public DateFilter(String propName, Date propValue, ConditionOperator operator) {
@@ -17,15 +20,8 @@ public class DateFilter extends SearchCondition<Date> {
 	}
 
 	@Override
-	public Criteria toPredicate() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	protected ConditionOperator[] supportedOperators() {
-		// TODO Auto-generated method stub
-		return null;
+		return SUPPORTED_OP;
 	}
 
 }

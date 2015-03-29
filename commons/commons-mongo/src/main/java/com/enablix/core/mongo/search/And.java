@@ -11,9 +11,8 @@ public class And extends CompositeFilter {
 	}
 
 	@Override
-	public Criteria toPredicate() {
-		// TODO Auto-generated method stub
-		return null;
+	public Criteria toPredicate(Criteria root) {
+		return root.andOperator(getLeft().toPredicate(root), getRight().toPredicate(root));
 	}
 	
 }
