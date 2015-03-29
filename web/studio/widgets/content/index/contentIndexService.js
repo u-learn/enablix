@@ -8,12 +8,12 @@ enablix.studioApp.factory('ContentIndexService',
 				
 				var indexData = [];
 
-				buildContentIndexFromContainer(indexData, data);
+				buildContentIndexFromContainer(indexData, data, null);
 				
 				return indexData;
 			};
 			
-			var buildContentIndexFromContainer = function(_indxDataParent, _containerList) {
+			var buildContentIndexFromContainer = function(_indxDataParent, _containerList, _parentIdentity) {
 				
 				angular.forEach(_containerList, function(cntnr) {
 				
@@ -21,12 +21,13 @@ enablix.studioApp.factory('ContentIndexService',
 						"id" : cntnr.id,
 						"qualifiedId" : cntnr.qualifiedId,
 						"label" : cntnr.label,
+						"parentIdentity" : _parentIdentity,
 						"children" : []
 					};
 				
 					_indxDataParent.push(indxItem);
 					
-					ContentDataService.getContentData(templateId, indxItem.qualifiedId, function(data) {
+					ContentDataService.getContentData(templateId, indxItem.qualifiedId, _parentIdentity, function(data) {
 						
 						angular.forEach(data, function(dataItem) {
 							
@@ -34,13 +35,14 @@ enablix.studioApp.factory('ContentIndexService',
 								"id" : dataItem.identity,
 								"qualifiedId" : cntnr.qualifiedId,
 								"label" : dataItem['name'],
+								"parentIdentity" : dataItem.identity,
 								"children" : []
 							};
 							
 							indxItem.children.push(indxDataItem);
 							
 							// recursively build the child elements
-							buildContentIndexFromContainer(indxDataItem.children, cntnr.container)
+							buildContentIndexFromContainer(indxDataItem.children, cntnr.container, dataItem.identity);
 
 						});
 						
