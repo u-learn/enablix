@@ -40,7 +40,7 @@ public class ContainerUIDefType
 
     private final static long serialVersionUID = 1L;
     @XmlAttribute(name = "labelQualifierId", required = true)
-    protected String labelQualifierId;
+    protected String labelQualifiedId;
 
     /**
      * Gets the value of the labelQualifierId property.
@@ -50,8 +50,8 @@ public class ContainerUIDefType
      *     {@link String }
      *     
      */
-    public String getLabelQualifierId() {
-        return labelQualifierId;
+    public String getLabelQualifiedId() {
+        return labelQualifiedId;
     }
 
     /**
@@ -62,8 +62,8 @@ public class ContainerUIDefType
      *     {@link String }
      *     
      */
-    public void setLabelQualifierId(String value) {
-        this.labelQualifierId = value;
+    public void setLabelQualifiedId(String value) {
+        this.labelQualifiedId = value;
     }
 
 }

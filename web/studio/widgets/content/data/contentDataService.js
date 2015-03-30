@@ -11,28 +11,12 @@ enablix.studioApp.factory('ContentDataService',
 	 			};
 
 	 			var resourceKey = "fetchRootData";
-	 			if (!angular.isUndefined(_parentIdentity)) {
+	 			if (!angular.isUndefined(_parentIdentity) && _parentIdentity != null) {
 	 				resourceKey = "fetchChildrenData";
 	 				params["parentIdentity"] = _parentIdentity;
 	 			}
 	 			
-	 			RESTService.getForData(resourceKey, params, null, function(data) {
-	 				if (_contentQId == 'product') {
-	 					data = [
-		 					{
-		 						"identity" : "5c5b6703-6bf8-451d-a8e9-7e828153119b",
-		 						"category" : "Compliance 2",
-		 						"name" : "Alert Management System"
-		 					},
-		 					{
-		 						"identity" : "5c5b6703-6bf8-451d-a8e9-7e828134444b",
-		 						"category" : "Compliance 2",
-		 						"name" : "KYC System"
-		 					}
-	 					];
-	 				}
-	 				_onSuccess(data);
-	 			}, _onError);
+	 			RESTService.getForData(resourceKey, params, null, _onSuccess, _onError);
 	 			
 	 		};
 

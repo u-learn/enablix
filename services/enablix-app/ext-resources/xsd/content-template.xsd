@@ -140,7 +140,7 @@
 	</xs:complexType>
 	
 	<xs:complexType name="containerUIDefType">
-		<xs:attribute name="labelQualifierId" type="xs:string" use="required"/>
+		<xs:attribute name="labelQualifiedId" type="xs:string" use="required"/>
 	</xs:complexType>
 	
 	<xs:complexType name="textUIDefType">

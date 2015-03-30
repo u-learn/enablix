@@ -1,6 +1,6 @@
 enablix.studioApp.factory('ContentIndexService', 
-	[	'RESTService', 'ContentDataService',
-	 	function(RESTService, ContentDataService) {
+	[	'RESTService', 'ContentDataService', 'ContentTemplateService',
+	 	function(RESTService, ContentDataService, ContentTemplateService) {
 		
 			var templateId = "";
 			
@@ -31,10 +31,12 @@ enablix.studioApp.factory('ContentIndexService',
 						
 						angular.forEach(data, function(dataItem) {
 							
+							var labelAttrId = ContentTemplateService.getContainerLabelAttrId(enablix.template, cntnr.qualifiedId); 
+								
 							var indxDataItem = {
 								"id" : dataItem.identity,
 								"qualifiedId" : cntnr.qualifiedId,
-								"label" : dataItem['name'],
+								"label" : dataItem[labelAttrId],
 								"parentIdentity" : dataItem.identity,
 								"children" : []
 							};

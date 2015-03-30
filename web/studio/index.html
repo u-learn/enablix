@@ -26,14 +26,17 @@
 	<script type="text/javascript" src="js/serviceUrl.js"></script>
 	<script type="text/javascript" src="js/common/services.js"></script>
 	
+	<script type="text/javascript" src="widgets/content/template/contentTemplateService.js"></script>
 	<script type="text/javascript" src="widgets/content/data/contentDataService.js"></script>
 	<script type="text/javascript" src="widgets/content/index/contentIndexService.js"></script>
+	
+	<script type="text/javascript" src="js/mainController.js"></script>
 	<script type="text/javascript" src="widgets/content/index/contentIndexController.js"></script>
 		
 </head>
 
-<body>
-<div id="wrap" ng-app="studio">
+<body ng-app="studio">
+<div id="wrap" ng-controller="MainCtrl">
 	<div id="header"><h2>Enablix</h2></div>
 	<div id="nav"></div>
 	<div ng-controller="contentIndexCtrl">
