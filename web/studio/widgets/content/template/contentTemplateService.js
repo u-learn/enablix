@@ -26,6 +26,40 @@ enablix.studioApp.factory('ContentTemplateService',
 				
 				return elemUIDef;
 			}
+
+			var getDataDefinition = function(_template, _elementQId) {
+				
+				var elemDataDef = undefined;
+				var elemQIdArr = _elementQId.split("\.");
+				
+				var containers = _template.dataDefinition.container;
+
+				for (var k = 0; k < elemQIdArr.length; k++) {
+					
+					var nextCntnrId = elemQIdArr[k];
+					var matchFound = false;
+					
+					// find the container Data definition
+					for (var i = 0; i < containers.length; i++) {
+	
+						var currCntnr = containers[i];
+						
+						if (currCntnr.id == nextCntnrId) {
+							matchFound = true;
+							elemDataDef = currCntnr;
+							containers = currCntnr.container;
+							break;
+						}
+						
+						if (!matchFound) {
+							elemDataDef = undefined;
+						}
+						
+					}
+				}
+				
+				return elemDataDef;
+			}
 			
 			var getContainerLabelAttrId = function(_template, _containerQId) {
 				

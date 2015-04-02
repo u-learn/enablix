@@ -22,7 +22,8 @@ enablix.studioApp.factory('ContentIndexService',
 						"qualifiedId" : cntnr.qualifiedId,
 						"label" : cntnr.label,
 						"parentIdentity" : _parentIdentity,
-						"children" : []
+						"children" : [],
+						"containerDef": cntnr
 					};
 				
 					_indxDataParent.push(indxItem);
@@ -38,7 +39,8 @@ enablix.studioApp.factory('ContentIndexService',
 								"qualifiedId" : cntnr.qualifiedId,
 								"label" : dataItem[labelAttrId],
 								"parentIdentity" : dataItem.identity,
-								"children" : []
+								"children" : [],
+								"containerDef": cntnr
 							};
 							
 							indxItem.children.push(indxDataItem);

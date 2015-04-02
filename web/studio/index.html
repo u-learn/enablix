@@ -14,7 +14,7 @@
 	<script type="text/javascript" src="js/vendor/bootstrap/bootstrap.min.js"></script>
 	
 	<!-- angular scripts -->
-	<script type="text/javascript" src="js/vendor/angular/angular.min.js"></script>
+	<script type="text/javascript" src="js/vendor/angular/angular.js"></script>
 	<script type="text/javascript" src="js/vendor/angular/angular-resource.min.js"></script>
 	<script type="text/javascript" src="js/vendor/angular/angular-route.min.js"></script>
 	<script type="text/javascript" src="js/vendor/angular/angular-ui-router.js"></script>
@@ -25,6 +25,8 @@
 	<script type="text/javascript" src="js/serverDomain.js"></script>
 	<script type="text/javascript" src="js/serviceUrl.js"></script>
 	<script type="text/javascript" src="js/common/services.js"></script>
+
+	<script type="text/javascript" src="widgets/directive/textInputDirective.js"></script>
 	
 	<script type="text/javascript" src="widgets/content/template/contentTemplateService.js"></script>
 	<script type="text/javascript" src="widgets/content/data/contentDataService.js"></script>
@@ -52,6 +54,14 @@
 		</div>
 		<div id="main">
 			<p>Selected Node : {{contentIndex.currentNode.label}}</p>
+			<p>Container Id : {{contentIndex.currentNode.containerDef.id}}</p>
+			<p>Container Id : {{contentIndex.currentNode.containerDef.qualifiedId}}</p>
+			<div ng-repeat="item in contentIndex.currentNode.containerDef.contentItem">
+				<div ng-if="item.type == 'TEXT'">
+					<eb-text content-def="{{item}}"></eb-text>
+				</div>
+				<br>
+			</div>
 		</div>
 	</div>
 	<div id="footer"></div>
