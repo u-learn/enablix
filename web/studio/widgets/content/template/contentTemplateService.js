@@ -27,7 +27,7 @@ enablix.studioApp.factory('ContentTemplateService',
 				return elemUIDef;
 			}
 
-			var getDataDefinition = function(_template, _elementQId) {
+			var getContainerDefinition = function(_template, _elementQId) {
 				
 				var elemDataDef = undefined;
 				var elemQIdArr = _elementQId.split("\.");
@@ -88,7 +88,8 @@ enablix.studioApp.factory('ContentTemplateService',
 			return {
 				getTemplate : getTemplate,
 				getContainerLabelAttrId : getContainerLabelAttrId,
-				getUIDefinition: getUIDefinition
+				getUIDefinition: getUIDefinition,
+				getContainerDefinition: getContainerDefinition
 			};
 		
 		}

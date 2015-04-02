@@ -1,4 +1,4 @@
-enablix.studioApp.controller('MainCtrl', ['$scope', 'ContentTemplateService', 
+enablix.studioApp.controller('MainStudioCtrl', ['$scope', 'ContentTemplateService', 
     function($scope, ContentTemplateService) {
 		ContentTemplateService.getTemplate(enablix.templateId, function(data) {
 			enablix.template = data;

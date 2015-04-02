@@ -1,13 +1,17 @@
 enablix.studioApp.directive('ebText', function() {
 
 	var labelTemplate = '<label>{{label}}</label><br>';
-	var shortTextTemplateHTML = labelTemplate + '<input id="{{id}}" name="{{name}}" placeholder="{{placeholder}}" type="text">';
-	var longTextTemplateHTML = labelTemplate + '<input id="{{id}}" name="{{name}}" placeholder="{{placeholder}}" type="text">';
+	
+	var shortTextTemplateHTML = labelTemplate + '<input id="{{id}}" name="{{name}}" '
+			+ 'placeholder="{{placeholder}}" type="text" ng-model="textValue" size="80">';
+	
+	var longTextTemplateHTML = labelTemplate + '<input id="{{id}}" name="{{name}}" '
+			+ 'placeholder="{{placeholder}}" type="text" ng-model="textValue" size="80">';
 	
 	return {
 		restrict: 'E',
 		scope : {
-			
+			textValue: '='
 		},
 		link: function(scope, element, attrs) {
 			var _uiDef = eval("(" + scope.uiDef + ")"); 

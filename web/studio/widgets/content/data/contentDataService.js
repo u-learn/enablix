@@ -20,22 +20,22 @@ enablix.studioApp.factory('ContentDataService',
 	 			
 	 		};
 
-	 		var getChildRecordData = function(_templateId, _contentQId, _childRecordIdentity, _onSuccess, _onError) {
+	 		var getContentRecordData = function(_templateId, _contentQId, _recordIdentity, _onSuccess, _onError) {
 	 			
 	 			var params = {
 	 					"templateId": _templateId,
 	 					"contentQId": _contentQId,
-	 					"recordIdentity": _childRecordIdentity
+	 					"recordIdentity": _recordIdentity
 	 			};
 	 			
-	 			RESTService.getForData("fetchChildRecord", params, null, _onSuccess, _onError);
+	 			RESTService.getForData("fetchRecordData", params, null, _onSuccess, _onError);
 	 			
 	 		};
 	 		
 	 		
 	 		return {
 	 			getContentData: getContentData,
-	 			getChildRecordData: getChildRecordData
+	 			getContentRecordData: getContentRecordData
 	 		};
 	 	}
 	 ]);

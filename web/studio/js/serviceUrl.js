@@ -4,5 +4,5 @@ enablix.serviceURL = {
 	"fetchChildContainers": enablix.domainName + "/template/containers/:templateId/:parentQId/",
 	"fetchRootData": enablix.domainName + "/data/t/:templateId/c/:contentQId/",
 	"fetchChildrenData": enablix.domainName + "/data/t/:templateId/c/:contentQId/p/:parentIdentity",
-	"fetchChildRecord": enablix.domainName + "/data/t/:templateId/c/:contentQId/d/:recordIdentity"
+	"fetchRecordData": enablix.domainName + "/data/t/:templateId/c/:contentQId/d/:recordIdentity"
 };

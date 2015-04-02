@@ -74,7 +74,7 @@
 						};
 
 						//if node label clicks,
-						scope[treeId].selectNodeLabel = scope[treeId].selectNodeLabel || function( selectedNode ){
+						var defaultSelectNode = function( selectedNode ){
 
 							//remove highlight from previous node
 							if( scope[treeId].currentNode && scope[treeId].currentNode.selected ) {
@@ -87,6 +87,13 @@
 							//set currentNode
 							scope[treeId].currentNode = selectedNode;
 						};
+						
+						var customSelectNodeFn = scope[treeId].selectNodeCallback;
+						scope[treeId].selectNodeLabel = customSelectNodeFn ? function(selectedNode) {
+							defaultSelectNode(selectedNode);
+							customSelectNodeFn(selectedNode);
+						} : defaultSelectNode; 
+					
 					}
 
 					//Rendering template.
