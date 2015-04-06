@@ -33,4 +33,4 @@ enablix.studioApp.directive('ebText', function() {
 			return longTextTemplateHTML;
 		}
 	}
-})
+});

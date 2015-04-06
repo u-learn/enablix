@@ -22,7 +22,8 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider) {
 		})
 		.state('studio.list', {
 			url: '/list/{containerQId}/{parentIdentity}/',
-			templateUrl: 'views/studio/studio-list.html'
+			templateUrl: 'views/studio/studio-list.html',
+			controller: 'ContentListCtrl'
 		})
 		.state('studio.detail', {
 			url: '/detail/{containerQId}/{elementIdentity}/',

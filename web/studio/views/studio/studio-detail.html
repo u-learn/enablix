@@ -1,7 +1,9 @@
 <h3>Studio Detail</h3>
-<div ng-repeat="item in containerDef.contentItem">
+<form>
+<div ng-repeat="item in containerDef.contentItem" class="form-group">
 	<div ng-if="item.type == 'TEXT'">
 		<eb-text content-def="{{item}}" text-value="containerData[item.id]"></eb-text>
 	</div>
 	<br>
 </div>
+</form>

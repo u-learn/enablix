@@ -13,7 +13,7 @@ enablix.studioApp.controller('ContentDetailCtrl',
 				}, 
 				function(data) {
 					alert('Error retrieving record data');
-				})
+				});
 		
 	}
 ]);
