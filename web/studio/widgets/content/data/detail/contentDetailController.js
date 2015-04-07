@@ -7,6 +7,8 @@ enablix.studioApp.controller('ContentDetailCtrl',
 		
 		$scope.containerDef = ContentTemplateService.getContainerDefinition(enablix.template, containerQId);
 		
+		$scope.pageHeading = $scope.containerDef.label;
+		
 		ContentDataService.getContentRecordData(enablix.templateId, containerQId, elementIdentity, 
 				function(data) {
 					$scope.containerData = data;
