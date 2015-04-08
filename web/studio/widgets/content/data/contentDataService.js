@@ -1,7 +1,7 @@
 enablix.studioApp.factory('ContentDataService', 
 	[
-	 	'RESTService',
-	 	function(RESTService) {
+	 	'RESTService', 'ContentTemplateService',
+	 	function(RESTService, ContentTemplateService) {
 	 		
 	 		var getContentData = function(_templateId, _contentQId, _parentIdentity, _onSuccess, _onError) {
 	 			
@@ -33,10 +33,27 @@ enablix.studioApp.factory('ContentDataService',
 	 			
 	 		};
 	 		
+	 		var saveContainerData = function(_templateId, _contentQId, _parentRecordIdentity, _data, _onSuccess, _onError) {
+	 			
+	 			var url = "saveOrUpdateRootContainerData";
+	 			
+	 			var params = {
+ 					"templateId": _templateId,
+ 					"contentQId": _contentQId
+	 			}
+	 			
+	 			if (!ContentTemplateService.isRootContainer(_contentQId)) {
+	 				params["parentIdentity"] = _parentRecordIdentity;
+	 				url = "saveOrUpdateChildContainerData";
+	 			}
+	 			
+	 			RESTService.postForData(url, params, _data, null, _onSucess, _onError, null);
+	 		}
 	 		
 	 		return {
 	 			getContentData: getContentData,
-	 			getContentRecordData: getContentRecordData
+	 			getContentRecordData: getContentRecordData,
+	 			saveContainerData: saveContainerData
 	 		};
 	 	}
 	 ]);

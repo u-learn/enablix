@@ -1,6 +1,6 @@
 enablix.studioApp.controller('ContentListCtrl', 
-			['$scope', '$stateParams', 'ContentDataService', 'ContentTemplateService',
-	function( $scope,   $stateParams,   ContentDataService,   ContentTemplateService) {
+			['$scope', '$state', '$stateParams', 'ContentDataService', 'ContentTemplateService',
+	function( $scope,   $state,   $stateParams,   ContentDataService,   ContentTemplateService) {
 		
 		var containerQId = $stateParams.containerQId;
 		var parentIdentity = $stateParams.parentIdentity;
@@ -9,6 +9,13 @@ enablix.studioApp.controller('ContentListCtrl',
 		
 		$scope.listHeaders = [];
 		$scope.listHeading = $scope.containerDef.label;
+		
+		$scope.navToAddContent = function() {
+			$state.go('studio.add', {
+				'containerQId': containerQId,
+				'parentIdentity': parentIdentity
+			});
+		}
 		
 		angular.forEach($scope.containerDef.contentItem, function(containerAttr) {
 			

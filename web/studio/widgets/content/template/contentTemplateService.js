@@ -85,11 +85,27 @@ enablix.studioApp.factory('ContentTemplateService',
 				return labelFieldId;
 			};
 		
+			var isRootContainer = function(_template, _containerQId) {
+				
+				var rootContainers = _template.dataDefinition.container;
+				
+				for (var i = 0; i < rootContainers.length; i++) {
+				
+					var currCntnr = rootContainers[i];
+					if (currCntnr.qualifiedId == _containerQId) {
+						return true;
+					}
+				}
+				
+				return false;
+			}
+			
 			return {
 				getTemplate : getTemplate,
 				getContainerLabelAttrId : getContainerLabelAttrId,
 				getUIDefinition: getUIDefinition,
-				getContainerDefinition: getContainerDefinition
+				getContainerDefinition: getContainerDefinition,
+				isRootContainer: isRootContainer
 			};
 		
 		}
