@@ -29,7 +29,7 @@ public class ContentDataController {
 			@PathVariable String parentIdentity, @RequestBody String jsonData) {
 		LOGGER.debug("Updating content data");
 		dataMgr.saveData(new UpdateContentRequest(templateId, parentIdentity, contentQId, jsonData));
-		return "success";
+		return "{ \"result\" : \"success\"}";
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, 
@@ -39,7 +39,7 @@ public class ContentDataController {
 			@RequestBody String jsonData) {
 		LOGGER.debug("Updating content data");
 		dataMgr.saveData(new UpdateContentRequest(templateId, null, contentQId, jsonData));
-		return "success";
+		return "{ \"result\" : \"success\"}";
 	}
 	
 }

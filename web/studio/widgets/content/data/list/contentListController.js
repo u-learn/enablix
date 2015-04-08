@@ -8,7 +8,7 @@ enablix.studioApp.controller('ContentListCtrl',
 		$scope.containerDef = ContentTemplateService.getContainerDefinition(enablix.template, containerQId);
 		
 		$scope.listHeaders = [];
-		$scope.listHeading = $scope.containerDef.label;
+		$scope.pageHeading = $scope.containerDef.label;
 		
 		$scope.navToAddContent = function() {
 			$state.go('studio.add', {

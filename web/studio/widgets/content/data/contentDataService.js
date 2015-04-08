@@ -42,12 +42,12 @@ enablix.studioApp.factory('ContentDataService',
  					"contentQId": _contentQId
 	 			}
 	 			
-	 			if (!ContentTemplateService.isRootContainer(_contentQId)) {
+	 			if (!ContentTemplateService.isRootContainer(enablix.template, _contentQId)) {
 	 				params["parentIdentity"] = _parentRecordIdentity;
 	 				url = "saveOrUpdateChildContainerData";
 	 			}
 	 			
-	 			RESTService.postForData(url, params, _data, null, _onSucess, _onError, null);
+	 			RESTService.postForData(url, params, _data, null, _onSuccess, _onError, null);
 	 		}
 	 		
 	 		return {
