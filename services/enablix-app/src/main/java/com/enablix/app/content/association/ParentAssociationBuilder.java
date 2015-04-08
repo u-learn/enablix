@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 import com.enablix.app.content.TemplateUtil;
 import com.enablix.app.content.update.ContentUpdateContext;
 import com.enablix.commons.constants.ContentDataConstants;
-import com.enablix.commons.util.QIdUtil;
 import com.enablix.commons.util.StringUtil;
 import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 import com.enablix.core.mongo.content.ContentAssociation;

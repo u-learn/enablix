@@ -1,9 +1,7 @@
-<h3>{{pageHeading}}</h3>
-<form>
-<div ng-repeat="item in containerDef.contentItem" class="form-group">
-	<div ng-if="item.type == 'TEXT'">
-		<eb-text content-def="{{item}}" text-value="containerData[item.id]"></eb-text>
-		<br>
-	</div>
-</div>
-</form>
+<h4>{{pageHeading}}</h4>
+<table class="table table-striped table-bordered table-sorting" >
+<tr ng-repeat="item in containerDef.contentItem">
+	<td><label>{{item.label}}</label></td>
+	<td>{{containerData[item.id]}}</td>
+</tr>
+</table>
