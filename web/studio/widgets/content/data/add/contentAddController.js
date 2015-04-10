@@ -15,10 +15,12 @@ enablix.studioApp.controller('ContentAddCtrl',
 		$scope.containerData = {};
 		
 		$scope.saveContentData = function() {
+			var dataToSave = $scope.containerData; 
 			ContentDataService.saveContainerData(enablix.templateId, containerQId, 
-					parentIdentity, $scope.containerData, 
+					parentIdentity, dataToSave, 
 					function(data) {
 						alert("Saved successfully!");
+						$scope.addChildToCurrentNode(data);
 					}, 
 					function (data) {
 						alert("Error saving data");

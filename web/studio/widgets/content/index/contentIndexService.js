@@ -17,6 +17,7 @@ enablix.studioApp.factory('ContentIndexService',
 				
 				angular.forEach(_containerList, function(cntnr) {
 				
+					// add container listing node parent
 					var indxItem = {
 						"id" : cntnr.id,
 						"qualifiedId" : cntnr.qualifiedId,
@@ -29,27 +30,11 @@ enablix.studioApp.factory('ContentIndexService',
 				
 					_indxDataParent.push(indxItem);
 					
+					// add container data instance node
 					ContentDataService.getContentData(templateId, indxItem.qualifiedId, _elementIdentity, function(data) {
 						
 						angular.forEach(data, function(dataItem) {
-							
-							var labelAttrId = ContentTemplateService.getContainerLabelAttrId(enablix.template, cntnr.qualifiedId); 
-								
-							var indxDataItem = {
-								"id" : dataItem.identity,
-								"qualifiedId" : cntnr.qualifiedId,
-								"label" : dataItem[labelAttrId],
-								"elementIdentity" : dataItem.identity,
-								"children" : [],
-								"containerDef": cntnr,
-								"type": "instance"
-							};
-							
-							indxItem.children.push(indxDataItem);
-							
-							// recursively build the child elements
-							buildContentIndexFromContainer(indxDataItem.children, cntnr.container, dataItem.identity);
-
+							addInstanceDataChild(indxItem, cntnr, dataItem);
 						});
 						
 					}, function(data) {
@@ -59,6 +44,27 @@ enablix.studioApp.factory('ContentIndexService',
 				});
 			};
 			
+			var addInstanceDataChild = function(_indxDataParent, _containerDef, dataItem) {
+
+				var labelAttrId = ContentTemplateService.getContainerLabelAttrId(enablix.template, _containerDef.qualifiedId); 
+				
+				var indxDataItem = {
+					"id" : dataItem.identity,
+					"qualifiedId" : _containerDef.qualifiedId,
+					"label" : dataItem[labelAttrId],
+					"elementIdentity" : dataItem.identity,
+					"children" : [],
+					"containerDef": _containerDef,
+					"type": "instance"
+				};
+				
+				_indxDataParent.children.push(indxDataItem);
+				
+				// recursively build the child elements
+				buildContentIndexFromContainer(indxDataItem.children, _containerDef.container, dataItem.identity);
+
+			} 
+
 			var getContentIndexData = function(_templateId, _onSuccess, _onError) {
 				templateId = _templateId;
 				var params = {"templateId": _templateId};
@@ -66,7 +72,8 @@ enablix.studioApp.factory('ContentIndexService',
 			};
 			
 			return {
-				getContentIndexData: getContentIndexData
+				getContentIndexData: getContentIndexData,
+				addInstanceDataChild: addInstanceDataChild 
 			};
 	 	}
 	]);

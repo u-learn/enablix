@@ -1,11 +1,13 @@
 package com.enablix.app.content;
 
+import java.util.Map;
+
 import com.enablix.app.content.fetch.FetchContentRequest;
 import com.enablix.app.content.update.UpdateContentRequest;
 
 public interface ContentDataManager {
 
-	void saveData(UpdateContentRequest request);
+	Map<String, Object> saveData(UpdateContentRequest request);
 	
 	Object fetchDataJson(FetchContentRequest request);
 	

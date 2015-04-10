@@ -1,5 +1,7 @@
 package com.enablix.app.content.web;
 
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,22 +26,20 @@ public class ContentDataController {
 	
 	@RequestMapping(method = RequestMethod.POST, 
 			value="/update/t/{templateId}/c/{contentQId}/r/{parentIdentity}", 
-			consumes = "application/json")
-	public String updateData(@PathVariable String templateId, @PathVariable String contentQId, 
+			consumes = "application/json", produces = "application/json")
+	public Map<String, Object> updateData(@PathVariable String templateId, @PathVariable String contentQId, 
 			@PathVariable String parentIdentity, @RequestBody String jsonData) {
 		LOGGER.debug("Updating content data");
-		dataMgr.saveData(new UpdateContentRequest(templateId, parentIdentity, contentQId, jsonData));
-		return "{ \"result\" : \"success\"}";
+		return dataMgr.saveData(new UpdateContentRequest(templateId, parentIdentity, contentQId, jsonData));
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, 
 			value="/update/t/{templateId}/c/{contentQId}", 
-			consumes = "application/json")
-	public String insertData(@PathVariable String templateId, @PathVariable String contentQId, 
+			consumes = "application/json", produces = "application/json")
+	public Map<String, Object> insertData(@PathVariable String templateId, @PathVariable String contentQId, 
 			@RequestBody String jsonData) {
 		LOGGER.debug("Updating content data");
-		dataMgr.saveData(new UpdateContentRequest(templateId, null, contentQId, jsonData));
-		return "{ \"result\" : \"success\"}";
+		return dataMgr.saveData(new UpdateContentRequest(templateId, null, contentQId, jsonData));
 	}
 	
 }

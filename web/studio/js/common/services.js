@@ -25,12 +25,18 @@ enablix.studioApp.factory('RESTService', [
 		'$http', '$window',
 		function($http, $window) {	
 			
-			var postForFile = function(_resourceKey, _params, files,_success, _error) {
+			var postForFile = function(_resourceKey, _params, files, _data, _success, _error) {
 				
-				 var fd = new FormData();
-		            //Take the first selected file
-		            fd.append("file", files[0]);
-					var requestConfig = genereateRequestConfig(_resourceKey, _params);
+				var fd = new FormData();
+	            
+				//Take the first selected file
+	            fd.append("file", files[0]);
+				
+	            angular.forEach(_data, function(key, value) {
+	            	fd.append(key, value);
+	            });
+	            
+	            var requestConfig = genereateRequestConfig(_resourceKey, _params);
 					
 				 $http.post(requestConfig.url, fd, {
 		                headers: {'Content-Type': undefined },

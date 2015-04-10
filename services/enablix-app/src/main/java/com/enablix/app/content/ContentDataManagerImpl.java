@@ -48,7 +48,7 @@ public class ContentDataManagerImpl implements ContentDataManager {
 	 * 3. Update existing container record attributes == Mongo update $set
 	 */
 	@Override
-	public void saveData(UpdateContentRequest request) {
+	public Map<String, Object> saveData(UpdateContentRequest request) {
 		
 		Collection<Error> errors = updateValidator.validate(request);
 		if (errors != null && !errors.isEmpty()) {
@@ -69,6 +69,8 @@ public class ContentDataManagerImpl implements ContentDataManager {
 		
 		updateHandler.updateContent(template, request.getParentIdentity(), 
 				request.getContentQId(), contentDataMap);
+		
+		return contentDataMap;
 		
 	}
 	

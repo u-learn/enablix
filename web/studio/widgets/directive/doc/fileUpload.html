@@ -1,0 +1,11 @@
+<label>{{label}}</label><br>
+<div>
+    <span ng-show="!files.length">No file selected</span>
+    <ul>
+        <li ng-repeat="file in files">{{file}}</li>
+    </ul>
+</div>
+<span class="btn btn-default fileinput-button">
+	<input type="file" name="{{name}}" upload><span>Select File</span>
+</span>
+<button type="button" class="btn btn-default" ng-click="upload()">Upload</button>

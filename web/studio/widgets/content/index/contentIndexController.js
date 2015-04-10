@@ -25,4 +25,9 @@ enablix.studioApp.controller('contentIndexCtrl',
 			
 		};
 		
+		$scope.addChildToCurrentNode = function(childData) {
+			ContentIndexService.addInstanceDataChild($scope.contentIndex.currentNode, 
+					$scope.contentIndex.currentNode.containerDef, childData);
+		};
+		
 	}]);

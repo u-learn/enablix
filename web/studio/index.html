@@ -5,13 +5,16 @@
 	<title>Enablix Studio</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	
-	<link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css" rel="stylesheet">
-	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="css/angular.treeview.css">
 	<link rel="stylesheet" type="text/css" href="css/enablix.css">
+	<link rel="stylesheet" type="text/css" href="css/file-input.css">
 	
 	<script type="text/javascript" src="js/vendor/jquery/jquery-1.11.2.min.js"></script>
 	<script type="text/javascript" src="js/vendor/bootstrap/bootstrap.min.js"></script>
+	<script type="text/javascript" src="js/vendor/jquery/jquery-ui.js"></script>
+	<script type="text/javascript" src="js/vendor/jquery/jquery.fileupload.js"></script>
 	
 	<!-- angular scripts -->
 	<script type="text/javascript" src="js/vendor/angular/angular.js"></script>
@@ -28,23 +31,27 @@
 
 	<script type="text/javascript" src="widgets/directive/textInputDirective.js"></script>
 	<script type="text/javascript" src="widgets/directive/table/tableDirective.js"></script>
+	<script type="text/javascript" src="widgets/directive/doc/uploadDirective.js"></script>
+	<script type="text/javascript" src="widgets/directive/doc/fileUploadDirective.js"></script>
 	
 	<script type="text/javascript" src="widgets/content/template/contentTemplateService.js"></script>
 	<script type="text/javascript" src="widgets/content/data/contentDataService.js"></script>
 	<script type="text/javascript" src="widgets/content/index/contentIndexService.js"></script>
+	<script type="text/javascript" src="widgets/content/data/doc/fileUploadService.js"></script>
 	
 	<script type="text/javascript" src="js/mainController.js"></script>
 	<script type="text/javascript" src="widgets/content/index/contentIndexController.js"></script>
 	<script type="text/javascript" src="widgets/content/data/detail/contentDetailController.js"></script>
 	<script type="text/javascript" src="widgets/content/data/list/contentListController.js"></script>
 	<script type="text/javascript" src="widgets/content/data/add/contentAddController.js"></script>
+	<script type="text/javascript" src="widgets/content/data/doc/fileUploadController.js"></script>
 		
 </head>
 
 <body ng-app="studio">
 
 <!-- NAVIGATION -->
-<nav class="navbar navbar-inverse" role="navigation">
+<nav class="navbar navbar-default" role="navigation">
     <div class="navbar-header">
         <a class="navbar-brand" ui-sref="home">Enablix</a>
     </div>

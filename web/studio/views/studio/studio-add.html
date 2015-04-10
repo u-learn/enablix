@@ -6,6 +6,10 @@
 		<eb-text content-def="{{item}}" text-value="containerData[item.id]"></eb-text>
 		<br>
 	</div>
+	<div ng-if="item.type == 'DOC'">
+		<eb-file-upload content-def="{{item}}" doc-value="containerData[item.id]"></eb-file-upload>
+		<br>
+	</div>
 </div>
 <p><button ng-click="saveContentData()" type="button" class="btn btn-default">Save</button></p>
 </form>
