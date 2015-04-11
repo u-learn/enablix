@@ -1,6 +1,6 @@
 enablix.studioApp.controller('contentIndexCtrl', 
-			['$scope', '$state', 'ContentIndexService', 
-    function( $scope,   $state,   ContentIndexService) {
+			['$scope', '$state', 'ContentIndexService', 'StateUpdateService', 
+    function( $scope,   $state,   ContentIndexService,   StateUpdateService) {
 	
 		ContentIndexService.getContentIndexData(enablix.templateId, function(data) {
 	    	 $scope.indexData = data; 
@@ -13,14 +13,10 @@ enablix.studioApp.controller('contentIndexCtrl',
 		$scope.contentIndex.selectNodeCallback = function(selectedNode) {
 			
 			if (selectedNode.type == 'container') {
-			
-				$state.go('studio.list', {'containerQId' : selectedNode.qualifiedId, 
-					"parentIdentity" : selectedNode.elementIdentity});
+				StateUpdateService.goToStudioList(selectedNode.qualifiedId, selectedNode.elementIdentity);
 				
 			} else if (selectedNode.type == 'instance') {
-				
-				$state.go('studio.detail', {'containerQId' : selectedNode.qualifiedId, 
-					"elementIdentity" : selectedNode.elementIdentity});
+				StateUpdateService.goToStudioDetail(selectedNode.qualifiedId, selectedNode.elementIdentity);
 			}
 			
 		};
