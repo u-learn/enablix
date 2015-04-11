@@ -22,16 +22,20 @@ enablix.studioApp.controller('ContentListCtrl',
 			var dataType = "string";
 			
 			switch (containerAttr.type) {
-				case "text":
+				case "TEXT":
 					dataType = "string";
 					break;
 					
-				case "numeric":
+				case "NUMERIC":
 					dataType = "number";
 					break;
 					
-				case "dateTime":
+				case "DATETIME":
 					dataType = "date";
+					break;
+					
+				case "DOC":
+					dataType = "doc";
 					break;
 			}
 			

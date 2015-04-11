@@ -15,6 +15,7 @@
 			<td ng-repeat="col in tableHeaders">
 				<span ng-switch on="col.dataType">
 					<span ng-switch-when="number"><span class="text-right">{{tableRecord[col.key]}}</span></span>
+					<span ng-switch-when="doc"><span class="text-right">{{tableRecord[col.key].name}}</span></span>
 					<span ng-switch-default>{{tableRecord[col.key]}}</span>
 				</span>
 			</td>

@@ -6,5 +6,6 @@ enablix.serviceURL = {
 	"fetchChildrenData": enablix.domainName + "/data/t/:templateId/c/:contentQId/p/:parentIdentity",
 	"fetchRecordData": enablix.domainName + "/data/t/:templateId/c/:contentQId/d/:recordIdentity",
 	"saveOrUpdateRootContainerData": enablix.domainName + "/content/update/t/:templateId/c/:contentQId/",
-	"saveOrUpdateChildContainerData": enablix.domainName + "/content/update/t/:templateId/c/:contentQId/r/:parentIdentity"
+	"saveOrUpdateChildContainerData": enablix.domainName + "/content/update/t/:templateId/c/:contentQId/r/:parentIdentity",
+	"uploadDocument" : enablix.domainName + "/doc/upload"
 };
