@@ -41,6 +41,7 @@ enablix.studioApp.controller('FileUploadCtrl',
         };
         uploader.onErrorItem = function(fileItem, response, status, headers) {
             console.info('onErrorItem', fileItem, response, status, headers);
+            alert("Error: " + response.message);
         };
         uploader.onCancelItem = function(fileItem, response, status, headers) {
             console.info('onCancelItem', fileItem, response, status, headers);
