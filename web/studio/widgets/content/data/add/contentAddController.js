@@ -23,7 +23,7 @@ enablix.studioApp.controller('ContentAddCtrl',
 					parentIdentity, dataToSave, 
 					function(data) {
 						alert("Saved successfully!");
-						$scope.addChildToCurrentNode(data);
+						$scope.addChildToCurrentNode(data, true);
 						//StateUpdateService.goToStudioList(containerQId, parentIdentity);
 					}, 
 					function (data) {

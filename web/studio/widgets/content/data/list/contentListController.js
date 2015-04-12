@@ -15,7 +15,7 @@ enablix.studioApp.controller('ContentListCtrl',
 		};
 		
 		$scope.navToContentDetail = function(elementIdentity) {
-			StateUpdateService.goToStudioDetail(containerQId, elementIdentity);
+			$scope.selectChildOfCurrent(elementIdentity);
 		};
 		
 		angular.forEach($scope.containerDef.contentItem, function(containerAttr) {

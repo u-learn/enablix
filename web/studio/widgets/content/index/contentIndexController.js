@@ -21,11 +21,33 @@ enablix.studioApp.controller('contentIndexCtrl',
 			
 		};
 		
-		$scope.addChildToCurrentNode = function(childData) {
+		$scope.addChildToCurrentNode = function(childData, selectChildAsCurrent) {
+			
 			var childNode = ContentIndexService.addInstanceDataChild(
 					$scope.contentIndex.currentNode, 
 					$scope.contentIndex.currentNode.containerDef, childData);
-			$scope.contentIndex.selectNodeLabel(childNode);
+			
+			if (selectChildAsCurrent) {
+				$scope.contentIndex.selectNodeLabel(childNode);
+			}
+			
+			return childNode;
 		};
+		
+		$scope.selectChildOfCurrent = function(childIdentity) {
+			
+			if ($scope.contentIndex.currentNode.children) {
+			
+				var childrenNodes = $scope.contentIndex.currentNode.children;
+				
+				for (var i = 0; i < childrenNodes.length; i++) {
+					var child = childrenNodes[i];
+					if (child.elementIdentity == childIdentity) {
+						$scope.contentIndex.selectNodeLabel(child);
+						break;
+					}
+				}
+			}
+		}
 		
 	}]);
