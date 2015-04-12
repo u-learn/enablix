@@ -1,4 +1,5 @@
-<table class="table table-striped table-bordered table-sorting" >
+<label>Search:</label><input class="form-control" ng-model="searchText"><br>
+<table class="table table-striped table-bordered table-sorting table-hover" >
 	<thead>
 		<tr>
 			<th ng-repeat="col in tableHeaders">
@@ -11,11 +12,16 @@
 	</thead>
 	
 	<tbody>
-		<tr ng-repeat="tableRecord in tableData">
+		<tr ng-if="tableData.length == 0">
+			<td colspan="{{tableHeaders.length}}">No data found</td>
+		</tr>
+		<tr ng-repeat="tableRecord in tableData | filter:searchText" ng-click="navToRowDetail(tableRecord.identity)">
 			<td ng-repeat="col in tableHeaders">
 				<span ng-switch on="col.dataType">
 					<span ng-switch-when="number"><span class="text-right">{{tableRecord[col.key]}}</span></span>
-					<span ng-switch-when="doc"><span class="text-right">{{tableRecord[col.key].name}}</span></span>
+					<span ng-switch-when="doc">{{tableRecord[col.key].name}}</span>
+					<span ng-switch-when="select">{{tableRecord[col.key].label}}</span>
+					<span ng-switch-when="date">{{tableRecord[col.key] | date}}</span>
 					<span ng-switch-default>{{tableRecord[col.key]}}</span>
 				</span>
 			</td>

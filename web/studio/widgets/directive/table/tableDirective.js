@@ -1,14 +1,22 @@
-enablix.studioApp.directive('ebTable', function() {
+enablix.studioApp.directive('ebTable', [
+        'StateUpdateService',
+function(StateUpdateService) {
 
 	return {
 		restrict: 'E',
 		scope : {
-			tableData : "="
+			tableData : "=",
+			tableHeaders : "=",
+			rowClickFn : "="
 		},
 		link: function(scope, element, attrs) {
-			scope.tableHeaders = eval("(" + attrs.tableHeaders + ")"); 
+			scope.navToRowDetail = function(elementIdentity) {
+				if (scope.rowClickFn) {
+					scope.rowClickFn(elementIdentity);
+				}
+			};
 		},
 
 		templateUrl: "widgets/directive/table/defaultTable.html"
-	}
-});
+	};
+}]);

@@ -3,11 +3,12 @@ enablix.studioApp.directive('ebFileUpload', function() {
 	return {
 		restrict: 'E',
 		scope : {
-			docValue : "="
+			docValue : "=",
+			contentDef : "="
 		},
 
 		link: function(scope, element, attrs) {
-			var _dataDef = eval("(" + attrs.contentDef + ")");
+			var _dataDef = scope.contentDef;
 			scope.name = _dataDef.id;
 			scope.label = _dataDef.label;
 		},

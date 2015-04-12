@@ -6,6 +6,7 @@
     <container id="product" label="Product" referenceable="true">
       <contentItem id="name" label="Product Name" type="text"/>
       <contentItem id="category" label="Product Category" type="text"/>
+      <contentItem id="releaseDate" label="Release Date" type="dateTime"/>
       <container id="datasheet" label="Data Sheet" referenceable="true">
       	<contentItem id="file" label="File" type="doc">
       	  <doc>
@@ -35,16 +36,23 @@
       			</refList>
       		</bounded>
       	</contentItem>
+        <container id="detail" label="Data Sheet detail" referenceable="false">
+          <contentItem id="name" label="Sheet Name" type="text"/>
+      	  <contentItem id="category" label="Sheet Category" type="text"/>
+        </container>
       </container>
     </container>
   </dataDefinition>
   
   <uiDefinition>
     <contentUIDef qualifiedId="product">
-      <container labelQualifierId="product.name"/>
+      <container labelQualifiedId="product.name"/>
     </contentUIDef>
     <contentUIDef qualifiedId="product.name">
       <text type="short"/>
+    </contentUIDef>
+    <contentUIDef qualifiedId="product.datasheet">
+      <container labelQualifiedId="product.datasheet.shortDesc"/>
     </contentUIDef>
     <contentUIDef qualifiedId="product.datasheet.shortDesc">
       <text type="long"/>

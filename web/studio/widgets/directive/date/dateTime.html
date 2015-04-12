@@ -1,0 +1,13 @@
+<label>{{label}}</label><br>
+<div class="row">
+     <div class="col-md-4">
+         <p class="input-group">
+           <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="dateValue" is-open="opened" 
+           			min-date="{{minDate}}" max-date="{{maxDate}}" datepicker-options="dateOptions" date-disabled="" 
+           			show-weeks="false" close-text="Close" />
+           <span class="input-group-btn">
+             <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+           </span>
+         </p>
+     </div>
+ </div>

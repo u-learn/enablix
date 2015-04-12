@@ -71,7 +71,7 @@ enablix.studioApp.factory('ContentTemplateService',
 					
 					var labelQId = cntnrUIDef.container.labelQualifiedId;
 
-					if (!angular.isUndefined(labelQId)) {
+					if (!angular.isUndefined(labelQId) && labelQId != null) {
 					
 						if (labelQId.indexOf(_containerQId) == 0) { // starts with container QId, strip it
 							labelFieldId = labelQId.substring(_containerQId.length + 1, labelQId.length);

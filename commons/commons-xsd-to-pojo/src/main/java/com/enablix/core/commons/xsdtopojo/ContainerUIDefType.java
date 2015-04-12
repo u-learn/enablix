@@ -39,7 +39,7 @@ public class ContainerUIDefType
 {
 
     private final static long serialVersionUID = 1L;
-    @XmlAttribute(name = "labelQualifierId", required = true)
+    @XmlAttribute(name = "labelQualifiedId", required = true)
     protected String labelQualifiedId;
 
     /**

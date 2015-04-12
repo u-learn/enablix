@@ -1,6 +1,6 @@
 enablix.studioApp.controller('ContentListCtrl', 
-			['$scope', '$state', '$stateParams', 'ContentDataService', 'ContentTemplateService',
-	function( $scope,   $state,   $stateParams,   ContentDataService,   ContentTemplateService) {
+			['$scope', '$state', '$stateParams', 'ContentDataService', 'ContentTemplateService', 'StateUpdateService',
+	function( $scope,   $state,   $stateParams,   ContentDataService,   ContentTemplateService,   StateUpdateService) {
 		
 		var containerQId = $stateParams.containerQId;
 		var parentIdentity = $stateParams.parentIdentity;
@@ -11,11 +11,12 @@ enablix.studioApp.controller('ContentListCtrl',
 		$scope.pageHeading = $scope.containerDef.label;
 		
 		$scope.navToAddContent = function() {
-			$state.go('studio.add', {
-				'containerQId': containerQId,
-				'parentIdentity': parentIdentity
-			});
-		}
+			StateUpdateService.goToStudioAdd(containerQId, parentIdentity);
+		};
+		
+		$scope.navToContentDetail = function(elementIdentity) {
+			StateUpdateService.goToStudioDetail(containerQId, elementIdentity);
+		};
 		
 		angular.forEach($scope.containerDef.contentItem, function(containerAttr) {
 			
@@ -30,12 +31,16 @@ enablix.studioApp.controller('ContentListCtrl',
 					dataType = "number";
 					break;
 					
-				case "DATETIME":
+				case "DATE_TIME":
 					dataType = "date";
 					break;
 					
 				case "DOC":
 					dataType = "doc";
+					break;
+					
+				case "BOUNDED":
+					dataType = "select";
 					break;
 			}
 			

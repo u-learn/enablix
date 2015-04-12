@@ -3,7 +3,7 @@ enablix.studioApp.controller('contentIndexCtrl',
     function( $scope,   $state,   ContentIndexService,   StateUpdateService) {
 	
 		ContentIndexService.getContentIndexData(enablix.templateId, function(data) {
-	    	 $scope.indexData = data; 
+	    	$scope.indexData = data; 
 	    }, function(data) {
 	    	alert("Error fetching content index");
 	    });
@@ -22,8 +22,10 @@ enablix.studioApp.controller('contentIndexCtrl',
 		};
 		
 		$scope.addChildToCurrentNode = function(childData) {
-			ContentIndexService.addInstanceDataChild($scope.contentIndex.currentNode, 
+			var childNode = ContentIndexService.addInstanceDataChild(
+					$scope.contentIndex.currentNode, 
 					$scope.contentIndex.currentNode.containerDef, childData);
+			$scope.contentIndex.selectNodeLabel(childNode);
 		};
 		
 	}]);

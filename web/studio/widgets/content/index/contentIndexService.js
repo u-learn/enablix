@@ -25,7 +25,8 @@ enablix.studioApp.factory('ContentIndexService',
 						"elementIdentity" : _elementIdentity,
 						"children" : [],
 						"containerDef": cntnr,
-						"type": "container"
+						"type": "container",
+						"uiClass": "eb-indx-container"
 					};
 				
 					_indxDataParent.push(indxItem);
@@ -55,7 +56,8 @@ enablix.studioApp.factory('ContentIndexService',
 					"elementIdentity" : dataItem.identity,
 					"children" : [],
 					"containerDef": _containerDef,
-					"type": "instance"
+					"type": "instance",
+					"uiClass": "eb-indx-instance"
 				};
 				
 				_indxDataParent.children.push(indxDataItem);
@@ -63,6 +65,7 @@ enablix.studioApp.factory('ContentIndexService',
 				// recursively build the child elements
 				buildContentIndexFromContainer(indxDataItem.children, _containerDef.container, dataItem.identity);
 
+				return indxDataItem;
 			} 
 
 			var getContentIndexData = function(_templateId, _onSuccess, _onError) {
