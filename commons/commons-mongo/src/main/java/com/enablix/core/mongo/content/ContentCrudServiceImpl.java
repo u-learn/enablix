@@ -123,7 +123,8 @@ public class ContentCrudServiceImpl implements ContentCrudService {
 		
 		Update update = new Update();
 		for (Map.Entry<String, Object> entry : data.entrySet()) {
-			if (!ContentDataConstants.IDENTITY_KEY.equals(entry.getKey())) {
+			if (!ContentDataConstants.IDENTITY_KEY.equals(entry.getKey())
+					&& !ID_FLD.equals(entry.getKey())) {
 				String updateKey = createArrayUpdateKey(elementQId, entry.getKey());
 				update.set(updateKey, entry.getValue());
 			}

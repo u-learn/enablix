@@ -5,7 +5,8 @@ enablix.serviceURL = {
 	"fetchRootData": enablix.domainName + "/data/t/:templateId/c/:contentQId/",
 	"fetchChildrenData": enablix.domainName + "/data/t/:templateId/c/:contentQId/p/:parentIdentity",
 	"fetchRecordData": enablix.domainName + "/data/t/:templateId/c/:contentQId/d/:recordIdentity",
-	"saveOrUpdateRootContainerData": enablix.domainName + "/content/update/t/:templateId/c/:contentQId/",
-	"saveOrUpdateChildContainerData": enablix.domainName + "/content/update/t/:templateId/c/:contentQId/r/:parentIdentity",
+	"insertRootContainerData": enablix.domainName + "/content/update/t/:templateId/c/:contentQId/",
+	"updateContainerData": enablix.domainName + "/content/update/t/:templateId/c/:contentQId/",
+	"insertChildContainerData": enablix.domainName + "/content/update/t/:templateId/c/:contentQId/r/:parentIdentity",
 	"uploadDocument" : enablix.domainName + "/doc/upload"
 };

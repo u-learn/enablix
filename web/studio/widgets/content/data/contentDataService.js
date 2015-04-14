@@ -35,16 +35,19 @@ enablix.studioApp.factory('ContentDataService',
 	 		
 	 		var saveContainerData = function(_templateId, _contentQId, _parentRecordIdentity, _data, _onSuccess, _onError) {
 	 			
-	 			var url = "saveOrUpdateRootContainerData";
+	 			var url = "insertRootContainerData";
 	 			
 	 			var params = {
  					"templateId": _templateId,
  					"contentQId": _contentQId
 	 			}
 	 			
-	 			if (!ContentTemplateService.isRootContainer(enablix.template, _contentQId)) {
+	 			if (_data.identity && _data.identity != null) {
+	 				url = "updateContainerData";
+	 				
+	 			} else if (!ContentTemplateService.isRootContainer(enablix.template, _contentQId)) {
 	 				params["parentIdentity"] = _parentRecordIdentity;
-	 				url = "saveOrUpdateChildContainerData";
+	 				url = "insertChildContainerData";
 	 			}
 	 			
 	 			RESTService.postForData(url, params, _data, null, _onSuccess, _onError, null);

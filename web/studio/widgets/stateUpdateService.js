@@ -21,11 +21,18 @@ enablix.studioApp.factory('StateUpdateService',
 					'parentIdentity': _parentIdentity
 				});
 	 		};
-	 			 		
+
+	 		var goToStudioEdit = function(_containerQId, _elementIdentity) {
+				$state.go('studio.edit', {'containerQId' : _containerQId, 
+					"elementIdentity" : _elementIdentity});
+
+	 		};
+	 		
 	 		return {
 	 			goToStudioList: goToStudioList,
 	 			goToStudioDetail: goToStudioDetail,
-	 			goToStudioAdd: goToStudioAdd
+	 			goToStudioAdd: goToStudioAdd,
+	 			goToStudioEdit: goToStudioEdit
 	 		};
 	 	}
 	 ]);

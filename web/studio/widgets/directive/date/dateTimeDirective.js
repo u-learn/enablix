@@ -41,10 +41,11 @@ enablix.studioApp.directive('ebDatePicker', [
 
 					scope.dateOptions = {
 						formatYear : 'yy',
-						startingDay : 1
+						startingDay : 1,
+						showWeeks : false
 					};
 
-					scope.format = 'dd-MMMM-yyyy';
+					scope.format = enablix.dateFormat;
 				},
 				templateUrl : "widgets/directive/date/dateTime.html"
 			};

@@ -21,7 +21,7 @@
 					<span ng-switch-when="number"><span class="text-right">{{tableRecord[col.key]}}</span></span>
 					<span ng-switch-when="doc">{{tableRecord[col.key].name}}</span>
 					<span ng-switch-when="select">{{tableRecord[col.key].label}}</span>
-					<span ng-switch-when="date">{{tableRecord[col.key] | date}}</span>
+					<span ng-switch-when="date">{{tableRecord[col.key] | ebDate}}</span>
 					<span ng-switch-default>{{tableRecord[col.key]}}</span>
 				</span>
 			</td>

@@ -34,6 +34,10 @@ enablix.studioApp.controller('contentIndexCtrl',
 			return childNode;
 		};
 		
+		$scope.updateCurrentNodeData = function(updatedData) {
+			ContentIndexService.updateNodeData($scope.contentIndex.currentNode, updatedData);
+		};
+		
 		$scope.selectChildOfCurrent = function(childIdentity) {
 			
 			if ($scope.contentIndex.currentNode.children) {

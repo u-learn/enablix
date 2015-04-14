@@ -2,6 +2,14 @@ var enablix = enablix || {};
 enablix.studioApp = angular.module("studio", ['ui.router', 'angularTreeview', 'angularFileUpload', 'ui.bootstrap']);
 
 enablix.templateId = "amlSalesTemplate";
+enablix.dateFormat = 'MM/dd/yyyy';
+
+enablix.studioApp.filter('ebDate', function($filter) {
+    return function(input) {
+        if (input == null) { return ""; }
+        return $filter('date')(input, enablix.dateFormat);
+    };
+});
 
 enablix.studioApp.config(function($stateProvider, $urlRouterProvider) {
 	
@@ -34,6 +42,11 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider) {
 			url: '/detail/{containerQId}/{elementIdentity}/',
 			templateUrl: 'views/studio/studio-detail.html',
 			controller: 'ContentDetailCtrl'
+		})
+		.state('studio.edit', {
+			url: '/detail/{containerQId}/{elementIdentity}/',
+			templateUrl: 'views/studio/studio-add.html',
+			controller: 'ContentEditCtrl'
 		});
 });
 

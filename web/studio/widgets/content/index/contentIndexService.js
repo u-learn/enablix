@@ -74,9 +74,15 @@ enablix.studioApp.factory('ContentIndexService',
 			    RESTService.getForData("fetchRootContainers", params, contentIndexTransformer, _onSuccess, _onError);
 			};
 			
+			var updateNodeData = function(_treeNode, _data) {
+				var labelAttrId = ContentTemplateService.getContainerLabelAttrId(enablix.template, _treeNode.qualifiedId);
+				_treeNode.label = _data[labelAttrId];
+			};
+			
 			return {
 				getContentIndexData: getContentIndexData,
-				addInstanceDataChild: addInstanceDataChild 
+				addInstanceDataChild: addInstanceDataChild,
+				updateNodeData: updateNodeData
 			};
 	 	}
 	]);

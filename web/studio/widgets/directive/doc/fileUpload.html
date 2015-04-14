@@ -1,7 +1,11 @@
 <label>{{label}}</label><br>
-<div ng-show="uploader.queue.length == 0">
+<div ng-show="uploader.queue.length == 0 && !docValue.name">
 <p>No file selected</p>
 </div>
+<div ng-show="docValue.name">
+<p>{{docValue.name}}</p>
+</div>
+
 <div ng-show="uploader.queue.length != 0">
 	<table class="table" style="margin-bottom: 0px;">
 	    <tbody>
