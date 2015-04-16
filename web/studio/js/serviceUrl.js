@@ -8,5 +8,6 @@ enablix.serviceURL = {
 	"insertRootContainerData": enablix.domainName + "/content/update/t/:templateId/c/:contentQId/",
 	"updateContainerData": enablix.domainName + "/content/update/t/:templateId/c/:contentQId/",
 	"insertChildContainerData": enablix.domainName + "/content/update/t/:templateId/c/:contentQId/r/:parentIdentity",
-	"uploadDocument" : enablix.domainName + "/doc/upload"
+	"uploadDocument" : enablix.domainName + "/doc/upload",
+	"fetchBoundedRefList": enablix.domainName + "/bounded/list/:templateId/:contentQId/"
 };

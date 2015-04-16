@@ -3,7 +3,9 @@
 <tr ng-repeat="item in containerDef.contentItem" ng-switch="item.type">
 	<td class="col-md-2"><label>{{item.label}}</label></td>
 	<td class="col-md-6" ng-switch-when="DOC">{{containerData[item.id].name}}</td>
-	<td class="col-md-6" ng-switch-when="BOUNDED">{{containerData[item.id].label}}</td>
+	<td class="col-md-6" ng-switch-when="BOUNDED">
+		<span ng-repeat="opt in containerData[item.id]">{{opt.label}}<span ng-if="!$last">, </span></span>
+	</td>
 	<td class="col-md-6" ng-switch-when="DATE_TIME">{{containerData[item.id] | ebDate}}</td>
 	<td class="col-md-6" ng-switch-default>{{containerData[item.id]}}</td>
 </tr>

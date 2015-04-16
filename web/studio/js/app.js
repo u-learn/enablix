@@ -1,5 +1,6 @@
 var enablix = enablix || {};
-enablix.studioApp = angular.module("studio", ['ui.router', 'angularTreeview', 'angularFileUpload', 'ui.bootstrap']);
+enablix.studioApp = angular.module("studio", ['ui.router', 'angularTreeview', 
+           'angularFileUpload', 'ui.bootstrap', 'isteven-multi-select']);
 
 enablix.templateId = "amlSalesTemplate";
 enablix.dateFormat = 'MM/dd/yyyy';

@@ -100,12 +100,39 @@ enablix.studioApp.factory('ContentTemplateService',
 				return false;
 			}
 			
+			var getBoundedValueList = function(_templateId, _contentItemDef, _transform, _onSuccess, _onError) {
+				
+				if (_contentItemDef.bounded.fixedList) {
+					
+					var itemList = [];
+					
+					angular.forEach(_contentItemDef.bounded.fixedList.data, function(optItem) {
+						itemList.push({id: optItem.id, label: optItem.label});
+					});
+					
+					if (_transform) {
+						itemList = _transform(itemList);	
+					}
+					
+					_onSuccess(itemList);
+					
+				} else if(_contentItemDef.bounded.refList) {
+					
+					var params = { 
+							"templateId": _templateId,
+							"contentQId": _contentItemDef.qualifiedId
+						};
+					RESTService.getForData("fetchBoundedRefList", params, _transform, _onSuccess, _onError);
+				}
+			}
+			
 			return {
 				getTemplate : getTemplate,
 				getContainerLabelAttrId : getContainerLabelAttrId,
 				getUIDefinition: getUIDefinition,
 				getContainerDefinition: getContainerDefinition,
-				isRootContainer: isRootContainer
+				isRootContainer: isRootContainer,
+				getBoundedValueList: getBoundedValueList
 			};
 		
 		}

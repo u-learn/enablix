@@ -1,5 +1,5 @@
 enablix.studioApp.directive('ebBounded', [
-        'ContentTemplateService',
+        'ContentTemplateService', 
 function(ContentTemplateService) {
 
 	return {
@@ -19,12 +19,13 @@ function(ContentTemplateService) {
 			
 			var _uiDef = ContentTemplateService.getUIDefinition(enablix.template, _dataDef.qualifiedId);
 			
-			
-			if (_dataDef.bounded.fixedList) {
-				angular.forEach(_dataDef.bounded.fixedList.data, function(optItem) {
-					scope.options.push({id: optItem.id, label: optItem.label});
-				});
-			}
+			ContentTemplateService.getBoundedValueList(enablix.templateId, _dataDef, null, 
+					function(data) {
+						scope.options = data;
+					},
+					function(data) {
+						alert("Error retrieving data.");
+					});
 			
 		},
 		templateUrl: "widgets/directive/bounded/bounded.html"

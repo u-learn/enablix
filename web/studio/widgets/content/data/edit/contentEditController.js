@@ -11,9 +11,11 @@ enablix.studioApp.controller('ContentEditCtrl',
 		
 		$scope.pageHeading = "Edit " + $scope.containerDef.label;
 		
+		$scope.containerData = {};
+		
 		ContentDataService.getContentRecordData(enablix.templateId, containerQId, elementIdentity, 
 				function(data) {
-					$scope.containerData = data;
+					$scope.containerData = angular.copy(data);
 				}, 
 				function(data) {
 					alert('Error retrieving record data');
