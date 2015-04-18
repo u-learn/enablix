@@ -21,7 +21,15 @@ enablix.studioApp.controller('contentIndexCtrl',
 			
 		};
 		
-		$scope.addChildToCurrentNode = function(childData, selectChildAsCurrent) {
+		$scope.postDataSave = function(data) {
+			addChildToCurrentNode(data, true);
+		}
+		
+		$scope.goToAddContent = function(containerQId, parentIdentity) {
+			StateUpdateService.goToStudioAdd(containerQId, parentIdentity);
+		};
+		
+		var addChildToCurrentNode = function(childData, selectChildAsCurrent) {
 			
 			var childNode = ContentIndexService.addInstanceDataChild(
 					$scope.contentIndex.currentNode, 
@@ -52,6 +60,10 @@ enablix.studioApp.controller('contentIndexCtrl',
 					}
 				}
 			}
-		}
+		};
+		
+		$scope.goToContentDetail = function(elementIdentity) {
+			$scope.selectChildOfCurrent(elementIdentity);
+		};
 		
 	}]);

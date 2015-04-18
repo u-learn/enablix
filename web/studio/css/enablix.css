@@ -3,11 +3,26 @@
 }
 
 .eb-indx-container {
-	font-family:Tahoma;
+	font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 	font-size: 14px;
 }
 
 .eb-indx-instance {
-	font-family:Tahoma;
+	font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;;
 	font-style: italic;
+}
+
+ul.nav a:hover { background-color: #e7e7e7 !important; }
+
+div[data-tree-model] li {
+	line-height: 25px;
+}
+
+div[data-tree-model] li .selected {
+	background-color: #e7e7e7;
+}
+
+.sidebar-nav-header {
+	font-weight: bold;
+	background-color: #e8e8e8;
 }

@@ -26,12 +26,12 @@
 	
 	<xs:complexType name="containerType">
 		<xs:complexContent>
-			<xs:extension base="baseContentType">
+			<xs:extension base="baseContainerType">
 				<xs:sequence>
-					<xs:element name="contentItem" type="contentItemType" minOccurs="0" maxOccurs="unbounded"/>
 					<xs:element name="container" type="containerType" minOccurs="0" maxOccurs="unbounded"/>
 				</xs:sequence>
 				<xs:attribute name="referenceable" type="xs:boolean" default="true"/>
+				<xs:attribute name="refData" type="xs:boolean" default="false"/>
 			</xs:extension>
 		</xs:complexContent>
 	</xs:complexType>
@@ -117,6 +117,16 @@
 	
 	<xs:complexType name="numericType">
 		<!-- no definition as of now -->
+	</xs:complexType>
+	
+	<xs:complexType name="baseContainerType">
+		<xs:complexContent>
+			<xs:extension base="baseContentType">
+				<xs:sequence>
+					<xs:element name="contentItem" type="contentItemType" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
 	</xs:complexType>
 	
 	<!-- #############  UI Definition types ############## -->

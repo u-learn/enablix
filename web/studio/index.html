@@ -11,6 +11,7 @@
 	<link rel="stylesheet" type="text/css" href="css/enablix.css">
 	<link rel="stylesheet" type="text/css" href="css/file-input.css">
 	<link rel="stylesheet" type="text/css" href="css/isteven-multi-select.css">
+	<link rel="stylesheet" type="text/css" href="css/sidebar-nav.css">
 	
 	<script type="text/javascript" src="js/vendor/jquery/jquery-1.11.2.min.js"></script>
 	<script type="text/javascript" src="js/vendor/bootstrap/bootstrap.min.js"></script>
@@ -28,7 +29,7 @@
 	<script type="text/javascript" src="js/app.js"></script>
 	<script type="text/javascript" src="js/serverDomain.js"></script>
 	<script type="text/javascript" src="js/serviceUrl.js"></script>
-	<script type="text/javascript" src="js/common/services.js"></script>
+	<script type="text/javascript" src="js/common/restService.js"></script>
 
 	<script type="text/javascript" src="widgets/directive/text/textInputDirective.js"></script>
 	<script type="text/javascript" src="widgets/directive/table/tableDirective.js"></script>
@@ -42,6 +43,7 @@
 	<script type="text/javascript" src="widgets/content/template/contentTemplateService.js"></script>
 	<script type="text/javascript" src="widgets/content/data/contentDataService.js"></script>
 	<script type="text/javascript" src="widgets/content/index/contentIndexService.js"></script>
+	<script type="text/javascript" src="widgets/content/refdata/refdataIndexService.js"></script>
 	
 	<script type="text/javascript" src="js/mainController.js"></script>
 	<script type="text/javascript" src="widgets/content/index/contentIndexController.js"></script>
@@ -49,6 +51,7 @@
 	<script type="text/javascript" src="widgets/content/data/list/contentListController.js"></script>
 	<script type="text/javascript" src="widgets/content/data/add/contentAddController.js"></script>
 	<script type="text/javascript" src="widgets/content/data/edit/contentEditController.js"></script>
+	<script type="text/javascript" src="widgets/content/refdata/refdataIndexController.js"></script>
 	
 </head>
 
@@ -57,9 +60,10 @@
 <!-- NAVIGATION -->
 <nav class="navbar navbar-default" role="navigation">
     <ul class="nav navbar-nav">
-        <li><a ui-sref="home">Home</a></li>
-        <li><a ui-sref="studio">Studio</a></li>
-        <li><a ui-sref="about">About</a></li>
+        <li ui-sref-active="active"><a ui-sref="home">Home</a></li>
+        <li ui-sref-active="active"><a ui-sref="studio">Studio</a></li>
+        <li ui-sref-active="active"><a ui-sref="refdata">Setup</a></li>
+        <li ui-sref-active="active"><a ui-sref="about">About</a></li>
     </ul>
 </nav>
 

@@ -2,7 +2,7 @@ var enablix = enablix || {};
 enablix.studioApp = angular.module("studio", ['ui.router', 'angularTreeview', 
            'angularFileUpload', 'ui.bootstrap', 'isteven-multi-select']);
 
-enablix.templateId = "amlSalesTemplate";
+enablix.templateId = "entSoftwareTemplate"; //"amlSalesTemplate";
 enablix.dateFormat = 'MM/dd/yyyy';
 
 enablix.studioApp.filter('ebDate', function($filter) {
@@ -31,23 +31,37 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider) {
 		})
 		.state('studio.list', {
 			url: '/list/{containerQId}/{parentIdentity}/',
-			templateUrl: 'views/studio/studio-list.html',
+			templateUrl: 'views/content/content-list.html',
 			controller: 'ContentListCtrl'
 		})
 		.state('studio.add', {
 			url: '/add/{containerQId}/{parentIdentity}/',
-			templateUrl: 'views/studio/studio-add.html',
+			templateUrl: 'views/content/content-add.html',
 			controller: 'ContentAddCtrl'
 		})
 		.state('studio.detail', {
 			url: '/detail/{containerQId}/{elementIdentity}/',
-			templateUrl: 'views/studio/studio-detail.html',
+			templateUrl: 'views/content/content-detail.html',
 			controller: 'ContentDetailCtrl'
 		})
 		.state('studio.edit', {
 			url: '/detail/{containerQId}/{elementIdentity}/',
-			templateUrl: 'views/studio/studio-add.html',
+			templateUrl: 'views/content/content-add.html',
 			controller: 'ContentEditCtrl'
+		})
+		.state('refdata', {
+			url: '/refdata',
+			templateUrl: 'views/refdata/refdata.html'
+		})
+		.state('refdata.list', {
+			url: '/list/{containerQId}/{parentIdentity}/',
+			templateUrl: 'views/content/content-list.html',
+			controller: 'ContentListCtrl'
+		})
+		.state('refdata.add', {
+			url: '/add/{containerQId}/',
+			templateUrl: 'views/content/content-add.html',
+			controller: 'ContentAddCtrl'
 		});
 });
 

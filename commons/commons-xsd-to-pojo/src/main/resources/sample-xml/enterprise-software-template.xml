@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="utf-8"?>
+<contentTemplate id="entSoftwareTemplate" 
+				 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
+				 xsi:noNamespaceSchemaLocation="../xsd/content-template.xsd">
+	<dataDefinition>
+		<container id="solution" label="Solution" referenceable="true">
+			<contentItem id="name" label="Solution Name" type="text"/>
+			<contentItem id="description" label="Solution Description" type="text"/>
+			<contentItem id="shortName" label="Short Name" type="text"/>
+			<contentItem id="image" label="Solution Image" type="doc"/>
+			<contentItem id="solProducts" label="Related Products" type="bounded">
+				<bounded>
+					<refList>
+						<datastore>
+							<storeId>product</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>name</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="solRegions" label="Related Regions" type="bounded">
+				<bounded>
+					<refList>
+						<datastore>
+							<storeId>regions</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>regionName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="solMarketTier" label="Market Tiers" type="bounded">
+				<bounded>
+					<refList>
+						<datastore>
+							<storeId>mrktTier</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>mrktTierName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<container id="solnExperts" label="Experts" referenceable="false">
+				<contentItem id="expertUserName" label="Name" type="bounded">
+					<bounded>
+						<refList>
+							<datastore>
+								<storeId>users</storeId>
+								<dataId>identity</dataId>
+								<dataLabel>userName</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>
+				<contentItem id="expertExpertise" label="Expertise" type="bounded">
+					<bounded multivalued="true">
+						<refList>
+							<datastore>
+								<storeId>expertise</storeId>
+								<dataId>identity</dataId>
+								<dataLabel>expertiseDesc</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>
+			</container>
+			<container id="solOverview" label="Solution Overview" referenceable="true">
+				<contentItem id="file" label="File" type="doc"/>
+				<contentItem id="shortDesc" label="Short Description" type="text"/>
+				<contentItem id="publicURL" label="Public URL" type="text"/>
+				<contentItem id="access" label="Access" type="bounded">
+					<bounded>
+						<refList>
+							<datastore>
+								<storeId>accessStore</storeId>
+								<dataId>identity</dataId>
+								<dataLabel>accessType</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>
+				<contentItem id="dealRelevance" label="Deal Relevance" type="bounded">
+					<bounded multivalued="true">
+						<refList>
+							<datastore>
+								<!-- ####  Sourced from CRM #### -->
+								<storeId>dealStages</storeId>
+								<dataId>identity</dataId>
+								<dataLabel>stageName</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>
+				<contentItem id="author" label="Author" type="bounded">
+					<bounded multivalued="true">
+						<refList>
+							<datastore>
+								<storeId>user</storeId>
+								<dataId>userId</dataId>
+								<dataLabel>userName</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>
+			</container>
+			<container id="solArchitecture" label="Solution Architecture" referenceable="true">
+				<contentItem id="file" label="File" type="doc"/>
+				<contentItem id="shortDesc" label="Short Description" type="text"/>
+				<contentItem id="access" label="Access" type="bounded">
+					<bounded>
+						<refList>
+							<datastore>
+								<storeId>accessStore</storeId>
+								<dataId>identity</dataId>
+								<dataLabel>accessType</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>
+				<contentItem id="dealRelevance" label="Deal Relevance" type="bounded">
+					<bounded multivalued="true">
+						<refList>
+							<datastore>
+								<!-- ####  Sourced from CRM #### -->
+								<storeId>dealStages</storeId>
+								<dataId>identity</dataId>
+								<dataLabel>stageName</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>
+				<contentItem id="author" label="Author" type="bounded">
+					<bounded multivalued="true">
+						<refList>
+							<datastore>
+								<storeId>user</storeId>
+								<dataId>userId</dataId>
+								<dataLabel>userName</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>
+			</container>
+			<container id="solExecSummary" label="Sales Executive Summary" referenceable="true">
+				<contentItem id="file" label="File" type="doc"/>
+				<contentItem id="shortDesc" label="Short Description" type="text"/>
+				<contentItem id="access" label="Access" type="bounded">
+					<bounded>
+						<refList>
+							<datastore>
+								<storeId>accessStore</storeId>
+								<dataId>identity</dataId>
+								<dataLabel>accessType</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>
+				<contentItem id="dealRelevance" label="Deal Relevance" type="bounded">
+					<bounded multivalued="true">
+						<refList>
+							<datastore>
+								<!-- ####  Sourced from CRM #### -->
+								<storeId>dealStages</storeId>
+								<dataId>identity</dataId>
+								<dataLabel>stageName</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>
+				<contentItem id="author" label="Author" type="bounded">
+					<bounded multivalued="true">
+						<refList>
+							<datastore>
+								<storeId>user</storeId>
+								<dataId>userId</dataId>
+								<dataLabel>userName</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>
+			</container>
+			<container id="solCaseStudy" label="Case Studies" referenceable="true">
+				<contentItem id="file" label="File" type="doc"/>
+				<contentItem id="title" label="Title" type="text"/>
+				<contentItem id="highlights" label="Case Highlights" type="text"/>
+				<contentItem id="customer" label="Customer Name" type="text"/>
+				<contentItem id="type" label="Case Type" type="bounded">
+					<bounded multivalued="true">
+						<refList>
+							<datastore>
+								<storeId>caseStudyType</storeId>
+								<dataId>identity</dataId>
+								<dataLabel>name</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>
+				<contentItem id="competitors" label="Competitors" type="bounded">
+					<bounded multivalued="true">
+						<refList>
+							<datastore>
+								<storeId>competitor</storeId>
+								<dataId>identity</dataId>
+								<dataLabel>name</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>
+				<contentItem id="audience" label="Target Audience" type="bounded">
+					<bounded multivalued="true">
+						<refList>
+							<datastore>
+								<storeId>audience</storeId>
+								<dataId>identity</dataId>
+								<dataLabel>name</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>
+				<contentItem id="access" label="Access" type="bounded">
+					<bounded>
+						<refList>
+							<datastore>
+								<storeId>accessStore</storeId>
+								<dataId>identity</dataId>
+								<dataLabel>accessType</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>
+				<contentItem id="dealRelevance" label="Deal Relevance" type="bounded">
+					<bounded multivalued="true">
+						<refList>
+							<datastore>
+								<!-- ####  Sourced from CRM #### -->
+								<storeId>dealStages</storeId>
+								<dataId>identity</dataId>
+								<dataLabel>stageName</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>
+				<contentItem id="author" label="Author" type="bounded">
+					<bounded multivalued="true">
+						<refList>
+							<datastore>
+								<storeId>user</storeId>
+								<dataId>userId</dataId>
+								<dataLabel>userName</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>
+			</container>
+			<container id="solFAQ" label="FAQ" referenceable="false">
+				<contentItem id="question" label="Question" type="text"/>
+				<contentItem id="qType" label="Type" type="bounded">
+					<bounded multivalued="true">
+						<refList>
+							<datastore>
+								<storeId>faqType</storeId>
+								<dataId>identity</dataId>
+								<dataLabel>typeName</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>
+				<contentItem id="answer" label="Answer" type="text"/>
+			</container>
+		</container>
+		<container id="faqType" label="FAQ Types" refData="true">
+			<contentItem id="typeName" label="Type name" type="text"/>
+			<contentItem id="desc" label="Description" type="text"/>
+		</container>
+		<container id="dealStages" label="Deal Stage" refData="true">
+			<contentItem id="stageName" label="Deal Stage name" type="text"/>
+			<contentItem id="desc" label="Description" type="text"/>
+		</container>
+		<container id="accessStore" label="Access Type" refData="true">
+			<contentItem id="accessType" label="Access name" type="text"/>
+			<contentItem id="desc" label="Description" type="text"/>
+		</container>
+		<container id="regions" label="Regions" refData="true">
+			<contentItem id="regionName" label="Region name" type="text"/>
+			<contentItem id="desc" label="Description" type="text"/>
+		</container>
+		<container id="audience" label="Audience" refData="true">
+			<contentItem id="name" label="Audience name" type="text"/>
+			<contentItem id="desc" label="Description" type="text"/>
+		</container>
+		<container id="caseStudyType" label="Case Study Type" refData="true">
+			<contentItem id="name" label="Type name" type="text"/>
+			<contentItem id="desc" label="Description" type="text"/>
+		</container>
+	</dataDefinition>
+	<uiDefinition>
+		<contentUIDef qualifiedId="solution">
+			<container labelQualifiedId="solution.name"/>
+		</contentUIDef>
+		<contentUIDef qualifiedId="solution.solFAQ.answer">
+			<text type="long"/>
+	    </contentUIDef>
+	    <contentUIDef qualifiedId="solution.solOverview.shortDesc">
+			<text type="long"/>
+	    </contentUIDef>
+	</uiDefinition>
+</contentTemplate>

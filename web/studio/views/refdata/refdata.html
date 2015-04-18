@@ -1,0 +1,22 @@
+<div class="row-fluid" ng-controller="MainStudioCtrl">
+	<div ng-controller="refdataIndexCtrl">
+		
+		<div class="col-sm-3">
+			<div class="sidebar-nav">
+				<div class="navbar navbar-default" role="navigation">
+					<div class="navbar-collapse collapse sidebar-navbar-collapse">
+						<ul class="nav navbar-nav">
+							<li class="sidebar-nav-header"><a>Reference Data</a></li>
+							<li ng-class="{'active': selectedIndexId == indx.id}" ng-repeat="indx in refdataIndexData">
+								<a ng-click="navToRefdataList(indx.id)">{{indx.label}}</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-sm-9">
+			<div ui-view></div>
+		</div>
+	</div>
+</div>

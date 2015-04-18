@@ -1,10 +1,33 @@
 enablix.studioApp.factory('ContentTemplateService', 
 	[	'RESTService',
 	 	function(RESTService) {
+		
+			var loadTemplate = function(_templateId) {
+				
+				if (enablix.template) {
+					_onSuccess(enablix.template);
+					
+				} else {
+					var params = { "templateId": _templateId };
+					RESTService.getForData("fetchContentTemplate", params, null, function(data) {
+						enablix.template = data;
+					}, function(response) {
+						alert("Error loading template: " + response);
+					});
+				}
+				
+			};
 	
 			var getTemplate = function(_templateId, _onSuccess, _onError) {
-				var params = { "templateId": _templateId };
-				RESTService.getForData("fetchContentTemplate", params, null, _onSuccess, _onError);
+				
+				if (enablix.template) {
+					_onSuccess(enablix.template);
+					
+				} else {
+					var params = { "templateId": _templateId };
+					RESTService.getForData("fetchContentTemplate", params, null, _onSuccess, _onError);
+				}
+				
 			};
 			
 			var getUIDefinition = function(_template, _elementQId) {
@@ -132,7 +155,8 @@ enablix.studioApp.factory('ContentTemplateService',
 				getUIDefinition: getUIDefinition,
 				getContainerDefinition: getContainerDefinition,
 				isRootContainer: isRootContainer,
-				getBoundedValueList: getBoundedValueList
+				getBoundedValueList: getBoundedValueList,
+				loadTemplate: loadTemplate
 			};
 		
 		}

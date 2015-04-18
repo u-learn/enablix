@@ -14,9 +14,14 @@ enablix.studioApp.factory('ContentIndexService',
 			};
 			
 			var buildContentIndexFromContainer = function(_indxDataParent, _containerList, _elementIdentity) {
-				
+			
 				angular.forEach(_containerList, function(cntnr) {
-				
+
+					// ignore refData containers
+					if (cntnr.refData) {
+						return;
+					}
+					
 					// add container listing node parent
 					var indxItem = {
 						"id" : cntnr.id,

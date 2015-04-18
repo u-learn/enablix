@@ -4,19 +4,15 @@
 <div ng-repeat="item in containerDef.contentItem" class="form-group">
 	<div ng-if="item.type == 'TEXT'">
 		<eb-text content-def="item" text-value="containerData[item.id]"></eb-text>
-		<br>
 	</div>
 	<div ng-if="item.type == 'DOC'">
 		<eb-file-upload content-def="item" doc-value="containerData[item.id]"></eb-file-upload>
-		<br>
 	</div>
 	<div ng-if="item.type == 'BOUNDED'">
 		<eb-bounded2 content-def="item" select-value="containerData[item.id]"></eb-bounded2>
-		<br>
 	</div>
 	<div ng-if="item.type == 'DATE_TIME'">
 		<eb-date-picker content-def="item" date-value="containerData[item.id]"></eb-date-picker>
-		<br>
 	</div>
 </div>
 <p><button ng-click="saveContentData()" type="button" class="btn btn-default">Save</button></p>
