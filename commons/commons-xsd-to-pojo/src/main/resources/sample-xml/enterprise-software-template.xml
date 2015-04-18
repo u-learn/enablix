@@ -59,13 +59,13 @@
 							<datastore>
 								<storeId>expertise</storeId>
 								<dataId>identity</dataId>
-								<dataLabel>expertiseDesc</dataLabel>
+								<dataLabel>name</dataLabel>
 							</datastore>
 						</refList>
 					</bounded>
 				</contentItem>
 			</container>
-			<container id="solOverview" label="Solution Overview" referenceable="true">
+			<container id="solOverview" label="Solution Overview" referenceable="true" single="true">
 				<contentItem id="file" label="File" type="doc"/>
 				<contentItem id="shortDesc" label="Short Description" type="text"/>
 				<contentItem id="publicURL" label="Public URL" type="text"/>
@@ -293,11 +293,25 @@
 			<contentItem id="name" label="Type name" type="text"/>
 			<contentItem id="desc" label="Description" type="text"/>
 		</container>
+		<container id="expertise" label="Expertise" refData="true">
+			<contentItem id="name" label="Name" type="text"/>
+			<contentItem id="desc" label="Description" type="text"/>
+		</container>
+		<container id="users" label="User" refData="true">
+			<contentItem id="userName" label="Name" type="text"/>
+			<contentItem id="email" label="Email" type="text"/>
+		</container>
 	</dataDefinition>
 	<uiDefinition>
 		<contentUIDef qualifiedId="solution">
 			<container labelQualifiedId="solution.name"/>
 		</contentUIDef>
+		<contentUIDef qualifiedId="solution.solnExperts">
+			<container labelQualifiedId="solution.solnExperts.expertUserName"/>
+		</contentUIDef>
+		<contentUIDef qualifiedId="solution.description">
+			<text type="long"/>
+	    </contentUIDef>
 		<contentUIDef qualifiedId="solution.solFAQ.answer">
 			<text type="long"/>
 	    </contentUIDef>

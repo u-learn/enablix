@@ -17,6 +17,14 @@ enablix.studioApp.controller('contentIndexCtrl',
 				
 			} else if (selectedNode.type == 'instance') {
 				StateUpdateService.goToStudioDetail(selectedNode.qualifiedId, selectedNode.elementIdentity);
+				
+			} else if (selectedNode.type == 'container-instance') {
+				
+				if (selectedNode.elementIdentity == undefined || selectedNode.elementIdentity == null) {
+					StateUpdateService.goToStudioAdd(selectedNode.qualifiedId, selectedNode.parentIdentity);
+				} else {
+					StateUpdateService.goToStudioDetail(selectedNode.qualifiedId, selectedNode.elementIdentity);
+				}
 			}
 			
 		};

@@ -21,16 +21,20 @@ enablix.studioApp.factory('ContentIndexService',
 					if (cntnr.refData) {
 						return;
 					}
+				
+					var cntnrType = cntnr.single ? "container-instance" : "container";
+					var elemIdentity = cntnr.single ? null : _elementIdentity;
 					
 					// add container listing node parent
 					var indxItem = {
 						"id" : cntnr.id,
 						"qualifiedId" : cntnr.qualifiedId,
 						"label" : cntnr.label,
-						"elementIdentity" : _elementIdentity,
+						"elementIdentity" : elemIdentity,
+						"parentIdentity" : _elementIdentity,
 						"children" : [],
 						"containerDef": cntnr,
-						"type": "container",
+						"type": cntnrType,
 						"uiClass": "eb-indx-container"
 					};
 				
@@ -52,26 +56,66 @@ enablix.studioApp.factory('ContentIndexService',
 			
 			var addInstanceDataChild = function(_indxDataParent, _containerDef, dataItem) {
 
-				var labelAttrId = ContentTemplateService.getContainerLabelAttrId(enablix.template, _containerDef.qualifiedId); 
+				var indxDataItem = null;
 				
-				var indxDataItem = {
-					"id" : dataItem.identity,
-					"qualifiedId" : _containerDef.qualifiedId,
-					"label" : dataItem[labelAttrId],
-					"elementIdentity" : dataItem.identity,
-					"children" : [],
-					"containerDef": _containerDef,
-					"type": "instance",
-					"uiClass": "eb-indx-instance"
-				};
-				
-				_indxDataParent.children.push(indxDataItem);
+				if (_containerDef.single) {
+					_indxDataParent.elementIdentity = dataItem.identity;
+					_indxDataParent.type = "instance";
+					indxDataItem = _indxDataParent;
+					
+				} else {
+					
+					var nodeLabel = resolveContainerInstanceLabel(_containerDef, dataItem); 
+					
+					var indxDataItem = {
+						"id" : dataItem.identity,
+						"qualifiedId" : _containerDef.qualifiedId,
+						"label" : nodeLabel,
+						"elementIdentity" : dataItem.identity,
+						"children" : [],
+						"containerDef": _containerDef,
+						"type": "instance",
+						"uiClass": "eb-indx-instance"
+					};
+					
+					_indxDataParent.children.push(indxDataItem);
+				}
 				
 				// recursively build the child elements
 				buildContentIndexFromContainer(indxDataItem.children, _containerDef.container, dataItem.identity);
 
 				return indxDataItem;
 			} 
+			
+			var resolveContainerInstanceLabel = function(_containerDef, _instanceData) {
+				
+				var labelAttrId = ContentTemplateService.getContainerLabelAttrId(enablix.template, _containerDef.qualifiedId);
+
+				for (var i = 0; _containerDef.contentItem; i++) {
+					
+					var cntItem = _containerDef.contentItem[i];
+					
+					if (cntItem.id == labelAttrId) {
+					
+						if (cntItem.type == 'TEXT') {
+							return _instanceData[labelAttrId]; 
+						
+						} else if (cntItem.type == 'BOUNDED') {
+							var bndValue = _instanceData[labelAttrId];
+							if (bndValue) {
+								return bndValue[0].label;
+							}
+						} else if (cntItem.type == 'DOC') {
+							var docValue = _instanceData[labelAttrId];
+							if (docValue) {
+								return docValue.name;
+							}
+						}
+					}
+				}
+				
+				return "";
+			};
 
 			var getContentIndexData = function(_templateId, _onSuccess, _onError) {
 				templateId = _templateId;
@@ -80,8 +124,9 @@ enablix.studioApp.factory('ContentIndexService',
 			};
 			
 			var updateNodeData = function(_treeNode, _data) {
-				var labelAttrId = ContentTemplateService.getContainerLabelAttrId(enablix.template, _treeNode.qualifiedId);
-				_treeNode.label = _data[labelAttrId];
+				if (_treeNode.containerDef && !_treeNode.containerDef.single) {
+					_treeNode.label = resolveContainerInstanceLabel(_treeNode.containerDef, _data);
+				}
 			};
 			
 			return {

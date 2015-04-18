@@ -32,6 +32,7 @@
 				</xs:sequence>
 				<xs:attribute name="referenceable" type="xs:boolean" default="true"/>
 				<xs:attribute name="refData" type="xs:boolean" default="false"/>
+				<xs:attribute name="single" type="xs:boolean" default="false"/>
 			</xs:extension>
 		</xs:complexContent>
 	</xs:complexType>
