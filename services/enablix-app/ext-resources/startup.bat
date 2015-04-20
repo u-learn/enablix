@@ -1,0 +1,1 @@
+java -DbaseDir=. -Dlog4j.configuration=file:"./config/properties/log4j.properties" -jar enablix-app-1.0-SNAPSHOT.jar --server.port=8114
