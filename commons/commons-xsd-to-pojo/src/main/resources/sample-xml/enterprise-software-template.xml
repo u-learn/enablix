@@ -69,6 +69,7 @@
 				<contentItem id="file" label="File" type="doc"/>
 				<contentItem id="shortDesc" label="Short Description" type="text"/>
 				<contentItem id="publicURL" label="Public URL" type="text"/>
+				<contentItem id="shortName" label="Short Name" type="text"/>
 				<contentItem id="access" label="Access" type="bounded">
 					<bounded>
 						<refList>
