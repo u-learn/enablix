@@ -36,6 +36,13 @@ enablix.studioApp.factory('StateUpdateService',
 				$state.go('refdata.add', {'containerQId' : _containerQId});
 	 		};
 	 		
+	 		var goToHome = function(_containerQId) {
+				$state.go('home');
+	 		};
+	 		
+	 		var goToLogin = function(_containerQId) {
+				$state.go('login');
+	 		};
 	 		
 	 		return {
 	 			goToStudioList: goToStudioList,
@@ -43,7 +50,9 @@ enablix.studioApp.factory('StateUpdateService',
 	 			goToStudioAdd: goToStudioAdd,
 	 			goToStudioEdit: goToStudioEdit,
 	 			goToRefdataList: goToRefdataList,
-	 			goToRefdataAdd: goToRefdataAdd
+	 			goToRefdataAdd: goToRefdataAdd,
+	 			goToHome: goToHome,
+	 			goToLogin: goToLogin
 	 		};
 	 	}
 	 ]);

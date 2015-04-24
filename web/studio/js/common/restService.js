@@ -22,8 +22,8 @@ var genereateRequestConfig = function(_resourceKey, _params) {
 };
 
 enablix.studioApp.factory('RESTService', [
-		'$http', '$window',
-		function($http, $window) {	
+		'$http', '$window', 'StateUpdateService',
+		function($http, $window, StateUpdateService) {	
 			
 			var postForFile = function(_resourceKey, _params, files, _data, _success, _error) {
 				
@@ -68,7 +68,14 @@ enablix.studioApp.factory('RESTService', [
 					}
 					
 				}).error(function(data) {
-					_error(data);	
+					
+					if (data.status && data.status == 401) {
+						// authentication error
+						StateUpdateService.goToLogin();
+						
+					} else {
+						_error(data);
+					}
 				});
 			};
 

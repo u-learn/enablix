@@ -11,5 +11,6 @@
 	<module>commons-domain</module>
 	<module>commons-mongo</module>
 	<module>commons-dms</module>
+	<module>commons-security</module>
   </modules>
 </project>

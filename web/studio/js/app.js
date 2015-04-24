@@ -25,6 +25,10 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider) {
 			url: '/about',
 			templateUrl: 'views/about.html'
 		})
+		.state('login', {
+			url: '/login',
+			templateUrl: 'views/login.html'
+		})
 		.state('studio', {
 			url: '/studio',
 			templateUrl: 'views/studio/studio.html'
