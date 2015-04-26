@@ -4,18 +4,14 @@
 			<label>No Reference data setup required.</label>
 		</div>
 		<div class="col-sm-3" ng-show="refdataIndexData.length != 0">
-			<div class="sidebar-nav">
-				<div class="navbar navbar-default" role="navigation">
-					<div class="navbar-collapse collapse sidebar-navbar-collapse">
-						<ul class="nav navbar-nav">
-							<li class="sidebar-nav-header"><a>Reference Data</a></li>
-							<li ng-class="{'active': selectedIndexId == indx.id}" ng-repeat="indx in refdataIndexData">
-								<a ng-click="navToRefdataList(indx.id)">{{indx.label}}</a>
-							</li>
-						</ul>
-					</div>
-				</div>
-			</div>
+			<div class="panel panel-default">
+				<div class="panel-heading">Reference Data</div>
+				<div class="list-group">
+	           		<a href="#" ng-class="{'active': selectedIndexId == indx.id}" class="list-group-item" 
+	           				ng-repeat="indx in refdataIndexData" 
+	          				ng-click="navToRefdataList(indx.id)">{{indx.label}}</a>
+	       		</div>
+       		</div>
 		</div>
 		<div class="col-sm-9">
 			<div ui-view></div>
