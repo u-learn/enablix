@@ -2,7 +2,7 @@ var enablix = enablix || {};
 enablix.studioApp = angular.module("studio", ['ui.router', 'angularTreeview', 
            'angularFileUpload', 'ui.bootstrap', 'isteven-multi-select']);
 
-enablix.templateId = "entSoftwareTemplate"; //"amlSalesTemplate";
+//enablix.templateId = "entSoftwareTemplate"; //"amlSalesTemplate";
 enablix.dateFormat = 'MM/dd/yyyy';
 
 enablix.studioApp.filter('ebDate', function($filter) {
@@ -12,7 +12,11 @@ enablix.studioApp.filter('ebDate', function($filter) {
     };
 });
 
-enablix.studioApp.config(function($stateProvider, $urlRouterProvider) {
+var studioAppSetup = function(StudioSetupService) {
+	return StudioSetupService.setupStudio();
+};
+
+enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
 	
 	$urlRouterProvider.otherwise("/home");
 	
@@ -27,45 +31,83 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider) {
 		})
 		.state('login', {
 			url: '/login',
-			templateUrl: 'views/login.html'
+			templateUrl: 'views/login.html',
+			controller: 'LoginController'
 		})
 		.state('studio', {
 			url: '/studio',
-			templateUrl: 'views/studio/studio.html'
+			templateUrl: 'views/studio/studio.html',
+			controller: 'MainStudioCtrl',
+			resolve: {
+				setupData: studioAppSetup 
+			}
 		})
 		.state('studio.list', {
 			url: '/list/{containerQId}/{parentIdentity}/',
 			templateUrl: 'views/content/content-list.html',
-			controller: 'ContentListCtrl'
+			controller: 'ContentListCtrl',
+			resolve: {
+				setupData: studioAppSetup 
+			}
 		})
 		.state('studio.add', {
 			url: '/add/{containerQId}/{parentIdentity}/',
 			templateUrl: 'views/content/content-add.html',
-			controller: 'ContentAddCtrl'
+			controller: 'ContentAddCtrl',
+			resolve: {
+				setupData: studioAppSetup 
+			}
 		})
 		.state('studio.detail', {
 			url: '/detail/{containerQId}/{elementIdentity}/',
 			templateUrl: 'views/content/content-detail.html',
-			controller: 'ContentDetailCtrl'
+			controller: 'ContentDetailCtrl',
+			resolve: {
+				setupData: studioAppSetup 
+			}
 		})
 		.state('studio.edit', {
 			url: '/detail/{containerQId}/{elementIdentity}/',
 			templateUrl: 'views/content/content-add.html',
-			controller: 'ContentEditCtrl'
+			controller: 'ContentEditCtrl',
+			resolve: {
+				setupData: studioAppSetup 
+			}
 		})
 		.state('refdata', {
 			url: '/refdata',
-			templateUrl: 'views/refdata/refdata.html'
+			templateUrl: 'views/refdata/refdata.html',
+			controller: 'MainStudioCtrl',
+			resolve: {
+				setupData: studioAppSetup 
+			}
 		})
 		.state('refdata.list', {
 			url: '/list/{containerQId}/{parentIdentity}/',
 			templateUrl: 'views/content/content-list.html',
-			controller: 'ContentListCtrl'
+			controller: 'ContentListCtrl',
+			resolve: {
+				setupData: studioAppSetup 
+			}
 		})
 		.state('refdata.add', {
 			url: '/add/{containerQId}/',
 			templateUrl: 'views/content/content-add.html',
-			controller: 'ContentAddCtrl'
+			controller: 'ContentAddCtrl',
+			resolve: {
+				setupData: studioAppSetup 
+			}
 		});
+	
+	// The custom “X-Requested-With” is a conventional header sent by browser clients, 
+	// and it used to be the default in Angular but they took it out in 1.3.0. 
+	// Spring Security responds to it by not sending a “WWW-Authenticate” header in a 
+	// 401 response, and thus the browser will not pop up an authentication dialog 
+	// (which is desirable in our app since we want to control the authentication).
+	
+	$httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
+	
+	$httpProvider.defaults.withCredentials = true;
+	
 });
 

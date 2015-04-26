@@ -12,13 +12,19 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.MongoDbFactory;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
 import com.enablix.core.mongo.MultiTenantMongoDbFactory;
+import com.enablix.core.mongo.template.SystemMongoTemplateHolder;
 import com.mongodb.Mongo;
 import com.mongodb.MongoClientOptions;
 
 @Configuration
 @EnableConfigurationProperties(MongoProperties.class)
+@EnableMongoRepositories(
+		basePackages = {"com.enablix.core.system.repo"},
+		mongoTemplateRef = "systemMongoTemplate"
+		)
 public class MongoConfig {
 
 	@Autowired
@@ -51,6 +57,14 @@ public class MongoConfig {
 	@Bean 
 	public MongoTemplate mongoTemplate() throws UnknownHostException {
 		return new MongoTemplate(multiTenantMongoDbFactory());
+	}
+	
+	@Bean(name="systemMongoTemplate")
+	public MongoTemplate systemMongoTemplate() throws UnknownHostException {
+		MongoTemplate systemMongoTemplate = 
+				new MongoTemplate(mongo(), AppConstants.SYSTEM_DB_NAME);
+		SystemMongoTemplateHolder.registerSystemMongoTemplate(systemMongoTemplate);
+		return systemMongoTemplate;
 	}
 	
 }

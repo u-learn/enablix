@@ -21,11 +21,14 @@ public class SimpleCORSFilter implements Filter {
 	public void doFilter(ServletRequest req, ServletResponse res,
 			FilterChain chain) throws IOException, ServletException {
 		
+		final HttpServletRequest httpReq = (HttpServletRequest) req;
+		
 		HttpServletResponse response = (HttpServletResponse) res;
-		response.setHeader("Access-Control-Allow-Origin", "*");
+		response.setHeader("Access-Control-Allow-Origin", httpReq.getHeader("Origin"));
 		response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
 		response.setHeader("Access-Control-Max-Age", "3600");
-		response.setHeader("Access-Control-Allow-Headers", "X-Requested-With,Content-Type");
+		response.setHeader("Access-Control-Allow-Headers", "X-Requested-With,Content-Type,Authorization");
+		response.setHeader("Access-Control-Allow-Credentials", "true");
 		
 		if ("OPTIONS".equalsIgnoreCase(((HttpServletRequest) req).getMethod().toLowerCase())) {
 			return;

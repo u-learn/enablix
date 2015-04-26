@@ -1,4 +1,4 @@
-package com.enablix.core.mongo.content;
+package com.enablix.core.domain.content;
 
 public class ContentAssociation {
 

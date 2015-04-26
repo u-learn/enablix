@@ -22,10 +22,10 @@ var genereateRequestConfig = function(_resourceKey, _params) {
 };
 
 enablix.studioApp.factory('RESTService', [
-		'$http', '$window', 'StateUpdateService',
-		function($http, $window, StateUpdateService) {	
+		'$http', '$rootScope', '$window', 'StateUpdateService',
+		function($http, $rootScope, $window, StateUpdateService) {	
 			
-			var postForFile = function(_resourceKey, _params, files, _data, _success, _error) {
+			var postForFile = function(_resourceKey, _params, files, _data, _success, _error, _headers) {
 				
 				var fd = new FormData();
 	            
@@ -50,37 +50,45 @@ enablix.studioApp.factory('RESTService', [
 		            });
 			}
 			
-			var getForData = function(_resourceKey, _params, transformer, _success, _error) {
+			var getForData = function(_resourceKey, _params, transformer, _success, _error, _headers) {
 				
 				var requestConfig = genereateRequestConfig(_resourceKey, _params);
 				
-				$http({
-					method : 'GET',
-					url : requestConfig.url,
-					params : requestConfig.paramsJson
-					
-				}).success(function(data) {
-					
-					if (transformer != undefined) {
-						_success(transformer(data));
-					} else {
-						_success(data);
-					}
-					
-				}).error(function(data) {
-					
-					if (data.status && data.status == 401) {
-						// authentication error
-						StateUpdateService.goToLogin();
-						
-					} else {
-						_error(data);
-					}
-				});
+				return $http({
+							method : 'GET',
+							url : requestConfig.url,
+							params : requestConfig.paramsJson,
+							headers : _headers
+							
+						}).success(function(data) {
+							
+							if (transformer != undefined) {
+								_success(transformer(data));
+							} else {
+								_success(data);
+							}
+							
+						}).error(function(data, status) {
+							
+							if (status && status == 401) {
+								
+								// authentication error
+								if (!$rootScope.loginProcess) {
+									$rootScope.authenticated = false;
+									StateUpdateService.goToLogin();
+								} else {
+									_error(data, status)
+								}
+								
+							} else {
+								_error(data, status);
+							}
+							
+						});
 			};
 
 			var postForData = function(_resourceKey, _params, _data,
-					transformer, _success, _error,_contentType) {
+					transformer, _success, _error, _contentType, _headers) {
 				
 				if (_contentType != null && _contentType != undefined && _contentType != '') {
 					$http.defaults.headers.post['Content-Type'] = _contentType;
@@ -95,7 +103,8 @@ enablix.studioApp.factory('RESTService', [
 					method : 'POST',
 					url : requestConfig.url,
 					params : requestConfig.paramsJson,
-					data : _data
+					data : _data,
+					headers : _headers
 					
 				}).success(function(data) {
 					

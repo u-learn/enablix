@@ -12,7 +12,7 @@ import com.enablix.app.content.update.ContentUpdateContext;
 import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.commons.util.StringUtil;
 import com.enablix.core.commons.xsdtopojo.ContentTemplate;
-import com.enablix.core.mongo.content.ContentAssociation;
+import com.enablix.core.domain.content.ContentAssociation;
 import com.enablix.core.mongo.content.ContentCrudService;
 
 @Component

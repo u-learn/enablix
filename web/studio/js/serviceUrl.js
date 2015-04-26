@@ -1,5 +1,6 @@
 enablix.serviceURL = {
 	"fetchContentTemplate": enablix.domainName + "/template/:templateId",
+	"fetchDefaultContentTemplate": enablix.domainName + "/template/default",
 	"fetchRootContainers": enablix.domainName + "/template/containers/:templateId",
 	"fetchChildContainers": enablix.domainName + "/template/containers/:templateId/:parentQId/",
 	"fetchRootData": enablix.domainName + "/data/t/:templateId/c/:contentQId/",
@@ -9,5 +10,7 @@ enablix.serviceURL = {
 	"updateContainerData": enablix.domainName + "/content/update/t/:templateId/c/:contentQId/",
 	"insertChildContainerData": enablix.domainName + "/content/update/t/:templateId/c/:contentQId/r/:parentIdentity",
 	"uploadDocument" : enablix.domainName + "/doc/upload",
-	"fetchBoundedRefList": enablix.domainName + "/bounded/list/:templateId/:contentQId/"
+	"fetchBoundedRefList": enablix.domainName + "/bounded/list/:templateId/:contentQId/",
+	"user": enablix.domainName + "/user",
+	"logout": enablix.domainName + "/logout"
 };

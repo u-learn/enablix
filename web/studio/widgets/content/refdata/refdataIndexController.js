@@ -5,13 +5,7 @@ enablix.studioApp.controller('refdataIndexCtrl',
 		$scope.refdataIndexData = [];
 		$scope.selectedIndexId = "";
 		
-		RefdataIndexService.getIndexData(enablix.templateId, 
-				function(data) {
-					$scope.refdataIndexData = data;
-				}, 
-				function(response) {
-					alert("Error retrieving setup index data");
-				});
+		$scope.refdataIndexData = RefdataIndexService.getIndexData(); 
 		
 		$scope.postDataSave = function(data) {
 			StateUpdateService.goToRefdataList(RefdataIndexService.getCurrentContainerQId());

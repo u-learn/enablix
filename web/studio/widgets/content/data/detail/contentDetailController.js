@@ -1,6 +1,6 @@
 enablix.studioApp.controller('ContentDetailCtrl', 
-			['$scope', '$stateParams', 'ContentDataService', 'ContentTemplateService', 'StateUpdateService',
-	function( $scope,   $stateParams,   ContentDataService,   ContentTemplateService,   StateUpdateService) {
+			['$scope', '$stateParams', 'ContentDataService', 'ContentTemplateService', 'StateUpdateService', 'StudioSetupService',
+	function( $scope,   $stateParams,   ContentDataService,   ContentTemplateService,   StateUpdateService,   StudioSetupService) {
 		
 		var containerQId = $stateParams.containerQId;
 		var elementIdentity = $stateParams.elementIdentity;

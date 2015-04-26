@@ -16,7 +16,8 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 		@PropertySource("file:${baseDir}/config/properties/security.properties"),
 		@PropertySource("file:${baseDir}/config/properties/log4j.properties")})
 @ComponentScan(basePackages = { "com.enablix" })
-@EnableMongoRepositories(basePackages = {"com.enablix.app.mongo.repository"})
+@EnableMongoRepositories(
+		basePackages = {"com.enablix.app.mongo.repository"})
 public class ApplicationInit {
 
 	public static void main(String[] args) {

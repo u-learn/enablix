@@ -14,7 +14,7 @@ import com.enablix.app.content.update.ContentUpdateContext;
 import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.commons.util.collection.CollectionUtil;
 import com.enablix.core.commons.xsdtopojo.ContentTemplate;
-import com.enablix.core.mongo.content.ContentAssociation;
+import com.enablix.core.domain.content.ContentAssociation;
 
 @Component
 public class ContentAssociator implements ContentEnricher {

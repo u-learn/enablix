@@ -25,13 +25,9 @@ enablix.studioApp.factory('RefdataIndexService',
 				return indexData;
 			};
 		
-			var getIndexData = function(_templateId, _onSuccess, _onError) {
-				
-				ContentTemplateService.getTemplate(_templateId, 
-						function(templateData) {
-							var indexData = buildIndexData(templateData.dataDefinition.container);
-							_onSuccess(indexData);
-						}, _onError);
+			var getIndexData = function() {
+				var indexData = buildIndexData(enablix.template.dataDefinition.container);
+				return indexData;
 			};
 			
 			var setCurrentContainerQId = function(_containerQId) {

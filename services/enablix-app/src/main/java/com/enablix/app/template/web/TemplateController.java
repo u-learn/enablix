@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.enablix.app.template.service.TemplateManager;
+import com.enablix.commons.util.process.ProcessContext;
 import com.enablix.core.commons.xsdtopojo.ContainerType;
 import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 
@@ -42,7 +43,7 @@ public class TemplateController {
 	
 	@RequestMapping(method = RequestMethod.GET, value="/containers/{templateId}", produces = "application/json")
 	public List<ContainerType> fetchRootContainerNames(@PathVariable String templateId) {
-		return fetchContainerNames(templateId, null);
+		return fetchContainerNames(ProcessContext.get().getTemplateId(), null);
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value="/{templateId}", produces = "application/json")
@@ -50,4 +51,8 @@ public class TemplateController {
 		return templateMgr.getTemplate(templateId);
 	}
 	
+	@RequestMapping(method = RequestMethod.GET, value="/default", produces = "application/json")
+	public ContentTemplate getContentTemplate() {
+		return templateMgr.getTemplate(ProcessContext.get().getTemplateId());
+	}
 }

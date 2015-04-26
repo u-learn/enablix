@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FilenameFilter;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.xml.bind.JAXBException;
 
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Component;
 import com.enablix.app.template.service.TemplateManager;
 import com.enablix.commons.dir.watch.DirectoryWatchBuilder;
 import com.enablix.commons.dir.watch.FileCreateOrUpdateCallback;
+import com.enablix.commons.util.process.ProcessContext;
 
 @Component
 public class FileBasedTemplateLoader implements TemplateLoader {
@@ -37,11 +40,29 @@ public class FileBasedTemplateLoader implements TemplateLoader {
 		String templateDirPath = getTemplateDirectory();
 		File templateDir = new File(templateDirPath);
 		
-		for (File templateFile : FileUtils.listFiles(templateDir, TEMPLATE_FILE_EXTN, false)) {
-			uploadTemplate(templateFile);
+		Set<String> tenantTemplateDirs = new HashSet<>();
+		
+		for (File templateFile : FileUtils.listFiles(templateDir, TEMPLATE_FILE_EXTN, true)) {
+			
+			String tenantId = resolveTenantIdFromFile(templateFile);
+			
+			tenantTemplateDirs.add(getTemplateDirectory() + File.separator + tenantId);
+			
+			ProcessContext.initialize("system", tenantId, null);
+			
+			try {
+				uploadTemplate(templateFile);
+				
+			} finally {
+				ProcessContext.clear();
+			}
 		}
 		
-		createWatch();
+		// create watch on each directory
+		for (String tenantTemplateDir : tenantTemplateDirs) {
+			createWatch(tenantTemplateDir);
+		}
+		
 	}
 
 	private void uploadTemplate(File templateFile) {
@@ -67,9 +88,13 @@ public class FileBasedTemplateLoader implements TemplateLoader {
 		}
 	}
 	
+	private String resolveTenantIdFromFile(File templateFile) {
+		return templateFile.getParentFile().getName();
+	}
 	
 	
-	private void createWatch() {
+	
+	private void createWatch(String templateDir) {
 		
 		FilenameFilter fileFilter = new FilenameFilter() {
 			@Override
@@ -78,9 +103,10 @@ public class FileBasedTemplateLoader implements TemplateLoader {
 			}
 		};
 		
-		DirectoryWatchBuilder.createDirectoryWatch(
-				getTemplateDirectory(), new UploadTemplateCallback())
-				.forFiles(fileFilter).build();
+		DirectoryWatchBuilder
+			.createDirectoryWatch(templateDir, new UploadTemplateCallback())
+			.forFiles(fileFilter)
+			.build();
 	}
 
 	private class UploadTemplateCallback implements FileCreateOrUpdateCallback {

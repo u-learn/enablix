@@ -1,4 +1,4 @@
-package com.enablix.core.mongo.content;
+package com.enablix.core.domain.content;
 
 import java.util.ArrayList;
 import java.util.Collection;

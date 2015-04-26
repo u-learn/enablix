@@ -386,7 +386,4 @@
 		<xerces.xercesImpl.version>2.9.1</xerces.xercesImpl.version>
 	</properties>
 
-	<modules>
-		<module>commons-security</module>
-	</modules>
 </project>

@@ -30,6 +30,7 @@
 	<script type="text/javascript" src="js/serverDomain.js"></script>
 	<script type="text/javascript" src="js/serviceUrl.js"></script>
 	<script type="text/javascript" src="js/common/restService.js"></script>
+	<script type="text/javascript" src="js/common/login/loginCtrl.js"></script>
 
 	<script type="text/javascript" src="widgets/directive/text/textInputDirective.js"></script>
 	<script type="text/javascript" src="widgets/directive/table/tableDirective.js"></script>
@@ -44,6 +45,7 @@
 	<script type="text/javascript" src="widgets/content/data/contentDataService.js"></script>
 	<script type="text/javascript" src="widgets/content/index/contentIndexService.js"></script>
 	<script type="text/javascript" src="widgets/content/refdata/refdataIndexService.js"></script>
+	<script type="text/javascript" src="widgets/studio/studioInitService.js"></script>
 	
 	<script type="text/javascript" src="js/mainController.js"></script>
 	<script type="text/javascript" src="widgets/content/index/contentIndexController.js"></script>
@@ -57,16 +59,20 @@
 
 <body ng-app="studio">
 <h2>&nbsp;Enablix</h2>
+
 <!-- NAVIGATION -->
+<div ng-controller="LoginController">
 <nav class="navbar navbar-default" role="navigation">
     <ul class="nav navbar-nav">
         <li ui-sref-active="active"><a ui-sref="home">Home</a></li>
-        <li ui-sref-active="active"><a ui-sref="studio">Studio</a></li>
-        <li ui-sref-active="active"><a ui-sref="refdata">Setup</a></li>
-        <li ui-sref-active="active"><a ui-sref="login">Login</a></li>
+        <li ui-sref-active="active" ng-show="authenticated"><a ui-sref="studio">Studio</a></li>
+        <li ui-sref-active="active" ng-show="authenticated"><a ui-sref="refdata">Setup</a></li>
+        <li ui-sref-active="active" ng-show="!authenticated"><a ui-sref="login">Login</a></li>
+        <li ng-show="authenticated"><a href="" ng-click="logout()">Logout</a></li>
         <li ui-sref-active="active"><a ui-sref="about">About</a></li>
     </ul>
 </nav>
+</div>
 
 <!-- MAIN CONTENT -->
 <div class="container-fluid">

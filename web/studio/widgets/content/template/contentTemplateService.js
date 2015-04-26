@@ -2,19 +2,16 @@ enablix.studioApp.factory('ContentTemplateService',
 	[	'RESTService',
 	 	function(RESTService) {
 		
-			var loadTemplate = function(_templateId) {
+			var loadTemplate = function() {
 				
-				if (enablix.template) {
-					_onSuccess(enablix.template);
-					
-				} else {
-					var params = { "templateId": _templateId };
-					RESTService.getForData("fetchContentTemplate", params, null, function(data) {
+				return RESTService.getForData("fetchDefaultContentTemplate", null, null, 
+					function(data) {
 						enablix.template = data;
-					}, function(response) {
-						alert("Error loading template: " + response);
+						enablix.templateId = data.id;
+					}, 
+					function(resp, status) {
+						alert("Error loading content template");
 					});
-				}
 				
 			};
 	
@@ -27,6 +24,16 @@ enablix.studioApp.factory('ContentTemplateService',
 					var params = { "templateId": _templateId };
 					RESTService.getForData("fetchContentTemplate", params, null, _onSuccess, _onError);
 				}
+				
+			};
+
+			var getDefaultTemplate = function(_onSuccess, _onError) {
+				
+				RESTService.getForData("fetchDefaultContentTemplate", null, null, function(data) {
+					enablix.template = data;
+					enablix.templateId = data.id;
+					_onSuccess(data);
+				}, _onError);
 				
 			};
 			
@@ -151,6 +158,7 @@ enablix.studioApp.factory('ContentTemplateService',
 			
 			return {
 				getTemplate : getTemplate,
+				getDefaultTemplate : getDefaultTemplate,
 				getContainerLabelAttrId : getContainerLabelAttrId,
 				getUIDefinition: getUIDefinition,
 				getContainerDefinition: getContainerDefinition,
