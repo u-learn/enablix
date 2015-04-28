@@ -26,3 +26,11 @@ div[data-tree-model] li .selected {
 	font-weight: bold;
 	background-color: #e8e8e8;
 }
+
+.login-panel {
+	margin-top: 20%;
+}
+
+.navbar-brand {
+	font-size: 30px;
+}

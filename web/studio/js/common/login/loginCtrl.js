@@ -31,7 +31,7 @@ enablix.studioApp.controller('LoginController',
 	        }
 		};
 		
-		//authenticate();
+		authenticate();
 		  
 		$scope.credentials = {};
 		
@@ -48,11 +48,11 @@ enablix.studioApp.controller('LoginController',
 			RESTService.postForData('logout', null, null, null, function() {
 					
 					$rootScope.authenticated = false;
-					StateUpdateService.goToHome();
+					StateUpdateService.goToLogin();
 					
 				}, function(data) {
 					$rootScope.authenticated = false;
-					StateUpdateService.goToHome();
+					StateUpdateService.goToLogin();
 					
 				}, null, {});
 			

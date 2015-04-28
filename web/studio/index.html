@@ -60,20 +60,30 @@
 </head>
 
 <body ng-app="studio">
-<h2>&nbsp;Enablix</h2>
-
 <!-- NAVIGATION -->
 <div ng-controller="LoginController">
 <nav class="navbar navbar-default" role="navigation">
-    <ul class="nav navbar-nav">
-        <li ui-sref-active="active"><a ui-sref="home">Home</a></li>
+	<div class="container-fluid">
+	<div class="navbar-header">
+	     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+	         <span class="sr-only">Toggle navigation</span>
+	         <span class="icon-bar"></span>
+	         <span class="icon-bar"></span>
+	         <span class="icon-bar"></span>
+	     </button>
+     	<a class="navbar-brand" href="#">Enablix</a>
+ 	</div>
+    <ul ng-show="authenticated" class="nav navbar-nav navbar-right">
+        <!-- <li ui-sref-active="active"><a ui-sref="home">Home</a></li> -->
         <li ui-sref-active="active" ng-show="authenticated"><a ui-sref="studio">Studio</a></li>
         <li ui-sref-active="active" ng-show="authenticated"><a ui-sref="refdata">Setup</a></li>
         <li ui-sref-active="active" ng-show="!authenticated"><a ui-sref="login">Login</a></li>
         <li ng-show="authenticated"><a href="" ng-click="logout()">Logout</a></li>
-        <li ui-sref-active="active"><a ui-sref="about">About</a></li>
+        <!-- <li ui-sref-active="active"><a ui-sref="about">About</a></li> -->
     </ul>
+    </div>
 </nav>
+
 </div>
 
 <!-- MAIN CONTENT -->
