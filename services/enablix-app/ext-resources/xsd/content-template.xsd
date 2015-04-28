@@ -151,7 +151,21 @@
 	</xs:complexType>
 	
 	<xs:complexType name="containerUIDefType">
-		<xs:attribute name="labelQualifiedId" type="xs:string" use="required"/>
+		<xs:sequence>
+			<xs:element name="enclosure" type="childEnclosureType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute name="labelQualifiedId" type="xs:string"/>
+	</xs:complexType>
+	
+	<xs:complexType name="childEnclosureType">
+		<xs:sequence>
+			<xs:element name="childContainer" minOccurs="1" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:attribute name="id" type="xs:string" use="required"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="label" type="xs:string" use="required"/>
 	</xs:complexType>
 	
 	<xs:complexType name="textUIDefType">

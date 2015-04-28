@@ -305,7 +305,12 @@
 	</dataDefinition>
 	<uiDefinition>
 		<contentUIDef qualifiedId="solution">
-			<container labelQualifiedId="solution.name"/>
+			<container labelQualifiedId="solution.name">
+				<enclosure label="Overview">
+					<childContainer id="solnExperts"/>
+					<childContainer id="solnOverview"/>
+				</enclosure>
+			</container>
 		</contentUIDef>
 		<contentUIDef qualifiedId="solution.solnExperts">
 			<container labelQualifiedId="solution.solnExperts.expertUserName"/>
