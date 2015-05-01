@@ -13,7 +13,7 @@
 	<link rel="stylesheet" type="text/css" href="css/enablix.css">
 	<link rel="stylesheet" type="text/css" href="css/file-input.css">
 	<link rel="stylesheet" type="text/css" href="css/isteven-multi-select.css">
-	<link rel="stylesheet" type="text/css" href="css/sidebar-nav.css">
+	<link rel="stylesheet" type="text/css" href="css/listGroupTreeview.css">
 	
 	<script type="text/javascript" src="js/vendor/jquery/jquery-1.11.2.min.js"></script>
 	<script type="text/javascript" src="js/vendor/bootstrap/bootstrap.min.js"></script>
@@ -23,6 +23,7 @@
 	<script type="text/javascript" src="js/vendor/angular/angular-resource.min.js"></script>
 	<script type="text/javascript" src="js/vendor/angular/angular-ui-router.js"></script>
 	<script type="text/javascript" src="js/common/widgets/tree/angular.treeview.js"></script>
+	<script type="text/javascript" src="js/common/widgets/tree/listGroupTree.js"></script>
 	<script type="text/javascript" src="js/vendor/angular/angular-file-upload.js"></script>
 	<script type="text/javascript" src="js/vendor/angular/ui-bootstrap-tpls-0.12.1.js"></script>
 	<script type="text/javascript" src="js/vendor/multi-select/isteven-multi-select.js"></script>
@@ -74,12 +75,12 @@
      	<a class="navbar-brand" href="#">Enablix</a>
  	</div>
     <ul ng-show="authenticated" class="nav navbar-nav navbar-right">
-        <!-- <li ui-sref-active="active"><a ui-sref="home">Home</a></li> -->
+        <li ui-sref-active="active"><a ui-sref="home">Home</a></li>
         <li ui-sref-active="active" ng-show="authenticated"><a ui-sref="studio">Studio</a></li>
         <li ui-sref-active="active" ng-show="authenticated"><a ui-sref="refdata">Setup</a></li>
         <li ui-sref-active="active" ng-show="!authenticated"><a ui-sref="login">Login</a></li>
         <li ng-show="authenticated"><a href="" ng-click="logout()">Logout</a></li>
-        <!-- <li ui-sref-active="active"><a ui-sref="about">About</a></li> -->
+        <li ui-sref-active="active"><a ui-sref="about">About</a></li>
     </ul>
     </div>
 </nav>

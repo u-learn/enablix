@@ -1,5 +1,5 @@
 .table-hover tbody tr:hover > td {
-  cursor: pointer
+  	cursor: pointer
 }
 
 .eb-indx-container {
@@ -34,3 +34,5 @@ div[data-tree-model] li .selected {
 .navbar-brand {
 	font-size: 30px;
 }
+
+

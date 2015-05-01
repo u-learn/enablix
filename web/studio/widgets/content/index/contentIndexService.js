@@ -91,7 +91,7 @@ enablix.studioApp.factory('ContentIndexService',
 				
 				var labelAttrId = ContentTemplateService.getContainerLabelAttrId(enablix.template, _containerDef.qualifiedId);
 
-				for (var i = 0; _containerDef.contentItem; i++) {
+				for (var i = 0; i < _containerDef.contentItem.length; i++) {
 					
 					var cntItem = _containerDef.contentItem[i];
 					

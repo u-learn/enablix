@@ -2836,6 +2836,9 @@
 		<contentUIDef qualifiedId="solution.solCaseStudy">
 			<container labelQualifiedId="solution.solCaseStudy.title"/>
 		</contentUIDef>
+		<contentUIDef qualifiedId="solution.solnExperts">
+			<container labelQualifiedId="solution.solnExperts.expertUserName"/>
+		</contentUIDef>
 		<contentUIDef qualifiedId="product">
 			<container labelQualifiedId="product.name"/>
 		</contentUIDef>

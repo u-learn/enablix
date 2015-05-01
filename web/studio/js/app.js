@@ -1,5 +1,5 @@
 var enablix = enablix || {};
-enablix.studioApp = angular.module("studio", ['ui.router', 'angularTreeview', 
+enablix.studioApp = angular.module("studio", ['ui.router', 'angularTreeview', 'listGroupTreeview', 
            'angularFileUpload', 'ui.bootstrap', 'isteven-multi-select']);
 
 //enablix.templateId = "entSoftwareTemplate"; //"amlSalesTemplate";
