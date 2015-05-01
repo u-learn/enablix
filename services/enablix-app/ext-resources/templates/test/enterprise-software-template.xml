@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<contentTemplate id="entSoftwareTemplate" 
-				 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
-				 xsi:noNamespaceSchemaLocation="../xsd/content-template.xsd">
+<contentTemplate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="entSoftwareTemplate" xsi:noNamespaceSchemaLocation="../xsd/content-template.xsd">
 	<dataDefinition>
-		<container id="solution" label="Solution" referenceable="true">
-			<contentItem id="name" label="Solution Name 1" type="text"/>
-			<contentItem id="description" label="Solution Description" type="text"/>
+		<container id="solution" label="Solutions">
+			<contentItem id="name" label="Name" type="text"/>
+			<contentItem id="description" label="Description" type="text"/>
 			<contentItem id="shortName" label="Short Name" type="text"/>
-			<contentItem id="image" label="Solution Image" type="doc"/>
-			<contentItem id="solProducts" label="Related Products" type="bounded">
-				<bounded>
+			<contentItem id="image" label="Image" type="doc"/>
+			<contentItem id="products" label="Related Products" type="bounded">
+				<bounded multivalued="true">
 					<refList>
 						<datastore>
 							<storeId>product</storeId>
@@ -19,8 +17,8 @@
 					</refList>
 				</bounded>
 			</contentItem>
-			<contentItem id="solRegions" label="Related Regions" type="bounded">
-				<bounded>
+			<contentItem id="regions" label="Related Regions" type="bounded">
+				<bounded multivalued="true">
 					<refList>
 						<datastore>
 							<storeId>regions</storeId>
@@ -30,18 +28,18 @@
 					</refList>
 				</bounded>
 			</contentItem>
-			<contentItem id="solMarketTier" label="Market Tiers" type="bounded">
-				<bounded>
+			<contentItem id="marketTier" label="Market Tiers" type="bounded">
+				<bounded multivalued="true">
 					<refList>
 						<datastore>
-							<storeId>mrktTier</storeId>
+							<storeId>marketTier</storeId>
 							<dataId>identity</dataId>
-							<dataLabel>mrktTierName</dataLabel>
+							<dataLabel>tier</dataLabel>
 						</datastore>
 					</refList>
 				</bounded>
 			</contentItem>
-			<container id="solnExperts" label="Solution Experts" referenceable="false">
+			<container id="solnExperts" label="Experts" referenceable="false">
 				<contentItem id="expertUserName" label="Name" type="bounded">
 					<bounded>
 						<refList>
@@ -65,47 +63,7 @@
 					</bounded>
 				</contentItem>
 			</container>
-			<container id="solOverview" label="Solution Overview" referenceable="true" single="true">
-				<contentItem id="file" label="File" type="doc"/>
-				<contentItem id="shortDesc" label="Short Description" type="text"/>
-				<contentItem id="publicURL" label="Public URL" type="text"/>
-				<contentItem id="shortName" label="Short Name" type="text"/>
-				<contentItem id="access" label="Access" type="bounded">
-					<bounded>
-						<refList>
-							<datastore>
-								<storeId>accessStore</storeId>
-								<dataId>identity</dataId>
-								<dataLabel>accessType</dataLabel>
-							</datastore>
-						</refList>
-					</bounded>
-				</contentItem>
-				<contentItem id="dealRelevance" label="Deal Relevance" type="bounded">
-					<bounded multivalued="true">
-						<refList>
-							<datastore>
-								<!-- ####  Sourced from CRM #### -->
-								<storeId>dealStages</storeId>
-								<dataId>identity</dataId>
-								<dataLabel>stageName</dataLabel>
-							</datastore>
-						</refList>
-					</bounded>
-				</contentItem>
-				<contentItem id="author" label="Author" type="bounded">
-					<bounded multivalued="true">
-						<refList>
-							<datastore>
-								<storeId>user</storeId>
-								<dataId>userId</dataId>
-								<dataLabel>userName</dataLabel>
-							</datastore>
-						</refList>
-					</bounded>
-				</contentItem>
-			</container>
-			<container id="solArchitecture" label="Solution Architecture" referenceable="true">
+			<container id="solOverview" label="Overview" single="true">
 				<contentItem id="file" label="File" type="doc"/>
 				<contentItem id="shortDesc" label="Short Description" type="text"/>
 				<contentItem id="access" label="Access" type="bounded">
@@ -143,7 +101,45 @@
 					</bounded>
 				</contentItem>
 			</container>
-			<container id="solExecSummary" label="Sales Executive Summary" referenceable="true">
+			<container id="solDataSheet" label="Data Sheet" single="true">
+				<contentItem id="file" label="File" type="doc"/>
+				<contentItem id="url" label="URL" type="text"/>
+				<contentItem id="access" label="Access" type="bounded">
+					<bounded>
+						<refList>
+							<datastore>
+								<storeId>accessStore</storeId>
+								<dataId>identity</dataId>
+								<dataLabel>accessType</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>
+				<contentItem id="dealRelevance" label="Deal Relevance" type="bounded">
+					<bounded multivalued="true">
+						<refList>
+							<datastore>
+								<!-- ####  Sourced from CRM #### -->
+								<storeId>dealStages</storeId>
+								<dataId>identity</dataId>
+								<dataLabel>stageName</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>
+				<contentItem id="author" label="Author" type="bounded">
+					<bounded multivalued="true">
+						<refList>
+							<datastore>
+								<storeId>user</storeId>
+								<dataId>userId</dataId>
+								<dataLabel>userName</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>
+			</container>
+			<container id="solArchitecture" label="Solution Architecture" single="true">
 				<contentItem id="file" label="File" type="doc"/>
 				<contentItem id="shortDesc" label="Short Description" type="text"/>
 				<contentItem id="access" label="Access" type="bounded">
@@ -181,18 +177,56 @@
 					</bounded>
 				</contentItem>
 			</container>
-			<container id="solCaseStudy" label="Case Studies" referenceable="true">
+			<container id="solExecSummary" label="Sales Executive Summary" single="true">
+				<contentItem id="file" label="File" type="doc"/>
+				<contentItem id="shortDesc" label="Short Description" type="text"/>
+				<contentItem id="access" label="Access" type="bounded">
+					<bounded>
+						<refList>
+							<datastore>
+								<storeId>accessStore</storeId>
+								<dataId>identity</dataId>
+								<dataLabel>accessType</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>
+				<contentItem id="dealRelevance" label="Deal Relevance" type="bounded">
+					<bounded multivalued="true">
+						<refList>
+							<datastore>
+								<!-- ####  Sourced from CRM #### -->
+								<storeId>dealStages</storeId>
+								<dataId>identity</dataId>
+								<dataLabel>stageName</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>
+				<contentItem id="author" label="Author" type="bounded">
+					<bounded multivalued="true">
+						<refList>
+							<datastore>
+								<storeId>user</storeId>
+								<dataId>userId</dataId>
+								<dataLabel>userName</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>
+			</container>
+			<container id="solCaseStudy" label="Case Studies">
 				<contentItem id="file" label="File" type="doc"/>
 				<contentItem id="title" label="Title" type="text"/>
 				<contentItem id="highlights" label="Case Highlights" type="text"/>
 				<contentItem id="customer" label="Customer Name" type="text"/>
-				<contentItem id="type" label="Case Type" type="bounded">
+				<contentItem id="type" label="Type" type="bounded">
 					<bounded multivalued="true">
 						<refList>
 							<datastore>
 								<storeId>caseStudyType</storeId>
 								<dataId>identity</dataId>
-								<dataLabel>name</dataLabel>
+								<dataLabel>type</dataLabel>
 							</datastore>
 						</refList>
 					</bounded>
@@ -214,6 +248,17 @@
 							<datastore>
 								<storeId>audience</storeId>
 								<dataId>identity</dataId>
+								<dataLabel>type</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>
+				<contentItem id="products" label="Products" type="bounded">
+					<bounded multivalued="true">
+						<refList>
+							<datastore>
+								<storeId>product</storeId>
+								<dataId>identity</dataId>
 								<dataLabel>name</dataLabel>
 							</datastore>
 						</refList>
@@ -254,70 +299,2559 @@
 					</bounded>
 				</contentItem>
 			</container>
-			<container id="solFAQ" label="FAQ" referenceable="false">
+			<container id="solFAQ" label="FAQ">
 				<contentItem id="question" label="Question" type="text"/>
-				<contentItem id="qType" label="Type" type="bounded">
+				<contentItem id="category" label="Category" type="bounded">
 					<bounded multivalued="true">
 						<refList>
 							<datastore>
-								<storeId>faqType</storeId>
+								<storeId>faqCategories</storeId>
 								<dataId>identity</dataId>
-								<dataLabel>typeName</dataLabel>
+								<dataLabel>categoryName</dataLabel>
 							</datastore>
 						</refList>
 					</bounded>
 				</contentItem>
 				<contentItem id="answer" label="Answer" type="text"/>
 			</container>
+			<container id="solObjections" label="Objection Handling">
+				<contentItem id="objection" label="Objection" type="text"/>
+				<contentItem id="objCategory" label="Category" type="bounded">
+					<bounded multivalued="true">
+						<refList>
+							<datastore>
+								<storeId>objectionCategory</storeId>
+								<dataId>identity</dataId>
+								<dataLabel>categoryName</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>
+				<contentItem id="response" label="Response" type="text"/>
+			</container>
+			<container id="solQualifyingQuestions" label="Qualifying Questions">
+				<contentItem id="question" label="Qualifying Question" type="text"/>
+				<contentItem id="answer" label="Answer" type="text"/>
+			</container>
+			<container id="solRoadmap" label="Roadmap" single="true">
+				<contentItem id="file" label="File" type="doc"/>
+				<contentItem id="access" label="Access" type="bounded">
+					<bounded>
+						<refList>
+							<datastore>
+								<storeId>accessStore</storeId>
+								<dataId>identity</dataId>
+								<dataLabel>accessType</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>
+				<contentItem id="dealRelevance" label="Deal Relevance" type="bounded">
+					<bounded multivalued="true">
+						<refList>
+							<datastore>
+								<!-- ####  Sourced from CRM #### -->
+								<storeId>dealStages</storeId>
+								<dataId>identity</dataId>
+								<dataLabel>stageName</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>
+				<contentItem id="author" label="Author" type="bounded">
+					<bounded multivalued="true">
+						<refList>
+							<datastore>
+								<storeId>user</storeId>
+								<dataId>userId</dataId>
+								<dataLabel>userName</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>
+			</container>
+			<container id="solImplGuides" label="Implementation Guides">
+				<contentItem id="file" label="File" type="doc"/>
+				<contentItem id="summary" label="Summary" type="text"/>
+				<contentItem id="solutions" label="Related Solutions" type="bounded">
+					<bounded>
+						<refList>
+							<datastore>
+								<storeId>solution</storeId>
+								<dataId>identity</dataId>
+								<dataLabel>name</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>
+				<contentItem id="products" label="Related Products" type="bounded">
+					<bounded>
+						<refList>
+							<datastore>
+								<storeId>product</storeId>
+								<dataId>identity</dataId>
+								<dataLabel>name</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>
+				<contentItem id="access" label="Access" type="bounded">
+					<bounded>
+						<refList>
+							<datastore>
+								<storeId>accessStore</storeId>
+								<dataId>identity</dataId>
+								<dataLabel>accessType</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>
+				<contentItem id="dealRelevance" label="Deal Relevance" type="bounded">
+					<bounded multivalued="true">
+						<refList>
+							<datastore>
+								<!-- ####  Sourced from CRM #### -->
+								<storeId>dealStages</storeId>
+								<dataId>identity</dataId>
+								<dataLabel>stageName</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>
+				<contentItem id="author" label="Author" type="bounded">
+					<bounded multivalued="true">
+						<refList>
+							<datastore>
+								<storeId>user</storeId>
+								<dataId>userId</dataId>
+								<dataLabel>userName</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>
+			</container>
+			<container id="solBattleCard" label="Battle Card" single="true">
+				<contentItem id="file" label="File" type="doc"/>
+				<contentItem id="summary" label="Summary" type="text"/>
+				<contentItem id="solutions" label="Related Solutions" type="bounded">
+					<bounded>
+						<refList>
+							<datastore>
+								<storeId>solution</storeId>
+								<dataId>identity</dataId>
+								<dataLabel>name</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>
+				<contentItem id="products" label="Related Products" type="bounded">
+					<bounded>
+						<refList>
+							<datastore>
+								<storeId>product</storeId>
+								<dataId>identity</dataId>
+								<dataLabel>name</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>
+				<contentItem id="access" label="Access" type="bounded">
+					<bounded>
+						<refList>
+							<datastore>
+								<storeId>accessStore</storeId>
+								<dataId>identity</dataId>
+								<dataLabel>accessType</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>
+				<contentItem id="dealRelevance" label="Deal Relevance" type="bounded">
+					<bounded multivalued="true">
+						<refList>
+							<datastore>
+								<!-- ####  Sourced from CRM #### -->
+								<storeId>dealStages</storeId>
+								<dataId>identity</dataId>
+								<dataLabel>stageName</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>
+				<contentItem id="author" label="Author" type="bounded">
+					<bounded multivalued="true">
+						<refList>
+							<datastore>
+								<storeId>user</storeId>
+								<dataId>userId</dataId>
+								<dataLabel>userName</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>
+			</container>
+			<container id="solReferences" label="References">
+				<contentItem id="name" label="Reference Name" type="text"/>
+				<contentItem id="summary" label="Reference Summary" type="text"/>
+				<contentItem id="highlights" label="Key Highlights" type="text"/>
+				<contentItem id="partner" label="Partner" type="bounded">
+					<bounded multivalued="true">
+						<refList>
+							<datastore>
+								<storeId>partner</storeId>
+								<dataId>identity</dataId>
+								<dataLabel>name</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>				
+				<contentItem id="expert" label="Reference Experts" type="bounded">
+					<bounded multivalued="true">
+						<refList>
+							<datastore>
+								<storeId>users</storeId>
+								<dataId>identity</dataId>
+								<dataLabel>userName</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>
+				<contentItem id="products" label="Related Products" type="bounded">
+					<bounded multivalued="true">
+						<refList>
+							<datastore>
+								<storeId>product</storeId>
+								<dataId>identity</dataId>
+								<dataLabel>name</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>
+				<contentItem id="access" label="Access" type="bounded">
+					<bounded>
+						<refList>
+							<datastore>
+								<storeId>accessStore</storeId>
+								<dataId>identity</dataId>
+								<dataLabel>accessType</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>
+				<contentItem id="dealRelevance" label="Deal Relevance" type="bounded">
+					<bounded multivalued="true">
+						<refList>
+							<datastore>
+								<!-- ####  Sourced from CRM #### -->
+								<storeId>dealStages</storeId>
+								<dataId>identity</dataId>
+								<dataLabel>stageName</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>
+			</container>
+			<container id="solPricing" label="Pricing">
+				<contentItem id="model" label="Pricing Model" type="text"/>
+				<contentItem id="sku" label="SKU Name" type="text"/>
+				<contentItem id="highlights" label="Key Highlights" type="text"/>
+				<contentItem id="metric" label="Price Metric" type="bounded">
+					<bounded>
+						<refList>
+							<datastore>
+								<storeId>pricemetrics</storeId>
+								<dataId>identity</dataId>
+								<dataLabel>name</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>
+				<contentItem id="price" label="Price per metric" type="numeric"/>
+				<contentItem id="highlights" label="Key Highlights" type="text"/>
+				<contentItem id="access" label="Access" type="bounded">
+					<bounded>
+						<refList>
+							<datastore>
+								<storeId>accessStore</storeId>
+								<dataId>identity</dataId>
+								<dataLabel>accessType</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>
+				<contentItem id="dealRelevance" label="Deal Relevance" type="bounded">
+					<bounded multivalued="true">
+						<refList>
+							<datastore>
+								<!-- ####  Sourced from CRM #### -->
+								<storeId>dealStages</storeId>
+								<dataId>identity</dataId>
+								<dataLabel>stageName</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>
+			</container>	
+			<container id="solContent" label="Other Content">
+				<contentItem id="file" label="File" type="doc"/>
+				<contentItem id="url" label="URL" type="text"/>				
+				<contentItem id="type" label="Content Type" type="text"/>
+				<contentItem id="summary" label="Summary" type="text"/>
+				<contentItem id="solutions" label="Related Solutions" type="bounded">
+					<bounded multivalued="true">
+						<refList>
+							<datastore>
+								<storeId>solution</storeId>
+								<dataId>identity</dataId>
+								<dataLabel>name</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>
+				<contentItem id="products" label="Related Products" type="bounded">
+					<bounded multivalued="true">
+						<refList>
+							<datastore>
+								<storeId>product</storeId>
+								<dataId>identity</dataId>
+								<dataLabel>name</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>
+				<contentItem id="access" label="Access" type="bounded">
+					<bounded>
+						<refList>
+							<datastore>
+								<storeId>accessStore</storeId>
+								<dataId>identity</dataId>
+								<dataLabel>accessType</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>
+				<contentItem id="dealRelevance" label="Deal Relevance" type="bounded">
+					<bounded multivalued="true">
+						<refList>
+							<datastore>
+								<!-- ####  Sourced from CRM #### -->
+								<storeId>dealStages</storeId>
+								<dataId>identity</dataId>
+								<dataLabel>stageName</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>
+				<contentItem id="author" label="Author" type="bounded">
+					<bounded multivalued="true">
+						<refList>
+							<datastore>
+								<storeId>user</storeId>
+								<dataId>userId</dataId>
+								<dataLabel>userName</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>
+			</container>					
 		</container>
-		<container id="faqType" label="FAQ Types" refData="true">
-			<contentItem id="typeName" label="Type name" type="text"/>
+		<container id="product" label="Products">
+			<contentItem id="name" label="Name" type="text"/>
+			<contentItem id="description" label="Description" type="text"/>
+			<contentItem id="shortName" label="Short Name" type="text"/>
+			<contentItem id="image" label="Image" type="doc"/>
+			<contentItem id="products" label="Related Products" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore>
+							<storeId>product</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>name</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="marketTier" label="Market Tiers" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore>
+							<storeId>mrktTier</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>mrktTierName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<container id="productExperts" label="Experts" referenceable="false">
+				<contentItem id="expertUserName" label="Name" type="bounded">
+					<bounded>
+						<refList>
+							<datastore>
+								<storeId>users</storeId>
+								<dataId>identity</dataId>
+								<dataLabel>userName</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>
+				<contentItem id="expertExpertise" label="Expertise" type="bounded">
+					<bounded multivalued="true">
+						<refList>
+							<datastore>
+								<storeId>expertise</storeId>
+								<dataId>identity</dataId>
+								<dataLabel>name</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>
+			</container>
+			<container id="prodOverview" label="Overview" single="true">
+				<contentItem id="file" label="File" type="doc"/>
+				<contentItem id="shortDesc" label="Short Description" type="text"/>
+				<contentItem id="access" label="Access" type="bounded">
+					<bounded>
+						<refList>
+							<datastore>
+								<storeId>accessStore</storeId>
+								<dataId>identity</dataId>
+								<dataLabel>accessType</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>
+				<contentItem id="dealRelevance" label="Deal Relevance" type="bounded">
+					<bounded multivalued="true">
+						<refList>
+							<datastore>
+								<!-- ####  Sourced from CRM #### -->
+								<storeId>dealStages</storeId>
+								<dataId>identity</dataId>
+								<dataLabel>stageName</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>
+				<contentItem id="author" label="Author" type="bounded">
+					<bounded multivalued="true">
+						<refList>
+							<datastore>
+								<storeId>user</storeId>
+								<dataId>userId</dataId>
+								<dataLabel>userName</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>
+			</container>
+			<container id="productSheet" label="Product Sheet" single="true">
+				<contentItem id="file" label="File" type="doc"/>
+				<contentItem id="url" label="URL" type="text"/>
+				<contentItem id="access" label="Access" type="bounded">
+					<bounded>
+						<refList>
+							<datastore>
+								<storeId>accessStore</storeId>
+								<dataId>identity</dataId>
+								<dataLabel>accessType</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>
+				<contentItem id="dealRelevance" label="Deal Relevance" type="bounded">
+					<bounded multivalued="true">
+						<refList>
+							<datastore>
+								<!-- ####  Sourced from CRM #### -->
+								<storeId>dealStages</storeId>
+								<dataId>identity</dataId>
+								<dataLabel>stageName</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>
+				<contentItem id="author" label="Author" type="bounded">
+					<bounded multivalued="true">
+						<refList>
+							<datastore>
+								<storeId>user</storeId>
+								<dataId>userId</dataId>
+								<dataLabel>userName</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>
+			</container>
+			<!-- ####  @todo There should be additional containers for FAQ, References, Roadmap etc which should be supported by the same data store in the back end #### -->		
+		</container>		
+		<container id="competitor" label="Competitors">
+			<contentItem id="name" label="Competitor Name" type="text"/>
+			<contentItem id="weburl" label="Website URL" type="text"/>
+			<contentItem id="summary" label="Summary" type="text"/>
+			<contentItem id="shortName" label="Short Name" type="text"/>
+			<contentItem id="image" label="Image" type="doc"/>
+			<contentItem id="type" label="Competitor Type" type="bounded">
+				<bounded>
+					<refList>
+						<datastore>
+							<storeId>competitorType</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>type</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="regions" label="Active Regions" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore>
+							<storeId>regions</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>regionName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="marketTier" label="Market Tiers" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore>
+							<storeId>marketTier</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>tier</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="expert" label="Experts" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore>
+							<storeId>users</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>userName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<container id="compswot" label="SWOT">
+				<contentItem id="file" label="File" type="doc"/>
+				<contentItem id="title" label="Title" type="text"/>
+				<contentItem id="products" label="Product" type="bounded">
+					<bounded>
+						<refList>
+							<datastore>
+								<storeId>product</storeId>
+								<dataId>identity</dataId>
+								<dataLabel>name</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>
+				<contentItem id="solutions" label="Solutions" type="bounded">
+					<bounded>
+						<refList>
+							<datastore>
+								<storeId>solution</storeId>
+								<dataId>identity</dataId>
+								<dataLabel>name</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>												
+				<contentItem id="access" label="Access" type="bounded">
+					<bounded>
+						<refList>
+							<datastore>
+								<storeId>accessStore</storeId>
+								<dataId>identity</dataId>
+								<dataLabel>accessType</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>
+				<contentItem id="dealRelevance" label="Deal Relevance" type="bounded">
+					<bounded multivalued="true">
+						<refList>
+							<datastore>
+								<!-- ####  Sourced from CRM #### -->
+								<storeId>dealStages</storeId>
+								<dataId>identity</dataId>
+								<dataLabel>stageName</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>
+				<contentItem id="author" label="Author" type="bounded">
+					<bounded multivalued="true">
+						<refList>
+							<datastore>
+								<storeId>user</storeId>
+								<dataId>userId</dataId>
+								<dataLabel>userName</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>
+			</container>
+			<container id="compTop3" label="Top 3 Differentiators" single="true">
+				<contentItem id="diff1" label="Message 1" type="text"/>
+				<contentItem id="desc1" label="Description 1" type="text"/>
+				<contentItem id="diff2" label="Message 2" type="text"/>
+				<contentItem id="desc2" label="Description 2" type="text"/>
+				<contentItem id="diff3" label="Message 3" type="text"/>
+				<contentItem id="desc3" label="Description 3" type="text"/>
+				<contentItem id="products" label="Product" type="bounded">
+					<bounded>
+						<refList>
+							<datastore>
+								<storeId>product</storeId>
+								<dataId>identity</dataId>
+								<dataLabel>name</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>
+				<contentItem id="solutions" label="Solutions" type="bounded">
+					<bounded>
+						<refList>
+							<datastore>
+								<storeId>solution</storeId>
+								<dataId>identity</dataId>
+								<dataLabel>name</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>												
+				<contentItem id="access" label="Access" type="bounded">
+					<bounded>
+						<refList>
+							<datastore>
+								<storeId>accessStore</storeId>
+								<dataId>identity</dataId>
+								<dataLabel>accessType</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>
+				<contentItem id="dealRelevance" label="Deal Relevance" type="bounded">
+					<bounded multivalued="true">
+						<refList>
+							<datastore>
+								<!-- ####  Sourced from CRM #### -->
+								<storeId>dealStages</storeId>
+								<dataId>identity</dataId>
+								<dataLabel>stageName</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>
+				<contentItem id="author" label="Author" type="bounded">
+					<bounded multivalued="true">
+						<refList>
+							<datastore>
+								<storeId>user</storeId>
+								<dataId>userId</dataId>
+								<dataLabel>userName</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>
+			</container>			
+			<container id="compClients" label="Clients">
+				<contentItem id="name" label="Client Name" type="text"/>
+				<contentItem id="highlights" label="Key Highlights" type="text"/>
+				<contentItem id="products" label="Product" type="bounded">
+					<bounded>
+						<refList>
+							<datastore>
+								<storeId>product</storeId>
+								<dataId>identity</dataId>
+								<dataLabel>name</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>
+				<contentItem id="solutions" label="Solutions" type="bounded">
+					<bounded>
+						<refList>
+							<datastore>
+								<storeId>solution</storeId>
+								<dataId>identity</dataId>
+								<dataLabel>name</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>												
+			</container>			
+			<container id="compProdCoverage" label="Product Coverage">			
+				<contentItem id="products" label="Product" type="bounded">
+					<bounded>
+						<refList>
+							<datastore>
+								<storeId>product</storeId>
+								<dataId>identity</dataId>
+								<dataLabel>name</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>
+				<contentItem id="competitiveOffering" label="Competitive Coverage" type="bounded">
+					<bounded>
+						<fixedList>
+		      				<data id="yes" label="Yes"/>
+      						<data id="no" label="No"/>
+      					</fixedList>
+					</bounded>
+				</contentItem>
+				<contentItem id="competitiveRating" label="Competitor's Rating" type="bounded">
+					<bounded>
+						<refList>
+							<datastore>
+								<storeId>compRating</storeId>
+								<dataId>identity</dataId>
+								<dataLabel>name</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>				
+				<contentItem id="file" label="Comparative Worksheet" type="doc"/>
+				<contentItem id="access" label="Access" type="bounded">
+					<bounded>
+						<refList>
+							<datastore>
+								<storeId>accessStore</storeId>
+								<dataId>identity</dataId>
+								<dataLabel>accessType</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>
+				<contentItem id="dealRelevance" label="Deal Relevance" type="bounded">
+					<bounded multivalued="true">
+						<refList>
+							<datastore>
+								<!-- ####  Sourced from CRM #### -->
+								<storeId>dealStages</storeId>
+								<dataId>identity</dataId>
+								<dataLabel>stageName</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>			
+			</container>
+		</container>
+		<container id="winloss" label="Win Loss Analysis">
+			<contentItem id="file" label="File" type="doc"/>
+			<contentItem id="client" label="Client Name" type="text"/>
+			<contentItem id="oppid" label="Opportunity ID" type="text"/>			
+			<contentItem id="winorloss" label="Result" type="bounded">
+				<bounded>
+					<fixedList>
+						<data id="win" label="Win"/>
+						<data id="loss" label="Loss"/>
+						<data id="nodecision" label="No Decision"/>						
+					</fixedList>
+				</bounded>
+			</contentItem>			
+			<contentItem id="summary" label="Summary" type="text"/>
+			<contentItem id="solutions" label="Related Solutions" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore>
+							<storeId>solution</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>name</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="products" label="Related Products" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore>
+							<storeId>product</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>name</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="access" label="Access" type="bounded">
+				<bounded>
+					<refList>
+						<datastore>
+							<storeId>accessStore</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>accessType</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="dealRelevance" label="Deal Relevance" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore>
+							<!-- ####  Sourced from CRM #### -->
+							<storeId>dealStages</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>stageName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="creator" label="Creator" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore>
+							<storeId>user</storeId>
+							<dataId>userId</dataId>
+							<dataLabel>userName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+		</container>
+		<container id="multimedia" label="Multimedia">
+			<contentItem id="file" label="File" type="doc"/>
+			<contentItem id="url" label="URL" type="text"/>
+			<contentItem id="summary" label="Summary" type="text"/>
+			<contentItem id="format" label="Format" type="bounded">
+				<bounded>
+					<refList>
+						<datastore>
+							<storeId>mmformat</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>format</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="type" label="Multimedia Type" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore>
+							<storeId>mmtype</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>type</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="solutions" label="Related Solutions" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore>
+							<storeId>solution</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>name</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="products" label="Related Products" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore>
+							<storeId>product</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>name</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="access" label="Access" type="bounded">
+				<bounded>
+					<refList>
+						<datastore>
+							<storeId>accessStore</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>accessType</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="dealRelevance" label="Deal Relevance" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore>
+							<!-- ####  Sourced from CRM #### -->
+							<storeId>dealStages</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>stageName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="creator" label="Creator" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore>
+							<storeId>user</storeId>
+							<dataId>userId</dataId>
+							<dataLabel>userName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+		</container>
+		<container id="whitepaper" label="Whitepapers">
+			<contentItem id="file" label="File" type="doc"/>
+			<contentItem id="url" label="URL" type="text"/>
+			<contentItem id="summary" label="Summary" type="text"/>
+			<contentItem id="solutions" label="Related Solutions" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore>
+							<storeId>solution</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>name</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="products" label="Related Products" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore>
+							<storeId>product</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>name</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="access" label="Access" type="bounded">
+				<bounded>
+					<refList>
+						<datastore>
+							<storeId>accessStore</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>accessType</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="dealRelevance" label="Deal Relevance" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore>
+							<!-- ####  Sourced from CRM #### -->
+							<storeId>dealStages</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>stageName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="creator" label="Creator" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore>
+							<storeId>user</storeId>
+							<dataId>userId</dataId>
+							<dataLabel>userName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+		</container>
+		<container id="blog" label="Blogs">
+			<contentItem id="url" label="URL" type="text"/>
+			<contentItem id="file" label="File" type="doc"/>
+			<contentItem id="summary" label="Summary" type="text"/>
+			<contentItem id="topics" label="Blog Topics" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore>
+							<storeId>blogtopics</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>topic</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="solutions" label="Related Solutions" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore>
+							<storeId>solution</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>name</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="products" label="Related Products" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore>
+							<storeId>product</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>name</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="access" label="Access" type="bounded">
+				<bounded>
+					<refList>
+						<datastore>
+							<storeId>accessStore</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>accessType</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="dealRelevance" label="Deal Relevance" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore>
+							<!-- ####  Sourced from CRM #### -->
+							<storeId>dealStages</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>stageName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="author" label="Author" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore>
+							<storeId>user</storeId>
+							<dataId>userId</dataId>
+							<dataLabel>userName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+		</container>
+		<container id="article" label="Articles">
+			<contentItem id="file" label="File" type="doc"/>
+			<contentItem id="url" label="URL" type="text"/>
+			<contentItem id="importance" label="Importance" type="text"/>
+			<contentItem id="publication" label="Publication" type="text"/>
+			<contentItem id="solutions" label="Related Solutions" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore>
+							<storeId>solution</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>name</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="products" label="Related Products" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore>
+							<storeId>product</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>name</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="access" label="Access" type="bounded">
+				<bounded>
+					<refList>
+						<datastore>
+							<storeId>accessStore</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>accessType</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="dealRelevance" label="Deal Relevance" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore>
+							<!-- ####  Sourced from CRM #### -->
+							<storeId>dealStages</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>stageName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="author" label="Author" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore>
+							<storeId>user</storeId>
+							<dataId>userId</dataId>
+							<dataLabel>userName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+		</container>
+		<container id="infographic" label="Infographics">
+			<contentItem id="file" label="File" type="doc"/>
+			<contentItem id="url" label="URL" type="text"/>
+			<contentItem id="importance" label="Importance" type="text"/>
+			<contentItem id="solutions" label="Related Solutions" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore>
+							<storeId>solution</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>name</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="products" label="Related Products" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore>
+							<storeId>product</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>name</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="access" label="Access" type="bounded">
+				<bounded>
+					<refList>
+						<datastore>
+							<storeId>accessStore</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>accessType</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="dealRelevance" label="Deal Relevance" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore>
+							<!-- ####  Sourced from CRM #### -->
+							<storeId>dealStages</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>stageName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="author" label="Author" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore>
+							<storeId>user</storeId>
+							<dataId>userId</dataId>
+							<dataLabel>userName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+		</container>
+		<container id="webinar" label="Webinars">
+			<contentItem id="url" label="URL" type="text"/>
+			<contentItem id="recording" label="Recording" type="doc"/>
+			<contentItem id="summary" label="Summary" type="text"/>
+			<contentItem id="date" label="Webinar Date" type="dateTime"/>
+			<contentItem id="regions" label="Target Region" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore>
+							<storeId>regions</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>regionName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="marketTier" label="Market Tiers" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore>
+							<storeId>marketTier</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>tier</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="solutions" label="Related Solutions" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore>
+							<storeId>solution</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>name</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="products" label="Related Products" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore>
+							<storeId>product</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>name</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="access" label="Access" type="bounded">
+				<bounded>
+					<refList>
+						<datastore>
+							<storeId>accessStore</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>accessType</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="dealRelevance" label="Deal Relevance" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore>
+							<!-- ####  Sourced from CRM #### -->
+							<storeId>dealStages</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>stageName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="author" label="Author" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore>
+							<storeId>user</storeId>
+							<dataId>userId</dataId>
+							<dataLabel>userName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+		</container>
+		<container id="ebook" label="E-books">
+			<contentItem id="url" label="URL" type="text"/>
+			<contentItem id="title" label="Title" type="text"/>
+			<contentItem id="summary" label="Summary" type="text"/>
+			<contentItem id="file" label="File" type="doc"/>
+			<contentItem id="regions" label="Target Region" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore>
+							<storeId>regions</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>regionName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="marketTier" label="Market Tiers" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore>
+							<storeId>marketTier</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>tier</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="solutions" label="Related Solutions" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore>
+							<storeId>solution</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>name</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="products" label="Related Products" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore>
+							<storeId>product</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>name</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="access" label="Access" type="bounded">
+				<bounded>
+					<refList>
+						<datastore>
+							<storeId>accessStore</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>accessType</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="dealRelevance" label="Deal Relevance" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore>
+							<!-- ####  Sourced from CRM #### -->
+							<storeId>dealStages</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>stageName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="author" label="Author" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore>
+							<storeId>user</storeId>
+							<dataId>userId</dataId>
+							<dataLabel>userName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+		</container>
+		<container id="newsletter" label="E-newsletter">
+			<contentItem id="url" label="URL" type="text"/>
+			<contentItem id="title" label="Title" type="text"/>
+			<contentItem id="summary" label="Summary" type="text"/>
+			<contentItem id="file" label="File" type="doc"/>
+			<contentItem id="regions" label="Target Region" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore>
+							<storeId>regions</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>regionName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="marketTier" label="Market Tiers" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore>
+							<storeId>marketTier</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>tier</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="solutions" label="Related Solutions" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore>
+							<storeId>solution</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>name</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="products" label="Related Products" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore>
+							<storeId>product</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>name</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="access" label="Access" type="bounded">
+				<bounded>
+					<refList>
+						<datastore>
+							<storeId>accessStore</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>accessType</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="dealRelevance" label="Deal Relevance" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore>
+							<!-- ####  Sourced from CRM #### -->
+							<storeId>dealStages</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>stageName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="author" label="Author" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore>
+							<storeId>user</storeId>
+							<dataId>userId</dataId>
+							<dataLabel>userName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+		</container>
+		<container id="competeworksheets" label="Competitive Worksheets">
+			<contentItem id="url" label="URL" type="text"/>
+			<contentItem id="title" label="Title" type="text"/>
+			<contentItem id="summary" label="Summary" type="text"/>
+			<contentItem id="file" label="File" type="doc"/>
+			<contentItem id="regions" label="Target Region" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore>
+							<storeId>regions</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>regionName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="marketTier" label="Market Tiers" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore>
+							<storeId>marketTier</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>tier</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="solutions" label="Related Solutions" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore>
+							<storeId>solution</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>name</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="products" label="Related Products" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore>
+							<storeId>product</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>name</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="access" label="Access" type="bounded">
+				<bounded>
+					<refList>
+						<datastore>
+							<storeId>accessStore</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>accessType</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="dealRelevance" label="Deal Relevance" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore>
+							<!-- ####  Sourced from CRM #### -->
+							<storeId>dealStages</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>stageName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="author" label="Author" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore>
+							<storeId>user</storeId>
+							<dataId>userId</dataId>
+							<dataLabel>userName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+		</container>
+		<container id="newsinfo" label="Information">
+			<contentItem id="url" label="External URL" type="text"/>
+			<contentItem id="file" label="File" type="doc"/>
+			<contentItem id="title" label="Title" type="text"/>
+			<contentItem id="summary" label="Summary" type="text"/>
+			<contentItem id="significance" label="Significance" type="text"/>
+			<contentItem id="type" label="Information Type" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore>
+							<storeId>infoType</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>type</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="regions" label="Target Region" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore>
+							<storeId>regions</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>regionName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="marketTier" label="Market Tiers" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore>
+							<storeId>marketTier</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>tier</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="solutions" label="Related Solutions" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore>
+							<storeId>solution</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>name</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="products" label="Related Products" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore>
+							<storeId>product</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>name</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="access" label="Access" type="bounded">
+				<bounded>
+					<refList>
+						<datastore>
+							<storeId>accessStore</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>accessType</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="dealRelevance" label="Deal Relevance" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore>
+							<!-- ####  Sourced from CRM #### -->
+							<storeId>dealStages</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>stageName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="author" label="Author" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore>
+							<storeId>user</storeId>
+							<dataId>userId</dataId>
+							<dataLabel>userName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+		</container>
+		<container id="analyst" label="Analysts">
+			<contentItem id="name" label="Analyst Name" type="text"/>
+			<contentItem id="summary" label="Summary" type="text"/>
+			<contentItem id="shortName" label="Short Name" type="text"/>
+			<contentItem id="contact" label="Analyst Contact" type="text"/>
+			<contentItem id="type" label="Analyst Type" type="bounded">
+				<bounded>
+					<refList>
+						<datastore>
+							<storeId>analystType</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>type</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="regions" label="Active Regions" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore>
+							<storeId>regions</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>regionName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<container id="analystReport" label="Reports">
+				<contentItem id="reportTitle" label="Report Title" type="text"/>
+				<contentItem id="file" label="File" type="doc"/>
+				<contentItem id="distributionrights" label="Distribution Rights" type="bounded">
+					<bounded>
+						<fixedList>
+							<data id="yes" label="Yes"/>
+							<data id="no" label="No"/>
+						</fixedList>
+					</bounded>
+				</contentItem>	
+				<contentItem id="desc" label="Short Description" type="text"/>
+				<contentItem id="highlights" label="Report Highlights" type="text"/>
+				<contentItem id="rating" label="Report Rating" type="bounded">
+					<bounded>
+						<refList>
+							<datastore>
+								<storeId>analystReportRating</storeId>
+								<dataId>identity</dataId>
+								<dataLabel>rating</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>				
+				<contentItem id="access" label="Access" type="bounded">
+					<bounded>
+						<refList>
+							<datastore>
+								<storeId>accessStore</storeId>
+								<dataId>identity</dataId>
+								<dataLabel>accessType</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>
+				<contentItem id="dealRelevance" label="Deal Relevance" type="bounded">
+					<bounded multivalued="true">
+						<refList>
+							<datastore>
+								<!-- ####  Sourced from CRM #### -->
+								<storeId>dealStages</storeId>
+								<dataId>identity</dataId>
+								<dataLabel>stageName</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>
+			</container>	
+			<container id="analystResearch" label="Other Research">
+				<contentItem id="researchTitle" label="Research Title" type="text"/>
+				<contentItem id="file" label="File" type="doc"/>
+				<contentItem id="distributionrights" label="Distribution Rights" type="bounded">
+					<bounded>
+						<fixedList>
+							<data id="yes" label="Yes"/>
+							<data id="no" label="No"/>
+						</fixedList>
+					</bounded>
+				</contentItem>	
+				<contentItem id="desc" label="Short Description" type="text"/>
+				<contentItem id="highlights" label="Report Highlights" type="text"/>
+				<contentItem id="access" label="Access" type="bounded">
+					<bounded>
+						<refList>
+							<datastore>
+								<storeId>accessStore</storeId>
+								<dataId>identity</dataId>
+								<dataLabel>accessType</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>
+				<contentItem id="dealRelevance" label="Deal Relevance" type="bounded">
+					<bounded multivalued="true">
+						<refList>
+							<datastore>
+								<!-- ####  Sourced from CRM #### -->
+								<storeId>dealStages</storeId>
+								<dataId>identity</dataId>
+								<dataLabel>stageName</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>
+			</container>	
+			<container id="jointEngagements" label="Joint Engagements">
+				<contentItem id="engagementTitle" label="Title" type="text"/>
+				<contentItem id="file" label="File" type="doc"/>
+				<contentItem id="desc" label="Short Description" type="text"/>
+				<contentItem id="highlights" label="Report Highlights" type="text"/>
+				<contentItem id="distributionrights" label="Distribution Rights" type="bounded">
+					<bounded>
+						<fixedList>
+							<data id="yes" label="Yes"/>
+							<data id="no" label="No"/>
+						</fixedList>
+					</bounded>
+				</contentItem>	
+				<contentItem id="engagementType" label="Engagement Type" type="bounded">
+					<bounded>
+						<refList>
+							<datastore>
+								<storeId>engagementType</storeId>
+								<dataId>identity</dataId>
+								<dataLabel>type</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>				
+				<contentItem id="access" label="Access" type="bounded">
+					<bounded>
+						<refList>
+							<datastore>
+								<storeId>accessStore</storeId>
+								<dataId>identity</dataId>
+								<dataLabel>accessType</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>
+				<contentItem id="dealRelevance" label="Deal Relevance" type="bounded">
+					<bounded multivalued="true">
+						<refList>
+							<datastore>
+								<!-- ####  Sourced from CRM #### -->
+								<storeId>dealStages</storeId>
+								<dataId>identity</dataId>
+								<dataLabel>stageName</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>
+			</container>					
+		</container>
+		<container id="partner" label="Partners">
+			<contentItem id="name" label="Partner Name" type="text"/>
+			<contentItem id="summary" label="Summary" type="text"/>
+			<contentItem id="shortName" label="Short Name" type="text"/>
+			<contentItem id="url" label="Website" type="text"/>			
+			<contentItem id="contact" label="Partner Contact" type="text"/>
+			<contentItem id="type" label="Partner Type" type="bounded">
+				<bounded>
+					<refList>
+						<datastore>
+							<storeId>partnerType</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>type</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="regions" label="Active Regions" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore>
+							<storeId>regions</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>regionName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="products" label="Product Expertise" type="bounded">
+				<bounded>
+					<refList>
+						<datastore>
+							<storeId>product</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>name</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="solutions" label="Solution Expertise" type="bounded">
+				<bounded>
+					<refList>
+						<datastore>
+							<storeId>solution</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>name</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>												
+			<contentItem id="certificationStatus" label="Certification Status" type="bounded">
+				<bounded>
+					<refList>
+						<datastore>
+							<storeId>partnerCertificationStatus</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>status</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>	
+			<container id="partnershipOverview" label="Overview" single="true">
+				<contentItem id="file" label="File" type="doc"/>
+				<contentItem id="shortDesc" label="Short Description" type="text"/>
+				<contentItem id="access" label="Access" type="bounded">
+					<bounded>
+						<refList>
+							<datastore>
+								<storeId>accessStore</storeId>
+								<dataId>identity</dataId>
+								<dataLabel>accessType</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>
+				<contentItem id="dealRelevance" label="Deal Relevance" type="bounded">
+					<bounded multivalued="true">
+						<refList>
+							<datastore>
+								<!-- ####  Sourced from CRM #### -->
+								<storeId>dealStages</storeId>
+								<dataId>identity</dataId>
+								<dataLabel>stageName</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>
+				<contentItem id="author" label="Author" type="bounded">
+					<bounded multivalued="true">
+						<refList>
+							<datastore>
+								<storeId>user</storeId>
+								<dataId>userId</dataId>
+								<dataLabel>userName</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>
+			</container>	
+			<!-- ####  @todo This should share the source with solution case study #### -->			
+			<container id="partnerCaseStudy" label="Case Studies">
+				<contentItem id="file" label="File" type="doc"/>
+				<contentItem id="title" label="Title" type="text"/>
+				<contentItem id="highlights" label="Case Highlights" type="text"/>
+				<contentItem id="customer" label="Customer Name" type="text"/>
+				<contentItem id="type" label="Type" type="bounded">
+					<bounded multivalued="true">
+						<refList>
+							<datastore>
+								<storeId>caseStudyType</storeId>
+								<dataId>identity</dataId>
+								<dataLabel>type</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>
+				<contentItem id="products" label="Products" type="bounded">
+					<bounded multivalued="true">
+						<refList>
+							<datastore>
+								<storeId>product</storeId>
+								<dataId>identity</dataId>
+								<dataLabel>name</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>	
+				<contentItem id="solutions" label="Solutions" type="bounded">
+					<bounded>
+						<refList>
+							<datastore>
+								<storeId>solution</storeId>
+								<dataId>identity</dataId>
+								<dataLabel>name</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>									
+				<contentItem id="competitors" label="Competitors" type="bounded">
+					<bounded multivalued="true">
+						<refList>
+							<datastore>
+								<storeId>competitor</storeId>
+								<dataId>identity</dataId>
+								<dataLabel>name</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>
+				<contentItem id="access" label="Access" type="bounded">
+					<bounded>
+						<refList>
+							<datastore>
+								<storeId>accessStore</storeId>
+								<dataId>identity</dataId>
+								<dataLabel>accessType</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>
+				<contentItem id="dealRelevance" label="Deal Relevance" type="bounded">
+					<bounded multivalued="true">
+						<refList>
+							<datastore>
+								<!-- ####  Sourced from CRM #### -->
+								<storeId>dealStages</storeId>
+								<dataId>identity</dataId>
+								<dataLabel>stageName</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>
+				<contentItem id="author" label="Author" type="bounded">
+					<bounded multivalued="true">
+						<refList>
+							<datastore>
+								<storeId>user</storeId>
+								<dataId>userId</dataId>
+								<dataLabel>userName</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>
+			</container>
+			<!-- ####  @todo This should share the source with solution references #### -->						
+			<container id="partnerReferences" label="References">
+				<contentItem id="name" label="Reference Name" type="text"/>
+				<contentItem id="summary" label="Reference Summary" type="text"/>
+				<contentItem id="highlights" label="Key Highlights" type="text"/>
+				<contentItem id="solution" label="Solutions" type="bounded">
+					<bounded multivalued="true">
+						<refList>
+							<datastore>
+								<storeId>partner</storeId>
+								<dataId>identity</dataId>
+								<dataLabel>name</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>	
+				<contentItem id="products" label="Related Products" type="bounded">
+					<bounded multivalued="true">
+						<refList>
+							<datastore>
+								<storeId>product</storeId>
+								<dataId>identity</dataId>
+								<dataLabel>name</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>							
+				<contentItem id="expert" label="Reference Experts" type="bounded">
+					<bounded multivalued="true">
+						<refList>
+							<datastore>
+								<storeId>users</storeId>
+								<dataId>identity</dataId>
+								<dataLabel>userName</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>
+				<contentItem id="access" label="Access" type="bounded">
+					<bounded>
+						<refList>
+							<datastore>
+								<storeId>accessStore</storeId>
+								<dataId>identity</dataId>
+								<dataLabel>accessType</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>
+				<contentItem id="dealRelevance" label="Deal Relevance" type="bounded">
+					<bounded multivalued="true">
+						<refList>
+							<datastore>
+								<!-- ####  Sourced from CRM #### -->
+								<storeId>dealStages</storeId>
+								<dataId>identity</dataId>
+								<dataLabel>stageName</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>
+			</container>	
+			<!-- ####  @todo This should share the source with solutions faq #### -->						
+			<container id="partnerFAQ" label="FAQ">
+				<contentItem id="question" label="Question" type="text"/>
+				<contentItem id="category" label="Category" type="bounded">
+					<bounded multivalued="true">
+						<refList>
+							<datastore>
+								<storeId>faqCategories</storeId>
+								<dataId>identity</dataId>
+								<dataLabel>categoryName</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>
+				<contentItem id="answer" label="Answer" type="text"/>
+			</container>		
+			<!-- ####  @todo This should share the source with analyst join engagements #### -->																							
+			<container id="partnerJointEngagements" label="Joint Engagements">
+				<contentItem id="engagementTitle" label="Title" type="text"/>
+				<contentItem id="file" label="File" type="doc"/>
+				<contentItem id="desc" label="Short Description" type="text"/>
+				<contentItem id="highlights" label="Report Highlights" type="text"/>
+				<contentItem id="distributionrights" label="Distribution Rights" type="bounded">
+					<bounded>
+						<fixedList>
+							<data id="yes" label="Yes"/>
+							<data id="no" label="No"/>
+						</fixedList>
+					</bounded>
+				</contentItem>	
+				<contentItem id="engagementType" label="Engagement Type" type="bounded">
+					<bounded>
+						<refList>
+							<datastore>
+								<storeId>engagementType</storeId>
+								<dataId>identity</dataId>
+								<dataLabel>type</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>				
+				<contentItem id="access" label="Access" type="bounded">
+					<bounded>
+						<refList>
+							<datastore>
+								<storeId>accessStore</storeId>
+								<dataId>identity</dataId>
+								<dataLabel>accessType</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>
+				<contentItem id="dealRelevance" label="Deal Relevance" type="bounded">
+					<bounded multivalued="true">
+						<refList>
+							<datastore>
+								<!-- ####  Sourced from CRM #### -->
+								<storeId>dealStages</storeId>
+								<dataId>identity</dataId>
+								<dataLabel>stageName</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>
+			</container>					
+		</container>
+		<container id="supportpolicy" label="Support Policy" single="true">
+			<contentItem id="title" label="Title" type="text"/>
+			<contentItem id="summary" label="Summary" type="text"/>
+			<contentItem id="file" label="File" type="doc"/>
+			<contentItem id="access" label="Access" type="bounded">
+				<bounded>
+					<refList>
+						<datastore>
+							<storeId>accessStore</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>accessType</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="dealRelevance" label="Deal Relevance" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore>
+							<!-- ####  Sourced from CRM #### -->
+							<storeId>dealStages</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>stageName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="contact" label="Contacts" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore>
+							<storeId>user</storeId>
+							<dataId>userId</dataId>
+							<dataLabel>userName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+		</container>				
+		<container id="nda" label="Non Discolusre Agreement (NDA)" single="true">
+			<contentItem id="title" label="Title" type="text"/>
+			<contentItem id="summary" label="Summary" type="text"/>
+			<contentItem id="file" label="File" type="doc"/>
+			<contentItem id="access" label="Access" type="bounded">
+				<bounded>
+					<refList>
+						<datastore>
+							<storeId>accessStore</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>accessType</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="dealRelevance" label="Deal Relevance" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore>
+							<!-- ####  Sourced from CRM #### -->
+							<storeId>dealStages</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>stageName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="contact" label="Contacts" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore>
+							<storeId>user</storeId>
+							<dataId>userId</dataId>
+							<dataLabel>userName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+		</container>
+		<container id="partneragreement" label="Partner Agreement" single="true">
+			<contentItem id="title" label="Title" type="text"/>
+			<contentItem id="summary" label="Summary" type="text"/>
+			<contentItem id="file" label="File" type="doc"/>
+			<contentItem id="access" label="Access" type="bounded">
+				<bounded>
+					<refList>
+						<datastore>
+							<storeId>accessStore</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>accessType</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="dealRelevance" label="Deal Relevance" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore>
+							<!-- ####  Sourced from CRM #### -->
+							<storeId>dealStages</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>stageName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="contact" label="Contacts" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore>
+							<storeId>user</storeId>
+							<dataId>userId</dataId>
+							<dataLabel>userName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+		</container>	
+		<container id="sow" label="Statement of Work" single="true">
+			<contentItem id="title" label="Title" type="text"/>
+			<contentItem id="summary" label="Summary" type="text"/>
+			<contentItem id="file" label="File" type="doc"/>
+			<contentItem id="access" label="Access" type="bounded">
+				<bounded>
+					<refList>
+						<datastore>
+							<storeId>accessStore</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>accessType</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="dealRelevance" label="Deal Relevance" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore>
+							<!-- ####  Sourced from CRM #### -->
+							<storeId>dealStages</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>stageName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="contact" label="Contacts" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore>
+							<storeId>user</storeId>
+							<dataId>userId</dataId>
+							<dataLabel>userName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+		</container>		
+		<container id="mla" label="Master License Agreement" single="true">
+			<contentItem id="title" label="Title" type="text"/>
+			<contentItem id="summary" label="Summary" type="text"/>
+			<contentItem id="file" label="File" type="doc"/>
+			<contentItem id="access" label="Access" type="bounded">
+				<bounded>
+					<refList>
+						<datastore>
+							<storeId>accessStore</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>accessType</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="dealRelevance" label="Deal Relevance" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore>
+							<!-- ####  Sourced from CRM #### -->
+							<storeId>dealStages</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>stageName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="contact" label="Contacts" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore>
+							<storeId>user</storeId>
+							<dataId>userId</dataId>
+							<dataLabel>userName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+		</container>			
+		<container id="msa" label="Master Services Agreement" single="true">
+			<contentItem id="title" label="Title" type="text"/>
+			<contentItem id="summary" label="Summary" type="text"/>
+			<contentItem id="file" label="File" type="doc"/>
+			<contentItem id="access" label="Access" type="bounded">
+				<bounded>
+					<refList>
+						<datastore>
+							<storeId>accessStore</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>accessType</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="dealRelevance" label="Deal Relevance" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore>
+							<!-- ####  Sourced from CRM #### -->
+							<storeId>dealStages</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>stageName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="contact" label="Contacts" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore>
+							<storeId>user</storeId>
+							<dataId>userId</dataId>
+							<dataLabel>userName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+		</container>			
+		<container id="orderingdoc" label="Ordering Document" single="true">
+			<contentItem id="title" label="Title" type="text"/>
+			<contentItem id="summary" label="Summary" type="text"/>
+			<contentItem id="file" label="File" type="doc"/>
+			<contentItem id="access" label="Access" type="bounded">
+				<bounded>
+					<refList>
+						<datastore>
+							<storeId>accessStore</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>accessType</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="dealRelevance" label="Deal Relevance" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore>
+							<!-- ####  Sourced from CRM #### -->
+							<storeId>dealStages</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>stageName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="contact" label="Contacts" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore>
+							<storeId>user</storeId>
+							<dataId>userId</dataId>
+							<dataLabel>userName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+		</container>		
+		<container id="corporatelogo" label="Corporate Logo" single="true">
+			<contentItem id="title" label="Title" type="text"/>
+			<contentItem id="summary" label="Summary" type="text"/>
+			<contentItem id="file" label="File" type="doc"/>
+			<contentItem id="access" label="Access" type="bounded">
+				<bounded>
+					<refList>
+						<datastore>
+							<storeId>accessStore</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>accessType</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+		</container>
+		<container id="ppttemplate" label="Powerpoint Template" single="true">
+			<contentItem id="title" label="Title" type="text"/>
+			<contentItem id="summary" label="Summary" type="text"/>
+			<contentItem id="file" label="File" type="doc"/>
+			<contentItem id="access" label="Access" type="bounded">
+				<bounded>
+					<refList>
+						<datastore>
+							<storeId>accessStore</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>accessType</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="contact" label="Contacts" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore>
+							<storeId>user</storeId>
+							<dataId>userId</dataId>
+							<dataLabel>userName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+		</container>	
+		<container id="corporatecontent" label="Corporate Content">
+			<contentItem id="title" label="Title" type="text"/>	
+			<contentItem id="summary" label="Summary" type="text"/>
+			<contentItem id="file" label="File" type="doc"/>
+			<contentItem id="access" label="Access" type="bounded">
+				<bounded>
+					<refList>
+						<datastore>
+							<storeId>accessStore</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>accessType</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="dealRelevance" label="Deal Relevance" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore>
+							<!-- ####  Sourced from CRM #### -->
+							<storeId>dealStages</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>stageName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="contact" label="Contacts" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore>
+							<storeId>user</storeId>
+							<dataId>userId</dataId>
+							<dataLabel>userName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+		</container>															
+		<container id="faqCategories" label="FAQ Categories" refData="true">
+			<contentItem id="categoryName" label="Category" type="text"/>
 			<contentItem id="desc" label="Description" type="text"/>
 		</container>
+		<container id="objectionCategory" label="Objection Categories" refData="true">
+			<contentItem id="categoryName" label="Category" type="text"/>
+			<contentItem id="desc" label="Description" type="text"/>
+		</container>		
 		<container id="dealStages" label="Deal Stage" refData="true">
-			<contentItem id="stageName" label="Deal Stage name" type="text"/>
+			<contentItem id="stageName" label="Stage Name" type="text"/>
 			<contentItem id="desc" label="Description" type="text"/>
 		</container>
 		<container id="accessStore" label="Access Type" refData="true">
-			<contentItem id="accessType" label="Access name" type="text"/>
+			<contentItem id="accessType" label="Type" type="text"/>
 			<contentItem id="desc" label="Description" type="text"/>
 		</container>
 		<container id="regions" label="Regions" refData="true">
-			<contentItem id="regionName" label="Region name" type="text"/>
+			<contentItem id="regionName" label="Region Name" type="text"/>
 			<contentItem id="desc" label="Description" type="text"/>
 		</container>
 		<container id="audience" label="Audience" refData="true">
-			<contentItem id="name" label="Audience name" type="text"/>
+			<contentItem id="type" label="Audience Type" type="text"/>
 			<contentItem id="desc" label="Description" type="text"/>
 		</container>
-		<container id="caseStudyType" label="Case Study Type" refData="true">
-			<contentItem id="name" label="Type name" type="text"/>
+		<container id="caseStudyType" label="Case Study Types" refData="true">
+			<contentItem id="type" label="Type" type="text"/>
 			<contentItem id="desc" label="Description" type="text"/>
 		</container>
 		<container id="expertise" label="Expertise" refData="true">
 			<contentItem id="name" label="Name" type="text"/>
 			<contentItem id="desc" label="Description" type="text"/>
 		</container>
-		<container id="users" label="User" refData="true">
+		<container id="marketTier" label="Market Tiers" refData="true">
+			<contentItem id="tier" label="Name" type="text"/>
+			<contentItem id="desc" label="Description" type="text"/>
+		</container>	
+		<container id="industries" label="Industries" refData="true">
+			<contentItem id="industry" label="Industry Name" type="text"/>
+			<contentItem id="desc" label="Description" type="text"/>
+		</container>
+		<container id="pricemetrics" label="Price Metrics" refData="true">
+			<contentItem id="name" label="Metric" type="text"/>
+			<contentItem id="desc" label="Description" type="text"/>
+		</container>	
+		<container id="competitorType" label="Competitor Types" refData="true">
+			<contentItem id="type" label="Type" type="text"/>
+			<contentItem id="desc" label="Description" type="text"/>
+		</container>	
+		<container id="compRating" label="Competitive Rating" refData="true">
+			<contentItem id="rating" label="Rating" type="text"/>
+			<contentItem id="desc" label="Description" type="text"/>
+		</container>	
+		<container id="analystType" label="Analyst Types" refData="true">
+			<contentItem id="type" label="Type" type="text"/>
+			<contentItem id="desc" label="Description" type="text"/>
+		</container>
+		<container id="analystReportRating" label="Analyst Report Rating" refData="true">
+			<contentItem id="rating" label="Rating" type="text"/>
+			<contentItem id="desc" label="Description" type="text"/>
+		</container>
+		<container id="analystEngagementType" label="Analyst Engagement Types" refData="true">
+			<contentItem id="type" label="Type" type="text"/>
+			<contentItem id="desc" label="Description" type="text"/>
+		</container>						
+		<container id="partnerType" label="Partner Types" refData="true">
+			<contentItem id="type" label="Type" type="text"/>
+			<contentItem id="desc" label="Description" type="text"/>
+		</container>
+		<container id="partnerCertificationStatus" label="Partner Certification Status" refData="true">
+			<contentItem id="status" label="Status" type="text"/>
+			<contentItem id="desc" label="Description" type="text"/>
+		</container>				
+		<container id="mmformat" label="Multi Media Formats" refData="true">
+			<contentItem id="format" label="Format" type="text"/>
+			<contentItem id="desc" label="Description" type="text"/>
+		</container>		
+		<container id="mmtype" label="Multi Media Types" refData="true">
+			<contentItem id="type" label="Type" type="text"/>
+			<contentItem id="desc" label="Description" type="text"/>
+		</container>		
+		<container id="blogtopics" label="Blog Topics" refData="true">
+			<contentItem id="topic" label="Topic" type="text"/>
+			<contentItem id="desc" label="Description" type="text"/>
+		</container>														
+		<container id="infoType" label="Information Types" refData="true">
+			<contentItem id="type" label="Type" type="text"/>
+			<contentItem id="desc" label="Description" type="text"/>
+		</container>																
+		<container id="user" label="Users" refData="true">
 			<contentItem id="userName" label="Name" type="text"/>
 			<contentItem id="email" label="Email" type="text"/>
 		</container>
 	</dataDefinition>
 	<uiDefinition>
-		<contentUIDef qualifiedId="solution">
-			<container labelQualifiedId="solution.name"/>
+		<contentUIDef qualifiedId="~root~">
+			<container>
+				<enclosure label="Web Content">
+					<childContainer id="multimedia"/>
+					<childContainer id="whitepaper"/>
+					<childContainer id="blog"/>
+					<childContainer id="article"/>
+					<childContainer id="infographic"/>
+					<childContainer id="webinar"/>
+					<childContainer id="ebook"/>
+					<childContainer id="newsletter"/>
+					<childContainer id="competeworksheets"/>
+					<childContainer id="newsinfo"/>										
+				</enclosure>
+				<enclosure label="Corporate">
+					<childContainer id="supportpolicy"/>
+					<childContainer id="nda"/>
+					<childContainer id="partneragreement"/>
+					<childContainer id="sow"/>
+					<childContainer id="mla"/>
+					<childContainer id="msa"/>
+					<childContainer id="orderingdoc"/>
+					<childContainer id="corporatelogo"/>
+					<childContainer id="ppttemplate"/>
+					<childContainer id="corporatecontent"/>										
+				</enclosure>
+			</container>			
 		</contentUIDef>
-		<contentUIDef qualifiedId="solution.solnExperts">
-			<container labelQualifiedId="solution.solnExperts.expertUserName"/>
+		<contentUIDef qualifiedId="solution.solCaseStudy">
+			<container labelQualifiedId="solution.solCaseStudy.title"/>
 		</contentUIDef>
-		<contentUIDef qualifiedId="solution.description">
+		<contentUIDef qualifiedId="product">
+			<container labelQualifiedId="product.name"/>
+		</contentUIDef>
+		<contentUIDef qualifiedId="product.name">
+			<text type="short"/>
+		</contentUIDef>
+		<contentUIDef qualifiedId="product.datasheet">
+			<container labelQualifiedId="product.datasheet.shortDesc"/>
+		</contentUIDef>
+		<contentUIDef qualifiedId="product.datasheet.shortDesc">
 			<text type="long"/>
-	    </contentUIDef>
-		<contentUIDef qualifiedId="solution.solFAQ.answer">
-			<text type="long"/>
-	    </contentUIDef>
-	    <contentUIDef qualifiedId="solution.solOverview.shortDesc">
-			<text type="long"/>
-	    </contentUIDef>
+		</contentUIDef>
+		<contentUIDef qualifiedId="product.datasheet.team">
+			<bounded>
+				<autoSuggest/>
+			</bounded>
+		</contentUIDef>
 	</uiDefinition>
 </contentTemplate>

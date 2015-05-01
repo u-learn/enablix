@@ -41,21 +41,13 @@ public class FileBasedTemplateLoader implements TemplateLoader {
 		File templateDir = new File(templateDirPath);
 		
 		Set<String> tenantTemplateDirs = new HashSet<>();
-		
+
 		for (File templateFile : FileUtils.listFiles(templateDir, TEMPLATE_FILE_EXTN, true)) {
-			
+		
 			String tenantId = resolveTenantIdFromFile(templateFile);
-			
 			tenantTemplateDirs.add(getTemplateDirectory() + File.separator + tenantId);
-			
-			ProcessContext.initialize("system", tenantId, null);
-			
-			try {
-				uploadTemplate(templateFile);
-				
-			} finally {
-				ProcessContext.clear();
-			}
+
+			loadTemplate(templateFile);
 		}
 		
 		// create watch on each directory
@@ -63,6 +55,20 @@ public class FileBasedTemplateLoader implements TemplateLoader {
 			createWatch(tenantTemplateDir);
 		}
 		
+	}
+
+	private void loadTemplate(File templateFile) {
+
+		String tenantId = resolveTenantIdFromFile(templateFile);
+
+		ProcessContext.initialize("system", tenantId, null);
+		
+		try {
+			uploadTemplate(templateFile);
+			
+		} finally {
+			ProcessContext.clear();
+		}
 	}
 
 	private void uploadTemplate(File templateFile) {
@@ -113,13 +119,13 @@ public class FileBasedTemplateLoader implements TemplateLoader {
 
 		@Override
 		public void onFileCreated(File fileName) {
-			uploadTemplate(fileName);
+			loadTemplate(fileName);
 			
 		}
 
 		@Override
 		public void onFileUpdated(File fileName) {
-			uploadTemplate(fileName);
+			loadTemplate(fileName);
 		}
 		
 	}
