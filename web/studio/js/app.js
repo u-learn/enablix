@@ -83,7 +83,7 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvi
 			}
 		})
 		.state('refdata.list', {
-			url: '/list/{containerQId}/{parentIdentity}/',
+			url: '/list/{containerQId}/',
 			templateUrl: 'views/content/content-list.html',
 			controller: 'ContentListCtrl',
 			resolve: {
@@ -94,6 +94,22 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvi
 			url: '/add/{containerQId}/',
 			templateUrl: 'views/content/content-add.html',
 			controller: 'ContentAddCtrl',
+			resolve: {
+				setupData: studioAppSetup 
+			}
+		})
+		.state('refdata.detail', {
+			url: '/detail/{containerQId}/{elementIdentity}/',
+			templateUrl: 'views/content/content-detail.html',
+			controller: 'ContentDetailCtrl',
+			resolve: {
+				setupData: studioAppSetup 
+			}
+		})
+		.state('refdata.edit', {
+			url: '/detail/{containerQId}/{elementIdentity}/',
+			templateUrl: 'views/content/content-add.html',
+			controller: 'ContentEditCtrl',
 			resolve: {
 				setupData: studioAppSetup 
 			}

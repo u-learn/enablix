@@ -21,8 +21,12 @@ enablix.studioApp.controller('refdataIndexCtrl',
 			StateUpdateService.goToRefdataList(containerQId);
 		}
 		
-		$scope.goToContentDetail = function(elementIdentity) {
-			// do nothing
+		$scope.goToContentDetail = function(containerQId, elementIdentity) {
+			StateUpdateService.goToRefdataDetail(containerQId, elementIdentity);
 		};
+		
+		$scope.goToDetailEdit = function(containerQId, elementIdentity) {
+			StateUpdateService.goToRefdataEdit(containerQId, elementIdentity);
+		}
 		
 	}]);

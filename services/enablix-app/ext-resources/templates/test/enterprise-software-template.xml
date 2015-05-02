@@ -2833,6 +2833,18 @@
 				</enclosure>
 			</container>			
 		</contentUIDef>
+		<contentUIDef qualifiedId="solution">
+			<container labelQualifiedId="solution.name">
+				<enclosure label="Misc">
+					<childContainer id="solFAQ"/>
+					<childContainer id="solObjections"/>
+					<childContainer id="solContent"/>
+				</enclosure>
+			</container>
+		</contentUIDef>
+		<contentUIDef qualifiedId="whitepaper">
+			<container labelQualifiedId="whitepaper.url"/>
+		</contentUIDef>
 		<contentUIDef qualifiedId="solution.solCaseStudy">
 			<container labelQualifiedId="solution.solCaseStudy.title"/>
 		</contentUIDef>

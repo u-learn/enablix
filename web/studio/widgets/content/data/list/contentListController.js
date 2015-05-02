@@ -61,7 +61,7 @@ enablix.studioApp.controller('ContentListCtrl',
 		};
 		
 		$scope.navToContentDetail = function(elementIdentity) {
-			$scope.goToContentDetail(elementIdentity);
+			$scope.goToContentDetail(containerQId, elementIdentity);
 		};
 		
 	}

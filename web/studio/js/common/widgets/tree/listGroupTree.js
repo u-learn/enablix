@@ -55,7 +55,7 @@
 				//tree template
 				var template =
 					'<ul class="' + ulClass + '">' +
-						'<li class="list-group-item" data-ng-repeat="node in ' + treeModel + '">' +
+						'<li class="list-group-item" data-ng-repeat="node in ' + treeModel + '" data-ng-init="node.collapsed = true">' +
 							'<span class="tree-node-data" data-ng-class="{\'active\': node.selected == \'selected\'}" data-ng-click="' + treeId + '.selectNodeLabel(node)">' 
 								+ '<span class="tree-node-label" style="padding-left: ' + listItemPadding + 'px" data-ng-class="node.uiClass">{{node.' + nodeLabel + '}}</span>'
 								+ '<i ng-class="{\'glyphicon-chevron-left\' : node.collapsed, \'glyphicon-chevron-down\' : !node.collapsed}" ' 

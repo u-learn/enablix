@@ -32,8 +32,7 @@ enablix.studioApp.controller('ContentEditCtrl',
 					function(data) {
 						//alert("Update successfully!");
 						Notification.primary("Updated successfully!");
-						$scope.updateCurrentNodeData(data);
-						StateUpdateService.goToStudioDetail(containerQId, elementIdentity);
+						$scope.postDataSave(data);
 					}, 
 					function (data) {
 						//alert("Error updating data");

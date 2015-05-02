@@ -8,13 +8,40 @@ enablix.studioApp.factory('ContentIndexService',
 				
 				var indexData = [];
 
-				buildContentIndexFromContainer(indexData, data, null);
+				buildContentIndexFromContainer(indexData, data, null, '~root~');
 				
 				return indexData;
 			};
 			
-			var buildContentIndexFromContainer = function(_indxDataParent, _containerList, _elementIdentity) {
+			var buildContentIndexFromContainer = function(_indxDataParent, 
+							_containerList, _elementIdentity, _parentCntnrQId) {
 			
+				var enclosures = ContentTemplateService.getContainerEnclosures(_parentCntnrQId);
+				
+				var enclosureNodes = new Array();
+				var cntnrIdToEnclosureMap = new Array();
+				
+				angular.forEach(enclosures, function(enclosure) {
+					
+					var enclosureNd = {
+							"id" : enclosure.label,
+							"qualifiedId" : enclosure.label,
+							"label" : enclosure.label,
+							"elementIdentity" : null,
+							"parentIdentity" : null,
+							"children" : [],
+							"containerDef": null,
+							"type": "enclosure",
+							"uiClass": "eb-indx-container"
+						};
+					
+					angular.forEach(enclosure.childContainer, function(childCntnr) {
+						cntnrIdToEnclosureMap[childCntnr.id] = enclosureNd;
+					});
+					
+					enclosureNodes.push(enclosureNd);
+				});
+				
 				angular.forEach(_containerList, function(cntnr) {
 
 					// ignore refData containers
@@ -38,21 +65,34 @@ enablix.studioApp.factory('ContentIndexService',
 						"uiClass": "eb-indx-container"
 					};
 				
-					_indxDataParent.push(indxItem);
+					var enclosureOfChildCntnr = cntnrIdToEnclosureMap[cntnr.id];
 					
-					// add container data instance node
-					ContentDataService.getContentData(templateId, indxItem.qualifiedId, _elementIdentity, function(data) {
-						
-						angular.forEach(data, function(dataItem) {
-							addInstanceDataChild(indxItem, cntnr, dataItem);
+					if (enclosureOfChildCntnr != null && enclosureOfChildCntnr != undefined) {
+						enclosureOfChildCntnr.children.push(indxItem);
+					} else {
+						_indxDataParent.push(indxItem);
+					}
+					
+					var childLabelAttrId = ContentTemplateService.getContainerLabelAttrId(enablix.template, cntnr.qualifiedId);
+					
+					if (!isNullOrUndefined(childLabelAttrId)) {
+						// add container data instance node
+						ContentDataService.getContentData(templateId, indxItem.qualifiedId, _elementIdentity, function(data) {
+							
+							angular.forEach(data, function(dataItem) {
+								addInstanceDataChild(indxItem, cntnr, dataItem);
+							});
+							
+						}, function(data) {
+							Notification.error({message: "Error retrieving content data for template [" 
+													+ templateId + ", " + indxItem.qualifiedId + "]", delay: null});
+							//alert("Error retrieving content data for template [" + templateId + ", " + indxItem.qualifiedId + "]");
 						});
-						
-					}, function(data) {
-						Notification.error({message: "Error retrieving content data for template [" 
-												+ templateId + ", " + indxItem.qualifiedId + "]", delay: null});
-						//alert("Error retrieving content data for template [" + templateId + ", " + indxItem.qualifiedId + "]");
-					});
-					
+					}
+				});
+				
+				angular.forEach(enclosureNodes, function(encNode) {
+					_indxDataParent.push(encNode);
 				});
 			};
 			
@@ -84,7 +124,8 @@ enablix.studioApp.factory('ContentIndexService',
 				}
 				
 				// recursively build the child elements
-				buildContentIndexFromContainer(indxDataItem.children, _containerDef.container, dataItem.identity);
+				buildContentIndexFromContainer(indxDataItem.children, _containerDef.container, 
+						dataItem.identity, _containerDef.qualifiedId);
 
 				return indxDataItem;
 			} 
@@ -126,7 +167,8 @@ enablix.studioApp.factory('ContentIndexService',
 			};
 			
 			var updateNodeData = function(_treeNode, _data) {
-				if (_treeNode.containerDef && !_treeNode.containerDef.single) {
+				if (_treeNode.containerDef && !_treeNode.containerDef.single
+						&& _treeNode.identity == _data.identity) {
 					_treeNode.label = resolveContainerInstanceLabel(_treeNode.containerDef, _data);
 				}
 			};

@@ -96,7 +96,7 @@ enablix.studioApp.factory('ContentTemplateService',
 				
 				var cntnrUIDef = getUIDefinition(_template, _containerQId);
 				
-				var labelFieldId = 'name';
+				var labelFieldId = null;
 				
 				if (!angular.isUndefined(cntnrUIDef)) {
 					
@@ -157,6 +157,18 @@ enablix.studioApp.factory('ContentTemplateService',
 				}
 			}
 			
+			var getContainerEnclosures = function(_cntnrQId) {
+				
+				var cntnrUIDef = getUIDefinition(enablix.template, _cntnrQId);
+				
+				if (!isNullOrUndefined(cntnrUIDef) && !isNullOrUndefined(cntnrUIDef.container) 
+						&& !isNullOrUndefined(cntnrUIDef.container.enclosure)) {
+					return cntnrUIDef.container.enclosure;
+				}
+				
+				return [];
+			}
+			
 			return {
 				getTemplate : getTemplate,
 				getDefaultTemplate : getDefaultTemplate,
@@ -165,7 +177,8 @@ enablix.studioApp.factory('ContentTemplateService',
 				getContainerDefinition: getContainerDefinition,
 				isRootContainer: isRootContainer,
 				getBoundedValueList: getBoundedValueList,
-				loadTemplate: loadTemplate
+				loadTemplate: loadTemplate,
+				getContainerEnclosures: getContainerEnclosures
 			};
 		
 		}

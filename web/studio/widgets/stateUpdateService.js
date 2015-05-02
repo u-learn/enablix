@@ -35,6 +35,19 @@ enablix.studioApp.factory('StateUpdateService',
 	 		var goToRefdataAdd = function(_containerQId) {
 				$state.go('refdata.add', {'containerQId' : _containerQId});
 	 		};
+
+	 		var goToRefdataDetail = function(_containerQId, _elementIdentity) {
+				$state.go('refdata.detail', {'containerQId' : _containerQId, 
+					"elementIdentity" : _elementIdentity});
+
+	 		};
+	 		
+	 		var goToRefdataEdit = function(_containerQId, _elementIdentity) {
+				$state.go('refdata.edit', {'containerQId' : _containerQId, 
+					"elementIdentity" : _elementIdentity});
+
+	 		};
+
 	 		
 	 		var goToHome = function(_containerQId) {
 				$state.go('home');
@@ -55,6 +68,8 @@ enablix.studioApp.factory('StateUpdateService',
 	 			goToStudioEdit: goToStudioEdit,
 	 			goToRefdataList: goToRefdataList,
 	 			goToRefdataAdd: goToRefdataAdd,
+	 			goToRefdataDetail: goToRefdataDetail,
+	 			goToRefdataEdit: goToRefdataEdit,
 	 			goToHome: goToHome,
 	 			goToLogin: goToLogin,
 	 			goToStudio: goToStudio

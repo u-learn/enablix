@@ -11,7 +11,7 @@ enablix.studioApp.controller('contentIndexCtrl',
 	    
 		$scope.contentIndex = $scope.contentIndex || {};
 		
-		$scope.contentIndex.selectNodeCallback = function(selectedNode) {
+		var moveToNodeDetail = function(selectedNode) {
 			
 			if (selectedNode.type == 'container') {
 				StateUpdateService.goToStudioList(selectedNode.qualifiedId, selectedNode.elementIdentity);
@@ -29,6 +29,12 @@ enablix.studioApp.controller('contentIndexCtrl',
 			}
 			
 		};
+		
+		$scope.contentIndex.selectNodeCallback = moveToNodeDetail;
+		
+		$scope.goToDetailEdit = function(containerQId, elementIdentity) {
+			StateUpdateService.goToStudioEdit(containerQId, elementIdentity);
+		}
 		
 		$scope.postDataSave = function(data) {
 			addChildToCurrentNode(data, true);
@@ -55,24 +61,30 @@ enablix.studioApp.controller('contentIndexCtrl',
 			ContentIndexService.updateNodeData($scope.contentIndex.currentNode, updatedData);
 		};
 		
-		$scope.selectChildOfCurrent = function(childIdentity) {
+		$scope.selectChildOfCurrent = function(containerQId, childIdentity) {
 			
 			if ($scope.contentIndex.currentNode.children) {
 			
 				var childrenNodes = $scope.contentIndex.currentNode.children;
 				
-				for (var i = 0; i < childrenNodes.length; i++) {
-					var child = childrenNodes[i];
-					if (child.elementIdentity == childIdentity) {
-						$scope.contentIndex.selectNodeLabel(child);
-						break;
+				if (childrenNodes.length > 0) {
+					
+					for (var i = 0; i < childrenNodes.length; i++) {
+						var child = childrenNodes[i];
+						if (child.elementIdentity == childIdentity) {
+							$scope.contentIndex.selectNodeLabel(child);
+							break;
+						}
 					}
+					
+				} else {
+					StateUpdateService.goToStudioDetail(containerQId, childIdentity);
 				}
 			}
 		};
 		
-		$scope.goToContentDetail = function(elementIdentity) {
-			$scope.selectChildOfCurrent(elementIdentity);
+		$scope.goToContentDetail = function(containerQId, elementIdentity) {
+			$scope.selectChildOfCurrent(containerQId, elementIdentity);
 		};
 		
 	}]);

@@ -12,7 +12,7 @@ enablix.studioApp.controller('ContentDetailCtrl',
 		$scope.pageHeading = $scope.containerDef.label + " detail";
 		
 		$scope.navToEdit = function() {
-			StateUpdateService.goToStudioEdit(containerQId, elementIdentity);
+			$scope.goToDetailEdit(containerQId, elementIdentity);
 		}
 		
 		ContentDataService.getContentRecordData(enablix.templateId, containerQId, elementIdentity, 
