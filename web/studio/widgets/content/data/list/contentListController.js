@@ -1,6 +1,6 @@
 enablix.studioApp.controller('ContentListCtrl', 
-			['$scope', '$stateParams', 'ContentDataService', 'ContentTemplateService', 'StateUpdateService', 'StudioSetupService',
-	function( $scope,   $stateParams,   ContentDataService,   ContentTemplateService,   StateUpdateService,   StudioSetupService) {
+			['$scope', '$stateParams', 'ContentDataService', 'ContentTemplateService', 'StateUpdateService', 'StudioSetupService', 'Notification',
+	function( $scope,   $stateParams,   ContentDataService,   ContentTemplateService,   StateUpdateService,   StudioSetupService,   Notification) {
 		
 		var containerQId = $stateParams.containerQId;
 		var parentIdentity = $stateParams.parentIdentity;
@@ -49,7 +49,8 @@ enablix.studioApp.controller('ContentListCtrl',
 						$scope.listData = data;
 					}, 
 					function(data) {
-						alert('Error retrieving list data');
+						//alert('Error retrieving list data');
+						Notification.error({message: "Error retrieving list data", delay: null});
 					});
 		});
 		

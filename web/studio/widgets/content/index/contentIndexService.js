@@ -1,6 +1,6 @@
 enablix.studioApp.factory('ContentIndexService', 
-	[	'RESTService', 'ContentDataService', 'ContentTemplateService',
-	 	function(RESTService, ContentDataService, ContentTemplateService) {
+	[	'RESTService', 'ContentDataService', 'ContentTemplateService', 'Notification',
+	 	function(RESTService, ContentDataService, ContentTemplateService, Notification) {
 		
 			var templateId = "";
 			
@@ -48,7 +48,9 @@ enablix.studioApp.factory('ContentIndexService',
 						});
 						
 					}, function(data) {
-						alert("Error retrieving content data for template [" + templateId + ", " + indxItem.qualifiedId + "]");
+						Notification.error({message: "Error retrieving content data for template [" 
+												+ templateId + ", " + indxItem.qualifiedId + "]", delay: null});
+						//alert("Error retrieving content data for template [" + templateId + ", " + indxItem.qualifiedId + "]");
 					});
 					
 				});

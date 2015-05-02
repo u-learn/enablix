@@ -1,6 +1,6 @@
 enablix.studioApp.controller('ContentEditCtrl', 
-			['$scope', '$stateParams', 'ContentDataService', 'ContentTemplateService', 'StateUpdateService', 'StudioSetupService',
-	function( $scope,   $stateParams,   ContentDataService,   ContentTemplateService,   StateUpdateService,   StudioSetupService) {
+			['$scope', '$stateParams', 'ContentDataService', 'ContentTemplateService', 'StateUpdateService', 'StudioSetupService', 'Notification', 
+	function( $scope,   $stateParams,   ContentDataService,   ContentTemplateService,   StateUpdateService,   StudioSetupService,   Notification) {
 		
 		var containerQId = $stateParams.containerQId;
 		var elementIdentity = $stateParams.elementIdentity;
@@ -18,7 +18,8 @@ enablix.studioApp.controller('ContentEditCtrl',
 					$scope.containerData = angular.copy(data);
 				}, 
 				function(data) {
-					alert('Error retrieving record data');
+					//alert('Error retrieving record data');
+					Notification.error({message: "Error retrieving record data", delay: null});
 				});
 		
 		$scope.saveContentData = function() {
@@ -29,12 +30,14 @@ enablix.studioApp.controller('ContentEditCtrl',
 					enablix.templateId, containerQId, 
 					null, dataToSave, 
 					function(data) {
-						alert("Update successfully!");
+						//alert("Update successfully!");
+						Notification.primary("Updated successfully!");
 						$scope.updateCurrentNodeData(data);
 						StateUpdateService.goToStudioDetail(containerQId, elementIdentity);
 					}, 
 					function (data) {
-						alert("Error updating data");
+						//alert("Error updating data");
+						Notification.error({message: "Error updating data", delay: null});
 					});
 		};
 	}

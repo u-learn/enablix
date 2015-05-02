@@ -1,6 +1,6 @@
 enablix.studioApp.controller('ContentDetailCtrl', 
-			['$scope', '$stateParams', 'ContentDataService', 'ContentTemplateService', 'StateUpdateService', 'StudioSetupService',
-	function( $scope,   $stateParams,   ContentDataService,   ContentTemplateService,   StateUpdateService,   StudioSetupService) {
+			['$scope', '$stateParams', 'ContentDataService', 'ContentTemplateService', 'StateUpdateService', 'StudioSetupService', 'Notification',
+	function( $scope,   $stateParams,   ContentDataService,   ContentTemplateService,   StateUpdateService,   StudioSetupService,   Notification) {
 		
 		var containerQId = $stateParams.containerQId;
 		var elementIdentity = $stateParams.elementIdentity;
@@ -20,7 +20,8 @@ enablix.studioApp.controller('ContentDetailCtrl',
 					$scope.containerData = data;
 				}, 
 				function(data) {
-					alert('Error retrieving record data');
+					//alert('Error retrieving record data');
+					Notification.error({message: "Error retrieving record data", delay: null});
 				});
 		
 	}

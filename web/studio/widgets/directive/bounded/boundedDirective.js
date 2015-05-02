@@ -1,6 +1,6 @@
 enablix.studioApp.directive('ebBounded', [
-        'ContentTemplateService', 
-function(ContentTemplateService) {
+        'ContentTemplateService', 'Notification',
+function(ContentTemplateService, Notification) {
 
 	return {
 		restrict: 'E',
@@ -24,7 +24,8 @@ function(ContentTemplateService) {
 						scope.options = data;
 					},
 					function(data) {
-						alert("Error retrieving data.");
+						Notification.error({message: "Error retrieving data", delay: null});
+						//alert("Error retrieving data.");
 					});
 			
 		},

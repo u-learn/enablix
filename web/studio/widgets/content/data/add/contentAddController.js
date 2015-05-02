@@ -1,6 +1,6 @@
 enablix.studioApp.controller('ContentAddCtrl', 
-			['$scope', '$stateParams', 'ContentDataService', 'ContentTemplateService', 'StateUpdateService', 'StudioSetupService',
-	function( $scope,   $stateParams,   ContentDataService,   ContentTemplateService,   StateUpdateService,   StudioSetupService) {
+			['$scope', '$stateParams', 'ContentDataService', 'ContentTemplateService', 'StateUpdateService', 'StudioSetupService', 'Notification', 
+	function( $scope,   $stateParams,   ContentDataService,   ContentTemplateService,   StateUpdateService,   StudioSetupService, Notification) {
 		
 		var containerQId = $stateParams.containerQId;
 		var parentIdentity = $stateParams.parentIdentity;
@@ -22,11 +22,13 @@ enablix.studioApp.controller('ContentAddCtrl',
 					enablix.templateId, containerQId, 
 					parentIdentity, dataToSave, 
 					function(data) {
-						alert("Saved successfully!");
+						//alert("Saved successfully!");
+						Notification.primary("Saved successfully!");
 						$scope.postDataSave(data);
 					}, 
 					function (data) {
-						alert("Error saving data");
+						//alert("Error saving data");
+						Notification.error({message: "Error saving data", delay: null});
 					});
 		};
 	}

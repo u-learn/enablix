@@ -1,6 +1,6 @@
 enablix.studioApp.factory('ContentTemplateService', 
-	[	'RESTService',
-	 	function(RESTService) {
+	[	'RESTService', 'Notification',
+	 	function(RESTService, Notification) {
 		
 			var loadTemplate = function() {
 				
@@ -10,7 +10,8 @@ enablix.studioApp.factory('ContentTemplateService',
 						enablix.templateId = data.id;
 					}, 
 					function(resp, status) {
-						alert("Error loading content template");
+						//alert("Error loading content template");
+						Notification.error({message: "Error loading content template", delay: null});
 					});
 				
 			};

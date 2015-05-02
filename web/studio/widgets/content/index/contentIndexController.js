@@ -1,11 +1,12 @@
 enablix.studioApp.controller('contentIndexCtrl', 
-			['$scope', '$state', 'ContentIndexService', 'StateUpdateService', 
-    function( $scope,   $state,   ContentIndexService,   StateUpdateService) {
+			['$scope', '$state', 'ContentIndexService', 'StateUpdateService', 'Notification', 
+    function( $scope,   $state,   ContentIndexService,   StateUpdateService,   Notification) {
 	
 		ContentIndexService.getContentIndexData(enablix.templateId, function(data) {
 	    	$scope.indexData = data; 
 	    }, function(data) {
-	    	alert("Error fetching content index");
+	    	//alert("Error fetching content index");
+	    	Notification.error({message: "Error fetching content index", delay: null});
 	    });
 	    
 		$scope.contentIndex = $scope.contentIndex || {};
