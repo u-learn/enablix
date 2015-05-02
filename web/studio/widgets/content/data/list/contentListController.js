@@ -10,40 +10,48 @@ enablix.studioApp.controller('ContentListCtrl',
 		
 		$scope.containerDef = ContentTemplateService.getContainerDefinition(enablix.template, containerQId);
 		
+		var hiddenContentItemIds = [];
+		
+		angular.forEach(ContentTemplateService.getContainerListViewHiddenItems(containerQId), function(hiddenContentItem) {
+			hiddenContentItemIds.push(hiddenContentItem.id);
+		});
+		
 		angular.forEach($scope.containerDef.contentItem, function(containerAttr) {
 			
-			var dataType = "string";
-			
-			switch (containerAttr.type) {
-				case "TEXT":
-					dataType = "string";
-					break;
-					
-				case "NUMERIC":
-					dataType = "number";
-					break;
-					
-				case "DATE_TIME":
-					dataType = "date";
-					break;
-					
-				case "DOC":
-					dataType = "doc";
-					break;
-					
-				case "BOUNDED":
-					dataType = "select";
-					break;
+			if (!hiddenContentItemIds.contains(containerAttr.id)) {
+				
+				var dataType = "string";
+				
+				switch (containerAttr.type) {
+					case "TEXT":
+						dataType = "string";
+						break;
+						
+					case "NUMERIC":
+						dataType = "number";
+						break;
+						
+					case "DATE_TIME":
+						dataType = "date";
+						break;
+						
+					case "DOC":
+						dataType = "doc";
+						break;
+						
+					case "BOUNDED":
+						dataType = "select";
+						break;
+				}
+				
+				var header = {
+					"key" : containerAttr.id,
+					"desc" : containerAttr.label,
+					"dataType" : dataType 
+				};
+				
+				$scope.listHeaders.push(header);
 			}
-			
-			var header = {
-				"key" : containerAttr.id,
-				"desc" : containerAttr.label,
-				"dataType" : dataType 
-			};
-			
-			$scope.listHeaders.push(header);
-			
 		});
 		
 		ContentDataService.getContentData(enablix.templateId, containerQId, parentIdentity, 

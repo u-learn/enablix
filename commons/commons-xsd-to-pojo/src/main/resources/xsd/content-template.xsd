@@ -153,8 +153,19 @@
 	<xs:complexType name="containerUIDefType">
 		<xs:sequence>
 			<xs:element name="enclosure" type="childEnclosureType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="listViewConfig" type="containerListViewConfigType" minOccurs="0"/>
 		</xs:sequence>
 		<xs:attribute name="labelQualifiedId" type="xs:string"/>
+	</xs:complexType>
+	
+	<xs:complexType name="containerListViewConfigType">
+		<xs:sequence>
+			<xs:element name="hideContentItem" minOccurs="1" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:attribute name="id" type="xs:string" use="required"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
 	</xs:complexType>
 	
 	<xs:complexType name="childEnclosureType">

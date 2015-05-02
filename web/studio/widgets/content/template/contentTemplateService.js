@@ -169,6 +169,19 @@ enablix.studioApp.factory('ContentTemplateService',
 				return [];
 			}
 			
+			var getContainerListViewHiddenItems = function(_cntnrQId) {
+				
+				var cntnrUIDef = getUIDefinition(enablix.template, _cntnrQId);
+				
+				if (!isNullOrUndefined(cntnrUIDef) && !isNullOrUndefined(cntnrUIDef.container) 
+						&& !isNullOrUndefined(cntnrUIDef.container.listViewConfig)
+						&& !isNullOrUndefined(cntnrUIDef.container.listViewConfig.hideContentItem)) {
+					return cntnrUIDef.container.listViewConfig.hideContentItem;
+				}
+				
+				return [];
+			}
+			
 			return {
 				getTemplate : getTemplate,
 				getDefaultTemplate : getDefaultTemplate,
@@ -178,7 +191,8 @@ enablix.studioApp.factory('ContentTemplateService',
 				isRootContainer: isRootContainer,
 				getBoundedValueList: getBoundedValueList,
 				loadTemplate: loadTemplate,
-				getContainerEnclosures: getContainerEnclosures
+				getContainerEnclosures: getContainerEnclosures,
+				getContainerListViewHiddenItems: getContainerListViewHiddenItems
 			};
 		
 		}

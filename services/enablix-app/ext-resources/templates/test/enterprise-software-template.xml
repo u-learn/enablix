@@ -2840,6 +2840,10 @@
 					<childContainer id="solObjections"/>
 					<childContainer id="solContent"/>
 				</enclosure>
+				<listViewConfig>
+					<hideContentItem id="image"/>
+					<hideContentItem id="description"/>
+		        </listViewConfig>
 			</container>
 		</contentUIDef>
 		<contentUIDef qualifiedId="whitepaper">
