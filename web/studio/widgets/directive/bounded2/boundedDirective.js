@@ -58,7 +58,7 @@ function(ContentTemplateService, Notification) {
 						});*/
 					},
 					function(data) {
-						Notification.error({message: "Error retrieving data.", delay: null});
+						Notification.error({message: "Error retrieving data.", delay: enablix.errorMsgShowTime});
 					});
 			
 		},

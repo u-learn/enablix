@@ -11,6 +11,10 @@ enablix.studioApp.controller('refdataIndexCtrl',
 			StateUpdateService.goToRefdataList(RefdataIndexService.getCurrentContainerQId());
 		};
 		
+		$scope.postDataUpdate = function(data) {
+			StateUpdateService.goToRefdataDetail(RefdataIndexService.getCurrentContainerQId(), data.identity);
+		}
+		
 		$scope.goToAddContent = function(containerQId) {
 			StateUpdateService.goToRefdataAdd(containerQId);
 		};

@@ -19,7 +19,7 @@ enablix.studioApp.controller('ContentEditCtrl',
 				}, 
 				function(data) {
 					//alert('Error retrieving record data');
-					Notification.error({message: "Error retrieving record data", delay: null});
+					Notification.error({message: "Error retrieving record data", delay: enablix.errorMsgShowTime});
 				});
 		
 		$scope.saveContentData = function() {
@@ -32,11 +32,11 @@ enablix.studioApp.controller('ContentEditCtrl',
 					function(data) {
 						//alert("Update successfully!");
 						Notification.primary("Updated successfully!");
-						$scope.postDataSave(data);
+						$scope.postDataUpdate(data);
 					}, 
 					function (data) {
 						//alert("Error updating data");
-						Notification.error({message: "Error updating data", delay: null});
+						Notification.error({message: "Error updating data", delay: enablix.errorMsgShowTime});
 					});
 		};
 	}

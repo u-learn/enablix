@@ -24,7 +24,7 @@ function(ContentTemplateService, Notification) {
 						scope.options = data;
 					},
 					function(data) {
-						Notification.error({message: "Error retrieving data", delay: null});
+						Notification.error({message: "Error retrieving data", delay: enablix.errorMsgShowTime});
 						//alert("Error retrieving data.");
 					});
 			

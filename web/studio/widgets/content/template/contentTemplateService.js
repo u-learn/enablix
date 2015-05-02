@@ -11,7 +11,7 @@ enablix.studioApp.factory('ContentTemplateService',
 					}, 
 					function(resp, status) {
 						//alert("Error loading content template");
-						Notification.error({message: "Error loading content template", delay: null});
+						Notification.error({message: "Error loading content template", delay: enablix.errorMsgShowTime});
 					});
 				
 			};

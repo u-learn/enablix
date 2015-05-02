@@ -85,7 +85,7 @@ enablix.studioApp.factory('ContentIndexService',
 							
 						}, function(data) {
 							Notification.error({message: "Error retrieving content data for template [" 
-													+ templateId + ", " + indxItem.qualifiedId + "]", delay: null});
+													+ templateId + ", " + indxItem.qualifiedId + "]", delay: enablix.errorMsgShowTime});
 							//alert("Error retrieving content data for template [" + templateId + ", " + indxItem.qualifiedId + "]");
 						});
 					}
@@ -168,7 +168,7 @@ enablix.studioApp.factory('ContentIndexService',
 			
 			var updateNodeData = function(_treeNode, _data) {
 				if (_treeNode.containerDef && !_treeNode.containerDef.single
-						&& _treeNode.identity == _data.identity) {
+						&& _treeNode.elementIdentity == _data.identity) {
 					_treeNode.label = resolveContainerInstanceLabel(_treeNode.containerDef, _data);
 				}
 			};

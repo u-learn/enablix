@@ -21,7 +21,7 @@ enablix.studioApp.controller('ContentDetailCtrl',
 				}, 
 				function(data) {
 					//alert('Error retrieving record data');
-					Notification.error({message: "Error retrieving record data", delay: null});
+					Notification.error({message: "Error retrieving record data", delay: enablix.errorMsgShowTime});
 				});
 		
 	}

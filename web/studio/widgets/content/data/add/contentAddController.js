@@ -28,7 +28,7 @@ enablix.studioApp.controller('ContentAddCtrl',
 					}, 
 					function (data) {
 						//alert("Error saving data");
-						Notification.error({message: "Error saving data", delay: null});
+						Notification.error({message: "Error saving data", delay: enablix.errorMsgShowTime});
 					});
 		};
 	}

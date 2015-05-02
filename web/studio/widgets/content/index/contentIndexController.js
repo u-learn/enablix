@@ -6,7 +6,7 @@ enablix.studioApp.controller('contentIndexCtrl',
 	    	$scope.indexData = data; 
 	    }, function(data) {
 	    	//alert("Error fetching content index");
-	    	Notification.error({message: "Error fetching content index", delay: null});
+	    	Notification.error({message: "Error fetching content index", delay: enablix.errorMsgShowTime});
 	    });
 	    
 		$scope.contentIndex = $scope.contentIndex || {};
@@ -56,6 +56,11 @@ enablix.studioApp.controller('contentIndexCtrl',
 			
 			return childNode;
 		};
+		
+		$scope.postDataUpdate = function(data) {
+			$scope.updateCurrentNodeData(data);
+			moveToNodeDetail($scope.contentIndex.currentNode);
+		}
 		
 		$scope.updateCurrentNodeData = function(updatedData) {
 			ContentIndexService.updateNodeData($scope.contentIndex.currentNode, updatedData);

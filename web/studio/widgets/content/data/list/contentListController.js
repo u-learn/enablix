@@ -44,15 +44,16 @@ enablix.studioApp.controller('ContentListCtrl',
 			
 			$scope.listHeaders.push(header);
 			
-			ContentDataService.getContentData(enablix.templateId, containerQId, parentIdentity, 
-					function(data) {
-						$scope.listData = data;
-					}, 
-					function(data) {
-						//alert('Error retrieving list data');
-						Notification.error({message: "Error retrieving list data", delay: null});
-					});
 		});
+		
+		ContentDataService.getContentData(enablix.templateId, containerQId, parentIdentity, 
+				function(data) {
+					$scope.listData = data;
+				}, 
+				function(data) {
+					//alert('Error retrieving list data');
+					Notification.error({message: "Error retrieving list data", delay: enablix.errorMsgShowTime});
+				});
 		
 		$scope.pageHeading = $scope.containerDef.label;
 		
