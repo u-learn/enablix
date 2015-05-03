@@ -31,7 +31,7 @@ public class ParentAssociationBuilder implements ContentAssociationBuilder {
 		// then add an association to the parent collection record 
 		if (!StringUtil.isEmpty(request.parentIdentity())
 				&& !TemplateUtil.isRootContainer(template, request.contentQId()) 
-				&& TemplateUtil.isRootElement(template, request.contentQId())) {
+				&& TemplateUtil.hasOwnCollection(template, request.contentQId())) {
 			
 			String parentCollection = TemplateUtil.findParentCollectionName(template, request.contentQId());
 			

@@ -2,6 +2,7 @@ package com.enablix.app.content;
 
 import java.util.Map;
 
+import com.enablix.app.content.delete.DeleteContentRequest;
 import com.enablix.app.content.fetch.FetchContentRequest;
 import com.enablix.app.content.update.UpdateContentRequest;
 
@@ -11,6 +12,6 @@ public interface ContentDataManager {
 	
 	Object fetchDataJson(FetchContentRequest request);
 	
-	void deleteData(String templateId, String containerQId, String dataIdentity);
+	void deleteData(DeleteContentRequest request);
 	
 }

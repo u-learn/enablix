@@ -30,7 +30,7 @@ public class InsertChildContainerHandler implements ContentUpdateHandler {
 		
 		String collectionName = TemplateUtil.resolveCollectionName(template, contentQId);
 		
-		if (TemplateUtil.isRootElement(template, contentQId)) {
+		if (TemplateUtil.hasOwnCollection(template, contentQId)) {
 			
 			LOGGER.debug("Inserting new record in collection [{}]", collectionName);
 			crudService.insert(collectionName, contentDataMap);

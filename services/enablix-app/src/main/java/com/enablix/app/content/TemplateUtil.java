@@ -1,5 +1,6 @@
 package com.enablix.app.content;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -39,6 +40,24 @@ public class TemplateUtil {
 		}
 		
 		return container;
+	}
+	
+	public static List<String> getChildContainerIds(ContentTemplate template, String parentContainerQId) {
+		
+		ContainerType container = findContainer(template.getDataDefinition(), parentContainerQId);
+		
+		if (container == null) {
+			LOGGER.error("Invalid containerQId [{}] for template [{}]", parentContainerQId, template.getId());
+			throw new IllegalArgumentException("Invalid containerQId [" + parentContainerQId + "] for template ["
+					+ template.getId() + "]");
+		}
+		
+		List<String> childContainerIds = new ArrayList<>();
+		for (ContainerType child : container.getContainer()) {
+			childContainerIds.add(child.getId());
+		}
+		
+		return childContainerIds;
 	}
 	
 	private static ContainerType findContainer(List<ContainerType> containers, String containerId) {
@@ -102,7 +121,7 @@ public class TemplateUtil {
 		return false;
 	}
 	
-	public static boolean isRootElement(ContentTemplate template, String containerQId) {
+	public static boolean hasOwnCollection(ContentTemplate template, String containerQId) {
 		
 		ContainerType container = findContainer(template.getDataDefinition(), containerQId);
 		

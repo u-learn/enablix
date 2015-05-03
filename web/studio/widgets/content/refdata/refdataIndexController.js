@@ -15,6 +15,10 @@ enablix.studioApp.controller('refdataIndexCtrl',
 			StateUpdateService.goToRefdataDetail(RefdataIndexService.getCurrentContainerQId(), data.identity);
 		}
 		
+		$scope.postDataDelete = function(parentNode, deletedChildIdentity) {
+			StateUpdateService.goToRefdataList(RefdataIndexService.getCurrentContainerQId());
+		}
+		
 		$scope.goToAddContent = function(containerQId) {
 			StateUpdateService.goToRefdataAdd(containerQId);
 		};

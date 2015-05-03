@@ -23,5 +23,9 @@ public class QIdUtil {
 	public static String[] splitQId(String elementQId) {
 		return elementQId.split("\\" + ContentDataConstants.QUALIFIED_ID_SEP);
 	}
+
+	public static String createQualifiedId(String parentQualifiedId, String childId) {
+		return parentQualifiedId + ContentDataConstants.QUALIFIED_ID_SEP + childId;
+	}
 	
 }

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.enablix.app.content.ContentDataManager;
+import com.enablix.app.content.delete.DeleteContentRequest;
 import com.enablix.app.content.update.UpdateContentRequest;
 import com.enablix.app.template.web.TemplateController;
 
@@ -29,6 +30,7 @@ public class ContentDataController {
 			consumes = "application/json", produces = "application/json")
 	public Map<String, Object> updateData(@PathVariable String templateId, @PathVariable String contentQId, 
 			@PathVariable String parentIdentity, @RequestBody String jsonData) {
+		
 		LOGGER.debug("Updating content data");
 		return dataMgr.saveData(new UpdateContentRequest(templateId, parentIdentity, contentQId, jsonData));
 	}
@@ -38,8 +40,21 @@ public class ContentDataController {
 			consumes = "application/json", produces = "application/json")
 	public Map<String, Object> insertData(@PathVariable String templateId, @PathVariable String contentQId, 
 			@RequestBody String jsonData) {
+		
 		LOGGER.debug("Updating content data");
 		return dataMgr.saveData(new UpdateContentRequest(templateId, null, contentQId, jsonData));
+	}
+
+	@RequestMapping(method = RequestMethod.POST, 
+			value="/delete/t/{templateId}/c/{contentQId}/r/{recordIdentity}", 
+			consumes = "application/json", produces = "application/json")
+	public String deleteData(@PathVariable String templateId, 
+							 @PathVariable String contentQId, 
+							 @PathVariable String recordIdentity) {
+		
+		LOGGER.debug("Deleting content data");
+		dataMgr.deleteData(new DeleteContentRequest(templateId, contentQId, recordIdentity));
+		return "{\"status\": \"success\"}";
 	}
 	
 }

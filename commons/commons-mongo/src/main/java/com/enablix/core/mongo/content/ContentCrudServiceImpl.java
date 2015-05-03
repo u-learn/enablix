@@ -17,6 +17,7 @@ import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.commons.util.QIdUtil;
 import com.enablix.commons.util.StringUtil;
 import com.enablix.commons.util.json.JsonUtil;
+import com.mongodb.BasicDBObject;
 
 @Component
 public class ContentCrudServiceImpl implements ContentCrudService {
@@ -161,7 +162,8 @@ public class ContentCrudServiceImpl implements ContentCrudService {
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
-	public List<Map<String, Object>> findChildElements(String collectionName, String childFieldId, String recordIdentity) {
+	public List<Map<String, Object>> findChildElements(String collectionName, 
+			String childFieldId, String recordIdentity) {
 		
 		Map<String, Object> parentRecord = findRecord(collectionName, recordIdentity);
 		
@@ -171,6 +173,65 @@ public class ContentCrudServiceImpl implements ContentCrudService {
 		}
 		
 		return childRecords instanceof List ? (List) childRecords : new ArrayList<>();
+	}
+
+	@Override
+	public void deleteRecord(String collectionName, String recordIdentity) {
+		Query query = createIdentityQuery(null, recordIdentity);
+		mongoTemplate.remove(query, collectionName);
+		
+	}
+
+	@Override
+	public void deleteChild(String collectionName, String childQId, String childIdentity) {
+		
+		Criteria criteria = createIdentityCriteria(childQId, childIdentity);
+		Query query = Query.query(criteria);
+		
+		Update removeArrElement = new Update().pull(childQId, 
+				new BasicDBObject(ContentDataConstants.IDENTITY_KEY, childIdentity));
+		
+		// removes the element from the array
+		mongoTemplate.updateFirst(query, removeArrElement, collectionName);
+		
+	}
+
+	@Override
+	public List<String> deleteAllChild(String collectionName, String recordIdentity, String childQId) {
+		
+		List<Map<String, Object>> children = findChildElements(collectionName, childQId, recordIdentity);
+		
+		List<String> childIds = new ArrayList<>();
+		
+		for (Map<String, Object> child : children) {
+			String childIdentity = (String) child.get(ContentDataConstants.IDENTITY_KEY);
+			childIds.add(childIdentity);
+		}
+		
+		// set the child to empty array list
+		Map<String, Object> updateData = new HashMap<>();
+		updateData.put(childQId, new ArrayList<Object>());
+		
+		updateAttributes(collectionName, recordIdentity, null, updateData);
+		
+		return childIds;
+	}
+
+	@Override
+	public List<String> deleteRecordsWithParentId(String collectionName, String parentIdentity) {
+		
+		Query query = Query.query(createParentCriteria(parentIdentity));
+		
+		@SuppressWarnings("rawtypes")
+		List<HashMap> removedRecords = mongoTemplate.findAllAndRemove(query, HashMap.class, collectionName);
+		
+		List<String> recordsIds = new ArrayList<>();
+		for (Map<?,?> record : removedRecords) {
+			String childIdentity = (String) record.get(ContentDataConstants.IDENTITY_KEY);
+			recordsIds.add(childIdentity);
+		}
+		
+		return recordsIds;
 	}
 	
 }

@@ -24,5 +24,19 @@ enablix.studioApp.controller('ContentDetailCtrl',
 					Notification.error({message: "Error retrieving record data", delay: enablix.errorMsgShowTime});
 				});
 		
+		$scope.deleteRecord = function() {
+			
+			ContentDataService.deleteContentData(containerQId, elementIdentity, 
+				function(data) {
+					Notification.primary("Deleted successfully!");
+					var parentNode = $scope.getCurrentIndexNode ? $scope.getCurrentIndexNode().parentNode : null;
+					$scope.postDataDelete(parentNode, elementIdentity);
+				}, 
+				function(data) {
+					Notification.error({message: "Error deleting record", delay: enablix.errorMsgShowTime});
+				});
+			
+		}
+		
 	}
 ]);

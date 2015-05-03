@@ -11,7 +11,7 @@ enablix.studioApp.controller('contentIndexCtrl',
 	    
 		$scope.contentIndex = $scope.contentIndex || {};
 		
-		var moveToNodeDetail = function(selectedNode) {
+		var moveToNodeView = function(selectedNode) {
 			
 			if (selectedNode.type == 'container') {
 				StateUpdateService.goToStudioList(selectedNode.qualifiedId, selectedNode.elementIdentity);
@@ -21,16 +21,31 @@ enablix.studioApp.controller('contentIndexCtrl',
 				
 			} else if (selectedNode.type == 'container-instance') {
 				
-				if (selectedNode.elementIdentity == undefined || selectedNode.elementIdentity == null) {
+				if (isNullOrUndefined(selectedNode.elementIdentity)) {
 					StateUpdateService.goToStudioAdd(selectedNode.qualifiedId, selectedNode.parentIdentity);
 				} else {
 					StateUpdateService.goToStudioDetail(selectedNode.qualifiedId, selectedNode.elementIdentity);
 				}
 			}
 			
+			expandParentIndexNode(selectedNode);
 		};
 		
-		$scope.contentIndex.selectNodeCallback = moveToNodeDetail;
+		var expandParentIndexNode = function(_treeNode) {
+			if (!isNullOrUndefined(_treeNode)) {
+				expandIndexNode(_treeNode.parentNode);
+			}
+		}
+		
+		var expandIndexNode = function(_treeNode) {
+			
+			if (!isNullOrUndefined(_treeNode)) {
+				_treeNode.collapsed = false;
+				expandIndexNode(_treeNode.parentNode);
+			}
+		}
+		
+		$scope.contentIndex.selectNodeCallback = moveToNodeView;
 		
 		$scope.goToDetailEdit = function(containerQId, elementIdentity) {
 			StateUpdateService.goToStudioEdit(containerQId, elementIdentity);
@@ -46,12 +61,12 @@ enablix.studioApp.controller('contentIndexCtrl',
 		
 		var addChildToCurrentNode = function(childData, selectChildAsCurrent) {
 			
+			var currentNode = $scope.contentIndex.currentNode;
 			var childNode = ContentIndexService.addInstanceDataChild(
-					$scope.contentIndex.currentNode, 
-					$scope.contentIndex.currentNode.containerDef, childData);
+					currentNode, currentNode.containerDef, childData);
 			
 			if (selectChildAsCurrent) {
-				$scope.contentIndex.selectNodeLabel(childNode);
+				$scope.selectChildOfCurrent($scope.contentIndex.currentNode.containerDef.qualifiedId, childData.identity);
 			}
 			
 			return childNode;
@@ -62,9 +77,18 @@ enablix.studioApp.controller('contentIndexCtrl',
 			moveToNodeDetail($scope.contentIndex.currentNode);
 		}
 		
+		$scope.postDataDelete = function(parentNode, deletedChildIdentity) {
+			ContentIndexService.deleteInstanceChildNode(parentNode, deletedChildIdentity);
+			$scope.contentIndex.selectNodeLabel(parentNode);
+		}
+		
 		$scope.updateCurrentNodeData = function(updatedData) {
 			ContentIndexService.updateNodeData($scope.contentIndex.currentNode, updatedData);
 		};
+		
+		$scope.getCurrentIndexNode = function() {
+			return $scope.contentIndex.currentNode;
+		}
 		
 		$scope.selectChildOfCurrent = function(containerQId, childIdentity) {
 			

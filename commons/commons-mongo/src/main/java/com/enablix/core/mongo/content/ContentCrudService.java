@@ -24,4 +24,12 @@ public interface ContentCrudService {
 	void insertChildContainer(String collectionName, String parentIdentity, String childQId,
 			Map<String, Object> data);
 	
+	void deleteRecord(String collectionName, String recordIdentity);
+	
+	void deleteChild(String collectionName, String childQId, String childIdentity);
+	
+	List<String> deleteAllChild(String collectionName, String recordIdentity, String childQId);
+	
+	List<String> deleteRecordsWithParentId(String collectionName, String parentIdentity);
+	
 }

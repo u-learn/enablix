@@ -40,7 +40,7 @@ enablix.studioApp.factory('ContentDataService',
 	 			var params = {
  					"templateId": _templateId,
  					"contentQId": _contentQId
-	 			}
+	 			};
 	 			
 	 			if (_data.identity && _data.identity != null) {
 	 				url = "updateContainerData";
@@ -53,10 +53,22 @@ enablix.studioApp.factory('ContentDataService',
 	 			RESTService.postForData(url, params, _data, null, _onSuccess, _onError, null);
 	 		}
 	 		
+	 		var deleteContentData = function(_contentQId, _recordIdentity, _onSuccess, _onError) {
+	 			
+	 			var params = {
+	 					"templateId": enablix.template.id,
+	 					"contentQId": _contentQId,
+	 					"recordIdentity": _recordIdentity
+		 			};
+	 			
+	 			RESTService.postForData("deleteContentData", params, null, null, _onSuccess, _onError, null);
+	 		}
+	 		
 	 		return {
 	 			getContentData: getContentData,
 	 			getContentRecordData: getContentRecordData,
-	 			saveContainerData: saveContainerData
+	 			saveContainerData: saveContainerData,
+	 			deleteContentData: deleteContentData
 	 		};
 	 	}
 	 ]);
