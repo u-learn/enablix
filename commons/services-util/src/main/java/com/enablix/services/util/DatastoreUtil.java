@@ -1,4 +1,4 @@
-package com.enablix.app.content;
+package com.enablix.services.util;
 
 import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.core.commons.xsdtopojo.ContainerType;

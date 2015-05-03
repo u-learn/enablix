@@ -2837,7 +2837,6 @@
 			<container labelQualifiedId="solution.name">
 				<enclosure label="Misc">
 					<childContainer id="solFAQ"/>
-					<childContainer id="solObjections"/>
 					<childContainer id="solContent"/>
 				</enclosure>
 				<listViewConfig>

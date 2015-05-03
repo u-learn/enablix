@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.enablix.app.content.TemplateUtil;
 import com.enablix.commons.util.StringUtil;
 import com.enablix.core.commons.xsd.parser.XMLParser;
 import com.enablix.core.commons.xsd.parser.XMLParserRegistry;
@@ -20,6 +19,7 @@ import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 import com.enablix.core.commons.xsdtopojo.DataDefinitionType;
 import com.enablix.core.commons.xsdtopojo.UiDefinitionType;
 import com.enablix.core.domain.content.TemplateDocument;
+import com.enablix.services.util.TemplateUtil;
 
 @Service
 public class TemplateManagerImpl implements TemplateManager {

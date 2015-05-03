@@ -9,7 +9,6 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.enablix.app.content.DatastoreUtil;
 import com.enablix.app.content.bounded.BoundedListBuilder;
 import com.enablix.app.content.bounded.DataItem;
 import com.enablix.commons.util.StringUtil;
@@ -18,6 +17,7 @@ import com.enablix.core.commons.xsdtopojo.BoundedRefListType;
 import com.enablix.core.commons.xsdtopojo.BoundedType;
 import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 import com.enablix.core.mongo.content.ContentCrudService;
+import com.enablix.services.util.DatastoreUtil;
 
 @Component
 public class RefListBuilder implements BoundedListBuilder {

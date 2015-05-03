@@ -12,5 +12,10 @@
 	<module>commons-mongo</module>
 	<module>commons-dms</module>
 	<module>commons-security</module>
+	<module>commons-refdata-loader</module>
+	<module>manage-content-data</module>
+	<module>manage-content-template</module>
+	<module>commons-crud</module>
+	<module>services-util</module>
   </modules>
 </project>

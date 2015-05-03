@@ -6,13 +6,13 @@ import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.enablix.app.content.TemplateUtil;
 import com.enablix.app.template.service.TemplateManager;
 import com.enablix.commons.util.QIdUtil;
 import com.enablix.core.commons.xsdtopojo.BoundedType;
 import com.enablix.core.commons.xsdtopojo.ContainerType;
 import com.enablix.core.commons.xsdtopojo.ContentItemType;
 import com.enablix.core.commons.xsdtopojo.ContentTemplate;
+import com.enablix.services.util.TemplateUtil;
 
 @Component
 public class BoundedListManagerImpl implements BoundedListManager {

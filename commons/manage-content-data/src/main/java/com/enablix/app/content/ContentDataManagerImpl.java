@@ -22,6 +22,7 @@ import com.enablix.commons.util.QIdUtil;
 import com.enablix.commons.util.StringUtil;
 import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 import com.enablix.core.mongo.content.ContentCrudService;
+import com.enablix.services.util.TemplateUtil;
 
 @Component
 public class ContentDataManagerImpl implements ContentDataManager {

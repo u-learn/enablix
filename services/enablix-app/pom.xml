@@ -15,11 +15,6 @@
 	<dependencies>
 		<dependency>
 			<groupId>com.enablix.commons</groupId>
-			<artifactId>dms-api</artifactId>
-			<version>1.0-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<groupId>com.enablix.commons</groupId>
 			<artifactId>dms-disk</artifactId>
 			<version>1.0-SNAPSHOT</version>
 		</dependency>
@@ -36,6 +31,21 @@
 		<dependency>
 			<groupId>com.enablix.commons</groupId>
 			<artifactId>commons-security</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.enablix.commons</groupId>
+			<artifactId>manage-content-template</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.enablix.commons</groupId>
+			<artifactId>manage-content-data</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.enablix.commons</groupId>
+			<artifactId>commons-datafile-loader</artifactId>
 			<version>1.0-SNAPSHOT</version>
 		</dependency>
 	</dependencies>

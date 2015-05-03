@@ -74,11 +74,14 @@ enablix.studioApp.controller('contentIndexCtrl',
 		
 		$scope.postDataUpdate = function(data) {
 			$scope.updateCurrentNodeData(data);
-			moveToNodeDetail($scope.contentIndex.currentNode);
+			moveToNodeView($scope.contentIndex.currentNode);
 		}
 		
 		$scope.postDataDelete = function(parentNode, deletedChildIdentity) {
 			ContentIndexService.deleteInstanceChildNode(parentNode, deletedChildIdentity);
+			if (parentNode.type === "enclosure") {
+				parentNode = parentNode.parentNode;
+			}
 			$scope.contentIndex.selectNodeLabel(parentNode);
 		}
 		
