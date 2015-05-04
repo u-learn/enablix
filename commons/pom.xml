@@ -17,5 +17,6 @@
 	<module>manage-content-template</module>
 	<module>commons-crud</module>
 	<module>services-util</module>
+	<module>refdata-loader</module>
   </modules>
 </project>

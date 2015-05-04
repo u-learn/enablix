@@ -233,5 +233,22 @@ public class ContentCrudServiceImpl implements ContentCrudService {
 		
 		return recordsIds;
 	}
+
+	@Override
+	public void upsert(String collectionName, String elementIdentity, Map<String, Object> data) {
+		
+		Query query = createIdentityQuery(null, elementIdentity);
+		
+		Update update = new Update();
+		for (Map.Entry<String, Object> entry : data.entrySet()) {
+			if (!ContentDataConstants.IDENTITY_KEY.equals(entry.getKey())
+					&& !ID_FLD.equals(entry.getKey())) {
+				String updateKey = createArrayUpdateKey(null, entry.getKey());
+				update.set(updateKey, entry.getValue());
+			}
+		}
+
+		mongoTemplate.upsert(query, update, collectionName);
+	}
 	
 }
