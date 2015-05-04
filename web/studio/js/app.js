@@ -4,7 +4,7 @@ enablix.studioApp = angular.module("studio", ['ui.router', 'angularTreeview', 'l
 
 //enablix.templateId = "entSoftwareTemplate"; //"amlSalesTemplate";
 enablix.dateFormat = 'MM/dd/yyyy';
-enablix.errorMsgShowTime = null; // in milli-seconds 
+enablix.errorMsgShowTime = 10000; // in milli-seconds 
 
 enablix.studioApp.filter('ebDate', function($filter) {
     return function(input) {
