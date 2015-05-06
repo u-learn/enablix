@@ -223,7 +223,7 @@ public class ContentCrudServiceImpl implements ContentCrudService {
 		Query query = Query.query(createParentCriteria(parentIdentity));
 		
 		@SuppressWarnings("rawtypes")
-		List<HashMap> removedRecords = mongoTemplate.findAllAndRemove(query, HashMap.class, collectionName);
+		List<HashMap> removedRecords = mongoTemplate.findAllAndRemove(query, collectionName);
 		
 		List<String> recordsIds = new ArrayList<>();
 		for (Map<?,?> record : removedRecords) {
