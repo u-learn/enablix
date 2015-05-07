@@ -217,20 +217,23 @@ public class ContentCrudServiceImpl implements ContentCrudService {
 		return childIds;
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public List<String> deleteRecordsWithParentId(String collectionName, String parentIdentity) {
-		
+
 		Query query = Query.query(createParentCriteria(parentIdentity));
+		query.fields().include(ContentDataConstants.IDENTITY_KEY);
 		
-		@SuppressWarnings("rawtypes")
-		List<HashMap> removedRecords = mongoTemplate.findAllAndRemove(query, collectionName);
+		List<HashMap> records = mongoTemplate.find(query, HashMap.class, collectionName);
 		
 		List<String> recordsIds = new ArrayList<>();
-		for (Map<?,?> record : removedRecords) {
-			String childIdentity = (String) record.get(ContentDataConstants.IDENTITY_KEY);
+		
+		for (Map<String, Object> child : records) {
+			String childIdentity = (String) child.get(ContentDataConstants.IDENTITY_KEY);
 			recordsIds.add(childIdentity);
 		}
 		
+		mongoTemplate.remove(query, collectionName);
 		return recordsIds;
 	}
 

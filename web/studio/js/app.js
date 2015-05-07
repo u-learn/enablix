@@ -19,7 +19,7 @@ var studioAppSetup = function(StudioSetupService) {
 
 enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
 	
-	$urlRouterProvider.otherwise("/home");
+	$urlRouterProvider.otherwise("/login");
 	
 	$stateProvider
 		.state('home', {
