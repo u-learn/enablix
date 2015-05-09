@@ -1,6 +1,6 @@
 enablix.studioApp.directive('ebBounded2', [
-        'ContentTemplateService', 'Notification',
-function(ContentTemplateService, Notification) {
+        'ContentTemplateService', 'Notification', '$filter',
+function(ContentTemplateService,   Notification,   $filter) {
 
 	return {
 		restrict: 'E',
@@ -31,6 +31,7 @@ function(ContentTemplateService, Notification) {
 			
 			ContentTemplateService.getBoundedValueList(enablix.templateId, _dataDef,
 					function(data) {
+						$filter('orderBy')(data, 'label', false);
 						angular.forEach(data, function(opt) {
 							for (var i = 0; i < selectedData.length; i++) {
 								var selectVal = scope.selectValue[i];
