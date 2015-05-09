@@ -2,7 +2,11 @@
 <table class="table table-striped table-bordered table-sorting" >
 <tr ng-repeat="item in containerDef.contentItem" ng-switch="item.type">
 	<td class="col-md-2"><label>{{item.label}}</label></td>
-	<td class="col-md-6" ng-switch-when="DOC">{{containerData[item.id].name}}</td>
+	<td class="col-md-6" ng-switch-when="DOC">{{containerData[item.id].name}}&nbsp;
+		<span ng-if="containerData[item.id].name">
+			<eb-doc-download doc-value="containerData[item.id].identity"></eb-doc-download>
+		</span>
+	</td>
 	<td class="col-md-6" ng-switch-when="BOUNDED">
 		<span ng-repeat="opt in containerData[item.id]">{{opt.label}}<span ng-if="!$last">, </span></span>
 	</td>

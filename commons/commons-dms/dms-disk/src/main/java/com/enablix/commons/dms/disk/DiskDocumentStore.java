@@ -57,6 +57,7 @@ public class DiskDocumentStore implements DocumentStore<DiskDocumentMetadata, Di
 			
 			fos = new FileOutputStream(file);
 			FileCopyUtils.copy(doc.getDataStream(), fos);
+			docMetadata.setContentLength(file.length());
 			
 		} finally {
 			
@@ -70,8 +71,7 @@ public class DiskDocumentStore implements DocumentStore<DiskDocumentMetadata, Di
 	
 	@Override
 	public DiskDocument load(DiskDocumentMetadata docMetadata) {
-		// TODO Auto-generated method stub
-		return null;
+		return new DiskDocument(docMetadata);
 	}
 
 	@Override

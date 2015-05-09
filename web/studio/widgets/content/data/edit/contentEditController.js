@@ -39,5 +39,9 @@ enablix.studioApp.controller('ContentEditCtrl',
 						Notification.error({message: "Error updating data", delay: enablix.errorMsgShowTime});
 					});
 		};
+		
+		$scope.cancelOperation = function() {
+			$scope.updateCancelled($scope.containerData);
+		};
 	}
 ]);

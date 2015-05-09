@@ -5,7 +5,7 @@ enablix.studioApp.controller('refdataIndexCtrl',
 		$scope.refdataIndexData = [];
 		$scope.selectedIndexId = "";
 		
-		$scope.refdataIndexData = RefdataIndexService.getIndexData(); 
+		$scope.refdataIndexData = RefdataIndexService.getIndexData();
 		
 		$scope.postDataSave = function(data) {
 			StateUpdateService.goToRefdataList(RefdataIndexService.getCurrentContainerQId());
@@ -35,6 +35,20 @@ enablix.studioApp.controller('refdataIndexCtrl',
 		
 		$scope.goToDetailEdit = function(containerQId, elementIdentity) {
 			StateUpdateService.goToRefdataEdit(containerQId, elementIdentity);
+		}
+		
+		$scope.addCancelled = function() {
+			$scope.navToRefdataList(RefdataIndexService.getCurrentContainerQId());
+		}
+		
+		$scope.updateCancelled = function(data) {
+			StateUpdateService.goToRefdataDetail(RefdataIndexService.getCurrentContainerQId(), data.identity);
+		}
+		
+		if ($scope.refdataIndexData && $scope.refdataIndexData.length > 0) {
+			var firstRefdata = $scope.refdataIndexData[0];
+			$scope.selectedIndexId = firstRefdata.id;
+			$scope.navToRefdataList(firstRefdata.id);
 		}
 		
 	}]);

@@ -3,7 +3,7 @@
 <p>No file selected</p>
 </div>
 <div ng-show="docValue.name">
-<p>{{docValue.name}}</p>
+<p>{{docValue.name}}&nbsp;<eb-doc-download doc-value="docValue.identity"></eb-doc-download></p>
 </div>
 
 <div ng-show="uploader.queue.length != 0">

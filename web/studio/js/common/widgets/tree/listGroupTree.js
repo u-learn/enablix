@@ -47,6 +47,8 @@
 
 				var nodeLevel = attrs.nodeLevel || '0';
 				nodeLevel = parseInt(nodeLevel, 10);
+			
+				var rootLevel = nodeLevel == 0;
 				
 				var ulClass = nodeLevel == 0 ? "list-group" : "list-group inner";
 				
@@ -70,6 +72,8 @@
 				//check tree id, tree model
 				if( treeId && treeModel ) {
 
+					var defaultSelectedNode = null;
+					
 					//root node
 					if( attrs.listGroupTreeview ) {
 					
@@ -110,6 +114,7 @@
 
 					//Rendering template.
 					element.html('').append( $compile( template )( scope ) );
+					
 				}
 			}
 		};

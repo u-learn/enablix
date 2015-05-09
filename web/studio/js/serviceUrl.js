@@ -10,6 +10,7 @@ enablix.serviceURL = {
 	"updateContainerData": enablix.domainName + "/content/update/t/:templateId/c/:contentQId/",
 	"insertChildContainerData": enablix.domainName + "/content/update/t/:templateId/c/:contentQId/r/:parentIdentity",
 	"uploadDocument" : enablix.domainName + "/doc/upload",
+	"downloadDocument" : enablix.domainName + "/doc/download/",
 	"fetchBoundedRefList": enablix.domainName + "/bounded/list/:templateId/:contentQId/",
 	"deleteContentData": enablix.domainName + "/content/delete/t/:templateId/c/:contentQId/r/:recordIdentity",
 	"user": enablix.domainName + "/user",

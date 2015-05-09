@@ -9,4 +9,6 @@ public interface DocumentManager {
 
 	DocumentMetadata save(Document<?> doc) throws IOException;
 	
+	Document<DocumentMetadata> load(String docIdentity);
+	
 }

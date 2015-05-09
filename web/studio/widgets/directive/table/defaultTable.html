@@ -19,7 +19,11 @@
 			<td ng-repeat="col in tableHeaders">
 				<span ng-switch on="col.dataType">
 					<span ng-switch-when="number"><span class="text-right">{{tableRecord[col.key]}}</span></span>
-					<span ng-switch-when="doc">{{tableRecord[col.key].name}}</span>
+					<span ng-switch-when="doc">{{tableRecord[col.key].name}}
+						<span ng-if="tableRecord[col.key].name">
+							<eb-doc-download doc-value="tableRecord[col.key].identity"></eb-doc-download>
+						</span> 
+					</span>
 					<span ng-switch-when="select">
 						<span ng-repeat="opt in tableRecord[col.key]">{{opt.label}}<span ng-if="!$last">, </span></span>
 					</span>

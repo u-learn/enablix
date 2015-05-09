@@ -1,5 +1,7 @@
 package com.enablix.commons.dms.api;
 
+import java.io.InputStream;
+
 
 public abstract class Document<DM extends DocumentMetadata> {
 
@@ -12,5 +14,7 @@ public abstract class Document<DM extends DocumentMetadata> {
 	public void setMetadata(DM metadata) {
 		this.metadata = metadata;
 	}
+	
+	public abstract InputStream getDataStream();
 	
 }

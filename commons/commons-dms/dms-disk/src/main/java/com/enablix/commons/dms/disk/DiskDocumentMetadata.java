@@ -8,13 +8,19 @@ public class DiskDocumentMetadata extends DocumentMetadata {
 	// Path of the file stored on server disk
 	private String location;
 	
-	protected DiskDocumentMetadata(String name) {
-		this(null, name);
-		this.setIdentity(IdentityUtil.generateIdentity(this));
+	private long contentLength;
+	
+	private DiskDocumentMetadata() { 
+		super(null, null);
 	}
 	
-	public DiskDocumentMetadata(String identity, String name) {
-		super(identity, name);
+	protected DiskDocumentMetadata(String name, String contentType) {
+		this(null, name, contentType);
+		this.setIdentity(IdentityUtil.generateIdentity(this));
+	}
+
+	public DiskDocumentMetadata(String identity, String name, String contentType) {
+		super(identity, name, contentType);
 	}
 
 	public String getLocation() {
@@ -23,6 +29,14 @@ public class DiskDocumentMetadata extends DocumentMetadata {
 
 	public void setLocation(String location) {
 		this.location = location;
+	}
+
+	public long getContentLength() {
+		return contentLength;
+	}
+
+	public void setContentLength(long contentLength) {
+		this.contentLength = contentLength;
 	}
 	
 }

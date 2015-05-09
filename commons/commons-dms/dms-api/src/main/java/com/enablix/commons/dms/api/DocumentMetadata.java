@@ -1,28 +1,26 @@
 package com.enablix.commons.dms.api;
 
-public abstract class DocumentMetadata {
+import org.springframework.data.mongodb.core.mapping.Document;
 
-	private String identity;
-	
+import com.enablix.core.domain.BaseDocumentEntity;
+
+@Document(collection = "disk_document_metadata_ebx")
+public abstract class DocumentMetadata extends BaseDocumentEntity {
+
 	private String name;
-
-	protected DocumentMetadata(String docName) {
-		this(null, docName);
+	
+	private String contentType;
+	
+	protected DocumentMetadata(String docName, String contentType) {
+		this(null, docName, contentType);
 	}
 	
-	public DocumentMetadata(String identity, String name) {
-		this.identity = identity;
+	public DocumentMetadata(String identity, String name, String contentType) {
+		setIdentity(identity);
 		this.name = name;
+		this.contentType = contentType;
 	}
 	
-	public String getIdentity() {
-		return identity;
-	}
-
-	protected void setIdentity(String identity) {
-		this.identity = identity;
-	}
-
 	public String getName() {
 		return name;
 	}
@@ -30,5 +28,9 @@ public abstract class DocumentMetadata {
 	protected void setName(String name) {
 		this.name = name;
 	}
-	
+
+	public String getContentType() {
+		return contentType;
+	}
+
 }

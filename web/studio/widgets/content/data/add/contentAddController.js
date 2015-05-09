@@ -31,5 +31,10 @@ enablix.studioApp.controller('ContentAddCtrl',
 						Notification.error({message: "Error saving data", delay: enablix.errorMsgShowTime});
 					});
 		};
+		
+		$scope.cancelOperation = function() {
+			$scope.addCancelled();
+		};
+		
 	}
 ]);

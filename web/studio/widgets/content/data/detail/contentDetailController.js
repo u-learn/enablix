@@ -9,7 +9,7 @@ enablix.studioApp.controller('ContentDetailCtrl',
 		
 		$scope.containerDef = ContentTemplateService.getContainerDefinition(enablix.template, containerQId);
 		
-		$scope.pageHeading = $scope.containerDef.label + " detail";
+		$scope.pageHeading = $scope.containerDef.label + " Information";
 		
 		$scope.navToEdit = function() {
 			$scope.goToDetailEdit(containerQId, elementIdentity);

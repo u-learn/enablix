@@ -5,7 +5,7 @@ enablix.studioApp.controller('FileUploadCtrl',
         var uploader = $scope.uploader = new FileUploader({
             url: enablix.serviceURL.uploadDocument,
             withCredentials: true,
-            removeAfterUpload: true
+            removeAfterUpload: false
         });
 
     	
