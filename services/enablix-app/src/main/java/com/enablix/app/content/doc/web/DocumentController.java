@@ -68,7 +68,7 @@ public class DocumentController {
     	Document<DocumentMetadata> doc = docManager.load(docIdentity);
     	
         // get MIME type of the file
-        String mimeType = null; //context.getMimeType(fullPath);
+        String mimeType = doc.getMetadata().getContentType(); //context.getMimeType(fullPath);
         if (mimeType == null) {
             // set to binary type if MIME mapping not found
             mimeType = "application/octet-stream";

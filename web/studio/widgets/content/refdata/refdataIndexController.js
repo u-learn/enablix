@@ -3,7 +3,8 @@ enablix.studioApp.controller('refdataIndexCtrl',
     function( $scope,   $state,   $stateParams,   RefdataIndexService,   StateUpdateService) {
 	
 		$scope.refdataIndexData = [];
-		$scope.selectedIndexId = "";
+		$scope.selectedIndexId = $stateParams.containerQId;
+		$scope.$stateParams = $stateParams;
 		
 		$scope.refdataIndexData = RefdataIndexService.getIndexData();
 		
@@ -45,9 +46,10 @@ enablix.studioApp.controller('refdataIndexCtrl',
 			StateUpdateService.goToRefdataDetail(RefdataIndexService.getCurrentContainerQId(), data.identity);
 		}
 		
-		if ($scope.refdataIndexData && $scope.refdataIndexData.length > 0) {
+		if (isNullOrUndefined($scope.selectedIndexId) && 
+				$scope.refdataIndexData && 
+				$scope.refdataIndexData.length > 0) {
 			var firstRefdata = $scope.refdataIndexData[0];
-			$scope.selectedIndexId = firstRefdata.id;
 			$scope.navToRefdataList(firstRefdata.id);
 		}
 		

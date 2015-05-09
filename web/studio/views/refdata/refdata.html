@@ -7,7 +7,7 @@
 			<div class="panel panel-default">
 				<div class="panel-heading">Reference Data</div>
 				<div class="list-group">
-	           		<a href="#" ng-class="{'active': selectedIndexId == indx.id}" class="list-group-item" 
+	           		<a ng-class="{'active': selectedIndexId == indx.id}" class="list-group-item" 
 	           				ng-repeat="indx in refdataIndexData" 
 	          				ng-click="navToRefdataList(indx.id)">{{indx.label}}</a>
 	       		</div>

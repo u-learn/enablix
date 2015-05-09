@@ -25,7 +25,7 @@ enablix.studioApp.directive('ebDocDownload', [
 					    document.body.removeChild(link);
 					    
 					    $event.stopPropagation();
-					}
+					};
 				},
 				templateUrl : "widgets/directive/doc/download/downloadFile.html"
 			};
