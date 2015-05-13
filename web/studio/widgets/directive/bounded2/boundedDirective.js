@@ -31,7 +31,7 @@ function(ContentTemplateService,   Notification,   $filter) {
 			
 			ContentTemplateService.getBoundedValueList(enablix.templateId, _dataDef,
 					function(data) {
-						$filter('orderBy')(data, 'label', false);
+						data = $filter('orderBy')(data, 'label', false);
 						angular.forEach(data, function(opt) {
 							for (var i = 0; i < selectedData.length; i++) {
 								var selectVal = scope.selectValue[i];
@@ -45,18 +45,6 @@ function(ContentTemplateService,   Notification,   $filter) {
 					},
 					function(data) {
 						scope.options = data;
-						
-						/*angular.forEach(scope.options, function(opt) {
-
-							for (var i = 0; i < scope.selectValue.length; i++) {
-								var selectVal = scope.selectValue[i];
-								if (opt.id == selectVal.id) {
-									opt.ticked = true;
-									break;
-								} 
-							}
-							
-						});*/
 					},
 					function(data) {
 						Notification.error({message: "Error retrieving data.", delay: enablix.errorMsgShowTime});
