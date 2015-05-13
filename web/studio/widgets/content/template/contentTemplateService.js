@@ -182,6 +182,17 @@ enablix.studioApp.factory('ContentTemplateService',
 				return [];
 			}
 			
+			var getRootContainers = function() {
+				
+				if (enablix.template) {
+					return enablix.template.dataDefinition.container;
+					
+				} else {
+					Notification.error({message : "App not initialized properly", delay: enablix.errorMsgShowTime});
+					return [];
+				}
+			}
+			
 			return {
 				getTemplate : getTemplate,
 				getDefaultTemplate : getDefaultTemplate,
@@ -192,7 +203,8 @@ enablix.studioApp.factory('ContentTemplateService',
 				getBoundedValueList: getBoundedValueList,
 				loadTemplate: loadTemplate,
 				getContainerEnclosures: getContainerEnclosures,
-				getContainerListViewHiddenItems: getContainerListViewHiddenItems
+				getContainerListViewHiddenItems: getContainerListViewHiddenItems,
+				getRootContainers : getRootContainers
 			};
 		
 		}

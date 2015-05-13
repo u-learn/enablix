@@ -61,6 +61,13 @@ enablix.studioApp.factory('StateUpdateService',
 				$state.go('studio');
 	 		};
 	 		
+	 		var goToPortalContainerDetail = function(_containerQId, _elemIdentity) {
+	 			$state.go("portal.container", {
+	 				"containerQId": _containerQId,
+	 				"elementIdentity": _elemIdentity
+	 			});
+	 		}
+	 		
 	 		return {
 	 			goToStudioList: goToStudioList,
 	 			goToStudioDetail: goToStudioDetail,
@@ -72,7 +79,8 @@ enablix.studioApp.factory('StateUpdateService',
 	 			goToRefdataEdit: goToRefdataEdit,
 	 			goToHome: goToHome,
 	 			goToLogin: goToLogin,
-	 			goToStudio: goToStudio
+	 			goToStudio: goToStudio,
+	 			goToPortalContainerDetail: goToPortalContainerDetail 
 	 		};
 	 	}
 	 ]);

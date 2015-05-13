@@ -52,3 +52,27 @@ div[data-tree-model] li .selected {
     padding-right: 0;
 }
 
+.nav, .pagination, .carousel, .panel-title a { 
+	cursor: pointer; 
+}
+
+.portal-top-nav {
+	border-bottom: 1px #e8e8e8 solid;
+}
+
+.portal-top-nav .nav-pills>li>a {
+	border-radius: 0px;
+}
+
+.portal-top-nav .navbar-form {
+	margin-top: 0px;
+	margin-bottom: 2px;
+}
+
+.portal-top-nav .nav-right {
+	float: right;
+}
+
+.portal-top-nav .nav>li>a {
+  padding: 5px 15px;
+}

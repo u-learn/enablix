@@ -15,6 +15,10 @@ enablix.studioApp.controller('ContentDetailCtrl',
 			$scope.goToDetailEdit(containerQId, elementIdentity);
 		}
 		
+		$scope.navToContentList = function(parentIdentity) {
+			$scope.goToContentList(containerQId, parentIdentity);
+		};
+		
 		ContentDataService.getContentRecordData(enablix.templateId, containerQId, elementIdentity, 
 				function(data) {
 					$scope.containerData = data;

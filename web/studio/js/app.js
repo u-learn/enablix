@@ -13,7 +13,7 @@ enablix.studioApp.filter('ebDate', function($filter) {
     };
 });
 
-var studioAppSetup = function(StudioSetupService) {
+var appSetup = function(StudioSetupService) {
 	return StudioSetupService.setupStudio();
 };
 
@@ -40,7 +40,7 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvi
 			templateUrl: 'views/studio/studio.html',
 			controller: 'MainStudioCtrl',
 			resolve: {
-				setupData: studioAppSetup 
+				setupData: appSetup 
 			}
 		})
 		.state('studio.list', {
@@ -48,7 +48,7 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvi
 			templateUrl: 'views/content/content-list.html',
 			controller: 'ContentListCtrl',
 			resolve: {
-				setupData: studioAppSetup 
+				setupData: appSetup 
 			}
 		})
 		.state('studio.add', {
@@ -56,7 +56,7 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvi
 			templateUrl: 'views/content/content-add.html',
 			controller: 'ContentAddCtrl',
 			resolve: {
-				setupData: studioAppSetup 
+				setupData: appSetup 
 			}
 		})
 		.state('studio.detail', {
@@ -64,7 +64,7 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvi
 			templateUrl: 'views/content/content-detail.html',
 			controller: 'ContentDetailCtrl',
 			resolve: {
-				setupData: studioAppSetup 
+				setupData: appSetup 
 			}
 		})
 		.state('studio.edit', {
@@ -72,7 +72,7 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvi
 			templateUrl: 'views/content/content-add.html',
 			controller: 'ContentEditCtrl',
 			resolve: {
-				setupData: studioAppSetup 
+				setupData: appSetup 
 			}
 		})
 		.state('refdata', {
@@ -80,7 +80,7 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvi
 			templateUrl: 'views/refdata/refdata.html',
 			controller: 'MainStudioCtrl',
 			resolve: {
-				setupData: studioAppSetup 
+				setupData: appSetup 
 			}
 		})
 		.state('refdata.list', {
@@ -88,7 +88,7 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvi
 			templateUrl: 'views/content/content-list.html',
 			controller: 'ContentListCtrl',
 			resolve: {
-				setupData: studioAppSetup 
+				setupData: appSetup 
 			}
 		})
 		.state('refdata.add', {
@@ -96,7 +96,7 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvi
 			templateUrl: 'views/content/content-add.html',
 			controller: 'ContentAddCtrl',
 			resolve: {
-				setupData: studioAppSetup 
+				setupData: appSetup 
 			}
 		})
 		.state('refdata.detail', {
@@ -104,7 +104,7 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvi
 			templateUrl: 'views/content/content-detail.html',
 			controller: 'ContentDetailCtrl',
 			resolve: {
-				setupData: studioAppSetup 
+				setupData: appSetup 
 			}
 		})
 		.state('refdata.edit', {
@@ -112,7 +112,30 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvi
 			templateUrl: 'views/content/content-add.html',
 			controller: 'ContentEditCtrl',
 			resolve: {
-				setupData: studioAppSetup 
+				setupData: appSetup 
+			}
+		})
+		.state('portal', {
+			url: '/portal',
+			templateUrl: 'views/portal/portal.html',
+			controller: 'MainPortalCtrl',
+			resolve: {
+				setupData: appSetup 
+			}
+		})
+		.state('portal.home', {
+			url: '/home',
+			templateUrl: 'views/portal/portal-home.html',
+			resolve: {
+				setupData: appSetup 
+			}
+		})
+		.state('portal.container', {
+			url: '/container/{containerQId}/{elementIdentity}/',
+			templateUrl: 'views/portal/portal-container.html',
+			controller: 'PortalCntnrDetailCtrl',
+			resolve: {
+				setupData: appSetup 
 			}
 		});
 	
