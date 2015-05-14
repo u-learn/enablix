@@ -55,6 +55,7 @@
 	<script type="text/javascript" src="widgets/content/index/contentIndexService.js"></script>
 	<script type="text/javascript" src="widgets/content/refdata/refdataIndexService.js"></script>
 	<script type="text/javascript" src="widgets/studio/studioInitService.js"></script>
+	<script type="text/javascript" src="widgets/portal/container/index/portalIndexService.js"></script>
 	
 	<script type="text/javascript" src="js/mainController.js"></script>
 	<script type="text/javascript" src="widgets/content/index/contentIndexController.js"></script>
@@ -65,6 +66,8 @@
 	<script type="text/javascript" src="widgets/content/refdata/refdataIndexController.js"></script>
 	<script type="text/javascript" src="widgets/portal/portalController.js"></script>
 	<script type="text/javascript" src="widgets/portal/container/portalCntnrDetailController.js"></script>
+	<script type="text/javascript" src="widgets/portal/container/portalCntnrBodyCtrl.js"></script>
+	<script type="text/javascript" src="widgets/portal/container/portalCntnrRecommendedCtrl.js"></script>
 	
 </head>
 
@@ -84,7 +87,7 @@
  	</div>
     <ul ng-show="authenticated" class="nav navbar-nav navbar-right">
         <!-- <li ui-sref-active="active"><a ui-sref="home">Home</a></li> -->
-        <!-- <li ui-sref-active="active" ng-show="authenticated"><a ui-sref="portal">Portal</a></li> -->
+        <li ui-sref-active="active" ng-show="authenticated"><a ui-sref="portal">Portal</a></li>
         <li ui-sref-active="active" ng-show="authenticated"><a ui-sref="studio">Studio</a></li>
         <li ui-sref-active="active" ng-show="authenticated"><a ui-sref="refdata">Setup</a></li>
         <li ui-sref-active="active" ng-show="!authenticated"><a ui-sref="login">Login</a></li>

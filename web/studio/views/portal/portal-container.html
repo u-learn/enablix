@@ -1,1 +1,19 @@
-<h1>Portal Container</h1>
+<div class="row-fluid">
+	<div class="col-sm-2 left-nav-section">
+		<div
+	      data-list-group-treeview="true"
+	      data-tree-id="portalIndex"
+	      data-list-group-tree-model="portalIndexData"
+	      data-node-id="qualifiedId"
+	      data-node-label="label"
+	      data-node-children="children" 
+	      >
+	    </div>
+	</div>
+	<div class="col-sm-7">
+		<div ui-view></div>
+	</div>
+	<div class="col-sm-3">
+		<div ui-view="rightSection"></div>
+	</div>
+</div>

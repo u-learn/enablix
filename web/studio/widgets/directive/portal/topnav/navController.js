@@ -5,15 +5,9 @@ enablix.studioApp.controller('PortalTopNavCtrl',
 		$scope.topNavList = [];
 		$scope.$stateParams = $stateParams;
 		
-		$scope.topNavList.push({
-			"id" : "~home~",
-			"qualifiedId" : "~home~",
-			"label" : "Home",
-			"children" : [],
-		});
-		
 		$scope.navToPortalTopNavItem = function(sublistItem) {
-			StateUpdateService.goToPortalContainerDetail(sublistItem.qualifiedId, sublistItem.identity);
+			StateUpdateService.goToPortalContainerBody(sublistItem.qualifiedId, sublistItem.identity, 
+					'single', sublistItem.qualifiedId);
 		};
 		
 		var containerList = ContentTemplateService.getRootContainers();

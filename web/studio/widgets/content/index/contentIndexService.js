@@ -4,17 +4,18 @@ enablix.studioApp.factory('ContentIndexService',
 		
 			var templateId = "";
 			
-			var contentIndexTransformer = function(data) {
+			var contentIndexTransformer = function(containerList, ignoreInstanceLoad, prntContainerQId) {
 				
 				var indexData = [];
 
-				buildContentIndexFromContainer(indexData, data, null, '~root~', null);
+				var parentCntnrQId = prntContainerQId || '~root~';
+				buildContentIndexFromContainer(indexData, containerList, null, parentCntnrQId, null, ignoreInstanceLoad);
 				
 				return indexData;
 			};
 			
 			var buildContentIndexFromContainer = function(_childrenList, 
-							_containerList, _elementIdentity, _parentCntnrQId, _parentNode) {
+							_containerList, _elementIdentity, _parentCntnrQId, _parentNode, ignoreInstanceLoad) {
 			
 				var enclosures = ContentTemplateService.getContainerEnclosures(_parentCntnrQId);
 				
@@ -79,7 +80,7 @@ enablix.studioApp.factory('ContentIndexService',
 					
 					var childLabelAttrId = ContentTemplateService.getContainerLabelAttrId(enablix.template, cntnr.qualifiedId);
 					
-					if (!isNullOrUndefined(childLabelAttrId) || cntnr.single) {
+					if ((!isNullOrUndefined(childLabelAttrId) || cntnr.single) && !ignoreInstanceLoad) {
 						// add container data instance node
 						ContentDataService.getContentData(templateId, indxItem.qualifiedId, _elementIdentity, function(data) {
 							
@@ -206,11 +207,38 @@ enablix.studioApp.factory('ContentIndexService',
 				}
 			};
 			
+			var getPortalIndexForContainer = function(_containerQId, _elementIdentity) {
+				
+				var containerDef = ContentTemplateService.getContainerDefinition(enablix.template, _containerQId);
+				
+				var indexList = []
+				
+				var abtIndexItem = {
+						"id" : _elementIdentity,
+						"qualifiedId" : _containerQId,
+						"label" : "About",
+						"elementIdentity" : _elementIdentity,
+						"children" : [],
+						"containerDef": containerDef,
+						"type": "instance"
+					};
+				
+				indexList.push(abtIndexItem);
+				
+				var indxCntnrList = contentIndexTransformer(containerDef.container, true, _containerQId);
+				angular.forEach(indxCntnrList, function(indxItem) {
+					indexList.push(indxItem);
+				});
+				
+				return indexList;
+			}
+			
 			return {
 				getContentIndexData: getContentIndexData,
 				addInstanceDataChild: addInstanceDataChild,
 				updateNodeData: updateNodeData,
-				deleteInstanceChildNode: deleteInstanceChildNode
+				deleteInstanceChildNode: deleteInstanceChildNode,
+				getPortalIndexForContainer: getPortalIndexForContainer
 			};
 	 	}
 	]);

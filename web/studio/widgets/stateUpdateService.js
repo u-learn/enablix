@@ -68,6 +68,20 @@ enablix.studioApp.factory('StateUpdateService',
 	 			});
 	 		}
 	 		
+	 		var goToPortalContainerBody = function(_containerQId, _containerInstanceIdentity, 
+	 												_subCntnrType, _subContainerQId) {
+	 			$state.go("portal.container.body", {
+	 				"containerQId": _containerQId,
+	 				"elementIdentity": _containerInstanceIdentity,
+	 				"type": _subCntnrType,
+	 				"subContainerQId": _subContainerQId
+	 			});
+	 		};
+	 		
+	 		var goToPortalHome = function() {
+	 			$state.go("portal.home");
+	 		};
+	 		
 	 		return {
 	 			goToStudioList: goToStudioList,
 	 			goToStudioDetail: goToStudioDetail,
@@ -80,7 +94,9 @@ enablix.studioApp.factory('StateUpdateService',
 	 			goToHome: goToHome,
 	 			goToLogin: goToLogin,
 	 			goToStudio: goToStudio,
-	 			goToPortalContainerDetail: goToPortalContainerDetail 
+	 			goToPortalHome: goToPortalHome,
+	 			goToPortalContainerDetail: goToPortalContainerDetail,
+	 			goToPortalContainerBody: goToPortalContainerBody
 	 		};
 	 	}
 	 ]);

@@ -11,8 +11,7 @@ enablix.studioApp.factory('ContentDataService',
 	 			};
 
 	 			var resourceKey = "fetchRootData";
-	 			if (!angular.isUndefined(_parentIdentity) && _parentIdentity != null
-	 					&& _parentIdentity != "") {
+	 			if (!isNullOrUndefined(_parentIdentity) && _parentIdentity != "") {
 	 				resourceKey = "fetchChildrenData";
 	 				params["parentIdentity"] = _parentIdentity;
 	 			}

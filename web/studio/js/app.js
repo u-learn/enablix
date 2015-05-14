@@ -131,9 +131,33 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvi
 			}
 		})
 		.state('portal.container', {
-			url: '/container/{containerQId}/{elementIdentity}/',
-			templateUrl: 'views/portal/portal-container.html',
-			controller: 'PortalCntnrDetailCtrl',
+			url: '/container/{containerQId}/{elementIdentity}',
+			views: {
+				// the main template
+				'': {
+					templateUrl: 'views/portal/portal-container.html',
+					controller: 'PortalCntnrDetailCtrl',
+					resolve: {
+						setupData: appSetup 
+					}
+				},
+				
+				// right section template
+				'rightSection@portal.container' : {
+					templateUrl: 'views/portal/container/recommended-section.html',
+					controller: 'PortalCntnrRecommendedCtrl',
+					resolve: {
+						setupData: appSetup 
+					}
+				}
+			}
+		})
+		.state('portal.container.body', {
+			url: '/{type}/{subContainerQId}/',
+			templateUrl: function($stateParams) {
+				return 'views/portal/container/body-' + $stateParams.type + '.html';
+			},
+			controller: 'PortalCntnrBodyCtrl',
 			resolve: {
 				setupData: appSetup 
 			}

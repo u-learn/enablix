@@ -1,6 +1,6 @@
 enablix.studioApp.controller('MainPortalCtrl', 
-		   ['$scope', 'ContentTemplateService', 'StudioSetupService', 
-    function($scope,   ContentTemplateService,   StudioSetupService) {
-		
+		   ['$scope', 'StateUpdateService', 'StudioSetupService', 
+    function($scope,   StateUpdateService,   StudioSetupService) {
+		StateUpdateService.goToPortalHome();
 	}                                          
 ]);
