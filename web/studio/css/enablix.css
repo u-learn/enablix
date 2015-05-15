@@ -76,3 +76,7 @@ div[data-tree-model] li .selected {
 .portal-top-nav .nav>li>a {
   padding: 5px 15px;
 }
+
+.borderless tbody tr td, .borderless tbody tr th, .borderless thead tr th {
+    border: none;
+}

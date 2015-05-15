@@ -1,1 +1,15 @@
-<h1>Container Body - Single</h1>
+<table class="table borderless" >
+<tr ng-repeat="header in singleHeaders" ng-switch="header.dataType">
+	<td class="col-sm-2"><label>{{header.label}}</label></td>
+	<td class="col-sm-5" ng-switch-when="DOC">{{bodyData[header.key].name}}&nbsp;
+		<span ng-if="bodyData[header.key].name">
+			<eb-doc-download doc-value="bodyData[header.key].name"></eb-doc-download>
+		</span>
+	</td>
+	<td class="col-sm-5" ng-switch-when="BOUNDED">
+		<span ng-repeat="opt in bodyData[header.key]">{{opt.label}}<span ng-if="!$last">, </span></span>
+	</td>
+	<td class="col-sm-5" ng-switch-when="DATE_TIME">{{bodyData[header.key] | ebDate}}</td>
+	<td class="col-sm-5" ng-switch-default>{{bodyData[header.key]}}</td>
+</tr>
+</table>

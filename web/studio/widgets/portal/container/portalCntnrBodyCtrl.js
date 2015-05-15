@@ -1,6 +1,6 @@
 enablix.studioApp.controller('PortalCntnrBodyCtrl', 
-		   ['$scope', '$rootScope', '$stateParams', 'ContentDataService', 'StudioSetupService', 'Notification',
-    function($scope,   $rootScope,   $stateParams,   ContentDataService,   StudioSetupService,   Notification) {
+		   ['$scope', 'ContentTemplateService', '$stateParams', 'ContentDataService', 'StudioSetupService', 'Notification',
+    function($scope,   ContentTemplateService,   $stateParams,   ContentDataService,   StudioSetupService,   Notification) {
 
 		if (!$scope.portalIndex.currentNode) {
 			angular.forEach($scope.portalIndexData, function(indexItem) {
@@ -10,6 +10,9 @@ enablix.studioApp.controller('PortalCntnrBodyCtrl',
 				}
 			});
 		}
+		
+		$scope.containerDef = ContentTemplateService.getContainerDefinition(
+									enablix.template, $stateParams.subContainerQId);
 		
 		if ($stateParams.containerQId === $stateParams.subContainerQId) {
 			
@@ -27,11 +30,38 @@ enablix.studioApp.controller('PortalCntnrBodyCtrl',
 			ContentDataService.getContentData(enablix.templateId, $stateParams.subContainerQId, 
 					$stateParams.elementIdentity,
 					function(data) {
-						$scope.bodyData = data;
+						if ($stateParams.type == 'single' && data && data.length > 0) {
+							$scope.bodyData = data[0];
+						} else {
+							$scope.bodyData = data;
+						}
 					},
 					function(errResp) {
 						Notification.error({message: "Error retrieving data", delay: enablix.errorMsgShowTime});
 					});
 		}
+		
+		if ($stateParams.type == 'single') {
+			
+			// set up headers for the view
+			$scope.singleHeaders = [];
+			
+			angular.forEach($scope.containerDef.contentItem, function(containerAttr) {
+				
+				var header = {
+					"key" : containerAttr.id,
+					"label" : containerAttr.label,
+					"dataType" : containerAttr.type 
+				};
+				
+				$scope.singleHeaders.push(header);
+				
+			});
+			
+		} else {
+			// set up headers for the expanded and collapsed view
+		}
+		
+		
 	}                                          
 ]);

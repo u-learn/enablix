@@ -1,1 +1,14 @@
-<h1>Body Multiple</h1>
+<div class="panel panel-default" ng-init="isCollapsed = true">
+	<div class="panel-heading">
+	<span ng-click="isCollapsed = false" ng-show="isCollapsed" class="glyphicon glyphicon-chevron-right"></span>
+	<span ng-click="isCollapsed = true" ng-show="!isCollapsed" class="glyphicon glyphicon-chevron-down"></span> 
+		 heading</div>
+	<div class="panel-body">
+		<div ng-show="isCollapsed">
+	      Collapsed view
+	    </div>
+	    <div ng-show="!isCollapsed">
+	      Expanded view
+	    </div>
+	</div>
+</div>
