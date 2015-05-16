@@ -1,0 +1,13 @@
+<div ng-show="navItemList.length != 0">
+	<div class="panel panel-default">
+		<div class="list-group">
+          		<a ng-class="{'active': $stateParams.subContainerQId == indxItem.qualifiedId}" class="list-group-item" 
+          		   ng-repeat="indxItem in navItemList" 
+         		   ng-click="navToItemDetail(indxItem)"
+         		   style="cursor: pointer;">
+         			<span ng-if="indxItem.single" class="glyphicon glyphicon-list-alt"></span>
+         			<span ng-if="!indxItem.single" class="glyphicon glyphicon-chevron-right"></span>	
+         				&nbsp;{{indxItem.label}}</a>
+   		</div>
+	</div>
+</div>

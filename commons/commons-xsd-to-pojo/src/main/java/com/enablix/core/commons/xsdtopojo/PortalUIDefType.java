@@ -16,16 +16,17 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for diskDocType complex type.
+ * <p>Java class for portalUIDefType complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="diskDocType">
+ * &lt;complexType name="portalUIDefType">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="location" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="topNavigation" type="{}topNavType"/>
+ *         &lt;element name="portalBody" type="{}portalBodyType" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -35,39 +36,65 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "diskDocType", propOrder = {
-    "location"
+@XmlType(name = "portalUIDefType", propOrder = {
+    "topNavigation",
+    "portalBody"
 })
-public class DiskDocType
+public class PortalUIDefType
     implements Serializable
 {
 
     private final static long serialVersionUID = 1L;
     @XmlElement(required = true)
-    protected String location;
+    protected TopNavType topNavigation;
+    protected PortalBodyType portalBody;
 
     /**
-     * Gets the value of the location property.
+     * Gets the value of the topNavigation property.
      * 
      * @return
      *     possible object is
-     *     {@link String }
+     *     {@link TopNavType }
      *     
      */
-    public String getLocation() {
-        return location;
+    public TopNavType getTopNavigation() {
+        return topNavigation;
     }
 
     /**
-     * Sets the value of the location property.
+     * Sets the value of the topNavigation property.
      * 
      * @param value
      *     allowed object is
-     *     {@link String }
+     *     {@link TopNavType }
      *     
      */
-    public void setLocation(String value) {
-        this.location = value;
+    public void setTopNavigation(TopNavType value) {
+        this.topNavigation = value;
+    }
+
+    /**
+     * Gets the value of the portalBody property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link PortalBodyType }
+     *     
+     */
+    public PortalBodyType getPortalBody() {
+        return portalBody;
+    }
+
+    /**
+     * Sets the value of the portalBody property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link PortalBodyType }
+     *     
+     */
+    public void setPortalBody(PortalBodyType value) {
+        this.portalBody = value;
     }
 
 }

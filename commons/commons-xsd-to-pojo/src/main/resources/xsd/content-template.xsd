@@ -7,6 +7,7 @@
 			<xs:sequence>
 				<xs:element name="dataDefinition" type="dataDefinitionType"/>
 				<xs:element name="uiDefinition" type="uiDefinitionType"/>
+				<xs:element name="portalUIDefinition" type="portalUIDefType" minOccurs="0"/>
 			</xs:sequence>
 			<xs:attribute name="id" type="xs:string" use="required"/>
 		</xs:complexType>
@@ -176,6 +177,7 @@
 				</xs:complexType>
 			</xs:element>
 		</xs:sequence>
+		<xs:attribute name="id" type="xs:string" use="required"/>
 		<xs:attribute name="label" type="xs:string" use="required"/>
 	</xs:complexType>
 	
@@ -225,6 +227,60 @@
 	
 	<xs:complexType name="numericUIDefType">
 		<!-- no definition as of now -->
+	</xs:complexType>
+	
+	<!-- Portal UI definition -->
+	<xs:complexType name="portalUIDefType">
+		<xs:sequence>
+			<xs:element name="topNavigation" type="topNavType" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="portalBody" type="portalBodyType" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="topNavType">
+		<xs:sequence>
+			<xs:element name="itemContainers" type="itemContainersType" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="enclosures" type="portalTopNavEnclosuresType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="itemContainersType">
+		<xs:sequence>
+			<xs:element name="itemContainer" type="itemContainerType" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="itemContainerType">
+		<xs:attribute name="qualifiedId" type="xs:string" use="required"/>
+	</xs:complexType>
+	
+	<xs:complexType name="portalTopNavEnclosuresType">
+		<xs:sequence>
+			<xs:element name="enclosure" type="childEnclosureType" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="portalBodyType">
+		<xs:sequence>
+			<xs:element name="contentUIDef" type="portalContentUIDefType" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="portalContentUIDefType">
+		<xs:sequence>
+			<xs:element name="condensedView" type="portalContentCondensedViewType" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+		<xs:attribute name="qualifiedId" type="xs:string" use="required"/>
+	</xs:complexType>
+	
+	<xs:complexType name="portalContentCondensedViewType">
+		<xs:sequence>
+			<xs:element name="showContentItem" type="showContentItemType" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="showContentItemType">
+		<xs:attribute name="id" type="xs:string" use="required"/>
 	</xs:complexType>
 	
 </xs:schema>

@@ -1,6 +1,6 @@
 enablix.studioApp.controller('PortalTopNavCtrl',
-			['$scope', 'StateUpdateService', '$stateParams', 'ContentTemplateService', 'ContentDataService',
-    function ($scope,   StateUpdateService,   $stateParams,   ContentTemplateService,   ContentDataService) {
+			['$scope', 'StateUpdateService', '$stateParams', 'ContentTemplateService', 'ContentDataService', 'ContentUtil',
+    function ($scope,   StateUpdateService,   $stateParams,   ContentTemplateService,   ContentDataService,   ContentUtil) {
 		
 		$scope.topNavList = [];
 		$scope.$stateParams = $stateParams;
@@ -10,10 +10,12 @@ enablix.studioApp.controller('PortalTopNavCtrl',
 					'single', sublistItem.qualifiedId);
 		};
 		
-		var containerList = ContentTemplateService.getRootContainers();
-		angular.forEach(containerList, function(container) {
+		var itemContainerList = ContentTemplateService.getPortalTopNavItemContainers()
+		angular.forEach(itemContainerList, function(itemCntnr) {
 			
-			if (container.refData) {
+			var container = ContentTemplateService.getContainerDefinition(enablix.template, itemCntnr.qualifiedId);
+			
+			if (!container || container.refData) {
 				return;
 			}
 			
@@ -22,7 +24,8 @@ enablix.studioApp.controller('PortalTopNavCtrl',
 				"qualifiedId" : container.qualifiedId,
 				"label" : container.label,
 				"children" : [],
-				"containerDef" : container
+				"containerDef" : container,
+				"type": "item-container"
 			};
 			
 			$scope.topNavList.push(navItem);
@@ -42,7 +45,7 @@ enablix.studioApp.controller('PortalTopNavCtrl',
 		
 		var addNavSublistItem = function(navItem, container, subItemData) {
 			
-			var label = resolveContainerInstanceLabel(container, subItemData);
+			var label = ContentUtil.resolveContainerInstanceLabel(container, subItemData);
 			
 			var sublistItem = {
 				"identity" : subItemData.identity,
@@ -54,34 +57,20 @@ enablix.studioApp.controller('PortalTopNavCtrl',
 			
 		};
 		
-		var resolveContainerInstanceLabel = function(_containerDef, _instanceData) {
+		var enclosureList = ContentTemplateService.getPortalTopNavEnclosures();
+		angular.forEach(enclosureList, function(enclosure) {
 			
-			var labelAttrId = ContentTemplateService.getContainerLabelAttrId(enablix.template, _containerDef.qualifiedId);
-
-			for (var i = 0; i < _containerDef.contentItem.length; i++) {
-				
-				var cntItem = _containerDef.contentItem[i];
-				
-				if (cntItem.id == labelAttrId) {
-				
-					if (cntItem.type == 'TEXT') {
-						return _instanceData[labelAttrId]; 
-					
-					} else if (cntItem.type == 'BOUNDED') {
-						var bndValue = _instanceData[labelAttrId];
-						if (bndValue) {
-							return bndValue[0].label;
-						}
-					} else if (cntItem.type == 'DOC') {
-						var docValue = _instanceData[labelAttrId];
-						if (docValue) {
-							return docValue.name;
-						}
-					}
-				}
-			}
+			var navItem = {
+					"id" : enclosure.id,
+					"qualifiedId" : enclosure.id,
+					"label" : enclosure.label,
+					"children" : [],
+					"type": "enclosure",
+					"enclosureDef": enclosure
+				};
 			
-			return "";
-		};
+			$scope.topNavList.push(navItem);
+			
+		});
 		
 	}]);

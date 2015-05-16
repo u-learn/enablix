@@ -1,4 +1,7 @@
-<table class="table borderless" >
+<div class="row-fluid" ng-show="bodyData == null || bodyData == undefined || bodyData.length == 0">
+	<br><label>No data found</label>
+</div>
+<table ng-hide="bodyData == null || bodyData == undefined || bodyData.length == 0" class="table borderless" >
 <tr ng-repeat="header in singleHeaders" ng-switch="header.dataType">
 	<td class="col-sm-2"><label>{{header.label}}</label></td>
 	<td class="col-sm-5" ng-switch-when="DOC">{{bodyData[header.key].name}}&nbsp;

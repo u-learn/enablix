@@ -12,22 +12,22 @@ import java.io.Serializable;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for baseContentType complex type.
+ * <p>Java class for portalContentUIDefType complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="baseContentType">
+ * &lt;complexType name="portalContentUIDefType">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *       &lt;attribute name="id" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
- *       &lt;attribute name="qualifiedId" type="{http://www.w3.org/2001/XMLSchema}string" />
- *       &lt;attribute name="label" type="{http://www.w3.org/2001/XMLSchema}string" />
+ *       &lt;sequence>
+ *         &lt;element name="condensedView" type="{}portalContentCondensedViewType" minOccurs="0"/>
+ *       &lt;/sequence>
+ *       &lt;attribute name="qualifiedId" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
  *     &lt;/restriction>
  *   &lt;/complexContent>
  * &lt;/complexType>
@@ -36,46 +36,40 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "baseContentType")
-@XmlSeeAlso({
-    BaseContainerType.class,
-    ContentItemType.class,
-    FixedListDataType.class
+@XmlType(name = "portalContentUIDefType", propOrder = {
+    "condensedView"
 })
-public class BaseContentType
+public class PortalContentUIDefType
     implements Serializable
 {
 
     private final static long serialVersionUID = 1L;
-    @XmlAttribute(name = "id", required = true)
-    protected String id;
-    @XmlAttribute(name = "qualifiedId")
+    protected PortalContentCondensedViewType condensedView;
+    @XmlAttribute(name = "qualifiedId", required = true)
     protected String qualifiedId;
-    @XmlAttribute(name = "label")
-    protected String label;
 
     /**
-     * Gets the value of the id property.
+     * Gets the value of the condensedView property.
      * 
      * @return
      *     possible object is
-     *     {@link String }
+     *     {@link PortalContentCondensedViewType }
      *     
      */
-    public String getId() {
-        return id;
+    public PortalContentCondensedViewType getCondensedView() {
+        return condensedView;
     }
 
     /**
-     * Sets the value of the id property.
+     * Sets the value of the condensedView property.
      * 
      * @param value
      *     allowed object is
-     *     {@link String }
+     *     {@link PortalContentCondensedViewType }
      *     
      */
-    public void setId(String value) {
-        this.id = value;
+    public void setCondensedView(PortalContentCondensedViewType value) {
+        this.condensedView = value;
     }
 
     /**
@@ -100,30 +94,6 @@ public class BaseContentType
      */
     public void setQualifiedId(String value) {
         this.qualifiedId = value;
-    }
-
-    /**
-     * Gets the value of the label property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getLabel() {
-        return label;
-    }
-
-    /**
-     * Sets the value of the label property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setLabel(String value) {
-        this.label = value;
     }
 
 }

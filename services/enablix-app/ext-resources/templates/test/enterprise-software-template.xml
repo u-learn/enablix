@@ -2933,7 +2933,7 @@
 	<uiDefinition>
 		<contentUIDef qualifiedId="~root~">
 			<container>
-				<enclosure label="Web Content">
+				<enclosure id="webContent" label="Web Content">
 					<childContainer id="multimedia"/>
 					<childContainer id="whitepaper"/>
 					<childContainer id="blog"/>
@@ -2945,11 +2945,11 @@
 					<childContainer id="competeworksheets"/>
 					<childContainer id="newsinfo"/>
 				</enclosure>
-				<enclosure label="Other Content">
+				<enclosure id="otherContent" label="Other Content">
 					<childContainer id="winloss"/>
 					<childContainer id="importantslides"/>
 				</enclosure>				
-				<enclosure label="Corporate">
+				<enclosure id="corporate" label="Corporate">
 					<childContainer id="supportpolicy"/>
 					<childContainer id="nda"/>
 					<childContainer id="partneragreement"/>
@@ -3372,4 +3372,53 @@
 			<text type="long"/>
 		</contentUIDef>			
 	</uiDefinition>
+	<portalUIDefinition>
+		<topNavigation>
+			<itemContainers>
+				<itemContainer qualifiedId="solution"/>
+				<itemContainer qualifiedId="product"/>
+				<itemContainer qualifiedId="competitor"/>
+				<itemContainer qualifiedId="analyst"/>
+				<itemContainer qualifiedId="partner"/>
+			</itemContainers>
+			<enclosures>
+				<enclosure id="webContent" label="Web Content">
+					<childContainer id="multimedia"/>
+					<childContainer id="whitepaper"/>
+					<childContainer id="blog"/>
+					<childContainer id="article"/>
+					<childContainer id="infographic"/>
+					<childContainer id="webinar"/>
+					<childContainer id="ebook"/>
+					<childContainer id="newsletter"/>
+					<childContainer id="competeworksheets"/>
+					<childContainer id="newsinfo"/>
+				</enclosure>
+				<enclosure  id="otherContent" label="Other Content">
+					<childContainer id="winloss"/>
+					<childContainer id="importantslides"/>
+				</enclosure>				
+				<enclosure  id="corporate" label="Corporate">
+					<childContainer id="supportpolicy"/>
+					<childContainer id="nda"/>
+					<childContainer id="partneragreement"/>
+					<childContainer id="sow"/>
+					<childContainer id="mla"/>
+					<childContainer id="msa"/>
+					<childContainer id="orderingdoc"/>
+					<childContainer id="corporatelogo"/>
+					<childContainer id="ppttemplate"/>
+					<childContainer id="corporatecontent"/>
+				</enclosure>
+			</enclosures>
+		</topNavigation>
+		<portalBody>
+			<contentUIDef qualifiedId="solution.solSalesDeck">
+				<condensedView>
+					<showContentItem id="title"/>
+					<showContentItem id="author"/>
+				</condensedView>
+			</contentUIDef>
+		</portalBody>
+	</portalUIDefinition>
 </contentTemplate>

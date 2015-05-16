@@ -1,6 +1,6 @@
 enablix.studioApp.factory('ContentIndexService', 
-	[	'RESTService', 'ContentDataService', 'ContentTemplateService', 'Notification',
-	 	function(RESTService, ContentDataService, ContentTemplateService, Notification) {
+	[	'RESTService', 'ContentDataService', 'ContentTemplateService', 'ContentUtil', 'Notification',
+	 	function(RESTService, ContentDataService, ContentTemplateService, ContentUtil, Notification) {
 		
 			var templateId = "";
 			
@@ -116,7 +116,7 @@ enablix.studioApp.factory('ContentIndexService',
 					
 					if (!isNullOrUndefined(childLabelAttrId)) {
 					
-						var nodeLabel = resolveContainerInstanceLabel(_containerDef, dataItem); 
+						var nodeLabel = ContentUtil.resolveContainerInstanceLabel(_containerDef, dataItem); 
 						
 						var indxDataItem = {
 							"id" : dataItem.identity,
@@ -143,36 +143,6 @@ enablix.studioApp.factory('ContentIndexService',
 				return indxDataItem;
 			} 
 			
-			var resolveContainerInstanceLabel = function(_containerDef, _instanceData) {
-				
-				var labelAttrId = ContentTemplateService.getContainerLabelAttrId(enablix.template, _containerDef.qualifiedId);
-
-				for (var i = 0; i < _containerDef.contentItem.length; i++) {
-					
-					var cntItem = _containerDef.contentItem[i];
-					
-					if (cntItem.id == labelAttrId) {
-					
-						if (cntItem.type == 'TEXT') {
-							return _instanceData[labelAttrId]; 
-						
-						} else if (cntItem.type == 'BOUNDED') {
-							var bndValue = _instanceData[labelAttrId];
-							if (bndValue) {
-								return bndValue[0].label;
-							}
-						} else if (cntItem.type == 'DOC') {
-							var docValue = _instanceData[labelAttrId];
-							if (docValue) {
-								return docValue.name;
-							}
-						}
-					}
-				}
-				
-				return "";
-			};
-
 			var getContentIndexData = function(_templateId, _onSuccess, _onError) {
 				templateId = _templateId;
 				var params = {"templateId": _templateId};
@@ -182,7 +152,7 @@ enablix.studioApp.factory('ContentIndexService',
 			var updateNodeData = function(_treeNode, _data) {
 				if (_treeNode.containerDef && !_treeNode.containerDef.single
 						&& _treeNode.elementIdentity == _data.identity) {
-					_treeNode.label = resolveContainerInstanceLabel(_treeNode.containerDef, _data);
+					_treeNode.label = ContentUtil.resolveContainerInstanceLabel(_treeNode.containerDef, _data);
 				}
 			};
 			

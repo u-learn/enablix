@@ -2,15 +2,6 @@ enablix.studioApp.controller('PortalCntnrBodyCtrl',
 		   ['$scope', 'ContentTemplateService', '$stateParams', 'ContentDataService', 'StudioSetupService', 'Notification',
     function($scope,   ContentTemplateService,   $stateParams,   ContentDataService,   StudioSetupService,   Notification) {
 
-		if (!$scope.portalIndex.currentNode) {
-			angular.forEach($scope.portalIndexData, function(indexItem) {
-				if (indexItem.qualifiedId === $stateParams.subContainerQId) {
-					indexItem.selected = 'selected';
-					$scope.portalIndex.currentNode = indexItem;
-				}
-			});
-		}
-		
 		$scope.containerDef = ContentTemplateService.getContainerDefinition(
 									enablix.template, $stateParams.subContainerQId);
 		

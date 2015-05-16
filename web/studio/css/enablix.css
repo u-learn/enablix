@@ -44,12 +44,20 @@ div[data-tree-model] li .selected {
     padding-right: 0;
 }
 
-.left-nav-section {
-	min-height: 90vh; /* viewport height */
-    max-height: 90vh;
+.portal-left-nav-section, .left-nav-section {
     overflow-y: auto;
     padding-left: 0;
     padding-right: 0;
+}
+
+.left-nav-section {
+	min-height: 90vh; /* viewport height */
+    max-height: 90vh;
+}
+
+.portal-left-nav-section {
+	min-height: 80vh; /* viewport height */
+    max-height: 80vh;
 }
 
 .nav, .pagination, .carousel, .panel-title a { 
@@ -66,7 +74,7 @@ div[data-tree-model] li .selected {
 
 .portal-top-nav .navbar-form {
 	margin-top: 0px;
-	margin-bottom: 2px;
+	margin-bottom: 0px;
 }
 
 .portal-top-nav .nav-right {
@@ -79,4 +87,17 @@ div[data-tree-model] li .selected {
 
 .borderless tbody tr td, .borderless tbody tr th, .borderless thead tr th {
     border: none;
+}
+
+.breadcrumb>li+li:before {
+  content: "\003e";
+}
+
+.breadcrumb {
+	margin-bottom: 0px;
+	background-color: transparent;
+}
+
+label {
+	color: rgb(119, 119, 119);
 }

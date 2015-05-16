@@ -18,16 +18,16 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for dataDefinitionType complex type.
+ * <p>Java class for portalTopNavEnclosuresType complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="dataDefinitionType">
+ * &lt;complexType name="portalTopNavEnclosuresType">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="container" type="{}containerType" maxOccurs="unbounded"/>
+ *         &lt;element name="enclosure" type="{}childEnclosureType" maxOccurs="unbounded"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -37,44 +37,44 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "dataDefinitionType", propOrder = {
-    "container"
+@XmlType(name = "portalTopNavEnclosuresType", propOrder = {
+    "enclosure"
 })
-public class DataDefinitionType
+public class PortalTopNavEnclosuresType
     implements Serializable
 {
 
     private final static long serialVersionUID = 1L;
     @XmlElement(required = true)
-    protected List<ContainerType> container;
+    protected List<ChildEnclosureType> enclosure;
 
     /**
-     * Gets the value of the container property.
+     * Gets the value of the enclosure property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the container property.
+     * This is why there is not a <CODE>set</CODE> method for the enclosure property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getContainer().add(newItem);
+     *    getEnclosure().add(newItem);
      * </pre>
      * 
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link ContainerType }
+     * {@link ChildEnclosureType }
      * 
      * 
      */
-    public List<ContainerType> getContainer() {
-        if (container == null) {
-            container = new ArrayList<ContainerType>();
+    public List<ChildEnclosureType> getEnclosure() {
+        if (enclosure == null) {
+            enclosure = new ArrayList<ChildEnclosureType>();
         }
-        return this.container;
+        return this.enclosure;
     }
 
 }

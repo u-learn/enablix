@@ -1,0 +1,6 @@
+<ol class="breadcrumb">
+  <li ng-class="{'active' : $last}" ng-repeat="breadcrumbItem in breadcrumbList">
+  	<a ng-if="!$last">{{breadcrumbItem}}</a>
+  	<span ng-if="$last">{{breadcrumbItem}}</span>
+  </li>
+</ol>

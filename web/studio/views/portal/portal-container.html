@@ -1,19 +1,9 @@
-<div class="row-fluid" style="margin-left: 10px; margin-top: 10px; margin-bottom: 10px;">
-	<label>Solution</label> <span>&gt;</span> <label>AML</label>
-</div>
+<eb-portal-breadcrumb></eb-portal-breadcrumb>
 <div class="row-fluid">
-	<div class="col-sm-2 left-nav-section">
-		<div
-	      data-list-group-treeview="true"
-	      data-tree-id="portalIndex"
-	      data-list-group-tree-model="portalIndexData"
-	      data-node-id="qualifiedId"
-	      data-node-label="label"
-	      data-node-children="children" 
-	      >
-	    </div>
+	<div class="col-sm-3 portal-left-nav-section">
+		<eb-portal-left-nav></eb-portal-left-nav>
 	</div>
-	<div class="col-sm-7">
+	<div class="col-sm-6">
 		<div ui-view></div>
 	</div>
 	<div class="col-sm-3">

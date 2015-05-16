@@ -48,6 +48,10 @@
 	<script type="text/javascript" src="widgets/directive/doc/download/downloadDirective.js"></script>
 	<script type="text/javascript" src="widgets/directive/portal/topnav/navController.js"></script>
 	<script type="text/javascript" src="widgets/directive/portal/topnav/navDirective.js"></script>
+	<script type="text/javascript" src="widgets/directive/portal/leftnav/navController.js"></script>
+	<script type="text/javascript" src="widgets/directive/portal/leftnav/navDirective.js"></script>
+	<script type="text/javascript" src="widgets/directive/portal/breadcrumb/breadcrumbDirective.js"></script>
+	<script type="text/javascript" src="widgets/directive/portal/breadcrumb/breadcrumbController.js"></script>
 	
 	<script type="text/javascript" src="widgets/stateUpdateService.js"></script>
 	<script type="text/javascript" src="widgets/content/template/contentTemplateService.js"></script>
@@ -56,6 +60,7 @@
 	<script type="text/javascript" src="widgets/content/refdata/refdataIndexService.js"></script>
 	<script type="text/javascript" src="widgets/studio/studioInitService.js"></script>
 	<script type="text/javascript" src="widgets/portal/container/index/portalIndexService.js"></script>
+	<script type="text/javascript" src="widgets/content/contentUtil.js"></script>
 	
 	<script type="text/javascript" src="js/mainController.js"></script>
 	<script type="text/javascript" src="widgets/content/index/contentIndexController.js"></script>
@@ -87,7 +92,7 @@
  	</div>
     <ul ng-show="authenticated" class="nav navbar-nav navbar-right">
         <!-- <li ui-sref-active="active"><a ui-sref="home">Home</a></li> -->
-        <!-- <li ui-sref-active="active" ng-show="authenticated"><a ui-sref="portal">Portal</a></li> -->
+        <li ui-sref-active="active" ng-show="authenticated"><a ui-sref="portal">Portal</a></li>
         <li ui-sref-active="active" ng-show="authenticated"><a ui-sref="studio">Studio</a></li>
         <li ui-sref-active="active" ng-show="authenticated"><a ui-sref="refdata">Setup</a></li>
         <li ui-sref-active="active" ng-show="!authenticated"><a ui-sref="login">Login</a></li>

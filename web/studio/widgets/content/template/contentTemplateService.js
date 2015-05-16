@@ -193,6 +193,20 @@ enablix.studioApp.factory('ContentTemplateService',
 				}
 			}
 			
+			var getPortalTopNavItemContainers = function() {
+				if (enablix.template.portalUIDefinition) {
+					return enablix.template.portalUIDefinition.topNavigation.itemContainers.itemContainer;
+				}
+				return [];
+			}
+			
+			var getPortalTopNavEnclosures = function() {
+				if (enablix.template.portalUIDefinition && enablix.template.portalUIDefinition.topNavigation.enclosures) {
+					return enablix.template.portalUIDefinition.topNavigation.enclosures.enclosure;
+				}
+				return [];
+			}
+			
 			return {
 				getTemplate : getTemplate,
 				getDefaultTemplate : getDefaultTemplate,
@@ -204,7 +218,9 @@ enablix.studioApp.factory('ContentTemplateService',
 				loadTemplate: loadTemplate,
 				getContainerEnclosures: getContainerEnclosures,
 				getContainerListViewHiddenItems: getContainerListViewHiddenItems,
-				getRootContainers : getRootContainers
+				getRootContainers : getRootContainers,
+				getPortalTopNavItemContainers: getPortalTopNavItemContainers,
+				getPortalTopNavEnclosures : getPortalTopNavEnclosures
 			};
 		
 		}
