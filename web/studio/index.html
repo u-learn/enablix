@@ -37,6 +37,9 @@
 	<script type="text/javascript" src="js/serviceUrl.js"></script>
 	<script type="text/javascript" src="js/common/restService.js"></script>
 	<script type="text/javascript" src="js/common/login/loginCtrl.js"></script>
+	<script type="text/javascript" src="widgets/filter/appFilterModule.js"></script>
+	<script type="text/javascript" src="widgets/filter/contentFormatFilter.js"></script>
+	<script type="text/javascript" src="widgets/filter/dateFilter.js"></script>
 
 	<script type="text/javascript" src="widgets/directive/text/textInputDirective.js"></script>
 	<script type="text/javascript" src="widgets/directive/table/tableDirective.js"></script>
@@ -92,7 +95,7 @@
  	</div>
     <ul ng-show="authenticated" class="nav navbar-nav navbar-right">
         <!-- <li ui-sref-active="active"><a ui-sref="home">Home</a></li> -->
-        <!-- <li ui-sref-active="active" ng-show="authenticated"><a ui-sref="portal">Portal</a></li> -->
+        <li ui-sref-active="active" ng-show="authenticated"><a ui-sref="portal">Portal</a></li>
         <li ui-sref-active="active" ng-show="authenticated"><a ui-sref="studio">Studio</a></li>
         <li ui-sref-active="active" ng-show="authenticated"><a ui-sref="refdata">Setup</a></li>
         <li ui-sref-active="active" ng-show="!authenticated"><a ui-sref="login">Login</a></li>

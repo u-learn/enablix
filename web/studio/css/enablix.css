@@ -66,10 +66,12 @@ div[data-tree-model] li .selected {
 
 .portal-top-nav {
 	border-bottom: 1px #e8e8e8 solid;
+	background-color: #f5f5f5;
 }
 
 .portal-top-nav .nav-pills>li>a {
 	border-radius: 0px;
+	font-weight: bold;
 }
 
 .portal-top-nav .navbar-form {
@@ -98,6 +100,16 @@ div[data-tree-model] li .selected {
 	background-color: transparent;
 }
 
-label {
+label, h4 {
 	color: rgb(119, 119, 119);
+}
+
+.panel .table {
+	margin-bottom: 0px;
+}
+
+.portal-home-body {
+	margin-left: 10px;
+	margin-right: 10px;
+	margin-top: 20px;
 }

@@ -9,26 +9,23 @@
 package com.enablix.core.commons.xsdtopojo;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for containerListViewConfigType complex type.
+ * <p>Java class for containerPortalConfigType complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="containerListViewConfigType">
+ * &lt;complexType name="containerPortalConfigType">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="hideContentItem" maxOccurs="unbounded">
+ *         &lt;element name="headingContentItem" minOccurs="0">
  *           &lt;complexType>
  *             &lt;complexContent>
  *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
@@ -37,6 +34,7 @@ import javax.xml.bind.annotation.XmlType;
  *             &lt;/complexContent>
  *           &lt;/complexType>
  *         &lt;/element>
+ *         &lt;element name="condensedView" type="{}portalContentCondensedViewType" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -46,44 +44,64 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "containerListViewConfigType", propOrder = {
-    "hideContentItem"
+@XmlType(name = "containerPortalConfigType", propOrder = {
+    "headingContentItem",
+    "condensedView"
 })
-public class ContainerListViewConfigType
+public class ContainerPortalConfigType
     implements Serializable
 {
 
     private final static long serialVersionUID = 1L;
-    @XmlElement(required = true)
-    protected List<ContainerListViewConfigType.HideContentItem> hideContentItem;
+    protected ContainerPortalConfigType.HeadingContentItem headingContentItem;
+    protected PortalContentCondensedViewType condensedView;
 
     /**
-     * Gets the value of the hideContentItem property.
+     * Gets the value of the headingContentItem property.
      * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the hideContentItem property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getHideContentItem().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link ContainerListViewConfigType.HideContentItem }
-     * 
-     * 
+     * @return
+     *     possible object is
+     *     {@link ContainerPortalConfigType.HeadingContentItem }
+     *     
      */
-    public List<ContainerListViewConfigType.HideContentItem> getHideContentItem() {
-        if (hideContentItem == null) {
-            hideContentItem = new ArrayList<ContainerListViewConfigType.HideContentItem>();
-        }
-        return this.hideContentItem;
+    public ContainerPortalConfigType.HeadingContentItem getHeadingContentItem() {
+        return headingContentItem;
+    }
+
+    /**
+     * Sets the value of the headingContentItem property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link ContainerPortalConfigType.HeadingContentItem }
+     *     
+     */
+    public void setHeadingContentItem(ContainerPortalConfigType.HeadingContentItem value) {
+        this.headingContentItem = value;
+    }
+
+    /**
+     * Gets the value of the condensedView property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link PortalContentCondensedViewType }
+     *     
+     */
+    public PortalContentCondensedViewType getCondensedView() {
+        return condensedView;
+    }
+
+    /**
+     * Sets the value of the condensedView property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link PortalContentCondensedViewType }
+     *     
+     */
+    public void setCondensedView(PortalContentCondensedViewType value) {
+        this.condensedView = value;
     }
 
 
@@ -106,7 +124,7 @@ public class ContainerListViewConfigType
      */
     @XmlAccessorType(XmlAccessType.FIELD)
     @XmlType(name = "")
-    public static class HideContentItem
+    public static class HeadingContentItem
         implements Serializable
     {
 

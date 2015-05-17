@@ -7,7 +7,12 @@ enablix.studioApp.factory('ContentUtil',
 				
 				var labelAttrId = ContentTemplateService.getContainerLabelAttrId(
 										enablix.template, _containerDef.qualifiedId);
-
+				
+				return findLabelValue(labelAttrId, _containerDef, _instanceData);
+			};
+			
+			var findLabelValue = function(labelAttrId, _containerDef, _instanceData) {
+				
 				for (var i = 0; i < _containerDef.contentItem.length; i++) {
 					
 					var cntItem = _containerDef.contentItem[i];
@@ -32,10 +37,23 @@ enablix.studioApp.factory('ContentUtil',
 				}
 				
 				return "";
-			};
+			}
 	 		
+			var resolveContainerInstancePortalLabel = function(_containerDef, _instanceData) {
+				
+				var portalLabelAttrId = ContentTemplateService.getPortalHeadingContentItem(_containerDef.qualifiedId);
+				
+				if (isNullOrUndefined(portalLabelAttrId)) {
+					portalLabelAttrId = ContentTemplateService.getContainerLabelAttrId(
+											enablix.template, _containerDef.qualifiedId);
+				}
+				
+				return findLabelValue(portalLabelAttrId, _containerDef, _instanceData);
+			};
+				
 	 		return {
-	 			resolveContainerInstanceLabel: resolveContainerInstanceLabel
+	 			resolveContainerInstanceLabel: resolveContainerInstanceLabel,
+	 			resolveContainerInstancePortalLabel: resolveContainerInstancePortalLabel
 	 		};
 	 	}
 	 ]);

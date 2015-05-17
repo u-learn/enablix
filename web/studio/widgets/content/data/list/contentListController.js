@@ -20,34 +20,10 @@ enablix.studioApp.controller('ContentListCtrl',
 			
 			if (!hiddenContentItemIds.contains(containerAttr.id)) {
 				
-				var dataType = "string";
-				
-				switch (containerAttr.type) {
-					case "TEXT":
-						dataType = "string";
-						break;
-						
-					case "NUMERIC":
-						dataType = "number";
-						break;
-						
-					case "DATE_TIME":
-						dataType = "date";
-						break;
-						
-					case "DOC":
-						dataType = "doc";
-						break;
-						
-					case "BOUNDED":
-						dataType = "select";
-						break;
-				}
-				
 				var header = {
 					"key" : containerAttr.id,
 					"desc" : containerAttr.label,
-					"dataType" : dataType 
+					"dataType" : containerAttr.type 
 				};
 				
 				$scope.listHeaders.push(header);

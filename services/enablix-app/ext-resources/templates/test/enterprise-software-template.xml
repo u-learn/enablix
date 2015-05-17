@@ -3007,6 +3007,17 @@
 				</listViewConfig>
 			</container>
 		</contentUIDef>
+		<contentUIDef qualifiedId="solution.solSalesDeck">
+			<container>
+				<portalConfig>
+					<headingContentItem id="title"/>
+					<condensedView>
+						<showContentItem id="title"/>
+						<showContentItem id="author"/>
+					</condensedView>
+				</portalConfig>
+			</container>
+		</contentUIDef>
 		<contentUIDef qualifiedId="solution.solFAQ.answer">
 			<text type="long"/>
 		</contentUIDef>
@@ -3412,13 +3423,5 @@
 				</enclosure>
 			</enclosures>
 		</topNavigation>
-		<portalBody>
-			<contentUIDef qualifiedId="solution.solSalesDeck">
-				<condensedView>
-					<showContentItem id="title"/>
-					<showContentItem id="author"/>
-				</condensedView>
-			</contentUIDef>
-		</portalBody>
 	</portalUIDefinition>
 </contentTemplate>

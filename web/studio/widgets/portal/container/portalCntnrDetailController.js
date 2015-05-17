@@ -1,6 +1,7 @@
 enablix.studioApp.controller('PortalCntnrDetailCtrl', 
-		   ['$scope', 'StateUpdateService', '$stateParams', 'PortalContainerIndexService', 'StudioSetupService', 
-    function($scope,   StateUpdateService,   $stateParams,   PortalContainerIndexService,   StudioSetupService) {
+		   ['$scope', 'ContentTemplateService', '$stateParams', 'ContentDataService', 'StudioSetupService', 
+    function($scope,   ContentTemplateService,   $stateParams,   ContentDataService,   StudioSetupService) {
+
 		
 	}                                          
 ]);

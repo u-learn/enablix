@@ -1,14 +1,34 @@
-<div class="panel panel-default" ng-init="isCollapsed = true">
+<!-- <div>
+	<h4>{{mainContainerLabel}}: {{containerDef.label}}</h4>
+</div> -->
+<div ng-if="bodyData.length == 0">
+	<br><label>No data found</label>
+</div>
+<div ng-repeat="dataItem in bodyData" class="panel panel-default" ng-init="dataItem.collapsed = true">
 	<div class="panel-heading">
-	<span ng-click="isCollapsed = false" ng-show="isCollapsed" class="glyphicon glyphicon-chevron-right"></span>
-	<span ng-click="isCollapsed = true" ng-show="!isCollapsed" class="glyphicon glyphicon-chevron-down"></span> 
-		&nbsp;heading</div>
-	<div class="panel-body">
-		<div ng-show="isCollapsed">
-	      Collapsed view
-	    </div>
-	    <div ng-show="!isCollapsed">
-	      Expanded view
-	    </div>
+		<span ng-click="dataItem.collapsed = false" ng-show="dataItem.collapsed" class="glyphicon glyphicon-chevron-right"></span>
+		<span ng-click="dataItem.collapsed = true" ng-show="!dataItem.collapsed" class="glyphicon glyphicon-chevron-down"></span> 
+		<label>{{dataItem.headingLabel}}</label>
+		<span class="pull-right" ng-if="dataItem.downloadDocIdentity">
+			<eb-doc-download doc-value="dataItem.downloadDocIdentity"></eb-doc-download>
+		</span>
 	</div>
+	<div ng-show="dataItem.collapsed">
+      <table class="table borderless" >
+		<tr ng-repeat="header in multiCondensedViewHeaders" ng-switch="$index % 2">
+			<td ng-switch-when="0" class="col-sm-1 text-right"><label>{{header.label}}:</label></td>
+			<td ng-switch-when="0" class="col-sm-2">{{dataItem[header.key] | ebxFormatData: header.dataType}}</td>
+			<td ng-switch-when="0" ng-show="multiCondensedViewHeaders[$index + 1]" class="col-sm-1 text-right"><label>{{multiCondensedViewHeaders[$index + 1].label}}:</label></td>
+			<td ng-switch-when="0" ng-show="multiCondensedViewHeaders[$index + 1]" class="col-sm-2">{{dataItem[multiCondensedViewHeaders[$index + 1].key] | ebxFormatData: multiCondensedViewHeaders[$index + 1].dataType}}</td>
+		</tr>
+	  </table>
+    </div>
+    <div ng-show="!dataItem.collapsed">
+      <table class="table borderless" >
+		<tr ng-repeat="header in multiHeaders" ng-switch="header.dataType">
+			<td class="col-sm-2 text-right"><label>{{header.label}}:</label></td>
+			<td class="col-sm-4">{{dataItem[header.key] | ebxFormatData: header.dataType}}</td>
+		</tr>
+	  </table>
+    </div>
 </div>
