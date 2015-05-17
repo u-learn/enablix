@@ -1,0 +1,1 @@
+enablix.filters = angular.module('enablixFilters', []);

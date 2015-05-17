@@ -5,7 +5,8 @@
     </li>
     <li role="presentation" ng-class="{'dropdown' : navItem.children.length > 0, 'active' : navItem.qualifiedId == $stateParams.containerQId}" 
     		ng-repeat="navItem in topNavList">
-    	<a ng-if="navItem.children.length == 0">{{navItem.label}}</a>
+    	<a ng-if="navItem.children.length == 0 && navItem.type == 'container'">{{navItem.label}}</a>
+    	<a ng-if="navItem.type == 'enclosure'" ng-click="navToEnclosureItem(navItem)">{{navItem.label}}</a>
     	<a ng-if="navItem.children.length > 0" class="dropdown-toggle" data-toggle="dropdown" 
     			role="button" aria-expanded="false">{{navItem.label}} <span class="caret"></span>
         </a>

@@ -1,17 +1,12 @@
 <h4>{{pageHeading}}</h4>
 <table class="table table-striped table-bordered table-sorting" >
-<tr ng-repeat="item in containerDef.contentItem" ng-switch="item.type">
+<tr ng-repeat="item in containerDef.contentItem">
 	<td class="col-md-2"><label>{{item.label}}</label></td>
-	<td class="col-md-6" ng-switch-when="DOC">{{containerData[item.id].name}}&nbsp;
-		<span ng-if="containerData[item.id].name">
+	<td class="col-md-6">{{containerData[item.id] | ebxFormatData: item.type}}&nbsp;
+		<span ng-if="item.type == 'DOC' && containerData[item.id].name">
 			<eb-doc-download doc-value="containerData[item.id].identity"></eb-doc-download>
 		</span>
 	</td>
-	<td class="col-md-6" ng-switch-when="BOUNDED">
-		<span ng-repeat="opt in containerData[item.id]">{{opt.label}}<span ng-if="!$last">, </span></span>
-	</td>
-	<td class="col-md-6" ng-switch-when="DATE_TIME">{{containerData[item.id] | ebDate}}</td>
-	<td class="col-md-6" ng-switch-default>{{containerData[item.id]}}</td>
 </tr>
 </table>
 <p><button ng-click="navToEdit()" type="button" class="btn btn-default">Edit</button>&nbsp;

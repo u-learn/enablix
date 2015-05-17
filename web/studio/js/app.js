@@ -1,17 +1,10 @@
 var enablix = enablix || {};
 enablix.studioApp = angular.module("studio", ['ui.router', 'angularTreeview', 'listGroupTreeview', 
-           'angularFileUpload', 'ui.bootstrap', 'isteven-multi-select', 'ui-notification']);
+           'angularFileUpload', 'ui.bootstrap', 'isteven-multi-select', 'ui-notification', 'enablixFilters']);
 
 //enablix.templateId = "entSoftwareTemplate"; //"amlSalesTemplate";
 enablix.dateFormat = 'MM/dd/yyyy';
 enablix.errorMsgShowTime = 10000; // in milli-seconds 
-
-enablix.studioApp.filter('ebDate', function($filter) {
-    return function(input) {
-        if (input == null) { return ""; }
-        return $filter('date')(input, enablix.dateFormat);
-    };
-});
 
 var appSetup = function(StudioSetupService) {
 	return StudioSetupService.setupStudio();

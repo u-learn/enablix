@@ -10,6 +10,10 @@ enablix.studioApp.controller('PortalTopNavCtrl',
 					'single', sublistItem.qualifiedId);
 		};
 		
+		$scope.navToEnclosureItem = function(navItem) {
+			
+		};
+		
 		var itemContainerList = ContentTemplateService.getPortalTopNavItemContainers()
 		angular.forEach(itemContainerList, function(itemCntnr) {
 			
