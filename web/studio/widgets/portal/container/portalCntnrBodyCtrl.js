@@ -1,6 +1,6 @@
 enablix.studioApp.controller('PortalCntnrBodyCtrl', 
-		   ['$scope', 'ContentTemplateService', '$stateParams', 'ContentDataService', 'StudioSetupService', 'Notification', 'ContentUtil',
-    function($scope,   ContentTemplateService,   $stateParams,   ContentDataService,   StudioSetupService,   Notification,   ContentUtil) {
+		   ['$scope', '$state', 'ContentTemplateService', '$stateParams', 'ContentDataService', 'StudioSetupService', 'Notification', 'ContentUtil',
+    function($scope,   $state,   ContentTemplateService,   $stateParams,   ContentDataService,   StudioSetupService,   Notification,   ContentUtil) {
 
 		$scope.containerDef = ContentTemplateService.getContainerDefinition(
 									enablix.template, $stateParams.subContainerQId);

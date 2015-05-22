@@ -235,6 +235,17 @@ enablix.studioApp.factory('ContentTemplateService',
 				return null;
 			}
 			
+			var getPortalEnclosureDefinition = function(_enclosureId) {
+				var enclList = getPortalTopNavEnclosures();
+				for (var i = 0; i < enclList.length; i++) {
+					var encl = enclList[i];
+					if (encl.id == _enclosureId) {
+						return encl;
+					}
+				}
+				return null;
+			}
+			
 			return {
 				getTemplate : getTemplate,
 				getDefaultTemplate : getDefaultTemplate,
@@ -250,7 +261,8 @@ enablix.studioApp.factory('ContentTemplateService',
 				getPortalTopNavItemContainers: getPortalTopNavItemContainers,
 				getPortalTopNavEnclosures : getPortalTopNavEnclosures,
 				getPortalCondensedViewItems: getPortalCondensedViewItems,
-				getPortalHeadingContentItem: getPortalHeadingContentItem
+				getPortalHeadingContentItem: getPortalHeadingContentItem,
+				getPortalEnclosureDefinition: getPortalEnclosureDefinition
 			};
 		
 		}

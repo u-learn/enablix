@@ -77,10 +77,25 @@ enablix.studioApp.factory('StateUpdateService',
 	 				"subContainerQId": _subContainerQId
 	 			});
 	 		};
-	 		
+
 	 		var goToPortalHome = function() {
 	 			$state.go("portal.home");
 	 		};
+
+	 		var goToPortalEnclosureDetail = function(_enclosureId) {
+	 			$state.go("portal.enclosure", {
+	 				"enclosureId": _enclosureId
+	 			});
+	 		}
+	 		
+	 		var goToPortalEnclosureBody = function(_enclosureId, _subCntnrType, _subContainerQId) {
+	 			$state.go("portal.enclosure.body", {
+	 				"enclosureId": _enclosureId,
+	 				"type": _subCntnrType,
+	 				"subContainerQId": _subContainerQId
+	 			});
+	 		};
+
 	 		
 	 		return {
 	 			goToStudioList: goToStudioList,
@@ -96,7 +111,9 @@ enablix.studioApp.factory('StateUpdateService',
 	 			goToStudio: goToStudio,
 	 			goToPortalHome: goToPortalHome,
 	 			goToPortalContainerDetail: goToPortalContainerDetail,
-	 			goToPortalContainerBody: goToPortalContainerBody
+	 			goToPortalContainerBody: goToPortalContainerBody,
+	 			goToPortalEnclosureDetail: goToPortalEnclosureDetail,
+	 			goToPortalEnclosureBody: goToPortalEnclosureBody
 	 		};
 	 	}
 	 ]);

@@ -154,6 +154,38 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvi
 			resolve: {
 				setupData: appSetup 
 			}
+		})
+		.state('portal.enclosure', {
+			url: '/enclosure/{enclosureId}/',
+			views: {
+				// the main template
+				'': {
+					templateUrl: 'views/portal/portal-container.html',
+					controller: 'PortalEnclDetailCtrl',
+					resolve: {
+						setupData: appSetup 
+					}
+				},
+				
+				// right section template
+				'rightSection@portal.enclosure' : {
+					templateUrl: 'views/portal/container/recommended-section.html',
+					controller: 'PortalEnclRecommendedCtrl',
+					resolve: {
+						setupData: appSetup 
+					}
+				}
+			}
+		})
+		.state('portal.enclosure.body', {
+			url: '{type}/{subContainerQId}/',
+			templateUrl: function($stateParams) {
+				return 'views/portal/container/body-' + $stateParams.type + '.html';
+			},
+			controller: 'PortalCntnrBodyCtrl',
+			resolve: {
+				setupData: appSetup 
+			}
 		});
 	
 	// The custom “X-Requested-With” is a conventional header sent by browser clients, 

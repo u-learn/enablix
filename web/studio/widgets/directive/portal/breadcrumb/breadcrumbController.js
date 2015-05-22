@@ -18,31 +18,52 @@ enablix.studioApp.controller('PortalBreadcrumbCtrl',
 			var containerQId = $stateParams.containerQId;
 			var elemIdentity = $stateParams.elementIdentity;
 			var subContainerQId = $stateParams.subContainerQId;
+			var enclosureId = $stateParams.enclosureId;
 			
-			var containerDef = ContentTemplateService.getContainerDefinition(enablix.template, containerQId);
-
-			ContentDataService.getContentRecordData(enablix.templateId, containerQId, elemIdentity, 
-				function(recordData) {
+			if (isNullOrUndefined(enclosureId)) {
+				var containerDef = ContentTemplateService.getContainerDefinition(enablix.template, containerQId);
+	
+				ContentDataService.getContentRecordData(enablix.templateId, containerQId, elemIdentity, 
+					function(recordData) {
+						
+						var breadCrumbs = []
 					
-					var breadCrumbs = []
+						// first breadcrumb item, container name
+						breadCrumbs.push(containerDef.label);
+						
+						var containerLabel = ContentUtil.resolveContainerInstanceLabel(containerDef, recordData);
+						breadCrumbs.push(containerLabel);
+						
+						if (containerQId != subContainerQId) {
+							var subContainerDef = ContentTemplateService.getContainerDefinition(enablix.template, subContainerQId);
+							breadCrumbs.push(subContainerDef.label);
+						}
+						
+						$scope.breadcrumbList = breadCrumbs;
+					}, 
+					function(errResp) {
+						// ignore
+					});
 				
-					// first breadcrumb item, container name
-					breadCrumbs.push(containerDef.label);
+			} else {
+				
+				var breadCrumbs = [];
+				
+				var enclDef = ContentTemplateService.getPortalEnclosureDefinition(enclosureId);
+				breadCrumbs.push(enclDef.label);
+				
+				if (!isNullOrUndefined(subContainerQId)) {
 					
-					var containerLabel = ContentUtil.resolveContainerInstanceLabel(containerDef, recordData);
-					breadCrumbs.push(containerLabel);
-					
-					if (containerQId != subContainerQId) {
-						var subContainerDef = ContentTemplateService.getContainerDefinition(enablix.template, subContainerQId);
+					var subContainerDef = ContentTemplateService.getContainerDefinition(enablix.template, subContainerQId);
+				
+					if (!isNullOrUndefined(subContainerDef)) {
 						breadCrumbs.push(subContainerDef.label);
 					}
-					
-					$scope.breadcrumbList = breadCrumbs;
-				}, 
-				function(errResp) {
-					// ignore
-				});
-
+				}
+				
+				$scope.breadcrumbList = breadCrumbs;
+			}
+			
 		};
 		
 		createBreadCrumbList($stateParams);

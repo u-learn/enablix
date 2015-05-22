@@ -5,8 +5,7 @@ enablix.studioApp.controller('PortalLeftNavCtrl',
 		$scope.navItemList = [];
 		$scope.$stateParams = $stateParams;
 		
-		var containerDef = ContentTemplateService.getContainerDefinition(
-								enablix.template, $stateParams.containerQId);
+		var enclosureId = $stateParams.enclosureId;
 		
 		$scope.navToItemDetail = function(navItem) {
 			var _subCntnrType = 'multi';
@@ -16,21 +15,52 @@ enablix.studioApp.controller('PortalLeftNavCtrl',
 				_subCntnrType = 'single';
 			} 
 			
-			StateUpdateService.goToPortalContainerBody($stateParams.containerQId, 
+			if (isNullOrUndefined(enclosureId)) {
+				StateUpdateService.goToPortalContainerBody($stateParams.containerQId, 
 					$stateParams.elementIdentity, _subCntnrType, navItem.qualifiedId);
+				
+			} else {
+				StateUpdateService.goToPortalEnclosureBody(enclosureId, 
+						_subCntnrType, navItem.qualifiedId);
+			}
 		};
+
+		var cntnrList = [];
 		
-		var abtIndexItem = {
-				"id" : containerDef.id,
-				"qualifiedId" : containerDef.qualifiedId,
-				"label" : "About",
-				"containerDef": containerDef,
-				"single": true
-			};
+		if (isNullOrUndefined(enclosureId)) {
+			
+			var containerDef = ContentTemplateService.getContainerDefinition(
+									enablix.template, $stateParams.containerQId);
 		
-		$scope.navItemList.push(abtIndexItem);
+			var abtIndexItem = {
+					"id" : containerDef.id,
+					"qualifiedId" : containerDef.qualifiedId,
+					"label" : "About",
+					"containerDef": containerDef,
+					"single": true
+				};
+			
+			$scope.navItemList.push(abtIndexItem);
+			cntnrList = containerDef.container;
+			
+		} else {
+			
+			var enclDef = ContentTemplateService.getPortalEnclosureDefinition(enclosureId);
+			
+			angular.forEach(enclDef.childContainer, function(cntnrRef) {
+
+				var containerDef = ContentTemplateService.getContainerDefinition(
+						enablix.template, cntnrRef.id);
+
+				if (!isNullOrUndefined(containerDef)) {
+					cntnrList.push(containerDef);
+				}
+				
+			});
+			
+		}
 		
-		angular.forEach(containerDef.container, function(subCntnr) {
+		angular.forEach(cntnrList, function(subCntnr) {
 			
 			var indxItem = {
 					"id" : subCntnr.id,
