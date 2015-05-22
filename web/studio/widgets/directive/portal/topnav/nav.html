@@ -3,7 +3,7 @@
     <li role="presentation" ui-sref-active="active">
     	<a ui-sref="portal.home">Home</a>
     </li>
-    <li role="presentation" ng-class="{'dropdown' : navItem.children.length > 0, 'active' : navItem.qualifiedId == $stateParams.containerQId}" 
+    <li role="presentation" ng-class="{'dropdown' : navItem.children.length > 0, 'active' : navItem.qualifiedId == $stateParams.containerQId || navItem.qualifiedId == $stateParams.enclosureId}" 
     		ng-repeat="navItem in topNavList">
     	<a ng-if="navItem.children.length == 0 && navItem.type == 'container'">{{navItem.label}}</a>
     	<a ng-if="navItem.type == 'enclosure'" ng-click="navToEnclosureItem(navItem)">{{navItem.label}}</a>
