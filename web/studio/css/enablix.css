@@ -113,3 +113,12 @@ label, h4 {
 	margin-right: 10px;
 	margin-top: 20px;
 }
+
+.label-condensed {
+	margin-bottom: 0px;
+}
+
+.panel-heading-condensed {
+	padding-top: 5px;
+	padding-bottom: 5px;
+}

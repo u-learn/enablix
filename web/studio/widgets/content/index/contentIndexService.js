@@ -25,8 +25,8 @@ enablix.studioApp.factory('ContentIndexService',
 				angular.forEach(enclosures, function(enclosure) {
 					
 					var enclosureNd = {
-							"id" : enclosure.label,
-							"qualifiedId" : enclosure.label,
+							"id" : enclosure.id,
+							"qualifiedId" : enclosure.id,
 							"label" : enclosure.label,
 							"elementIdentity" : null,
 							"parentIdentity" : null,
@@ -56,7 +56,7 @@ enablix.studioApp.factory('ContentIndexService',
 					
 					// add container listing node parent
 					var indxItem = {
-						"id" : cntnr.id,
+						"id" : cntnr.qualifiedId,
 						"qualifiedId" : cntnr.qualifiedId,
 						"label" : cntnr.label,
 						"elementIdentity" : elemIdentity,

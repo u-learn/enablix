@@ -8,9 +8,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.enablix.commons.util.QIdUtil;
+import com.enablix.commons.util.StringUtil;
+import com.enablix.core.commons.xsdtopojo.ContainerPortalConfigType;
+import com.enablix.core.commons.xsdtopojo.ContainerPortalConfigType.HeadingContentItem;
 import com.enablix.core.commons.xsdtopojo.ContainerType;
+import com.enablix.core.commons.xsdtopojo.ContainerUIDefType;
 import com.enablix.core.commons.xsdtopojo.ContentTemplate;
+import com.enablix.core.commons.xsdtopojo.ContentUIDefType;
 import com.enablix.core.commons.xsdtopojo.DataDefinitionType;
+import com.enablix.core.commons.xsdtopojo.PortalUIDefType;
+import com.enablix.core.commons.xsdtopojo.UiDefinitionType;
 
 public class TemplateUtil {
 
@@ -164,6 +171,52 @@ public class TemplateUtil {
 				// substring - +1 for excluding '.' after holding container QId
 				contentQId.substring(holdingContainerQId.length() + 1, contentQId.length());
 		
+	}
+
+
+	public static String getPortalLabelAttributeId(ContentTemplate template, String qId) {
+		
+		ContentUIDefType contentUIDef = getContentUIDef(template, qId);
+		
+		if (contentUIDef != null) {
+			
+			ContainerUIDefType containerUIDef = contentUIDef.getContainer();
+			if (containerUIDef != null) {
+			
+				ContainerPortalConfigType portalConfig = containerUIDef.getPortalConfig();
+				if (portalConfig != null) {
+				
+					HeadingContentItem headingContentItem = portalConfig.getHeadingContentItem();
+					if (headingContentItem != null) {
+						return headingContentItem.getId();
+					}
+				}
+				
+				// check container label instead
+				String labelQualifiedId = containerUIDef.getLabelQualifiedId();
+				if (!StringUtil.isEmpty(labelQualifiedId)) {
+					return QIdUtil.getElementId(labelQualifiedId);
+				}
+				
+			}
+		}
+		
+		return null;
+	}
+	
+	public static ContentUIDefType getContentUIDef(ContentTemplate template, String qId) {
+		
+		ContentUIDefType cntUIDef = null;
+		UiDefinitionType uiDefinition = template.getUiDefinition();
+		
+		for (ContentUIDefType contentUIDef : uiDefinition.getContentUIDef()) {
+			if (contentUIDef.getQualifiedId().equals(qId)) {
+				cntUIDef = contentUIDef;
+				break;
+			}
+		}
+		
+		return cntUIDef;
 	}
 	
 }

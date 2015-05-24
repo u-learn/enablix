@@ -33,5 +33,7 @@ public interface ContentCrudService {
 	List<String> deleteRecordsWithParentId(String collectionName, String parentIdentity);
 
 	void upsert(String collectionName, String elementIdentity, Map<String, Object> data);
+
+	Map<String, Object> findContainingRecord(String collectionName, String childQId, String childIdentity);
 	
 }

@@ -253,5 +253,13 @@ public class ContentCrudServiceImpl implements ContentCrudService {
 
 		mongoTemplate.upsert(query, update, collectionName);
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public Map<String, Object> findContainingRecord(String collectionName, 
+			String childRelativeQId, String childIdentity) {
+		Query query = createIdentityQuery(childRelativeQId, childIdentity);
+		return mongoTemplate.findOne(query, HashMap.class, collectionName);
+	}
 	
 }

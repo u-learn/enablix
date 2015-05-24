@@ -7,5 +7,6 @@
   <modules>
 	<module>services-parent</module>
 	<module>enablix-app</module>
+	<module>analytic-engine</module>
   </modules>
 </project>
