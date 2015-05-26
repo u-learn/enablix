@@ -2,10 +2,13 @@ package com.enablix.util.data.loader;
 
 import java.io.File;
 import java.io.FilenameFilter;
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
 import org.apache.commons.io.FileUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 
@@ -15,6 +18,8 @@ import com.enablix.commons.util.process.ProcessContext;
 
 public class FileBasedDataLoader implements ApplicationListener<ContextRefreshedEvent> {
 
+	private static final Logger LOGGER = LoggerFactory.getLogger(FileBasedDataLoader.class);
+	
 	private String dataDirectory;
 	
 	private String[] fileExtensions;
@@ -60,7 +65,12 @@ public class FileBasedDataLoader implements ApplicationListener<ContextRefreshed
 		ProcessContext.initialize("system", tenantId, null);
 		
 		try {
+			
+			LOGGER.info("Loading data file: " + dataFile.getCanonicalPath());
 			dataFileProcessor.process(dataFile);
+			
+		} catch (IOException e) {
+			LOGGER.error("Error loading file [" + dataFile.getAbsolutePath() + "]", e);
 			
 		} finally {
 			ProcessContext.clear();

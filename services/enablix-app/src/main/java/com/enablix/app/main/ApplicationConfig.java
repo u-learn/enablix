@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import com.enablix.app.template.provider.TemplateFileProcessor;
+import com.enablix.commons.util.StringUtil;
 import com.enablix.refdata.xls.loader.XLSRefdataProcessor;
 import com.enablix.util.data.loader.FileBasedDataLoader;
 
@@ -24,6 +25,9 @@ public class ApplicationConfig {
 	@Value("${baseDir}")
 	private String baseDir;
 	
+	@Value("${dataDir}")
+	private String dataDir;
+	
 	@Bean
 	public TemplateFileProcessor templateFileProcessor() {
 		return new TemplateFileProcessor();
@@ -31,8 +35,12 @@ public class ApplicationConfig {
 	
 	@Bean
 	public FileBasedDataLoader templateFilesLoader() {
-		String templatesBaseDir = baseDir + File.separator + TEMPLATES_DIR;
+		String templatesBaseDir = getDataDirPath() + File.separator + TEMPLATES_DIR;
 		return new FileBasedDataLoader(templatesBaseDir, TEMPLATE_FILE_EXTN, templateFileProcessor());
+	}
+
+	private String getDataDirPath() {
+		return !StringUtil.isEmpty(dataDir) ? dataDir : baseDir;
 	}
 	
 	
@@ -43,8 +51,8 @@ public class ApplicationConfig {
 	
 	@Bean
 	public FileBasedDataLoader refdataFilesLoader() {
-		String templatesBaseDir = baseDir + File.separator + REFDATA_DIR;
-		return new FileBasedDataLoader(templatesBaseDir, REFDATA_FILE_EXTN, refdataFileProcessor());
+		String refdataBaseDir = getDataDirPath() + File.separator + REFDATA_DIR;
+		return new FileBasedDataLoader(refdataBaseDir, REFDATA_FILE_EXTN, refdataFileProcessor());
 	}
 	
 }
