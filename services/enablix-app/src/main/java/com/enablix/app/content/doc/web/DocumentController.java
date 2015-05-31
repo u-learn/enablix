@@ -22,7 +22,8 @@ import com.enablix.app.content.doc.DocumentManager;
 import com.enablix.commons.dms.api.ContentLengthAwareDocument;
 import com.enablix.commons.dms.api.Document;
 import com.enablix.commons.dms.api.DocumentMetadata;
-import com.enablix.commons.dms.disk.DiskDocument;
+import com.enablix.commons.util.QIdUtil;
+import com.enablix.commons.util.StringUtil;
 
 @RestController
 @RequestMapping("doc")
@@ -40,13 +41,18 @@ public class DocumentController {
 	
 	@RequestMapping(value = "/upload", method = RequestMethod.POST)
     public @ResponseBody DocumentMetadata handleFileUpload(
+    		@RequestParam(value = "fileSize", required = true) long fileSize,
+    		@RequestParam(value = "contentQId", required = true) String contentQId,
+    		@RequestParam(value = "parentIdentity", required = false) String parentIdentity,
+    		@RequestParam(value = "containerIdentity", required = false) String containerIdentity,
+    		@RequestParam(value = "docIdentity", required = false) String docIdentity,
             @RequestParam(value="file", required = true) MultipartFile file) {
         
         try {
-            DiskDocument document = new DiskDocument(file.getInputStream(), 
-            		file.getOriginalFilename(), file.getContentType());
-            docManager.save(document);
-            return document.getMetadata();
+            Document<DocumentMetadata> document = docManager.buildDocument(file.getInputStream(), 
+            		file.getOriginalFilename(), file.getContentType(), contentQId, fileSize, docIdentity);
+            
+            return saveDocument(contentQId, parentIdentity, containerIdentity, document);
             
         } catch (RuntimeException e) {
         	LOGGER.error("Error while uploading.", e);
@@ -57,6 +63,27 @@ public class DocumentController {
             throw new RuntimeException(e);
         }      
     }
+
+	private DocumentMetadata saveDocument(String contentQId, 
+			String parentIdentity, String containerIdentity,
+			Document<?> document) throws IOException {
+		
+		String containerQId = getContainerQId(contentQId);
+		
+		if (!StringUtil.isEmpty(parentIdentity)) {
+			docManager.saveUsingParentInfo(document, containerQId, parentIdentity);
+		} else {
+			docManager.saveUsingContainerInfo(document, containerQId, containerIdentity);
+		}
+		
+		return document.getMetadata();
+	}
+
+	private String getContainerQId(String contentQId) {
+		String parentQId = QIdUtil.getParentQId(contentQId); // doc container QId
+		return parentQId;
+	}
+	
 	
 	/**
      * Method for handling file download request from client

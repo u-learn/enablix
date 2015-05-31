@@ -10,6 +10,8 @@ import com.enablix.analytics.recommendation.RecommendationContext;
 import com.enablix.analytics.recommendation.RecommendationEngine;
 import com.enablix.analytics.recommendation.builder.RecommendationContextBuilder;
 import com.enablix.analytics.recommendation.builder.web.WebRecommendationRequest;
+import com.enablix.app.content.label.ContentLabelResolver;
+import com.enablix.app.content.label.PortalContentLabelResolver;
 import com.enablix.app.content.ui.NavigableContent;
 import com.enablix.app.content.ui.NavigableContentBuilder;
 import com.enablix.core.api.ContentDataRef;
@@ -26,6 +28,8 @@ public class RecommendedContentServiceImpl implements RecommendedContentService 
 	@Autowired
 	private NavigableContentBuilder navContentBuilder;
 	
+	private ContentLabelResolver labelResolver = new PortalContentLabelResolver();
+	
 	@Override
 	public List<NavigableContent> getRecommendedContent(WebRecommendationRequest request) {
 		
@@ -36,7 +40,7 @@ public class RecommendedContentServiceImpl implements RecommendedContentService 
 		List<NavigableContent> navRecos = new ArrayList<>();
 		
 		for (ContentDataRef reco : recommendations) {
-			navRecos.add(navContentBuilder.build(reco));
+			navRecos.add(navContentBuilder.build(reco, labelResolver));
 		}
 		
 		return navRecos;

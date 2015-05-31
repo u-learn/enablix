@@ -6,12 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.enablix.app.content.ContentDataUtil;
+import com.enablix.app.content.label.ContentLabelResolver;
 import com.enablix.app.template.service.TemplateManager;
 import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.commons.util.QIdUtil;
 import com.enablix.core.api.ContentDataRef;
 import com.enablix.core.commons.xsdtopojo.ContentTemplate;
-import com.enablix.core.domain.content.ContentAssociation;
 import com.enablix.core.mongo.content.ContentCrudService;
 import com.enablix.services.util.TemplateUtil;
 
@@ -25,7 +25,7 @@ public class NavigableContentBuilderImpl implements NavigableContentBuilder {
 	private TemplateManager templateMgr;
 	
 	@Override
-	public NavigableContent build(ContentDataRef data) {
+	public NavigableContent build(ContentDataRef data, ContentLabelResolver labelResolver) {
 		ContentTemplate template = templateMgr.getTemplate(data.getTemplateId());
 		return buildNavigableContent(template, data.getContainerQId(), data.getInstanceIdentity(), null);
 	}
@@ -51,11 +51,11 @@ public class NavigableContentBuilderImpl implements NavigableContentBuilder {
 			
 			navigableContent = createNavigableContent(record, qId, template, child);
 			
-			ContentAssociation parentRef = ContentDataUtil.findParentAssociation(record);
+			String parentIdentity = ContentDataUtil.findParentIdentityFromAssociation(record);
 			
-			if (parentRef != null) {
+			if (parentIdentity != null) {
 				navigableContent = buildNavigableContent(template, QIdUtil.getParentQId(qId), 
-						parentRef.getRecordIdentity(), navigableContent);
+						parentIdentity, navigableContent);
 			}
 		}
 		
@@ -65,7 +65,7 @@ public class NavigableContentBuilderImpl implements NavigableContentBuilder {
 	private NavigableContent createNavigableContent(Map<String, Object> record, 
 			String containerQId, ContentTemplate template, NavigableContent child) {
 		
-		String label = ContentDataUtil.findPortalLabelAttribute(record, template, containerQId);
+		String label = ContentDataUtil.findPortalLabelValue(record, template, containerQId);
 		
 		NavigableContent content = new NavigableContent(containerQId, 
 				(String) record.get(ContentDataConstants.IDENTITY_KEY), label);

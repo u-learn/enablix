@@ -6,7 +6,10 @@
 		<eb-text content-def="item" text-value="containerData[item.id]"></eb-text>
 	</div>
 	<div ng-if="item.type == 'DOC'">
-		<eb-file-upload content-def="item" doc-value="containerData[item.id]"></eb-file-upload>
+		<eb-file-upload content-def="item" doc-value="containerData[item.id]" 
+				data-parent-identity="parentIdentity" data-container-identity="containerData.identity"
+				data-doc-identity="containerData[item.id].identity">
+		</eb-file-upload>
 	</div>
 	<div ng-if="item.type == 'BOUNDED'">
 		<eb-bounded2 content-def="item" select-value="containerData[item.id]"></eb-bounded2>

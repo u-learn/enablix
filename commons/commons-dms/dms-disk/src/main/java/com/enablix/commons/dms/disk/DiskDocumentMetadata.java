@@ -11,16 +11,18 @@ public class DiskDocumentMetadata extends DocumentMetadata {
 	private long contentLength;
 	
 	private DiskDocumentMetadata() { 
-		super(null, null);
+		super(null, null, null);
 	}
 	
-	protected DiskDocumentMetadata(String name, String contentType) {
-		this(null, name, contentType);
+	protected DiskDocumentMetadata(String name, String contentType, 
+			String contentQId) {
+		this(null, name, contentType, contentQId);
 		this.setIdentity(IdentityUtil.generateIdentity(this));
 	}
 
-	public DiskDocumentMetadata(String identity, String name, String contentType) {
-		super(identity, name, contentType);
+	public DiskDocumentMetadata(String identity, String name, String contentType, 
+			String contentQId) {
+		super(identity, name, contentType, contentQId);
 	}
 
 	public String getLocation() {

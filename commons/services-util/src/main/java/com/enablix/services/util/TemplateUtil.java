@@ -16,7 +16,6 @@ import com.enablix.core.commons.xsdtopojo.ContainerUIDefType;
 import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 import com.enablix.core.commons.xsdtopojo.ContentUIDefType;
 import com.enablix.core.commons.xsdtopojo.DataDefinitionType;
-import com.enablix.core.commons.xsdtopojo.PortalUIDefType;
 import com.enablix.core.commons.xsdtopojo.UiDefinitionType;
 
 public class TemplateUtil {
@@ -217,6 +216,28 @@ public class TemplateUtil {
 		}
 		
 		return cntUIDef;
+	}
+
+
+	public static String getStudioLabelAttributeId(ContentTemplate template, String qId) {
+		
+		ContentUIDefType contentUIDef = getContentUIDef(template, qId);
+		
+		if (contentUIDef != null) {
+			
+			ContainerUIDefType containerUIDef = contentUIDef.getContainer();
+			if (containerUIDef != null) {
+			
+				// check container label instead
+				String labelQualifiedId = containerUIDef.getLabelQualifiedId();
+				if (!StringUtil.isEmpty(labelQualifiedId)) {
+					return QIdUtil.getElementId(labelQualifiedId);
+				}
+				
+			}
+		}
+		
+		return null;
 	}
 	
 }

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
 
 import com.enablix.commons.dms.api.Document;
+import com.enablix.commons.dms.api.DocumentBuilder;
 import com.enablix.commons.dms.api.DocumentMetadata;
 import com.enablix.commons.dms.api.DocumentStore;
 import com.enablix.commons.util.StringUtil;
@@ -26,13 +27,15 @@ public class DiskDocumentStore implements DocumentStore<DiskDocumentMetadata, Di
 	@Autowired
 	private ArchiveDocumentService archiveService;
 	
+	private DocumentBuilder<DiskDocumentMetadata, DiskDocument> docBuilder = new DiskDocumentBuilder();
+	
 	@Override
-	public DiskDocumentMetadata save(DiskDocument document) throws IOException {
+	public DiskDocumentMetadata save(DiskDocument document, String contentPath) throws IOException {
 		
 		DiskDocumentMetadata docMetadata = document.getMetadata();
 		
 		if (StringUtil.isEmpty(docMetadata.getLocation())) {
-			docMetadata.setLocation(locationResolver.getDocumentStoragePath(docMetadata));
+			docMetadata.setLocation(locationResolver.getDocumentStoragePath(docMetadata, contentPath));
 		}
 		
 		LOGGER.debug("Saving document {} to: {}", docMetadata.getName(), docMetadata.getLocation());
@@ -82,6 +85,16 @@ public class DiskDocumentStore implements DocumentStore<DiskDocumentMetadata, Di
 	@Override
 	public boolean canHandle(Document<?> doc) {
 		return doc instanceof DiskDocument;
+	}
+
+	@Override
+	public String type() {
+		return "DISK";
+	}
+
+	@Override
+	public DocumentBuilder<DiskDocumentMetadata, DiskDocument> getDocumentBuilder() {
+		return docBuilder;
 	}
 
 }

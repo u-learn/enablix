@@ -25,7 +25,7 @@ public class ApplicationConfig {
 	@Value("${baseDir}")
 	private String baseDir;
 	
-	@Value("${dataDir}")
+	@Value("${dataDir:#{null}}")
 	private String dataDir;
 	
 	@Bean

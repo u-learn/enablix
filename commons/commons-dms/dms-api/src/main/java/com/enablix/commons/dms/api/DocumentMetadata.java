@@ -11,14 +11,19 @@ public abstract class DocumentMetadata extends BaseDocumentEntity {
 	
 	private String contentType;
 	
-	protected DocumentMetadata(String docName, String contentType) {
-		this(null, docName, contentType);
+	private String contentQId;
+	
+	protected DocumentMetadata(String docName, String contentType, 
+			String contentQId) {
+		this(null, docName, contentType, contentQId);
 	}
 	
-	public DocumentMetadata(String identity, String name, String contentType) {
+	public DocumentMetadata(String identity, String name, String contentType, 
+			String contentQId) {
 		setIdentity(identity);
 		this.name = name;
 		this.contentType = contentType;
+		this.contentQId = contentQId;
 	}
 	
 	public String getName() {
@@ -31,6 +36,14 @@ public abstract class DocumentMetadata extends BaseDocumentEntity {
 
 	public String getContentType() {
 		return contentType;
+	}
+
+	public String getContentQId() {
+		return contentQId;
+	}
+
+	public void setContentQId(String contentQId) {
+		this.contentQId = contentQId;
 	}
 
 }

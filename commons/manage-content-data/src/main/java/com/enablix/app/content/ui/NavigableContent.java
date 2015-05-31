@@ -48,5 +48,15 @@ public class NavigableContent {
 	public void setNext(NavigableContent childContent) {
 		this.next = childContent;
 	}
-	
+
+	public String toPath(String pathSeparator) {
+		
+		String path = getLabel();
+		
+		if (next != null) {
+			path += pathSeparator + next.toPath(pathSeparator);
+		}
+		
+		return path;
+	}
 }

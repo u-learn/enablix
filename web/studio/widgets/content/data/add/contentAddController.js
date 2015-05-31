@@ -3,7 +3,7 @@ enablix.studioApp.controller('ContentAddCtrl',
 	function( $scope,   $stateParams,   ContentDataService,   ContentTemplateService,   StateUpdateService,   StudioSetupService, Notification) {
 		
 		var containerQId = $stateParams.containerQId;
-		var parentIdentity = $stateParams.parentIdentity;
+		var parentIdentity = $scope.parentIdentity = $stateParams.parentIdentity;
 		
 		// Add state params to scope for easy access
 		$scope.$stateParams = $stateParams;

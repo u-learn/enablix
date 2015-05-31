@@ -12,8 +12,9 @@ public class DiskDocument extends Document<DiskDocumentMetadata> implements Cont
 
 	private InputStream dataStream;
 	
-	public DiskDocument(InputStream dataStream, String name, String contentType) {
-		this(dataStream, new DiskDocumentMetadata(name, contentType));
+	public DiskDocument(InputStream dataStream, String name, String contentType, 
+			String contentQId) {
+		this(dataStream, new DiskDocumentMetadata(name, contentType, contentQId));
 	}
 	
 	public DiskDocument(InputStream dataStream, DiskDocumentMetadata metadata) {

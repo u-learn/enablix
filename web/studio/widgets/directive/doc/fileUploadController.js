@@ -2,8 +2,10 @@ enablix.studioApp.controller('FileUploadCtrl',
 			['$scope', 'FileUploader', 
     function ($scope, FileUploader) {
     	
+		var uploadUrl = enablix.serviceURL.uploadDocument;
+				
         var uploader = $scope.uploader = new FileUploader({
-            url: enablix.serviceURL.uploadDocument,
+            url: uploadUrl,
             withCredentials: true,
             removeAfterUpload: false
         });
@@ -31,6 +33,24 @@ enablix.studioApp.controller('FileUploadCtrl',
         };
         uploader.onBeforeUploadItem = function(item) {
             console.info('onBeforeUploadItem', item);
+            var fd = {
+        			fileSize: item.file.size, 
+        			contentQId: $scope.qualifiedId,
+        		};
+            
+            if (!isNullOrUndefined($scope.parentIdentity)) {
+            	fd['parentIdentity'] = $scope.parentIdentity;
+            }
+            
+            if (!isNullOrUndefined($scope.containerIdentity)) {
+            	fd['containerIdentity'] = $scope.containerIdentity;
+            }
+            
+            if (!isNullOrUndefined($scope.docIdentity)) {
+            	fd['docIdentity'] = $scope.docIdentity;
+            }
+            
+            item.formData.push(fd);
         };
         uploader.onProgressItem = function(fileItem, progress) {
             console.info('onProgressItem', fileItem, progress);

@@ -12,22 +12,22 @@ import com.enablix.commons.util.tenant.TenantUtil;
 @Component
 public class DefaultDiskStoreLocationResolver implements DiskStoreLocationResolver {
 
-	private static final String DEFAULT_DOC_EXTN = ".ebd";
-	
 	@Value("${doc.disk.storage.location:/usr/local/applications/enablix/docstore}")
 	private String storeBaseLocation;
 	
 	@Override
-	public String getDocumentStoragePath(DiskDocumentMetadata metadata) {
+	public String getDocumentStoragePath(DiskDocumentMetadata metadata, String contentPath) {
 		
-		String docFolderPath = storeBaseLocation + File.separator + TenantUtil.getTenantId();
+		String docFolderPath = storeBaseLocation + File.separator 
+				+ TenantUtil.getTenantId() + File.separator + contentPath;
+		
 		File docFolder = new File(docFolderPath);
 		
 		if (!docFolder.exists()) {
 			docFolder.mkdirs();
 		}
 		
-		return docFolderPath + File.separator + metadata.getIdentity() + DEFAULT_DOC_EXTN;
+		return docFolderPath + File.separator + metadata.getName();
 	}
 
 }

@@ -11,5 +11,9 @@ public interface DocumentStoreFactory {
 	
 	@SuppressWarnings("rawtypes")
 	DocumentStore getDocumentStore(Document doc);
+
+	@SuppressWarnings("rawtypes")
+	DocumentStore getDocumentStore(String storeType);
 	
+	String defaultStoreType();
 }

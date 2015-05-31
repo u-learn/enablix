@@ -12,9 +12,9 @@ import com.enablix.services.util.TemplateUtil;
 
 public class ContentDataUtil {
 
-	public static ContentAssociation findParentAssociation(Map<String, Object> record) {
+	public static String findParentIdentityFromAssociation(Map<String, Object> record) {
 		
-		ContentAssociation parentAssoc = null;
+		String parentIdentity = null;
 		
 		if (record != null) {
 			
@@ -29,27 +29,52 @@ public class ContentDataUtil {
 				
 					Collection<?> parents = (Collection<?>) parentAssocList;
 					if (!parents.isEmpty()) {
-						parentAssoc = (ContentAssociation) parents.iterator().next();
+						
+						Object parentAssoc = parents.iterator().next();
+						
+						if (parentAssoc instanceof ContentAssociation) {
+							parentIdentity = ((ContentAssociation) parentAssoc).getRecordIdentity();
+							
+						} else if (parentAssoc instanceof Map<?,?>) {
+							parentIdentity = (String) ((Map<?,?>) parentAssoc).get(
+											ContentDataConstants.RECORD_IDENTITY_KEY);
+						}
 					}
 				}
 			}
 		}
 		
-		return parentAssoc;
+		return parentIdentity;
 	}
 
-	public static String findPortalLabelAttribute(
+	public static String findPortalLabelValue(
 			Map<String, Object> record, ContentTemplate template, String qId) {
 		
-		Object labelAttribute = null;
 		String portalLabelAttributeId = TemplateUtil.getPortalLabelAttributeId(template, qId);
+		
+		return findLabelAttributeValue(record, template, qId, portalLabelAttributeId);
+	}
+	
+	public static String findStudioLabelValue(
+			Map<String, Object> record, ContentTemplate template, String qId) {
+		
+		String studioLabelAttributeId = TemplateUtil.getStudioLabelAttributeId(template, qId);
+		
+		return findLabelAttributeValue(record, template, qId, studioLabelAttributeId);
+	}
+	
+	public static String findLabelAttributeValue(Map<String, Object> record, 
+			ContentTemplate template, String qId, String labelAttrId) {
+		
+		String labelAttributeValue = null;
 		ContainerType containerDef = TemplateUtil.findContainer(template.getDataDefinition(), qId);
 		
-		if (portalLabelAttributeId != null) {
-			labelAttribute = record.get(portalLabelAttributeId);
+		if (labelAttrId != null) {
+			Object labelAttribute = record.get(labelAttrId);
+			labelAttributeValue = contentItemToString(labelAttribute, containerDef, labelAttrId);
 		}
 		
-		return contentItemToString(labelAttribute, containerDef, portalLabelAttributeId);
+		return labelAttributeValue;
 	}
 
 	private static String contentItemToString(Object labelAttribute, ContainerType containerDef,

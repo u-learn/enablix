@@ -53,4 +53,24 @@ public class DocumentStoreFactoryImpl extends SpringBackedAbstractFactory<Docume
 		return DocumentStore.class;
 	}
 
+	@Override
+	public DocumentStore getDocumentStore(String storeType) {
+
+		for (DocumentStore ds : registeredInstances()) {
+			if (ds.type().equals(storeType)) {
+				return ds;
+			}
+		}
+
+		LOGGER.error("No document store found for type [{}]", storeType);
+		
+		throw new IllegalStateException("No document store found for type [" 
+						+ storeType + "]");
+	}
+
+	@Override
+	public String defaultStoreType() {
+		return "DISK";
+	}
+
 }
