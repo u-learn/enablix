@@ -9,7 +9,7 @@
 	<td class="col-sm-2 text-right"><label>{{header.label}}:</label></td>
 	<td class="col-sm-4">{{bodyData[header.key] | ebxFormatData: header.dataType}}&nbsp;
 		<span ng-if="header.dataType == 'DOC' && bodyData[header.key].name">
-			<eb-doc-download doc-value="bodyData[header.key].name"></eb-doc-download>
+			<eb-doc-download doc-value="bodyData[header.key].identity"></eb-doc-download>
 		</span>
 	</td>
 </tr>
