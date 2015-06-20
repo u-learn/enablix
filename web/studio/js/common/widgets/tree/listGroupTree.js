@@ -51,18 +51,14 @@
 				
 				//tree template
 				var template =
-					'<ul class="' + ulClass + '">' +
-						'<li class="list-group-item" data-ng-repeat="node in ' + treeModel + '" data-ng-init="node.collapsed = true">' +
-							'<span class="tree-node-data" data-ng-class="{\'active\': node.selected == \'selected\'}" data-ng-click="' + treeId + '.selectNodeLabel(node)">' 
-								+ '<span class="tree-node-label" style="padding-left: ' + listItemPadding + 'px" data-ng-class="node.uiClass">{{node.' + nodeLabel + '}}</span>'
-								+ '<i ng-class="{\'glyphicon-chevron-left\' : node.collapsed, \'glyphicon-chevron-down\' : !node.collapsed}" ' 
-										+ ' data-ng-show="node.' + nodeChildren + '.length" data-ng-click="' + treeId + '.selectNodeHead(node, $event)" class="glyphicon pull-right">&nbsp;</i>'
-						 + '</span>' +
-							'<div data-ng-hide="node.collapsed" data-tree-id="' + treeId + '" data-list-group-tree-model="node.' + nodeChildren + '" data-node-id=' + nodeId 
-								+ ' data-node-label=' + nodeLabel + ' data-node-children=' + nodeChildren + ' data-node-level=' + (nodeLevel + 1) + '></div>' +
-						'</li>' +
-					'</ul>';
-
+						'<li data-ng-repeat="node in ' + treeModel + '" data-ng-init="node.collapsed = true" data-ng-class="{\'active\': node.selected == \'selected\'}">' 
+							+ '<i class="fa fa-angle-right" data-ng-class="{\'active\': !node.collapsed}" data-ng-click="' + treeId + '.selectNodeHead(node, $event)"></i>'
+							+ '<a data-ng-click="' + treeId + '.selectNodeLabel(node)">{{node.' + nodeLabel + '}}</a>'
+								//+ '<i ng-class="{\'glyphicon-chevron-left\' : node.collapsed, \'glyphicon-chevron-down\' : !node.collapsed}" ' 
+								//		+ ' data-ng-show="node.' + nodeChildren + '.length" data-ng-click="' + treeId + '.selectNodeHead(node, $event)" class="glyphicon pull-right">&nbsp;</i>'
+								+ '<ul data-ng-hide="node.collapsed" data-tree-id="' + treeId + '" data-list-group-tree-model="node.' + nodeChildren + '" data-node-id=' + nodeId 
+								+ ' data-node-label=' + nodeLabel + ' data-node-children=' + nodeChildren + ' data-node-level=' + (nodeLevel + 1) + '></ul>' +
+						'</li>';
 
 				//check tree id, tree model
 				if( treeId && treeModel ) {

@@ -1,5 +1,9 @@
-<h4>{{pageHeading}}</h4>
-
-<p class="text-left"><button ng-click="navToAddContent()" type="button" class="btn btn-default">Add</button></p>
-
-<p><eb-table table-headers="listHeaders" table-data="listData" row-click-fn="navToContentDetail"></eb-table></p>
+<div class="block">
+	<div class="head">
+		<a href="#" ng-click="navToAddContent()" class="button button-add">Add new</a>
+		<h2>{{pageHeading}}</h2>
+	</div>
+	<div class="cont">
+	<eb-table table-headers="listHeaders" table-data="listData" row-click-fn="navToContentDetail"></eb-table>
+	</div>
+</div>

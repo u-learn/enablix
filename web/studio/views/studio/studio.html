@@ -1,18 +1,30 @@
-<div class="row-fluid" ng-controller="MainStudioCtrl">
-	<div ng-controller="contentIndexCtrl">
-		<div class="col-sm-3 left-nav-section">
-			<div
-		      data-list-group-treeview="true"
-		      data-tree-id="contentIndex"
-		      data-list-group-tree-model="indexData"
-		      data-node-id="qualifiedId"
-		      data-node-label="label"
-		      data-node-children="children" 
-		      >
-		    </div>
+<div class="container-fluid" ng-controller="MainStudioCtrl">
+	
+	<!-- bread crumbs -->
+	<div class="block bread-crumbs">
+		<div class="cont">
+			<a href="#">Studio</a>&nbsp;&nbsp;<i class="fa fa-angle-right"></i>
+			<span>Solutions</span>
 		</div>
-		<div class="col-sm-9">
+	</div>
+	<!--/ bread crumbs -->
+	
+	<div class="row" ng-controller="contentIndexCtrl">
+		<aside class="col-sm-4 col-md-3">
+			<nav id="side-nav" class="side-nav">
+				<ul
+			      data-list-group-treeview="true"
+			      data-tree-id="contentIndex"
+			      data-list-group-tree-model="indexData"
+			      data-node-id="qualifiedId"
+			      data-node-label="label"
+			      data-node-children="children" 
+			      >
+			    </ul>
+		    </nav>
+		</aside>
+		<main class="col-sm-9">
 			<div ui-view></div>
-		</div>
+		</main>
 	</div>
 </div>

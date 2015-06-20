@@ -1,4 +1,4 @@
-<div class="col-md-4 col-md-offset-4">
+<!-- <div class="col-md-4 col-md-offset-4">
 	<div class="login-panel panel panel-default">
 		<div class="panel-heading">Please Sign In</div>
 	
@@ -24,4 +24,32 @@
 		</form>
 		</div>
 	</div>
+</div> -->
+
+<div class="container-fluid">
+	<div class="row">
+		<main class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3">
+			<!-- login -->
+			<form ng-submit="login()" class="block">
+				<div class="head">
+					<h2>Sign in</h2>
+				</div>
+				<div class="cont clearfix">
+					
+					<label class="form-label">Login</label>
+					<input type="text" name="username" ng-model="credentials.username" class="form-control">
+					
+					<label class="form-label">Password</label>
+					<input type="password" type="password" name="password" ng-model="credentials.password" class="form-control">
+					
+					<a href="#" class="form-forgot">forgot password?</a>
+				</div>
+				<div class="foot clearfix">
+					<button class="button button-add" type="submit">Login</button>
+				</div>
+			</form>
+			<!--/ login -->
+		</main>
+	</div>
 </div>
+	<!--/ page content -->
