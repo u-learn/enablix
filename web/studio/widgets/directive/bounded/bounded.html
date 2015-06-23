@@ -1,2 +1,2 @@
-<label>{{label}}</label><br>
-<select class="form-control" name="{{name}}" ng-model="selectValue" ng-options="opt as opt.label for opt in options track by opt.id"></select>
+<label class="form-label">{{label}}</label>
+<select multiple class="form-control" name="{{name}}" ng-model="selectValue" ng-options="opt as opt.label for opt in options track by opt.id"></select>

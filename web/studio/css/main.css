@@ -280,6 +280,10 @@ form .row .form-label:first-child {
 	color: #fff;
 	transition: background 0.3s;
 }
+.button-small {
+	font-size: 0.60em;
+	line-height: 20px;
+}
 .button:hover {
 	background: #2980b9;
 	color: #fff;

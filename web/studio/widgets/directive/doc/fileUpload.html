@@ -1,17 +1,17 @@
-<label>{{label}}</label><br>
+<label class="form-label">{{label}}</label><br>
 <div ng-show="uploader.queue.length == 0 && !docValue.name">
-<p>No file selected</p>
+<p class="form-label">No file selected</p>
 </div>
 <div ng-show="docValue.name">
-<p>{{docValue.name}}&nbsp;<eb-doc-download doc-value="docValue.identity"></eb-doc-download></p>
+<label class="form-label">{{docValue.name}}&nbsp;<eb-doc-download doc-value="docValue.identity"></eb-doc-download></label>
 </div>
 
 <div ng-show="uploader.queue.length != 0">
 	<table class="table" style="margin-bottom: 0px;">
 	    <tbody>
 	        <tr ng-repeat="item in uploader.queue">
-	            <td>{{ item.file.name }}</td>
-	            <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
+	            <td class="form-label">{{ item.file.name }}</td>
+	            <td class="form-label" ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
 	            <td ng-show="uploader.isHTML5" style="width: 10%;">
 	                <div class="progress" style="margin-bottom: 0;">
 	                    <div class="progress-bar" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>
@@ -22,14 +22,14 @@
 	                <span ng-show="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
 	                <span ng-show="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
 	            </td>
-	            <td nowrap>
-	                <button type="button" class="btn btn-success btn-xs" ng-click="item.upload()" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
+	            <td nowrap class="text-center">
+	                <button type="button" class="button button-small" ng-click="item.upload()" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
 	                    <span class="glyphicon glyphicon-upload"></span> Upload
 	                </button>
-	                <button type="button" class="btn btn-warning btn-xs" ng-click="item.cancel()" ng-disabled="!item.isUploading">
+	                <button type="button" class="button button-small" ng-click="item.cancel()" ng-disabled="!item.isUploading">
 	                    <span class="glyphicon glyphicon-ban-circle"></span> Cancel
 	                </button>
-	                <button type="button" class="btn btn-danger btn-xs" ng-click="item.remove()">
+	                <button type="button" class="button button-small" ng-click="item.remove()">
 	                    <span class="glyphicon glyphicon-trash"></span> Remove
 	                </button>
 	            </td>
@@ -37,7 +37,8 @@
 	    </tbody>
 	</table>
 </div>
-<span class="btn btn-default fileinput-button">
-	<input type="file" name="{{name}}" nv-file-select="" uploader="uploader" ng-disabled="uploader.queue.length != 0"><span>Select File</span>
-</span>
+<div class="form-control form-control-file" data-ng-hide="uploader.queue.length != 0">
+	<span></span><button ng-disabled="uploader.queue.length != 0" class="button">Select file<input type="file" name="{{name}}" nv-file-select="" uploader="uploader" 
+		 onchange="this.parentNode.previousSibling.innerHTML = this.value.match(/[^\/\\]+$/)"></button>
+</div>
 <br>

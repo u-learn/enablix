@@ -1,13 +1,21 @@
-<h4>{{pageHeading}}</h4>
-<table class="table table-striped table-bordered table-sorting" >
-<tr ng-repeat="item in containerDef.contentItem">
-	<td class="col-md-2"><label>{{item.label}}</label></td>
-	<td class="col-md-6">{{containerData[item.id] | ebxFormatData: item.type}}&nbsp;
-		<span ng-if="item.type == 'DOC' && containerData[item.id].name">
-			<eb-doc-download doc-value="containerData[item.id].identity"></eb-doc-download>
-		</span>
-	</td>
-</tr>
-</table>
-<p><button ng-click="navToEdit()" type="button" class="btn btn-default">Edit</button>&nbsp;
-<button ng-click="deleteRecord()" type="button" class="btn btn-default">Delete</button></p>
+<div class="block">
+	<div class="head">
+		<h2>{{pageHeading}}</h2>
+	</div>
+	<div class="cont">
+		<table class="infotable" >
+			<tr ng-repeat="item in containerDef.contentItem">
+				<th>{{item.label}}:</td>
+				<td>{{containerData[item.id] | ebxFormatData: item.type}}&nbsp;
+					<span ng-if="item.type == 'DOC' && containerData[item.id].name">
+						<eb-doc-download doc-value="containerData[item.id].identity"></eb-doc-download>
+					</span>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="foot clearfix">
+		<a href="#" ng-click="deleteRecord()" class="button button-edit">Delete</a>
+		<a href="#" ng-click="navToEdit()" class="button button-delete">Edit</a>
+	</div>
+</div>
