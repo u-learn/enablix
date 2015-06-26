@@ -13,6 +13,8 @@ enablix.studioApp.controller('ContentAddCtrl',
 		$scope.pageHeading = "Add " + $scope.containerDef.label;
 		
 		$scope.containerData = {};
+
+		$scope.options = [{label: "opt1"}, {label: "opt2"}, {label: "opt3"}];
 		
 		$scope.saveContentData = function() {
 			

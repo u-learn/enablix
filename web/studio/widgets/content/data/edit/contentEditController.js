@@ -13,6 +13,8 @@ enablix.studioApp.controller('ContentEditCtrl',
 		
 		$scope.containerData = {};
 		
+		$scope.options = [{label: "opt1"}, {label: "opt2"}, {label: "opt3"}];
+		
 		ContentDataService.getContentRecordData(enablix.templateId, containerQId, elementIdentity, 
 				function(data) {
 					$scope.containerData = angular.copy(data);

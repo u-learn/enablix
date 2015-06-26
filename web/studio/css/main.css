@@ -282,7 +282,7 @@ form .row .form-label:first-child {
 }
 .button-small {
 	font-size: 0.60em;
-	line-height: 20px;
+	line-height: 22px;
 }
 .button:hover {
 	background: #2980b9;
@@ -306,7 +306,24 @@ form .row .form-label:first-child {
 .button-delete:hover {
 	background: #c0392b;
 }
-
+.button-red {
+	background: #c9302c;
+}
+.button-red:hover {
+	background: #ac2925;
+}
+.button-green {
+	background: #5cb85c;
+}
+.button-green:hover {
+	background: #398439;
+}
+.button-yellow {
+	background: #ec971f;
+}
+.button-yellow:hover {
+	background: #d58512;
+}
 
 
 /*----------------------------------------------*/
@@ -1119,4 +1136,13 @@ form .row .form-label:first-child {
 .popup.active {
 	visibility: visible;
 	opacity: 1;
+}
+
+.select2 > .select2-choice.ui-select-match {
+      /* Because of the inclusion of Bootstrap */
+  height: 29px;
+}
+
+.selectize-control > .selectize-dropdown {
+  top: 36px;
 }

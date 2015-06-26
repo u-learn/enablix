@@ -23,14 +23,14 @@
 	                <span ng-show="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
 	            </td>
 	            <td nowrap class="text-center">
-	                <button type="button" class="button button-small" ng-click="item.upload()" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
-	                    <span class="glyphicon glyphicon-upload"></span> Upload
+	                <button type="button" class="button button-small button-red" ng-click="item.remove()">
+	                    <span class="glyphicon glyphicon-trash"></span> Remove
 	                </button>
-	                <button type="button" class="button button-small" ng-click="item.cancel()" ng-disabled="!item.isUploading">
+	                <button type="button" class="button button-small button-yellow" ng-click="item.cancel()" ng-disabled="!item.isUploading">
 	                    <span class="glyphicon glyphicon-ban-circle"></span> Cancel
 	                </button>
-	                <button type="button" class="button button-small" ng-click="item.remove()">
-	                    <span class="glyphicon glyphicon-trash"></span> Remove
+	                <button type="button" class="button button-small button-green" ng-click="item.upload()" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
+	                    <span class="glyphicon glyphicon-upload"></span> Upload
 	                </button>
 	            </td>
 	        </tr>

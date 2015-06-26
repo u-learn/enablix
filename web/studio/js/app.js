@@ -1,6 +1,7 @@
 var enablix = enablix || {};
 enablix.studioApp = angular.module("studio", ['ui.router', 'angularTreeview', 'listGroupTreeview', 
-           'angularFileUpload', 'ui.bootstrap', 'isteven-multi-select', 'ui-notification', 'enablixFilters']);
+           'angularFileUpload', 'ui.bootstrap', 'isteven-multi-select', 'ui-notification', 'enablixFilters',
+           'ngSanitize', 'ui.select']);
 
 //enablix.templateId = "entSoftwareTemplate"; //"amlSalesTemplate";
 enablix.dateFormat = 'MM/dd/yyyy';
