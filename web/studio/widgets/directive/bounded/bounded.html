@@ -1,6 +1,6 @@
 <label class="form-label">{{label}}</label>
 <ui-select multiple ng-model="selectValue" theme="bootstrap" ng-disabled="disabled" sortable="true" 
-	close-on-select="false" on-select="onItemSelect($item, $model)" on-remove="onItemRemove($item, $model)">
+	close-on-select="false" remove-selected="false" on-select="onItemSelect($item, $model)" on-remove="onItemRemove($item, $model)">
   <ui-select-match>{{$item.label}}</ui-select-match>
   <ui-select-choices repeat="opt in options | filter: {label: $select.search}">
     {{opt.label}}

@@ -23,8 +23,8 @@
 		<tr ng-repeat="tableRecord in tableData | filter:searchText">
 			<td class="download"><a href="#" class="fa fa-download"></a></td>
 			<td class="details"><a href="#" ng-click="navToRowDetail(tableRecord.identity)" class="fa fa-eye"></a></td>
-			<td class="edit"><a href="#" class="fa fa-pencil"></a></td>
-			<td class="remove"><a href="#" class="fa fa-times"></a></td>
+			<td class="edit"><a href="#" class="fa fa-pencil" ng-click="navToRecordEdit(tableRecord.identity)"></a></td>
+			<td class="remove"><a href="#" class="fa fa-times" ng-click="deleteTheRecord(tableRecord.identity)"></a></td>
 			<td ng-repeat="col in tableHeaders">
 				<span ng-class="{'text-right': col.dataType == 'NUMERIC'}">
 					{{tableRecord[col.key] | ebxFormatData: col.dataType}}</span>

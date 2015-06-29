@@ -1,18 +1,29 @@
-<div class="row-fluid">
+<div class="container-fluid">
+
+	<!-- bread crumbs -->
+	<div class="block bread-crumbs">
+		<div class="cont">
+			<a href="#">Setup</a>&nbsp;&nbsp;<i class="fa fa-angle-right"></i>
+			<span>Reference Data</span>
+		</div>
+	</div>
+	<!--/ bread crumbs -->
+
 	<div ng-controller="refdataIndexCtrl">
 		<div ng-show="refdataIndexData.length == 0">
 			<label>No Reference data setup required.</label>
 		</div>
-		<div class="col-sm-3 left-nav-section" ng-show="refdataIndexData.length != 0">
-			<div class="panel panel-default">
-				<div class="panel-heading">Reference Data</div>
-				<div class="list-group">
-	           		<a ng-class="{'active': selectedIndexId == indx.id}" class="list-group-item" 
-	           				ng-repeat="indx in refdataIndexData" 
-	          				ng-click="navToRefdataList(indx.id)">{{indx.label}}</a>
-	       		</div>
-       		</div>
-		</div>
+	
+		<aside class="col-sm-4 col-md-3" ng-show="refdataIndexData.length != 0">
+			<nav id="side-nav" class="side-nav">
+				<ul>
+					<li ng-class="{'active': selectedIndexId == indx.id}" ng-repeat="indx in refdataIndexData">
+						<i class="fa fa-angle-right"></i>
+						<a ng-click="navToRefdataList(indx.id)">{{indx.label}}</a>
+					</li>
+				</ul>
+		    </nav>
+		</aside>
 		<div class="col-sm-9">
 			<div ui-view></div>
 		</div>

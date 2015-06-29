@@ -160,7 +160,7 @@ form .row .form-label:first-child {
 	cursor: pointer;
 	opacity: 0;
 }
-.select2:after {
+.select2:after, .ui-select-container:after {
 	content: '';
 	position: absolute;
 	top: 50%;
@@ -170,7 +170,7 @@ form .row .form-label:first-child {
 	border-right: 4px solid transparent;
 	border-left: 4px solid transparent;
 }
-.select2:before {
+.select2:before, .ui-select-container:before {
 	content: '';
 	position: absolute;
 	bottom: 50%;
@@ -682,6 +682,10 @@ form .row .form-label:first-child {
 /* side nav */
 /**/
 .side-nav {
+	max-height: calc(100vh - 196px);
+	max-height: -moz-calc(100vh - 196px);
+	max-height: -webkit-calc(100vh - 196px);
+	overflow: auto;
 	margin-top: 2em;
 	background: #34495e;
 }
@@ -1145,4 +1149,17 @@ form .row .form-label:first-child {
 
 .selectize-control > .selectize-dropdown {
   top: 36px;
+}
+
+.dropdown-menu {
+	border-radius: 0px;
+}
+
+.ui-select-match-item {
+	border-radius: 0px;
+	background: #f5f5f5;
+}
+
+.ui-select-match-close {
+	padding-top: 3px;
 }

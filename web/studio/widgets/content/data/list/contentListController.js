@@ -16,6 +16,24 @@ enablix.studioApp.controller('ContentListCtrl',
 			hiddenContentItemIds.push(hiddenContentItem.id);
 		});
 		
+		$scope.navToEdit = function(elementIdentity) {
+			$scope.goToDetailEdit(containerQId, elementIdentity);
+		}
+		
+		$scope.deleteRecord = function(elementIdentity) {
+			
+			ContentDataService.deleteContentData(containerQId, elementIdentity, 
+				function(data) {
+					Notification.primary("Deleted successfully!");
+					var parentNode = $scope.getCurrentIndexNode ? $scope.getCurrentIndexNode().parentNode : null;
+					$scope.postDataDelete(parentNode, elementIdentity);
+				}, 
+				function(data) {
+					Notification.error({message: "Error deleting record", delay: enablix.errorMsgShowTime});
+				});
+			
+		}
+		
 		angular.forEach($scope.containerDef.contentItem, function(containerAttr) {
 			
 			if (!hiddenContentItemIds.contains(containerAttr.id)) {

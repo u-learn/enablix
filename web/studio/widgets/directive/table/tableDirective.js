@@ -7,12 +7,26 @@ function(StateUpdateService) {
 		scope : {
 			tableData : "=",
 			tableHeaders : "=",
-			rowClickFn : "="
+			rowClickFn : "=",
+			recordEditFn : "=",
+			recordDeleteFn : "="
 		},
 		link: function(scope, element, attrs) {
 			scope.navToRowDetail = function(elementIdentity) {
 				if (scope.rowClickFn) {
 					scope.rowClickFn(elementIdentity);
+				}
+			};
+			
+			scope.navToRecordEdit = function(elementIdentity) {
+				if (scope.recordEditFn) {
+					scope.recordEditFn(elementIdentity);
+				}
+			};
+			
+			scope.deleteTheRecord = function(elementIdentity) {
+				if (scope.recordDeleteFn) {
+					scope.recordDeleteFn(elementIdentity);
 				}
 			};
 		},
