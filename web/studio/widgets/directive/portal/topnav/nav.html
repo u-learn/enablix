@@ -1,4 +1,25 @@
-<div class="portal-top-nav">
+<!-- secondary nav -->
+<nav class="secondary-nav container-fluid">
+	<ul>
+		<li><a href="#" ui-sref-active="active" ui-sref="portal.home">Home</a></li>
+		<li ng-repeat="navItem in topNavList">
+			<a href="#" ng-class="{'active' : navItem.qualifiedId == $stateParams.containerQId || navItem.qualifiedId == $stateParams.enclosureId}"
+			   ng-if="navItem.type == 'item-container'">{{navItem.label}}&nbsp;<i ng-if="navItem.children.length > 0" class="fa fa-angle-down"></i></a>
+	    	<a ng-class="{'active' : navItem.qualifiedId == $stateParams.containerQId || navItem.qualifiedId == $stateParams.enclosureId}" 
+	    	   ng-if="navItem.type == 'enclosure'" ng-click="navToEnclosureItem(navItem)">{{navItem.label}}</a>
+			<ul ng-if="navItem.children.length > 0">
+				<li ng-repeat="subItem in navItem.children">
+					<a ng-click="navToPortalTopNavItem(subItem)">{{subItem.label}}</a>
+				</li>
+			</ul>
+		</li>
+	</ul>
+	<form action="#">
+		<input type="text" placeholder="search the portal...">
+		<i class="fa fa-search"></i>
+	</form>
+</nav>
+<!-- <div class="portal-top-nav">
   <ul class="nav nav-pills">
     <li role="presentation" ui-sref-active="active">
     	<a ui-sref="portal.home">Home</a>
@@ -25,4 +46,4 @@
 	  </form>
     </li>
   </ul>  
-</div>
+</div> -->

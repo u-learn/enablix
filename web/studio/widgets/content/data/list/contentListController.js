@@ -27,6 +27,7 @@ enablix.studioApp.controller('ContentListCtrl',
 					Notification.primary("Deleted successfully!");
 					var parentNode = $scope.getCurrentIndexNode ? $scope.getCurrentIndexNode().parentNode : null;
 					$scope.postDataDelete(parentNode, elementIdentity);
+					StateUpdateService.reload();
 				}, 
 				function(data) {
 					Notification.error({message: "Error deleting record", delay: enablix.errorMsgShowTime});
@@ -48,9 +49,31 @@ enablix.studioApp.controller('ContentListCtrl',
 			}
 		});
 		
+		var decorateData = function(_containerDef, _dataRecord) {
+			
+			for (var i = 0; i < _containerDef.contentItem.length; i++) {
+				
+				var item = _containerDef.contentItem[i];
+				
+				if (item.type == 'DOC') {
+				
+					var docInstance = _dataRecord[item.id];
+					if (docInstance && docInstance.identity) {
+						_dataRecord.downloadDocIdentity = docInstance.identity;
+					}
+					
+					break;
+				}
+			}
+		}
+		
 		ContentDataService.getContentData(enablix.templateId, containerQId, parentIdentity, 
 				function(data) {
 					$scope.listData = data;
+					
+					angular.forEach($scope.listData, function(item) {
+						decorateData($scope.containerDef, item);
+					});
 				}, 
 				function(data) {
 					//alert('Error retrieving list data');
