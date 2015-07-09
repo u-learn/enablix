@@ -1,0 +1,24 @@
+<div class="block">
+	<div class="head head-toggle">
+		<i></i>
+		<em class="fa fa-file-text-o"></em>
+		<h2>{{subContainerLabel}}</h2>
+	</div>
+	<div class="cont cont-hidden" ng-if="bodyData.length != 0">
+		<div ng-repeat="dataItem in bodyData">
+			<h4><eb-doc-download class="right-doc" ng-if="dataItem.downloadDocIdentity" doc-value="dataItem.downloadDocIdentity"></eb-doc-download>
+			    <a href="#{{dataItem.containerId}}{{$index}}" class="toggle">{{dataItem.headingLabel}}</a></h4>
+			<div id="{{dataItem.containerId}}{{$index}}" class="toggle-cont">
+				<table class="infotable" >
+					<tr ng-repeat="header in multiHeaders" ng-switch="header.dataType">
+						<th>{{header.label}}:</th>
+						<td>{{dataItem[header.key] | ebxFormatData: header.dataType}}</td>
+					</tr>
+			  	</table>
+			</div>
+		</div>
+	</div>
+	<div ng-if="bodyData.length == 0" class="cont cont-hidden cont-empty">
+		No data found.
+	</div>
+</div>

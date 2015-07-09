@@ -2995,6 +2995,9 @@
 					<hideContentItem id="access"/>
 					<hideContentItem id="dealRelevance"/>
 				</listViewConfig>
+				<portalConfig>
+					<headingContentItem id="title"/>
+				</portalConfig>
 			</container>
 		</contentUIDef>
 		<contentUIDef qualifiedId="solution.solCaseStudy.highlights">

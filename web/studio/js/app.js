@@ -162,7 +162,7 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvi
 				// the main template
 				'': {
 					templateUrl: 'views/portal/portal-container.html',
-					controller: 'PortalEnclDetailCtrl',
+					controller: 'PortalCntnrDetailCtrl',
 					resolve: {
 						setupData: appSetup 
 					}

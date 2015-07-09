@@ -1,0 +1,23 @@
+<div class="block">
+	<div class="head head-toggle">
+		<i></i>
+		<em class="fa fa-file-o"></em>
+		<h2>{{subContainerLabel}}</h2>
+	</div>
+	<div class="cont cont-hidden clearfix" ng-if="!(bodyData == null || bodyData == undefined || bodyData.length == 0)">
+		<table class="infotable" >
+			<tr ng-repeat="header in singleHeaders" ng-switch="header.dataType">
+				<th>{{header.label}}:</th>
+				<td>{{bodyData[header.key] | ebxFormatData: header.dataType}}&nbsp;
+					<span ng-if="header.dataType == 'DOC' && bodyData[header.key].name">
+						<eb-doc-download doc-value="bodyData[header.key].identity"></eb-doc-download>
+					</span>
+				</td>
+			</tr>
+	  	</table>
+	</div>
+	<div ng-if="bodyData == null || bodyData == undefined || bodyData.length == 0" 
+		 class="cont cont-hidden cont-empty">
+		No data found.
+	</div>
+</div>

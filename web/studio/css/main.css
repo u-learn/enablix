@@ -965,13 +965,13 @@ form .row .form-label:first-child {
 .faq h4:first-child {
 	margin-top: 0;
 }
-.faq .download {
+.faq .download, .right-doc .fa-download {
 	float: right;
 	margin-top: 2px;
 	font-size: 14px;
 	color: #2ecc71;
 }
-.faq .download:hover {
+.faq .download:hover, .right-doc .fa-download:hover {
 	color: #27ae60;
 }
 .faq .download i {

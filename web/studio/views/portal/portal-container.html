@@ -1,5 +1,27 @@
-<eb-portal-breadcrumb></eb-portal-breadcrumb>
-<div class="row-fluid">
+<!-- page content -->
+<div class="page-content">
+	<div class="container-fluid">
+		<eb-portal-breadcrumb></eb-portal-breadcrumb>
+		<div class="row">							
+			<main class="col-md-8">
+				<div ng-repeat="subContainer in subContainerList">
+					<eb-portal-sub-container ng-if="subContainer.type == 'single'" 
+						type="single" sub-container-label="subContainer.label" 
+						sub-container-q-id="subContainer.qualifiedId" index="$index"></eb-portal-sub-container>
+					<eb-portal-sub-container ng-if="subContainer.type == 'multi'"
+						type="multi" sub-container-label="subContainer.label" 
+						sub-container-q-id="subContainer.qualifiedId" index="$index"></eb-portal-sub-container>
+				</div>
+			</main>
+			
+			
+			<aside class="col-md-4">
+				<div ui-view="rightSection"></div>
+			</aside>
+		</div>
+	</div>
+</div>
+<!-- <div class="row-fluid">
 	<div class="col-sm-3 portal-left-nav-section">
 		<eb-portal-left-nav></eb-portal-left-nav>
 	</div>
@@ -9,4 +31,4 @@
 	<div class="col-sm-3">
 		<div ui-view="rightSection"></div>
 	</div>
-</div>
+</div> -->
