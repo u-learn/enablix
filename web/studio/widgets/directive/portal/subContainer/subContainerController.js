@@ -28,20 +28,19 @@ enablix.studioApp.controller('PortalSubContainerCtrl',
 			}
 		}
 		
-		var initToggle = function() {
-			$('.toggle').on('click', function() {
-				$(this).toggleClass('active');
-				$($(this).attr('href')).slideToggle('fast');
-				return false;
-			});
-			
-			$('.head-toggle').on('click', function() {
-				if( event.target.nodeName != 'A' )
-				{
-					$(this).toggleClass('active');
-					$(this).next().slideToggle('fast');
-				}
-			});
+		$scope.toggleContainer = function($event) {
+			var elem = $event.currentTarget;
+			if ($event.target.nodeName != 'A' ) {
+				$(elem).toggleClass('active');
+				$(elem).next().slideToggle('fast');
+			}
+		}
+		
+		$scope.toggleContainerItem = function($event) {
+			var elem = $event.currentTarget;
+			$(elem).toggleClass('active');
+			$($(elem).attr('href')).slideToggle('fast');
+			return false;
 		}
 		
 		if ($stateParams.containerQId === $scope.subContainerQId) {
@@ -51,9 +50,6 @@ enablix.studioApp.controller('PortalSubContainerCtrl',
 					function(recordData) {
 						decorateData($scope.containerDef, recordData);
 						$scope.bodyData = recordData;
-						if ($scope.index == 0) {
-							initToggle();
-						}
 					},
 					function(errResp) {
 						Notification.error({message: "Error retrieving data", delay: enablix.errorMsgShowTime});
@@ -78,10 +74,6 @@ enablix.studioApp.controller('PortalSubContainerCtrl',
 						}
 						
 						$scope.bodyData = data;
-					}
-					
-					if ($scope.index == 0) {
-						initToggle();
 					}
 					
 				},
