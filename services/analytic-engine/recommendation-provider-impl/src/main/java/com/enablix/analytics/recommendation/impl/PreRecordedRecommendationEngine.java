@@ -8,26 +8,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.enablix.analytics.recommendation.RecommendationContext;
 import com.enablix.analytics.recommendation.RecommendationEngine;
-import com.enablix.analytics.recommendation.repository.UserRecommendationRepository;
+import com.enablix.analytics.recommendation.repository.RecommendationRepository;
 import com.enablix.core.api.ContentDataRef;
-import com.enablix.core.domain.reco.UserRecommendation;
+import com.enablix.core.domain.reco.Recommendation;
 
 public class PreRecordedRecommendationEngine implements RecommendationEngine {
 
 	@Autowired
-	private UserRecommendationRepository repo;
+	private RecommendationRepository repo;
 	
 	@Override
 	public List<ContentDataRef> getRecommendations(RecommendationContext request) {
 		
 		List<ContentDataRef> recoContent = new ArrayList<>();
 		
-		Collection<UserRecommendation> recommendations = 
-				repo.findByUserIdAndRecommendedDataDataTemplateIdAndRecommendedDataDataContainerQId(
+		Collection<Recommendation> recommendations = 
+				repo.findByUserIdAndTemplateIdAndContainerQId(
 				request.getUserContext().userId(), request.getRequestContext().templateId(),
 				request.getRequestContext().containerQId());
 		
-		for (UserRecommendation reco : recommendations) {
+		for (Recommendation reco : recommendations) {
 			recoContent.add(reco.getRecommendedData().getData());
 		}
 		

@@ -11,7 +11,7 @@ public class WebRecommendationRequest implements RecommendationRequest {
 		this.containerQId = containerQId;
 	}
 	
-	protected WebRecommendationRequest() { }
+	public WebRecommendationRequest() { }
 	
 	public String getContainerQId() {
 		return containerQId;

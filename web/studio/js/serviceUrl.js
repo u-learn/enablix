@@ -13,6 +13,9 @@ enablix.serviceURL = {
 	"downloadDocument" : enablix.domainName + "/doc/download/",
 	"fetchBoundedRefList": enablix.domainName + "/bounded/list/:templateId/:contentQId/",
 	"deleteContentData": enablix.domainName + "/content/delete/t/:templateId/c/:contentQId/r/:recordIdentity",
+	"generalRecommendaton": enablix.domainName + "/navcontent/reco",
+	"containerSpecificRecommendaton": enablix.domainName + "/navcontent/reco/:containerQId/",
+	"contentSpecificRecommendaton": enablix.domainName + "/navcontent/reco/:containerQId/:contentIdentity/",
 	"user": enablix.domainName + "/user",
 	"logout": enablix.domainName + "/logout"
 };

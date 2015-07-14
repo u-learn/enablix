@@ -971,6 +971,15 @@ form .row .form-label:first-child {
 	font-size: 14px;
 	color: #2ecc71;
 }
+
+.fa-download {
+	color: #2ecc71;
+}
+
+.fa-download:hover {
+	color: #27ae60;
+}
+
 .faq .download:hover, .right-doc .fa-download:hover {
 	color: #27ae60;
 }

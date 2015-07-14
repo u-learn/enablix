@@ -21,8 +21,14 @@ public class NavigableContentController {
 	private RecommendedContentService recoService;
 	
 	@RequestMapping(method = RequestMethod.POST, value="/reco/{containerQId}/")
-	public List<NavigableContent> recommendedContent(@PathVariable String containerQId) {
+	public List<NavigableContent> containerRecommendedContent(@PathVariable String containerQId) {
 		WebRecommendationRequest request = new WebRecommendationRequest(containerQId);
+		return recoService.getRecommendedContent(request);
+	}
+	
+	@RequestMapping(method = RequestMethod.POST, value="/reco")
+	public List<NavigableContent> generalRecommendedContent() {
+		WebRecommendationRequest request = new WebRecommendationRequest();
 		return recoService.getRecommendedContent(request);
 	}
 	

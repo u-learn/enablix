@@ -1,5 +1,8 @@
 <div class="block bread-crumbs">
 	<div class="cont">
+		<span>
+			<a ng-if="!$last">Portal</a>&nbsp;&nbsp;<i class="fa fa-angle-right"></i>
+		</span>
 		<span ng-repeat="breadcrumbItem in breadcrumbList">
 			<span ng-if="$last">{{breadcrumbItem}}</span>
 			<a ng-if="!$last">{{breadcrumbItem}}</a>&nbsp;&nbsp;<i ng-if="!$last" class="fa fa-angle-right"></i>
