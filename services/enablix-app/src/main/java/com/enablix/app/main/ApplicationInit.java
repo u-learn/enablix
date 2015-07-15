@@ -42,7 +42,7 @@ public class ApplicationInit {
 	
 }
 
-@Component
+/*@Component
 class Temp {
 	
 	@Autowired
@@ -79,5 +79,5 @@ class Temp {
 		
 	}
 	
-}
+}*/
 

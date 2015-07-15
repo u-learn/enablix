@@ -1,0 +1,6 @@
+<ul>
+	<li ng-repeat="reco in recoList">
+		<span ng-repeat="navItem in reco"><span ng-if="!$last">{{navItem.label}}</span><a ng-if="$last">{{navItem.label}}</a>
+		&nbsp;<i ng-if="!$last" class="fa fa-angle-right"></i>&nbsp;&nbsp;</span>
+	</li>
+</ul>

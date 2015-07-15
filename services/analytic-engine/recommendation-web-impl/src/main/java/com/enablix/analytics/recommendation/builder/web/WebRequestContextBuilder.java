@@ -13,6 +13,7 @@ public class WebRequestContextBuilder implements RequestContextBuilder<WebRecomm
 				new WebRequestContext(ProcessContext.get().getTemplateId());
 		
 		webRequestContext.setContainerQId(request.getContainerQId());
+		webRequestContext.setContentIdentity(request.getContentIdentity());
 		
 		return webRequestContext;
 	}
@@ -22,6 +23,8 @@ public class WebRequestContextBuilder implements RequestContextBuilder<WebRecomm
 		private String templateId;
 		
 		private String containerQId;
+		
+		private String contentIdentity;
 		
 		public WebRequestContext(String templateId) {
 			super();
@@ -39,6 +42,15 @@ public class WebRequestContextBuilder implements RequestContextBuilder<WebRecomm
 
 		public void setContainerQId(String containerQId) {
 			this.containerQId = containerQId;
+		}
+
+		@Override
+		public String contentIdentity() {
+			return contentIdentity;
+		}
+
+		public void setContentIdentity(String contentIdentity) {
+			this.contentIdentity = contentIdentity;
 		}
 		
 	}

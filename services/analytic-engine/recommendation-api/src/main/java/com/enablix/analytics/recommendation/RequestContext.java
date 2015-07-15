@@ -6,4 +6,6 @@ public interface RequestContext {
 	
 	String containerQId();
 	
+	String contentIdentity();
+	
 }

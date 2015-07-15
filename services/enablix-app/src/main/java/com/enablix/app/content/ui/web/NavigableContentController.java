@@ -20,19 +20,26 @@ public class NavigableContentController {
 	@Autowired
 	private RecommendedContentService recoService;
 	
-	@RequestMapping(method = RequestMethod.POST, value="/reco/{containerQId}/")
+	@RequestMapping(method = RequestMethod.GET, value="/reco/{containerQId}/")
 	public List<NavigableContent> containerRecommendedContent(@PathVariable String containerQId) {
 		WebRecommendationRequest request = new WebRecommendationRequest(containerQId);
 		return recoService.getRecommendedContent(request);
 	}
 	
-	@RequestMapping(method = RequestMethod.POST, value="/reco")
+	@RequestMapping(method = RequestMethod.GET, value="/reco")
 	public List<NavigableContent> generalRecommendedContent() {
 		WebRecommendationRequest request = new WebRecommendationRequest();
 		return recoService.getRecommendedContent(request);
 	}
 	
-	@RequestMapping(method = RequestMethod.POST, value="/recent/{containerQId}")
+	@RequestMapping(method = RequestMethod.GET, value="/reco/{containerQId}/{contentIdentity}/")
+	public List<NavigableContent> contentSpecificRecommendedContent(@PathVariable String containerQId, 
+			@PathVariable String contentIdentity) {
+		WebRecommendationRequest request = new WebRecommendationRequest(containerQId, contentIdentity);
+		return recoService.getRecommendedContent(request);
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, value="/recent/{containerQId}")
 	public List<NavigableContent> recentlyUpdatedContent(@PathVariable String containerQId) {
 		// TODO:
 		return new ArrayList<>();
