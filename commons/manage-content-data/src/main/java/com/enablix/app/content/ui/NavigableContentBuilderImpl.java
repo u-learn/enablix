@@ -70,6 +70,9 @@ public class NavigableContentBuilderImpl implements NavigableContentBuilder {
 		NavigableContent content = new NavigableContent(containerQId, 
 				(String) record.get(ContentDataConstants.IDENTITY_KEY), label);
 		
+		String docIdentity = ContentDataUtil.findDocIdentity(record, template, containerQId);
+		content.setDocIdentity(docIdentity);
+		
 		content.setNext(child);
 		
 		return content;

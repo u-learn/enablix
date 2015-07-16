@@ -1,0 +1,17 @@
+<!-- page content -->
+<div class="page-content">
+	<div class="container-fluid">
+		<eb-portal-breadcrumb></eb-portal-breadcrumb>
+		<div class="row">							
+			<main class="col-md-8">
+				<eb-portal-sub-container 
+					type="single" sub-container-label="containerDef.label" 
+					sub-container-q-id="containerDef.qualifiedId" index="0">
+				</eb-portal-sub-container>
+			</main>
+			<aside class="col-md-4">
+				<div ui-view="rightSection"></div>
+			</aside>
+		</div>
+	</div>
+</div>

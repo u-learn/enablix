@@ -28,5 +28,21 @@ public interface RecommendationRepository extends BaseMongoRepository<Recommenda
 			   + "{'recommendationScope.contentIdentity' : ?3 } ]}")
 	Collection<Recommendation> findByUserIdAndTemplateIdAndContainerQIdAndContentIdentity(
 		String userId, String templateId, String containerQId, String contentIdentity);
-	
+
+	@Query("{ $and : [{'recommendationScope.templateId' : ?0 }, "
+			   + "{'recommendationScope.containerQId' : ?1 }, "
+			   + "{'recommendationScope.contentIdentity' : ?2 } ]}")
+	Collection<Recommendation> findByTemplateIdAndContainerQIdAndContentIdentity(
+		String templateId, String containerQId, String contentIdentity);
+
+	@Query("{ $and : [{'recommendationScope.templateId' : ?0 }, "
+			   + "{'recommendationScope.containerQId' : {$exists : false} }, "
+			   + "{'recommendationScope.contentIdentity' : {$exists: false} } ]}")
+	Collection<Recommendation> findByTemplateId(String templateId);
+
+	@Query("{ $and : [{'recommendationScope.templateId' : ?0 }, "
+				   + "{'recommendationScope.containerQId' : ?1 }, "
+				   + "{'recommendationScope.contentIdentity' : {$exists : false} } ]}")
+	Collection<Recommendation> findByTemplateIdAndContainerQId(String templateId, String containerQId);
+
 }

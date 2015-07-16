@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.core.commons.xsdtopojo.ContainerType;
+import com.enablix.core.commons.xsdtopojo.ContentItemClassType;
 import com.enablix.core.commons.xsdtopojo.ContentItemType;
 import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 import com.enablix.core.domain.content.ContentAssociation;
@@ -75,6 +76,30 @@ public class ContentDataUtil {
 		}
 		
 		return labelAttributeValue;
+	}
+	
+	public static String findDocIdentity(Map<String, Object> record, ContentTemplate template, String qId) {
+		
+		String docIdentity = null;
+		
+		ContainerType containerDef = TemplateUtil.findContainer(template.getDataDefinition(), qId);
+		
+		for (ContentItemType itemType : containerDef.getContentItem()) {
+			
+			if (ContentItemClassType.DOC.equals(itemType.getType())) {
+				
+				Object doc = record.get(itemType.getId());
+				if (doc != null && doc instanceof Map<?,?>) {
+					Map<?,?> docDetails = (Map<?,?>) doc;
+					docIdentity = String.valueOf(
+							docDetails.get(ContentDataConstants.IDENTITY_KEY));
+				}
+				
+				break;
+			}
+		}
+		
+		return docIdentity;
 	}
 
 	private static String contentItemToString(Object labelAttribute, ContainerType containerDef,

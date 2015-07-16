@@ -246,6 +246,11 @@ enablix.studioApp.factory('ContentTemplateService',
 				return null;
 			}
 			
+			var getRootContainerIdForContainer = function(_containerQId) {
+				var cntnrQIdArr = _containerQId.split("\.");
+				return cntnrQIdArr[0];
+			}
+			
 			return {
 				getTemplate : getTemplate,
 				getDefaultTemplate : getDefaultTemplate,
@@ -262,7 +267,8 @@ enablix.studioApp.factory('ContentTemplateService',
 				getPortalTopNavEnclosures : getPortalTopNavEnclosures,
 				getPortalCondensedViewItems: getPortalCondensedViewItems,
 				getPortalHeadingContentItem: getPortalHeadingContentItem,
-				getPortalEnclosureDefinition: getPortalEnclosureDefinition
+				getPortalEnclosureDefinition: getPortalEnclosureDefinition,
+				getRootContainerIdForContainer: getRootContainerIdForContainer
 			};
 		
 		}

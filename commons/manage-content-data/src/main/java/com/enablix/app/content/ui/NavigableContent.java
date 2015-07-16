@@ -7,6 +7,8 @@ public class NavigableContent {
 	private String identity;
 	
 	private String label;
+	
+	private String docIdentity;
 
 	private NavigableContent next;
 	
@@ -39,6 +41,14 @@ public class NavigableContent {
 
 	public void setLabel(String label) {
 		this.label = label;
+	}
+
+	public String getDocIdentity() {
+		return docIdentity;
+	}
+
+	public void setDocIdentity(String docIdentity) {
+		this.docIdentity = docIdentity;
 	}
 
 	public NavigableContent getNext() {

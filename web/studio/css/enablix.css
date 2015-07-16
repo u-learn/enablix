@@ -122,3 +122,8 @@ label, h4 {
 	padding-top: 5px;
 	padding-bottom: 5px;
 }
+
+.nav-separator {
+	padding-left: 3px;
+	padding-right: 3px;
+}

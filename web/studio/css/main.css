@@ -1047,8 +1047,9 @@ form .row .form-label:first-child {
 }
 .recomended-content .fa-download {
 	position: relative;
-	top: 1px;
+	top: 2px;
 	color: #2ecc71;
+	margin-left: 3px;
 }
 .recomended-content .fa-download::after {
 	display: none;
