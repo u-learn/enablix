@@ -1,10 +1,4 @@
 <ul>
-	<li ng-repeat="reco in recoList">
-		<span ng-repeat="navItem in reco"><span ng-if="!$last">{{navItem.label}}</span>
-			<a ng-if="$last" ng-click="navToContent(navItem)">{{navItem.label}}</a>
-			<i ng-if="!$last" class="fa fa-angle-right nav-separator"></i>
-			<eb-doc-download ng-if="$last && navItem.docIdentity && navItem.docIdentity != null" 
-					doc-value="navItem.docIdentity"></eb-doc-download>
-		</span>
-	</li>
+	<eb-nav-link hide-hierarchy="false" nav-link="reco" ng-repeat="reco in recoList">
+	</eb-nav-link>
 </ul>

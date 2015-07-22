@@ -1009,9 +1009,17 @@ form .row .form-label:first-child {
 .recomended-content li {
 	margin-top: 0.75em;
 }
-.recomended-content li:first-child {
+.recomended-content li:first-child{
 	margin-top: 0;
 }
+
+eb-nav-link li {
+	margin-top: 0.75em !important;
+}
+eb-nav-link:first-child li {
+	margin-top: 0 !important;
+}
+
 .recomended-content a {
 	position: relative;
 	text-decoration: none;
