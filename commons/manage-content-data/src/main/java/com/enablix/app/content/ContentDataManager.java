@@ -1,5 +1,6 @@
 package com.enablix.app.content;
 
+import java.util.List;
 import java.util.Map;
 
 import com.enablix.app.content.delete.DeleteContentRequest;
@@ -13,5 +14,7 @@ public interface ContentDataManager {
 	Object fetchDataJson(FetchContentRequest request);
 	
 	void deleteData(DeleteContentRequest request);
+
+	List<Map<String, Object>> fetchPeers(FetchContentRequest request);
 	
 }

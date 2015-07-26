@@ -1,10 +1,10 @@
 <div class="block">
-	<div class="head head-toggle" ng-click="toggleContainer($event)">
+	<div ng-class="{'active': expanded}" class="head head-toggle" ng-click="toggleContainer($event)">
 		<i></i>
 		<em class="fa fa-file-o"></em>
 		<h2>{{subContainerLabel}}</h2>
 	</div>
-	<div class="cont cont-hidden clearfix" ng-if="!(bodyData == null || bodyData == undefined || bodyData.length == 0)">
+	<div ng-class="{'cont-hidden': !expanded}" class="cont clearfix" ng-if="!(bodyData == null || bodyData == undefined || bodyData.length == 0)">
 		<table class="infotable" >
 			<tr ng-repeat="header in singleHeaders" ng-switch="header.dataType">
 				<th>{{header.label}}:</th>

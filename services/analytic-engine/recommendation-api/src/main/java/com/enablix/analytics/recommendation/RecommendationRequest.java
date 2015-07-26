@@ -1,5 +1,7 @@
 package com.enablix.analytics.recommendation;
 
-public interface RecommendationRequest {
+import com.enablix.analytics.context.ContentRequest;
+
+public interface RecommendationRequest extends ContentRequest {
 
 }

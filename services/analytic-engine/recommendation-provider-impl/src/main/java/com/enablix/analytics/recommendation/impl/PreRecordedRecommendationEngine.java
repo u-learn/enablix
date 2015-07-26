@@ -32,34 +32,17 @@ public class PreRecordedRecommendationEngine implements RecommendationEngine {
 		String contentIdentity = request.getRequestContext().contentIdentity();
 		
 		if (!StringUtil.isEmpty(containerQId) && !StringUtil.isEmpty(contentIdentity)) {
-			
-			// user and content specific recommendation
-			recommendations = repo.findByUserIdAndTemplateIdAndContainerQIdAndContentIdentity(
+			recommendations = contentSpecificRecommendations(
 					userId, templateId, containerQId, contentIdentity);
-			
-			if (CollectionUtil.isEmpty(recommendations)) {
-				// ignore user
-				recommendations = repo.findByTemplateIdAndContainerQIdAndContentIdentity(
-						templateId, containerQId, contentIdentity);
-			}
-			
-		} else if (!StringUtil.isEmpty(containerQId) && StringUtil.isEmpty(contentIdentity)) {
-			
-			// user and container specific
-			recommendations = repo.findByUserIdAndTemplateIdAndContainerQId(
-					userId, templateId, containerQId);
-			
-			if (CollectionUtil.isEmpty(recommendations)) {
-				recommendations = repo.findByTemplateIdAndContainerQId(
-						templateId, containerQId);
-			}
-			
-		} else {
-			recommendations = repo.findByUserIdAndTemplateId(userId, templateId);
-			
-			if (CollectionUtil.isEmpty(recommendations)) {
-				recommendations = repo.findByTemplateId(templateId);
-			}
+		} 
+		
+		if (CollectionUtil.isEmpty(recommendations) && 
+				!StringUtil.isEmpty(containerQId) && StringUtil.isEmpty(contentIdentity)) {
+			recommendations = containerSpecificRecommendation(userId, templateId, containerQId);
+		} 
+		
+		if (CollectionUtil.isEmpty(recommendations)) {
+			recommendations = generalRecommendations(userId, templateId);
 		}
 
 		if (recommendations != null) {
@@ -69,6 +52,49 @@ public class PreRecordedRecommendationEngine implements RecommendationEngine {
 		}
 		
 		return recoContent;
+	}
+
+	private Collection<Recommendation> contentSpecificRecommendations(String userId, String templateId,
+			String containerQId, String contentIdentity) {
+		
+		// user and content specific recommendation
+		Collection<Recommendation> recommendations = repo.findByUserIdAndTemplateIdAndContainerQIdAndContentIdentity(
+				userId, templateId, containerQId, contentIdentity);
+		
+		if (CollectionUtil.isEmpty(recommendations)) {
+			// ignore user
+			recommendations = repo.findByTemplateIdAndContainerQIdAndContentIdentity(
+					templateId, containerQId, contentIdentity);
+			
+		}
+		
+		return recommendations;
+	}
+
+	private Collection<Recommendation> generalRecommendations(String userId, String templateId) {
+		
+		Collection<Recommendation> recommendations = repo.findByUserIdAndTemplateId(userId, templateId);
+		
+		if (CollectionUtil.isEmpty(recommendations)) {
+			recommendations = repo.findByTemplateId(templateId);
+		}
+		
+		return recommendations;
+	}
+
+	private Collection<Recommendation> containerSpecificRecommendation(String userId, String templateId,
+			String containerQId) {
+
+		// user and container specific
+		Collection<Recommendation> recommendations = repo.findByUserIdAndTemplateIdAndContainerQId(
+				userId, templateId, containerQId);
+		
+		if (CollectionUtil.isEmpty(recommendations)) {
+			recommendations = repo.findByTemplateIdAndContainerQId(
+					templateId, containerQId);
+		}
+		
+		return recommendations;
 	}
 
 }

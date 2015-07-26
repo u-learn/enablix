@@ -1,0 +1,8 @@
+<ul ng-if="peers && peers.length > 0">
+	<li ng-repeat="peer in peers">
+		<eb-nav-link hide-hierarchy="true" nav-link="peer" hide-doc-link="true"></eb-nav-link>
+	</li>
+</ul>
+<div ng-if="!peers || peers.length == 0" class="cont-empty" style="display: block;">
+		No data found.
+</div>

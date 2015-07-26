@@ -1,5 +1,8 @@
 package com.enablix.app.content.ui;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class NavigableContent {
 
 	private String qualifiedId;
@@ -9,6 +12,8 @@ public class NavigableContent {
 	private String label;
 	
 	private String docIdentity;
+	
+	private Map<String, String> additionalInfo;
 
 	private NavigableContent next;
 	
@@ -17,6 +22,7 @@ public class NavigableContent {
 		this.qualifiedId = qualifiedId;
 		this.identity = identity;
 		this.label = label;
+		this.additionalInfo = new HashMap<>();
 	}
 
 	public String getQualifiedId() {
@@ -57,6 +63,14 @@ public class NavigableContent {
 
 	public void setNext(NavigableContent childContent) {
 		this.next = childContent;
+	}
+
+	public Map<String, String> getAdditionalInfo() {
+		return additionalInfo;
+	}
+
+	public void setAdditionalInfo(Map<String, String> additionalInfo) {
+		this.additionalInfo = additionalInfo;
 	}
 
 	public String toPath(String pathSeparator) {

@@ -1,0 +1,6 @@
+<ul>
+	<li ng-repeat="recent in recentList">
+		<em ng-class="recent.additionalInfo.updateType | lowercase">{{recent.additionalInfo.updateType | lowercase}}</em>
+		<eb-nav-link hide-hierarchy="false" nav-link="recent"></eb-nav-link>
+	</li>
+</ul>

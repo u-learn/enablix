@@ -1,4 +1,4 @@
-package com.enablix.analytics.recommendation;
+package com.enablix.analytics.context;
 
 public interface RequestContext {
 

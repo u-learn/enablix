@@ -7,7 +7,8 @@ enablix.studioApp.directive('ebPortalSubContainer', [
 				type: "@",
 				subContainerQId: "=",
 				subContainerLabel: "=",
-				index: "="
+				index: "=",
+				expanded: "@"
 			},
 			controller : 'PortalSubContainerCtrl',
 			templateUrl : function(elem, attr) {

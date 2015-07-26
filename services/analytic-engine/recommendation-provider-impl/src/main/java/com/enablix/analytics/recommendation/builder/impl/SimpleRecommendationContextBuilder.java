@@ -1,12 +1,12 @@
 package com.enablix.analytics.recommendation.builder.impl;
 
+import com.enablix.analytics.context.RequestContext;
+import com.enablix.analytics.context.UserContext;
+import com.enablix.analytics.context.builder.RequestContextBuilder;
+import com.enablix.analytics.context.builder.UserContextBuilder;
 import com.enablix.analytics.recommendation.RecommendationContext;
 import com.enablix.analytics.recommendation.RecommendationRequest;
-import com.enablix.analytics.recommendation.RequestContext;
-import com.enablix.analytics.recommendation.UserContext;
 import com.enablix.analytics.recommendation.builder.RecommendationContextBuilder;
-import com.enablix.analytics.recommendation.builder.RequestContextBuilder;
-import com.enablix.analytics.recommendation.builder.UserContextBuilder;
 
 public class SimpleRecommendationContextBuilder<R extends RecommendationRequest> 
 		implements RecommendationContextBuilder<R> {

@@ -47,6 +47,17 @@ public class NavigableContentBuilderImpl implements NavigableContentBuilder {
 			record = crudService.findRecord(collName, QIdUtil.getElementId(qId), identity);
 		}
 		
+		navigableContent = buildNavigableContent(template, qId, child, record);
+		
+		return navigableContent;
+	}
+
+	private NavigableContent buildNavigableContent(
+			ContentTemplate template, String qId, NavigableContent child,
+			Map<String, Object> record) {
+		
+		NavigableContent navigableContent = null;
+
 		if (record != null) {
 			
 			navigableContent = createNavigableContent(record, qId, template, child);
@@ -76,6 +87,13 @@ public class NavigableContentBuilderImpl implements NavigableContentBuilder {
 		content.setNext(child);
 		
 		return content;
+	}
+
+	@Override
+	public NavigableContent build(Map<String, Object> record, String templateId, 
+			String qId, ContentLabelResolver labelResolver) {
+		ContentTemplate template = templateMgr.getTemplate(templateId);
+		return buildNavigableContent(template, qId, null, record);
 	}
 	
 

@@ -5,7 +5,8 @@ enablix.studioApp.directive('ebNavLink', [
 			restrict : 'E',
 			scope : {
 				navLink : "=",
-				hideHierarchy : "="
+				hideHierarchy : "=",
+				hideDocLink : "="
 			},
 			controller : 'PortalNavLinkCtrl',
 			templateUrl : "widgets/directive/portal/link/navLink.html"

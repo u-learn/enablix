@@ -142,4 +142,6 @@ enablix.studioApp.controller('PortalSubContainerCtrl',
 			});
 		}
 		
+		$scope.expanded = $scope.expanded || false;
+		
 	}]);

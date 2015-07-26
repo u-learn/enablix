@@ -11,5 +11,7 @@
   	<module>recommendation-api</module>
   	<module>recommendation-provider-impl</module>
   	<module>recommendation-web-impl</module>
+  	<module>analytic-api</module>
+  	<module>analytic-web-impl</module>
   </modules>
 </project>

@@ -16,6 +16,11 @@ enablix.serviceURL = {
 	"generalRecommendation": enablix.domainName + "/navcontent/reco",
 	"containerSpecificRecommendation": enablix.domainName + "/navcontent/reco/:containerQId/",
 	"contentSpecificRecommendation": enablix.domainName + "/navcontent/reco/:containerQId/:contentIdentity/",
+	"generalRecentData": enablix.domainName + "/navcontent/recent/",
+	"containerSpecificRecentData": enablix.domainName + "/navcontent/recent/:containerQId/",
+	"contentSpecificRecentData": enablix.domainName + "/navcontent/recent/:containerQId/:contentIdentity/",
+	"quickLinks": enablix.domainName + "/navcontent/quicklinks/",
+	"contentPeers": enablix.domainName + "/navcontent/peers/:containerQId/:contentIdentity/",
 	"user": enablix.domainName + "/user",
 	"logout": enablix.domainName + "/logout"
 };

@@ -1,13 +1,13 @@
-package com.enablix.analytics.recommendation.builder.web;
+package com.enablix.analytics.web.request;
 
-import com.enablix.analytics.recommendation.UserContext;
-import com.enablix.analytics.recommendation.builder.UserContextBuilder;
+import com.enablix.analytics.context.UserContext;
+import com.enablix.analytics.context.builder.UserContextBuilder;
 import com.enablix.commons.util.process.ProcessContext;
 
-public class WebUserContextBuilder implements UserContextBuilder<WebRecommendationRequest> {
+public class WebUserContextBuilder<T extends WebContentRequest> implements UserContextBuilder<T> {
 
 	@Override
-	public UserContext build(WebRecommendationRequest request) {
+	public UserContext build(T request) {
 		return new WebUserContext(ProcessContext.get().getUserId());
 	}
 	

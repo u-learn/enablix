@@ -4,6 +4,8 @@ enablix.studioApp.controller('PortalNavLinkCtrl',
 		
 		var navLink = $scope.navLink;
 		
+		$scope.showDocLink = !($scope.hideDocLink || false);
+		
 		if (!isNullOrUndefined(navLink)) {
 			
 			var firstLevelContainerQId = navLink.qualifiedId;

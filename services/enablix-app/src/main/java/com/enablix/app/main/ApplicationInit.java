@@ -1,24 +1,12 @@
 package com.enablix.app.main;
 
-import javax.annotation.PostConstruct;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.PropertySources;
-import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
-import org.springframework.stereotype.Component;
-
-import com.enablix.analytics.recommendation.repository.RecommendationRepository;
-import com.enablix.commons.util.process.ProcessContext;
-import com.enablix.core.api.ContentDataRef;
-import com.enablix.core.domain.reco.RecommendationScope;
-import com.enablix.core.domain.reco.RecommendedData;
-import com.enablix.core.domain.reco.Recommendation;
 
 @EnableAutoConfiguration
 @Configuration
@@ -32,7 +20,9 @@ import com.enablix.core.domain.reco.Recommendation;
 		basePackages = {"com.enablix.app.mongo.repository", 
 				"com.enablix.commons.dms.repository",
 				"com.enablix.analytics.recommendation.repository", 
-				"com.enablix.core.mongo.config.repo"})
+				"com.enablix.core.mongo.config.repo",
+				"com.enablix.app.content.ui.recent.repo",
+				"com.enablix.app.content.ui.link.repo"})
 public class ApplicationInit {
 
 	

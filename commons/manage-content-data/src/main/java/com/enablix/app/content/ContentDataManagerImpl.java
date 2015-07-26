@@ -1,6 +1,8 @@
 package com.enablix.app.content;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -18,6 +20,7 @@ import com.enablix.app.content.update.ContentUpdateHandlerFactory;
 import com.enablix.app.content.update.UpdateContentRequest;
 import com.enablix.app.content.update.UpdateContentRequestValidator;
 import com.enablix.app.template.service.TemplateManager;
+import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.commons.util.QIdUtil;
 import com.enablix.commons.util.StringUtil;
 import com.enablix.core.commons.xsdtopojo.ContentTemplate;
@@ -157,4 +160,48 @@ public class ContentDataManagerImpl implements ContentDataManager {
 		return data;
 	}
 
+	@Override
+	public List<Map<String, Object>> fetchPeers(FetchContentRequest request) {
+		
+		String contentQId = request.getContentQId();
+		
+		ContentTemplate template = templateMgr.getTemplate(request.getTemplateId());
+		String collName = TemplateUtil.resolveCollectionName(template, contentQId);
+		String qIdRelativeToParent = TemplateUtil.getQIdRelativeToParentContainer(template, contentQId);
+
+		List<Map<String, Object>> peers = null;
+		
+		// Fetch one record
+		Map<String, Object> recordData = 
+				crud.findRecord(collName, qIdRelativeToParent, request.getRecordIdentity());
+		
+		if (recordData != null) {
+			// Fetch all child containers
+			if (TemplateUtil.hasOwnCollection(template, contentQId)) {
+				
+				String parentIdentity = ContentDataUtil.findParentIdentityFromAssociation(recordData);
+				
+				// content is in its own collection, hence query with parent id
+				List<Map<String, Object>> allPeers = crud.findAllRecordWithParentId(
+											collName, parentIdentity);
+				
+				// remove current
+				for (Iterator<Map<String, Object>> itr = allPeers.iterator(); itr.hasNext(); ) {
+					String peerIdentity = (String) itr.next().get(ContentDataConstants.IDENTITY_KEY);
+					if (request.getRecordIdentity().equals(peerIdentity)) {
+						itr.remove();
+						break;
+					}
+				}
+				
+				peers = allPeers;
+				
+			} else {
+				// TODO:
+			}
+		}
+	
+		return peers == null ? new ArrayList<Map<String, Object>>() : peers;
+	}
+	
 }
