@@ -52,6 +52,11 @@ public class AuditInfoEnricher implements ContentEnricher {
 		Object obj = containerData.get(ContentDataConstants.CREATED_AT_KEY);
 		if (obj == null) {
 			containerData.put(ContentDataConstants.CREATED_AT_KEY, currDate); 
+		} else {
+			if (obj instanceof Long) {
+				Date createdAt = new Date((Long) obj);
+				containerData.put(ContentDataConstants.CREATED_AT_KEY, createdAt);
+			}
 		}
 		
 		containerData.put(ContentDataConstants.MODIFIED_AT_KEY, currDate); 
