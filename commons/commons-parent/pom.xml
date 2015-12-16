@@ -311,6 +311,11 @@
 				<artifactId>xercesImpl</artifactId>
 				<version>${xerces.xercesImpl.version}</version>
 			</dependency>
+			<dependency>
+		 		<groupId>org.elasticsearch</groupId>
+		 		<artifactId>elasticsearch</artifactId>
+		 		<version>${elastic.search.version}</version>
+		 	</dependency>
 		</dependencies>
 	</dependencyManagement>
 	<dependencies>
@@ -384,6 +389,10 @@
 		<javax.servlet.api.version>3.1.0</javax.servlet.api.version>
 		<com.fasterxml.jackson.core.databind.version>2.3.2</com.fasterxml.jackson.core.databind.version>
 		<xerces.xercesImpl.version>2.9.1</xerces.xercesImpl.version>
+		<elastic.search.version>2.1.0</elastic.search.version>
 	</properties>
 
+	<modules>
+		<module>commons-elastic-search</module>
+	</modules>
 </project>

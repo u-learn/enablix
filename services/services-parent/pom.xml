@@ -298,6 +298,11 @@
 				<artifactId>hibernate-validator</artifactId>
 				<version>${hibernate.validator.version}</version>
 			</dependency>
+			<dependency>
+		 		<groupId>org.elasticsearch</groupId>
+		 		<artifactId>elasticsearch</artifactId>
+		 		<version>${elastic.search.version}</version>
+		 	</dependency>
 		</dependencies>
 	</dependencyManagement>
 
@@ -459,6 +464,7 @@
 		<com.sun.xml.bind.jaxb.impl.version>2.0.3</com.sun.xml.bind.jaxb.impl.version>
 		<javax.xml.bind.jaxb.api.version>2.0</javax.xml.bind.jaxb.api.version>
 		<javax.servlet.api.version>3.1.0</javax.servlet.api.version>
+		<elastic.search.version>2.1.0</elastic.search.version>
 		<package.location>${basedir}/target</package.location>
 	</properties>
 

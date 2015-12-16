@@ -2,18 +2,21 @@ package com.enablix.app.main;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.elasticsearch.ElasticsearchAutoConfiguration;
+import org.springframework.boot.autoconfigure.elasticsearch.ElasticsearchDataAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.PropertySources;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
-@EnableAutoConfiguration
+@EnableAutoConfiguration(exclude={ElasticsearchDataAutoConfiguration.class, ElasticsearchAutoConfiguration.class})
 @Configuration
 @PropertySources({
 		@PropertySource("file:${baseDir}/config/properties/mongodb.properties"),
 		@PropertySource("file:${baseDir}/config/properties/app.properties"),
 		@PropertySource("file:${baseDir}/config/properties/security.properties"),
+		@PropertySource("file:${baseDir}/config/properties/elasticsearch.properties"),
 		@PropertySource("file:${baseDir}/config/properties/log4j.properties")})
 @ComponentScan(basePackages = { "com.enablix" })
 @EnableMongoRepositories(

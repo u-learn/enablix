@@ -13,5 +13,7 @@
   	<module>recommendation-web-impl</module>
   	<module>analytic-api</module>
   	<module>analytic-web-impl</module>
+  	<module>search-api</module>
+  	<module>elastic-search-impl</module>
   </modules>
 </project>

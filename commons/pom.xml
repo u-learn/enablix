@@ -19,5 +19,6 @@
 	<module>services-util</module>
 	<module>refdata-loader</module>
 	<module>configuration-provider</module>
+	<module>commons-elastic-search</module>
   </modules>
 </project>
