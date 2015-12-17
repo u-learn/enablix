@@ -124,6 +124,14 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvi
 				setupData: appSetup 
 			}
 		})
+		.state('portal.search', {
+			url: '/search/t/{searchText}/',
+			templateUrl: 'views/portal/portal-search.html',
+			controller: 'PortalSearchCtrl',
+			resolve: {
+				setupData: appSetup 
+			}
+		})
 		.state('portal.container', {
 			url: '/container/{containerQId}/{elementIdentity}',
 			views: {

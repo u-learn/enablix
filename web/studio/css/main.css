@@ -647,7 +647,7 @@ form .row .form-label:first-child {
 	float: right;
 	position: relative;
 }
-.secondary-nav form i {
+.secondary-nav form i, .search-box i {
 	position: absolute;
 	top: -1px;
 	right: 1em;
@@ -657,7 +657,7 @@ form .row .form-label:first-child {
 	pointer-events: none;
 	color: #222;
 }
-.secondary-nav form input {
+.secondary-nav form input, .search-box input {
 	width: 20vw;
 	padding: 0 1em;
 	border-radius: 1em;

@@ -106,6 +106,12 @@ enablix.studioApp.factory('StateUpdateService',
 	 			});
 	 		};
 	 		
+	 		var goToPortalSearch = function(_searchText) {
+	 			$state.go("portal.search", {
+	 				"searchText": _searchText
+	 			});
+	 		}
+	 		
 	 		var reload = function() {
 	 			$state.transitionTo($state.current, $stateParams, {
 	 			    reload: true,
@@ -133,6 +139,7 @@ enablix.studioApp.factory('StateUpdateService',
 	 			goToPortalEnclosureDetail: goToPortalEnclosureDetail,
 	 			goToPortalEnclosureBody: goToPortalEnclosureBody,
 	 			goToPortalSubItem: goToPortalSubItem,
+	 			goToPortalSearch: goToPortalSearch,
 	 			reload: reload
 	 		};
 	 	}

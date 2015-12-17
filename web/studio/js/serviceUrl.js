@@ -21,6 +21,7 @@ enablix.serviceURL = {
 	"contentSpecificRecentData": enablix.domainName + "/navcontent/recent/:containerQId/:contentIdentity/",
 	"quickLinks": enablix.domainName + "/navcontent/quicklinks/",
 	"contentPeers": enablix.domainName + "/navcontent/peers/:containerQId/:contentIdentity/",
+	"searchData": enablix.domainName + "/search/t/:searchText/",
 	"user": enablix.domainName + "/user",
 	"logout": enablix.domainName + "/logout"
 };
