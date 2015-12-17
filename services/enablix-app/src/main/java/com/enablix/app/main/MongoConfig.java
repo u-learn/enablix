@@ -14,6 +14,7 @@ import org.springframework.data.mongodb.MongoDbFactory;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
+import com.enablix.core.mongo.AppConstants;
 import com.enablix.core.mongo.MultiTenantMongoDbFactory;
 import com.enablix.core.mongo.template.SystemMongoTemplateHolder;
 import com.mongodb.Mongo;

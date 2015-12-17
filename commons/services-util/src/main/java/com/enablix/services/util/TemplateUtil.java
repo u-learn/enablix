@@ -240,4 +240,51 @@ public class TemplateUtil {
 		return null;
 	}
 	
+	public static ContainerType findContainerForCollection(String collectionName, ContentTemplate template) {
+		return findContainerForCollectionName(collectionName, 
+				template.getDataDefinition().getContainer(), template.getId());
+	}
+
+
+	private static ContainerType findContainerForCollectionName(String collectionName, 
+			List<ContainerType> containers, String templateId) {
+		
+		for (ContainerType container : containers) {
+			
+			String cntnrCollName = DatastoreUtil.getCollectionName(templateId, container);
+			
+			if (cntnrCollName.equals(collectionName)) {
+				return container;
+			}
+		}
+		
+		for (ContainerType container : containers) {
+			
+			ContainerType matchedContainer = findContainerForCollectionName(
+					collectionName, container.getContainer(), templateId);
+			
+			if (matchedContainer != null) {
+				return matchedContainer;
+			}
+		}
+		
+		return null;
+	}
+	
+	public static List<String> findAllCollectionNames(ContentTemplate template) {
+		return findAllCollectionNames(template.getDataDefinition().getContainer(), template.getId());
+	}
+	
+	private static List<String> findAllCollectionNames(List<ContainerType> containers, String templateId) {
+		
+		List<String> collectionNames = new ArrayList<>();
+		
+		for (ContainerType container : containers) {
+			collectionNames.add(DatastoreUtil.getCollectionName(templateId, container));
+			collectionNames.addAll(findAllCollectionNames(container.getContainer(), templateId));
+		}
+		
+		return collectionNames;
+	}
+	
 }

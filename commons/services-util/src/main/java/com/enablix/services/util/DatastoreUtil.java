@@ -1,6 +1,7 @@
 package com.enablix.services.util;
 
 import com.enablix.commons.constants.ContentDataConstants;
+import com.enablix.commons.util.tenant.TenantUtil;
 import com.enablix.core.commons.xsdtopojo.ContainerType;
 
 public class DatastoreUtil {
@@ -14,6 +15,11 @@ public class DatastoreUtil {
 	public static String getCollectionName(String templateId, String qualifiedId) {
 		String[] split = qualifiedId.split("\\" + ContentDataConstants.QUALIFIED_ID_SEP);
 		return templateId + COLL_NAME_SEP + split[split.length - 1];
+	}
+
+	public static String getTenantAwareDbName(String dbName) {
+		String tenantId = TenantUtil.getTenantId();
+		return tenantId == null ? dbName : tenantId + "_" + dbName;
 	}
 	
 }

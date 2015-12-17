@@ -1,4 +1,4 @@
-package com.enablix.app.main;
+package com.enablix.core.mongo;
 
 public class AppConstants {
 
