@@ -49,7 +49,7 @@ public class ESQueryBuilder {
 	}
 	
 	private String[] getTypes() {
-		List<String> allCollections = TemplateUtil.findAllCollectionNames(template);
+		List<String> allCollections = TemplateUtil.findContentCollectionNames(template);
 		return allCollections.toArray(new String[0]);
 	}
 	

@@ -1,8 +1,9 @@
 <div class="block">
 	<div ng-class="{'active': expanded}" class="head head-toggle" ng-click="toggleContainer($event)">
-		<i></i>
+		<i class="expandable"></i>
 		<em class="fa fa-file-o"></em>
-		<h2>{{subContainerLabel}}</h2>
+		<h2 ng-if="!navigableHeader">{{subContainerLabel}}</h2>
+		<h2><eb-nav-link hide-hierarchy="false" nav-link="navContentData" ng-if="navigableHeader"></eb-nav-link></h2>
 	</div>
 	<div ng-class="{'cont-hidden': !expanded}" class="cont clearfix" ng-if="!(bodyData == null || bodyData == undefined || bodyData.length == 0)">
 		<table class="infotable" >

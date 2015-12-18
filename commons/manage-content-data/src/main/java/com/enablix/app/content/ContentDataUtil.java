@@ -75,7 +75,7 @@ public class ContentDataUtil {
 			labelAttributeValue = contentItemToString(labelAttribute, containerDef, labelAttrId);
 		}
 		
-		return labelAttributeValue;
+		return labelAttributeValue == null ? containerDef.getLabel() : labelAttributeValue;
 	}
 	
 	public static String findDocIdentity(Map<String, Object> record, ContentTemplate template, String qId) {

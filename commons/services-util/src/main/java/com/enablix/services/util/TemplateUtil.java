@@ -272,19 +272,30 @@ public class TemplateUtil {
 	}
 	
 	public static List<String> findAllCollectionNames(ContentTemplate template) {
-		return findAllCollectionNames(template.getDataDefinition().getContainer(), template.getId());
+		return findCollectionNames(template.getDataDefinition().getContainer(), template.getId(), true, true);
 	}
 	
-	private static List<String> findAllCollectionNames(List<ContainerType> containers, String templateId) {
+	private static List<String> findCollectionNames(List<ContainerType> containers, String templateId,
+			boolean includeRefDataColl, boolean includeContentDataColl) {
 		
 		List<String> collectionNames = new ArrayList<>();
 		
 		for (ContainerType container : containers) {
-			collectionNames.add(DatastoreUtil.getCollectionName(templateId, container));
-			collectionNames.addAll(findAllCollectionNames(container.getContainer(), templateId));
+			
+			if ((includeRefDataColl && container.isRefData())
+					|| (includeContentDataColl && !container.isRefData())) {
+			
+				collectionNames.add(DatastoreUtil.getCollectionName(templateId, container));
+				collectionNames.addAll(findCollectionNames(container.getContainer(), templateId, 
+					includeRefDataColl, includeContentDataColl));
+			}
 		}
 		
 		return collectionNames;
+	}
+	
+	public static List<String> findContentCollectionNames(ContentTemplate template) {
+		return findCollectionNames(template.getDataDefinition().getContainer(), template.getId(), false, true);
 	}
 	
 }
