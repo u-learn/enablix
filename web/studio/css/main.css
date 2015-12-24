@@ -1181,3 +1181,9 @@ eb-nav-link:first-child li {
 .ui-select-match-close {
 	padding-top: 3px;
 }
+
+.auth-error {
+  	height: 100px;
+  	line-height: 100px;
+  	text-align: center;
+}

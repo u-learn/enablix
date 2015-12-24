@@ -1,6 +1,6 @@
 enablix.studioApp.controller('MainStudioCtrl', 
-		   ['$scope', 'ContentTemplateService', 'StudioSetupService', 
-    function($scope,   ContentTemplateService,   StudioSetupService) {
+		   ['$scope', 'ContentTemplateService', 'StudioSetupService', 'AuthorizationService',
+    function($scope,   ContentTemplateService,   StudioSetupService,   AuthorizationService) {
 
 	}                                          
 ]);

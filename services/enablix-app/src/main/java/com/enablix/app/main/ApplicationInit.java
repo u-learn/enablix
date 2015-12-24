@@ -22,6 +22,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 @EnableMongoRepositories(
 		basePackages = {"com.enablix.app.mongo.repository", 
 				"com.enablix.commons.dms.repository",
+				"com.enablix.core.security.auth.repo",
 				"com.enablix.analytics.recommendation.repository", 
 				"com.enablix.core.mongo.config.repo",
 				"com.enablix.app.content.ui.recent.repo",

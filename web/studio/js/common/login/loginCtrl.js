@@ -9,6 +9,7 @@ enablix.studioApp.controller('LoginController',
 
 		    RESTService.getForData('user', null, null, function(data) {
 			    	if (data.name) {
+			    		enablix.loggedInUser = data.principal;
 			    		$rootScope.authenticated = true;
 			    	} else {
 			    		$rootScope.authenticated = false;
@@ -24,7 +25,7 @@ enablix.studioApp.controller('LoginController',
 
 		var authCallback = function() {
 			if ($rootScope.authenticated) {
-				StateUpdateService.goToStudio();
+				StateUpdateService.goToPortalHome();
 				$scope.error = false;
 			} else {
 				$scope.error = true;

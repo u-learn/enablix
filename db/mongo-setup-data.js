@@ -30,9 +30,11 @@ var insertTenants = function() {
 			"_class" : "com.enablix.core.domain.tenant.Tenant",
 			"tenantId" : "test",
 			"name" : "Sample Organization",
-			"defaultTemplateId" : "entSoftwareTemplate"
+			"defaultTemplateId" : "enterprise-software-template"
 		}
 	);
+	
+	setupRoles("test");
 	
 	// inserting tenant 1
 	print("inserting tenant: tenant1");
@@ -45,6 +47,8 @@ var insertTenants = function() {
 			"defaultTemplateId" : "amlSalesTemplate"
 		}
 	);
+	
+	setupRoles("tenant1");
 	
 };
 
@@ -78,6 +82,39 @@ var insertUsers = function() {
 		}
 	);
 	
+};
+
+var setupRoles = function(tenantId) {
+	
+	var coll = getCollection(tenantId + "_enablix", "ebx_role");
+	
+	// inserting contentAdmin role
+	print("inserting role: Content Admin");
+	coll.insert(
+		{
+			"_id" : "contentAdmin",
+			"_class" : "com.enablix.core.domain.security.authorization.Role",
+			"roleName" : "Content Admin",
+			"permissions" : [
+				"VIEW_STUDIO",
+				"VIEW_PORTAL",
+				"VIEW_REF_DATA"
+			]
+		}
+	);
+	
+	// inserting contentAdmin role
+	print("inserting role: Portal User");
+	coll.insert(
+		{
+			"_id" : "portalUser",
+			"_class" : "com.enablix.core.domain.security.authorization.Role",
+			"roleName" : "Portal User",
+			"permissions" : [
+				"VIEW_PORTAL"
+			]
+		}
+	);
 };
 
 var loadData = function() {

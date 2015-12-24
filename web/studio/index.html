@@ -88,6 +88,8 @@
 	<script type="text/javascript" src="widgets/studio/studioInitService.js"></script>
 	<script type="text/javascript" src="widgets/search/searchService.js"></script>
 	<script type="text/javascript" src="widgets/content/contentUtil.js"></script>
+	<script type="text/javascript" src="widgets/auth/authorizationService.js"></script>
+	<script type="text/javascript" src="widgets/auth/requiresPermDirective.js"></script>
 	
 	<script type="text/javascript" src="js/mainController.js"></script>
 	<script type="text/javascript" src="widgets/content/index/contentIndexController.js"></script>
@@ -125,12 +127,12 @@
 				<a href="#" class="logo"><i class="fa fa-power-off"></i>Enablix</a>
 				<!--/ logo -->
 			</div>
-			<div class="col-sm-8" ng-show="authenticated">
+			<div class="col-sm-8" ng-if="authenticated">
 				<!-- main nav -->
 				<nav class="main-nav">
 					<a href="#" ui-sref-active="active" ui-sref="portal">Portal</a>
-					<a href="#" ui-sref-active="active" ui-sref="studio">Studio</a>
-					<a href="#" ui-sref-active="active" ui-sref="refdata">Setup</a>
+					<a href="#" ui-sref-active="active" ui-sref="studio" requires-permission="VIEW_STUDIO">Studio</a>
+					<a href="#" ui-sref-active="active" ui-sref="refdata" requires-permission="VIEW_REF_DATA">Setup</a>
 					<a href="#" ng-show="authenticated" ng-click="logout()">Logout</a>
 				</nav>
 				<!--/ main nav -->

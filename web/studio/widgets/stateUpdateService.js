@@ -91,6 +91,10 @@ enablix.studioApp.factory('StateUpdateService',
 	 		var goToPortalHome = function() {
 	 			$state.go("portal.home");
 	 		};
+	 		
+	 		var goToAuthError = function() {
+	 			$state.go("authorizationError");
+	 		};
 
 	 		var goToPortalEnclosureDetail = function(_enclosureId) {
 	 			$state.go("portal.enclosure", {
@@ -140,6 +144,7 @@ enablix.studioApp.factory('StateUpdateService',
 	 			goToPortalEnclosureBody: goToPortalEnclosureBody,
 	 			goToPortalSubItem: goToPortalSubItem,
 	 			goToPortalSearch: goToPortalSearch,
+	 			goToAuthError: goToAuthError,
 	 			reload: reload
 	 		};
 	 	}
