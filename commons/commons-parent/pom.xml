@@ -397,7 +397,4 @@
 		<elastic.search.version>2.1.0</elastic.search.version>
 	</properties>
 
-	<modules>
-		<module>commons-elastic-search</module>
-	</modules>
 </project>
