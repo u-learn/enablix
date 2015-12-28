@@ -30,7 +30,6 @@ var setupRoles = function(tenantId) {
 			"roleName" : "Content Admin",
 			"permissions" : [
 				"VIEW_STUDIO",
-				"VIEW_PORTAL",
 				"VIEW_REF_DATA"
 			]
 		}
@@ -45,7 +44,8 @@ var setupRoles = function(tenantId) {
 			"identity" : "portalUser",
 			"roleName" : "Portal User",
 			"permissions" : [
-				"VIEW_PORTAL"
+				"VIEW_PORTAL",
+				"VIEW_RECENT_CONTENT"
 			]
 		}
 	);
@@ -60,9 +60,8 @@ var assignRoleToUser = function(tenantId, userIdentity, rolesJson) {
 			
 	coll.insert(
 		{
-			"_id" : userIdentity + "_" + roleId,
 			"_class" : "com.enablix.core.domain.security.authorization.UserRole",
-			"identity" : userIdentity + "_" + roleId,
+			"identity" : userIdentity + "_role1",
 			"userIdentity" : userIdentity,
 			"roles" : rolesJson
 		}

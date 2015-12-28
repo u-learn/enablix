@@ -28,6 +28,7 @@ var insertTenants = function() {
 		{
 			"_id" : "test",
 			"_class" : "com.enablix.core.domain.tenant.Tenant",
+			"identity" : "test",
 			"tenantId" : "test",
 			"name" : "Sample Organization",
 			"defaultTemplateId" : "enterprise-software-template"
@@ -42,6 +43,7 @@ var insertTenants = function() {
 		{
 			"_id" : "tenant1",
 			"_class" : "com.enablix.core.domain.tenant.Tenant",
+			"identity" : "tenant1",
 			"tenantId" : "tenant1",
 			"name" : "Tenant 1 Organization",
 			"defaultTemplateId" : "amlSalesTemplate"
@@ -65,6 +67,20 @@ var insertUsers = function() {
 			"_id" : "user1",
 			"_class" : "com.enablix.core.domain.user.User",
 			"userId" : "user1",
+			"identity" : "user1",
+			"password" : "password",
+			"tenantId" : "test"
+		}
+	);
+	
+	// inserting user1
+	print("inserting user: user3");
+	coll.insert(
+		{
+			"_id" : "user3",
+			"_class" : "com.enablix.core.domain.user.User",
+			"userId" : "user3",
+			"identity" : "user3",
 			"password" : "password",
 			"tenantId" : "test"
 		}
@@ -76,45 +92,13 @@ var insertUsers = function() {
 		{
 			"_id" : "user2",
 			"_class" : "com.enablix.core.domain.user.User",
+			"identity" : "user2",
 			"userId" : "user2",
 			"password" : "password",
 			"tenantId" : "tenant1"
 		}
 	);
 	
-};
-
-var setupRoles = function(tenantId) {
-	
-	var coll = getCollection(tenantId + "_enablix", "ebx_role");
-	
-	// inserting contentAdmin role
-	print("inserting role: Content Admin");
-	coll.insert(
-		{
-			"_id" : "contentAdmin",
-			"_class" : "com.enablix.core.domain.security.authorization.Role",
-			"roleName" : "Content Admin",
-			"permissions" : [
-				"VIEW_STUDIO",
-				"VIEW_PORTAL",
-				"VIEW_REF_DATA"
-			]
-		}
-	);
-	
-	// inserting contentAdmin role
-	print("inserting role: Portal User");
-	coll.insert(
-		{
-			"_id" : "portalUser",
-			"_class" : "com.enablix.core.domain.security.authorization.Role",
-			"roleName" : "Portal User",
-			"permissions" : [
-				"VIEW_PORTAL"
-			]
-		}
-	);
 };
 
 var loadData = function() {

@@ -23,7 +23,7 @@ public class MultiTenantMongoDbFactory extends SimpleMongoDbFactory {
 	
 	private String getTenantAwareDbName(String dbName) {
 		String tenantId = TenantUtil.getTenantId();
-		LOGGER.debug("Tenant id : {}", tenantId);
+		LOGGER.trace("Tenant id : {}", tenantId);
 		return tenantId == null ? dbName : tenantId + "_" + dbName;
 	}
 
