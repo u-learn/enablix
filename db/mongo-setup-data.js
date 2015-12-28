@@ -35,8 +35,6 @@ var insertTenants = function() {
 		}
 	);
 	
-	setupRoles("test");
-	
 	// inserting tenant 1
 	print("inserting tenant: tenant1");
 	coll.insert(
@@ -49,8 +47,6 @@ var insertTenants = function() {
 			"defaultTemplateId" : "amlSalesTemplate"
 		}
 	);
-	
-	setupRoles("tenant1");
 	
 };
 
