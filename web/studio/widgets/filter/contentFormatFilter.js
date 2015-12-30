@@ -31,6 +31,13 @@ enablix.filters.filter('ebxFormatData', function($filter) {
 					}
 				}
 				break;
+				
+			case "TEXT":
+				
+				if (input) {
+					text = $filter('linky')(input, "_blank");
+				}
+				break;
 		}
 		
 		return text;

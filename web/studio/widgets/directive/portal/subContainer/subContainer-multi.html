@@ -12,7 +12,7 @@
 				<table class="infotable" >
 					<tr ng-repeat="header in multiHeaders" ng-switch="header.dataType">
 						<th>{{header.label}}:</th>
-						<td>{{dataItem[header.key] | ebxFormatData: header.dataType}}&nbsp;</td>
+						<td><span class="content-data" ng-bind-html="dataItem[header.key] | ebxFormatData: header.dataType"></span>&nbsp;</td>
 					</tr>
 			  	</table>
 			</div>
