@@ -57,7 +57,6 @@ public class DropboxDocumentStore implements DocumentStore<DropboxDocumentMetada
 	        	
 	        	String fileLocation = createDropboxFilepath(document, contentPath);
 	        	
-	        	
 				DbxEntry.File uploadedFile = client.uploadFile(
 	        			fileLocation, determineWriteMode(client, document), 
 	        			document.getContentLength(), inputStream);
@@ -116,11 +115,11 @@ public class DropboxDocumentStore implements DocumentStore<DropboxDocumentMetada
 	}
 	
 	private String getAppName(Configuration config) {
-		return config.getConfig().get(APP_NAME_KEY);
+		return config.getStringValue(APP_NAME_KEY);
 	}
 	
 	private String getAccessToken(Configuration config) {
-		return config.getConfig().get(ACCESS_TOKEN_KEY);
+		return config.getStringValue(ACCESS_TOKEN_KEY);
 	}
 
 	@Override

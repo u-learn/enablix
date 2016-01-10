@@ -8,8 +8,19 @@ enablix.studioApp.controller('ContentDetailCtrl',
 		$scope.$stateParams = $stateParams;
 		
 		$scope.containerDef = ContentTemplateService.getContainerDefinition(enablix.template, containerQId);
+		var containerLabel = $scope.containerDef.label;
 		
-		$scope.pageHeading = $scope.containerDef.label + " Information";
+		if (!isNullOrUndefined($scope.containerDef.linkContainerQId)) {
+			
+			$scope.containerDef = ContentTemplateService.getContainerDefinition(
+					enablix.template, $scope.containerDef.linkContainerQId);
+			
+			if (isNullOrUndefined(containerLabel)) {
+				containerLabel = $scope.containerDef.label;
+			}
+		}
+		
+		$scope.pageHeading = containerLabel + " Information";
 		
 		$scope.navToEdit = function() {
 			$scope.goToDetailEdit(containerQId, elementIdentity);
