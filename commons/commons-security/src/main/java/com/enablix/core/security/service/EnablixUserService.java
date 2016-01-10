@@ -61,6 +61,43 @@ public class EnablixUserService implements UserService, UserDetailsService {
 		
 		return new LoggedInUser(user, templateId, userRole);
 	}
+	/**
+	 * 
+	 * @author ganesh
+	 * @return boolean
+	 *  
+	 */
+	
+	@Override
+	public Boolean checkUserbyUserName(String userName) {
+		User user=userRepo.findByUserId(userName);
+		if(user==null)
+		{
+			return false;		  
+		}else {
+			return true;
+		}
+	}
+	
+	 
+	/**
+	 * @author ganesh 
+	 */
+	@Override
+	public User addUser(User user) {
+		
+		User newuser=userRepo.insert(user);
+		
+		return newuser;
+	}
+	
+	@Override
+	public User updateUser(User user) {
+		
+		User newuser=userRepo.save(user);
+		
+		return newuser;
+	}
 	
 	public static class LoggedInUser implements UserDetails {
 
@@ -138,5 +175,7 @@ public class EnablixUserService implements UserService, UserDetailsService {
 		}
 		
 	}
+
+	
 
 }
