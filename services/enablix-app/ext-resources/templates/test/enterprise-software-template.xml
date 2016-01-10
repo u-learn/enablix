@@ -938,62 +938,6 @@
 				<contentItem id="desc2" label="Description 2" type="text"/>
 				<contentItem id="diff3" label="Message 3" type="text"/>
 				<contentItem id="desc3" label="Description 3" type="text"/>
-				<contentItem id="products" label="Product" type="bounded">
-					<bounded>
-						<refList>
-							<datastore>
-								<storeId>product</storeId>
-								<dataId>identity</dataId>
-								<dataLabel>name</dataLabel>
-							</datastore>
-						</refList>
-					</bounded>
-				</contentItem>
-				<contentItem id="solutions" label="Solutions" type="bounded">
-					<bounded>
-						<refList>
-							<datastore>
-								<storeId>solution</storeId>
-								<dataId>identity</dataId>
-								<dataLabel>name</dataLabel>
-							</datastore>
-						</refList>
-					</bounded>
-				</contentItem>
-				<contentItem id="access" label="Access" type="bounded">
-					<bounded>
-						<refList>
-							<datastore>
-								<storeId>accessStore</storeId>
-								<dataId>identity</dataId>
-								<dataLabel>accessType</dataLabel>
-							</datastore>
-						</refList>
-					</bounded>
-				</contentItem>
-				<contentItem id="dealRelevance" label="Deal Relevance" type="bounded">
-					<bounded multivalued="true">
-						<refList>
-							<datastore>
-								<!-- ####  Sourced from CRM #### -->
-								<storeId>dealStages</storeId>
-								<dataId>identity</dataId>
-								<dataLabel>stageName</dataLabel>
-							</datastore>
-						</refList>
-					</bounded>
-				</contentItem>
-				<contentItem id="author" label="Author" type="bounded">
-					<bounded multivalued="true">
-						<refList>
-							<datastore>
-								<storeId>user</storeId>
-								<dataId>identity</dataId>
-								<dataLabel>userName</dataLabel>
-							</datastore>
-						</refList>
-					</bounded>
-				</contentItem>
 			</container>
 			<container id="compClients" label="Clients">
 				<contentItem id="name" label="Client Name" type="text"/>
@@ -2968,12 +2912,24 @@
 				<listViewConfig>
 					<hideContentItem id="image"/>
 					<hideContentItem id="description"/>
+					<hideContentItem id="marketTier"/>					
 				</listViewConfig>
 			</container>
 		</contentUIDef>
 		<contentUIDef qualifiedId="solution.description">
 			<text type="long"/>
 		</contentUIDef>
+		<contentUIDef qualifiedId="solution.solnExperts">
+			<container>
+				<portalConfig>
+					<headingContentItem id="expertUserName"/>
+					<condensedView>
+						<showContentItem id="expertUserName"/>
+						<showContentItem id="expertExpertise"/>
+					</condensedView>
+				</portalConfig>
+			</container>
+		</contentUIDef>		
 		<contentUIDef qualifiedId="solution.solOverview.shortDesc">
 			<text type="long"/>
 		</contentUIDef>
@@ -3008,6 +2964,13 @@
 				<listViewConfig>
 					<hideContentItem id="answer"/>
 				</listViewConfig>
+				<portalConfig>
+					<headingContentItem id="question"/>
+					<condensedView>
+						<showContentItem id="question"/>
+						<showContentItem id="category"/>
+					</condensedView>
+				</portalConfig>					
 			</container>
 		</contentUIDef>
 		<contentUIDef qualifiedId="solution.solSalesDeck">
@@ -3091,6 +3054,7 @@
 				<listViewConfig>
 					<hideContentItem id="image"/>
 					<hideContentItem id="description"/>
+					<hideContentItem id="marketTier"/>								
 				</listViewConfig>
 			</container>
 		</contentUIDef>
@@ -3102,6 +3066,13 @@
 				<autoSuggest/>
 			</bounded>
 		</contentUIDef>
+		<contentUIDef qualifiedId="product.productExperts">
+			<container>
+				<portalConfig>
+					<headingContentItem id="expertUserName"/>
+				</portalConfig>				
+			</container>
+		</contentUIDef>		
 		<contentUIDef qualifiedId="competitor">
 			<container labelQualifiedId="competitor.name">
 				<listViewConfig>
@@ -3121,6 +3092,9 @@
 					<hideContentItem id="access"/>
 					<hideContentItem id="dealRelevance"/>
 				</listViewConfig>
+				<portalConfig>
+					<headingContentItem id="title"/>
+				</portalConfig>			
 			</container>
 		</contentUIDef>
 		<contentUIDef qualifiedId="competitor.compTop3.desc1">
@@ -3132,6 +3106,16 @@
 		<contentUIDef qualifiedId="competitor.compTop3.desc3">
 			<text type="long"/>
 		</contentUIDef>
+		<contentUIDef qualifiedId="competitor.compClients">
+			<container>
+				<listViewConfig>
+					<hideContentItem id="highlights"/>
+				</listViewConfig>
+				<portalConfig>
+					<headingContentItem id="name"/>
+				</portalConfig>			
+			</container>
+		</contentUIDef>		
 		<contentUIDef qualifiedId="competitor.compClients.highlights">
 			<text type="long"/>
 		</contentUIDef>
@@ -3142,6 +3126,9 @@
 					<hideContentItem id="access"/>
 					<hideContentItem id="dealRelevance"/>
 				</listViewConfig>
+				<portalConfig>
+					<headingContentItem id="products"/>
+				</portalConfig>				
 			</container>
 		</contentUIDef>
 		<contentUIDef qualifiedId="winloss">
@@ -3151,6 +3138,9 @@
 					<hideContentItem id="access"/>
 					<hideContentItem id="dealRelevance"/>
 				</listViewConfig>
+				<portalConfig>
+					<headingContentItem id="client"/>
+				</portalConfig>				
 			</container>
 		</contentUIDef>
 		<contentUIDef qualifiedId="winloss.summary">
@@ -3187,6 +3177,9 @@
 					<hideContentItem id="access"/>
 					<hideContentItem id="dealRelevance"/>
 				</listViewConfig>
+				<portalConfig>
+					<headingContentItem id="reportTitle"/>
+				</portalConfig>				
 			</container>
 		</contentUIDef>
 		<contentUIDef qualifiedId="analyst.analystReport.desc">
@@ -3203,6 +3196,9 @@
 					<hideContentItem id="access"/>
 					<hideContentItem id="dealRelevance"/>
 				</listViewConfig>
+				<portalConfig>
+					<headingContentItem id="researchTitle"/>
+				</portalConfig>				
 			</container>
 		</contentUIDef>
 		<contentUIDef qualifiedId="analyst.analystResearch.summary">
@@ -3220,6 +3216,9 @@
 					<hideContentItem id="access"/>
 					<hideContentItem id="dealRelevance"/>
 				</listViewConfig>
+				<portalConfig>
+					<headingContentItem id="engagementTitle"/>
+				</portalConfig>				
 			</container>
 		</contentUIDef>
 		<contentUIDef qualifiedId="analyst.jointEngagements.desc">
@@ -3255,8 +3254,47 @@
 					<hideContentItem id="access"/>
 					<hideContentItem id="dealRelevance"/>
 				</listViewConfig>
+				<portalConfig>
+					<headingContentItem id="title"/>
+				</portalConfig>				
 			</container>
 		</contentUIDef>
+		<contentUIDef qualifiedId="partner.partnerReferences">
+			<container>
+				<listViewConfig>
+					<hideContentItem id="highlights"/>
+					<hideContentItem id="access"/>
+					<hideContentItem id="dealRelevance"/>
+				</listViewConfig>
+				<portalConfig>
+					<headingContentItem id="name"/>
+				</portalConfig>				
+			</container>
+		</contentUIDef>	
+		<contentUIDef qualifiedId="partner.partnerFAQ">
+			<container>
+				<listViewConfig>
+					<hideContentItem id="answer"/>
+				</listViewConfig>
+				<portalConfig>
+					<headingContentItem id="question"/>
+				</portalConfig>				
+			</container>
+		</contentUIDef>
+		<contentUIDef qualifiedId="partner.partnerJointEngagements">
+			<container>
+				<listViewConfig>
+					<hideContentItem id="file"/>
+					<hideContentItem id="desc"/>
+					<hideContentItem id="highlights"/>
+					<hideContentItem id="access"/>
+					<hideContentItem id="dealRelevance"/>
+				</listViewConfig>
+				<portalConfig>
+					<headingContentItem id="engagementTitle"/>
+				</portalConfig>				
+			</container>
+		</contentUIDef>						
 		<contentUIDef qualifiedId="supportpolicy.summary">
 			<text type="long"/>
 		</contentUIDef>
@@ -3291,6 +3329,9 @@
 					<hideContentItem id="url"/>
 					<hideContentItem id="dealRelevance"/>
 				</listViewConfig>
+				<portalConfig>
+					<headingContentItem id="title"/>
+				</portalConfig>				
 			</container>
 		</contentUIDef>
 		<contentUIDef qualifiedId="corporatecontent.summary">
@@ -3307,6 +3348,9 @@
 					<hideContentItem id="dealRelevance"/>
 					<hideContentItem id="access"/>					
 				</listViewConfig>
+				<portalConfig>
+					<headingContentItem id="title"/>
+				</portalConfig>					
 			</container>
 		</contentUIDef>		
 		<contentUIDef qualifiedId="multimedia.summary">
@@ -3321,6 +3365,9 @@
 					<hideContentItem id="dealRelevance"/>
 					<hideContentItem id="access"/>					
 				</listViewConfig>
+				<portalConfig>
+					<headingContentItem id="title"/>
+				</portalConfig>				
 			</container>
 		</contentUIDef>		
 		<contentUIDef qualifiedId="whitepaper.summary">
@@ -3335,6 +3382,9 @@
 					<hideContentItem id="dealRelevance"/>
 					<hideContentItem id="access"/>					
 				</listViewConfig>
+				<portalConfig>
+					<headingContentItem id="title"/>
+				</portalConfig>				
 			</container>
 		</contentUIDef>		
 		<contentUIDef qualifiedId="blog.summary">
@@ -3349,6 +3399,9 @@
 					<hideContentItem id="dealRelevance"/>
 					<hideContentItem id="access"/>					
 				</listViewConfig>
+				<portalConfig>
+					<headingContentItem id="title"/>
+				</portalConfig>				
 			</container>
 		</contentUIDef>		
 		<contentUIDef qualifiedId="article.importance">
@@ -3363,6 +3416,9 @@
 					<hideContentItem id="dealRelevance"/>
 					<hideContentItem id="access"/>					
 				</listViewConfig>
+				<portalConfig>
+					<headingContentItem id="title"/>
+				</portalConfig>				
 			</container>
 		</contentUIDef>		
 		<contentUIDef qualifiedId="infographic.importance">
@@ -3380,6 +3436,9 @@
 					<hideContentItem id="dealRelevance"/>
 					<hideContentItem id="access"/>					
 				</listViewConfig>
+				<portalConfig>
+					<headingContentItem id="title"/>
+				</portalConfig>				
 			</container>
 		</contentUIDef>		
 		<contentUIDef qualifiedId="webinar.summary">
