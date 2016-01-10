@@ -9,10 +9,16 @@ enablix.studioApp.controller('ContentListCtrl',
 		$scope.listHeaders = [];
 		
 		$scope.containerDef = ContentTemplateService.getContainerDefinition(enablix.template, containerQId);
+		var containerLabel = $scope.containerDef.label;
 		
 		if (!isNullOrUndefined($scope.containerDef.linkContainerQId)) {
+			
 			$scope.containerDef = ContentTemplateService.getContainerDefinition(
 					enablix.template, $scope.containerDef.linkContainerQId);
+			
+			if (isNullOrUndefined(containerLabel)) {
+				containerLabel = $scope.containerDef.label;
+			}
 		}
 		
 		var hiddenContentItemIds = [];
@@ -91,7 +97,7 @@ enablix.studioApp.controller('ContentListCtrl',
 		
 		fetchData();
 		
-		$scope.pageHeading = $scope.containerDef.label;
+		$scope.pageHeading = containerLabel;
 		
 		$scope.navToAddContent = function() {
 			$scope.goToAddContent(containerQId, parentIdentity);
