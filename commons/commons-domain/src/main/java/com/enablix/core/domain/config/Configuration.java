@@ -11,7 +11,7 @@ public class Configuration extends BaseEntity {
 
 	private String key;
 	
-	private Map<String, String> config;
+	private Map<String, Object> config;
 
 	public Configuration() {
 		super();
@@ -21,15 +21,29 @@ public class Configuration extends BaseEntity {
 		return key;
 	}
 
-	public Map<String, String> getConfig() {
+	public Map<String, Object> getConfig() {
 		return config;
+	}
+	
+	public String getStringValue(String configProp) {
+		
+		if (config != null) {
+		
+			Object propValue = config.get(configProp);
+			
+			if (propValue != null) {
+				return String.valueOf(propValue);
+			}
+		}
+		
+		return null;
 	}
 
 	public void setKey(String key) {
 		this.key = key;
 	}
 
-	public void setConfig(Map<String, String> config) {
+	public void setConfig(Map<String, Object> config) {
 		this.config = config;
 	}
 	

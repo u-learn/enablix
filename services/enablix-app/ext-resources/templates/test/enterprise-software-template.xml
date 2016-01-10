@@ -691,6 +691,8 @@
 					</bounded>
 				</contentItem>
 			</container>
+			<container id="solWhitepaper" label="Solution Whitepaper" 
+				linkContainerQId="whitepaper" linkContentItemId="solutions"/>
 		</container>
 		<container id="product" label="Products">
 			<contentItem id="name" label="Name" type="text"/>

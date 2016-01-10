@@ -10,6 +10,11 @@ enablix.studioApp.controller('ContentListCtrl',
 		
 		$scope.containerDef = ContentTemplateService.getContainerDefinition(enablix.template, containerQId);
 		
+		if (!isNullOrUndefined($scope.containerDef.linkContainerQId)) {
+			$scope.containerDef = ContentTemplateService.getContainerDefinition(
+					enablix.template, $scope.containerDef.linkContainerQId);
+		}
+		
 		var hiddenContentItemIds = [];
 		
 		angular.forEach(ContentTemplateService.getContainerListViewHiddenItems(containerQId), function(hiddenContentItem) {

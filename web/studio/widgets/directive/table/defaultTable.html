@@ -27,7 +27,8 @@
 			<td class="remove"><a class="fa fa-times" ng-click="deleteTheRecord(tableRecord.identity)"></a></td>
 			<td ng-repeat="col in tableHeaders">
 				<span ng-class="{'text-right': col.dataType == 'NUMERIC'}">
-					{{tableRecord[col.key] | ebxFormatData: col.dataType}}</span>
+					<span class="content-data" ng-bind-html="tableRecord[col.key] | ebxFormatData: col.dataType"></span>
+				</span>
 				<span ng-if="col.dataType == 'DOC' && tableRecord[col.key].name">
 					<eb-doc-download doc-value="tableRecord[col.key].identity"></eb-doc-download>
 				</span> 

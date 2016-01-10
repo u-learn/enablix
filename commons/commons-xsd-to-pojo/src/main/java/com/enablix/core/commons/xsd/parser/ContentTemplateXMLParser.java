@@ -22,12 +22,12 @@ public class ContentTemplateXMLParser extends DefaultXMLParser<ContentTemplate> 
 	@Override
 	public ContentTemplate unmarshal(InputStream is) throws JAXBException {
 		ContentTemplate template = super.unmarshal(is);
-		populateQualifierId(template, ParentChildRelation.get());
+		populateQualifiedId(template, ParentChildRelation.get());
 		ParentChildRelation.clear();
 		return template;
 	}
 	
-	private void populateQualifierId(ContentTemplate template, ParentChildRelation relationships) {
+	private void populateQualifiedId(ContentTemplate template, ParentChildRelation relationships) {
 		
 		if (relationships != null) {
 			

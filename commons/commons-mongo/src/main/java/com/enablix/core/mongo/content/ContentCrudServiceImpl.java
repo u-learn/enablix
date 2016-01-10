@@ -261,5 +261,17 @@ public class ContentCrudServiceImpl implements ContentCrudService {
 		Query query = createIdentityQuery(childRelativeQId, childIdentity);
 		return mongoTemplate.findOne(query, HashMap.class, collectionName);
 	}
+
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@Override
+	public List<Map<String, Object>> findAllRecordWithLinkContainerId(String collectionName, String linkContentItemId,
+			String linkContainerIdentity) {
+
+		Query query = Query.query(Criteria.where(linkContentItemId + ".id").is(linkContainerIdentity));
+		
+		List<Map<String, Object>> result = (List) mongoTemplate.find(query, HashMap.class, collectionName);
+
+		return result;
+	}
 	
 }

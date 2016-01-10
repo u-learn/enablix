@@ -23,6 +23,7 @@ import com.enablix.app.template.service.TemplateManager;
 import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.commons.util.QIdUtil;
 import com.enablix.commons.util.StringUtil;
+import com.enablix.core.commons.xsdtopojo.ContainerType;
 import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 import com.enablix.core.mongo.content.ContentCrudService;
 import com.enablix.services.util.TemplateUtil;
@@ -63,9 +64,18 @@ public class ContentDataManagerImpl implements ContentDataManager {
 			throw new IllegalArgumentException("Update request validation error: " + errors);
 		}
 		
-		ContentUpdateHandler updateHandler = handlerFactory.getHandler(request);
-		
 		ContentTemplate template = templateMgr.getTemplate(request.getTemplateId());
+		
+		// check for linked container
+		ContainerType container = TemplateUtil.findContainer(template.getDataDefinition(), request.getContentQId());
+		
+		String linkedContainerQId = container.getLinkContainerQId();
+		if (!StringUtil.isEmpty(linkedContainerQId)) {
+			request.setParentIdentity(null);
+			request.setContentQId(linkedContainerQId);
+		}
+		
+		ContentUpdateHandler updateHandler = handlerFactory.getHandler(request);
 		
 		Map<String, Object> contentDataMap = request.getDataAsMap();
 		
@@ -130,10 +140,32 @@ public class ContentDataManagerImpl implements ContentDataManager {
 		String contentQId = request.getContentQId();
 		
 		ContentTemplate template = templateMgr.getTemplate(request.getTemplateId());
+		
+		// check for linked container
+		ContainerType container = TemplateUtil.findContainer(template.getDataDefinition(), contentQId);
+		
+		String linkedContainerQId = container.getLinkContainerQId();
+		if (!StringUtil.isEmpty(linkedContainerQId)) {
+			contentQId = linkedContainerQId;
+		}
+		
 		String collName = TemplateUtil.resolveCollectionName(template, contentQId);
 		String qIdRelativeToParent = TemplateUtil.getQIdRelativeToParentContainer(template, contentQId);
 		
-		if (StringUtil.isEmpty(request.getParentRecordIdentity())
+		if (!StringUtil.isEmpty(linkedContainerQId)) {
+			
+			if (!StringUtil.isEmpty(request.getParentRecordIdentity())) {
+				
+				data = crud.findAllRecordWithLinkContainerId(collName, 
+					container.getLinkContentItemId(), request.getParentRecordIdentity());
+				
+			} else if (!StringUtil.isEmpty(request.getRecordIdentity())) {
+				// Fetch one record
+				data = crud.findRecord(collName, qIdRelativeToParent, request.getRecordIdentity());
+			} 				
+			
+			
+		} else if (StringUtil.isEmpty(request.getParentRecordIdentity())
 				&& StringUtil.isEmpty(request.getRecordIdentity())) {
 			
 			// Fetch all root elements for the template

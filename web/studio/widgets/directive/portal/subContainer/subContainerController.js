@@ -5,6 +5,11 @@ enablix.studioApp.controller('PortalSubContainerCtrl',
 		$scope.containerDef = ContentTemplateService.getContainerDefinition(
 						enablix.template, $scope.subContainerQId);
 
+		if (!isNullOrUndefined($scope.containerDef.linkContainerQId)) {
+			$scope.containerDef = ContentTemplateService.getContainerDefinition(
+					enablix.template, $scope.containerDef.linkContainerQId);
+		}
+		
 		$scope.navigableHeader = !isNullOrUndefined($scope.navContentData);
 		
 		$scope.$stateParams = $stateParams;
