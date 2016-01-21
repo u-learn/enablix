@@ -14,6 +14,9 @@ import org.springframework.stereotype.Component;
 import com.enablix.app.content.delete.DeleteContentRequest;
 import com.enablix.app.content.enrich.ContentEnricher;
 import com.enablix.app.content.enrich.ContentEnricherRegistry;
+import com.enablix.app.content.event.ContentDataEventListener;
+import com.enablix.app.content.event.ContentDataEventListenerRegistry;
+import com.enablix.app.content.event.ContentDataSaveEvent;
 import com.enablix.app.content.fetch.FetchContentRequest;
 import com.enablix.app.content.update.ContentUpdateHandler;
 import com.enablix.app.content.update.ContentUpdateHandlerFactory;
@@ -48,6 +51,9 @@ public class ContentDataManagerImpl implements ContentDataManager {
 	@Autowired
 	private ContentUpdateHandlerFactory handlerFactory;
 	
+	@Autowired
+	private ContentDataEventListenerRegistry listenerRegistry;
+	
 	/*
 	 * Use cases:
 	 * 1. Insert top level container i.e. new record == Mongo Insert
@@ -76,6 +82,8 @@ public class ContentDataManagerImpl implements ContentDataManager {
 		}
 		
 		ContentUpdateHandler updateHandler = handlerFactory.getHandler(request);
+		boolean newRecord = (request.isInsertRootRequest() || request.isInsertChildRequest()) 
+				&& TemplateUtil.hasOwnCollection(template, request.getContentQId());
 		
 		Map<String, Object> contentDataMap = request.getDataAsMap();
 		
@@ -87,8 +95,14 @@ public class ContentDataManagerImpl implements ContentDataManager {
 		updateHandler.updateContent(template, request.getParentIdentity(), 
 				request.getContentQId(), contentDataMap);
 		
-		return contentDataMap;
+		// notify listeners
+		ContentDataSaveEvent saveEvent = new ContentDataSaveEvent(
+				contentDataMap, request.getTemplateId(), request.contentQId(), newRecord);
+		for (ContentDataEventListener listener : listenerRegistry.getListeners()) {
+			listener.onContentDataSave(saveEvent);
+		}
 		
+		return contentDataMap;
 	}
 	
 

@@ -25,7 +25,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 				"com.enablix.core.security.auth.repo",
 				"com.enablix.analytics.recommendation.repository", 
 				"com.enablix.core.mongo.config.repo",
-				"com.enablix.app.content.ui.recent.repo",
+				"com.enablix.app.content.recent.repo",
 				"com.enablix.app.content.ui.link.repo"})
 public class ApplicationInit {
 
@@ -35,6 +35,24 @@ public class ApplicationInit {
 	}
 	
 }
+
+/*@Component
+class SaveUser {
+	
+	@Autowired
+	private UserRepository userRepo;
+	
+	@PostConstruct
+	private void saveUser() {
+		User user = new User();
+		user.setUserId("user1234");
+		user.setTenantId("test");
+		user.setIdentity("user1234");
+		user.setPassword("password");
+		
+		userRepo.save(user);
+	}
+}*/
 
 /*@Component
 class Temp {
