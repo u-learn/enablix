@@ -26,4 +26,7 @@ public interface RecentDataRepository extends BaseMongoRepository<RecentData> {
 				   + "{'scope.contentIdentity' : {$exists : false} } ]}")
 	Collection<RecentData> findByTemplateIdAndContainerQId(String templateId, String containerQId, Sort sort);
 	
+	// Since identity is unique across collection, we delete by identity
+	Long deleteByDataInstanceIdentity(String identity);
+	
 }

@@ -3,6 +3,7 @@ package com.enablix.app.content.recent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.enablix.app.content.event.ContentDataDelEvent;
 import com.enablix.app.content.event.ContentDataEventListener;
 import com.enablix.app.content.event.ContentDataSaveEvent;
 import com.enablix.app.content.recent.repo.RecentDataRepository;
@@ -44,6 +45,11 @@ public class RecentDataCollector implements ContentDataEventListener {
 			
 			recentDataRepo.save(recentData);
 		}
+	}
+
+	@Override
+	public void onContentDataDelete(ContentDataDelEvent event) {
+		recentDataRepo.deleteByDataInstanceIdentity(event.getContentIdentity());
 	}
 
 }

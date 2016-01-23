@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 import com.enablix.app.content.delete.DeleteContentRequest;
 import com.enablix.app.content.enrich.ContentEnricher;
 import com.enablix.app.content.enrich.ContentEnricherRegistry;
+import com.enablix.app.content.event.ContentDataDelEvent;
 import com.enablix.app.content.event.ContentDataEventListener;
 import com.enablix.app.content.event.ContentDataEventListenerRegistry;
 import com.enablix.app.content.event.ContentDataSaveEvent;
@@ -116,6 +117,8 @@ public class ContentDataManagerImpl implements ContentDataManager {
 		
 		if (TemplateUtil.hasOwnCollection(template, contentQId)) {
 			crud.deleteRecord(collName, request.getRecordIdentity());
+			publishContentDeleteEvent(new ContentDataDelEvent(request.getTemplateId(), 
+					request.getContentQId(), request.getRecordIdentity()));
 			
 		} else {
 			String qIdRelativeToParent = QIdUtil.getElementId(contentQId);
@@ -123,6 +126,12 @@ public class ContentDataManagerImpl implements ContentDataManager {
 		}
 		
 		deleteChildContainerData(template, contentQId, request.getRecordIdentity());
+	}
+	
+	private void publishContentDeleteEvent(ContentDataDelEvent event) {
+		for (ContentDataEventListener listener : listenerRegistry.getListeners()) {
+			listener.onContentDataDelete(event);
+		}
 	}
 	
 	private void deleteChildContainerData(ContentTemplate template, String containerQId, String recordIdentity) {
@@ -139,6 +148,10 @@ public class ContentDataManagerImpl implements ContentDataManager {
 						crud.deleteRecordsWithParentId(collName, recordIdentity);
 				
 				for (String childRecordIdentity : deletedChildRecordIds) {
+
+					publishContentDeleteEvent(new ContentDataDelEvent(template.getId(), 
+							childQId, childRecordIdentity));
+
 					deleteChildContainerData(template, childQId, childRecordIdentity);
 				}
 			}

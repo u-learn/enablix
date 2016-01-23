@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
@@ -21,6 +23,8 @@ import com.enablix.core.domain.recent.RecentData;
 
 @Component
 public class RecentContentServiceImpl implements RecentContentService {
+	
+	private static final Logger LOGGER = LoggerFactory.getLogger(RecentContentServiceImpl.class);
 
 	private RecentContentContextBuilder<WebContentRequest> requestBuilder = 
 			new RecentContentWebRequestBuilder();
@@ -69,8 +73,12 @@ public class RecentContentServiceImpl implements RecentContentService {
 		if (recentDataList != null) {
 			for (RecentData recentData : recentDataList) {
 				NavigableContent navContent = navContentBuilder.build(recentData.getData(), labelResolver);
-				navContent.getAdditionalInfo().put("updateType", recentData.getUpdateType().toString());
-				navRecentData.add(navContent);
+				if (navContent != null) {
+					navContent.getAdditionalInfo().put("updateType", recentData.getUpdateType().toString());
+					navRecentData.add(navContent);
+				} else {
+					LOGGER.error("Unable to build nav content for recent data [{}]", recentData.getIdentity());
+				}
 			}
 		}
 

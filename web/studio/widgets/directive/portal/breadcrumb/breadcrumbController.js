@@ -1,6 +1,6 @@
 enablix.studioApp.controller('PortalBreadcrumbCtrl',
-			['$scope', '$rootScope', '$stateParams', 'ContentTemplateService', 'ContentDataService', 'ContentUtil',
-    function ($scope,   $rootScope,   $stateParams,   ContentTemplateService,   ContentDataService,   ContentUtil) {
+			['$scope', '$rootScope', '$stateParams', 'ContentTemplateService', 'ContentDataService', 'ContentUtil', 'Notification', 'StateUpdateService', 
+    function ($scope,   $rootScope,   $stateParams,   ContentTemplateService,   ContentDataService,   ContentUtil,   Notification,   StateUpdateService) {
 		
 		
 		$rootScope.$on('$stateChangeSuccess', 
@@ -13,6 +13,14 @@ enablix.studioApp.controller('PortalBreadcrumbCtrl',
 				}
 			});
 		
+		$scope.navToItem = function(_containerQId, _contentIdentity) {
+
+			if (!isNullOrUndefined(_containerQId) && !isNullOrUndefined(_contentIdentity)) {
+				StateUpdateService.goToPortalContainerBody(
+						_containerQId, _contentIdentity, 'single', _containerQId);
+			}
+		}
+		
 		var createBreadCrumbList = function($stateParams) {
 
 			$scope.breadcrumbList = $scope.breadcrumbList || [];
@@ -23,28 +31,40 @@ enablix.studioApp.controller('PortalBreadcrumbCtrl',
 			var enclosureId = $stateParams.enclosureId;
 			
 			if (isNullOrUndefined(enclosureId)) {
-				var containerDef = ContentTemplateService.getContainerDefinition(enablix.template, containerQId);
 	
-				ContentDataService.getContentRecordData(enablix.templateId, containerQId, elemIdentity, 
-					function(recordData) {
+				ContentDataService.getNavigationPath(containerQId, elemIdentity, 
+					function(navPath) {
 						
-						var breadCrumbs = []
-					
-						// first breadcrumb item, container name
-						breadCrumbs.push(containerDef.label);
-						
-						var containerLabel = ContentUtil.resolveContainerInstanceLabel(containerDef, recordData);
-						breadCrumbs.push(containerLabel);
-						
-						if (containerQId != subContainerQId) {
-							var subContainerDef = ContentTemplateService.getContainerDefinition(enablix.template, subContainerQId);
-							breadCrumbs.push(subContainerDef.label);
+						var breadCrumbs = [];
+
+						if (!isNullOrUndefined(navPath)) {
+							
+							var navContentPointer = navPath;
+							
+							var containerDef = ContentTemplateService.getContainerDefinition(enablix.template, navContentPointer.qualifiedId);
+							
+							// first breadcrumb item, container name
+							breadCrumbs.push({
+								label: containerDef.label,
+							})
+							
+							while (!isNullOrUndefined(navContentPointer)) {
+								
+								breadCrumbs.push({
+									label: navContentPointer.label,
+									qualifiedId: navContentPointer.qualifiedId,
+									identity: navContentPointer.identity
+								});
+								
+								// move pointer to next
+								navContentPointer = navContentPointer.next;
+							}
 						}
 						
 						$scope.breadcrumbList = breadCrumbs;
 					}, 
 					function(errResp) {
-						// ignore
+						Notification.error({message: "Error loading breadcrumbs", delay: enablix.errorMsgShowTime});
 					});
 				
 			} else {
@@ -52,14 +72,18 @@ enablix.studioApp.controller('PortalBreadcrumbCtrl',
 				var breadCrumbs = [];
 				
 				var enclDef = ContentTemplateService.getPortalEnclosureDefinition(enclosureId);
-				breadCrumbs.push(enclDef.label);
+				breadCrumbs.push({
+					label: enclDef.label
+				});
 				
 				if (!isNullOrUndefined(subContainerQId)) {
 					
 					var subContainerDef = ContentTemplateService.getContainerDefinition(enablix.template, subContainerQId);
 				
 					if (!isNullOrUndefined(subContainerDef)) {
-						breadCrumbs.push(subContainerDef.label);
+						breadCrumbs.push({
+							label: subContainerDef.label
+						});
 					}
 				}
 				

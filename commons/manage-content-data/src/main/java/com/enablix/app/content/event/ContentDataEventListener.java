@@ -4,4 +4,6 @@ public interface ContentDataEventListener {
 
 	public void onContentDataSave(ContentDataSaveEvent event);
 	
+	public void onContentDataDelete(ContentDataDelEvent event);
+	
 }

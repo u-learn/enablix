@@ -7,7 +7,8 @@
 	<div class="cont cont-hidden" ng-if="bodyData.length != 0">
 		<div ng-repeat="dataItem in bodyData">
 			<h4><eb-doc-download class="right-doc" ng-if="dataItem.downloadDocIdentity" doc-value="dataItem.downloadDocIdentity"></eb-doc-download>
-			    <a href="#{{dataItem.containerId}}{{$index}}" ng-click="toggleContainerItem($event)" class="toggle">{{dataItem.headingLabel}}</a></h4>
+			    <a ng-click="toggleContainerItem($event, dataItem.containerId + $index)" class="toggle">{{dataItem.headingLabel}}</a>
+			    <a ng-if="dataItem.hasSubContainers" ng-click="navToItemDetail(dataItem.containerQId, dataItem.identity)" class="detail fa fa-external-link"></a></h4>
 			<div id="{{dataItem.containerId}}{{$index}}" class="toggle-cont">
 				<table class="infotable" >
 					<tr ng-repeat="header in multiHeaders" ng-switch="header.dataType">
