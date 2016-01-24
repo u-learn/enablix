@@ -96,9 +96,10 @@ enablix.studioApp.factory('StateUpdateService',
 	 			$state.go("authorizationError");
 	 		};
 
-	 		var goToPortalEnclosureDetail = function(_enclosureId) {
+	 		var goToPortalEnclosureDetail = function(_enclosureId, _childContainerId) {
 	 			$state.go("portal.enclosure", {
-	 				"enclosureId": _enclosureId
+	 				"enclosureId": _enclosureId,
+	 				"childContainerQId": _childContainerId
 	 			});
 	 		}
 	 		

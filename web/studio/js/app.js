@@ -188,7 +188,7 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvi
 				}
 			}
 		})
-		.state('portal.container.body', {
+		.state('portal.container.body', { // state not used?
 			url: '/c/{type}/{subContainerQId}/',
 			templateUrl: function($stateParams) {
 				return 'views/portal/container/body-' + $stateParams.type + '.html';
@@ -221,7 +221,7 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvi
 			}
 		})
 		.state('portal.enclosure', {
-			url: '/enclosure/{enclosureId}/',
+			url: '/enclosure/{enclosureId}/{childContainerQId}',
 			views: {
 				// the main template
 				'': {
@@ -242,7 +242,7 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvi
 				}
 			}
 		})
-		.state('portal.enclosure.body', {
+		.state('portal.enclosure.body', { // state not used?
 			url: '{type}/{subContainerQId}/',
 			templateUrl: function($stateParams) {
 				return 'views/portal/container/body-' + $stateParams.type + '.html';

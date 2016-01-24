@@ -1,11 +1,8 @@
 <div class="block bread-crumbs">
 	<div class="cont">
-		<span>
-			<a ng-if="!$last">Portal</a>&nbsp;&nbsp;<i class="fa fa-angle-right"></i>
-		</span>
 		<span ng-repeat="breadcrumbItem in breadcrumbList">
 			<span ng-if="$last">{{breadcrumbItem.label}}</span>
-			<a ng-click="navToItem(breadcrumbItem.qualifiedId, breadcrumbItem.identity)" 
+			<a ng-click="navToItem(breadcrumbItem.qualifiedId, breadcrumbItem.identity, breadcrumbItem.enclosureId)" 
 				ng-if="!$last">{{breadcrumbItem.label}}</a>&nbsp;&nbsp;<i ng-if="!$last" class="fa fa-angle-right"></i>
 		</span>
 	</div>

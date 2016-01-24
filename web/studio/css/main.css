@@ -357,6 +357,12 @@ form .row .form-label:first-child {
 	margin: 4px 8px 0 0;
 	color: #aaa;
 }
+
+.block .cont .detail {
+	font-size: 14px;
+	color: #aaa;
+}
+
 .block .head .add {
 }
 .block .head .close {
