@@ -1,7 +1,7 @@
 var enablix = enablix || {};
 enablix.studioApp = angular.module("studio", ['ui.router', 'angularTreeview', 'listGroupTreeview', 
            'angularFileUpload', 'ui.bootstrap', 'isteven-multi-select', 'ui-notification', 'enablixFilters',
-           'ngSanitize', 'ui.select']);
+           'ngSanitize', 'ui.select','ngMessages']);
 
 //enablix.templateId = "entSoftwareTemplate"; //"amlSalesTemplate";
 enablix.dateFormat = 'MM/dd/yyyy';
@@ -29,19 +29,12 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvi
 			templateUrl: 'views/login.html',
 			controller: 'LoginController'
 		})
-		.state('authorizationError', {
-			url: '/authError',
-			templateUrl: 'views/authError.html'
-		})
 		.state('studio', {
 			url: '/studio',
 			templateUrl: 'views/studio/studio.html',
 			controller: 'MainStudioCtrl',
 			resolve: {
-				setupData: appSetup,
-				checkPageAccess: ['setupData', 'AuthorizationService', function(setupData, AuthorizationService) {
-					return AuthorizationService.userHasPageAccess('VIEW_STUDIO')
-				}]
+				setupData: appSetup 
 			}
 		})
 		.state('studio.list', {
@@ -49,10 +42,7 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvi
 			templateUrl: 'views/content/content-list.html',
 			controller: 'ContentListCtrl',
 			resolve: {
-				setupData: appSetup,
-				checkPageAccess: ['setupData', 'AuthorizationService', function(setupData, AuthorizationService) {
-					return AuthorizationService.userHasPageAccess('VIEW_STUDIO')
-				}]
+				setupData: appSetup 
 			}
 		})
 		.state('studio.add', {
@@ -60,10 +50,7 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvi
 			templateUrl: 'views/content/content-add.html',
 			controller: 'ContentAddCtrl',
 			resolve: {
-				setupData: appSetup,
-				checkPageAccess: ['setupData', 'AuthorizationService', function(setupData, AuthorizationService) {
-					return AuthorizationService.userHasPageAccess('VIEW_STUDIO')
-				}] 
+				setupData: appSetup 
 			}
 		})
 		.state('studio.detail', {
@@ -71,10 +58,7 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvi
 			templateUrl: 'views/content/content-detail.html',
 			controller: 'ContentDetailCtrl',
 			resolve: {
-				setupData: appSetup,
-				checkPageAccess: ['setupData', 'AuthorizationService', function(setupData, AuthorizationService) {
-					return AuthorizationService.userHasPageAccess('VIEW_STUDIO')
-				}] 
+				setupData: appSetup 
 			}
 		})
 		.state('studio.edit', {
@@ -82,10 +66,7 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvi
 			templateUrl: 'views/content/content-add.html',
 			controller: 'ContentEditCtrl',
 			resolve: {
-				setupData: appSetup,
-				checkPageAccess: ['setupData', 'AuthorizationService', function(setupData, AuthorizationService) {
-					return AuthorizationService.userHasPageAccess('VIEW_STUDIO')
-				}] 
+				setupData: appSetup 
 			}
 		})
 		.state('refdata', {
@@ -93,10 +74,7 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvi
 			templateUrl: 'views/refdata/refdata.html',
 			controller: 'MainStudioCtrl',
 			resolve: {
-				setupData: appSetup,
-				checkPageAccess: ['setupData', 'AuthorizationService', function(setupData, AuthorizationService) {
-					return AuthorizationService.userHasPageAccess('VIEW_REF_DATA')
-				}] 
+				setupData: appSetup 
 			}
 		})
 		.state('refdata.list', {
@@ -104,10 +82,7 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvi
 			templateUrl: 'views/content/content-list.html',
 			controller: 'ContentListCtrl',
 			resolve: {
-				setupData: appSetup,
-				checkPageAccess: ['setupData', 'AuthorizationService', function(setupData, AuthorizationService) {
-					return AuthorizationService.userHasPageAccess('VIEW_REF_DATA')
-				}]  
+				setupData: appSetup 
 			}
 		})
 		.state('refdata.add', {
@@ -115,10 +90,7 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvi
 			templateUrl: 'views/content/content-add.html',
 			controller: 'ContentAddCtrl',
 			resolve: {
-				setupData: appSetup,
-				checkPageAccess: ['setupData', 'AuthorizationService', function(setupData, AuthorizationService) {
-					return AuthorizationService.userHasPageAccess('VIEW_REF_DATA')
-				}]  
+				setupData: appSetup 
 			}
 		})
 		.state('refdata.detail', {
@@ -126,10 +98,7 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvi
 			templateUrl: 'views/content/content-detail.html',
 			controller: 'ContentDetailCtrl',
 			resolve: {
-				setupData: appSetup,
-				checkPageAccess: ['setupData', 'AuthorizationService', function(setupData, AuthorizationService) {
-					return AuthorizationService.userHasPageAccess('VIEW_REF_DATA')
-				}]  
+				setupData: appSetup 
 			}
 		})
 		.state('refdata.edit', {
@@ -137,10 +106,7 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvi
 			templateUrl: 'views/content/content-add.html',
 			controller: 'ContentEditCtrl',
 			resolve: {
-				setupData: appSetup,
-				checkPageAccess: ['setupData', 'AuthorizationService', function(setupData, AuthorizationService) {
-					return AuthorizationService.userHasPageAccess('VIEW_REF_DATA')
-				}]  
+				setupData: appSetup 
 			}
 		})
 		.state('portal', {
@@ -154,14 +120,6 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvi
 		.state('portal.home', {
 			url: '/home',
 			templateUrl: 'views/portal/portal-home.html',
-			resolve: {
-				setupData: appSetup 
-			}
-		})
-		.state('portal.search', {
-			url: '/search/t/{searchText}/',
-			templateUrl: 'views/portal/portal-search.html',
-			controller: 'PortalSearchCtrl',
 			resolve: {
 				setupData: appSetup 
 			}
@@ -251,6 +209,43 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvi
 			resolve: {
 				setupData: appSetup 
 			}
+		})
+		.state('users', {
+			url: '/users',
+			templateUrl: 'views/user/userdata.html',
+			controller: 'UserController',
+			resolve: {
+				setupData: appSetup 
+			}
+		})
+		.state('users.list', {
+			url: '/list',
+			templateUrl: 'views/user/userlist.html',
+			controller: 'UserController',
+			resolve: {
+				setupData: appSetup 
+			}
+		})
+		.state('users.add', {
+			url: '/add',
+			templateUrl: 'views/user/adduser.html',
+			controller: 'SaveUserController',
+			resolve: {
+				setupData: appSetup 
+			}
+		})
+		.state('users.edit', {
+			url: '/edit/{identity}',
+			templateUrl: 'views/user/edituser.html',
+			controller: 'SaveUserController',
+			resolve: {
+				setupData: appSetup 
+			}
+		}).state('setpassword', {
+			url: '/setpassword',
+			templateUrl: 'views/set-password.html',
+			controller: 'SetPasswordController'
+			
 		});
 	
 	// The custom “X-Requested-With” is a conventional header sent by browser clients, 

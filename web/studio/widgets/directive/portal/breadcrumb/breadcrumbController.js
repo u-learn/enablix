@@ -7,8 +7,7 @@ enablix.studioApp.controller('PortalBreadcrumbCtrl',
 			function(event, toState, toParams, fromState, fromParams) {
 				if (toState.name.indexOf("portal") == 0
 						&& fromState.name.indexOf("portal") == 0
-						&& toState.name != "portal.home"
-						&& toState.name != "portal.search") {
+						&& toState.name != "portal.home") {
 					createBreadCrumbList(toParams);
 				}
 			});

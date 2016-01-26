@@ -1,15 +1,14 @@
 <div class="block">
 	<div ng-class="{'active': expanded}" class="head head-toggle" ng-click="toggleContainer($event)">
-		<i class="expandable"></i>
+		<i></i>
 		<em class="fa fa-file-o"></em>
-		<h2 ng-if="!navigableHeader">{{subContainerLabel}}</h2>
-		<h2><eb-nav-link hide-hierarchy="false" nav-link="navContentData" ng-if="navigableHeader"></eb-nav-link></h2>
+		<h2>{{subContainerLabel}}</h2>
 	</div>
 	<div ng-class="{'cont-hidden': !expanded}" class="cont clearfix" ng-if="!(bodyData == null || bodyData == undefined || bodyData.length == 0)">
 		<table class="infotable" >
 			<tr ng-repeat="header in singleHeaders" ng-switch="header.dataType">
 				<th>{{header.label}}:</th>
-				<td><span class="content-data" ng-bind-html="bodyData[header.key] | ebxFormatData: header.dataType"></span>&nbsp;
+				<td>{{bodyData[header.key] | ebxFormatData: header.dataType}}&nbsp;
 					<span ng-if="header.dataType == 'DOC' && bodyData[header.key].name">
 						<eb-doc-download doc-value="bodyData[header.key].identity"></eb-doc-download>
 					</span>

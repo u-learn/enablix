@@ -35,6 +35,7 @@
 	<script type="text/javascript" src="js/vendor/angular/ui-bootstrap-tpls-0.12.1.js"></script>
 	<script type="text/javascript" src="js/vendor/multi-select/isteven-multi-select.js"></script>
 	<script type="text/javascript" src="js/vendor/angular/angular-ui-notification.min.js"></script>
+	<script type="text/javascript" src="js/vendor/angular/angular-messages.min.js"></script>
 	<script type="text/javascript" src="js/vendor/angular/select.js"></script>
 	
 	<!-- application scripts -->
@@ -44,6 +45,7 @@
 	<script type="text/javascript" src="js/serviceUrl.js"></script>
 	<script type="text/javascript" src="js/common/restService.js"></script>
 	<script type="text/javascript" src="js/common/login/loginCtrl.js"></script>
+	<script type="text/javascript" src="js/common/login/setPasswordController.js"></script>
 	<script type="text/javascript" src="widgets/filter/appFilterModule.js"></script>
 	<script type="text/javascript" src="widgets/filter/contentFormatFilter.js"></script>
 	<script type="text/javascript" src="widgets/filter/dateFilter.js"></script>
@@ -56,7 +58,6 @@
 	<script type="text/javascript" src="widgets/directive/bounded2/boundedDirective.js"></script>
 	<script type="text/javascript" src="widgets/directive/date/dateTimeDirective.js"></script>
 	<script type="text/javascript" src="widgets/directive/doc/download/downloadDirective.js"></script>
-	<script type="text/javascript" src="widgets/directive/search/searchDirective.js"></script>
 	<script type="text/javascript" src="widgets/directive/portal/topnav/navController.js"></script>
 	<script type="text/javascript" src="widgets/directive/portal/topnav/navDirective.js"></script>
 	<script type="text/javascript" src="widgets/directive/portal/subContainer/subContainerController.js"></script>
@@ -77,8 +78,7 @@
 	<script type="text/javascript" src="widgets/directive/portal/peers/peersService.js"></script>
 	<script type="text/javascript" src="widgets/directive/portal/peers/peersController.js"></script>
 	<script type="text/javascript" src="widgets/directive/portal/peers/peersDirective.js"></script>
-	<script type="text/javascript" src="widgets/directive/search/searchResultItemController.js"></script>
-	<script type="text/javascript" src="widgets/directive/search/searchResultItemDirective.js"></script>
+	<script type="text/javascript" src="widgets/directive/passwordChecked.js"></script>
 	
 	<script type="text/javascript" src="widgets/stateUpdateService.js"></script>
 	<script type="text/javascript" src="widgets/content/template/contentTemplateService.js"></script>
@@ -86,10 +86,10 @@
 	<script type="text/javascript" src="widgets/content/index/contentIndexService.js"></script>
 	<script type="text/javascript" src="widgets/content/refdata/refdataIndexService.js"></script>
 	<script type="text/javascript" src="widgets/studio/studioInitService.js"></script>
-	<script type="text/javascript" src="widgets/search/searchService.js"></script>
 	<script type="text/javascript" src="widgets/content/contentUtil.js"></script>
-	<script type="text/javascript" src="widgets/auth/authorizationService.js"></script>
-	<script type="text/javascript" src="widgets/auth/requiresPermDirective.js"></script>
+	<script type="text/javascript" src="widgets/content/refdata/userCtrl.js"></script>
+	<script type="text/javascript" src="widgets/content/refdata/userService.js"></script>
+	<script type="text/javascript" src="widgets/content/refdata/saveUserController.js"></script>
 	
 	<script type="text/javascript" src="js/mainController.js"></script>
 	<script type="text/javascript" src="widgets/content/index/contentIndexController.js"></script>
@@ -105,8 +105,7 @@
 	<script type="text/javascript" src="widgets/portal/container/portalCntnrSubItemCtrl.js"></script>
 	<script type="text/javascript" src="widgets/portal/enclosure/portalEnclDetailController.js"></script>
 	<script type="text/javascript" src="widgets/portal/enclosure/portalEnclRecommendedCtrl.js"></script>
-	<script type="text/javascript" src="widgets/portal/search/portalSearchController.js"></script>
-	
+
 </head>
 
 <body ng-app="studio">
@@ -127,12 +126,19 @@
 				<a href="#" class="logo"><i class="fa fa-power-off"></i>Enablix</a>
 				<!--/ logo -->
 			</div>
-			<div class="col-sm-8" ng-if="authenticated">
+			<div class="col-sm-8" ng-show="authenticated">
 				<!-- main nav -->
-				<nav class="main-nav">
+				<nav class="main-nav container-fluid">
 					<a href="#" ui-sref-active="active" ui-sref="portal">Portal</a>
-					<a href="#" ui-sref-active="active" ui-sref="studio" requires-permission="VIEW_STUDIO">Studio</a>
-					<a href="#" ui-sref-active="active" ui-sref="refdata" requires-permission="VIEW_REF_DATA">Setup</a>
+					<a href="#" ui-sref-active="active" ui-sref="studio">Studio</a>
+					<!-- <a href="#" ui-sref-active="active" ui-sref="refdata">Setup</a> -->
+					<li>
+						<a href="#" ui-sref-active="active">Setup<i class="fa fa-angle-down"></i></a>
+						<ul >
+							<li ><a  ui-sref="refdata">Reference Data</a></li>
+							<li><a ui-sref="users.list">User Management</a></li>
+						</ul>
+					</li>
 					<a href="#" ng-show="authenticated" ng-click="logout()">Logout</a>
 				</nav>
 				<!--/ main nav -->
