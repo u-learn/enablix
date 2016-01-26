@@ -6,7 +6,7 @@ enablix.studioApp.controller('LoginController',
 
 		    var headers = credentials ? 
 		    		{authorization : "Basic " + btoa(credentials.username + ":" + credentials.password) } : {};
-
+		    
 		    RESTService.getForData('user', null, null, function(data) {
 			    	if (data.name) {
 			    		enablix.loggedInUser = data.principal;
@@ -49,9 +49,16 @@ enablix.studioApp.controller('LoginController',
 			$rootScope.authenticated = false;
 			
 			RESTService.postForData('logout', null, null, null, function() {
-					StateUpdateService.goToLogin();
+					// to clear basic auth associated with browser window, update it with a bad credentials
+					authenticate({username: "~~baduser~~", password:"~~"}, function() {
+						StateUpdateService.goToLogin();
+					});
+					
 				}, function(data) {
-					StateUpdateService.goToLogin();
+					// to clear basic auth associated with browser window, update it with a bad credentials
+					authenticate({username: "~~baduser~~", password:"~~"}, function() {
+						StateUpdateService.goToLogin();
+					});
 				}, null, {});
 			
 		};
