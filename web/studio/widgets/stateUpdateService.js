@@ -1,7 +1,7 @@
 enablix.studioApp.factory('StateUpdateService', 
 	[
-	 			'$state', '$stateParams',
-	 	function($state,   $stateParams) {
+	 			'$state', '$stateParams', '$rootScope',
+	 	function($state,   $stateParams,   $rootScope) {
 	 		
 	 		var goToStudioList = function(_containerQId, _parentIdentity) {
 				$state.go('studio.list', {'containerQId' : _containerQId, 

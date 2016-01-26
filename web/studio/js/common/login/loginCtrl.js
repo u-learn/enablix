@@ -46,15 +46,12 @@ enablix.studioApp.controller('LoginController',
 		
 		$scope.logout = function() {
 			
+			$rootScope.authenticated = false;
+			
 			RESTService.postForData('logout', null, null, null, function() {
-					
-					$rootScope.authenticated = false;
 					StateUpdateService.goToLogin();
-					
 				}, function(data) {
-					$rootScope.authenticated = false;
 					StateUpdateService.goToLogin();
-					
 				}, null, {});
 			
 		};
