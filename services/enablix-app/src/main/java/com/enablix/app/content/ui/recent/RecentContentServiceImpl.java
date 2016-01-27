@@ -1,12 +1,15 @@
 package com.enablix.app.content.ui.recent;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
@@ -35,6 +38,10 @@ public class RecentContentServiceImpl implements RecentContentService {
 	@Autowired
 	private NavigableContentBuilder navContentBuilder;
 	
+	// TODO: this should be tenant specific configuration
+	@Value("${recent.data.result.size:5}")
+	private int pageSize;
+	
 	private ContentLabelResolver labelResolver = new PortalContentLabelResolver();
 	
 	@Override
@@ -42,7 +49,7 @@ public class RecentContentServiceImpl implements RecentContentService {
 		
 		RecentContentContext context = requestBuilder.build(request);
 		
-		Collection<RecentData> recentDataList = null;
+		Page<RecentData> recentDataList = null;
 		
 		String templateId = context.getRequestContext().templateId();
 		
@@ -50,22 +57,23 @@ public class RecentContentServiceImpl implements RecentContentService {
 		String contentIdentity = context.getRequestContext().contentIdentity();
 		
 		Sort sort = new Sort(Sort.Direction.DESC, ContentDataConstants.CREATED_AT_KEY);
+		Pageable pageable = new PageRequest(0, pageSize, sort);
 		
 		if (!StringUtil.isEmpty(containerQId) && !StringUtil.isEmpty(contentIdentity)) {
 			recentDataList = repo.findByTemplateIdAndContainerQIdAndContentIdentity(
-					templateId, containerQId, contentIdentity, sort);
+					templateId, containerQId, contentIdentity, pageable);
 			
 		} 
 		
 		if (CollectionUtil.isEmpty(recentDataList) && 
 				!StringUtil.isEmpty(containerQId) && StringUtil.isEmpty(contentIdentity)) {
 			recentDataList = repo.findByTemplateIdAndContainerQId(
-					templateId, containerQId, sort);
+					templateId, containerQId, pageable);
 			
 		} 
 		
 		if (CollectionUtil.isEmpty(recentDataList)) {
-			recentDataList = repo.findByTemplateId(templateId, sort);
+			recentDataList = repo.findByTemplateId(templateId, pageable);
 		}
 
 		List<NavigableContent> navRecentData = new ArrayList<>();
