@@ -7,8 +7,6 @@ enablix.studioApp.directive('ebPortalSubContainer', [
 				type: "@",
 				subContainerQId: "=",
 				subContainerLabel: "=",
-				elementIdentity: "=",
-				navContentData: "=",
 				index: "=",
 				expanded: "@"
 			},

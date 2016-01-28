@@ -91,10 +91,19 @@ enablix.studioApp.factory('StateUpdateService',
 	 		var goToPortalHome = function() {
 	 			$state.go("portal.home");
 	 		};
-	 		
-	 		var goToAuthError = function() {
-	 			$state.go("authorizationError");
+	 		var goAddUser = function(){	 			
+	 			$state.go("users.add");
 	 		};
+	 		var goToListUser = function(){	 			
+	 			$state.go("users.list");
+	 		};
+	 		var goEditUser=function(_identity){
+	 			$state.go("users.edit",{"identity" : _identity});
+	 		}
+	 		var goToSetPassword=function(){
+	 			$state.go("setpassword");
+	 		}
+	 		
 
 	 		var goToPortalEnclosureDetail = function(_enclosureId, _childContainerId) {
 	 			$state.go("portal.enclosure", {
@@ -110,12 +119,6 @@ enablix.studioApp.factory('StateUpdateService',
 	 				"subContainerQId": _subContainerQId
 	 			});
 	 		};
-	 		
-	 		var goToPortalSearch = function(_searchText) {
-	 			$state.go("portal.search", {
-	 				"searchText": _searchText
-	 			});
-	 		}
 	 		
 	 		var reload = function() {
 	 			$state.transitionTo($state.current, $stateParams, {
@@ -144,9 +147,11 @@ enablix.studioApp.factory('StateUpdateService',
 	 			goToPortalEnclosureDetail: goToPortalEnclosureDetail,
 	 			goToPortalEnclosureBody: goToPortalEnclosureBody,
 	 			goToPortalSubItem: goToPortalSubItem,
-	 			goToPortalSearch: goToPortalSearch,
-	 			goToAuthError: goToAuthError,
-	 			reload: reload
+	 			reload: reload,
+	 			goAddUser : goAddUser,
+	 			goEditUser : goEditUser,
+	 			goToListUser : goToListUser,
+	 			goToSetPassword : goToSetPassword
 	 		};
 	 	}
 	 ]);

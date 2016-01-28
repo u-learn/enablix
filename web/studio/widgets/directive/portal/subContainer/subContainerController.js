@@ -10,8 +10,6 @@ enablix.studioApp.controller('PortalSubContainerCtrl',
 					enablix.template, $scope.containerDef.linkContainerQId);
 		}
 		
-		$scope.navigableHeader = !isNullOrUndefined($scope.navContentData);
-		
 		$scope.$stateParams = $stateParams;
 		
 		var decorateData = function(_containerDef, _dataRecord) {
@@ -58,15 +56,10 @@ enablix.studioApp.controller('PortalSubContainerCtrl',
 					_containerQId, _contentIdentity, 'single', _containerQId);
 		}
 		
-		if ($stateParams.containerQId === $scope.subContainerQId || !isNullOrUndefined($scope.elementIdentity)) {
+		if ($stateParams.containerQId === $scope.subContainerQId) {
 		
-			var elemIdentity = isNullOrUndefined($scope.elementIdentity) ? $stateParams.elementIdentity
-									: $scope.elementIdentity;
-			
-			var cntnrQId = isNullOrUndefined($stateParams.containerQId) ? $scope.subContainerQId 
-								: $stateParams.containerQId;
-			
-			ContentDataService.getContentRecordData(enablix.templateId, cntnrQId, elemIdentity, 
+			ContentDataService.getContentRecordData(enablix.templateId, $stateParams.containerQId, 
+					$stateParams.elementIdentity, 
 					function(recordData) {
 						decorateData($scope.containerDef, recordData);
 						$scope.bodyData = recordData;
@@ -76,8 +69,9 @@ enablix.studioApp.controller('PortalSubContainerCtrl',
 					});
 			
 		} else {
-
-			ContentDataService.getContentData(enablix.templateId, $scope.subContainerQId, $stateParams.elementIdentity,
+			
+			ContentDataService.getContentData(enablix.templateId, $scope.subContainerQId, 
+				$stateParams.elementIdentity,
 				function(data) {
 					
 					if ($scope.type == 'single' && data && data.length > 0) {

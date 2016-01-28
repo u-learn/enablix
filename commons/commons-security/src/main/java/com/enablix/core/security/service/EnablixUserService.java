@@ -2,6 +2,7 @@ package com.enablix.core.security.service;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -60,6 +61,55 @@ public class EnablixUserService implements UserService, UserDetailsService {
 		
 		
 		return new LoggedInUser(user, templateId, userRole);
+	}
+	/**
+	 * 
+	 * @author ganesh
+	 * @return boolean
+	 *  
+	 */
+	
+	@Override
+	public Boolean checkUserbyUserName(String userName) {
+		User user=userRepo.findByUserId(userName);
+		if(user==null)
+		{
+			return false;		  
+		}else {
+			return true;
+		}
+	}
+	
+	 
+	/**
+	 * @author ganesh 
+	 */
+	
+	@Override
+	public User addUser(User user) {
+		
+		User newuser=userRepo.save(user);		
+		
+		return newuser;
+	}
+	
+	@Override
+	public List<User> getAllUsers() {
+		
+		return userRepo.findAll();
+		
+	}
+	
+	@Override
+	public Boolean deleteUser(User user) {
+		try{
+			userRepo.delete(user);
+		    return true;
+		}catch(Exception e)
+		{
+			
+			return false;
+		}
 	}
 	
 	public static class LoggedInUser implements UserDetails {
@@ -138,5 +188,8 @@ public class EnablixUserService implements UserService, UserDetailsService {
 		}
 		
 	}
+
+
+	
 
 }
