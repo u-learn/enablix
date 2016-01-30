@@ -1,6 +1,7 @@
 enablix.studioApp.controller('LoginController', 
 			['$scope', '$state', 'RESTService', '$rootScope', 'StateUpdateService',
 	function( $scope,   $state,   RESTService,   $rootScope,   StateUpdateService) {
+		$scope.$state = $state;
 		var currentUser={};
 		var authenticate = function(credentials, callback) {
 
@@ -9,8 +10,9 @@ enablix.studioApp.controller('LoginController',
 		    
 		    RESTService.getForData('user', null, null, function(data) {
 			    	if (data.name) {
+			    		enablix.loggedInUser = data.principal;
 			    		currentUser=data.principal.user;
-			    		window.localStorage.setItem("userData",JSON.stringify(data.principal.user));
+			    		window.localStorage.setItem("userData", JSON.stringify(data.principal.user));
 			    		$rootScope.authenticated = true;
 			    	} else {
 			    		window.localStorage.setItem("userData","");

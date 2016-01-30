@@ -24,7 +24,12 @@ enablix.serviceURL = {
 	"navPath": enablix.domainName + "/navcontent/navpath/:containerQId/:contentIdentity/",
 	"user": enablix.domainName + "/user",
 	"systemuser" : enablix.domainName + "/systemuser",
+	"fetchUser" : enablix.domainName + "/d/user/:userIdentity/",
 	"deletesystemuser" : enablix.domainName + "/deletesystemuser",
 	"checkusername" : enablix.domainName + "/checkusername",
+	"fetchAllRoles" : enablix.domainName + "/roles",
+	"fetchConfigByKey" : enablix.domainName + "/config/:configKey",
+	"saveConfig" : enablix.domainName + "/config/save",
+	"fetchDocStoresConfigMetadata" : enablix.domainName + "/docstore/configmetadata",
 	"logout": enablix.domainName + "/logout"
 };

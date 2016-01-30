@@ -4,10 +4,10 @@ import java.util.Map;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import com.enablix.core.domain.BaseEntity;
+import com.enablix.core.domain.BaseDocumentEntity;
 
 @Document(collection = "ebx_configuration")
-public class Configuration extends BaseEntity {
+public class Configuration extends BaseDocumentEntity {
 
 	private String key;
 	

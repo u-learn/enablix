@@ -12,12 +12,15 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
+import com.enablix.commons.util.collection.CollectionUtil;
 import com.enablix.commons.util.process.ProcessContext;
 import com.enablix.core.domain.security.authorization.Role;
 import com.enablix.core.domain.security.authorization.UserRole;
 import com.enablix.core.domain.tenant.Tenant;
 import com.enablix.core.domain.user.User;
+import com.enablix.core.security.auth.repo.RoleRepository;
 import com.enablix.core.security.auth.repo.UserRoleRepository;
+import com.enablix.core.security.web.UserAndRolesVO;
 import com.enablix.core.system.repo.TenantRepository;
 import com.enablix.core.system.repo.UserRepository;
 
@@ -32,6 +35,9 @@ public class EnablixUserService implements UserService, UserDetailsService {
 	
 	@Autowired
 	private UserRoleRepository userRoleRepo;
+	
+	@Autowired
+	private RoleRepository roleRepo;
 	
 	@Override
 	public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
@@ -62,52 +68,50 @@ public class EnablixUserService implements UserService, UserDetailsService {
 		
 		return new LoggedInUser(user, templateId, userRole);
 	}
-	/**
-	 * 
-	 * @author ganesh
-	 * @return boolean
-	 *  
-	 */
 	
 	@Override
-	public Boolean checkUserbyUserName(String userName) {
-		User user=userRepo.findByUserId(userName);
-		if(user==null)
-		{
-			return false;		  
-		}else {
-			return true;
-		}
-	}
-	
+	public Boolean checkUserByUserId(String userId) {
+		User user = userRepo.findByUserId(userId);
+		return user != null;
+	}	
 	 
-	/**
-	 * @author ganesh 
-	 */
-	
 	@Override
-	public User addUser(User user) {
+	public User addUser(UserAndRolesVO userVO) {
 		
-		User newuser=userRepo.save(user);		
+		User newuser = userRepo.save(userVO.getUser());
+		
+		if (!userVO.getRoles().isEmpty()) {
+			
+			List<Role> roles = roleRepo.findByIdentityIn(userVO.getRoles());
+			
+			if (!CollectionUtil.isEmpty(roles)) {
+				
+				UserRole userRole = userRoleRepo.findByUserIdentity(newuser.getIdentity());
+				
+				if (userRole == null) {
+					userRole = new UserRole();
+					userRole.setUserIdentity(newuser.getIdentity());
+				}
+				
+				userRole.setRoles(roles);
+				userRoleRepo.save(userRole);
+			}
+		}
 		
 		return newuser;
 	}
 	
 	@Override
-	public List<User> getAllUsers() {
-		
-		return userRepo.findAll();
-		
+	public List<User> getAllUsers(String tenantId) {
+		return userRepo.findByTenantId(tenantId);
 	}
 	
 	@Override
 	public Boolean deleteUser(User user) {
-		try{
+		try {
 			userRepo.delete(user);
-		    return true;
-		}catch(Exception e)
-		{
-			
+			return true;
+		} catch (Exception e) {
 			return false;
 		}
 	}
@@ -189,7 +193,28 @@ public class EnablixUserService implements UserService, UserDetailsService {
 		
 	}
 
-
-	
+	@Override
+	public UserAndRolesVO getUserByIdentity(String userIdentity, String tenantId) {
+		
+		UserAndRolesVO userVO = new UserAndRolesVO();
+		
+		User user = userRepo.findByIdentityAndTenantId(userIdentity, tenantId);
+		
+		if (user != null) {
+		
+			userVO.setUser(user);
+			
+			UserRole userRole = userRoleRepo.findByUserIdentity(userIdentity);
+			
+			if (userRole != null) {
+				
+				for (Role role : userRole.getRoles()) {
+					userVO.addRole(role.getIdentity());
+				}
+			}
+		}
+		
+		return userVO;
+	}
 
 }

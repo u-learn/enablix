@@ -210,7 +210,15 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvi
 				setupData: appSetup 
 			}
 		})
-		.state('users', {
+		.state('system', {
+			url: '/system',
+			templateUrl: 'views/system/system-admin.html',
+			controller: 'SystemAdminController',
+			resolve: {
+				setupData: appSetup 
+			}
+		})
+		.state('system.users', {
 			url: '/users',
 			templateUrl: 'views/user/userdata.html',
 			controller: 'UserController',
@@ -218,7 +226,7 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvi
 				setupData: appSetup 
 			}
 		})
-		.state('users.list', {
+		.state('system.users.list', {
 			url: '/list',
 			templateUrl: 'views/user/userlist.html',
 			controller: 'UserController',
@@ -226,7 +234,7 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvi
 				setupData: appSetup 
 			}
 		})
-		.state('users.add', {
+		.state('system.users.add', {
 			url: '/add',
 			templateUrl: 'views/user/adduser.html',
 			controller: 'SaveUserController',
@@ -234,14 +242,20 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvi
 				setupData: appSetup 
 			}
 		})
-		.state('users.edit', {
-			url: '/edit/{identity}',
-			templateUrl: 'views/user/edituser.html',
+		.state('system.users.edit', {
+			url: '/edit/{identity}/',
+			templateUrl: 'views/user/adduser.html',
 			controller: 'SaveUserController',
 			resolve: {
 				setupData: appSetup 
 			}
-		}).state('setpassword', {
+		})
+		.state('system.docstore', {
+			url: '/docstore',
+			templateUrl: 'views/system/docstore/doc-store-config.html',
+			controller: 'DocStoreConfigController'
+		})
+		.state('setpassword', {
 			url: '/setpassword',
 			templateUrl: 'views/set-password.html',
 			controller: 'SetPasswordController'

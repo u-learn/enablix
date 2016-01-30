@@ -6,7 +6,7 @@ public class Profile extends BaseWrappedEntity {
 
 	private String name;
 	
-	private ContactSet<Email> emails;
+	private ContactSet<Email> emails = new ContactSet<Email>();
 
 	public String getName() {
 		return name;

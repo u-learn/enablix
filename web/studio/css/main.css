@@ -554,6 +554,7 @@ form .row .form-label:first-child {
 .main-nav {
 	text-align: right;
 }
+
 .main-nav a {
 	display: inline-block;
 	margin: 1.25em 0 0 1em;
@@ -575,6 +576,30 @@ form .row .form-label:first-child {
 }
 .main-nav .active,
 .main-nav .active:hover {
+	background: #2980b9;
+	cursor: default;
+	color: #fff;
+}
+
+.main-nav-secondary {
+	text-align: center;
+}
+
+.main-nav-secondary a {
+	display: inline-block;
+	font-family: Montserrat;
+	margin: 0 0 0 0;
+	padding: 0.5em 1.25em;
+	font-size: 0.75em;
+	text-transform: none;
+	line-height: 12.25px;
+	color: #626262;
+}
+.main-nav-secondary a:hover {
+	color: #2980b9;
+}
+.main-nav-secondary .active,
+.main-nav-secondary .active:hover {
 	background: #2980b9;
 	cursor: default;
 	color: #fff;
@@ -1250,4 +1275,13 @@ eb-nav-link:first-child li {
 .error {
 	color : red;
 }
+
+input[type=checkbox] {
+	display: inherit;
+}
+
+.chckBox {
+	font-size: 0.875em;
+	font-weight: 300;
+	vertical-align: super;
 }

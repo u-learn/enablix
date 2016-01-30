@@ -92,13 +92,13 @@ enablix.studioApp.factory('StateUpdateService',
 	 			$state.go("portal.home");
 	 		};
 	 		var goAddUser = function(){	 			
-	 			$state.go("users.add");
+	 			$state.go("system.users.add");
 	 		};
 	 		var goToListUser = function(){	 			
-	 			$state.go("users.list");
+	 			$state.go("system.users.list");
 	 		};
 	 		var goEditUser=function(_identity){
-	 			$state.go("users.edit",{"identity" : _identity});
+	 			$state.go("system.users.edit",{"identity" : _identity});
 	 		}
 	 		var goToSetPassword=function(){
 	 			$state.go("setpassword");
