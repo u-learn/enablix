@@ -47,7 +47,7 @@ enablix.studioApp.factory('UserService',
 			var userVO = { user: sessionUser };
 				RESTService.postForData('systemuser', null, userVO, null,function(data) {	    	
 					Notification.primary({message: "Password updated successfully", delay: enablix.errorMsgShowTime});
-				StateUpdateService.goToStudio();
+				StateUpdateService.goToPortalHome();
 	    	}, function() {    		
 	    		Notification.error({message: "Error ", delay: enablix.errorMsgShowTime});
 	    	});

@@ -37,8 +37,10 @@ enablix.studioApp.controller('ContentListCtrl',
 				function(data) {
 					Notification.primary("Deleted successfully!");
 					var parentNode = $scope.getCurrentIndexNode ? $scope.getCurrentIndexNode().parentNode : null;
-					$scope.postDataDelete(parentNode, elementIdentity);
-					StateUpdateService.reload();
+					if (parentNode && parentNode.children && parentNode.children.length > 0) {
+						$scope.postDataDelete(parentNode, elementIdentity);
+					}
+					fetchData();
 				}, 
 				function(data) {
 					Notification.error({message: "Error deleting record", delay: enablix.errorMsgShowTime});
@@ -78,7 +80,8 @@ enablix.studioApp.controller('ContentListCtrl',
 			}
 		}
 		
-		ContentDataService.getContentData(enablix.templateId, containerQId, parentIdentity, 
+		var fetchData = function() {
+			ContentDataService.getContentData(enablix.templateId, containerQId, parentIdentity, 
 				function(data) {
 					$scope.listData = data;
 					
@@ -90,6 +93,9 @@ enablix.studioApp.controller('ContentListCtrl',
 					//alert('Error retrieving list data');
 					Notification.error({message: "Error retrieving list data", delay: enablix.errorMsgShowTime});
 				});
+		};
+		
+		fetchData();
 		
 		$scope.pageHeading = containerLabel;
 		

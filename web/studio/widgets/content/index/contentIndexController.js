@@ -5,9 +5,10 @@ enablix.studioApp.controller('contentIndexCtrl',
 		ContentIndexService.getContentIndexData(enablix.templateId, function(data) {
 	    	
 			$scope.indexData = data; 
-	    	
-	    	var firstNode = data[0];
-	    	$scope.contentIndex.selectNodeLabel(firstNode);
+			if (!$stateParams.containerQId) {
+				var firstNode = data[0];
+				$scope.contentIndex.selectNodeLabel(firstNode);
+			}
 	    	
 	    }, function(data) {
 	    	//alert("Error fetching content index");
