@@ -91,6 +91,11 @@ enablix.studioApp.factory('StateUpdateService',
 	 		var goToPortalHome = function() {
 	 			$state.go("portal.home");
 	 		};
+	 		
+	 		var goToAuthError = function() {
+	 			$state.go("authorizationError");
+	 		};
+	 		
 	 		var goAddUser = function(){	 			
 	 			$state.go("system.users.add");
 	 		};
@@ -120,6 +125,12 @@ enablix.studioApp.factory('StateUpdateService',
 	 			});
 	 		};
 	 		
+	 		var goToPortalSearch = function(_searchText) {
+	 			$state.go("portal.search", {
+	 				"searchText": _searchText
+	 			});
+	 		};
+	
 	 		var reload = function() {
 	 			$state.transitionTo($state.current, $stateParams, {
 	 			    reload: true,
@@ -147,6 +158,8 @@ enablix.studioApp.factory('StateUpdateService',
 	 			goToPortalEnclosureDetail: goToPortalEnclosureDetail,
 	 			goToPortalEnclosureBody: goToPortalEnclosureBody,
 	 			goToPortalSubItem: goToPortalSubItem,
+	 			goToPortalSearch: goToPortalSearch,
+	 			goToAuthError: goToAuthError,
 	 			reload: reload,
 	 			goAddUser : goAddUser,
 	 			goEditUser : goEditUser,
