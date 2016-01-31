@@ -5,6 +5,8 @@ enablix.studioApp.controller('PortalSubContainerCtrl',
 		$scope.containerDef = ContentTemplateService.getContainerDefinition(
 						enablix.template, $scope.subContainerQId);
 
+		$scope.navigableHeader = !isNullOrUndefined($scope.navContentData);
+		
 		if (!isNullOrUndefined($scope.containerDef.linkContainerQId)) {
 			$scope.containerDef = ContentTemplateService.getContainerDefinition(
 					enablix.template, $scope.containerDef.linkContainerQId);
@@ -56,10 +58,16 @@ enablix.studioApp.controller('PortalSubContainerCtrl',
 					_containerQId, _contentIdentity, 'single', _containerQId);
 		}
 		
-		if ($stateParams.containerQId === $scope.subContainerQId) {
+		if ($stateParams.containerQId === $scope.subContainerQId 
+				|| !isNullOrUndefined($scope.elementIdentity)) {
 		
-			ContentDataService.getContentRecordData(enablix.templateId, $stateParams.containerQId, 
-					$stateParams.elementIdentity, 
+			var elemIdentity = isNullOrUndefined($scope.elementIdentity) ? $stateParams.elementIdentity
+									: $scope.elementIdentity;
+								
+				var cntnrQId = isNullOrUndefined($stateParams.containerQId) ? $scope.subContainerQId 
+									: $stateParams.containerQId;
+				
+			ContentDataService.getContentRecordData(enablix.templateId, cntnrQId, elemIdentity,  
 					function(recordData) {
 						decorateData($scope.containerDef, recordData);
 						$scope.bodyData = recordData;

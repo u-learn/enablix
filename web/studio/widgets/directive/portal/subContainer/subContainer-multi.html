@@ -1,6 +1,6 @@
 <div class="block">
 	<div class="head head-toggle" ng-click="toggleContainer($event)">
-		<i></i>
+		<i class="expandable"></i>
 		<em class="fa fa-file-text-o"></em>
 		<h2>{{subContainerLabel}}</h2>
 	</div>
@@ -13,7 +13,7 @@
 				<table class="infotable" >
 					<tr ng-repeat="header in multiHeaders" ng-switch="header.dataType">
 						<th>{{header.label}}:</th>
-						<td>{{dataItem[header.key] | ebxFormatData: header.dataType}}&nbsp;</td>
+						<td><span class="content-data" ng-bind-html="dataItem[header.key] | ebxFormatData: header.dataType"></span>&nbsp;</td>
 					</tr>
 			  	</table>
 			</div>
