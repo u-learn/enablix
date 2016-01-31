@@ -38,6 +38,8 @@ public class FileBasedDataLoader implements ApplicationListener<ContextRefreshed
 	
 	public void loadAllData() {
 		
+		LOGGER.debug("Loading data from directory [{}]", dataDirectory);
+		
 		File dataDir = new File(dataDirectory);
 		
 		Set<String> tenantDataDirs = new HashSet<>();
