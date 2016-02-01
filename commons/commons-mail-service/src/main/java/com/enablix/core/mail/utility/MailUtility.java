@@ -18,7 +18,9 @@ import javax.mail.internet.MimeMultipart;
 
 import org.slf4j.LoggerFactory;
 
-import com.enablix.core.mongo.config.repo.EmailConfiguration;
+import com.enablix.core.domain.config.EmailConfiguration;
+
+
 
 public class MailUtility {
 
@@ -37,8 +39,7 @@ public class MailUtility {
 	        props.put("password",password);
 	        props.put("mail.smtp.auth","true");
 	        props.put("mail.transport.protocol","smtp");
-	        props.put("mail.smtp.starttls.enable", "true");
-	
+	        props.put("mail.smtp.starttls.enable", "true");	
 	        
 	        Session session = Session.getDefaultInstance(props, new Authenticator() {
 	            @Override

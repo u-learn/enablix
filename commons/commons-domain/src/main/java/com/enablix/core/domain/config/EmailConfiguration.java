@@ -1,4 +1,4 @@
-package com.enablix.core.mongo.config.repo;
+package com.enablix.core.domain.config;
 
 import com.enablix.core.domain.BaseDocumentEntity;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -6,14 +6,10 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "ebxEmailConf")
 public class EmailConfiguration extends BaseDocumentEntity{
 
-	private String emailId;
-	
-	private String tetantId;	
-
-	private String password;
-	
-	private String smtp;
-	
+	private String emailId;	
+	private String tetantId;
+	private String password;	
+	private String smtp;	
 	private String port;
 
 	public String getTetantId() {

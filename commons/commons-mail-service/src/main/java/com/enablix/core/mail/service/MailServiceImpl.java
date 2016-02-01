@@ -8,10 +8,11 @@ import org.apache.velocity.app.VelocityEngine;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.enablix.core.domain.config.EmailConfiguration;
 import com.enablix.core.mail.constant.MailConstant;
 import com.enablix.core.mail.utility.MailUtility;
-import com.enablix.core.mongo.config.repo.EmailConfigRepo;
-import com.enablix.core.mongo.config.repo.EmailConfiguration;
+import com.enablix.core.system.repo.EmailConfigRepo;
+
 
 @Service
 public class MailServiceImpl implements MailService {
@@ -39,7 +40,8 @@ public class MailServiceImpl implements MailService {
         }
         
         String htmlBody = generateMessageBody(objectToBeMerged, templateName,  elementName);
-		return MailUtility.sendEmail(fromMailAddress,toMailAddress,subject,htmlBody,this.getEmailConfiguration(tetantId));
+		//return MailUtility.sendEmail(fromMailAddress,toMailAddress,subject,htmlBody,this.getEmailConfiguration(tetantId));
+        return MailUtility.sendEmail(fromMailAddress, toMailAddress, subject, htmlBody, this.getEmailConfiguration(tetantId));
 	}
 
 	private String generateMessageBody(Object objectTobeMerged,String templateName, String elementName)
@@ -54,6 +56,12 @@ public class MailServiceImpl implements MailService {
 	
 	public EmailConfiguration getEmailConfiguration(String tetantId)
 	{
-		return emailConfigRepo.findOne(tetantId);	
+		return emailConfigRepo.findByIdentity(tetantId);	
 	}
+
+	public EmailConfiguration addEmailConfiguration(EmailConfiguration emailConfiguration) {
+		return emailConfigRepo.save(emailConfiguration);
+	}
+
+	
 }

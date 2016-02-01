@@ -1,4 +1,4 @@
-package com.enablix.core.mongo.config.repo;
+package com.enablix.core.domain.config;
 import java.util.Map;
 
 import com.enablix.core.domain.BaseDocumentEntity;
