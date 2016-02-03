@@ -1,0 +1,104 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Booking</title>
+
+</head>
+
+<body >
+<div style=" width:620px; margin:0 auto">
+<div style="margin-top:-5px;position:relative;"><img src="static/images/hdr-bg.png"></div>
+
+<div style="position:relative;left: 10px;position: relative;top: -150px;z-index: 99;">
+<div style="width:200px; float:left"><img src="${user.imagePath}/static/images/logo.png"></div>
+<div style="width:100px; float:left; color:green">Follow Us</div>
+<div style="width:200px; float:left">
+<a href="#"><img src="${user.imagePath}/static/images/icon-fb.png"></a>
+<a href="#"><img src="${user.imagePath}/static/images/icon-insta.png"></a>
+<a href="#"><img src="${user.imagePath}/static/images/icon-twt.png"></a>
+<a href="#"><img src="${user.imagePath}/static/images/icon-yt.png"></a>
+</div>
+</div>
+
+<div style="float: right;font-family: 'Oswald',sans-serif;position: relative;right: 10px;top: -80px;z-index: 99;">
+(02) 8294 6111<br>
+help@super-heroes.com.au
+</div>
+</div>
+
+<div style=" width:620px; margin:0 auto; ">
+<table style="width:620px; float:left;margin-top:-75px">
+<tr>
+<td>
+Hi ${user.firstName}
+</td>
+</tr>
+
+<tr>
+<td>
+<br>
+Thank you for registering.
+<br><br>
+Welcome to the world of Super Heroes!</td>
+</tr>
+
+<tr>
+<td style="text-align:center" height="60px">
+<a style="  background-color: rgb(106, 183, 117);
+    border: medium none;
+    border-radius: 50px;
+    box-shadow: none;
+    color: rgb(255, 255, 255);   padding: 10px 30px;" href="${user.imagePath}/">Click Here to Login</a>
+</td>
+</tr>
+
+<tr>
+<td>
+
+Thank you for booking a service with Super Heroes. We will send you further details and reminders about your service via SMS.
+<br><br>
+If you need to cancel or reschedule, you can do so free of charge up to 24 hours before the appointment. Cancellations or rescheduling within 24 hours of the appointment time might incur charges.
+<br><br>
+If you have any questions or feedback, please Contact Us. You can also call us on (02) 8294 6111 or email help@super-heroes.com.au. Our support staff is always happy to assist you.
+<br>
+<br>
+Kind regards,
+
+<br>
+Your friendly Super Heroes.
+
+</td>
+</tr>
+
+<tr>
+<td style="text-align:center" height="60px">
+<a style="  background-color: rgb(106, 183, 117);
+    border: medium none;
+    border-radius: 50px;
+    box-shadow: none;
+    color: rgb(255, 255, 255);   padding: 10px 30px;" href="${user.imagePath}/web/placeOrder">Book A Service Now</button>
+    
+</td>
+</tr>
+
+<tr>
+<td>
+<img src="${user.imagePath}/static/images/ser-bg.png">
+</td>
+</tr>
+
+<tr>
+<td style="background-color: rgb(248, 235, 71); text-align:center; padding:10px">
+Super-Heroes.com.au is a service of: Super Heroes Australia Suite 37, 6 Meridian Place,
+Bella Vista NSW 2153, Australia | ABN: 39 169 216 620
+<br>
+Please do not respond to this email. Visit us at <a style="text-decoration:none; color:#144409" href="www.super-heroes.com.au"><strong>www.super-heroes.com.au</strong></a> or Contact Us.
+You are receiving this email because <a id=""> ${user.email}</a>.com is signed up to receive email from Super Heroes Australia.
+</td>
+</tr>
+
+</table>
+</div>
+</body>
+</html>
