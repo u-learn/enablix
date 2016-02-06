@@ -6,5 +6,8 @@ import com.enablix.core.mongo.repository.BaseMongoRepository;
 
 public interface SMTPConfigRepo extends BaseMongoRepository<SMTPConfiguration> {
 
-	SMTPConfiguration findByIdentity(String identity);
+	SMTPConfiguration findByDomainName(String domainName);
+
+	
+	
 }

@@ -1,35 +1,24 @@
 package com.enablix.core.domain.config;
-import java.util.Map;
-
 import com.enablix.core.domain.BaseDocumentEntity;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "ebx_smtp_conf")
-public class SMTPConfiguration extends BaseDocumentEntity{
 
-	private String Identity;
-	
-	private String domianName;
+@Document(collection = "ebxSmtpConf")
+public class SMTPConfiguration extends BaseDocumentEntity{
+		
+	private String domainName;
 	
 	private String smtp;
 	
 	private String port;
 
-	public String getIdentity() {
-		return Identity;
-	}
-
-	public void setIdentity(String identity) {
-		Identity = identity;
-	}
-
 	public String getDomianName() {
-		return domianName;
+		return domainName;
 	}
 
 	public void setDomianName(String domianName) {
-		this.domianName = domianName;
+		this.domainName = domianName;
 	}
 
 	public String getSmtp() {
