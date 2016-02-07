@@ -32,7 +32,7 @@ enablix.docstore.metadata =
 			"paramName" : "Username"
 		},
 		{
-			"paramKey" : "PASSWORD",
+			"paramKey" : "PASSWORD_ENC",
 			"paramName" : "Password"
 		}
 	]

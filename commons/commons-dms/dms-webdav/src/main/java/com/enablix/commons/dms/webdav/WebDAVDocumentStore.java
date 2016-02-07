@@ -48,7 +48,7 @@ public class WebDAVDocumentStore extends AbstractDocumentStore<WebDAVDocumentMet
 
 	private static final String USERNAME_KEY = "USERNAME";
 
-	private static final String PASSWORD_KEY = "PASSWORD";
+	private static final String PASSWORD_KEY = "PASSWORD_ENC";
 	
 	private static final String HOST_KEY = "HOST";
 	

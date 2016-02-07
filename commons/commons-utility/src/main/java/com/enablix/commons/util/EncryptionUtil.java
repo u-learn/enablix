@@ -59,19 +59,17 @@ public class EncryptionUtil {
 	 */
 
 	public static final String getAesDecryptedString(
-			final String encryptedText, final String passphrase,
-			final String iv, final String salt) {
+			final String encryptedText, AESParameterProvider aesParams) {
 		if (encryptedText != null) {
-			return AesUtil.decrypt(salt, iv, passphrase, encryptedText);
+			return AesUtil.decrypt(aesParams, encryptedText);
 		}
 		return "";
 	}
 	
 	public static final String getAesEncryptedString(
-			final String plainText, final String passphrase,
-			final String iv, final String salt) {
+			final String plainText, AESParameterProvider aesParams) {
 		if (plainText != null) {
-			return AesUtil.encrypt(salt, iv, passphrase, plainText);
+			return AesUtil.encrypt(aesParams, plainText);
 		}
 		return "";
 	}

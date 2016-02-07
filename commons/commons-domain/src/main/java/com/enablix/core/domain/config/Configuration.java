@@ -3,7 +3,6 @@ package com.enablix.core.domain.config;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.enablix.core.domain.BaseDocumentEntity;
@@ -11,7 +10,6 @@ import com.enablix.core.domain.BaseDocumentEntity;
 @Document(collection = "ebx_configuration")
 public class Configuration extends BaseDocumentEntity {
 
-	@Indexed(unique = true)
 	private String key;
 	
 	private Map<String, Object> config;

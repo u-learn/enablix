@@ -3,6 +3,8 @@ package com.enablix.core.mongo.listener;
 import org.springframework.data.mongodb.core.mapping.event.AbstractMongoEventListener;
 import org.springframework.stereotype.Component;
 
+import com.enablix.commons.util.AESParameterProvider;
+import com.enablix.commons.util.DefaultAESParameterProvider;
 import com.enablix.commons.util.EncryptionUtil;
 import com.enablix.core.domain.user.User;
 import com.mongodb.DBObject;
@@ -12,8 +14,7 @@ public class UserPasswordEncryptor extends AbstractMongoEventListener<User> {
 
 	private static final String PASSWORD_FIELD = "password";
 	
-	// TODO: need to setup tenant specific security key
-	private static final String TEMP_SECURITY_KEY = "f4844b1923eb4d50883ecc807c287640";//UUID.randomUUID().toString().replaceAll("-", "");
+	private AESParameterProvider aesParamProvider = new DefaultAESParameterProvider();
 	
 	@Override
 	public void onAfterLoad(DBObject userDbo) {
@@ -21,8 +22,7 @@ public class UserPasswordEncryptor extends AbstractMongoEventListener<User> {
 		String encPassword = getPassword(userDbo);
 		
 		if (encPassword != null) {
-			String password = EncryptionUtil.getAesDecryptedString(encPassword, 
-				getPassphrase(), getIvParameter(), getSalt());
+			String password = EncryptionUtil.getAesDecryptedString(encPassword, aesParamProvider); 
 			userDbo.put(PASSWORD_FIELD, password);
 		}
 	}
@@ -32,8 +32,7 @@ public class UserPasswordEncryptor extends AbstractMongoEventListener<User> {
 		String password = getPassword(userDbo);
 		
 		if (password != null) {
-			String encPassword = EncryptionUtil.getAesEncryptedString(password, 
-				getPassphrase(), getIvParameter(), getSalt());
+			String encPassword = EncryptionUtil.getAesEncryptedString(password, aesParamProvider);
 			userDbo.put(PASSWORD_FIELD, encPassword);
 		}
 		
@@ -44,23 +43,4 @@ public class UserPasswordEncryptor extends AbstractMongoEventListener<User> {
 		return password != null ? String.valueOf(password) : null;
 	}
 	
-	private String getIvParameter() {
-		return TEMP_SECURITY_KEY;
-	}
-	
-	private String getPassphrase() {
-		return TEMP_SECURITY_KEY + TEMP_SECURITY_KEY;
-	}
-	
-	private String getSalt() {
-		return TEMP_SECURITY_KEY + TEMP_SECURITY_KEY + TEMP_SECURITY_KEY;
-	}
-
-	public static void main(String[] args) {
-		
-		UserPasswordEncryptor enc = new UserPasswordEncryptor();
-		System.out.println(TEMP_SECURITY_KEY);
-		System.out.println(EncryptionUtil.getAesEncryptedString("password", 
-				enc.getPassphrase(), enc.getIvParameter(), enc.getSalt()));
-	}
 }

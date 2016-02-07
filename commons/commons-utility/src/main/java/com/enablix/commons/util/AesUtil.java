@@ -36,20 +36,20 @@ public class AesUtil {
         }
     }
     
-    public static String encrypt(String salt, String iv, String passphrase, String plaintext) {
+    public static String encrypt(AESParameterProvider aesParams, String plaintext) {
         try {
-            SecretKey key = generateKey(salt, passphrase);
-            byte[] encrypted = doFinal(Cipher.ENCRYPT_MODE, key, iv, plaintext.getBytes("UTF-8"));
+            SecretKey key = generateKey(aesParams.salt(), aesParams.passphrase());
+            byte[] encrypted = doFinal(Cipher.ENCRYPT_MODE, key, aesParams.ivParameter(), plaintext.getBytes("UTF-8"));
             return base64(encrypted);
         } catch (UnsupportedEncodingException e) {
             throw fail(e);
         }
     }
     
-    public static String decrypt(String salt, String iv, String passphrase, String ciphertext) {
+    public static String decrypt(AESParameterProvider aesParams, String ciphertext) {
         try {
-            SecretKey key = generateKey(salt, passphrase);
-            byte[] decrypted = doFinal(Cipher.DECRYPT_MODE, key, iv, base64(ciphertext));
+            SecretKey key = generateKey(aesParams.salt(), aesParams.passphrase());
+            byte[] decrypted = doFinal(Cipher.DECRYPT_MODE, key, aesParams.ivParameter(), base64(ciphertext));
             return new String(decrypted, "UTF-8");
         } catch (UnsupportedEncodingException e) {
             throw fail(e);
