@@ -5,10 +5,10 @@
 <body>
 	<span>Time:</span>
 	<ul>
-		<li>From controller: $time</li>
-		<li>From velocity: $dateTool</li>
+		<li>From controller: $User</li>
+		<li>From velocity: $</li>
 	</ul>
-	<span>Message: $message</span>
+	<span>Message: $</span>
 </body>
 
 </html>
