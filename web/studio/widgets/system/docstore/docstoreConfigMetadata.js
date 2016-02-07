@@ -34,10 +34,6 @@ enablix.docstore.metadata =
 		{
 			"paramKey" : "PASSWORD",
 			"paramName" : "Password"
-		},
-		{
-			"paramKey" : "MAX_HOST_CONNECTIONS",
-			"paramName" : "Max host connections"
 		}
 	]
 }

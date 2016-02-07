@@ -6,8 +6,22 @@ enablix.studioApp.factory('DocStoreConfigService',
 				_onSuccess(enablix.docstore.metadata);
 			};
 			
+			var saveDocStoreConfig = function(_configData, _onSuccess, _onError) {
+				
+				RESTService.postForData("saveDocStoreConfig", null, _configData, null, _onSuccess, _onError);
+				
+			};
+			
+			var getDefaultDocStoreConfig = function(_onSuccess) {
+				RESTService.getForData("defaultDocStoreConfig", null, null, _onSuccess, function() {
+					Notification.error({message: "Error loading default document store data", delay: enablix.errorMsgShowTime});
+				});
+			}
+			
 			return {
-				getDocStoresConfigMetadata: getDocStoresConfigMetadata
+				getDocStoresConfigMetadata: getDocStoresConfigMetadata,
+				saveDocStoreConfig: saveDocStoreConfig,
+				getDefaultDocStoreConfig: getDefaultDocStoreConfig
 			};
 		
 		}

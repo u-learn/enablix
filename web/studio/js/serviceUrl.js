@@ -32,5 +32,7 @@ enablix.serviceURL = {
 	"fetchConfigByKey" : enablix.domainName + "/config/:configKey",
 	"saveConfig" : enablix.domainName + "/config/save",
 	"fetchDocStoresConfigMetadata" : enablix.domainName + "/docstore/configmetadata",
+	"saveDocStoreConfig" : enablix.domainName + "/docstore/config",
+	"defaultDocStoreConfig": enablix.domainName + "/docstore/default",
 	"logout": enablix.domainName + "/logout"
 };

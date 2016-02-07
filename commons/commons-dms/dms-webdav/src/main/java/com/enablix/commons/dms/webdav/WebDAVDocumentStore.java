@@ -32,17 +32,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.enablix.commons.config.ConfigurationProvider;
-import com.enablix.commons.dms.DocumentStoreConstants;
+import com.enablix.commons.dms.api.AbstractDocumentStore;
 import com.enablix.commons.dms.api.Document;
 import com.enablix.commons.dms.api.DocumentBuilder;
 import com.enablix.commons.dms.api.DocumentMetadata;
-import com.enablix.commons.dms.api.DocumentStore;
 import com.enablix.commons.util.StringUtil;
 import com.enablix.core.domain.config.Configuration;
 
 @Component
-public class WebDAVDocumentStore implements DocumentStore<WebDAVDocumentMetadata, WebDAVDocument> {
+public class WebDAVDocumentStore extends AbstractDocumentStore<WebDAVDocumentMetadata, WebDAVDocument> {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(WebDAVDocumentStore.class);
 	
@@ -59,9 +57,6 @@ public class WebDAVDocumentStore implements DocumentStore<WebDAVDocumentMetadata
 	private static final String CONN_PARAMS_PREFIX = "conn.params.";
 
 	@Autowired
-	private ConfigurationProvider configProvider;
-	
-	@Autowired
 	private WebDAVDocumentBuilder docBuilder;
 
 	@Override
@@ -69,7 +64,7 @@ public class WebDAVDocumentStore implements DocumentStore<WebDAVDocumentMetadata
 		
 		try {
 			
-			Configuration config = configProvider.getConfiguration(DocumentStoreConstants.DOC_STORE_CONFIG_KEY);
+			Configuration config = getDocStoreConfiguration();
 			
 		    HttpClient client = createHttpClient(config);
 
@@ -103,7 +98,7 @@ public class WebDAVDocumentStore implements DocumentStore<WebDAVDocumentMetadata
 		
 		return document.getMetadata();
 	}
-	
+
 	private String getResourceURI(String host, String fileLocation) {
 		return sanitizeURI(host + fileLocation);
 	}
@@ -225,7 +220,7 @@ public class WebDAVDocumentStore implements DocumentStore<WebDAVDocumentMetadata
 		
 		try {
 			
-			Configuration config = configProvider.getConfiguration(DocumentStoreConstants.DOC_STORE_CONFIG_KEY);
+			Configuration config = getDocStoreConfiguration();
 			
 			String host = config.getStringValue(HOST_KEY);			
 		    HttpClient client = createHttpClient(config);

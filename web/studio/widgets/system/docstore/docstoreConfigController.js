@@ -2,7 +2,7 @@ enablix.studioApp.controller('DocStoreConfigController',
 			['$scope', '$state', '$stateParams', 'ConfigurationService', 'DocStoreConfigService', 'RESTService', 'StateUpdateService', 'Notification',
 	function( $scope,   $state,   $stateParams,   ConfigurationService,   DocStoreConfigService,   RESTService,   StateUpdateService,   Notification) {
 	
-		var DOCUMENT_STORE_CONFIG_KEY = "DOCUMENT_STORE";
+		var DOCUMENT_STORE_CONFIG_KEY_PREFIX = "docstore.";
 		
 		$scope.breadcrumbList = 
 		[
@@ -48,7 +48,7 @@ enablix.studioApp.controller('DocStoreConfigController',
 					$scope.changeDocStoreType($scope.selectDocStoreTypeMd.storeTypeCode);
 				}
 				
-				ConfigurationService.getConfigByKey(DOCUMENT_STORE_CONFIG_KEY, function(data) {
+				DocStoreConfigService.getDefaultDocStoreConfig(function(data) {
 					
 					if (!isNullOrUndefined(data) && data != "") {
 						
@@ -83,13 +83,14 @@ enablix.studioApp.controller('DocStoreConfigController',
 		
 		$scope.saveDocStoreConfig = function() {
 			
+			var docStoreConfigKey = DOCUMENT_STORE_CONFIG_KEY_PREFIX + $scope.docstore.STORE_TYPE;
 			var docStoreConfiguration = {
-				key : DOCUMENT_STORE_CONFIG_KEY
+				key : docStoreConfigKey
 			};
 			
 			docStoreConfiguration.config = $scope.docstore;
 			
-			ConfigurationService.saveConfiguration(docStoreConfiguration, 
+			DocStoreConfigService.saveDocStoreConfig(docStoreConfiguration, 
 				function() {
 					
 					angular.copy($scope.docstore, $scope.docstoreBackup);

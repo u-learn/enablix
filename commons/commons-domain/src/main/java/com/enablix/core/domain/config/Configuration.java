@@ -1,7 +1,9 @@
 package com.enablix.core.domain.config;
 
+import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.enablix.core.domain.BaseDocumentEntity;
@@ -9,12 +11,14 @@ import com.enablix.core.domain.BaseDocumentEntity;
 @Document(collection = "ebx_configuration")
 public class Configuration extends BaseDocumentEntity {
 
+	@Indexed(unique = true)
 	private String key;
 	
 	private Map<String, Object> config;
 
 	public Configuration() {
 		super();
+		this.config = new HashMap<>();
 	}
 
 	public String getKey() {
@@ -45,6 +49,10 @@ public class Configuration extends BaseDocumentEntity {
 
 	public void setConfig(Map<String, Object> config) {
 		this.config = config;
+	}
+	
+	public void addConfigProperty(String key, Object value) {
+		this.config.put(key, value);
 	}
 	
 }
