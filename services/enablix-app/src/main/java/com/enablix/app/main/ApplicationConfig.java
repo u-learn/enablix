@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.enablix.app.content.doc.impl.JsonFileDocStoreConfigMetadataProvider;
 import com.enablix.app.template.provider.TemplateFileProcessor;
 import com.enablix.commons.util.StringUtil;
 import com.enablix.refdata.xls.loader.XLSRefdataProcessor;
@@ -62,7 +61,7 @@ public class ApplicationConfig {
 	}
 	
 	
-	@Bean
+	/*@Bean
 	public JsonFileDocStoreConfigMetadataProvider jsonDocStoreConfigMetadataProcessor() {
 		return new JsonFileDocStoreConfigMetadataProvider();
 	}
@@ -71,7 +70,7 @@ public class ApplicationConfig {
 	public FileBasedDataLoader jsonDocStoreConfigMetadataFilesLoader() {
 		String refdataBaseDir = baseDir + File.separator + DOCSTORE_CONFIG_DIR;
 		return new FileBasedDataLoader(refdataBaseDir, DOCSTORE_CONFIG_FILE_EXTN, jsonDocStoreConfigMetadataProcessor());
-	}
+	}*/
 	
 	
 }
