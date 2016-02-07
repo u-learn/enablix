@@ -14,5 +14,31 @@ enablix.docstore.metadata =
 			"paramName" : "Dropbox Access Token"
 		}
 	]
+},
+{
+	"storeTypeName" : "WebDAV",
+	"storeTypeCode" : "WEBDAV",
+	"params" : [
+		{
+			"paramKey" : "HOST",
+			"paramName" : "Server Host"
+		},
+		{
+			"paramKey" : "BASE_DOC_PATH",
+			"paramName" : "Base document path"
+		},
+		{
+			"paramKey" : "USERNAME",
+			"paramName" : "Username"
+		},
+		{
+			"paramKey" : "PASSWORD",
+			"paramName" : "Password"
+		},
+		{
+			"paramKey" : "MAX_HOST_CONNECTIONS",
+			"paramName" : "Max host connections"
+		}
+	]
 }
 ];
