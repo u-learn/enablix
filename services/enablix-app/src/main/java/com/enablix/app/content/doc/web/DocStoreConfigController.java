@@ -30,14 +30,14 @@ public class DocStoreConfigController {
 	@Autowired
 	private ConfigurationCrudService configManager;
 	
-	@Autowired
-	private DocStoreConfigMetadataProvider docstoreConfigMetadataProvider;
+	//@Autowired
+	/*private DocStoreConfigMetadataProvider docstoreConfigMetadataProvider;
 	
 	@RequestMapping(value = "/configmetadata", method = RequestMethod.GET, produces = "application/json")
 	public Collection<DocStoreConfigMetadata> fetchDocStoresConfigMetadata() {
 		LOGGER.debug("Fetching doc store config metadata");
 		return docstoreConfigMetadataProvider.getDocStoresConfigMetadata();
-	}
+	}*/
 	
 	@RequestMapping(value = "/default", method = RequestMethod.GET, produces = "application/json")
 	public Configuration defaultDocStoreConfig() {
