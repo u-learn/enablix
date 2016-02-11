@@ -28,7 +28,7 @@ public class MailServiceImpl implements MailService {
     }
     
     @Override
-	public boolean sendHtmlEmail(Object objectToBeMerged, String elementName, String templateName, String toMailAddress, String fromMailAddress, String subject,String tetantId) {
+	public boolean sendHtmlEmail(Object objectToBeMerged, String elementName, String templateName, String toMailAddress, String fromMailAddress, String subject,String tenantId) {
 		
 	    if(fromMailAddress==null) {
             fromMailAddress = MailConstant.FROM_MAIL_ADDRESS;
@@ -38,8 +38,8 @@ public class MailServiceImpl implements MailService {
         };
         
         String htmlBody = generateMessageBody(objectToBeMerged, templateName,  elementName);
-		//return MailUtility.sendEmail(fromMailAddress,toMailAddress,subject,htmlBody,this.getEmailConfiguration(tetantId));
-        return MailUtility.sendEmail(fromMailAddress, toMailAddress, subject, htmlBody, this.getEmailConfiguration(tetantId));
+		//return MailUtility.sendEmail(fromMailAddress,toMailAddress,subject,htmlBody,this.getEmailConfiguration(tenantId));
+        return MailUtility.sendEmail(fromMailAddress, toMailAddress, subject, htmlBody, this.getEmailConfiguration(tenantId));
 	};
 
 	private String generateMessageBody(Object objectTobeMerged,String templateName, String elementName) {
@@ -52,8 +52,8 @@ public class MailServiceImpl implements MailService {
     };
 	
     @Override
-	public EmailConfiguration getEmailConfiguration(String tetantId) {
-		return emailConfigRepo.findByIdentity(tetantId);	
+	public EmailConfiguration getEmailConfiguration(String tenantId) {
+		return emailConfigRepo.findByIdentity(tenantId);	
 	};
 
 	@Override
@@ -67,10 +67,10 @@ public class MailServiceImpl implements MailService {
 	};
 
 	@Override
-	public Boolean deleteEmailConfiguration(String tetantId) {
+	public Boolean deleteEmailConfiguration(String tenantId) {
 		// TODO Auto-generated method stub
 		try {
-			emailConfigRepo.delete(tetantId);
+			emailConfigRepo.delete(tenantId);
 			return true;
 		} catch (Exception e) {
 			return false;

@@ -16,19 +16,14 @@ public class MailConfController {
 	@Autowired
 	MailService mailService;
 	
-	/*@RequestMapping(method = RequestMethod.GET, value = "/sentMail", produces = "application/json")
-	public Boolean sentMail() {
-		return mailService.sendHtmlEmail(new Integer(0), "User", "welcome.vm", "john.wakad@gmail.com", null, null, "test1");
-	}*/
-	
 	@RequestMapping(method = RequestMethod.GET, value = "/getsmtpconfig", produces = "application/json")
 	public SMTPConfiguration getSmtpConfig(String domainName) {
 		return mailService.getSMTPConfig(domainName);
 	};
 	
 	@RequestMapping(method = RequestMethod.DELETE, value = "/deleteemailconfiguration", produces = "application/json")
-	public Boolean deleteEmailConfiguration(String tetantId) {
-		return mailService.deleteEmailConfiguration(tetantId);
+	public Boolean deleteEmailConfiguration(String tenantId) {
+		return mailService.deleteEmailConfiguration(tenantId);
 	};
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/addemailconfiguration", produces = "application/json")

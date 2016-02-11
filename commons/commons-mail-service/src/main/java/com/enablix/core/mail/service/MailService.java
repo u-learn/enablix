@@ -5,10 +5,10 @@ import com.enablix.core.domain.config.SMTPConfiguration;
 
 
 public interface MailService {
-	public boolean sendHtmlEmail(Object objectToBeMerged, String elementName, String templateName, String toMailAddress, String fromMailAddress, String subject,String tetantId);
+	public boolean sendHtmlEmail(Object objectToBeMerged, String elementName, String templateName, String toMailAddress, String fromMailAddress, String subject,String tenantId);
 	public EmailConfiguration addEmailConfiguration (EmailConfiguration emailConfiguration);
 	public SMTPConfiguration getSMTPConfig(String domainName);
-	public Boolean deleteEmailConfiguration(String tetantId);
-	public EmailConfiguration getEmailConfiguration(String tetantId);
+	public Boolean deleteEmailConfiguration(String tenantId);
+	public EmailConfiguration getEmailConfiguration(String tenantId);
 	
 }
