@@ -1,0 +1,42 @@
+<div class="block">
+<div class="head">
+	<a ng-if="!addOrEditAction" ng-click="updateAddOrEditAction(true)" class="button button-add">Edit</a>
+	<h2>Document Store Configuration</h2>
+</div>
+<div class="cont" ng-if="!addOrEditAction">
+	<table class="infotable">
+		<tbody>
+			<tr>
+				<th>Document Store Type:</th>
+				<td>{{docstore.STORE_TYPE}}</td>
+			</tr>
+			<tr ng-repeat="param in selectDocStoreTypeMd.params">
+				<th>{{param.paramName}}:</th>
+				<td>{{docstore[param.paramKey]}}</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+<form name="docstoreForm" novalidate="novalidate" ng-if="addOrEditAction">
+<div class="cont">
+	<div>
+		<label class="form-label">Document Store Type </label>
+		<select class="form-control" ng-change="changeDocStoreType(docstore.STORE_TYPE)"
+			ng-options="item.id as item.label for item in docStoreTypes" 
+			ng-model="docstore.STORE_TYPE"></select>
+	</div>
+</div>
+<div class="cont" ng-repeat="param in selectDocStoreTypeMd.params">
+	<div>
+		<label class="form-label">{{param.paramName}}</label>
+		<input name="docstore[param.paramKey]" placeholder="Enter {{param.paramName}}" 
+			ng-model="docstore[param.paramKey]" class="form-control" 
+			type="text" size="80" required>
+	</div>
+</div>
+<div class="foot clearfix">
+	<button ng-click="docstoreForm.$valid && saveDocStoreConfig()" class="button button-add">Save</button>
+	<a ng-if="docstoreConfigured" ng-click="cancelOperation()" class="button button-delete">Cancel</a>
+</div>
+</form>
+</div>

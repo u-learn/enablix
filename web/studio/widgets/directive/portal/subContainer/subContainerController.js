@@ -5,12 +5,22 @@ enablix.studioApp.controller('PortalSubContainerCtrl',
 		$scope.containerDef = ContentTemplateService.getContainerDefinition(
 						enablix.template, $scope.subContainerQId);
 
+		$scope.navigableHeader = !isNullOrUndefined($scope.navContentData);
+		
+		if (!isNullOrUndefined($scope.containerDef.linkContainerQId)) {
+			$scope.containerDef = ContentTemplateService.getContainerDefinition(
+					enablix.template, $scope.containerDef.linkContainerQId);
+		}
+		
 		$scope.$stateParams = $stateParams;
 		
 		var decorateData = function(_containerDef, _dataRecord) {
 			_dataRecord.headingLabel = ContentUtil.resolveContainerInstancePortalLabel(
 									_containerDef, _dataRecord);
 			_dataRecord.containerId = _containerDef.id;
+			_dataRecord.containerQId = _containerDef.qualifiedId;
+			_dataRecord.hasSubContainers = !isNullOrUndefined(_containerDef.container)
+											&& _containerDef.container.length > 0;
 		
 			for (var i = 0; i < _containerDef.contentItem.length; i++) {
 				
@@ -36,17 +46,28 @@ enablix.studioApp.controller('PortalSubContainerCtrl',
 			}
 		}
 		
-		$scope.toggleContainerItem = function($event) {
+		$scope.toggleContainerItem = function($event, itemId) {
 			var elem = $event.currentTarget;
 			$(elem).toggleClass('active');
-			$($(elem).attr('href')).slideToggle('fast');
+			$('#' + itemId).slideToggle('fast');
 			return false;
 		}
 		
-		if ($stateParams.containerQId === $scope.subContainerQId) {
+		$scope.navToItemDetail = function(_containerQId, _contentIdentity) {
+			StateUpdateService.goToPortalContainerBody(
+					_containerQId, _contentIdentity, 'single', _containerQId);
+		}
 		
-			ContentDataService.getContentRecordData(enablix.templateId, $stateParams.containerQId, 
-					$stateParams.elementIdentity, 
+		if ($stateParams.containerQId === $scope.subContainerQId 
+				|| !isNullOrUndefined($scope.elementIdentity)) {
+		
+			var elemIdentity = isNullOrUndefined($scope.elementIdentity) ? $stateParams.elementIdentity
+									: $scope.elementIdentity;
+								
+				var cntnrQId = isNullOrUndefined($stateParams.containerQId) ? $scope.subContainerQId 
+									: $stateParams.containerQId;
+				
+			ContentDataService.getContentRecordData(enablix.templateId, cntnrQId, elemIdentity,  
 					function(recordData) {
 						decorateData($scope.containerDef, recordData);
 						$scope.bodyData = recordData;
@@ -114,7 +135,7 @@ enablix.studioApp.controller('PortalSubContainerCtrl',
 				$scope.multiHeaders.push(header);
 				
 			});
-		
+			
 			$scope.multiCondensedViewHeaders = [];
 			
 			var condensedViewItems = ContentTemplateService.getPortalCondensedViewItems($scope.containerDef.qualifiedId);

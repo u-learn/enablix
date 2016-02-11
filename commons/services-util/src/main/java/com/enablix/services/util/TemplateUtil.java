@@ -297,5 +297,18 @@ public class TemplateUtil {
 	public static List<String> findContentCollectionNames(ContentTemplate template) {
 		return findCollectionNames(template.getDataDefinition().getContainer(), template.getId(), false, true);
 	}
+
+	public static String checkAndGetLinkedContainerQId(ContentTemplate template, String containerQId) {
+		
+		String linkedContainerQId = null;
+		
+		ContainerType container = findContainer(template.getDataDefinition(), containerQId);
+		
+		if (container != null) {
+			linkedContainerQId = container.getLinkContainerQId();
+		}
+		
+		return linkedContainerQId;
+	}
 	
 }

@@ -1,34 +1,25 @@
 <form class="block" name="userForm" novalidate="novalidate">
 <div class="head">
-	<h2 >Add User</h2>
+	<h2 >{{pageHeading}}</h2>
 </div>
 <div class="cont">
 	<div>
 		<label class="form-label">Name </label>
-		<input name="Name" placeholder="Enter Name" class="form-control" type="text" ng-model="newUser.name" size="80" required>
+		<input name="name" placeholder="Enter Name" class="form-control" type="text" ng-model="newUser.profile.name" size="80" required>
 	</div>
-	<div ng-messages="userForm.Name.$error" ng-if='userForm.Name.$touched' role="alert">
-    <div ng-message="required" class="error">You did not enter a Name</div>    
-  </div>
-</div>
-<div class="cont">
-	<div>
-		<label class="form-label">User Name</label>
-		<input name="userName" placeholder="Enter User Name" class="form-control" ng-model="newUser.userId" ng-blur="checkUserName()" type="text" size="80" required>
-	</div>
-	<div ng-messages="userForm.userName.$error" ng-if='userForm.userName.$touched' role="alert">
-    <div ng-message="required" class="error">You did not enter a Name</div>
-    <div ng-message="unexits" class="error">Username already exits ! please try with different Username</div>    
+	<div ng-messages="userForm.name.$error" ng-if='userForm.Name.$touched' role="alert">
+    <div ng-message="required" class="error">Please enter name</div>    
   </div>
 </div>
 <div class="cont">
 	<div>
 		<label class="form-label">Email</label>
-		<input name="email" placeholder="Enter Email Id " class="form-control" ng-model="newUser.email" type="email" size="80" required>
+		<input name="userId" placeholder="Enter Email Id " class="form-control" ng-model="newUser.userId" ng-blur="checkUserName()" type="email" size="80" required>
 	</div>
-	<div ng-messages="userForm.email.$error" ng-if='userForm.email.$touched' role="alert">
-    <div ng-message="required" class="error">You did not enter a email</div> 
-    <div ng-message="email" class="error">Please enter a valid email</div>    
+	<div ng-messages="userForm.userId.$error" ng-if='userForm.userId.$touched' role="alert">
+    <div ng-message="required" class="error">Please enter user email</div> 
+    <div ng-message="email" class="error">Please enter valid email</div>
+    <div ng-message="unexits" class="error">User email already registered</div>    
   </div>
 </div>
 <div class="cont">
@@ -37,11 +28,23 @@
 		<input name="password" placeholder="Enter Password" class="form-control" ng-model="newUser.password" type="password" size="80" required>
 	</div>
 	<div ng-messages="userForm.password.$error" ng-if='userForm.password.$touched' role="alert">
-    <div ng-message="required" class="error">You did not enter a Password</div>    
+    <div ng-message="required" class="error">Please enter user password</div>    
+  </div>
+</div>
+<div class="cont">
+	<div>
+		<label class="form-label">Roles</label>
+		<span ng-repeat="role in allRoles" class="chckBox">
+		<input type="checkbox" name="selectedRoles[]" 
+			value="role.identity" ng-model="role.selected">&nbsp;&nbsp;{{role.roleName}}<br/>
+		</span>
+	</div>
+	<div ng-messages="userForm.password.$error" ng-if='userForm.password.$touched' role="alert">
+    <div ng-message="required" class="error">Please enter user password</div>    
   </div>
 </div>
 <div class="foot clearfix">
-	<button ng-click=" userForm.$valid && saveUserData()" class="button button-add">Save</button>
-	<a href="#" ng-click="cancelOperation()" class="button button-delete">Cancel</a>
+	<button ng-click="userForm.$valid && saveUserData()" class="button button-add">Save</button>
+	<a ng-click="cancelOperation()" class="button button-delete">Cancel</a>
 </div>
 </form>

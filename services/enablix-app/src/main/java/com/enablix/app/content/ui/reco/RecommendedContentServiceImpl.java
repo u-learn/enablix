@@ -40,7 +40,10 @@ public class RecommendedContentServiceImpl implements RecommendedContentService 
 		List<NavigableContent> navRecos = new ArrayList<>();
 		
 		for (ContentDataRef reco : recommendations) {
-			navRecos.add(navContentBuilder.build(reco, labelResolver));
+			NavigableContent navReco = navContentBuilder.build(reco, labelResolver);
+			if (navReco != null) {
+				navRecos.add(navReco);
+			}
 		}
 		
 		return navRecos;

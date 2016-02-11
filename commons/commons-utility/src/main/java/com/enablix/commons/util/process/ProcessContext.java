@@ -39,7 +39,7 @@ public class ProcessContext {
 	private String templateId;
 	private String processId;
 
-	public ProcessContext(String userId, String tenantId, String templateId) {
+	private ProcessContext(String userId, String tenantId, String templateId) {
 		super();
 		this.userId = userId;
 		this.tenantId = tenantId;

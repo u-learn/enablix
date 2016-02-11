@@ -94,11 +94,11 @@ public class DocumentManagerImpl implements DocumentManager {
 	public Document<DocumentMetadata> buildDocument(InputStream dataStream, 
 			String name, String contentType, String contentQId, long contentLength, String docIdentity) {
 		
-		Configuration docStoreConfig = ConfigurationUtil.getConfig(DocumentStoreConstants.DOC_STORE_CONFIG_KEY);
+		Configuration docStoreConfig = ConfigurationUtil.getConfig(DocumentStoreConstants.DEFUALT_DOC_STORE_CONFIG_KEY);
 		
 		String storeType = null;
 		if (docStoreConfig != null) {
-			storeType = docStoreConfig.getConfig().get(DocumentStoreConstants.DOC_STORE_TYPE_PROP);
+			storeType = docStoreConfig.getStringValue(DocumentStoreConstants.DOC_STORE_TYPE_PROP);
 		} else {
 			storeType = storeFactory.defaultStoreType();
 		}

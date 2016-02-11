@@ -1,0 +1,32 @@
+<div class="container-fluid">
+	<!-- bread crumbs -->
+	<div class="block bread-crumbs">
+		<div class="cont">
+			<span ng-repeat="breadcrumbItem in breadcrumbList">
+				<span ng-if="$last">{{breadcrumbItem.label}}</span>
+				<a ng-if="!$last">{{breadcrumbItem.label}}</a>&nbsp;&nbsp;<i ng-if="!$last" class="fa fa-angle-right"></i>
+			</span>
+		</div>
+	</div>
+	<!--/ bread crumbs -->
+
+	<div >
+		<aside class="col-sm-4 col-md-3">
+			<nav id="side-nav" class="side-nav">
+				<ul>
+					<li ng-class="{active: $state.includes('system.users')}">
+						<i class="fa fa-angle-right"></i>
+						<a href="#" ui-sref="system.users.list">User Management</a>
+					</li>
+					<li ng-class="{active: $state.includes('system.docstore')}">
+						<i class="fa fa-angle-right"></i>
+						<a href="#" ui-sref-active="active" ui-sref="system.docstore">Document Store</a>
+					</li>
+				</ul>
+		    </nav>
+		</aside>
+		<div class="col-sm-9">
+			<div ui-view></div>
+		</div>
+	</div>
+</div>

@@ -1,16 +1,18 @@
 enablix.studioApp.controller('LoginController', 
 			['$scope', '$state', 'RESTService', '$rootScope', 'StateUpdateService',
 	function( $scope,   $state,   RESTService,   $rootScope,   StateUpdateService) {
+		$scope.$state = $state;
 		var currentUser={};
 		var authenticate = function(credentials, callback) {
 
 		    var headers = credentials ? 
 		    		{authorization : "Basic " + btoa(credentials.username + ":" + credentials.password) } : {};
-
+		    
 		    RESTService.getForData('user', null, null, function(data) {
 			    	if (data.name) {
+			    		enablix.loggedInUser = data.principal;
 			    		currentUser=data.principal.user;
-			    		window.localStorage.setItem("userData",JSON.stringify(data.principal.user));
+			    		window.localStorage.setItem("userData", JSON.stringify(data.principal.user));
 			    		$rootScope.authenticated = true;
 			    	} else {
 			    		window.localStorage.setItem("userData","");
@@ -29,7 +31,7 @@ enablix.studioApp.controller('LoginController',
 		var authCallback = function() {
 			if ($rootScope.authenticated) {
 				if(currentUser.isPasswordSet){
-					StateUpdateService.goToStudio();	
+					StateUpdateService.goToPortalHome();	
 				}else {
 					StateUpdateService.goToSetPassword();
 				}				
@@ -53,15 +55,22 @@ enablix.studioApp.controller('LoginController',
 		
 		$scope.logout = function() {
 			
+			$rootScope.authenticated = false;
+			
 			RESTService.postForData('logout', null, null, null, function() {
-					window.localStorage.setItem("userData","");
-					$rootScope.authenticated = false;
-					StateUpdateService.goToLogin();
+					// HACK: to clear basic auth associated with browser window, 
+					// update it with a bad credentials
+					// http://stackoverflow.com/questions/233507/how-to-log-out-user-from-web-site-using-basic-authentication
+					authenticate({username: "~~baduser~~", password:"~~"}, function() {
+						StateUpdateService.goToLogin();
+					});
 					
 				}, function(data) {
-					$rootScope.authenticated = false;
-					StateUpdateService.goToLogin();
-					
+					// HACK: to clear basic auth associated with browser window, 
+					// update it with a bad credentials
+					authenticate({username: "~~baduser~~", password:"~~"}, function() {
+						StateUpdateService.goToLogin();
+					});
 				}, null, {});
 			
 		};

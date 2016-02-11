@@ -29,12 +29,19 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvi
 			templateUrl: 'views/login.html',
 			controller: 'LoginController'
 		})
+		.state('authorizationError', {
+			url: '/authError',
+			templateUrl: 'views/authError.html'
+		})
 		.state('studio', {
 			url: '/studio',
 			templateUrl: 'views/studio/studio.html',
 			controller: 'MainStudioCtrl',
 			resolve: {
-				setupData: appSetup 
+				setupData: appSetup,
+				checkPageAccess: ['setupData', 'AuthorizationService', function(setupData, AuthorizationService) {
+					return AuthorizationService.userHasPageAccess('VIEW_STUDIO')
+				}]
 			}
 		})
 		.state('studio.list', {
@@ -42,7 +49,10 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvi
 			templateUrl: 'views/content/content-list.html',
 			controller: 'ContentListCtrl',
 			resolve: {
-				setupData: appSetup 
+				setupData: appSetup,
+				checkPageAccess: ['setupData', 'AuthorizationService', function(setupData, AuthorizationService) {
+					return AuthorizationService.userHasPageAccess('VIEW_STUDIO')
+				}]
 			}
 		})
 		.state('studio.add', {
@@ -50,7 +60,10 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvi
 			templateUrl: 'views/content/content-add.html',
 			controller: 'ContentAddCtrl',
 			resolve: {
-				setupData: appSetup 
+				setupData: appSetup,
+				checkPageAccess: ['setupData', 'AuthorizationService', function(setupData, AuthorizationService) {
+					return AuthorizationService.userHasPageAccess('VIEW_STUDIO')
+				}]
 			}
 		})
 		.state('studio.detail', {
@@ -58,7 +71,10 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvi
 			templateUrl: 'views/content/content-detail.html',
 			controller: 'ContentDetailCtrl',
 			resolve: {
-				setupData: appSetup 
+				setupData: appSetup,
+				checkPageAccess: ['setupData', 'AuthorizationService', function(setupData, AuthorizationService) {
+					return AuthorizationService.userHasPageAccess('VIEW_STUDIO')
+				}]
 			}
 		})
 		.state('studio.edit', {
@@ -66,7 +82,10 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvi
 			templateUrl: 'views/content/content-add.html',
 			controller: 'ContentEditCtrl',
 			resolve: {
-				setupData: appSetup 
+				setupData: appSetup,
+				checkPageAccess: ['setupData', 'AuthorizationService', function(setupData, AuthorizationService) {
+					return AuthorizationService.userHasPageAccess('VIEW_STUDIO')
+				}]
 			}
 		})
 		.state('refdata', {
@@ -74,7 +93,10 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvi
 			templateUrl: 'views/refdata/refdata.html',
 			controller: 'MainStudioCtrl',
 			resolve: {
-				setupData: appSetup 
+				setupData: appSetup,
+				checkPageAccess: ['setupData', 'AuthorizationService', function(setupData, AuthorizationService) {
+					return AuthorizationService.userHasPageAccess('VIEW_REF_DATA')
+				}]
 			}
 		})
 		.state('refdata.list', {
@@ -82,7 +104,10 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvi
 			templateUrl: 'views/content/content-list.html',
 			controller: 'ContentListCtrl',
 			resolve: {
-				setupData: appSetup 
+				setupData: appSetup,
+				checkPageAccess: ['setupData', 'AuthorizationService', function(setupData, AuthorizationService) {
+					return AuthorizationService.userHasPageAccess('VIEW_REF_DATA')
+				}]
 			}
 		})
 		.state('refdata.add', {
@@ -90,7 +115,10 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvi
 			templateUrl: 'views/content/content-add.html',
 			controller: 'ContentAddCtrl',
 			resolve: {
-				setupData: appSetup 
+				setupData: appSetup,
+				checkPageAccess: ['setupData', 'AuthorizationService', function(setupData, AuthorizationService) {
+					return AuthorizationService.userHasPageAccess('VIEW_REF_DATA')
+				}]
 			}
 		})
 		.state('refdata.detail', {
@@ -98,7 +126,10 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvi
 			templateUrl: 'views/content/content-detail.html',
 			controller: 'ContentDetailCtrl',
 			resolve: {
-				setupData: appSetup 
+				setupData: appSetup,
+				checkPageAccess: ['setupData', 'AuthorizationService', function(setupData, AuthorizationService) {
+					return AuthorizationService.userHasPageAccess('VIEW_REF_DATA')
+				}]
 			}
 		})
 		.state('refdata.edit', {
@@ -106,7 +137,10 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvi
 			templateUrl: 'views/content/content-add.html',
 			controller: 'ContentEditCtrl',
 			resolve: {
-				setupData: appSetup 
+				setupData: appSetup,
+				checkPageAccess: ['setupData', 'AuthorizationService', function(setupData, AuthorizationService) {
+					return AuthorizationService.userHasPageAccess('VIEW_REF_DATA')
+				}]
 			}
 		})
 		.state('portal', {
@@ -120,6 +154,14 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvi
 		.state('portal.home', {
 			url: '/home',
 			templateUrl: 'views/portal/portal-home.html',
+			resolve: {
+				setupData: appSetup 
+			}
+		})
+		.state('portal.search', {
+			url: '/search/t/{searchText}/',
+			templateUrl: 'views/portal/portal-search.html',
+			controller: 'PortalSearchCtrl',
 			resolve: {
 				setupData: appSetup 
 			}
@@ -146,7 +188,7 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvi
 				}
 			}
 		})
-		.state('portal.container.body', {
+		.state('portal.container.body', { // state not used?
 			url: '/c/{type}/{subContainerQId}/',
 			templateUrl: function($stateParams) {
 				return 'views/portal/container/body-' + $stateParams.type + '.html';
@@ -179,7 +221,7 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvi
 			}
 		})
 		.state('portal.enclosure', {
-			url: '/enclosure/{enclosureId}/',
+			url: '/enclosure/{enclosureId}/{childContainerQId}',
 			views: {
 				// the main template
 				'': {
@@ -200,7 +242,7 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvi
 				}
 			}
 		})
-		.state('portal.enclosure.body', {
+		.state('portal.enclosure.body', { // state not used?
 			url: '{type}/{subContainerQId}/',
 			templateUrl: function($stateParams) {
 				return 'views/portal/container/body-' + $stateParams.type + '.html';
@@ -210,7 +252,15 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvi
 				setupData: appSetup 
 			}
 		})
-		.state('users', {
+		.state('system', {
+			url: '/system',
+			templateUrl: 'views/system/system-admin.html',
+			controller: 'SystemAdminController',
+			resolve: {
+				setupData: appSetup 
+			}
+		})
+		.state('system.users', {
 			url: '/users',
 			templateUrl: 'views/user/userdata.html',
 			controller: 'UserController',
@@ -218,7 +268,7 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvi
 				setupData: appSetup 
 			}
 		})
-		.state('users.list', {
+		.state('system.users.list', {
 			url: '/list',
 			templateUrl: 'views/user/userlist.html',
 			controller: 'UserController',
@@ -226,7 +276,7 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvi
 				setupData: appSetup 
 			}
 		})
-		.state('users.add', {
+		.state('system.users.add', {
 			url: '/add',
 			templateUrl: 'views/user/adduser.html',
 			controller: 'SaveUserController',
@@ -234,14 +284,20 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvi
 				setupData: appSetup 
 			}
 		})
-		.state('users.edit', {
-			url: '/edit/{identity}',
-			templateUrl: 'views/user/edituser.html',
+		.state('system.users.edit', {
+			url: '/edit/{identity}/',
+			templateUrl: 'views/user/adduser.html',
 			controller: 'SaveUserController',
 			resolve: {
 				setupData: appSetup 
 			}
-		}).state('setpassword', {
+		})
+		.state('system.docstore', {
+			url: '/docstore',
+			templateUrl: 'views/system/docstore/doc-store-config.html',
+			controller: 'DocStoreConfigController'
+		})
+		.state('setpassword', {
 			url: '/setpassword',
 			templateUrl: 'views/set-password.html',
 			controller: 'SetPasswordController'

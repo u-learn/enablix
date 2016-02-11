@@ -63,9 +63,22 @@ enablix.studioApp.factory('ContentDataService',
 	 			RESTService.postForData("deleteContentData", params, null, null, _onSuccess, _onError, null);
 	 		}
 	 		
+	 		var getNavigationPath = function(_containerQId, _contentIdentity, _onSuccess, _onError) {
+	 			
+	 			var params = {
+ 					"containerQId": _containerQId,
+ 					"contentIdentity": _contentIdentity
+	 			};
+
+	 			RESTService.getForData("navPath", params, null, _onSuccess, _onError);
+	 			
+	 		};
+
+	 		
 	 		return {
 	 			getContentData: getContentData,
 	 			getContentRecordData: getContentRecordData,
+	 			getNavigationPath: getNavigationPath,
 	 			saveContainerData: saveContainerData,
 	 			deleteContentData: deleteContentData
 	 		};

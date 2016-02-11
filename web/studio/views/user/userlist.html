@@ -1,32 +1,28 @@
 <div class="block">
 	<div class="head">
-		<a href="#" ng-click="addUser()" class="button button-add">Add new</a>
+		<a ng-click="addUser()" class="button button-add">Add new</a>
 		<h2 class="ng-binding">Users</h2>
 	</div>
 	<div class="cont">
-	<!-- <label>Search:</label><input class="form-control" ng-model="searchText"><br> -->
-<table class="datatable">
-	<thead>
-		<tr>
-			<th class="download"></th>
-			<th class="edit"></th>
-			<th class="remove"></th>
-			<th><span>Name</span></th>
-			<th><span>User Name</span></th>
-			<th><span>Email</span></th>
-		</tr>
-	</thead>	
-	<tbody>
-		<tr ng-repeat="user in userData" >
-			<td class="download"></td>
-			<td class="edit"><a href="#" class="fa fa-pencil" ng-click="userRecordEdit(user.identity)"></a></td>
-			<td class="remove"><a href="#" class="fa fa-times" ng-click="deleteUserRecord(user.identity)"></a></td>
-			<td><span ng-bind="user.name"></span></td>	
-			<td><span ng-bind="user.userId"></span></td>
-			<td><span ng-bind="user.email"></span></td>
-		</tr>
-	</tbody>
-</table>
+		<!-- <label>Search:</label><input class="form-control" ng-model="searchText"><br> -->
+		<table class="datatable">
+			<thead>
+				<tr>
+					<th class="edit"></th>
+					<th class="remove"></th>
+					<th><span>Name</span></th>
+					<th><span>Email</span></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="user in userData">
+					<td class="edit"><a class="fa fa-pencil" ng-click="userRecordEdit(user.identity)"></a></td>
+					<td class="remove"><a class="fa fa-times" ng-click="deleteUserRecord(user.identity)"></a></td>
+					<td><span ng-bind="user.profile.name"></span></td>
+					<td><span ng-bind="user.userId"></span></td>
+				</tr>
+			</tbody>
+		</table>
 
 	</div>
 </div>
