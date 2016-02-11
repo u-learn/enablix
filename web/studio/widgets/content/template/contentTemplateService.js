@@ -193,21 +193,6 @@ enablix.studioApp.factory('ContentTemplateService',
 				}
 			}
 			
-			var getRootContainer = function(_containerId) {
-				
-				var rootContainers = enablix.template.dataDefinition.container;
-				
-				for (var i = 0; i < rootContainers.length; i++) {
-				
-					var currCntnr = rootContainers[i];
-					if (currCntnr.qualifiedId == _containerId) {
-						return currCntnr;
-					}
-				}
-				
-				return null;
-			}
-			
 			var getPortalTopNavItemContainers = function() {
 				if (enablix.template.portalUIDefinition) {
 					return enablix.template.portalUIDefinition.topNavigation.itemContainers.itemContainer;
@@ -261,20 +246,6 @@ enablix.studioApp.factory('ContentTemplateService',
 				return null;
 			}
 			
-			var getParentEnclosureDefinition = function(_childId) {
-				var enclList = getPortalTopNavEnclosures();
-				for (var i = 0; i < enclList.length; i++) {
-					var encl = enclList[i];
-					for (var j = 0; j < encl.childContainer.length; j++) {
-						var childContainer = encl.childContainer[j];
-						if (childContainer.id === _childId) {
-							return encl;
-						}
-					}
-				}
-				return null;
-			}
-			
 			var getRootContainerIdForContainer = function(_containerQId) {
 				var cntnrQIdArr = _containerQId.split("\.");
 				return cntnrQIdArr[0];
@@ -292,13 +263,11 @@ enablix.studioApp.factory('ContentTemplateService',
 				getContainerEnclosures: getContainerEnclosures,
 				getContainerListViewHiddenItems: getContainerListViewHiddenItems,
 				getRootContainers : getRootContainers,
-				getRootContainer : getRootContainer,
 				getPortalTopNavItemContainers: getPortalTopNavItemContainers,
 				getPortalTopNavEnclosures : getPortalTopNavEnclosures,
 				getPortalCondensedViewItems: getPortalCondensedViewItems,
 				getPortalHeadingContentItem: getPortalHeadingContentItem,
 				getPortalEnclosureDefinition: getPortalEnclosureDefinition,
-				getParentEnclosureDefinition: getParentEnclosureDefinition,
 				getRootContainerIdForContainer: getRootContainerIdForContainer
 			};
 		

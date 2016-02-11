@@ -6,7 +6,7 @@
 		<table class="infotable" >
 			<tr ng-repeat="item in containerDef.contentItem">
 				<th>{{item.label}}:</td>
-				<td><span class="content-data" ng-bind-html="containerData[item.id] | ebxFormatData: item.type"></span>&nbsp;
+				<td>{{containerData[item.id] | ebxFormatData: item.type}}&nbsp;
 					<span ng-if="item.type == 'DOC' && containerData[item.id].name" class="download">
 						<eb-doc-download doc-value="containerData[item.id].identity"></eb-doc-download>
 					</span>
@@ -15,7 +15,7 @@
 		</table>
 	</div>
 	<div class="foot clearfix">
-		<a ng-click="deleteRecord()" class="button button-edit">Delete</a>
-		<a ng-click="navToEdit()" class="button button-delete">Edit</a>
+		<a href="#" ng-click="deleteRecord()" class="button button-edit">Delete</a>
+		<a href="#" ng-click="navToEdit()" class="button button-delete">Edit</a>
 	</div>
 </div>

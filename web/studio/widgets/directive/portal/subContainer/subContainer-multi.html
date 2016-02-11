@@ -1,19 +1,18 @@
 <div class="block">
 	<div class="head head-toggle" ng-click="toggleContainer($event)">
-		<i class="expandable"></i>
+		<i></i>
 		<em class="fa fa-file-text-o"></em>
 		<h2>{{subContainerLabel}}</h2>
 	</div>
 	<div class="cont cont-hidden" ng-if="bodyData.length != 0">
 		<div ng-repeat="dataItem in bodyData">
 			<h4><eb-doc-download class="right-doc" ng-if="dataItem.downloadDocIdentity" doc-value="dataItem.downloadDocIdentity"></eb-doc-download>
-			    <a ng-click="toggleContainerItem($event, dataItem.containerId + $index)" class="toggle">{{dataItem.headingLabel}}</a>
-			    <a ng-if="dataItem.hasSubContainers" ng-click="navToItemDetail(dataItem.containerQId, dataItem.identity)" class="detail fa fa-external-link"></a></h4>
+			    <a href="#{{dataItem.containerId}}{{$index}}" ng-click="toggleContainerItem($event)" class="toggle">{{dataItem.headingLabel}}</a></h4>
 			<div id="{{dataItem.containerId}}{{$index}}" class="toggle-cont">
 				<table class="infotable" >
 					<tr ng-repeat="header in multiHeaders" ng-switch="header.dataType">
 						<th>{{header.label}}:</th>
-						<td><span class="content-data" ng-bind-html="dataItem[header.key] | ebxFormatData: header.dataType"></span>&nbsp;</td>
+						<td>{{dataItem[header.key] | ebxFormatData: header.dataType}}&nbsp;</td>
 					</tr>
 			  	</table>
 			</div>

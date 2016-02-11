@@ -46,9 +46,22 @@ enablix.studioApp.controller('PortalNavLinkCtrl',
 			var _containerQId = navItem.qualifiedId;
 			var _contentIdentity = navItem.identity;
 			
-			StateUpdateService.goToPortalContainerBody(
-					_containerQId, _contentIdentity, 'single', _containerQId);
+			if (ContentTemplateService.isRootContainer(enablix.template, _containerQId)) {
 				
+				StateUpdateService.goToPortalContainerBody(
+						_containerQId, _contentIdentity, 'single', _containerQId);
+				
+			} else {
+				
+				// find the root container
+				var rootNavItem = navItem;
+				while (!isNullOrUndefined(rootNavItem.previous)) {
+					rootNavItem = rootNavItem.previous;
+				}
+				
+				StateUpdateService.goToPortalSubItem(
+						rootNavItem.qualifiedId, rootNavItem.identity, _containerQId, _contentIdentity);
+			}
 		}
 		
 	}]);

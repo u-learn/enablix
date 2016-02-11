@@ -15,15 +15,17 @@ import com.dropbox.core.DbxEntry;
 import com.dropbox.core.DbxException;
 import com.dropbox.core.DbxRequestConfig;
 import com.dropbox.core.DbxWriteMode;
-import com.enablix.commons.dms.api.AbstractDocumentStore;
+import com.enablix.commons.config.ConfigurationUtil;
+import com.enablix.commons.dms.DocumentStoreConstants;
 import com.enablix.commons.dms.api.Document;
 import com.enablix.commons.dms.api.DocumentBuilder;
 import com.enablix.commons.dms.api.DocumentMetadata;
+import com.enablix.commons.dms.api.DocumentStore;
 import com.enablix.commons.util.StringUtil;
 import com.enablix.core.domain.config.Configuration;
 
 @Component
-public class DropboxDocumentStore extends AbstractDocumentStore<DropboxDocumentMetadata, DropboxDocument> {
+public class DropboxDocumentStore implements DocumentStore<DropboxDocumentMetadata, DropboxDocument> {
 
 	private static final String APP_NAME_KEY = "APP_NAME";
 
@@ -54,6 +56,7 @@ public class DropboxDocumentStore extends AbstractDocumentStore<DropboxDocumentM
 	        try {
 	        	
 	        	String fileLocation = createDropboxFilepath(document, contentPath);
+	        	
 	        	
 				DbxEntry.File uploadedFile = client.uploadFile(
 	        			fileLocation, determineWriteMode(client, document), 
@@ -102,7 +105,8 @@ public class DropboxDocumentStore extends AbstractDocumentStore<DropboxDocumentM
 
 	private DbxClient createDbxClient() {
 		
-		Configuration configuration = getDocStoreConfiguration();
+		Configuration configuration = 
+				ConfigurationUtil.getConfig(DocumentStoreConstants.DOC_STORE_CONFIG_KEY);
 		
 		DbxRequestConfig config = new DbxRequestConfig(
 				getAppName(configuration), Locale.getDefault().toString());
@@ -112,11 +116,11 @@ public class DropboxDocumentStore extends AbstractDocumentStore<DropboxDocumentM
 	}
 	
 	private String getAppName(Configuration config) {
-		return config.getStringValue(APP_NAME_KEY);
+		return config.getConfig().get(APP_NAME_KEY);
 	}
 	
 	private String getAccessToken(Configuration config) {
-		return config.getStringValue(ACCESS_TOKEN_KEY);
+		return config.getConfig().get(ACCESS_TOKEN_KEY);
 	}
 
 	@Override

@@ -322,15 +322,10 @@
 		 		<version>${elastic.search.version}</version>
 		 	</dependency>
 		 	<dependency>
-				<groupId>javax.mail</groupId>
-				<artifactId>mail</artifactId>
-				<version>1.4</version>
-			</dependency>
-			<dependency>
-		 		<groupId>org.mongodb</groupId>
-		 		<artifactId>mongo-java-driver</artifactId>
-		 		<version>${mongo.java.driver.version}</version>
-		 	</dependency>
+			<groupId>javax.mail</groupId>
+			<artifactId>mail</artifactId>
+			<version>1.4</version>
+		</dependency>
 		</dependencies>
 	</dependencyManagement>
 	<dependencies>
@@ -369,13 +364,13 @@
 	</repositories>
 	<properties>
 		<org.springframework.spring.ws.core.version>2.1.4.RELEASE</org.springframework.spring.ws.core.version>
-		<org.springframework.version>4.2.3.RELEASE</org.springframework.version>
+		<org.springframework.version>4.1.5.RELEASE</org.springframework.version>
 		<org.springframework.data.version>1.2.1.RELEASE</org.springframework.data.version>
 		<spring.batch.version>3.0.0.RELEASE</spring.batch.version>
 		<org.springframework.data.jpa.version>1.5.1.RELEASE</org.springframework.data.jpa.version>
 		<org.springframework.spring.data.mongodb.version>1.6.2.RELEASE</org.springframework.spring.data.mongodb.version>
-		<org.springframework.spring.test.version>4.2.3.RELEASE</org.springframework.spring.test.version>
-		<org.springframework.spring.boot.version>1.3.2.RELEASE</org.springframework.spring.boot.version>
+		<org.springframework.spring.test.version>4.1.5.RELEASE</org.springframework.spring.test.version>
+		<org.springframework.spring.boot.version>1.2.2.RELEASE</org.springframework.spring.boot.version>
 		<hibernate.validator.version>5.1.3.Final</hibernate.validator.version>
 		<junit.version>4.11</junit.version>
 		<mockito.core.version>1.8.4</mockito.core.version>
@@ -405,7 +400,6 @@
 		<com.fasterxml.jackson.core.databind.version>2.3.2</com.fasterxml.jackson.core.databind.version>
 		<xerces.xercesImpl.version>2.9.1</xerces.xercesImpl.version>
 		<elastic.search.version>2.1.0</elastic.search.version>
-		<mongo.java.driver.version>3.0.1</mongo.java.driver.version>
 	</properties>
 
 </project>

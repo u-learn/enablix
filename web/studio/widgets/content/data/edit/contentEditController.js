@@ -8,21 +8,12 @@ enablix.studioApp.controller('ContentEditCtrl',
 		$scope.$stateParams = $stateParams;
 		
 		$scope.containerDef = ContentTemplateService.getContainerDefinition(enablix.template, containerQId);
-		var containerLabel = $scope.containerDef.label;
 		
-		if (!isNullOrUndefined($scope.containerDef.linkContainerQId)) {
-			
-			$scope.containerDef = ContentTemplateService.getContainerDefinition(
-					enablix.template, $scope.containerDef.linkContainerQId);
-			
-			if (isNullOrUndefined(containerLabel)) {
-				containerLabel = $scope.containerDef.label;
-			}
-		}
-		
-		$scope.pageHeading = "Edit " + containerLabel;
+		$scope.pageHeading = "Edit " + $scope.containerDef.label;
 		
 		$scope.containerData = {};
+		
+		$scope.options = [{label: "opt1"}, {label: "opt2"}, {label: "opt3"}];
 		
 		ContentDataService.getContentRecordData(enablix.templateId, containerQId, elementIdentity, 
 				function(data) {

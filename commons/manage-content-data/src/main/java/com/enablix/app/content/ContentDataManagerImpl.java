@@ -14,10 +14,6 @@ import org.springframework.stereotype.Component;
 import com.enablix.app.content.delete.DeleteContentRequest;
 import com.enablix.app.content.enrich.ContentEnricher;
 import com.enablix.app.content.enrich.ContentEnricherRegistry;
-import com.enablix.app.content.event.ContentDataDelEvent;
-import com.enablix.app.content.event.ContentDataEventListener;
-import com.enablix.app.content.event.ContentDataEventListenerRegistry;
-import com.enablix.app.content.event.ContentDataSaveEvent;
 import com.enablix.app.content.fetch.FetchContentRequest;
 import com.enablix.app.content.update.ContentUpdateHandler;
 import com.enablix.app.content.update.ContentUpdateHandlerFactory;
@@ -27,7 +23,6 @@ import com.enablix.app.template.service.TemplateManager;
 import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.commons.util.QIdUtil;
 import com.enablix.commons.util.StringUtil;
-import com.enablix.core.commons.xsdtopojo.ContainerType;
 import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 import com.enablix.core.mongo.content.ContentCrudService;
 import com.enablix.services.util.TemplateUtil;
@@ -52,9 +47,6 @@ public class ContentDataManagerImpl implements ContentDataManager {
 	@Autowired
 	private ContentUpdateHandlerFactory handlerFactory;
 	
-	@Autowired
-	private ContentDataEventListenerRegistry listenerRegistry;
-	
 	/*
 	 * Use cases:
 	 * 1. Insert top level container i.e. new record == Mongo Insert
@@ -71,20 +63,9 @@ public class ContentDataManagerImpl implements ContentDataManager {
 			throw new IllegalArgumentException("Update request validation error: " + errors);
 		}
 		
-		ContentTemplate template = templateMgr.getTemplate(request.getTemplateId());
-		
-		// check for linked container
-		ContainerType container = TemplateUtil.findContainer(template.getDataDefinition(), request.getContentQId());
-		
-		String linkedContainerQId = container.getLinkContainerQId();
-		if (!StringUtil.isEmpty(linkedContainerQId)) {
-			request.setParentIdentity(null);
-			request.setContentQId(linkedContainerQId);
-		}
-		
 		ContentUpdateHandler updateHandler = handlerFactory.getHandler(request);
-		boolean newRecord = (request.isInsertRootRequest() || request.isInsertChildRequest()) 
-				&& TemplateUtil.hasOwnCollection(template, request.getContentQId());
+		
+		ContentTemplate template = templateMgr.getTemplate(request.getTemplateId());
 		
 		Map<String, Object> contentDataMap = request.getDataAsMap();
 		
@@ -96,14 +77,8 @@ public class ContentDataManagerImpl implements ContentDataManager {
 		updateHandler.updateContent(template, request.getParentIdentity(), 
 				request.getContentQId(), contentDataMap);
 		
-		// notify listeners
-		ContentDataSaveEvent saveEvent = new ContentDataSaveEvent(
-				contentDataMap, request.getTemplateId(), request.contentQId(), newRecord);
-		for (ContentDataEventListener listener : listenerRegistry.getListeners()) {
-			listener.onContentDataSave(saveEvent);
-		}
-		
 		return contentDataMap;
+		
 	}
 	
 
@@ -117,8 +92,6 @@ public class ContentDataManagerImpl implements ContentDataManager {
 		
 		if (TemplateUtil.hasOwnCollection(template, contentQId)) {
 			crud.deleteRecord(collName, request.getRecordIdentity());
-			publishContentDeleteEvent(new ContentDataDelEvent(request.getTemplateId(), 
-					request.getContentQId(), request.getRecordIdentity()));
 			
 		} else {
 			String qIdRelativeToParent = QIdUtil.getElementId(contentQId);
@@ -126,12 +99,6 @@ public class ContentDataManagerImpl implements ContentDataManager {
 		}
 		
 		deleteChildContainerData(template, contentQId, request.getRecordIdentity());
-	}
-	
-	private void publishContentDeleteEvent(ContentDataDelEvent event) {
-		for (ContentDataEventListener listener : listenerRegistry.getListeners()) {
-			listener.onContentDataDelete(event);
-		}
 	}
 	
 	private void deleteChildContainerData(ContentTemplate template, String containerQId, String recordIdentity) {
@@ -148,10 +115,6 @@ public class ContentDataManagerImpl implements ContentDataManager {
 						crud.deleteRecordsWithParentId(collName, recordIdentity);
 				
 				for (String childRecordIdentity : deletedChildRecordIds) {
-
-					publishContentDeleteEvent(new ContentDataDelEvent(template.getId(), 
-							childQId, childRecordIdentity));
-
 					deleteChildContainerData(template, childQId, childRecordIdentity);
 				}
 			}
@@ -167,32 +130,10 @@ public class ContentDataManagerImpl implements ContentDataManager {
 		String contentQId = request.getContentQId();
 		
 		ContentTemplate template = templateMgr.getTemplate(request.getTemplateId());
-		
-		// check for linked container
-		ContainerType container = TemplateUtil.findContainer(template.getDataDefinition(), contentQId);
-		
-		String linkedContainerQId = container.getLinkContainerQId();
-		if (!StringUtil.isEmpty(linkedContainerQId)) {
-			contentQId = linkedContainerQId;
-		}
-		
 		String collName = TemplateUtil.resolveCollectionName(template, contentQId);
 		String qIdRelativeToParent = TemplateUtil.getQIdRelativeToParentContainer(template, contentQId);
 		
-		if (!StringUtil.isEmpty(linkedContainerQId)) {
-			
-			if (!StringUtil.isEmpty(request.getParentRecordIdentity())) {
-				
-				data = crud.findAllRecordWithLinkContainerId(collName, 
-					container.getLinkContentItemId(), request.getParentRecordIdentity());
-				
-			} else if (!StringUtil.isEmpty(request.getRecordIdentity())) {
-				// Fetch one record
-				data = crud.findRecord(collName, qIdRelativeToParent, request.getRecordIdentity());
-			} 				
-			
-			
-		} else if (StringUtil.isEmpty(request.getParentRecordIdentity())
+		if (StringUtil.isEmpty(request.getParentRecordIdentity())
 				&& StringUtil.isEmpty(request.getRecordIdentity())) {
 			
 			// Fetch all root elements for the template

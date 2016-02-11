@@ -3,7 +3,6 @@
 	<h2>{{pageHeading}}</h2>
 </div>
 <div ng-repeat="item in containerDef.contentItem" class="cont">
-	<div ng-hide="item.hide">
 	<div ng-if="item.type == 'TEXT'">
 		<eb-text content-def="item" text-value="containerData[item.id]"></eb-text>
 	</div>
@@ -19,10 +18,9 @@
 	<div ng-if="item.type == 'DATE_TIME'">
 		<eb-date-picker content-def="item" date-value="containerData[item.id]"></eb-date-picker>
 	</div>
-	</div>
 </div>
 <div class="foot clearfix">
 	<button ng-click="saveContentData()" class="button button-add">Save</button>
-	<a ng-click="cancelOperation()" class="button button-delete">Cancel</a>
+	<a href="#" ng-click="cancelOperation()" class="button button-delete">Cancel</a>
 </div>
 </form>

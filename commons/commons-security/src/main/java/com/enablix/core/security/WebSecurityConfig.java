@@ -1,9 +1,5 @@
 package com.enablix.core.security;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -11,9 +7,9 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.security.web.authentication.switchuser.SwitchUserFilter;
+import org.springframework.security.web.csrf.CsrfTokenRepository;
+import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 
 import com.enablix.core.security.service.EnablixUserService;
 
@@ -30,10 +26,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http = http.addFilterAfter(new ProcessContextInitFilter(), SwitchUserFilter.class);
 		http
 			.authorizeRequests()
-				.antMatchers("/", "/health", "/**/*.html", "/**/*.js", "/**/*.css", "/**/*.png", "/**/*.jpg", "/**/*.jpeg", "/**/*.gif", "/**/*.svg", "/**/*.ttf", "/**/*.woff", "/**/*.woff2", "/**/*.eot").permitAll().anyRequest().authenticated()
+				.antMatchers("/", "/health", "/logout").permitAll().anyRequest().authenticated()
 			//.and().addFilter(new ProcessContextInitFilter()).exceptionHandling()
 			.and().httpBasic()
-			.and().logout().logoutSuccessUrl("/").permitAll()
+			.and().logout().permitAll()
 			.and().csrf().disable();
 			
 			//.and().csrf().csrfTokenRepository(csrfTokenRepository());
@@ -46,10 +42,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		auth.userDetailsService(userService);
 	}
 
-/*	private CsrfTokenRepository csrfTokenRepository() {
+	private CsrfTokenRepository csrfTokenRepository() {
 		HttpSessionCsrfTokenRepository repository = new HttpSessionCsrfTokenRepository();
 		repository.setHeaderName("X-XSRF-TOKEN");
 		return repository;
-	}*/
+	}
 
 }

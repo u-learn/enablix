@@ -1,7 +1,7 @@
 enablix.studioApp.factory('StateUpdateService', 
 	[
-	 			'$state', '$stateParams', '$rootScope',
-	 	function($state,   $stateParams,   $rootScope) {
+	 			'$state', '$stateParams',
+	 	function($state,   $stateParams) {
 	 		
 	 		var goToStudioList = function(_containerQId, _parentIdentity) {
 				$state.go('studio.list', {'containerQId' : _containerQId, 
@@ -91,29 +91,23 @@ enablix.studioApp.factory('StateUpdateService',
 	 		var goToPortalHome = function() {
 	 			$state.go("portal.home");
 	 		};
-	 		
-	 		var goToAuthError = function() {
-	 			$state.go("authorizationError");
-	 		};
-	 		
 	 		var goAddUser = function(){	 			
-	 			$state.go("system.users.add");
+	 			$state.go("users.add");
 	 		};
 	 		var goToListUser = function(){	 			
-	 			$state.go("system.users.list");
+	 			$state.go("users.list");
 	 		};
 	 		var goEditUser=function(_identity){
-	 			$state.go("system.users.edit",{"identity" : _identity});
+	 			$state.go("users.edit",{"identity" : _identity});
 	 		}
 	 		var goToSetPassword=function(){
 	 			$state.go("setpassword");
 	 		}
 	 		
 
-	 		var goToPortalEnclosureDetail = function(_enclosureId, _childContainerId) {
+	 		var goToPortalEnclosureDetail = function(_enclosureId) {
 	 			$state.go("portal.enclosure", {
-	 				"enclosureId": _enclosureId,
-	 				"childContainerQId": _childContainerId
+	 				"enclosureId": _enclosureId
 	 			});
 	 		}
 	 		
@@ -125,12 +119,6 @@ enablix.studioApp.factory('StateUpdateService',
 	 			});
 	 		};
 	 		
-	 		var goToPortalSearch = function(_searchText) {
-	 			$state.go("portal.search", {
-	 				"searchText": _searchText
-	 			});
-	 		};
-	
 	 		var reload = function() {
 	 			$state.transitionTo($state.current, $stateParams, {
 	 			    reload: true,
@@ -158,8 +146,6 @@ enablix.studioApp.factory('StateUpdateService',
 	 			goToPortalEnclosureDetail: goToPortalEnclosureDetail,
 	 			goToPortalEnclosureBody: goToPortalEnclosureBody,
 	 			goToPortalSubItem: goToPortalSubItem,
-	 			goToPortalSearch: goToPortalSearch,
-	 			goToAuthError: goToAuthError,
 	 			reload: reload,
 	 			goAddUser : goAddUser,
 	 			goEditUser : goEditUser,

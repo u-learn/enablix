@@ -21,18 +21,9 @@ enablix.serviceURL = {
 	"contentSpecificRecentData": enablix.domainName + "/navcontent/recent/:containerQId/:contentIdentity/",
 	"quickLinks": enablix.domainName + "/navcontent/quicklinks/",
 	"contentPeers": enablix.domainName + "/navcontent/peers/:containerQId/:contentIdentity/",
-	"searchData": enablix.domainName + "/search/t/:searchText/",
-	"navPath": enablix.domainName + "/navcontent/navpath/:containerQId/:contentIdentity/",
 	"user": enablix.domainName + "/user",
 	"systemuser" : enablix.domainName + "/systemuser",
-	"fetchUser" : enablix.domainName + "/d/user/:userIdentity/",
 	"deletesystemuser" : enablix.domainName + "/deletesystemuser",
 	"checkusername" : enablix.domainName + "/checkusername",
-	"fetchAllRoles" : enablix.domainName + "/roles",
-	"fetchConfigByKey" : enablix.domainName + "/config/:configKey",
-	"saveConfig" : enablix.domainName + "/config/save",
-	"fetchDocStoresConfigMetadata" : enablix.domainName + "/docstore/configmetadata",
-	"saveDocStoreConfig" : enablix.domainName + "/docstore/config",
-	"defaultDocStoreConfig": enablix.domainName + "/docstore/default",
 	"logout": enablix.domainName + "/logout"
 };

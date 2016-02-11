@@ -14,9 +14,10 @@ public class User extends BaseDocumentEntity {
 	
 	private String tenantId;
 	
-	private Profile profile = new Profile();
+	private Profile profile;
 	
 	private Boolean isPasswordSet;
+	
 	
 	public Boolean getIsPasswordSet() {
 		return isPasswordSet;

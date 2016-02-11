@@ -51,10 +51,10 @@ public abstract class AbstractCrudService<T extends BaseEntity> implements CrudS
 		return new ArrayList<Error>();
 	};
 	
-	protected abstract T doSave(T t);
+	public abstract T doSave(T t);
 	
-	protected abstract T merge(T t, T existing);
+	public abstract T merge(T t, T existing);
 
-	protected abstract T findExisting(T t);
+	public abstract T findExisting(T t);
 	
 }

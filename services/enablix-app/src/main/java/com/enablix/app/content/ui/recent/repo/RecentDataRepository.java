@@ -1,7 +1,7 @@
-package com.enablix.app.content.recent.repo;
+package com.enablix.app.content.ui.recent.repo;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import java.util.Collection;
+
 import org.springframework.data.mongodb.repository.Query;
 
 import com.enablix.core.domain.recent.RecentData;
@@ -12,20 +12,17 @@ public interface RecentDataRepository extends BaseMongoRepository<RecentData> {
 	@Query("{ $and : [{'scope.templateId' : ?0 }, "
 			   + "{'scope.containerQId' : ?1 }, "
 			   + "{'scope.contentIdentity' : ?2 } ]}")
-	Page<RecentData> findByTemplateIdAndContainerQIdAndContentIdentity(
-		String templateId, String containerQId, String contentIdentity, Pageable sort);
+	Collection<RecentData> findByTemplateIdAndContainerQIdAndContentIdentity(
+		String templateId, String containerQId, String contentIdentity);
 
 	@Query("{ $and : [{'scope.templateId' : ?0 }, "
 			   + "{'scope.containerQId' : {$exists : false} }, "
 			   + "{'scope.contentIdentity' : {$exists: false} } ]}")
-	Page<RecentData> findByTemplateId(String templateId, Pageable sort);
+	Collection<RecentData> findByTemplateId(String templateId);
 
 	@Query("{ $and : [{'scope.templateId' : ?0 }, "
 				   + "{'scope.containerQId' : ?1 }, "
 				   + "{'scope.contentIdentity' : {$exists : false} } ]}")
-	Page<RecentData> findByTemplateIdAndContainerQId(String templateId, String containerQId, Pageable sort);
-	
-	// Since identity is unique across collection, we delete by identity
-	Long deleteByDataInstanceIdentity(String identity);
+	Collection<RecentData> findByTemplateIdAndContainerQId(String templateId, String containerQId);
 	
 }

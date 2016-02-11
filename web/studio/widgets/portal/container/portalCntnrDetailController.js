@@ -29,36 +29,16 @@ enablix.studioApp.controller('PortalCntnrDetailCtrl',
 			
 			var enclDef = ContentTemplateService.getPortalEnclosureDefinition(enclosureId);
 			
-			var childContainerQId = $stateParams.childContainerQId;
-			
-			if (isNullOrUndefined(childContainerQId) || childContainerQId === "") {
-			
-				angular.forEach(enclDef.childContainer, function(cntnrRef) {
-	
-					var containerDef = ContentTemplateService.getContainerDefinition(
-							enablix.template, cntnrRef.id);
-	
-					if (!isNullOrUndefined(containerDef)) {
-						cntnrList.push(containerDef);
-					}
-					
-				});
-				
-			} else {
-				
-				for (var i = 0; i < enclDef.childContainer.length; i++) {
-					
-					var childCntnr = enclDef.childContainer[i];
-					
-					if (childCntnr.id == childContainerQId) {
-						
-						var containerDef = ContentTemplateService.getContainerDefinition(
-								enablix.template, childCntnr.id);
-						
-						cntnrList.push(containerDef)
-					}
+			angular.forEach(enclDef.childContainer, function(cntnrRef) {
+
+				var containerDef = ContentTemplateService.getContainerDefinition(
+						enablix.template, cntnrRef.id);
+
+				if (!isNullOrUndefined(containerDef)) {
+					cntnrList.push(containerDef);
 				}
-			}
+				
+			});
 			
 		}
 		

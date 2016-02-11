@@ -95,7 +95,6 @@ enablix.studioApp.controller('PortalCntnrBodyCtrl',
 			
 		} else {
 			
-			// This is old code we don't have a use case of multi-result container
 			$scope.multiHeaders = [];
 			
 			angular.forEach($scope.containerDef.contentItem, function(containerAttr) {

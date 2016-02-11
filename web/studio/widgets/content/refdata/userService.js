@@ -10,26 +10,13 @@ enablix.studioApp.factory('UserService',
     	});
 		};
 		
-		var getUserByIdentity = function(userIdentity, _success) {
-			
-			var params = {userIdentity: userIdentity};
-			
-			RESTService.getForData('fetchUser', params, null, function(data) {	    	
-				_success(data);	    	
-			}, function() {    		
-				Notification.error({message: "Error fetching user data", delay: enablix.errorMsgShowTime});
-			});
-		};
-		
-		var addUserData= function(userData, roles)
+		var addUserData= function(userData)
 		{
-			if (isNullOrUndefined(userData.isPasswordSet)) {
-				userData.isPasswordSet=false;
-			}
+			userData.isPasswordSet=false;
+			userData.identity=userData.userId;
 			var sessionUser=JSON.parse(window.localStorage.getItem("userData"));
 			userData.tenantId=sessionUser.tenantId;
-			var userVO = { user: userData, roles: roles };
-				RESTService.postForData('systemuser', null, userVO, null,function(data) {	    	
+				RESTService.postForData('systemuser', null, userData, null,function(data) {	    	
 					Notification.primary({message: "Save successfully", delay: enablix.errorMsgShowTime});
 				StateUpdateService.goToListUser();
 	    	}, function() {    		
@@ -44,10 +31,9 @@ enablix.studioApp.factory('UserService',
 			var sessionUser=JSON.parse(window.localStorage.getItem("userData"));
 			sessionUser.password=_password;
 			sessionUser.isPasswordSet=true;
-			var userVO = { user: sessionUser };
-				RESTService.postForData('systemuser', null, userVO, null,function(data) {	    	
-					Notification.primary({message: "Password updated successfully", delay: enablix.errorMsgShowTime});
-				StateUpdateService.goToPortalHome();
+				RESTService.postForData('systemuser', null, sessionUser, null,function(data) {	    	
+					Notification.primary({message: "Save successfully", delay: enablix.errorMsgShowTime});
+				StateUpdateService.goToStudio();
 	    	}, function() {    		
 	    		Notification.error({message: "Error ", delay: enablix.errorMsgShowTime});
 	    	});
@@ -86,24 +72,13 @@ enablix.studioApp.factory('UserService',
 			
 		};
 		
-		var getAllRoles = function(_success) {
-			
-			RESTService.getForData('fetchAllRoles', null, null, function(data) {	    	
-				_success(data);	    	
-			}, function() {    		
-				Notification.error({message: "Error fetching roles", delay: enablix.errorMsgShowTime});
-			});
-		};
-		
 		return {
 			
 			getAllUsers: getAllUsers,
-			getUserByIdentity: getUserByIdentity,
 			addUserData: addUserData,
 			updatepassword :  updatepassword,
 			checkUserName : checkUserName,
-			deleteUser : deleteUser,
-			getAllRoles: getAllRoles
+			deleteUser : deleteUser
 			
 		};
 	}

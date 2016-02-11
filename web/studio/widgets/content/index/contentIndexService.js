@@ -46,20 +46,6 @@ enablix.studioApp.factory('ContentIndexService',
 				
 				angular.forEach(_containerList, function(cntnr) {
 
-					var cntnrLabel = cntnr.label;
-					var cntnrQId = cntnr.qualifiedId;
-					
-					if (!isNullOrUndefined(cntnr.linkContainerQId)) {
-						cntnr = ContentTemplateService.getRootContainer(cntnr.linkContainerQId);
-						if (isNullOrUndefined(cntnr)) {
-							return;
-						}
-						
-						if (isNullOrUndefined(cntnrLabel)) {
-							cntnrLabel = cntnr.label
-						}
-					}
-					
 					// ignore refData containers
 					if (cntnr.refData) {
 						return;
@@ -71,8 +57,8 @@ enablix.studioApp.factory('ContentIndexService',
 					// add container listing node parent
 					var indxItem = {
 						"id" : cntnr.qualifiedId,
-						"qualifiedId" : cntnrQId,
-						"label" : cntnrLabel,
+						"qualifiedId" : cntnr.qualifiedId,
+						"label" : cntnr.label,
 						"elementIdentity" : elemIdentity,
 						"parentIdentity" : _elementIdentity,
 						"children" : [],
@@ -84,7 +70,6 @@ enablix.studioApp.factory('ContentIndexService',
 					var enclosureOfChildCntnr = cntnrIdToEnclosureMap[cntnr.id];
 					
 					if (!isNullOrUndefined(enclosureOfChildCntnr)) {
-						// this container is part of enclosure
 						indxItem.parentNode = enclosureOfChildCntnr;
 						enclosureOfChildCntnr.children.push(indxItem);
 						

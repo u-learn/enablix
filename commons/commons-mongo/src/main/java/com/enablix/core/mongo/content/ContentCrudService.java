@@ -18,8 +18,6 @@ public interface ContentCrudService {
 	List<Map<String, Object>> findAllRecord(String collectionName);
 	
 	List<Map<String, Object>> findAllRecordWithParentId(String collectionName, String parentIdentity);
-	
-	List<Map<String, Object>> findAllRecordWithLinkContainerId(String collectionName, String linkContentItemId, String linkContainerIdentity);
 
 	void updateAttributes(String collectionName, String elementQId, String elementIdentity, Map<String, Object> data);
 

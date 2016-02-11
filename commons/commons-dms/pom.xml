@@ -7,7 +7,6 @@
   	<module>dms-api</module>
   	<module>dms-disk</module>
   	<module>dms-dropbox</module>
-  	<module>dms-webdav</module>
   </modules>
   <parent>
   	<groupId>com.enablix.commons</groupId>

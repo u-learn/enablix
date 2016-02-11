@@ -99,25 +99,13 @@ function(ContentTemplateService, Notification) {
 			scope.label = _dataDef.label;
 			scope.id = _dataDef.qualifiedId;
 			scope.options = [];
-			scope.selectMultiple = _dataDef.bounded.multivalued;
+			scope.selectMode = _dataDef.bounded.multivalued ? "multiple" : "single";
 			
 			var _uiDef = ContentTemplateService.getUIDefinition(enablix.template, _dataDef.qualifiedId);
 			
 			ContentTemplateService.getBoundedValueList(enablix.templateId, _dataDef, null, 
 					function(data) {
 						scope.options = data;
-						
-						angular.forEach(scope.selectValue, function(selVal) {
-							if (isNullOrUndefined(selVal.label)) {
-								for (var i = 0; i < scope.options.length; i++) {
-									var opt = scope.options[i];
-									if (opt.id === selVal.id) {
-										selVal.label = opt.label;
-										break;
-									}
-								}
-							}
-						});
 					},
 					function(data) {
 						Notification.error({message: "Error retrieving data", delay: enablix.errorMsgShowTime});

@@ -13,7 +13,6 @@ import com.enablix.analytics.web.request.WebContentRequest;
 import com.enablix.app.content.ui.NavigableContent;
 import com.enablix.app.content.ui.link.QuickLinks;
 import com.enablix.app.content.ui.link.QuickLinksService;
-import com.enablix.app.content.ui.nav.NavigationPathService;
 import com.enablix.app.content.ui.peers.PeerContentService;
 import com.enablix.app.content.ui.recent.RecentContentService;
 import com.enablix.app.content.ui.reco.RecommendedContentService;
@@ -33,9 +32,6 @@ public class NavigableContentController {
 	
 	@Autowired
 	private PeerContentService peerService;
-	
-	@Autowired
-	private NavigationPathService navPathService;
 	
 	@RequestMapping(method = RequestMethod.GET, value="/reco/{containerQId}/")
 	public List<NavigableContent> containerRecommendedContent(@PathVariable String containerQId) {
@@ -89,14 +85,6 @@ public class NavigableContentController {
 		
 		WebContentRequest request = new WebContentRequest(containerQId, contentIdentity);
 		return peerService.getPeers(request);
-	}
-	
-	@RequestMapping(method = RequestMethod.GET, value="/navpath/{containerQId}/{contentIdentity}/")
-	public NavigableContent navigationPath(
-			@PathVariable String containerQId, 
-			@PathVariable String contentIdentity) {
-		
-		return navPathService.getNavPath(containerQId, contentIdentity);
 	}
 	
 }

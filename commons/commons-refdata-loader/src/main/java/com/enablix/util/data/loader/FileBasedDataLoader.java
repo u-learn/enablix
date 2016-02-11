@@ -14,6 +14,7 @@ import org.springframework.context.event.ContextRefreshedEvent;
 
 import com.enablix.commons.dir.watch.DirectoryWatchBuilder;
 import com.enablix.commons.dir.watch.FileCreateOrUpdateCallback;
+import com.enablix.commons.util.process.ProcessContext;
 
 public class FileBasedDataLoader implements ApplicationListener<ContextRefreshedEvent> {
 
@@ -38,8 +39,6 @@ public class FileBasedDataLoader implements ApplicationListener<ContextRefreshed
 	
 	public void loadAllData() {
 		
-		LOGGER.debug("Loading data from directory [{}]", dataDirectory);
-		
 		File dataDir = new File(dataDirectory);
 		
 		Set<String> tenantDataDirs = new HashSet<>();
@@ -59,8 +58,12 @@ public class FileBasedDataLoader implements ApplicationListener<ContextRefreshed
 		
 	}
 
-	protected void loadDataFile(File dataFile) {
+	private void loadDataFile(File dataFile) {
 
+		String tenantId = resolveTenantIdFromFile(dataFile);
+
+		ProcessContext.initialize("system", tenantId, null);
+		
 		try {
 			
 			LOGGER.info("Loading data file: " + dataFile.getCanonicalPath());
@@ -68,7 +71,10 @@ public class FileBasedDataLoader implements ApplicationListener<ContextRefreshed
 			
 		} catch (IOException e) {
 			LOGGER.error("Error loading file [" + dataFile.getAbsolutePath() + "]", e);
-		} 
+			
+		} finally {
+			ProcessContext.clear();
+		}
 	}
 
 	private String resolveTenantIdFromFile(File templateFile) {

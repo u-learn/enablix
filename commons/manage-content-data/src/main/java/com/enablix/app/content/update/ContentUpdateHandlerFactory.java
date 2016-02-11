@@ -3,6 +3,8 @@ package com.enablix.app.content.update;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.enablix.app.template.service.TemplateManager;
+
 @Component
 public class ContentUpdateHandlerFactory {
 
@@ -14,6 +16,9 @@ public class ContentUpdateHandlerFactory {
 	
 	@Autowired
 	private UpdateContentAttributeHandler updateAttribs;
+	
+	@Autowired
+	private TemplateManager templateMgr;
 	
 	public ContentUpdateHandler getHandler(UpdateContentRequest request) {
 		
