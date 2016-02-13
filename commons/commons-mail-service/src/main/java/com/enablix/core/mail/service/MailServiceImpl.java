@@ -17,6 +17,7 @@ import com.enablix.core.system.repo.SMTPConfigRepo;
 @Service
 public class MailServiceImpl implements MailService {	
 	
+	
 	private VelocityEngine velocityEngine ;
 	@Autowired
 	private EmailConfigRepo emailConfigRepo;
@@ -53,7 +54,7 @@ public class MailServiceImpl implements MailService {
 	
     @Override
 	public EmailConfiguration getEmailConfiguration(String tenantId) {
-		return emailConfigRepo.findByIdentity(tenantId);	
+		return emailConfigRepo.findByTenantId(tenantId);
 	};
 
 	@Override
@@ -67,12 +68,13 @@ public class MailServiceImpl implements MailService {
 	};
 
 	@Override
-	public Boolean deleteEmailConfiguration(String tenantId) {
+	public Boolean deleteEmailConfiguration(EmailConfiguration emailConfiguration) {
 		// TODO Auto-generated method stub
 		try {
-			emailConfigRepo.delete(tenantId);
+			emailConfigRepo.delete(emailConfiguration);
 			return true;
 		} catch (Exception e) {
+			
 			return false;
 		}
 	};

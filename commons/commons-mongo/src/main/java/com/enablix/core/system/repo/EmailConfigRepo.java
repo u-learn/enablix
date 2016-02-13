@@ -5,7 +5,7 @@ import com.enablix.core.mongo.repository.BaseMongoRepository;
 
 public interface EmailConfigRepo extends BaseMongoRepository<EmailConfiguration> {
 
-	EmailConfiguration findByIdentity(String identity);
+	EmailConfiguration findByTenantId(String tenantId);
 	
 }
 
