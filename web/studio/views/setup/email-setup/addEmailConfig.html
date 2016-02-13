@@ -1,0 +1,48 @@
+<form class="block" name="emailForm" novalidate="novalidate">
+<div class="head">
+	<h2 >Add Email Configuration</h2>
+</div>
+
+<div class="cont">
+	<div>
+		<label class="form-label">Email</label>
+		<input name="Email" placeholder="Enter Email" class="form-control" type="email" ng-blur="emailForm.Email.$valid && getSmtp(newEmailData.emailId)" ng-model="newEmailData.emailId" size="80" required>
+	</div>
+	<div ng-messages="emailForm.Email.$error" ng-if="emailForm.Email.$touched" role="alert">
+    <div ng-message="required" class="error">You didn't enter a email</div> 
+    <div ng-message="email" class="error">Please enter a valid email</div>    
+     
+  </div>
+</div>
+<div class="cont">
+	<div>
+		<label class="form-label">Email Password</label>
+		<input name="password" placeholder="Enter Password" class="form-control" ng-model="newEmailData.password" type="password" size="80" required>
+	</div>
+	<div ng-messages="emailForm.password.$error" ng-if='emailForm.password.$touched' role="alert">
+    <div ng-message="required" class="error">You didn't enter a Password</div>    
+  </div>
+</div>
+<div class="cont">
+	<div>
+		<label class="form-label">SMTP</label>
+		<input name="smtp" placeholder="Enter SMTP" class="form-control" ng-model="newEmailData.smtp" type="text" size="80" required>
+	</div>
+	<div ng-messages="emailForm.smtp.$error" ng-if='emailForm.smtp.$touched' role="alert">
+    <div ng-message="required" class="error">You didn't enter a SMTP</div>    
+  </div>
+</div>
+<div class="cont">
+	<div>
+		<label class="form-label">PORT</label>
+		<input name="port" placeholder="Enter PORT" class="form-control" ng-model="newEmailData.port" type="text" size="80" required>
+	</div>
+	<div ng-messages="emailForm.port.$error" ng-if='emailForm.port.$touched' role="alert">
+    <div ng-message="required" class="error">You didn't enter a SMTP</div>    
+  </div>
+</div>
+<div class="foot clearfix">
+	<button ng-click=" emailForm.$valid && saveEmailData()" class="button button-add">Save</button>
+	<a href="#" ng-click="cancelOperation()" class="button button-delete">Cancel</a>
+</div>
+</form>

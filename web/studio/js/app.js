@@ -212,7 +212,7 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvi
 		})
 		.state('users', {
 			url: '/users',
-			templateUrl: 'views/user/userdata.html',
+			templateUrl: 'views/setup/user/userdata.html',
 			controller: 'UserController',
 			resolve: {
 				setupData: appSetup 
@@ -220,7 +220,7 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvi
 		})
 		.state('users.list', {
 			url: '/list',
-			templateUrl: 'views/user/userlist.html',
+			templateUrl: 'views/setup/user/userlist.html',
 			controller: 'UserController',
 			resolve: {
 				setupData: appSetup 
@@ -228,7 +228,7 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvi
 		})
 		.state('users.add', {
 			url: '/add',
-			templateUrl: 'views/user/adduser.html',
+			templateUrl: 'views/setup/user/adduser.html',
 			controller: 'SaveUserController',
 			resolve: {
 				setupData: appSetup 
@@ -236,7 +236,7 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvi
 		})
 		.state('users.edit', {
 			url: '/edit/{identity}',
-			templateUrl: 'views/user/edituser.html',
+			templateUrl: 'views/setup/user/edituser.html',
 			controller: 'SaveUserController',
 			resolve: {
 				setupData: appSetup 
@@ -246,6 +246,37 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvi
 			templateUrl: 'views/set-password.html',
 			controller: 'SetPasswordController'
 			
+		}).state('emailConfig', {
+			url: '/emailConfig',
+			templateUrl: 'views/setup/email-setup/emailConfigData.html',
+			controller: 'EmailController',
+			resolve: {
+				setupData: appSetup 
+			}
+		})
+		.state('emailConfig.list', {
+			url: '/list',
+			templateUrl: 'views/setup/email-setup/emailconfigList.html',
+			controller: 'EmailController',
+			resolve: {
+				setupData: appSetup 
+			}
+		})
+		.state('emailConfig.add', {
+			url: '/add',
+			templateUrl: 'views/setup/email-setup/addEmailConfig.html',
+			controller: 'EmailController',
+			resolve: {
+				setupData: appSetup 
+			}
+		})
+		.state('emailConfig.edit', {
+			url: '/edit/{identity}',
+			templateUrl: 'views/setup/email-setup/editEmailConfig.html',
+			controller: 'EmailController',
+			resolve: {
+				setupData: appSetup 
+			}
 		});
 	
 	// The custom “X-Requested-With” is a conventional header sent by browser clients, 

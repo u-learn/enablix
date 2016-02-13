@@ -1,1 +1,1 @@
-enablix.domainName = "http://localhost:8114";
+enablix.domainName = "http://192.168.0.104:8114";

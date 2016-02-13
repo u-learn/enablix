@@ -24,6 +24,10 @@ enablix.serviceURL = {
 	"user": enablix.domainName + "/user",
 	"systemuser" : enablix.domainName + "/systemuser",
 	"deletesystemuser" : enablix.domainName + "/deletesystemuser",
-	"checkusername" : enablix.domainName + "/checkusername",
+	"getemailconfiguration" : enablix.domainName + "/getemailconfiguration/:tenantId",
+	"addemailconfiguration" : enablix.domainName + "/addemailconfiguration",
+	"deleteemailconfiguration" : enablix.domainName + "/deleteemailconfiguration",
+	"getsmtpconfig" : enablix.domainName + "/getsmtpconfig/:domainName",
+	"checkusername" : enablix.domainName + "/checkusername",	
 	"logout": enablix.domainName + "/logout"
 };

@@ -32,7 +32,7 @@ enablix.studioApp.factory('UserService',
 			sessionUser.password=_password;
 			sessionUser.isPasswordSet=true;
 				RESTService.postForData('systemuser', null, sessionUser, null,function(data) {	    	
-					Notification.primary({message: "Save successfully", delay: enablix.errorMsgShowTime});
+					Notification.primary({message: "Password save successfully", delay: enablix.errorMsgShowTime});
 				StateUpdateService.goToStudio();
 	    	}, function() {    		
 	    		Notification.error({message: "Error ", delay: enablix.errorMsgShowTime});
@@ -72,14 +72,64 @@ enablix.studioApp.factory('UserService',
 			
 		};
 		
+		var getEmailConfig= function(tenantId,_success,_error)
+		{
+			var requestParam={"tenantId" : tenantId};
+			RESTService.getForData('getemailconfiguration', requestParam, null, function(data) {	    	
+				_success(data);	    	
+    	}, function(errorObj) {    		
+    		_error(errorObj)
+    	});
+		};
+		
+		var getSmtpConfig = function(domainName,_success,_error)
+		{
+			var requestParam={"domainName" : domainName};
+			RESTService.getForData('getsmtpconfig', requestParam, null, function(data) {	    	
+				_success(data);	    	
+    	}, function(errorObj) {    		
+    		_error(errorObj)
+    	});
+		};
+		//var saveEmailData = function ()
+		var saveEmailData= function(emailData)
+		{			
+			
+			var sessionUser=JSON.parse(window.localStorage.getItem("userData"));
+			emailData.tenantId=sessionUser.tenantId;
+			emailData.identity=sessionUser.tenantId;
+			RESTService.postForData('addemailconfiguration', null, emailData, null,function(data) {	    	
+					Notification.primary({message: "Save successfully", delay: enablix.errorMsgShowTime});
+				StateUpdateService.goToEmailConfig();
+	    	}, function() {    		
+	    		Notification.error({message: "Error ", delay: enablix.errorMsgShowTime});
+	    		StateUpdateService.goToEmailConfig();
+	    	});
+			
+		};
+		
+		var deleteEmailData = function(emailData)
+		{		
+			RESTService.postForData('deleteemailconfiguration', null, emailData, null,function(data) {	    	
+					Notification.primary({message: "Deleted successfully", delay: enablix.errorMsgShowTime});
+				StateUpdateService.goToAddEmailConfig();
+	    	}, function() {    		
+	    		Notification.error({message: "Error ", delay: enablix.errorMsgShowTime});
+	    		StateUpdateService.goToEmailConfig();
+	    	});
+		}
+		
 		return {
 			
 			getAllUsers: getAllUsers,
 			addUserData: addUserData,
 			updatepassword :  updatepassword,
 			checkUserName : checkUserName,
-			deleteUser : deleteUser
-			
+			deleteUser : deleteUser,
+			getEmailConfig  : getEmailConfig,
+			getSmtpConfig : getSmtpConfig,
+			saveEmailData : saveEmailData,
+			deleteEmailData : deleteEmailData
 		};
 	}
 ]);	

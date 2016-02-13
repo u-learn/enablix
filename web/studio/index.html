@@ -78,7 +78,7 @@
 	<script type="text/javascript" src="widgets/directive/portal/peers/peersService.js"></script>
 	<script type="text/javascript" src="widgets/directive/portal/peers/peersController.js"></script>
 	<script type="text/javascript" src="widgets/directive/portal/peers/peersDirective.js"></script>
-	<script type="text/javascript" src="widgets/directive/passwordChecked.js"></script>
+	
 	
 	<script type="text/javascript" src="widgets/stateUpdateService.js"></script>
 	<script type="text/javascript" src="widgets/content/template/contentTemplateService.js"></script>
@@ -90,6 +90,7 @@
 	<script type="text/javascript" src="widgets/content/refdata/userCtrl.js"></script>
 	<script type="text/javascript" src="widgets/content/refdata/userService.js"></script>
 	<script type="text/javascript" src="widgets/content/refdata/saveUserController.js"></script>
+	<script type="text/javascript" src="widgets/content/refdata/emailConfController.js"></script>
 	
 	<script type="text/javascript" src="js/mainController.js"></script>
 	<script type="text/javascript" src="widgets/content/index/contentIndexController.js"></script>
@@ -135,8 +136,9 @@
 					<li>
 						<a href="#" ui-sref-active="active">Setup<i class="fa fa-angle-down"></i></a>
 						<ul >
+							<li><a ui-sref="users.list">Administration</a></li>
 							<li ><a  ui-sref="refdata">Reference Data</a></li>
-							<li><a ui-sref="users.list">User Management</a></li>
+							
 						</ul>
 					</li>
 					<a href="#" ng-show="authenticated" ng-click="logout()">Logout</a>

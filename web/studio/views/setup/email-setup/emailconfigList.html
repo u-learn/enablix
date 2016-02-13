@@ -1,0 +1,31 @@
+<div class="block">
+	<div class="head">
+		<h2 class="ng-binding">Email Configuration</h2>
+	</div>
+	<div class="cont">
+	<!-- <label>Search:</label><input class="form-control" ng-model="searchText"><br> -->
+<table class="datatable">
+	<thead>
+		<tr>
+			<th class="download"></th>
+			<th class="edit"></th>
+			<th class="remove"></th>
+			<th><span>Email Id</span></th>
+			<th><span>SMTP</span></th>
+			<th><span>SMTP PORT</span></th>			
+		</tr>
+	</thead>	
+	<tbody>
+		<tr >
+			<td class="download"></td>
+			<td class="edit"><a href="#" class="fa fa-pencil" ng-click="emailRecordEdit(emailData)"></a></td>
+			<td class="remove"><a href="#" class="fa fa-times" ng-click="deleteEmailRecord(emailData)"></a></td>
+			<td><span ng-bind="emailData.emailId"></span></td>	
+			<td><span ng-bind="emailData.smtp"></span></td>
+			<td><span ng-bind="emailData.port"></span></td>			
+		</tr>
+	</tbody>
+</table>
+
+	</div>
+</div>

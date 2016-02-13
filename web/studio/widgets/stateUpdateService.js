@@ -103,7 +103,16 @@ enablix.studioApp.factory('StateUpdateService',
 	 		var goToSetPassword=function(){
 	 			$state.go("setpassword");
 	 		}
-	 		
+	 		var goToAddEmailConfig=function(){
+	 			$state.go("emailConfig.add");
+	 		}
+	 		var goToEmailConfig = function()
+	 		{
+	 			$state.go("emailConfig.list");
+	 		}
+	 		var goToEditEmailConfig=function(){
+	 			$state.go("emailConfig.edit")
+	 		}
 
 	 		var goToPortalEnclosureDetail = function(_enclosureId) {
 	 			$state.go("portal.enclosure", {
@@ -150,7 +159,10 @@ enablix.studioApp.factory('StateUpdateService',
 	 			goAddUser : goAddUser,
 	 			goEditUser : goEditUser,
 	 			goToListUser : goToListUser,
-	 			goToSetPassword : goToSetPassword
+	 			goToSetPassword : goToSetPassword,
+	 			goToAddEmailConfig : goToAddEmailConfig,
+	 			goToEmailConfig : goToEmailConfig,
+	 			goToEditEmailConfig : goToEditEmailConfig
 	 		};
 	 	}
 	 ]);
