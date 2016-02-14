@@ -50,6 +50,6 @@ public class SecurityController {
 	@RequestMapping(method = RequestMethod.GET, value="/getroles", produces = "application/json")
 	public List<Role> getAllRoles() {
 		return userService.getRoleS();
-	}
+	};
 
 }
