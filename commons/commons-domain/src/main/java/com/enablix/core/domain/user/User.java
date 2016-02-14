@@ -1,15 +1,19 @@
 package com.enablix.core.domain.user;
 
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.enablix.core.domain.BaseDocumentEntity;
 import com.enablix.core.domain.profile.Profile;
+import com.enablix.core.domain.security.authorization.UserRole;
 
 @Document(collection = "ebxUser")
 public class User extends BaseDocumentEntity {
 
 	private String userId;
 	
+	private String name;
+
 	private String password;
 	
 	private String tenantId;
@@ -18,7 +22,18 @@ public class User extends BaseDocumentEntity {
 	
 	private Boolean isPasswordSet;
 	
+	@Transient
+	private UserRole userRole;	
 	
+
+	public UserRole getUserRole() {
+		return userRole;
+	}
+
+	public void setUserRole(UserRole userRole) {
+		this.userRole = userRole;
+	}
+
 	public Boolean getIsPasswordSet() {
 		return isPasswordSet;
 	}
@@ -30,6 +45,14 @@ public class User extends BaseDocumentEntity {
 	public String getUserId() {
 		return userId;
 	}
+	
+	public String getName() {
+		return name;
+	};
+
+	public void setName(String name) {
+		this.name = name;
+	};
 
 	public void setUserId(String userId) {
 		this.userId = userId;

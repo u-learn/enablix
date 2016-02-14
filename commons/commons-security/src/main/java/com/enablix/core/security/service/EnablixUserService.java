@@ -1,9 +1,15 @@
 package com.enablix.core.security.service;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
+import java.util.ListIterator;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -17,12 +23,15 @@ import com.enablix.core.domain.security.authorization.Role;
 import com.enablix.core.domain.security.authorization.UserRole;
 import com.enablix.core.domain.tenant.Tenant;
 import com.enablix.core.domain.user.User;
+import com.enablix.core.security.auth.repo.RoleRepository;
 import com.enablix.core.security.auth.repo.UserRoleRepository;
 import com.enablix.core.system.repo.TenantRepository;
 import com.enablix.core.system.repo.UserRepository;
 
 @Component
 public class EnablixUserService implements UserService, UserDetailsService {
+	
+	private static final Logger LOGGER = LoggerFactory.getLogger(UserService.class);
 
 	@Autowired
 	private UserRepository userRepo;
@@ -33,12 +42,17 @@ public class EnablixUserService implements UserService, UserDetailsService {
 	@Autowired
 	private UserRoleRepository userRoleRepo;
 	
+	@Autowired
+	private RoleRepository roleRepo;
+	
 	@Override
 	public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
 		
+		LOGGER.debug("loadUserByUsername initiated");
 		User user = userRepo.findByUserId(userName);
 		
 		if (user == null) {
+			LOGGER.debug("UserName not found " +  userName);
 			throw new UsernameNotFoundException("[" + userName + "] not found");
 		}
 		
@@ -71,15 +85,17 @@ public class EnablixUserService implements UserService, UserDetailsService {
 	
 	@Override
 	public Boolean checkUserbyUserName(String userName) {
+		LOGGER.debug("CheckUserByUserName is initiated" + userName);
 		User user=userRepo.findByUserId(userName);
 		if(user==null)
 		{
+			LOGGER.debug("User Not found by UserName"+userName);
 			return false;		  
 		}else {
+			LOGGER.debug("User found by UserName"+userName);
 			return true;
 		}
-	}
-	
+	};	
 	 
 	/**
 	 * @author ganesh 
@@ -87,30 +103,43 @@ public class EnablixUserService implements UserService, UserDetailsService {
 	
 	@Override
 	public User addUser(User user) {
-		
-		User newuser=userRepo.save(user);		
-		
+		LOGGER.debug("Add User initiated"+user.toString());
+		User newuser=userRepo.save(user);
+		newuser.getUserRole().setUserIdentity(newuser.getUserId());
+		userRoleRepo.save(newuser.getUserRole());
+		LOGGER.debug("User Added successfully" + user.toString());
 		return newuser;
 	}
 	
+	
 	@Override
 	public List<User> getAllUsers() {
-		
-		return userRepo.findAll();
-		
-	}
+		 List<User> userList=userRepo.findAll();
+		 List<User> newUserList=new ArrayList<>();
+		 for (User user : userList)
+		 {				
+			 UserRole userRole=userRoleRepo.findByUserIdentity(user.getUserId());
+			 user.setUserRole(userRole);
+			newUserList.add(user);
+			 
+		 };
+		return newUserList;	
+	};
 	
 	@Override
 	public Boolean deleteUser(User user) {
-		try{
+		LOGGER.debug("Delete User initiated");
+		try{		
 			userRepo.delete(user);
-		    return true;
+			userRoleRepo.delete(user.getUserRole());
+			LOGGER.debug("User deleted successfully");
+			return true;
 		}catch(Exception e)
 		{
-			
+		   LOGGER.debug("Exception occured while deleting User "+e.getMessage());	
 			return false;
 		}
-	}
+	};
 	
 	public static class LoggedInUser implements UserDetails {
 
@@ -185,11 +214,12 @@ public class EnablixUserService implements UserService, UserDetailsService {
 		@Override
 		public boolean isEnabled() {
 			return true;
-		}
-		
+		}		
 	}
 
-
-	
+	@Override
+	public List<Role> getRoleS() {
+		return roleRepo.findAll();
+	};
 
 }

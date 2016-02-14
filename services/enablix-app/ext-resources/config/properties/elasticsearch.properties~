@@ -1,2 +1,0 @@
-spring.data.elasticsearch.clusterNodes=localhost:9300
-spring.data.elasticsearch.clusterName=enablix-es-cluster

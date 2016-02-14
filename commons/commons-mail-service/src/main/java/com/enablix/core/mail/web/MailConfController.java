@@ -18,8 +18,8 @@ public class MailConfController {
 	@Autowired
 	MailService mailService;
 	
-	@RequestMapping(method = RequestMethod.GET, value = "/getsmtpconfig/{domainName}", produces = "application/json")
-	public SMTPConfiguration getSmtpConfig(@PathVariable String domainName) {
+	@RequestMapping(method = RequestMethod.POST, value = "/getsmtpconfig", produces = "application/json")
+	public SMTPConfiguration getSmtpConfig(@RequestBody String domainName) {
 		return mailService.getSMTPConfig(domainName);
 	};
 	
@@ -36,7 +36,7 @@ public class MailConfController {
 	public EmailConfiguration getemailconfiguration(@PathVariable String tenantId) {
 		return mailService.getEmailConfiguration(tenantId);
 	};
-	@RequestMapping(method = RequestMethod.GET, value = "/sentmail/emailid", produces = "application/json")
+	@RequestMapping(method = RequestMethod.GET, value = "/sentmail/{emailid}", produces = "application/json")
 	public Boolean sentMail(@PathVariable String emailid) {
 		return mailService.sendHtmlEmail(new Integer(0), "user", "welcome.vm", emailid, "john.wakad@gmail.com",null, "test1");
 	};
