@@ -1,6 +1,6 @@
 enablix.studioApp.controller('contentIndexCtrl', 
-			['$scope', '$state', 'ContentIndexService', 'StateUpdateService', 'Notification', 
-    function( $scope,   $state,   ContentIndexService,   StateUpdateService,   Notification) {
+			['$scope', '$state', '$stateParams', 'ContentIndexService', 'StateUpdateService', 'Notification', 
+    function( $scope,   $state,   $stateParams,   ContentIndexService,   StateUpdateService,   Notification) {
 	
 		ContentIndexService.getContentIndexData(enablix.templateId, function(data) {
 	    	
