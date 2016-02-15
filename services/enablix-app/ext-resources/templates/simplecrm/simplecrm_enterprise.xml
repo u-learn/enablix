@@ -837,7 +837,7 @@
 			<contentItem id="summary" label="Summary" type="text"/>
 			<contentItem id="file" label="File" type="doc"/>			
 		</container>
-		<container id="nda" label="Non Discolusre Agreement (NDA)">
+		<container id="nda" label="Non Disclosure Agreement (NDA)">
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="summary" label="Summary" type="text"/>
 			<contentItem id="file" label="File" type="doc"/>
