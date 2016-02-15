@@ -2,22 +2,24 @@ package com.enablix.app.content.event;
 
 import java.util.Map;
 
+import com.enablix.core.commons.xsdtopojo.ContainerType;
+
 public class ContentDataSaveEvent {
 
 	private Map<String, Object> dataAsMap;
 	
 	private String templateId;
 	
-	private String containerQId;
+	private ContainerType containerType;
 	
 	private boolean newRecord;
 
 	public ContentDataSaveEvent(Map<String, Object> dataAsMap, 
-			String templateId, String containerQId, boolean newRecord) {
+			String templateId, ContainerType containerQId, boolean newRecord) {
 		super();
 		this.dataAsMap = dataAsMap;
 		this.templateId = templateId;
-		this.containerQId = containerQId;
+		this.containerType = containerQId;
 		this.newRecord = newRecord;
 	}
 
@@ -29,8 +31,8 @@ public class ContentDataSaveEvent {
 		return templateId;
 	}
 
-	public String getContainerQId() {
-		return containerQId;
+	public ContainerType getContainerType() {
+		return containerType;
 	}
 
 	public boolean isNewRecord() {

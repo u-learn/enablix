@@ -5,9 +5,9 @@ enablix.studioApp.factory('UserService',
 		var getAllUsers= function(_success){
 			RESTService.getForData('systemuser', null, null, function(data) {	    	
 				_success(data);	    	
-    	}, function() {    		
-    		Notification.error({message: "Error loading user data", delay: enablix.errorMsgShowTime});
-    	});
+	    	}, function() {    		
+	    		Notification.error({message: "Error loading user data", delay: enablix.errorMsgShowTime});
+	    	});
 		};
 		
 		var getUserByIdentity = function(userIdentity, _success) {
@@ -26,10 +26,10 @@ enablix.studioApp.factory('UserService',
 			if (isNullOrUndefined(userData.isPasswordSet)) {
 				userData.isPasswordSet=false;
 			}
+			userData.identity=userData.userId;
 			var sessionUser=JSON.parse(window.localStorage.getItem("userData"));
 			userData.tenantId=sessionUser.tenantId;
-			var userVO = { user: userData, roles: roles };
-				RESTService.postForData('systemuser', null, userVO, null,function(data) {	    	
+				RESTService.postForData('systemuser', null, userData, null,function(data) {	    	
 					Notification.primary({message: "Save successfully", delay: enablix.errorMsgShowTime});
 				StateUpdateService.goToListUser();
 	    	}, function() {    		
@@ -44,10 +44,9 @@ enablix.studioApp.factory('UserService',
 			var sessionUser=JSON.parse(window.localStorage.getItem("userData"));
 			sessionUser.password=_password;
 			sessionUser.isPasswordSet=true;
-			var userVO = { user: sessionUser };
-				RESTService.postForData('systemuser', null, userVO, null,function(data) {	    	
-					Notification.primary({message: "Password updated successfully", delay: enablix.errorMsgShowTime});
-				StateUpdateService.goToPortalHome();
+				RESTService.postForData('systemuser', null, sessionUser, null,function(data) {	    	
+					Notification.primary({message: "Password save successfully", delay: enablix.errorMsgShowTime});
+				StateUpdateService.goToStudio();
 	    	}, function() {    		
 	    		Notification.error({message: "Error ", delay: enablix.errorMsgShowTime});
 	    	});
@@ -86,6 +85,53 @@ enablix.studioApp.factory('UserService',
 			
 		};
 		
+		var getEmailConfig= function(tenantId,_success,_error)
+		{
+			var requestParam={"tenantId" : tenantId};
+			RESTService.getForData('getemailconfiguration', requestParam, null, function(data) {	    	
+				_success(data);	    	
+    	}, function(errorObj) {    		
+    		_error(errorObj)
+    	});
+		};
+			
+		var getSmtpConfig = function(domainName,_success,_error)
+		{
+			var requestParam={"domainName" : domainName};
+			RESTService.getForData('getsmtpconfig', requestParam, null, function(data) {	    	
+				_success(data);	    	
+    	}, function(errorObj) {    		
+    		_error(errorObj)
+    	});
+		};
+		//var saveEmailData = function ()
+		var saveEmailData= function(emailData)
+		{			
+			
+			var sessionUser=JSON.parse(window.localStorage.getItem("userData"));
+			emailData.tenantId=sessionUser.tenantId;
+			emailData.identity=sessionUser.tenantId;
+			RESTService.postForData('addemailconfiguration', null, emailData, null,function(data) {	    	
+					Notification.primary({message: "Save successfully", delay: enablix.errorMsgShowTime});
+				StateUpdateService.goToEmailConfig();
+	    	}, function() {    		
+	    		Notification.error({message: "Error ", delay: enablix.errorMsgShowTime});
+	    		StateUpdateService.goToEmailConfig();
+	    	});
+			
+		};
+		
+		var deleteEmailData = function(emailData)
+		{		
+			RESTService.postForData('deleteemailconfiguration', null, emailData, null,function(data) {	    	
+					Notification.primary({message: "Deleted successfully", delay: enablix.errorMsgShowTime});
+				StateUpdateService.goToAddEmailConfig();
+	    	}, function() {    		
+	    		Notification.error({message: "Error ", delay: enablix.errorMsgShowTime});
+	    		StateUpdateService.goToEmailConfig();
+	    	});
+		}
+		
 		var getAllRoles = function(_success) {
 			
 			RESTService.getForData('fetchAllRoles', null, null, function(data) {	    	
@@ -103,6 +149,10 @@ enablix.studioApp.factory('UserService',
 			updatepassword :  updatepassword,
 			checkUserName : checkUserName,
 			deleteUser : deleteUser,
+			getEmailConfig  : getEmailConfig,
+			getSmtpConfig : getSmtpConfig,
+			saveEmailData : saveEmailData,
+			deleteEmailData : deleteEmailData,
 			getAllRoles: getAllRoles
 			
 		};

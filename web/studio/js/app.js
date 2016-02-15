@@ -302,6 +302,37 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvi
 			templateUrl: 'views/set-password.html',
 			controller: 'SetPasswordController'
 			
+		}).state('system.emailConfig', {
+			url: '/emailConfig',
+			templateUrl: 'views/setup/email-setup/emailConfigData.html',
+			controller: 'EmailController',
+			resolve: {
+				setupData: appSetup 
+			}
+		})
+		.state('system.emailConfig.list', {
+			url: '/list',
+			templateUrl: 'views/setup/email-setup/emailconfigList.html',
+			controller: 'EmailController',
+			resolve: {
+				setupData: appSetup 
+			}
+		})
+		.state('system.emailConfig.add', {
+			url: '/add',
+			templateUrl: 'views/setup/email-setup/addEmailConfig.html',
+			controller: 'EmailController',
+			resolve: {
+				setupData: appSetup 
+			}
+		})
+		.state('system.emailConfig.edit', {
+			url: '/edit/{identity}',
+			templateUrl: 'views/setup/email-setup/editEmailConfig.html',
+			controller: 'EmailController',
+			resolve: {
+				setupData: appSetup 
+			}
 		});
 	
 	// The custom “X-Requested-With” is a conventional header sent by browser clients, 

@@ -25,10 +25,10 @@ public class RecentDataCollector implements ContentDataEventListener {
 		RecentData recentData = new RecentData();
 		Object contentIdentity = event.getDataAsMap().get(ContentDataConstants.IDENTITY_KEY);
 		
-		if (contentIdentity != null) {
+		if (contentIdentity != null && !event.getContainerType().isRefData()) {
 			
 			ContentDataRef dataRef = new ContentDataRef(event.getTemplateId(), 
-					event.getContainerQId(), String.valueOf(contentIdentity));
+					event.getContainerType().getQualifiedId(), String.valueOf(contentIdentity));
 			
 			// set data ref
 			recentData.setData(dataRef);

@@ -98,7 +98,7 @@ public class ContentDataManagerImpl implements ContentDataManager {
 		
 		// notify listeners
 		ContentDataSaveEvent saveEvent = new ContentDataSaveEvent(
-				contentDataMap, request.getTemplateId(), request.contentQId(), newRecord);
+				contentDataMap, request.getTemplateId(), container, newRecord);
 		for (ContentDataEventListener listener : listenerRegistry.getListeners()) {
 			listener.onContentDataSave(saveEvent);
 		}

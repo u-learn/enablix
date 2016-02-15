@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<body>
+	<span>Time:</span>
+	<ul>
+		<li>From controller: $User</li>
+		<li>From velocity: $</li>
+	</ul>
+	<span>Message: $</span>
+</body>
+
+</html>

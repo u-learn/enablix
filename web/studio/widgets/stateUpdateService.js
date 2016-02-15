@@ -99,16 +99,30 @@ enablix.studioApp.factory('StateUpdateService',
 	 		var goAddUser = function(){	 			
 	 			$state.go("system.users.add");
 	 		};
+	 		
 	 		var goToListUser = function(){	 			
 	 			$state.go("system.users.list");
 	 		};
+	 		
 	 		var goEditUser=function(_identity){
 	 			$state.go("system.users.edit",{"identity" : _identity});
-	 		}
+	 		};
+	 		
 	 		var goToSetPassword=function(){
 	 			$state.go("setpassword");
-	 		}
+	 		};
 	 		
+	 		var goToAddEmailConfig=function(){
+	 			$state.go("system.emailConfig.add");
+	 		};
+	 		
+	 		var goToEmailConfig = function() {
+	 			$state.go("system.emailConfig.list");
+	 		};
+	 		
+	 		var goToEditEmailConfig=function(){
+	 			$state.go("system.emailConfig.edit")
+	 		}
 
 	 		var goToPortalEnclosureDetail = function(_enclosureId, _childContainerId) {
 	 			$state.go("portal.enclosure", {
@@ -164,7 +178,10 @@ enablix.studioApp.factory('StateUpdateService',
 	 			goAddUser : goAddUser,
 	 			goEditUser : goEditUser,
 	 			goToListUser : goToListUser,
-	 			goToSetPassword : goToSetPassword
+	 			goToSetPassword : goToSetPassword,
+	 			goToAddEmailConfig : goToAddEmailConfig,
+	 			goToEmailConfig : goToEmailConfig,
+	 			goToEditEmailConfig : goToEditEmailConfig
 	 		};
 	 	}
 	 ]);
