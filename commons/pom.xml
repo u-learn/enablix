@@ -20,5 +20,6 @@
 	<module>refdata-loader</module>
 	<module>configuration-provider</module>
 	<module>commons-elastic-search</module>
+	<module>commons-mail-service</module>
   </modules>
 </project>
