@@ -98,7 +98,7 @@ public class DocumentManagerImpl implements DocumentManager {
 		
 		String storeType = null;
 		if (docStoreConfig != null) {
-			storeType = docStoreConfig.getStringValue(DocumentStoreConstants.DOC_STORE_TYPE_PROP);
+			storeType = docStoreConfig.getStringValue(DocumentStoreConstants.DEFUALT_DOC_STORE_CONFIG_PROP);
 		} else {
 			storeType = storeFactory.defaultStoreType();
 		}
