@@ -1,6 +1,6 @@
-enablix.studioApp.controller('FileUploadCtrl',
-			['$scope', 'FileUploader', 
-    function ($scope, FileUploader) {
+enablix.studioApp.controller('FileUploadCtrl', 
+			['$scope', 'FileUploader', 'ContentTemplateService', 'QIdUtil',
+    function ($scope,   FileUploader,   ContentTemplateService,   QIdUtil) {
     	
 		var uploadUrl = enablix.serviceURL.uploadDocument;
 				
@@ -38,7 +38,9 @@ enablix.studioApp.controller('FileUploadCtrl',
         			contentQId: $scope.qualifiedId,
         		};
             
-            if (!isNullOrUndefined($scope.parentIdentity)) {
+            var fileContainerQId = QIdUtil.getParentQId(fd.contentQId);
+            if (!isNullOrUndefined($scope.parentIdentity) 
+            		&& !ContentTemplateService.isRootContainer(enablix.template, fileContainerQId)) {
             	fd['parentIdentity'] = $scope.parentIdentity;
             }
             

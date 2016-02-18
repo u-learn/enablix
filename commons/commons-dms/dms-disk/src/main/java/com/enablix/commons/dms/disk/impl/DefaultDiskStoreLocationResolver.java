@@ -1,6 +1,7 @@
 package com.enablix.commons.dms.disk.impl;
 
 import java.io.File;
+import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -16,7 +17,7 @@ public class DefaultDiskStoreLocationResolver implements DiskStoreLocationResolv
 	private String storeBaseLocation;
 	
 	@Override
-	public String getDocumentStoragePath(DiskDocumentMetadata metadata, String contentPath) {
+	public String getDocumentStoragePath(DiskDocumentMetadata metadata, String contentPath) throws IOException {
 		
 		String docFolderPath = storeBaseLocation + File.separator 
 				+ TenantUtil.getTenantId() + File.separator + contentPath;
@@ -24,7 +25,10 @@ public class DefaultDiskStoreLocationResolver implements DiskStoreLocationResolv
 		File docFolder = new File(docFolderPath);
 		
 		if (!docFolder.exists()) {
-			docFolder.mkdirs();
+			boolean dirCreated = docFolder.mkdirs();
+			if (!dirCreated) {
+				throw new IOException("Unable to create folder structure");
+			}
 		}
 		
 		return docFolderPath + File.separator + metadata.getName();
