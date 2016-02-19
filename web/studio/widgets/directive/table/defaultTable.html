@@ -1,11 +1,12 @@
 <!-- <label>Search:</label><input class="form-control" ng-model="searchText"><br> -->
+<div class="cont">
 <table class="datatable">
 	<thead>
 		<tr>
 			<th class="download"></th>
-			<th class="details"></th>
-			<th class="edit"></th>
-			<th class="remove"></th>
+			<th class="details" ng-if="rowClickFn"></th>
+			<th class="edit" ng-if="recordEditFn"></th>
+			<th class="remove" ng-if="recordDeleteFn"></th>
 			<th ng-repeat="col in tableHeaders">
 				<span ng-switch on="col.dataType">
 					<span ng-switch-when="number"><span class="text-right">{{col.desc}}</span></span>
@@ -22,9 +23,9 @@
 		</tr>
 		<tr ng-repeat="tableRecord in tableData | filter:searchText">
 			<td class="download"><eb-doc-download ng-if="tableRecord.downloadDocIdentity" doc-value="tableRecord.downloadDocIdentity"></eb-doc-download></td>
-			<td class="details"><a ng-click="navToRowDetail(tableRecord.identity)" class="fa fa-eye"></a></td>
-			<td class="edit"><a class="fa fa-pencil" ng-click="navToRecordEdit(tableRecord.identity)"></a></td>
-			<td class="remove"><a class="fa fa-times" ng-click="deleteTheRecord(tableRecord.identity)"></a></td>
+			<td class="details" ng-if="rowClickFn"><a ng-click="navToRowDetail(tableRecord.identity)" class="fa fa-eye"></a></td>
+			<td class="edit" ng-if="recordEditFn"><a class="fa fa-pencil" ng-click="navToRecordEdit(tableRecord.identity)"></a></td>
+			<td class="remove" ng-if="recordDeleteFn"><a class="fa fa-times" ng-click="deleteTheRecord(tableRecord.identity)"></a></td>
 			<td ng-repeat="col in tableHeaders">
 				<span ng-class="{'text-right': col.dataType == 'NUMERIC'}">
 					<span class="content-data" ng-bind-html="tableRecord[col.key] | ebxFormatData: col.dataType"></span>
@@ -36,3 +37,12 @@
 		</tr>
 	</tbody>
 </table>
+</div>
+<div class="foot text-center" ng-if="pageData && tableData.length > 0">
+	<ul class="pagination">
+		<li><a ng-click="setPage(pageData.number-1)">❮</a></li>
+		<li ng-class="{active: pageData.number == n}" ng-repeat="n in getPageNumbers(pageData.totalPages)">
+			<a ng-click="setPage(n)" ng-bind="n+1">1</a></li>
+		<li><a ng-click="setPage(pageData.number+1)">❯</a></li>
+	</ul>
+</div>

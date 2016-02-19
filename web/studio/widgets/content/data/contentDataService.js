@@ -3,12 +3,21 @@ enablix.studioApp.factory('ContentDataService',
 	 	'RESTService', 'ContentTemplateService',
 	 	function(RESTService, ContentTemplateService) {
 	 		
-	 		var getContentData = function(_templateId, _contentQId, _parentIdentity, _onSuccess, _onError) {
+	 		var getContentData = function(_templateId, _contentQId, _parentIdentity, _onSuccess, _onError, _pagination) {
 	 			
 	 			var params = {
 	 					"templateId": _templateId,
 	 					"contentQId": _contentQId
 	 			};
+	 			
+	 			if (!isNullOrUndefined(_pagination)) {
+	 				params.page = _pagination.pageNum;
+	 				params.pageSize = isNullOrUndefined(_pagination.pageSize) ? enablix.defaultPageSize : _pagination.pageSize;
+	 			} else {
+	 				params.page = "";
+	 				params.pageSize = "";
+	 			}
+	 			
 
 	 			var resourceKey = "fetchRootData";
 	 			if (!isNullOrUndefined(_parentIdentity) && _parentIdentity != "") {

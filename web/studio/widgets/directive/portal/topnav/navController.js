@@ -14,7 +14,12 @@ enablix.studioApp.controller('PortalTopNavCtrl',
 			StateUpdateService.goToPortalEnclosureDetail(navItem.qualifiedId);
 		};
 		
-		var itemContainerList = ContentTemplateService.getPortalTopNavItemContainers()
+		$scope.navToContainerList = function(cntnrNavItem) {
+			StateUpdateService.goToPortalContainerList(cntnrNavItem.qualifiedId);
+		}
+		
+		var itemContainerList = ContentTemplateService.getPortalTopNavItemContainers();
+		
 		angular.forEach(itemContainerList, function(itemCntnr) {
 			
 			var container = ContentTemplateService.getContainerDefinition(enablix.template, itemCntnr.qualifiedId);
@@ -34,6 +39,7 @@ enablix.studioApp.controller('PortalTopNavCtrl',
 			
 			$scope.topNavList.push(navItem);
 			
+			/* Remove dropdown for container items
 			// add container data instance node
 			ContentDataService.getContentData(enablix.templateId, navItem.qualifiedId, null, function(data) {
 				
@@ -43,7 +49,7 @@ enablix.studioApp.controller('PortalTopNavCtrl',
 				
 			}, function(data) {
 				Notification.error({message: "Error retrieving content data", delay: enablix.errorMsgShowTime});
-			});
+			});*/
 			
 		});
 		

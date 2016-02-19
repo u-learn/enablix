@@ -3,7 +3,7 @@
 	<ul>
 		<li><a href="#" ui-sref-active="active" ui-sref="portal.home">Home</a></li>
 		<li ng-repeat="navItem in topNavList">
-			<a href="#" ng-class="{'active' : navItem.qualifiedId == $stateParams.containerQId || navItem.qualifiedId == $stateParams.enclosureId}"
+			<a ng-click="navToContainerList(navItem)" ng-class="{'active' : navItem.qualifiedId == $stateParams.containerQId || navItem.qualifiedId == $stateParams.enclosureId}"
 			   ng-if="navItem.type == 'item-container'">{{navItem.label}}&nbsp;<i ng-if="navItem.children.length > 0" class="fa fa-angle-down"></i></a>
 	    	<a ng-class="{'active' : navItem.qualifiedId == $stateParams.containerQId || navItem.qualifiedId == $stateParams.enclosureId}" 
 	    	   ng-if="navItem.type == 'enclosure'" ng-click="navToEnclosureItem(navItem)">{{navItem.label}}</a>

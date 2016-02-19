@@ -1,6 +1,9 @@
 enablix.studioApp.controller('PortalCntnrRecommendedCtrl', 
-		   ['$scope', '$rootScope', '$stateParams', 'ContentTemplateService', 'StudioSetupService', 
-    function($scope,   $rootScope,   $stateParams,   ContentTemplateService,   StudioSetupService) {
+		   ['$scope', '$rootScope', '$state', '$stateParams', 'ContentTemplateService', 'StudioSetupService', 
+    function($scope,   $rootScope,   $state,   $stateParams,   ContentTemplateService,   StudioSetupService) {
+		
+		$scope.$state = $state;
+			   
 		$scope.containerQId = $stateParams.containerQId;
 		$scope.contentIdentity = $stateParams.elementIdentity;
 		

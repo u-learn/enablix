@@ -6,6 +6,7 @@ enablix.studioApp = angular.module("studio", ['ui.router', 'angularTreeview', 'l
 //enablix.templateId = "entSoftwareTemplate"; //"amlSalesTemplate";
 enablix.dateFormat = 'MM/dd/yyyy';
 enablix.errorMsgShowTime = 10000; // in milli-seconds 
+enablix.defaultPageSize = 5;
 
 var appSetup = function(StudioSetupService) {
 	return StudioSetupService.setupStudio();
@@ -164,6 +165,34 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvi
 			controller: 'PortalSearchCtrl',
 			resolve: {
 				setupData: appSetup 
+			}
+		})
+		.state('portal.containerlist', {
+			url: '/containerlist/{containerQId}?page',
+			params: {
+				page: {
+					value: '0',
+					squash: true
+				}
+			},
+			views: {
+				// the main template
+				'': {
+					templateUrl: 'views/portal/portal-container-list.html',
+					controller: 'PortalCntnrListCtrl',
+					resolve: {
+						setupData: appSetup 
+					}
+				},
+				
+				// right section template
+				'rightSection@portal.containerlist' : {
+					templateUrl: 'views/portal/container/recommended-section.html',
+					controller: 'PortalCntnrRecommendedCtrl',
+					resolve: {
+						setupData: appSetup 
+					}
+				}
 			}
 		})
 		.state('portal.container', {

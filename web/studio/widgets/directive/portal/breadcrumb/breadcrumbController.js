@@ -24,6 +24,9 @@ enablix.studioApp.controller('PortalBreadcrumbCtrl',
 			} else if (!isNullOrUndefined(_enclosureId)) {
 				StateUpdateService.goToPortalEnclosureDetail(_enclosureId, _containerQId);
 				
+			} else if (!isNullOrUndefined(_containerQId) && isNullOrUndefined(_contentIdentity)) {
+				StateUpdateService.goToPortalContainerList(_containerQId);
+				
 			} else if (!isNullOrUndefined(_containerQId) && !isNullOrUndefined(_contentIdentity)) {
 				StateUpdateService.goToPortalContainerBody(
 						_containerQId, _contentIdentity, 'single', _containerQId);
@@ -40,18 +43,20 @@ enablix.studioApp.controller('PortalBreadcrumbCtrl',
 			var subContainerQId = $stateParams.subContainerQId;
 			var enclosureId = $stateParams.enclosureId;
 			
+			var breadCrumbs = [];
+			
+			breadCrumbs.push({
+				label: PORTAL_HOME_LABEL,
+				qualifiedId: PORTAL_HOME_QID
+			});
+			
 			if (isNullOrUndefined(enclosureId)) {
 	
-				ContentDataService.getNavigationPath(containerQId, elemIdentity, 
+				if (!isNullOrUndefined(elemIdentity)) {
+					
+					ContentDataService.getNavigationPath(containerQId, elemIdentity, 
 					function(navPath) {
 						
-						var breadCrumbs = [];
-						
-						breadCrumbs.push({
-							label: PORTAL_HOME_LABEL,
-							qualifiedId: PORTAL_HOME_QID
-						});
-
 						if (!isNullOrUndefined(navPath)) {
 							
 							var navContentPointer = navPath;
@@ -80,8 +85,7 @@ enablix.studioApp.controller('PortalBreadcrumbCtrl',
 								// first breadcrumb item, container name
 								breadCrumbs.push({
 									label: containerDef.label,
-									qualifiedId: navContentPointer.qualifiedId,
-									identity: navContentPointer.identity
+									qualifiedId: navContentPointer.qualifiedId
 								});
 							}
 							
@@ -98,20 +102,23 @@ enablix.studioApp.controller('PortalBreadcrumbCtrl',
 							}
 						}
 						
-						$scope.breadcrumbList = breadCrumbs;
 					}, 
 					function(errResp) {
 						Notification.error({message: "Error loading breadcrumbs", delay: enablix.errorMsgShowTime});
 					});
+					
+				} else {
+					
+					// Bread crumb for container list page
+					
+					var containerDef = ContentTemplateService.getContainerDefinition(enablix.template, $stateParams.containerQId);
+					breadCrumbs.push({
+						label: containerDef.label,
+						qualifiedId: containerDef.qualifiedId
+					});
+				}
 				
 			} else {
-				
-				var breadCrumbs = [];
-				
-				breadCrumbs.push({
-					label: PORTAL_HOME_LABEL,
-					qualifiedId: PORTAL_HOME_QID
-				});
 				
 				var enclDef = ContentTemplateService.getPortalEnclosureDefinition(enclosureId);
 				breadCrumbs.push({
@@ -133,8 +140,9 @@ enablix.studioApp.controller('PortalBreadcrumbCtrl',
 					}
 				}
 				
-				$scope.breadcrumbList = breadCrumbs;
 			}
+			
+			$scope.breadcrumbList = breadCrumbs;
 			
 		};
 		

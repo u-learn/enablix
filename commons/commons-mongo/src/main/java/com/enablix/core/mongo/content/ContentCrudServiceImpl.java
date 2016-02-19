@@ -7,6 +7,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -141,10 +144,9 @@ public class ContentCrudServiceImpl implements ContentCrudService {
 		return mongoTemplate.findOne(query, HashMap.class, collectionName);
 	}
 
-	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public List<Map<String, Object>> findAllRecord(String collectionName) {
-		return (List) mongoTemplate.findAll(HashMap.class, collectionName);
+		return findAllRecord(collectionName, null).getContent();
 	}
 
 	private Criteria createParentCriteria(String parentIdentity) {
@@ -153,11 +155,9 @@ public class ContentCrudServiceImpl implements ContentCrudService {
 		return Criteria.where(criteriaKey).is(parentIdentity);
 	}
 	
-	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public List<Map<String, Object>> findAllRecordWithParentId(String collectionName, String parentIdentity) {
-		Query query = Query.query(createParentCriteria(parentIdentity));
-		return (List) mongoTemplate.find(query, HashMap.class, collectionName);
+		return findAllRecord(collectionName, null).getContent();
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
@@ -272,6 +272,43 @@ public class ContentCrudServiceImpl implements ContentCrudService {
 		List<Map<String, Object>> result = (List) mongoTemplate.find(query, HashMap.class, collectionName);
 
 		return result;
+	}
+
+	@Override
+	public Page<Map<String, Object>> findAllRecord(String collectionName, Pageable pageable) {
+		Query query = new Query();
+		return findRecords(query, collectionName, pageable);
+	}
+
+	@Override
+	public Page<Map<String, Object>> findAllRecordWithParentId(String collectionName, String parentIdentity,
+			Pageable pageable) {
+		
+		Query query = Query.query(createParentCriteria(parentIdentity));
+		return findRecords(query, collectionName, pageable);
+	}
+
+	@Override
+	public Page<Map<String, Object>> findAllRecordWithLinkContainerId(String collectionName, String linkContentItemId,
+			String linkContainerIdentity, Pageable pageable) {
+
+		Query query = Query.query(Criteria.where(linkContentItemId + ".id").is(linkContainerIdentity));
+		return findRecords(query, collectionName, pageable);
+	}
+	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	private Page<Map<String, Object>> findRecords(Query query, String collectionName, Pageable pageable) {
+		
+		long count = 0;
+		
+		if (pageable != null) {
+			count = mongoTemplate.count(query, collectionName);
+			query = query.with(pageable);
+		}
+		
+		List<Map<String, Object>> list =  (List) mongoTemplate.find(query, HashMap.class, collectionName);
+		
+		return new PageImpl<Map<String, Object>>(list, pageable, count);
 	}
 	
 }

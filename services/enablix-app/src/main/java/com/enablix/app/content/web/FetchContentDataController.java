@@ -3,14 +3,18 @@ package com.enablix.app.content.web;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.enablix.app.content.ContentDataManager;
 import com.enablix.app.content.fetch.FetchContentRequest;
 import com.enablix.app.template.web.TemplateController;
+import com.enablix.commons.util.StringUtil;
 
 @RestController
 @RequestMapping("data")
@@ -21,12 +25,25 @@ public class FetchContentDataController {
 	@Autowired
 	private ContentDataManager dataMgr;
 	
+	private static final int DEFAULT_PAGE_SIZE = 10;
+	
 	@RequestMapping(method = RequestMethod.GET, 
 			value="/t/{templateId}/c/{contentQId}", 
 			produces = "application/json")
-	public Object fetchRootData(@PathVariable String templateId, @PathVariable String contentQId) {
+	public Object fetchRootData(@PathVariable String templateId, @PathVariable String contentQId,
+			@RequestParam(required=false) String page, 
+			@RequestParam(required=false) String size) {
 		LOGGER.debug("Fetch root content data");
-		return fetchData(new FetchContentRequest(templateId, contentQId, null, null));
+		
+		Pageable pageable = null;
+		
+		if (!StringUtil.isEmpty(page)) {
+			int pageInt = Integer.parseInt(page);
+			int sizeInt = StringUtil.isEmpty(size) ? DEFAULT_PAGE_SIZE : Integer.parseInt(size);
+			pageable = new PageRequest(pageInt, sizeInt);
+		}
+		
+		return fetchData(new FetchContentRequest(templateId, contentQId, null, null, pageable));
 	}
 
 	@RequestMapping(method = RequestMethod.GET, 

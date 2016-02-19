@@ -196,14 +196,16 @@ public class ContentDataManagerImpl implements ContentDataManager {
 				&& StringUtil.isEmpty(request.getRecordIdentity())) {
 			
 			// Fetch all root elements for the template
-			data = crud.findAllRecord(collName);
+			data = request.getPageable() == null ? crud.findAllRecord(collName) : 
+						crud.findAllRecord(collName, request.getPageable());
 			
 		} else if (!StringUtil.isEmpty(request.getParentRecordIdentity())) {
 			
 			// Fetch all child containers
 			if (TemplateUtil.hasOwnCollection(template, contentQId)) {
 				// content is in its own collection, hence query with parent id
-				data = crud.findAllRecordWithParentId(collName, request.getParentRecordIdentity());
+				data = request.getPageable() == null ? crud.findAllRecordWithParentId(collName, request.getParentRecordIdentity())
+						: crud.findAllRecordWithParentId(collName, request.getParentRecordIdentity(), request.getPageable());
 				
 			} else {
 				// content is a child array in parents collection, hence retrieve child elements
@@ -228,7 +230,7 @@ public class ContentDataManagerImpl implements ContentDataManager {
 		String collName = TemplateUtil.resolveCollectionName(template, contentQId);
 		String qIdRelativeToParent = TemplateUtil.getQIdRelativeToParentContainer(template, contentQId);
 
-		List<Map<String, Object>> peers = null;
+		List<Map<String, Object>> peers = new ArrayList<Map<String, Object>>();
 		
 		// Fetch one record
 		Map<String, Object> recordData = 
@@ -245,15 +247,12 @@ public class ContentDataManagerImpl implements ContentDataManager {
 											collName, parentIdentity);
 				
 				// remove current
-				for (Iterator<Map<String, Object>> itr = allPeers.iterator(); itr.hasNext(); ) {
-					String peerIdentity = (String) itr.next().get(ContentDataConstants.IDENTITY_KEY);
-					if (request.getRecordIdentity().equals(peerIdentity)) {
-						itr.remove();
-						break;
+				for (Map<String, Object> item : allPeers) {
+					String peerIdentity = (String) item.get(ContentDataConstants.IDENTITY_KEY);
+					if (!request.getRecordIdentity().equals(peerIdentity)) {
+						peers.add(item);
 					}
 				}
-				
-				peers = allPeers;
 				
 			} else {
 				// TODO:

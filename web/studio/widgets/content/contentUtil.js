@@ -50,10 +50,60 @@ enablix.studioApp.factory('ContentUtil',
 				
 				return findLabelValue(portalLabelAttrId, _containerDef, _instanceData);
 			};
+			
+			var decorateData = function(_containerDef, _dataRecord) {
 				
+				for (var i = 0; i < _containerDef.contentItem.length; i++) {
+					
+					var item = _containerDef.contentItem[i];
+					
+					if (item.type == 'DOC') {
+					
+						var docInstance = _dataRecord[item.id];
+						if (docInstance && docInstance.identity) {
+							_dataRecord.downloadDocIdentity = docInstance.identity;
+						}
+						
+						break;
+					}
+				}
+			}
+			
+			var getContentListHeaders = function(_containerDef) {
+				
+				var listHeaders = [];
+				
+				var hiddenContentItemIds = [];
+				
+				angular.forEach(ContentTemplateService.getContainerListViewHiddenItems(_containerDef.qualifiedId), 
+						function(hiddenContentItem) {
+							hiddenContentItemIds.push(hiddenContentItem.id);
+						});
+				
+				angular.forEach(_containerDef.contentItem, function(containerAttr) {
+					
+					if (!hiddenContentItemIds.contains(containerAttr.id)) {
+						
+						var header = {
+							"key" : containerAttr.id,
+							"desc" : containerAttr.label,
+							"dataType" : containerAttr.type 
+						};
+						
+						listHeaders.push(header);
+					}
+				});
+				
+				return listHeaders;
+			};
+			
 	 		return {
 	 			resolveContainerInstanceLabel: resolveContainerInstanceLabel,
-	 			resolveContainerInstancePortalLabel: resolveContainerInstancePortalLabel
+	 			resolveContainerInstancePortalLabel: resolveContainerInstancePortalLabel,
+	 			decorateData: decorateData,
+	 			getContentListHeaders: getContentListHeaders
 	 		};
+	 		
+	 		
 	 	}
 	 ]);

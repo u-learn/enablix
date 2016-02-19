@@ -1,6 +1,6 @@
 enablix.studioApp.controller('ContentListCtrl', 
-			['$scope', '$stateParams', 'ContentDataService', 'ContentTemplateService', 'StateUpdateService', 'StudioSetupService', 'Notification',
-	function( $scope,   $stateParams,   ContentDataService,   ContentTemplateService,   StateUpdateService,   StudioSetupService,   Notification) {
+			['$scope', '$stateParams', 'ContentDataService', 'ContentTemplateService', 'StateUpdateService', 'StudioSetupService', 'Notification', 'ContentUtil',
+	function( $scope,   $stateParams,   ContentDataService,   ContentTemplateService,   StateUpdateService,   StudioSetupService,   Notification,   ContentUtil) {
 		
 		var containerQId = $stateParams.containerQId;
 		var parentIdentity = $stateParams.parentIdentity;
@@ -21,11 +21,7 @@ enablix.studioApp.controller('ContentListCtrl',
 			}
 		}
 		
-		var hiddenContentItemIds = [];
-		
-		angular.forEach(ContentTemplateService.getContainerListViewHiddenItems(containerQId), function(hiddenContentItem) {
-			hiddenContentItemIds.push(hiddenContentItem.id);
-		});
+		$scope.listHeaders = ContentUtil.getContentListHeaders($scope.containerDef);
 		
 		$scope.navToEdit = function(elementIdentity) {
 			$scope.goToDetailEdit(containerQId, elementIdentity);
@@ -48,45 +44,13 @@ enablix.studioApp.controller('ContentListCtrl',
 			
 		}
 		
-		angular.forEach($scope.containerDef.contentItem, function(containerAttr) {
-			
-			if (!hiddenContentItemIds.contains(containerAttr.id)) {
-				
-				var header = {
-					"key" : containerAttr.id,
-					"desc" : containerAttr.label,
-					"dataType" : containerAttr.type 
-				};
-				
-				$scope.listHeaders.push(header);
-			}
-		});
-		
-		var decorateData = function(_containerDef, _dataRecord) {
-			
-			for (var i = 0; i < _containerDef.contentItem.length; i++) {
-				
-				var item = _containerDef.contentItem[i];
-				
-				if (item.type == 'DOC') {
-				
-					var docInstance = _dataRecord[item.id];
-					if (docInstance && docInstance.identity) {
-						_dataRecord.downloadDocIdentity = docInstance.identity;
-					}
-					
-					break;
-				}
-			}
-		}
-		
 		var fetchData = function() {
 			ContentDataService.getContentData(enablix.templateId, containerQId, parentIdentity, 
 				function(data) {
 					$scope.listData = data;
 					
 					angular.forEach($scope.listData, function(item) {
-						decorateData($scope.containerDef, item);
+						ContentUtil.decorateData($scope.containerDef, item);
 					});
 				}, 
 				function(data) {

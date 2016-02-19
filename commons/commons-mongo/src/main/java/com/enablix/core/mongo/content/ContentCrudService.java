@@ -3,6 +3,9 @@ package com.enablix.core.mongo.content;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 public interface ContentCrudService {
 
 	void insert(String collectionName, String jsonData);
@@ -17,9 +20,17 @@ public interface ContentCrudService {
 	
 	List<Map<String, Object>> findAllRecord(String collectionName);
 	
+	Page<Map<String, Object>> findAllRecord(String collectionName, Pageable pageable);
+	
 	List<Map<String, Object>> findAllRecordWithParentId(String collectionName, String parentIdentity);
 	
-	List<Map<String, Object>> findAllRecordWithLinkContainerId(String collectionName, String linkContentItemId, String linkContainerIdentity);
+	Page<Map<String, Object>> findAllRecordWithParentId(String collectionName, String parentIdentity, Pageable pageable);
+	
+	List<Map<String, Object>> findAllRecordWithLinkContainerId(String collectionName, 
+			String linkContentItemId, String linkContainerIdentity);
+	
+	Page<Map<String, Object>> findAllRecordWithLinkContainerId(String collectionName, 
+			String linkContentItemId, String linkContainerIdentity, Pageable pageable);
 
 	void updateAttributes(String collectionName, String elementQId, String elementIdentity, Map<String, Object> data);
 
