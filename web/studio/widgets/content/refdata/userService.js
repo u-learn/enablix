@@ -29,7 +29,8 @@ enablix.studioApp.factory('UserService',
 			userData.identity=userData.userId;
 			var sessionUser=JSON.parse(window.localStorage.getItem("userData"));
 			userData.tenantId=sessionUser.tenantId;
-				RESTService.postForData('systemuser', null, userData, null,function(data) {	    	
+			var userVO = { user: userData, roles: roles };
+				RESTService.postForData('systemuser', null, userVO, null,function(data) {	    	
 					Notification.primary({message: "Save successfully", delay: enablix.errorMsgShowTime});
 				StateUpdateService.goToListUser();
 	    	}, function() {    		
@@ -44,7 +45,8 @@ enablix.studioApp.factory('UserService',
 			var sessionUser=JSON.parse(window.localStorage.getItem("userData"));
 			sessionUser.password=_password;
 			sessionUser.isPasswordSet=true;
-				RESTService.postForData('systemuser', null, sessionUser, null,function(data) {	    	
+			var userVO = { user: sessionUser };
+				RESTService.postForData('systemuser', null, userVO, null,function(data) {	    	
 					Notification.primary({message: "Password save successfully", delay: enablix.errorMsgShowTime});
 				StateUpdateService.goToStudio();
 	    	}, function() {    		
