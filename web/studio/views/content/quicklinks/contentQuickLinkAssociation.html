@@ -2,9 +2,29 @@
     <h3 class="modal-title">Quick Links</h3>
 </div>
 <div class="modal-body">
-    Quick Link options
+<div class="cont">
+<table class="datatable">
+	<thead>
+		<tr>
+			<th></th>
+			<th></th>
+			<th>
+				<span>Section</span>
+			</th>
+		</tr>
+	</thead>
+	
+	<tbody>
+		<tr ng-repeat="assoc in quickLinkCategoryAssociations">
+			<td class="remove"></td>
+			<td class="remove" ng-if="!assoc.associated"><a ng-click="associateToCategory(assoc)" class="fa fa-square-o"></a></td>
+			<td class="check" ng-if="assoc.associated"><a ng-click="dissociateFromCategory(assoc)" class="fa fa-check-square-o"></a></td>
+			<td><span class="content-data">{{assoc.category.name}}</span></td>
+		</tr>
+	</tbody>
+</table>
+</div>
 </div>
 <div class="modal-footer">
-    <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
-    <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+    <button class="button button-small" type="button" ng-click="close()">Close</button>
 </div>

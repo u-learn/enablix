@@ -8,6 +8,10 @@ public class ContentDataRef {
 	
 	private String instanceIdentity;
 
+	protected ContentDataRef() {
+		// for JSON conversions
+	}
+	
 	public ContentDataRef(String templateId, String containerQId, String instanceIdentity) {
 		super();
 		this.templateId = templateId;

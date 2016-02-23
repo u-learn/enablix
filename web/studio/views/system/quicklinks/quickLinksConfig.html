@@ -6,7 +6,7 @@
 <div class="cont" ng-repeat="quickLinkSec in quickLinksData.sections">
 	<div>
 		<a ng-if="quickLinkSec.editing" ng-click="saveQuickLinkSection(quickLinkSec)" class="button button-add">Save</a>
-		<a ng-if="!quickLinkSec.editing" ng-click="quickLinkSec.editing=true" class="button button-add">Edit</a>
+		<a ng-if="!quickLinkSec.editing" ng-click="quickLinkSec.editing=true" class="button button-edit">Edit</a>
 		<span class="section-heading" ng-if="!quickLinkSec.editing">{{quickLinkSec.sectionName}}</span>
 		<input name="sectionName[$index]" placeholder="Enter Section Heading" ng-model="quickLinksData.sections[$index].sectionName" 
 			class="form-control form-control-inlined" size="80" required ng-if="quickLinkSec.editing">

@@ -12,6 +12,8 @@ import com.enablix.app.content.ui.NavigableContent;
 import com.enablix.app.content.ui.NavigableContentBuilder;
 import com.enablix.app.content.ui.link.repo.QuickLinkCategoryRepository;
 import com.enablix.app.content.ui.link.repo.QuickLinkContentRepository;
+import com.enablix.commons.util.StringUtil;
+import com.enablix.commons.util.process.ProcessContext;
 import com.enablix.core.api.ContentDataRef;
 import com.enablix.core.domain.links.QuickLinkCategory;
 import com.enablix.core.domain.links.QuickLinkContent;
@@ -51,7 +53,7 @@ public class QuickLinksServiceImpl implements QuickLinksService {
 			NavigableContent navContent = navContentBuilder.build(linkContent.getData(), labelResolver);
 			
 			QuickLinks.Link link = new QuickLinks.Link();
-			link.setCategoryIdentity(linkContent.getCategory().getName());
+			link.setCategoryIdentity(linkContent.getCategory().getIdentity());
 			link.setData(navContent);
 			
 			quickLinks.addLink(link);
@@ -76,7 +78,7 @@ public class QuickLinksServiceImpl implements QuickLinksService {
 	}
 
 	@Override
-	public void addLinkToCategory(String categoryIdentity, ContentDataRef linkData) {
+	public QuickLinkContent addLinkToCategory(String categoryIdentity, ContentDataRef linkData) {
 		
 		QuickLinkCategory category = categoryRepo.findByIdentity(categoryIdentity);
 		if (category == null) {
@@ -84,11 +86,15 @@ public class QuickLinksServiceImpl implements QuickLinksService {
 					+ "] does not exist");
 		}
 		
+		if (StringUtil.isEmpty(linkData.getTemplateId())) {
+			linkData.setTemplateId(ProcessContext.get().getTemplateId());
+		}
+		
 		QuickLinkContent linkContent = new QuickLinkContent();
 		linkContent.setCategory(category);
 		linkContent.setData(linkData);
 		
-		linkRepo.save(linkContent);
+		return linkRepo.save(linkContent);
 		
 	}
 

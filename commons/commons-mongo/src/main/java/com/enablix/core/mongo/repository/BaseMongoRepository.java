@@ -10,6 +10,6 @@ public interface BaseMongoRepository<T extends BaseEntity> extends MongoReposito
 
 	T findByIdentity(String identity);
 	
-	T deleteByIdentity(String identity);
+	Long deleteByIdentity(String identity);
 	
 }

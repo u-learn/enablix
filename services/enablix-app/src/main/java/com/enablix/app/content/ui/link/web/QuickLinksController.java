@@ -14,6 +14,7 @@ import com.enablix.app.content.ui.link.QuickLinks;
 import com.enablix.app.content.ui.link.QuickLinksService;
 import com.enablix.core.api.ContentDataRef;
 import com.enablix.core.domain.links.QuickLinkCategory;
+import com.enablix.core.domain.links.QuickLinkContent;
 
 @RestController
 @RequestMapping("quicklink")
@@ -38,16 +39,17 @@ public class QuickLinksController {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, value="/add")
-	public void addQuickLink(AddQuickLinkRequest addLink) {
-		quickLinksService.addLinkToCategory(addLink.getQuickLinkCategoryIdentity(), addLink.getLinkContent());
+	public QuickLinkContent addQuickLink(@RequestBody AddQuickLinkRequest addLink) {
+		return quickLinksService.addLinkToCategory(addLink.getQuickLinkCategoryIdentity(), 
+				addLink.getLinkContent());
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, value="/delete")
-	public void deleteQuickLink(String quickLinkIdentity) {
+	public void deleteQuickLink(@RequestBody String quickLinkIdentity) {
 		quickLinksService.removeLinkFromCategory(quickLinkIdentity);
 	}
 	
-	public class AddQuickLinkRequest {
+	public static class AddQuickLinkRequest {
 		
 		private String quickLinkCategoryIdentity;
 		private ContentDataRef linkContent;

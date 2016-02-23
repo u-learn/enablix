@@ -1,6 +1,6 @@
 enablix.studioApp.controller('ContentListCtrl', 
-			['$scope', '$stateParams', 'ContentDataService', 'ContentTemplateService', 'StateUpdateService', 'StudioSetupService', 'Notification', 'ContentUtil', '$modal',
-	function( $scope,   $stateParams,   ContentDataService,   ContentTemplateService,   StateUpdateService,   StudioSetupService,   Notification,   ContentUtil,   $modal) {
+			['$scope', '$state', '$stateParams', 'ContentDataService', 'ContentTemplateService', 'StateUpdateService', 'StudioSetupService', 'Notification', 'ContentUtil', '$modal', 'QuickLinksService',
+	function( $scope,   $state,   $stateParams,   ContentDataService,   ContentTemplateService,   StateUpdateService,   StudioSetupService,   Notification,   ContentUtil,   $modal,   QuickLinksService) {
 		
 		var containerQId = $stateParams.containerQId;
 		var parentIdentity = $stateParams.parentIdentity;
@@ -64,17 +64,38 @@ enablix.studioApp.controller('ContentListCtrl',
 		var showAddQuickLinks = function(contentIdentity) {
 			var modalInstance = $modal.open({
 			      templateUrl: 'views/content/quicklinks/contentQuickLinkAssociation.html',
-			      size: '' // 'sm', 'lg'
+			      size: 'sm', // 'sm', 'lg'
+			      controller: 'AssociateQuickLinkController',
+			      resolve: {
+			    	  quickLinkAssociation: function($stateParams, $q) {
+			    		  
+			    		  var deferred = $q.defer();
+			    		  
+			    		  QuickLinksService.getContentQuickLinkAssociation(contentIdentity, 
+				    			function(data) {
+				    			  deferred.resolve(data);
+				    		  	}, function(data) {
+				    		  		deferred.reject(data);
+				    		  	});
+			    		  
+			    		  return deferred.promise;
+			    	  },
+			    	  contentInstanceIdentity: function() {
+			    		  return contentIdentity;
+			    	  }
+			      }
 			    });
 		};
 		
-		$scope.tableRecordActions = 
-			[{
-				actionName: "Add to Quick Links",
-				iconClass: "fa fa-link",
-				tableCellClass: "edit",
-				actionCallbackFn: showAddQuickLinks
-			}];
+		if ($state.includes('studio.list')) {
+			$scope.tableRecordActions = 
+				[{
+					actionName: "Add to Quick Links",
+					iconClass: "fa fa-link",
+					tableCellClass: "edit",
+					actionCallbackFn: showAddQuickLinks
+				}];
+		}
 		
 		$scope.pageHeading = containerLabel;
 		

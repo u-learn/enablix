@@ -881,6 +881,17 @@ form .row .form-label:first-child {
 .datatable .remove a:hover {
 	color: #c0392b;
 }
+.datatable .check {
+	width: 1px;
+	padding-left: 0;
+	color: #2ecc71;
+}
+.datatable .check a {
+	transition: color 0.3s;	
+}
+.datatable .check a:hover {
+	color: #27ae60;
+}
 .datatable .download {
 	width: 1px;
 	color: #2ecc71;

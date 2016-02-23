@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.enablix.core.api.ContentDataRef;
 import com.enablix.core.domain.links.QuickLinkCategory;
+import com.enablix.core.domain.links.QuickLinkContent;
 
 public interface QuickLinksService {
 
@@ -15,7 +16,7 @@ public interface QuickLinksService {
 	
 	List<QuickLinkCategory> getAllCategories();
 	
-	void addLinkToCategory(String categoryIdentity, ContentDataRef linkContent);
+	QuickLinkContent addLinkToCategory(String categoryIdentity, ContentDataRef linkContent);
 	
 	void removeLinkFromCategory(String linkIdentity);
 	
