@@ -29,12 +29,20 @@ enablix.studioApp.factory('UserService',
 			userData.identity=userData.userId;
 			var sessionUser=JSON.parse(window.localStorage.getItem("userData"));
 			userData.tenantId=sessionUser.tenantId;
-			var userVO = { user: userData, roles: roles };
-				RESTService.postForData('systemuser', null, userVO, null,function(data) {	    	
-					Notification.primary({message: "Save successfully", delay: enablix.errorMsgShowTime});
-				StateUpdateService.goToListUser();
+			var userVO = { user: userData, roles: roles };			
+				
+			RESTService.postForData('systemuser', null, userVO, null,function(data) {	    	
+					Notification.primary({message: "User Saved successfully", delay: enablix.errorMsgShowTime});
+				//send password reset mail				
+					var requestParam={"scenario" : "resetpassword","userid":userData.userId,"tenantid":sessionUser.tenantId};			
+					RESTService.getForData('sentmail',requestParam, null,function(data) {
+						Notification.primary({message: "Mail sent successfully", delay: enablix.errorMsgShowTime});
+					}, function(errorObj) {    		
+						Notification.error({message: "Error sending mail ", delay: enablix.errorMsgShowTime});
+					});		
+				StateUpdateService.goToListUser();				
 	    	}, function() {    		
-	    		Notification.error({message: "Error ", delay: enablix.errorMsgShowTime});
+	    		Notification.error({message: "Error saving user ", delay: enablix.errorMsgShowTime});
 	    		StateUpdateService.goToListUser();
 	    	});
 			
@@ -45,9 +53,17 @@ enablix.studioApp.factory('UserService',
 			var sessionUser=JSON.parse(window.localStorage.getItem("userData"));
 			sessionUser.password=_password;
 			sessionUser.isPasswordSet=true;
-			var userVO = { user: sessionUser };
+			var userVO = { user: sessionUser, roles: [] };
 				RESTService.postForData('systemuser', null, userVO, null,function(data) {	    	
-					Notification.primary({message: "Password save successfully", delay: enablix.errorMsgShowTime});
+					Notification.primary({message: "Password saved successfully", delay: enablix.errorMsgShowTime});
+					
+					var requestParam={"scenario" : "passwordconfirmation","userid":sessionUser.userId,"tenantid":sessionUser.tenantId};	
+					RESTService.getForData('sentmail',requestParam, null,function(data) {
+						Notification.primary({message: "Password Reset Confirmation mail sent successfully", delay: enablix.errorMsgShowTime});
+					}, function(errorObj) {    		
+						Notification.error({message: "Error sending mail ", delay: enablix.errorMsgShowTime});
+					});	
+					
 				StateUpdateService.goToPortalHome();
 	    	}, function() {    		
 	    		Notification.error({message: "Error ", delay: enablix.errorMsgShowTime});

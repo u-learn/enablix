@@ -3,6 +3,7 @@ package com.enablix.core.security.service;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -78,6 +79,10 @@ public class EnablixUserService implements UserService, UserDetailsService {
 	@Override
 	public User addUser(UserAndRolesVO userVO) {
 		
+		String password =UUID.randomUUID().toString().substring(0,8);//system generated default password
+		
+		if (userVO.getUser().getPassword()==null)
+			userVO.getUser().setPassword(password);
 		User newuser = userRepo.save(userVO.getUser());
 		
 		if (!userVO.getRoles().isEmpty()) {

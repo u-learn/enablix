@@ -42,5 +42,6 @@ enablix.serviceURL = {
 	"fetchDocStoresConfigMetadata" : enablix.domainName + "/docstore/configmetadata",
 	"saveDocStoreConfig" : enablix.domainName + "/docstore/config",
 	"defaultDocStoreConfig": enablix.domainName + "/docstore/default",
-	"logout": enablix.domainName + "/logout"
+	"logout": enablix.domainName + "/logout",
+	"sentmail": enablix.domainName + "/sentmail/:scenario/:userid/:tenantid"
 };
