@@ -81,6 +81,14 @@ h4 {
 	line-height: 1.25;
 	color: #222;	
 }
+.section-heading {
+	margin: 1.5em 0 0.5em;
+	font-size: 0.875em;
+	font-weight: 300;
+	text-align: left;
+	font-weight: 400;
+	color: #666;
+}
 a, a:hover {
 	text-decoration: none;
 	cursor: pointer;
@@ -159,6 +167,10 @@ form .row .form-label:first-child {
 	height: 200%;
 	cursor: pointer;
 	opacity: 0;
+}
+
+.form-control-inlined {
+	width: 50%;
 }
 .select2:after, .ui-select-container:after {
 	content: '';

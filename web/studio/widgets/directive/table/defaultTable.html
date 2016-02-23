@@ -7,6 +7,7 @@
 			<th class="details" ng-if="rowClickFn"></th>
 			<th class="edit" ng-if="recordEditFn"></th>
 			<th class="remove" ng-if="recordDeleteFn"></th>
+			<th ng-repeat="action in otherActions" ng-class="action.tableCellClass"></th>
 			<th ng-repeat="col in tableHeaders">
 				<span ng-switch on="col.dataType">
 					<span ng-switch-when="number"><span class="text-right">{{col.desc}}</span></span>
@@ -26,6 +27,7 @@
 			<td class="details" ng-if="rowClickFn"><a ng-click="navToRowDetail(tableRecord.identity)" class="fa fa-eye"></a></td>
 			<td class="edit" ng-if="recordEditFn"><a class="fa fa-pencil" ng-click="navToRecordEdit(tableRecord.identity)"></a></td>
 			<td class="remove" ng-if="recordDeleteFn"><a class="fa fa-times" ng-click="deleteTheRecord(tableRecord.identity)"></a></td>
+			<td ng-repeat="action in otherActions" ng-class="action.tableCellClass"><a ng-class="action.iconClass" ng-click="callOtherAction(action, tableRecord.identity)"></a></td>
 			<td ng-repeat="col in tableHeaders">
 				<span ng-class="{'text-right': col.dataType == 'NUMERIC'}">
 					<span class="content-data" ng-bind-html="tableRecord[col.key] | ebxFormatData: col.dataType"></span>

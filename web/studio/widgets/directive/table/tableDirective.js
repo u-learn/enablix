@@ -11,7 +11,8 @@ function(StateUpdateService) {
 			recordEditFn : "=",
 			recordDeleteFn : "=",
 			pageData : "=",
-			setPageFn : "="
+			setPageFn : "=",
+			otherActions: "="
 		},
 		link: function(scope, element, attrs) {
 			scope.navToRowDetail = function(elementIdentity) {
@@ -45,6 +46,12 @@ function(StateUpdateService) {
 		    		scope.setPageFn(pageNum);
 		    	}
 		    };
+		    
+		    scope.callOtherAction = function(action, elementIdentity) {
+		    	if (action.actionCallbackFn) {
+		    		action.actionCallbackFn(elementIdentity);
+		    	}
+		    }
 
 		},
 

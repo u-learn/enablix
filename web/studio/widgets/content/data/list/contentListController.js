@@ -1,6 +1,6 @@
 enablix.studioApp.controller('ContentListCtrl', 
-			['$scope', '$stateParams', 'ContentDataService', 'ContentTemplateService', 'StateUpdateService', 'StudioSetupService', 'Notification', 'ContentUtil',
-	function( $scope,   $stateParams,   ContentDataService,   ContentTemplateService,   StateUpdateService,   StudioSetupService,   Notification,   ContentUtil) {
+			['$scope', '$stateParams', 'ContentDataService', 'ContentTemplateService', 'StateUpdateService', 'StudioSetupService', 'Notification', 'ContentUtil', '$modal',
+	function( $scope,   $stateParams,   ContentDataService,   ContentTemplateService,   StateUpdateService,   StudioSetupService,   Notification,   ContentUtil,   $modal) {
 		
 		var containerQId = $stateParams.containerQId;
 		var parentIdentity = $stateParams.parentIdentity;
@@ -60,6 +60,21 @@ enablix.studioApp.controller('ContentListCtrl',
 		};
 		
 		fetchData();
+		
+		var showAddQuickLinks = function(contentIdentity) {
+			var modalInstance = $modal.open({
+			      templateUrl: 'views/content/quicklinks/contentQuickLinkAssociation.html',
+			      size: '' // 'sm', 'lg'
+			    });
+		};
+		
+		$scope.tableRecordActions = 
+			[{
+				actionName: "Add to Quick Links",
+				iconClass: "fa fa-link",
+				tableCellClass: "edit",
+				actionCallbackFn: showAddQuickLinks
+			}];
 		
 		$scope.pageHeading = containerLabel;
 		

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.enablix.app.content.ui.NavigableContent;
+import com.enablix.core.domain.links.QuickLinkCategory;
 
 public class QuickLinks {
 
@@ -18,39 +19,45 @@ public class QuickLinks {
 	}
 
 	public void addLink(Link link) {
-		QuickLinkSection quickLinkSection = findQuickLinkSection(link.getSectionName());
-		quickLinkSection.getLinks().add(link.getData());
+		QuickLinkSection quickLinkSection = findQuickLinkSection(link.getCategoryIdentity());
+		if (quickLinkSection != null) {
+			quickLinkSection.getLinks().add(link.getData());
+		}
 	}
 	
-	private QuickLinkSection findQuickLinkSection(String sectionName) {
+	private QuickLinkSection findQuickLinkSection(String categoryIdentity) {
 		
 		for (QuickLinkSection section : sections) {
-			if (section.getSectionName().equals(sectionName)) {
+			if (section.getSectionIdentity().equals(categoryIdentity)) {
 				return section;
 			}
 		}
 		
-		QuickLinkSection section = new QuickLinkSection(sectionName);
-		sections.add(section);
-		
-		return section;
+		return null;
+	}
+	
+	public void addQuickLinkSection(QuickLinkCategory category) {
+		QuickLinkSection linkSection = findQuickLinkSection(category.getIdentity());
+		if (linkSection == null) {
+			sections.add(new QuickLinkSection(category.getName(), category.getIdentity()));
+		}
 	}
 	
 	public static class Link {
 		
-		private String sectionName;
+		private String categoryIdentity;
 		private NavigableContent data;
 		
-		public String getSectionName() {
-			return sectionName;
+		public String getCategoryIdentity() {
+			return categoryIdentity;
 		}
 		
 		public NavigableContent getData() {
 			return data;
 		}
 		
-		public void setSectionName(String sectionName) {
-			this.sectionName = sectionName;
+		public void setCategoryIdentity(String sectionName) {
+			this.categoryIdentity = sectionName;
 		}
 		
 		public void setData(NavigableContent data) {

@@ -4,12 +4,6 @@ enablix.studioApp.controller('DocStoreConfigController',
 	
 		var DOCUMENT_STORE_CONFIG_KEY_PREFIX = "docstore.";
 		
-		$scope.breadcrumbList = 
-		[
-	         { label: "Setup" },
-	         { label: "Document Store" }
-		];
-		
 		$scope.docStoreConfigMetadata = [];
 		$scope.docStoreTypes = [];
 		$scope.selectDocStoreTypeMd = {};

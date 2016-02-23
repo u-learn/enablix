@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.enablix.analytics.recommendation.builder.web.WebRecommendationRequest;
 import com.enablix.analytics.web.request.WebContentRequest;
 import com.enablix.app.content.ui.NavigableContent;
-import com.enablix.app.content.ui.link.QuickLinks;
-import com.enablix.app.content.ui.link.QuickLinksService;
 import com.enablix.app.content.ui.nav.NavigationPathService;
 import com.enablix.app.content.ui.peers.PeerContentService;
 import com.enablix.app.content.ui.recent.RecentContentService;
@@ -27,9 +25,6 @@ public class NavigableContentController {
 	
 	@Autowired
 	private RecentContentService recentService;
-	
-	@Autowired
-	private QuickLinksService quickLinksService;
 	
 	@Autowired
 	private PeerContentService peerService;
@@ -77,11 +72,6 @@ public class NavigableContentController {
 		return recentService.getRecentContent(request);
 	}
 
-	@RequestMapping(method = RequestMethod.GET, value="/quicklinks/")
-	public QuickLinks quickLinks() {
-		return quickLinksService.getQuickLinks();
-	}
-	
 	@RequestMapping(method = RequestMethod.GET, value="/peers/{containerQId}/{contentIdentity}/")
 	public List<NavigableContent> fetchPeers(
 			@PathVariable String containerQId, 

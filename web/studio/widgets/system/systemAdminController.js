@@ -28,6 +28,22 @@ enablix.studioApp.controller('SystemAdminController',
 			         { label: "Setup" },
 			         { label: "Document Store" }
 				];
+				
+			} else if ($state.includes("system.quicklinks")) {
+				
+				$scope.breadcrumbList = 
+				[
+			         { label: "Setup" },
+			         { label: "Quick Links" }
+				];
+				
+			} else if ($state.includes("system.emailConfig")) {
+				
+				$scope.breadcrumbList = 
+				[
+			         { label: "Setup" },
+			         { label: "Email Configuration" }
+				];
 			}
 
 		};

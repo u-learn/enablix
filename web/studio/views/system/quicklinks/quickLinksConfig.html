@@ -1,0 +1,15 @@
+<div class="block">
+<div class="head">
+	<a ng-click="addNewQuickLinksSection()" class="button button-add">Add</a>
+	<h2>Quick Links Configuration</h2>
+</div>
+<div class="cont" ng-repeat="quickLinkSec in quickLinksData.sections">
+	<div>
+		<a ng-if="quickLinkSec.editing" ng-click="saveQuickLinkSection(quickLinkSec)" class="button button-add">Save</a>
+		<a ng-if="!quickLinkSec.editing" ng-click="quickLinkSec.editing=true" class="button button-add">Edit</a>
+		<span class="section-heading" ng-if="!quickLinkSec.editing">{{quickLinkSec.sectionName}}</span>
+		<input name="sectionName[$index]" placeholder="Enter Section Heading" ng-model="quickLinksData.sections[$index].sectionName" 
+			class="form-control form-control-inlined" size="80" required ng-if="quickLinkSec.editing">
+	</div>
+</div>
+</div>
