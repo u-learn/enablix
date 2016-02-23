@@ -8,10 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.enablix.core.domain.config.EmailConfiguration;
 import com.enablix.core.domain.config.SMTPConfiguration;
+import com.enablix.core.domain.config.TemplateConfiguration;
+import com.enablix.core.domain.user.User;
 import com.enablix.core.mail.constant.MailConstant;
 import com.enablix.core.mail.utility.MailUtility;
 import com.enablix.core.mongo.config.repo.EmailConfigRepo;
 import com.enablix.core.mongo.config.repo.SMTPConfigRepo;
+import com.enablix.core.mongo.config.repo.TemplateConfigRepo;
+import com.enablix.core.system.repo.UserRepository;
 
 
 @Service
@@ -23,14 +27,30 @@ public class MailServiceImpl implements MailService {
 	private EmailConfigRepo emailConfigRepo;
 	@Autowired
 	private SMTPConfigRepo  smtpConfigRepo;    
+    @Autowired    
+    private TemplateConfigRepo templateConfigRepo;
     @Autowired
+	private UserRepository userRepo;
+    @Autowired
+    
     public void setVelocityEngine(VelocityEngine velocityEngine) {
         this.velocityEngine = velocityEngine;
     }
     
     @Override
-	public boolean sendHtmlEmail(Object objectToBeMerged, String elementName, String templateName, String toMailAddress, String fromMailAddress, String subject,String tenantId) {
+    public boolean sendHtmlEmail(String emailid, String tenantId,String scenario) {
+    //public boolean sendHtmlEmail(Object objectToBeMerged, String tenantId,String scenario) {
+		String fromMailAddress = null;
+		String subject = null;
+		String templateName = null;
+		String elementName = "obj";
+		String toMailAddress = emailid;
 		
+		User user = userRepo.findByUserId(emailid);
+    		
+    	TemplateConfiguration templateConfiguration = this.getTemplateConfiguration(scenario);
+    	templateName = templateConfiguration!=null?templateConfiguration.getTemplateFile():""; //a .vm file
+    	
 	    if(fromMailAddress==null) {
             fromMailAddress = MailConstant.FROM_MAIL_ADDRESS;
         };
@@ -38,9 +58,9 @@ public class MailServiceImpl implements MailService {
             subject = MailConstant.DEFAULT_SUBJECT;
         };
         
-        String htmlBody = generateMessageBody(objectToBeMerged, templateName,  elementName);
+        String htmlBody = generateMessageBody(user, templateName,  elementName);
 		//return MailUtility.sendEmail(fromMailAddress,toMailAddress,subject,htmlBody,this.getEmailConfiguration(tenantId));
-        return MailUtility.sendEmail(fromMailAddress, toMailAddress, subject, htmlBody, this.getEmailConfiguration(tenantId));
+        return MailUtility.sendEmail(fromMailAddress, toMailAddress, subject, htmlBody, this.getEmailConfiguration(tenantId)); //TODO: null check for email config
 	};
 
 	private String generateMessageBody(Object objectTobeMerged,String templateName, String elementName) {
@@ -78,5 +98,27 @@ public class MailServiceImpl implements MailService {
 			return false;
 		}
 	};
-		
+	
+	@Override
+	public TemplateConfiguration getTemplateConfiguration(String scenario) {
+		return templateConfigRepo.findByScenario(scenario);
+	};
+	
+	@Override
+	public TemplateConfiguration addTemplateConfiguration(TemplateConfiguration templateConfiguration) {
+		return templateConfigRepo.save(templateConfiguration);
+	};
+	
+	@Override
+	public Boolean deleteTemplateConfiguration(TemplateConfiguration templateConfiguration) {
+		// TODO Auto-generated method stub
+		try {
+			templateConfigRepo.delete(templateConfiguration);
+			return true;
+		} catch (Exception e) {
+			
+			return false;
+		}
+	};
+
 };
