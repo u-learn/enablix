@@ -55,6 +55,7 @@ public class QuickLinksServiceImpl implements QuickLinksService {
 			QuickLinks.Link link = new QuickLinks.Link();
 			link.setCategoryIdentity(linkContent.getCategory().getIdentity());
 			link.setData(navContent);
+			link.setQuickLinkIdentity(linkContent.getIdentity());
 			
 			quickLinks.addLink(link);
 		}
@@ -142,6 +143,18 @@ public class QuickLinksServiceImpl implements QuickLinksService {
 		}
 		
 		return associations;
+	}
+
+	@Override
+	public void removeLinkCategory(String quickLinkCategoryIdentity) {
+		
+		QuickLinkCategory quickLinkCategory = categoryRepo.findByIdentity(quickLinkCategoryIdentity);
+		
+		if (quickLinkCategory != null) {
+			linkRepo.deleteByCategoryId(quickLinkCategory.getId());
+			categoryRepo.deleteByIdentity(quickLinkCategoryIdentity);
+		}
+		
 	}
 
 }

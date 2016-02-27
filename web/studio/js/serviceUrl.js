@@ -24,6 +24,7 @@ enablix.serviceURL = {
 	"deleteQuickLinks": enablix.domainName + "/quicklink/delete",
 	"getQuickLinkCategoryAssociation": enablix.domainName + "/quicklink/categories/:contentIdentity/",
 	"saveQuickLinkCategory": enablix.domainName + "/quicklink/category",
+	"deleteQuickLinkCategory": enablix.domainName + "/quicklink/category/delete",
 	"contentPeers": enablix.domainName + "/navcontent/peers/:containerQId/:contentIdentity/",
 	"searchData": enablix.domainName + "/search/t/:searchText/",
 	"navPath": enablix.domainName + "/navcontent/navpath/:containerQId/:contentIdentity/",

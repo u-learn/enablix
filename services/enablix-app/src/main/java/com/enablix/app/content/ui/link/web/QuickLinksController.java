@@ -44,6 +44,11 @@ public class QuickLinksController {
 				addLink.getLinkContent());
 	}
 	
+	@RequestMapping(method = RequestMethod.POST, value="/category/delete")
+	public void deleteQuickLinkCategory(@RequestBody String quickLinkCategoryIdentity) {
+		quickLinksService.removeLinkCategory(quickLinkCategoryIdentity);
+	}
+	
 	@RequestMapping(method = RequestMethod.POST, value="/delete")
 	public void deleteQuickLink(@RequestBody String quickLinkIdentity) {
 		quickLinksService.removeLinkFromCategory(quickLinkIdentity);

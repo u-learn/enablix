@@ -28,5 +28,37 @@ enablix.studioApp.controller('QuickLinksConfigController',
 					});
 		};
 		
+		$scope.deleteQuickLink = function(quickLinkSec, indx) {
+
+			if (quickLinkSec.links[indx] && quickLinkSec.links[indx].quickLinkIdentity) {
+			
+				QuickLinksService.deleteQuickLink(quickLinkSec.links[indx].quickLinkIdentity, 
+					function(data) {
+						quickLinkSec.links.splice(indx, 1);
+					}, function(data) {
+						Notification.error({message: "Error deleting Quick Link", delay: enablix.errorMsgShowTime});
+					});
+				
+			}
+		};
+		
+		$scope.cancelAddOrEdit = function(quickLinkSec) {
+			quickLinkSec.editing = false;
+			if (!quickLinkSec.sectionIdentity) {
+				$scope.quickLinksData.sections.splice(0, 1);
+			}
+		};
+		
+		$scope.deleteQuickLinkSection = function(quickLinkSec) {
+			if (quickLinkSec.sectionIdentity) {
+				QuickLinksService.deleteQuickLinkSection(quickLinkSec.sectionIdentity, 
+						function(data) {
+							StateUpdateService.reload();
+						}, function(data) {
+							Notification.error({message: "Error deleting Quick Link Section", delay: enablix.errorMsgShowTime});
+						});
+			}
+		};
+		
 	}
 ]);			

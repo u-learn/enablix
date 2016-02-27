@@ -48,6 +48,10 @@ enablix.studioApp.factory('QuickLinksService',
 			
 			var deleteQuickLink = function(_quickLinkIdentity, _onSuccess, _onError) {
 				RESTService.postForData("deleteQuickLinks", null, _quickLinkIdentity, null, _onSuccess, _onError);
+			};
+			
+			var deleteQuickLinkSection = function(_quickLinkSectionIdentity, _onSuccess, _onError) {
+				RESTService.postForData("deleteQuickLinkCategory", null, _quickLinkSectionIdentity, null, _onSuccess, _onError);
 			}
 	
 			return {
@@ -55,7 +59,8 @@ enablix.studioApp.factory('QuickLinksService',
 				saveQuickLinkCategory: saveQuickLinkCategory,
 				getContentQuickLinkAssociation: getContentQuickLinkAssociation,
 				addQuickLink: addQuickLink,
-				deleteQuickLink: deleteQuickLink
+				deleteQuickLink: deleteQuickLink,
+				deleteQuickLinkSection: deleteQuickLinkSection 
 			};
 
 		

@@ -21,7 +21,7 @@ public class QuickLinks {
 	public void addLink(Link link) {
 		QuickLinkSection quickLinkSection = findQuickLinkSection(link.getCategoryIdentity());
 		if (quickLinkSection != null) {
-			quickLinkSection.getLinks().add(link.getData());
+			quickLinkSection.getLinks().add(link);
 		}
 	}
 	
@@ -46,6 +46,7 @@ public class QuickLinks {
 	public static class Link {
 		
 		private String categoryIdentity;
+		private String quickLinkIdentity;
 		private NavigableContent data;
 		
 		public String getCategoryIdentity() {
@@ -62,6 +63,14 @@ public class QuickLinks {
 		
 		public void setData(NavigableContent data) {
 			this.data = data;
+		}
+
+		public String getQuickLinkIdentity() {
+			return quickLinkIdentity;
+		}
+
+		public void setQuickLinkIdentity(String quickLinkIdentity) {
+			this.quickLinkIdentity = quickLinkIdentity;
 		}
 	}
 	

@@ -16,6 +16,8 @@ public interface QuickLinksService {
 	
 	List<QuickLinkCategory> getAllCategories();
 	
+	void removeLinkCategory(String quickLinkCategory);
+	
 	QuickLinkContent addLinkToCategory(String categoryIdentity, ContentDataRef linkContent);
 	
 	void removeLinkFromCategory(String linkIdentity);

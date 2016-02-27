@@ -1,15 +1,28 @@
 <div class="block">
-<div class="head">
-	<a ng-click="addNewQuickLinksSection()" class="button button-add">Add</a>
-	<h2>Quick Links Configuration</h2>
+	<div class="head">
+		<a ng-click="addNewQuickLinksSection()" class="button button-add">Add</a>
+		<h2>Quick Links Sections</h2>
+	</div>
 </div>
-<div class="cont" ng-repeat="quickLinkSec in quickLinksData.sections">
-	<div>
+<div class="block" ng-repeat="quickLinkSec in quickLinksData.sections">
+	<div class="head">
 		<a ng-if="quickLinkSec.editing" ng-click="saveQuickLinkSection(quickLinkSec)" class="button button-add">Save</a>
+		<a ng-if="quickLinkSec.editing" ng-click="cancelAddOrEdit(quickLinkSec)" class="button button-edit">Cancel</a>
+		<a ng-if="!quickLinkSec.editing" ng-click="deleteQuickLinkSection(quickLinkSec)" class="button button-delete">Delete</a>
 		<a ng-if="!quickLinkSec.editing" ng-click="quickLinkSec.editing=true" class="button button-edit">Edit</a>
 		<span class="section-heading" ng-if="!quickLinkSec.editing">{{quickLinkSec.sectionName}}</span>
 		<input name="sectionName[$index]" placeholder="Enter Section Heading" ng-model="quickLinksData.sections[$index].sectionName" 
 			class="form-control form-control-inlined" size="80" required ng-if="quickLinkSec.editing">
 	</div>
-</div>
+	<div class="cont" ng-if="quickLinkSec.links && quickLinkSec.links.length > 0">
+		<table class="datatable">
+			<tbody>
+				<tr ng-repeat="link in quickLinkSec.links" class="ng-scope">
+					<td class="remove no-border"></td>
+					<td class="remove no-border"><a ng-click="deleteQuickLink(quickLinkSec, $index)" class="fa fa-times"></a></td>
+					<td class="no-border"><span class="content-data">{{link.data.label}}</span></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
 </div>

@@ -3,7 +3,7 @@
 		<h4>{{quickLinkSec.sectionName}}</h4>
 		<ul>
 			<li ng-repeat="link in quickLinkSec.links">
-				<eb-nav-link hide-hierarchy="true" nav-link="link" hide-doc-link="true"></eb-nav-link>
+				<eb-nav-link hide-hierarchy="true" nav-link="link.data" hide-doc-link="true"></eb-nav-link>
 			</li>
 		</ul>
 	</div>

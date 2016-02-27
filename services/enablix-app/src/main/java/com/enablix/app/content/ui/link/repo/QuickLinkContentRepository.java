@@ -9,4 +9,6 @@ public interface QuickLinkContentRepository extends BaseMongoRepository<QuickLin
 
 	List<QuickLinkContent> findByDataInstanceIdentity(String identity);
 	
+	Long deleteByCategoryId(String categoryId);
+	
 }

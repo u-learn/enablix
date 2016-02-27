@@ -3,7 +3,7 @@ package com.enablix.app.content.ui.link;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import com.enablix.app.content.ui.NavigableContent;
+import com.enablix.app.content.ui.link.QuickLinks.Link;
 
 public class QuickLinkSection {
 
@@ -11,7 +11,7 @@ public class QuickLinkSection {
 	
 	private String sectionIdentity;
 	
-	private Collection<NavigableContent> links;
+	private Collection<Link> links;
 
 	public QuickLinkSection(String sectionName, String sectionIdentity) {
 		this.sectionName = sectionName;
@@ -27,7 +27,7 @@ public class QuickLinkSection {
 		return sectionIdentity;
 	}
 
-	public Collection<NavigableContent> getLinks() {
+	public Collection<Link> getLinks() {
 		return links;
 	}
 
