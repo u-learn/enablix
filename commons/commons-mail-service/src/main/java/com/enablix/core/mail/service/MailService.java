@@ -6,15 +6,14 @@ import com.enablix.core.domain.config.TemplateConfiguration;
 
 
 public interface MailService {
-	//public boolean sendHtmlEmail(Object objectToBeMerged, String elementName, String templateName, String toMailAddress, String fromMailAddress, String subject,String tenantId);
-	//public boolean sendHtmlEmail(Object objectToBeMerged, String tenantId,String scenario);
-	public boolean sendHtmlEmail(String emailid, String tenantId,String scenario);
+	public boolean sendHtmlEmail(Object objectTobeMerged, String emailid,String scenario);
 	public EmailConfiguration addEmailConfiguration (EmailConfiguration emailConfiguration);
 	public SMTPConfiguration getSMTPConfig(String domainName);
 	public Boolean deleteEmailConfiguration(EmailConfiguration emailConfiguration);
-	public EmailConfiguration getEmailConfiguration(String tenantId);
+	public EmailConfiguration getEmailConfiguration();
 	TemplateConfiguration getTemplateConfiguration(String scenario);
 	TemplateConfiguration addTemplateConfiguration(TemplateConfiguration templateConfiguration);
 	Boolean deleteTemplateConfiguration(TemplateConfiguration templateConfiguration);
+
 	
 }

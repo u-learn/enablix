@@ -36,14 +36,12 @@ public class MailConfController {
 	public EmailConfiguration addEmailConfiguration(@RequestBody EmailConfiguration emailConfiguration) {
 		return mailService.addEmailConfiguration(emailConfiguration);
 	};
-	@RequestMapping(method = RequestMethod.GET, value = "/getemailconfiguration/{tenantId}", produces = "application/json")
-	public EmailConfiguration getemailconfiguration(@PathVariable String tenantId) {
-		return mailService.getEmailConfiguration(tenantId);
+	@RequestMapping(method = RequestMethod.GET, value = "/getemailconfiguration", produces = "application/json")
+	public EmailConfiguration getemailconfiguration() {
+		return mailService.getEmailConfiguration();
 	};
-	@RequestMapping(method = RequestMethod.GET, value = "/sentmail/{scenario}/{userid}/{tenantid}", produces = "application/json")
-	public Boolean sentMail(@PathVariable String scenario, @PathVariable String userid, @PathVariable String tenantid) {
-		String emailid = userid;
-		//return mailService.sendHtmlEmail(new Integer(0), "user", "welcome.vm", emailid, "qir.richa.agrawal@gmail.com",null, "test");
-		return mailService.sendHtmlEmail(emailid,tenantid,scenario);
+	@RequestMapping(method = RequestMethod.POST, value = "/sendmail", produces = "application/json")
+	public Boolean sentMail(@RequestBody EmailData emailData) {
+		return mailService.sendHtmlEmail(emailData.getTemplateObject(),emailData.getEmailid(),emailData.getScenario());
 	};		
 }

@@ -57,8 +57,7 @@ public class MailUtility {
             htmlPart.setContent(htmlBody, "text/html");
             multipart.addBodyPart(htmlPart);
             msg.setContent(multipart);
-            Transport.send(msg);
-            
+            Transport.send(msg);            
         } catch (AddressException e) {
         	logger.error(e.getMessage(), e);
             return false;

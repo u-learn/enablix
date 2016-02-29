@@ -7,19 +7,10 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class EmailConfiguration extends BaseDocumentEntity{
 
 	private String emailId;	
-	private String tenantId;
 	private String password;	
 	private String smtp;	
 	private String port;
 
-	public String getTenantId() {
-		return tenantId;
-	};
-
-	public void setTenantId(String tenantId) {
-		this.tenantId = tenantId;
-	};
-	
 	public String getEmailId() {
 		return emailId;
 	}

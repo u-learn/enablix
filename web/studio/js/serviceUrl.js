@@ -32,7 +32,7 @@ enablix.serviceURL = {
 	"systemuser" : enablix.domainName + "/systemuser",
 	"fetchUser" : enablix.domainName + "/d/user/:userIdentity/",
 	"deletesystemuser" : enablix.domainName + "/deletesystemuser",
-	"getemailconfiguration" : enablix.domainName + "/getemailconfiguration/:tenantId",
+	"getemailconfiguration" : enablix.domainName + "/getemailconfiguration",
 	"addemailconfiguration" : enablix.domainName + "/addemailconfiguration",
 	"deleteemailconfiguration" : enablix.domainName + "/deleteemailconfiguration",
 	"getsmtpconfig" : enablix.domainName + "/getsmtpconfig/:domainName",
@@ -44,5 +44,5 @@ enablix.serviceURL = {
 	"saveDocStoreConfig" : enablix.domainName + "/docstore/config",
 	"defaultDocStoreConfig": enablix.domainName + "/docstore/default",
 	"logout": enablix.domainName + "/logout",
-	"sentmail": enablix.domainName + "/sentmail/:scenario/:userid/:tenantid"
+	"sendmail": enablix.domainName + "/sendmail"
 };

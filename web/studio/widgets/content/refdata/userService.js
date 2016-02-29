@@ -33,14 +33,8 @@ enablix.studioApp.factory('UserService',
 				
 			RESTService.postForData('systemuser', null, userVO, null,function(data) {	    	
 					Notification.primary({message: "User Saved successfully", delay: enablix.errorMsgShowTime});
-				//send password reset mail				
-					var requestParam={"scenario" : "resetpassword","userid":userData.userId,"tenantid":sessionUser.tenantId};			
-					RESTService.getForData('sentmail',requestParam, null,function(data) {
-						Notification.primary({message: "Mail sent successfully", delay: enablix.errorMsgShowTime});
-					}, function(errorObj) {    		
-						Notification.error({message: "Error sending mail ", delay: enablix.errorMsgShowTime});
-					});		
-				StateUpdateService.goToListUser();				
+					sendMail(userData,userData.userId,"resetpassword");	
+					StateUpdateService.goToListUser();				
 	    	}, function() {    		
 	    		Notification.error({message: "Error saving user ", delay: enablix.errorMsgShowTime});
 	    		StateUpdateService.goToListUser();
@@ -56,20 +50,27 @@ enablix.studioApp.factory('UserService',
 			var userVO = { user: sessionUser, roles: [] };
 				RESTService.postForData('systemuser', null, userVO, null,function(data) {	    	
 					Notification.primary({message: "Password saved successfully", delay: enablix.errorMsgShowTime});
-					
-					var requestParam={"scenario" : "passwordconfirmation","userid":sessionUser.userId,"tenantid":sessionUser.tenantId};	
-					RESTService.getForData('sentmail',requestParam, null,function(data) {
-						Notification.primary({message: "Password Reset Confirmation mail sent successfully", delay: enablix.errorMsgShowTime});
-					}, function(errorObj) {    		
-						Notification.error({message: "Error sending mail ", delay: enablix.errorMsgShowTime});
-					});	
-					
-				StateUpdateService.goToPortalHome();
+					sendMail(sessionUser,sessionUser.userId,"passwordconfirmation");
+					StateUpdateService.goToPortalHome();
 	    	}, function() {    		
 	    		Notification.error({message: "Error ", delay: enablix.errorMsgShowTime});
 	    	});
 			
 		};
+		
+		var sendMail = function(templateObject, emailid, scenario){
+			
+			var emailData = {scenario:scenario,emailid:emailid,templateObject:templateObject};
+			
+			RESTService.postForData('sendmail',null,emailData, null,function(data) {
+						Notification.primary({message: "Mail sent successfully", delay: enablix.errorMsgShowTime});
+					}, function(errorObj) {    		
+						Notification.error({message: "Error sending mail ", delay: enablix.errorMsgShowTime});
+					});	
+					
+		};
+		
+		
 		var checkUserName=function(userName,_success)
 		{			
 				RESTService.getForData('checkusername', {"userName": userName}, null, function(data) {	    	
@@ -105,8 +106,7 @@ enablix.studioApp.factory('UserService',
 		
 		var getEmailConfig= function(tenantId,_success,_error)
 		{
-			var requestParam={"tenantId" : tenantId};
-			RESTService.getForData('getemailconfiguration', requestParam, null, function(data) {	    	
+			RESTService.getForData('getemailconfiguration', null, null, function(data) {	    	
 				_success(data);	    	
     	}, function(errorObj) {    		
     		_error(errorObj)
@@ -122,7 +122,7 @@ enablix.studioApp.factory('UserService',
     		_error(errorObj)
     	});
 		};
-		//var saveEmailData = function ()
+		
 		var saveEmailData= function(emailData)
 		{			
 			
