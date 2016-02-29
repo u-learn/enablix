@@ -75,8 +75,9 @@ public class EncryptionUtil {
 	}
 
 	public static void main(String args[]) {
-		
-		String hashed = twoWayEncryptString("67cc5f666c2111e589fc129d33c27fbe");
+		String encString = "Lai0cYIRMg6Gyqqf0+FsHg==";
+		DefaultAESParameterProvider params = new DefaultAESParameterProvider();
+		String hashed = getAesDecryptedString(encString, params);
 		
 		System.out.println(hashed);
 	}

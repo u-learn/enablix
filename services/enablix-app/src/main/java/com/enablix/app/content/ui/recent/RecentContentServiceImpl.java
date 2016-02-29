@@ -56,7 +56,7 @@ public class RecentContentServiceImpl implements RecentContentService {
 		String containerQId = context.getRequestContext().containerQId();
 		String contentIdentity = context.getRequestContext().contentIdentity();
 		
-		Sort sort = new Sort(Sort.Direction.DESC, ContentDataConstants.CREATED_AT_KEY);
+		Sort sort = new Sort(Sort.Direction.DESC, ContentDataConstants.MODIFIED_AT_KEY);
 		Pageable pageable = new PageRequest(0, pageSize, sort);
 		
 		if (!StringUtil.isEmpty(containerQId) && !StringUtil.isEmpty(contentIdentity)) {

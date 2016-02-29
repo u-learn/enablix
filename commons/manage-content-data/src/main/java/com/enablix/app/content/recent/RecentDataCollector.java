@@ -27,24 +27,46 @@ public class RecentDataCollector implements ContentDataEventListener {
 		
 		if (contentIdentity != null && !event.getContainerType().isRefData()) {
 			
-			ContentDataRef dataRef = new ContentDataRef(event.getTemplateId(), 
-					event.getContainerType().getQualifiedId(), String.valueOf(contentIdentity));
+			if (event.isNewRecord()) {
 			
-			// set data ref
-			recentData.setData(dataRef);
-			
-			// set scope of data ref
-			RecentDataScope scope = new RecentDataScope();
-			scope.setTemplateId(event.getTemplateId());
-
-			recentData.setScope(scope);
-			
-			// set update type
-			recentData.setUpdateType(event.isNewRecord() ? UpdateType.NEW
-							: UpdateType.UPDATED);
-			
-			recentDataRepo.save(recentData);
+				createNewRecord(event, recentData, contentIdentity, UpdateType.NEW);
+				
+			} else {
+				
+				RecentData existEntry = recentDataRepo.findByDataInstanceIdentityAndUpdateType(
+											String.valueOf(contentIdentity), UpdateType.UPDATED);
+				
+				if (existEntry == null) {
+					
+					createNewRecord(event, recentData, contentIdentity, UpdateType.UPDATED);
+					
+				} else {
+					// simply save it again, it will update the updated date
+					recentDataRepo.save(existEntry);
+				}
+			}
 		}
+	}
+
+	private void createNewRecord(ContentDataSaveEvent event, RecentData recentData, 
+			Object contentIdentity, UpdateType updateType) {
+		
+		ContentDataRef dataRef = new ContentDataRef(event.getTemplateId(), 
+				event.getContainerType().getQualifiedId(), String.valueOf(contentIdentity));
+		
+		// set data ref
+		recentData.setData(dataRef);
+		
+		// set scope of data ref
+		RecentDataScope scope = new RecentDataScope();
+		scope.setTemplateId(event.getTemplateId());
+
+		recentData.setScope(scope);
+		
+		// set update type
+		recentData.setUpdateType(updateType);
+		
+		recentDataRepo.save(recentData);
 	}
 
 	@Override

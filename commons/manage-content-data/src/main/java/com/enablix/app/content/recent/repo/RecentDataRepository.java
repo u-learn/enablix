@@ -5,6 +5,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.Query;
 
 import com.enablix.core.domain.recent.RecentData;
+import com.enablix.core.domain.recent.RecentData.UpdateType;
 import com.enablix.core.mongo.repository.BaseMongoRepository;
 
 public interface RecentDataRepository extends BaseMongoRepository<RecentData> {
@@ -27,5 +28,7 @@ public interface RecentDataRepository extends BaseMongoRepository<RecentData> {
 	
 	// Since identity is unique across collection, we delete by identity
 	Long deleteByDataInstanceIdentity(String identity);
+	
+	RecentData findByDataInstanceIdentityAndUpdateType(String identity, UpdateType updateType);
 	
 }
