@@ -20,14 +20,14 @@ var setupRoles = function(tenantId) {
 	
 	var coll = getCollection(tenantId + "_enablix", "ebx_role");
 	
-	// inserting contentAdmin role
+	// inserting Administrator role
 	print("inserting role: Content Admin");
 	coll.insert(
 		{
-			"_id" : "contentAdmin",
+			"_id" : "Administrator",
 			"_class" : "com.enablix.core.domain.security.authorization.Role",
-			"identity" : "contentAdmin",
-			"roleName" : "Content Admin",
+			"identity" : "Administrator",
+			"roleName" : "Administrator",
 			"permissions" : [
 				"VIEW_STUDIO",
 				"VIEW_REF_DATA"
@@ -35,7 +35,7 @@ var setupRoles = function(tenantId) {
 		}
 	);
 	
-	// inserting contentAdmin role
+	// inserting Administrator role
 	print("inserting role: Portal User");
 	coll.insert(
 		{
@@ -55,7 +55,7 @@ var assignRoleToUser = function(tenantId, userIdentity, rolesJson) {
 	
 	var coll = getCollection(tenantId + "_enablix", "ebx_user_role");
 	
-	// inserting contentAdmin role
+	// inserting Administrator role
 	print("assigning roles to user [" + userIdentity + "]");
 			
 	coll.insert(
@@ -71,7 +71,7 @@ var assignRoleToUser = function(tenantId, userIdentity, rolesJson) {
 var loadData = function() {
 	setupRoles("test");
 	assignRoleToUser("test", "user1", [
-				DBRef("ebx_role", "contentAdmin"),
+				DBRef("ebx_role", "Administrator"),
 				DBRef("ebx_role", "portalUser") 
 			]);
 	assignRoleToUser("test", "user3", [
