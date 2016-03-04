@@ -13,6 +13,7 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.data.elasticsearch.ElasticsearchAutoConfiguration;
 import org.springframework.boot.autoconfigure.data.elasticsearch.ElasticsearchDataAutoConfiguration;
 import org.springframework.boot.autoconfigure.web.WebMvcAutoConfiguration.WebMvcAutoConfigurationAdapter;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
@@ -51,8 +52,11 @@ public class ApplicationInit extends WebMvcAutoConfigurationAdapter {
 	@Value("${ui.assets.external.paths:}")
 	private String externalUIAssets;
 
-	@Value("${ui.gateway.resource.cache.period:0}")
+	@Value("${ui.resource.cache.period:0}")
 	public int cachePeriod;
+	
+	@Value("${ui.cache.resources.flag:true}")
+	public boolean cacheResources;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(ApplicationInit.class, args);
@@ -89,7 +93,8 @@ public class ApplicationInit extends WebMvcAutoConfigurationAdapter {
 		registry.addResourceHandler("/**")
 				.addResourceLocations(resourcesPaths.toArray(new String[resourcesPaths.size()]))
 				.setCachePeriod(cachePeriod)
-				.resourceChain(false)
+				.resourceChain(cacheResources)
+				.addResolver(tenantBasedCustomResourceResolver())
 				.addResolver(new PathResourceResolver());
 	}
 
@@ -99,6 +104,11 @@ public class ApplicationInit extends WebMvcAutoConfigurationAdapter {
 		 registry.addViewController("/").setViewName("forward:/index.html");
 	}
 	
+	
+	@Bean
+	public TenantBasedCustomResourceResolver tenantBasedCustomResourceResolver() {
+		return new TenantBasedCustomResourceResolver();
+	}
 }
 
 /*@Component

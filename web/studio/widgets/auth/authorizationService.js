@@ -1,7 +1,9 @@
 enablix.studioApp.factory('AuthorizationService', 
 	[
-	 			'$state', '$stateParams', 'StateUpdateService',
-	 	function($state,   $stateParams,   StateUpdateService) {
+	 			'$state', '$rootScope', '$stateParams', 'StateUpdateService', 'RESTService',
+	 	function($state,   $rootScope,   $stateParams,   StateUpdateService,   RESTService) {
+	 		
+	 		var currentUser = {};		
 	 		
 	 		var userHasPermission = function(checkPerm) {
 	 			
@@ -27,9 +29,48 @@ enablix.studioApp.factory('AuthorizationService',
 	 			}
 	 		}
 	 		
+	 		var authenticate = function(credentials, callback) {
+
+			    var headers = credentials ? 
+			    		{authorization : "Basic " + btoa(credentials.username + ":" + credentials.password) } : {};
+			    
+			    RESTService.getForData('user', null, null, function(data) {
+				    	
+			    		if (data.name) {
+				    		
+			    			enablix.loggedInUser = data.principal;
+				    		
+				    		currentUser = data.principal.user;
+				    		window.localStorage.setItem("userData", JSON.stringify(data.principal.user));
+				    	
+				    		$rootScope.authenticated = true;
+				    		
+				    	} else {
+				    		window.localStorage.setItem("userData","");
+				    		$rootScope.authenticated = false;
+				    	}
+			    		
+				    	callback && callback();
+			    	
+			    	}, function() {
+			    		
+			    		window.localStorage.setItem("userData","");
+			    		$rootScope.authenticated = false;
+			    		callback && callback();
+			    		
+			    	}, headers);
+
+			};
+			
+			var getCurrentUser = function() {
+				return currentUser;
+			}
+	 		
 	 		return {
 	 			userHasPermission: userHasPermission,
-	 			userHasPageAccess: userHasPageAccess 
+	 			userHasPageAccess: userHasPageAccess,
+	 			authenticate: authenticate,
+	 			getCurrentUser: getCurrentUser
 	 		};
 	 	}
 	 ]);

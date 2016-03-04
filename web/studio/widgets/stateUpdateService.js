@@ -1,7 +1,7 @@
 enablix.studioApp.factory('StateUpdateService', 
 	[
-	 			'$state', '$stateParams', '$rootScope',
-	 	function($state,   $stateParams,   $rootScope) {
+	 			'$state', '$stateParams', '$rootScope', '$location', '$window',
+	 	function($state,   $stateParams,   $rootScope,   $location,   $window) {
 	 		
 	 		var goToStudioList = function(_containerQId, _parentIdentity) {
 				$state.go('studio.list', {'containerQId' : _containerQId, 
@@ -47,15 +47,25 @@ enablix.studioApp.factory('StateUpdateService',
 					"elementIdentity" : _elementIdentity});
 
 	 		};
-
 	 		
-	 		var goToHome = function(_containerQId) {
+	 		var goToHome = function() {
 				$state.go('home');
 	 		};
 	 		
-	 		var goToLogin = function(_containerQId) {
-				$state.go('login');
+	 		var goToLogin = function() {
+	 			$window.location.href = $location.protocol() + "://" + $location.host() 
+ 											+ ":" + $location.port() + "/login.html";
 	 		};
+	 		
+	 		var goToApp = function() {
+	 			$window.location.href = $location.protocol() + "://" + $location.host() 
+ 						+ ":" + $location.port() + "/#/portal/home";
+	 		};
+	 		
+	 		var goToAppSetPassword = function() {
+	 			$window.location.href = $location.protocol() + "://" + $location.host() 
+					+ ":" + $location.port() + "/#/setpassword";
+	 		}
 	 		
 	 		var goToStudio = function(_containerQId) {
 				$state.go('studio');
@@ -161,6 +171,8 @@ enablix.studioApp.factory('StateUpdateService',
 
 	 		
 	 		return {
+	 			goToApp: goToApp,
+	 			goToAppSetPassword: goToAppSetPassword,
 	 			goToStudioList: goToStudioList,
 	 			goToStudioDetail: goToStudioDetail,
 	 			goToStudioAdd: goToStudioAdd,

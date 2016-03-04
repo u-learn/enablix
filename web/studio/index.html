@@ -38,6 +38,9 @@
 	<script type="text/javascript" src="js/vendor/angular/angular-ui-notification.min.js"></script>
 	<script type="text/javascript" src="js/vendor/angular/angular-messages.min.js"></script>
 	<script type="text/javascript" src="js/vendor/angular/select.js"></script>
+	<script type="text/javascript" src="js/vendor/angular/angular-translate.js"></script>
+	<script type="text/javascript" src="js/vendor/angular/angular-translate-loader-url.js"></script>
+	<script type="text/javascript" src="js/vendor/angular/angular-translate-loader-static-files.js"></script>
 	
 	<!-- application scripts -->
 	<script type="text/javascript" src="js/common/utility.js"></script>
@@ -45,6 +48,7 @@
 	<script type="text/javascript" src="js/serverDomain.js"></script>
 	<script type="text/javascript" src="js/serviceUrl.js"></script>
 	<script type="text/javascript" src="js/common/restService.js"></script>
+	<script type="text/javascript" src="js/common/lang-translate.js"></script>
 	<script type="text/javascript" src="js/common/login/loginCtrl.js"></script>
 	<script type="text/javascript" src="js/common/login/setPasswordController.js"></script>
 	<script type="text/javascript" src="widgets/filter/appFilterModule.js"></script>
@@ -142,7 +146,7 @@
 		<div class="row">
 			<div class="col-sm-4">
 				<!-- logo -->
-				<a href="#" class="logo"><i class="fa fa-power-off"></i>Enablix</a>
+				<a href="#" class="logo"><i class="fa fa-power-off"></i><span translate="app.name"></span></a>
 				<!--/ logo -->
 			</div>
 			<div class="col-sm-8" ng-if="authenticated">
