@@ -6,7 +6,7 @@
 <div class="cont">
 	<div>
 		<label class="form-label">Email</label>
-		<input name="Email" placeholder="Enter Email" class="form-control" type="email" ng-blur="emailForm.Email.$valid && getSmtp(newEmailData.emailId)" ng-model="newEmailData.emailId" size="80" required>
+		<input focus="true" name="Email" placeholder="Enter Email" class="form-control" type="email" ng-blur="emailForm.Email.$valid && getSmtp(newEmailData.emailId)" ng-model="newEmailData.emailId" size="80" required >
 	</div>
 	<div ng-messages="emailForm.Email.$error" ng-if="emailForm.Email.$touched" role="alert">
     <div ng-message="required" class="error">You didn't enter a email</div> 

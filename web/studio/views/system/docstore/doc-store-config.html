@@ -29,9 +29,18 @@
 <div class="cont" ng-repeat="param in selectDocStoreTypeMd.params">
 	<div>
 		<label class="form-label">{{param.paramName}}</label>
-		<input name="docstore[param.paramKey]" placeholder="Enter {{param.paramName}}" 
+		<input focus="true" ng-if="$first" name="docstore[param.paramKey]" placeholder="Enter {{param.paramName}}" 
 			ng-model="docstore[param.paramKey]" class="form-control" 
-			type="text" size="80" required>
+			type="text" size="80" required >
+			<input ng-if="!$first && !$last" name="docstore[param.paramKey]" placeholder="Enter {{param.paramName}}" 
+			ng-model="docstore[param.paramKey]" class="form-control" 
+			type="text" size="80" required >
+			<input ng-if="$last && param.paramName.toLowerCase().indexOf('password')>-1" name="docstore[param.paramKey]" placeholder="Enter {{param.paramName}}" 
+			ng-model="docstore[param.paramKey]" class="form-control" 
+			type="password" size="80" required >
+			<input ng-if="$last && param.paramName.toLowerCase().indexOf('password')<0" name="docstore[param.paramKey]" placeholder="Enter {{param.paramName}}" 
+			ng-model="docstore[param.paramKey]" class="form-control" 
+			type="text" size="80" required >
 	</div>
 </div>
 <div class="foot clearfix">

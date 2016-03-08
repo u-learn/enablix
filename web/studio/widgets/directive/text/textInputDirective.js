@@ -16,6 +16,7 @@ function(ContentTemplateService) {
 			scope.label = _dataDef.label;
 			scope.id = _dataDef.qualifiedId;
 			scope.placeholder = "Enter " + _dataDef.label;
+			scope.focus = attrs.focusvalue;
 			
 			var _uiDef = ContentTemplateService.getUIDefinition(enablix.template, _dataDef.qualifiedId);
 			
