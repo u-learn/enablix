@@ -62,8 +62,11 @@ enablix.studioApp.factory('UserService',
 			
 			var emailData = {scenario:scenario,emailid:emailid,templateObject:templateObject};
 			
-			RESTService.postForData('sendmail',null,emailData, null,function(data) {
+			RESTService.postForData('sendmail',null,emailData, null,function(sent) {
+				if(sent)
 						Notification.primary({message: "Mail sent successfully", delay: enablix.errorMsgShowTime});
+				else
+						Notification.error({message: "Error sending mail ", delay: enablix.errorMsgShowTime});
 					}, function(errorObj) {    		
 						Notification.error({message: "Error sending mail ", delay: enablix.errorMsgShowTime});
 					});	
