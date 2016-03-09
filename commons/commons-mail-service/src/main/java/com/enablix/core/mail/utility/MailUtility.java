@@ -24,7 +24,7 @@ public class MailUtility {
 	private final static org.slf4j.Logger logger = LoggerFactory.getLogger(MailUtility.class);
 
 	public static boolean sendEmail(String sendFromEmail, String sendToEmail,String subject, String htmlBody,EmailConfiguration emailConfiguration) {
-		
+		try{
 		logger.info("sending mail..");
 		final String username = emailConfiguration.getEmailId();
         final String password = emailConfiguration.getPassword();
@@ -44,8 +44,7 @@ public class MailUtility {
 	                return new PasswordAuthentication(username,password); 
 	            }
 	        });
- 
-        try {
+		
             Message msg = new MimeMessage(session);
           
             msg.setFrom(new InternetAddress(sendFromEmail));
@@ -57,14 +56,20 @@ public class MailUtility {
             htmlPart.setContent(htmlBody, "text/html");
             multipart.addBodyPart(htmlPart);
             msg.setContent(multipart);
-            Transport.send(msg);            
+            Transport.send(msg);  
+            return true;
         } catch (AddressException e) {
         	logger.error(e.getMessage(), e);
             return false;
         } catch (MessagingException e) {
         	logger.error(e.getMessage(), e);
             return false;
-        }
-        return true;
-    }
+        }catch (NullPointerException e) {
+        	logger.error(e.getMessage(), e);
+            return false;        
+    	}catch (Exception e){
+    		logger.error(e.getMessage(), e);
+            return false; 
+    	}		
+	}
 }
