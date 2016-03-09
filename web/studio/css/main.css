@@ -957,6 +957,17 @@ form .row .form-label:first-child {
 
 
 /**/
+/* back button */
+/**/
+
+.back{
+	text-decoration: underline;
+	color: #2980b9;
+	padding-top: 10px;
+	border: 0;
+	font-size: 0.85em;
+}
+/**/
 /* bread crumbs */
 /**/
 .bread-crumbs {
