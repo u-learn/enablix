@@ -131,9 +131,8 @@ enablix.studioApp.factory('UserService',
 			
 			var sessionUser=JSON.parse(window.localStorage.getItem("userData"));
 			emailData.tenantId=sessionUser.tenantId;
-			emailData.identity=sessionUser.tenantId;
 			RESTService.postForData('addemailconfiguration', null, emailData, null,function(data) {	    	
-					Notification.primary({message: "Save successfully", delay: enablix.errorMsgShowTime});
+					Notification.primary({message: "Saved successfully", delay: enablix.errorMsgShowTime});
 				StateUpdateService.goToEmailConfig();
 	    	}, function() {    		
 	    		Notification.error({message: "Error ", delay: enablix.errorMsgShowTime});
