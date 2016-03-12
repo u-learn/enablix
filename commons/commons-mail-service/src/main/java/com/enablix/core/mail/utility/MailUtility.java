@@ -1,5 +1,9 @@
 package com.enablix.core.mail.utility;
 
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.util.Properties;
 
 import javax.mail.Authenticator;
@@ -23,31 +27,57 @@ public class MailUtility {
 
 	private final static org.slf4j.Logger logger = LoggerFactory.getLogger(MailUtility.class);
 
-	public static boolean sendEmail(String sendFromEmail, String sendToEmail,String subject, String htmlBody,EmailConfiguration emailConfiguration) {
+	public static boolean sendEmail(String sendToEmail,String subject, String htmlBody,EmailConfiguration emailConfiguration) {
 		try{
-		logger.info("sending mail..");
-		final String username = emailConfiguration.getEmailId();
-        final String password = emailConfiguration.getPassword();
-        
-		 Properties props = new Properties();
-	        props.put("mail.smtp.host", emailConfiguration.getSmtp());
-	        props.put("mail.smtp.port",emailConfiguration.getPort());
+			logger.info("sending mail..");
+			
+			String username;
+			String password;
+			String smtpport;
+			String smtpserver;
+			
+			if(emailConfiguration!=null){
+				username = emailConfiguration.getEmailId();
+				password = emailConfiguration.getPassword();
+				smtpserver = emailConfiguration.getSmtp();
+				smtpport = emailConfiguration.getPort();
+			}
+			else
+			{
+				URL url = ((URLClassLoader)ClassLoader.getSystemClassLoader()).getURLs()[0];
+		    	URL url_new = new URL(url.toString().substring(0, (url.toString().lastIndexOf("enablix-app")+"enablix-app".length())) + "/ext-resources/config/properties/mail.properties");
+		   		Properties props = new Properties();
+		   		InputStream input = new FileInputStream(url_new.toString().substring(6));
+		   		props.load(input); 
+		   		
+		   		username = props.getProperty(MailConstants.FROM_ADDRESS);
+		   		password = props.getProperty(MailConstants.FROM_PASSWORD);
+				smtpserver = props.getProperty(MailConstants.FROM_SMTP_SERVER);
+				smtpport = props.getProperty(MailConstants.FROM_SMTP_PORT);		   		
+			}
+			
+			Properties props = new Properties();
+	        props.put("mail.smtp.host", smtpserver);
+	        props.put("mail.smtp.port",smtpport);
 	        props.put("mail.smtp.user",username);
 	        props.put("password",password);
 	        props.put("mail.smtp.auth","true");
 	        props.put("mail.transport.protocol","smtp");
 	        props.put("mail.smtp.starttls.enable", "true");	
 	        
+	        final String authUsername = username;
+            final String authPassword = password;
+            
 	        Session session = Session.getDefaultInstance(props, new Authenticator() {
 	            @Override
-	            protected PasswordAuthentication getPasswordAuthentication() {	                
-	                return new PasswordAuthentication(username,password); 
+	             protected PasswordAuthentication getPasswordAuthentication() {	                
+	                return new PasswordAuthentication(authUsername,authPassword); 
 	            }
 	        });
 		
             Message msg = new MimeMessage(session);
           
-            msg.setFrom(new InternetAddress(sendFromEmail));
+            msg.setFrom(new InternetAddress(username));
            
             msg.addRecipient(Message.RecipientType.TO, new InternetAddress(sendToEmail));
             msg.setSubject(subject);
