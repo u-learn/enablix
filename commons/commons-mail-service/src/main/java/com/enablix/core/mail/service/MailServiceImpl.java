@@ -10,14 +10,17 @@ import java.util.Properties;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
+import org.apache.velocity.exception.ResourceNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.enablix.commons.util.process.ProcessContext;
 import com.enablix.core.domain.config.EmailConfiguration;
 import com.enablix.core.domain.config.SMTPConfiguration;
 import com.enablix.core.domain.config.TemplateConfiguration;
+import com.enablix.core.mail.utility.MailConstants;
 import com.enablix.core.mail.utility.MailUtility;
 import com.enablix.core.mongo.config.repo.EmailConfigRepo;
 import com.enablix.core.mongo.config.repo.SMTPConfigRepo;
@@ -47,25 +50,18 @@ public class MailServiceImpl implements MailService {
     
     @Override
     public boolean sendHtmlEmail(Object objectTobeMerged, String emailid,String scenario) {
-		String toMailAddress = emailid;
-		String templateName = scenario+"_body.vm";
-		String elementName = "obj";
+		String templateName = scenario + MailConstants.EMAIL_BODY_SUFFIX;
+		String subjectTemplateName = scenario + MailConstants.EMAIL_SUBJECT_SUFFIX;
+		String elementName = MailConstants.EMAIL_TEMPLATE_OBJECTNAME;
 				
 		if(scenario.equalsIgnoreCase("resetpassword"))
 			objectTobeMerged = userRepo.findByUserId(emailid); //done to pick system generated password
 		 
        try{
-    	URL url = ((URLClassLoader)ClassLoader.getSystemClassLoader()).getURLs()[0];
-    	URL url_new = new URL(url.toString().substring(0, (url.toString().lastIndexOf("enablix-app")+"enablix-app".length())) + "/ext-resources/config/properties/mail.properties");
-   		Properties props = new Properties();
-   		InputStream input = new FileInputStream(url_new.toString().substring(6));
-   		props.load(input);    		
-         
-   		String subject = props.getProperty(scenario+"_subject");
-   		String fromMailAddress = props.getProperty("from.mail.address");   		
-   		String htmlBody = generateMessageBody(objectTobeMerged, templateName,  elementName);
+    	String htmlBody = generateTemplateMessage(objectTobeMerged,templateName,elementName,MailConstants.BODY_TEMPLATE_PATH);
+    	String subject = generateTemplateMessage(objectTobeMerged,subjectTemplateName,elementName,MailConstants.SUBJECT_TEMPLATE_PATH);
    		
-   		return MailUtility.sendEmail(fromMailAddress, toMailAddress, subject, htmlBody, this.getEmailConfiguration());
+   		return MailUtility.sendEmail(emailid, subject, htmlBody, this.getEmailConfiguration());
        }catch(Exception e){
     	   logger.error(e.getMessage(), e);
     	   return false;
@@ -73,9 +69,16 @@ public class MailServiceImpl implements MailService {
         
 	};
 
-	private String generateMessageBody(Object objectTobeMerged,String templateName, String elementName) {
-        Template emailTemplate = velocityEngine.getTemplate("templates/"+templateName);
-        VelocityContext velocityContext = new VelocityContext();
+	private String generateTemplateMessage(Object objectTobeMerged,String templateName, String elementName, String path) {
+		Template emailTemplate = null;
+		try{
+        	emailTemplate = velocityEngine.getTemplate(ProcessContext.get().getTenantId() + path + templateName);
+        }catch(ResourceNotFoundException ex){
+        	if (emailTemplate==null)
+        		emailTemplate = velocityEngine.getTemplate("default" + path + templateName);
+        }
+        
+        VelocityContext velocityContext = new VelocityContext(); 
         velocityContext.put(elementName, objectTobeMerged);
         StringWriter stringWriter = new StringWriter();
         emailTemplate.merge(velocityContext, stringWriter);
