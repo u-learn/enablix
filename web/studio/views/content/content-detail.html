@@ -17,5 +17,6 @@
 	<div class="foot clearfix">
 		<a ng-click="deleteRecord()" class="button button-edit">Delete</a>
 		<a ng-click="navToEdit()" class="button button-delete">Edit</a>
+		<a ng-if="$state.includes('studio')" ng-click="manageQuickLinks()" class="button button-yellow">Add to Quick Link</a>
 	</div>
 </div>

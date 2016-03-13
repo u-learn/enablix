@@ -1,11 +1,12 @@
 enablix.studioApp.controller('ContentDetailCtrl', 
-			['$scope', '$stateParams', 'ContentDataService', 'ContentTemplateService', 'StateUpdateService', 'StudioSetupService', 'Notification',
-	function( $scope,   $stateParams,   ContentDataService,   ContentTemplateService,   StateUpdateService,   StudioSetupService,   Notification) {
+			['$scope', '$state', '$stateParams', 'ContentDataService', 'ContentTemplateService', 'StateUpdateService', 'StudioSetupService', 'Notification', 'AssocQuickLinkModalWindow',
+	function( $scope,   $state,   $stateParams,   ContentDataService,   ContentTemplateService,   StateUpdateService,   StudioSetupService,   Notification,   AssocQuickLinkModalWindow) {
 		
 		var containerQId = $stateParams.containerQId;
 		var elementIdentity = $stateParams.elementIdentity;
 		
 		$scope.$stateParams = $stateParams;
+		$scope.$state = $state;
 		
 		$scope.containerDef = ContentTemplateService.getContainerDefinition(enablix.template, containerQId);
 		var containerLabel = $scope.containerDef.label;
@@ -39,6 +40,8 @@ enablix.studioApp.controller('ContentDetailCtrl',
 					Notification.error({message: "Error retrieving record data", delay: enablix.errorMsgShowTime});
 				});
 		
+		
+		
 		$scope.deleteRecord = function() {
 			
 			ContentDataService.deleteContentData(containerQId, elementIdentity, 
@@ -51,6 +54,10 @@ enablix.studioApp.controller('ContentDetailCtrl',
 					Notification.error({message: "Error deleting record", delay: enablix.errorMsgShowTime});
 				});
 			
+		}
+		
+		$scope.manageQuickLinks = function() {
+			AssocQuickLinkModalWindow.showAddQuickLinks(elementIdentity);
 		}
 		
 	}

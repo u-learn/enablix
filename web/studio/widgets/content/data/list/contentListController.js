@@ -1,6 +1,6 @@
 enablix.studioApp.controller('ContentListCtrl', 
-			['$scope', '$state', '$stateParams', 'ContentDataService', 'ContentTemplateService', 'StateUpdateService', 'StudioSetupService', 'Notification', 'ContentUtil', '$modal', 'QuickLinksService',
-	function( $scope,   $state,   $stateParams,   ContentDataService,   ContentTemplateService,   StateUpdateService,   StudioSetupService,   Notification,   ContentUtil,   $modal,   QuickLinksService) {
+			['$scope', '$state', '$stateParams', 'ContentDataService', 'ContentTemplateService', 'StateUpdateService', 'StudioSetupService', 'Notification', 'ContentUtil', 'QuickLinksService', 'AssocQuickLinkModalWindow',
+	function( $scope,   $state,   $stateParams,   ContentDataService,   ContentTemplateService,   StateUpdateService,   StudioSetupService,   Notification,   ContentUtil,   QuickLinksService,   AssocQuickLinkModalWindow) {
 		
 		var containerQId = $stateParams.containerQId;
 		var parentIdentity = $stateParams.parentIdentity;
@@ -61,39 +61,13 @@ enablix.studioApp.controller('ContentListCtrl',
 		
 		fetchData();
 		
-		var showAddQuickLinks = function(contentIdentity) {
-			var modalInstance = $modal.open({
-			      templateUrl: 'views/content/quicklinks/contentQuickLinkAssociation.html',
-			      size: 'sm', // 'sm', 'lg'
-			      controller: 'AssociateQuickLinkController',
-			      resolve: {
-			    	  quickLinkAssociation: function($stateParams, $q) {
-			    		  
-			    		  var deferred = $q.defer();
-			    		  
-			    		  QuickLinksService.getContentQuickLinkAssociation(contentIdentity, 
-				    			function(data) {
-				    			  deferred.resolve(data);
-				    		  	}, function(data) {
-				    		  		deferred.reject(data);
-				    		  	});
-			    		  
-			    		  return deferred.promise;
-			    	  },
-			    	  contentInstanceIdentity: function() {
-			    		  return contentIdentity;
-			    	  }
-			      }
-			    });
-		};
-		
 		if ($state.includes('studio.list')) {
 			$scope.tableRecordActions = 
 				[{
 					actionName: "Add to Quick Links",
 					iconClass: "fa fa-link",
 					tableCellClass: "edit",
-					actionCallbackFn: showAddQuickLinks
+					actionCallbackFn: AssocQuickLinkModalWindow.showAddQuickLinks
 				}];
 		}
 		
