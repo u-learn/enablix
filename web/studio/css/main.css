@@ -962,10 +962,11 @@ form .row .form-label:first-child {
 
 .back{
 	text-decoration: underline;
-	color: #2980b9;
-	padding-top: 10px;
-	border: 0;
-	font-size: 0.85em;
+    color: #2980b9;
+    padding-top: 25px;
+    border: 0;
+    font-size: 0.85em;
+    float: right;
 }
 /**/
 /* bread crumbs */
