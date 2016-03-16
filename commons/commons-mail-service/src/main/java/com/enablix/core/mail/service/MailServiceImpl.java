@@ -54,7 +54,7 @@ public class MailServiceImpl implements MailService {
 		String subjectTemplateName = scenario + MailConstants.EMAIL_SUBJECT_SUFFIX;
 		String elementName = MailConstants.EMAIL_TEMPLATE_OBJECTNAME;
 				
-		if(scenario.equalsIgnoreCase("resetpassword"))
+		if(scenario.equalsIgnoreCase("setpassword"))
 			objectTobeMerged = userRepo.findByUserId(emailid); //done to pick system generated password
 		 
        try{
