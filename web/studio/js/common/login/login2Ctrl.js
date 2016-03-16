@@ -32,6 +32,10 @@ enablix.studioApp.controller('Login2Controller',
 				authCallback();
 		    });
 		};
+
+		$scope.forgotpassword = function(){
+			StateUpdateService.goToForgotPasswordPage();
+		}
 		
 	}
 			

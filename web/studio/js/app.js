@@ -326,6 +326,12 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvi
 			templateUrl: 'views/system/docstore/doc-store-config.html',
 			controller: 'DocStoreConfigController'
 		})
+		.state('forgotpassword', {
+			url: '/forgotpassword',
+			templateUrl: 'views/forgot-password.html',
+			controller: 'ForgotPasswordController'
+			
+		})
 		.state('setpassword', {
 			url: '/setpassword',
 			templateUrl: 'views/set-password.html',
