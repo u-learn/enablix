@@ -12,5 +12,5 @@ public interface UserService {
 	public List<User> getAllUsers(String tenantId);
 	public Boolean deleteUser(User user);
 	public UserAndRolesVO getUserByIdentity(String userIdentity, String tenantId);
-
+	public User resetPassword(String userid);
 }

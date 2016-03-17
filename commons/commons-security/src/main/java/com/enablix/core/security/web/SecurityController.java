@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.enablix.commons.util.process.ProcessContext;
 import com.enablix.core.domain.security.authorization.Role;
 import com.enablix.core.domain.user.User;
+//import com.enablix.core.mail.service.MailService;
 import com.enablix.core.security.auth.repo.RoleRepository;
 import com.enablix.core.security.service.UserService;
 
@@ -23,6 +24,9 @@ public class SecurityController {
 	@Autowired
 	private UserService userService;
 	
+	/*@Autowired
+	MailService mailService;
+	*/
 	@Autowired
 	private RoleRepository roleRepo;
 	
@@ -68,6 +72,18 @@ public class SecurityController {
 		return roleRepo.findAll();
 	}
 
+	@RequestMapping(method = RequestMethod.POST,	value="/resetpassword", 
+			produces = "application/json")
+	public Boolean resetPassword(@RequestBody String userid ) {
+		if(userService.checkUserByUserId(userid)){
+			User user = userService.resetPassword(userid);
+			return true;//mailService.sendHtmlEmail(user, userid, "resetpassword");
+		}
+		else
+			return false;
+		
+		
+	}
 	
 /*	@RequestMapping(value="/logout", method = RequestMethod.GET)
 	public String logout(HttpServletRequest request, HttpServletResponse response) {

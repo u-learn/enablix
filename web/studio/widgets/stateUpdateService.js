@@ -62,6 +62,11 @@ enablix.studioApp.factory('StateUpdateService',
  						+ ":" + $location.port() + "/#/portal/home";
 	 		};
 	 		
+			var goToForgotPasswordPage = function(){
+	 			$window.location.href = $location.protocol() + "://" + $location.host() 
+					+ ":" + $location.port() + "/#/forgotpassword";
+	 		};
+
 	 		var goToAppSetPassword = function() {
 	 			$window.location.href = $location.protocol() + "://" + $location.host() 
 					+ ":" + $location.port() + "/#/setpassword";
@@ -200,7 +205,8 @@ enablix.studioApp.factory('StateUpdateService',
 	 			goToSetPassword : goToSetPassword,
 	 			goToAddEmailConfig : goToAddEmailConfig,
 	 			goToEmailConfig : goToEmailConfig,
-	 			goToEditEmailConfig : goToEditEmailConfig
+	 			goToEditEmailConfig : goToEditEmailConfig,
+	 			goToForgotPasswordPage : goToForgotPasswordPage
 	 		};
 	 	}
 	 ]);

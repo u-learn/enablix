@@ -33,7 +33,7 @@ enablix.studioApp.factory('UserService',
 				
 			RESTService.postForData('systemuser', null, userVO, null,function(data) {	    	
 					Notification.primary({message: "User Saved successfully", delay: enablix.errorMsgShowTime});
-					sendMail(userData,userData.userId,"resetpassword");	
+					sendMail(userData,userData.userId,"setpassword");	
 					StateUpdateService.goToListUser();				
 	    	}, function() {    		
 	    		Notification.error({message: "Error saving user ", delay: enablix.errorMsgShowTime});
