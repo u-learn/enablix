@@ -157,7 +157,7 @@ public class ContentCrudServiceImpl implements ContentCrudService {
 	
 	@Override
 	public List<Map<String, Object>> findAllRecordWithParentId(String collectionName, String parentIdentity) {
-		return findAllRecord(collectionName, null).getContent();
+		return findAllRecordWithParentId(collectionName, parentIdentity, null).getContent();
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
