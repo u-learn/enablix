@@ -54,7 +54,7 @@ enablix.studioApp.factory('StateUpdateService',
 	 		
 	 		var goToLogin = function() {
 	 			$window.location.href = $location.protocol() + "://" + $location.host() 
- 											+ ":" + $location.port() + "/login.html";
+ 											+ ":" + $location.port() + "/login.html#/login";
 	 		};
 	 		
 	 		var goToApp = function() {
@@ -63,8 +63,7 @@ enablix.studioApp.factory('StateUpdateService',
 	 		};
 	 		
 			var goToForgotPasswordPage = function(){
-	 			$window.location.href = $location.protocol() + "://" + $location.host() 
-					+ ":" + $location.port() + "/#/forgotpassword";
+	 			$state.go('forgotpassword');
 	 		};
 
 	 		var goToAppSetPassword = function() {

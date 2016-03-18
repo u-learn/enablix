@@ -27,8 +27,8 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvi
 		})
 		.state('login', {
 			url: '/login',
-			templateUrl: 'views/login.html',
-			controller: 'LoginController'
+			templateUrl: 'views/loginForm.html',
+			controller: 'Login2Controller'
 		})
 		.state('authorizationError', {
 			url: '/authError',
