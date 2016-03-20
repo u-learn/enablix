@@ -1,14 +1,21 @@
 package com.enablix.analytics.search.es;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchType;
 import org.elasticsearch.client.Requests;
-import org.elasticsearch.index.query.MatchQueryBuilder;
+import org.elasticsearch.index.query.MultiMatchQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import com.enablix.core.commons.xsdtopojo.ContainerType;
+import com.enablix.core.commons.xsdtopojo.ContentItemClassType;
+import com.enablix.core.commons.xsdtopojo.ContentItemType;
 import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 import com.enablix.core.mongo.AppConstants;
 import com.enablix.services.util.DatastoreUtil;
@@ -16,6 +23,10 @@ import com.enablix.services.util.TemplateUtil;
 
 
 public class ESQueryBuilder {
+	
+	private static final String BOOST_OPERATOR = "^";
+
+	private static final Logger LOGGER = LoggerFactory.getLogger(ESQueryBuilder.class);
 
 	private String searchText;
 	private ContentTemplate template;
@@ -36,14 +47,76 @@ public class ESQueryBuilder {
 					.searchType(SearchType.DFS_QUERY_THEN_FETCH)
 					.types(getTypes());
 		
-		MatchQueryBuilder matchQuery = QueryBuilders.matchQuery("_all", searchText);
-		SearchSourceBuilder searchSource = SearchSourceBuilder.searchSource().query(matchQuery);
+		Map<String, Integer> fieldBoostIndex = new HashMap<>();
+		getFieldNames(fieldBoostIndex, 
+				template.getDataDefinition().getContainer());
+		MultiMatchQueryBuilder multiMatchQuery = QueryBuilders.multiMatchQuery(
+				searchText, convertToMultiMatchBoostedFields(fieldBoostIndex));
+		
+		//MatchQueryBuilder matchQuery = QueryBuilders.matchQuery("_all", searchText);
+		SearchSourceBuilder searchSource = SearchSourceBuilder.searchSource().query(multiMatchQuery);
 		
 		searchRequest.source(searchSource);
 		
 		return searchRequest;
 	}
 	
+	private String[] convertToMultiMatchBoostedFields(Map<String, Integer> fieldBoostIndex) {
+		
+		String[] boostedFieldSearch = new String[fieldBoostIndex.size()];
+		
+		int indx = 0;
+		for (Map.Entry<String, Integer> entry : fieldBoostIndex.entrySet()) {
+			boostedFieldSearch[indx++] = entry.getKey() + BOOST_OPERATOR + entry.getValue();
+		}
+		
+		return boostedFieldSearch;
+	}
+	
+	private void getFieldNames(Map<String, Integer> fieldSearchBoost, List<ContainerType> containers) {
+		
+		for (ContainerType container : containers) {
+			
+			for (ContentItemType contentItem : container.getContentItem()) {
+				
+				Integer itemBoostValue = contentItem.getSearchBoost() == null ? 1 
+											: contentItem.getSearchBoost().intValue();
+				
+				String esFieldName = getESFieldName(contentItem);
+				
+				if (fieldSearchBoost.containsKey(esFieldName)) {
+				
+					Integer boostValue = fieldSearchBoost.get(esFieldName);
+					if (itemBoostValue > boostValue) {
+						fieldSearchBoost.put(esFieldName, itemBoostValue);
+					}
+					
+				} else {
+					fieldSearchBoost.put(esFieldName, itemBoostValue);
+				}
+			}
+		
+			getFieldNames(fieldSearchBoost, container.getContainer());
+		}
+	}
+	
+	private String getESFieldName(ContentItemType contentItem) {
+		
+		String fieldName = contentItem.getQualifiedId();
+		
+		int dotIndx = fieldName.indexOf('.');
+		if (dotIndx > 0) {
+			fieldName = fieldName.substring(dotIndx + 1);
+		}
+		
+		if (contentItem.getType() == ContentItemClassType.BOUNDED) {
+			fieldName += ".label";
+		}
+		
+		LOGGER.debug("ES Query field name: {}", fieldName);
+		return fieldName;
+	}
+
 	private String getIndexName() {
 		return DatastoreUtil.getTenantAwareDbName(AppConstants.BASE_DB_NAME);
 	}

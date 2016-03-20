@@ -81,9 +81,9 @@ public class EnablixUserService implements UserService, UserDetailsService {
 		User user = userRepo.findByUserId(userid);
 		String password =UUID.randomUUID().toString().substring(0,8);//system generated default password
 		user.setPassword(password);
+		user.setIsPasswordSet(false);
 		ProcessContext.initialize(userid, user.getTenantId(),null);
-		userRepo.save(user);
-		ProcessContext.clear();
+		userRepo.save(user);		
 		return user;
 	}	
 	@Override

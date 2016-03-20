@@ -961,12 +961,19 @@ form .row .form-label:first-child {
 /**/
 
 .back{
-	text-decoration: underline;
-    color: #2980b9;
-    padding-top: 25px;
+	padding-top: 25px;
     border: 0;
-    font-size: 0.85em;
     float: right;
+    display: inline-block;
+    margin: 1.25em 0 0 1em;
+    padding: 0.5em 1.25em;
+    font-family: Montserrat;
+    font-size: 0.75em;
+    line-height: 1.5;
+    text-transform: uppercase;
+    cursor: default;
+    color: #fff;
+    background: #2c3e50;
 }
 /**/
 /* bread crumbs */

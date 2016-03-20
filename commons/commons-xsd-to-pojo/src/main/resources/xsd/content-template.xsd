@@ -23,6 +23,7 @@
 		<xs:attribute name="id" type="xs:string" use="required"/>
 		<xs:attribute name="qualifiedId" type="xs:string"/>
 		<xs:attribute name="label" type="xs:string" use="optional"/>
+		<xs:attribute name="searchBoost" type="xs:nonNegativeInteger" use="optional" default="1"/>
 	</xs:complexType>
 	
 	<xs:complexType name="containerType">

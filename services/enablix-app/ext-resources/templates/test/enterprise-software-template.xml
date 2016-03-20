@@ -695,7 +695,7 @@
 				linkContainerQId="whitepaper" linkContentItemId="solutions"/>
 		</container>
 		<container id="product" label="Products">
-			<contentItem id="name" label="Name" type="text"/>
+			<contentItem id="name" label="Name" type="text" searchBoost="3"/>
 			<contentItem id="description" label="Description" type="text"/>
 			<contentItem id="shortName" label="Short Name" type="text"/>
 			<contentItem id="image" label="Image" type="doc"/>
