@@ -1,0 +1,20 @@
+<div class="block">
+	<div class="head">
+		<h2>Recommendations</h2>
+	</div>
+</div>
+<div class="block">
+	<div class="cont" ng-if="recoList && recoList.length > 0">
+		<table class="datatable">
+			<tbody>
+				<tr ng-repeat="reco in recoList" class="ng-scope">
+					<td class="remove no-border"></td>
+					<td class="remove no-border"><a ng-click="deleteRecommendation($index)" class="fa fa-times"></a></td>
+					<td class="no-border">
+						<eb-nav-link hide-hierarchy="false" nav-link="reco.navContent"></eb-nav-link>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>

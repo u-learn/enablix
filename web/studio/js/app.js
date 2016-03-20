@@ -374,7 +374,11 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvi
 			templateUrl: 'views/system/quicklinks/quickLinksConfig.html',
 			controller: 'QuickLinksConfigController'
 		})
-		;
+		.state('system.recommendations', {
+			url: '/reco',
+			templateUrl: 'views/system/reco/recoConfig.html',
+			controller: 'RecommendationConfigController'
+		});
 	
 	// The custom “X-Requested-With” is a conventional header sent by browser clients, 
 	// and it used to be the default in Angular but they took it out in 1.3.0. 

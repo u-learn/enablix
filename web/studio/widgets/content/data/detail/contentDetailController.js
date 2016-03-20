@@ -1,6 +1,6 @@
 enablix.studioApp.controller('ContentDetailCtrl', 
-			['$scope', '$state', '$stateParams', 'ContentDataService', 'ContentTemplateService', 'StateUpdateService', 'StudioSetupService', 'Notification', 'AssocQuickLinkModalWindow',
-	function( $scope,   $state,   $stateParams,   ContentDataService,   ContentTemplateService,   StateUpdateService,   StudioSetupService,   Notification,   AssocQuickLinkModalWindow) {
+			['$scope', '$state', '$stateParams', 'ContentDataService', 'ContentTemplateService', 'StateUpdateService', 'StudioSetupService', 'Notification', 'AssocQuickLinkModalWindow', 'ManageRecoModalWindow',
+	function( $scope,   $state,   $stateParams,   ContentDataService,   ContentTemplateService,   StateUpdateService,   StudioSetupService,   Notification,   AssocQuickLinkModalWindow,   ManageRecoModalWindow) {
 		
 		var containerQId = $stateParams.containerQId;
 		var elementIdentity = $stateParams.elementIdentity;
@@ -58,6 +58,10 @@ enablix.studioApp.controller('ContentDetailCtrl',
 		
 		$scope.manageQuickLinks = function() {
 			AssocQuickLinkModalWindow.showAddQuickLinks(elementIdentity);
+		}
+		
+		$scope.addToRecommendation = function() {
+			ManageRecoModalWindow.showAddToRecoWindow(elementIdentity);
 		}
 		
 	}

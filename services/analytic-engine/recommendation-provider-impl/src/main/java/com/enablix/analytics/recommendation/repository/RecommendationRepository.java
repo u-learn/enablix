@@ -11,14 +11,14 @@ public interface RecommendationRepository extends BaseMongoRepository<Recommenda
 
 	@Query("{ $and : [{'recommendationScope.userId' : ?0 }, "
 			   + "{'recommendationScope.templateId' : ?1 }, "
-			   + "{'recommendationScope.containerQId' : {$exists : false} }, "
-			   + "{'recommendationScope.contentIdentity' : {$exists: false} } ]}")
+			   + "{'recommendationScope.containerQId' : null }, "
+			   + "{'recommendationScope.contentIdentity' : null } ]}")
 	Collection<Recommendation> findByUserIdAndTemplateId(String userId, String templateId);
 
 	@Query("{ $and : [{'recommendationScope.userId' : ?0 }, "
 				   + "{'recommendationScope.templateId' : ?1 }, "
 				   + "{'recommendationScope.containerQId' : ?2 }, "
-				   + "{'recommendationScope.contentIdentity' : {$exists : false} } ]}")
+				   + "{'recommendationScope.contentIdentity' : null } ]}")
 	Collection<Recommendation> findByUserIdAndTemplateIdAndContainerQId(
 			String userId, String templateId, String containerQId);
 	
@@ -36,13 +36,23 @@ public interface RecommendationRepository extends BaseMongoRepository<Recommenda
 		String templateId, String containerQId, String contentIdentity);
 
 	@Query("{ $and : [{'recommendationScope.templateId' : ?0 }, "
-			   + "{'recommendationScope.containerQId' : {$exists : false} }, "
-			   + "{'recommendationScope.contentIdentity' : {$exists: false} } ]}")
+			   + "{'recommendationScope.containerQId' : null }, "
+			   + "{'recommendationScope.contentIdentity' : null } ]}")
 	Collection<Recommendation> findByTemplateId(String templateId);
 
 	@Query("{ $and : [{'recommendationScope.templateId' : ?0 }, "
 				   + "{'recommendationScope.containerQId' : ?1 }, "
-				   + "{'recommendationScope.contentIdentity' : {$exists : false} } ]}")
+				   + "{'recommendationScope.contentIdentity' : null } ]}")
 	Collection<Recommendation> findByTemplateIdAndContainerQId(String templateId, String containerQId);
+
+	@Query("{ $and : [{'recommendationScope.userId' : ?0 }, "
+			   + "{'recommendationScope.templateId' : ?1 }, "
+			   + "{'recommendationScope.containerQId' : ?2 }, "
+			   + "{'recommendationScope.contentIdentity' : ?3 },"
+			   + "{'recommendedData.data.containerQId' : ?4 },"
+			   + "{'recommendedData.data.instanceIdentity' : ?5 } ]}")
+	Collection<Recommendation> findByRecommendationScopeAndRecommendationData(
+			String userId, String templateId, String containerQId, 
+			String contentIdentity, String recoContainerQId, String recoContentIdentity);
 
 }

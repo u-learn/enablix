@@ -853,26 +853,26 @@ form .row .form-label:first-child {
 .datatable tr:hover td {
 	background: #fafafa;
 }
-.datatable .details {
+.datatable .details, .head .details {
 	width: 1px;
 	padding-left: 0;
 	color: #3498db;
 }
-.datatable .details a {
+.datatable .details a, .head .details a {
 	transition: color 0.3s;	
 }
-.datatable .details a:hover {
+.datatable .details a:hover, .head .details a:hover {
 	color: #2980b9;
 }
-.datatable .edit {
+.datatable .edit, .head .edit {
 	width: 1px;
 	padding-left: 0;
 	color: #e67e22;
 }
-.datatable .edit a {
+.datatable .edit a, .head .edit a {
 	transition: color 0.3s;	
 }
-.datatable .edit a:hover {
+.datatable .edit a:hover, .head .edit a:hover {
 	color: #d35400;
 }
 .datatable .remove {
@@ -1340,4 +1340,9 @@ input[type=checkbox] {
 
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
   display: none !important;
+}
+
+.header-link {
+	float: right;
+	margin: 3px 0 -3px 1em;
 }

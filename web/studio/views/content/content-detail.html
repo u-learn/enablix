@@ -1,5 +1,7 @@
 <div class="block">
 	<div class="head">
+		<span class="header-link edit"><a ng-if="$state.includes('studio')" class="fa fa-link" ng-click="manageQuickLinks()"></a></span>
+		<span class="header-link details"><a ng-if="$state.includes('studio')" class="fa fa-thumbs-up" ng-click="addToRecommendation()"></a></span>
 		<h2>{{pageHeading}}</h2>
 	</div>
 	<div class="cont">
@@ -17,6 +19,5 @@
 	<div class="foot clearfix">
 		<a ng-click="deleteRecord()" class="button button-edit">Delete</a>
 		<a ng-click="navToEdit()" class="button button-delete">Edit</a>
-		<a ng-if="$state.includes('studio')" ng-click="manageQuickLinks()" class="button button-yellow">Add to Quick Link</a>
 	</div>
 </div>
