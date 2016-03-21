@@ -79,6 +79,12 @@ public class ESQueryBuilder {
 			
 			for (ContentItemType contentItem : container.getContentItem()) {
 				
+				if (contentItem.getType() == ContentItemClassType.DATE_TIME
+						|| contentItem.getType() == ContentItemClassType.NUMERIC) {
+					// do not search on Data and numeric fields
+					continue;
+				}
+				
 				Integer itemBoostValue = contentItem.getSearchBoost() == null ? 1 
 											: contentItem.getSearchBoost().intValue();
 				
@@ -111,6 +117,8 @@ public class ESQueryBuilder {
 		
 		if (contentItem.getType() == ContentItemClassType.BOUNDED) {
 			fieldName += ".label";
+		} else if (contentItem.getType() == ContentItemClassType.DOC) {
+			fieldName += ".name";
 		}
 		
 		LOGGER.debug("ES Query field name: {}", fieldName);
