@@ -975,6 +975,11 @@ form .row .form-label:first-child {
     color: #fff;
     background: #2c3e50;
 }
+
+.back:hover{
+	cursor: pointer;
+	background:#476481;	
+}
 /**/
 /* bread crumbs */
 /**/
