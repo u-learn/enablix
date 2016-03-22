@@ -29,7 +29,7 @@ public class MailUtility {
 
 	public static boolean sendEmail(String sendToEmail,String subject, String htmlBody,EmailConfiguration emailConfiguration) {
 		try{
-			logger.info("sending mail..");
+			logger.info("sending mail.. " + emailConfiguration);
 			
 			String username;
 			String password;
@@ -45,7 +45,7 @@ public class MailUtility {
 			else
 			{
 				URL url = ((URLClassLoader)ClassLoader.getSystemClassLoader()).getURLs()[0];
-		    	URL url_new = new URL(url.toString().substring(0, (url.toString().lastIndexOf("enablix-app")+"enablix-app".length())) + "/ext-resources/config/properties/mail.properties");
+		    	URL url_new = new URL("/"+ url.toString().substring(0, (url.toString().lastIndexOf("enablix-app")+"enablix-app".length())) + "/ext-resources/config/properties/mail.properties");
 		   		Properties props = new Properties();
 		   		InputStream input = new FileInputStream(url_new.toString().substring(6));
 		   		props.load(input); 
@@ -74,7 +74,8 @@ public class MailUtility {
 	                return new PasswordAuthentication(authUsername,authPassword); 
 	            }
 	        });
-		
+	        
+	        logger.debug("session details" + session + " properties: " + props);
             Message msg = new MimeMessage(session);
           
             msg.setFrom(new InternetAddress(username));
@@ -85,6 +86,7 @@ public class MailUtility {
             MimeBodyPart htmlPart = new MimeBodyPart();
             htmlPart.setContent(htmlBody, "text/html");
             multipart.addBodyPart(htmlPart);
+           logger.debug("To: " + msg.getAllRecipients()[0] + "From: " +  msg.getFrom()[0]);
             msg.setContent(multipart);
             Transport.send(msg);  
             return true;

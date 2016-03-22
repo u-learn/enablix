@@ -42,6 +42,10 @@ public class EmailConfiguration extends BaseDocumentEntity{
 	public void setPort(String port) {
 		this.port = port;
 	}
-	
-	
+
+	@Override
+	public String toString() {
+		return "EmailConfiguration [emailId=" + emailId + ", smtp=" + smtp + ", port=" + port
+				+ "]";
+	}
 }
