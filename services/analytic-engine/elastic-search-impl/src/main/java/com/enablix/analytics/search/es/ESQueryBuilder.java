@@ -88,7 +88,7 @@ public class ESQueryBuilder {
 				Integer itemBoostValue = contentItem.getSearchBoost() == null ? 1 
 											: contentItem.getSearchBoost().intValue();
 				
-				String esFieldName = getESFieldName(contentItem);
+				String esFieldName = getESFieldName(contentItem, container);
 				
 				if (fieldSearchBoost.containsKey(esFieldName)) {
 				
@@ -106,13 +106,22 @@ public class ESQueryBuilder {
 		}
 	}
 	
-	private String getESFieldName(ContentItemType contentItem) {
+	private String getESFieldName(ContentItemType contentItem, ContainerType container) {
 		
 		String fieldName = contentItem.getQualifiedId();
 		
-		int dotIndx = fieldName.indexOf('.');
-		if (dotIndx > 0) {
-			fieldName = fieldName.substring(dotIndx + 1);
+		ContainerType holdingContainer = container;
+		if (!container.isReferenceable()) {
+			holdingContainer = TemplateUtil.findReferenceableParentContainer(
+					template.getDataDefinition(), container.getQualifiedId());
+		}
+		
+		String containerQId = holdingContainer.getQualifiedId();
+
+		// container name = c1.c2
+		// field name = c1.c2.f1, hence remove the container prefix from field
+		if (fieldName.startsWith(containerQId)) {
+			fieldName = fieldName.substring(containerQId.length() + 1);
 		}
 		
 		if (contentItem.getType() == ContentItemClassType.BOUNDED) {

@@ -80,7 +80,7 @@ public class TemplateUtil {
 		return null;
 	}
 	
-	private static ContainerType findReferenceableParentContainer(
+	public static ContainerType findReferenceableParentContainer(
 			DataDefinitionType dataDef, String containerQId) {
 		
 		String[] idHierarchy = QIdUtil.splitQId(containerQId);
