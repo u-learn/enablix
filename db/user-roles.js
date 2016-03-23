@@ -21,7 +21,7 @@ var setupRoles = function(tenantId) {
 	var coll = getCollection(tenantId + "_enablix", "ebx_role");
 	
 	// inserting Administrator role
-	print("inserting role: Content Admin");
+	print("inserting role: Administrator");
 	coll.insert(
 		{
 			"_id" : "Administrator",
@@ -35,17 +35,33 @@ var setupRoles = function(tenantId) {
 		}
 	);
 	
-	// inserting Administrator role
-	print("inserting role: Portal User");
+	// inserting Consumer role
+	print("inserting role: Consumer");
 	coll.insert(
 		{
-			"_id" : "portalUser",
+			"_id" : "Consumer",
 			"_class" : "com.enablix.core.domain.security.authorization.Role",
-			"identity" : "portalUser",
-			"roleName" : "Portal User",
+			"identity" : "Consumer",
+			"roleName" : "Consumer",
 			"permissions" : [
 				"VIEW_PORTAL",
 				"VIEW_RECENT_CONTENT"
+			]
+		}
+	);
+	
+	// inserting Contributor role
+	print("inserting role: Contributor");
+	coll.insert(
+		{
+			"_id" : "Contributor",
+			"_class" : "com.enablix.core.domain.security.authorization.Role",
+			"identity" : "Contributor",
+			"roleName" : "Contributor",
+			"permissions" : [
+				"VIEW_PORTAL",
+				"VIEW_RECENT_CONTENT",
+				"VIEW_STUDIO"
 			]
 		}
 	);
@@ -69,14 +85,25 @@ var assignRoleToUser = function(tenantId, userIdentity, rolesJson) {
 };
 
 var loadData = function() {
-	setupRoles("test");
+	/*setupRoles("test");
 	assignRoleToUser("test", "user1", [
 				DBRef("ebx_role", "Administrator"),
-				DBRef("ebx_role", "portalUser") 
+				DBRef("ebx_role", "Consumer") 
 			]);
 	assignRoleToUser("test", "user3", [
-				DBRef("ebx_role", "portalUser") 
+				DBRef("ebx_role", "Consumer") 
+			]);*/
+			
+			setupRoles("tenant1");
+			assignRoleToUser("tenant1", "user2", [
+				DBRef("ebx_role", "Administrator"),
+				DBRef("ebx_role", "Consumer") 
 			]);
+			
+			assignRoleToUser("test", "user3", [
+				DBRef("ebx_role", "Contributor")
+			]);
+			
 };
 
 loadData();
