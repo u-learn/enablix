@@ -33,7 +33,7 @@ enablix.studioApp.factory('UserService',
 				
 			RESTService.postForData('systemuser', null, userVO, null,function(data) {	    	
 					Notification.primary({message: "User Saved successfully", delay: enablix.errorMsgShowTime});
-					sendMail(userData,userData.userId,"setpassword");	
+					sendMail(userData,userData.userId,"setpassword",true);	
 					StateUpdateService.goToListUser();				
 	    	}, function() {    		
 	    		Notification.error({message: "Error saving user ", delay: enablix.errorMsgShowTime});
@@ -50,7 +50,7 @@ enablix.studioApp.factory('UserService',
 			var userVO = { user: sessionUser, roles: [] };
 				RESTService.postForData('systemuser', null, userVO, null,function(data) {	    	
 					Notification.primary({message: "Password saved successfully", delay: enablix.errorMsgShowTime});
-					sendMail(sessionUser,sessionUser.userId,"passwordconfirmation");
+					sendMail(sessionUser,sessionUser.userId,"passwordconfirmation", false);
 					StateUpdateService.goToPortalHome();
 	    	}, function() {    		
 	    		Notification.error({message: "Error ", delay: enablix.errorMsgShowTime});
@@ -58,17 +58,19 @@ enablix.studioApp.factory('UserService',
 			
 		};
 		
-		var sendMail = function(templateObject, emailid, scenario){
+		var sendMail = function(templateObject, emailid, scenario, notifyUser){
 			
 			var emailData = {scenario:scenario,emailid:emailid,templateObject:templateObject};
 			
 			RESTService.postForData('sendmail',null,emailData, null,function(sent) {
-				if(sent)
+				if(notifyUser)
+					if(sent)
 						Notification.primary({message: "Mail sent successfully", delay: enablix.errorMsgShowTime});
 				else
 						Notification.error({message: "Error sending mail ", delay: enablix.errorMsgShowTime});
 					}, function(errorObj) {    		
-						Notification.error({message: "Error sending mail ", delay: enablix.errorMsgShowTime});
+						if(notifyUser)
+							Notification.error({message: "Error sending mail ", delay: enablix.errorMsgShowTime});
 					});	
 					
 		};
