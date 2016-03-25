@@ -549,7 +549,7 @@ form .row .form-label:first-child {
 	font-size: 1.5em;
 	color: #222;
 }
-.logo i {
+.logo i{
 	display: block;
 	float: left;
 	margin-right: 0.25em;
@@ -557,6 +557,11 @@ form .row .form-label:first-child {
 }
 .logo:hover {
 	color: #222;
+}
+
+.logo img {
+	margin-right: 0.25em;
+	vertical-align: bottom;
 }
 
 

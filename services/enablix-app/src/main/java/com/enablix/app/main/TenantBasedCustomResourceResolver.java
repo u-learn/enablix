@@ -20,7 +20,7 @@ public class TenantBasedCustomResourceResolver extends PathResourceResolver {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(TenantBasedCustomResourceResolver.class);
 
-	@Value("${ui.resource.custom.pattern:**/css/**,**/messages/**}")
+	@Value("${ui.resource.custom.pattern:**/css/**,**/messages/**,**/img/**}")
 	private final String[] customResourcePatternArr = new String[0];
 	private final PathMatcher pathMatcher = new AntPathMatcher();
 
