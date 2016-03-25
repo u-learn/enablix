@@ -68,12 +68,13 @@ public class MailUtility {
 	        final String authUsername = username;
             final String authPassword = password;
             
-	        Session session = Session.getDefaultInstance(props, new Authenticator() {
+	        Session session = Session.getInstance(props, new Authenticator() {
 	            @Override
 	             protected PasswordAuthentication getPasswordAuthentication() {	                
 	                return new PasswordAuthentication(authUsername,authPassword); 
 	            }
 	        });
+	        
 	        
 	        logger.debug("session details" + session + " properties: " + props);
             Message msg = new MimeMessage(session);
