@@ -965,7 +965,7 @@ form .row .form-label:first-child {
     border: 0;
     float: right;
     display: inline-block;
-    margin: 1.25em 0 0 1em;
+    margin: -0.75em 0 -25px 1em;
     padding: 0.5em 1.25em;
     font-family: Montserrat;
     font-size: 0.75em;
