@@ -36,11 +36,18 @@ public class TenantBasedCustomResourceResolver extends PathResourceResolver {
 	}
 	
 	protected Resource getResource(String resourcePath, Resource location) throws IOException {
+		
 		final String tenantId = resolveTenantId();
+		
 		if (tenantId != null && matchedFoundAgainstPattern(resourcePath)) {
 			location = location.createRelative("/custom/" + tenantId + "/");
+			LOGGER.debug("try custom location: {}", location);
 		}
-		return super.getResource(resourcePath, location);
+		
+		Resource resource = super.getResource(resourcePath, location);
+		LOGGER.debug("Resource path: {}", resource);
+		
+		return resource;
 	}
 	
 
