@@ -109,6 +109,10 @@ public class TemplateUtil {
 			containers = container.getContainer();
 		}
 		
+		if (refContainer != null && !StringUtil.isEmpty(refContainer.getLinkContainerQId())) {
+			refContainer = findReferenceableParentContainer(dataDef, refContainer.getLinkContainerQId());
+		}
+		
 		return refContainer;		
 	}
 	

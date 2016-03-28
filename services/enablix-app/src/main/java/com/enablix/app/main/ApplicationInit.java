@@ -55,7 +55,7 @@ public class ApplicationInit extends WebMvcAutoConfigurationAdapter {
 	@Value("${ui.resource.cache.period:0}")
 	public int cachePeriod;
 	
-	@Value("${ui.cache.resources.flag:true}")
+	@Value("${ui.cache.resources.flag:false}")
 	public boolean cacheResources;
 	
 	public static void main(String[] args) {
@@ -93,7 +93,7 @@ public class ApplicationInit extends WebMvcAutoConfigurationAdapter {
 		registry.addResourceHandler("/**")
 				.addResourceLocations(resourcesPaths.toArray(new String[resourcesPaths.size()]))
 				.setCachePeriod(cachePeriod)
-				.resourceChain(cacheResources)
+				.resourceChain(false)
 				.addResolver(tenantBasedCustomResourceResolver())
 				.addResolver(new PathResourceResolver());
 	}
