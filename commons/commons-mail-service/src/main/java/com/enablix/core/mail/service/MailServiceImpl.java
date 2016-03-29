@@ -20,6 +20,7 @@ import com.enablix.commons.util.process.ProcessContext;
 import com.enablix.core.domain.config.EmailConfiguration;
 import com.enablix.core.domain.config.SMTPConfiguration;
 import com.enablix.core.domain.config.TemplateConfiguration;
+import com.enablix.core.domain.user.User;
 import com.enablix.core.mail.utility.MailConstants;
 import com.enablix.core.mail.utility.MailUtility;
 import com.enablix.core.mongo.config.repo.EmailConfigRepo;
@@ -54,8 +55,13 @@ public class MailServiceImpl implements MailService {
 		String subjectTemplateName = scenario + MailConstants.EMAIL_SUBJECT_SUFFIX;
 		String elementName = MailConstants.EMAIL_TEMPLATE_OBJECTNAME;
 				
-		if(scenario.equalsIgnoreCase("setpassword"))
-			objectTobeMerged = userRepo.findByUserId(emailid); //done to pick system generated password
+		if(scenario.equalsIgnoreCase("setpassword")){
+			User user = userRepo.findByUserId(emailid); //done to pick system generated password
+			User createdBy = userRepo.findByUserId(user.getCreatedBy());
+			user.setCreatedBy(createdBy.getProfile().getName());
+			objectTobeMerged = user;
+		}
+			
 		 
        try{
     	String htmlBody = generateTemplateMessage(objectTobeMerged,templateName,elementName,MailConstants.BODY_TEMPLATE_PATH);
