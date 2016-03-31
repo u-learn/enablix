@@ -1,5 +1,6 @@
 package com.enablix.core.mail.velocity.resolver;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.enablix.commons.util.process.ProcessContext;
@@ -11,6 +12,7 @@ import com.enablix.core.system.repo.TenantRepository;
 @Component
 public class TenantResolver implements VelocityTemplateInputResolver<TenantAware> {
 
+	@Autowired
 	private TenantRepository tenantRepo;
 	
 	@Override
