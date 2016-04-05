@@ -2,7 +2,7 @@ package com.enablix.core.mail.velocity.input;
 
 import com.enablix.core.domain.user.User;
 
-public class UserWelcomeVelocityInput extends BaseVelocityInput {
+public class UserWelcomeVelocityInput extends BaseVelocityInput implements LoggedInUserAware{
 
 	private User loggedInUser;
 	private User newCreatedUser;

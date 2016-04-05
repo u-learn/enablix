@@ -24,6 +24,7 @@ import com.enablix.core.domain.tenant.Tenant;
 import com.enablix.core.domain.user.User;
 import com.enablix.core.mail.utility.MailConstants;
 import com.enablix.core.mail.utility.MailUtility;
+import com.enablix.core.mail.velocity.NewUserScenarioInputBuilder;
 import com.enablix.core.mongo.config.repo.EmailConfigRepo;
 import com.enablix.core.mongo.config.repo.SMTPConfigRepo;
 import com.enablix.core.mongo.config.repo.TemplateConfigRepo;
@@ -36,6 +37,7 @@ public class MailServiceImpl implements MailService {
 	
 	private static final Logger logger = LoggerFactory.getLogger(MailServiceImpl.class);
 	
+	@Autowired
 	private VelocityEngine velocityEngine ;
 	@Autowired
 	private EmailConfigRepo emailConfigRepo;
@@ -48,6 +50,7 @@ public class MailServiceImpl implements MailService {
     @Autowired
 	private TenantRepository tenantRepo;
     @Autowired
+    private NewUserScenarioInputBuilder newUserScenarioInputBuilder;
     
     public void setVelocityEngine(VelocityEngine velocityEngine) {
         this.velocityEngine = velocityEngine;
@@ -58,16 +61,23 @@ public class MailServiceImpl implements MailService {
 		String templateName = scenario + MailConstants.EMAIL_BODY_SUFFIX;
 		String subjectTemplateName = scenario + MailConstants.EMAIL_SUBJECT_SUFFIX;
 		String elementName = MailConstants.EMAIL_TEMPLATE_OBJECTNAME;
-				
-		//if(scenario.equalsIgnoreCase("setpassword")){
-			User user = userRepo.findByUserId(emailid); //done to pick system generated password
-			User createdBy = userRepo.findByUserId(user.getCreatedBy());
-			user.setCreatedBy(createdBy.getProfile().getName());
-			Tenant tenant = tenantRepo.findByTenantId(user.getTenantId());
-			user.setTenantId(tenant.getName());
-			objectTobeMerged = user;			
-		//}
-			
+		
+		objectTobeMerged = newUserScenarioInputBuilder.build(emailid);
+		logger.debug(objectTobeMerged.toString());
+		/*switch (scenario) { 
+		case MailConstants.SCENARIO_SET_PASSWORD:
+			objectTobeMerged = newUserScenarioInputBuilder.build(emailid);
+			break;
+		case MailConstants.SCENARIO_RESET_PASSWORD:
+			objectTobeMerged = newUserScenarioInputBuilder.build(emailid);
+			break;
+		case MailConstants.SCENARIO_PASSWORD_CONFIRMATION:
+			objectTobeMerged = newUserScenarioInputBuilder.build(emailid);
+			break;
+		default:
+			break;
+		}
+			*/
 		 
        try{
     	String htmlBody = generateTemplateMessage(objectTobeMerged,templateName,elementName,MailConstants.BODY_TEMPLATE_PATH);

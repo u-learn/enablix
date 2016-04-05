@@ -17,7 +17,7 @@ public class TenantResolver implements VelocityTemplateInputResolver<TenantAware
 	
 	@Override
 	public void work(TenantAware velocityTemplateInput) {
-		Tenant tenant = tenantRepo.findByTenantId(ProcessContext.get().getTemplateId());
+		Tenant tenant = tenantRepo.findByTenantId(ProcessContext.get().getTenantId());
 		if (tenant != null) {
 			velocityTemplateInput.setTenant(tenant);
 		}

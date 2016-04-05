@@ -11,4 +11,7 @@ public class MailConstants {
 	public static final String EMAIL_TEMPLATE_OBJECTNAME = "obj";
 	public static final String BODY_TEMPLATE_PATH = "/body-templates/";
 	public static final String SUBJECT_TEMPLATE_PATH = "/subject-templates/";
+	public static final String SCENARIO_SET_PASSWORD = "setpassword";
+	public static final String SCENARIO_PASSWORD_CONFIRMATION = "passwordconfirmation";
+	public static final String SCENARIO_RESET_PASSWORD = "resetpassword";
 }

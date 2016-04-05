@@ -4,7 +4,7 @@ import com.enablix.core.domain.user.User;
 
 public interface LoggedInUserAware {
 
-	void setLoggerInUser(User loggedInUser);
+	void setLoggedInUser(User loggedInUser);
 	
 	User getLoggedInUser();
 	

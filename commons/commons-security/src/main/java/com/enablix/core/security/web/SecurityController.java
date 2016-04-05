@@ -15,6 +15,7 @@ import com.enablix.commons.util.process.ProcessContext;
 import com.enablix.core.domain.security.authorization.Role;
 import com.enablix.core.domain.user.User;
 import com.enablix.core.mail.service.MailService;
+import com.enablix.core.mail.utility.MailConstants;
 import com.enablix.core.security.auth.repo.RoleRepository;
 import com.enablix.core.security.service.UserService;
 
@@ -77,7 +78,7 @@ public class SecurityController {
 	public Boolean resetPassword(@RequestBody String userid ) {
 		if(userService.checkUserByUserId(userid)){
 			User user = userService.resetPassword(userid);
-			mailService.sendHtmlEmail(user, userid, "resetpassword");
+			mailService.sendHtmlEmail(user, userid, MailConstants.SCENARIO_RESET_PASSWORD);
 			ProcessContext.clear();
 			return true;
 		}
