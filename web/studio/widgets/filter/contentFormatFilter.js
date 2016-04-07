@@ -36,6 +36,8 @@ enablix.filters.filter('ebxFormatData', function($filter) {
 								
 				if (input) {
 					text = $filter('linky')(input, "_blank");
+					if(text.indexOf('<a') >= 0)
+						text = text.replace(text.substring(text.indexOf('>'),text.indexOf('</')),">Click here");
 				}
 				break;
 		}

@@ -85,22 +85,21 @@ var assignRoleToUser = function(tenantId, userIdentity, rolesJson) {
 };
 
 var loadData = function() {
-	/*setupRoles("test");
+	setupRoles("test");
 	assignRoleToUser("test", "user1", [
 				DBRef("ebx_role", "Administrator"),
 				DBRef("ebx_role", "Consumer") 
 			]);
-	assignRoleToUser("test", "user3", [
+	/*assignRoleToUser("test", "user3", [
 				DBRef("ebx_role", "Consumer") 
 			]);*/
-			
-			setupRoles("tenant1");
-			assignRoleToUser("tenant1", "user2", [
+	setupRoles("tenant1");
+	assignRoleToUser("tenant1", "user2", [
 				DBRef("ebx_role", "Administrator"),
 				DBRef("ebx_role", "Consumer") 
 			]);
 			
-			assignRoleToUser("test", "user3", [
+	assignRoleToUser("test", "user3", [
 				DBRef("ebx_role", "Contributor")
 			]);
 			
