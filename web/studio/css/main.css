@@ -367,7 +367,9 @@ form .row .form-label:first-child {
 	float: left;
 	font-size: 14px;
 	margin: 4px 8px 0 0;
-	color: #aaa;
+	/* color: #aaa; */
+	opacity: 0.75;
+    color: #fff;
 }
 
 .block .cont .detail {
@@ -425,7 +427,19 @@ form .row .form-label:first-child {
 .block .head-toggle {
 	cursor: pointer;
 	-webkit-user-select: none;
+	background: #2980b9;
 }
+
+.block .head-toggle h2{
+	opacity: 0.75;
+    color: #fff;
+}
+
+.block .head-toggle h2:hover{
+	opacity: 1;
+}
+
+	
 .block .head-toggle i.expandable {
 	position: relative;
 	float: right;
@@ -442,7 +456,8 @@ form .row .form-label:first-child {
 	width: 100%;
 	height: 2px;
 	margin: -1px 0 0 -7px;
-	background: #aaa;
+	background: #fff;
+	opacity:0.75;
 }
 .block .head-toggle i.expandable:before {
 	content: '';
@@ -452,11 +467,12 @@ form .row .form-label:first-child {
 	width: 2px;
 	height: 100%;
 	margin: -7px 0 0 -1px;
-	background: #aaa;
+	background: #fff;
+	opacity:0.75;
 }
 .block .head-toggle:hover i.expandable:after,
 .block .head-toggle:hover i.expandable:before {
-	background-color: #666;
+	opacity:1;
 }
 .block .head-toggle.active i.expandable:before {
 	display: none;
@@ -495,6 +511,9 @@ form .row .form-label:first-child {
 	text-decoration: none;
 }
 
+.cont .dataItem{
+	padding-top: 15px;
+}
 
 /**/
 /* grid */
@@ -811,7 +830,9 @@ form .row .form-label:first-child {
 	margin-top: -0.5em;
 	font-size: 0.875em;
 	line-height: 1.5;
+	overflow: hidden;
 }
+
 .infotable th {
 	width: 1%;
 	padding-right: 0.75em;
@@ -1355,4 +1376,15 @@ input[type=checkbox] {
 .header-link {
 	float: right;
 	margin: 3px 0 -3px 1em;
+}
+
+
+.subcontainer
+{    width: 50%;
+    float: left;
+    border: 53pxblack;
+    padding-right: 15px;
+    padding-left: 15px;
+    position: relative;
+    min-height: 1px;
 }
