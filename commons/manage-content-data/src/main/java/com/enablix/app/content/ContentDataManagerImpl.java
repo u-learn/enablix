@@ -2,7 +2,6 @@ package com.enablix.app.content;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -80,6 +79,7 @@ public class ContentDataManagerImpl implements ContentDataManager {
 		if (!StringUtil.isEmpty(linkedContainerQId)) {
 			request.setParentIdentity(null);
 			request.setContentQId(linkedContainerQId);
+			container = TemplateUtil.findContainer(template.getDataDefinition(), linkedContainerQId);
 		}
 		
 		ContentUpdateHandler updateHandler = handlerFactory.getHandler(request);

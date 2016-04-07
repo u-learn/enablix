@@ -219,7 +219,19 @@ public class TemplateUtil {
 			}
 		}
 		
+		// check if this is a linked container, then look for linked container's UI def
+		if (cntUIDef == null) {
+			ContainerType containerDef = findContainer(template.getDataDefinition(), qId);
+			if (isLinkedContainer(containerDef)) {
+				cntUIDef = getContentUIDef(template, containerDef.getLinkContainerQId());
+			}
+		}
+		
 		return cntUIDef;
+	}
+	
+	public static boolean isLinkedContainer(ContainerType containerDef) {
+		return !StringUtil.isEmpty(containerDef.getLinkContainerQId());
 	}
 
 
