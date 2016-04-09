@@ -981,6 +981,19 @@ form .row .form-label:first-child {
 	margin-left: 22px;
 }
 
+.dataItem .toggle-cont {
+	margin: 1em 0 1.25em;
+	padding: 0 0 1.25em 22px;
+	border-bottom: 1px solid #ecf0f1;
+}
+ 
+.dataItem:last-child .toggle-cont {
+	margin-bottom: 0;
+	padding-bottom: 0;
+	border-bottom: 0;
+}
+
+
 
 /**/
 /* back button */
