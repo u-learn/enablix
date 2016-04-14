@@ -11,20 +11,7 @@ enablix.studioApp.controller('PortalCntnrSubItemCtrl',
 			_dataRecord.headingLabel = ContentUtil.resolveContainerInstancePortalLabel(
 										_containerDef, _dataRecord);
 			
-			for (var i = 0; i < _containerDef.contentItem.length; i++) {
-				
-				var item = _containerDef.contentItem[i];
-				
-				if (item.type == 'DOC') {
-				
-					var docInstance = _dataRecord[item.id];
-					if (docInstance && docInstance.identity) {
-						_dataRecord.downloadDocIdentity = docInstance.identity;
-					}
-					
-					break;
-				}
-			}
+			ContentUtil.decorateData(_containerDef, _dataRecord, true);
 		}
 		
 		ContentDataService.getContentRecordData(enablix.templateId, $stateParams.subContainerQId, 

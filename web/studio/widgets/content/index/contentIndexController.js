@@ -2,10 +2,12 @@ enablix.studioApp.controller('contentIndexCtrl',
 			['$scope', '$state', '$stateParams', 'ContentIndexService', 'StateUpdateService', 'Notification', 
     function( $scope,   $state,   $stateParams,   ContentIndexService,   StateUpdateService,   Notification) {
 	
+		$scope.contentIndex = $scope.contentIndex || {};
+		
 		ContentIndexService.getContentIndexData(enablix.templateId, function(data) {
 	    	
 			$scope.indexData = data; 
-			if (!$stateParams.containerQId) {
+			if (!$stateParams.containerQId && $scope.contentIndex.selectNodeLabel) {
 				var firstNode = data[0];
 				$scope.contentIndex.selectNodeLabel(firstNode);
 			}
@@ -15,8 +17,6 @@ enablix.studioApp.controller('contentIndexCtrl',
 	    	Notification.error({message: "Error fetching content index", delay: enablix.errorMsgShowTime});
 	    });
 	    
-		$scope.contentIndex = $scope.contentIndex || {};
-		
 		var moveToNodeView = function(selectedNode) {
 			
 			if (selectedNode.type == 'container') {

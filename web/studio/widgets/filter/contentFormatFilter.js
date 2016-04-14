@@ -1,6 +1,6 @@
-enablix.filters.filter('ebxFormatData', function($filter) {
+enablix.filters.filter('ebxFormatData', function($filter, $compile) {
 	
-	return function(input, dataType) {
+	return function(input, dataType, scope) {
 		
 		if (isNullOrUndefined(input)) { return ""; }
 		
@@ -27,7 +27,9 @@ enablix.filters.filter('ebxFormatData', function($filter) {
 							text += ", "
 						}
 					
-						text += input[i].label;
+						var item = input[i];
+						var formattedItem = item.label;
+						text += formattedItem;
 					}
 				}
 				break;

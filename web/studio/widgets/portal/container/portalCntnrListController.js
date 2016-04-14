@@ -19,7 +19,7 @@ enablix.studioApp.controller('PortalCntnrListCtrl',
 					$scope.listData = dataPage.content;
 					$scope.pageData = dataPage;
 					angular.forEach($scope.listData, function(item) {
-						ContentUtil.decorateData(containerDef, item);
+						ContentUtil.decorateData(containerDef, item, true);
 					});
 				}, 
 				function(data) {
@@ -33,6 +33,11 @@ enablix.studioApp.controller('PortalCntnrListCtrl',
 		
 		$scope.navToContentDetail = function(contentRecordIdentity) {
 			StateUpdateService.goToPortalContainerDetail($stateParams.containerQId, contentRecordIdentity);
+		}
+		
+		$scope.navToItemDetail = function(_containerQId, _contentIdentity) {
+			StateUpdateService.goToPortalContainerBody(
+					_containerQId, _contentIdentity, 'single', _containerQId);
 		}
 		
 		$scope.setPage = function(pageNum) {

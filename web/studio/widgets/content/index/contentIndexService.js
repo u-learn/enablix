@@ -3,6 +3,7 @@ enablix.studioApp.factory('ContentIndexService',
 	 	function(RESTService, ContentDataService, ContentTemplateService, ContentUtil, Notification) {
 		
 			var templateId = "";
+			var cachedContentIndexData = null;
 			
 			var contentIndexTransformer = function(containerList, ignoreInstanceLoad, prntContainerQId) {
 				
@@ -161,7 +162,15 @@ enablix.studioApp.factory('ContentIndexService',
 			var getContentIndexData = function(_templateId, _onSuccess, _onError) {
 				templateId = _templateId;
 				var params = {"templateId": _templateId};
-			    RESTService.getForData("fetchRootContainers", params, contentIndexTransformer, _onSuccess, _onError);
+				
+				if (isNullOrUndefined(cachedContentIndexData)) {
+					RESTService.getForData("fetchRootContainers", params, contentIndexTransformer, function(data) {
+							cachedContentIndexData = data;
+							_onSuccess(data)
+						}, _onError);
+				} else {
+					_onSuccess(cachedContentIndexData);
+				}
 			};
 			
 			var updateNodeData = function(_treeNode, _data) {

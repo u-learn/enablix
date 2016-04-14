@@ -22,20 +22,7 @@ enablix.studioApp.controller('PortalSubContainerCtrl',
 			_dataRecord.hasSubContainers = !isNullOrUndefined(_containerDef.container)
 											&& _containerDef.container.length > 0;
 		
-			for (var i = 0; i < _containerDef.contentItem.length; i++) {
-				
-				var item = _containerDef.contentItem[i];
-				
-				if (item.type == 'DOC') {
-				
-					var docInstance = _dataRecord[item.id];
-					if (docInstance && docInstance.identity) {
-						_dataRecord.downloadDocIdentity = docInstance.identity;
-					}
-					
-					break;
-				}
-			}
+			ContentUtil.decorateData(_containerDef, _dataRecord, true);
 		}
 		
 		$scope.toggleContainer = function($event) {

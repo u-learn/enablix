@@ -108,6 +108,11 @@
 					//Rendering template.
 					element.html('').append( $compile( template )( scope ) );
 					
+					if (scope[treeModel]) {
+						var treeData = scope[treeModel];
+						var firstNode = treeData[0];
+						scope[treeId].selectNodeLabel(firstNode);
+					}
 				}
 			}
 		};

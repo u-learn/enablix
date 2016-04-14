@@ -9,11 +9,7 @@
 		<table class="infotable" >
 			<tr ng-repeat="header in singleHeaders" ng-switch="header.dataType" ng-if="bodyData[header.key]!=null">
 				<th>{{header.label}}:</th>
-				<td><span class="content-data" ng-bind-html="bodyData[header.key] | ebxFormatData: header.dataType"></span>&nbsp;
-					<span ng-if="header.dataType == 'DOC' && bodyData[header.key].name">
-						<eb-doc-download doc-value="bodyData[header.key].identity"></eb-doc-download>
-					</span>
-				</td>
+				<td><eb-render-data content-value="bodyData[header.key]" content-def="header"/></td>
 			</tr>
 	  	</table>
 	</div>

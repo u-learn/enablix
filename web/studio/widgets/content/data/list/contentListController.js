@@ -32,7 +32,7 @@ enablix.studioApp.controller('ContentListCtrl',
 			ContentDataService.deleteContentData(containerQId, elementIdentity, 
 				function(data) {
 					Notification.primary("Deleted successfully!");
-					var parentNode = $scope.getCurrentIndexNode ? $scope.getCurrentIndexNode().parentNode : null;
+					var parentNode = $scope.getCurrentIndexNode ? $scope.getCurrentIndexNode() : null;
 					if (parentNode && parentNode.children && parentNode.children.length > 0) {
 						$scope.postDataDelete(parentNode, elementIdentity);
 					}

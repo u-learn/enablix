@@ -102,6 +102,7 @@
 			<xs:element name="dataId" type="xs:string"/>
 			<xs:element name="dataLabel" type="xs:string"/>
 		</xs:sequence>
+		<xs:attribute name="hyperlink" type="xs:boolean"/>
 	</xs:complexType>
 	
 	<xs:complexType name="docType">

@@ -51,20 +51,36 @@ enablix.studioApp.factory('ContentUtil',
 				return findLabelValue(portalLabelAttrId, _containerDef, _instanceData);
 			};
 			
-			var decorateData = function(_containerDef, _dataRecord) {
+			var decorateData = function(_containerDef, _dataRecord, _processHyperlink) {
 				
 				for (var i = 0; i < _containerDef.contentItem.length; i++) {
 					
 					var item = _containerDef.contentItem[i];
 					
 					if (item.type == 'DOC') {
-					
+						
 						var docInstance = _dataRecord[item.id];
 						if (docInstance && docInstance.identity) {
 							_dataRecord.downloadDocIdentity = docInstance.identity;
 						}
 						
-						break;
+					} else if (item.type == 'BOUNDED') {
+						
+						var boundedItem = _dataRecord[item.id];
+						
+						if (_processHyperlink && !isNullOrUndefined(boundedItem) 
+								&& boundedItem.length
+								&& item.bounded.refList && item.bounded.refList.datastore
+								&& item.bounded.refList.datastore.hyperlink) {
+						
+							for (var k = 0; k < boundedItem.length; k++) {
+								var itemVal = boundedItem[k];
+								itemVal.hrefData = {
+									"containerQId": item.bounded.refList.datastore.storeId,
+									"contentIdentity": itemVal.id
+								};
+							}
+						}
 					}
 				}
 			}

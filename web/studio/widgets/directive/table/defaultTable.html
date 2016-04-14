@@ -30,11 +30,8 @@
 			<td ng-repeat="action in otherActions" ng-class="action.tableCellClass"><a ng-class="action.iconClass" ng-click="callOtherAction(action, tableRecord.identity)"></a></td>
 			<td ng-repeat="col in tableHeaders">
 				<span ng-class="{'text-right': col.dataType == 'NUMERIC'}">
-					<span class="content-data" ng-bind-html="tableRecord[col.key] | ebxFormatData: col.dataType"></span>
+					<eb-render-data content-value="tableRecord[col.key]" content-def="col"/>
 				</span>
-				<span ng-if="col.dataType == 'DOC' && tableRecord[col.key].name">
-					<eb-doc-download doc-value="tableRecord[col.key].identity"></eb-doc-download>
-				</span> 
 			</td>
 		</tr>
 	</tbody>

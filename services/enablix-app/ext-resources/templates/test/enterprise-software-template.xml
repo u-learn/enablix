@@ -9,7 +9,7 @@
 			<contentItem id="products" label="Related Products" type="bounded">
 				<bounded multivalued="true">
 					<refList>
-						<datastore>
+						<datastore hyperlink="true">
 							<storeId>product</storeId>
 							<dataId>identity</dataId>
 							<dataLabel>name</dataLabel>
@@ -702,7 +702,7 @@
 			<contentItem id="products" label="Related Solutions" type="bounded">
 				<bounded multivalued="true">
 					<refList>
-						<datastore>
+						<datastore hyperlink="true">
 							<storeId>solution</storeId>
 							<dataId>identity</dataId>
 							<dataLabel>name</dataLabel>
