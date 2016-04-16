@@ -33,6 +33,10 @@ public interface ContentCrudService {
 			String linkContentItemId, String linkContainerIdentity, Pageable pageable);
 
 	void updateAttributes(String collectionName, String elementQId, String elementIdentity, Map<String, Object> data);
+	
+	void updateBoundedLabel(String collectionName, String boundedAttrId, String boundedAttrIdValue, String newAttrLabelValue);
+	
+	void deleteBoundedItem(String collection, String boundedAttrId, String boundedAttrIdValue);
 
 	void insertChildContainer(String collectionName, String parentIdentity, String childQId,
 			Map<String, Object> data);

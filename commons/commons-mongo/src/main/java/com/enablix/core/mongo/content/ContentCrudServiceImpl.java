@@ -2,6 +2,7 @@ package com.enablix.core.mongo.content;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -309,6 +310,25 @@ public class ContentCrudServiceImpl implements ContentCrudService {
 		List<Map<String, Object>> list =  (List) mongoTemplate.find(query, HashMap.class, collectionName);
 		
 		return new PageImpl<Map<String, Object>>(list, pageable, count);
+	}
+
+	@Override
+	public void updateBoundedLabel(String collectionName, String boundedAttrId, String boundedAttrIdValue,
+			String newAttrLabelValue) {
+		
+		Query query = Query.query(Criteria.where(boundedAttrId + ".id").is(boundedAttrIdValue));
+		
+		String setId = boundedAttrId + "." + ARR_POSITIONAL_OP + ".label";
+		Update set = new Update().set(setId, newAttrLabelValue);
+		mongoTemplate.updateMulti(query, set, collectionName);
+		
+	}
+
+	@Override
+	public void deleteBoundedItem(String collectionName, String boundedAttrId, String boundedAttrIdValue) {
+		Query query = Query.query(new Criteria());
+		Update pull = new Update().pull(boundedAttrId, Collections.singletonMap("id", boundedAttrIdValue));
+		mongoTemplate.updateMulti(query, pull, collectionName);
 	}
 	
 }

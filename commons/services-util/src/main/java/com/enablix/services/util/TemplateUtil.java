@@ -9,10 +9,14 @@ import org.slf4j.LoggerFactory;
 
 import com.enablix.commons.util.QIdUtil;
 import com.enablix.commons.util.StringUtil;
+import com.enablix.core.commons.xsdtopojo.BoundedRefListType;
+import com.enablix.core.commons.xsdtopojo.BoundedType;
 import com.enablix.core.commons.xsdtopojo.ContainerPortalConfigType;
 import com.enablix.core.commons.xsdtopojo.ContainerPortalConfigType.HeadingContentItem;
 import com.enablix.core.commons.xsdtopojo.ContainerType;
 import com.enablix.core.commons.xsdtopojo.ContainerUIDefType;
+import com.enablix.core.commons.xsdtopojo.ContentItemClassType;
+import com.enablix.core.commons.xsdtopojo.ContentItemType;
 import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 import com.enablix.core.commons.xsdtopojo.ContentUIDefType;
 import com.enablix.core.commons.xsdtopojo.DataDefinitionType;
@@ -325,6 +329,49 @@ public class TemplateUtil {
 		}
 		
 		return linkedContainerQId;
+	}
+	
+	public static List<ContainerType> findContainersWithDatastoreAssociation(
+					ContentTemplate inTemplate, String forContainerQId) {
+		
+		List<ContainerType> containers = new ArrayList<>();
+		
+		List<ContainerType> allContainers = inTemplate.getDataDefinition().getContainer();
+		containers.addAll(findContainersWithDatastoreAssociation(
+							allContainers, QIdUtil.getElementId(forContainerQId)));
+		
+		return containers;
+	}
+	
+	private static List<ContainerType> findContainersWithDatastoreAssociation(
+			List<ContainerType> inContainers, String forContainerId) {
+		
+		List<ContainerType> containers = new ArrayList<>();
+		
+		for (ContainerType cntnr : inContainers) {
+			
+			for (ContentItemType contentItem : cntnr.getContentItem()) {
+			
+				if (contentItem.getType() == ContentItemClassType.BOUNDED) {
+				
+					BoundedType boundedItem = contentItem.getBounded();
+					if (boundedItem != null) {
+					
+						BoundedRefListType boundedRefList = boundedItem.getRefList();
+						if (boundedRefList != null) {
+							if (boundedRefList.getDatastore().getStoreId().equals(forContainerId)) {
+								containers.add(cntnr);
+							}
+						}
+					}
+				}
+			}
+			
+			containers.addAll(findContainersWithDatastoreAssociation(cntnr.getContainer(), forContainerId));
+		}
+		
+		return containers;
+		
 	}
 	
 }
