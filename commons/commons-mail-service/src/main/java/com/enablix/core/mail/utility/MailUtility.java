@@ -45,8 +45,9 @@ public class MailUtility {
 			else
 			{
 				URL url = ((URLClassLoader)ClassLoader.getSystemClassLoader()).getURLs()[0];
-		    	URL url_new = new URL("/"+ url.toString().substring(0, (url.toString().lastIndexOf("enablix-app")+"enablix-app".length())) + "/ext-resources/config/properties/mail.properties");
-		   		Properties props = new Properties();
+		    	URL url_new = new URL(url.toString().substring(0, (url.toString().lastIndexOf("enablix-app"))) + "config/properties/mail.properties");
+		   		logger.debug( "url: " + url + " , url_new : "   + url_new);
+		    	Properties props = new Properties();
 		   		InputStream input = new FileInputStream(url_new.toString().substring(6));
 		   		props.load(input); 
 		   		
