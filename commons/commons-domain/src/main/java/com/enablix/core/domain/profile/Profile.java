@@ -6,6 +6,8 @@ public class Profile extends BaseWrappedEntity {
 
 	private String name;
 	
+	private boolean sendWeeklyDigest;
+	
 	private ContactSet<Email> emails = new ContactSet<Email>();
 
 	public String getName() {
@@ -22,6 +24,14 @@ public class Profile extends BaseWrappedEntity {
 
 	public void setEmails(ContactSet<Email> emails) {
 		this.emails = emails;
+	}
+
+	public boolean isSendWeeklyDigest() {
+		return sendWeeklyDigest;
+	}
+
+	public void setSendWeeklyDigest(boolean sendWeeklyDigest) {
+		this.sendWeeklyDigest = sendWeeklyDigest;
 	}
 	
 }

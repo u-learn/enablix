@@ -52,9 +52,15 @@ enablix.studioApp.factory('StateUpdateService',
 				$state.go('home');
 	 		};
 	 		
-	 		var goToLogin = function() {
-	 			$window.location.href = $location.protocol() + "://" + $location.host() 
+	 		var goToLogin = function(previousUrl) {
+	 			if(previousUrl.substring(previousUrl.lastIndexOf("#") + 1, previousUrl.length))
+					//if previous URL is other than logout
+					$window.location.href = $location.protocol() + "://" + $location.host() 
+ 											+ ":" + $location.port() + "/login.html#/login#" +"redirect#" + encodeURIComponent(previousUrl);
+				else
+					$window.location.href = $location.protocol() + "://" + $location.host() 
  											+ ":" + $location.port() + "/login.html#/login";
+											
 	 		};
 	 		
 	 		var goToApp = function() {

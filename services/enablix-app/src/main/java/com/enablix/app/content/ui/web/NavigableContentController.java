@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.enablix.analytics.recommendation.builder.web.WebRecommendationRequest;
 import com.enablix.analytics.web.request.WebContentRequest;
+import com.enablix.app.content.recent.RecentContentService;
 import com.enablix.app.content.ui.NavigableContent;
 import com.enablix.app.content.ui.nav.NavigationPathService;
 import com.enablix.app.content.ui.peers.PeerContentService;
-import com.enablix.app.content.ui.recent.RecentContentService;
 import com.enablix.app.content.ui.reco.RecommendedContentService;
 
 @RestController

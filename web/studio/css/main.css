@@ -1094,11 +1094,21 @@ form .row .form-label:first-child {
 	color: #2ecc71;
 }
 
-.fa-download {
+.fa-download{
 	color: #2ecc71;
 }
 
-.fa-download:hover {
+.fa-download:hover{
+	color: #27ae60;
+}
+
+.fa-share-alt{
+	color:#2ecc71;
+float:right;
+padding: 15px;	
+}
+
+.fa-share-alt:hover{
 	color: #27ae60;
 }
 

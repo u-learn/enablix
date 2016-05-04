@@ -75,7 +75,7 @@ enablix.studioApp.factory('RESTService', [
 								// authentication error
 								if (!$rootScope.loginProcess) {
 									$rootScope.authenticated = false;
-									StateUpdateService.goToLogin();
+									StateUpdateService.goToLogin(window.location.href);
 								} else {
 									_error(data, status)
 								}

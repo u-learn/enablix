@@ -175,7 +175,8 @@ enablix.studioApp.factory('UserService',
 			getSmtpConfig : getSmtpConfig,
 			saveEmailData : saveEmailData,
 			deleteEmailData : deleteEmailData,
-			getAllRoles: getAllRoles
+			getAllRoles: getAllRoles,
+			sendMail:sendMail
 			
 		};
 	}

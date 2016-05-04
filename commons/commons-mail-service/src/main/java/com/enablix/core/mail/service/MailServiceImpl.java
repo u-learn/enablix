@@ -1,11 +1,7 @@
 package com.enablix.core.mail.service;
 
-import java.io.FileInputStream;
-import java.io.InputStream;
 import java.io.StringWriter;
-import java.net.URL;
-import java.net.URLClassLoader;
-import java.util.Properties;
+import java.util.HashMap;
 
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
@@ -20,11 +16,10 @@ import com.enablix.commons.util.process.ProcessContext;
 import com.enablix.core.domain.config.EmailConfiguration;
 import com.enablix.core.domain.config.SMTPConfiguration;
 import com.enablix.core.domain.config.TemplateConfiguration;
-import com.enablix.core.domain.tenant.Tenant;
-import com.enablix.core.domain.user.User;
 import com.enablix.core.mail.utility.MailConstants;
 import com.enablix.core.mail.utility.MailUtility;
 import com.enablix.core.mail.velocity.NewUserScenarioInputBuilder;
+import com.enablix.core.mail.velocity.WeeklyDigestScenarioInputBuilder;
 import com.enablix.core.mongo.config.repo.EmailConfigRepo;
 import com.enablix.core.mongo.config.repo.SMTPConfigRepo;
 import com.enablix.core.mongo.config.repo.TemplateConfigRepo;
@@ -51,7 +46,10 @@ public class MailServiceImpl implements MailService {
 	private TenantRepository tenantRepo;
     @Autowired
     private NewUserScenarioInputBuilder newUserScenarioInputBuilder;
+    @Autowired
+    private WeeklyDigestScenarioInputBuilder weeklyDigestScenarioInputBuilder;
     
+   
     public void setVelocityEngine(VelocityEngine velocityEngine) {
         this.velocityEngine = velocityEngine;
     }
@@ -61,29 +59,23 @@ public class MailServiceImpl implements MailService {
 		String templateName = scenario + MailConstants.EMAIL_BODY_SUFFIX;
 		String subjectTemplateName = scenario + MailConstants.EMAIL_SUBJECT_SUFFIX;
 		String elementName = MailConstants.EMAIL_TEMPLATE_OBJECTNAME;
-		
-		objectTobeMerged = newUserScenarioInputBuilder.build(emailid);
-		logger.debug(objectTobeMerged.toString());
-		/*switch (scenario) { 
+		switch (scenario) { 
 		case MailConstants.SCENARIO_SET_PASSWORD:
-			objectTobeMerged = newUserScenarioInputBuilder.build(emailid);
-			break;
 		case MailConstants.SCENARIO_RESET_PASSWORD:
-			objectTobeMerged = newUserScenarioInputBuilder.build(emailid);
-			break;
 		case MailConstants.SCENARIO_PASSWORD_CONFIRMATION:
 			objectTobeMerged = newUserScenarioInputBuilder.build(emailid);
-			break;
+			break;	
+		case MailConstants.SCENARIO_SHARE_CONTENT:
+			
 		default:
 			break;
 		}
-			*/
+			
 		 
        try{
     	String htmlBody = generateTemplateMessage(objectTobeMerged,templateName,elementName,MailConstants.BODY_TEMPLATE_PATH);
     	String subject = generateTemplateMessage(objectTobeMerged,subjectTemplateName,elementName,MailConstants.SUBJECT_TEMPLATE_PATH);
-   		
-   		return MailUtility.sendEmail(emailid, subject, htmlBody, this.getEmailConfiguration());
+    	return MailUtility.sendEmail(emailid, subject, htmlBody, this.getEmailConfiguration());
        }catch(Exception e){
     	   logger.error(e.getMessage(), e);
     	   return false;

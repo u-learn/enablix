@@ -1,6 +1,6 @@
 enablix.studioApp.controller('PortalSubContainerCtrl',
-			['$scope', 'StateUpdateService', '$stateParams', 'ContentTemplateService', 'ContentDataService', 'ContentUtil', 'Notification',
-    function ($scope,   StateUpdateService,   $stateParams,   ContentTemplateService,   ContentDataService,   ContentUtil,   Notification) {
+			['$scope', 'StateUpdateService','UserService', '$stateParams', 'ContentTemplateService', 'ContentDataService', 'ContentUtil', 'Notification',
+    function ($scope,   StateUpdateService, UserService,  $stateParams,   ContentTemplateService,   ContentDataService,   ContentUtil,   Notification) {
 		
 		$scope.containerDef = ContentTemplateService.getContainerDefinition(
 						enablix.template, $scope.subContainerQId);
@@ -14,6 +14,14 @@ enablix.studioApp.controller('PortalSubContainerCtrl',
 		
 		$scope.$stateParams = $stateParams;
 		
+		$scope.openPopup = function () {
+			console.log($scope.bodyData);
+			/*  var modalInstance = $modal.open({
+			templateUrl: 'popup.html'
+			}); */ 
+			UserService.sendMail({"bodyData": $scope.bodyData, "singleHeaders": $scope.singleHeaders, "multiHeaders": $scope.multiHeaders},"qir.richa.agrawal@gmail.com","shareContent",true);
+			}
+
 		var decorateData = function(_containerDef, _dataRecord) {
 			_dataRecord.headingLabel = ContentUtil.resolveContainerInstancePortalLabel(
 									_containerDef, _dataRecord);
@@ -31,6 +39,11 @@ enablix.studioApp.controller('PortalSubContainerCtrl',
 				$(elem).toggleClass('active');
 				$(elem).next().slideToggle('fast');
 			}
+		}
+		
+		$scope.shareFromPortal = function(_containerQId, _contentIdentity){
+			
+			
 		}
 		
 		$scope.toggleContainerItem = function($event, itemId) {
