@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+        <title>Weekly Digest</title>
+    </head>
+<body>
+  <div>
+    <div>
+      <div style="min-height:100%;margin:0;padding:0;width:100%;background-color:#fafafa">
+        <center>
+          <table align="center" border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" style="border-collapse:collapse;height:100%;margin:0;padding:0;width:100%;background-color:#fafafa">
+            <tbody>
+              <tr>
+                <td align="center" valign="top" style="height:100%;margin:0;padding:10px;width:100%;border-top:0">
+                  <table border="0" cellpadding="0" cellspacing="0" width="100%" style="border-collapse:collapse;border:0;max-width:600px!important">
+                    <tbody>
+                      <tr>
+                        <td valign="top" style="background-color:#ffffff;border-top:0;border-bottom:0;padding-top:9px;padding-bottom:0">
+                          <table border="0" cellpadding="0" cellspacing="0" width="100%" style="min-width:100%;border-collapse:collapse">
+                            <tbody>
+                              <tr>
+                                <td valign="top">
+                                  <table align="left" border="0" cellpadding="0" cellspacing="0" width="100%" style="min-width:100%;border-collapse:collapse">
+                                    <tbody>
+                                      <tr>
+                                        <td valign="top" style="padding-top:9px;padding-right:18px;padding-bottom:9px;padding-left:18px;word-break:break-word;color:#202020;font-family:Helvetica;font-size:16px;line-height:150%;text-align:left">
+                                          <h1 style="display:block;margin:0;padding:0;color:#202020;font-family:Helvetica;font-size:26px;font-style:normal;font-weight:bold;line-height:125%;letter-spacing:normal;text-align:left"></h1>
+                                          <p dir="ltr" style="margin:10px 0;padding:0;color:#202020;font-family:Helvetica;font-size:16px;line-height:150%;text-align:left"><strong>Hello John Doe, </strong> </p>
+                                          <p style="margin:10px 0;padding:0;color:#202020;font-family:Helvetica;font-size:16px;line-height:150%;text-align:left">
+                                            <br> <strong>Here is your weekly digest from FCCM Central.</strong> </p>
+                                        </td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td valign="top" style="background-color:#ffffff;border-top:0;border-bottom:2px solid #eaeaea;padding-top:0;padding-bottom:9px">
+                          <table align="left" border="0" cellpadding="0" cellspacing="0" width="300" style="border-collapse:collapse">
+                            <tbody>
+                              <tr>
+                                <td valign="top">
+                                  <table border="0" cellpadding="0" cellspacing="0" width="100%" style="min-width:100%;border-collapse:collapse">
+                                    <tbody>
+                                      <tr>
+                                        <td valign="top">
+                                          <table align="left" border="0" cellpadding="0" cellspacing="0" width="100%" style="min-width:100%;border-collapse:collapse">
+                                            <tbody>
+                                              <tr>
+                                                <td valign="top" style="padding-top:9px;padding-right:18px;padding-bottom:9px;padding-left:18px;word-break:break-word;color:#202020;font-family:Helvetica;font-size:16px;line-height:150%;text-align:left"> Recent Updates:
+                                                  <ul	>
+												  #foreach($key in $obj.recentList.keySet())
+													#set ($navigableContent = $obj.recentList.get($key)) 
+													#foreach($key1 in $navigableContent)  
+                                                    <li><a href="http://localhost:8114/#/portal/container/$key1.qualifiedId/$key1.identity/c/single/$key1.qualifiedId/">$key1.label</a>
+                                                    	#if($key1.next) &gt; <a href="http://localhost:8114/#/portal/container/$key1.next.qualifiedId/$key1.next.identity/c/single/$key1.next.qualifiedId/">$key1.next.label</a>#end </li>
+													 #end
+													 #end
+                                                  </ul>
+                                                  <br> We hope you find this information useful. Have any questions or feedback? You can reply to this email.
+                                                  <br>
+                                                  <br>
+                                                  <br>
+                                                  <p dir="ltr" style="margin:10px 0;padding:0;color:#202020;font-family:Helvetica;font-size:16px;line-height:150%;text-align:left">Cheers,</p>
+                                                  <p dir="ltr" style="margin:10px 0;padding:0;color:#202020;font-family:Helvetica;font-size:16px;line-height:150%;text-align:left">Enablix Team for FCCM Central</p> &nbsp;
+                                                  <p dir="ltr" style="margin:10px 0;padding:0;color:#202020;font-family:Helvetica;font-size:16px;line-height:150%;text-align:left">P.S.&nbsp;please add<a href="mailto:support@enablix.com" style="color:#2baadf;font-weight:normal;text-decoration:underline" target="_blank"> support@enablix.com</a> to your address book or ?safe sender list?.</p>
+                                                </td>
+                                              </tr>
+                                            </tbody>
+                                          </table>
+                                        </td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                          <table align="left" border="0" cellpadding="0" cellspacing="0" width="300" style="border-collapse:collapse">
+                            <tbody>
+                              <tr>
+                                <td valign="top">
+                                  <table border="0" cellpadding="0" cellspacing="0" width="100%" style="border-collapse:collapse">
+                                    <tbody>
+                                      <tr>
+                                        <td valign="top" style="padding-top:9px;padding-right:18px;padding-bottom:9px;padding-left:18px">
+                                          <table align="left" border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color:#EFEFEF;border-collapse:collapse">
+                                            <tbody>
+                                              <tr>
+                                                <td align="left" valign="top" style="padding-top:0px;padding-right:0px;padding-bottom:0;padding-left:0px">
+                                                  <table style="width:264px;border-collapse:collapse"></table>
+                                                </td>
+                                              </tr>
+                                              <tr>
+                                                <td valign="top" style="padding:9px 18px;color:#f2f2f2;font-family:Helvetica;font-size:14px;font-weight:normal;text-align:center;word-break:break-word;line-height:150%" width="246"> Competitors
+                                                  <ul>
+                                                    <li><a href="http://www.enablix.com" style="color:#2baadf;font-weight:normal;text-decoration:underline" target="_blank">Competitor</a> </li>
+                                                    <li><a href="http://www.enablix.com" style="color:#2baadf;font-weight:normal;text-decoration:underline" target="_blank">Competitor</a> </li>
+                                                    <li><a href="http://www.enablix.com" style="color:#2baadf;font-weight:normal;text-decoration:underline" target="_blank">Competitor</a> </li>
+                                                    <li><a href="http://www.enablix.com" style="color:#2baadf;font-weight:normal;text-decoration:underline" target="_blank">Competitor</a> </li>
+                                                    <li><a href="http://www.enablix.com" style="color:#2baadf;font-weight:normal;text-decoration:underline" target="_blank">Competitor</a> </li>
+                                                  </ul> Solutions
+                                                  <ul>
+                                                    <li><a href="http://www.enablix.com" style="color:#2baadf;font-weight:normal;text-decoration:underline" target="_blank">Solution1</a> </li>
+                                                    <li><a href="http://www.enablix.com" style="color:#2baadf;font-weight:normal;text-decoration:underline" target="_blank">Solution2</a> </li>
+                                                    <li><a href="http://www.enablix.com" style="color:#2baadf;font-weight:normal;text-decoration:underline" target="_blank">Solution3</a> </li>
+                                                    <li><a href="http://www.enablix.com" style="color:#2baadf;font-weight:normal;text-decoration:underline" target="_blank">Solution4</a> </li>
+                                                    <li><a href="http://www.enablix.com" style="color:#2baadf;font-weight:normal;text-decoration:underline" target="_blank">Solution5</a> </li>
+                                                  </ul>
+                                                </td>
+                                              </tr>
+                                            </tbody>
+                                          </table>
+                                        </td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td valign="top" style="background-color:#fafafa;border-top:0;border-bottom:0;padding-top:9px;padding-bottom:9px">
+                          <table border="0" cellpadding="0" cellspacing="0" width="100%" style="min-width:100%;border-collapse:collapse">
+                            <tbody>
+                              <tr>
+                                <td align="center" valign="top" style="padding:9px">
+                                  <table border="0" cellpadding="0" cellspacing="0" width="100%" style="min-width:100%;border-collapse:collapse">
+                                    <tbody>
+                                      <tr>
+                                        <td align="center" style="padding-left:9px;padding-right:9px">
+                                          <table border="0" cellpadding="0" cellspacing="0" width="100%" style="min-width:100%;border-collapse:collapse">
+                                            <tbody>
+                                              <tr>
+                                                <td align="center" valign="top" style="padding-top:9px;padding-right:9px;padding-left:9px">
+                                                  <table align="center" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse">
+                                                    <tbody>
+                                                      <tr>
+                                                        <td align="center" valign="top">
+                                                          <table align="left" border="0" cellpadding="0" cellspacing="0" style="display:inline;border-collapse:collapse">
+                                                            <tbody>
+                                                              <tr>
+                                                                <td valign="top" style="padding-right:10px;padding-bottom:9px">
+                                                                  <table border="0" cellpadding="0" cellspacing="0" width="100%" style="border-collapse:collapse">
+                                                                    <tbody>
+                                                                      <tr>
+                                                                        <td align="left" valign="middle" style="padding-top:5px;padding-right:10px;padding-bottom:5px;padding-left:9px">
+                                                                          <table align="left" border="0" cellpadding="0" cellspacing="0" width="" style="border-collapse:collapse">
+                                                                            <tbody>
+                                                                              <tr>
+                                                                                <td align="center" valign="middle" width="24">
+                                                                                  <a href="http://www.twitter.com/" target="_blank"><img src="https://ci5.googleusercontent.com/proxy/7Mkp5x7vnjoGT2ynGuzF3bII8G8nN9AZ8P94lSQK9u1YI3mtO9W7FJ47IvEXf-miKSuDyVsogoi3lN_ByGUbmgjPGjx-metceXGhlGdxbwFiNbGKmwGCzURgcLUOD4kCIw=s0-d-e1-ft#https://cdn-images.mailchimp.com/icons/social-block-v2/color-twitter-48.png" style="display:block;border:0;min-height:auto;outline:none;text-decoration:none" height="24" width="24" class="CToWUd"> </a>
+                                                                                </td>
+                                                                              </tr>
+                                                                            </tbody>
+                                                                          </table>
+                                                                        </td>
+                                                                      </tr>
+                                                                    </tbody>
+                                                                  </table>
+                                                                </td>
+                                                              </tr>
+                                                            </tbody>
+                                                          </table>
+                                                          <table align="left" border="0" cellpadding="0" cellspacing="0" style="display:inline;border-collapse:collapse">
+                                                            <tbody>
+                                                              <tr>
+                                                                <td valign="top" style="padding-right:10px;padding-bottom:9px">
+                                                                  <table border="0" cellpadding="0" cellspacing="0" width="100%" style="border-collapse:collapse">
+                                                                    <tbody>
+                                                                      <tr>
+                                                                        <td align="left" valign="middle" style="padding-top:5px;padding-right:10px;padding-bottom:5px;padding-left:9px">
+                                                                          <table align="left" border="0" cellpadding="0" cellspacing="0" width="" style="border-collapse:collapse">
+                                                                            <tbody>
+                                                                              <tr>
+                                                                                <td align="center" valign="middle" width="24">
+                                                                                  <a href="http://www.facebook.com" target="_blank"><img src="https://ci5.googleusercontent.com/proxy/THEfQ-zOr2AaMLVp_TKYp66Poy4XIPQHLLPvp3JqaDTShBZ9oZafDmhUm7hfcJbSG9vWeV4d9Esrao80PBgUGiMiifS3Dl-CqVUBIY1Qj6oJicgM-Vrdv4BVqtr98zDVKOE=s0-d-e1-ft#https://cdn-images.mailchimp.com/icons/social-block-v2/color-facebook-48.png" style="display:block;border:0;min-height:auto;outline:none;text-decoration:none" height="24" width="24" class="CToWUd"> </a>
+                                                                                </td>
+                                                                              </tr>
+                                                                            </tbody>
+                                                                          </table>
+                                                                        </td>
+                                                                      </tr>
+                                                                    </tbody>
+                                                                  </table>
+                                                                </td>
+                                                              </tr>
+                                                            </tbody>
+                                                          </table>
+                                                          <table align="left" border="0" cellpadding="0" cellspacing="0" style="display:inline;border-collapse:collapse">
+                                                            <tbody>
+                                                              <tr>
+                                                                <td valign="top" style="padding-right:0;padding-bottom:9px">
+                                                                  <table border="0" cellpadding="0" cellspacing="0" width="100%" style="border-collapse:collapse">
+                                                                    <tbody>
+                                                                      <tr>
+                                                                        <td align="left" valign="middle" style="padding-top:5px;padding-right:10px;padding-bottom:5px;padding-left:9px">
+                                                                          <table align="left" border="0" cellpadding="0" cellspacing="0" width="" style="border-collapse:collapse">
+                                                                            <tbody>
+                                                                              <tr>
+                                                                                <td align="center" valign="middle" width="24">
+                                                                                  <a href="http://mailchimp.com" target="_blank"><img src="https://ci4.googleusercontent.com/proxy/XGenZrmUcdiVbGsrNYCRgHNYNfacIjhuLbFebzTFb_97r7SkYv7ogFxlEPf2hCuN5Kk9p8x-3_ifj6nSGicK0tVj4vtdS4rtGr6b05PDLfKpkMu-ZN-ze73H72HWQg=s0-d-e1-ft#https://cdn-images.mailchimp.com/icons/social-block-v2/color-link-48.png" style="display:block;border:0;min-height:auto;outline:none;text-decoration:none" height="24" width="24" class="CToWUd"> </a>
+                                                                                </td>
+                                                                              </tr>
+                                                                            </tbody>
+                                                                          </table>
+                                                                        </td>
+                                                                      </tr>
+                                                                    </tbody>
+                                                                  </table>
+                                                                </td>
+                                                              </tr>
+                                                            </tbody>
+                                                          </table>
+                                                        </td>
+                                                      </tr>
+                                                    </tbody>
+                                                  </table>
+                                                </td>
+                                              </tr>
+                                            </tbody>
+                                          </table>
+                                        </td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                          <table border="0" cellpadding="0" cellspacing="0" width="100%" style="min-width:100%;border-collapse:collapse;table-layout:fixed!important">
+                            <tbody>
+                              <tr>
+                                <td style="min-width:100%;padding:10px 18px 25px">
+                                  <table border="0" cellpadding="0" cellspacing="0" width="100%" style="min-width:100%;border-top-width:2px;border-top-style:solid;border-top-color:#eeeeee;border-collapse:collapse">
+                                    <tbody>
+                                      <tr>
+                                        <td> <span></span> </td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                          <table border="0" cellpadding="0" cellspacing="0" width="100%" style="min-width:100%;border-collapse:collapse">
+                            <tbody>
+                              <tr>
+                                <td valign="top">
+                                  <table align="left" border="0" cellpadding="0" cellspacing="0" width="100%" style="min-width:100%;border-collapse:collapse">
+                                    <tbody>
+                                      <tr>
+                                        <td valign="top" style="padding-top:9px;padding-right:18px;padding-bottom:9px;padding-left:18px;word-break:break-word;color:#656565;font-family:Helvetica;font-size:12px;line-height:150%;text-align:center"> <em>Copyright © 2016 Enablix, All rights reserved.</em>
+                                          <br> </td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </center>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

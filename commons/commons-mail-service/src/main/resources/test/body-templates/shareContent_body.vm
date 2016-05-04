@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+     <body>
+      <h3>Hello ${obj.newCreatedUser.profile.name},</h3>
+      <p style = "font: normal 14px/normal Arial, Helvetica, sans-serif;">${obj.loggedInUser.profile.name} shared  <b>${obj.tenant.name}</b>  details with you.    
+      </p>
+       
+       <div style = "font: normal 14px/normal Arial, Helvetica, sans-serif;">
+       #if($obj.singleHeaders)
+       		<table>
+              #foreach($key1 in $obj.singleHeaders)	
+              	#set ($header = $key1.key) 
+              	#if($header.equals("file")) #set($isFile=true)#end
+              		#set($data = $obj.bodyData.get($header))
+              		#if($data) <tr> <td>$key1.label</td> 
+              		#if($data.name) <td style="padding: 5px 5px 5px 5px">$data.name</td> #set($docIdentity = $data.identity)#end
+              		#if(!$data.size()) <td style="padding: 5px 5px 5px 5px">$data</td>#end
+              		#set($i=0) 
+              			<td style="padding: 5px 5px 5px 5px">
+              			#foreach($dataItem in $data)
+              			  #if($dataItem) 
+              				 #if($dataItem.label) #set($i = $i+1 )  #if($i>1),#end
+              				 #if($dataItem.hrefData)
+              				 <a href="http://localhost:8114/#/portal/container/$dataItem.hrefData.containerQId/$dataItem.hrefData.contentIdentity/c/single/$dataItem.hrefData.containerQId/" target="_parent">
+              				 $dataItem.label 
+              				 </a>
+              				 #else
+              				  $dataItem.label
+              				 #end               			   
+              				#end
+              			 #end
+              		#end  
+              			</td>    
+              </tr>
+              #end
+             #end
+         </table>
+         #end
+         
+         <!-- Multi Headers -->
+        #if($obj.multiHeaders)
+         <table>
+         	#foreach($key1 in $obj.bodyData)
+              	#set ($data = $key1) 
+              		#foreach($key2 in $obj.multiHeaders)
+              			#set ($header = $key2.key)
+              		 <tr>
+              		 	 <td>$key2.label</td> 
+              			  <!--td>$data.get($header)</td-->
+              		#set($i=0) 
+              			
+              			#foreach($dataItem in $data.get($header))
+              				<td>#if($dataItem.name)$dataItem.name #end
+              				$dataItem
+              				 #if($dataItem.label) #set($i = $i+1 )  #if($i>1),#end
+              				 $dataItem.label 
+              				  #end
+              			#end  
+              			</td>    
+              </tr>
+              #end
+             #end
+         </table>
+         #end
+         
+       
+       </div>
+       
+     
+      #if($docIdentity)
+	      <br/>
+	      <div><a href="http://localhost:8114/doc/download//$docIdentity" target="_parent">
+	      <button style="background: #3d85c6;
+	      font: normal 16px/normal Arial, Helvetica, sans-serif;
+	      color: rgba(255,255,255,0.9);
+	      -webkit-border-radius: 3px;
+	      border-radius: 3px;
+	      padding: 5px 5px 5px 5px;
+	      cursor: pointer;
+	      float:left;
+		  margin:5px 5px 5px 60px;
+	      border: 1px solid #3d85c6;
+	      width:200px">Download File</button>
+	      </a></div> 
+      #end
+     
+     <div><a href="http://localhost:8114/doc/download//$docIdentity" target="_parent">
+      <button style="background: #3d85c6;
+      font: normal 16px/normal Arial, Helvetica, sans-serif;
+      color: rgba(255,255,255,0.9);
+      -webkit-border-radius: 3px;
+      border-radius: 3px;
+      padding: 5px 5px 5px 5px;
+      cursor: pointer;
+	  margin:5px 5px 5px 60px;
+      border: 1px solid #3d85c6;
+      width:200px">Access on Portal</button>
+      </a></div> 
+     <br/>
+      <p style = "font: normal 14px/normal Arial, Helvetica, sans-serif;">Have any questions or feedback? You can reply to this email.</p>
+      <p style = "font: normal 14px/normal Arial, Helvetica, sans-serif;">Cheers, <br/>Enablix Team for <b>${obj.tenant.name}</b> </p>
+      <p style = "font: normal 14px/normal Arial, Helvetica, sans-serif;">P.S. please add support@enablix.com to your address book or safe sender list. </p>
+      <p style = "font: normal 14px/normal Arial, Helvetica, sans-serif;">&copy; 2016 Enablix. All rights reserved. For more information, please contact us at support@enablix.com</p>
+   </body>
+</html>
