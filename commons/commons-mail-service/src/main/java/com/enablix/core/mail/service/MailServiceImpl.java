@@ -19,6 +19,7 @@ import com.enablix.core.domain.config.TemplateConfiguration;
 import com.enablix.core.mail.utility.MailConstants;
 import com.enablix.core.mail.utility.MailUtility;
 import com.enablix.core.mail.velocity.NewUserScenarioInputBuilder;
+import com.enablix.core.mail.velocity.ShareContentScenarioInputBuilder;
 import com.enablix.core.mail.velocity.WeeklyDigestScenarioInputBuilder;
 import com.enablix.core.mongo.config.repo.EmailConfigRepo;
 import com.enablix.core.mongo.config.repo.SMTPConfigRepo;
@@ -48,7 +49,8 @@ public class MailServiceImpl implements MailService {
     private NewUserScenarioInputBuilder newUserScenarioInputBuilder;
     @Autowired
     private WeeklyDigestScenarioInputBuilder weeklyDigestScenarioInputBuilder;
-    
+    @Autowired
+    private ShareContentScenarioInputBuilder shareContentScenarioInputBuilder;
    
     public void setVelocityEngine(VelocityEngine velocityEngine) {
         this.velocityEngine = velocityEngine;
@@ -66,7 +68,7 @@ public class MailServiceImpl implements MailService {
 			objectTobeMerged = newUserScenarioInputBuilder.build(emailid);
 			break;	
 		case MailConstants.SCENARIO_SHARE_CONTENT:
-			
+			objectTobeMerged = shareContentScenarioInputBuilder.build(emailid, objectTobeMerged);
 		default:
 			break;
 		}

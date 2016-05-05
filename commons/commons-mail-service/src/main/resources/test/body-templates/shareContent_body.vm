@@ -2,16 +2,15 @@
 <html lang="en">
      <body>
       <h3>Hello ${obj.newCreatedUser.profile.name},</h3>
-      <p style = "font: normal 14px/normal Arial, Helvetica, sans-serif;">${obj.loggedInUser.profile.name} shared  <b>${obj.tenant.name}</b>  details with you.    
+      <p style = "font: normal 14px/normal Arial, Helvetica, sans-serif;">${obj.loggedInUser.profile.name} shared  <b>${obj.sharedContent.bodyData.title}</b>  details with you.    
       </p>
        
        <div style = "font: normal 14px/normal Arial, Helvetica, sans-serif;">
-       #if($obj.singleHeaders)
+       #if($obj.sharedContent.singleHeaders)
        		<table>
-              #foreach($key1 in $obj.singleHeaders)	
+              #foreach($key1 in $obj.sharedContent.singleHeaders)	
               	#set ($header = $key1.key) 
-              	#if($header.equals("file")) #set($isFile=true)#end
-              		#set($data = $obj.bodyData.get($header))
+              		#set($data = $obj.sharedContent.bodyData.get($header))
               		#if($data) <tr> <td>$key1.label</td> 
               		#if($data.name) <td style="padding: 5px 5px 5px 5px">$data.name</td> #set($docIdentity = $data.identity)#end
               		#if(!$data.size()) <td style="padding: 5px 5px 5px 5px">$data</td>#end
@@ -32,17 +31,18 @@
               		#end  
               			</td>    
               </tr>
+              #set($data=false)
               #end
              #end
          </table>
          #end
          
          <!-- Multi Headers -->
-        #if($obj.multiHeaders)
+        #if($obj.sharedContent.multiHeaders)
          <table>
-         	#foreach($key1 in $obj.bodyData)
+         	#foreach($key1 in $obj.sharedContent.bodyData)
               	#set ($data = $key1) 
-              		#foreach($key2 in $obj.multiHeaders)
+              		#foreach($key2 in $obj.sharedContent.multiHeaders)
               			#set ($header = $key2.key)
               		 <tr>
               		 	 <td>$key2.label</td> 
@@ -84,7 +84,7 @@
 	      </a></div> 
       #end
      
-     <div><a href="http://localhost:8114/doc/download//$docIdentity" target="_parent">
+     <div><a href="http://localhost:8114/#/portal/container/$obj.sharedContent.bodyData.containerQId/$obj.sharedContent.bodyData.identity/c/single/$obj.sharedContent.bodyData.containerQId/" target="_parent">
       <button style="background: #3d85c6;
       font: normal 16px/normal Arial, Helvetica, sans-serif;
       color: rgba(255,255,255,0.9);
