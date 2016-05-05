@@ -4,6 +4,8 @@ enablix.studioApp.controller('PortalSubContainerCtrl',
 		
 		$scope.containerDef = ContentTemplateService.getContainerDefinition(
 						enablix.template, $scope.subContainerQId);
+		
+		$scope.showModal = false;
 
 		$scope.navigableHeader = !isNullOrUndefined($scope.navContentData);
 		
@@ -14,14 +16,12 @@ enablix.studioApp.controller('PortalSubContainerCtrl',
 		
 		$scope.$stateParams = $stateParams;
 		
-		$scope.openPopup = function () {
-			console.log($scope.bodyData);
-			/*  var modalInstance = $modal.open({
-			templateUrl: 'popup.html'
-			}); */ 
-			UserService.sendMail({"bodyData": $scope.bodyData, "singleHeaders": $scope.singleHeaders, "multiHeaders": $scope.multiHeaders},"qir.richa.agrawal@gmail.com","shareContent",true);
-			}
-
+		 $scope.openPopup = function(){
+			if($scope.showModal)
+				$scope.showModal = false;
+			else $scope.showModal=true;
+		}
+		
 		var decorateData = function(_containerDef, _dataRecord) {
 			_dataRecord.headingLabel = ContentUtil.resolveContainerInstancePortalLabel(
 									_containerDef, _dataRecord);
@@ -41,8 +41,9 @@ enablix.studioApp.controller('PortalSubContainerCtrl',
 			}
 		}
 		
-		$scope.shareFromPortal = function(_containerQId, _contentIdentity){
-			
+		$scope.shareContent = function(){
+			UserService.sendMail({"bodyData": $scope.bodyData, "singleHeaders": $scope.singleHeaders, "multiHeaders": $scope.multiHeaders},$scope.emailid,"shareContent",true);
+			$scope.showModal = false;
 			
 		}
 		
