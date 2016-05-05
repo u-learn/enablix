@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
      <body>
-      <h3>Hello ${obj.newCreatedUser.profile.name},</h3>
-      <p style = "font: normal 14px/normal Arial, Helvetica, sans-serif;">${obj.loggedInUser.profile.name} shared  <b>${obj.sharedContent.bodyData.title}</b>  details with you.    
+      <h3>Hello #if(${obj.newCreatedUser.profile.name})${obj.newCreatedUser.profile.name} #end,</h3>
+      <p style = "font: normal 14px/normal Arial, Helvetica, sans-serif;">${obj.loggedInUser.profile.name} shared  #if(${obj.sharedContent.bodyData.title})<b>${obj.sharedContent.bodyData.title}</b> #else few #end  details with you.    
       </p>
        
        <div style = "font: normal 14px/normal Arial, Helvetica, sans-serif;">
