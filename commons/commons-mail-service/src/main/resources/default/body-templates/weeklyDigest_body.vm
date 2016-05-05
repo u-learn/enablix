@@ -95,22 +95,18 @@
                                                   <table style="width:264px;border-collapse:collapse"></table>
                                                 </td>
                                               </tr>
-                                              <tr>
-                                                <td valign="top" style="padding:9px 18px;color:#f2f2f2;font-family:Helvetica;font-size:14px;font-weight:normal;text-align:center;word-break:break-word;line-height:150%" width="246"> Competitors
+                                              <tr>                                              
+                                              	 
+                                               <td style="padding: 9px 18px;line-height: 150%;font-size: 16px;font-weight: normal;font-family: Helvetica">
+                                                  #foreach($key in $obj.sideBarItems.keySet())
+                                        		#set($items = $obj.sideBarItems.get($key))
+                                        		 <b>$key</b>
                                                   <ul>
-                                                    <li><a href="http://www.enablix.com" style="color:#2baadf;font-weight:normal;text-decoration:underline" target="_blank">Competitor</a> </li>
-                                                    <li><a href="http://www.enablix.com" style="color:#2baadf;font-weight:normal;text-decoration:underline" target="_blank">Competitor</a> </li>
-                                                    <li><a href="http://www.enablix.com" style="color:#2baadf;font-weight:normal;text-decoration:underline" target="_blank">Competitor</a> </li>
-                                                    <li><a href="http://www.enablix.com" style="color:#2baadf;font-weight:normal;text-decoration:underline" target="_blank">Competitor</a> </li>
-                                                    <li><a href="http://www.enablix.com" style="color:#2baadf;font-weight:normal;text-decoration:underline" target="_blank">Competitor</a> </li>
-                                                  </ul> Solutions
-                                                  <ul>
-                                                    <li><a href="http://www.enablix.com" style="color:#2baadf;font-weight:normal;text-decoration:underline" target="_blank">Solution1</a> </li>
-                                                    <li><a href="http://www.enablix.com" style="color:#2baadf;font-weight:normal;text-decoration:underline" target="_blank">Solution2</a> </li>
-                                                    <li><a href="http://www.enablix.com" style="color:#2baadf;font-weight:normal;text-decoration:underline" target="_blank">Solution3</a> </li>
-                                                    <li><a href="http://www.enablix.com" style="color:#2baadf;font-weight:normal;text-decoration:underline" target="_blank">Solution4</a> </li>
-                                                    <li><a href="http://www.enablix.com" style="color:#2baadf;font-weight:normal;text-decoration:underline" target="_blank">Solution5</a> </li>
-                                                  </ul>
+                                                   #foreach($key1 in $items)
+                                                    <li><a href="http://localhost:8114/#/portal/container/$key/$key1.identity" style="color:#2baadf;font-weight:normal;text-decoration:underline" target="_blank">$key1.name</a> </li>
+                                                     #end
+                                                    </ul> 
+                                                    #end
                                                 </td>
                                               </tr>
                                             </tbody>
