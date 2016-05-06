@@ -3,16 +3,18 @@ package com.enablix.core.mail.velocity.input;
 import java.util.HashMap;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Value;
+
 import com.enablix.app.content.ui.NavigableContent;
 
-public class ShareContentVelocityInput extends UserWelcomeVelocityInput{
+public class ShareContentVelocityInput extends UserWelcomeVelocityInput implements EnvPropertiesAware{
 	
 	private Object sharedContent;
-	
+	private String url;
+
 	public ShareContentVelocityInput(String newUserId, Object sharedContent) {
 		super(newUserId);
 		this.sharedContent = sharedContent;
-		// TODO Auto-generated constructor stub
 	}
 
 	public Object getSharedContent() {
@@ -23,7 +25,17 @@ public class ShareContentVelocityInput extends UserWelcomeVelocityInput{
 		this.sharedContent = sharedContent;
 	}
 
-	
+	@Override
+	public void setUrl(String url) {
+		this.url  = url;
+		
+	}
+
+	@Override
+	public String getUrl() {
+		// TODO Auto-generated method stub
+		return url;
+	}
 
 		
 }

@@ -5,10 +5,11 @@ import java.util.List;
 
 import com.enablix.app.content.ui.NavigableContent;
 
-public class WeeklyDigestVelocityInput extends BaseVelocityInput{
+public class WeeklyDigestVelocityInput extends BaseVelocityInput implements EnvPropertiesAware{
 
 	private HashMap<String, List<NavigableContent>> recentList ;
 	private HashMap<String,List<HashMap<String,Object>>> sideBarItems; 
+	private String url;
 
 	public HashMap<String, List<NavigableContent>> getRecentList() {
 		return recentList;
@@ -30,6 +31,16 @@ public class WeeklyDigestVelocityInput extends BaseVelocityInput{
 
 	public void setRecentList(HashMap<String, List<NavigableContent>> recentList) {
 		this.recentList = recentList;
+	}
+
+	@Override
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
+	@Override
+	public String getUrl() {
+		return url;
 	}
 
 		

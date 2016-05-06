@@ -1,7 +1,6 @@
 package com.enablix.core.mail.service;
 
 import java.io.StringWriter;
-import java.util.HashMap;
 
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
@@ -73,7 +72,6 @@ public class MailServiceImpl implements MailService {
 			break;
 		}
 			
-		 
        try{
     	String htmlBody = generateTemplateMessage(objectTobeMerged,templateName,elementName,MailConstants.BODY_TEMPLATE_PATH);
     	String subject = generateTemplateMessage(objectTobeMerged,subjectTemplateName,elementName,MailConstants.SUBJECT_TEMPLATE_PATH);
