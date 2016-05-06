@@ -17,7 +17,7 @@ public class NewUserResolver implements VelocityTemplateInputResolver<UserWelcom
 	@Override
 	public void work(UserWelcomeVelocityInput velocityTemplateInput) {
 		String userId = velocityTemplateInput.getNewUserId();
-		User newUser = userRepo.findByUserId(userId);
+		User newUser = userRepo.findByUserId(userId.toLowerCase());
 		velocityTemplateInput.setNewCreatedUser(newUser);
 	}
 

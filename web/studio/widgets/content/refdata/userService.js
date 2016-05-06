@@ -23,6 +23,7 @@ enablix.studioApp.factory('UserService',
 		
 		var addUserData= function(userData, roles)
 		{
+			userData.userId = userData.userId.toLowerCase();
 			if (isNullOrUndefined(userData.isPasswordSet)) {
 				userData.isPasswordSet=false;
 			}

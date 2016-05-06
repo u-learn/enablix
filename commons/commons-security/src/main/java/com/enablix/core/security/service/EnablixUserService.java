@@ -43,7 +43,7 @@ public class EnablixUserService implements UserService, UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
 		
-		User user = userRepo.findByUserId(userName);
+		User user = userRepo.findByUserId(userName.toLowerCase());
 		
 		if (user == null) {
 			throw new UsernameNotFoundException("[" + userName + "] not found");
@@ -72,17 +72,17 @@ public class EnablixUserService implements UserService, UserDetailsService {
 	
 	@Override
 	public Boolean checkUserByUserId(String userId) {
-		User user = userRepo.findByUserId(userId);
+		User user = userRepo.findByUserId(userId.toLowerCase());
 		return user != null;
 	}	
 	
 	@Override
 	public User resetPassword(String userid){
-		User user = userRepo.findByUserId(userid);
+		User user = userRepo.findByUserId(userid.toLowerCase());
 		String password =UUID.randomUUID().toString().substring(0,8);//system generated default password
 		user.setPassword(password);
 		user.setIsPasswordSet(false);
-		ProcessContext.initialize(userid, user.getTenantId(),null);
+		ProcessContext.initialize(userid.toLowerCase(), user.getTenantId(),null);
 		userRepo.save(user);		
 		return user;
 	}	

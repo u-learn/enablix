@@ -1104,8 +1104,7 @@ form .row .form-label:first-child {
 
 .fa-share-alt{
 	color:#2ecc71;
-float:right;
-padding: 15px;	
+	float:right;
 }
 
 .fa-share-alt:hover{

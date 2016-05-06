@@ -18,7 +18,7 @@ public class LoggedInUserResolver implements VelocityTemplateInputResolver<Logge
 	@Override
 	public void work(LoggedInUserAware velocityTemplateInput) {
 		String userId = ProcessContext.get().getUserId();
-		User loggedInUser = userRepo.findByUserId(userId);
+		User loggedInUser = userRepo.findByUserId(userId.toLowerCase());
 		velocityTemplateInput.setLoggedInUser(loggedInUser);
 	}
 

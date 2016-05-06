@@ -27,11 +27,11 @@ public class User extends BaseDocumentEntity {
 	}
 
 	public String getUserId() {
-		return userId;
+		return userId.toLowerCase();
 	}
 
 	public void setUserId(String userId) {
-		this.userId = userId;
+		this.userId = userId.toLowerCase();
 	}
 
 	public String getPassword() {
@@ -42,7 +42,7 @@ public class User extends BaseDocumentEntity {
 		this.password = password;
 	}
 
-	public String getTenantId() {
+	public String getTenantId() { 
 		return tenantId;
 	}
 
