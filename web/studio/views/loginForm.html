@@ -5,7 +5,7 @@
 			
 			<!-- login -->
 			<!-- <form ng-submit="forgotpassword()" class="block"> -->
-			<form ng-submit="login()" class="block">
+			<form ng-submit="login()" name="loginForm" class="block">
 				<div class="head">
 					<h2>Sign in</h2>
 				</div>
@@ -14,10 +14,13 @@
 						<label class="form-label" style="color:#e74c3c;">Invalid username or password</label>
 					</div>
 					<label class="form-label">Login</label>
-					<input type="text" name="username" ng-model="credentials.username" class="form-control">
-					
+					<input type="text" name="username" ng-model="credentials.username" class="form-control" ng-pattern="/^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/">					 
+					  <br>
+					  <span class="form-label" style="color:#e74c3c;" ng-show="loginForm.username.$error.pattern">
+						Not valid email !</span>
+		
 					<label class="form-label">Password</label>
-					<input type="password" type="password" name="password" ng-model="credentials.password" class="form-control">
+					<input type="password" name="password" ng-model="credentials.password" class="form-control" >
 					
 					<a ng-click="forgotpassword()" class="form-forgot">forgot password?</a>
 				</div>

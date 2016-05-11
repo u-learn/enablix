@@ -7,8 +7,16 @@
        
        <div style = "font: normal 14px/normal Arial, Helvetica, sans-serif;">
        #if($obj.sharedContent.singleHeaders)
+       		#set ($headers=$obj.sharedContent.singleHeaders)
+       #elseif ($obj.sharedContent.multiHeaders)
+       	 	#set ($headers=$obj.sharedContent.multiHeaders)
+       	#end
+       	
+       	#if($obj.sharedContent.counter)
+       		#set($obj.sharedContent.bodyData = $obj.sharedContent.bodyData[$obj.sharedContent.counter])
+       	#end
        		<table>
-              #foreach($key1 in $obj.sharedContent.singleHeaders)	
+              #foreach($key1 in $headers)	
               	#set ($header = $key1.key) 
               		#set($data = $obj.sharedContent.bodyData.get($header))
               		#if($data) <tr> <td>$key1.label</td> 
@@ -35,19 +43,19 @@
               #end
              #end
          </table>
-         #end
-         
-         <!-- Multi Headers -->
+
+         <!-- Multi Card Full share Code
+         <h2> $obj.counter</h2>
         #if($obj.sharedContent.multiHeaders)
          <table>
-         	#foreach($key1 in $obj.sharedContent.bodyData)
+         	#foreach($key1 in $obj.sharedContent.bodyData[1])
               	#set ($data = $key1) 
               		#foreach($key2 in $obj.sharedContent.multiHeaders)
               			#set ($header = $key2.key)
               		 <tr>
               		 	 <td>$key2.label</td> 
               			  <!--td>$data.get($header)</td-->
-              		#set($i=0) 
+              		 <!--#set($i=0) 
               			
               			#foreach($dataItem in $data.get($header))
               				<td>#if($dataItem.name)$dataItem.name #end
@@ -62,7 +70,7 @@
              #end
          </table>
          #end
-         
+         -->
        
        </div>
        
