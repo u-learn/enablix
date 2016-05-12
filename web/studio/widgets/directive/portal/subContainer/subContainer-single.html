@@ -6,9 +6,10 @@
 		
 		<h2 ng-if="!navigableHeader">{{subContainerLabel}}</h2>
 		<h2><eb-nav-link hide-hierarchy="false" nav-link="navContentData" ng-if="navigableHeader"></eb-nav-link></h2>		
-	</div> 	 
+	</div> 
+	
 	<div ng-class="{'active': !expanded}" class="cont clearfix" ng-if="!(bodyData == null || bodyData == undefined || bodyData.length == 0)">	
-	 <em class="fa fa-share-alt" ng-click="openPopup()"></em> 
+	<a  class="fa fa-share-alt" ng-click="openShareContentModal()" ></a>
 		<table class="infotable" >		
 			<tr ng-repeat="header in singleHeaders" ng-switch="header.dataType" ng-if="bodyData[header.key]!=null">
 				<th>{{header.label}}:</th>
@@ -21,11 +22,3 @@
 		No data found.
 	</div>
 </div>
-
-
-        <div class="modal-body" id="modal" ng-show="showModal">	
-          <label class="form-label">Enter recepient email</label>
-			<input type="email" name="emailid" ng-model="emailid" class="form-control ng-pristine ng-untouched ng-valid"><br/>
-			<button class="button button-add" ng-click="shareContent()">Share</button>
-        </div>
-       

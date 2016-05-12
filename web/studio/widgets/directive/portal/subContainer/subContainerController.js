@@ -1,12 +1,10 @@
 enablix.studioApp.controller('PortalSubContainerCtrl',
-			['$scope', 'StateUpdateService','UserService', '$stateParams', 'ContentTemplateService', 'ContentDataService', 'ContentUtil', 'Notification',
-    function ($scope,   StateUpdateService, UserService,  $stateParams,   ContentTemplateService,   ContentDataService,   ContentUtil,   Notification) {
+			['$scope', 'StateUpdateService','UserService', '$stateParams', 'ContentTemplateService', 'ContentDataService', 'ContentUtil', 'Notification','shareContentModalWindow',
+    function ($scope,   StateUpdateService, UserService,  $stateParams,   ContentTemplateService,   ContentDataService,   ContentUtil,   Notification, shareContentModalWindow) {
 		
 		$scope.containerDef = ContentTemplateService.getContainerDefinition(
 						enablix.template, $scope.subContainerQId);
 		
-		$scope.showModal = false;
-
 		$scope.navigableHeader = !isNullOrUndefined($scope.navContentData);
 		
 		if (!isNullOrUndefined($scope.containerDef.linkContainerQId)) {
@@ -15,12 +13,6 @@ enablix.studioApp.controller('PortalSubContainerCtrl',
 		}
 		
 		$scope.$stateParams = $stateParams;
-		
-		 $scope.openPopup = function(){
-			if($scope.showModal)
-				$scope.showModal = false;
-			else $scope.showModal=true;
-		}
 		
 		var decorateData = function(_containerDef, _dataRecord) {
 			_dataRecord.headingLabel = ContentUtil.resolveContainerInstancePortalLabel(
@@ -41,10 +33,8 @@ enablix.studioApp.controller('PortalSubContainerCtrl',
 			}
 		}
 		
-		$scope.shareContent = function(){
-			UserService.sendMail({"bodyData": $scope.bodyData, "singleHeaders": $scope.singleHeaders, "multiHeaders": $scope.multiHeaders},$scope.emailid,"shareContent",true);
-			$scope.showModal = false;
-			
+		$scope.openShareContentModal =function(counter){
+			shareContentModalWindow.showShareContentModal(counter, $scope.bodyData,$scope.singleHeaders,$scope.multiHeaders);
 		}
 		
 		$scope.toggleContainerItem = function($event, itemId) {
