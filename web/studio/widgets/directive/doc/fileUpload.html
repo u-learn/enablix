@@ -38,7 +38,7 @@
 	</table>
 </div>
 <div class="form-control form-control-file" data-ng-hide="uploader.queue.length != 0">
-	<span></span><button ng-disabled="uploader.queue.length != 0" class="button">Select file<input type="file" name="{{name}}" nv-file-select="" uploader="uploader" 
-		 onchange="this.parentNode.previousSibling.innerHTML = this.value.match(/[^\/\\]+$/)"></button>
+	<span></span><div ng-disabled="uploader.queue.length != 0" class="button">Select file<input type="file" name="{{name}}" nv-file-select="" uploader="uploader" 
+		 onchange="this.parentNode.previousSibling.innerHTML = this.value.match(/[^\/\\]+$/)"></div>
 </div>
 <br>
