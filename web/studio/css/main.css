@@ -1152,10 +1152,16 @@ eb-nav-link:first-child li {
 	margin-top: 0 !important;
 }
 
-.recomended-content a, .search-result a, .content-data a {
+.recomended-content a, .content-data a {
 	position: relative;
 	text-decoration: none;
 	color: #3498db;
+}
+
+.search-result a{
+	position: relative;
+	text-decoration: none;
+	color: #fff;
 }
 .recomended-content a::after, .search-result a::after {
 	content: '';

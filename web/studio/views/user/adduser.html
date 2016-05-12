@@ -14,11 +14,11 @@
 <div class="cont">
 	<div>
 		<label class="form-label">Email</label>
-		<input name="userId" placeholder="Enter Email Id " class="form-control" ng-model="newUser.userId" ng-blur="checkUserName()" type="email" size="80" required>
+		<input name="userId" placeholder="Enter Email Id " class="form-control" ng-model="newUser.userId" ng-blur="checkUserName()" type="text" size="80" required ng-pattern="/^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/">
 	</div>
 	<div ng-messages="userForm.userId.$error" ng-if='userForm.userId.$touched' role="alert">
     <div ng-message="required" class="error">Please enter user email</div> 
-    <div ng-message="email" class="error">Please enter valid email</div>
+    <div ng-message="pattern" class="error">Please enter valid email</div>
     <div ng-message="unexits" class="error">User email already registered</div>    
   </div>
 </div>
