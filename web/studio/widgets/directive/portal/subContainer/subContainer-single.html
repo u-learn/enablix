@@ -2,7 +2,7 @@
 <div class="block" ng-if="!(bodyData == null || bodyData == undefined || bodyData.length == 0)">
 	<div ng-class="{'active': expanded}" class="head head-toggle active" ng-click="toggleContainer($event)">
 		<i class="expandable"></i>
-		<em class="fa fa-file-o"></em>		
+		<em class="fa fa-square-o"></em>		
 		<h2 ng-if="!navigableHeader">{{subContainerLabel}}</h2>
 		<h2><eb-nav-link hide-hierarchy="false" hide-doc-link="true" nav-link="navContentData" ng-if="navigableHeader"></eb-nav-link></h2>		
 	</div> 
