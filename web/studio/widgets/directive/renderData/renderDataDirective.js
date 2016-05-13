@@ -6,7 +6,8 @@ function(ContentTemplateService,   StateUpdateService) {
 		restrict: 'E',
 		scope : {
 			contentValue: '=',
-			contentDef: '='
+			contentDef: '=',
+			showDocLink:'='
 		},
 		link: function(scope, element, attrs) {
 			scope.navToItemDetail = function(_containerQId, _contentIdentity) {

@@ -1105,12 +1105,23 @@ form .row .form-label:first-child {
 .fa-share-alt{
 	color:#2ecc71;
 	float:right;
-    padding-right: 10px;
+    padding-right: 10px
+}
+ .fa-share-alt:hover{
+	color: #27ae60;
+} 
+
+.bar-share{
+	margin-right: 15px;
+    margin-top: -15px;
+    opacity: 0.75;
+    color: #fff;
+}
+.bar-share:hover{
+	opacity: 1;
+	color: #fff;
 }
 
-.fa-share-alt:hover{
-	color: #27ae60;
-}
 
 .faq .download:hover, .right-doc .fa-download:hover {
 	color: #27ae60;
@@ -1129,6 +1140,12 @@ form .row .form-label:first-child {
 	border-bottom: 0;
 }
 
+.bar-download a{
+	margin-right:50px;
+	margin-top:-15px !important;
+	opacity:0.75;
+	color:#fff !important;
+}
 
 /**/
 /* recomended content */
@@ -1417,3 +1434,4 @@ input[type=checkbox] {
     position: relative;
     min-height: 1px;
 }
+

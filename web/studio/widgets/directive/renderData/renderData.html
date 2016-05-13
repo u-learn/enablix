@@ -6,6 +6,6 @@
 	<span ng-if="!bndItem.hrefData" ng-bind-html="bndItem.label"></span>
 	<span ng-if="!$last">, </span>
 </span>
-<span ng-if="contentDef.dataType == 'DOC' && contentValue.name">&nbsp;
+<span ng-if="contentDef.dataType == 'DOC' && showDocLink && contentValue.name">&nbsp;
 	<eb-doc-download doc-value="contentValue.identity"></eb-doc-download>
 </span>
