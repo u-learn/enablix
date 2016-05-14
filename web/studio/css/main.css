@@ -1116,11 +1116,11 @@ form .row .form-label:first-child {
     margin-top: -15px;
     opacity: 0.75;
     color: #fff;
-}
+}/* 
 .bar-share:hover{
 	opacity: 1;
 	color: #fff;
-}
+} */
 
 
 .faq .download:hover, .right-doc .fa-download:hover {
