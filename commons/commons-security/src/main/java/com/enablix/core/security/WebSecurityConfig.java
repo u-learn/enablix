@@ -25,7 +25,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		
 		http
 			.authorizeRequests()
-				.antMatchers("/resetpassword", "/", "/health", "/site-doc/**/*", "/**/*.html", "/**/*.js", "/**/*.json", "/**/*.css", "/**/*.png", "/**/*.jpg", "/**/*.jpeg", "/**/*.gif", "/**/*.svg", "/**/*.ttf", "/**/*.woff", "/**/*.woff2", "/**/*.eot").permitAll()
+				.antMatchers("/resetpassword", "/", "/health", "/site-doc/**/*", "/terms", "/privacy", "/**/*.html", "/**/*.js", "/**/*.json", "/**/*.css", "/**/*.png", "/**/*.jpg", "/**/*.jpeg", "/**/*.gif", "/**/*.svg", "/**/*.ttf", "/**/*.woff", "/**/*.woff2", "/**/*.eot").permitAll()
 				.anyRequest().authenticated()
 			//.and().addFilter(new ProcessContextInitFilter()).exceptionHandling()
 			.and().httpBasic()
