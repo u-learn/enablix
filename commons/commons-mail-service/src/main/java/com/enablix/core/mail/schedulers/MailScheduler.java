@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -18,6 +19,7 @@ import com.enablix.core.mail.service.MailService;
 import com.enablix.core.mail.utility.MailConstants;
 import com.enablix.core.mail.velocity.WeeklyDigestScenarioInputBuilder;
 import com.enablix.core.mail.velocity.input.WeeklyDigestVelocityInput;
+import com.enablix.core.system.repo.TenantRepository;
 import com.enablix.core.system.repo.UserRepository;
 
 @Configuration
@@ -32,12 +34,16 @@ public class MailScheduler {
 
 	@Autowired
 	private UserRepository userRepo;
+	
+	@Autowired
+	private TenantRepository tenantRepo;
 
-	@Resource(name = "authenticationManager")
+	/*@Resource(name = "authenticationManager")
 	private AuthenticationManager authenticationManager;
-
-	@Scheduled(cron = "0 15 10 ? * MON")
-	// @Scheduled(fixedDelay = 50000)
+*/
+	
+	@Scheduled(cron = "${weekly.digest.timing}")
+	//@Scheduled(fixedDelay = 50000)
 	public void scheduleWeeklyDigest() {
 		String loggedInUser = null;
 		String loggedInTenant = null;
@@ -61,9 +67,10 @@ public class MailScheduler {
 					 * authenticate);
 					 */
 
-					ProcessContext.initialize(user.getUserId(), user.getTenantId(), "enterprise-software-template");
+					ProcessContext.initialize(user.getUserId(), user.getTenantId(), tenantRepo.findByTenantId(user.getTenantId()).getDefaultTemplateId());
 					WeeklyDigestVelocityInput input = weeklyDigestScenarioInputBuilder.build(user.getTenantId());
-					mailService.sendHtmlEmail(input, user.getUserId(), MailConstants.SCENARIO_WEEKLY_DIGEST);
+					if (!input.getRecentList().get("RecentlyUpdated").isEmpty())
+						mailService.sendHtmlEmail(input, user.getUserId(), MailConstants.SCENARIO_WEEKLY_DIGEST);
 					ProcessContext.clear();
 				} catch (AuthenticationException e) {
 					e.printStackTrace();
@@ -71,7 +78,8 @@ public class MailScheduler {
 				}
 			}
 		}
-		ProcessContext.initialize(loggedInUser, loggedInTenant, null);
+		if(loggedInUser!=null && loggedInTenant!=null)
+			ProcessContext.initialize(loggedInUser, loggedInTenant, null);
 
 	}
 

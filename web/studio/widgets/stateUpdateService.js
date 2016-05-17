@@ -53,7 +53,7 @@ enablix.studioApp.factory('StateUpdateService',
 	 		};
 	 		
 	 		var goToLogin = function(previousUrl) {
-	 			if(previousUrl.substring(previousUrl.lastIndexOf("#") + 1, previousUrl.length))
+	 			if(previousUrl.substring(previousUrl.lastIndexOf("#") + 1, previousUrl.length).length > 7)
 					//if previous URL is other than logout
 					$window.location.href = $location.protocol() + "://" + $location.host() 
  											+ ":" + $location.port() + "/login.html#/login#" +"redirect#" + encodeURIComponent(previousUrl);

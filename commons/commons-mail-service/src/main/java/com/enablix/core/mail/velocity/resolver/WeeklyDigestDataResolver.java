@@ -1,6 +1,8 @@
+
 package com.enablix.core.mail.velocity.resolver;
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
@@ -13,9 +15,12 @@ import org.springframework.stereotype.Component;
 
 import com.enablix.analytics.web.request.WebContentRequest;
 import com.enablix.app.content.ui.NavigableContent;
+import com.enablix.app.template.service.TemplateManager;
 import com.enablix.app.content.ContentDataManager;
 import com.enablix.app.content.fetch.FetchContentRequest;
 import com.enablix.app.content.recent.RecentContentService;
+import com.enablix.core.commons.xsdtopojo.ContainerType;
+import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 import com.enablix.core.mail.velocity.VelocityTemplateInputResolver;
 import com.enablix.core.mail.velocity.input.WeeklyDigestVelocityInput;
 
@@ -28,25 +33,41 @@ public class WeeklyDigestDataResolver implements VelocityTemplateInputResolver<W
 	@Autowired
 	private ContentDataManager dataMgr;
 	
+	@Autowired
+	private TemplateManager templateMgr;
+	
 	@Override
 	public void work(WeeklyDigestVelocityInput weeklyDigestVelocityInput) {
 		String tenantId = weeklyDigestVelocityInput.getTenant().getTenantId();
+		String templateId = weeklyDigestVelocityInput.getTenant().getDefaultTemplateId();
 		
 		WebContentRequest request = new WebContentRequest();
 		List<NavigableContent> recentData = recentService.getRecentContent(request);
 		weeklyDigestVelocityInput.setRecentList("RecentlyUpdated", recentData);
 		
-		String containerIds[] = {"partner", "product","competitor", "analyst", "solution"};
-		//int selectedRandomInteger = selectRandomInteger(1, containerIds.length, new Random());
-		Object sideBarItem1 = dataMgr.fetchDataJson(new FetchContentRequest("enterprise-software-template", containerIds[2], null, null, new PageRequest(0, 5)));
-		Object sideBarItem2 = dataMgr.fetchDataJson(new FetchContentRequest("enterprise-software-template", containerIds[4], null, null, new PageRequest(0, 5)));
-			List<HashMap<String,Object>> sideBarContent1 = (List<HashMap<String,Object>>) ((PageImpl<?>) sideBarItem1).getContent();
-			List<HashMap<String,Object>> sideBarContent2 = (List<HashMap<String,Object>>) ((PageImpl<?>) sideBarItem2).getContent();
-			HashMap<String, List<HashMap<String,Object>> > sidebarContent = new HashMap<>();
-			sidebarContent.put(containerIds[2], sideBarContent1);
-			sidebarContent.put(containerIds[4], sideBarContent2);
-		weeklyDigestVelocityInput.setSideBarItems(sidebarContent);
+		ContentTemplate template = templateMgr.getTemplate(templateId);
+		List<ContainerType> containers = template.getDataDefinition().getContainer();
+		ArrayList<String> containerIds = new ArrayList<String>(containers.size());
+		for (ContainerType containerType : containers) {
+			containerIds.add(containerType.getId());
+		}
 		
+		HashMap<String, List<HashMap<String,Object>> > sidebarContent = new HashMap<>();
+		//int selectedRandomInteger = (containerIds.size()==1)? 0 : selectRandomInteger(0, containerIds.size(), new Random());
+		
+			if(containerIds.indexOf("competitor") >= 0){				
+				Object sideBarItem1 = dataMgr.fetchDataJson(new FetchContentRequest(templateId, containerIds.get(containerIds.indexOf("competitor")), null, null, new PageRequest(0, 5)));
+				List<HashMap<String,Object>> sideBarContent1 = (List<HashMap<String,Object>>) ((PageImpl<?>) sideBarItem1).getContent();
+				sidebarContent.put(containerIds.get(containerIds.indexOf("competitor")), sideBarContent1);				
+			}
+			
+			if(containerIds.indexOf("solution") >= 0){
+				Object sideBarItem2 = dataMgr.fetchDataJson(new FetchContentRequest(templateId, containerIds.get(containerIds.indexOf("solution")), null, null, new PageRequest(0, 5)));
+				List<HashMap<String,Object>> sideBarContent2 = (List<HashMap<String,Object>>) ((PageImpl<?>) sideBarItem2).getContent();
+				sidebarContent.put(containerIds.get(containerIds.indexOf("solution")), sideBarContent2);
+			}
+			
+		weeklyDigestVelocityInput.setSideBarItems(sidebarContent);		
 		//get solutions, competitors
 		
 	}
