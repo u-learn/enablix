@@ -1,6 +1,8 @@
 package com.enablix.core.mail.velocity;
 
-public interface VelocityTemplateInputResolver<I> {
+import com.enablix.commons.util.ExecutionOrderAware;
+
+public interface VelocityTemplateInputResolver<I> extends ExecutionOrderAware {
 
 	void work(I input);
 	

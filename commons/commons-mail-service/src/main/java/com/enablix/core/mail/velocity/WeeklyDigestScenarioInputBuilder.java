@@ -1,6 +1,6 @@
 package com.enablix.core.mail.velocity;
 
-import java.util.List;
+import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -18,7 +18,7 @@ public class WeeklyDigestScenarioInputBuilder {
 		
 		WeeklyDigestVelocityInput input = new WeeklyDigestVelocityInput();
 		
-		List<VelocityTemplateInputResolver<WeeklyDigestVelocityInput>> resolvers = 
+		Collection<VelocityTemplateInputResolver<WeeklyDigestVelocityInput>> resolvers = 
 				factory.getResolvers(input);
 		
 		for (VelocityTemplateInputResolver resolver : resolvers) {

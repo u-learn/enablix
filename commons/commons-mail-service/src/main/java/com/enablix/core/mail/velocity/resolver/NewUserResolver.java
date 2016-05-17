@@ -26,6 +26,9 @@ public class NewUserResolver implements VelocityTemplateInputResolver<UserWelcom
 		return velocityTemplateInput instanceof UserWelcomeVelocityInput;
 	}
 
-	
+	@Override
+	public float executionOrder() {
+		return VelocityResolverExecOrder.NEW_USER_EXEC_ORDER;
+	}
 	
 }

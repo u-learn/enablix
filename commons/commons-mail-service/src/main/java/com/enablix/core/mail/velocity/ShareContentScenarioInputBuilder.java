@@ -1,11 +1,10 @@
 package com.enablix.core.mail.velocity;
 
-import java.util.List;
+import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.enablix.core.mail.velocity.input.UserWelcomeVelocityInput;
 import com.enablix.core.mail.velocity.input.ShareContentVelocityInput;
 
 @Component
@@ -19,7 +18,7 @@ public class ShareContentScenarioInputBuilder {
 		
 		ShareContentVelocityInput input = new ShareContentVelocityInput(newUserId,sharedContent);
 		
-		List<VelocityTemplateInputResolver<ShareContentVelocityInput>> resolvers = 
+		Collection<VelocityTemplateInputResolver<ShareContentVelocityInput>> resolvers = 
 				factory.getResolvers(input);
 		
 		for (VelocityTemplateInputResolver resolver : resolvers) {

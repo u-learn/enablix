@@ -1,10 +1,11 @@
 package com.enablix.core.mail.velocity;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
+import java.util.TreeSet;
 
 import org.springframework.stereotype.Component;
 
+import com.enablix.commons.util.ExecutionOrderComparator;
 import com.enablix.commons.util.beans.SpringBackedAbstractFactory;
 
 @SuppressWarnings("rawtypes")
@@ -14,8 +15,11 @@ public class VelocityTemplateInputResolverFactoryImpl extends SpringBackedAbstra
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public <I> List<VelocityTemplateInputResolver<I>> getResolvers(I velocityTemplateInput) {
-		List<VelocityTemplateInputResolver<I>> resolvers = new ArrayList<>(); 
+	public <I> Collection<VelocityTemplateInputResolver<I>> getResolvers(I velocityTemplateInput) {
+		
+		Collection<VelocityTemplateInputResolver<I>> resolvers = 
+				new TreeSet<>(new ExecutionOrderComparator()); 
+		
 		for (VelocityTemplateInputResolver<I> resolver : registeredInstances()) {
 			if (resolver.canHandle(velocityTemplateInput)) {
 				resolvers.add(resolver);

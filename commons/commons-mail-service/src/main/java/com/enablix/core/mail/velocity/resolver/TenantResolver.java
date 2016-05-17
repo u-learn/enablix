@@ -29,4 +29,9 @@ public class TenantResolver implements VelocityTemplateInputResolver<TenantAware
 		return velocityTemplateInput instanceof TenantAware;
 	}
 
+	@Override
+	public float executionOrder() {
+		return VelocityResolverExecOrder.TENANT_EXEC_ORDER;
+	}
+
 }

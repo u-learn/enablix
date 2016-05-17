@@ -88,7 +88,10 @@ public class WeeklyDigestDataResolver implements VelocityTemplateInputResolver<W
 	    int randomNumber =  (int)(fraction + aStart);    
 	    return randomNumber;
 	  }
-	  
-	
+
+	@Override
+	public float executionOrder() {
+		return VelocityResolverExecOrder.WEEKLY_DIGEST_EXEC_ORDER;
+	}
 	
 }

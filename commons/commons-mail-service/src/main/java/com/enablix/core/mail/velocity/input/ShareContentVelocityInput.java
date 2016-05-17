@@ -1,12 +1,5 @@
 package com.enablix.core.mail.velocity.input;
 
-import java.util.HashMap;
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Value;
-
-import com.enablix.app.content.ui.NavigableContent;
-
 public class ShareContentVelocityInput extends UserWelcomeVelocityInput implements EnvPropertiesAware{
 	
 	private Object sharedContent;
@@ -33,7 +26,6 @@ public class ShareContentVelocityInput extends UserWelcomeVelocityInput implemen
 
 	@Override
 	public String getUrl() {
-		// TODO Auto-generated method stub
 		return url;
 	}
 

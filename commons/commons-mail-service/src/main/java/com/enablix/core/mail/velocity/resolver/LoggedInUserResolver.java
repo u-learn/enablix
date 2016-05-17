@@ -27,6 +27,9 @@ public class LoggedInUserResolver implements VelocityTemplateInputResolver<Logge
 		return velocityTemplateInput instanceof LoggedInUserAware;
 	}
 
-	
+	@Override
+	public float executionOrder() {
+		return VelocityResolverExecOrder.LOGGED_IN_USER_EXEC_ORDER;
+	}
 	
 }

@@ -1,9 +1,9 @@
 package com.enablix.core.mail.velocity;
 
-import java.util.List;
+import java.util.Collection;
 
 public interface VelocityTemplateInputResolverFactory {
 
-	<I> List<VelocityTemplateInputResolver<I>> getResolvers(I velocityTemplateInput);
+	<I> Collection<VelocityTemplateInputResolver<I>> getResolvers(I velocityTemplateInput);
 	
 }
