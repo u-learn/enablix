@@ -1113,7 +1113,7 @@ form .row .form-label:first-child {
 
 .bar-share{
 	margin-right: 15px;
-    margin-top: -15px;
+    margin-top: -20px;
     opacity: 0.75;
     color: #fff;
 }/* 
@@ -1142,7 +1142,7 @@ form .row .form-label:first-child {
 
 .bar-download a{
 	margin-right:50px;
-	margin-top:-15px !important;
+	margin-top:-17px !important;
 	opacity:0.75;
 	color:#fff !important;
 }
@@ -1178,8 +1178,20 @@ eb-nav-link:first-child li {
 .search-result a{
 	position: relative;
 	text-decoration: none;
-	color: #fff;
 }
+
+.search-result a.bar-share {
+	padding-top: 20px;
+}
+
+.search-result a.bar-share::after {
+	width: 0;
+}
+
+.search-result div.head a.fa-download {
+	padding-top: 20px;
+}
+
 .recomended-content a::after, .search-result a::after {
 	content: '';
 	position: absolute;
