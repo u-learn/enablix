@@ -66,6 +66,10 @@ enablix.studioApp.controller('PortalSubContainerCtrl',
 						$scope.bodyData = recordData;
 						if ($scope.bodyData != null && $scope.bodyData != undefined) {
 							$scope.showSubContainer = true;
+						} else {
+							if ($scope.parentList && $scope.index) {
+								$scope.parentList[$scope.index] = "null" + $scope.index; // hack to remove div in portal-container.html
+							}
 						}
 					},
 					function(errResp) {
@@ -93,6 +97,12 @@ enablix.studioApp.controller('PortalSubContainerCtrl',
 						}
 						
 						$scope.bodyData = data;
+					}
+					
+					if (!$scope.showSubContainer) {
+						if ($scope.parentList && $scope.index) {
+							$scope.parentList[$scope.index] = "null" + $scope.index; // hack to remove div in portal-container.html
+						}
 					}
 					
 				},

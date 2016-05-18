@@ -5,13 +5,13 @@
 		<div class="row">							
 			<main class="col-md-8">
 				<div ng-repeat="subContainer in subContainerList" ng-class = "{'subcontainer': subContainerList.length>1}" 
-						ng-if ="!(subContainerList.length>1 && subContainer.label =='About')">					
+						ng-if ="subContainer != ('null' + $index) && !(subContainerList.length>1 && subContainer.label =='About')">					
 					<eb-portal-sub-container ng-if="subContainer.type == 'single'" 
 						type="single" sub-container-label="subContainer.label" 
-						sub-container-q-id="subContainer.qualifiedId" index="$index"></eb-portal-sub-container>
+						sub-container-q-id="subContainer.qualifiedId" index="$index" parent-list="subContainerList"></eb-portal-sub-container>
 					<eb-portal-sub-container ng-if="subContainer.type == 'multi'"
 						type="multi" sub-container-label="subContainer.label" 
-						sub-container-q-id="subContainer.qualifiedId" index="$index"></eb-portal-sub-container>
+						sub-container-q-id="subContainer.qualifiedId" index="$index" parent-list="subContainerList"></eb-portal-sub-container>
 				</div>
 			</main>
 			
