@@ -12,6 +12,8 @@ enablix.studioApp.controller('PortalSubContainerCtrl',
 					enablix.template, $scope.containerDef.linkContainerQId);
 		}
 		
+		$scope.showSubContainer = false;
+		
 		$scope.$stateParams = $stateParams;
 		
 		var decorateData = function(_containerDef, _dataRecord) {
@@ -62,6 +64,9 @@ enablix.studioApp.controller('PortalSubContainerCtrl',
 					function(recordData) {
 						decorateData($scope.containerDef, recordData);
 						$scope.bodyData = recordData;
+						if ($scope.bodyData != null && $scope.bodyData != undefined) {
+							$scope.showSubContainer = true;
+						}
 					},
 					function(errResp) {
 						Notification.error({message: "Error retrieving data", delay: enablix.errorMsgShowTime});
@@ -76,6 +81,7 @@ enablix.studioApp.controller('PortalSubContainerCtrl',
 					if ($scope.type == 'single' && data && data.length > 0) {
 						$scope.bodyData = data[0];
 						decorateData($scope.containerDef, $scope.bodyData);
+						$scope.showSubContainer = true;
 						
 					} else {
 						
@@ -83,6 +89,7 @@ enablix.studioApp.controller('PortalSubContainerCtrl',
 							angular.forEach(data, function(dataItem) {
 								decorateData($scope.containerDef, dataItem);
 							});
+							$scope.showSubContainer = true;
 						}
 						
 						$scope.bodyData = data;
