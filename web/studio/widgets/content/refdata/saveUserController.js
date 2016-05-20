@@ -1,6 +1,6 @@
 enablix.studioApp.controller('SaveUserController', [
-	        '$scope', '$state', '$stateParams', 'RESTService', 'UserService', '$rootScope', 'StateUpdateService',
-	function($scope,   $state,   $stateParams,   RESTService,   UserService,   $rootScope,   StateUpdateService) {
+	        '$scope', '$state', '$stateParams', 'RESTService', 'UserService', '$rootScope', 'Notification','StateUpdateService',
+	function($scope,   $state,   $stateParams,   RESTService,   UserService,   $rootScope, Notification,  StateUpdateService) {
 
 		$scope.newUser = {};
 		$scope.allRoles = [];
@@ -49,7 +49,10 @@ enablix.studioApp.controller('SaveUserController', [
 				}
 			});
 			
-			UserService.addUserData($scope.newUser, selectedRoles);
+			if(selectedRoles.length > 0)
+				UserService.addUserData($scope.newUser, selectedRoles);
+			else
+				Notification.error({message: "Select at least one role", delay: enablix.errorMsgShowTime});
 		}
 
 		$scope.cancelOperation = function() {

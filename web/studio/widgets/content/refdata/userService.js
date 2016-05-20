@@ -89,7 +89,7 @@ enablix.studioApp.factory('UserService',
 					Notification.primary({message: "User Name is valid", delay: enablix.errorMsgShowTime});
 				}*/	
 	    	}, function() {    		
-	    		Notification.error({message: "Error while checking userName", delay: enablix.errorMsgShowTime});
+	    		//Notification.error({message: "Error while checking userName", delay: enablix.errorMsgShowTime});
 	    	});
 		};
 		var deleteUser= function(userData,_success)

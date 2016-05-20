@@ -7,7 +7,7 @@
 		<label class="form-label">Name </label>
 		<input focus="true" name="name" placeholder="Enter Name" class="form-control" type="text" ng-model="newUser.profile.name" size="80" required >
 	</div>
-	<div ng-messages="userForm.name.$error" ng-if='userForm.Name.$touched' role="alert">
+	<div ng-messages="userForm.name.$error" ng-if='userForm.name.$touched' role="alert">
     <div ng-message="required" class="error">Please enter name</div>    
   </div>
 </div>
@@ -17,7 +17,7 @@
 		<input name="userId" placeholder="Enter Email Id " class="form-control" ng-model="newUser.userId" ng-blur="checkUserName()" type="text" size="80" required ng-pattern="/^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/">
 	</div>
 	<div ng-messages="userForm.userId.$error" ng-if='userForm.userId.$touched' role="alert">
-    <div ng-message="required" class="error">Please enter user email</div> 
+    <div ng-message="required" class="error">Please enter a valid email address</div> 
     <div ng-message="pattern" class="error">Please enter valid email</div>
     <div ng-message="unexits" class="error">User email already registered</div>    
   </div>
@@ -39,8 +39,8 @@
 			value="role.identity" ng-model="role.selected">&nbsp;&nbsp;{{role.roleName}}<br/>
 		</span>
 	</div>
-	<div ng-messages="userForm.password.$error" ng-if='userForm.password.$touched' role="alert">
-    <div ng-message="required" class="error">Please enter user password</div>    
+	<div ng-messages="userForm.selectedRoles.$error" ng-if='userForm.selectedRoles.$touched' role="alert">
+    <div ng-message="noneselected" class="error">Please select a role</div>    
   </div>
 </div>
 <div class="foot clearfix">
