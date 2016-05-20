@@ -16,7 +16,7 @@
 					<label class="form-label">Login</label>
 					<input type="text" name="username" ng-model="credentials.username" class="form-control" ng-pattern="/^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/">					 
 					  <br>
-					  <span class="form-label" style="color:#e74c3c;" ng-show="loginForm.username.$error.pattern">
+					  <span class="form-label" style="color:#e74c3c;" ng-show="loginForm.username.$error.pattern && loginForm.username.$touched">
 						Not valid email !</span>
 		
 					<label class="form-label">Password</label>

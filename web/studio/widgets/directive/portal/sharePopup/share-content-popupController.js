@@ -2,7 +2,8 @@ enablix.studioApp.controller('ShareController', ['$scope', '$stateParams', '$mod
 	function( $scope,   $stateParams,   $modalInstance, bodyData, singleHeaders, multiHeaders,UserService,counter){
 
 $scope.shareContent = function(){
-UserService.sendMail({"bodyData": bodyData, "singleHeaders": singleHeaders, "multiHeaders": multiHeaders, "counter": counter},$scope.emailid,"shareContent",true);
+	UserService.sendMail({"bodyData": bodyData, "singleHeaders": singleHeaders, "multiHeaders": multiHeaders, "counter": counter},$scope.emailid,"shareContent",true);
+	$modalInstance.close();
 }
 
 		$scope.close = function() {
