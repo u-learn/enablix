@@ -10,6 +10,18 @@ public class EmailConfiguration extends BaseDocumentEntity{
 	private String password;	
 	private String smtp;	
 	private String port;
+	private String personalName;
+	
+	
+	
+	public EmailConfiguration(String emailId, String password, String smtp, String port, String personalName) {
+		super();
+		this.emailId = emailId;
+		this.password = password;
+		this.smtp = smtp;
+		this.port = port;
+		this.personalName = personalName;
+	}
 
 	public String getEmailId() {
 		return emailId;
@@ -42,10 +54,19 @@ public class EmailConfiguration extends BaseDocumentEntity{
 	public void setPort(String port) {
 		this.port = port;
 	}
+	
+	
+	public String getPersonalName() {
+		return personalName;
+	}
+
+	public void setPersonalName(String personalName) {
+		this.personalName = personalName;
+	}
 
 	@Override
 	public String toString() {
 		return "EmailConfiguration [emailId=" + emailId + ", smtp=" + smtp + ", port=" + port
-				+ "]";
+				+ "personamName" + personalName + "]";
 	}
 }

@@ -9,12 +9,14 @@ import org.apache.velocity.exception.ResourceNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.enablix.commons.util.process.ProcessContext;
 import com.enablix.core.domain.config.EmailConfiguration;
 import com.enablix.core.domain.config.SMTPConfiguration;
 import com.enablix.core.domain.config.TemplateConfiguration;
+import com.enablix.core.domain.tenant.Tenant;
 import com.enablix.core.mail.utility.MailConstants;
 import com.enablix.core.mail.utility.MailUtility;
 import com.enablix.core.mail.velocity.NewUserScenarioInputBuilder;
@@ -51,6 +53,7 @@ public class MailServiceImpl implements MailService {
     @Autowired
     private ShareContentScenarioInputBuilder shareContentScenarioInputBuilder;
    
+	
     public void setVelocityEngine(VelocityEngine velocityEngine) {
         this.velocityEngine = velocityEngine;
     }
@@ -75,6 +78,7 @@ public class MailServiceImpl implements MailService {
        try{
     	String htmlBody = generateTemplateMessage(objectTobeMerged,templateName,elementName,MailConstants.BODY_TEMPLATE_PATH);
     	String subject = generateTemplateMessage(objectTobeMerged,subjectTemplateName,elementName,MailConstants.SUBJECT_TEMPLATE_PATH);
+    	
     	return MailUtility.sendEmail(emailid, subject, htmlBody, this.getEmailConfiguration());
        }catch(Exception e){
     	   logger.error(e.getMessage(), e);
@@ -99,16 +103,37 @@ public class MailServiceImpl implements MailService {
         return stringWriter.toString();
     };
 	
+    
+    @Value("${from.mail.address}")
+    private String emailId;
+    
+    @Value("${from.mail.password}")
+    private String password;
+    
+    @Value("${smtp.default.port}")
+    private String port;
+    
+    @Value("${smtp.default.server}")
+    private String server;
+    
+    
     @Override
 	public EmailConfiguration getEmailConfiguration() {
-		if (emailConfigRepo.count()==1)    	
-    	return emailConfigRepo.findAll().get(0);
-		else
-			return null;
+		if (emailConfigRepo.count()==1)
+			return emailConfigRepo.findAll().get(0);
+		else{
+			//for default settings
+			Tenant tenant = tenantRepo.findByTenantId(ProcessContext.get().getTenantId());
+			 EmailConfiguration emailConfiguration = new EmailConfiguration(emailId, password, server, port, tenant.getName());
+			 emailConfigRepo.save(emailConfiguration);
+			 return emailConfiguration;
+			}
 	};
 
 	@Override
 	public EmailConfiguration addEmailConfiguration(EmailConfiguration emailConfiguration) {
+		Tenant tenant = tenantRepo.findByTenantId(ProcessContext.get().getTenantId());
+		emailConfiguration.setPersonalName(tenant.getName());
 		return emailConfigRepo.save(emailConfiguration);		
 	};
 	

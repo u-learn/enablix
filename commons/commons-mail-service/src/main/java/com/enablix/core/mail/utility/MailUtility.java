@@ -1,9 +1,5 @@
 package com.enablix.core.mail.utility;
 
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.net.URL;
-import java.net.URLClassLoader;
 import java.util.Properties;
 
 import javax.mail.Authenticator;
@@ -25,38 +21,18 @@ import com.enablix.core.domain.config.EmailConfiguration;
 
 public class MailUtility {
 
-	private final static org.slf4j.Logger logger = LoggerFactory.getLogger(MailUtility.class);
-
+	private final static org.slf4j.Logger logger = LoggerFactory.getLogger(MailUtility.class);	
+	
 	public static boolean sendEmail(String sendToEmail,String subject, String htmlBody,EmailConfiguration emailConfiguration) {
 		try{
 			logger.info("sending mail.. " + emailConfiguration);
-			
-			String username;
-			String password;
-			String smtpport;
-			String smtpserver;
-			
-			if(emailConfiguration!=null){
-				username = emailConfiguration.getEmailId();
-				password = emailConfiguration.getPassword();
-				smtpserver = emailConfiguration.getSmtp();
-				smtpport = emailConfiguration.getPort();
-			}
-			else
-			{
-				URL url = ((URLClassLoader)ClassLoader.getSystemClassLoader()).getURLs()[0];
-		    	URL url_new = new URL(url.toString().substring(0, (url.toString().lastIndexOf("enablix-app"))) + "config/properties/mail.properties");
-		   		logger.debug( "url: " + url + " , url_new : "   + url_new);
-		    	Properties props = new Properties();
-		   		InputStream input = new FileInputStream(url_new.toString().substring(6));
-		   		props.load(input); 
-		   		
-		   		username = props.getProperty(MailConstants.FROM_ADDRESS);
-		   		password = props.getProperty(MailConstants.FROM_PASSWORD);
-				smtpserver = props.getProperty(MailConstants.FROM_SMTP_SERVER);
-				smtpport = props.getProperty(MailConstants.FROM_SMTP_PORT);		   		
-			}
-			
+					
+			String	username = emailConfiguration.getEmailId();
+			String password = emailConfiguration.getPassword();
+			String smtpserver = emailConfiguration.getSmtp();
+			String smtpport = emailConfiguration.getPort();			
+			String personalName = emailConfiguration.getPersonalName();
+				
 			Properties props = new Properties();
 	        props.put("mail.smtp.host", smtpserver);
 	        props.put("mail.smtp.port",smtpport);
@@ -78,20 +54,19 @@ public class MailUtility {
 	        
 	        
 	        logger.debug("session details" + session + " properties: " + props);
-            Message msg = new MimeMessage(session);
-          
-            msg.setFrom(new InternetAddress(username));
-           
+            Message msg = new MimeMessage(session);          
+            msg.setFrom(new InternetAddress(username, personalName));           
             msg.addRecipient(Message.RecipientType.TO, new InternetAddress(sendToEmail));
             msg.setSubject(subject);
             Multipart multipart = new MimeMultipart();
             MimeBodyPart htmlPart = new MimeBodyPart();
             htmlPart.setContent(htmlBody, "text/html");
             multipart.addBodyPart(htmlPart);
-           logger.debug("To: " + msg.getAllRecipients()[0] + "From: " +  msg.getFrom()[0]);
+            logger.debug("To: " + msg.getAllRecipients()[0] + "From: " +  msg.getFrom()[0]);
             msg.setContent(multipart);
             Transport.send(msg);  
             return true;
+            	
         } catch (AddressException e) {
         	logger.error(e.getMessage(), e);
             return false;
