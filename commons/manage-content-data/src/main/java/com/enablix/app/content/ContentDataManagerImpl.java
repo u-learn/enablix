@@ -262,4 +262,29 @@ public class ContentDataManagerImpl implements ContentDataManager {
 		return peers == null ? new ArrayList<Map<String, Object>>() : peers;
 	}
 	
+	@Override
+	public Map<String, Object> fetchParentRecord(ContentTemplate template, String recordQId, Map<String, Object> record) {
+		
+		Map<String, Object> parentRecord = null;
+		
+		String parentQId = QIdUtil.getParentQId(recordQId);
+		
+		String parentIdentity = ContentDataUtil.findParentIdentityFromAssociation(record);
+		
+		if (!StringUtil.isEmpty(parentIdentity)) {
+		
+			// check if data is self contained or in parent container
+			String collName = TemplateUtil.resolveCollectionName(template, parentQId);
+			
+			if (TemplateUtil.hasOwnCollection(template, parentQId)) {
+				parentRecord = crud.findRecord(collName, parentIdentity);
+				
+			} else {
+				record = crud.findRecord(collName, QIdUtil.getElementId(parentQId), parentIdentity);
+			}
+		}
+		
+		return parentRecord;
+	}
+	
 }

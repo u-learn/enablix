@@ -21,5 +21,6 @@
 	<module>configuration-provider</module>
 	<module>commons-elastic-search</module>
 	<module>commons-mail-service</module>
+	<module>manage-correlation-rule</module>
   </modules>
 </project>

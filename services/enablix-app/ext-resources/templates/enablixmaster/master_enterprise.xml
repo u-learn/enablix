@@ -1971,6 +1971,28 @@
 						</datastore>
 					</refList>
 				</bounded>
+			</contentItem>
+			<contentItem id="userRegions" label="Regions" type="bounded">
+				<bounded>
+					<refList>
+						<datastore>
+							<storeId>regions</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>name</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="userSolArea" label="Solution Area" type="bounded">
+				<bounded>
+					<refList>
+						<datastore>
+							<storeId>solutionArea</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
 			</contentItem>			
 		</container>
 	</dataDefinition>

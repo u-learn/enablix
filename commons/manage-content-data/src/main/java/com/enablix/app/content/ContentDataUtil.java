@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.Map;
 
 import com.enablix.commons.constants.ContentDataConstants;
+import com.enablix.core.api.ContentDataRef;
 import com.enablix.core.commons.xsdtopojo.ContainerType;
 import com.enablix.core.commons.xsdtopojo.ContentItemClassType;
 import com.enablix.core.commons.xsdtopojo.ContentItemType;
@@ -115,5 +116,23 @@ public class ContentDataUtil {
 		return null;
 	}
 	
+	
+	public static ContentDataRef contentDataToRef(
+			Map<String, Object> contentData, String templateId, String containerQId) {
+		
+		Object identity = contentData.get(ContentDataConstants.IDENTITY_KEY);
+		
+		ContentDataRef contentDataRef = null;
+		
+		if (identity instanceof String) {
+			contentDataRef = new ContentDataRef(templateId, 
+								containerQId, (String) identity);	
+		} else {
+			throw new IllegalStateException("[identity] not of type string. Found [" 
+						+ identity.getClass().getName() + "]");	
+		}
+		
+		return contentDataRef;
+	}
 	
 }

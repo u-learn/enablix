@@ -42,7 +42,9 @@ import com.enablix.commons.util.StringUtil;
 				"com.enablix.analytics.recommendation.repository", 
 				"com.enablix.core.mongo.config.repo",
 				"com.enablix.app.content.recent.repo",
-				"com.enablix.app.content.ui.link.repo"})
+				"com.enablix.app.content.ui.link.repo",
+				"com.enablix.analytics.correlation.repo",
+				"com.enablix.analytics.correlation.data.repo"})
 public class ApplicationInit extends WebMvcAutoConfigurationAdapter {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(ApplicationInit.class);

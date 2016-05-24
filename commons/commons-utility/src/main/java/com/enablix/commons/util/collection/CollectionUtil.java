@@ -251,6 +251,23 @@ public final class CollectionUtil {
 		return null;
 	}
 
+	public static interface ITransformer<K, V> {
+		V transform(K in);
+	}
+	
+	public static interface CollectionCreator<T extends Collection<V>, V> {
+		T create();
+	}
+	
+	public static <T extends Collection<V>, S extends Collection<K>, K, V> T 
+			transform(S in, CollectionCreator<T, V> creator, ITransformer<K, V> tx) {
+		T collection = creator.create();
+		for (K inElem : in) {
+			collection.add(tx.transform(inElem));
+		}
+		return collection;
+	}
+	
 	/**
 	 * Prevent instantiation.
 	 */

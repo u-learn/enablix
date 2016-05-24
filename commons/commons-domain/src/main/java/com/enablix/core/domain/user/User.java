@@ -2,10 +2,11 @@ package com.enablix.core.domain.user;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.enablix.commons.constants.AppConstants;
 import com.enablix.core.domain.BaseDocumentEntity;
 import com.enablix.core.domain.profile.Profile;
 
-@Document(collection = "ebxUser")
+@Document(collection = AppConstants.SYSTEM_USER_COLL_NAME)
 public class User extends BaseDocumentEntity {
 
 	private String userId;

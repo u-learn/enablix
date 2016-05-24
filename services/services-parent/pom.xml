@@ -476,6 +476,7 @@
 		<javax.servlet.api.version>3.1.0</javax.servlet.api.version>
 		<elastic.search.version>2.1.0</elastic.search.version>
 		<mongo.java.driver.version>3.0.1</mongo.java.driver.version>
+		<apache.mahout.version>0.9</apache.mahout.version>
 		<package.location>${basedir}/target</package.location>
 	</properties>
 

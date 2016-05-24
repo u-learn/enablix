@@ -13,18 +13,20 @@ import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.core.commons.xsdtopojo.ContainerType;
 import com.enablix.core.commons.xsdtopojo.ContentItemClassType;
 import com.enablix.core.commons.xsdtopojo.ContentItemType;
 import com.enablix.core.commons.xsdtopojo.ContentTemplate;
-import com.enablix.core.mongo.AppConstants;
-import com.enablix.services.util.DatastoreUtil;
+import com.enablix.services.util.ElasticSearchUtil;
 import com.enablix.services.util.TemplateUtil;
 
 
 public class ESQueryBuilder {
 	
 	private static final String BOOST_OPERATOR = "^";
+	private static final int CONTAINER_NAME_FLD_BOOST = 5;
+	private static final int TAGS_FLD_BOOST = 5;
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(ESQueryBuilder.class);
 
@@ -63,12 +65,21 @@ public class ESQueryBuilder {
 	
 	private String[] convertToMultiMatchBoostedFields(Map<String, Integer> fieldBoostIndex) {
 		
-		String[] boostedFieldSearch = new String[fieldBoostIndex.size()];
+		String[] boostedFieldSearch = new String[fieldBoostIndex.size() + 2]; // +2 for container name and tags
 		
 		int indx = 0;
 		for (Map.Entry<String, Integer> entry : fieldBoostIndex.entrySet()) {
 			boostedFieldSearch[indx++] = entry.getKey() + BOOST_OPERATOR + entry.getValue();
 		}
+		
+		// add field for search on container metadata
+		boostedFieldSearch[indx++] = ContentDataConstants.CONTAINER_NAME_METADATA_FLD 
+										+ BOOST_OPERATOR + CONTAINER_NAME_FLD_BOOST;
+		
+		// add field for tags search
+		boostedFieldSearch[indx++] = ContentDataConstants.RECORD_TAGS_ATTR + "." + ContentDataConstants.TAG_NAME_ATTR
+										+ BOOST_OPERATOR + TAGS_FLD_BOOST;
+
 		
 		return boostedFieldSearch;
 	}
@@ -135,7 +146,7 @@ public class ESQueryBuilder {
 	}
 
 	private String getIndexName() {
-		return DatastoreUtil.getTenantAwareDbName(AppConstants.BASE_DB_NAME);
+		return ElasticSearchUtil.getIndexName();
 	}
 	
 	private String[] getTypes() {

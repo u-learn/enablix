@@ -42,5 +42,11 @@ public class ContentDataRef {
 	public void setInstanceIdentity(String instanceIdentity) {
 		this.instanceIdentity = instanceIdentity;
 	}
+
+	@Override
+	public String toString() {
+		return "ContentDataRef [templateId=" + templateId + ", containerQId=" + containerQId + ", instanceIdentity="
+				+ instanceIdentity + "]";
+	}
 	
 }

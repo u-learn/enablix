@@ -36,6 +36,11 @@ public class JsonUtil {
 		return map;
 	}
 	
+	public static <T> T jsonToObject(Map<String, Object> json, Class<T> objectType) {
+		final ObjectMapper mapper = new ObjectMapper();
+		return mapper.convertValue(json, objectType);
+	}
+	
 	/*public static void main(String[] args) {
 		String json = "{\"name\" : \"abc\" ,"
 			+ "\"email id\" : [\"abc@gmail.com\",\"def@gmail.com\",\"ghi@gmail.com\"],"
