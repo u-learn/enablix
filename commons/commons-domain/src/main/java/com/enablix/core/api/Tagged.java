@@ -1,9 +1,9 @@
 package com.enablix.core.api;
 
-import java.util.List;
+import java.util.Set;
 
 public interface Tagged {
 
-	List<Tag> getTags();
+	Set<Tag> getTags();
 	
 }

@@ -5,7 +5,6 @@
     <artifactId>analytic-engine</artifactId>
     <version>1.0-SNAPSHOT</version>
   </parent>
-  <groupId>com.enablix.services.analytic</groupId>
   <artifactId>correlation-api</artifactId>
   <dependencies>
   	<dependency>

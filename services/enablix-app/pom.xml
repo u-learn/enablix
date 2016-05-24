@@ -108,7 +108,7 @@
 			<version>1.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
-			<groupId>com.enablix.services.analytic</groupId>
+			<groupId>com.enablix.services</groupId>
 			<artifactId>correlation-api</artifactId>
 			<version>1.0-SNAPSHOT</version>
 		</dependency>

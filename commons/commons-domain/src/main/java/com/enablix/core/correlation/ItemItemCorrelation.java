@@ -1,6 +1,6 @@
 package com.enablix.core.correlation;
 
-import java.util.List;
+import java.util.Set;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -20,7 +20,7 @@ public class ItemItemCorrelation extends BaseDocumentEntity implements Tagged {
 	
 	private float correlationScore;
 	
-	private List<Tag> tags;
+	private Set<Tag> tags;
 	
 	public ContentDataRef getItem() {
 		return item;
@@ -54,11 +54,11 @@ public class ItemItemCorrelation extends BaseDocumentEntity implements Tagged {
 		this.correlationScore = correlationScore;
 	}
 
-	public List<Tag> getTags() {
+	public Set<Tag> getTags() {
 		return tags;
 	}
 
-	public void setTags(List<Tag> tags) {
+	public void setTags(Set<Tag> tags) {
 		this.tags = tags;
 	}
 

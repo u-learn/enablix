@@ -1,7 +1,8 @@
 package com.enablix.services.util;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.enablix.commons.util.collection.CollectionUtil;
 import com.enablix.commons.util.collection.CollectionUtil.CollectionCreator;
@@ -10,14 +11,14 @@ import com.enablix.core.api.Tag;
 
 public class TagUtil {
 
-	public static final List<Tag> createTags(List<String> strTags) {
+	public static final Set<Tag> createTags(List<String> strTags) {
 		
 		return CollectionUtil.transform(strTags, 
-			new CollectionCreator<List<Tag>, Tag>() {
+			new CollectionCreator<Set<Tag>, Tag>() {
 	
 				@Override
-				public List<Tag> create() {
-					return new ArrayList<Tag>();
+				public Set<Tag> create() {
+					return new HashSet<Tag>();
 				}
 				
 			}, new ITransformer<String, Tag>() {

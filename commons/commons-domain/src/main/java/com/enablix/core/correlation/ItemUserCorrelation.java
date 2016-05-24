@@ -1,6 +1,7 @@
 package com.enablix.core.correlation;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -25,7 +26,7 @@ public class ItemUserCorrelation extends BaseDocumentEntity {
 	 * We can then define rules to work with DIRECT relationship and if not found, then
 	 * work with the DERIVED relationship.
 	 */
-	private List<Tag> tags;
+	private Set<Tag> tags;
 
 	public ContentDataRef getItem() {
 		return item;
@@ -61,11 +62,11 @@ public class ItemUserCorrelation extends BaseDocumentEntity {
 		this.correlationScore = correlationScore;
 	}
 
-	public List<Tag> getTags() {
+	public Set<Tag> getTags() {
 		return tags;
 	}
 
-	public void setTags(List<Tag> tags) {
+	public void setTags(Set<Tag> tags) {
 		this.tags = tags;
 	}
 	

@@ -15,7 +15,6 @@
   	<module>analytic-web-impl</module>
   	<module>search-api</module>
   	<module>elastic-search-impl</module>
-  	<module>mahout-recommendation-provider</module>
   	<module>correlation-api</module>
   	<module>manage-correlation-data</module>
   </modules>

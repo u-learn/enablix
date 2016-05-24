@@ -5,4 +5,7 @@ import com.enablix.core.mongo.repository.BaseMongoRepository;
 
 public interface ItemItemCorrelationRepository extends BaseMongoRepository<ItemItemCorrelation> {
 
+	ItemItemCorrelation findByItemInstanceIdentityAndRelatedItemInstanceIdentity(
+			String itemIdentity, String relatedItemIdentity);
+	
 }
