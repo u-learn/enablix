@@ -4,12 +4,14 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.enablix.app.content.ui.NavigableContent;
+import com.enablix.core.domain.user.User;
 
-public class WeeklyDigestVelocityInput extends BaseVelocityInput implements EnvPropertiesAware{
+public class WeeklyDigestVelocityInput extends BaseVelocityInput implements  LoggedInUserAware, EnvPropertiesAware{
 
 	private HashMap<String, List<NavigableContent>> recentList ;
 	private HashMap<String,List<HashMap<String,Object>>> sideBarItems; 
 	private String url;
+	private User loggedInUser;
 
 	public HashMap<String, List<NavigableContent>> getRecentList() {
 		return recentList;
@@ -42,6 +44,15 @@ public class WeeklyDigestVelocityInput extends BaseVelocityInput implements EnvP
 	public String getUrl() {
 		return url;
 	}
-
+	
+	@Override
+	public User getLoggedInUser() {
+		return loggedInUser;
+	}
+	
+	@Override
+	public void setLoggedInUser(User loggedInUser) {
+		this.loggedInUser = loggedInUser;
+	}
 		
 }
