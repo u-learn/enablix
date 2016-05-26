@@ -117,13 +117,17 @@ public class MailServiceImpl implements MailService {
     private String server;
     
     
-    @Override
+     @Override
 	public EmailConfiguration getEmailConfiguration() {
-		if (emailConfigRepo.count()==1)
-			return emailConfigRepo.findAll().get(0);
+    	Tenant tenant = tenantRepo.findByTenantId(ProcessContext.get().getTenantId());    	
+		if (emailConfigRepo.count()==1){
+			EmailConfiguration emailConfig = emailConfigRepo.findAll().get(0);	
+			if(emailConfig.getPersonalName()==null) //for email configs already in the system
+				emailConfig.setPersonalName(tenant.getName());
+			return emailConfig;
+		}
 		else{
 			//for default settings
-			Tenant tenant = tenantRepo.findByTenantId(ProcessContext.get().getTenantId());
 			 EmailConfiguration emailConfiguration = new EmailConfiguration(emailId, password, server, port, tenant.getName());
 			 emailConfigRepo.save(emailConfiguration);
 			 return emailConfiguration;

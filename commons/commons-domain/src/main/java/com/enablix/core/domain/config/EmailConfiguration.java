@@ -22,6 +22,10 @@ public class EmailConfiguration extends BaseDocumentEntity{
 		this.port = port;
 		this.personalName = personalName;
 	}
+	
+	public EmailConfiguration() {
+
+	}
 
 	public String getEmailId() {
 		return emailId;
