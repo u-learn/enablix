@@ -8,11 +8,14 @@
 		<tr>
 		<label class="form-label">Enter email</label>
 		<form name="modalForm">
-		<input type="text" name="emailid" ng-model="emailid" class="form-control ng-pristine ng-untouched ng-valid" ng-pattern="/^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/"></td>
-			<span class="form-label" style="color:#e74c3c;" ng-show="modalForm.emailid.$error.pattern">
-						Not valid email !</span>
-						</form>
-						</tr>
+			<input type="text" name="emailid" ng-model="emailid" class="form-control" ng-blur="modalForm.emailid.$valid" ng-pattern="/^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/" required></td>
+		
+			<div ng-messages="modalForm.emailid.$error" ng-if="modalForm.emailid.$touched" role="alert">
+				<div ng-message="required" class="error">You didn't enter a email</div>
+				<div ng-message="pattern" class="error">Please enter a valid email</div>      
+			</div>
+		</form>
+	</tr>
 	</tbody>
 </table>
 </div>

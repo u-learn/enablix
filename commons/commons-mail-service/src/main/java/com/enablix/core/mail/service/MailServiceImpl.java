@@ -59,7 +59,7 @@ public class MailServiceImpl implements MailService {
     }
     
     @Override
-    public boolean sendHtmlEmail(Object objectTobeMerged, String emailid,String scenario) {
+    public boolean sendHtmlEmail(Object objectTobeMerged, String emailid, String scenario) {
 		String templateName = scenario + MailConstants.EMAIL_BODY_SUFFIX;
 		String subjectTemplateName = scenario + MailConstants.EMAIL_SUBJECT_SUFFIX;
 		String elementName = MailConstants.EMAIL_TEMPLATE_OBJECTNAME;

@@ -4,6 +4,7 @@
 		<ul>
 			<li ng-repeat="link in quickLinkSec.links">
 				<eb-nav-link hide-hierarchy="true" nav-link="link.data" hide-doc-link="true"></eb-nav-link>
+				<eb-doc-download ng-if="link.data.next.docIdentity" doc-value="link.data.next.docIdentity"></eb-doc-download>
 			</li>
 		</ul>
 	</div>
