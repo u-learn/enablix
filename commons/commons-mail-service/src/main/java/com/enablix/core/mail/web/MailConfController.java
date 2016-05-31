@@ -9,9 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.enablix.core.domain.config.EmailConfiguration;
 import com.enablix.core.domain.config.SMTPConfiguration;
-import com.enablix.core.domain.user.User;
 import com.enablix.core.mail.service.MailService;
-import com.enablix.core.system.repo.UserRepository;
 
 
 @RestController
