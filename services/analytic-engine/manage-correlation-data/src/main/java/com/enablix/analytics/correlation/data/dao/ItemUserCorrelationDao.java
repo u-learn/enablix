@@ -1,0 +1,60 @@
+package com.enablix.analytics.correlation.data.dao;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.stereotype.Component;
+
+import com.enablix.core.api.ContentDataRef;
+import com.enablix.core.correlation.ItemUserCorrelation;
+import com.enablix.core.mongo.search.And;
+import com.enablix.core.mongo.search.CompositeFilter;
+import com.enablix.core.mongo.search.ConditionOperator;
+import com.enablix.core.mongo.search.SearchFilter;
+import com.enablix.core.mongo.search.StringFilter;
+
+@Component
+public class ItemUserCorrelationDao {
+
+	private static final String TAG_NAME_FILTER_PROP_NAME = "tags.name";
+	private static final String ITEM_CONTAINER_QID_PROP_NAME = "item.containerQId";
+	private static final String ITEM_INSTANCE_IDENTITY_PROP_NAME = "item.instanceIdentity";
+	
+	@Autowired
+	private MongoTemplate mongoTemplate;
+	
+	public List<ItemUserCorrelation> findByCriteria(Criteria queryCriteria) {
+		Query query = Query.query(queryCriteria);
+		return mongoTemplate.find(query, ItemUserCorrelation.class);
+	}
+	
+	public List<ItemUserCorrelation> findByItemAndContainingTags(ContentDataRef item, List<String> tags) {
+		
+		SearchFilter searchFilter = new StringFilter(ITEM_CONTAINER_QID_PROP_NAME, 
+				item.getContainerQId(), ConditionOperator.EQ);
+		
+		CompositeFilter andFilter = new And(searchFilter, new StringFilter(
+				ITEM_INSTANCE_IDENTITY_PROP_NAME, item.getInstanceIdentity(), ConditionOperator.EQ));
+		
+		searchFilter = andFilter;
+		
+		for (String tag : tags) {
+			
+			SearchFilter tagFilter = new StringFilter(TAG_NAME_FILTER_PROP_NAME, tag, ConditionOperator.EQ);
+			
+			if (searchFilter == null) {
+				searchFilter = tagFilter;
+			} else {
+				searchFilter = searchFilter.and(tagFilter);
+			}
+		}
+		
+		Criteria criteria = searchFilter != null ? searchFilter.toPredicate(new Criteria()) : new Criteria();
+		
+		return findByCriteria(criteria);
+	}
+	
+}

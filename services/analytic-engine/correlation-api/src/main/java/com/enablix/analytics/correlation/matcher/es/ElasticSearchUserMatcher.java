@@ -14,11 +14,9 @@ import org.springframework.stereotype.Component;
 
 import com.enablix.analytics.correlation.matcher.MatchInputRecord;
 import com.enablix.analytics.correlation.matcher.UserMatcher;
-import com.enablix.commons.util.json.JsonUtil;
 import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 import com.enablix.core.commons.xsdtopojo.FilterCriteriaType;
 import com.enablix.core.commons.xsdtopojo.RelatedUserType;
-import com.enablix.core.domain.user.User;
 
 @Component
 public class ElasticSearchUserMatcher implements UserMatcher {

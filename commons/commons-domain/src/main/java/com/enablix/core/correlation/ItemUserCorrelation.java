@@ -1,15 +1,17 @@
 package com.enablix.core.correlation;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.enablix.commons.constants.AppConstants;
 import com.enablix.core.api.ContentDataRef;
 import com.enablix.core.api.Tag;
 import com.enablix.core.domain.BaseDocumentEntity;
 
-@Document(collection = "ebx_item_user_correlation")
+@Document(collection = AppConstants.ITEM_USER_CORR_COLL_NAME)
 public class ItemUserCorrelation extends BaseDocumentEntity {
 
 	private ContentDataRef item;
@@ -52,6 +54,17 @@ public class ItemUserCorrelation extends BaseDocumentEntity {
 	@SuppressWarnings("rawtypes")
 	public void setSources(List<CorrelationSource> sources) {
 		this.sources = sources;
+	}
+	
+	public void addSource(CorrelationSource<?> source) {
+		if (sources == null) {
+			sources = new ArrayList<>();
+			sources.add(source);
+		} else {
+			if (!sources.contains(source)) {
+				sources.add(source);
+			}
+		}
 	}
 
 	public float getCorrelationScore() {

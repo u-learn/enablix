@@ -8,6 +8,7 @@ import com.enablix.core.commons.xsd.parser.ContentTemplateXMLParser;
 import com.enablix.core.commons.xsd.parser.DefaultXMLParser;
 import com.enablix.core.commons.xsdtopojo.ItemCorrelationRules;
 import com.enablix.core.commons.xsdtopojo.ItemUserCorrelationRules;
+import com.enablix.core.commons.xsdtopojo.TriggersDef;
 
 @Configuration
 public class SchemaConfig {
@@ -30,6 +31,13 @@ public class SchemaConfig {
 	public DefaultXMLParser<ItemUserCorrelationRules> itemUserCorrelationRuleParser() {
 		DefaultXMLParser<ItemUserCorrelationRules> parser = new DefaultXMLParser<ItemUserCorrelationRules>(
 				SchemaConstants.CORR_RULE_TEMPLATE_XSD_LOCATION, ItemUserCorrelationRules.class);
+		return parser;
+	}
+	
+	@Bean
+	public DefaultXMLParser<TriggersDef> triggersParser() {
+		DefaultXMLParser<TriggersDef> parser = new DefaultXMLParser<TriggersDef>(
+				SchemaConstants.TRIGGER_LIFECYCLE_XSD_LOCATION, TriggersDef.class);
 		return parser;
 	}
 

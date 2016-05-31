@@ -8,4 +8,6 @@ public class SchemaConstants {
 	
 	public static final String CORR_RULE_TEMPLATE_XSD_LOCATION = "xsd/item-correlation-rule.xsd";
 	
+	public static final String TRIGGER_LIFECYCLE_XSD_LOCATION = "xsd/trigger-lifecycle.xsd";
+	
 }

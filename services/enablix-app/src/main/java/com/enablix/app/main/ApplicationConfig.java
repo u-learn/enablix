@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import com.enablix.app.corr.rule.processor.ItemCorrelationRuleProcessor;
 import com.enablix.app.corr.rule.processor.ItemUserCorrelationRuleProcessor;
 import com.enablix.app.template.provider.TemplateFileProcessor;
+import com.enablix.app.trigger.rule.TriggerLifecycleRuleProcessor;
 import com.enablix.commons.util.StringUtil;
 import com.enablix.refdata.xls.loader.XLSRefdataProcessor;
 import com.enablix.util.data.loader.FileBasedDataLoader;
@@ -32,7 +33,10 @@ public class ApplicationConfig {
 	private static final String ITEM_USER_CORR_DIR = "item-user-corr";
 	
 	private static final String[] ITEM_USER_CORR_FILE_EXTN = {"xml"};
+
+	private static final String TRIGGER_RULE_DIR = "trigger";
 	
+	private static final String[] TRIGGER_RULE_FILE_EXTN = {"xml"};
 	
 	//private static final String DOCSTORE_CONFIG_DIR = "config/docstore";
 
@@ -68,6 +72,12 @@ public class ApplicationConfig {
 	}
 	
 	@Bean
+	public FileBasedDataLoader triggerLifecycleRuleFilesLoader() {
+		String templatesBaseDir = getDataDirPath() + File.separator + TRIGGER_RULE_DIR;
+		return new TenantSpecificFileBasedDataLoader(templatesBaseDir, TRIGGER_RULE_FILE_EXTN, triggerLifecycleRuleProcessor());
+	}
+	
+	@Bean
 	public ItemCorrelationRuleProcessor itemItemCorrRuleProcessor() {
 		return new ItemCorrelationRuleProcessor();
 	}
@@ -75,6 +85,11 @@ public class ApplicationConfig {
 	@Bean
 	public ItemUserCorrelationRuleProcessor itemUserCorrRuleProcessor() {
 		return new ItemUserCorrelationRuleProcessor();
+	}
+	
+	@Bean
+	public TriggerLifecycleRuleProcessor triggerLifecycleRuleProcessor() {
+		return new TriggerLifecycleRuleProcessor();
 	}
 
 	private String getDataDirPath() {

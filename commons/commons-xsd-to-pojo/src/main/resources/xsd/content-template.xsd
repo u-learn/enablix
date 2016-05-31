@@ -16,6 +16,14 @@
 	<xs:complexType name="dataDefinitionType">
 		<xs:sequence>
 			<xs:element name="container" type="containerType" maxOccurs="unbounded"/>
+			<xs:element name="userProfileRef" type="userProfileRefType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="userProfileRefType">
+		<xs:sequence>
+			<xs:element name="containerQId" type="xs:string"/>
+			<xs:element name="emailAttributeId" type="xs:string"/> 
 		</xs:sequence>
 	</xs:complexType>
 	

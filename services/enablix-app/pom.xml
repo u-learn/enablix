@@ -112,5 +112,10 @@
 			<artifactId>correlation-api</artifactId>
 			<version>1.0-SNAPSHOT</version>
 		</dependency>
+		<dependency>
+			<groupId>com.enablix.commons</groupId>
+			<artifactId>manage-trigger-lifecycle</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 </project>

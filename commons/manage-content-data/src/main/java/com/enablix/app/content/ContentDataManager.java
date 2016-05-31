@@ -6,6 +6,7 @@ import java.util.Map;
 import com.enablix.app.content.delete.DeleteContentRequest;
 import com.enablix.app.content.fetch.FetchContentRequest;
 import com.enablix.app.content.update.UpdateContentRequest;
+import com.enablix.core.api.ContentDataRef;
 import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 
 public interface ContentDataManager {
@@ -20,5 +21,7 @@ public interface ContentDataManager {
 
 	Map<String, Object> fetchParentRecord(ContentTemplate template, 
 			String recordQId, Map<String, Object> record);
+	
+	Map<String, Object> getContentRecord(ContentDataRef dataRef, ContentTemplate template);
 	
 }

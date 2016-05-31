@@ -6,7 +6,7 @@ public class Profile extends BaseWrappedEntity {
 
 	private String name;
 	
-	private boolean sendWeeklyDigest = true;
+	private boolean sendWeeklyDigest;
 	
 	private ContactSet<Email> emails = new ContactSet<Email>();
 

@@ -1,5 +1,7 @@
 package com.enablix.core.mongo.search;
 
+import java.util.Collection;
+
 import org.springframework.data.mongodb.core.query.Criteria;
 
 
@@ -81,11 +83,11 @@ public abstract class SearchCondition<T> extends AbstractFilter {
 			break;	
 		
 		case IN:
-			criteria.in(getPropertyValue());
+			criteria.in((Collection<?>) getPropertyValue());
 			break;	
 			
 		case NOT_IN:
-			criteria.nin(getPropertyValue());
+			criteria.nin((Collection<?>) getPropertyValue());
 			break;	
 			
 		default:

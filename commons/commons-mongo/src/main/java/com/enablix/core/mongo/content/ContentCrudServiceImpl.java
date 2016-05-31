@@ -330,5 +330,12 @@ public class ContentCrudServiceImpl implements ContentCrudService {
 		Update pull = new Update().pull(boundedAttrId, Collections.singletonMap("id", boundedAttrIdValue));
 		mongoTemplate.updateMulti(query, pull, collectionName);
 	}
+
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@Override
+	public List<Map<String, Object>> findAllRecordForCriteria(String collectionName, Criteria criteria) {
+		Query query = Query.query(criteria);
+		return (List) mongoTemplate.find(query, HashMap.class, collectionName);
+	}
 	
 }

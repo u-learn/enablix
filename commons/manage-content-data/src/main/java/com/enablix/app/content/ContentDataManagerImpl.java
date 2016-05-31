@@ -26,6 +26,7 @@ import com.enablix.app.template.service.TemplateManager;
 import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.commons.util.QIdUtil;
 import com.enablix.commons.util.StringUtil;
+import com.enablix.core.api.ContentDataRef;
 import com.enablix.core.commons.xsdtopojo.ContainerType;
 import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 import com.enablix.core.mongo.content.ContentCrudService;
@@ -285,6 +286,16 @@ public class ContentDataManagerImpl implements ContentDataManager {
 		}
 		
 		return parentRecord;
+	}
+
+
+	@Override
+	public Map<String, Object> getContentRecord(ContentDataRef dataRef, ContentTemplate template) {
+		
+		String collName = TemplateUtil.resolveCollectionName(template, dataRef.getContainerQId());
+		Map<String, Object> triggerItemRecord = crud.findRecord(collName, dataRef.getInstanceIdentity());
+
+		return triggerItemRecord;
 	}
 	
 }

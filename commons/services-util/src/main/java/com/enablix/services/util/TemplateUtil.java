@@ -7,6 +7,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.commons.util.QIdUtil;
 import com.enablix.commons.util.StringUtil;
 import com.enablix.core.commons.xsdtopojo.BoundedRefListType;
@@ -21,6 +22,7 @@ import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 import com.enablix.core.commons.xsdtopojo.ContentUIDefType;
 import com.enablix.core.commons.xsdtopojo.DataDefinitionType;
 import com.enablix.core.commons.xsdtopojo.UiDefinitionType;
+import com.enablix.core.commons.xsdtopojo.UserProfileRefType;
 
 public class TemplateUtil {
 
@@ -372,6 +374,28 @@ public class TemplateUtil {
 		
 		return containers;
 		
+	}
+
+	public static String getUserContainerQId(ContentTemplate template) {
+		
+		UserProfileRefType userProfileRef = template.getDataDefinition().getUserProfileRef();
+		
+		if (userProfileRef == null) {
+			return ContentDataConstants.DEFAULT_USER_CONTAINER_QID;
+		}
+		
+		return userProfileRef.getContainerQId();
+	}
+	
+	public static String getUserContainerEmailAttrId(ContentTemplate template) {
+		
+		UserProfileRefType userProfileRef = template.getDataDefinition().getUserProfileRef();
+		
+		if (userProfileRef == null) {
+			return ContentDataConstants.DEFAULT_USER_CONTAINER_EMAIL_ATTR_ID;
+		}
+		
+		return userProfileRef.getEmailAttributeId();
 	}
 	
 }

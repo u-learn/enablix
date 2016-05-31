@@ -10,22 +10,16 @@ import com.enablix.app.content.ContentDataManager;
 import com.enablix.commons.util.QIdUtil;
 import com.enablix.core.api.ContentDataRef;
 import com.enablix.core.commons.xsdtopojo.ContentTemplate;
-import com.enablix.core.mongo.content.ContentCrudService;
-import com.enablix.services.util.TemplateUtil;
 
 @Component
 public class MatchInputRecordBuilder {
-	
-	@Autowired
-	private ContentCrudService dataService;
 	
 	@Autowired
 	private ContentDataManager contentDataMgr;
 
 	public MatchInputRecord buildTriggerMatchInput(ContentTemplate template, ContentDataRef triggerItem) {
 		
-		String collName = TemplateUtil.resolveCollectionName(template, triggerItem.getContainerQId());
-		Map<String, Object> triggerItemRecord = dataService.findRecord(collName, triggerItem.getInstanceIdentity());
+		Map<String, Object> triggerItemRecord = contentDataMgr.getContentRecord(triggerItem, template);
 		
 		MatchInputRecord matchInput = new MatchInputRecord(triggerItem.getContainerQId(), triggerItem.getContainerQId(), triggerItemRecord);
 		

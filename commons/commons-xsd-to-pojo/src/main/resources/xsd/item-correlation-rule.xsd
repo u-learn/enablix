@@ -113,7 +113,6 @@
 		<xs:sequence>
 			<xs:element name="relatedUserPath" type="relatedUserPathType" maxOccurs="unbounded"/>
 		</xs:sequence>
-		<xs:attribute name="userQualifiedId" type="xs:string" default="user"/>
 	</xs:complexType>
 
 	<xs:complexType name="relatedUserPathType">

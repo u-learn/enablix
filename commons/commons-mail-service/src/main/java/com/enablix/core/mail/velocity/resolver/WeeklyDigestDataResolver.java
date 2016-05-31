@@ -10,15 +10,14 @@ import java.util.Random;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import com.enablix.analytics.web.request.WebContentRequest;
-import com.enablix.app.content.ui.NavigableContent;
-import com.enablix.app.template.service.TemplateManager;
 import com.enablix.app.content.ContentDataManager;
 import com.enablix.app.content.fetch.FetchContentRequest;
 import com.enablix.app.content.recent.RecentContentService;
+import com.enablix.app.content.ui.NavigableContent;
+import com.enablix.app.template.service.TemplateManager;
 import com.enablix.core.commons.xsdtopojo.ContainerType;
 import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 import com.enablix.core.mail.velocity.VelocityTemplateInputResolver;

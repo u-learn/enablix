@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<itemCorrelationRules xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/item-correlation-rule.xsd">
+	<itemCorrelationRule id="rule1" name="Solution-Product via Impl Guide">
+		<triggerItem qualifiedId="solution">
+			<filterCriteria>
+				<filter>
+					<attributeId>regions</attributeId>
+					<constant>NAM</constant>
+				</filter>
+			</filterCriteria>
+		</triggerItem>
+		<relatedItems>
+			<relatedItem qualifiedId="solution.solImplGuides">
+				<filterCriteria>
+					<filter>
+						<attributeId>solutions</attributeId>
+						<parentAttribute>identity</parentAttribute>
+					</filter>
+					<filter>
+						<attributeId>access</attributeId>
+						<constant>PRIVATE</constant>
+					</filter>
+				</filterCriteria>
+				<matchCriteria>
+					<match>
+						<attributeId>summary</attributeId>
+						<parentAttribute>name</parentAttribute>
+					</match>
+				</matchCriteria>
+				<recordAsRelated>false</recordAsRelated>
+				<tags>
+					<tag>LEVEL1_DOC</tag>
+				</tags>
+				<!-- Second level -->
+				<relatedItem qualifiedId="product">
+					<filterCriteria>
+						<filter>
+							<attributeId>identity</attributeId>
+							<parentAttribute>products</parentAttribute>
+						</filter>
+					</filterCriteria>
+					<recordAsRelated>true</recordAsRelated>
+					<tags>
+						<tag>PRIMARY_PRODUCT</tag>
+					</tags>	
+				</relatedItem>
+			</relatedItem>
+		</relatedItems>
+	</itemCorrelationRule>
+</itemCorrelationRules>

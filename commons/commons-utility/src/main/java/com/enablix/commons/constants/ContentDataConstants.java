@@ -28,4 +28,7 @@ public class ContentDataConstants {
 	
 	public static final String TAG_NAME_ATTR = "name";
 	
+	public static final String DEFAULT_USER_CONTAINER_QID = "user";
+	public static final String DEFAULT_USER_CONTAINER_EMAIL_ATTR_ID = "email";
+	
 }

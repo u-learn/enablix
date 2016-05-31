@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.mongodb.core.query.Criteria;
 
 public interface ContentCrudService {
 
@@ -31,6 +32,8 @@ public interface ContentCrudService {
 	
 	Page<Map<String, Object>> findAllRecordWithLinkContainerId(String collectionName, 
 			String linkContentItemId, String linkContainerIdentity, Pageable pageable);
+	
+	List<Map<String, Object>> findAllRecordForCriteria(String collectionName, Criteria criteria);
 
 	void updateAttributes(String collectionName, String elementQId, String elementIdentity, Map<String, Object> data);
 	

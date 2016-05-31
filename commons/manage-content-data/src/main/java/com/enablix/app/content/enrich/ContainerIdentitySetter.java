@@ -13,7 +13,6 @@ import com.enablix.commons.util.id.IdentityGenerator;
 import com.enablix.core.api.IdentityAware;
 import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 import com.enablix.core.domain.BaseEntity;
-import com.mongodb.DBObject;
 
 @Component
 public class ContainerIdentitySetter extends AbstractMongoEventListener<BaseEntity> implements ContentEnricher {

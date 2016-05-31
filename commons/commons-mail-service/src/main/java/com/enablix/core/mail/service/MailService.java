@@ -14,6 +14,8 @@ public interface MailService {
 	TemplateConfiguration getTemplateConfiguration(String scenario);
 	TemplateConfiguration addTemplateConfiguration(TemplateConfiguration templateConfiguration);
 	Boolean deleteTemplateConfiguration(TemplateConfiguration templateConfiguration);
+	boolean sendHtmlEmail(Object objectTobeMerged, String emailid, String scenario, String bodyTemplateName,
+			String subjectTemplateName);
 
 	
 }

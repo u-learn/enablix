@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<itemCorrelationRules xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/item-correlation-rule.xsd">
+	<itemCorrelationRule id="rule1" name="Solution-Product via Impl Guide">
+		<triggerItem qualifiedId="solution">
+		</triggerItem>
+		<relatedItems>
+			<relatedItem qualifiedId="product">
+				<filterCriteria>
+					<filter>
+						<attributeId>identity</attributeId>
+						<parentAttribute>products</parentAttribute>
+					</filter>
+				</filterCriteria>
+				<matchCriteria>
+					<match>
+						<attributeId>name</attributeId>
+						<parentAttribute>shortName</parentAttribute>
+					</match>
+				</matchCriteria>
+				<recordAsRelated>true</recordAsRelated>
+				<tags>
+					<tag>DIRECT_LINK</tag>
+				</tags>
+			</relatedItem>
+		</relatedItems>
+	</itemCorrelationRule>
+</itemCorrelationRules>

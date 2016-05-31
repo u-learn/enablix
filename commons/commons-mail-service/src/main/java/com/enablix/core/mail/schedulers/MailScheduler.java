@@ -2,17 +2,12 @@ package com.enablix.core.mail.schedulers;
 
 import java.util.List;
 
-import javax.annotation.Resource;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.AuthenticationException;
 
-import com.enablix.app.content.ui.NavigableContent;
 import com.enablix.commons.util.process.ProcessContext;
 import com.enablix.core.domain.user.User;
 import com.enablix.core.mail.service.MailService;

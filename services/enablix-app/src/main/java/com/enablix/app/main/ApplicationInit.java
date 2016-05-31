@@ -44,7 +44,8 @@ import com.enablix.commons.util.StringUtil;
 				"com.enablix.app.content.recent.repo",
 				"com.enablix.app.content.ui.link.repo",
 				"com.enablix.analytics.correlation.repo",
-				"com.enablix.analytics.correlation.data.repo"})
+				"com.enablix.analytics.correlation.data.repo",
+				"com.enablix.trigger.lifecycle.rule.repo"})
 public class ApplicationInit extends WebMvcAutoConfigurationAdapter {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(ApplicationInit.class);

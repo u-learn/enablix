@@ -1971,8 +1971,8 @@
 						</datastore>
 					</refList>
 				</bounded>
-			</contentItem>
-			<contentItem id="userRegions" label="Regions" type="bounded">
+			</contentItem>			
+			<contentItem id="region" label="Region Focus" type="bounded">
 				<bounded>
 					<refList>
 						<datastore>
@@ -1982,8 +1982,8 @@
 						</datastore>
 					</refList>
 				</bounded>
-			</contentItem>
-			<contentItem id="userSolArea" label="Solution Area" type="bounded">
+			</contentItem>	
+			<contentItem id="userSolArea" label="Solution Area Focus" type="bounded">
 				<bounded>
 					<refList>
 						<datastore>
@@ -1993,8 +1993,12 @@
 						</datastore>
 					</refList>
 				</bounded>
-			</contentItem>			
+			</contentItem>						
 		</container>
+		<userProfileRef>
+			<containerQId>user</containerQId>
+			<emailAttributeId>email</emailAttributeId>
+		</userProfileRef>
 	</dataDefinition>
 	<uiDefinition>
 		<contentUIDef qualifiedId="~root~">
@@ -2058,6 +2062,16 @@
 		<contentUIDef qualifiedId="competitor">
 			<container labelQualifiedId="competitor.shortName"/>
 		</contentUIDef>
+		<contentUIDef qualifiedId="competitor.compswot">
+			<container labelQualifiedId="competitor.compswot.title">
+				<listViewConfig>
+					<hideContentItem id="file"/>
+				</listViewConfig>
+				<portalConfig>
+					<headingContentItem id="title"/>
+				</portalConfig>
+			</container>
+		</contentUIDef>		
 		<contentUIDef qualifiedId="partner">
 			<container labelQualifiedId="partner.shortName"/>
 		</contentUIDef>

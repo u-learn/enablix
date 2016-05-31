@@ -22,5 +22,6 @@
 	<module>commons-elastic-search</module>
 	<module>commons-mail-service</module>
 	<module>manage-correlation-rule</module>
+	<module>manage-trigger-lifecycle</module>
   </modules>
 </project>

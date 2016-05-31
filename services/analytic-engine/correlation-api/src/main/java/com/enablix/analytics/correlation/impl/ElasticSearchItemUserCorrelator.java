@@ -20,6 +20,7 @@ import com.enablix.core.commons.xsdtopojo.ItemUserCorrelationRuleType;
 import com.enablix.core.commons.xsdtopojo.PathItemType;
 import com.enablix.core.commons.xsdtopojo.RelatedUserPathType;
 import com.enablix.core.commons.xsdtopojo.RelatedUserType;
+import com.enablix.services.util.TemplateUtil;
 
 @Component
 public class ElasticSearchItemUserCorrelator implements ItemUserCorrelator {
@@ -124,7 +125,7 @@ public class ElasticSearchItemUserCorrelator implements ItemUserCorrelator {
 	private void processRelatedUserPath(ContentTemplate template, ContentDataRef item, ItemUserCorrelationRuleType rule,
 			RelatedUserType relatedUserDef, MatchInputRecord nextMatchInput) {
 		
-		String userContainerQId = rule.getRelatedUsers().getUserQualifiedId();
+		String userContainerQId = TemplateUtil.getUserContainerQId(template);
 		List<Map<String, Object>> users = userMatcher.findMatchingUsers(template, 
 				userContainerQId, relatedUserDef, nextMatchInput);
 		
@@ -135,5 +136,5 @@ public class ElasticSearchItemUserCorrelator implements ItemUserCorrelator {
 			}
 		}
 	}
-
+	
 }

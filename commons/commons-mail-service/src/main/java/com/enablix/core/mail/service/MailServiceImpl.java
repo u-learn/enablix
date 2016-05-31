@@ -46,6 +46,8 @@ public class MailServiceImpl implements MailService {
 	private UserRepository userRepo;
     @Autowired
 	private TenantRepository tenantRepo;
+    
+    // need to move scenario builders into a factory
     @Autowired
     private NewUserScenarioInputBuilder newUserScenarioInputBuilder;
     @Autowired
@@ -62,6 +64,12 @@ public class MailServiceImpl implements MailService {
     public boolean sendHtmlEmail(Object objectTobeMerged, String emailid, String scenario) {
 		String templateName = scenario + MailConstants.EMAIL_BODY_SUFFIX;
 		String subjectTemplateName = scenario + MailConstants.EMAIL_SUBJECT_SUFFIX;
+		return sendHtmlEmail(objectTobeMerged, emailid, scenario, templateName, subjectTemplateName);
+    }
+    
+    @Override
+    public boolean sendHtmlEmail(Object objectTobeMerged, String emailid,String scenario, String bodyTemplateName, String subjectTemplateName) {
+    
 		String elementName = MailConstants.EMAIL_TEMPLATE_OBJECTNAME;
 		switch (scenario) { 
 		case MailConstants.SCENARIO_SET_PASSWORD:
@@ -76,7 +84,7 @@ public class MailServiceImpl implements MailService {
 		}
 			
        try{
-    	String htmlBody = generateTemplateMessage(objectTobeMerged,templateName,elementName,MailConstants.BODY_TEMPLATE_PATH);
+    	String htmlBody = generateTemplateMessage(objectTobeMerged,bodyTemplateName,elementName,MailConstants.BODY_TEMPLATE_PATH);
     	String subject = generateTemplateMessage(objectTobeMerged,subjectTemplateName,elementName,MailConstants.SUBJECT_TEMPLATE_PATH);
     	
     	return MailUtility.sendEmail(emailid, subject, htmlBody, this.getEmailConfiguration());

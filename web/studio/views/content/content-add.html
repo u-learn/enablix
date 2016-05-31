@@ -10,6 +10,9 @@
 	<div ng-if="item.type == 'TEXT' && !$first">
 		<eb-text focusValue="false" content-def="item" text-value="containerData[item.id]"></eb-text>
 	</div>
+	<div ng-if="item.type == 'NUMERIC'">
+		<eb-text content-def="item" text-value="containerData[item.id]"></eb-text>
+	</div>
 	<div ng-if="item.type == 'DOC'">
 		<eb-file-upload content-def="item" doc-value="containerData[item.id]" 
 				data-parent-identity="parentIdentity" data-container-identity="containerData.identity"
