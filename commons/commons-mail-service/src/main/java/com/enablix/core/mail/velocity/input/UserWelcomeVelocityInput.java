@@ -3,10 +3,10 @@ package com.enablix.core.mail.velocity.input;
 import com.enablix.core.domain.user.User;
 
 
-public class UserWelcomeVelocityInput extends BaseVelocityInput implements LoggedInUserAware, EnvPropertiesAware{
+public class UserWelcomeVelocityInput extends BaseVelocityInput implements LoggedInUserAware, RecipientUserAware, EnvPropertiesAware{
 
 	private User loggedInUser;
-	private User newCreatedUser;
+	private User recipientUser;
 	private String url;
 	private String newUserId;
 	
@@ -22,14 +22,6 @@ public class UserWelcomeVelocityInput extends BaseVelocityInput implements Logge
 		this.loggedInUser = loggedInUser;
 	}
 	
-	public User getNewCreatedUser() {
-		return newCreatedUser;
-	}
-	
-	public void setNewCreatedUser(User newCreatedUser) {
-		this.newCreatedUser = newCreatedUser;
-	}
-
 	public String getNewUserId() {
 		return newUserId;
 	}
@@ -46,6 +38,20 @@ public class UserWelcomeVelocityInput extends BaseVelocityInput implements Logge
 	@Override
 	public String getUrl() {
 		return url;
+	}
+
+	public User getRecipientUser() {
+		return recipientUser;
+	}
+
+	@Override
+	public void setRecipientUser(User recipientUser) {
+		this.recipientUser = recipientUser;
+	}
+
+	@Override
+	public String getRecipientUserId() {
+		return newUserId;
 	}
 	
 }

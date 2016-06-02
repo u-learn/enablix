@@ -11,21 +11,22 @@ package com.enablix.core.commons.xsdtopojo;
 import java.io.Serializable;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for boundedRefListType complex type.
+ * <p>Java class for emailRecipientType complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="boundedRefListType">
+ * &lt;complexType name="emailRecipientType">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *       &lt;choice>
- *         &lt;element name="datastore" type="{}boundedListDatastoreType"/>
- *       &lt;/choice>
+ *       &lt;sequence>
+ *         &lt;element name="correlatedUsers" type="{}emailCorrelatedUsersType"/>
+ *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
  * &lt;/complexType>
@@ -34,38 +35,39 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "boundedRefListType", propOrder = {
-    "datastore"
+@XmlType(name = "emailRecipientType", propOrder = {
+    "correlatedUsers"
 })
-public class BoundedRefListType
+public class EmailRecipientType
     implements Serializable
 {
 
     private final static long serialVersionUID = 1L;
-    protected BoundedListDatastoreType datastore;
+    @XmlElement(required = true)
+    protected EmailCorrelatedUsersType correlatedUsers;
 
     /**
-     * Gets the value of the datastore property.
+     * Gets the value of the correlatedUsers property.
      * 
      * @return
      *     possible object is
-     *     {@link BoundedListDatastoreType }
+     *     {@link EmailCorrelatedUsersType }
      *     
      */
-    public BoundedListDatastoreType getDatastore() {
-        return datastore;
+    public EmailCorrelatedUsersType getCorrelatedUsers() {
+        return correlatedUsers;
     }
 
     /**
-     * Sets the value of the datastore property.
+     * Sets the value of the correlatedUsers property.
      * 
      * @param value
      *     allowed object is
-     *     {@link BoundedListDatastoreType }
+     *     {@link EmailCorrelatedUsersType }
      *     
      */
-    public void setDatastore(BoundedListDatastoreType value) {
-        this.datastore = value;
+    public void setCorrelatedUsers(EmailCorrelatedUsersType value) {
+        this.correlatedUsers = value;
     }
 
 }

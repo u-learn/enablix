@@ -1,11 +1,15 @@
 package com.enablix.app.content.ui.format;
 
-public class ContentRef implements FieldValue {
+public class ContentRef extends AbstractFieldValue {
 
 	private String textValue;
 	private String containerQId;
 	private String contentIdentity;
 
+	public ContentRef() {
+		super(FieldValueType.CONTENT_REF);
+	}
+	
 	public String getTextValue() {
 		return textValue;
 	}
@@ -28,11 +32,6 @@ public class ContentRef implements FieldValue {
 
 	public void setContentIdentity(String contentIdentity) {
 		this.contentIdentity = contentIdentity;
-	}
-
-	@Override
-	public FieldValueType getValueType() {
-		return FieldValueType.CONTENT_REF;
 	}
 
 	@Override

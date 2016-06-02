@@ -79,7 +79,7 @@
 				<xs:sequence>
 					<xs:element name="emailTemplate" type="emailTemplateType"/>
 					<xs:element name="emailContent" type="emailContentType"/>
-					<xs:element name="recepient" type="emailRecepientType"/>
+					<xs:element name="recipient" type="emailRecipientType"/>
 				</xs:sequence>
 			</xs:extension>
 		</xs:complexContent>
@@ -136,7 +136,7 @@
 		</xs:sequence>
 	</xs:complexType>
 	
-	<xs:complexType name="emailRecepientType">
+	<xs:complexType name="emailRecipientType">
 		<xs:sequence>
 			<xs:element name="correlatedUsers" type="emailCorrelatedUsersType" maxOccurs="1"/>
 		</xs:sequence>

@@ -9,6 +9,9 @@ public class DisplayableContent {
 
 	private List<DisplayField<?>> fields;
 	
+	private String containerQId;
+	private String recordIdentity;
+	private String title;
 	private DocRef doc;
 
 	public DisplayableContent() {
@@ -24,6 +27,22 @@ public class DisplayableContent {
 		this.fields = fields;
 	}
 
+	public String getContainerQId() {
+		return containerQId;
+	}
+
+	public void setContainerQId(String containerQId) {
+		this.containerQId = containerQId;
+	}
+
+	public String getRecordIdentity() {
+		return recordIdentity;
+	}
+
+	public void setRecordIdentity(String recordIdentity) {
+		this.recordIdentity = recordIdentity;
+	}
+
 	public DocRef getDoc() {
 		return doc;
 	}
@@ -36,9 +55,17 @@ public class DisplayableContent {
 		fields.add(field);
 	}
 
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
 	@Override
 	public String toString() {
-		return "DisplayableContent [fields=" + fields + ", doc=" + doc + "]";
+		return "DisplayableContent [fields=" + fields + ", title=" + title + ", doc=" + doc + "]";
 	}
 	
 }

@@ -19,7 +19,7 @@
 						<emailContent>
 							<triggerEntity/>
 						</emailContent>
-						<recepient>
+						<recipient>
 							<correlatedUsers>
 								<users>
 									<filterTags>
@@ -32,7 +32,7 @@
 									</filterTags>
 								</users>
 							</correlatedUsers>
-						</recepient>
+						</recipient>
 					</email>
 				</actions>
 			</checkpoint>	

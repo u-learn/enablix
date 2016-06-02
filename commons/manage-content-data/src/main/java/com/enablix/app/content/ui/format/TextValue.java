@@ -1,10 +1,11 @@
 package com.enablix.app.content.ui.format;
 
-public class TextValue implements FieldValue {
+public class TextValue extends AbstractFieldValue {
 
 	private String value;
 
 	public TextValue(String value) {
+		super(FieldValueType.TEXT);
 		this.value = value;
 	}
 
@@ -14,11 +15,6 @@ public class TextValue implements FieldValue {
 
 	public void setValue(String value) {
 		this.value = value;
-	}
-
-	@Override
-	public FieldValueType getValueType() {
-		return FieldValueType.TEXT;
 	}
 
 	@Override

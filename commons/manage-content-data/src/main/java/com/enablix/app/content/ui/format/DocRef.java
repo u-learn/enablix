@@ -1,10 +1,14 @@
 package com.enablix.app.content.ui.format;
 
-public class DocRef implements FieldValue {
+public class DocRef extends AbstractFieldValue {
 
 	private String name;
 	
 	private String docIdentity;
+
+	public DocRef() {
+		super(FieldValueType.DOC);
+	}
 	
 	public String getName() {
 		return name;
@@ -20,11 +24,6 @@ public class DocRef implements FieldValue {
 
 	public void setDocIdentity(String docIdentity) {
 		this.docIdentity = docIdentity;
-	}
-
-	@Override
-	public FieldValueType getValueType() {
-		return FieldValueType.DOC;
 	}
 
 	@Override

@@ -5,6 +5,8 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.enablix.app.content.ContentDataUtil;
+import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.core.api.ContentDataRecord;
 import com.enablix.core.commons.xsdtopojo.ContainerType;
 import com.enablix.core.commons.xsdtopojo.ContentItemType;
@@ -26,9 +28,11 @@ public class DisplayableContentBuilderImpl implements DisplayableContentBuilder 
 		ContainerType containerDef = TemplateUtil.findContainer(template.getDataDefinition(), containerQId );
 		
 		DisplayableContent dispContent = new DisplayableContent();
+		dispContent.setContainerQId(record.getContainerQId());
+		dispContent.setRecordIdentity((String) record.getRecord().get(ContentDataConstants.IDENTITY_KEY));
+		dispContent.setTitle(ContentDataUtil.findStudioLabelValue(contentRecord, template, containerQId));
 		
 		for (ContentItemType fieldDef : containerDef.getContentItem()) {
-			
 			
 			DisplayField<?> field = fieldBuilder.build(fieldDef, template, contentRecord);
 			

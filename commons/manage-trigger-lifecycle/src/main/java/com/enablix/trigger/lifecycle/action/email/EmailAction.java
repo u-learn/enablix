@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.stereotype.Component;
 
+import com.enablix.app.content.ContentDataManager;
+import com.enablix.app.content.ContentDataUtil;
 import com.enablix.app.content.ui.format.DisplayableContent;
 import com.enablix.app.content.ui.format.DisplayableContentBuilder;
 import com.enablix.commons.constants.ContentDataConstants;
@@ -27,9 +29,10 @@ import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 import com.enablix.core.commons.xsdtopojo.CorrelatedEntitiesType;
 import com.enablix.core.commons.xsdtopojo.EmailActionType;
 import com.enablix.core.commons.xsdtopojo.EmailContentTriggerEntityType;
-import com.enablix.core.commons.xsdtopojo.EmailRecepientType;
+import com.enablix.core.commons.xsdtopojo.EmailRecipientType;
 import com.enablix.core.domain.trigger.ContentChange;
 import com.enablix.core.domain.trigger.LifecycleCheckpoint;
+import com.enablix.core.domain.user.User;
 import com.enablix.core.mail.service.MailService;
 import com.enablix.core.mail.velocity.VelocityTemplateInputResolver;
 import com.enablix.core.mail.velocity.VelocityTemplateInputResolverFactory;
@@ -37,6 +40,7 @@ import com.enablix.core.mongo.content.ContentCrudService;
 import com.enablix.core.mongo.search.ConditionOperator;
 import com.enablix.core.mongo.search.SearchFilter;
 import com.enablix.core.mongo.search.StringListFilter;
+import com.enablix.core.system.repo.UserRepository;
 import com.enablix.services.util.TemplateUtil;
 import com.enablix.trigger.lifecycle.action.CheckpointAction;
 
@@ -63,6 +67,12 @@ public class EmailAction implements CheckpointAction<ContentChange, EmailActionT
 	@Autowired
 	private DisplayableContentBuilder displayableContentBuilder;
 	
+	@Autowired
+	private ContentDataManager contentDataMgr;
+	
+	@Autowired
+	private UserRepository userRepo;
+	
 	@Override
 	public boolean canHandle(ActionType action) {
 		return action instanceof EmailActionType;
@@ -75,6 +85,7 @@ public class EmailAction implements CheckpointAction<ContentChange, EmailActionT
 		// of the same record returned from different content resolvers
 		Map<String, ContentDataRecord> emailContent = new HashMap<>();
 		
+		ContentDataRef triggerItemRef = checkpoint.getTrigger().getTriggerItem();
 		EmailContentTriggerEntityType triggerEntityContent = actionType.getEmailContent().getTriggerEntity();
 		
 		if (triggerEntityContent != null) {
@@ -86,11 +97,11 @@ public class EmailAction implements CheckpointAction<ContentChange, EmailActionT
 		if (correlatedEntities != null) {
 			fetchEmailContent(checkpoint, template, emailContent, correlatedEntities);
 		}
-		
-		// find out the recepients
-		EmailRecepientType recepientDef = actionType.getRecepient();
+
+		// find out the recipients
+		EmailRecipientType recepientDef = actionType.getRecipient();
 		Set<ContentDataRef> recepientUsers = recepientUserResolver.resolveRecepientEmails(
-				checkpoint.getTrigger().getTriggerItem(), template, recepientDef.getCorrelatedUsers());
+				triggerItemRef, template, recepientDef.getCorrelatedUsers());
 		
 		if (CollectionUtil.isNotEmpty(recepientUsers)) {
 			
@@ -111,27 +122,42 @@ public class EmailAction implements CheckpointAction<ContentChange, EmailActionT
 			if (userRecords != null) {
 				Set<String> recepientEmailIds = extractEmailIdsFromUsers(userRecords, template);
 				
-				// send email
-				LOGGER.debug("Sending mail to: {}", recepientEmailIds);
-				
-				for (String emailId : recepientEmailIds) {
-					sendEmail(template, emailId, actionType.getEmailTemplate().getBody().getTemplateName(), 
-							actionType.getEmailTemplate().getBody().getTemplateName(), emailContent.values());
-				}
+				sendEmails(template, actionType, emailContent, triggerItemRef, recepientEmailIds);
 			}
 		}
 		
 	}
-	
-	private void sendEmail(ContentTemplate template, String recepientEmailId, String bodyTemplateName, 
-			String subjectTemplateName, Collection<ContentDataRecord> collection) {
 
-		List<DisplayableContent> displayableEmailContent = createDisplayableContent(template, collection);
+	private void sendEmails(ContentTemplate template, EmailActionType actionType,
+			Map<String, ContentDataRecord> emailContent, ContentDataRef triggerItemRef, Set<String> recepientEmailIds) {
+		
+		// find trigger entity data
+		ContentDataRecord entityDataRec = emailContent.get(triggerItemRef.getInstanceIdentity());
+		
+		if (entityDataRec == null) {
+			Map<String, Object> entityRec = contentDataMgr.getContentRecord(triggerItemRef, template);
+			entityDataRec = new ContentDataRecord(triggerItemRef.getTemplateId(), triggerItemRef.getContainerQId(), entityRec);
+		}
+		
+		// send email
+		LOGGER.debug("Sending mail to: {}", recepientEmailIds);
+		
+		List<DisplayableContent> displayableEmailContent = createDisplayableContent(template, emailContent.values());
 		
 		LOGGER.debug("Email content: {}", displayableEmailContent);
 		
 		TriggerEmailVelocityInput velocityIn = new TriggerEmailVelocityInput();
 		velocityIn.setEmailContent(displayableEmailContent);
+		
+		
+		String triggerEntityLabel = "";
+		if (entityDataRec != null) {
+			triggerEntityLabel = ContentDataUtil.findStudioLabelValue(
+					entityDataRec.getRecord(), template, entityDataRec.getContainerQId());
+			triggerEntityLabel = triggerEntityLabel == null ? "" : triggerEntityLabel;
+		}
+		
+		velocityIn.setTriggerEntityTitle(triggerEntityLabel);
 		
 		Collection<VelocityTemplateInputResolver<TriggerEmailVelocityInput>> resolvers = 
 				velocityInputFactory.getResolvers(velocityIn);
@@ -140,10 +166,19 @@ public class EmailAction implements CheckpointAction<ContentChange, EmailActionT
 			resolver.work(velocityIn);
 		}
 		
-		mailService.sendHtmlEmail(velocityIn, recepientEmailId, "TRIGGER_CHECKPOINT", bodyTemplateName, subjectTemplateName);
-		
+		for (String emailId : recepientEmailIds) {
+			
+			velocityIn.setRecipientUserId(emailId);
+			
+			User recipientUser = userRepo.findByUserId(emailId.toLowerCase());
+			velocityIn.setRecipientUser(recipientUser);
+			
+			mailService.sendHtmlEmail(velocityIn, emailId, "TRIGGER_CHECKPOINT", 
+					actionType.getEmailTemplate().getBody().getTemplateName(), 
+					actionType.getEmailTemplate().getSubject().getTemplateName());
+		}
 	}
-
+	
 	private List<DisplayableContent> createDisplayableContent(ContentTemplate template, Collection<ContentDataRecord> collection) {
 		
 		List<DisplayableContent> displayableContentList = new ArrayList<>();

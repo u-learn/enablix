@@ -1,0 +1,145 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	elementFormDefault="qualified">
+	
+	<xs:element name="itemCorrelationRules">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="itemCorrelationRule" type="itemCorrelationRuleType" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:complexType name="itemCorrelationRuleType">
+		<xs:sequence>
+			<xs:element name="triggerItem" type="triggerItemType"/>
+			<xs:element name="relatedItems" type="relatedItemsType"/>
+		</xs:sequence>
+		<xs:attribute name="id" type="xs:string"/>
+		<xs:attribute name="name" type="xs:string"/>
+	</xs:complexType>
+	
+	<xs:complexType name="triggerItemType">
+		<xs:sequence>
+			<xs:element name="filterCriteria" type="filterCriteriaType" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute name="qualifiedId" type="xs:string"/>
+	</xs:complexType>
+	
+	<xs:complexType name="filterCriteriaType">
+		<xs:sequence>
+			<xs:element name="filter" type="filterType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="filterType">
+		<xs:sequence>
+			<xs:element name="attributeId" type="xs:string"/>
+			<xs:choice>
+				<xs:element name="constant" type="filterConstantType"/>
+				<xs:element name="parentAttribute" type="filterParentAttributeType"/>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="filterConstantType">
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	
+	<xs:complexType name="filterParentAttributeType">
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute name="parentQId" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	
+	<xs:complexType name="relatedItemsType">
+		<xs:sequence>
+			<xs:element name="relatedItem" type="relatedItemType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="relatedItemType">
+		<xs:sequence>
+			<xs:element name="filterCriteria" type="filterCriteriaType" minOccurs="0"/>
+			<xs:element name="matchCriteria" type="matchCriteriaType" minOccurs="0"/>
+			<xs:element name="recordAsRelated" type="xs:boolean" default="true"/>
+			<xs:element name="tags" type="tagsType" minOccurs="0"/>
+			<xs:element name="relatedItem" type="relatedItemType" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute name="qualifiedId" type="xs:string"/>
+	</xs:complexType>
+	
+	<xs:complexType name="matchCriteriaType">
+		<xs:sequence>
+			<xs:element name="match" type="matchType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="matchType">
+		<xs:complexContent>
+			<xs:extension base="filterType"></xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	
+	<xs:complexType name="tagsType">
+		<xs:sequence>
+			<xs:element name="tag" type="xs:string" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!-- Item user correlation rules -->
+	<xs:element name="itemUserCorrelationRules">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="itemUserCorrelationRule" type="itemUserCorrelationRuleType" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:complexType name="itemUserCorrelationRuleType">
+		<xs:sequence>
+			<xs:element name="triggerItem" type="triggerItemType"/>
+			<xs:element name="relatedUsers" type="relatedUsersType"/>
+		</xs:sequence>
+		<xs:attribute name="id" type="xs:string"/>
+		<xs:attribute name="name" type="xs:string"/>
+	</xs:complexType>
+	
+	<xs:complexType name="relatedUsersType">
+		<xs:sequence>
+			<xs:element name="relatedUserPath" type="relatedUserPathType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="relatedUserPathType">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="relatedUser" type="relatedUserType"/>
+				<xs:element name="pathItem" type="pathItemType"/>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="pathItemType">
+		<xs:sequence>
+			<xs:element name="filterCriteria" type="filterCriteriaType"/>
+			<xs:choice>
+				<xs:element name="relatedUser" type="relatedUserType"/>
+				<xs:element name="pathItem" type="pathItemType"/>
+			</xs:choice>
+		</xs:sequence>
+		<xs:attribute name="qualifiedId" type="xs:string"/>
+	</xs:complexType>
+	
+	<xs:complexType name="relatedUserType">
+		<xs:sequence>
+			<xs:element name="filterCriteria" type="filterCriteriaType"/>
+			<xs:element name="tags" type="tagsType"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+</xs:schema>
