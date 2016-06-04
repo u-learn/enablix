@@ -4,6 +4,7 @@ package com.enablix.trigger.lifecycle.action.email;
 import java.util.Collection;
 
 import com.enablix.app.content.ui.format.DisplayableContent;
+import com.enablix.core.domain.trigger.ContentChange.TriggerType;
 import com.enablix.core.domain.user.User;
 import com.enablix.core.mail.velocity.input.BaseVelocityInput;
 import com.enablix.core.mail.velocity.input.EnvPropertiesAware;
@@ -18,6 +19,7 @@ public class TriggerEmailVelocityInput extends BaseVelocityInput implements Logg
 	private String triggerEntityTitle;
 	private String recipientUserId;
 	private User recipientUser;
+	private TriggerType triggerType;
 	
 	@Override
 	public void setUrl(String url) {
@@ -71,6 +73,14 @@ public class TriggerEmailVelocityInput extends BaseVelocityInput implements Logg
 
 	public void setRecipientUserId(String recipientUserId) {
 		this.recipientUserId = recipientUserId;
+	}
+
+	public TriggerType getTriggerType() {
+		return triggerType;
+	}
+
+	public void setTriggerType(TriggerType triggerType) {
+		this.triggerType = triggerType;
 	}
 
 }

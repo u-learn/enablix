@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <triggersDef xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/trigger-lifecycle.xsd">
-	<contentTriggerDef id="solution-container-content-add-trigger" type="CONTENT_ADD">
+	<contentTriggerDef id="solution-container-content-add-trigger" type="CONTENT_UPDATE">
 		<candidateContainers>
 			<containerQId>solution</containerQId>
 			<containerQId>solution.solutionSheet</containerQId>

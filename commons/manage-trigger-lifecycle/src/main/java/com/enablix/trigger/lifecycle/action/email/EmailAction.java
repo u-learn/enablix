@@ -31,6 +31,7 @@ import com.enablix.core.commons.xsdtopojo.EmailActionType;
 import com.enablix.core.commons.xsdtopojo.EmailContentTriggerEntityType;
 import com.enablix.core.commons.xsdtopojo.EmailRecipientType;
 import com.enablix.core.domain.trigger.ContentChange;
+import com.enablix.core.domain.trigger.ContentChange.TriggerType;
 import com.enablix.core.domain.trigger.LifecycleCheckpoint;
 import com.enablix.core.domain.user.User;
 import com.enablix.core.mail.service.MailService;
@@ -122,13 +123,14 @@ public class EmailAction implements CheckpointAction<ContentChange, EmailActionT
 			if (userRecords != null) {
 				Set<String> recepientEmailIds = extractEmailIdsFromUsers(userRecords, template);
 				
-				sendEmails(template, actionType, emailContent, triggerItemRef, recepientEmailIds);
+				sendEmails(template, actionType, checkpoint.getTrigger().getType(), 
+						emailContent, triggerItemRef, recepientEmailIds);
 			}
 		}
 		
 	}
 
-	private void sendEmails(ContentTemplate template, EmailActionType actionType,
+	private void sendEmails(ContentTemplate template, EmailActionType actionType, TriggerType triggerType,
 			Map<String, ContentDataRecord> emailContent, ContentDataRef triggerItemRef, Set<String> recepientEmailIds) {
 		
 		// find trigger entity data
@@ -148,7 +150,7 @@ public class EmailAction implements CheckpointAction<ContentChange, EmailActionT
 		
 		TriggerEmailVelocityInput velocityIn = new TriggerEmailVelocityInput();
 		velocityIn.setEmailContent(displayableEmailContent);
-		
+		velocityIn.setTriggerType(triggerType);
 		
 		String triggerEntityLabel = "";
 		if (entityDataRec != null) {

@@ -28,7 +28,7 @@ public class ContentTriggerListener implements ContentDataEventListener {
 				event.getDataAsMap(), event.getTemplateId(), event.getContainerType().getQualifiedId());
 		
 		contentChangeTrigger.setTriggerItem(triggerItem);
-		contentChangeTrigger.setType(event.isNewRecord() ? TriggerType.ADD : TriggerType.ADD);
+		contentChangeTrigger.setType(event.isNewRecord() ? TriggerType.ADD : TriggerType.UPDATE);
 		
 		TriggerLifecycleManager<ContentChange> triggerLifecycleManager = 
 				lifecycleMgrFactory.getTriggerLifecycleManager(contentChangeTrigger);

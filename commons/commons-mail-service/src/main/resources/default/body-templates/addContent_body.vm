@@ -2,7 +2,9 @@
 <html lang="en">
  <body>
 	<h3>Hello#if(${obj.recipientUser.profile.name}) ${obj.recipientUser.profile.name}#end,</h3>
-	<p style = "font: normal 14px/normal Arial, Helvetica, sans-serif;">${obj.triggerEntityTitle} was recently added to #if(${obj.tenant.name})<b>${obj.tenant.name}</b>#end. Here are the details:    
+	<p style = "font: normal 14px/normal Arial, Helvetica, sans-serif;">${obj.triggerEntityTitle} was recently 
+		#if(obj.triggerType == 'ADD') added #else updated #end 
+		to #if(${obj.tenant.name})<b>${obj.tenant.name}</b>#end. Here are the details:    
 	</p>
 	#foreach($item in $obj.emailContent)
 	<div style = "font: normal 14px/normal Arial, Helvetica, sans-serif;">
@@ -15,7 +17,7 @@
 				#elseif($field.value.valueType == 'LIST')
 				<td>
 					#foreach($valListItem in $field.value.valueList)
-						#if(valListItem.valueType == 'CONTENT_REF')
+						#if($valListItem.valueType == 'CONTENT_REF')
 							<a href="${obj.url}/#/portal/container/$valListItem.containerQId/$valListItem.contentIdentity/c/single/$valListItem.containerQId/" target="_blank">${valListItem.textValue}</a>
 						#else
 							${valListItem.value} 
