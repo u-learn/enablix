@@ -7,9 +7,13 @@ import com.enablix.app.content.ContentDataUtil;
 import com.enablix.app.content.event.ContentDataDelEvent;
 import com.enablix.app.content.event.ContentDataEventListener;
 import com.enablix.app.content.event.ContentDataSaveEvent;
+import com.enablix.commons.util.concurrent.Events;
 import com.enablix.core.api.ContentDataRef;
 import com.enablix.core.domain.trigger.ContentChange;
 import com.enablix.core.domain.trigger.ContentChange.TriggerType;
+import com.enablix.core.mq.Event;
+import com.enablix.core.mq.EventSubscription;
+import com.enablix.core.mq.util.EventUtil;
 import com.enablix.trigger.lifecycle.TriggerLifecycleManager;
 import com.enablix.trigger.lifecycle.TriggerLifecycleManagerFactory;
 
@@ -30,17 +34,22 @@ public class ContentTriggerListener implements ContentDataEventListener {
 		contentChangeTrigger.setTriggerItem(triggerItem);
 		contentChangeTrigger.setType(event.isNewRecord() ? TriggerType.ADD : TriggerType.UPDATE);
 		
-		TriggerLifecycleManager<ContentChange> triggerLifecycleManager = 
-				lifecycleMgrFactory.getTriggerLifecycleManager(contentChangeTrigger);
-		
-		triggerLifecycleManager.startLifecycle(contentChangeTrigger);
-		
+		EventUtil.publishEvent(new Event<ContentChange>(Events.CONTENT_TRIGGER, contentChangeTrigger));
 	}
 
 	@Override
 	public void onContentDataDelete(ContentDataDelEvent event) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	@EventSubscription(eventName = {Events.CONTENT_TRIGGER})
+	public void handleContentChangeEvent(ContentChange contentChangeTrigger) {
+		
+		TriggerLifecycleManager<ContentChange> triggerLifecycleManager = 
+				lifecycleMgrFactory.getTriggerLifecycleManager(contentChangeTrigger);
+		
+		triggerLifecycleManager.startLifecycle(contentChangeTrigger);
 	}
 
 }

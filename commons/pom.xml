@@ -23,5 +23,6 @@
 	<module>commons-mail-service</module>
 	<module>manage-correlation-rule</module>
 	<module>manage-trigger-lifecycle</module>
+	<module>commons-mq</module>
   </modules>
 </project>
