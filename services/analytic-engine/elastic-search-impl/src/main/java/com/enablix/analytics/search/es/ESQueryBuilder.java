@@ -45,9 +45,12 @@ public class ESQueryBuilder {
 	
 	public SearchRequest build() {
 		
-		SearchRequest searchRequest = Requests.searchRequest(getIndexName())
+		String indexName = getIndexName();
+		List<String> types = getTypes();
+		
+		SearchRequest searchRequest = Requests.searchRequest(indexName)
 					.searchType(SearchType.DFS_QUERY_THEN_FETCH)
-					.types(getTypes());
+					.types(types.toArray(new String[0]));
 		
 		Map<String, Integer> fieldBoostIndex = new HashMap<>();
 		getFieldNames(fieldBoostIndex, 
@@ -59,6 +62,13 @@ public class ESQueryBuilder {
 		SearchSourceBuilder searchSource = SearchSourceBuilder.searchSource().query(multiMatchQuery);
 		
 		searchRequest.source(searchSource);
+		
+		if (LOGGER.isDebugEnabled()) {
+			
+			LOGGER.debug("Search index: {}", indexName);
+			LOGGER.debug("Search types: {}", types);
+			LOGGER.debug("Search query: {}", searchSource);
+		}
 		
 		return searchRequest;
 	}
@@ -149,9 +159,8 @@ public class ESQueryBuilder {
 		return ElasticSearchUtil.getIndexName();
 	}
 	
-	private String[] getTypes() {
-		List<String> allCollections = TemplateUtil.findContentCollectionNames(template);
-		return allCollections.toArray(new String[0]);
+	private List<String> getTypes() {
+		return TemplateUtil.findContentCollectionNames(template);
 	}
 	
 }
