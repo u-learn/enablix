@@ -4,7 +4,7 @@ enablix.studioApp.factory('InfoModalWindow',
 		
 			var showInfoWindow = function(title, infoText) {
 				var modalInstance = $modal.open({
-				      templateUrl: 'views/modal/infomodal.html',
+				      templateUrl: 'views/modal/infoModal.html',
 				      size: 'sm', // 'sm', 'lg'
 				      controller: 'InfoModalController',
 				      resolve: {
