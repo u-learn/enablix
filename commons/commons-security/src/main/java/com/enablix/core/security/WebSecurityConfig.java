@@ -21,11 +21,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http = http.addFilterAfter(new ProcessContextInitFilter(), SwitchUserFilter.class);
+		String[] systemUserRequestPatterns = {"/site/*", "site-doc/**/*"};
+		http = http.addFilterAfter(new ProcessContextInitFilter(systemUserRequestPatterns), SwitchUserFilter.class);
 		
 		http
 			.authorizeRequests()
-				.antMatchers("/resetpassword", "/", "/health", "/site-doc/**/*", "/terms", "/privacy", "/**/*.html", "/**/*.js", "/**/*.json", "/**/*.css", "/**/*.png", "/**/*.jpg", "/**/*.jpeg", "/**/*.gif", "/**/*.svg", "/**/*.ttf", "/**/*.woff", "/**/*.woff2", "/**/*.eot").permitAll()
+				.antMatchers("/resetpassword", "/", "/health", "/site-doc/**/*", "/site/*", "/terms", "/privacy", 
+						"/**/*.html", "/**/*.js", "/**/*.json", "/**/*.css", "/**/*.png", "/**/*.jpg", "/**/*.jpeg", 
+						"/**/*.gif", "/**/*.svg", "/**/*.ttf", "/**/*.woff", "/**/*.woff2", "/**/*.eot").permitAll()
 				.anyRequest().authenticated()
 			//.and().addFilter(new ProcessContextInitFilter()).exceptionHandling()
 			.and().httpBasic()

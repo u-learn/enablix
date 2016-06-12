@@ -28,7 +28,7 @@
               			  #if($dataItem) 
               				 #if($dataItem.label) #set($i = $i+1 )  #if($i>1),#end
               				 #if($dataItem.hrefData)
-              				 <a href="${obj.url}/#/portal/container/$dataItem.hrefData.containerQId/$dataItem.hrefData.contentIdentity/c/single/$dataItem.hrefData.containerQId/" target="_parent">
+              				 <a href="${obj.url}/app.html#/portal/container/$dataItem.hrefData.containerQId/$dataItem.hrefData.contentIdentity/c/single/$dataItem.hrefData.containerQId/" target="_parent">
               				 $dataItem.label 
               				 </a>
               				 #else
@@ -92,7 +92,7 @@
 	      </a></div> 
       #end
      
-     <div><a href="${obj.url}/#/portal/container/$obj.sharedContent.bodyData.containerQId/$obj.sharedContent.bodyData.identity/c/single/$obj.sharedContent.bodyData.containerQId/" target="_parent">
+     <div><a href="${obj.url}/app.html#/portal/container/$obj.sharedContent.bodyData.containerQId/$obj.sharedContent.bodyData.identity/c/single/$obj.sharedContent.bodyData.containerQId/" target="_parent">
       <button style="background: #3d85c6;
       font: normal 16px/normal Arial, Helvetica, sans-serif;
       color: rgba(255,255,255,0.9);

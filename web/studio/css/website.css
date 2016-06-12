@@ -1,0 +1,88 @@
+h2 {
+	color: #222;
+}
+h3 {
+	color: #222;
+}
+h4 {
+	color: #222;	
+}
+.form-label {
+	color: #222;
+}
+
+.masthead-brand {
+	margin-top: 0px
+}
+
+.error {
+	color : red;
+}
+
+.modal-sm {
+	width: 380px;
+}
+
+.content-data {
+	color: #222;
+}
+
+/* buttons */
+/**/
+.button {
+	float: right;
+	margin: -3px 0 -3px 1em;
+	display: block;
+	padding: 0 1em;
+	background: #3498db;
+	font-family: Montserrat;
+	font-size: 0.75em;
+	line-height: 28px;
+	text-transform: uppercase;
+	color: #fff;
+	transition: background 0.3s;
+}
+.button-small {
+	font-size: 0.60em;
+	line-height: 22px;
+}
+.button:hover {
+	background: #2980b9;
+	color: #fff;
+}
+.button-add {
+	background: #2ecc71;	
+}
+.button-add:hover {
+	background: #27ae60;
+}
+.button-edit {
+	background: #e67e22;
+}
+.button-edit:hover {
+	background: #d35400;
+}
+.button-delete {
+	background: #e74c3c;
+}
+.button-delete:hover {
+	background: #c0392b;
+}
+.button-red {
+	background: #c9302c;
+}
+.button-red:hover {
+	background: #ac2925;
+}
+.button-green {
+	background: #5cb85c;
+}
+.button-green:hover {
+	background: #398439;
+}
+.button-yellow {
+	background: #ec971f;
+}
+.button-yellow:hover {
+	background: #d58512;
+}

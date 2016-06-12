@@ -48,5 +48,6 @@ enablix.serviceURL = {
 	"defaultDocStoreConfig": enablix.domainName + "/docstore/default",
 	"logout": enablix.domainName + "/logout",
 	"sendmail": enablix.domainName + "/sendmail",
-	"resetpassword": enablix.domainName + "/resetpassword"
+	"resetpassword": enablix.domainName + "/resetpassword",
+	"contactUs": enablix.domainName + "/site/contactus"
 };

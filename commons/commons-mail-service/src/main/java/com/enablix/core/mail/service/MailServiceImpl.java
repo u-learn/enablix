@@ -1,6 +1,9 @@
 package com.enablix.core.mail.service;
 
 import java.io.StringWriter;
+import java.util.List;
+
+import javax.annotation.PostConstruct;
 
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
@@ -12,6 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import com.enablix.commons.util.DefaultAESParameterProvider;
+import com.enablix.commons.util.EncryptionUtil;
+import com.enablix.commons.util.StringUtil;
 import com.enablix.commons.util.process.ProcessContext;
 import com.enablix.core.domain.config.EmailConfiguration;
 import com.enablix.core.domain.config.SMTPConfiguration;
@@ -28,130 +34,166 @@ import com.enablix.core.mongo.config.repo.TemplateConfigRepo;
 import com.enablix.core.system.repo.TenantRepository;
 import com.enablix.core.system.repo.UserRepository;
 
-
 @Service
-public class MailServiceImpl implements MailService {	
-	
+public class MailServiceImpl implements MailService {
+
 	private static final Logger logger = LoggerFactory.getLogger(MailServiceImpl.class);
+
+	@Value("${from.mail.address}")
+	private String emailId;
+
+	@Value("${from.mail.password}")
+	private String password;
+
+	@Value("${smtp.default.port}")
+	private String port;
+
+	@Value("${smtp.default.server}")
+	private String server;
 	
 	@Autowired
-	private VelocityEngine velocityEngine ;
+	private VelocityEngine velocityEngine;
+	
 	@Autowired
 	private EmailConfigRepo emailConfigRepo;
-	@Autowired
-	private SMTPConfigRepo  smtpConfigRepo;    
-    @Autowired    
-    private TemplateConfigRepo templateConfigRepo;
-    @Autowired
-	private UserRepository userRepo;
-    @Autowired
-	private TenantRepository tenantRepo;
-    
-    // need to move scenario builders into a factory
-    @Autowired
-    private NewUserScenarioInputBuilder newUserScenarioInputBuilder;
-    @Autowired
-    private WeeklyDigestScenarioInputBuilder weeklyDigestScenarioInputBuilder;
-    @Autowired
-    private ShareContentScenarioInputBuilder shareContentScenarioInputBuilder;
-   
 	
-    public void setVelocityEngine(VelocityEngine velocityEngine) {
-        this.velocityEngine = velocityEngine;
-    }
-    
-    @Override
-    public boolean sendHtmlEmail(Object objectTobeMerged, String emailid, String scenario) {
+	@Autowired
+	private SMTPConfigRepo smtpConfigRepo;
+	
+	@Autowired
+	private TemplateConfigRepo templateConfigRepo;
+	
+	@Autowired
+	private UserRepository userRepo;
+	
+	@Autowired
+	private TenantRepository tenantRepo;
+
+	// need to move scenario builders into a factory
+	@Autowired
+	private NewUserScenarioInputBuilder newUserScenarioInputBuilder;
+	
+	@Autowired
+	private WeeklyDigestScenarioInputBuilder weeklyDigestScenarioInputBuilder;
+	
+	@Autowired
+	private ShareContentScenarioInputBuilder shareContentScenarioInputBuilder;
+
+	private EmailConfiguration defaultEmailConfig;
+	
+	@PostConstruct
+	public void init() {
+		defaultEmailConfig = new EmailConfiguration();
+		defaultEmailConfig.setEmailId(emailId);
+		defaultEmailConfig.setPassword(EncryptionUtil.getAesDecryptedString(
+										password, new DefaultAESParameterProvider()));
+		defaultEmailConfig.setSmtp(server);
+		defaultEmailConfig.setPort(port);
+		defaultEmailConfig.setPersonalName(emailId);
+	}
+	
+	@Override
+	public boolean sendHtmlEmail(Object objectTobeMerged, String emailid, String scenario) {
 		String templateName = scenario + MailConstants.EMAIL_BODY_SUFFIX;
 		String subjectTemplateName = scenario + MailConstants.EMAIL_SUBJECT_SUFFIX;
 		return sendHtmlEmail(objectTobeMerged, emailid, scenario, templateName, subjectTemplateName);
-    }
-    
-    @Override
-    public boolean sendHtmlEmail(Object objectTobeMerged, String emailid,String scenario, String bodyTemplateName, String subjectTemplateName) {
-    
+	}
+
+	@Override
+	public boolean sendHtmlEmail(Object objectTobeMerged, String emailid, String scenario, String bodyTemplateName,
+			String subjectTemplateName) {
+
 		String elementName = MailConstants.EMAIL_TEMPLATE_OBJECTNAME;
-		switch (scenario) { 
+		switch (scenario) {
 		case MailConstants.SCENARIO_SET_PASSWORD:
 		case MailConstants.SCENARIO_RESET_PASSWORD:
 		case MailConstants.SCENARIO_PASSWORD_CONFIRMATION:
 			objectTobeMerged = newUserScenarioInputBuilder.build(emailid);
-			break;	
+			break;
 		case MailConstants.SCENARIO_SHARE_CONTENT:
 			objectTobeMerged = shareContentScenarioInputBuilder.build(emailid, objectTobeMerged);
 		default:
 			break;
 		}
-			
-       try{
-    	String htmlBody = generateTemplateMessage(objectTobeMerged,bodyTemplateName,elementName,MailConstants.BODY_TEMPLATE_PATH);
-    	String subject = generateTemplateMessage(objectTobeMerged,subjectTemplateName,elementName,MailConstants.SUBJECT_TEMPLATE_PATH);
-    	
-    	return MailUtility.sendEmail(emailid, subject, htmlBody, this.getEmailConfiguration());
-       }catch(Exception e){
-    	   logger.error(e.getMessage(), e);
-    	   return false;
-       }
-        
+
+		try {
+			String htmlBody = generateTemplateMessage(objectTobeMerged, bodyTemplateName, elementName,
+					MailConstants.BODY_TEMPLATE_PATH);
+			String subject = generateTemplateMessage(objectTobeMerged, subjectTemplateName, elementName,
+					MailConstants.SUBJECT_TEMPLATE_PATH);
+
+			return MailUtility.sendEmail(emailid, subject, htmlBody, this.getEmailConfiguration());
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			return false;
+		}
+
 	};
 
-	private String generateTemplateMessage(Object objectTobeMerged,String templateName, String elementName, String path) {
+	private String generateTemplateMessage(Object objectTobeMerged, String templateName, String elementName, String path) {
 		Template emailTemplate = null;
-		try{
-        	emailTemplate = velocityEngine.getTemplate(ProcessContext.get().getTenantId() + path + templateName);
-        }catch(ResourceNotFoundException ex){
-        	if (emailTemplate==null)
-        		emailTemplate = velocityEngine.getTemplate("default" + path + templateName);
-        }
-        
-        VelocityContext velocityContext = new VelocityContext(); 
-        velocityContext.put(elementName, objectTobeMerged);
-        StringWriter stringWriter = new StringWriter();
-        emailTemplate.merge(velocityContext, stringWriter);
-        return stringWriter.toString();
-    };
-	
-    
-    @Value("${from.mail.address}")
-    private String emailId;
-    
-    @Value("${from.mail.password}")
-    private String password;
-    
-    @Value("${smtp.default.port}")
-    private String port;
-    
-    @Value("${smtp.default.server}")
-    private String server;
-    
-    
-     @Override
-	public EmailConfiguration getEmailConfiguration() {
-    	Tenant tenant = tenantRepo.findByTenantId(ProcessContext.get().getTenantId());    	
-		if (emailConfigRepo.count()==1){
-			EmailConfiguration emailConfig = emailConfigRepo.findAll().get(0);	
-			if(emailConfig.getPersonalName()==null) //for email configs already in the system
-				emailConfig.setPersonalName(tenant.getName());
-			return emailConfig;
+		try {
+			emailTemplate = velocityEngine.getTemplate(ProcessContext.get().getTenantId() + path + templateName);
+		} catch (ResourceNotFoundException ex) {
+			if (emailTemplate == null)
+				emailTemplate = velocityEngine.getTemplate("default" + path + templateName);
 		}
-		else{
-			//for default settings
-			 EmailConfiguration emailConfiguration = new EmailConfiguration(emailId, password, server, port, tenant.getName());
-			 emailConfigRepo.save(emailConfiguration);
-			 return emailConfiguration;
+
+		VelocityContext velocityContext = new VelocityContext();
+		velocityContext.put(elementName, objectTobeMerged);
+		StringWriter stringWriter = new StringWriter();
+		emailTemplate.merge(velocityContext, stringWriter);
+		return stringWriter.toString();
+	};
+
+	
+
+	@Override
+	public EmailConfiguration getEmailConfiguration() {
+		
+		EmailConfiguration emailConfig = null;
+		
+		String tenantId = ProcessContext.get().getTenantId();
+		String tenantName = null;
+		
+		if (!StringUtil.isEmpty(tenantId)) {
+			
+			Tenant tenant = tenantRepo.findByTenantId(tenantId);
+			tenantName = tenant.getName();
+			
+			List<EmailConfiguration> emailConfigs = emailConfigRepo.findAll();
+			if (emailConfigs != null && !emailConfigs.isEmpty()) {
+				emailConfig = emailConfigs.get(0);
+				if (StringUtil.isEmpty(emailConfig.getPersonalName())) {
+					// for email configs already in the system
+					emailConfig.setPersonalName(tenantName);
+				}
 			}
+			
+		}
+		
+		
+		if (emailConfig == null) {
+			// for default settings
+			emailConfig = EmailConfiguration.createCopy(defaultEmailConfig);
+			if (!StringUtil.isEmpty(tenantName)) {
+				emailConfig.setPersonalName(tenantName);
+			}
+		}
+		
+		return emailConfig;
 	};
 
 	@Override
 	public EmailConfiguration addEmailConfiguration(EmailConfiguration emailConfiguration) {
 		Tenant tenant = tenantRepo.findByTenantId(ProcessContext.get().getTenantId());
 		emailConfiguration.setPersonalName(tenant.getName());
-		return emailConfigRepo.save(emailConfiguration);		
+		return emailConfigRepo.save(emailConfiguration);
 	};
-	
+
 	@Override
 	public SMTPConfiguration getSMTPConfig(String domainName) {
-	   return smtpConfigRepo.findByDomainName(domainName);	
+		return smtpConfigRepo.findByDomainName(domainName);
 	};
 
 	@Override
@@ -164,17 +206,17 @@ public class MailServiceImpl implements MailService {
 			return false;
 		}
 	};
-	
+
 	@Override
 	public TemplateConfiguration getTemplateConfiguration(String scenario) {
 		return templateConfigRepo.findByScenario(scenario);
 	};
-	
+
 	@Override
 	public TemplateConfiguration addTemplateConfiguration(TemplateConfiguration templateConfiguration) {
 		return templateConfigRepo.save(templateConfiguration);
 	};
-	
+
 	@Override
 	public Boolean deleteTemplateConfiguration(TemplateConfiguration templateConfiguration) {
 		try {

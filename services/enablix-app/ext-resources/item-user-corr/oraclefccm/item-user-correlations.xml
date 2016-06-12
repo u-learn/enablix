@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<itemUserCorrelationRules xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/item-correlation-rule.xsd">
+	<itemUserCorrelationRule id="caseStudyUserRule" name="Case Study - User Notification">
+		<triggerItem qualifiedId="caseStudy">
+		</triggerItem>
+		<relatedUsers>
+			<relatedUserPath>
+				<pathItem qualifiedId="businessRole">
+					<filterCriteria>
+						<filter>
+							<attributeId>role</attributeId>
+							<constant>PreSales</constant>
+						</filter>
+					</filterCriteria>
+					<relatedUser>
+						<filterCriteria>
+							<filter>
+								<attributeId>role</attributeId>
+								<parentAttribute>identity</parentAttribute>
+							</filter>
+						</filterCriteria>
+						<tags>
+							<tag>PRE_SALES_USER</tag>
+						</tags>
+					</relatedUser>
+				</pathItem>
+			</relatedUserPath>
+		</relatedUsers>
+	</itemUserCorrelationRule>
+</itemUserCorrelationRules>

@@ -63,9 +63,15 @@ enablix.studioApp.factory('StateUpdateService',
 											
 	 		};
 	 		
+	 		var goToWebsite = function(previousUrl) {
+	 			$window.location.href = $location.protocol() + "://" + $location.host() 
+					+ ":" + $location.port() + "/index.html";
+											
+	 		};
+	 		
 	 		var goToApp = function() {
 	 			$window.location.href = $location.protocol() + "://" + $location.host() 
- 						+ ":" + $location.port() + "/#/portal/home";
+ 						+ ":" + $location.port() + "/app.html#/portal/home";
 	 		};
 	 		
 			var goToForgotPasswordPage = function(){
@@ -74,7 +80,7 @@ enablix.studioApp.factory('StateUpdateService',
 
 	 		var goToAppSetPassword = function() {
 	 			$window.location.href = $location.protocol() + "://" + $location.host() 
-					+ ":" + $location.port() + "/#/setpassword";
+					+ ":" + $location.port() + "/app.html#/setpassword";
 	 		}
 	 		
 	 		var goToStudio = function(_containerQId) {
@@ -193,6 +199,7 @@ enablix.studioApp.factory('StateUpdateService',
 	 			goToRefdataEdit: goToRefdataEdit,
 	 			goToHome: goToHome,
 	 			goToLogin: goToLogin,
+	 			goToWebsite: goToWebsite,
 	 			goToStudio: goToStudio,
 	 			goToPortalHome: goToPortalHome,
 	 			goToPortalContainerDetail: goToPortalContainerDetail,

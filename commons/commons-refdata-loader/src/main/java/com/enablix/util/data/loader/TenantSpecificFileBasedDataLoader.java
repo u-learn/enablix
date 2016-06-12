@@ -2,6 +2,7 @@ package com.enablix.util.data.loader;
 
 import java.io.File;
 
+import com.enablix.commons.constants.AppConstants;
 import com.enablix.commons.util.process.ProcessContext;
 
 public class TenantSpecificFileBasedDataLoader extends FileBasedDataLoader {
@@ -15,7 +16,7 @@ public class TenantSpecificFileBasedDataLoader extends FileBasedDataLoader {
 
 		String tenantId = resolveTenantIdFromFile(dataFile);
 
-		ProcessContext.initialize("system", tenantId, null);
+		ProcessContext.initialize(AppConstants.SYSTEM_USER_ID, tenantId, null);
 		
 		try {
 			

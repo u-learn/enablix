@@ -1,0 +1,241 @@
+/* Links */
+a,
+a:focus,
+a:hover {
+	color: #FFFFFF;
+}
+
+/* Custom default button */
+.btn-default,
+.btn-default:hover,
+.btn-default:focus {
+	color: #FFFFFF;
+	text-shadow: none; /* Prevent inheritence from `body` */
+	background-color: #0E2A49;
+	border: 1px solid #FFFFFF;
+}
+
+
+/*
+ * Base structure
+ */
+
+html,
+body {
+	height: 100%;
+	background-color: #0E2A49;
+	font-family: "Open Sans";
+	font-style: normal;
+}
+body {
+	color: #FFFFFF;
+	text-align: center;
+}
+
+/* Extra markup and styles for table-esque vertical and horizontal centering */
+.site-wrapper {
+	display: table;
+	width: 100%;
+	height: 100%; /* For at least Firefox */
+	min-height: 100%;
+}
+.site-wrapper-inner {
+	display: table-cell;
+	vertical-align: top;
+}
+.cover-container {
+	margin-right: auto;
+	margin-left: auto;
+}
+
+/* Padding for spacing */
+.inner {
+	padding: 30px;
+}
+
+
+/*
+ * Header
+ */
+.masthead-brand h3 {
+	margin-top: 1px;
+	margin-bottom: 10px;
+}
+
+.masthead-nav > li {
+	display: inline-block;
+}
+.masthead-nav > li + li {
+	margin-left: 20px;
+}
+.masthead-nav > li > a {
+	padding-right: 0;
+	padding-left: 5px;
+	font-size: 16px;
+	color: #fff; /* IE8 proofing */
+}
+.masthead-nav > li > a:hover,
+.masthead-nav > li > a:focus {
+	background-color: transparent;
+	color: #32C4F3;
+}
+.masthead-nav > .active > a {
+	color: #fff;
+	font-weight: normal;
+}
+.masthead-nav > .active > a:hover,
+.masthead-nav > .active > a:focus {
+	color: #32C4F3;
+	font-weight: normal;
+}
+
+@media (min-width: 768px) {
+	.masthead-brand {
+		float: left;
+	}
+	.masthead-nav {
+		float: right;
+	}
+}
+
+
+/*
+ * Cover
+ */
+
+.cover {
+	padding: 0px 20px 0px 0px;
+}
+.cover .btn-lg {
+	padding: 10px 20px;
+	font-weight: bold;
+}
+
+
+/*
+ * Footer
+ */
+
+.mastfoot {
+	color: #0E2A49;
+}
+
+
+/*
+ * Affix and center
+ */
+
+@media (min-width: 768px) {
+	/* Pull out the header and footer */
+	.masthead {
+		position: fixed;
+		top: 0;
+	}
+	.mastfoot {
+		position: fixed;
+		bottom: 0;
+	}
+	/* Start the vertical centering */
+	.site-wrapper-inner {
+		vertical-align: middle;
+	}
+	/* Handle the widths */
+	.masthead,
+	.mastfoot,
+	.cover-container {
+		width: 100%;
+	}
+}
+
+@media (min-width: 992px) {
+	.masthead,
+	.mastfoot,
+	.cover-container {
+		width: 100%;
+	}
+}
+
+/*Elements*/
+.btn-meeeting{
+	background-color: #32C4F3;
+	color: #0E2A49;
+	border-radius: 0px;
+	text-transform: uppercase;
+	font-weight: normal !important;
+}
+.blueSepa{
+	color: #32C4F3 !important;
+	font-size: 18px;
+
+}
+.loginBox{
+	border-radius: 0px;
+	border: 1px solid #fff;
+	padding-left: 20px !important;
+	padding-right: 20px !important;
+	background-color: #0E2A49;
+	padding-top: 8px !important;
+	padding-bottom: 8px !important;
+}
+.loginBox:hover{
+	background-color: #1D5478 !important;
+	color: #FFFFFF !important;
+}
+#login a:hover{
+	color: #FFFFFF !important;
+}
+.mastfoot .inner{
+	background-color: #FFFFFF;
+	padding-top: 15px !important;
+	padding-bottom: 5px !important;
+}
+.mastfoot a{
+	color: #0E2A49;
+	text-decoration: none;
+}
+.mastfoot a:hover{
+	color: #32C4F3;
+}
+.masthead .inner{
+	padding-top: 20px !important;
+}
+.blue{
+	color: #32C4F3;
+}
+.bgImg{ 
+	background: url('../images/bg.jpg');
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+  background-position: 50% 50%;
+	min-height: 820px;
+  margin-top: 60px;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+.no-padding{
+	margin-top: 0px !important;
+}
+.cover-heading{
+	font-size: 50px;
+	font-weight: normal;
+}
+.masthead-nav{
+	margin-top: 6px;
+}
+@media (min-width: 768px) and (max-width: 1500px) {
+  .cover-heading{
+		font-size: 40px;
+	}
+}
+@media (min-width: 200px) and (max-width: 767px) {
+  .bgImg {
+    margin-top: 0px !important;
+  }
+  .cover-heading{
+		font-size: 35px;
+	}
+}

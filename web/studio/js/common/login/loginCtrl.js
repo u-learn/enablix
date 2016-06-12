@@ -42,14 +42,14 @@ enablix.studioApp.controller('LoginController',
 					// update it with a bad credentials
 					// http://stackoverflow.com/questions/233507/how-to-log-out-user-from-web-site-using-basic-authentication
 					AuthorizationService.authenticate({username: "~~baduser~~", password:"~~"}, function() {
-						StateUpdateService.goToLogin();
+						StateUpdateService.goToWebsite();
 					});
 					
 				}, function(data) {
 					// HACK: to clear basic auth associated with browser window, 
 					// update it with a bad credentials
 					AuthorizationService.authenticate({username: "~~baduser~~", password:"~~"}, function() {
-						StateUpdateService.goToLogin();
+						StateUpdateService.goToWebsite();
 					});
 				}, null, {});
 			

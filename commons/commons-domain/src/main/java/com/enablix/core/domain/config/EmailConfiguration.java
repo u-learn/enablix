@@ -11,9 +11,7 @@ public class EmailConfiguration extends BaseDocumentEntity{
 	private String smtp;	
 	private String port;
 	private String personalName;
-	
-	
-	
+
 	public EmailConfiguration(String emailId, String password, String smtp, String port, String personalName) {
 		super();
 		this.emailId = emailId;
@@ -73,4 +71,10 @@ public class EmailConfiguration extends BaseDocumentEntity{
 		return "EmailConfiguration [emailId=" + emailId + ", smtp=" + smtp + ", port=" + port
 				+ "personamName" + personalName + "]";
 	}
+	
+	public static EmailConfiguration createCopy(EmailConfiguration config) {
+		return new EmailConfiguration(config.getEmailId(), config.getPassword(), 
+				config.getSmtp(), config.getPort(), config.getPersonalName());
+	}
+	
 }

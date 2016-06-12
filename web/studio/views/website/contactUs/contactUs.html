@@ -1,0 +1,46 @@
+<div class="modal-header">
+    <h3 class="modal-title">Contact Us</h3>
+</div>
+<div class="modal-body">
+<div class="cont">
+	<form name="modalForm">
+	<table class="datatable">	
+	<tbody>
+		<tr>
+			<label class="form-label">Name</label>
+			<input type="text" name="name" ng-model="contactUsForm.name" class="form-control" ng-blur="modalForm.name.$valid" required>
+		
+			<div ng-messages="modalForm.name.$error" ng-if="modalForm.name.$touched" role="alert">
+				<div ng-message="required" class="error">Please enter name</div>
+			</div>
+		</tr><br/>
+		<tr>
+			<label class="form-label">Company Name</label>
+			<input type="text" name="companyName" ng-model="contactUsForm.companyName" class="form-control" ng-blur="modalForm.companyName.$valid" required>
+		
+			<div ng-messages="modalForm.companyName.$error" ng-if="modalForm.companyName.$touched" role="alert">
+				<div ng-message="required" class="error">Please enter company name</div>
+			</div>
+		</tr><br/>
+		<tr>
+			<label class="form-label">Work Email</label>
+			<input type="text" name="email" ng-model="contactUsForm.email" class="form-control" ng-blur="modalForm.email.$valid" ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,5})$/" required>
+		
+			<div ng-messages="modalForm.email.$error" ng-if="modalForm.email.$touched" role="alert">
+				<div ng-message="required" class="error">Please enter email</div>
+				<div ng-message="pattern" class="error">Please enter a valid email</div>      
+			</div>
+		</tr><br/>
+		<tr>
+			<label class="form-label">Message</label>
+			<textarea  name="message" ng-model="contactUsForm.message" class="form-control"></textarea>
+		</tr>
+	</tbody>
+	</table>
+	</form>
+</div>
+</div>
+<div class="modal-footer">
+	<button class="btn btn-primary btn-meeeting" type="button" ng-disabled="!modalForm.$valid" ng-click="submitContactUs()">Submit Message</button>
+</div>
+<a title="Close" class="fancybox-item fancybox-close" ng-click="close()"></a>

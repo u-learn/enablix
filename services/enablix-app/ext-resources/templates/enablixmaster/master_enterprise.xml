@@ -698,7 +698,8 @@
 			</contentItem>			
 			<container id="topicFAQ" label="FAQ" linkContainerQId="faq" linkContentItemId="topics"/>
 			<container id="topicBlog" label="Blogs" linkContainerQId="blog" linkContentItemId="topics"/>
-			<container id="topicCaseStudy" label="Case Studies" linkContainerQId="caseStudy" linkContentItemId="topics"/>			
+			<container id="topicCaseStudy" label="Case Studies" linkContainerQId="caseStudy" linkContentItemId="topics"/>		
+			<container id="topicImpSlide" label="Important Slides" linkContainerQId="importantslide" linkContentItemId="topics"/>							
 			<container id="topicMarketingEvent" label="Marketing Events" linkContainerQId="marketingevent" linkContentItemId="topics"/>	
 			<container id="topicWhitePaper" label="White Papers" linkContainerQId="whitepaper" linkContentItemId="topics"/>
 			<container id="topicMultimedia" label="Multimedia" linkContainerQId="multimedia" linkContentItemId="topics"/>
@@ -1789,11 +1790,63 @@
 					</refList>
 				</bounded>
 			</contentItem>
+			<contentItem id="topics" label="Topics" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>topic</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>			
 		</container>
 		<container id="template" label="Templates">
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="file" label="File" type="doc"/>
 			<contentItem id="summary" label="Summary" type="text"/>
+		</container>
+		<container id="nda" label="Non Disclosure Agreement (NDA)">
+			<contentItem id="title" label="Title" type="text"/>
+			<contentItem id="summary" label="Summary" type="text"/>
+			<contentItem id="file" label="File" type="doc"/>
+		</container>
+		<container id="partneragreement" label="Partnership Agreement">
+			<contentItem id="title" label="Title" type="text"/>
+			<contentItem id="summary" label="Summary" type="text"/>
+			<contentItem id="file" label="File" type="doc"/>
+		</container>
+		<container id="mla" label="Master License Agreement">
+			<contentItem id="title" label="Title" type="text"/>
+			<contentItem id="summary" label="Summary" type="text"/>
+			<contentItem id="file" label="File" type="doc"/>
+		</container>
+		<container id="msa" label="Master Services Agreement">
+			<contentItem id="title" label="Title" type="text"/>
+			<contentItem id="summary" label="Summary" type="text"/>
+			<contentItem id="file" label="File" type="doc"/>
+		</container>
+		<container id="supportpolicy" label="Support Policy">
+			<contentItem id="title" label="Title" type="text"/>
+			<contentItem id="summary" label="Summary" type="text"/>
+			<contentItem id="file" label="File" type="doc"/>
+		</container>		
+		<container id="corporatelogo" label="Corporate Logo">
+			<contentItem id="title" label="Title" type="text"/>
+			<contentItem id="summary" label="Summary" type="text"/>
+			<contentItem id="file" label="File" type="doc"/>
+		</container>
+		<container id="ppttemplate" label="Corporate PPT Template">
+			<contentItem id="title" label="Title" type="text"/>
+			<contentItem id="summary" label="Summary" type="text"/>
+			<contentItem id="file" label="File" type="doc"/>
+		</container>
+		<container id="corporatecontent" label="Corporate Content">
+			<contentItem id="title" label="Title" type="text"/>
+			<contentItem id="summary" label="Summary" type="text"/>
+			<contentItem id="url" label="URL" type="text"/>
+			<contentItem id="file" label="File" type="doc"/>
 		</container>
 		<container id="content" label="Other Content">
 			<contentItem id="title" label="Title" type="text"/>
@@ -1951,11 +2004,11 @@
 			<contentItem id="desc" label="Description" type="text"/>
 		</container>
 		<container id="opportunityStatus" label="Opportunity Status" refData="true">
-			<contentItem id="oppStatus" label="Status" type="text"/>
+			<contentItem id="opStatus" label="Status" type="text"/>
 			<contentItem id="desc" label="Description" type="text"/>
 		</container>
 		<container id="businessRole" label="Business Roles" refData="true">
-			<contentItem id="role" label="Role" type="text"/>
+			<contentItem id="roleName" label="Role" type="text"/>
 			<contentItem id="desc" label="Description" type="text"/>
 		</container>
 		<container id="user" label="Users" refData="true">
@@ -1983,7 +2036,7 @@
 					</refList>
 				</bounded>
 			</contentItem>	
-			<contentItem id="userSolArea" label="Solution Area Focus" type="bounded">
+			<contentItem id="solarea" label="Solution Area Focus" type="bounded">
 				<bounded>
 					<refList>
 						<datastore>
@@ -1996,8 +2049,11 @@
 			</contentItem>						
 		</container>
 		<userProfileRef>
+			
 			<containerQId>user</containerQId>
+			
 			<emailAttributeId>email</emailAttributeId>
+		
 		</userProfileRef>
 	</dataDefinition>
 	<uiDefinition>
@@ -2022,6 +2078,18 @@
 					<childContainer id="winloss"/>
 					<childContainer id="content"/>
 				</enclosure>
+				<enclosure id="corporate" label="Corporate Documents">
+					<childContainer id="corporatelogo"/>
+					<childContainer id="mla"/>	
+					<childContainer id="msa"/>	
+					<childContainer id="nda"/>	
+					<childContainer id="partneragreement"/>									
+					<childContainer id="ppttemplate"/>														
+					<childContainer id="pricingtemplate"/>
+					<childContainer id="sow"/>
+					<childContainer id="supportpolicy"/>					
+					<childContainer id="corporatecontent"/>
+				</enclosure>				
 			</container>
 		</contentUIDef>
 		<contentUIDef qualifiedId="customer">
@@ -2409,6 +2477,146 @@
 		<contentUIDef qualifiedId="template.summary">
 			<text type="long"/>
 		</contentUIDef>
+		<contentUIDef qualifiedId="sow">
+			<container labelQualifiedId="sow.title">
+				<listViewConfig>
+					<hideContentItem id="file"/>
+					<hideContentItem id="summary"/>
+				</listViewConfig>
+				<portalConfig>
+					<headingContentItem id="title"/>
+				</portalConfig>
+			</container>
+		</contentUIDef>
+		<contentUIDef qualifiedId="sow.summary">
+			<text type="long"/>
+		</contentUIDef>		
+		<contentUIDef qualifiedId="pricingtemplate">
+			<container labelQualifiedId="pricingtemplate.title">
+				<listViewConfig>
+					<hideContentItem id="file"/>
+					<hideContentItem id="summary"/>
+				</listViewConfig>
+				<portalConfig>
+					<headingContentItem id="title"/>
+				</portalConfig>
+			</container>
+		</contentUIDef>
+		<contentUIDef qualifiedId="pricingtemplate.summary">
+			<text type="long"/>
+		</contentUIDef>	
+		<contentUIDef qualifiedId="nda">
+			<container labelQualifiedId="nda.title">
+				<listViewConfig>
+					<hideContentItem id="file"/>
+					<hideContentItem id="summary"/>
+				</listViewConfig>
+				<portalConfig>
+					<headingContentItem id="title"/>
+				</portalConfig>
+			</container>
+		</contentUIDef>
+		<contentUIDef qualifiedId="nda.summary">
+			<text type="long"/>
+		</contentUIDef>	
+		<contentUIDef qualifiedId="partneragreement">
+			<container labelQualifiedId="partneragreement.title">
+				<listViewConfig>
+					<hideContentItem id="file"/>
+					<hideContentItem id="summary"/>
+				</listViewConfig>
+				<portalConfig>
+					<headingContentItem id="title"/>
+				</portalConfig>
+			</container>
+		</contentUIDef>
+		<contentUIDef qualifiedId="partneragreement.summary">
+			<text type="long"/>
+		</contentUIDef>		
+		<contentUIDef qualifiedId="mla">
+			<container labelQualifiedId="mla.title">
+				<listViewConfig>
+					<hideContentItem id="file"/>
+					<hideContentItem id="summary"/>
+				</listViewConfig>
+				<portalConfig>
+					<headingContentItem id="title"/>
+				</portalConfig>
+			</container>
+		</contentUIDef>
+		<contentUIDef qualifiedId="mla.summary">
+			<text type="long"/>
+		</contentUIDef>		
+		<contentUIDef qualifiedId="msa">
+			<container labelQualifiedId="msa.title">
+				<listViewConfig>
+					<hideContentItem id="file"/>
+					<hideContentItem id="summary"/>
+				</listViewConfig>
+				<portalConfig>
+					<headingContentItem id="title"/>
+				</portalConfig>
+			</container>
+		</contentUIDef>
+		<contentUIDef qualifiedId="msa.summary">
+			<text type="long"/>
+		</contentUIDef>	
+		<contentUIDef qualifiedId="corporatelogo">
+			<container labelQualifiedId="corporatelogo.title">
+				<listViewConfig>
+					<hideContentItem id="file"/>
+					<hideContentItem id="summary"/>
+				</listViewConfig>
+				<portalConfig>
+					<headingContentItem id="title"/>
+				</portalConfig>
+			</container>
+		</contentUIDef>
+		<contentUIDef qualifiedId="corporatelogo.summary">
+			<text type="long"/>
+		</contentUIDef>	
+		<contentUIDef qualifiedId="ppttemplate">
+			<container labelQualifiedId="ppttemplate.title">
+				<listViewConfig>
+					<hideContentItem id="file"/>
+					<hideContentItem id="summary"/>
+				</listViewConfig>
+				<portalConfig>
+					<headingContentItem id="title"/>
+				</portalConfig>
+			</container>
+		</contentUIDef>
+		<contentUIDef qualifiedId="ppttemplate.summary">
+			<text type="long"/>
+		</contentUIDef>	
+		<contentUIDef qualifiedId="supportpolicy">
+			<container labelQualifiedId="supportpolicy.title">
+				<listViewConfig>
+					<hideContentItem id="file"/>
+					<hideContentItem id="summary"/>
+				</listViewConfig>
+				<portalConfig>
+					<headingContentItem id="title"/>
+				</portalConfig>
+			</container>
+		</contentUIDef>
+		<contentUIDef qualifiedId="supportpolicy.summary">
+			<text type="long"/>
+		</contentUIDef>			
+		<contentUIDef qualifiedId="corporatecontent">
+			<container labelQualifiedId="corporatecontent.title">
+				<listViewConfig>
+					<hideContentItem id="file"/>
+					<hideContentItem id="summary"/>
+				</listViewConfig>
+				<portalConfig>
+					<headingContentItem id="title"/>
+				</portalConfig>
+			</container>
+		</contentUIDef>
+		<contentUIDef qualifiedId="corporatecontent.summary">
+			<text type="long"/>
+		</contentUIDef>
 		<contentUIDef qualifiedId="content">
 			<container>
 				<listViewConfig>
@@ -2456,6 +2664,18 @@
 					<childContainer id="multimedia"/>
 					<childContainer id="winloss"/>
 					<childContainer id="content"/>
+				</enclosure>
+				<enclosure id="corporate" label="Corporate">
+					<childContainer id="corporatelogo"/>
+					<childContainer id="mla"/>	
+					<childContainer id="msa"/>	
+					<childContainer id="nda"/>	
+					<childContainer id="partneragreement"/>									
+					<childContainer id="ppttemplate"/>														
+					<childContainer id="pricingtemplate"/>
+					<childContainer id="sow"/>
+					<childContainer id="supportpolicy"/>					
+					<childContainer id="corporatecontent"/>
 				</enclosure>
 			</enclosures>
 		</topNavigation>

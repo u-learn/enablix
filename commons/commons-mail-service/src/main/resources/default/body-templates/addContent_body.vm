@@ -18,7 +18,7 @@
 				<td>
 					#foreach($valListItem in $field.value.valueList)
 						#if($valListItem.valueType == 'CONTENT_REF')
-							<a href="${obj.url}/#/portal/container/$valListItem.containerQId/$valListItem.contentIdentity/c/single/$valListItem.containerQId/" target="_blank">${valListItem.textValue}</a>
+							<a href="${obj.url}/app.html#/portal/container/$valListItem.containerQId/$valListItem.contentIdentity/c/single/$valListItem.containerQId/" target="_blank">${valListItem.textValue}</a>
 						#else
 							${valListItem.value} 
 						#end	
@@ -52,7 +52,7 @@
 	      </a></div> 
       #end
      
-     <div><a href="${obj.url}/#/portal/container/$item.containerQId/$item.recordIdentity/c/single/$item.containerQId/" target="_blank">
+     <div><a href="${obj.url}/app.html#/portal/container/$item.containerQId/$item.recordIdentity/c/single/$item.containerQId/" target="_blank">
       <button style="background: #3d85c6;
       font: normal 16px/normal Arial, Helvetica, sans-serif;
       color: rgba(255,255,255,0.9);

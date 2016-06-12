@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en	">
+<head>
+	<meta charset="utf-8">
+	<title>Enablix</title>
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+    <meta name="viewport" content="width=1024">
+    <link rel="icon" type="image/png" href="/favicon.png">
+	
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+	
+	<!-- <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css"> -->
+	<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"> -->
+	<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
+	<!-- <link rel="stylesheet" type="text/css" href="css/themes/united/bootstrap.min.css"> -->
+	<!-- <link rel="stylesheet" type="text/css" href="css/themes/cerulean/bootstrap.min.css"> -->
+	<!-- <link rel="stylesheet" type="text/css" href="css/angular.treeview.css"> -->
+	<link rel="stylesheet" type="text/css" href="css/enablix.css">
+	<link rel="stylesheet" type="text/css" href="css/file-input.css">
+	<link rel="stylesheet" type="text/css" href="css/isteven-multi-select.css">
+	<!-- <link rel="stylesheet" type="text/css" href="css/listGroupTreeview.css"> -->
+	<link rel="stylesheet" type="text/css" href="css/angular-ui-notification.min.css">
+	<link rel="stylesheet" type="text/css" href="css/select.css">
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+	
+	<script type="text/javascript" src="js/vendor/jquery/jquery-1.11.2.min.js"></script>
+	<script type="text/javascript" src="js/vendor/bootstrap/bootstrap.min.js"></script>
+	
+	<!-- angular scripts -->
+	<script type="text/javascript" src="js/vendor/angular/angular.js"></script>
+	<script type="text/javascript" src="js/vendor/angular/angular-resource.min.js"></script>
+	<script type="text/javascript" src="js/vendor/angular/angular-ui-router.js"></script>
+	<script type="text/javascript" src="js/vendor/angular/angular-sanitize.min.js"></script>
+	<script type="text/javascript" src="js/common/widgets/tree/angular.treeview.js"></script>
+	<script type="text/javascript" src="js/common/widgets/tree/listGroupTree.js"></script>
+	<script type="text/javascript" src="js/vendor/angular/angular-file-upload.js"></script>
+	<script type="text/javascript" src="js/vendor/angular/ui-bootstrap-tpls-0.12.1.js"></script>
+	<script type="text/javascript" src="js/vendor/multi-select/isteven-multi-select.js"></script>
+	<script type="text/javascript" src="js/vendor/angular/angular-ui-notification.min.js"></script>
+	<script type="text/javascript" src="js/vendor/angular/angular-messages.min.js"></script>
+	<script type="text/javascript" src="js/vendor/angular/select.js"></script>
+	<script type="text/javascript" src="js/vendor/angular/angular-translate.js"></script>
+	<script type="text/javascript" src="js/vendor/angular/angular-translate-loader-url.js"></script>
+	<script type="text/javascript" src="js/vendor/angular/angular-translate-loader-static-files.js"></script>
+	
+	<!-- application scripts -->
+	<script type="text/javascript" src="js/common/utility.js"></script>
+	<script type="text/javascript" src="js/app.js"></script>
+	<script type="text/javascript" src="js/serverDomain.js"></script>
+	<script type="text/javascript" src="js/serviceUrl.js"></script>
+	<script type="text/javascript" src="js/common/restService.js"></script>
+	<script type="text/javascript" src="js/common/lang-translate.js"></script>
+	<script type="text/javascript" src="js/common/login/loginCtrl.js"></script>
+	<script type="text/javascript" src="js/common/login/setPasswordController.js"></script>
+	<script type="text/javascript" src="js/common/login/forgotPasswordController.js"></script>
+	<script type="text/javascript" src="widgets/filter/appFilterModule.js"></script>
+	<script type="text/javascript" src="widgets/filter/contentFormatFilter.js"></script>
+	<script type="text/javascript" src="widgets/filter/dateFilter.js"></script>
+
+	<script type="text/javascript" src="widgets/directive/focus/focusDirective.js"></script>
+	<script type="text/javascript" src="widgets/directive/text/textInputDirective.js"></script>
+	<script type="text/javascript" src="widgets/directive/renderData/renderDataDirective.js"></script>
+	<script type="text/javascript" src="widgets/directive/table/tableDirective.js"></script>
+	<script type="text/javascript" src="widgets/directive/doc/fileUploadDirective.js"></script>
+	<script type="text/javascript" src="widgets/directive/doc/fileUploadController.js"></script>
+	<script type="text/javascript" src="widgets/directive/bounded/boundedDirective.js"></script>
+	<script type="text/javascript" src="widgets/directive/bounded2/boundedDirective.js"></script>
+	<script type="text/javascript" src="widgets/directive/bounded/multiSelectCheckDirective.js"></script>
+	<script type="text/javascript" src="widgets/directive/date/dateTimeDirective.js"></script>
+	<script type="text/javascript" src="widgets/directive/doc/download/downloadDirective.js"></script>
+	<script type="text/javascript" src="widgets/directive/search/searchDirective.js"></script>
+	<script type="text/javascript" src="widgets/directive/portal/topnav/navController.js"></script>
+	<script type="text/javascript" src="widgets/directive/portal/topnav/navDirective.js"></script>
+	<script type="text/javascript" src="widgets/directive/portal/subContainer/subContainerController.js"></script>
+	<script type="text/javascript" src="widgets/directive/portal/subContainer/subContainerDirective.js"></script>
+	<script type="text/javascript" src="widgets/directive/portal/breadcrumb/breadcrumbDirective.js"></script>
+	<script type="text/javascript" src="widgets/directive/portal/breadcrumb/breadcrumbController.js"></script>
+	<script type="text/javascript" src="widgets/directive/portal/link/navLinkController.js"></script>
+	<script type="text/javascript" src="widgets/directive/portal/link/navLinkDirective.js"></script>
+	<script type="text/javascript" src="widgets/directive/portal/reco/recoController.js"></script>
+	<script type="text/javascript" src="widgets/directive/portal/reco/recoDirective.js"></script>
+	<script type="text/javascript" src="widgets/directive/portal/recent/recentService.js"></script>
+	<script type="text/javascript" src="widgets/directive/portal/recent/recentController.js"></script>
+	<script type="text/javascript" src="widgets/directive/portal/recent/recentDirective.js"></script>
+	<script type="text/javascript" src="widgets/directive/portal/quicklinks/quickLinksController.js"></script>
+	<script type="text/javascript" src="widgets/directive/portal/quicklinks/quickLinksDirective.js"></script>
+	<script type="text/javascript" src="widgets/directive/portal/peers/peersService.js"></script>
+	<script type="text/javascript" src="widgets/directive/portal/peers/peersController.js"></script>
+	<script type="text/javascript" src="widgets/directive/portal/peers/peersDirective.js"></script>
+	<script type="text/javascript" src="widgets/directive/search/searchResultItemController.js"></script>
+	<script type="text/javascript" src="widgets/directive/search/searchResultItemDirective.js"></script>
+	<script type="text/javascript" src="widgets/directive/passwordChecked.js"></script>
+	<script type="text/javascript" src="widgets/directive/portal/sharePopup/share-content-popup.js"></script>
+	<script type="text/javascript" src="widgets/directive/portal/sharePopup/share-content-popupController.js"></script>
+	
+	<script type="text/javascript" src="widgets/stateUpdateService.js"></script>
+	<script type="text/javascript" src="widgets/content/template/contentTemplateService.js"></script>
+	<script type="text/javascript" src="widgets/content/data/contentDataService.js"></script>
+	<script type="text/javascript" src="widgets/content/index/contentIndexService.js"></script>
+	<script type="text/javascript" src="widgets/content/refdata/refdataIndexService.js"></script>
+	<script type="text/javascript" src="widgets/studio/studioInitService.js"></script>
+	<script type="text/javascript" src="widgets/search/searchService.js"></script>
+	<script type="text/javascript" src="widgets/content/contentUtil.js"></script>
+	<script type="text/javascript" src="widgets/content/qIdUtil.js"></script>
+	<script type="text/javascript" src="widgets/auth/authorizationService.js"></script>
+	<script type="text/javascript" src="widgets/auth/requiresPermDirective.js"></script>
+	<script type="text/javascript" src="widgets/system/systemAdminController.js"></script>
+	<script type="text/javascript" src="widgets/system/docstore/docstoreConfigController.js"></script>
+	<script type="text/javascript" src="widgets/system/quicklinks/quickLinksService.js"></script>
+	<script type="text/javascript" src="widgets/system/quicklinks/quickLinksConfigController.js"></script>
+	<script type="text/javascript" src="widgets/system/reco/recoService.js"></script>
+	<script type="text/javascript" src="widgets/system/reco/recoConfigController.js"></script>
+	<script type="text/javascript" src="widgets/content/refdata/userCtrl.js"></script>
+	<script type="text/javascript" src="widgets/content/refdata/userService.js"></script>
+	<script type="text/javascript" src="widgets/content/quicklinks/assocQuickLinkController.js"></script>
+	<script type="text/javascript" src="widgets/content/quicklinks/assocQuickLinksModal.js"></script>
+	<script type="text/javascript" src="widgets/content/reco/manageRecoController.js"></script>
+	<script type="text/javascript" src="widgets/content/reco/manageRecoModal.js"></script>
+	<script type="text/javascript" src="widgets/config/configurationService.js"></script>
+	<script type="text/javascript" src="widgets/system/docstore/docstoreConfigService.js"></script>
+	<script type="text/javascript" src="widgets/system/docstore/docstoreConfigMetadata.js"></script>
+	<script type="text/javascript" src="widgets/content/refdata/saveUserController.js"></script>
+	<script type="text/javascript" src="widgets/content/refdata/emailConfController.js"></script>
+	
+	<script type="text/javascript" src="js/mainController.js"></script>
+	<script type="text/javascript" src="widgets/content/index/contentIndexController.js"></script>
+	<script type="text/javascript" src="widgets/content/data/detail/contentDetailController.js"></script>
+	<script type="text/javascript" src="widgets/content/data/list/contentListController.js"></script>
+	<script type="text/javascript" src="widgets/content/data/add/contentAddController.js"></script>
+	<script type="text/javascript" src="widgets/content/data/edit/contentEditController.js"></script>
+	<script type="text/javascript" src="widgets/content/refdata/refdataIndexController.js"></script>
+	<script type="text/javascript" src="widgets/portal/portalController.js"></script>
+	<script type="text/javascript" src="widgets/portal/container/portalCntnrDetailController.js"></script>
+	<script type="text/javascript" src="widgets/portal/container/portalCntnrListController.js"></script>
+	<script type="text/javascript" src="widgets/portal/container/portalCntnrBodyCtrl.js"></script>
+	<script type="text/javascript" src="widgets/portal/container/portalCntnrRecommendedCtrl.js"></script>
+	<script type="text/javascript" src="widgets/portal/container/portalCntnrSubItemCtrl.js"></script>
+	<script type="text/javascript" src="widgets/portal/enclosure/portalEnclDetailController.js"></script>
+	<script type="text/javascript" src="widgets/portal/enclosure/portalEnclRecommendedCtrl.js"></script>
+	<script type="text/javascript" src="widgets/portal/search/portalSearchController.js"></script>
+
+</head>
+
+<body ng-app="studio">
+
+<!-- MAIN CONTENT -->
+<div class="page">
+<div class="page-inner">
+<div class="page-content">
+<!-- NAVIGATION -->
+<div ng-controller="LoginController">
+
+<!-- page header -->
+<header class="page-header">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-sm-4">
+				<!-- logo -->
+				<a href="#" class="logo"><img src="widgets/img/logo.png"><span translate="app.name"></span></a>
+				<!--/ logo -->
+			</div>
+			<div class="col-sm-8" ng-if="authenticated">
+				<!-- main nav -->
+				<nav class="main-nav container-fluid">
+					<a href="#" ui-sref-active="active" ui-sref="portal">Portal</a>
+					<a href="#" ui-sref-active="active" ui-sref="studio" requires-permission="VIEW_STUDIO">Studio</a>
+					<!-- <a href="#" ui-sref-active="active" ui-sref="refdata">Setup</a> -->
+					<li requires-permission="VIEW_STUDIO">
+						<a href="#" ng-class="{active:$state.includes('refdata') || $state.includes('system')}">Setup&nbsp;<i class="fa fa-angle-down"></i></a>
+						<ul class="main-nav-secondary">
+							<li><a ui-sref="refdata">Reference Data</a></li>
+							<li><a ui-sref="system.users.list">System Admin</a></li>
+						</ul>
+					</li>
+					<a href="#" ng-show="authenticated" ng-click="logout()">Logout</a>
+				</nav>
+				<!--/ main nav -->
+			</div>
+		</div>
+	</div>
+</header>
+<!--/ page header -->
+</div>
+
+    <!-- THIS IS WHERE WE WILL INJECT OUR CONTENT ============================== -->
+    <div ui-view></div>
+
+</div>
+</div>
+</div>
+
+<!-- page footer -->
+<footer class="page-footer">
+	<!-- copyrights -->
+	<div class="copyrights">&copy 2016 Enablix LLC. All rights reserved. | <a href="/terms" target="_blank">Terms and Conditions</a> | <a href="/privacy" target="_blank">Privacy Policy</a></div>
+	<!--/ copyrights -->
+</footer>
+<!--/ page footer -->
+
+<!-- scripts -->
+<script src="js/vendor/jquery/jquery-2.1.3.min.js"></script>
+<script src="js/vendor/jquery/jquery.select2.min.js"></script>
+<script src="js/main.js"></script>
+<!--/ scripts -->
+		
+</body>
+</html>
