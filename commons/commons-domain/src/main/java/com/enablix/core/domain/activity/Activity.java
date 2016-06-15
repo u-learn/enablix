@@ -6,6 +6,18 @@ public abstract class Activity {
 		USER_ACCOUNT, CONTENT
 	}
 	
-	public abstract Category getCategory();
+	protected Category category;
+	
+	protected Activity(Category category) {
+		this.category = category;
+	}
+
+	public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
+	}
 	
 }

@@ -34,6 +34,15 @@
 		<tr>
 			<label class="form-label">Message</label>
 			<textarea  name="message" ng-model="contactUsForm.message" class="form-control"></textarea>
+		</tr><br/>
+		<tr>
+			<no-captcha g-recaptcha-response="captchaResponse" theme='light' 
+				control="noCaptchaControl" expired-callback="captchaExpiredCallback"
+				site-key="{{captchaSiteKey}}">
+			</no-captcha>
+			<div ng-if="captchaError && captchaError=='CAPTCHA_ERROR'">
+				<div class="error">Please complete Captcha verification</div>
+			</div>
 		</tr>
 	</tbody>
 	</table>

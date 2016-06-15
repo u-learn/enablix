@@ -1,6 +1,6 @@
 enablix.studioApp.factory('StudioSetupService', 
 	[
-	 	         '$rootScope', 'ContentTemplateService',
+	 	         '$rootScope', 'ContentTemplateService', 
 	 	function ($rootScope,   ContentTemplateService) {
 	 		
 	 		var setupStudio = function() {

@@ -20,7 +20,7 @@ public class ContentActivity extends Activity {
 
 	public ContentActivity(String itemIdentity, String containerQId, ContainerType containerType,
 			ContentActivityType activityType) {
-		super();
+		super(Category.CONTENT);
 		this.itemIdentity = itemIdentity;
 		this.containerQId = containerQId;
 		this.containerType = containerType;
@@ -59,9 +59,4 @@ public class ContentActivity extends Activity {
 		this.activityType = activityType;
 	}
 
-	@Override
-	public Category getCategory() {
-		return Category.CONTENT;
-	}
-	
 }

@@ -4,12 +4,14 @@ import java.util.Date;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.enablix.core.domain.BaseDocumentEntity;
+
 @Document(collection = "ebx_activity_audit")
-public class ActivityAudit {
+public class ActivityAudit extends BaseDocumentEntity {
 
 	private Activity activity;
 	
-	private ActivityChannel<?> channel;
+	private ActivityChannel channel;
 	
 	private Date activityTime;
 	
@@ -23,11 +25,11 @@ public class ActivityAudit {
 		this.activity = activity;
 	}
 
-	public ActivityChannel<?> getChannel() {
+	public ActivityChannel getChannel() {
 		return channel;
 	}
 
-	public void setChannel(ActivityChannel<?> channel) {
+	public void setChannel(ActivityChannel channel) {
 		this.channel = channel;
 	}
 

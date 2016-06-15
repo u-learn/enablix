@@ -13,13 +13,43 @@ enablix.studioApp.controller('ContactUsController',
 			$modalInstance.close();
 		}
 		
+		$scope.captchaSiteKey = enablix.captchaSiteKey;
+		$scope.captchaResponse = null;
+		$scope.noCaptchaControl = {};
+		
 		$scope.submitContactUs = function() {
-			RESTService.postForData("contactUs", null, $scope.contactUsForm, null, function() {
+			
+			if (isNullOrUndefined($scope.captchaResponse)) {
+				$scope.captchaError = "CAPTCHA_ERROR";
+				return;
+			} else {
+				$scope.captchaError = null;
+			}
+			
+			var contactUsRequest = {
+					contactUs : $scope.contactUsForm,
+					captchaResponse : $scope.captchaResponse
+			}
+			
+			RESTService.postForData("contactUs", null, contactUsRequest, null, function() {
+				
 				$modalInstance.close();
 				InfoModalWindow.showInfoWindow("Thank you.", "Thank you for contacting us. We will get back to you soon!");
-			}, function() {
-				$modalInstance.close();
+				
+			}, function(data) {
+				
+				if (data.message == 'CAPTCHA_ERROR') {
+					$scope.captchaError = "CAPTCHA_ERROR";
+					$scope.noCaptchaControl.reset();
+				} else {
+					$modalInstance.close();
+					InfoModalWindow.showInfoWindow("Error.", "Error in submitting request. Please try again later.");
+				}
 			});
+		}
+		
+		$scope.captchaExpiredCallback = function() {
+			$scope.contactUsForm.nocaptcha = null;
 		}
 		
 	}

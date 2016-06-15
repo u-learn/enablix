@@ -1,15 +1,17 @@
 package com.enablix.core.domain.activity;
 
-public class ActivityChannel<CI> {
+public class ActivityChannel {
 
 	public enum Channel {
 		WEB, EMAIL, EXTERNAL
 	}
 	
 	private Channel channel;
-	
-	private CI channelInfo;
 
+	public ActivityChannel(Channel channel) {
+		this.channel = channel;
+	}
+	
 	public Channel getChannel() {
 		return channel;
 	}
@@ -18,12 +20,4 @@ public class ActivityChannel<CI> {
 		this.channel = channel;
 	}
 
-	public CI getChannelInfo() {
-		return channelInfo;
-	}
-
-	public void setChannelInfo(CI channelInfo) {
-		this.channelInfo = channelInfo;
-	}
-	
 }

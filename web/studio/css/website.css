@@ -27,6 +27,10 @@ h4 {
 	color: #222;
 }
 
+.rc-anchor-alert {
+	display: none;
+}
+
 /* buttons */
 /**/
 .button {
