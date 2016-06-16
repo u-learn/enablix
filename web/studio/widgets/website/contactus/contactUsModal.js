@@ -2,7 +2,7 @@ enablix.studioApp.factory('ContactUsModalWindow',
 	[			'$state', '$stateParams', 'RESTService', 'Notification', '$modal',
 	 	function($state,   $stateParams,   RESTService,   Notification,   $modal) {
 		
-			var showContactUsWindow = function(contentIdentity) {
+			var showContactUsWindow = function() {
 				var modalInstance = $modal.open({
 				      templateUrl: 'views/website/contactUs/contactUs.html',
 				      size: 'sm', // 'sm', 'lg'

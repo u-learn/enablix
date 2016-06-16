@@ -61,6 +61,9 @@
 	<script type="text/javascript" src="widgets/website/websiteMainCtrl.js"></script>
 	<script type="text/javascript" src="widgets/website/contactus/contactUsModal.js"></script>
 	<script type="text/javascript" src="widgets/website/contactus/contactUsController.js"></script>
+	<script type="text/javascript" src="widgets/website/modalpage/modalPageService.js"></script>
+	<script type="text/javascript" src="widgets/website/modalpage/modalPageController.js"></script>
+	
     <script type="text/javascript" src="widgets/modal/infoModal.js"></script>
     <script type="text/javascript" src="widgets/modal/infoModalController.js"></script>
     
@@ -75,7 +78,7 @@
               <h3 class="masthead-brand"><img src="img/logo.png" border="0" /></h3>
               <nav>
                 <ul class="nav masthead-nav">
-                  <li class="active"><a href="javascript:;">About Us</a></li>
+                  <li class="active"><a ng-click="showAboutUsModal()" href="javascript:;">About Us</a></li>
                   <li class="blueSepa">|</li>
                   <li><a ng-click="showContactUsModal()" href="javascript:;">Contact Us</a></li>
                   <li><a href="login.html#/login" class="loginBox" id="login">Customer Login &nbsp;<img src="img/bArrow.png" border="0" /></a></li>

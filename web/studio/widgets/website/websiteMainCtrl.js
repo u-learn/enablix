@@ -1,6 +1,6 @@
 enablix.studioApp.controller('WebsiteMainCtrl', 
-		   ['$scope', 'ContactUsModalWindow', 'RESTService',
-    function($scope,   ContactUsModalWindow,   RESTService) {
+		   ['$scope', 'ContactUsModalWindow', 'RESTService', 'ModalPageWindow',
+    function($scope,   ContactUsModalWindow,   RESTService,   ModalPageWindow) {
 
 		RESTService.getForData("captchasitekey", null, null, function(data) {
 			enablix.captchaSiteKey = data.sitekey;
@@ -12,5 +12,8 @@ enablix.studioApp.controller('WebsiteMainCtrl',
 			ContactUsModalWindow.showContactUsWindow();
 		};
 		
+		$scope.showAboutUsModal = function() {
+			ModalPageWindow.showModalPage('views/website/aboutus.html');
+		}
 	}                                          
 ]);
