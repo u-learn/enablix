@@ -54,7 +54,7 @@ public class EmailAction implements CheckpointAction<ContentChange, EmailActionT
 	private EmailContentResolverFactory contentResolverFactory;
 	
 	@Autowired
-	private CorrelatedUsersEmailRecepientResolver recepientUserResolver;
+	private EmailRecipientHelper recepientUserHelper;
 	
 	@Autowired
 	private ContentCrudService contentCrudService;
@@ -101,8 +101,7 @@ public class EmailAction implements CheckpointAction<ContentChange, EmailActionT
 
 		// find out the recipients
 		EmailRecipientType recepientDef = actionType.getRecipient();
-		Set<ContentDataRef> recepientUsers = recepientUserResolver.resolveRecepientEmails(
-				triggerItemRef, template, recepientDef.getCorrelatedUsers());
+		Set<ContentDataRef> recepientUsers = recepientUserHelper.getEmailRecipients(triggerItemRef, template, recepientDef);
 		
 		if (CollectionUtil.isNotEmpty(recepientUsers)) {
 			

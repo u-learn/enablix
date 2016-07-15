@@ -59,4 +59,9 @@ public class ContentCreatorCorrelator implements ItemUserCorrelator {
 		
 	}
 
+	@Override
+	public void deleteCorrelationForItem(ContentDataRef item) {
+		userCorrRecorder.removeItemUserCorrelation(item);
+	}
+
 }

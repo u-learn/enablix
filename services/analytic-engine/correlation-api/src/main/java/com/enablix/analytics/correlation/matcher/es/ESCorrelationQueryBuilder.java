@@ -18,6 +18,7 @@ import com.enablix.analytics.correlation.matcher.MatchInputRecord;
 import com.enablix.commons.util.collection.CollectionUtil;
 import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 import com.enablix.core.commons.xsdtopojo.FilterCriteriaType;
+import com.enablix.core.commons.xsdtopojo.FilterOperatorType;
 import com.enablix.core.commons.xsdtopojo.FilterType;
 import com.enablix.core.commons.xsdtopojo.MatchCriteriaType;
 import com.enablix.core.commons.xsdtopojo.MatchType;
@@ -45,12 +46,10 @@ public class ESCorrelationQueryBuilder {
 		SearchRequest searchRequest = Requests.searchRequest(indexName)
 				.searchType(SearchType.DFS_QUERY_THEN_FETCH).types(searchType);
 
-		BoolQueryBuilder qb = null;
+		BoolQueryBuilder qb = QueryBuilders.boolQuery();
 		
 		// Add filter criteria
 		if (filterCriteria != null && CollectionUtil.isNotEmpty(filterCriteria.getFilter())) {
-			
-			qb = QueryBuilders.boolQuery();
 			
 			for (FilterType filter : filterCriteria.getFilter()) {
 				
@@ -58,7 +57,12 @@ public class ESCorrelationQueryBuilder {
 									filter, targetItemQId, matchInput, template);
 				
 				for (QueryBuilder filterQb : filterQbs) {
-					qb.filter(filterQb);
+					
+					if (filter.getOperator() == FilterOperatorType.NOT_MATCH) {
+						qb.mustNot(filterQb);
+					} else {
+						qb.filter(filterQb);
+					}
 				}
 			}
 			
@@ -67,17 +71,18 @@ public class ESCorrelationQueryBuilder {
 		// Add match criteria
 		if (matchCriteria != null && CollectionUtil.isNotEmpty(matchCriteria.getMatch())) {
 			
-			if (qb == null) {
-				qb = QueryBuilders.boolQuery();
-			}
-			
 			for (MatchType match : matchCriteria.getMatch()) {
 				
 				List<QueryBuilder> matchQbs = filterESQueryTx.createESQuery(
 									match, targetItemQId, matchInput, template);
 				
 				for (QueryBuilder matchQb : matchQbs) {
-					qb.must(matchQb);
+
+					if (match.getOperator() == FilterOperatorType.NOT_MATCH) {
+						qb.mustNot(matchQb);
+					} else {
+						qb.must(matchQb);
+					}
 				}
 			}
 			

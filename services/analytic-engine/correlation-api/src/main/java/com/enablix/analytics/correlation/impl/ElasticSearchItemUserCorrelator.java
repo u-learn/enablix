@@ -61,11 +61,12 @@ public class ElasticSearchItemUserCorrelator implements ItemUserCorrelator {
 	private void processItemUserCorrelationRule(ItemUserCorrelationRuleType corrRule, ContentTemplate template,
 			ContentDataRef triggerItem) {
 		
-		// TODO: Filter record based on rule instead of fetching without filter. Implement MongoDataMatcher
-		MatchInputRecord matchInput = matchInputBuilder.buildTriggerMatchInput(template, triggerItem);
-		
-		for (RelatedUserPathType relatedItemDef : corrRule.getRelatedUsers().getRelatedUserPath()) {
-			processRelatedUserRule(corrRule, template, triggerItem, matchInput, relatedItemDef);
+		MatchInputRecord matchInput = matchInputBuilder.buildTriggerMatchInput(template, corrRule.getTriggerItem(), triggerItem);
+
+		if (matchInput != null) {
+			for (RelatedUserPathType relatedItemDef : corrRule.getRelatedUsers().getRelatedUserPath()) {
+				processRelatedUserRule(corrRule, template, triggerItem, matchInput, relatedItemDef);
+			}
 		}
 		
 	}
@@ -135,6 +136,11 @@ public class ElasticSearchItemUserCorrelator implements ItemUserCorrelator {
 				itemUserCorrRecorder.recordItemUserCorrelation(item, userRef, rule, relatedUserDef.getTags());
 			}
 		}
+	}
+
+	@Override
+	public void deleteCorrelationForItem(ContentDataRef item) {
+		itemUserCorrRecorder.removeItemUserCorrelation(item);
 	}
 	
 }

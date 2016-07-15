@@ -34,12 +34,20 @@
 	<xs:complexType name="filterType">
 		<xs:sequence>
 			<xs:element name="attributeId" type="xs:string"/>
+			<xs:element name="operator" type="filterOperatorType" default="MATCH" minOccurs="0"/>
 			<xs:choice>
 				<xs:element name="constant" type="filterConstantType"/>
 				<xs:element name="parentAttribute" type="filterParentAttributeType"/>
 			</xs:choice>
 		</xs:sequence>
 	</xs:complexType>
+	
+	<xs:simpleType name="filterOperatorType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="MATCH" />
+			<xs:enumeration value="NOT_MATCH" />
+		</xs:restriction>
+	</xs:simpleType>
 	
 	<xs:complexType name="filterConstantType">
 		<xs:simpleContent>
@@ -137,7 +145,7 @@
 	
 	<xs:complexType name="relatedUserType">
 		<xs:sequence>
-			<xs:element name="filterCriteria" type="filterCriteriaType"/>
+			<xs:element name="filterCriteria" type="filterCriteriaType" minOccurs="0"/>
 			<xs:element name="tags" type="tagsType"/>
 		</xs:sequence>
 	</xs:complexType>

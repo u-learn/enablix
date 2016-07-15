@@ -64,4 +64,9 @@ public class ItemUserCorrelationMongoRecorder implements ItemUserCorrelationReco
 		return itemUserCorr;
 	}
 
+	@Override
+	public void removeItemUserCorrelation(ContentDataRef item) {
+		itemUserCorrelationRepo.deleteByItemInstanceIdentity(item.getInstanceIdentity());
+	}
+
 }

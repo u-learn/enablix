@@ -43,4 +43,11 @@ public class ItemUserCorrelationServiceImpl implements ItemUserCorrelationServic
 		return null;
 	}
 
+	@Override
+	public void deleteCorrelationsForItem(ContentDataRef item) {
+		for (ItemUserCorrelator correlator : itemUserCorrelatorRegistry.getCorrelators()) {
+			correlator.deleteCorrelationForItem(item);
+		}
+	}
+
 }

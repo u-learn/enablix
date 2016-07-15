@@ -61,11 +61,12 @@ public class ElasticSearchItemCorrelator implements ItemItemCorrelator {
 	private void processItemCorrelationRule(ItemCorrelationRuleType corrRule, 
 			ContentTemplate template, ContentDataRef item) {
 
-		// TODO: Filter record based on rule instead of fetching without filter. Implement MongoDataMatcher
-		MatchInputRecord matchInput = matchInputBuilder.buildTriggerMatchInput(template, item);
+		MatchInputRecord matchInput = matchInputBuilder.buildTriggerMatchInput(template, corrRule.getTriggerItem(), item);
 		
-		for (RelatedItemType relatedItemDef : corrRule.getRelatedItems().getRelatedItem()) {
-			processRelatedItemRule(corrRule, template, item, matchInput, relatedItemDef);
+		if (matchInput != null) {
+			for (RelatedItemType relatedItemDef : corrRule.getRelatedItems().getRelatedItem()) {
+				processRelatedItemRule(corrRule, template, item, matchInput, relatedItemDef);
+			}
 		}
 		
 	}
@@ -98,6 +99,11 @@ public class ElasticSearchItemCorrelator implements ItemItemCorrelator {
 				processRelatedItemRule(corrRule, template, triggerItem, nextMatchInput, relatedItemDef);
 			}
 		}
+	}
+
+	@Override
+	public void deleteCorrelationForItem(ContentDataRef item) {
+		itemCorrRecorder.removeItemCorrelations(item);
 	}
 
 }

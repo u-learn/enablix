@@ -14,4 +14,6 @@ public interface ItemUserCorrelationRecorder {
 
 	ItemUserCorrelation recordItemUserCorrelation(ContentDataRef item, ContentDataRef userRef, List<String> tags);
 
+	void removeItemUserCorrelation(ContentDataRef item);
+	
 }

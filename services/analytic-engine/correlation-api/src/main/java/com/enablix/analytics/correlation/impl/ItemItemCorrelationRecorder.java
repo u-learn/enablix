@@ -10,4 +10,6 @@ public interface ItemItemCorrelationRecorder {
 	ItemItemCorrelation recordItemCorrelation(ContentDataRef item, ContentDataRef relatedItem, 
 			ItemCorrelationRuleType itemCorrRule, TagsType tagsType);
 	
+	void removeItemCorrelations(ContentDataRef item);
+	
 }

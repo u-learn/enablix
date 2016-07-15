@@ -13,4 +13,6 @@ public interface ItemCorrelationService {
 	
 	List<ItemItemCorrelation> fetchItemItemCorrelations(ContentDataRef item, List<String> relatedItemQIds);
 	
+	void deleteCorrelationsForItem(ContentDataRef item);
+	
 }

@@ -138,14 +138,29 @@
 	
 	<xs:complexType name="emailRecipientType">
 		<xs:sequence>
-			<xs:element name="correlatedUsers" type="emailCorrelatedUsersType" maxOccurs="1"/>
+			<xs:element name="correlatedUsers" type="emailCorrelatedUsersType" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="allUsers" type="emailAllUsersType"  minOccurs="0" maxOccurs="1"/>
 		</xs:sequence>
 	</xs:complexType>
 	
+	<xs:complexType name="baseEmailRecipientType">
+		<xs:attribute name="name" type="xs:string"/>
+	</xs:complexType>
+	
+	<xs:complexType name="emailAllUsersType">
+		<xs:complexContent>
+			<xs:extension base="baseEmailRecipientType"/>
+		</xs:complexContent>
+	</xs:complexType>
+	
 	<xs:complexType name="emailCorrelatedUsersType">
-		<xs:sequence>
-			<xs:element name="users" type="emailUsersType" maxOccurs="unbounded"/>
-		</xs:sequence>
+		<xs:complexContent>
+			<xs:extension base="baseEmailRecipientType">
+				<xs:sequence>
+					<xs:element name="users" type="emailUsersType" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
 	</xs:complexType>
 	
 	<xs:complexType name="emailUsersType">

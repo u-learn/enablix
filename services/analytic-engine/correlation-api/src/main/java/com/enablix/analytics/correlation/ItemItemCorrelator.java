@@ -7,4 +7,6 @@ public interface ItemItemCorrelator {
 
 	void correlateItem(ContentTemplate template, ContentDataRef item);
 	
+	void deleteCorrelationForItem(ContentDataRef item);
+	
 }

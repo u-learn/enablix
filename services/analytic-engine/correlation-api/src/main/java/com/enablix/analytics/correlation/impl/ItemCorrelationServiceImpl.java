@@ -42,4 +42,11 @@ public class ItemCorrelationServiceImpl implements ItemCorrelationService {
 		return null;
 	}
 
+	@Override
+	public void deleteCorrelationsForItem(ContentDataRef item) {
+		for (ItemItemCorrelator correlator : itemCorrelatorRegistry.getCorrelators()) {
+			correlator.deleteCorrelationForItem(item);
+		}
+	}
+
 }

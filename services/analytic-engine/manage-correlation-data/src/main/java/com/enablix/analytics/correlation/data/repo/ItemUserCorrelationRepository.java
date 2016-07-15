@@ -6,6 +6,8 @@ import com.enablix.core.mongo.repository.BaseMongoRepository;
 public interface ItemUserCorrelationRepository extends BaseMongoRepository<ItemUserCorrelation> {
 
 	ItemUserCorrelation findByItemInstanceIdentityAndUserInstanceIdentity(String itemIdentity, String userIdentity);
+
+	void deleteByItemInstanceIdentity(String itemIdentity);
 	
 }
 

@@ -14,4 +14,6 @@ public interface ItemUserCorrelationService {
 	
 	List<ItemUserCorrelation> findCorrelatedUsers(ContentDataRef item, Tag tag);
 	
+	void deleteCorrelationsForItem(ContentDataRef item);
+	
 }
