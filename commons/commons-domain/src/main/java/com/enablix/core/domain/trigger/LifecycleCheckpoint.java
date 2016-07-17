@@ -1,5 +1,6 @@
 package com.enablix.core.domain.trigger;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -86,6 +87,7 @@ public class LifecycleCheckpoint<T extends Trigger> extends BaseDocumentEntity {
 	
 	public void executionStarted() {
 		this.setStatus(ExecutionStatus.STARTED);
+		this.setExecutedOn(Calendar.getInstance().getTime());
 	}
 	
 	public void executionCompleted() {
@@ -111,6 +113,14 @@ public class LifecycleCheckpoint<T extends Trigger> extends BaseDocumentEntity {
 	public ExecutionStatus getActionExecStatus(int actionOrder) {
 		ExecutionStatus actionExecStatus = actionStatus.get(actionOrder);
 		return actionExecStatus == null ? ExecutionStatus.PENDING : actionExecStatus;
+	}
+
+	public void setScheduledExecDate(Date scheduledExecDate) {
+		this.scheduledExecDate = scheduledExecDate;
+	}
+
+	public void resetActionExec(int actionOrder) {
+		actionStatus.put(actionOrder, ExecutionStatus.PENDING);
 	}
 	
 }

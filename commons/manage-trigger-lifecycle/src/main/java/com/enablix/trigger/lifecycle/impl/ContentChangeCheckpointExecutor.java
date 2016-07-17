@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.enablix.analytics.correlation.impl.DataSyncPendingException;
 import com.enablix.app.template.service.TemplateManager;
 import com.enablix.core.commons.xsdtopojo.ActionType;
 import com.enablix.core.commons.xsdtopojo.CheckpointType;
@@ -29,6 +30,7 @@ import com.enablix.trigger.lifecycle.repo.LifecycleCheckpointRepository;
 @Component
 public class ContentChangeCheckpointExecutor implements CheckpointExecutor<ContentChange> {
 
+	private static final int DATA_SYNC_WAIT_INTERVAL = 60; //60 seconds
 	private static final Logger LOGGER = LoggerFactory.getLogger(ContentChangeCheckpointExecutor.class);
 	
 	@Autowired
@@ -64,6 +66,17 @@ public class ContentChangeCheckpointExecutor implements CheckpointExecutor<Conte
 				
 				checkpoint.executionCompleted();
 				
+			} catch (DataSyncPendingException e) {
+				
+				LOGGER.error("Data sync pending exception", e);
+				
+				// data sync pending, re-schedule it to run later
+				checkpoint.setStatus(ExecutionStatus.PENDING);
+				
+				Calendar currDate = Calendar.getInstance();
+				currDate.add(Calendar.SECOND, DATA_SYNC_WAIT_INTERVAL);
+				checkpoint.setScheduledExecDate(currDate.getTime());
+				
 			} catch (Throwable t) {
 				
 				LOGGER.error("Error executing action checkpoint [{}]", checkpoint.getIdentity());
@@ -98,6 +111,10 @@ public class ContentChangeCheckpointExecutor implements CheckpointExecutor<Conte
 					checkpoint.actionExecStarted(actionOrder);
 					executeAction(checkpoint, template, actionDef);
 					checkpoint.actionExecCompleted(actionOrder);
+					
+				} catch (DataSyncPendingException e) {
+					checkpoint.resetActionExec(actionOrder);
+					throw e;
 					
 				} catch (Throwable t) {
 					LOGGER.error("Error executing action [{}]", actionOrder);

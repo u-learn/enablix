@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -22,6 +24,8 @@ import com.enablix.core.commons.xsdtopojo.TriggerItemType;
 
 @Component
 public class MatchInputRecordBuilder {
+	
+	private static final Logger LOGGER = LoggerFactory.getLogger(MatchInputRecordBuilder.class);
 	
 	@Autowired
 	private ContentDataManager contentDataMgr;
@@ -56,25 +60,34 @@ public class MatchInputRecordBuilder {
 				triggerItem.getContainerQId(), new HashMap<String, Object>());
 		
 		FilterCriteriaType triggerFilterCriteria = new FilterCriteriaType();
-		triggerFilterCriteria.getFilter().addAll(filterCriteria.getFilter());
-		
+
 		// Add identity filter
 		FilterType identityFilter = new FilterType();
 		identityFilter.setAttributeId(ContentDataConstants.IDENTITY_KEY);
 		
 		FilterConstantType identityFilterConstantVal = new FilterConstantType();
 		identityFilterConstantVal.setValue(triggerItem.getInstanceIdentity());
-		
 		identityFilter.setConstant(identityFilterConstantVal);
 		
 		triggerFilterCriteria.getFilter().add(identityFilter);
 		
+		// check that the record has made it to the persistence layer of the data matcher before 
+		// matching the record against the filter criteria i.e. in case of elastic search data matcher,
+		// need to make sure that the record has made it to the 
+		List<Map<String, Object>> triggerRecord = 
+				dataMatcher.findMatchingRecords(triggerItem.getContainerQId(), template, triggerFilterCriteria, emptyMatchInput);
+		
+		if (CollectionUtil.isEmpty(triggerRecord)) {
+			LOGGER.error("Trigger record [{}] not found in data matcher lookup store", triggerItem);
+			throw new DataSyncPendingException("Trigger record not found in data matcher lookup store");
+		}
+		
 		// check if the trigger entity matches the filter criteria
+		triggerFilterCriteria.getFilter().addAll(filterCriteria.getFilter());
 		List<Map<String, Object>> matchedRecords = 
 				dataMatcher.findMatchingRecords(triggerItem.getContainerQId(), template, triggerFilterCriteria, emptyMatchInput);
 		
 		return CollectionUtil.isNotEmpty(matchedRecords);
-		
 	}
 
 	private void populateParent(MatchInputRecord matchInput, ContentTemplate template) {
