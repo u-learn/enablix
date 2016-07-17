@@ -18,7 +18,7 @@ public class ProcessContext {
 			ProcessContext ctx = new ProcessContext(userId, tenantId, templateId);
 			THREAD_LOCAL_PROCESS_CONTEXT.set(ctx);
 			
-			LOGGER.debug("Initialized " + ctx);
+			LOGGER.trace("Initialized " + ctx);
 
 		} else {
 			throw new IllegalStateException("Process context cannot be re-initialized");
@@ -30,7 +30,7 @@ public class ProcessContext {
 	}
 	
 	public static void clear() {
-		LOGGER.debug("Clearing " + get());
+		LOGGER.trace("Clearing " + get());
 		THREAD_LOCAL_PROCESS_CONTEXT.remove();
 	}
 	

@@ -1,6 +1,7 @@
 package com.enablix.app.content;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.Map;
 
 import com.enablix.commons.constants.ContentDataConstants;
@@ -133,6 +134,14 @@ public class ContentDataUtil {
 		}
 		
 		return contentDataRef;
+	}
+	
+	public static Date getContentCreatedAt(Map<String, Object> contentData) {
+		return (Date) contentData.get(ContentDataConstants.CREATED_AT_KEY);
+	}
+	
+	public static Date getContentModifiedAt(Map<String, Object> contentData) {
+		return (Date) contentData.get(ContentDataConstants.MODIFIED_AT_KEY);
 	}
 	
 }

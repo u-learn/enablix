@@ -1,5 +1,7 @@
 package com.enablix.core.domain.trigger;
 
+import java.util.Date;
+
 import com.enablix.core.api.ContentDataRef;
 import com.enablix.core.commons.xsdtopojo.TriggerTypeEnum;
 
@@ -12,7 +14,11 @@ public class ContentChange extends Trigger {
 	private ContentDataRef triggerItem;
 	
 	private TriggerType type;
-
+	
+	public ContentChange(Date triggerTime) {
+		super(triggerTime);
+	}
+	
 	public ContentDataRef getTriggerItem() {
 		return triggerItem;
 	}

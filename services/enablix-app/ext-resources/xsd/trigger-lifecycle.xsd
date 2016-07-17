@@ -29,6 +29,20 @@
 	<xs:simpleType name="execTimeType">
 		<xs:restriction base="xs:string">
 			<xs:enumeration value="NOW" />
+			<xs:enumeration value="LATER" />
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:complexType name="laterExecutionTimeType">
+		<xs:attribute name="timeUnit" type="timeUnitEnum"/>
+		<xs:attribute name="timeValue" type="xs:integer"/>
+	</xs:complexType>
+	
+	<xs:simpleType name="timeUnitEnum">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="MIN" />
+			<xs:enumeration value="DAY" />
+			<xs:enumeration value="WEEK" />
 		</xs:restriction>
 	</xs:simpleType>
 	
@@ -52,6 +66,9 @@
 	</xs:complexType>
 	
 	<xs:complexType name="executionTimeType">
+		<xs:sequence>
+			<xs:element name="after" type="laterExecutionTimeType" minOccurs="0"/>
+		</xs:sequence>
 		<xs:attribute name="type" type="execTimeType"/>
 	</xs:complexType>
 	

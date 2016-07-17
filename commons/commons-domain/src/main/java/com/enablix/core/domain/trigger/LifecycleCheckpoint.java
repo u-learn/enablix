@@ -1,13 +1,19 @@
 package com.enablix.core.domain.trigger;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.enablix.core.commons.xsdtopojo.CheckpointType;
+import com.enablix.core.domain.BaseDocumentEntity;
 
-public class LifecycleCheckpoint<T extends Trigger> {
+@Document(collection = "ebx_lifecycle_checkpoint")
+public class LifecycleCheckpoint<T extends Trigger> extends BaseDocumentEntity {
 
-	public static enum CheckpointStatus {
-		STARTED, PENDING, COMPLETED
+	public static enum ExecutionStatus {
+		STARTED, PENDING, COMPLETED, FAILED
 	}
 	
 	private T trigger;
@@ -22,46 +28,44 @@ public class LifecycleCheckpoint<T extends Trigger> {
 	
 	private Date executedOn;
 	
-	private CheckpointStatus status = CheckpointStatus.PENDING;
+	private ExecutionStatus status;
+	
+	private Map<Integer, ExecutionStatus> actionStatus;
+	
+	public LifecycleCheckpoint(T trigger, String triggerLifecycleId, String triggerLifecycleRuleId,
+			CheckpointType checkpointDefinition, Date scheduledExecDate) {
+		super();
+		this.trigger = trigger;
+		this.triggerLifecycleId = triggerLifecycleId;
+		this.triggerLifecycleRuleId = triggerLifecycleRuleId;
+		this.checkpointDefinition = checkpointDefinition;
+		this.scheduledExecDate = scheduledExecDate;
+		init();
+	}
+
+	private void init() {
+		this.status = ExecutionStatus.PENDING;
+		this.actionStatus = new HashMap<>();
+	}
 	
 	public T getTrigger() {
 		return trigger;
-	}
-
-	public void setTrigger(T trigger) {
-		this.trigger = trigger;
 	}
 
 	public String getTriggerLifecycleId() {
 		return triggerLifecycleId;
 	}
 
-	public void setTriggerLifecycleId(String triggerLifecycleId) {
-		this.triggerLifecycleId = triggerLifecycleId;
-	}
-	
 	public String getTriggerLifecycleRuleId() {
 		return triggerLifecycleRuleId;
-	}
-
-	public void setTriggerLifecycleRuleId(String triggerLifecycleRuleId) {
-		this.triggerLifecycleRuleId = triggerLifecycleRuleId;
 	}
 
 	public CheckpointType getCheckpointDefinition() {
 		return checkpointDefinition;
 	}
 
-	public void setCheckpointDefinition(CheckpointType checkpointDefinition) {
-		this.checkpointDefinition = checkpointDefinition;
-	}
-
 	public Date getScheduledExecDate() {
 		return scheduledExecDate;
-	}
-
-	public void setScheduledExecDate(Date scheduledExecDate) {
-		this.scheduledExecDate = scheduledExecDate;
 	}
 
 	public Date getExecutedOn() {
@@ -72,20 +76,41 @@ public class LifecycleCheckpoint<T extends Trigger> {
 		this.executedOn = executedOn;
 	}
 
-	public CheckpointStatus getStatus() {
+	public ExecutionStatus getStatus() {
 		return status;
 	}
 
-	public void setStatus(CheckpointStatus status) {
+	public void setStatus(ExecutionStatus status) {
 		this.status = status;
 	}
 	
 	public void executionStarted() {
-		this.setStatus(CheckpointStatus.STARTED);
+		this.setStatus(ExecutionStatus.STARTED);
 	}
 	
 	public void executionCompleted() {
-		this.setStatus(CheckpointStatus.COMPLETED);
+		this.setStatus(ExecutionStatus.COMPLETED);
+	}
+
+	public void executionFailed() {
+		this.setStatus(ExecutionStatus.FAILED);
+	}
+	
+	public void actionExecStarted(int actionOrder) {
+		actionStatus.put(actionOrder, ExecutionStatus.STARTED);
+	}
+	
+	public void actionExecCompleted(int actionOrder) {
+		actionStatus.put(actionOrder, ExecutionStatus.COMPLETED);
+	}
+	
+	public void actionExecFailed(int actionOrder) {
+		actionStatus.put(actionOrder, ExecutionStatus.FAILED);
+	}
+	
+	public ExecutionStatus getActionExecStatus(int actionOrder) {
+		ExecutionStatus actionExecStatus = actionStatus.get(actionOrder);
+		return actionExecStatus == null ? ExecutionStatus.PENDING : actionExecStatus;
 	}
 	
 }

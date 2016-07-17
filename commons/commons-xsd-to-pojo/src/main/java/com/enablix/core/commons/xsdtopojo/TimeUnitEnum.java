@@ -13,32 +13,34 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for filterOperatorType.
+ * <p>Java class for timeUnitEnum.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * <p>
  * <pre>
- * &lt;simpleType name="filterOperatorType">
+ * &lt;simpleType name="timeUnitEnum">
  *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *     &lt;enumeration value="MATCH"/>
- *     &lt;enumeration value="NOT_MATCH"/>
+ *     &lt;enumeration value="MIN"/>
+ *     &lt;enumeration value="DAY"/>
+ *     &lt;enumeration value="WEEK"/>
  *   &lt;/restriction>
  * &lt;/simpleType>
  * </pre>
  * 
  */
-@XmlType(name = "filterOperatorType")
+@XmlType(name = "timeUnitEnum")
 @XmlEnum
-public enum FilterOperatorType {
+public enum TimeUnitEnum {
 
-    MATCH,
-    NOT_MATCH;
+    MIN,
+    DAY,
+    WEEK;
 
     public String value() {
         return name();
     }
 
-    public static FilterOperatorType fromValue(String v) {
+    public static TimeUnitEnum fromValue(String v) {
         return valueOf(v);
     }
 

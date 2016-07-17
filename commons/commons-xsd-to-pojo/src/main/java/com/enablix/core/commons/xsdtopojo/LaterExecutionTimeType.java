@@ -9,24 +9,24 @@
 package com.enablix.core.commons.xsdtopojo;
 
 import java.io.Serializable;
+import java.math.BigInteger;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for emailRecipientType complex type.
+ * <p>Java class for laterExecutionTimeType complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="emailRecipientType">
+ * &lt;complexType name="laterExecutionTimeType">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *       &lt;sequence>
- *         &lt;element name="correlatedUsers" type="{}emailCorrelatedUsersType" minOccurs="0"/>
- *         &lt;element name="allUsers" type="{}emailAllUsersType" minOccurs="0"/>
- *       &lt;/sequence>
+ *       &lt;attribute name="timeUnit" type="{}timeUnitEnum" />
+ *       &lt;attribute name="timeValue" type="{http://www.w3.org/2001/XMLSchema}integer" />
  *     &lt;/restriction>
  *   &lt;/complexContent>
  * &lt;/complexType>
@@ -35,64 +35,63 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "emailRecipientType", propOrder = {
-    "correlatedUsers",
-    "allUsers"
-})
-public class EmailRecipientType
+@XmlType(name = "laterExecutionTimeType")
+public class LaterExecutionTimeType
     implements Serializable
 {
 
     private final static long serialVersionUID = 1L;
-    protected EmailCorrelatedUsersType correlatedUsers;
-    protected EmailAllUsersType allUsers;
+    @XmlAttribute(name = "timeUnit")
+    protected TimeUnitEnum timeUnit;
+    @XmlAttribute(name = "timeValue")
+    protected BigInteger timeValue;
 
     /**
-     * Gets the value of the correlatedUsers property.
+     * Gets the value of the timeUnit property.
      * 
      * @return
      *     possible object is
-     *     {@link EmailCorrelatedUsersType }
+     *     {@link TimeUnitEnum }
      *     
      */
-    public EmailCorrelatedUsersType getCorrelatedUsers() {
-        return correlatedUsers;
+    public TimeUnitEnum getTimeUnit() {
+        return timeUnit;
     }
 
     /**
-     * Sets the value of the correlatedUsers property.
+     * Sets the value of the timeUnit property.
      * 
      * @param value
      *     allowed object is
-     *     {@link EmailCorrelatedUsersType }
+     *     {@link TimeUnitEnum }
      *     
      */
-    public void setCorrelatedUsers(EmailCorrelatedUsersType value) {
-        this.correlatedUsers = value;
+    public void setTimeUnit(TimeUnitEnum value) {
+        this.timeUnit = value;
     }
 
     /**
-     * Gets the value of the allUsers property.
+     * Gets the value of the timeValue property.
      * 
      * @return
      *     possible object is
-     *     {@link EmailAllUsersType }
+     *     {@link BigInteger }
      *     
      */
-    public EmailAllUsersType getAllUsers() {
-        return allUsers;
+    public BigInteger getTimeValue() {
+        return timeValue;
     }
 
     /**
-     * Sets the value of the allUsers property.
+     * Sets the value of the timeValue property.
      * 
      * @param value
      *     allowed object is
-     *     {@link EmailAllUsersType }
+     *     {@link BigInteger }
      *     
      */
-    public void setAllUsers(EmailAllUsersType value) {
-        this.allUsers = value;
+    public void setTimeValue(BigInteger value) {
+        this.timeValue = value;
     }
 
 }

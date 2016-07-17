@@ -38,8 +38,13 @@ enablix.filters.filter('ebxFormatData', function($filter, $compile) {
 								
 				if (input) {
 					text = $filter('linky')(input, "_blank");
-					if(text.indexOf('<a') >= 0)
-						text = text.replace(text.substring(text.indexOf('>'),text.indexOf('</')),">Click here");
+					if (text.indexOf('<a') >= 0) {
+						if (text.indexOf('mailto:') > 0) {
+							text = input;
+						} else {
+							text = text.replace(text.substring(text.indexOf('>'),text.indexOf('</')),">Click here");
+						}
+					}
 				}
 				break;
 		}

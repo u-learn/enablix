@@ -1,5 +1,8 @@
 package com.enablix.trigger;
 
+import java.util.Calendar;
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -44,7 +47,14 @@ public class ContentTriggerListener implements ContentDataEventListener {
 	@EventSubscription(eventName = {Events.CONTENT_CHANGE_EVENT})
 	public void handleContentChangeEvent(ContentDataSaveEvent event) {
 		
-		ContentChange contentChangeTrigger = new ContentChange();
+		Date contentTriggerDate = event.isNewRecord() ? ContentDataUtil.getContentCreatedAt(event.getDataAsMap())
+				: ContentDataUtil.getContentModifiedAt(event.getDataAsMap());
+		
+		if (contentTriggerDate == null) {
+			contentTriggerDate = Calendar.getInstance().getTime();
+		}
+		
+		ContentChange contentChangeTrigger = new ContentChange(contentTriggerDate);
 		
 		ContentDataRef triggerItem = ContentDataUtil.contentDataToRef(
 				event.getDataAsMap(), event.getTemplateId(), event.getContainerType().getQualifiedId());

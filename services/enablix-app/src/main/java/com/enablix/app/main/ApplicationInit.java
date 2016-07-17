@@ -19,6 +19,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.PropertySources;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.resource.PathResourceResolver;
@@ -46,7 +47,9 @@ import com.enablix.commons.util.StringUtil;
 				"com.enablix.analytics.correlation.repo",
 				"com.enablix.analytics.correlation.data.repo",
 				"com.enablix.trigger.lifecycle.rule.repo",
+				"com.enablix.trigger.lifecycle.repo",
 				"com.enablix.app.audit.repo"})
+@EnableScheduling
 public class ApplicationInit extends WebMvcAutoConfigurationAdapter {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(ApplicationInit.class);

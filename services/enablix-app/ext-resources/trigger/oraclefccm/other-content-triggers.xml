@@ -6,7 +6,9 @@
 		</candidateContainers>
 		<lifecycle>
 			<checkpoint>
-				<executionTime type="NOW"/>
+				<executionTime type="LATER">
+					<after timeUnit="MIN" timeValue="2"/>
+				</executionTime>
 				<actions>
 					<correlation execOrder="1"/>
 					<email execOrder="2">
@@ -37,7 +39,9 @@
 		</candidateContainers>
 		<lifecycle>
 			<checkpoint>
-				<executionTime type="NOW"/>
+				<executionTime type="LATER">
+					<after timeUnit="MIN" timeValue="2"/>
+				</executionTime>
 				<actions>
 					<correlation execOrder="1"/>
 					<email execOrder="2">

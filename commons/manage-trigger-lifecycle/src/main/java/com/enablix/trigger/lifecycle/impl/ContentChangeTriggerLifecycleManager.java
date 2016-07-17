@@ -16,6 +16,7 @@ import com.enablix.core.domain.trigger.Trigger;
 import com.enablix.core.domain.trigger.TriggerLifecycleRule;
 import com.enablix.trigger.lifecycle.LifecycleCheckpointBuilder;
 import com.enablix.trigger.lifecycle.TriggerLifecycleManager;
+import com.enablix.trigger.lifecycle.repo.LifecycleCheckpointRepository;
 import com.enablix.trigger.lifecycle.rule.repo.TriggerLifecycleRuleRepository;
 
 @Component
@@ -29,6 +30,9 @@ public class ContentChangeTriggerLifecycleManager implements TriggerLifecycleMan
 	
 	@Autowired
 	private LifecycleCheckpointBuilder checkpointBuilder;
+	
+	@Autowired
+	private LifecycleCheckpointRepository checkpointRepo;
 	
 	@Override
 	public void startLifecycle(ContentChange trigger) {
@@ -51,12 +55,11 @@ public class ContentChangeTriggerLifecycleManager implements TriggerLifecycleMan
 			
 				LifecycleCheckpoint<ContentChange> lifecycleCheckpoint = checkpointBuilder.build(
 						contentTriggerLifecycleRule, checkpointDef, trigger, triggerLifecycleId);
-				
-				// TODO: record checkpoints in mongo
-				
 				checkpoints.add(lifecycleCheckpoint);
-				
 			}
+			
+			// save all checkpoints
+			checkpoints = checkpointRepo.save(checkpoints);
 			
 			// execute checkpoints
 			for (LifecycleCheckpoint<ContentChange> lifecycleCheckpoint : checkpoints) {

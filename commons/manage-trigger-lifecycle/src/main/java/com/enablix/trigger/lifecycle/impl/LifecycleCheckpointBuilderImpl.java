@@ -26,12 +26,8 @@ public class LifecycleCheckpointBuilderImpl implements LifecycleCheckpointBuilde
 		CheckpointExecutionTimeInterpreter execTimeInterpreter = execTimeInterpreterFactory.getInterpreter(checkpointDef);
 		Date toBeExecutedOn = execTimeInterpreter.getCheckpointExecutionTime(checkpointDef, trigger);
 		
-		LifecycleCheckpoint<T> checkpoint = new LifecycleCheckpoint<>();
-		checkpoint.setCheckpointDefinition(checkpointDef);
-		checkpoint.setScheduledExecDate(toBeExecutedOn);
-		checkpoint.setTrigger(trigger);
-		checkpoint.setTriggerLifecycleRuleId(triggerLifecycleRule.getId());
-		checkpoint.setTriggerLifecycleId(triggerLifecycleId);
+		LifecycleCheckpoint<T> checkpoint = new LifecycleCheckpoint<>(trigger, 
+				triggerLifecycleId, triggerLifecycleRule.getId(), checkpointDef, toBeExecutedOn);
 		
 		return checkpoint;
 	}
