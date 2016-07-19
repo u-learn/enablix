@@ -59,6 +59,8 @@ public class ElasticSearchDataMatcher implements DataMatcher {
 			matchedRecords.add(matchedRec);
 		}
 		
+		LOGGER.debug("Total matched records: {}", matchedRecords.size());
+		
 		return matchedRecords;
 	}
 	

@@ -161,7 +161,7 @@
 							<datastore>
 								<storeId>compRating</storeId>
 								<dataId>identity</dataId>
-								<dataLabel>rating</dataLabel>
+								<dataLabel>ratingName</dataLabel>
 							</datastore>
 						</refList>
 					</bounded>
@@ -212,7 +212,7 @@
 							<datastore>
 								<storeId>opportunityStatus</storeId>
 								<dataId>identity</dataId>
-								<dataLabel>oppStatus</dataLabel>
+								<dataLabel>oppStatusName</dataLabel>
 							</datastore>
 						</refList>
 					</bounded>
@@ -318,7 +318,7 @@
 						<datastore>
 							<storeId>partnerType</storeId>
 							<dataId>identity</dataId>
-							<dataLabel>type</dataLabel>
+							<dataLabel>typeName</dataLabel>
 						</datastore>
 					</refList>
 				</bounded>
@@ -351,7 +351,7 @@
 						<datastore>
 							<storeId>analystType</storeId>
 							<dataId>identity</dataId>
-							<dataLabel>type</dataLabel>
+							<dataLabel>typeName</dataLabel>
 						</datastore>
 					</refList>
 				</bounded>
@@ -375,7 +375,7 @@
 							<datastore>
 								<storeId>analystReportRating</storeId>
 								<dataId>identity</dataId>
-								<dataLabel>rating</dataLabel>
+								<dataLabel>ratingName</dataLabel>
 							</datastore>
 						</refList>
 					</bounded>
@@ -504,7 +504,7 @@
 							<datastore>
 								<storeId>analystEngagementType</storeId>
 								<dataId>identity</dataId>
-								<dataLabel>type</dataLabel>
+								<dataLabel>typeName</dataLabel>
 							</datastore>
 						</refList>
 					</bounded>
@@ -568,7 +568,7 @@
 						<datastore>
 							<storeId>mktEventType</storeId>
 							<dataId>identity</dataId>
-							<dataLabel>type</dataLabel>
+							<dataLabel>typeName</dataLabel>
 						</datastore>
 					</refList>
 				</bounded>
@@ -837,7 +837,7 @@
 						<datastore>
 							<storeId>caseStudyType</storeId>
 							<dataId>identity</dataId>
-							<dataLabel>type</dataLabel>
+							<dataLabel>typeName</dataLabel>
 						</datastore>
 					</refList>
 				</bounded>
@@ -1297,7 +1297,7 @@
 						<datastore>
 							<storeId>mmtype</storeId>
 							<dataId>identity</dataId>
-							<dataLabel>type</dataLabel>
+							<dataLabel>typeName</dataLabel>
 						</datastore>
 					</refList>
 				</bounded>
@@ -1866,7 +1866,7 @@
 						<datastore>
 							<storeId>slideType</storeId>
 							<dataId>identity</dataId>
-							<dataLabel>type</dataLabel>
+							<dataLabel>typeName</dataLabel>
 						</datastore>
 					</refList>
 				</bounded>
@@ -1934,7 +1934,7 @@
 		</container>
 		<container id="content" label="Other Content">
 			<contentItem id="title" label="Title" type="text"/>
-			<contentItem id="documentType" label="Document Type" type="text"/>
+			<contentItem id="documentType" label="Document Type" type="text" searchBoost="6"/>
 			<contentItem id="file" label="File" type="doc"/>
 			<contentItem id="url" label="URL" type="text"/>				
 			<contentItem id="summary" label="Summary" type="text"/>
@@ -2021,7 +2021,7 @@
 			<contentItem id="name" label="Name" type="text"/>			
 		</container>
 		<container id="caseStudyType" label="Case Study Types" refData="true">
-			<contentItem id="type" label="Type" type="text"/>
+			<contentItem id="typeName" label="Type" type="text"/>
 			<contentItem id="desc" label="Description" type="text"/>
 		</container>
 		<container id="industry" label="Industries" refData="true">
@@ -2037,23 +2037,23 @@
 			<contentItem id="desc" label="Description" type="text"/>
 		</container>
 		<container id="analystType" label="Analyst Types" refData="true">
-			<contentItem id="type" label="Type" type="text"/>
+			<contentItem id="typeName" label="Type" type="text"/>
 			<contentItem id="desc" label="Description" type="text"/>
 		</container>
 		<container id="analystReportRating" label="Analyst Report Rating" refData="true">
-			<contentItem id="rating" label="Rating" type="text"/>
+			<contentItem id="ratingName" label="Rating" type="text"/>
 			<contentItem id="desc" label="Description" type="text"/>
 		</container>
 		<container id="analystEngagementType" label="Analyst Engagement Types" refData="true">
-			<contentItem id="type" label="Type" type="text"/>
+			<contentItem id="typeName" label="Type" type="text"/>
 			<contentItem id="desc" label="Description" type="text"/>
 		</container>
 		<container id="competitorType" label="Competitor Types" refData="true">
-			<contentItem id="type" label="Type" type="text"/>
+			<contentItem id="typeName" label="Type" type="text"/>
 			<contentItem id="desc" label="Description" type="text"/>
 		</container>
 		<container id="compRating" label="Competitive Rating" refData="true">
-			<contentItem id="rating" label="Rating" type="text"/>
+			<contentItem id="ratingName" label="Rating" type="text"/>
 			<contentItem id="desc" label="Description" type="text"/>
 		</container>		
 		<container id="faqCategory" label="FAQ Category" refData="true">
@@ -2065,11 +2065,11 @@
 			<contentItem id="desc" label="Description" type="text"/>
 		</container>
 		<container id="mmtype" label="Multi Media Types" refData="true">
-			<contentItem id="type" label="Type" type="text"/>
+			<contentItem id="typeName" label="Type" type="text"/>
 			<contentItem id="desc" label="Description" type="text"/>
 		</container>
 		<container id="partnerType" label="Partner Types" refData="true">
-			<contentItem id="type" label="Type" type="text"/>
+			<contentItem id="typeName" label="Type" type="text"/>
 			<contentItem id="desc" label="Description" type="text"/>
 		</container>
 		<container id="proposalTypes" label="Proposal Types" refData="true">
@@ -2081,19 +2081,19 @@
 			<contentItem id="desc" label="Description" type="text"/>
 		</container>
 		<container id="slideType" label="Slide Types" refData="true">
-			<contentItem id="type" label="Type" type="text"/>
+			<contentItem id="typeName" label="Type" type="text"/>
 			<contentItem id="desc" label="Description" type="text"/>
 		</container>
 		<container id="mktEventType" label="Marketing Event Types" refData="true">
-			<contentItem id="type" label="Type" type="text"/>
+			<contentItem id="typeName" label="Type" type="text"/>
 			<contentItem id="desc" label="Description" type="text"/>
 		</container>
 		<container id="opportunityStatus" label="Opportunity Status" refData="true">
-			<contentItem id="oppStatus" label="Status" type="text"/>
+			<contentItem id="oppStatusName" label="Status" type="text"/>
 			<contentItem id="desc" label="Description" type="text"/>
 		</container>
 		<container id="businessRole" label="Business Roles" refData="true">
-			<contentItem id="role" label="Role" type="text"/>
+			<contentItem id="roleName" label="Role" type="text"/>
 			<contentItem id="desc" label="Description" type="text"/>
 		</container>
 		<container id="user" label="Users" refData="true">
@@ -2105,7 +2105,7 @@
 						<datastore>
 							<storeId>businessRole</storeId>
 							<dataId>identity</dataId>
-							<dataLabel>role</dataLabel>
+							<dataLabel>roleName</dataLabel>
 						</datastore>
 					</refList>
 				</bounded>
