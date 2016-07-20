@@ -55,5 +55,8 @@ public interface ContentCrudService {
 	void upsert(String collectionName, String elementIdentity, Map<String, Object> data);
 
 	Map<String, Object> findContainingRecord(String collectionName, String childQId, String childIdentity);
+
+	@SuppressWarnings("rawtypes")
+	List findRecords(String collectionName, List<String> elementIdentities);
 	
 }

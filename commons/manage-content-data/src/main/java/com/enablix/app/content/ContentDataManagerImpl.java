@@ -297,5 +297,14 @@ public class ContentDataManagerImpl implements ContentDataManager {
 
 		return triggerItemRecord;
 	}
+
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Map<String, Object>> getContentRecords(String containerQId, List<String> recordIdentities,
+			ContentTemplate template) {
+		String collName = TemplateUtil.resolveCollectionName(template, containerQId);
+		return crud.findRecords(collName, recordIdentities);
+	}
 	
 }

@@ -38,6 +38,7 @@
 			<container id="prodPOC" label="Proof of Concepts" linkContainerQId="poc" linkContentItemId="products"/>
 			<container id="prodProposal" label="Proposals" linkContainerQId="proposal" linkContentItemId="products"/>
 			<container id="prodSalesDeck" label="Sales Decks" linkContainerQId="salesDeck" linkContentItemId="products"/>
+			<container id="prodSalesPlay" label="Sales Plays" linkContainerQId="salesPlay" linkContentItemId="products"/>			
 			<container id="prodWinLoss" label="Win Loss Analysis" linkContainerQId="winloss" linkContentItemId="products"/>
 			<container id="prodBlog" label="Blogs" linkContainerQId="blog" linkContentItemId="products"/>
 			<container id="prodWhitePaper" label="White Papers" linkContainerQId="whitepaper" linkContentItemId="products"/>
@@ -92,6 +93,7 @@
 			<container id="solPOC" label="Proof of Concepts" linkContainerQId="poc" linkContentItemId="solutions"/>
 			<container id="solProposal" label="Proposals" linkContainerQId="proposal" linkContentItemId="solutions"/>
 			<container id="solSalesDeck" label="Sales Decks" linkContainerQId="salesDeck" linkContentItemId="solutions"/>
+			<container id="solSalesPlay" label="Sales Plays" linkContainerQId="salesPlay" linkContentItemId="solutions"/>						
 			<container id="solWinLoss" label="Win Loss Analysis" linkContainerQId="winloss" linkContentItemId="solutions"/>
 			<container id="solBlog" label="Blogs" linkContainerQId="blog" linkContentItemId="solutions"/>
 			<container id="solWhitePaper" label="White Papers" linkContainerQId="whitepaper" linkContentItemId="solutions"/>
@@ -173,6 +175,7 @@
 			<container id="compImpSlide" label="Important Slides" linkContainerQId="importantslide" linkContentItemId="competitors"/>
 			<container id="compPOC" label="Proof of Concepts" linkContainerQId="poc" linkContentItemId="competitors"/>
 			<container id="compProposal" label="Proposals" linkContainerQId="proposal" linkContentItemId="competitors"/>
+			<container id="compSalesPlay" label="Sales Plays" linkContainerQId="salesPlay" linkContentItemId="competitors"/>						
 			<container id="compWinLoss" label="Win Loss Analysis" linkContainerQId="winloss" linkContentItemId="competitors"/>
 			<container id="compBlog" label="Blogs" linkContainerQId="blog" linkContentItemId="competitors"/>
 			<container id="compWhitePaper" label="White Papers" linkContainerQId="whitepaper" linkContentItemId="competitors"/>
@@ -192,7 +195,7 @@
 				<contentItem id="title" label="Opportunity Title" type="text" searchBoost="7"/>
 				<contentItem id="id" label="Opportunity ID" type="text" searchBoost="7"/>
 				<contentItem id="desc" label="Description" type="text" searchBoost="2"/>
-				<contentItem id="oppPreSalesMember" label="Pre-Sales Team" type="bounded" searchBoost="6">
+				<contentItem id="oppSalesMember" label="Sales Team" type="bounded" searchBoost="6">
 					<bounded multivalued="true">
 						<refList>
 							<datastore>
@@ -304,7 +307,7 @@
 						<datastore>
 							<storeId>partnerType</storeId>
 							<dataId>identity</dataId>
-							<dataLabel>type</dataLabel>
+							<dataLabel>typeName</dataLabel>
 						</datastore>
 					</refList>
 				</bounded>
@@ -314,6 +317,7 @@
 			<container id="partnerFAQ" label="FAQ" linkContainerQId="faq" linkContentItemId="partners"/>
 			<container id="partnerImpSlide" label="Important Slides" linkContainerQId="importantslide" linkContentItemId="partners"/>
 			<container id="partnerSalesDeck" label="Sales Decks" linkContainerQId="salesDeck" linkContentItemId="partners"/>
+			<container id="partnerSalesPlay" label="Sales Plays" linkContainerQId="salesPlay" linkContentItemId="partners"/>									
 			<container id="partnerPOC" label="Proof of Concepts" linkContainerQId="poc" linkContentItemId="partners"/>
 			<container id="partnerProposal" label="Proposals" linkContainerQId="proposal" linkContentItemId="partners"/>
 			<container id="partnerBlog" label="Blogs" linkContainerQId="blog" linkContentItemId="partners"/>															
@@ -337,7 +341,7 @@
 						<datastore>
 							<storeId>analystType</storeId>
 							<dataId>identity</dataId>
-							<dataLabel>type</dataLabel>
+							<dataLabel>typeName</dataLabel>
 						</datastore>
 					</refList>
 				</bounded>
@@ -361,7 +365,7 @@
 							<datastore>
 								<storeId>analystReportRating</storeId>
 								<dataId>identity</dataId>
-								<dataLabel>rating</dataLabel>
+								<dataLabel>ratingName</dataLabel>
 							</datastore>
 						</refList>
 					</bounded>
@@ -490,7 +494,7 @@
 							<datastore>
 								<storeId>analystEngagementType</storeId>
 								<dataId>identity</dataId>
-								<dataLabel>type</dataLabel>
+								<dataLabel>typeName</dataLabel>
 							</datastore>
 						</refList>
 					</bounded>
@@ -554,7 +558,7 @@
 						<datastore>
 							<storeId>mktEventType</storeId>
 							<dataId>identity</dataId>
-							<dataLabel>type</dataLabel>
+							<dataLabel>typeName</dataLabel>
 						</datastore>
 					</refList>
 				</bounded>
@@ -706,6 +710,8 @@
 			<container id="topicPOC" label="Proof of Concepts" linkContainerQId="poc" linkContentItemId="topics"/>
 			<container id="topicPOV" label="Point of Views" linkContainerQId="pov" linkContentItemId="topics"/>
 			<container id="topicProposal" label="Proposals" linkContainerQId="proposal" linkContentItemId="topics"/>
+			<container id="topicSalesDeck" label="Sales Decks" linkContainerQId="salesDeck" linkContentItemId="topics"/>	
+			<container id="topicSalesPlay" label="Sales Plays" linkContainerQId="salesPlay" linkContentItemId="topics"/>			
 			<container id="topicArticle" label="Articles" linkContainerQId="article" linkContentItemId="topics"/>			
 			<container id="topicContent" label="Other Content" linkContainerQId="content" linkContentItemId="topics"/>
 		</container>
@@ -816,7 +822,7 @@
 						<datastore>
 							<storeId>caseStudyType</storeId>
 							<dataId>identity</dataId>
-							<dataLabel>type</dataLabel>
+							<dataLabel>typeName</dataLabel>
 						</datastore>
 					</refList>
 				</bounded>
@@ -1254,7 +1260,7 @@
 						<datastore>
 							<storeId>mmtype</storeId>
 							<dataId>identity</dataId>
-							<dataLabel>type</dataLabel>
+							<dataLabel>typeName</dataLabel>
 						</datastore>
 					</refList>
 				</bounded>
@@ -1396,7 +1402,78 @@
 					</refList>
 				</bounded>
 			</contentItem>
+			<contentItem id="topics" label="Topics" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>topic</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>			
 		</container>
+		<container id="salesPlay" label="Sales Plays">
+			<contentItem id="title" label="Title" type="text"/>
+			<contentItem id="file" label="File" type="doc"/>
+			<contentItem id="summary" label="Summary" type="text"/>
+			<contentItem id="solutions" label="Solutions" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>solution</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="products" label="Products" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>product</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="competitors" label="Competitors" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>competitor</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>			
+			<contentItem id="partners" label="Partners" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>partner</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="topics" label="Topics" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>topic</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>			
+		</container>		
 		<container id="poc" label="Proof of Concept">
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="summary" label="Summary" type="text"/>
@@ -1741,7 +1818,7 @@
 						<datastore>
 							<storeId>slideType</storeId>
 							<dataId>identity</dataId>
-							<dataLabel>type</dataLabel>
+							<dataLabel>typeName</dataLabel>
 						</datastore>
 					</refList>
 				</bounded>
@@ -1936,7 +2013,7 @@
 			<contentItem id="name" label="Name" type="text"/>			
 		</container>
 		<container id="caseStudyType" label="Case Study Types" refData="true">
-			<contentItem id="type" label="Type" type="text"/>
+			<contentItem id="typeName" label="Type" type="text"/>
 			<contentItem id="desc" label="Description" type="text"/>
 		</container>
 		<container id="industry" label="Industries" refData="true">
@@ -1952,23 +2029,23 @@
 			<contentItem id="desc" label="Description" type="text"/>
 		</container>
 		<container id="analystType" label="Analyst Types" refData="true">
-			<contentItem id="type" label="Type" type="text"/>
+			<contentItem id="typeName" label="Type" type="text"/>
 			<contentItem id="desc" label="Description" type="text"/>
 		</container>
 		<container id="analystReportRating" label="Analyst Report Rating" refData="true">
-			<contentItem id="rating" label="Rating" type="text"/>
+			<contentItem id="ratingName" label="Rating" type="text"/>
 			<contentItem id="desc" label="Description" type="text"/>
 		</container>
 		<container id="analystEngagementType" label="Analyst Engagement Types" refData="true">
-			<contentItem id="type" label="Type" type="text"/>
+			<contentItem id="typeName" label="Type" type="text"/>
 			<contentItem id="desc" label="Description" type="text"/>
 		</container>
 		<container id="competitorType" label="Competitor Types" refData="true">
-			<contentItem id="type" label="Type" type="text"/>
+			<contentItem id="typeName" label="Type" type="text"/>
 			<contentItem id="desc" label="Description" type="text"/>
 		</container>
 		<container id="compRating" label="Competitive Rating" refData="true">
-			<contentItem id="rating" label="Rating" type="text"/>
+			<contentItem id="ratingName" label="Rating" type="text"/>
 			<contentItem id="desc" label="Description" type="text"/>
 		</container>		
 		<container id="faqCategory" label="FAQ Category" refData="true">
@@ -1980,11 +2057,11 @@
 			<contentItem id="desc" label="Description" type="text"/>
 		</container>
 		<container id="mmtype" label="Multi Media Types" refData="true">
-			<contentItem id="type" label="Type" type="text"/>
+			<contentItem id="typeName" label="Type" type="text"/>
 			<contentItem id="desc" label="Description" type="text"/>
 		</container>
 		<container id="partnerType" label="Partner Types" refData="true">
-			<contentItem id="type" label="Type" type="text"/>
+			<contentItem id="typeName" label="Type" type="text"/>
 			<contentItem id="desc" label="Description" type="text"/>
 		</container>
 		<container id="proposalTypes" label="Proposal Types" refData="true">
@@ -1996,15 +2073,15 @@
 			<contentItem id="desc" label="Description" type="text"/>
 		</container>
 		<container id="slideType" label="Slide Types" refData="true">
-			<contentItem id="type" label="Type" type="text"/>
+			<contentItem id="typeName" label="Type" type="text"/>
 			<contentItem id="desc" label="Description" type="text"/>
 		</container>
 		<container id="mktEventType" label="Marketing Event Types" refData="true">
-			<contentItem id="type" label="Type" type="text"/>
+			<contentItem id="typeName" label="Type" type="text"/>
 			<contentItem id="desc" label="Description" type="text"/>
 		</container>
 		<container id="opportunityStatus" label="Opportunity Status" refData="true">
-			<contentItem id="opStatus" label="Status" type="text"/>
+			<contentItem id="opStatusName" label="Status" type="text"/>
 			<contentItem id="desc" label="Description" type="text"/>
 		</container>
 		<container id="businessRole" label="Business Roles" refData="true">
@@ -2020,7 +2097,7 @@
 						<datastore>
 							<storeId>businessRole</storeId>
 							<dataId>identity</dataId>
-							<dataLabel>role</dataLabel>
+							<dataLabel>roleName</dataLabel>
 						</datastore>
 					</refList>
 				</bounded>
@@ -2073,6 +2150,7 @@
 					<childContainer id="proposals"/>
 					<childContainer id="template"/>
 					<childContainer id="salesDeck"/>
+					<childContainer id="salesPlay"/>										
 					<childContainer id="whitepaper"/>
 					<childContainer id="multimedia"/>
 					<childContainer id="winloss"/>
@@ -2435,6 +2513,20 @@
 		<contentUIDef qualifiedId="salesDeck.summary">
 			<text type="long"/>
 		</contentUIDef>
+		<contentUIDef qualifiedId="salesPlay">
+			<container labelQualifiedId="salesPlay.title">
+				<listViewConfig>
+					<hideContentItem id="file"/>
+					<hideContentItem id="summary"/>
+				</listViewConfig>
+				<portalConfig>
+					<headingContentItem id="title"/>
+				</portalConfig>
+			</container>
+		</contentUIDef>
+		<contentUIDef qualifiedId="salesPlay.summary">
+			<text type="long"/>
+		</contentUIDef>		
 		<contentUIDef qualifiedId="article">
 			<container labelQualifiedId="article.title">
 				<listViewConfig>
@@ -2660,6 +2752,7 @@
 					<childContainer id="proposals"/>
 					<childContainer id="template"/>
 					<childContainer id="salesDeck"/>
+					<childContainer id="salesPlay"/>										
 					<childContainer id="whitepaper"/>
 					<childContainer id="multimedia"/>
 					<childContainer id="winloss"/>

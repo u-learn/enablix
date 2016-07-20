@@ -101,6 +101,12 @@ public class ContentCrudServiceImpl implements ContentCrudService {
 				: elementQId + "." + ContentDataConstants.IDENTITY_KEY;
 		return Criteria.where(elementIdentity).is(identity);
 	}
+	
+	private Criteria createIdentityInCriteria(String elementQId, List<String> identities) {
+		String elementIdentity = StringUtil.isEmpty(elementQId) ? ContentDataConstants.IDENTITY_KEY
+				: elementQId + "." + ContentDataConstants.IDENTITY_KEY;
+		return Criteria.where(elementIdentity).in(identities);
+	}
 
 	@Override
 	public void insertChildContainer(String collectionName, String parentIdentity, 
@@ -143,6 +149,13 @@ public class ContentCrudServiceImpl implements ContentCrudService {
 	public Map<String, Object> findRecord(String collectionName, String elementIdentity) {
 		Query query = createIdentityQuery(null, elementIdentity);
 		return mongoTemplate.findOne(query, HashMap.class, collectionName);
+	}
+	
+	@SuppressWarnings("rawtypes")
+	@Override
+	public List<HashMap> findRecords(String collectionName, List<String> elementIdentities) {
+		Query query = Query.query(createIdentityInCriteria(null, elementIdentities));
+		return mongoTemplate.find(query, HashMap.class, collectionName);
 	}
 
 	@Override

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<itemCorrelationRules xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/item-correlation-rule.xsd">
+	<itemCorrelationRule id="opportunity-whitepaper-corr" name="Opportunity-Whitepaper via Solution">
+		<triggerItem qualifiedId="customer.opportunity">
+		</triggerItem>
+		<relatedItems>
+			<relatedItem qualifiedId="whitepaper">
+				<filterCriteria>
+					<filter>
+						<attributeId>solutions</attributeId>
+						<parentAttribute>oppSolutions</parentAttribute>
+					</filter>
+				</filterCriteria>
+				<recordAsRelated>true</recordAsRelated>
+				<tags>
+					<tag>LINK_VIA_SOLN</tag>
+				</tags>
+			</relatedItem>
+		</relatedItems>
+	</itemCorrelationRule>
+</itemCorrelationRules>

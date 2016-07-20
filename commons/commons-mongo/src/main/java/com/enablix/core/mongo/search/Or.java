@@ -9,10 +9,21 @@ public class Or extends CompositeFilter {
 	public Or(SearchFilter left, SearchFilter right) {
 		super(left, right);
 	}
+	
+	public SearchFilter or(SearchFilter orWithFilter) {
+		if (orWithFilter != null) {
+			if (orWithFilter instanceof Or) {
+				searchFilters.addAll(((Or) orWithFilter).searchFilters);
+			} else {
+				searchFilters.add(orWithFilter);
+			}
+		}
+		return this;
+	}
 
 	@Override
-	public Criteria toPredicate(Criteria root) {
-		return root.orOperator(getLeft().toPredicate(root), getRight().toPredicate(root));
+	protected Criteria appendFilter(Criteria root, Criteria[] filterCriteria) {
+		return root.orOperator(filterCriteria);
 	}
 	
 }

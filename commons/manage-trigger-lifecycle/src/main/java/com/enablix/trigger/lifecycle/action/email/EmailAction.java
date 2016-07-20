@@ -99,38 +99,41 @@ public class EmailAction implements CheckpointAction<ContentChange, EmailActionT
 			fetchEmailContent(checkpoint, template, emailContent, correlatedEntities);
 		}
 
-		// find out the recipients
-		EmailRecipientType recepientDef = actionType.getRecipient();
-		Set<ContentDataRef> recepientUsers = recepientUserHelper.getEmailRecipients(triggerItemRef, template, recepientDef);
-		
-		if (CollectionUtil.isNotEmpty(recepientUsers)) {
+		if (!emailContent.isEmpty()) {
+			// find out the recipients
+			EmailRecipientType recepientDef = actionType.getRecipient();
+			Set<ContentDataRef> recepientUsers = recepientUserHelper.getEmailRecipients(triggerItemRef, template, recepientDef);
 			
-			List<String> userIdentities = new ArrayList<>();
-			for (ContentDataRef userRef : recepientUsers) {
-				userIdentities.add(userRef.getInstanceIdentity());
-			}
-			
-			String userContainerQId = TemplateUtil.getUserContainerQId(template);
-			String userContainerCollName = TemplateUtil.resolveCollectionName(template, userContainerQId);
-			
-			SearchFilter usersIdentitiesInFilter = new StringListFilter(
-					ContentDataConstants.IDENTITY_KEY, userIdentities, ConditionOperator.IN);
-			
-			List<Map<String, Object>> userRecords = contentCrudService.findAllRecordForCriteria(
-					userContainerCollName, usersIdentitiesInFilter.toPredicate(new Criteria()));
-			
-			if (userRecords != null) {
-				Set<String> recepientEmailIds = extractEmailIdsFromUsers(userRecords, template);
+			if (CollectionUtil.isNotEmpty(recepientUsers)) {
 				
-				sendEmails(template, actionType, checkpoint.getTrigger().getType(), 
-						emailContent, triggerItemRef, recepientEmailIds);
+				List<String> userIdentities = new ArrayList<>();
+				for (ContentDataRef userRef : recepientUsers) {
+					userIdentities.add(userRef.getInstanceIdentity());
+				}
+				
+				String userContainerQId = TemplateUtil.getUserContainerQId(template);
+				String userContainerCollName = TemplateUtil.resolveCollectionName(template, userContainerQId);
+				
+				SearchFilter usersIdentitiesInFilter = new StringListFilter(
+						ContentDataConstants.IDENTITY_KEY, userIdentities, ConditionOperator.IN);
+				
+				List<Map<String, Object>> userRecords = contentCrudService.findAllRecordForCriteria(
+						userContainerCollName, usersIdentitiesInFilter.toPredicate(new Criteria()));
+				
+				if (userRecords != null) {
+					Set<String> recepientEmailIds = extractEmailIdsFromUsers(userRecords, template);
+					
+					sendEmails(template, actionType, checkpoint.getTrigger().getType(), 
+							emailContent, triggerItemRef, recepientEmailIds);
+				}
 			}
 		}
-		
 	}
 
 	private void sendEmails(ContentTemplate template, EmailActionType actionType, TriggerType triggerType,
 			Map<String, ContentDataRecord> emailContent, ContentDataRef triggerItemRef, Set<String> recepientEmailIds) {
+		
+		TriggerEmailVelocityInput velocityIn = new TriggerEmailVelocityInput();
 		
 		// find trigger entity data
 		ContentDataRecord entityDataRec = emailContent.get(triggerItemRef.getInstanceIdentity());
@@ -140,6 +143,11 @@ public class EmailAction implements CheckpointAction<ContentChange, EmailActionT
 			entityDataRec = new ContentDataRecord(triggerItemRef.getTemplateId(), triggerItemRef.getContainerQId(), entityRec);
 		}
 		
+		DisplayableContent triggerEntityDispRecord = displayableContentBuilder.build(template, entityDataRec);
+		if (triggerEntityDispRecord != null) {
+			velocityIn.setTriggerEntity(triggerEntityDispRecord);
+		}
+		
 		// send email
 		LOGGER.debug("Sending mail to: {}", recepientEmailIds);
 		
@@ -147,7 +155,6 @@ public class EmailAction implements CheckpointAction<ContentChange, EmailActionT
 		
 		LOGGER.debug("Email content: {}", displayableEmailContent);
 		
-		TriggerEmailVelocityInput velocityIn = new TriggerEmailVelocityInput();
 		velocityIn.setEmailContent(displayableEmailContent);
 		velocityIn.setTriggerType(triggerType);
 		

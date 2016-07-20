@@ -20,6 +20,7 @@ public class TriggerEmailVelocityInput extends BaseVelocityInput implements Logg
 	private String recipientUserId;
 	private User recipientUser;
 	private TriggerType triggerType;
+	private DisplayableContent triggerEntity;
 	
 	@Override
 	public void setUrl(String url) {
@@ -81,6 +82,14 @@ public class TriggerEmailVelocityInput extends BaseVelocityInput implements Logg
 
 	public void setTriggerType(TriggerType triggerType) {
 		this.triggerType = triggerType;
+	}
+
+	public DisplayableContent getTriggerEntity() {
+		return triggerEntity;
+	}
+
+	public void setTriggerEntity(DisplayableContent triggerEntity) {
+		this.triggerEntity = triggerEntity;
 	}
 
 }

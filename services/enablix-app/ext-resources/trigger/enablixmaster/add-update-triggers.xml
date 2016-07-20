@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<triggersDef xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/trigger-lifecycle.xsd">
+	<contentTriggerDef id="cust-opportunity-add-trigger" type="CONTENT_UPDATE">
+		<candidateContainers>
+			<containerQId>customer.opportunity</containerQId>
+		</candidateContainers>
+		<lifecycle>
+			<checkpoint>
+				<executionTime type="NOW"/>
+				<actions>
+					<correlation execOrder="1"/>
+					<email execOrder="2">
+						<emailTemplate>
+							<subject templateName="addContent_subject.vm"/>
+							<body templateName="addContent_body.vm"/>
+						</emailTemplate>
+						<emailContent>
+							<correlatedEntities>
+								<entity>
+									<contentTypes>
+										<containerQId>whitepaper</containerQId>
+									</contentTypes>
+									<filterTags>
+										<tag>LINK_VIA_SOLN</tag>
+									</filterTags>
+								</entity>
+							</correlatedEntities>
+						</emailContent>
+						<recipient>
+							<allUsers/>
+						</recipient>
+					</email>
+				</actions>
+			</checkpoint>	
+		</lifecycle>
+	</contentTriggerDef>
+</triggersDef>

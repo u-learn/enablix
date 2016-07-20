@@ -24,4 +24,6 @@ public interface ContentDataManager {
 	
 	Map<String, Object> getContentRecord(ContentDataRef dataRef, ContentTemplate template);
 	
+	List<Map<String, Object>> getContentRecords(String containerQId, List<String> recordIdentities, ContentTemplate template);
+	
 }
