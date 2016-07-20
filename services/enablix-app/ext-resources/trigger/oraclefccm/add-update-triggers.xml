@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<triggersDef xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/trigger-lifecycle.xsd">
+	<contentTriggerDef id="pipeline-report-add-trigger" type="CONTENT_ADD">
+		<candidateContainers>
+			<containerQId>content</containerQId>
+		</candidateContainers>
+		<lifecycle>
+			<checkpoint>
+				<executionTime type="NOW"/>
+				<actions>
+					<correlation execOrder="1"/>
+					<email execOrder="2">
+						<emailTemplate>
+							<subject templateName="addPipelineReport_subject.vm"/>
+							<body templateName="addPipelineReport_body.vm"/>
+						</emailTemplate>
+						<emailContent>
+							<triggerEntity/>
+						</emailContent>
+						<recipient>
+							<correlatedUsers>
+								<users>
+									<filterTags>
+										<tag>ALL_USERS</tag>
+									</filterTags>
+								</users>
+							</correlatedUsers>
+						</recipient>
+					</email>
+				</actions>
+			</checkpoint>	
+		</lifecycle>
+	</contentTriggerDef>
+	<contentTriggerDef id="pipeline-report-update-trigger" type="CONTENT_UPDATE">
+		<candidateContainers>
+			<containerQId>content</containerQId>
+		</candidateContainers>
+		<lifecycle>
+			<checkpoint>
+				<executionTime type="NOW"/>
+				<actions>
+					<correlation execOrder="1"/>
+					<email execOrder="2">
+						<emailTemplate>
+							<subject templateName="addPipelineReport_subject.vm"/>
+							<body templateName="addPipelineReport_body.vm"/>
+						</emailTemplate>
+						<emailContent>
+							<triggerEntity/>
+						</emailContent>
+						<recipient>
+							<correlatedUsers>
+								<users>
+									<filterTags>
+										<tag>ALL_USERS</tag>
+									</filterTags>
+								</users>
+							</correlatedUsers>
+						</recipient>
+					</email>
+				</actions>
+			</checkpoint>	
+		</lifecycle>
+	</contentTriggerDef>
+	<contentTriggerDef id="case-study-add-trigger" type="CONTENT_ADD">
+		<candidateContainers>
+			<containerQId>caseStudy</containerQId>
+		</candidateContainers>
+		<lifecycle>
+			<checkpoint>
+				<executionTime type="NOW"/>
+				<actions>
+					<correlation execOrder="1"/>
+					<email execOrder="2">
+						<emailTemplate>
+							<subject templateName="addContent_subject.vm"/>
+							<body templateName="addContent_body.vm"/>
+						</emailTemplate>
+						<emailContent>
+							<triggerEntity/>
+						</emailContent>
+						<recipient>
+							<correlatedUsers>
+								<users>
+									<filterTags>
+										<tag>PRE_SALES_USER</tag>
+									</filterTags>
+								</users>
+							</correlatedUsers>
+						</recipient>
+					</email>
+				</actions>
+			</checkpoint>	
+		</lifecycle>
+	</contentTriggerDef>
+	<contentTriggerDef id="case-study-update-trigger" type="CONTENT_UPDATE">
+		<candidateContainers>
+			<containerQId>caseStudy</containerQId>
+		</candidateContainers>
+		<lifecycle>
+			<checkpoint>
+				<executionTime type="NOW"/>
+				<actions>
+					<correlation execOrder="1"/>
+					<email execOrder="2">
+						<emailTemplate>
+							<subject templateName="addContent_subject.vm"/>
+							<body templateName="addContent_body.vm"/>
+						</emailTemplate>
+						<emailContent>
+							<triggerEntity/>
+						</emailContent>
+						<recipient>
+							<correlatedUsers>
+								<users>
+									<filterTags>
+										<tag>PRE_SALES_USER</tag>
+									</filterTags>
+								</users>
+							</correlatedUsers>
+						</recipient>
+					</email>
+				</actions>
+			</checkpoint>	
+		</lifecycle>
+	</contentTriggerDef>	
+</triggersDef>

@@ -37,33 +37,36 @@ public class ContentChangeTriggerLifecycleManager implements TriggerLifecycleMan
 	@Override
 	public void startLifecycle(ContentChange trigger) {
 		
-		TriggerLifecycleRule lifecycleDef = 
+		List<TriggerLifecycleRule> lifecycleDefs = 
 				lifecycleRuleRepo.findByContentTriggerRuleTypeAndContentTriggerRuleCandidateContainersContainerQId(
 						trigger.getTriggerType(), trigger.getTriggerItem().getContainerQId());
 		
-		if (lifecycleDef != null) {
+		if (lifecycleDefs != null) {
 			
-			ContentTriggerDefType contentTriggerLifecycleRule = lifecycleDef.getContentTriggerRule();
-			LifecycleType triggerLifecycleDef = contentTriggerLifecycleRule.getLifecycle();
-			
-			String triggerLifecycleId = IdentityUtil.generateIdentity(null);
-			
-			List<LifecycleCheckpoint<ContentChange>> checkpoints = new ArrayList<>();
-			
-			// build checkpoints
-			for (CheckpointType checkpointDef : triggerLifecycleDef.getCheckpoint()) {
-			
-				LifecycleCheckpoint<ContentChange> lifecycleCheckpoint = checkpointBuilder.build(
-						contentTriggerLifecycleRule, checkpointDef, trigger, triggerLifecycleId);
-				checkpoints.add(lifecycleCheckpoint);
-			}
-			
-			// save all checkpoints
-			checkpoints = checkpointRepo.save(checkpoints);
-			
-			// execute checkpoints
-			for (LifecycleCheckpoint<ContentChange> lifecycleCheckpoint : checkpoints) {
-				checkpointExecutor.execute(lifecycleCheckpoint);
+			for (TriggerLifecycleRule lifecycleDef : lifecycleDefs) {
+				ContentTriggerDefType contentTriggerLifecycleRule = lifecycleDef.getContentTriggerRule();
+				LifecycleType triggerLifecycleDef = contentTriggerLifecycleRule.getLifecycle();
+				
+				String triggerLifecycleId = IdentityUtil.generateIdentity(null);
+				
+				List<LifecycleCheckpoint<ContentChange>> checkpoints = new ArrayList<>();
+				
+				// build checkpoints
+				for (CheckpointType checkpointDef : triggerLifecycleDef.getCheckpoint()) {
+				
+					LifecycleCheckpoint<ContentChange> lifecycleCheckpoint = checkpointBuilder.build(
+							contentTriggerLifecycleRule, checkpointDef, trigger, triggerLifecycleId);
+					checkpoints.add(lifecycleCheckpoint);
+				}
+				
+				// save all checkpoints
+				checkpoints = checkpointRepo.save(checkpoints);
+				
+				// execute checkpoints
+				for (LifecycleCheckpoint<ContentChange> lifecycleCheckpoint : checkpoints) {
+					checkpointExecutor.execute(lifecycleCheckpoint);
+				}
+				
 			}
 			
 		}

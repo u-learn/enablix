@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<itemUserCorrelationRules xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/item-correlation-rule.xsd">
+	<itemUserCorrelationRule id="other-content-pipeline-report-user" name="Other Content - Pipeline Report Users">
+		<triggerItem qualifiedId="content">
+			<filterCriteria>
+				<filter>
+					<attributeId>documentType</attributeId>
+					<constant>Pipeline Report</constant>
+				</filter>
+			</filterCriteria>
+		</triggerItem>
+		<relatedUsers>
+			<relatedUserPath>
+				<relatedUser>
+					<tags>
+						<tag>ALL_USERS</tag>
+					</tags>
+				</relatedUser>
+			</relatedUserPath>
+		</relatedUsers>
+	</itemUserCorrelationRule>
+	<itemUserCorrelationRule id="case-study-user" name="Case Study - Users">
+		<triggerItem qualifiedId="caseStudy">
+		</triggerItem>
+		<relatedUsers>
+			<relatedUserPath>
+				<pathItem qualifiedId="businessRole">
+					<filterCriteria>
+						<filter>
+							<attributeId>roleName</attributeId>
+							<constant>PreSales</constant>
+						</filter>
+					</filterCriteria>
+					<relatedUser>
+						<filterCriteria>
+							<filter>
+								<attributeId>role</attributeId>
+								<parentAttribute>identity</parentAttribute>
+							</filter>
+						</filterCriteria>
+						<tags>
+							<tag>PRE_SALES_USER</tag>
+						</tags>
+					</relatedUser>
+				</pathItem>
+			</relatedUserPath>
+		</relatedUsers>
+	</itemUserCorrelationRule>	
+</itemUserCorrelationRules>
