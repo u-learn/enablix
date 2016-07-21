@@ -3,7 +3,7 @@ Introduction to
 	#if($item.containerQId	== 'product')
 		#foreach($field in $item.fields)
 			#if($field.label == 'Short Name')
-				for ${field.value.value} #break
+				${field.value.value} #break
 			#end
 		#end
 	#end
