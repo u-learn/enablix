@@ -76,7 +76,7 @@
 			<xs:element name="matchCriteria" type="matchCriteriaType" minOccurs="0"/>
 			<xs:element name="recordAsRelated" type="xs:boolean" default="true"/>
 			<xs:element name="tags" type="tagsType" minOccurs="0"/>
-			<xs:element name="relatedItem" type="relatedItemType" minOccurs="0"/>
+			<xs:element name="relatedItems" type="relatedItemsType" minOccurs="0"/>
 		</xs:sequence>
 		<xs:attribute name="qualifiedId" type="xs:string"/>
 	</xs:complexType>

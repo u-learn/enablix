@@ -1,0 +1,9 @@
+#foreach($item in $obj.emailContent)
+	#if($item.containerQId	== 'customer.opportunity')
+		#foreach($field in $item.fields)
+			#if($field.label == 'Opportunity Title')
+				${field.value.value}: #break
+			#end
+		#end
+	#end
+#end Content Update

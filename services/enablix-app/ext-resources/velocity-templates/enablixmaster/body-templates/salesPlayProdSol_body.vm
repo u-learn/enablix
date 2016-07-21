@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+ <body style = "font: normal 14px/normal Arial, Helvetica, sans-serif;">
+	<p>Hello#if(${obj.recipientUser.profile.name}) ${obj.recipientUser.profile.name}#end,</p>
+	<p>Here are the products and solutions related to the sales play,   
+		#foreach($field in $obj.triggerEntity.fields) 
+			#if($field.label == 'Title') ${field.value.value}#break#end
+		#end. 
+	</p><br/>	
+
+#* We need to show a list of solutions and then follow it by a list of products. Each list should have the title of Related Solutions and
+Related Products*#		
+   
+    #if($obj.triggerEntity.doc)
+	      <br/>
+	      <div><a href="${obj.url}/doc/download//$obj.triggerEntity.doc.docIdentity" target="_blank">
+	      <button style="background: #3d85c6;
+	      font: normal 16px/normal Arial, Helvetica, sans-serif;
+	      color: rgba(255,255,255,0.9);
+	      -webkit-border-radius: 3px;
+	      border-radius: 3px;
+	      padding: 5px 5px 5px 5px;
+	      cursor: pointer;
+	      float:left;
+		  margin:5px 5px 5px 60px;
+	      border: 1px solid #3d85c6;
+	      width:200px">Download File</button>
+	      </a></div> 
+      #end
+     
+     <div><a href="${obj.url}/app.html#/portal/container/$obj.triggerEntity.containerQId/$obj.triggerEntity.recordIdentity/c/single/$obj.triggerEntity.containerQId/" target="_blank">
+      <button style="background: #3d85c6;
+      font: normal 16px/normal Arial, Helvetica, sans-serif;
+      color: rgba(255,255,255,0.9);
+      -webkit-border-radius: 3px;
+      border-radius: 3px;
+      padding: 5px 5px 5px 5px;
+      cursor: pointer;
+	  margin:5px 5px 5px 60px;
+      border: 1px solid #3d85c6;
+      width:200px">Access on Portal</button>
+      </a></div> 
+
+     <br/>
+      <p style = "font: normal 14px/normal Arial, Helvetica, sans-serif;">Have any questions or feedback? You can reply to this email.</p>
+      <p style = "font: normal 14px/normal Arial, Helvetica, sans-serif;">Cheers, <br/>Enablix Team for <b>${obj.tenant.name}</b> </p>
+      <p style = "font: normal 14px/normal Arial, Helvetica, sans-serif;">P.S. please add support@enablix.com to your address book or safe sender list. </p>
+      <p style = "font: normal 14px/normal Arial, Helvetica, sans-serif;">&copy; 2016 Enablix LLC. All rights reserved. For more information, please contact us at support@enablix.com</p>
+   </body>
+</html>

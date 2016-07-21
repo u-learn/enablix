@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<triggersDef xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/trigger-lifecycle.xsd">
+	<contentTriggerDef id="add-salesplay-trigger" type="CONTENT_ADD">
+		<candidateContainers>
+			<containerQId>salesPlay</containerQId>
+		</candidateContainers>
+		<lifecycle>
+			<checkpoint>
+				<executionTime type="NOW"/>
+				<actions>
+					<correlation execOrder="1"/>
+					<email execOrder="2">
+						<emailTemplate>
+							<subject templateName="addSalesplay_subject.vm"/>
+							<body templateName="addSalesplay_body.vm"/>
+						</emailTemplate>
+						<emailContent>
+							<triggerEntity/>
+						</emailContent>
+						<recipient>
+							<correlatedUsers>
+								<users>
+									<filterTags>
+										<tag>SALES_REPS</tag>
+									</filterTags>
+								</users>
+							</correlatedUsers>
+						</recipient>
+					</email>
+				</actions>
+			</checkpoint>
+			<checkpoint>
+				<executionTime type="LATER">
+					<after timeUnit="MIN" timeValue="3"/>
+				</executionTime>
+				<actions>
+					<correlation execOrder="1"/>
+					<email execOrder="2">
+						<emailTemplate>
+							<subject templateName="salesPlayProdSol_subject.vm"/>
+							<body templateName="salesPlayProdSol_body.vm"/>
+						</emailTemplate>
+						<emailContent>
+							<triggerEntity/>
+							<correlatedEntities>
+								<entity>
+									<contentTypes>
+										<containerQId>product</containerQId>
+										<containerQId>solution</containerQId>										
+									</contentTypes>
+									<filterTags>
+										<tag>LINKED_PROD</tag>
+										<tag>LINKED_SOL</tag>										
+									</filterTags>
+								</entity>
+							</correlatedEntities>			
+						</emailContent>
+						<recipient>
+							<correlatedUsers>
+								<users>
+									<filterTags>
+										<tag>SALES_REPS</tag>
+									</filterTags>
+								</users>
+							</correlatedUsers>
+						</recipient>
+					</email>
+				</actions>
+			</checkpoint>	
+			<checkpoint>
+				<executionTime type="LATER">
+					<after timeUnit="MIN" timeValue="6"/>
+				</executionTime>
+				<actions>
+					<correlation execOrder="1"/>
+					<email execOrder="2">
+						<emailTemplate>
+							<subject templateName="salesPlayComp_subject.vm"/>
+							<body templateName="salesPlayComp_body.vm"/>
+						</emailTemplate>
+						<emailContent>
+							<triggerEntity/>
+							<correlatedEntities>
+								<entity>
+									<contentTypes>
+										<containerQId>competitive</containerQId>
+									</contentTypes>
+									<filterTags>
+										<tag>LINKED_COMP</tag>										
+									</filterTags>
+								</entity>
+							</correlatedEntities>			
+						</emailContent>
+						<recipient>
+							<correlatedUsers>
+								<users>
+									<filterTags>
+										<tag>SALES_REPS</tag>
+									</filterTags>
+								</users>
+							</correlatedUsers>
+						</recipient>
+					</email>
+				</actions>
+			</checkpoint>									
+			<checkpoint>
+				<executionTime type="LATER">
+					<after timeUnit="MIN" timeValue="8"/>
+				</executionTime>
+				<actions>
+					<correlation execOrder="1"/>
+					<email execOrder="2">
+						<emailTemplate>
+							<subject templateName="introProd_subject.vm"/>
+							<body templateName="introProd_body.vm"/>
+						</emailTemplate>
+						<emailContent>
+							<triggerEntity/>
+							<correlatedEntities>
+								<entity>
+									<contentTypes>
+										<containerQId>product</containerQId>
+										<containerQId>whitepaper</containerQId>
+										<containerQId>salesDeck</containerQId>
+										<containerQId>battlecard</containerQId>
+										<containerQId>caseStudy</containerQId>																																								
+									</contentTypes>
+									<filterTags>
+										<tag>INTRO_PROD</tag>	
+										<tag>PROD_BATTLECARD</tag>	
+										<tag>PROD_SALES_DECK</tag>	
+										<tag>PROD_WP</tag>	
+										<tag>PROD_CS</tag>																																																		
+									</filterTags>
+								</entity>
+							</correlatedEntities>			
+						</emailContent>
+						<recipient>
+							<correlatedUsers>
+								<users>
+									<filterTags>
+										<tag>SALES_REPS</tag>
+									</filterTags>
+								</users>
+							</correlatedUsers>
+						</recipient>
+					</email>
+				</actions>
+			</checkpoint>									
+		</lifecycle>
+	</contentTriggerDef>
+</triggersDef>

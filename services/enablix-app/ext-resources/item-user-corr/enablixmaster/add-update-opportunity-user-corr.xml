@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<itemUserCorrelationRules xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/item-correlation-rule.xsd">
+	<itemUserCorrelationRule id="white-paper-user" name="Whitepaper Opportunity User">
+		<triggerItem qualifiedId="whitepaper">
+		</triggerItem>
+		<relatedUsers>
+			<relatedUserPath>
+				<pathItem qualifiedId="customer.opportunity">
+					<filterCriteria>
+						<filter>
+							<attributeId>oppProducts</attributeId>
+							<parentAttribute>products</parentAttribute>
+						</filter>
+					</filterCriteria>
+					<relatedUser>
+						<filterCriteria>
+							<filter>
+								<attributeId>identity</attributeId>
+								<parentAttribute>oppSalesMember</parentAttribute>
+							</filter>
+						</filterCriteria>
+						<tags>
+							<tag>OPP_SALES_REP</tag>
+						</tags>
+					</relatedUser>
+				</pathItem>			
+			</relatedUserPath>
+		</relatedUsers>
+	</itemUserCorrelationRule>
+	<itemUserCorrelationRule id="case-study-user" name="Case Study - Users">
+		<triggerItem qualifiedId="caseStudy">
+		</triggerItem>
+		<relatedUsers>
+			<relatedUserPath>
+				<pathItem qualifiedId="customer.opportunity">
+					<filterCriteria>
+						<filter>
+							<attributeId>oppProducts</attributeId>
+							<parentAttribute>products</parentAttribute>
+						</filter>
+					</filterCriteria>
+					<relatedUser>
+						<filterCriteria>
+							<filter>
+								<attributeId>identity</attributeId>
+								<parentAttribute>oppSalesMember</parentAttribute>
+							</filter>
+						</filterCriteria>
+						<tags>
+							<tag>OPP_SALES_REP</tag>
+						</tags>
+					</relatedUser>
+				</pathItem>
+			</relatedUserPath>
+		</relatedUsers>
+	</itemUserCorrelationRule>	
+</itemUserCorrelationRules>

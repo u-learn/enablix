@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<itemCorrelationRules xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/item-correlation-rule.xsd">
+	<itemCorrelationRule id="rule1" name="Whitepaper Opportunity Correlation">
+		<triggerItem qualifiedId="whitepaper">
+		</triggerItem>
+		<relatedItems>
+			<relatedItem qualifiedId="customer.opportunity">
+				<filterCriteria>
+					<filter>
+						<attributeId>oppProducts</attributeId>
+						<parentAttribute>products</parentAttribute>
+					</filter>
+				</filterCriteria>
+				<recordAsRelated>true</recordAsRelated>
+				<tags>
+					<tag>OPP_VIA_PROD</tag>
+				</tags>
+			</relatedItem>
+		</relatedItems>
+	</itemCorrelationRule>
+	<itemCorrelationRule id="rule2" name="Casestudy Opportunity Correlation">
+		<triggerItem qualifiedId="caseStudy">
+		</triggerItem>
+		<relatedItems>
+			<relatedItem qualifiedId="customer.opportunity">
+				<filterCriteria>
+					<filter>
+						<attributeId>oppProducts</attributeId>
+						<parentAttribute>products</parentAttribute>
+					</filter>
+				</filterCriteria>
+				<recordAsRelated>true</recordAsRelated>
+				<tags>
+					<tag>OPP_VIA_PROD</tag>
+				</tags>
+				<relatedItems>
+					<relatedItem qualifiedId="competitor">
+						<filterCriteria>
+							<filter>
+								<attributeId>identity</attributeId>
+								<parentAttribute>oppCompetitors</parentAttribute>
+							</filter>
+						</filterCriteria>
+						<recordAsRelated>true</recordAsRelated>
+						<tags>
+							<tag>COMP_VIA_OPP</tag>
+						</tags>
+					</relatedItem>
+				</relatedItems>
+			</relatedItem>
+		</relatedItems>
+	</itemCorrelationRule>	
+</itemCorrelationRules>

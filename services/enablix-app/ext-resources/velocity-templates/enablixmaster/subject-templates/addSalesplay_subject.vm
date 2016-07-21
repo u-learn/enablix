@@ -1,0 +1,5 @@
+Sales Play: 
+#foreach($field in $obj.triggerEntity.fields) 
+	#if($field.label == 'Title') ${field.value.value} #break 
+	#end 
+#end

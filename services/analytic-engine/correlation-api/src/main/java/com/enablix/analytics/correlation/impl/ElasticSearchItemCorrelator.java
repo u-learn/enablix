@@ -17,6 +17,7 @@ import com.enablix.core.api.ContentDataRef;
 import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 import com.enablix.core.commons.xsdtopojo.ItemCorrelationRuleType;
 import com.enablix.core.commons.xsdtopojo.RelatedItemType;
+import com.enablix.core.commons.xsdtopojo.RelatedItemsType;
 
 @Component
 public class ElasticSearchItemCorrelator implements ItemItemCorrelator {
@@ -88,15 +89,21 @@ public class ElasticSearchItemCorrelator implements ItemItemCorrelator {
 				itemCorrRecorder.recordItemCorrelation(triggerItem, relatedItem, corrRule, relatedItemDef.getTags());
 			}
 			
-			RelatedItemType nextRelatedItemDef = relatedItemDef.getRelatedItem();
+			RelatedItemsType relatedItemsDef = relatedItemDef.getRelatedItems();
 			
-			if (nextRelatedItemDef != null) {
-				
-				MatchInputRecord nextMatchInput = new MatchInputRecord(
-						triggerItem.getContainerQId(), relatedItemDef.getQualifiedId(), match);
-				nextMatchInput.setParent(matchInput);
-				
-				processRelatedItemRule(corrRule, template, triggerItem, nextMatchInput, nextRelatedItemDef);
+			if (relatedItemsDef != null) {
+			
+				for (RelatedItemType nextRelatedItemDef : relatedItemsDef.getRelatedItem()) {
+					
+					if (nextRelatedItemDef != null) {
+						
+						MatchInputRecord nextMatchInput = new MatchInputRecord(
+								triggerItem.getContainerQId(), relatedItemDef.getQualifiedId(), match);
+						nextMatchInput.setParent(matchInput);
+						
+						processRelatedItemRule(corrRule, template, triggerItem, nextMatchInput, nextRelatedItemDef);
+					}
+				}
 			}
 		}
 	}
