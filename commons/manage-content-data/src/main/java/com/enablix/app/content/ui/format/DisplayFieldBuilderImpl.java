@@ -22,7 +22,7 @@ public class DisplayFieldBuilderImpl implements DisplayFieldBuilder {
 		
 		Object value = contentRec.get(fieldDef.getId());
 		if (value != null) {
-			return new DisplayField(fieldDef.getLabel(), 
+			return new DisplayField(fieldDef.getId(), fieldDef.getLabel(), 
 					builder.build(fieldDef, value, template));
 		}
 		

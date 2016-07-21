@@ -52,40 +52,17 @@ public class ESCorrelationQueryBuilder {
 		if (filterCriteria != null && CollectionUtil.isNotEmpty(filterCriteria.getFilter())) {
 			
 			for (FilterType filter : filterCriteria.getFilter()) {
-				
-				List<QueryBuilder> filterQbs = filterESQueryTx.createESQuery(
-									filter, targetItemQId, matchInput, template);
-				
-				for (QueryBuilder filterQb : filterQbs) {
-					
-					if (filter.getOperator() == FilterOperatorType.NOT_MATCH) {
-						qb.mustNot(filterQb);
-					} else {
-						qb.filter(filterQb);
-					}
-				}
+				addFilterToQuer(template, targetItemQId, matchInput, qb, filter);
 			}
 			
 		}
 
 		// Add match criteria
 		if (matchCriteria != null && CollectionUtil.isNotEmpty(matchCriteria.getMatch())) {
-			
+			// TODO: do we need match criteria of the filter criteria is sufficient
 			for (MatchType match : matchCriteria.getMatch()) {
-				
-				List<QueryBuilder> matchQbs = filterESQueryTx.createESQuery(
-									match, targetItemQId, matchInput, template);
-				
-				for (QueryBuilder matchQb : matchQbs) {
-
-					if (match.getOperator() == FilterOperatorType.NOT_MATCH) {
-						qb.mustNot(matchQb);
-					} else {
-						qb.must(matchQb);
-					}
-				}
+				addFilterToQuer(template, targetItemQId, matchInput, qb, match);
 			}
-			
 		}
 		
 		SearchSourceBuilder searchSource = SearchSourceBuilder.searchSource().query(qb);
@@ -95,6 +72,44 @@ public class ESCorrelationQueryBuilder {
 		LOGGER.debug("Correlation query: {}", searchSource);
 		
 		return searchRequest;
+	}
+
+	private void addFilterToQuer(ContentTemplate template, String targetItemQId, 
+			MatchInputRecord matchInput, BoolQueryBuilder qb, FilterType filter) {
+		
+		List<QueryBuilder> filterQbs = filterESQueryTx.createESQuery(
+							filter, targetItemQId, matchInput, template);
+		
+		QueryBuilder filterParentQb = QueryBuilders.boolQuery();
+		
+		if (CollectionUtil.isNotEmpty(filterQbs)) {
+		
+			if (filterQbs.size() == 1) {
+				
+				// optimize for size 1
+				filterParentQb = filterQbs.get(0);
+				
+			} else {
+				
+				// in case of multiple query builders for a filter, one match is sufficient
+				// i.e. must have one match so we create a collection of should matches and 
+				// add them as a must match
+				BoolQueryBuilder shouldQbs = QueryBuilders.boolQuery();
+				for (QueryBuilder filterQb : filterQbs) {
+					shouldQbs.should(filterQb);
+				}
+				shouldQbs.minimumNumberShouldMatch(1);
+				
+				filterParentQb = shouldQbs;
+			}
+			
+			// add it
+			if (filter.getOperator() == FilterOperatorType.NOT_MATCH) {
+				qb.mustNot(filterParentQb);
+			} else {
+				qb.filter(filterParentQb);
+			}
+		}
 	}
 	
 }

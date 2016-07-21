@@ -77,7 +77,10 @@ public class FilterToESQueryTx {
 			}
 			
 		} else {
-			qbs.add(QueryBuilders.matchQuery(filterAttrId, value));
+			
+			if (value != null) {
+				qbs.add(QueryBuilders.matchQuery(filterAttrId, value));
+			}
 		}
 		
 		return qbs;
