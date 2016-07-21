@@ -78,9 +78,10 @@ public class FilterToESQueryTx {
 			
 		} else {
 			
-			if (value != null) {
-				qbs.add(QueryBuilders.matchQuery(filterAttrId, value));
+			if (value == null) {
+				value = "~~!@#4567dsfdf"; // random value so that it does not match
 			}
+			qbs.add(QueryBuilders.matchQuery(filterAttrId, value));
 		}
 		
 		return qbs;

@@ -96,7 +96,7 @@ public class ElasticSearchItemCorrelator implements ItemItemCorrelator {
 						triggerItem.getContainerQId(), relatedItemDef.getQualifiedId(), match);
 				nextMatchInput.setParent(matchInput);
 				
-				processRelatedItemRule(corrRule, template, triggerItem, nextMatchInput, relatedItemDef);
+				processRelatedItemRule(corrRule, template, triggerItem, nextMatchInput, nextRelatedItemDef);
 			}
 		}
 	}
