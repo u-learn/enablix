@@ -83,7 +83,7 @@
 							<correlatedEntities>
 								<entity>
 									<contentTypes>
-										<containerQId>competitive</containerQId>
+										<containerQId>competitor</containerQId>
 									</contentTypes>
 									<filterTags>
 										<tag>LINKED_COMP</tag>										

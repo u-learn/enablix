@@ -32,18 +32,20 @@
 					<tag>LEVEL1_DOC</tag>
 				</tags>
 				<!-- Second level -->
-				<relatedItem qualifiedId="product">
-					<filterCriteria>
-						<filter>
-							<attributeId>identity</attributeId>
-							<parentAttribute>products</parentAttribute>
-						</filter>
-					</filterCriteria>
-					<recordAsRelated>true</recordAsRelated>
-					<tags>
-						<tag>PRIMARY_PRODUCT</tag>
-					</tags>	
-				</relatedItem>
+				<relatedItems>
+					<relatedItem qualifiedId="product">
+						<filterCriteria>
+							<filter>
+								<attributeId>identity</attributeId>
+								<parentAttribute>products</parentAttribute>
+							</filter>
+						</filterCriteria>
+						<recordAsRelated>true</recordAsRelated>
+						<tags>
+							<tag>PRIMARY_PRODUCT</tag>
+						</tags>	
+					</relatedItem>
+				</relatedItems>
 			</relatedItem>
 		</relatedItems>
 	</itemCorrelationRule>

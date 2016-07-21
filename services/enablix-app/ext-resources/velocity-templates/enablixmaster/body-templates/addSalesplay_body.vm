@@ -2,11 +2,35 @@
 <html lang="en">
  <body style = "font: normal 14px/normal Arial, Helvetica, sans-serif;">
 	<p>Hello#if(${obj.recipientUser.profile.name}) ${obj.recipientUser.profile.name}#end,</p>
-	<p>Sales Play,   
-		#foreach($field in $obj.triggerEntity.fields) 
-			#if($field.label == 'Title') ${field.value.value}#break#end
-		#end, was recently #if($obj.triggerType == 'ADD') added to #else updated on #end #if(${obj.tenant.name})<b>${obj.tenant.name}</b>#end.  
+	<p>Sales Play, ${obj.triggerEntityTitle}, was recently #if($obj.triggerType == 'ADD') added to #else updated on #end #if(${obj.tenant.name})<b>${obj.tenant.name}</b>#end.  
 	</p><br/>	
+	
+	<div style = "font: normal 14px/normal Arial, Helvetica, sans-serif;">
+		<table>
+			#foreach($field in $obj.triggerEntity.fields)			
+			<tr>
+				<td>${field.label}:</td>
+				#if($field.value.valueType == 'DOC')
+				<td>${field.value.name}</td>
+				#elseif($field.value.valueType == 'LIST')
+				<td>
+					#foreach($valListItem in $field.value.valueList)
+						#if($valListItem.valueType == 'CONTENT_REF')
+							<a href="${obj.url}/app.html#/portal/container/$valListItem.containerQId/$valListItem.contentIdentity/c/single/$valListItem.containerQId/" target="_blank">${valListItem.textValue}</a>
+						#else
+							${valListItem.value} 
+						#end	
+						#if($foreach.hasNext), #end
+					#end
+				</td>
+				#else
+				<td>${field.value.value}</td>
+				#end
+			</td>
+			#end
+		</table>
+
+	</div>
 		
    
     #if($obj.triggerEntity.doc)

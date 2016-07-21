@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <itemCorrelationRules xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/item-correlation-rule.xsd">
-	<itemCorrelationRule id="rule1" name="Product Correlation">
+	<itemCorrelationRule id="rule11" name="Product Correlation">
 		<triggerItem qualifiedId="salesPlay">
 		</triggerItem>
 		<relatedItems>
@@ -18,7 +18,7 @@
 			</relatedItem>
 		</relatedItems>
 	</itemCorrelationRule>
-	<itemCorrelationRule id="rule2" name="Solution Correlation">
+	<itemCorrelationRule id="rule12" name="Solution Correlation">
 		<triggerItem qualifiedId="salesPlay">
 		</triggerItem>
 		<relatedItems>
@@ -36,7 +36,7 @@
 			</relatedItem>
 		</relatedItems>
 	</itemCorrelationRule>	
-	<itemCorrelationRule id="rule3" name="Competitor Correlation">
+	<itemCorrelationRule id="rule13" name="Competitor Correlation">
 		<triggerItem qualifiedId="salesPlay">
 		</triggerItem>
 		<relatedItems>
@@ -54,14 +54,14 @@
 			</relatedItem>
 		</relatedItems>
 	</itemCorrelationRule>	
-	<itemCorrelationRule id="rule4" name="Product Introduction Correlation">
+	<itemCorrelationRule id="rule14" name="Product Introduction Correlation">
 		<triggerItem qualifiedId="salesPlay">
 		</triggerItem>
 		<relatedItems>
 			<relatedItem qualifiedId="product">
 				<filterCriteria>
 					<filter>
-						<attributeId>identity</attributeId>
+						<attributeId>shortName</attributeId>
 						<constant>TransactionGuard</constant>
 					</filter>
 				</filterCriteria>
