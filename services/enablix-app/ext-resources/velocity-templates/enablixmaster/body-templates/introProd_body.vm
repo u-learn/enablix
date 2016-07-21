@@ -13,29 +13,20 @@
 			#end
 		#end
 	#end
-	</p><br/>	
-
-#* In a bulleted list we need to show the following: 
-	1. Product Name as a link to the product page on the portal. 
-	2. Product Architecture link. 
-	3. BattleCard Link
-	4. Sales Deck Link 
-	5. Case Studies: There will be sub-links under main link. 
-	6. White Paper: There will be sub-links under main link. 
-*#		
+	</p>
 
 	<p>
-	<ul>
-		#foreach($item in $obj.emailContent)
-			#if($item.containerQId	== 'product')
-				#foreach($field in $item.fields)
-					#if($field.id == 'shortName')
-						<li><a href="${obj.url}/app.html#/portal/container/$item.containerQId/$item.recordIdentity/c/single/$item.containerQId/" target="_blank">${field.value.value}</a></li> #break
-						#break
-					#end
+	#foreach($item in $obj.emailContent)
+		#if($item.containerQId	== 'product')
+			#foreach($field in $item.fields)
+				#if($field.id == 'shortName')
+					<a href="${obj.url}/app.html#/portal/container/$item.containerQId/$item.recordIdentity/c/single/$item.containerQId/" target="_blank"><strong>${field.value.value}</strong></a>#break
+					#break
 				#end
 			#end
 		#end
+	#end
+	<ul>
 		#foreach($item in $obj.emailContent)
 			#if($item.containerQId	== 'battlecard')
 				#foreach($field in $item.fields)
@@ -45,7 +36,7 @@
 					#end
 				#end
 			#end
-		#end
+		#end<br/>
 		#foreach($item in $obj.emailContent)
 			#if($item.containerQId	== 'salesDeck')
 				#foreach($field in $item.fields)
@@ -55,7 +46,7 @@
 					#end
 				#end
 			#end
-		#end
+		#end<br/>
 		<li>Case Studies:
 			<ul>
 				#foreach($item in $obj.emailContent)
@@ -69,7 +60,7 @@
 					#end
 				#end
 			</ul>
-		</li>
+		</li><br/>
 		<li>White Papers:
 			<ul>
 				#foreach($item in $obj.emailContent)
