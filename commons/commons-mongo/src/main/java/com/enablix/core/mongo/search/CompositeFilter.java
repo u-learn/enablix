@@ -22,7 +22,7 @@ public abstract class CompositeFilter extends AbstractFilter {
 		int indx = 0;
 		Criteria[] criteriaList = new Criteria[searchFilters.size()];
 		for (SearchFilter filter : searchFilters) {
-			criteriaList[indx++] = filter.toPredicate(root);
+			criteriaList[indx++] = filter.toPredicate(new Criteria());
 		}
 		return appendFilter(root, criteriaList);
 	}
