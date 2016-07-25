@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<triggersDef xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/trigger-lifecycle.xsd">
+	<contentTriggerDef id="add-featuresheet-trigger" type="CONTENT_ADD">
+		<candidateContainers>
+			<containerQId>featureSheet</containerQId>
+		</candidateContainers>
+		<lifecycle>
+			<checkpoint>
+				<executionTime type="NOW"/>
+				<actions>
+					<email execOrder="1">
+						<emailTemplate>
+							<subject templateName="addContent_subject.vm"/>
+							<body templateName="addContent_body.vm"/>
+						</emailTemplate>
+						<emailContent>
+							<triggerEntity/>
+						</emailContent>
+						<recipient>
+							<allUsers/>
+						</recipient>
+					</email>
+				</actions>
+			</checkpoint>	
+		</lifecycle>
+	</contentTriggerDef>
+	<contentTriggerDef id="update-featuresheet-trigger" type="CONTENT_UPDATE">
+		<candidateContainers>
+			<containerQId>featureSheet</containerQId>
+		</candidateContainers>
+		<lifecycle>
+			<checkpoint>
+				<executionTime type="NOW"/>
+				<actions>
+					<email execOrder="1">
+						<emailTemplate>
+							<subject templateName="addContent_subject.vm"/>
+							<body templateName="addContent_body.vm"/>
+						</emailTemplate>
+						<emailContent>
+							<triggerEntity/>
+						</emailContent>
+						<recipient>
+							<allUsers/>
+						</recipient>
+					</email>
+				</actions>
+			</checkpoint>	
+		</lifecycle>
+	</contentTriggerDef>
+	<contentTriggerDef id="importantslide-add-trigger" type="CONTENT_ADD">
+		<candidateContainers>
+			<containerQId>importantslides</containerQId>
+		</candidateContainers>
+		<lifecycle>
+			<checkpoint>
+				<executionTime type="NOW"/>
+				<actions>
+					<email execOrder="2">
+						<emailTemplate>
+							<subject templateName="addContent_subject.vm"/>
+							<body templateName="addContent_body.vm"/>
+						</emailTemplate>
+						<emailContent>
+							<triggerEntity/>
+						</emailContent>
+						<recipient>
+							<allUsers/>
+						</recipient>
+					</email>
+				</actions>
+			</checkpoint>	
+		</lifecycle>
+	</contentTriggerDef>
+	<contentTriggerDef id="importantslide-update-trigger" type="CONTENT_UPDATE">
+		<candidateContainers>
+			<containerQId>importantslides</containerQId>
+		</candidateContainers>
+		<lifecycle>
+			<checkpoint>
+				<executionTime type="NOW"/>
+				<actions>
+					<email execOrder="2">
+						<emailTemplate>
+							<subject templateName="addContent_subject.vm"/>
+							<body templateName="addContent_body.vm"/>
+						</emailTemplate>
+						<emailContent>
+							<triggerEntity/>
+						</emailContent>
+						<recipient>
+							<allUsers/>
+						</recipient>
+					</email>
+				</actions>
+			</checkpoint>	
+		</lifecycle>
+	</contentTriggerDef>	
+</triggersDef>

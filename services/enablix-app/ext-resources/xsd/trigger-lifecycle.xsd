@@ -74,8 +74,8 @@
 	
 	<xs:complexType name="actionsType">
 		<xs:sequence>
-			<xs:element name="correlation" type="correlationActionType"/>
-			<xs:element name="email" type="emailActionType" maxOccurs="unbounded"/>
+			<xs:element name="correlation" type="correlationActionType" minOccurs="0"/>
+			<xs:element name="email" type="emailActionType" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
 
