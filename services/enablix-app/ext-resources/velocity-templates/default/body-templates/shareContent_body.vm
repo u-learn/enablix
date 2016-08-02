@@ -4,80 +4,37 @@
       <h3>Hello#if(${obj.recipientUser.profile.name}) ${obj.recipientUser.profile.name}#end,</h3>
       <p style = "font: normal 14px/normal Arial, Helvetica, sans-serif;">${obj.loggedInUser.profile.name} shared  #if(${obj.sharedContent.bodyData.title})<b>${obj.sharedContent.bodyData.title}</b> #else few #end  details with you.    
       </p>
-       
-       <div style = "font: normal 14px/normal Arial, Helvetica, sans-serif;">
-       #if($obj.sharedContent.singleHeaders)
-       		#set ($headers=$obj.sharedContent.singleHeaders)
-       #elseif ($obj.sharedContent.multiHeaders)
-       	 	#set ($headers=$obj.sharedContent.multiHeaders)
-       	#end
-       	
-       	#if($obj.sharedContent.counter)
-       		#set($obj.sharedContent.bodyData = $obj.sharedContent.bodyData[$obj.sharedContent.counter])
-       	#end
-       		<table>
-              #foreach($key1 in $headers)	
-              	#set ($header = $key1.key) 
-              		#set($data = $obj.sharedContent.bodyData.get($header))
-              		#if($data) <tr> <td>$key1.label</td> 
-              		#if($data.name) <td style="padding: 5px 5px 5px 5px">$data.name</td> #set($docIdentity = $data.identity)#end
-              		#if(!$data.size()) <td style="padding: 5px 5px 5px 5px">$data</td>#end
-              		#set($i=0) 
-              			<td style="padding: 5px 5px 5px 5px">
-              			#foreach($dataItem in $data)
-              			  #if($dataItem) 
-              				 #if($dataItem.label) #set($i = $i+1 )  #if($i>1),#end
-              				 #if($dataItem.hrefData)
-              				 <a href="${obj.url}/app.html#/portal/container/$dataItem.hrefData.containerQId/$dataItem.hrefData.contentIdentity/c/single/$dataItem.hrefData.containerQId/" target="_parent">
-              				 $dataItem.label 
-              				 </a>
-              				 #else
-              				  $dataItem.label
-              				 #end               			   
-              				#end
-              			 #end
-              		#end  
-              			</td>    
-              </tr>
-              #set($data=false)
-              #end
-             #end
-         </table>
+      
+      <div style = "font: normal 14px/normal Arial, Helvetica, sans-serif;">
+		<table>
+			#foreach($field in $obj.sharedContent.fields)			
+			<tr>
+				<td>${field.label}:</td>
+				#if($field.value.valueType == 'DOC')
+				<td>${field.value.name}</td>
+				#elseif($field.value.valueType == 'LIST')
+				<td>
+					#foreach($valListItem in $field.value.valueList)
+						#if($valListItem.valueType == 'CONTENT_REF')
+							<a href="${obj.url}/app.html#/portal/container/$valListItem.containerQId/$valListItem.contentIdentity/c/single/$valListItem.containerQId/" target="_blank">${valListItem.textValue}</a>
+						#else
+							${valListItem.value} 
+						#end	
+						#if($foreach.hasNext), #end
+					#end
+				</td>
+				#else
+				<td>${field.value.value}</td>
+				#end
+			</td>
+			#end
+		</table>
 
-         <!-- Multi Card Full share Code
-         <h2> $obj.counter</h2>
-        #if($obj.sharedContent.multiHeaders)
-         <table>
-         	#foreach($key1 in $obj.sharedContent.bodyData[1])
-              	#set ($data = $key1) 
-              		#foreach($key2 in $obj.sharedContent.multiHeaders)
-              			#set ($header = $key2.key)
-              		 <tr>
-              		 	 <td>$key2.label</td> 
-              			  <!--td>$data.get($header)</td-->
-              		 <!--#set($i=0) 
-              			
-              			#foreach($dataItem in $data.get($header))
-              				<td>#if($dataItem.name)$dataItem.name #end
-              				$dataItem
-              				 #if($dataItem.label) #set($i = $i+1 )  #if($i>1),#end
-              				 $dataItem.label 
-              				  #end
-              			#end  
-              			</td>    
-              </tr>
-              #end
-             #end
-         </table>
-         #end
-         -->
-       
-       </div>
-       
+	</div>
      
-      #if($docIdentity)
+      #if($obj.sharedContent.doc)
 	      <br/>
-	      <div><a href="${obj.url}/doc/download//$docIdentity" target="_parent">
+	      <div><a href="${obj.url}$obj.sharedContent.doc.accessUrl" target="_blank">
 	      <button style="background: #3d85c6;
 	      font: normal 16px/normal Arial, Helvetica, sans-serif;
 	      color: rgba(255,255,255,0.9);
@@ -92,7 +49,7 @@
 	      </a></div> 
       #end
      
-     <div><a href="${obj.url}/app.html#/portal/container/$obj.sharedContent.bodyData.containerQId/$obj.sharedContent.bodyData.identity/c/single/$obj.sharedContent.bodyData.containerQId/" target="_parent">
+     <div><a href="${obj.url}/app.html#/portal/container/$obj.sharedContent.containerQId/$obj.sharedContent.recordIdentity/c/single/$obj.sharedContent.containerQId/" target="_blank">
       <button style="background: #3d85c6;
       font: normal 16px/normal Arial, Helvetica, sans-serif;
       color: rgba(255,255,255,0.9);

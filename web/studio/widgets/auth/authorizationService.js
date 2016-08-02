@@ -62,6 +62,27 @@ enablix.studioApp.factory('AuthorizationService',
 
 			};
 			
+			var logoutUser = function() {
+				
+				$rootScope.authenticated = false;
+				
+				RESTService.postForData('logout', null, null, null, function() {
+						// HACK: to clear basic auth associated with browser window, 
+						// update it with a bad credentials
+						// http://stackoverflow.com/questions/233507/how-to-log-out-user-from-web-site-using-basic-authentication
+						authenticate({username: "~~baduser~~", password:"~~"}, function() {
+							StateUpdateService.goToWebsite();
+						});
+						
+					}, function(data) {
+						// HACK: to clear basic auth associated with browser window, 
+						// update it with a bad credentials
+						authenticate({username: "~~baduser~~", password:"~~"}, function() {
+							StateUpdateService.goToWebsite();
+						});
+					}, null, {});
+			}
+			
 			var getCurrentUser = function() {
 				return currentUser;
 			}
@@ -70,6 +91,7 @@ enablix.studioApp.factory('AuthorizationService',
 	 			userHasPermission: userHasPermission,
 	 			userHasPageAccess: userHasPageAccess,
 	 			authenticate: authenticate,
+	 			logoutUser: logoutUser,
 	 			getCurrentUser: getCurrentUser
 	 		};
 	 	}

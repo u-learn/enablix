@@ -50,5 +50,6 @@ enablix.serviceURL = {
 	"sendmail": enablix.domainName + "/sendmail",
 	"resetpassword": enablix.domainName + "/resetpassword",
 	"contactUs": enablix.domainName + "/site/contactus",
-	"captchasitekey": enablix.domainName + "/site/captchasitekey"
+	"captchasitekey": enablix.domainName + "/site/captchasitekey",
+	"sharecontent": enablix.domainName + "/sharecontent"
 };

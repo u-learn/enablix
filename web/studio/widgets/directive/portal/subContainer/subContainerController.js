@@ -36,7 +36,7 @@ enablix.studioApp.controller('PortalSubContainerCtrl',
 		}
 		
 		$scope.openShareContentModal =function(counter){
-			shareContentModalWindow.showShareContentModal(counter, $scope.bodyData,$scope.singleHeaders,$scope.multiHeaders);
+			shareContentModalWindow.showShareContentModal($scope.subContainerQId, $scope.bodyData.identity);
 		}
 		
 		$scope.toggleContainerItem = function($event, itemId) {

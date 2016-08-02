@@ -1,12 +1,14 @@
 package com.enablix.core.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.security.web.authentication.switchuser.SwitchUserFilter;
 
 import com.enablix.core.security.service.EnablixUserService;
@@ -23,6 +25,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		String[] systemUserRequestPatterns = {"/site/*", "site-doc/**/*"};
 		http = http.addFilterAfter(new ProcessContextInitFilter(systemUserRequestPatterns), SwitchUserFilter.class);
+		
+		// Add guest login filter ahead of username/password filter. Also, read the following:
+		// http://mtyurt.net/2015/07/15/spring-how-to-insert-a-filter-before-springsecurityfilterchain/
+		http = http.addFilterBefore(guestLoginFilter(), FilterSecurityInterceptor.class);
 		
 		http
 			.authorizeRequests()
@@ -51,4 +57,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		return repository;
 	}*/
 
+	@Bean
+	public GuestUserLoginFilter guestLoginFilter() {
+		return new GuestUserLoginFilter();
+	}
+	
 }

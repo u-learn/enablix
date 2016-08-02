@@ -2,8 +2,8 @@
 <contentTemplate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="simplecrm_enterprise" xsi:noNamespaceSchemaLocation="../xsd/content-template.xsd">
 	<dataDefinition>
 		<container id="customer" label="Customers">
-			<contentItem id="name" label="Account Name" type="text"/>
-			<contentItem id="shortName" label="Account Short Name" type="text"/>
+			<contentItem id="name" label="Account Name" type="text" searchBoost="7"/>
+			<contentItem id="shortName" label="Account Short Name" type="text" searchBoost="7"/>
 			<container id="project" label="Projects">
 				<contentItem id="name" label="Project Name" type="text"/>
 				<contentItem id="shortName" label="Project Short Name" type="text"/>
@@ -132,13 +132,13 @@
 		<container id="partner" label="Partners">
 			<contentItem id="name" label="Partner Name" type="text"/>
 			<contentItem id="shortName" label="Short Name" type="text"/>
-			<contentItem id="type" label="Partner Type" type="bounded">
+			<contentItem id="type" label="Partner Type" type="bounded" searchBoost="6">
 				<bounded>
 					<refList>
 						<datastore>
 							<storeId>partnerType</storeId>
 							<dataId>identity</dataId>
-							<dataLabel>type</dataLabel>
+							<dataLabel>typeName</dataLabel>
 						</datastore>
 					</refList>
 				</bounded>
@@ -167,14 +167,14 @@
 				linkContainerQId="othercontent" linkContentItemId="partners"/>																							
 		</container>	
 		<container id="article" label="Articles">
-			<contentItem id="title" label="Title" type="text"/>
+			<contentItem id="title" label="Title" type="text" searchBoost="7"/>
 			<contentItem id="url" label="URL" type="text"/>
 			<contentItem id="file" label="File" type="doc"/>
-			<contentItem id="publication" label="Publication" type="text"/>
-			<contentItem id="solutions" label="Industry Solutions" type="bounded">
+			<contentItem id="publication" label="Publication" type="text" searchBoost="5"/>
+			<contentItem id="solutions" label="Industry Solutions" type="bounded" searchBoost="6">
 				<bounded multivalued="true">
 					<refList>
-						<datastore>
+						<datastore hyperlink="true">
 							<storeId>solution</storeId>
 							<dataId>identity</dataId>
 							<dataLabel>name</dataLabel>
@@ -182,10 +182,10 @@
 					</refList>
 				</bounded>
 			</contentItem>
-			<contentItem id="products" label="Products" type="bounded">
+			<contentItem id="products" label="Products" type="bounded" searchBoost="6">
 				<bounded multivalued="true">
 					<refList>
-						<datastore>
+						<datastore hyperlink="true">
 							<storeId>product</storeId>
 							<dataId>identity</dataId>
 							<dataLabel>name</dataLabel>
@@ -193,10 +193,10 @@
 					</refList>
 				</bounded>
 			</contentItem>
-			<contentItem id="competitors" label="Competitors" type="bounded">
+			<contentItem id="competitors" label="Competitors" type="bounded" searchBoost="6">
 				<bounded multivalued="true">
 					<refList>
-						<datastore>
+						<datastore hyperlink="true">
 							<storeId>competitor</storeId>
 							<dataId>identity</dataId>
 							<dataLabel>name</dataLabel>
@@ -204,10 +204,10 @@
 					</refList>
 				</bounded>
 			</contentItem>		
-			<contentItem id="partners" label="Partners" type="bounded">
+			<contentItem id="partners" label="Partners" type="bounded" searchBoost="6">
 				<bounded multivalued="true">
 					<refList>
-						<datastore>
+						<datastore hyperlink="true">
 							<storeId>partner</storeId>
 							<dataId>identity</dataId>
 							<dataLabel>name</dataLabel>
@@ -215,10 +215,10 @@
 					</refList>
 				</bounded>
 			</contentItem>
-			<contentItem id="customers" label="Customers" type="bounded">
+			<contentItem id="customers" label="Customers" type="bounded" searchBoost="6">
 				<bounded multivalued="true">
 					<refList>
-						<datastore>
+						<datastore hyperlink="true">
 							<storeId>customer</storeId>
 							<dataId>identity</dataId>
 							<dataLabel>name</dataLabel>
@@ -230,11 +230,11 @@
 		<container id="battlecard" label="Battle Cards">
 			<contentItem id="title" label="Title" type="text"/>		
 			<contentItem id="file" label="File" type="doc"/>
-			<contentItem id="summary" label="Summary" type="text"/>
+			<contentItem id="summary" label="Summary" type="text" searchBoost="2"/>
 			<contentItem id="solutions" label="Industry Solutions" type="bounded">
 				<bounded multivalued="true">
 					<refList>
-						<datastore>
+						<datastore hyperlink="true">
 							<storeId>solution</storeId>
 							<dataId>identity</dataId>
 							<dataLabel>name</dataLabel>
@@ -245,7 +245,7 @@
 			<contentItem id="products" label="Products" type="bounded">
 				<bounded multivalued="true">
 					<refList>
-						<datastore>
+						<datastore hyperlink="true">
 							<storeId>product</storeId>
 							<dataId>identity</dataId>
 							<dataLabel>name</dataLabel>
@@ -268,7 +268,7 @@
 			<contentItem id="solutions" label="Industry Solutions" type="bounded">
 				<bounded multivalued="true">
 					<refList>
-						<datastore>
+						<datastore hyperlink="true">
 							<storeId>solution</storeId>
 							<dataId>identity</dataId>
 							<dataLabel>name</dataLabel>
@@ -279,7 +279,7 @@
 			<contentItem id="products" label="Products" type="bounded">
 				<bounded multivalued="true">
 					<refList>
-						<datastore>
+						<datastore hyperlink="true">
 							<storeId>product</storeId>
 							<dataId>identity</dataId>
 							<dataLabel>name</dataLabel>
@@ -290,7 +290,7 @@
 			<contentItem id="competitors" label="Competitors" type="bounded">
 				<bounded multivalued="true">
 					<refList>
-						<datastore>
+						<datastore hyperlink="true">
 							<storeId>competitor</storeId>
 							<dataId>identity</dataId>
 							<dataLabel>name</dataLabel>
@@ -301,7 +301,7 @@
 			<contentItem id="partners" label="Partners" type="bounded">
 				<bounded multivalued="true">
 					<refList>
-						<datastore>
+						<datastore hyperlink="true">
 							<storeId>partner</storeId>
 							<dataId>identity</dataId>
 							<dataLabel>name</dataLabel>
@@ -312,7 +312,7 @@
 			<contentItem id="customers" label="Customers" type="bounded">
 				<bounded multivalued="true">
 					<refList>
-						<datastore>
+						<datastore hyperlink="true">
 							<storeId>customer</storeId>
 							<dataId>identity</dataId>
 							<dataLabel>name</dataLabel>
@@ -324,14 +324,14 @@
 		<container id="caseStudy" label="Case Studies">
 			<contentItem id="title" label="Title" type="text"/>		
 			<contentItem id="file" label="File" type="doc"/>
-			<contentItem id="highlights" label="Case Highlights" type="text"/>
+			<contentItem id="highlights" label="Case Highlights" type="text" searchBoost="2"/>
 			<contentItem id="type" label="Type" type="bounded">
 				<bounded multivalued="true">
 					<refList>
 						<datastore>
 							<storeId>caseStudyType</storeId>
 							<dataId>identity</dataId>
-							<dataLabel>type</dataLabel>
+							<dataLabel>typeName</dataLabel>
 						</datastore>
 					</refList>
 				</bounded>
@@ -339,7 +339,7 @@
 			<contentItem id="customers" label="Customers" type="bounded">
 				<bounded multivalued="true">
 					<refList>
-						<datastore>
+						<datastore hyperlink="true">
 							<storeId>customer</storeId>
 							<dataId>identity</dataId>
 							<dataLabel>name</dataLabel>
@@ -350,7 +350,7 @@
 			<contentItem id="customerProjects" label="Customer Projects" type="bounded">
 				<bounded multivalued="true">
 					<refList>
-						<datastore>
+						<datastore hyperlink="true">
 							<storeId>customer.project</storeId>
 							<dataId>identity</dataId>
 							<dataLabel>name</dataLabel>
@@ -361,7 +361,7 @@
 			<contentItem id="products" label="Products" type="bounded">
 				<bounded multivalued="true">
 					<refList>
-						<datastore>
+						<datastore hyperlink="true">
 							<storeId>product</storeId>
 							<dataId>identity</dataId>
 							<dataLabel>name</dataLabel>
@@ -372,7 +372,7 @@
 			<contentItem id="solutions" label="Industry Solutions" type="bounded">
 				<bounded multivalued="true">
 					<refList>
-						<datastore>
+						<datastore hyperlink="true">
 							<storeId>solution</storeId>
 							<dataId>identity</dataId>
 							<dataLabel>name</dataLabel>
@@ -383,7 +383,7 @@
 			<contentItem id="competitors" label="Competitors" type="bounded">
 				<bounded multivalued="true">
 					<refList>
-						<datastore>
+						<datastore hyperlink="true">
 							<storeId>competitor</storeId>
 							<dataId>identity</dataId>
 							<dataLabel>name</dataLabel>
@@ -394,7 +394,7 @@
 			<contentItem id="partners" label="Partners" type="bounded">
 				<bounded multivalued="true">
 					<refList>
-						<datastore>
+						<datastore hyperlink="true">
 							<storeId>partner</storeId>
 							<dataId>identity</dataId>
 							<dataLabel>name</dataLabel>
@@ -409,7 +409,7 @@
 			<contentItem id="products" label="Products" type="bounded">
 				<bounded multivalued="true">
 					<refList>
-						<datastore>
+						<datastore hyperlink="true">
 							<storeId>product</storeId>
 							<dataId>identity</dataId>
 							<dataLabel>name</dataLabel>
@@ -420,7 +420,7 @@
 			<contentItem id="solutions" label="Industry Solutions" type="bounded">
 				<bounded multivalued="true">
 					<refList>
-						<datastore>
+						<datastore hyperlink="true">
 							<storeId>solution</storeId>
 							<dataId>identity</dataId>
 							<dataLabel>name</dataLabel>
@@ -431,7 +431,7 @@
 			<contentItem id="customerProjects" label="Customer Projects" type="bounded">
 				<bounded multivalued="true">
 					<refList>
-						<datastore>
+						<datastore hyperlink="true">
 							<storeId>customer.project</storeId>
 							<dataId>identity</dataId>
 							<dataLabel>name</dataLabel>
@@ -442,7 +442,7 @@
 			<contentItem id="competitors" label="Competitors" type="bounded">
 				<bounded multivalued="true">
 					<refList>
-						<datastore>
+						<datastore hyperlink="true">
 							<storeId>competitor</storeId>
 							<dataId>identity</dataId>
 							<dataLabel>name</dataLabel>
@@ -458,7 +458,7 @@
 			<contentItem id="solutions" label="Industry Solutions" type="bounded">
 				<bounded multivalued="true">
 					<refList>
-						<datastore>
+						<datastore hyperlink="true">
 							<storeId>solution</storeId>
 							<dataId>identity</dataId>
 							<dataLabel>name</dataLabel>
@@ -469,7 +469,7 @@
 			<contentItem id="products" label="Products" type="bounded">
 				<bounded multivalued="true">
 					<refList>
-						<datastore>
+						<datastore hyperlink="true">
 							<storeId>product</storeId>
 							<dataId>identity</dataId>
 							<dataLabel>name</dataLabel>
@@ -485,7 +485,7 @@
 			<contentItem id="solutions" label="Industry Solutions" type="bounded">
 				<bounded multivalued="true">
 					<refList>
-						<datastore>
+						<datastore hyperlink="true">
 							<storeId>solution</storeId>
 							<dataId>identity</dataId>
 							<dataLabel>name</dataLabel>
@@ -496,7 +496,7 @@
 			<contentItem id="products" label="Products" type="bounded">
 				<bounded multivalued="true">
 					<refList>
-						<datastore>
+						<datastore hyperlink="true">
 							<storeId>product</storeId>
 							<dataId>identity</dataId>
 							<dataLabel>name</dataLabel>
@@ -507,7 +507,7 @@
 			<contentItem id="competitors" label="Competitors" type="bounded">
 				<bounded multivalued="true">
 					<refList>
-						<datastore>
+						<datastore hyperlink="true">
 							<storeId>competitor</storeId>
 							<dataId>identity</dataId>
 							<dataLabel>name</dataLabel>
@@ -518,7 +518,7 @@
 			<contentItem id="partners" label="Partners" type="bounded">
 				<bounded multivalued="true">
 					<refList>
-						<datastore>
+						<datastore hyperlink="true">
 							<storeId>partner</storeId>
 							<dataId>identity</dataId>
 							<dataLabel>name</dataLabel>
@@ -529,7 +529,7 @@
 			<contentItem id="customers" label="Customers" type="bounded">
 				<bounded multivalued="true">
 					<refList>
-						<datastore>
+						<datastore hyperlink="true">
 							<storeId>customer</storeId>
 							<dataId>identity</dataId>
 							<dataLabel>name</dataLabel>
@@ -542,13 +542,13 @@
 			<contentItem id="title" label="Title" type="text"/>			
 			<contentItem id="file" label="File" type="doc"/>
 			<contentItem id="summary" label="Summary" type="text"/>
-			<contentItem id="slideType" label="Slide Type" type="bounded">
+			<contentItem id="slideType" label="Slide Type" type="bounded" searchBoost="6">
 				<bounded multivalued="true">
 					<refList>
 						<datastore>
 							<storeId>slideType</storeId>
 							<dataId>identity</dataId>
-							<dataLabel>type</dataLabel>
+							<dataLabel>typeName</dataLabel>
 						</datastore>
 					</refList>
 				</bounded>
@@ -556,7 +556,7 @@
 			<contentItem id="solutions" label="Industry Solutions" type="bounded">
 				<bounded multivalued="true">
 					<refList>
-						<datastore>
+						<datastore hyperlink="true">
 							<storeId>solution</storeId>
 							<dataId>identity</dataId>
 							<dataLabel>name</dataLabel>
@@ -567,7 +567,7 @@
 			<contentItem id="products" label="Products" type="bounded">
 				<bounded multivalued="true">
 					<refList>
-						<datastore>
+						<datastore hyperlink="true">
 							<storeId>product</storeId>
 							<dataId>identity</dataId>
 							<dataLabel>name</dataLabel>
@@ -585,7 +585,7 @@
 						<datastore>
 							<storeId>proposalType</storeId>
 							<dataId>identity</dataId>
-							<dataLabel>type</dataLabel>
+							<dataLabel>typeName</dataLabel>
 						</datastore>
 					</refList>
 				</bounded>
@@ -593,7 +593,7 @@
 			<contentItem id="customerProjects" label="Customer Projects" type="bounded">
 				<bounded multivalued="true">
 					<refList>
-						<datastore>
+						<datastore hyperlink="true">
 							<storeId>customer.project</storeId>
 							<dataId>identity</dataId>
 							<dataLabel>name</dataLabel>
@@ -604,7 +604,7 @@
 			<contentItem id="solutions" label="Industry Solutions" type="bounded">
 				<bounded multivalued="true">
 					<refList>
-						<datastore>
+						<datastore hyperlink="true">
 							<storeId>solution</storeId>
 							<dataId>identity</dataId>
 							<dataLabel>name</dataLabel>
@@ -615,7 +615,7 @@
 			<contentItem id="products" label="Products" type="bounded">
 				<bounded multivalued="true">
 					<refList>
-						<datastore>
+						<datastore hyperlink="true">
 							<storeId>product</storeId>
 							<dataId>identity</dataId>
 							<dataLabel>name</dataLabel>
@@ -626,7 +626,7 @@
 			<contentItem id="partners" label="Partners" type="bounded">
 				<bounded multivalued="true">
 					<refList>
-						<datastore>
+						<datastore hyperlink="true">
 							<storeId>partner</storeId>
 							<dataId>identity</dataId>
 							<dataLabel>name</dataLabel>
@@ -639,10 +639,10 @@
 			<contentItem id="title" label="Title" type="text"/>			
 			<contentItem id="file" label="File" type="doc"/>
 			<contentItem id="summary" label="Summary" type="text"/>
-			<contentItem id="customerProjects" label="Customer Projects" type="bounded">
+			<contentItem id="customerProjects" label="Customer Projects" type="bounded" searchBoost="6">
 				<bounded multivalued="true">
 					<refList>
-						<datastore>
+						<datastore hyperlink="true">
 							<storeId>customer.project</storeId>
 							<dataId>identity</dataId>
 							<dataLabel>name</dataLabel>
@@ -653,7 +653,7 @@
 			<contentItem id="solutions" label="Industry Solutions" type="bounded">
 				<bounded multivalued="true">
 					<refList>
-						<datastore>
+						<datastore hyperlink="true">
 							<storeId>solution</storeId>
 							<dataId>identity</dataId>
 							<dataLabel>name</dataLabel>
@@ -664,7 +664,7 @@
 			<contentItem id="products" label="Products" type="bounded">
 				<bounded multivalued="true">
 					<refList>
-						<datastore>
+						<datastore hyperlink="true">
 							<storeId>product</storeId>
 							<dataId>identity</dataId>
 							<dataLabel>name</dataLabel>
@@ -675,7 +675,7 @@
 			<contentItem id="partners" label="Partners" type="bounded">
 				<bounded multivalued="true">
 					<refList>
-						<datastore>
+						<datastore hyperlink="true">
 							<storeId>partner</storeId>
 							<dataId>identity</dataId>
 							<dataLabel>name</dataLabel>
@@ -700,7 +700,7 @@
 			<contentItem id="solutions" label="Industry Solutions" type="bounded">
 				<bounded multivalued="true">
 					<refList>
-						<datastore>
+						<datastore hyperlink="true">
 							<storeId>solution</storeId>
 							<dataId>identity</dataId>
 							<dataLabel>name</dataLabel>
@@ -711,7 +711,7 @@
 			<contentItem id="products" label="Products" type="bounded">
 				<bounded multivalued="true">
 					<refList>
-						<datastore>
+						<datastore hyperlink="true">
 							<storeId>product</storeId>
 							<dataId>identity</dataId>
 							<dataLabel>name</dataLabel>
@@ -722,7 +722,7 @@
 			<contentItem id="competitors" label="Competitors" type="bounded">
 				<bounded multivalued="true">
 					<refList>
-						<datastore>
+						<datastore hyperlink="true">
 							<storeId>competitor</storeId>
 							<dataId>identity</dataId>
 							<dataLabel>name</dataLabel>
@@ -733,7 +733,7 @@
 			<contentItem id="partners" label="Partners" type="bounded">
 				<bounded multivalued="true">
 					<refList>
-						<datastore>
+						<datastore hyperlink="true">
 							<storeId>partner</storeId>
 							<dataId>identity</dataId>
 							<dataLabel>name</dataLabel>
@@ -744,7 +744,7 @@
 			<contentItem id="customers" label="Customers" type="bounded">
 				<bounded multivalued="true">
 					<refList>
-						<datastore>
+						<datastore hyperlink="true">
 							<storeId>customer</storeId>
 							<dataId>identity</dataId>
 							<dataLabel>name</dataLabel>
@@ -755,7 +755,7 @@
 		</container>		
 		<container id="winloss" label="Win Loss Analysis">
 			<contentItem id="title" label="Title" type="text"/>
-			<contentItem id="winorloss" label="Result" type="bounded">
+			<contentItem id="winorloss" label="Result" type="bounded" searchBoost="6">
 				<bounded>
 					<fixedList>
 						<data id="win" label="Win"/>
@@ -768,7 +768,7 @@
 			<contentItem id="customers" label="Customer" type="bounded">
 				<bounded multivalued="true">
 					<refList>
-						<datastore>
+						<datastore hyperlink="true">
 							<storeId>customer</storeId>
 							<dataId>identity</dataId>
 							<dataLabel>name</dataLabel>
@@ -779,7 +779,7 @@
 			<contentItem id="customerProjects" label="Customer Projects" type="bounded">
 				<bounded multivalued="true">
 					<refList>
-						<datastore>
+						<datastore hyperlink="true">
 							<storeId>customer.project</storeId>
 							<dataId>identity</dataId>
 							<dataLabel>name</dataLabel>
@@ -790,7 +790,7 @@
 			<contentItem id="competitors" label="Competitors" type="bounded">
 				<bounded multivalued="true">
 					<refList>
-						<datastore>
+						<datastore hyperlink="true">
 							<storeId>competitor</storeId>
 							<dataId>identity</dataId>
 							<dataLabel>name</dataLabel>
@@ -801,7 +801,7 @@
 			<contentItem id="solutions" label="Industry Solutions" type="bounded">
 				<bounded multivalued="true">
 					<refList>
-						<datastore>
+						<datastore hyperlink="true">
 							<storeId>solution</storeId>
 							<dataId>identity</dataId>
 							<dataLabel>name</dataLabel>
@@ -812,7 +812,7 @@
 			<contentItem id="products" label="Products" type="bounded">
 				<bounded multivalued="true">
 					<refList>
-						<datastore>
+						<datastore hyperlink="true">
 							<storeId>product</storeId>
 							<dataId>identity</dataId>
 							<dataLabel>name</dataLabel>
@@ -823,7 +823,7 @@
 			<contentItem id="partners" label="Partners" type="bounded">
 				<bounded multivalued="true">
 					<refList>
-						<datastore>
+						<datastore hyperlink="true">
 							<storeId>partner</storeId>
 							<dataId>identity</dataId>
 							<dataLabel>name</dataLabel>
@@ -837,14 +837,14 @@
 			<contentItem id="summary" label="Summary" type="text"/>
 			<contentItem id="file" label="File" type="doc"/>			
 		</container>
-		<container id="nda" label="Non Disclosure Agreement (NDA)">
+		<container id="nda" label="Non Discolusre Agreement (NDA)">
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="summary" label="Summary" type="text"/>
 			<contentItem id="file" label="File" type="doc"/>
 			<contentItem id="customers" label="Customer" type="bounded">
 				<bounded multivalued="true">
 					<refList>
-						<datastore>
+						<datastore hyperlink="true">
 							<storeId>customer</storeId>
 							<dataId>identity</dataId>
 							<dataLabel>name</dataLabel>
@@ -855,7 +855,7 @@
 			<contentItem id="customerProjects" label="Customer Projects" type="bounded">
 				<bounded multivalued="true">
 					<refList>
-						<datastore>
+						<datastore hyperlink="true">
 							<storeId>customer.project</storeId>
 							<dataId>identity</dataId>
 							<dataLabel>name</dataLabel>
@@ -866,7 +866,7 @@
 			<contentItem id="partners" label="Partners" type="bounded">
 				<bounded multivalued="true">
 					<refList>
-						<datastore>
+						<datastore hyperlink="true">
 							<storeId>partner</storeId>
 							<dataId>identity</dataId>
 							<dataLabel>name</dataLabel>
@@ -882,7 +882,7 @@
 			<contentItem id="customerProjects" label="Customer Projects" type="bounded">
 				<bounded multivalued="true">
 					<refList>
-						<datastore>
+						<datastore hyperlink="true">
 							<storeId>customer.project</storeId>
 							<dataId>identity</dataId>
 							<dataLabel>name</dataLabel>
@@ -893,7 +893,7 @@
 			<contentItem id="partners" label="Partners" type="bounded">
 				<bounded multivalued="true">
 					<refList>
-						<datastore>
+						<datastore hyperlink="true">
 							<storeId>partner</storeId>
 							<dataId>identity</dataId>
 							<dataLabel>name</dataLabel>
@@ -909,7 +909,7 @@
 			<contentItem id="customerProjects" label="Customer Projects" type="bounded">
 				<bounded multivalued="true">
 					<refList>
-						<datastore>
+						<datastore hyperlink="true">
 							<storeId>customer.project</storeId>
 							<dataId>identity</dataId>
 							<dataLabel>name</dataLabel>
@@ -925,7 +925,7 @@
 			<contentItem id="customerProjects" label="Customer Projects" type="bounded">
 				<bounded multivalued="true">
 					<refList>
-						<datastore>
+						<datastore hyperlink="true">
 							<storeId>customer.project</storeId>
 							<dataId>identity</dataId>
 							<dataLabel>name</dataLabel>
@@ -941,7 +941,7 @@
 			<contentItem id="customerProjects" label="Customer Projects" type="bounded">
 				<bounded multivalued="true">
 					<refList>
-						<datastore>
+						<datastore hyperlink="true">
 							<storeId>customer.project</storeId>
 							<dataId>identity</dataId>
 							<dataLabel>name</dataLabel>
@@ -957,7 +957,7 @@
 			<contentItem id="customerProjects" label="Customer Projects" type="bounded">
 				<bounded multivalued="true">
 					<refList>
-						<datastore>
+						<datastore hyperlink="true">
 							<storeId>customer.project</storeId>
 							<dataId>identity</dataId>
 							<dataLabel>name</dataLabel>
@@ -971,16 +971,32 @@
 			<contentItem id="summary" label="Summary" type="text"/>
 			<contentItem id="file" label="File" type="doc"/>
 		</container>
+		<container id="template" label="Templates">
+			<contentItem id="title" label="Title" type="text"/>
+			<contentItem id="templateType" label="Type" type="bounded" searchBoost="6">
+				<bounded multivalued="true">
+					<refList>
+						<datastore>
+							<storeId>templateType</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>typeName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>			
+			<contentItem id="summary" label="Summary" type="text"/>
+			<contentItem id="file" label="File" type="doc"/>
+		</container>		
 		<container id="othercontent" label="Other Content">
 			<contentItem id="title" label="Title" type="text"/>
-			<contentItem id="Type" label="Type" type="text"/>
+			<contentItem id="documentType" label="Type" type="text"/>
 			<contentItem id="summary" label="Summary" type="text"/>
 			<contentItem id="url" label="URL" type="text"/>
 			<contentItem id="file" label="File" type="doc"/>
 			<contentItem id="customers" label="Customer" type="bounded">
 				<bounded multivalued="true">
 					<refList>
-						<datastore>
+						<datastore hyperlink="true">
 							<storeId>customer</storeId>
 							<dataId>identity</dataId>
 							<dataLabel>name</dataLabel>
@@ -991,7 +1007,7 @@
 			<contentItem id="customerProjects" label="Customer Projects" type="bounded">
 				<bounded multivalued="true">
 					<refList>
-						<datastore>
+						<datastore hyperlink="true">
 							<storeId>customer.project</storeId>
 							<dataId>identity</dataId>
 							<dataLabel>name</dataLabel>
@@ -1002,7 +1018,7 @@
 			<contentItem id="competitors" label="Competitors" type="bounded">
 				<bounded multivalued="true">
 					<refList>
-						<datastore>
+						<datastore hyperlink="true">
 							<storeId>competitor</storeId>
 							<dataId>identity</dataId>
 							<dataLabel>name</dataLabel>
@@ -1013,7 +1029,7 @@
 			<contentItem id="solutions" label="Industry Solutions" type="bounded">
 				<bounded multivalued="true">
 					<refList>
-						<datastore>
+						<datastore hyperlink="true">
 							<storeId>solution</storeId>
 							<dataId>identity</dataId>
 							<dataLabel>name</dataLabel>
@@ -1024,7 +1040,7 @@
 			<contentItem id="products" label="Products" type="bounded">
 				<bounded multivalued="true">
 					<refList>
-						<datastore>
+						<datastore hyperlink="true">
 							<storeId>product</storeId>
 							<dataId>identity</dataId>
 							<dataLabel>name</dataLabel>
@@ -1035,7 +1051,7 @@
 			<contentItem id="partners" label="Partners" type="bounded">
 				<bounded multivalued="true">
 					<refList>
-						<datastore>
+						<datastore hyperlink="true">
 							<storeId>partner</storeId>
 							<dataId>identity</dataId>
 							<dataLabel>name</dataLabel>
@@ -1045,25 +1061,29 @@
 			</contentItem>			
 		</container>
 		<container id="caseStudyType" label="Case Study Types" refData="true">
-			<contentItem id="type" label="Type" type="text"/>
+			<contentItem id="typeName" label="Type" type="text"/>
 			<contentItem id="desc" label="Description" type="text"/>
 		</container>
 		<container id="competitorType" label="Competitor Types" refData="true">
-			<contentItem id="type" label="Type" type="text"/>
+			<contentItem id="typeName" label="Type" type="text"/>
 			<contentItem id="desc" label="Description" type="text"/>
 		</container>
 		<container id="partnerType" label="Partner Types" refData="true">
-			<contentItem id="type" label="Type" type="text"/>
+			<contentItem id="typeName" label="Type" type="text"/>
 			<contentItem id="desc" label="Description" type="text"/>
 		</container>
 		<container id="proposalType" label="Proposal Types" refData="true">
-			<contentItem id="type" label="Type" type="text"/>
+			<contentItem id="typeName" label="Type" type="text"/>
 			<contentItem id="desc" label="Description" type="text"/>
 		</container>	
 		<container id="slideType" label="Slide Types" refData="true">
-			<contentItem id="type" label="Type" type="text"/>
+			<contentItem id="typeName" label="Type" type="text"/>
 			<contentItem id="desc" label="Description" type="text"/>
-		</container>				
+		</container>
+		<container id="templateType" label="Template Types" refData="true">
+			<contentItem id="typeName" label="Type" type="text"/>
+			<contentItem id="desc" label="Description" type="text"/>
+		</container>						
 	</dataDefinition>
 	<uiDefinition>
 		<contentUIDef qualifiedId="~root~">
@@ -1363,6 +1383,20 @@
 		<contentUIDef qualifiedId="ppttemplate.summary">
 			<text type="long"/>
 		</contentUIDef>
+		<contentUIDef qualifiedId="template">
+			<container labelQualifiedId="template.title">
+				<listViewConfig>
+					<hideContentItem id="file"/>
+					<hideContentItem id="summary"/>									
+				</listViewConfig>
+				<portalConfig>
+					<headingContentItem id="title"/>
+				</portalConfig>					
+			</container>
+		</contentUIDef>				
+		<contentUIDef qualifiedId="template.summary">
+			<text type="long"/>
+		</contentUIDef>		
 		<contentUIDef qualifiedId="othercontent">
 			<container>
 				<listViewConfig>
@@ -1403,7 +1437,8 @@
 					<childContainer id="salesDeck"/>					
 					<childContainer id="whitepaper"/>
 					<childContainer id="winloss"/>
-					<childContainer id="othercontent"/>										
+					<childContainer id="othercontent"/>
+					<childContainer id="template"/>															
 				</enclosure>			
 				<enclosure  id="corporate" label="Corporate">
 					<childContainer id="licenseAgreement"/>

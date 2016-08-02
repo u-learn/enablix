@@ -1,33 +1,27 @@
 enablix.studioApp.factory('shareContentModalWindow', 
-	[		'$state', '$stateParams', 'Notification', '$modal',
+			[	 '$state', '$stateParams', 'Notification', '$modal',
 	 	function( $state,   $stateParams,   Notification,   $modal) {
 	
 	
 		
-	var showShareContentModal = function(counter,bodyData,singleHeaders,multiHeaders) {
+	var showShareContentModal = function(containerQId, contentIdentity) {
 				var modalInstance = $modal.open({
 				      templateUrl: 'widgets/directive/portal/sharePopup/share-content-popup.html',
 				      size: 'sm', // 'sm', 'lg'
 				      controller: 'ShareController',
 					  resolve: {				    	  
-						   bodyData: function() {
-				    		  return bodyData;
+						  containerQId: function() {
+				    		  return containerQId;
 				    	  },
-						   singleHeaders: function() {
-				    		  return singleHeaders;
-				    	  },
-						   multiHeaders: function() {
-				    		  return multiHeaders;
-				    	  },
-						  counter: function() {
-				    		  return counter;
+				    	  contentIdentity : function() {
+				    		  return contentIdentity;
 				    	  }
 					  }
-				    });
+				});
 			};
 
-			return {
-				showShareContentModal : showShareContentModal
-			};	
+	return {
+		showShareContentModal : showShareContentModal
+	};	
 			
 }]);

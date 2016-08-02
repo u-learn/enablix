@@ -9,4 +9,6 @@ public interface RoleRepository extends BaseMongoRepository<Role> {
 
 	List<Role> findByIdentityIn(List<String> roleIdentity);
 	
+	List<Role> findByRoleNameIn(List<String> roleNames);
+	
 }

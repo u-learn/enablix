@@ -1,13 +1,19 @@
 enablix.studioApp.factory('ContentTemplateService', 
-	[	'RESTService', 'Notification',
-	 	function(RESTService, Notification) {
+	[	'RESTService', 'Notification', 'AuthorizationService',
+	 	function(RESTService, Notification, AuthorizationService) {
 		
 			var loadTemplate = function() {
 				
 				return RESTService.getForData("fetchDefaultContentTemplate", null, null, 
 					function(data) {
-						enablix.template = data;
-						enablix.templateId = data.id;
+					
+						if (data == "") {
+							// No template, user should be logout?
+							AuthorizationService.logoutUser();
+						} else {
+							enablix.template = data;
+							enablix.templateId = data.id;
+						}
 					}, 
 					function(resp, status) {
 						//alert("Error loading content template");

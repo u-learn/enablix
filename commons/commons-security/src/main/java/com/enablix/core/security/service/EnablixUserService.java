@@ -5,6 +5,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -39,6 +41,9 @@ public class EnablixUserService implements UserService, UserDetailsService {
 	
 	@Autowired
 	private RoleRepository roleRepo;
+	
+	@Autowired
+	private GuestUserProviderFactory guestUserProviderFactory;
 	
 	@Override
 	public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
@@ -89,10 +94,11 @@ public class EnablixUserService implements UserService, UserDetailsService {
 	@Override
 	public User addUser(UserAndRolesVO userVO) {
 		
-		String password =UUID.randomUUID().toString().substring(0,8);//system generated default password
-		
-		if (userVO.getUser().getPassword()==null)
+		if (userVO.getUser().getPassword() == null) {
+			String password =UUID.randomUUID().toString().substring(0,8);//system generated default password
 			userVO.getUser().setPassword(password);
+		}
+		
 		User newuser = userRepo.save(userVO.getUser());
 		
 		if (!userVO.getRoles().isEmpty()) {
@@ -230,6 +236,29 @@ public class EnablixUserService implements UserService, UserDetailsService {
 		}
 		
 		return userVO;
+	}
+
+	@Override
+	public UserDetails getGuestUser(HttpServletRequest request) {
+		
+		UserDetails user = null;
+		GuestUserProvider provider = guestUserProviderFactory.getProvider(request);
+		
+		if (provider != null) {
+		
+			UserAndRolesVO guestUser = provider.getGuestUser(request);
+			
+			if (guestUser != null) {
+				UserRole userRole = new UserRole();
+				userRole.setUserIdentity(guestUser.getUser().getIdentity());
+				userRole.setRoles(guestUser.getDetailedRoles());
+				
+				user = new LoggedInUser(guestUser.getUser(), 
+						null, userRole);
+			}
+		}
+		
+		return user;
 	}
 
 }

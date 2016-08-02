@@ -26,13 +26,10 @@ import com.enablix.core.domain.tenant.Tenant;
 import com.enablix.core.mail.utility.MailConstants;
 import com.enablix.core.mail.utility.MailUtility;
 import com.enablix.core.mail.velocity.NewUserScenarioInputBuilder;
-import com.enablix.core.mail.velocity.ShareContentScenarioInputBuilder;
-import com.enablix.core.mail.velocity.WeeklyDigestScenarioInputBuilder;
 import com.enablix.core.mongo.config.repo.EmailConfigRepo;
 import com.enablix.core.mongo.config.repo.SMTPConfigRepo;
 import com.enablix.core.mongo.config.repo.TemplateConfigRepo;
 import com.enablix.core.system.repo.TenantRepository;
-import com.enablix.core.system.repo.UserRepository;
 
 @Service
 public class MailServiceImpl implements MailService {
@@ -64,22 +61,16 @@ public class MailServiceImpl implements MailService {
 	private TemplateConfigRepo templateConfigRepo;
 	
 	@Autowired
-	private UserRepository userRepo;
-	
-	@Autowired
 	private TenantRepository tenantRepo;
 
 	// need to move scenario builders into a factory
 	@Autowired
 	private NewUserScenarioInputBuilder newUserScenarioInputBuilder;
 	
-	@Autowired
-	private WeeklyDigestScenarioInputBuilder weeklyDigestScenarioInputBuilder;
+	private EmailConfiguration defaultEmailConfig;
 	
 	@Autowired
-	private ShareContentScenarioInputBuilder shareContentScenarioInputBuilder;
-
-	private EmailConfiguration defaultEmailConfig;
+	private MailContentProcessorFactory mailContentProcessorFactory;
 	
 	@PostConstruct
 	public void init() {
@@ -110,25 +101,46 @@ public class MailServiceImpl implements MailService {
 		case MailConstants.SCENARIO_PASSWORD_CONFIRMATION:
 			objectTobeMerged = newUserScenarioInputBuilder.build(emailid);
 			break;
-		case MailConstants.SCENARIO_SHARE_CONTENT:
-			objectTobeMerged = shareContentScenarioInputBuilder.build(emailid, objectTobeMerged);
 		default:
 			break;
 		}
 
+		boolean mailSent = false;
+		
 		try {
 			String htmlBody = generateTemplateMessage(objectTobeMerged, bodyTemplateName, elementName,
 					MailConstants.BODY_TEMPLATE_PATH);
 			String subject = generateTemplateMessage(objectTobeMerged, subjectTemplateName, elementName,
 					MailConstants.SUBJECT_TEMPLATE_PATH);
 
-			return MailUtility.sendEmail(emailid, subject, htmlBody, this.getEmailConfiguration());
+			preprocessMailContent(objectTobeMerged, scenario);
+			mailSent = MailUtility.sendEmail(emailid, subject, htmlBody, this.getEmailConfiguration());
+			postprocessMailContent(objectTobeMerged, scenario);
+			
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
-			return false;
 		}
 
+		return mailSent;
 	};
+	
+	private void preprocessMailContent(Object mailContent, String mailScenarioName) {
+		List<MailContentProcessor> processors = mailContentProcessorFactory.getProcessors(mailScenarioName);
+		if (processors != null) {
+			for (MailContentProcessor processor : processors) {
+				processor.preSend(mailContent);
+			}
+		}
+	}
+	
+	private void postprocessMailContent(Object mailContent, String mailScenarioName) {
+		List<MailContentProcessor> processors = mailContentProcessorFactory.getProcessors(mailScenarioName);
+		if (processors != null) {
+			for (MailContentProcessor processor : processors) {
+				processor.postSend(mailContent);
+			}
+		}
+	}
 
 	private String generateTemplateMessage(Object objectTobeMerged, String templateName, String elementName, String path) {
 		Template emailTemplate = null;
