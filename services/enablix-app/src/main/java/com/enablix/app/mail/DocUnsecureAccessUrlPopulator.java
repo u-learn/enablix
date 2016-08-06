@@ -29,7 +29,7 @@ public class DocUnsecureAccessUrlPopulator {
 	}
 	
 	private String getActualDocDownloadUrl(String docIdentity) {
-		return docDownloadUrl.replaceAll(":docIdentity", docIdentity);
+		return docDownloadUrl.replaceAll(":docIdentity", docIdentity) + "?atChannel=EMAIL";
 	}
 	
 }

@@ -1,9 +1,26 @@
 package com.enablix.core.domain.activity;
 
+import com.enablix.commons.util.StringUtil;
+
 public class ActivityChannel {
 
 	public enum Channel {
-		WEB, EMAIL, EXTERNAL
+		
+		WEB, EMAIL, EXTERNAL;
+		
+		public static Channel parse(String channel) {
+			
+			if (!StringUtil.isEmpty(channel)) {
+			
+				for (Channel ch : Channel.values()) {
+					if (ch.toString().equals(channel)) {
+						return ch;
+					}
+				}
+			}
+			
+			return null;
+		}
 	}
 	
 	private Channel channel;

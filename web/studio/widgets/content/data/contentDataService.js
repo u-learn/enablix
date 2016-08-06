@@ -29,12 +29,15 @@ enablix.studioApp.factory('ContentDataService',
 	 			
 	 		};
 
-	 		var getContentRecordData = function(_templateId, _contentQId, _recordIdentity, _onSuccess, _onError) {
+	 		var getContentRecordData = function(_templateId, _contentQId, _recordIdentity, _accessFrom, _onSuccess, _onError) {
+	 			
+	 			var atChannel = _accessFrom == 'PORTAL' ? 'WEB' : null;
 	 			
 	 			var params = {
 	 					"templateId": _templateId,
 	 					"contentQId": _contentQId,
-	 					"recordIdentity": _recordIdentity
+	 					"recordIdentity": _recordIdentity,
+	 					"accessChannel": atChannel
 	 			};
 	 			
 	 			RESTService.getForData("fetchRecordData", params, null, _onSuccess, _onError);

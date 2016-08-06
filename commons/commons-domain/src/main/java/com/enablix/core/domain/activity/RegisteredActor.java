@@ -4,6 +4,11 @@ public class RegisteredActor extends Actor {
 
 	private String userId;
 	
+	public RegisteredActor(String userId) {
+		super();
+		this.userId = userId;
+	}
+
 	public String getUserId() {
 		return userId;
 	}

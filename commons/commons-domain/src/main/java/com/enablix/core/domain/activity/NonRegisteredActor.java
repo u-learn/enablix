@@ -6,6 +6,11 @@ public class NonRegisteredActor extends Actor {
 	
 	private String name;
 	
+	public NonRegisteredActor(String externalId) {
+		super();
+		this.externalId = externalId;
+	}
+
 	public String getExternalId() {
 		return externalId;
 	}

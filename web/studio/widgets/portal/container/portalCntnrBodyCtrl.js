@@ -7,16 +7,6 @@ enablix.studioApp.controller('PortalCntnrBodyCtrl',
 		
 		$scope.$stateParams = $stateParams;
 		
-		/*ContentDataService.getContentRecordData(enablix.templateId, $stateParams.containerQId, $stateParams.elementIdentity, 
-				function(recordData) {
-					var mainCntnrDef = ContentTemplateService.getContainerDefinition(
-											enablix.template, $stateParams.containerQId);
-					$scope.mainContainerLabel = ContentUtil.resolveContainerInstanceLabel(mainCntnrDef, recordData);
-				}, 
-				function(errResp) {
-					// ignore
-				});*/
-		
 		var decorateData = function(_containerDef, _dataRecord) {
 			_dataRecord.headingLabel = ContentUtil.resolveContainerInstancePortalLabel(
 										_containerDef, _dataRecord);
@@ -26,7 +16,7 @@ enablix.studioApp.controller('PortalCntnrBodyCtrl',
 		
 		if ($stateParams.containerQId === $stateParams.subContainerQId) {
 			
-			ContentDataService.getContentRecordData(enablix.templateId, $stateParams.containerQId, 
+			ContentDataService.getContentRecordData(enablix.templateId, $stateParams.containerQId, 'PORTAL',
 					$stateParams.elementIdentity, 
 					function(recordData) {
 						decorateData($scope.containerDef, recordData);

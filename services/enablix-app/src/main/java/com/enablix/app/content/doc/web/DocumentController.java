@@ -24,6 +24,13 @@ import com.enablix.commons.dms.api.Document;
 import com.enablix.commons.dms.api.DocumentMetadata;
 import com.enablix.commons.util.QIdUtil;
 import com.enablix.commons.util.StringUtil;
+import com.enablix.commons.util.process.ProcessContext;
+import com.enablix.core.domain.activity.ActivityChannel.Channel;
+import com.enablix.core.domain.activity.Actor;
+import com.enablix.core.domain.activity.NonRegisteredActor;
+import com.enablix.core.domain.activity.RegisteredActor;
+import com.enablix.core.security.SecurityUtil;
+import com.enablix.services.util.ActivityLogger;
 
 @RestController
 @RequestMapping("doc")
@@ -90,7 +97,8 @@ public class DocumentController {
      */
     @RequestMapping(value = "/download/{docIdentity}", method = RequestMethod.GET)
     public void doDownload(HttpServletRequest request,
-            HttpServletResponse response, @PathVariable String docIdentity) throws IOException {
+            HttpServletResponse response, @PathVariable String docIdentity, 
+            @RequestParam(required=false) String atChannel) throws IOException {
  
     	Document<DocumentMetadata> doc = docManager.load(docIdentity);
     	
@@ -130,7 +138,30 @@ public class DocumentController {
  
         inputStream.close();
         outStream.close();
+        
+        // Audit download activity
+        auditActivity(docIdentity, atChannel, doc);
  
     }
+
+	private void auditActivity(String docIdentity, String atChannel, Document<DocumentMetadata> doc) {
+		
+		Channel channel = Channel.parse(atChannel);
+        
+		if (channel != null) {
+        
+			String userId = ProcessContext.get().getUserId();
+			Actor actor = null;
+        	
+        	if (SecurityUtil.isGuestUserLogIn()) {
+        		actor = new NonRegisteredActor(userId);
+        	} else {
+        		actor = new RegisteredActor(userId);
+        	}
+        	
+        	ActivityLogger.auditDocDownload(doc.getMetadata().getContentQId(), 
+        			null, docIdentity, channel, actor);
+        }
+	}
 	
 }

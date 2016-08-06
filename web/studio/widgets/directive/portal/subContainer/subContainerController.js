@@ -60,7 +60,7 @@ enablix.studioApp.controller('PortalSubContainerCtrl',
 				var cntnrQId = isNullOrUndefined($stateParams.containerQId) ? $scope.subContainerQId 
 									: $stateParams.containerQId;
 				
-			ContentDataService.getContentRecordData(enablix.templateId, cntnrQId, elemIdentity,  
+			ContentDataService.getContentRecordData(enablix.templateId, cntnrQId, elemIdentity, 'PORTAL', 
 					function(recordData) {
 						decorateData($scope.containerDef, recordData);
 						$scope.bodyData = recordData;

@@ -4,9 +4,9 @@ public class DocDownload extends ContentActivity {
 
 	private String docIdentity;
 	
-	public DocDownload(String itemIdentity, String containerQId, ContainerType containerType,
-			ContentActivityType activityType, String docIdentity) {
-		super(itemIdentity, containerQId, containerType, activityType);
+	public DocDownload(String itemIdentity, String containerQId, 
+			ContainerType containerType, String docIdentity) {
+		super(itemIdentity, containerQId, containerType, ContentActivityType.DOC_DOWNLOAD);
 		this.docIdentity = docIdentity;
 	}
 

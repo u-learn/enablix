@@ -24,7 +24,7 @@ enablix.studioApp.controller('ContentEditCtrl',
 		
 		$scope.containerData = {};
 		
-		ContentDataService.getContentRecordData(enablix.templateId, containerQId, elementIdentity, 
+		ContentDataService.getContentRecordData(enablix.templateId, containerQId, elementIdentity, 'STUDIO',
 				function(data) {
 					$scope.containerData = angular.copy(data);
 				}, 

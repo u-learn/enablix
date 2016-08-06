@@ -15,7 +15,7 @@ enablix.studioApp.controller('PortalCntnrSubItemCtrl',
 		}
 		
 		ContentDataService.getContentRecordData(enablix.templateId, $stateParams.subContainerQId, 
-				$stateParams.subItemIdentity, 
+				$stateParams.subItemIdentity, 'PORTAL',
 				function(recordData) {
 					decorateData($scope.containerDef, recordData);
 					$scope.bodyData = recordData;

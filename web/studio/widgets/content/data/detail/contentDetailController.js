@@ -31,7 +31,7 @@ enablix.studioApp.controller('ContentDetailCtrl',
 			$scope.goToContentList(containerQId, parentIdentity);
 		};
 		
-		ContentDataService.getContentRecordData(enablix.templateId, containerQId, elementIdentity, 
+		ContentDataService.getContentRecordData(enablix.templateId, containerQId, elementIdentity, 'STUDIO',
 				function(data) {
 					$scope.containerData = data;
 				}, 

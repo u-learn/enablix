@@ -40,8 +40,8 @@ public class SharedContentGuestUserProvider implements GuestUserProvider {
 			userAndRoles = new UserAndRolesVO();
 			
 			User user = new User();
-			user.setIdentity(AppConstants.GUEST_USER_ID);
-			user.setUserId(AppConstants.GUEST_USER_ID);
+			user.setIdentity(AppConstants.GUEST_USER_IDENTITY);
+			user.setUserId(shareDetails.getSharedWith());
 			user.setTenantId(shareDetails.getTenantId());
 			
 			userAndRoles.setUser(user);

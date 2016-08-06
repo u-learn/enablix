@@ -45,8 +45,7 @@ public class LoginListener implements ApplicationListener<AuthenticationSuccessE
 		
 		userLogin.setActivityTime(Calendar.getInstance().getTime());
 		
-		RegisteredActor actor = new RegisteredActor();
-		actor.setUserId(ud.getUsername());
+		RegisteredActor actor = new RegisteredActor(ud.getUsername());
 		userLogin.setActor(actor);
 
 		userLogin.setChannel(new ActivityChannel(Channel.WEB));

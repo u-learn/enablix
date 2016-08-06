@@ -15,6 +15,11 @@ import com.enablix.app.content.ContentDataManager;
 import com.enablix.app.content.fetch.FetchContentRequest;
 import com.enablix.app.template.web.TemplateController;
 import com.enablix.commons.util.StringUtil;
+import com.enablix.core.api.ContentDataRef;
+import com.enablix.core.domain.activity.ActivityChannel.Channel;
+import com.enablix.core.domain.activity.ContentActivity.ContainerType;
+import com.enablix.core.domain.activity.ContentActivity.ContentActivityType;
+import com.enablix.services.util.ActivityLogger;
 
 @RestController
 @RequestMapping("data")
@@ -62,10 +67,21 @@ public class FetchContentDataController {
 			produces = "application/json")
 	public Object fetchRecordData(@PathVariable String templateId, 
 			@PathVariable String contentQId, 
-			@PathVariable String dataIdentity) {
+			@PathVariable String dataIdentity,
+			@RequestParam(required=false) String atChannel) { // activity tracking channel
 		
 		LOGGER.debug("Fetch record content data");
-		return fetchData(new FetchContentRequest(templateId, contentQId, null, dataIdentity));
+		
+		Object data =  fetchData(new FetchContentRequest(templateId, contentQId, null, dataIdentity));
+		
+		// Audit access activity
+		Channel channel = Channel.parse(atChannel);
+		if (channel != null) {
+			ActivityLogger.auditContentActivity(ContentActivityType.CONTENT_ACCESS, 
+					new ContentDataRef(contentQId, contentQId, dataIdentity), ContainerType.CONTENT, channel);
+		}
+		
+		return data;
 	}
 	
 	private Object fetchData(FetchContentRequest request) {
