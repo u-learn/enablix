@@ -16,7 +16,6 @@ import org.springframework.stereotype.Component;
 
 import com.enablix.app.content.ContentDataManager;
 import com.enablix.app.content.ContentDataUtil;
-import com.enablix.app.content.ui.format.DisplayableContent;
 import com.enablix.app.content.ui.format.DisplayableContentBuilder;
 import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.commons.util.StringUtil;
@@ -30,6 +29,8 @@ import com.enablix.core.commons.xsdtopojo.CorrelatedEntitiesType;
 import com.enablix.core.commons.xsdtopojo.EmailActionType;
 import com.enablix.core.commons.xsdtopojo.EmailContentTriggerEntityType;
 import com.enablix.core.commons.xsdtopojo.EmailRecipientType;
+import com.enablix.core.domain.activity.ActivityChannel.Channel;
+import com.enablix.core.domain.activity.ContentShareActivity.ShareMedium;
 import com.enablix.core.domain.trigger.ContentChange;
 import com.enablix.core.domain.trigger.ContentChange.TriggerType;
 import com.enablix.core.domain.trigger.LifecycleCheckpoint;
@@ -42,6 +43,8 @@ import com.enablix.core.mongo.search.ConditionOperator;
 import com.enablix.core.mongo.search.SearchFilter;
 import com.enablix.core.mongo.search.StringListFilter;
 import com.enablix.core.system.repo.UserRepository;
+import com.enablix.core.ui.DisplayableContent;
+import com.enablix.services.util.ActivityLogger;
 import com.enablix.services.util.TemplateUtil;
 import com.enablix.trigger.lifecycle.action.CheckpointAction;
 
@@ -184,6 +187,8 @@ public class EmailAction implements CheckpointAction<ContentChange, EmailActionT
 			mailService.sendHtmlEmail(velocityIn, emailId, "TRIGGER_CHECKPOINT", 
 					actionType.getEmailTemplate().getBody().getTemplateName(), 
 					actionType.getEmailTemplate().getSubject().getTemplateName());
+			
+			auditContentShare(template.getId(), velocityIn, emailId);
 		}
 	}
 	
@@ -238,6 +243,29 @@ public class EmailAction implements CheckpointAction<ContentChange, EmailActionT
 			emailContent.put(recIdentity, rec);
 		}
 		
+	}
+	
+	private void auditContentShare(String templateId, TriggerEmailVelocityInput sharedContent, 
+			String sharedWithEmailId) {
+		
+		List<ContentDataRef> sharedContentList = new ArrayList<>();
+		
+		DisplayableContent triggerEntity = sharedContent.getTriggerEntity();
+		if (triggerEntity != null) {
+			sharedContentList.add(new ContentDataRef(templateId, 
+				triggerEntity.getContainerQId(), triggerEntity.getRecordIdentity()));
+		}
+		
+		Collection<DisplayableContent> emailContent = sharedContent.getEmailContent();
+		if (emailContent != null) {
+			for (DisplayableContent content : emailContent) {
+				sharedContentList.add(new ContentDataRef(templateId, 
+						content.getContainerQId(), content.getRecordIdentity()));
+			}
+		}
+		
+		ActivityLogger.auditContentShare(templateId, sharedContentList, 
+				ShareMedium.CORRELATION, Channel.EMAIL, sharedContent.getIdentity(), sharedWithEmailId);
 	}
 
 }

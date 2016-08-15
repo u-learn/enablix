@@ -98,7 +98,9 @@ public class DocumentController {
     @RequestMapping(value = "/download/{docIdentity}", method = RequestMethod.GET)
     public void doDownload(HttpServletRequest request,
             HttpServletResponse response, @PathVariable String docIdentity, 
-            @RequestParam(required=false) String atChannel) throws IOException {
+            @RequestParam(required=false) String atChannel,
+            @RequestParam(required=false) String atCampaign,
+            @RequestParam(required=false) String atCampaignId) throws IOException {
  
     	Document<DocumentMetadata> doc = docManager.load(docIdentity);
     	
@@ -140,11 +142,12 @@ public class DocumentController {
         outStream.close();
         
         // Audit download activity
-        auditActivity(docIdentity, atChannel, doc);
+        auditActivity(docIdentity, doc, atChannel, atCampaign, atCampaignId);
  
     }
 
-	private void auditActivity(String docIdentity, String atChannel, Document<DocumentMetadata> doc) {
+	private void auditActivity(String docIdentity, Document<DocumentMetadata> doc, 
+			String atChannel, String campaign, String campaignId) {
 		
 		Channel channel = Channel.parse(atChannel);
         
@@ -160,7 +163,7 @@ public class DocumentController {
         	}
         	
         	ActivityLogger.auditDocDownload(doc.getMetadata().getContentQId(), 
-        			null, docIdentity, channel, actor);
+        			null, docIdentity, channel, actor, campaign, campaignId);
         }
 	}
 	

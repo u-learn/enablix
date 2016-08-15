@@ -8,6 +8,7 @@ import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.core.commons.xsdtopojo.ContentItemClassType;
 import com.enablix.core.commons.xsdtopojo.ContentItemType;
 import com.enablix.core.commons.xsdtopojo.ContentTemplate;
+import com.enablix.core.ui.DocRef;
 
 @Component
 public class DocRefValueBuilder implements FieldValueBuilder<DocRef, Map<String, Object>> {

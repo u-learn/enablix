@@ -16,7 +16,7 @@
 				<td>
 					#foreach($valListItem in $field.value.valueList)
 						#if($valListItem.valueType == 'CONTENT_REF')
-							<a href="${obj.url}/app.html#/portal/container/$valListItem.containerQId/$valListItem.contentIdentity/c/single/$valListItem.containerQId/" target="_blank">${valListItem.textValue}</a>
+							<a href="${obj.url}/app.html#/portal/container/$valListItem.containerQId/$valListItem.contentIdentity/c/single/$valListItem.containerQId/?atChannel=EMAIL&atCampaign=WEB_SHARE&atCampaignId=$obj.identity" target="_blank">${valListItem.textValue}</a>
 						#else
 							${valListItem.value} 
 						#end	
@@ -34,7 +34,7 @@
      
       #if($obj.sharedContent.doc)
 	      <br/>
-	      <div><a href="${obj.url}$obj.sharedContent.doc.accessUrl" target="_blank">
+	      <div><a href="${obj.url}$obj.sharedContent.doc.accessUrl?atChannel=EMAIL&atCampaign=WEB_SHARE&atCampaignId=$obj.identity" target="_blank">
 	      <button style="background: #3d85c6;
 	      font: normal 16px/normal Arial, Helvetica, sans-serif;
 	      color: rgba(255,255,255,0.9);
@@ -49,7 +49,7 @@
 	      </a></div> 
       #end
      
-     <div><a href="${obj.url}/app.html#/portal/container/$obj.sharedContent.containerQId/$obj.sharedContent.recordIdentity/c/single/$obj.sharedContent.containerQId/" target="_blank">
+     <div><a href="${obj.url}/app.html#/portal/container/$obj.sharedContent.containerQId/$obj.sharedContent.recordIdentity/c/single/$obj.sharedContent.containerQId/?atChannel=EMAIL&atCampaign=WEB_SHARE&atCampaignId=$obj.identity" target="_blank">
       <button style="background: #3d85c6;
       font: normal 16px/normal Arial, Helvetica, sans-serif;
       color: rgba(255,255,255,0.9);

@@ -12,6 +12,9 @@ import com.enablix.core.commons.xsdtopojo.ContainerType;
 import com.enablix.core.commons.xsdtopojo.ContentItemClassType;
 import com.enablix.core.commons.xsdtopojo.ContentItemType;
 import com.enablix.core.commons.xsdtopojo.ContentTemplate;
+import com.enablix.core.ui.ContentRef;
+import com.enablix.core.ui.ListValue;
+import com.enablix.core.ui.TextValue;
 import com.enablix.services.util.TemplateUtil;
 
 @Component

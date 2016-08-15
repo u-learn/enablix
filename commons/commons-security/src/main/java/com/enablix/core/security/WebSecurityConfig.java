@@ -38,7 +38,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.anyRequest().authenticated()
 			//.and().addFilter(new ProcessContextInitFilter()).exceptionHandling()
 			.and().httpBasic()
-			.and().logout().logoutSuccessUrl("/").permitAll()
+			.and().logout().logoutSuccessHandler(logoutSuccessHandler()).permitAll()
 			.and().csrf().disable();
 			
 			//.and().csrf().csrfTokenRepository(csrfTokenRepository());
@@ -60,6 +60,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Bean
 	public GuestUserLoginFilter guestLoginFilter() {
 		return new GuestUserLoginFilter();
+	}
+	
+	public CustomLogoutSuccessHandler logoutSuccessHandler() {
+		CustomLogoutSuccessHandler handler = new CustomLogoutSuccessHandler();
+		handler.setDefaultTargetUrl("/login.html#/login");
+		return handler;
 	}
 	
 }

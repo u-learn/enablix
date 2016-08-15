@@ -1,4 +1,4 @@
-package com.enablix.app.content.ui.format;
+package com.enablix.core.ui;
 
 import java.util.ArrayList;
 import java.util.List;

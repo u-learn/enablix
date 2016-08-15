@@ -3,16 +3,18 @@ package com.enablix.trigger.lifecycle.action.email;
 
 import java.util.Collection;
 
-import com.enablix.app.content.ui.format.DisplayableContent;
+import com.enablix.commons.util.id.IdentityUtil;
 import com.enablix.core.domain.trigger.ContentChange.TriggerType;
 import com.enablix.core.domain.user.User;
 import com.enablix.core.mail.velocity.input.BaseVelocityInput;
 import com.enablix.core.mail.velocity.input.EnvPropertiesAware;
 import com.enablix.core.mail.velocity.input.LoggedInUserAware;
 import com.enablix.core.mail.velocity.input.RecipientUserAware;
+import com.enablix.core.ui.DisplayableContent;
 
 public class TriggerEmailVelocityInput extends BaseVelocityInput implements LoggedInUserAware, RecipientUserAware, EnvPropertiesAware {
 
+	private String identity;
 	private String url;
 	private User loggedInUser;
 	private Collection<DisplayableContent> emailContent;
@@ -22,6 +24,18 @@ public class TriggerEmailVelocityInput extends BaseVelocityInput implements Logg
 	private TriggerType triggerType;
 	private DisplayableContent triggerEntity;
 	
+	public TriggerEmailVelocityInput() {
+		this.identity = IdentityUtil.generateIdentity(this);
+	}
+	
+	public String getIdentity() {
+		return identity;
+	}
+
+	public void setIdentity(String identity) {
+		this.identity = identity;
+	}
+
 	@Override
 	public void setUrl(String url) {
 		this.url = url;

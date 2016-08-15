@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import com.enablix.core.commons.xsdtopojo.ContentItemType;
 import com.enablix.core.commons.xsdtopojo.ContentTemplate;
+import com.enablix.core.ui.DisplayField;
 
 @Component
 public class DisplayFieldBuilderImpl implements DisplayFieldBuilder {

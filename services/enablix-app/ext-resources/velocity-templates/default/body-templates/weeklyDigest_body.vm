@@ -16,8 +16,8 @@
 		    #foreach($key in $obj.recentList.keySet())
 			#set ($navigableContent = $obj.recentList.get($key)) 
 			#foreach($key1 in $navigableContent)  
-            <li><a href="$obj.url/#/portal/container/$key1.qualifiedId/$key1.identity/c/single/$key1.qualifiedId/">$key1.label</a>
-            	#if($key1.next) &gt; <a href="$obj.url/#/portal/container/$key1.next.qualifiedId/$key1.next.identity/c/single/$key1.next.qualifiedId/">$key1.next.label</a>#end </li>
+            <li><a href="$obj.url/app.html#/portal/container/$key1.qualifiedId/$key1.identity/c/single/$key1.qualifiedId/?atChannel=EMAIL&atCampaign=WEEKLY_DIGEST&atCampaignId=$obj.identity">$key1.label</a>
+            	#if($key1.next) &gt; <a href="$obj.url/app.html#/portal/container/$key1.next.qualifiedId/$key1.next.identity/c/single/$key1.next.qualifiedId/?atChannel=EMAIL&atCampaign=WEEKLY_DIGEST&atCampaignId=$obj.identity">$key1.next.label</a>#end </li>
 			 #end
 			 #end
           </ul>
@@ -28,7 +28,7 @@
              <b>$key</b>
              <ul>
                #foreach($key1 in $items)
-               <li><a href="$obj.url/#/portal/container/$key/$key1.identity" style="color:#2baadf;font-weight:normal;text-decoration:underline" target="_blank">$key1.name</a> </li>
+               <li><a href="$obj.url/app.html#/portal/container/$key/$key1.identity?atChannel=EMAIL&atCampaign=WEEKLY_DIGEST&atCampaignId=$obj.identity" style="color:#2baadf;font-weight:normal;text-decoration:underline" target="_blank">$key1.name</a> </li>
                #end
              </ul> 
           #end 

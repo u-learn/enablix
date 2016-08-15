@@ -5,6 +5,7 @@ import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.enablix.commons.util.id.IdentityUtil;
 import com.enablix.core.mail.velocity.input.WeeklyDigestVelocityInput;
 
 @Component
@@ -14,9 +15,11 @@ public class WeeklyDigestScenarioInputBuilder {
 	private VelocityTemplateInputResolverFactory factory;
 	
 	@SuppressWarnings({ "rawtypes", "unchecked"})
-	public WeeklyDigestVelocityInput build(String tenantId) {
+	public WeeklyDigestVelocityInput build() {
 		
 		WeeklyDigestVelocityInput input = new WeeklyDigestVelocityInput();
+		String inputIdentity = IdentityUtil.generateIdentity(input);
+		input.setIdentity(inputIdentity);
 		
 		Collection<VelocityTemplateInputResolver<WeeklyDigestVelocityInput>> resolvers = 
 				factory.getResolvers(input);

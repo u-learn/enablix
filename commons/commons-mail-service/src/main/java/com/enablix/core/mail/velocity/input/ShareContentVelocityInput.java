@@ -1,15 +1,18 @@
 package com.enablix.core.mail.velocity.input;
 
-import com.enablix.app.content.ui.format.DisplayableContent;
+import com.enablix.commons.util.id.IdentityUtil;
+import com.enablix.core.ui.DisplayableContent;
 
 public class ShareContentVelocityInput extends UserWelcomeVelocityInput implements EnvPropertiesAware {
 	
 	private DisplayableContent sharedContent;
 	private String url;
+	private String identity;
 
 	public ShareContentVelocityInput(String newUserId, DisplayableContent sharedContent) {
 		super(newUserId);
 		this.sharedContent = sharedContent;
+		this.identity = IdentityUtil.generateIdentity(this);
 	}
 
 	public DisplayableContent getSharedContent() {
@@ -28,6 +31,14 @@ public class ShareContentVelocityInput extends UserWelcomeVelocityInput implemen
 	@Override
 	public String getUrl() {
 		return url;
+	}
+
+	public String getIdentity() {
+		return identity;
+	}
+
+	public void setIdentity(String identity) {
+		this.identity = identity;
 	}
 
 		

@@ -1,4 +1,4 @@
-package com.enablix.app.content.ui.format;
+package com.enablix.core.ui;
 
 public interface FieldValue {
 

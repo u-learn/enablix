@@ -5,8 +5,8 @@ import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.enablix.app.content.ui.format.DisplayableContent;
 import com.enablix.core.mail.velocity.input.ShareContentVelocityInput;
+import com.enablix.core.ui.DisplayableContent;
 
 @Component
 public class ShareContentScenarioInputBuilder {

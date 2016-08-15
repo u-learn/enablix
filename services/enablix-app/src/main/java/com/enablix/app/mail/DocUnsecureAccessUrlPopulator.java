@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import com.enablix.app.content.ui.format.DisplayableContent;
-import com.enablix.app.content.ui.format.DocRef;
+import com.enablix.core.ui.DisplayableContent;
+import com.enablix.core.ui.DocRef;
 
 @Component
 public class DocUnsecureAccessUrlPopulator {
@@ -29,7 +29,7 @@ public class DocUnsecureAccessUrlPopulator {
 	}
 	
 	private String getActualDocDownloadUrl(String docIdentity) {
-		return docDownloadUrl.replaceAll(":docIdentity", docIdentity) + "?atChannel=EMAIL";
+		return docDownloadUrl.replaceAll(":docIdentity", docIdentity);
 	}
 	
 }

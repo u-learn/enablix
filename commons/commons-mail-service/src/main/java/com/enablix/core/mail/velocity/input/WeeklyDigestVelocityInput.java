@@ -12,6 +12,15 @@ public class WeeklyDigestVelocityInput extends BaseVelocityInput implements  Log
 	private HashMap<String,List<HashMap<String,Object>>> sideBarItems; 
 	private String url;
 	private User loggedInUser;
+	private String identity; // unique identifier for weekly digest
+
+	public String getIdentity() {
+		return identity;
+	}
+
+	public void setIdentity(String weeklyDigestId) {
+		this.identity = weeklyDigestId;
+	}
 
 	public HashMap<String, List<NavigableContent>> getRecentList() {
 		return recentList;

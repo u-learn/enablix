@@ -1,15 +1,23 @@
 package com.enablix.core.domain.activity;
 
-public class DocDownload extends ContentActivity {
+public class DocDownload extends ContentAccessActivity {
 
 	private String docIdentity;
 	
 	public DocDownload(String itemIdentity, String containerQId, 
 			ContainerType containerType, String docIdentity) {
-		super(itemIdentity, containerQId, containerType, ContentActivityType.DOC_DOWNLOAD);
-		this.docIdentity = docIdentity;
+		this(itemIdentity, containerQId, containerType, docIdentity, null, null);
 	}
 
+	public DocDownload(String itemIdentity, String containerQId, 
+			ContainerType containerType, String docIdentity, String campaign, String campaignId) {
+		
+		super(itemIdentity, containerQId, containerType, campaign, campaignId);
+		this.docIdentity = docIdentity;
+		setActivityType(ContentActivityType.DOC_DOWNLOAD);
+	}
+
+	
 	public String getDocIdentity() {
 		return docIdentity;
 	}

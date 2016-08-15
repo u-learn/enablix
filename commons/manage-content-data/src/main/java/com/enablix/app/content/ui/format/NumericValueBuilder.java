@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 import com.enablix.core.commons.xsdtopojo.ContentItemClassType;
 import com.enablix.core.commons.xsdtopojo.ContentItemType;
 import com.enablix.core.commons.xsdtopojo.ContentTemplate;
+import com.enablix.core.ui.TextValue;
 
 @Component
 public class NumericValueBuilder implements FieldValueBuilder<TextValue, String>{

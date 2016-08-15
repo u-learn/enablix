@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,7 +19,6 @@ import com.enablix.commons.util.StringUtil;
 import com.enablix.core.api.ContentDataRef;
 import com.enablix.core.domain.activity.ActivityChannel.Channel;
 import com.enablix.core.domain.activity.ContentActivity.ContainerType;
-import com.enablix.core.domain.activity.ContentActivity.ContentActivityType;
 import com.enablix.services.util.ActivityLogger;
 
 @RestController
@@ -68,7 +68,10 @@ public class FetchContentDataController {
 	public Object fetchRecordData(@PathVariable String templateId, 
 			@PathVariable String contentQId, 
 			@PathVariable String dataIdentity,
-			@RequestParam(required=false) String atChannel) { // activity tracking channel
+			@RequestHeader(required=false) String atChannel, // activity tracking channel
+			@RequestHeader(required=false) String atCampaign, // activity tracking campaign e.g. weekly sharing
+			@RequestHeader(required=false) String atCampaignId // activity tracking campaign id e.g. weekly sharing id
+			) { 
 		
 		LOGGER.debug("Fetch record content data");
 		
@@ -77,8 +80,9 @@ public class FetchContentDataController {
 		// Audit access activity
 		Channel channel = Channel.parse(atChannel);
 		if (channel != null) {
-			ActivityLogger.auditContentActivity(ContentActivityType.CONTENT_ACCESS, 
-					new ContentDataRef(contentQId, contentQId, dataIdentity), ContainerType.CONTENT, channel);
+			ActivityLogger.auditContentAccess(
+				new ContentDataRef(contentQId, contentQId, dataIdentity), 
+				ContainerType.CONTENT, channel, atCampaign, atCampaignId);
 		}
 		
 		return data;

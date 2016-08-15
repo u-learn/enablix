@@ -1,7 +1,7 @@
 enablix.studioApp.factory('ContentDataService', 
 	[
-	 	'RESTService', 'ContentTemplateService',
-	 	function(RESTService, ContentTemplateService) {
+	 	'RESTService', 'ContentTemplateService', '$location',
+	 	function(RESTService, ContentTemplateService, $location) {
 	 		
 	 		var getContentData = function(_templateId, _contentQId, _parentIdentity, _onSuccess, _onError, _pagination) {
 	 			
@@ -31,16 +31,19 @@ enablix.studioApp.factory('ContentDataService',
 
 	 		var getContentRecordData = function(_templateId, _contentQId, _recordIdentity, _accessFrom, _onSuccess, _onError) {
 	 			
-	 			var atChannel = _accessFrom == 'PORTAL' ? 'WEB' : null;
+	 			var reqParams = $location.search();
+	 			
+	 			if (isNullOrUndefined(reqParams.atChannel)) {
+	 				reqParams.atChannel = _accessFrom == 'PORTAL' ? 'WEB' : null;
+	 			}
 	 			
 	 			var params = {
 	 					"templateId": _templateId,
 	 					"contentQId": _contentQId,
-	 					"recordIdentity": _recordIdentity,
-	 					"accessChannel": atChannel
+	 					"recordIdentity": _recordIdentity
 	 			};
 	 			
-	 			RESTService.getForData("fetchRecordData", params, null, _onSuccess, _onError);
+	 			RESTService.getForData("fetchRecordData", params, null, _onSuccess, _onError, reqParams);
 	 			
 	 		};
 	 		
