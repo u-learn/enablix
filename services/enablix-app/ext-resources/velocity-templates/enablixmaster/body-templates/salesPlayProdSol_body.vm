@@ -10,7 +10,7 @@
 			#if($item.containerQId	== 'product')
 				#foreach($field in $item.fields)
 					#if($field.id == 'shortName')
-						<li><a href="${obj.url}/app.html#/portal/container/$item.containerQId/$item.recordIdentity/c/single/$item.containerQId/" target="_blank">${field.value.value}</a></li> #break
+						<li><a href="${obj.url}/app.html#/portal/container/$item.containerQId/$item.recordIdentity/c/single/$item.containerQId/?atChannel=EMAIL&atCampaign=CORRELATION&atCampaignId=$obj.identity" target="_blank">${field.value.value}</a></li> #break
 						#break
 					#end
 				#end
@@ -25,7 +25,7 @@
 			#if($item.containerQId	== 'solution')
 				#foreach($field in $item.fields)
 					#if($field.id == 'shortName')
-						<li><a href="${obj.url}/app.html#/portal/container/$item.containerQId/$item.recordIdentity/c/single/$item.containerQId/" target="_blank">${field.value.value}</a></li> #break
+						<li><a href="${obj.url}/app.html#/portal/container/$item.containerQId/$item.recordIdentity/c/single/$item.containerQId/?atChannel=EMAIL&atCampaign=CORRELATION&atCampaignId=$obj.identity" target="_blank">${field.value.value}</a></li> #break
 						#break
 					#end
 				#end

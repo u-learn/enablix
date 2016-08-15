@@ -23,7 +23,7 @@
    
     #if($obj.triggerEntity.doc)
 	      <br/>
-	      <div><a href="${obj.url}/doc/download//$obj.triggerEntity.doc.docIdentity" target="_blank">
+	      <div><a href="${obj.url}/doc/download//$obj.triggerEntity.doc.docIdentity?atChannel=EMAIL&atCampaign=CORRELATION&atCampaignId=$obj.identity" target="_blank">
 	      <button style="background: #3d85c6;
 	      font: normal 16px/normal Arial, Helvetica, sans-serif;
 	      color: rgba(255,255,255,0.9);
@@ -38,7 +38,7 @@
 	      </a></div> 
       #end
      
-     <div><a href="${obj.url}/app.html#/portal/container/$obj.triggerEntity.containerQId/$obj.triggerEntity.recordIdentity/c/single/$obj.triggerEntity.containerQId/" target="_blank">
+     <div><a href="${obj.url}/app.html#/portal/container/$obj.triggerEntity.containerQId/$obj.triggerEntity.recordIdentity/c/single/$obj.triggerEntity.containerQId/?atChannel=EMAIL&atCampaign=CORRELATION&atCampaignId=$obj.identity" target="_blank">
       <button style="background: #3d85c6;
       font: normal 16px/normal Arial, Helvetica, sans-serif;
       color: rgba(255,255,255,0.9);
