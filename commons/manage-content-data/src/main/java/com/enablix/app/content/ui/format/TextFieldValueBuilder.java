@@ -2,6 +2,7 @@ package com.enablix.app.content.ui.format;
 
 import org.springframework.stereotype.Component;
 
+import com.enablix.commons.util.StringUtil;
 import com.enablix.core.commons.xsdtopojo.ContentItemClassType;
 import com.enablix.core.commons.xsdtopojo.ContentItemType;
 import com.enablix.core.commons.xsdtopojo.ContentTemplate;
@@ -12,7 +13,7 @@ public class TextFieldValueBuilder implements FieldValueBuilder<TextValue, Strin
 
 	@Override
 	public TextValue build(ContentItemType fieldDef, String fieldValue, ContentTemplate template) {
-		return new TextValue(String.valueOf(fieldValue));
+		return new TextValue(StringUtil.linkifyText(String.valueOf(fieldValue)));
 	}
 
 	@Override

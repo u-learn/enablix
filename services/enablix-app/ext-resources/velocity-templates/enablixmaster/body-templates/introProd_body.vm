@@ -20,7 +20,7 @@
 		#if($item.containerQId	== 'product')
 			#foreach($field in $item.fields)
 				#if($field.id == 'shortName')
-					<a href="${obj.url}/app.html#/portal/container/$item.containerQId/$item.recordIdentity/c/single/$item.containerQId/?atChannel=EMAIL&atCampaign=CORRELATION&atCampaignId=$obj.identity" target="_blank"><strong>${field.value.value}</strong></a>#break
+					<a href="${obj.url}/app.html#/portal/container/$item.containerQId/$item.recordIdentity/c/single/$item.containerQId/?atChannel=EMAIL&atContext=CORRELATION&atContextId=$obj.identity" target="_blank"><strong>${field.value.value}</strong></a>#break
 					#break
 				#end
 			#end
@@ -31,7 +31,7 @@
 			#if($item.containerQId	== 'battlecard')
 				#foreach($field in $item.fields)
 					#if($field.id == 'title')
-						<li><a href="${obj.url}/app.html#/portal/container/$item.containerQId/$item.recordIdentity/c/single/$item.containerQId/?atChannel=EMAIL&atCampaign=CORRELATION&atCampaignId=$obj.identity" target="_blank">${field.value.value}</a></li> #break
+						<li><a href="${obj.url}/app.html#/portal/container/$item.containerQId/$item.recordIdentity/c/single/$item.containerQId/?atChannel=EMAIL&atContext=CORRELATION&atContextId=$obj.identity" target="_blank">${field.value.value}</a></li> #break
 						#break
 					#end
 				#end
@@ -41,7 +41,7 @@
 			#if($item.containerQId	== 'salesDeck')
 				#foreach($field in $item.fields)
 					#if($field.id == 'title')
-						<li><a href="${obj.url}/app.html#/portal/container/$item.containerQId/$item.recordIdentity/c/single/$item.containerQId/?atChannel=EMAIL&atCampaign=CORRELATION&atCampaignId=$obj.identity" target="_blank">${field.value.value}</a></li> #break
+						<li><a href="${obj.url}/app.html#/portal/container/$item.containerQId/$item.recordIdentity/c/single/$item.containerQId/?atChannel=EMAIL&atContext=CORRELATION&atContextId=$obj.identity" target="_blank">${field.value.value}</a></li> #break
 						#break
 					#end
 				#end
@@ -53,7 +53,7 @@
 					#if($item.containerQId	== 'caseStudy')
 						#foreach($field in $item.fields)
 							#if($field.id == 'title')
-								<li><a href="${obj.url}/app.html#/portal/container/$item.containerQId/$item.recordIdentity/c/single/$item.containerQId/?atChannel=EMAIL&atCampaign=CORRELATION&atCampaignId=$obj.identity" target="_blank">${field.value.value}</a></li> #break
+								<li><a href="${obj.url}/app.html#/portal/container/$item.containerQId/$item.recordIdentity/c/single/$item.containerQId/?atChannel=EMAIL&atContext=CORRELATION&atContextId=$obj.identity" target="_blank">${field.value.value}</a></li> #break
 								#break
 							#end
 						#end
@@ -67,7 +67,7 @@
 					#if($item.containerQId	== 'whitepaper')
 						#foreach($field in $item.fields)
 							#if($field.id == 'title')
-								<li><a href="${obj.url}/app.html#/portal/container/$item.containerQId/$item.recordIdentity/c/single/$item.containerQId/?atChannel=EMAIL&atCampaign=CORRELATION&atCampaignId=$obj.identity" target="_blank">${field.value.value}</a></li> #break
+								<li><a href="${obj.url}/app.html#/portal/container/$item.containerQId/$item.recordIdentity/c/single/$item.containerQId/?atChannel=EMAIL&atContext=CORRELATION&atContextId=$obj.identity" target="_blank">${field.value.value}</a></li> #break
 								#break
 							#end
 						#end

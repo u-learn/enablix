@@ -69,8 +69,9 @@ public class FetchContentDataController {
 			@PathVariable String contentQId, 
 			@PathVariable String dataIdentity,
 			@RequestHeader(required=false) String atChannel, // activity tracking channel
-			@RequestHeader(required=false) String atCampaign, // activity tracking campaign e.g. weekly sharing
-			@RequestHeader(required=false) String atCampaignId // activity tracking campaign id e.g. weekly sharing id
+			@RequestHeader(required=false) String atContext, // activity tracking context e.g. weekly sharing
+			@RequestHeader(required=false) String atContextId, // activity tracking context id e.g. weekly sharing id
+			@RequestHeader(required=false) String atContextTerm // activity tracking context term e.g. search term
 			) { 
 		
 		LOGGER.debug("Fetch record content data");
@@ -82,7 +83,7 @@ public class FetchContentDataController {
 		if (channel != null) {
 			ActivityLogger.auditContentAccess(
 				new ContentDataRef(contentQId, contentQId, dataIdentity), 
-				ContainerType.CONTENT, channel, atCampaign, atCampaignId);
+				ContainerType.CONTENT, channel, atContext, atContextId, atContextTerm);
 		}
 		
 		return data;

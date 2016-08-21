@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.enablix.app.content.ui.NavigableContent;
 import com.enablix.app.content.ui.search.SearchService;
+import com.enablix.core.domain.activity.SearchActivity;
+import com.enablix.services.util.ActivityLogger;
 
 @RestController
 @RequestMapping("search")
@@ -20,7 +22,9 @@ public class SearchController {
 	
 	@RequestMapping(method = RequestMethod.GET, value="/t/{searchText}/")
 	public List<NavigableContent> containerRecommendedContent(@PathVariable String searchText) {
-		return searchService.search(searchText);
+		List<NavigableContent> searchResult = searchService.search(searchText);
+		ActivityLogger.auditActivity(new SearchActivity(searchText));
+		return searchResult;
 	}
 	
 }

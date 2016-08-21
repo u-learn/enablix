@@ -22,14 +22,19 @@ public class ContentSaveAuditor implements ContentDataEventListener {
 		
 		ActivityLogger.auditContentActivity(
 				event.isNewRecord() ? ContentActivityType.CONTENT_ADD : ContentActivityType.CONTENT_UPDATE, 
-				dataRef, event.getContainerType().isRefData() ? ContainerType.REF_DATA :ContainerType.CONTENT);
+				dataRef, event.getContainerType().isRefData() ? ContainerType.REF_DATA : ContainerType.CONTENT);
 	}
 
 	
 	@Override
 	public void onContentDataDelete(ContentDataDelEvent event) {
-		// TODO Auto-generated method stub
 		
+		ContentDataRef dataRef = new ContentDataRef(event.getTemplateId(), 
+				event.getContainerQId(), event.getContentIdentity());
+		
+		ActivityLogger.auditContentActivity(
+				ContentActivityType.CONTENT_DELETE, 
+				dataRef, event.getContainerType().isRefData() ? ContainerType.REF_DATA : ContainerType.CONTENT);
 	}
 
 }

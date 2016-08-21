@@ -1,7 +1,7 @@
 enablix.studioApp.factory('ContentDataService', 
 	[
-	 	'RESTService', 'ContentTemplateService', '$location',
-	 	function(RESTService, ContentTemplateService, $location) {
+	 	'RESTService', 'ContentTemplateService', '$location', '$state', 'NavigationTracker',
+	 	function(RESTService, ContentTemplateService, $location, $state, NavigationTracker) {
 	 		
 	 		var getContentData = function(_templateId, _contentQId, _parentIdentity, _onSuccess, _onError, _pagination) {
 	 			
@@ -32,9 +32,21 @@ enablix.studioApp.factory('ContentDataService',
 	 		var getContentRecordData = function(_templateId, _contentQId, _recordIdentity, _accessFrom, _onSuccess, _onError) {
 	 			
 	 			var reqParams = $location.search();
+	 			var previousState = NavigationTracker.getPreviousState();
 	 			
-	 			if (isNullOrUndefined(reqParams.atChannel)) {
-	 				reqParams.atChannel = _accessFrom == 'PORTAL' ? 'WEB' : null;
+	 			if (isNullOrUndefined(reqParams.atChannel)
+	 					&& !$state.includes('portal.search')) { // ignore search result listing
+	 				
+	 				// if navigating from search results, then track the search action as well
+	 				if (previousState != null && previousState.route.name == 'portal.search') {
+	 					
+	 					reqParams.atChannel = 'WEB';
+	 					reqParams.atContext = 'WEB_SEARCH';
+	 					reqParams.atContextTerm = previousState.routeParams.searchText;
+	 					
+	 				} else {
+	 					reqParams.atChannel = _accessFrom == 'PORTAL' ? 'WEB' : null;
+	 				}
 	 			}
 	 			
 	 			var params = {

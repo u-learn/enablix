@@ -118,8 +118,9 @@ public class ContentDataManagerImpl implements ContentDataManager {
 		
 		if (TemplateUtil.hasOwnCollection(template, contentQId)) {
 			crud.deleteRecord(collName, request.getRecordIdentity());
+			ContainerType containerType = TemplateUtil.findContainer(template.getDataDefinition(), contentQId);
 			publishContentDeleteEvent(new ContentDataDelEvent(request.getTemplateId(), 
-					request.getContentQId(), request.getRecordIdentity()));
+					request.getContentQId(), request.getRecordIdentity(), containerType));
 			
 		} else {
 			String qIdRelativeToParent = QIdUtil.getElementId(contentQId);
@@ -148,10 +149,12 @@ public class ContentDataManagerImpl implements ContentDataManager {
 				List<String> deletedChildRecordIds = 
 						crud.deleteRecordsWithParentId(collName, recordIdentity);
 				
+				ContainerType childContainer = TemplateUtil.findContainer(template.getDataDefinition(), childQId);
+				
 				for (String childRecordIdentity : deletedChildRecordIds) {
 
 					publishContentDeleteEvent(new ContentDataDelEvent(template.getId(), 
-							childQId, childRecordIdentity));
+							childQId, childRecordIdentity, childContainer));
 
 					deleteChildContainerData(template, childQId, childRecordIdentity);
 				}

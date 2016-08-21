@@ -6,6 +6,7 @@ import java.util.List;
 import com.enablix.commons.util.concurrent.Events;
 import com.enablix.commons.util.process.ProcessContext;
 import com.enablix.core.api.ContentDataRef;
+import com.enablix.core.domain.activity.Activity;
 import com.enablix.core.domain.activity.ActivityAudit;
 import com.enablix.core.domain.activity.ActivityChannel;
 import com.enablix.core.domain.activity.ActivityChannel.Channel;
@@ -26,6 +27,25 @@ public class ActivityLogger {
 
 	public static void auditActivity(ActivityAudit activity) {
 		EventUtil.publishEvent(new Event<ActivityAudit>(Events.AUDIT_ACITIVITY, activity));
+	}
+	
+	public static void auditActivity(Activity activity) {
+		auditActivity(activity, Channel.WEB);
+	}
+	
+	public static void auditActivity(Activity activity, Channel activityChannel) {
+		ProcessContext processContext = ProcessContext.get();
+		
+		ActivityAudit activityAudit = new ActivityAudit();
+		activityAudit.setActivity(activity);
+		
+		RegisteredActor actor = new RegisteredActor(processContext.getUserId());
+		activityAudit.setActor(actor);
+		
+		activityAudit.setChannel(new ActivityChannel(activityChannel));
+		activityAudit.setActivityTime(Calendar.getInstance().getTime());
+		
+		auditActivity(activityAudit);
 	}
 	
 	public static void auditContentActivity(ContentActivityType activityType,
@@ -62,21 +82,21 @@ public class ActivityLogger {
 	
 	public static void auditDocDownload(String contentQId, 
 			String contentIdentity, String docIdentity, Channel channel, 
-			String campaign, String campaignId) {
+			String contextName, String contextId, String contextTerm) {
 		
 		ProcessContext processContext = ProcessContext.get();
 		auditDocDownload(contentQId, contentIdentity, docIdentity, channel, 
-				new RegisteredActor(processContext.getUserId()), campaign, campaignId);
+				new RegisteredActor(processContext.getUserId()), contextName, contextId, contextTerm);
 	}
 	
 	public static void auditDocDownload(String contentQId, 
 			String contentIdentity, String docIdentity, Channel channel, Actor actor,
-			String campaign, String campaignId) {
+			String contextName, String contextId, String contextTerm) {
 		
 		ActivityAudit activity = new ActivityAudit();
 		
 		DocDownload docDownloadActvy = new DocDownload(contentIdentity, contentQId, 
-				ContainerType.CONTENT, docIdentity, campaign, campaignId);
+				ContainerType.CONTENT, docIdentity, contextName, contextId, contextTerm);
 		
 		activity.setActivity(docDownloadActvy);
 		activity.setActor(actor);
@@ -122,10 +142,10 @@ public class ActivityLogger {
 	}
 	
 	public static void auditContentAccess(ContentDataRef dataRef,
-			ContainerType containerType, Channel channel, String campaign, String campaignId) {
+			ContainerType containerType, Channel channel, String contextName, String contextId, String contextTerm) {
 		
 		ContentActivity contentActvy = new ContentAccessActivity(dataRef.getInstanceIdentity(), 
-				dataRef.getContainerQId(), containerType, campaign, campaignId);
+				dataRef.getContainerQId(), containerType, contextName, contextId, contextTerm);
 		
 		auditContentActivity(contentActvy, channel);
 	}
