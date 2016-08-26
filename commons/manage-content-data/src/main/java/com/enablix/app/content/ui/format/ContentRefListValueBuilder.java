@@ -21,7 +21,8 @@ import com.enablix.services.util.TemplateUtil;
 public class ContentRefListValueBuilder implements FieldValueBuilder<ListValue, Collection<Map<String, Object>>> {
 
 	@Override
-	public ListValue build(ContentItemType fieldDef, Collection<Map<String, Object>> fieldValue, ContentTemplate template) {
+	public ListValue build(ContentItemType fieldDef, Collection<Map<String, Object>> fieldValue, 
+			ContentTemplate template, DisplayContext ctx) {
 		
 		ListValue listVal = new ListValue();
 		

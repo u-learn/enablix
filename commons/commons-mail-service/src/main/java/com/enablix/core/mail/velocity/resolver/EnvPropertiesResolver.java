@@ -1,20 +1,21 @@
 package com.enablix.core.mail.velocity.resolver;
 
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.enablix.commons.util.EnvironmentProperties;
 import com.enablix.core.mail.velocity.VelocityTemplateInputResolver;
 import com.enablix.core.mail.velocity.input.EnvPropertiesAware;
 
 @Component
 public class EnvPropertiesResolver implements VelocityTemplateInputResolver<EnvPropertiesAware> {
 
-	@Value("${server.url}")
-	private String url;
+	@Autowired
+	private EnvironmentProperties envProps;
 	
 	@Override
 	public void work(EnvPropertiesAware velocityTemplateInput) {
-		velocityTemplateInput.setUrl(url);
+		velocityTemplateInput.setUrl(envProps.getServerUrl());
 	}
 
 	@Override

@@ -24,7 +24,7 @@ public class DisplayableContentBuilderImpl implements DisplayableContentBuilder 
 	private DisplayFieldBuilder fieldBuilder;
 	
 	@Override
-	public DisplayableContent build(ContentTemplate template, ContentDataRecord record) {
+	public DisplayableContent build(ContentTemplate template, ContentDataRecord record, DisplayContext ctx) {
 		
 		String containerQId = record.getContainerQId();
 		Map<String, Object> contentRecord = record.getRecord();
@@ -38,7 +38,7 @@ public class DisplayableContentBuilderImpl implements DisplayableContentBuilder 
 		
 		for (ContentItemType fieldDef : containerDef.getContentItem()) {
 			
-			DisplayField<?> field = fieldBuilder.build(fieldDef, template, contentRecord);
+			DisplayField<?> field = fieldBuilder.build(fieldDef, template, contentRecord, ctx);
 			
 			if (field != null) {
 			

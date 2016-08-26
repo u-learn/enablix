@@ -41,7 +41,7 @@ enablix.studioApp.factory('ContentDataService',
 	 				if (previousState != null && previousState.route.name == 'portal.search') {
 	 					
 	 					reqParams.atChannel = 'WEB';
-	 					reqParams.atContext = 'WEB_SEARCH';
+	 					reqParams.atContext = 'SEARCH_RESULT';
 	 					reqParams.atContextTerm = previousState.routeParams.searchText;
 	 					
 	 				} else {

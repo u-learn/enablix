@@ -3,6 +3,7 @@ package com.enablix.services.util;
 import java.util.Calendar;
 import java.util.List;
 
+import com.enablix.commons.util.StringUtil;
 import com.enablix.commons.util.concurrent.Events;
 import com.enablix.commons.util.process.ProcessContext;
 import com.enablix.core.api.ContentDataRef;
@@ -18,12 +19,18 @@ import com.enablix.core.domain.activity.ContentActivity.ContentActivityType;
 import com.enablix.core.domain.activity.ContentShareActivity;
 import com.enablix.core.domain.activity.ContentShareActivity.ShareMedium;
 import com.enablix.core.domain.activity.DocDownload;
+import com.enablix.core.domain.activity.ExternalLinkAccess;
+import com.enablix.core.domain.activity.NonRegisteredActor;
 import com.enablix.core.domain.activity.RegisteredActor;
 import com.enablix.core.mq.Event;
 import com.enablix.core.mq.util.EventUtil;
 import com.enablix.core.ui.DisplayableContent;
 
 public class ActivityLogger {
+	
+	private ActivityLogger() {
+		// object creation not allowed
+	}
 
 	public static void auditActivity(ActivityAudit activity) {
 		EventUtil.publishEvent(new Event<ActivityAudit>(Events.AUDIT_ACITIVITY, activity));
@@ -35,11 +42,15 @@ public class ActivityLogger {
 	
 	public static void auditActivity(Activity activity, Channel activityChannel) {
 		ProcessContext processContext = ProcessContext.get();
+		RegisteredActor actor = new RegisteredActor(processContext.getUserId());
+		auditActivity(activity, actor, activityChannel);
+	}
+	
+	public static void auditActivity(Activity activity, Actor actor, Channel activityChannel) {
 		
 		ActivityAudit activityAudit = new ActivityAudit();
 		activityAudit.setActivity(activity);
 		
-		RegisteredActor actor = new RegisteredActor(processContext.getUserId());
 		activityAudit.setActor(actor);
 		
 		activityAudit.setChannel(new ActivityChannel(activityChannel));
@@ -148,6 +159,23 @@ public class ActivityLogger {
 				dataRef.getContainerQId(), containerType, contextName, contextId, contextTerm);
 		
 		auditContentActivity(contentActvy, channel);
+	}
+
+	public static void auditExternalLinkAccess(String url, String contentIdentity, 
+			String contentItemQId, String aid, Channel channel) {
+		
+		Activity actvy = new ExternalLinkAccess(url, contentIdentity, contentItemQId);
+		Actor actor = null;
+		
+		ProcessContext processContext = ProcessContext.get();
+		if (processContext != null) {
+			actor = new RegisteredActor(processContext.getUserId());
+		} else if (!StringUtil.isEmpty(aid)) {
+			actor = new NonRegisteredActor(aid);
+		}
+		
+		auditActivity(actvy, actor, channel);
+		
 	}
 
 }

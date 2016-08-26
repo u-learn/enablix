@@ -16,7 +16,10 @@ import org.springframework.stereotype.Component;
 
 import com.enablix.app.content.ContentDataManager;
 import com.enablix.app.content.ContentDataUtil;
+import com.enablix.app.content.share.DocUnsecureAccessUrlPopulator;
+import com.enablix.app.content.ui.format.DisplayContext;
 import com.enablix.app.content.ui.format.DisplayableContentBuilder;
+import com.enablix.app.content.ui.format.TextLinkProcessor;
 import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.commons.util.StringUtil;
 import com.enablix.commons.util.collection.CollectionUtil;
@@ -76,6 +79,14 @@ public class EmailAction implements CheckpointAction<ContentChange, EmailActionT
 	
 	@Autowired
 	private UserRepository userRepo;
+
+	@Autowired
+	private DocUnsecureAccessUrlPopulator docUrlPopulator;
+	
+	@Autowired
+	private TextLinkProcessor textLinkProcessor;
+	
+
 	
 	@Override
 	public boolean canHandle(ActionType action) {
@@ -146,7 +157,9 @@ public class EmailAction implements CheckpointAction<ContentChange, EmailActionT
 			entityDataRec = new ContentDataRecord(triggerItemRef.getTemplateId(), triggerItemRef.getContainerQId(), entityRec);
 		}
 		
-		DisplayableContent triggerEntityDispRecord = displayableContentBuilder.build(template, entityDataRec);
+		DisplayContext ctx = new DisplayContext();
+		
+		DisplayableContent triggerEntityDispRecord = displayableContentBuilder.build(template, entityDataRec, ctx);
 		if (triggerEntityDispRecord != null) {
 			velocityIn.setTriggerEntity(triggerEntityDispRecord);
 		}
@@ -154,7 +167,7 @@ public class EmailAction implements CheckpointAction<ContentChange, EmailActionT
 		// send email
 		LOGGER.debug("Sending mail to: {}", recepientEmailIds);
 		
-		List<DisplayableContent> displayableEmailContent = createDisplayableContent(template, emailContent.values());
+		List<DisplayableContent> displayableEmailContent = createDisplayableContent(template, emailContent.values(), ctx);
 		
 		LOGGER.debug("Email content: {}", displayableEmailContent);
 		
@@ -179,6 +192,11 @@ public class EmailAction implements CheckpointAction<ContentChange, EmailActionT
 		
 		for (String emailId : recepientEmailIds) {
 			
+			for (DisplayableContent displayableContent : velocityIn.getEmailContent()) {
+				docUrlPopulator.process(displayableContent, emailId);
+				textLinkProcessor.process(displayableContent, template, emailId);
+			}
+			
 			velocityIn.setRecipientUserId(emailId);
 			
 			User recipientUser = userRepo.findByUserId(emailId.toLowerCase());
@@ -192,12 +210,13 @@ public class EmailAction implements CheckpointAction<ContentChange, EmailActionT
 		}
 	}
 	
-	private List<DisplayableContent> createDisplayableContent(ContentTemplate template, Collection<ContentDataRecord> collection) {
+	private List<DisplayableContent> createDisplayableContent(ContentTemplate template, 
+			Collection<ContentDataRecord> collection, DisplayContext ctx) {
 		
 		List<DisplayableContent> displayableContentList = new ArrayList<>();
 		
 		for (ContentDataRecord rec : collection) {
-			DisplayableContent displayContent = displayableContentBuilder.build(template, rec);
+			DisplayableContent displayContent = displayableContentBuilder.build(template, rec, ctx);
 			displayableContentList.add(displayContent);
 		}
 		

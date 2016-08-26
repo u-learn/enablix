@@ -30,7 +30,7 @@
 			<td ng-repeat="action in otherActions" ng-class="action.tableCellClass"><a ng-class="action.iconClass" ng-click="callOtherAction(action, tableRecord.identity)"></a></td>
 			<td ng-repeat="col in tableHeaders">
 				<span ng-class="{'text-right': col.dataType == 'NUMERIC'}">
-					<eb-render-data content-value="tableRecord[col.key]" content-def="col"/>
+					<eb-render-data content-value="tableRecord[col.key]" content-def="col" content-identity="tableRecord.identity" />
 				</span>
 			</td>
 		</tr>

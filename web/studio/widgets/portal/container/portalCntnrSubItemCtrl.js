@@ -32,7 +32,8 @@ enablix.studioApp.controller('PortalCntnrSubItemCtrl',
 			var header = {
 				"key" : containerAttr.id,
 				"label" : containerAttr.label,
-				"dataType" : containerAttr.type 
+				"dataType" : containerAttr.type,
+				"typeDef" : containerAttr
 			};
 			
 			$scope.headers.push(header);

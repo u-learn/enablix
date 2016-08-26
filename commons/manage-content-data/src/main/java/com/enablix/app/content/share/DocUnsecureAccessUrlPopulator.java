@@ -1,4 +1,4 @@
-package com.enablix.app.mail;
+package com.enablix.app.content.share;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

@@ -8,6 +8,6 @@ import com.enablix.core.ui.DisplayField;
 
 public interface DisplayFieldBuilder {
 
-	DisplayField<?> build(ContentItemType fieldDef, ContentTemplate template, Map<String, Object> contentRec);
+	DisplayField<?> build(ContentItemType fieldDef, ContentTemplate template, Map<String, Object> contentRec, DisplayContext ctx);
 	
 }

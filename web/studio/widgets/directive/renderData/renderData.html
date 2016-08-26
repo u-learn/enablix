@@ -1,4 +1,4 @@
-<span ng-if="contentDef.dataType != 'BOUNDED'" class="content-data" ng-bind-html="contentValue | ebxFormatData: contentDef.dataType"></span>
+<span ng-if="contentDef.dataType != 'BOUNDED'" class="content-data" ng-bind-html="contentValue | ebxFormatData: contentDef.typeDef : contentIdentity"></span>
 <span ng-if="contentDef.dataType == 'BOUNDED'" class="content-data" ng-repeat="bndItem in contentValue track by $index">
 	<span ng-if="bndItem.hrefData">
 		<a ng-click="navToItemDetail(bndItem.hrefData.containerQId, bndItem.hrefData.contentIdentity)">{{bndItem.label}}</a>

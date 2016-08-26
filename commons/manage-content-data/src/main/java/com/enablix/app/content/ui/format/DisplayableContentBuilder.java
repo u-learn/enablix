@@ -6,6 +6,6 @@ import com.enablix.core.ui.DisplayableContent;
 
 public interface DisplayableContentBuilder {
 
-	DisplayableContent build(ContentTemplate template, ContentDataRecord record);
+	DisplayableContent build(ContentTemplate template, ContentDataRecord record, DisplayContext ctx);
 	
 }

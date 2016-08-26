@@ -6,7 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.enablix.app.content.ContentDataManager;
+import com.enablix.app.content.share.DocUnsecureAccessUrlPopulator;
+import com.enablix.app.content.ui.format.DisplayContext;
 import com.enablix.app.content.ui.format.DisplayableContentBuilder;
+import com.enablix.app.content.ui.format.TextLinkProcessor;
 import com.enablix.app.mail.web.EmailData;
 import com.enablix.app.template.service.TemplateManager;
 import com.enablix.commons.util.process.ProcessContext;
@@ -42,6 +45,9 @@ public class ShareEmailServiceImpl implements ShareEmailService {
 	@Autowired
 	private DocUnsecureAccessUrlPopulator docUrlPopulator;
 	
+	@Autowired
+	private TextLinkProcessor textLinkProcessor;
+	
 	@Override
 	public boolean sendEmail(EmailData data) {
 		
@@ -54,8 +60,12 @@ public class ShareEmailServiceImpl implements ShareEmailService {
 		
 		ContentDataRecord dataRecord = new ContentDataRecord(templateId, data.getContainerQId(), record);
 		
-		DisplayableContent displayableContent = contentBuilder.build(template, dataRecord);
+		DisplayContext ctx = new DisplayContext();
+		
+		DisplayableContent displayableContent = contentBuilder.build(template, dataRecord, ctx);
+		
 		docUrlPopulator.process(displayableContent, data.getEmailId());
+		textLinkProcessor.process(displayableContent, template, data.getEmailId());
 		
 		ShareContentVelocityInput mailInput = mailInputBuilder.build(data.getEmailId(), displayableContent);
 		

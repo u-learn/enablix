@@ -6,7 +6,7 @@ import com.enablix.core.ui.FieldValue;
 
 public interface FieldValueBuilder<T extends FieldValue, I> {
 
-	T build(ContentItemType fieldDef, I fieldValue, ContentTemplate template);
+	T build(ContentItemType fieldDef, I fieldValue, ContentTemplate template, DisplayContext ctx);
 	
 	boolean canHandle(ContentItemType fieldDef);
 	

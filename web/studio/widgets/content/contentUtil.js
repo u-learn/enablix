@@ -103,7 +103,8 @@ enablix.studioApp.factory('ContentUtil',
 						var header = {
 							"key" : containerAttr.id,
 							"desc" : containerAttr.label,
-							"dataType" : containerAttr.type 
+							"dataType" : containerAttr.type,
+							"typeDef" : containerAttr
 						};
 						
 						listHeaders.push(header);

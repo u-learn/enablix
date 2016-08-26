@@ -1,4 +1,4 @@
-package com.enablix.app.mail;
+package com.enablix.app.content.share;
 
 public interface SharedContentUrlCreator {
 

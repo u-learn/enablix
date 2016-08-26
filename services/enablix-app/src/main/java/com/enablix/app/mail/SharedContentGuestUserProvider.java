@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.enablix.app.content.share.ShareContentConstants;
 import com.enablix.commons.constants.AppConstants;
 import com.enablix.core.domain.share.SharedSiteUrl;
 import com.enablix.core.domain.user.User;

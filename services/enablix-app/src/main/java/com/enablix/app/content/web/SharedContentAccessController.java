@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.enablix.app.mail.ShareContentConstants;
+import com.enablix.app.content.share.ShareContentConstants;
 import com.enablix.app.template.web.TemplateController;
 import com.enablix.core.domain.share.SharedSiteUrl;
 import com.enablix.core.system.repo.SharedSiteUrlRepository;

@@ -14,7 +14,8 @@ import com.enablix.core.ui.DocRef;
 public class DocRefValueBuilder implements FieldValueBuilder<DocRef, Map<String, Object>> {
 
 	@Override
-	public DocRef build(ContentItemType fieldDef, Map<String, Object> fieldValue, ContentTemplate template) {
+	public DocRef build(ContentItemType fieldDef, Map<String, Object> fieldValue, 
+			ContentTemplate template, DisplayContext ctx) {
 		DocRef doc = new DocRef();
 		doc.setName((String) fieldValue.get(ContentDataConstants.DOC_NAME_ATTR));
 		doc.setDocIdentity((String) fieldValue.get(ContentDataConstants.IDENTITY_KEY)); 

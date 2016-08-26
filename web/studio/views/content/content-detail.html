@@ -8,7 +8,7 @@
 		<table class="infotable" >
 			<tr ng-repeat="item in containerDef.contentItem">
 				<th>{{item.label}}:</td>
-				<td><span class="content-data" ng-bind-html="containerData[item.id] | ebxFormatData: item.type"></span>&nbsp;
+				<td><span class="content-data" ng-bind-html="containerData[item.id] | ebxFormatData: item : containerData.identity"></span>&nbsp;
 					<span ng-if="item.type == 'DOC' && containerData[item.id].name" class="download">
 						<eb-doc-download doc-value="containerData[item.id].identity"></eb-doc-download>
 					</span>

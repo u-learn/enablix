@@ -17,14 +17,15 @@ public class DisplayFieldBuilderImpl implements DisplayFieldBuilder {
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
-	public DisplayField<?> build(ContentItemType fieldDef, ContentTemplate template, Map<String, Object> contentRec) {
+	public DisplayField<?> build(ContentItemType fieldDef, ContentTemplate template, 
+			Map<String, Object> contentRec, DisplayContext ctx) {
 		
 		FieldValueBuilder builder = fvBuilderFactory.getBuilder(fieldDef);
 		
 		Object value = contentRec.get(fieldDef.getId());
 		if (value != null) {
 			return new DisplayField(fieldDef.getId(), fieldDef.getLabel(), 
-					builder.build(fieldDef, value, template));
+					builder.build(fieldDef, value, template, ctx));
 		}
 		
 		return null;

@@ -25,7 +25,7 @@ public class DateToTextValueBuilder implements FieldValueBuilder<TextValue, Stri
 	private SimpleDateFormat outDateFormatter = new SimpleDateFormat(OUT_DATE_FORMAT);
 	
 	@Override
-	public TextValue build(ContentItemType fieldDef, String fieldValue, ContentTemplate template) {
+	public TextValue build(ContentItemType fieldDef, String fieldValue, ContentTemplate template, DisplayContext ctx) {
 		
 		Date date = null;
 		

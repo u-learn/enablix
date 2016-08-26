@@ -121,7 +121,8 @@ enablix.studioApp.controller('PortalSubContainerCtrl',
 				var header = {
 					"key" : containerAttr.id,
 					"label" : containerAttr.label,
-					"dataType" : containerAttr.type 
+					"dataType" : containerAttr.type,
+					"typeDef" : containerAttr
 				};
 				
 				$scope.singleHeaders.push(header);
@@ -137,7 +138,8 @@ enablix.studioApp.controller('PortalSubContainerCtrl',
 				var header = {
 					"key" : containerAttr.id,
 					"label" : containerAttr.label,
-					"dataType" : containerAttr.type 
+					"dataType" : containerAttr.type,
+					"typeDef" : containerAttr
 				};
 				
 				$scope.multiHeaders.push(header);
@@ -159,7 +161,8 @@ enablix.studioApp.controller('PortalSubContainerCtrl',
 						var header = {
 								"key" : contentItem.id,
 								"label" : contentItem.label,
-								"dataType" : contentItem.type 
+								"dataType" : contentItem.type,
+								"typeDef" : contentItem
 							};		
 						
 						$scope.multiCondensedViewHeaders.push(header);

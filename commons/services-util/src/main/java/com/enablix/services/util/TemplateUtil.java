@@ -398,4 +398,13 @@ public class TemplateUtil {
 		return userProfileRef.getEmailAttributeId();
 	}
 	
+	public static ContentItemType findContentItem(ContainerType container, String contentItemId) {
+		for (ContentItemType item : container.getContentItem()) {
+			if (item.getId().equals(contentItemId)) {
+				return item;
+			}
+		}
+		return null;
+	}
+	
 }

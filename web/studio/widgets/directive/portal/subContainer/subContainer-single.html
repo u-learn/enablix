@@ -16,7 +16,7 @@
 		<table class="infotable" >		
 			<tr ng-repeat="header in singleHeaders" ng-switch="header.dataType" ng-if="bodyData[header.key]!=null">
 				<th>{{header.label}}:</th>
-				<td><eb-render-data content-value="bodyData[header.key]" content-def="header" show-doc-link="false"/></td>
+				<td><eb-render-data content-value="bodyData[header.key]" content-def="header" content-identity="bodyData.identity" show-doc-link="false"/></td>
 			</tr>
 	  	</table>
 	</div>

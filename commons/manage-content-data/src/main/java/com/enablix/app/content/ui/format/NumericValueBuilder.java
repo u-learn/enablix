@@ -11,7 +11,8 @@ import com.enablix.core.ui.TextValue;
 public class NumericValueBuilder implements FieldValueBuilder<TextValue, String>{
 
 	@Override
-	public TextValue build(ContentItemType fieldDef, String fieldValue, ContentTemplate template) {
+	public TextValue build(ContentItemType fieldDef, String fieldValue, 
+			ContentTemplate template, DisplayContext ctx) {
 		return new TextValue((String) fieldValue);
 	}
 
