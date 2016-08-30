@@ -1,6 +1,6 @@
 enablix.studioApp.controller('PortalSubContainerCtrl',
-			['$scope', 'StateUpdateService','UserService', '$stateParams', 'ContentTemplateService', 'ContentDataService', 'ContentUtil', 'Notification','shareContentModalWindow',
-    function ($scope,   StateUpdateService, UserService,  $stateParams,   ContentTemplateService,   ContentDataService,   ContentUtil,   Notification, shareContentModalWindow) {
+			['$scope', 'StateUpdateService','UserService', '$stateParams', 'ContentTemplateService', 'ContentDataService', 'ContentUtil', 'Notification','shareContentModalWindow', 'ActivityAuditService',
+    function ($scope,   StateUpdateService, UserService,  $stateParams,   ContentTemplateService,   ContentDataService,   ContentUtil,   Notification,    shareContentModalWindow,   ActivityAuditService) {
 		
 		$scope.containerDef = ContentTemplateService.getContainerDefinition(
 						enablix.template, $scope.subContainerQId);
@@ -39,10 +39,22 @@ enablix.studioApp.controller('PortalSubContainerCtrl',
 			shareContentModalWindow.showShareContentModal($scope.subContainerQId, $scope.bodyData.identity);
 		}
 		
-		$scope.toggleContainerItem = function($event, itemId) {
+		$scope.toggleContainerItem = function($event, itemId, _containerQId, _contentIdentity) {
+			
 			var elem = $event.currentTarget;
 			$(elem).toggleClass('active');
 			$('#' + itemId).slideToggle('fast');
+			
+			var expanded = elem.className.indexOf('active') > 0;
+			if (_containerQId && _contentIdentity && expanded && !elem.accessAudited) {
+				ActivityAuditService.auditContentAccess(_containerQId, _contentIdentity, 
+					function() { 
+						elem.accessAudited = true; 
+					}, 
+					function() {/* do nothing */});
+				
+			}
+			
 			return false;
 		}
 		

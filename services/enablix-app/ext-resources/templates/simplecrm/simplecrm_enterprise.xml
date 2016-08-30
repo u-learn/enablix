@@ -1083,7 +1083,26 @@
 		<container id="templateType" label="Template Types" refData="true">
 			<contentItem id="typeName" label="Type" type="text"/>
 			<contentItem id="desc" label="Description" type="text"/>
-		</container>						
+		</container>	
+		<container id="businessRole" label="Business Roles" refData="true">
+			<contentItem id="roleName" label="Role" type="text"/>
+			<contentItem id="desc" label="Description" type="text"/>
+		</container>
+		<container id="user" label="Users" refData="true">
+			<contentItem id="userName" label="Name" type="text"/>
+			<contentItem id="email" label="Email" type="text"/>
+			<contentItem id="role" label="Business Roles" type="bounded">
+				<bounded>
+					<refList>
+						<datastore>
+							<storeId>businessRole</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>roleName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>						
+		</container>							
 	</dataDefinition>
 	<uiDefinition>
 		<contentUIDef qualifiedId="~root~">

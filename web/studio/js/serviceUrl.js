@@ -51,5 +51,6 @@ enablix.serviceURL = {
 	"resetpassword": enablix.domainName + "/resetpassword",
 	"contactUs": enablix.domainName + "/site/contactus",
 	"captchasitekey": enablix.domainName + "/site/captchasitekey",
-	"sharecontent": enablix.domainName + "/sharecontent"
+	"sharecontent": enablix.domainName + "/sharecontent",
+	"auditContentAccess": enablix.domainName + "/activity/content/access/"
 };
