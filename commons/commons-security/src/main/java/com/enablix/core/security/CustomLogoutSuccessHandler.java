@@ -33,37 +33,40 @@ public class CustomLogoutSuccessHandler extends SimpleUrlLogoutSuccessHandler {
 		
 		super.handle(request, response, authentication);
 		
-		UserDetails ud = (UserDetails) authentication.getPrincipal();
-		
-		LOGGER.info("User {} logged-out successfully", ud.getUsername());
-		
-		ActivityAudit userLogout = new ActivityAudit();
-		
-		UserAccountActivity userLoginActvy = new UserAccountActivity(AccountActivityType.LOGOUT);
-		userLogout.setActivity(userLoginActvy);
-		
-		userLogout.setActivityTime(Calendar.getInstance().getTime());
-		
-		RegisteredActor actor = new RegisteredActor(ud.getUsername());
-		userLogout.setActor(actor);
-
-		userLogout.setChannel(new ActivityChannel(Channel.WEB));
-		
-		if (ud instanceof LoggedInUser) {
+		if (authentication != null) {
 			
-			User user = ((LoggedInUser) ud).getUser();
+			UserDetails ud = (UserDetails) authentication.getPrincipal();
 			
-			// set up process context to fetch user roles from tenant specific database
-			ProcessContext.initialize(user.getUserId(), user.getTenantId(), null);
+			LOGGER.info("User {} logged-out successfully", ud.getUsername());
 			
-			try {
+			ActivityAudit userLogout = new ActivityAudit();
+			
+			UserAccountActivity userLoginActvy = new UserAccountActivity(AccountActivityType.LOGOUT);
+			userLogout.setActivity(userLoginActvy);
+			
+			userLogout.setActivityTime(Calendar.getInstance().getTime());
+			
+			RegisteredActor actor = new RegisteredActor(ud.getUsername());
+			userLogout.setActor(actor);
+	
+			userLogout.setChannel(new ActivityChannel(Channel.WEB));
+			
+			if (ud instanceof LoggedInUser) {
 				
-				ActivityLogger.auditActivity(userLogout);
+				User user = ((LoggedInUser) ud).getUser();
 				
-			} finally {
-				ProcessContext.clear();
+				// set up process context to fetch user roles from tenant specific database
+				ProcessContext.initialize(user.getUserId(), user.getTenantId(), null);
+				
+				try {
+					
+					ActivityLogger.auditActivity(userLogout);
+					
+				} finally {
+					ProcessContext.clear();
+				}
+				
 			}
-			
 		}
 		
 	}
