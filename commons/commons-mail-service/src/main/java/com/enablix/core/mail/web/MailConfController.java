@@ -38,4 +38,9 @@ public class MailConfController {
 		return mailService.getEmailConfiguration();
 	}
 	
+	@RequestMapping(method = RequestMethod.POST, value = "/sendmail", produces = "application/json")
+	public Boolean sentMail(@RequestBody EmailData emailData) {
+		return mailService.sendHtmlEmail(emailData.getTemplateObject(),emailData.getEmailid(),emailData.getScenario());
+	}
+	
 }
