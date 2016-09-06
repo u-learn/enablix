@@ -21,6 +21,7 @@ import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.commons.util.QIdUtil;
 import com.enablix.commons.util.StringUtil;
 import com.enablix.commons.util.json.JsonUtil;
+import com.enablix.core.mongo.search.SearchFilter;
 import com.mongodb.BasicDBObject;
 
 @Component
@@ -349,6 +350,11 @@ public class ContentCrudServiceImpl implements ContentCrudService {
 	public List<Map<String, Object>> findAllRecordForCriteria(String collectionName, Criteria criteria) {
 		Query query = Query.query(criteria);
 		return (List) mongoTemplate.find(query, HashMap.class, collectionName);
+	}
+
+	@Override
+	public List<Map<String, Object>> findRecords(String collectionName, SearchFilter filter) {
+		return findAllRecordForCriteria(collectionName, filter.toPredicate(new Criteria()));
 	}
 	
 }

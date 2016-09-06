@@ -1,4 +1,4 @@
-package com.enablix.analytics.correlation.data.dao;
+package com.enablix.core.mongo.dao;
 
 import java.util.List;
 

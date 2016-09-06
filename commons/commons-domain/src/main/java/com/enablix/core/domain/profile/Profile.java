@@ -10,6 +10,10 @@ public class Profile extends BaseWrappedEntity {
 	
 	private ContactSet<Email> emails = new ContactSet<Email>();
 
+	public Profile() {
+		this.sendWeeklyDigest = true;
+	}
+	
 	public String getName() {
 		return name;
 	}

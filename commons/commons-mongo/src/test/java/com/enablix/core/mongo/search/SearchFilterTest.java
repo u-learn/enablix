@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
+import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 
 public class SearchFilterTest {
@@ -20,7 +21,7 @@ public class SearchFilterTest {
 		SearchCriteria c = new SearchCriteria(f3);
 		c.and(f2).or(f1);
 		
-		System.out.println(Query.query(c.toPredicate()));
+		System.out.println(Query.query(c.toPredicate(new Criteria())));
 	}
 	
 }

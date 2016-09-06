@@ -11,6 +11,7 @@ import com.enablix.commons.util.collection.CollectionUtil.CollectionCreator;
 import com.enablix.commons.util.collection.CollectionUtil.ITransformer;
 import com.enablix.core.api.ContentDataRef;
 import com.enablix.core.correlation.ItemItemCorrelation;
+import com.enablix.core.mongo.dao.BaseCorrelationDao;
 import com.enablix.core.mongo.search.And;
 import com.enablix.core.mongo.search.CompositeFilter;
 import com.enablix.core.mongo.search.ConditionOperator;
@@ -57,8 +58,6 @@ public class ItemItemCorrelationDao extends BaseCorrelationDao {
 	public List<ItemItemCorrelation> findByItemAndRelatedItemQIdAndContainingTags(
 			ContentDataRef item, List<String> relatedItemContainerQId, List<String> tags) {
 		
-		List<ItemItemCorrelation> finalResults = null;
-		
 		SearchFilter searchFilter = new StringFilter(ITEM_CONTAINER_QID_PROP_NAME, 
 				item.getContainerQId(), ConditionOperator.EQ);
 		
@@ -71,17 +70,24 @@ public class ItemItemCorrelationDao extends BaseCorrelationDao {
 		// http://stackoverflow.com/questions/38519448/mongodb-due-to-limitations-of-the-com-mongodb-basicdbobject-you-cant-add-a-s
 		// Hence two separate queries to arrive at final list of records
 		
-		List<ItemItemCorrelation> tagFilteredRecords = null;
+		List<ItemItemCorrelation> filteredRecords = null;
 		
+		// first filter on the tags
 		if (CollectionUtil.isNotEmpty(tags)) {
 			SearchFilter tagsFilter = getOrFilter(TAG_NAME_FILTER_PROP_NAME, tags);
 			searchFilter = searchFilter.and(tagsFilter);
 			
-			tagFilteredRecords = findByCriteria(searchFilter.toPredicate(new Criteria()), ItemItemCorrelation.class);
+			filteredRecords = findByCriteria(searchFilter.toPredicate(new Criteria()), ItemItemCorrelation.class);
+		}
+		
+		// now filter on the related Item container qualified id
+		if (CollectionUtil.isNotEmpty(relatedItemContainerQId)) {
 			
-			if (CollectionUtil.isNotEmpty(tagFilteredRecords)) {
+			if (CollectionUtil.isNotEmpty(tags) && CollectionUtil.isNotEmpty(filteredRecords)) {
 				
-				ArrayList<String> recordIds = CollectionUtil.transform(tagFilteredRecords, 
+				// if tag filter was present and records matched the tag filter, then apply 
+				
+				ArrayList<String> recordIds = CollectionUtil.transform(filteredRecords, 
 						new CollectionCreator<ArrayList<String>, String>() {
 
 							@Override
@@ -104,22 +110,29 @@ public class ItemItemCorrelationDao extends BaseCorrelationDao {
 				searchFilter = searchFilter.and(relatedItemsFilter);
 				
 				Criteria criteria = searchFilter.toPredicate(new Criteria());
-				finalResults = findByCriteria(criteria, ItemItemCorrelation.class);
+				filteredRecords = findByCriteria(criteria, ItemItemCorrelation.class);
 				
-			} else {
-				finalResults = tagFilteredRecords;
+			} else if (CollectionUtil.isEmpty(tags)) {
+				
+				// if tags filter was missing, then add related container qualified id filter
+				
+				SearchFilter relatedItemsFilter = getOrFilter(RELATED_ITEM_CONTAINER_QID_PROP_NAME, relatedItemContainerQId);
+				searchFilter.and(relatedItemsFilter);
+				
+				Criteria criteria = searchFilter.toPredicate(new Criteria());
+				filteredRecords = findByCriteria(criteria, ItemItemCorrelation.class);
 			}
 			
-		} else if (CollectionUtil.isNotEmpty(relatedItemContainerQId)) {
+			// if tags filter was present and did not match any record, then we do not need to run any more query
 			
-			SearchFilter relatedItemsFilter = getOrFilter(RELATED_ITEM_CONTAINER_QID_PROP_NAME, relatedItemContainerQId);
-			searchFilter.and(relatedItemsFilter);
-			
-			Criteria criteria = searchFilter.toPredicate(new Criteria());
-			finalResults = findByCriteria(criteria, ItemItemCorrelation.class);
 		} 
 		
-		return finalResults == null ? new ArrayList<ItemItemCorrelation>() : finalResults;
+		// if both are empty, then execute with tag or related item filter
+		if (CollectionUtil.isEmpty(tags) && CollectionUtil.isEmpty(relatedItemContainerQId)) {
+			filteredRecords = findByCriteria(searchFilter.toPredicate(new Criteria()), ItemItemCorrelation.class);
+		}
+		
+		return filteredRecords == null ? new ArrayList<ItemItemCorrelation>() : filteredRecords;
 	}
 	
 	private SearchFilter getOrFilter(String propName, List<String> values) {

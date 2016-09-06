@@ -35,18 +35,26 @@ public class CorrelatedEntityEmailContentResolver implements EmailContentResolve
 
 		List<ItemItemCorrelation> itemCorrs = new ArrayList<>();
 		
-		for (EntityContentType entityContentType : corrEntitiesDef.getEntity()) {
+		List<EntityContentType> corrEntityDef = corrEntitiesDef.getEntity();
+		
+		if (corrEntityDef != null && !corrEntityDef.isEmpty()) {
 			
-			CandidateContainersType contentTypes = entityContentType.getContentTypes();
-			FilterTagsType filterTags = entityContentType.getFilterTags();
+			for (EntityContentType entityContentType : corrEntityDef) {
+				
+				CandidateContainersType contentTypes = entityContentType.getContentTypes();
+				FilterTagsType filterTags = entityContentType.getFilterTags();
+				
+				List<String> relatedContQIds = contentTypes != null ? 
+						contentTypes.getContainerQId() : new ArrayList<String>();
+						
+				List<String> filterTagNames = filterTags != null ? filterTags.getTag() : new ArrayList<String>();
+				
+				itemCorrs.addAll(dao.findByItemAndRelatedItemQIdAndContainingTags(
+						triggerItem, relatedContQIds, filterTagNames));
+			}
 			
-			List<String> relatedContQIds = contentTypes != null ? 
-					contentTypes.getContainerQId() : new ArrayList<String>();
-					
-			List<String> filterTagNames = filterTags != null ? filterTags.getTag() : new ArrayList<String>();
-			
-			itemCorrs.addAll(dao.findByItemAndRelatedItemQIdAndContainingTags(
-					triggerItem, relatedContQIds, filterTagNames));
+		} else {
+			itemCorrs.addAll(dao.findByItemAndContainingTags(triggerItem, new ArrayList<String>()));
 		}
 		
 		Map<String, List<String>> contentIdentitiesMap = new HashMap<String, List<String>>();

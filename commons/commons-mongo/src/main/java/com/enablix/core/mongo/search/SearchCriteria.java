@@ -20,10 +20,6 @@ public class SearchCriteria implements SearchFilter {
 		return root.toPredicate(rootCriteria);
 	}
 	
-	public Criteria toPredicate() {
-		return toPredicate(null);
-	}
-	
 	@Override
 	public SearchFilter and(SearchFilter andWithFilter) {
 		root = root.and(andWithFilter);

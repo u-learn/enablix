@@ -10,6 +10,7 @@ public class DisplayableContent {
 	private List<DisplayField<?>> fields;
 	
 	private String containerQId;
+	private String containerLabel;
 	private String recordIdentity;
 	private String title;
 	private DocRef doc;
@@ -33,6 +34,14 @@ public class DisplayableContent {
 
 	public void setContainerQId(String containerQId) {
 		this.containerQId = containerQId;
+	}
+
+	public String getContainerLabel() {
+		return containerLabel;
+	}
+
+	public void setContainerLabel(String containerLabel) {
+		this.containerLabel = containerLabel;
 	}
 
 	public String getRecordIdentity() {

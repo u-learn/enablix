@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import com.enablix.core.api.ContentDataRef;
 import com.enablix.core.correlation.ItemUserCorrelation;
+import com.enablix.core.mongo.dao.BaseCorrelationDao;
 import com.enablix.core.mongo.search.And;
 import com.enablix.core.mongo.search.CompositeFilter;
 import com.enablix.core.mongo.search.ConditionOperator;

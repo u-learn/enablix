@@ -7,6 +7,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.core.query.Criteria;
 
+import com.enablix.core.mongo.search.SearchFilter;
+
 public interface ContentCrudService {
 
 	void insert(String collectionName, String jsonData);
@@ -58,5 +60,7 @@ public interface ContentCrudService {
 
 	@SuppressWarnings("rawtypes")
 	List findRecords(String collectionName, List<String> elementIdentities);
+	
+	List<Map<String, Object>> findRecords(String collectionName, SearchFilter filter);
 	
 }

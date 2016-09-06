@@ -70,7 +70,7 @@ public class MailScheduler {
 					
 				} catch (Throwable e) {
 					
-					LOGGER.error("Error sending weeking digest for user: {}", user.getUserId());
+					LOGGER.error("Error sending weekly digest for user: {}", user.getUserId());
 					LOGGER.error("Exception: ", e);
 					
 				} finally {
