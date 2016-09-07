@@ -6,7 +6,7 @@ enablix.studioApp = angular.module("studio", ['ui.router', 'angularTreeview', 'l
 //enablix.templateId = "entSoftwareTemplate"; //"amlSalesTemplate";
 enablix.dateFormat = 'MM/dd/yyyy';
 enablix.errorMsgShowTime = 10000; // in milli-seconds 
-enablix.defaultPageSize = 5;
+enablix.defaultPageSize = 10;
 
 var appSetup = function(StudioSetupService) {
 	return StudioSetupService.setupStudio();
