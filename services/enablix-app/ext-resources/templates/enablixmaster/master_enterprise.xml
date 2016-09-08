@@ -195,6 +195,17 @@
 				<contentItem id="title" label="Opportunity Title" type="text" searchBoost="7"/>
 				<contentItem id="id" label="Opportunity ID" type="text" searchBoost="7"/>
 				<contentItem id="desc" label="Description" type="text" searchBoost="2"/>
+				<contentItem id="stage" label="Opportunity Stage" type="bounded">
+					<bounded multivalued="true">
+						<refList>
+							<datastore>
+								<storeId>oppStage</storeId>
+								<dataId>identity</dataId>
+								<dataLabel>stageName</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>				
 				<contentItem id="oppSalesMember" label="Sales Team" type="bounded" searchBoost="6">
 					<bounded multivalued="true">
 						<refList>
@@ -1416,6 +1427,8 @@
 		</container>
 		<container id="salesPlay" label="Sales Plays">
 			<contentItem id="title" label="Title" type="text"/>
+			<contentItem id="startdate" label="Start Date" type="dateTime"/>			
+			<contentItem id="enddate" label="End Date" type="dateTime"/>			
 			<contentItem id="file" label="File" type="doc"/>
 			<contentItem id="summary" label="Summary" type="text"/>
 			<contentItem id="solutions" label="Solutions" type="bounded">
@@ -1919,6 +1932,11 @@
 			<contentItem id="summary" label="Summary" type="text"/>
 			<contentItem id="file" label="File" type="doc"/>
 		</container>
+		<container id="pricingtemplate" label="Corporate Pricing Template">
+			<contentItem id="title" label="Title" type="text"/>
+			<contentItem id="summary" label="Summary" type="text"/>
+			<contentItem id="file" label="File" type="doc"/>
+		</container>
 		<container id="corporatecontent" label="Corporate Content">
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="summary" label="Summary" type="text"/>
@@ -2047,7 +2065,11 @@
 		<container id="compRating" label="Competitive Rating" refData="true">
 			<contentItem id="ratingName" label="Rating" type="text"/>
 			<contentItem id="desc" label="Description" type="text"/>
-		</container>		
+		</container>	
+		<container id="oppStage" label="Opportunity Stages" refData="true">
+			<contentItem id="stageName" label="Stage" type="text"/>
+			<contentItem id="desc" label="Description" type="text"/>
+		</container>				
 		<container id="faqCategory" label="FAQ Category" refData="true">
 			<contentItem id="categoryName" label="Category" type="text"/>
 			<contentItem id="desc" label="Description" type="text"/>
