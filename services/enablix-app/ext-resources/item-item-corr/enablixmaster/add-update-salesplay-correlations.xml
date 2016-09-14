@@ -62,7 +62,7 @@
 				<filterCriteria>
 					<filter>
 						<attributeId>shortName</attributeId>
-						<constant>TransactionGuard</constant>
+						<constant>miRevenue</constant>
 					</filter>
 				</filterCriteria>
 				<recordAsRelated>true</recordAsRelated>
