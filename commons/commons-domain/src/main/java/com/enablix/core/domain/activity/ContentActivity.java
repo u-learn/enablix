@@ -17,6 +17,10 @@ public class ContentActivity extends Activity {
 	private ContainerType containerType;
 	
 	private ContentActivityType activityType;
+	
+	protected ContentActivity() {
+		super(Category.CONTENT);
+	}
 
 	public ContentActivity(String itemIdentity, String containerQId, ContainerType containerType,
 			ContentActivityType activityType) {

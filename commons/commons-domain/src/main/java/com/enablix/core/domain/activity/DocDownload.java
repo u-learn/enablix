@@ -4,6 +4,10 @@ public class DocDownload extends ContentAccessActivity {
 
 	private String docIdentity;
 	
+	protected DocDownload() { 
+		// for ORM
+	}
+	
 	public DocDownload(String itemIdentity, String containerQId, 
 			ContainerType containerType, String docIdentity) {
 		this(itemIdentity, containerQId, containerType, docIdentity, null, null, null);

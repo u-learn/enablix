@@ -8,6 +8,10 @@ public class ContentAccessActivity extends ContentActivity {
 	
 	private String contextTerm; // addition term to track
 	
+	protected ContentAccessActivity() {
+		// for ORM
+	}
+	
 	public ContentAccessActivity(String itemIdentity, String containerQId, ContainerType containerType) {
 		this(itemIdentity, containerQId, containerType, null, null, null);
 	}
