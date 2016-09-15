@@ -117,7 +117,7 @@
 							<datastore hyperlink="true">
 								<storeId>product</storeId>
 								<dataId>identity</dataId>
-								<dataLabel>name</dataLabel>
+								<dataLabel>shortName</dataLabel>
 							</datastore>
 						</refList>
 					</bounded>
@@ -128,7 +128,7 @@
 							<datastore hyperlink="true">
 								<storeId>solution</storeId>
 								<dataId>identity</dataId>
-								<dataLabel>name</dataLabel>
+								<dataLabel>shortName</dataLabel>
 							</datastore>
 						</refList>
 					</bounded>
@@ -142,7 +142,7 @@
 							<datastore hyperlink="true">
 								<storeId>product</storeId>
 								<dataId>identity</dataId>
-								<dataLabel>name</dataLabel>
+								<dataLabel>shortName</dataLabel>
 							</datastore>
 						</refList>
 					</bounded>
