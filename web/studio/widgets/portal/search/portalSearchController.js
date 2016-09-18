@@ -5,14 +5,29 @@ enablix.studioApp.controller('PortalSearchCtrl',
 		$scope.$stateParams = $stateParams;
 		var searchText = $stateParams.searchText;
 		
-		SearchService.getSearchResult(searchText, 
-			function(data) {
-				console.log(data);
-				$scope.searchResult = data;
-			},
-			function() {
-				Notification.error({message: "Error fetching search result", delay: enablix.errorMsgShowTime});
-			}
-		);
+		var pagination = {
+			pageNum: $stateParams.page
+		};
+		
+		fetchSearchResult = function() {
+			SearchService.getSearchResult(searchText, pagination,
+				function(data) {
+					console.log(data);
+					$scope.searchResult = data.content;
+					$scope.totalPages = data.totalPages;
+					$scope.pageNum = pagination.pageNum;
+				},
+				function() {
+					Notification.error({message: "Error fetching search result", delay: enablix.errorMsgShowTime});
+				}
+			);
+		};
+		
+		fetchSearchResult();
+		
+		$scope.setPage = function(pageNum) {
+			pagination.pageNum = pageNum;
+			fetchSearchResult();
+		};
 	}                                          
 ]);

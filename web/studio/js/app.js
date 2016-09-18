@@ -160,7 +160,13 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvi
 			}
 		})
 		.state('portal.search', {
-			url: '/search/t/{searchText}/',
+			url: '/search/t/{searchText}/?page',
+			params: {
+				page: {
+					value: '0',
+					squash: true
+				}
+			},
 			templateUrl: 'views/portal/portal-search.html',
 			controller: 'PortalSearchCtrl',
 			resolve: {

@@ -1,11 +1,10 @@
 package com.enablix.app.content.ui.search;
 
-import java.util.List;
-
 import com.enablix.app.content.ui.NavigableContent;
+import com.enablix.core.api.SearchResult;
 
 public interface SearchService {
 
-	public List<NavigableContent> search(String searchText);
+	SearchResult<NavigableContent> search(String searchText, int pageSize, int pageNum);
 	
 }

@@ -12,5 +12,6 @@ public class AppConstants {
 	public static final String SYSTEM_USER_ID = "system";
 	
 	public static final String GUEST_USER_IDENTITY = "~guest~";
+	public static final int DEFAULT_PAGE_SIZE = 10;
 	
 }

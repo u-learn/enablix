@@ -32,6 +32,8 @@ public class ESQueryBuilder {
 
 	private String searchText;
 	private ContentTemplate template;
+	private int pageSize = 10;
+	private int pageNum = 0;
 	
 	private ESQueryBuilder(String searchText, ContentTemplate template) {
 		this.searchText = searchText;
@@ -41,6 +43,12 @@ public class ESQueryBuilder {
 	public static ESQueryBuilder builder(String searchText, ContentTemplate template) {
 		ESQueryBuilder builder = new ESQueryBuilder(searchText, template);
 		return builder;
+	}
+	
+	public ESQueryBuilder withPagination(int pageSize, int pageNum) {
+		this.pageNum = pageNum;
+		this.pageSize = pageSize;
+		return this;
 	}
 	
 	public SearchRequest build() {
@@ -60,6 +68,8 @@ public class ESQueryBuilder {
 		
 		//MatchQueryBuilder matchQuery = QueryBuilders.matchQuery("_all", searchText);
 		SearchSourceBuilder searchSource = SearchSourceBuilder.searchSource().query(multiMatchQuery);
+		searchSource.size(pageSize);
+		searchSource.from(pageNum * pageSize);
 		
 		searchRequest.source(searchSource);
 		

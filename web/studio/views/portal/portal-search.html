@@ -10,6 +10,12 @@
 			<main class="col-md-8">
 				<div class="block search-result" ng-repeat="resultItem in searchResult">
 					<ebx-search-result-item result-item="resultItem"></ebx-search-result-item>
+				</div><br/>
+				<div class="foot text-center" ng-if="searchResult.length > 0">
+					<eb-pagination current-page="pageNum" total-pages="totalPages" set-page-fn="setPage"/>
+				</div>
+				<div ng-if="searchResult.length == 0">
+					<br><label>Your search did not match any document.</label>
 				</div>
 			</main>
 			

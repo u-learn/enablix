@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.enablix.app.content.ContentDataManager;
 import com.enablix.app.content.fetch.FetchContentRequest;
 import com.enablix.app.template.web.TemplateController;
+import com.enablix.commons.constants.AppConstants;
 import com.enablix.commons.util.StringUtil;
 import com.enablix.core.api.ContentDataRef;
 import com.enablix.core.domain.activity.ActivityChannel.Channel;
@@ -30,8 +31,6 @@ public class FetchContentDataController {
 	@Autowired
 	private ContentDataManager dataMgr;
 	
-	private static final int DEFAULT_PAGE_SIZE = 10;
-	
 	@RequestMapping(method = RequestMethod.GET, 
 			value="/t/{templateId}/c/{contentQId}", 
 			produces = "application/json")
@@ -44,7 +43,7 @@ public class FetchContentDataController {
 		
 		if (!StringUtil.isEmpty(page)) {
 			int pageInt = Integer.parseInt(page);
-			int sizeInt = StringUtil.isEmpty(size) ? DEFAULT_PAGE_SIZE : Integer.parseInt(size);
+			int sizeInt = StringUtil.isEmpty(size) ? AppConstants.DEFAULT_PAGE_SIZE : Integer.parseInt(size);
 			pageable = new PageRequest(pageInt, sizeInt);
 		}
 		

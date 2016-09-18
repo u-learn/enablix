@@ -29,7 +29,7 @@ enablix.serviceURL = {
 	"saveQuickLinkCategory": enablix.domainName + "/quicklink/category",
 	"deleteQuickLinkCategory": enablix.domainName + "/quicklink/category/delete",
 	"contentPeers": enablix.domainName + "/navcontent/peers/:containerQId/:contentIdentity/",
-	"searchData": enablix.domainName + "/search/t/:searchText/",
+	"searchData": enablix.domainName + "/search/t/:searchText/?page=:pageNum&size=:pageSize",
 	"navPath": enablix.domainName + "/navcontent/navpath/:containerQId/:contentIdentity/",
 	"user": enablix.domainName + "/user",
 	"systemuser" : enablix.domainName + "/systemuser",

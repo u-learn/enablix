@@ -8,10 +8,12 @@ import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.search.SearchHit;
+import org.elasticsearch.search.SearchHits;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.enablix.analytics.search.SearchClient;
 import com.enablix.core.api.ContentDataRef;
+import com.enablix.core.api.SearchResult;
 import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 
 public class ElasticSearchClient implements SearchClient {
@@ -23,23 +25,31 @@ public class ElasticSearchClient implements SearchClient {
 	private SearchHitToContentDataRefTransformer searchHitTx;
 	
 	@Override
-	public List<ContentDataRef> search(String text, ContentTemplate template) {
+	public SearchResult<ContentDataRef> search(String text, ContentTemplate template, int pageSize, int pageNum) {
 		
-		SearchRequest searchRequest = ESQueryBuilder.builder(text, template).build();
+		SearchRequest searchRequest = ESQueryBuilder.builder(text, template).withPagination(pageSize, pageNum).build();
 		
 		ActionFuture<SearchResponse> searchResponseFuture = esClient.search(searchRequest);
 		SearchResponse searchResponse = searchResponseFuture.actionGet();
 		
 		List<ContentDataRef> result = new ArrayList<>();
 		
-		for (SearchHit hit : searchResponse.getHits()) {
+		SearchHits hits = searchResponse.getHits();
+		for (SearchHit hit : hits) {
 			ContentDataRef contentDataRef = searchHitTx.transform(hit, template);
 			if (contentDataRef != null) {
 				result.add(contentDataRef);
 			}
 		}
 		
-		return result;
+		SearchResult<ContentDataRef> searchResult = new SearchResult<>();
+		searchResult.setContent(result);
+		searchResult.setNumberOfElements(hits.getTotalHits());
+		searchResult.setPageSize(pageSize);
+		searchResult.setCurrentPage(pageNum);
+		searchResult.setTotalPages((long) Math.ceil(((double) hits.getTotalHits())/pageSize));
+		
+		return searchResult;
 	}
 
 }

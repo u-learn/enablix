@@ -14,6 +14,7 @@ import com.enablix.app.content.ui.NavigableContentBuilder;
 import com.enablix.app.template.service.TemplateManager;
 import com.enablix.commons.util.process.ProcessContext;
 import com.enablix.core.api.ContentDataRef;
+import com.enablix.core.api.SearchResult;
 
 @Component
 public class SearchServiceImpl implements SearchService {
@@ -30,19 +31,26 @@ public class SearchServiceImpl implements SearchService {
 	private ContentLabelResolver labelResolver = new PortalContentLabelResolver();
 	
 	@Override
-	public List<NavigableContent> search(String searchText) {
+	public SearchResult<NavigableContent> search(String searchText, int pageSize, int pageNum) {
 		
 		String templateId = ProcessContext.get().getTemplateId();
-		List<ContentDataRef> searchResult = searchClient.search(
-				searchText, templateMgr.getTemplate(templateId));
+		SearchResult<ContentDataRef> searchResult = searchClient.search(
+				searchText, templateMgr.getTemplate(templateId), pageSize, pageNum);
 		
-		List<NavigableContent> result = new ArrayList<>();
+		List<NavigableContent> content = new ArrayList<>();
 		
 		if (searchResult != null) {
-			for (ContentDataRef dataRef : searchResult) {
-				result.add(navContentBuilder.build(dataRef, labelResolver));
+			for (ContentDataRef dataRef : searchResult.getContent()) {
+				content.add(navContentBuilder.build(dataRef, labelResolver));
 			}
 		}
+		
+		SearchResult<NavigableContent> result = new SearchResult<NavigableContent>();
+		result.setContent(content);
+		result.setNumberOfElements(searchResult.getNumberOfElements());
+		result.setPageSize(searchResult.getPageSize());
+		result.setCurrentPage(pageNum);
+		result.setTotalPages(searchResult.getTotalPages());
 		
 		return result;
 	}
