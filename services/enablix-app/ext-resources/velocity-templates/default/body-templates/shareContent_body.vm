@@ -34,7 +34,7 @@
      
       #if($obj.sharedContent.doc)
 	      <br/>
-	      <div><a href="${obj.url}$obj.sharedContent.doc.accessUrl?atChannel=EMAIL&atContext=WEB_SHARE&atContextId=$obj.identity" target="_blank">
+	      <div><a href="$obj.sharedContent.doc.accessUrl?atChannel=EMAIL&atContext=WEB_SHARE&atContextId=$obj.identity" target="_blank">
 	      <button style="background: #3d85c6;
 	      font: normal 16px/normal Arial, Helvetica, sans-serif;
 	      color: rgba(255,255,255,0.9);

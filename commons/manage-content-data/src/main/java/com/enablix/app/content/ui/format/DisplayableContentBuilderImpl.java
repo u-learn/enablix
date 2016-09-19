@@ -3,10 +3,12 @@ package com.enablix.app.content.ui.format;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.enablix.app.content.ContentDataUtil;
 import com.enablix.commons.constants.ContentDataConstants;
+import com.enablix.commons.util.EnvPropertiesUtil;
 import com.enablix.core.api.ContentDataRecord;
 import com.enablix.core.commons.xsdtopojo.ContainerType;
 import com.enablix.core.commons.xsdtopojo.ContentItemType;
@@ -20,6 +22,9 @@ import com.enablix.services.util.TemplateUtil;
 @Component
 public class DisplayableContentBuilderImpl implements DisplayableContentBuilder {
 
+	@Value("${site.url.container.instance}")
+	private String containerInstanceUrl;
+	
 	@Autowired
 	private DisplayFieldBuilder fieldBuilder;
 	
@@ -36,6 +41,7 @@ public class DisplayableContentBuilderImpl implements DisplayableContentBuilder 
 		dispContent.setContainerLabel(containerDef.getLabel());
 		dispContent.setRecordIdentity((String) record.getRecord().get(ContentDataConstants.IDENTITY_KEY));
 		dispContent.setTitle(ContentDataUtil.findStudioLabelValue(contentRecord, template, containerQId));
+		dispContent.setAccessUrl(getContentInstanceAccessUrl(dispContent.getContainerQId(), dispContent.getRecordIdentity()));
 		
 		for (ContentItemType fieldDef : containerDef.getContentItem()) {
 			
@@ -53,6 +59,12 @@ public class DisplayableContentBuilderImpl implements DisplayableContentBuilder 
 		}
 		
 		return dispContent;
+	}
+	
+	private String getContentInstanceAccessUrl(String containerQId, String contentIdentity) {
+		return EnvPropertiesUtil.getProperties().getServerUrl() + 
+				containerInstanceUrl.replaceAll(":containerQId", containerQId)
+									.replaceAll(":contentIdentity", contentIdentity);
 	}
 
 }

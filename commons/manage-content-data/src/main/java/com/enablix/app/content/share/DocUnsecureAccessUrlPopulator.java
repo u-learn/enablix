@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import com.enablix.commons.util.EnvPropertiesUtil;
 import com.enablix.core.ui.DisplayableContent;
 import com.enablix.core.ui.DocRef;
 
@@ -23,7 +24,7 @@ public class DocUnsecureAccessUrlPopulator {
 		if (contentDoc != null) {
 			String shareableUrl = urlCreator.createShareableUrl(
 				getActualDocDownloadUrl(contentDoc.getDocIdentity()), sharedWithEmail, true);
-			contentDoc.setAccessUrl(shareableUrl);
+			contentDoc.setAccessUrl(EnvPropertiesUtil.getProperties().getServerUrl() + shareableUrl);
 		}
 		
 	}
