@@ -14,7 +14,7 @@ public class DisplayableContent {
 	private String recordIdentity;
 	private String title;
 	private DocRef doc;
-	private String accessUrl;
+	private String portalUrl;
 
 	public DisplayableContent() {
 		this.fields = new ArrayList<>();
@@ -73,12 +73,12 @@ public class DisplayableContent {
 		this.title = title;
 	}
 
-	public String getAccessUrl() {
-		return accessUrl;
+	public String getPortalUrl() {
+		return portalUrl;
 	}
 
-	public void setAccessUrl(String accessUrl) {
-		this.accessUrl = accessUrl;
+	public void setPortalUrl(String accessUrl) {
+		this.portalUrl = accessUrl;
 	}
 
 	@Override
