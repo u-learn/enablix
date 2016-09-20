@@ -18,6 +18,7 @@ import com.enablix.analytics.correlation.ItemCorrelationService;
 import com.enablix.app.content.share.DocUnsecureAccessUrlPopulator;
 import com.enablix.app.content.ui.format.DisplayContext;
 import com.enablix.app.content.ui.format.DisplayableContentBuilder;
+import com.enablix.app.content.ui.format.TextLinkProcessor;
 import com.enablix.app.template.service.TemplateManager;
 import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.commons.util.process.ProcessContext;
@@ -48,6 +49,9 @@ public class CorrelatedEntitiesController {
 	
 	@Autowired
 	private DocUnsecureAccessUrlPopulator docUrlPopulator;
+	
+	@Autowired
+	private TextLinkProcessor textLinkProcessor;
 	
 	@RequestMapping(method = RequestMethod.GET, 
 			value="/te/{contentQId}/{attrId}/{attrVal}", 
@@ -94,6 +98,7 @@ public class CorrelatedEntitiesController {
 		for (ContentDataRecord record : correlatedEntities) {
 			DisplayableContent dispRecord = contentBuilder.build(template, record, ctx);
 			docUrlPopulator.process(dispRecord, "support@enablix.com");
+			textLinkProcessor.process(dispRecord, template, "support@enablix.com");
 			displayRecords.add(dispRecord);
 		}
 		

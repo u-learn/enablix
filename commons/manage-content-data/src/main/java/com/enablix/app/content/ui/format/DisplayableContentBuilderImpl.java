@@ -41,7 +41,7 @@ public class DisplayableContentBuilderImpl implements DisplayableContentBuilder 
 		dispContent.setContainerLabel(containerDef.getLabel());
 		dispContent.setRecordIdentity((String) record.getRecord().get(ContentDataConstants.IDENTITY_KEY));
 		dispContent.setTitle(ContentDataUtil.findStudioLabelValue(contentRecord, template, containerQId));
-		dispContent.setAccessUrl(getContentInstanceAccessUrl(dispContent.getContainerQId(), dispContent.getRecordIdentity()));
+		dispContent.setPortalUrl(getContentInstanceAccessUrl(dispContent.getContainerQId(), dispContent.getRecordIdentity()));
 		
 		for (ContentItemType fieldDef : containerDef.getContentItem()) {
 			
