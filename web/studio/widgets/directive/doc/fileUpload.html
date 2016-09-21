@@ -3,7 +3,9 @@
 <p class="form-label">No file selected</p>
 </div>
 <div ng-show="docValue.name">
-<label class="form-label">{{docValue.name}}&nbsp;<eb-doc-download doc-value="docValue.identity"></eb-doc-download></label>
+<label class="form-label">{{docValue.name}}&nbsp;<eb-doc-download doc-value="docValue.identity"></eb-doc-download>
+	<eb-doc-preview-action doc-identity="docValue.identity"></eb-doc-preview-action>
+</label>
 </div>
 
 <div ng-show="uploader.queue.length != 0">

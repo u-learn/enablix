@@ -6,10 +6,16 @@
 	</div> 
 	<div class="cont" ng-if="bodyData.length != 0">
 		<div ng-repeat="dataItem in bodyData" class = "dataItem">
-			<h4><eb-doc-download class="right-doc" ng-if="dataItem.downloadDocIdentity" doc-value="dataItem.downloadDocIdentity"></eb-doc-download>
-			<a  class="fa fa-share-alt" ng-click="openShareContentModal($index)"></a>
-			    <a ng-click="toggleContainerItem($event, dataItem.containerId + $index, dataItem.containerQId, dataItem.identity)" class="toggle">{{dataItem.headingLabel}}</a>
-			    <a ng-if="dataItem.hasSubContainers" ng-click="navToItemDetail(dataItem.containerQId, dataItem.identity)" class="detail fa fa-external-link"></a></h4>
+			<h4><a ng-click="toggleContainerItem($event, dataItem.containerId + $index, dataItem.containerQId, dataItem.identity)" class="toggle">{{dataItem.headingLabel}}</a>
+			    <a ng-if="dataItem.hasSubContainers" ng-click="navToItemDetail(dataItem.containerQId, dataItem.identity)" class="detail fa fa-external-link"></a>
+			    <div class="action-icons">
+			    	<span ng-if="dataItem.downloadDocIdentity">
+			    		<eb-doc-download doc-value="dataItem.downloadDocIdentity"></eb-doc-download>
+			    		<eb-doc-preview-action doc-identity="dataItem.downloadDocIdentity"></eb-doc-preview-action>
+			    	</span>
+					<a class="fa fa-share-alt" ng-click="openShareContentModal($index)"></a>
+			    </div>
+			</h4>
 			<div id="{{dataItem.containerId}}{{$index}}" class="toggle-cont">
 				<table class="infotable" >
 					<tr ng-repeat="header in multiHeaders" ng-switch="header.dataType" ng-if="dataItem[header.key]!=null">

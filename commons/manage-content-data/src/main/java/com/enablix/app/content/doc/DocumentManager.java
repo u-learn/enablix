@@ -20,5 +20,7 @@ public interface DocumentManager {
 	
 	Document<DocumentMetadata> buildDocument(InputStream dataStream, String name, String contentType, 
 			String contentQId, long fileSize, String docIdentity);
+
+	DocumentMetadata loadDocMetadata(String docIdentity);
 	
 }

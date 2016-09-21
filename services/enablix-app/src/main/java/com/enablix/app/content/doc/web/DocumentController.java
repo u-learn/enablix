@@ -95,7 +95,31 @@ public class DocumentController {
 	/**
      * Method for handling file download request from client
      */
-    @RequestMapping(value = "/download/{docIdentity}", method = RequestMethod.GET)
+    @RequestMapping(value = "/download/{docIdentity}.{ext}", method = {RequestMethod.GET, RequestMethod.HEAD})
+    public void doDownloadWithExt(HttpServletRequest request,
+            HttpServletResponse response, @PathVariable String docIdentity, 
+            @RequestParam(required=false) String atChannel,
+            @RequestParam(required=false) String atContext,
+            @RequestParam(required=false) String atContextId,
+            @RequestParam(required=false) String atContextTerm) throws IOException {
+    	doDownload(request, response, docIdentity, atChannel, atContext, atContextId, atContextTerm);
+    }
+	
+    /**
+     * Method for handling file download request from client
+     * @return 
+     */
+    @RequestMapping(value = "/docmd/{docIdentity}", method = {RequestMethod.GET, RequestMethod.HEAD},
+    				produces="application/json")
+    public DocumentMetadata getDocMetadata(@PathVariable String docIdentity) {
+    	return docManager.loadDocMetadata(docIdentity);
+    }
+   
+    
+	/**
+     * Method for handling file download request from client
+     */
+    @RequestMapping(value = "/download/{docIdentity}", method = {RequestMethod.GET, RequestMethod.HEAD})
     public void doDownload(HttpServletRequest request,
             HttpServletResponse response, @PathVariable String docIdentity, 
             @RequestParam(required=false) String atChannel,

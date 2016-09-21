@@ -11,6 +11,7 @@
 		<label class="label-condensed">{{dataItem.headingLabel}}</label>
 		<span class="pull-right" ng-if="dataItem.downloadDocIdentity">
 			<eb-doc-download doc-value="dataItem.downloadDocIdentity"></eb-doc-download>
+			<eb-doc-preview-action doc-identity="dataItem.downloadDocIdentity"></eb-doc-preview-action>
 		</span>
 	</div>
 	<div ng-show="dataItem.collapsed">

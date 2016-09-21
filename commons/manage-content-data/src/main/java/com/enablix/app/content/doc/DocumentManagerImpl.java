@@ -75,6 +75,12 @@ public class DocumentManagerImpl implements DocumentManager {
 		
 		return doc;
 	}
+	
+
+	@Override
+	public DocumentMetadata loadDocMetadata(String docIdentity) {
+		return docRepo.findByIdentity(docIdentity);
+	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override

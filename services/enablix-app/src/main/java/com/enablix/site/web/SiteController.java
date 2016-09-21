@@ -46,7 +46,7 @@ public class SiteController {
 		rd.forward(request, response);
 	}
 
-	@RequestMapping(method = RequestMethod.GET, value="/privacy")
+	@RequestMapping(method = {RequestMethod.GET, RequestMethod.HEAD}, value="/privacy")
 	public void privacyPolicy(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		forward(request, response, "/site-doc/PrivacyPolicy.pdf");
 	}

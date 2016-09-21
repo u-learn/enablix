@@ -3,10 +3,13 @@
 		<i class="expandable"></i>
 		<em class="fa fa-square-o"></em>		
 		<h2 ng-if="!navigableHeader">{{subContainerLabel}}</h2>
-		<span ng-if="bodyData.downloadDocIdentity">
-		<eb-doc-download class="bar-download" doc-value="bodyData.downloadDocIdentity"></eb-doc-download>
-		</span>
-		<a  class="fa fa-share-alt bar-share" ng-click="openShareContentModal()" ></a>
+		<div class="action-icons bar-action-icons">
+			<span ng-if="bodyData.downloadDocIdentity">
+				<eb-doc-download doc-value="bodyData.downloadDocIdentity"></eb-doc-download>
+				<eb-doc-preview-action doc-identity="bodyData.downloadDocIdentity"></eb-doc-preview-action>
+			</span>
+			<a class="fa fa-share-alt bar-share" ng-click="openShareContentModal()" ></a>
+		</div>
 		<h2><eb-nav-link hide-hierarchy="false" hide-doc-link="true" nav-link="navContentData" ng-if="navigableHeader"></eb-nav-link></h2>
 			
 	</div> 

@@ -29,7 +29,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		// Add guest login filter ahead of username/password filter. Also, read the following:
 		// http://mtyurt.net/2015/07/15/spring-how-to-insert-a-filter-before-springsecurityfilterchain/
 		http = http.addFilterBefore(guestLoginFilter(), FilterSecurityInterceptor.class);
-		
+		http.headers().frameOptions().sameOrigin();
 		http
 			.authorizeRequests()
 				.antMatchers("/resetpassword", "/", "/health", "/site-doc/**/*", "/site/*", "/terms", "/privacy", 

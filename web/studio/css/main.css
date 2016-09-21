@@ -336,6 +336,10 @@ form .row .form-label:first-child {
 .button-yellow:hover {
 	background: #d58512;
 }
+.button-close {
+	margin: -25px 0 0px 1em;
+	background: #2c3e50;
+}
 
 
 /*----------------------------------------------*/
@@ -412,7 +416,7 @@ form .row .form-label:first-child {
 .block .head .close:hover::before {
 	background-color: #666;
 }
-.block .head .fa-download {
+/*.block .head .fa-download {
 	float: right;
 	position: relative;
 	margin-top: 5px;
@@ -420,7 +424,7 @@ form .row .form-label:first-child {
 	line-height: 1;
 	text-decoration: none;
 	color: #2ecc71;
-}
+}*/
 .block .head .fa-download:hover {
 	color: #27ae60;
 }
@@ -509,6 +513,10 @@ form .row .form-label:first-child {
 }
 .block .goto a:hover {
 	text-decoration: none;
+}
+
+.cont .dataItem:first-child {
+	padding-top: 0px;
 }
 
 .cont .dataItem{
@@ -950,7 +958,7 @@ form .row .form-label:first-child {
 .toggle::after {
 	content: '';
 	position: absolute;
-	top: 50%;
+	top: 10px;
 	left: 6px;
 	width: 12px;
 	height: 2px;
@@ -960,7 +968,7 @@ form .row .form-label:first-child {
 .toggle::before {
 	content: '';
 	position: absolute;
-	top: 50%;
+	top: 10px;
 	left: 6px;
 	width: 2px;
 	height: 12px;
@@ -1087,12 +1095,12 @@ form .row .form-label:first-child {
 .faq h4:first-child {
 	margin-top: 0;
 }
-.faq .download, .right-doc .fa-download {
+/* .faq .download, .right-doc .fa-download {
 	float: right;
 	margin-top: 2px;
 	font-size: 14px;
 	color: #2ecc71;
-}
+}*/
 
 .fa-download{
 	color: #2ecc71;
@@ -1104,19 +1112,19 @@ form .row .form-label:first-child {
 
 .fa-share-alt{
 	color:#2ecc71;
-	float:right;
     padding-right: 10px
 }
  .fa-share-alt:hover{
 	color: #27ae60;
 } 
 
-.bar-share{
+/*.bar-share{
 	margin-right: 15px;
     margin-top: -20px;
     opacity: 0.75;
     color: #fff;
-}/* 
+}*/
+/* 
 .bar-share:hover{
 	opacity: 1;
 	color: #fff;
@@ -1141,8 +1149,6 @@ form .row .form-label:first-child {
 }
 
 .bar-download a{
-	margin-right:50px;
-	margin-top:-17px !important;
 	opacity:0.75;
 	color:#fff !important;
 }
@@ -1437,8 +1443,8 @@ input[type=checkbox] {
 }
 
 
-.subcontainer
-{    width: 50%;
+.subcontainer {    
+	width: 50%;
     float: left;
     border: 53pxblack;
     padding-right: 15px;
@@ -1447,3 +1453,24 @@ input[type=checkbox] {
     min-height: 1px;
 }
 
+.doc-preview {
+	color: #2ecc71 !important;
+}
+
+.action-icons {
+	float: right;
+}
+
+.bar-action-icons {
+	margin-top: -20px;
+	margin-right: 15px;
+}
+
+.bar-action-icons a {
+	opacity: 0.75;
+	color: #fff !important;
+}
+
+.dataItem h4 {
+	font-size: 0.875em;
+}

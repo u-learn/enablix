@@ -11,6 +11,7 @@ enablix.serviceURL = {
 	"insertChildContainerData": enablix.domainName + "/content/update/t/:templateId/c/:contentQId/r/:parentIdentity",
 	"uploadDocument" : enablix.domainName + "/doc/upload",
 	"downloadDocument" : enablix.domainName + "/doc/download/",
+	"getDocMetadata" : enablix.domainName + "doc/docmd/:docIdentity",
 	"fetchBoundedRefList": enablix.domainName + "/bounded/list/:templateId/:contentQId/",
 	"deleteContentData": enablix.domainName + "/content/delete/t/:templateId/c/:contentQId/r/:recordIdentity",
 	"generalRecommendation": enablix.domainName + "/navcontent/reco",
