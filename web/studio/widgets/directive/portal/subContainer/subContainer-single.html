@@ -3,6 +3,7 @@
 		<i class="expandable"></i>
 		<em class="fa fa-square-o"></em>		
 		<h2 ng-if="!navigableHeader">{{subContainerLabel}}</h2>
+		<h2><eb-nav-link hide-hierarchy="false" hide-doc-link="true" nav-link="navContentData" ng-if="navigableHeader"></eb-nav-link></h2>
 		<div class="action-icons bar-action-icons">
 			<span ng-if="bodyData.downloadDocIdentity">
 				<eb-doc-download doc-value="bodyData.downloadDocIdentity"></eb-doc-download>
@@ -10,8 +11,6 @@
 			</span>
 			<a class="fa fa-share-alt bar-share" ng-click="openShareContentModal()" ></a>
 		</div>
-		<h2><eb-nav-link hide-hierarchy="false" hide-doc-link="true" nav-link="navContentData" ng-if="navigableHeader"></eb-nav-link></h2>
-			
 	</div> 
 	
 	<div ng-class="{'active': !expanded}" class="cont clearfix" ng-if="!(bodyData == null || bodyData == undefined || bodyData.length == 0)">	
