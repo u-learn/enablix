@@ -7,6 +7,7 @@ enablix.studioApp = angular.module("studio", ['ui.router', 'angularTreeview', 'l
 enablix.dateFormat = 'MM/dd/yyyy';
 enablix.errorMsgShowTime = 10000; // in milli-seconds 
 enablix.defaultPageSize = 10;
+enablix.subContainerItemLimit = 5;
 
 var appSetup = function(StudioSetupService) {
 	return StudioSetupService.setupStudio();
@@ -215,6 +216,28 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvi
 				
 				// right section template
 				'rightSection@portal.container' : {
+					templateUrl: 'views/portal/container/recommended-section.html',
+					controller: 'PortalCntnrRecommendedCtrl',
+					resolve: {
+						setupData: appSetup 
+					}
+				}
+			}
+		})
+		.state('portal.subContainerList', {
+			url: '/subcontainer/{containerQId}/{subContainerQId}/p/{elementIdentity}',
+			views: {
+				// the main template
+				'': {
+					templateUrl: 'views/portal/portal-container.html',
+					controller: 'PortalSubCntnrListCtrl',
+					resolve: {
+						setupData: appSetup 
+					}
+				},
+				
+				// right section template
+				'rightSection@portal.subContainerList' : {
 					templateUrl: 'views/portal/container/recommended-section.html',
 					controller: 'PortalCntnrRecommendedCtrl',
 					resolve: {

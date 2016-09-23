@@ -187,8 +187,10 @@ public class ContentDataManagerImpl implements ContentDataManager {
 			
 			if (!StringUtil.isEmpty(request.getParentRecordIdentity())) {
 				
-				data = crud.findAllRecordWithLinkContainerId(collName, 
-					container.getLinkContentItemId(), request.getParentRecordIdentity());
+				data = request.getPageable() == null ? crud.findAllRecordWithLinkContainerId(collName, 
+							container.getLinkContentItemId(), request.getParentRecordIdentity())
+						: crud.findAllRecordWithLinkContainerId(collName, 
+								container.getLinkContentItemId(), request.getParentRecordIdentity(), request.getPageable());
 				
 			} else if (!StringUtil.isEmpty(request.getRecordIdentity())) {
 				// Fetch one record
@@ -213,8 +215,10 @@ public class ContentDataManagerImpl implements ContentDataManager {
 				
 			} else {
 				// content is a child array in parents collection, hence retrieve child elements
-				data = crud.findChildElements(collName, 
-						qIdRelativeToParent, request.getParentRecordIdentity());
+				data = request.getPageable() == null ? crud.findChildElements(collName, 
+														qIdRelativeToParent, request.getParentRecordIdentity())
+						: crud.findChildElements(collName, 
+								qIdRelativeToParent, request.getParentRecordIdentity(), request.getPageable());
 			}
 			
 		} else if (!StringUtil.isEmpty(request.getRecordIdentity())) {

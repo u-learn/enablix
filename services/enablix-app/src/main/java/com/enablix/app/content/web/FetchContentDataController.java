@@ -37,7 +37,14 @@ public class FetchContentDataController {
 	public Object fetchRootData(@PathVariable String templateId, @PathVariable String contentQId,
 			@RequestParam(required=false) String page, 
 			@RequestParam(required=false) String size) {
+		
 		LOGGER.debug("Fetch root content data");
+		
+		Pageable pageable = createPaginationInfo(page, size);
+		return fetchData(new FetchContentRequest(templateId, contentQId, null, null, pageable));
+	}
+	
+	private Pageable createPaginationInfo(String page, String size) {
 		
 		Pageable pageable = null;
 		
@@ -47,7 +54,7 @@ public class FetchContentDataController {
 			pageable = new PageRequest(pageInt, sizeInt);
 		}
 		
-		return fetchData(new FetchContentRequest(templateId, contentQId, null, null, pageable));
+		return pageable;
 	}
 
 	@RequestMapping(method = RequestMethod.GET, 
@@ -55,10 +62,13 @@ public class FetchContentDataController {
 			produces = "application/json")
 	public Object fetchChildData(@PathVariable String templateId, 
 			@PathVariable String contentQId, 
-			@PathVariable String parentIdentity) {
+			@PathVariable String parentIdentity,
+			@RequestParam(required=false) String page, 
+			@RequestParam(required=false) String size) {
 		
 		LOGGER.debug("Fetch child content data");
-		return fetchData(new FetchContentRequest(templateId, contentQId, parentIdentity, null));
+		Pageable pageable = createPaginationInfo(page, size);
+		return fetchData(new FetchContentRequest(templateId, contentQId, parentIdentity, null, pageable));
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, 

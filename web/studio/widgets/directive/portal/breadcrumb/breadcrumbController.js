@@ -1,6 +1,6 @@
 enablix.studioApp.controller('PortalBreadcrumbCtrl',
-			['$scope', '$rootScope', '$stateParams', 'ContentTemplateService', 'ContentDataService', 'ContentUtil', 'Notification', 'StateUpdateService', 
-    function ($scope,   $rootScope,   $stateParams,   ContentTemplateService,   ContentDataService,   ContentUtil,   Notification,   StateUpdateService) {
+			['$scope', '$rootScope', '$state', '$stateParams', 'ContentTemplateService', 'ContentDataService', 'ContentUtil', 'Notification', 'StateUpdateService', 
+    function ($scope,   $rootScope,   $state,   $stateParams,   ContentTemplateService,   ContentDataService,   ContentUtil,   Notification,   StateUpdateService) {
 		
 		var PORTAL_HOME_QID = "_portal_home";
 		var PORTAL_HOME_LABEL = "Home";
@@ -100,6 +100,18 @@ enablix.studioApp.controller('PortalBreadcrumbCtrl',
 								// move pointer to next
 								navContentPointer = navContentPointer.next;
 							}
+							
+							// sub container list page
+							if ($state.includes("portal.subContainerList")) {
+								var subContainerDef = ContentTemplateService.getContainerDefinition(enablix.template, $stateParams.subContainerQId);
+								if (!isNullOrUndefined(subContainerDef)) {
+									breadCrumbs.push({
+										label: subContainerDef.label,
+										qualifiedId: subContainerDef.qualifiedId
+									});
+								}
+							}
+							
 						}
 						
 					}, 

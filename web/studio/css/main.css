@@ -1483,3 +1483,12 @@ input[type=checkbox] {
 .modal-title {
 	font-weight: 400;
 }
+
+.sub-container-more-link a {
+	color: #3498db;
+}
+
+.sub-container-more-link a:hover,
+.sub-container-more-link a:focus {
+	color: #2980b9;
+}

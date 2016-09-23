@@ -356,5 +356,28 @@ public class ContentCrudServiceImpl implements ContentCrudService {
 	public List<Map<String, Object>> findRecords(String collectionName, SearchFilter filter) {
 		return findAllRecordForCriteria(collectionName, filter.toPredicate(new Criteria()));
 	}
+
+	@Override
+	public Page<Map<String, Object>> findChildElements(String collName, String qIdRelativeToParent,
+			String parentRecordIdentity, Pageable pageable) {
+		List<Map<String, Object>> childElements = findChildElements(collName, qIdRelativeToParent, parentRecordIdentity);
+		int startFrom = pageable.getPageNumber() * pageable.getPageSize();
+		int endAt = startFrom + pageable.getPageSize();
+		
+		if (startFrom >= childElements.size()) {
+			childElements = new ArrayList<>();
+		}
+		
+		if (endAt <= 0) {
+			childElements = new ArrayList<>();
+		}
+		
+		if (endAt >= childElements.size()) {
+			endAt = childElements.size();
+		}
+		
+		childElements = childElements.subList(startFrom, endAt);
+		return new PageImpl<>(childElements, pageable, childElements.size());
+	}
 	
 }

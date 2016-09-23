@@ -4,7 +4,7 @@ enablix.serviceURL = {
 	"fetchRootContainers": enablix.domainName + "/template/containers/:templateId",
 	"fetchChildContainers": enablix.domainName + "/template/containers/:templateId/:parentQId/",
 	"fetchRootData": enablix.domainName + "/data/t/:templateId/c/:contentQId/?page=:page&size=:pageSize",
-	"fetchChildrenData": enablix.domainName + "/data/t/:templateId/c/:contentQId/p/:parentIdentity",
+	"fetchChildrenData": enablix.domainName + "/data/t/:templateId/c/:contentQId/p/:parentIdentity?page=:page&size=:pageSize",
 	"fetchRecordData": enablix.domainName + "/data/t/:templateId/c/:contentQId/d/:recordIdentity",
 	"insertRootContainerData": enablix.domainName + "/content/update/t/:templateId/c/:contentQId/",
 	"updateContainerData": enablix.domainName + "/content/update/t/:templateId/c/:contentQId/",

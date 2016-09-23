@@ -13,7 +13,7 @@
 			    		<eb-doc-download doc-value="dataItem.downloadDocIdentity"></eb-doc-download>
 			    		<eb-doc-preview-action doc-identity="dataItem.downloadDocIdentity"></eb-doc-preview-action>
 			    	</span>
-					<a class="fa fa-share-alt" ng-click="openShareContentModal($index)"></a>
+					<a class="fa fa-share-alt" ng-click="openShareContentModal($index)" tooltip="Share"></a>
 			    </div>
 			</h4>
 			<div id="{{dataItem.containerId}}{{$index}}" class="toggle-cont">
@@ -25,9 +25,13 @@
 			  	</table>
 			</div>
 		</div>
+		<div ng-if="pageData && pageData.numberOfElements < pageData.totalElements" class="dataItem sub-container-more-link">
+			<h4><a ng-click="showSubContainerList()">...more</a></h4>
+		</div>
 	</div>
-	<div ng-if="bodyData.length == 0" class="cont cont-hidden cont-empty">
+	<div ng-if="bodyData.length == 0" class="cont cont-empty">
 		No data found.
 	</div>
+	
 </div>
 

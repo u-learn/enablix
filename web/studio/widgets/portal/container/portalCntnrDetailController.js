@@ -25,6 +25,8 @@ enablix.studioApp.controller('PortalCntnrDetailCtrl',
 			$scope.subContainerList.push(abtSubCntnrItem);
 			cntnrList = containerDef.container;
 			
+			$scope.subCntnrMultiListLimit = enablix.subContainerItemLimit;
+			
 		} else {
 			
 			var enclDef = ContentTemplateService.getPortalEnclosureDefinition(enclosureId);
@@ -43,6 +45,8 @@ enablix.studioApp.controller('PortalCntnrDetailCtrl',
 					}
 					
 				});
+				
+				$scope.subCntnrMultiListLimit = enablix.subContainerItemLimit;
 				
 			} else {
 				

@@ -62,5 +62,8 @@ public interface ContentCrudService {
 	List findRecords(String collectionName, List<String> elementIdentities);
 	
 	List<Map<String, Object>> findRecords(String collectionName, SearchFilter filter);
+
+	Page<Map<String, Object>> findChildElements(String collName, String qIdRelativeToParent,
+			String parentRecordIdentity, Pageable pageable);
 	
 }

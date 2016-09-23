@@ -1,6 +1,6 @@
 enablix.studioApp.controller('PortalSubContainerCtrl',
-			['$scope', 'StateUpdateService','UserService', '$stateParams', 'ContentTemplateService', 'ContentDataService', 'ContentUtil', 'Notification','shareContentModalWindow', 'ActivityAuditService',
-    function ($scope,   StateUpdateService, UserService,  $stateParams,   ContentTemplateService,   ContentDataService,   ContentUtil,   Notification,    shareContentModalWindow,   ActivityAuditService) {
+			['$scope', '$state', 'StateUpdateService', 'UserService', '$stateParams', 'ContentTemplateService', 'ContentDataService', 'ContentUtil', 'Notification','shareContentModalWindow', 'ActivityAuditService', 'QIdUtil',
+    function ($scope,   $state,   StateUpdateService,   UserService,   $stateParams,   ContentTemplateService,   ContentDataService,   ContentUtil,   Notification,    shareContentModalWindow,   ActivityAuditService,   QIdUtil) {
 		
 		$scope.containerDef = ContentTemplateService.getContainerDefinition(
 						enablix.template, $scope.subContainerQId);
@@ -90,9 +90,18 @@ enablix.studioApp.controller('PortalSubContainerCtrl',
 			
 		} else {
 			
-			ContentDataService.getContentData(enablix.templateId, $scope.subContainerQId, 
-				$stateParams.elementIdentity,
-				function(data) {
+			var paginationData = isNullOrUndefined($scope.multiListLimit) ? undefined
+					: { pageNum: 0, pageSize: $scope.multiListLimit };
+			
+			ContentDataService.getContentData(enablix.templateId, $scope.subContainerQId, $stateParams.elementIdentity,
+				function(dataPage) {
+					
+					
+					var data = dataPage;
+					if (dataPage.content) {
+						data = dataPage.content;
+						$scope.pageData = dataPage;
+					}
 					
 					if ($scope.type == 'single' && data && data.length > 0) {
 						$scope.bodyData = data[0];
@@ -120,7 +129,8 @@ enablix.studioApp.controller('PortalSubContainerCtrl',
 				},
 				function(errResp) {
 					Notification.error({message: "Error retrieving data", delay: enablix.errorMsgShowTime});
-				});
+				}, 
+				paginationData);
 		}
 		
 		if ($scope.type == 'single') {
@@ -187,5 +197,15 @@ enablix.studioApp.controller('PortalSubContainerCtrl',
 		}
 		
 		$scope.expanded = $scope.expanded || false;
+		
+		$scope.showSubContainerList = function() {
+			if ($state.includes('portal.enclosure')) {
+				StateUpdateService.goToPortalEnclosureDetail($stateParams.enclosureId, $scope.subContainerQId);
+			} else {
+				StateUpdateService.goToPortalSubContainerList(
+					QIdUtil.getParentQId($scope.subContainerQId), 
+					$scope.subContainerQId, $stateParams.elementIdentity);
+			}
+		}
 		
 	}]);

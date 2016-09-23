@@ -17,7 +17,7 @@ enablix.studioApp.factory('DocPreviewService',
 	 			};
 	 			
 	 			this.canHandleDoc = function(_docMd) {
-	 				return _docMd.contentType == 'application/pdf';
+	 				return _docMd.contentType && _docMd.contentType == 'application/pdf';
 	 			};
 	 		};
 	 		
@@ -32,7 +32,7 @@ enablix.studioApp.factory('DocPreviewService',
 	 			};
 	 			
 	 			this.canHandleDoc = function(_docMd) {
-	 				return _docMd.contentType.indexOf("image") >= 0;
+	 				return _docMd.contentType && _docMd.contentType.indexOf("image") >= 0;
 	 			};
 	 		};
 	 		
