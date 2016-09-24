@@ -3,25 +3,25 @@ package com.enablix.core.mail.velocity.resolver;
 
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import com.enablix.analytics.web.request.WebContentRequest;
-import com.enablix.app.content.ContentDataManager;
-import com.enablix.app.content.fetch.FetchContentRequest;
 import com.enablix.app.content.recent.RecentContentService;
 import com.enablix.app.content.ui.NavigableContent;
 import com.enablix.app.template.service.TemplateManager;
+import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.core.commons.xsdtopojo.ContainerType;
 import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 import com.enablix.core.mail.velocity.VelocityTemplateInputResolver;
 import com.enablix.core.mail.velocity.input.WeeklyDigestVelocityInput;
+import com.enablix.core.mongo.search.ConditionOperator;
+import com.enablix.core.mongo.search.DateFilter;
+import com.enablix.core.mongo.search.SearchCriteria;
 
 @Component
 public class WeeklyDigestDataResolver implements VelocityTemplateInputResolver<WeeklyDigestVelocityInput> {
@@ -29,19 +29,22 @@ public class WeeklyDigestDataResolver implements VelocityTemplateInputResolver<W
 	@Autowired
 	private RecentContentService recentService;
 	
-	@Autowired
-	private ContentDataManager dataMgr;
+	//@Autowired
+	//private ContentDataManager dataMgr;
 	
 	@Autowired
 	private TemplateManager templateMgr;
 	
+	@Value("${recent.data.lookback.days:7}")
+	private int recentDataLookbackDays;
+	
 	@Override
 	public void work(WeeklyDigestVelocityInput weeklyDigestVelocityInput) {
-		String tenantId = weeklyDigestVelocityInput.getTenant().getTenantId();
+
 		String templateId = weeklyDigestVelocityInput.getTenant().getDefaultTemplateId();
 		
-		WebContentRequest request = new WebContentRequest();
-		List<NavigableContent> recentData = recentService.getRecentContent(request);
+		SearchCriteria recentDataCriteria = createRecentDataCriteria();
+		List<NavigableContent> recentData = recentService.getRecentContentByCriteria(recentDataCriteria);
 		weeklyDigestVelocityInput.setRecentList("RecentlyUpdated", recentData);
 		
 		ContentTemplate template = templateMgr.getTemplate(templateId);
@@ -51,10 +54,11 @@ public class WeeklyDigestDataResolver implements VelocityTemplateInputResolver<W
 			containerIds.add(containerType.getId());
 		}
 		
+		// TODO: correctly implement randomization in sidebar content
 		HashMap<String, List<HashMap<String,Object>> > sidebarContent = new HashMap<>();
 		//int selectedRandomInteger = (containerIds.size()==1)? 0 : selectRandomInteger(0, containerIds.size(), new Random());
 		
-			if(containerIds.indexOf("competitor") >= 0){				
+			/*if(containerIds.indexOf("competitor") >= 0){				
 				Object sideBarItem1 = dataMgr.fetchDataJson(new FetchContentRequest(templateId, containerIds.get(containerIds.indexOf("competitor")), null, null, new PageRequest(0, 5)));
 				List<HashMap<String,Object>> sideBarContent1 = (List<HashMap<String,Object>>) ((PageImpl<?>) sideBarItem1).getContent();
 				sidebarContent.put(containerIds.get(containerIds.indexOf("competitor")), sideBarContent1);				
@@ -64,11 +68,22 @@ public class WeeklyDigestDataResolver implements VelocityTemplateInputResolver<W
 				Object sideBarItem2 = dataMgr.fetchDataJson(new FetchContentRequest(templateId, containerIds.get(containerIds.indexOf("solution")), null, null, new PageRequest(0, 5)));
 				List<HashMap<String,Object>> sideBarContent2 = (List<HashMap<String,Object>>) ((PageImpl<?>) sideBarItem2).getContent();
 				sidebarContent.put(containerIds.get(containerIds.indexOf("solution")), sideBarContent2);
-			}
+			}*/
 			
 		weeklyDigestVelocityInput.setSideBarItems(sidebarContent);		
 		//get solutions, competitors
 		
+	}
+	
+	private SearchCriteria createRecentDataCriteria() {
+		
+		Calendar lookbackLimitDate = Calendar.getInstance();
+		lookbackLimitDate.add(Calendar.DAY_OF_YEAR, -recentDataLookbackDays);
+		
+		DateFilter dateFilter = new DateFilter(ContentDataConstants.MODIFIED_AT_KEY, 
+				lookbackLimitDate.getTime(), ConditionOperator.GTE);
+		
+		return new SearchCriteria(dateFilter);
 	}
 
 	@Override
@@ -76,17 +91,17 @@ public class WeeklyDigestDataResolver implements VelocityTemplateInputResolver<W
 		return velocityTemplateInput instanceof WeeklyDigestVelocityInput;
 	}
 	
-	private static int selectRandomInteger(int aStart, int aEnd, Random aRandom){
-	    if (aStart > aEnd) {
-	      throw new IllegalArgumentException("Start cannot exceed End.");
-	    }
-	    //get the range, casting to long to avoid overflow problems
-	    long range = (long)aEnd - (long)aStart + 1;
-	    // compute a fraction of the range, 0 <= frac < range
-	    long fraction = (long)(range * aRandom.nextDouble());
-	    int randomNumber =  (int)(fraction + aStart);    
-	    return randomNumber;
-	  }
+/*	private static int selectRandomInteger(int aStart, int aEnd, Random aRandom) {
+		if (aStart > aEnd) {
+			throw new IllegalArgumentException("Start cannot exceed End.");
+		}
+		// get the range, casting to long to avoid overflow problems
+		long range = (long) aEnd - (long) aStart + 1;
+		// compute a fraction of the range, 0 <= frac < range
+		long fraction = (long) (range * aRandom.nextDouble());
+		int randomNumber = (int) (fraction + aStart);
+		return randomNumber;
+	}*/
 
 	@Override
 	public float executionOrder() {

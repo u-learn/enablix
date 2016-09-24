@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.stereotype.Component;
 
 import com.enablix.analytics.web.request.WebContentRequest;
@@ -23,6 +24,8 @@ import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.commons.util.StringUtil;
 import com.enablix.commons.util.collection.CollectionUtil;
 import com.enablix.core.domain.recent.RecentData;
+import com.enablix.core.mongo.dao.GenericDao;
+import com.enablix.core.mongo.search.SearchCriteria;
 
 @Component
 public class RecentContentServiceImpl implements RecentContentService {
@@ -34,6 +37,9 @@ public class RecentContentServiceImpl implements RecentContentService {
 	
 	@Autowired
 	private RecentDataRepository repo;
+	
+	@Autowired
+	private GenericDao dao;
 	
 	@Autowired
 	private NavigableContentBuilder navContentBuilder;
@@ -55,8 +61,7 @@ public class RecentContentServiceImpl implements RecentContentService {
 		String containerQId = context.getRequestContext().containerQId();
 		String contentIdentity = context.getRequestContext().contentIdentity();
 		
-		Sort sort = new Sort(Sort.Direction.DESC, ContentDataConstants.MODIFIED_AT_KEY);
-		Pageable pageable = new PageRequest(0, pageSize, sort);
+		Pageable pageable = createDefaultPageable();
 		
 		if (!StringUtil.isEmpty(containerQId) && !StringUtil.isEmpty(contentIdentity)) {
 			recentDataList = repo.findByTemplateIdAndContainerQIdAndContentIdentity(
@@ -75,6 +80,11 @@ public class RecentContentServiceImpl implements RecentContentService {
 			recentDataList = repo.findByTemplateId(templateId, pageable);
 		}
 
+		return buildNavagableContent(recentDataList);
+	}
+
+	private List<NavigableContent> buildNavagableContent(Page<RecentData> recentDataList) {
+		
 		List<NavigableContent> navRecentData = new ArrayList<>();
 
 		if (recentDataList != null) {
@@ -88,8 +98,23 @@ public class RecentContentServiceImpl implements RecentContentService {
 				}
 			}
 		}
-
+		
 		return navRecentData;
 	}
+
+	private Pageable createDefaultPageable() {
+		Sort sort = new Sort(Sort.Direction.DESC, ContentDataConstants.MODIFIED_AT_KEY);
+		Pageable pageable = new PageRequest(0, pageSize, sort);
+		return pageable;
+	}
+	
+	@Override
+	public List<NavigableContent> getRecentContentByCriteria(SearchCriteria criteria) {
+		Pageable pageable = createDefaultPageable();
+		Page<RecentData> contentPage = dao.findByCriteria(
+				criteria.toPredicate(new Criteria()), RecentData.class, pageable);
+		return buildNavagableContent(contentPage);
+	}
+	
 
 }
