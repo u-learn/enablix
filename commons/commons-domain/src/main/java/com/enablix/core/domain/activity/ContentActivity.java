@@ -7,7 +7,7 @@ public class ContentActivity extends Activity {
 	}
 	
 	public enum ContentActivityType {
-		CONTENT_ADD, CONTENT_UPDATE, CONTENT_DELETE, CONTENT_SHARE, CONTENT_ACCESS, DOC_DOWNLOAD
+		CONTENT_ADD, CONTENT_UPDATE, CONTENT_DELETE, CONTENT_SHARE, CONTENT_ACCESS, DOC_DOWNLOAD, DOC_UPLOAD, DOC_PREVIEW
 	}
 	
 	private String itemIdentity;

@@ -18,7 +18,7 @@ import com.enablix.core.domain.activity.ContentActivity.ContainerType;
 import com.enablix.core.domain.activity.ContentActivity.ContentActivityType;
 import com.enablix.core.domain.activity.ContentShareActivity;
 import com.enablix.core.domain.activity.ContentShareActivity.ShareMedium;
-import com.enablix.core.domain.activity.DocDownload;
+import com.enablix.core.domain.activity.DocumentActivity;
 import com.enablix.core.domain.activity.ExternalLinkAccess;
 import com.enablix.core.domain.activity.NonRegisteredActor;
 import com.enablix.core.domain.activity.RegisteredActor;
@@ -91,22 +91,22 @@ public class ActivityLogger {
 		auditActivity(activity);
 	}
 	
-	public static void auditDocDownload(String contentQId, 
+	public static void auditDocDownload(ContentActivityType activityType, String contentQId,
 			String contentIdentity, String docIdentity, Channel channel, 
 			String contextName, String contextId, String contextTerm) {
 		
 		ProcessContext processContext = ProcessContext.get();
-		auditDocDownload(contentQId, contentIdentity, docIdentity, channel, 
+		auditDocActivity(activityType, contentQId, contentIdentity, docIdentity, channel, 
 				new RegisteredActor(processContext.getUserId()), contextName, contextId, contextTerm);
 	}
 	
-	public static void auditDocDownload(String contentQId, 
+	public static void auditDocActivity(ContentActivityType activityType, String contentQId, 
 			String contentIdentity, String docIdentity, Channel channel, Actor actor,
 			String contextName, String contextId, String contextTerm) {
 		
 		ActivityAudit activity = new ActivityAudit();
 		
-		DocDownload docDownloadActvy = new DocDownload(contentIdentity, contentQId, 
+		DocumentActivity docDownloadActvy = new DocumentActivity(activityType, contentIdentity, contentQId, 
 				ContainerType.CONTENT, docIdentity, contextName, contextId, contextTerm);
 		
 		activity.setActivity(docDownloadActvy);

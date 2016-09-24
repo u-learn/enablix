@@ -9,7 +9,7 @@ enablix.studioApp.factory('DocPreviewService',
 	 			
 	 			this.previewHtml = function(_docMd) {
 	 				if (this.canHandleDoc(_docMd)) {
-	 					return '<iframe src="/js/vendor/viewerjs-0.5.8/ViewerJS/index.html#/doc/download/' + _docMd.identity + '.pdf"' 
+	 					return '<iframe src="/js/vendor/viewerjs-0.5.8/ViewerJS/index.html#/doc/preview/' + _docMd.identity + '.pdf?atChannel=WEB"' 
 	 						+ ' style="width:100%; height:500px;" allowfullscreen webkitallowfullscreen></iframe>';
 	 				} else {
 	 					return '<p>Document preview not supported</p>';
@@ -25,7 +25,7 @@ enablix.studioApp.factory('DocPreviewService',
 	 			
 	 			this.previewHtml = function(_docMd) {
 	 				if (this.canHandleDoc(_docMd)) {
-	 					return '<img src="/doc/download/' + _docMd.identity + '" style="max-width:100%; max-height:500px;"></img>'; 
+	 					return '<img src="/doc/preview/' + _docMd.identity + '?atChannel=WEB" style="max-width:100%; max-height:500px;"></img>'; 
 	 				} else {
 	 					return '<p>Document preview not supported</p>';
 	 				}

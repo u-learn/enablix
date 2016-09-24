@@ -1,9 +1,11 @@
 package com.enablix.core.domain.activity;
 
-public class DocDownload extends ContentAccessActivity {
+/*
+ * @Deprecated
+ * Use DocumentActivity instead
+ */
+public class DocDownload extends DocumentActivity {
 
-	private String docIdentity;
-	
 	protected DocDownload() { 
 		// for ORM
 	}
@@ -13,21 +15,12 @@ public class DocDownload extends ContentAccessActivity {
 		this(itemIdentity, containerQId, containerType, docIdentity, null, null, null);
 	}
 
-	public DocDownload(String itemIdentity, String containerQId, 
-			ContainerType containerType, String docIdentity, String contextName, String contextId, String contextTerm) {
+	public DocDownload(String itemIdentity, String containerQId, ContainerType containerType, 
+			String docIdentity, String contextName, String contextId, String contextTerm) {
 		
-		super(itemIdentity, containerQId, containerType, contextName, contextId, contextTerm);
-		this.docIdentity = docIdentity;
-		setActivityType(ContentActivityType.DOC_DOWNLOAD);
+		super(ContentActivityType.DOC_DOWNLOAD, itemIdentity, containerQId, 
+				containerType, docIdentity, contextName, contextId, contextTerm);
 	}
 
-	
-	public String getDocIdentity() {
-		return docIdentity;
-	}
-
-	public void setDocIdentity(String docIdentity) {
-		this.docIdentity = docIdentity;
-	}
 	
 }

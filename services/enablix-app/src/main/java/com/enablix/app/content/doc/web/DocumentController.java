@@ -27,6 +27,7 @@ import com.enablix.commons.util.StringUtil;
 import com.enablix.commons.util.process.ProcessContext;
 import com.enablix.core.domain.activity.ActivityChannel.Channel;
 import com.enablix.core.domain.activity.Actor;
+import com.enablix.core.domain.activity.ContentActivity.ContentActivityType;
 import com.enablix.core.domain.activity.NonRegisteredActor;
 import com.enablix.core.domain.activity.RegisteredActor;
 import com.enablix.core.security.SecurityUtil;
@@ -59,7 +60,12 @@ public class DocumentController {
             Document<DocumentMetadata> document = docManager.buildDocument(file.getInputStream(), 
             		file.getOriginalFilename(), file.getContentType(), contentQId, fileSize, docIdentity);
             
-            return saveDocument(contentQId, parentIdentity, containerIdentity, document);
+            DocumentMetadata docMd = saveDocument(contentQId, parentIdentity, containerIdentity, document);
+			
+            auditActivity(ContentActivityType.DOC_UPLOAD, docIdentity, document, 
+            				null, null, null, null);
+            
+            return docMd;
             
         } catch (RuntimeException e) {
         	LOGGER.error("Error while uploading.", e);
@@ -102,7 +108,24 @@ public class DocumentController {
             @RequestParam(required=false) String atContext,
             @RequestParam(required=false) String atContextId,
             @RequestParam(required=false) String atContextTerm) throws IOException {
-    	doDownload(request, response, docIdentity, atChannel, atContext, atContextId, atContextTerm);
+    	
+    	downloadAction(request, response, docIdentity, atChannel, atContext, 
+    			atContextId, atContextTerm, ContentActivityType.DOC_DOWNLOAD);
+    }
+    
+    /**
+     * Method for handling file download request from client
+     */
+    @RequestMapping(value = "/preview/{docIdentity}.{ext}", method = {RequestMethod.GET, RequestMethod.HEAD})
+    public void doPreviewWithExt(HttpServletRequest request,
+            HttpServletResponse response, @PathVariable String docIdentity, 
+            @RequestParam(required=false) String atChannel,
+            @RequestParam(required=false) String atContext,
+            @RequestParam(required=false) String atContextId,
+            @RequestParam(required=false) String atContextTerm) throws IOException {
+    	
+    	downloadAction(request, response, docIdentity, atChannel, atContext, 
+    			atContextId, atContextTerm, ContentActivityType.DOC_PREVIEW);
     }
 	
     /**
@@ -126,6 +149,26 @@ public class DocumentController {
             @RequestParam(required=false) String atContext,
             @RequestParam(required=false) String atContextId,
             @RequestParam(required=false) String atContextTerm) throws IOException {
+    	
+    	downloadAction(request, response, docIdentity, atChannel, atContext, 
+    			atContextId, atContextTerm, ContentActivityType.DOC_DOWNLOAD);
+    }
+    
+    @RequestMapping(value = "/preview/{docIdentity}", method = {RequestMethod.GET, RequestMethod.HEAD})
+    public void doPreview(HttpServletRequest request,
+            HttpServletResponse response, @PathVariable String docIdentity, 
+            @RequestParam(required=false) String atChannel,
+            @RequestParam(required=false) String atContext,
+            @RequestParam(required=false) String atContextId,
+            @RequestParam(required=false) String atContextTerm) throws IOException {
+    	
+    	downloadAction(request, response, docIdentity, atChannel, atContext, 
+    			atContextId, atContextTerm, ContentActivityType.DOC_PREVIEW);
+    }
+    
+    public void downloadAction(HttpServletRequest request, HttpServletResponse response, 
+    		String docIdentity, String atChannel, String atContext, String atContextId, 
+    		String atContextTerm, ContentActivityType activityType) throws IOException {
  
     	Document<DocumentMetadata> doc = docManager.load(docIdentity);
     	
@@ -166,13 +209,17 @@ public class DocumentController {
         inputStream.close();
         outStream.close();
         
-        // Audit download activity
-        auditActivity(docIdentity, doc, atChannel, atContext, atContextId, atContextTerm);
+        if (!request.getMethod().equals(RequestMethod.HEAD.toString())) {
+        	// Audit download activity
+        	auditActivity(activityType, docIdentity, doc, 
+        		atChannel, atContext, atContextId, atContextTerm);
+        }
  
     }
 
-	private void auditActivity(String docIdentity, Document<DocumentMetadata> doc, 
-			String atChannel, String contextName, String contextId, String contextTerm) {
+	private void auditActivity(ContentActivityType activityType, String docIdentity, 
+			Document<DocumentMetadata> doc, String atChannel, String contextName, 
+			String contextId, String contextTerm) {
 		
 		Channel channel = Channel.parse(atChannel);
         
@@ -187,7 +234,7 @@ public class DocumentController {
         		actor = new RegisteredActor(userId);
         	}
         	
-        	ActivityLogger.auditDocDownload(doc.getMetadata().getContentQId(), 
+        	ActivityLogger.auditDocActivity(activityType, doc.getMetadata().getContentQId(), 
         			null, docIdentity, channel, actor, contextName, contextId, contextTerm);
         }
 	}
