@@ -19,7 +19,7 @@ public class BaseDao {
 	protected MongoTemplate mongoTemplate;
 	
 	public <T> List<T> findByCriteria(Criteria queryCriteria, Class<T> findType) {
-		return findByCriteria(queryCriteria, findType);
+		return findByCriteria(queryCriteria, null, findType);
 	}
 	
 	public <T> List<T> findByCriteria(
