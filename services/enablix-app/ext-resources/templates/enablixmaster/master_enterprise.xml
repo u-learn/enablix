@@ -294,12 +294,119 @@
 						</refList>
 					</bounded>
 				</contentItem>
+				<container id="oppBOM" label="Bill of Material" linkContainerQId="bom" linkContentItemId="opportunities"/>						
 				<container id="oppPOC" label="Proof of Concepts" linkContainerQId="poc" linkContentItemId="opportunities"/>
 				<container id="oppProposal" label="Proposals" linkContainerQId="proposal" linkContentItemId="opportunities"/>
 				<container id="oppSalesDeck" label="Sales Decks" linkContainerQId="salesDeck" linkContentItemId="opportunities"/>
 				<container id="oppWinLoss" label="Win Loss Analysis" linkContainerQId="winloss" linkContentItemId="opportunities"/>
 				<container id="oppContent" label="Other Content" linkContainerQId="content" linkContentItemId="opportunities"/>
 			</container>
+			<container id="implProject" label="Implementation Projects">
+				<contentItem id="title" label="Project Title" type="text" searchBoost="7"/>
+				<contentItem id="objective" label="Project Objective" type="text" searchBoost="3"/>				
+				<contentItem id="projectMembers" label="Project Team" type="bounded" searchBoost="6">
+					<bounded multivalued="true">
+						<refList>
+							<datastore>
+								<storeId>user</storeId>
+								<dataId>identity</dataId>
+								<dataLabel>userName</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>
+				<contentItem id="projStatus" label="Project Status" type="bounded" searchBoost="6">
+					<bounded>
+						<refList>
+							<datastore>
+								<storeId>projectStatus</storeId>
+								<dataId>identity</dataId>
+								<dataLabel>projStatusName</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>
+				<contentItem id="desc" label="Status Details" type="text" searchBoost="2"/>
+				<contentItem id="highlights" label="Project Highlights" type="text" searchBoost="2"/>				
+				<contentItem id="projProducts" label="Products" type="bounded" searchBoost="6">
+					<bounded multivalued="true">
+						<refList>
+							<datastore hyperlink="true">
+								<storeId>product</storeId>
+								<dataId>identity</dataId>
+								<dataLabel>shortName</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>
+				<contentItem id="projSolutions" label="Solutions" type="bounded" searchBoost="6">
+					<bounded multivalued="true">
+						<refList>
+							<datastore hyperlink="true">
+								<storeId>solution</storeId>
+								<dataId>identity</dataId>
+								<dataLabel>shortName</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>
+				<contentItem id="projPartners" label="Partners" type="bounded" searchBoost="6">
+					<bounded multivalued="true">
+						<refList>
+							<datastore hyperlink="true">
+								<storeId>partner</storeId>
+								<dataId>identity</dataId>
+								<dataLabel>shortName</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>				
+				<contentItem id="projCompetitors" label="Competitors" type="bounded" searchBoost="6">
+					<bounded multivalued="true">
+						<refList>
+							<datastore hyperlink="true">
+								<storeId>competitor</storeId>
+								<dataId>identity</dataId>
+								<dataLabel>shortName</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>
+				<contentItem id="projTopics" label="Topics" type="bounded" searchBoost="6">
+					<bounded multivalued="true">
+						<refList>
+							<datastore hyperlink="true">
+								<storeId>topic</storeId>
+								<dataId>identity</dataId>
+								<dataLabel>shortName</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>				
+				<contentItem id="projRegions" label="Regions" type="bounded" searchBoost="6">
+					<bounded multivalued="true">
+						<refList>
+							<datastore>
+								<storeId>regions</storeId>
+								<dataId>identity</dataId>
+								<dataLabel>name</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>
+				<contentItem id="projIndustry" label="Industry" type="bounded" searchBoost="6">
+					<bounded multivalued="true">
+						<refList>
+							<datastore>
+								<storeId>industry</storeId>
+								<dataId>identity</dataId>
+								<dataLabel>name</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>
+				<container id="projContent" label="Project Content" linkContainerQId="content" linkContentItemId="opportunities"/>
+			</container>			
 			<container id="custCaseStudy" label="Case Studies" linkContainerQId="caseStudy" linkContentItemId="customers"/>
 			<container id="custFeatureSheet" label="Feature Sheets" linkContainerQId="featureSheet" linkContentItemId="customers"/>
 			<container id="custSalesDeck" label="Sales Decks" linkContainerQId="salesDeck" linkContentItemId="customers"/>
@@ -1158,6 +1265,21 @@
 				</bounded>
 			</contentItem>
 		</container>
+		<container id="bom" label="Bill of Materials">
+			<contentItem id="title" label="Title" type="text"/>
+			<contentItem id="file" label="File" type="doc"/>			
+			<contentItem id="opportunities" label="Sales Opportunity" type="bounded">
+				<bounded>
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>customer.opportunity</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>title</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>					
+		</container>		
 		<container id="whitepaper" label="White Papers">
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="file" label="File" type="doc"/>
@@ -1737,6 +1859,7 @@
 					</refList>
 				</bounded>
 			</contentItem>
+			<container id="propExecSummary" label="Executive Summary" linkContainerQId="execSummary" linkContentItemId="proposals"/>			
 		</container>
 		<container id="article" label="News Article">
 			<contentItem id="title" label="Title" type="text"/>
@@ -1892,6 +2015,21 @@
 				</bounded>
 			</contentItem>			
 		</container>
+		<container id="execSummary" label="Executive Summary">
+			<contentItem id="title" label="Title" type="text"/>
+			<contentItem id="file" label="File" type="doc"/>
+			<contentItem id="proposals" label="Proposal" type="bounded">
+				<bounded>
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>proposal</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>title</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>					
+		</container>			
 		<container id="template" label="Templates">
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="file" label="File" type="doc"/>
@@ -2106,6 +2244,10 @@
 			<contentItem id="opStatusName" label="Status" type="text"/>
 			<contentItem id="desc" label="Description" type="text"/>
 		</container>
+		<container id="projectStatus" label="Project Status" refData="true">
+			<contentItem id="projStatusName" label="Status" type="text"/>
+			<contentItem id="desc" label="Description" type="text"/>
+		</container>		
 		<container id="businessRole" label="Business Roles" refData="true">
 			<contentItem id="roleName" label="Role" type="text"/>
 			<contentItem id="desc" label="Description" type="text"/>
@@ -2162,8 +2304,10 @@
 					<childContainer id="article"/>
 					<childContainer id="battlecard"/>
 					<childContainer id="blog"/>
+					<childContainer id="bom"/>					
 					<childContainer id="caseStudy"/>
 					<childContainer id="discoveryQuestion"/>
+					<childContainer id="execSummary"/>					
 					<childContainer id="faq"/>
 					<childContainer id="featureSheet"/>
 					<childContainer id="importantslide"/>
@@ -2208,6 +2352,30 @@
 		<contentUIDef qualifiedId="customer.opportunity.desc">
 			<text type="long"/>
 		</contentUIDef>
+		<contentUIDef qualifiedId="customer.implProject">
+			<container labelQualifiedId="customer.implProject.title">
+				<listViewConfig>
+					<hideContentItem id="objective"/>
+					<hideContentItem id="desc"/>
+					<hideContentItem id="highlights"/>	
+					<hideContentItem id="projTopics"/>	
+					<hideContentItem id="projIndustry"/>										
+				</listViewConfig>
+				<portalConfig>
+					<headingContentItem id="title"/>
+				</portalConfig>
+			</container>
+		</contentUIDef>
+		<contentUIDef qualifiedId="customer.implProject.desc">
+			<text type="long"/>
+		</contentUIDef>
+		<contentUIDef qualifiedId="customer.implProject.objective">
+			<text type="long"/>
+		</contentUIDef>
+		<contentUIDef qualifiedId="customer.implProject.highlights">
+			<text type="long"/>
+		</contentUIDef>		
+		
 		<contentUIDef qualifiedId="solution">
 			<container labelQualifiedId="solution.shortName"/>
 		</contentUIDef>
@@ -2482,6 +2650,16 @@
 				</portalConfig>
 			</container>
 		</contentUIDef>
+		<contentUIDef qualifiedId="bom">
+			<container labelQualifiedId="bom.title">
+				<listViewConfig>
+					<hideContentItem id="file"/>
+				</listViewConfig>	
+				<portalConfig>
+					<headingContentItem id="title"/>
+				</portalConfig>
+			</container>
+		</contentUIDef>		
 		<contentUIDef qualifiedId="whitepaper">
 			<container labelQualifiedId="whitepaper.title">
 				<listViewConfig>
@@ -2577,6 +2755,16 @@
 		<contentUIDef qualifiedId="importantslide.summary">
 			<text type="long"/>
 		</contentUIDef>
+		<contentUIDef qualifiedId="execSummary">
+			<container labelQualifiedId="execSummary.title">
+				<listViewConfig>
+					<hideContentItem id="file"/>
+				</listViewConfig>			
+				<portalConfig>
+					<headingContentItem id="title"/>
+				</portalConfig>
+			</container>	
+		</contentUIDef>	
 		<contentUIDef qualifiedId="template">
 			<container labelQualifiedId="template.title">
 				<listViewConfig>
@@ -2764,8 +2952,10 @@
 					<childContainer id="article"/>
 					<childContainer id="battlecard"/>
 					<childContainer id="blog"/>
+					<childContainer id="bom"/>					
 					<childContainer id="caseStudy"/>
 					<childContainer id="discoveryQuestion"/>
+					<childContainer id="execSummary"/>
 					<childContainer id="faq"/>
 					<childContainer id="featureSheet"/>
 					<childContainer id="importantslide"/>
