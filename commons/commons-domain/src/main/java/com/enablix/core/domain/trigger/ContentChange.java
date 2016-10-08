@@ -4,6 +4,7 @@ import java.util.Date;
 
 import com.enablix.core.api.ContentDataRef;
 import com.enablix.core.commons.xsdtopojo.TriggerTypeEnum;
+import com.enablix.core.domain.content.ContentChangeDelta;
 
 public class ContentChange extends Trigger {
 
@@ -12,6 +13,8 @@ public class ContentChange extends Trigger {
 	}
 	
 	private ContentDataRef triggerItem;
+	
+	private ContentChangeDelta contentChange;
 	
 	private TriggerType type;
 	
@@ -39,6 +42,14 @@ public class ContentChange extends Trigger {
 	public TriggerTypeEnum getTriggerType() {
 		return type == TriggerType.ADD ? TriggerTypeEnum.CONTENT_ADD
 					: TriggerTypeEnum.CONTENT_UPDATE;
+	}
+
+	public ContentChangeDelta getContentChange() {
+		return contentChange;
+	}
+
+	public void setContentChange(ContentChangeDelta contentChange) {
+		this.contentChange = contentChange;
 	}
 	
 }

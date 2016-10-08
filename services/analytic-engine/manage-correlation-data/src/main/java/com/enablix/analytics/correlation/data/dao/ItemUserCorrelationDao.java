@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 import com.enablix.core.api.ContentDataRef;
 import com.enablix.core.correlation.ItemUserCorrelation;
-import com.enablix.core.mongo.dao.BaseDao;
+import com.enablix.core.mongo.dao.BaseTenantDao;
 import com.enablix.core.mongo.search.And;
 import com.enablix.core.mongo.search.CompositeFilter;
 import com.enablix.core.mongo.search.ConditionOperator;
@@ -15,7 +15,7 @@ import com.enablix.core.mongo.search.SearchFilter;
 import com.enablix.core.mongo.search.StringFilter;
 
 @Component
-public class ItemUserCorrelationDao extends BaseDao {
+public class ItemUserCorrelationDao extends BaseTenantDao {
 
 	private static final String TAG_NAME_FILTER_PROP_NAME = "tags.name";
 	private static final String ITEM_CONTAINER_QID_PROP_NAME = "item.containerQId";

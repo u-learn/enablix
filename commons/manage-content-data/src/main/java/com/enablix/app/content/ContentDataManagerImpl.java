@@ -83,6 +83,7 @@ public class ContentDataManagerImpl implements ContentDataManager {
 			container = TemplateUtil.findContainer(template.getDataDefinition(), linkedContainerQId);
 		}
 		
+		// update the data store with content
 		ContentUpdateHandler updateHandler = handlerFactory.getHandler(request);
 		boolean newRecord = (request.isInsertRootRequest() || request.isInsertChildRequest()) 
 				&& TemplateUtil.hasOwnCollection(template, request.getContentQId());

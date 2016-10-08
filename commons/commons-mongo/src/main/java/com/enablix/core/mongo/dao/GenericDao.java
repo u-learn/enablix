@@ -15,7 +15,7 @@ import com.enablix.core.mongo.search.service.SearchRequest.Pagination;
 import com.enablix.core.mongo.search.service.SearchRequestTransformer;
 
 @Component
-public class GenericDao extends BaseDao {
+public class GenericDao extends BaseTenantDao {
 
 	@Autowired
 	private SearchRequestTransformer requestTx;

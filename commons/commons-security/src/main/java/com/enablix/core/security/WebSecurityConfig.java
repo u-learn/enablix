@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
+import org.springframework.security.web.authentication.RememberMeServices;
 import org.springframework.security.web.authentication.switchuser.SwitchUserFilter;
 
 import com.enablix.core.security.service.EnablixUserService;
@@ -18,6 +19,8 @@ import com.enablix.core.security.service.EnablixUserService;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+	private static final String PERSISTENT_REMEMBER_ME_KEY = "3nabl1xr0cks";
+	
 	@Autowired
 	private EnablixUserService userService;
 
@@ -29,7 +32,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		// Add guest login filter ahead of username/password filter. Also, read the following:
 		// http://mtyurt.net/2015/07/15/spring-how-to-insert-a-filter-before-springsecurityfilterchain/
 		http = http.addFilterBefore(guestLoginFilter(), FilterSecurityInterceptor.class);
+		
 		http.headers().frameOptions().sameOrigin();
+		
 		http
 			.authorizeRequests()
 				.antMatchers("/resetpassword", "/", "/health", "/site-doc/**/*", "/site/*", "/terms", "/privacy", 
@@ -38,6 +43,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.anyRequest().authenticated()
 			//.and().addFilter(new ProcessContextInitFilter()).exceptionHandling()
 			.and().httpBasic()
+			
+			// http://docs.spring.io/spring-security/site/docs/3.0.x/reference/remember-me.html#remember-me-persistent-token
+			//.and().rememberMe().rememberMeServices(rememberMeServices()).key(PERSISTENT_REMEMBER_ME_KEY)
 			.and().logout().logoutSuccessHandler(logoutSuccessHandler()).permitAll()
 			.and().csrf().disable();
 			
@@ -60,6 +68,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Bean
 	public GuestUserLoginFilter guestLoginFilter() {
 		return new GuestUserLoginFilter();
+	}
+	
+	@Bean
+	public RememberMeServices rememberMeServices() {
+		return new BasicAuthPersistedRememberMeServices(PERSISTENT_REMEMBER_ME_KEY, 
+					userService, mongoPersistentTokenRepository());
+	}
+	
+	@Bean
+	public MongoPersistentTokenRepository mongoPersistentTokenRepository() {
+		return new MongoPersistentTokenRepository();
 	}
 	
 	public CustomLogoutSuccessHandler logoutSuccessHandler() {

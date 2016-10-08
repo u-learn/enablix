@@ -24,5 +24,6 @@
 	<module>manage-correlation-rule</module>
 	<module>manage-trigger-lifecycle</module>
 	<module>commons-mq</module>
+	<module>content-mapper</module>
   </modules>
 </project>

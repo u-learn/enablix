@@ -90,12 +90,12 @@ public class FileBasedDataLoader implements ApplicationListener<ContextRefreshed
 		};
 		
 		DirectoryWatchBuilder
-			.createDirectoryWatch(templateDir, new UploadTemplateCallback())
+			.createDirectoryWatch(templateDir, new UploadDataCallback())
 			.forFiles(fileFilter)
 			.build();
 	}
 
-	private class UploadTemplateCallback implements FileCreateOrUpdateCallback {
+	private class UploadDataCallback implements FileCreateOrUpdateCallback {
 
 		@Override
 		public void onFileCreated(File fileName) {

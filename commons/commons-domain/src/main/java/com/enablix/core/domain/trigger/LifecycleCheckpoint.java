@@ -14,7 +14,7 @@ import com.enablix.core.domain.BaseDocumentEntity;
 public class LifecycleCheckpoint<T extends Trigger> extends BaseDocumentEntity {
 
 	public static enum ExecutionStatus {
-		STARTED, PENDING, COMPLETED, FAILED
+		STARTED, PENDING, COMPLETED, FAILED, DISABLED
 	}
 	
 	private T trigger;

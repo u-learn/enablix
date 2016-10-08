@@ -4,10 +4,14 @@ import java.util.UUID;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 
 public class ProcessContext {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(ProcessContext.class);
+	
+	private static final String LOG_TENANT_ID_KEY = "TENANT_ID";
+	private static final String LOG_PROCESS_ID_KEY = "PROCESS_ID";
 	
 	public static final ThreadLocal<ProcessContext> THREAD_LOCAL_PROCESS_CONTEXT = new ThreadLocal<ProcessContext>();
 
@@ -19,6 +23,8 @@ public class ProcessContext {
 			THREAD_LOCAL_PROCESS_CONTEXT.set(ctx);
 			
 			LOGGER.trace("Initialized " + ctx);
+			
+			postInitialization(ctx);
 
 		} else {
 			throw new IllegalStateException("Process context cannot be re-initialized");
@@ -32,6 +38,20 @@ public class ProcessContext {
 	public static void clear() {
 		LOGGER.trace("Clearing " + get());
 		THREAD_LOCAL_PROCESS_CONTEXT.remove();
+	}
+	
+	private static void postInitialization(final ProcessContext context) {
+		
+		if (null != context) {
+		
+			if (null != context.processId) {
+				MDC.put(LOG_PROCESS_ID_KEY, context.processId);
+			}
+			
+			if (null != context.getTenantId()) {
+				MDC.put(LOG_TENANT_ID_KEY, context.getTenantId());
+			}
+		}
 	}
 	
 	private String userId;

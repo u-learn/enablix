@@ -22,6 +22,7 @@ public class ContentDataConstants {
 
 	public static final String DOC_NAME_ATTR = "name";
 	public static final String BOUNDED_LABEL_ATTR = "label";
+	public static final String BOUNDED_ID_ATTR = "id";
 	
 	public static final String CONTAINER_NAME_METADATA_FLD = "__container";
 	public static final String RECORD_TAGS_ATTR = "__tags";
@@ -30,5 +31,7 @@ public class ContentDataConstants {
 	
 	public static final String DEFAULT_USER_CONTAINER_QID = "user";
 	public static final String DEFAULT_USER_CONTAINER_EMAIL_ATTR_ID = "email";
+	
+	public static final String EXTERNAL_SOURCE_ID_KEY = "__extSourceId";
 	
 }

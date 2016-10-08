@@ -32,7 +32,10 @@ enablix.studioApp.factory('AuthorizationService',
 	 		var authenticate = function(credentials, callback) {
 
 			    var headers = credentials ? 
-			    		{authorization : "Basic " + btoa(credentials.username + ":" + credentials.password) } : {};
+			    		{ 
+			    			"authorization" : "Basic " + btoa(credentials.username + ":" + credentials.password)//,
+			    			//"remember-me" : "true",
+			    		} : {};
 			    
 			    RESTService.getForData('user', null, null, function(data) {
 				    	

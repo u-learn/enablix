@@ -360,7 +360,9 @@ public class ContentCrudServiceImpl implements ContentCrudService {
 	@Override
 	public Page<Map<String, Object>> findChildElements(String collName, String qIdRelativeToParent,
 			String parentRecordIdentity, Pageable pageable) {
+		
 		List<Map<String, Object>> childElements = findChildElements(collName, qIdRelativeToParent, parentRecordIdentity);
+		
 		int startFrom = pageable.getPageNumber() * pageable.getPageSize();
 		int endAt = startFrom + pageable.getPageSize();
 		

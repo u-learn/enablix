@@ -47,4 +47,9 @@ public class ParentAssociationBuilder implements ContentAssociationBuilder {
 		return associations;
 	}
 
+	@Override
+	public boolean replaceExisting() {
+		return true;
+	}
+
 }

@@ -64,6 +64,11 @@ public class TemplateUtil {
 					+ template.getId() + "]");
 		}
 		
+		return getChildContainerIds(container);
+	}
+
+
+	public static List<String> getChildContainerIds(ContainerType container) {
 		List<String> childContainerIds = new ArrayList<>();
 		for (ContainerType child : container.getContainer()) {
 			childContainerIds.add(child.getId());

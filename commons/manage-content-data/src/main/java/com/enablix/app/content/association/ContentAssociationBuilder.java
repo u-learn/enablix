@@ -12,5 +12,6 @@ public interface ContentAssociationBuilder {
 	Collection<ContentAssociation> buildAssociations(ContentTemplate template, ContentUpdateContext updateCtx,
 			Map<String, Object> dataAsMap);
 	
+	boolean replaceExisting();
 	
 }

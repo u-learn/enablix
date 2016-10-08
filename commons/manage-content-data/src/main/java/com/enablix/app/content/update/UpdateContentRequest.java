@@ -14,8 +14,6 @@ public class UpdateContentRequest implements ContentUpdateContext {
 	
 	private String contentQId;
 	
-	private String jsonData;
-	
 	private Map<String, Object> dataAsMap;
 
 	protected UpdateContentRequest() {
@@ -29,14 +27,18 @@ public class UpdateContentRequest implements ContentUpdateContext {
 	
 	public UpdateContentRequest(String templateId, 
 			String recordId, String contentQId, String jsonData) {
+		this(templateId, recordId, contentQId, JsonUtil.jsonToMap(jsonData));
+	}
+
+	public UpdateContentRequest(String templateId, 
+			String recordId, String contentQId, Map<String, Object> dataAsMap) {
 		super();
 		this.templateId = templateId;
 		this.parentIdentity = recordId;
 		this.contentQId = contentQId;
-		this.jsonData = jsonData;
-		this.dataAsMap = JsonUtil.jsonToMap(jsonData);
+		this.dataAsMap = dataAsMap;
 	}
-
+	
 	public String getTemplateId() {
 		return templateId;
 	}
@@ -49,10 +51,6 @@ public class UpdateContentRequest implements ContentUpdateContext {
 		return contentQId;
 	}
 
-	public String getJsonData() {
-		return jsonData;
-	}
-
 	public void setTemplateId(String templateId) {
 		this.templateId = templateId;
 	}
@@ -63,10 +61,6 @@ public class UpdateContentRequest implements ContentUpdateContext {
 
 	public void setContentQId(String contentQId) {
 		this.contentQId = contentQId;
-	}
-
-	public void setJsonData(String jsonData) {
-		this.jsonData = jsonData;
 	}
 
 	public Map<String, Object> getDataAsMap() {

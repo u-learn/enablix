@@ -1,0 +1,60 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+	
+	<xs:complexType name="filterCriteriaType">
+		<xs:sequence>
+			<xs:element name="filter" type="filterType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="filterType">
+		<xs:sequence>
+			<xs:element name="attributeId" type="xs:string"/>
+			<xs:element name="operator" type="filterOperatorType" default="MATCH" minOccurs="0"/>
+			<xs:choice>
+				<xs:element name="constant" type="filterConstantType"/>
+				<xs:element name="parentAttribute" type="filterParentAttributeType"/>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:simpleType name="filterOperatorType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="MATCH" />
+			<xs:enumeration value="NOT_MATCH" />
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:complexType name="filterConstantType">
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	
+	<xs:complexType name="filterParentAttributeType">
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute name="parentQId" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	
+	<xs:complexType name="matchCriteriaType">
+		<xs:sequence>
+			<xs:element name="match" type="matchType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="matchType">
+		<xs:complexContent>
+			<xs:extension base="filterType"></xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	
+	<xs:complexType name="tagsType">
+		<xs:sequence>
+			<xs:element name="tag" type="xs:string" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+</xs:schema>

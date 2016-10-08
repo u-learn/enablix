@@ -11,8 +11,10 @@ import org.springframework.stereotype.Component;
 import com.enablix.app.content.update.ContentUpdateContext;
 import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.commons.util.process.ProcessContext;
+import com.enablix.core.commons.xsdtopojo.ContainerType;
 import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 import com.enablix.core.domain.BaseEntity;
+import com.enablix.services.util.TemplateUtil;
 import com.mongodb.DBObject;
 
 @Component
@@ -21,10 +23,15 @@ public class AuditInfoEnricher extends AbstractMongoEventListener<BaseEntity> im
 	@Override
 	public void enrich(ContentUpdateContext updateCtx, 
 			Map<String, Object> content, ContentTemplate contentTemplate) {
-		setAuditInfoInHierarchy(content);
+		
+		ContainerType containerDef = TemplateUtil.findContainer(
+				contentTemplate.getDataDefinition(), updateCtx.contentQId());
+		
+		setAuditInfoInHierarchy(content, containerDef);
 	}
 	
-	private void setAuditInfoInHierarchy(final Map<String, Object> containerData) {
+	private void setAuditInfoInHierarchy(
+			final Map<String, Object> containerData, ContainerType containerDef) {
 		
 		setAuditInfo(new FieldCollection() {
 
@@ -41,21 +48,25 @@ public class AuditInfoEnricher extends AbstractMongoEventListener<BaseEntity> im
 		});
 		
 		// populate identity in hierarchy
-		for (Map.Entry<String, Object> entry : containerData.entrySet()) {
-			setAuditInfoIfContainer(entry.getValue());
+		for (ContainerType childContainer : containerDef.getContainer()) {
+			Object childContainerData = containerData.get(childContainer.getId());
+			if (childContainerData != null) {
+				setAuditInfoIfContainer(childContainerData, childContainer);
+			}
 		}
+		
 	}
 	
 	@SuppressWarnings("unchecked")
-	private void setAuditInfoIfContainer(Object obj) {
+	private void setAuditInfoIfContainer(Object obj, ContainerType containerDef) {
 		
 		if (obj instanceof Map<?,?>) {
 			Map<String, Object> mapObj = (Map<String, Object>) obj; 
-			setAuditInfoInHierarchy(mapObj);
+			setAuditInfoInHierarchy(mapObj, containerDef);
 			
 		} else if (obj instanceof Collection<?>) {
 			for (Object collElement : (Collection<?>) obj) {
-				setAuditInfoIfContainer(collElement);
+				setAuditInfoIfContainer(collElement, containerDef);
 			}
 		}
 		
@@ -69,16 +80,24 @@ public class AuditInfoEnricher extends AbstractMongoEventListener<BaseEntity> im
 		Object obj = fieldSet.get(ContentDataConstants.CREATED_AT_KEY);
 		if (obj == null) {
 			fieldSet.put(ContentDataConstants.CREATED_AT_KEY, currDate); 
-			fieldSet.put(ContentDataConstants.CREATED_BY_KEY, userId);
+			
 		} else {
 			if (obj instanceof Long) {
 				Date createdAt = new Date((Long) obj);
 				fieldSet.put(ContentDataConstants.CREATED_AT_KEY, createdAt);
 			}
 		}
+
+		if (fieldSet.get(ContentDataConstants.CREATED_BY_KEY) == null) {
+			fieldSet.put(ContentDataConstants.CREATED_BY_KEY, userId);
+		}
+
+		if (fieldSet.get(ContentDataConstants.MODIFIED_BY_KEY) == null) {
+			fieldSet.put(ContentDataConstants.MODIFIED_BY_KEY, userId);
+		}
 		
 		fieldSet.put(ContentDataConstants.MODIFIED_AT_KEY, currDate);
-		fieldSet.put(ContentDataConstants.MODIFIED_BY_KEY, userId);
+		
 	}
 
 	public void onBeforeSave(final BaseEntity source, final DBObject dbo) {

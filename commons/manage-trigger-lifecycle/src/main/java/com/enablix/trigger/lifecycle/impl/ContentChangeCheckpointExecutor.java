@@ -19,6 +19,7 @@ import com.enablix.core.commons.xsdtopojo.CheckpointType;
 import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 import com.enablix.core.commons.xsdtopojo.CorrelationActionType;
 import com.enablix.core.commons.xsdtopojo.EmailActionType;
+import com.enablix.core.commons.xsdtopojo.ReevaluatePendingCheckpointType;
 import com.enablix.core.domain.trigger.ContentChange;
 import com.enablix.core.domain.trigger.LifecycleCheckpoint;
 import com.enablix.core.domain.trigger.LifecycleCheckpoint.ExecutionStatus;
@@ -137,6 +138,7 @@ public class ContentChangeCheckpointExecutor implements CheckpointExecutor<Conte
 		
 		CorrelationActionType correlationActionDef = checkpointDef.getActions().getCorrelation();
 		List<EmailActionType> emailActionDefs = checkpointDef.getActions().getEmail();
+		ReevaluatePendingCheckpointType reevaluateCheckpointDef = checkpointDef.getActions().getReevaluateCheckpoint();
 		
 		Set<ActionType> actionDefs = new TreeSet<>(new Comparator<ActionType>() {
 
@@ -155,6 +157,10 @@ public class ContentChangeCheckpointExecutor implements CheckpointExecutor<Conte
 			for (EmailActionType emailActDef : emailActionDefs) {
 				actionDefs.add(emailActDef);
 			}
+		}
+		
+		if (reevaluateCheckpointDef != null) {
+			actionDefs.add(reevaluateCheckpointDef);
 		}
 		
 		return actionDefs;

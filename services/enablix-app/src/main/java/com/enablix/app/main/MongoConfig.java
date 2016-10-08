@@ -23,7 +23,8 @@ import com.mongodb.MongoClientOptions;
 @Configuration
 @EnableConfigurationProperties(MongoProperties.class)
 @EnableMongoRepositories(
-		basePackages = {"com.enablix.core.system.repo"},
+		basePackages = {"com.enablix.core.system.repo", 
+						"com.enablix.core.security.token.repo"},
 		mongoTemplateRef = "systemMongoTemplate"
 		)
 public class MongoConfig {

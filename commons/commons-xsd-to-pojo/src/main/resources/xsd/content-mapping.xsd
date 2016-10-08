@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	elementFormDefault="qualified">
+	
+	<xs:element name="contentMapping">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="container" type="contentContainerMappingType" maxOccurs="unbounded"/>
+			</xs:sequence>
+			<xs:attribute name="id" type="xs:string" use="required"/>
+			<xs:attribute name="name" type="xs:string" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:complexType name="contentContainerMappingType">
+		<xs:sequence>
+			<xs:element name="sourceId" type="sourceIdType"/>
+			<xs:element name="parent" type="parentContainerMappingType" minOccurs="0"/>
+			<xs:element name="createdBy" type="sytemUserMappingType" minOccurs="0"/>
+			<xs:element name="modifiedBy" type="sytemUserMappingType" minOccurs="0"/>
+			<xs:element name="contentItemMappings" type="contentItemMappingsType"/>
+			<xs:element name="containerMappings" type="containerMappingsType" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute name="qualifiedId" type="xs:string" use="required"/>
+	</xs:complexType>
+	
+	<xs:complexType name="sourceIdType">
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>	
+	
+	<xs:complexType name="parentContainerMappingType">
+		<xs:sequence>
+			<xs:element name="containerMapping" type="containerMappingType"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="containerMappingType">
+		<xs:sequence>
+			<xs:element name="itemMapping" type="contentItemMappingType"/>
+		</xs:sequence>
+		<xs:attribute name="qualifiedId" type="xs:string" use="optional"/>
+		<xs:attribute name="id" type="xs:string" use="optional"/>
+	</xs:complexType>
+	
+	<xs:complexType name="sytemUserMappingType">
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute name="attribute" type="xs:string"/>	
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	
+	<xs:complexType name="contentItemMappingsType">
+		<xs:sequence>
+			<xs:element name="itemMapping" type="contentItemMappingType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="contentItemMappingType">
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute name="itemId" type="xs:string"/>
+				<xs:attribute name="listAttribute" type="contentItemListAttrType"/>	
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	
+	<xs:simpleType name="contentItemListAttrType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ID" />
+			<xs:enumeration value="LABEL" />
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:complexType name="containerMappingsType">
+		<xs:sequence>
+			<xs:element name="containerMapping" type="containerMappingType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+</xs:schema>

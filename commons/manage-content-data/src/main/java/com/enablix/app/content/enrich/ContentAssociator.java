@@ -34,6 +34,11 @@ public class ContentAssociator implements ContentEnricher {
 					contentTemplate, updateCtx, content);
 			
 			if (CollectionUtil.isNotEmpty(assocs)) {
+				
+				if (builder.replaceExisting()) {
+					removeExistingAssociation(content, assocs);
+				}
+				
 				associations.addAll(assocs);
 			}
 		}
@@ -57,6 +62,20 @@ public class ContentAssociator implements ContentEnricher {
 			
 		}
 		
+	}
+
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	private void removeExistingAssociation(Map<String, Object> content, Collection<ContentAssociation> assocs) {
+		
+		Object associationData = content.get(ContentDataConstants.ASSOCIATIONS_KEY);
+		
+		if (associationData != null && associationData instanceof Map) {
+		
+			Map<String, ?> assocMap = ((Map) associationData);
+			for (ContentAssociation assoc : assocs) {
+				assocMap.remove(assoc.getAssociationName());
+			}
+		}
 	}
 	
 	private void addAssociationToMap(Map<String, Collection<ContentAssociation>> assocMap, 

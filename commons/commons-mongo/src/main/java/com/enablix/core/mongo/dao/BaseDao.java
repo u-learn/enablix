@@ -2,7 +2,6 @@ package com.enablix.core.mongo.dao;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -13,10 +12,9 @@ import org.springframework.util.Assert;
 
 import com.enablix.commons.util.StringUtil;
 
-public class BaseDao {
+public abstract class BaseDao {
 
-	@Autowired
-	protected MongoTemplate mongoTemplate;
+	protected abstract MongoTemplate getMongoTemplate();
 	
 	public <T> List<T> findByCriteria(Criteria queryCriteria, Class<T> findType) {
 		return findByCriteria(queryCriteria, null, findType);
@@ -27,8 +25,8 @@ public class BaseDao {
 		
 		Query query = Query.query(queryCriteria);
 		
-		return StringUtil.isEmpty(collectionName) ? mongoTemplate.find(query, findType) 
-				: mongoTemplate.find(query, findType, collectionName);
+		return StringUtil.isEmpty(collectionName) ? getMongoTemplate().find(query, findType) 
+				: getMongoTemplate().find(query, findType, collectionName);
 	}
 
 	public <T> Page<T> findByCriteria(
@@ -42,6 +40,8 @@ public class BaseDao {
 		Assert.notNull(pageable, "Pageable is be null");
 		
 		Query query = Query.query(queryCriteria);
+		
+		MongoTemplate mongoTemplate = getMongoTemplate();
 		
 		long count = mongoTemplate.count(query, findType);
 				

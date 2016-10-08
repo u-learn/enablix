@@ -1,6 +1,5 @@
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-	elementFormDefault="qualified">
-	
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+	<xs:include schemaLocation="enablix-commons.xsd" />
 	
 	<xs:element name="triggersDef">
 		<xs:complexType>
@@ -34,6 +33,10 @@
 	</xs:simpleType>
 	
 	<xs:complexType name="laterExecutionTimeType">
+		<xs:sequence>
+			<xs:element name="resetOn" type="resetExecutionOnType" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="disableOn" type="disableExecutionOnType" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
 		<xs:attribute name="timeUnit" type="timeUnitEnum"/>
 		<xs:attribute name="timeValue" type="xs:integer"/>
 	</xs:complexType>
@@ -45,6 +48,36 @@
 			<xs:enumeration value="WEEK" />
 		</xs:restriction>
 	</xs:simpleType>
+	
+	<xs:complexType name="resetExecutionOnType">
+		<xs:sequence>
+			<xs:element name="triggerEntityUpdate" type="triggerEntityUpdateCondType" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="disableExecutionOnType">
+		<xs:sequence>
+			<xs:element name="triggerEntityUpdate" type="triggerEntityUpdateCondType" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="triggerEntityUpdateCondType">
+		<xs:sequence>
+			<xs:element name="attributeUpdate" type="attributeUpdateType" minOccurs="0"/>
+			<xs:element name="entityMatch" type="filterCriteriaType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="attributeUpdateType">
+		<xs:sequence>
+			<xs:element name="on" type="attributeCheckType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="except" type="attributeCheckType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="attributeCheckType">
+		<xs:attribute name="name" type="xs:string"/>
+	</xs:complexType>
 	
 	<xs:complexType name="candidateContainersType">
 		<xs:sequence>
@@ -76,6 +109,7 @@
 		<xs:sequence>
 			<xs:element name="correlation" type="correlationActionType" minOccurs="0"/>
 			<xs:element name="email" type="emailActionType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="reevaluateCheckpoint" type="reevaluatePendingCheckpointType" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
 
@@ -84,6 +118,13 @@
 	</xs:complexType>
 	
 	<xs:complexType name="correlationActionType">
+		<xs:complexContent>
+			<xs:extension base="actionType">
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	
+	<xs:complexType name="reevaluatePendingCheckpointType">
 		<xs:complexContent>
 			<xs:extension base="actionType">
 			</xs:extension>

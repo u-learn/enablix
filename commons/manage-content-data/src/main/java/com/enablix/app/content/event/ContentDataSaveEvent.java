@@ -13,6 +13,10 @@ public class ContentDataSaveEvent {
 	private ContainerType containerType;
 	
 	private boolean newRecord;
+	
+	// Old data before the record update. Only applicable when
+	// update action was taken i.e. newRecord == false
+	private Map<String, Object> priorData; 
 
 	public ContentDataSaveEvent(Map<String, Object> dataAsMap, 
 			String templateId, ContainerType containerQId, boolean newRecord) {
@@ -37,6 +41,14 @@ public class ContentDataSaveEvent {
 
 	public boolean isNewRecord() {
 		return newRecord;
+	}
+
+	public Map<String, Object> getPriorData() {
+		return priorData;
+	}
+
+	public void setPriorData(Map<String, Object> priorData) {
+		this.priorData = priorData;
 	}
 
 }

@@ -48,7 +48,8 @@ import com.enablix.commons.util.StringUtil;
 				"com.enablix.analytics.correlation.data.repo",
 				"com.enablix.trigger.lifecycle.rule.repo",
 				"com.enablix.trigger.lifecycle.repo",
-				"com.enablix.app.audit.repo"})
+				"com.enablix.app.audit.repo",
+				"com.enablix.content.mapping.repo"})
 @EnableScheduling
 public class ApplicationInit extends WebMvcAutoConfigurationAdapter {
 

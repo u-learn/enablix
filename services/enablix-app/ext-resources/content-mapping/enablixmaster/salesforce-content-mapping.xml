@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<contentMapping id="sf" name="Salesforce content mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../xsd/content-mapping.xsd">
+	
+	<container qualifiedId="customer.opportunity">
+		<sourceId>Id</sourceId>
+		<parent>
+			<containerMapping qualifiedId="customer">
+				<itemMapping itemId="name">Account.Name</itemMapping>
+			</containerMapping>
+		</parent>
+		<createdBy attribute="profile.name">CreatedBy.Name</createdBy>
+		<modifiedBy attribute="profile.name">LastModifiedBy.Name</modifiedBy>
+		<contentItemMappings>
+			<itemMapping itemId="title">Name</itemMapping>
+			<itemMapping itemId="stage" listAttribute="LABEL">StageName</itemMapping>
+			<itemMapping itemId="oppSolutions" listAttribute="LABEL">Solution__c</itemMapping>
+			<itemMapping itemId="oppCompetitors">Competitor__c</itemMapping>
+		</contentItemMappings>
+	</container>
+
+</contentMapping>

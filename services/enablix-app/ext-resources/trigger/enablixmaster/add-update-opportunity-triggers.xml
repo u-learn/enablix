@@ -11,6 +11,34 @@
 					<correlation execOrder="1"/>
 				</actions>
 			</checkpoint>
+			<checkpoint>
+				<executionTime type="LATER">
+					<after timeUnit="DAY" timeValue="30">
+						<resetOn>
+							<triggerEntityUpdate>
+								<attributeUpdate>
+									<on name=""/>
+									<except name=""/>
+								</attributeUpdate>
+							</triggerEntityUpdate>
+						</resetOn>
+						<disableOn>
+							<triggerEntityUpdate>
+								<entityMatch>
+									<filter>
+										<attributeId>stage</attributeId>
+										<constant>Closed</constant>
+									</filter>
+								</entityMatch>
+							</triggerEntityUpdate>
+						</disableOn>
+					</after>
+				</executionTime>
+				<actions>
+					<email execOrder="1">
+					</email>
+				</actions>
+			</checkpoint>
 		</lifecycle>
 	</contentTriggerDef>
 	<contentTriggerDef id="update-opportunity-trigger" type="CONTENT_UPDATE">

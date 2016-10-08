@@ -11,6 +11,7 @@ import com.enablix.app.corr.rule.processor.ItemUserCorrelationRuleProcessor;
 import com.enablix.app.template.provider.TemplateFileProcessor;
 import com.enablix.app.trigger.rule.TriggerLifecycleRuleProcessor;
 import com.enablix.commons.util.StringUtil;
+import com.enablix.content.mapping.ContentMappingFileProcessor;
 import com.enablix.refdata.xls.loader.XLSRefdataProcessor;
 import com.enablix.util.data.loader.FileBasedDataLoader;
 import com.enablix.util.data.loader.TenantSpecificFileBasedDataLoader;
@@ -37,6 +38,10 @@ public class ApplicationConfig {
 	private static final String TRIGGER_RULE_DIR = "trigger";
 	
 	private static final String[] TRIGGER_RULE_FILE_EXTN = {"xml"};
+	
+	private static final String CONTENT_MAPPING_DIR = "content-mapping";
+	
+	private static final String[] CONTENT_MAPPING_FILE_EXTN = {"xml"};
 	
 	//private static final String DOCSTORE_CONFIG_DIR = "config/docstore";
 
@@ -78,6 +83,12 @@ public class ApplicationConfig {
 	}
 	
 	@Bean
+	public FileBasedDataLoader contentMappingFilesLoader() {
+		String templatesBaseDir = getDataDirPath() + File.separator + CONTENT_MAPPING_DIR;
+		return new TenantSpecificFileBasedDataLoader(templatesBaseDir, CONTENT_MAPPING_FILE_EXTN, contentMappingProcessor());
+	}
+	
+	@Bean
 	public ItemCorrelationRuleProcessor itemItemCorrRuleProcessor() {
 		return new ItemCorrelationRuleProcessor();
 	}
@@ -90,6 +101,11 @@ public class ApplicationConfig {
 	@Bean
 	public TriggerLifecycleRuleProcessor triggerLifecycleRuleProcessor() {
 		return new TriggerLifecycleRuleProcessor();
+	}
+	
+	@Bean
+	public ContentMappingFileProcessor contentMappingProcessor() {
+		return new ContentMappingFileProcessor();
 	}
 
 	private String getDataDirPath() {
