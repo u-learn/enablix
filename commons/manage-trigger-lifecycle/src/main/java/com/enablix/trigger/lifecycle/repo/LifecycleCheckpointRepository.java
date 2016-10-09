@@ -15,8 +15,8 @@ public interface LifecycleCheckpointRepository extends BaseMongoRepository<Lifec
 	List<LifecycleCheckpoint> findByStatusAndScheduledExecDateBefore(ExecutionStatus status, Date scheduledExecDate);
 	
 	@Query("{ $and : [{'status' : ?0}, {'trigger.triggerItem.instanceIdentity' : ?1},"
-			+ " {$or: [{'checkpointDefinition.executionTime.resetOn' : {$exists : true} }, "
-				   + "{'checkpointDefinition.executionTime.disableOn' : {$exists : true} }] } ]}")
+			+ " {$or: [{'checkpointDefinition.executionTime.after.resetOn' : {$exists : true} }, "
+				   + "{'checkpointDefinition.executionTime.after.disableOn' : {$exists : true} }] } ]}")
 	List<LifecycleCheckpoint<?>> findByStatusAndTriggerItem(ExecutionStatus status, String instanceIdentity);
 	
 }

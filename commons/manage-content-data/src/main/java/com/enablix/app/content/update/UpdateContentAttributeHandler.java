@@ -22,7 +22,7 @@ public class UpdateContentAttributeHandler implements ContentUpdateHandler {
 	private ContentCrudService crudService;
 	
 	@Override
-	public void updateContent(ContentTemplate template, String recordId, String contentQId,
+	public Map<String, Object> updateContent(ContentTemplate template, String recordId, String contentQId,
 			Map<String, Object> contentDataMap) {
 		
 		LOGGER.debug("Updating content attributes for templateId: {}, recordId: {}, "
@@ -37,8 +37,12 @@ public class UpdateContentAttributeHandler implements ContentUpdateHandler {
 			throw new IllegalArgumentException("Content identity is null or empty");
 		}
 		
+		Map<String, Object> existRecord = crudService.findRecord(collectionName, contentIdentity);
+		
 		crudService.updateAttributes(collectionName, relativeContentQId, 
 				contentIdentity, contentDataMap);
+		
+		return existRecord;
 	}
 
 

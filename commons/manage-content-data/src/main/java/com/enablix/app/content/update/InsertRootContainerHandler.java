@@ -20,7 +20,7 @@ public class InsertRootContainerHandler implements ContentUpdateHandler {
 	private ContentCrudService crudService;
 	
 	@Override
-	public void updateContent(ContentTemplate template, String recordId, String contentQId,
+	public Map<String, Object> updateContent(ContentTemplate template, String recordId, String contentQId,
 			Map<String, Object> contentDataMap) {
 		
 		String collectionName = TemplateUtil.resolveCollectionName(template, contentQId);
@@ -28,6 +28,7 @@ public class InsertRootContainerHandler implements ContentUpdateHandler {
 		LOGGER.debug("Inserting new record in collection [{}]", collectionName);
 		crudService.insert(collectionName, contentDataMap);
 		
+		return null;
 	}
 
 

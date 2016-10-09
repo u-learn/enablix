@@ -95,12 +95,14 @@ public class ContentDataManagerImpl implements ContentDataManager {
 			enricher.enrich(request, contentDataMap, template);
 		}
 		
-		updateHandler.updateContent(template, request.getParentIdentity(), 
+		Map<String, Object> oldRecord = updateHandler.updateContent(template, request.getParentIdentity(), 
 				request.getContentQId(), contentDataMap);
 		
 		// notify listeners
 		ContentDataSaveEvent saveEvent = new ContentDataSaveEvent(
 				contentDataMap, request.getTemplateId(), container, newRecord);
+		saveEvent.setPriorData(oldRecord);
+		
 		for (ContentDataEventListener listener : listenerRegistry.getListeners()) {
 			listener.onContentDataSave(saveEvent);
 		}

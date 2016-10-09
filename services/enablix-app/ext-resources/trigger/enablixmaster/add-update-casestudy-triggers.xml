@@ -1,87 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <triggersDef xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/trigger-lifecycle.xsd">
-	<contentTriggerDef id="add-whitepaper-trigger" type="CONTENT_ADD">
-		<candidateContainers>
-			<containerQId>whitepaper</containerQId>
-		</candidateContainers>
-		<lifecycle>
-			<checkpoint>
-				<executionTime type="NOW"/>
-				<actions>
-					<correlation execOrder="1"/>
-					<email execOrder="2">
-						<emailTemplate>
-							<subject templateName="addContentOpp_subject.vm"/>
-							<body templateName="addWhitepaperOpp_body.vm"/>
-						</emailTemplate>
-						<emailContent>
-							<triggerEntity/>
-							<correlatedEntities>
-								<entity>
-									<contentTypes>
-										<containerQId>customer.opportunity</containerQId>
-									</contentTypes>
-									<filterTags>
-										<tag>OPP_VIA_PROD</tag>
-									</filterTags>
-								</entity>
-							</correlatedEntities>			
-						</emailContent>
-						<recipient>
-							<correlatedUsers>
-								<users>
-									<filterTags>
-										<tag>OPP_SALES_REP</tag>
-									</filterTags>
-								</users>
-							</correlatedUsers>
-						</recipient>
-					</email>
-				</actions>
-			</checkpoint>
-		</lifecycle>
-	</contentTriggerDef>
-	<contentTriggerDef id="update-whitepaper-trigger" type="CONTENT_UPDATE">
-		<candidateContainers>
-			<containerQId>whitepaper</containerQId>
-		</candidateContainers>
-		<lifecycle>
-			<checkpoint>
-				<executionTime type="NOW"/>
-				<actions>
-					<correlation execOrder="1"/>
-					<email execOrder="2">
-						<emailTemplate>
-							<subject templateName="addContentOpp_subject.vm"/>
-							<body templateName="addWhitepaperOpp_body.vm"/>
-						</emailTemplate>
-						<emailContent>
-							<triggerEntity/>
-							<correlatedEntities>
-								<entity>
-									<contentTypes>
-										<containerQId>customer.opportunity</containerQId>
-									</contentTypes>
-									<filterTags>
-										<tag>OPP_VIA_PROD</tag>
-									</filterTags>
-								</entity>
-							</correlatedEntities>			
-						</emailContent>
-						<recipient>
-							<correlatedUsers>
-								<users>
-									<filterTags>
-										<tag>OPP_SALES_REP</tag>
-									</filterTags>
-								</users>
-							</correlatedUsers>
-						</recipient>
-					</email>
-				</actions>
-			</checkpoint>	
-		</lifecycle>
-	</contentTriggerDef>
 	<contentTriggerDef id="case-study-add-trigger" type="CONTENT_ADD">
 		<candidateContainers>
 			<containerQId>caseStudy</containerQId>
@@ -114,6 +32,34 @@
 								<users>
 									<filterTags>
 										<tag>OPP_SALES_REP</tag>
+									</filterTags>
+								</users>
+							</correlatedUsers>
+						</recipient>
+					</email>
+					<email execOrder="3">
+						<emailTemplate>
+							<subject templateName="addContentOpp_subject.vm"/>
+							<body templateName="addCasestudyOpp_body.vm"/>
+						</emailTemplate>
+						<emailContent>
+							<triggerEntity/>
+							<correlatedEntities>
+								<entity>
+									<contentTypes>
+										<containerQId>customer.opportunity</containerQId>
+									</contentTypes>
+									<filterTags>
+										<tag>OPP_VIA_SOLN</tag>
+									</filterTags>
+								</entity>
+							</correlatedEntities>			
+						</emailContent>
+						<recipient>
+							<correlatedUsers>
+								<users>
+									<filterTags>
+										<tag>OPP_VIA_SOLN_CREATOR</tag>
 									</filterTags>
 								</users>
 							</correlatedUsers>

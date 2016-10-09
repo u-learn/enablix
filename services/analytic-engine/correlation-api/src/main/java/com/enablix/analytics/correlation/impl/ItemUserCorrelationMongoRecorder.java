@@ -69,4 +69,10 @@ public class ItemUserCorrelationMongoRecorder implements ItemUserCorrelationReco
 		itemUserCorrelationRepo.deleteByItemInstanceIdentity(item.getInstanceIdentity());
 	}
 
+	@Override
+	public void removeItemUserCorrelationByRule(ContentDataRef item, ItemUserCorrelationRuleType rule) {
+		// TODO: revisit. We should only remove the source and the associated tags
+		itemUserCorrelationRepo.deleteByItemInstanceIdentityAndCorrRule(item.getInstanceIdentity(), rule.getId());
+	}
+
 }

@@ -22,7 +22,7 @@ public class InsertChildContainerHandler implements ContentUpdateHandler {
 	private ContentCrudService crudService;
 	
 	@Override
-	public void updateContent(ContentTemplate template, String recordId, String contentQId,
+	public Map<String, Object> updateContent(ContentTemplate template, String recordId, String contentQId,
 			Map<String, Object> contentDataMap) {
 		
 		LOGGER.debug("Insert child - templateId: {}, recordId: {}, contentQId: {}, data: {}",
@@ -47,6 +47,8 @@ public class InsertChildContainerHandler implements ContentUpdateHandler {
 			LOGGER.debug("Inserting child record in collection [{}]", collectionName);
 			crudService.insertChildContainer(collectionName, recordId, relativeChildQId, contentDataMap);
 		}
+		
+		return null;
 		
 	}
 

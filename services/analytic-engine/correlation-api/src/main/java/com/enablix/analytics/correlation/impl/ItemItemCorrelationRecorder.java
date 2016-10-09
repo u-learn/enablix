@@ -12,4 +12,6 @@ public interface ItemItemCorrelationRecorder {
 	
 	void removeItemCorrelations(ContentDataRef item);
 	
+	void removeItemCorrelationsByRule(ContentDataRef item, ItemCorrelationRuleType rule);
+	
 }

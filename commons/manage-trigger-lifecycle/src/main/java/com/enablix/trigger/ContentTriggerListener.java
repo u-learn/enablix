@@ -8,12 +8,14 @@ import org.springframework.stereotype.Component;
 
 import com.enablix.analytics.correlation.ItemCorrelationService;
 import com.enablix.analytics.correlation.ItemUserCorrelationService;
+import com.enablix.app.content.ContentChangeEvaluator;
 import com.enablix.app.content.ContentDataUtil;
 import com.enablix.app.content.event.ContentDataDelEvent;
 import com.enablix.app.content.event.ContentDataEventListener;
 import com.enablix.app.content.event.ContentDataSaveEvent;
 import com.enablix.commons.util.concurrent.Events;
 import com.enablix.core.api.ContentDataRef;
+import com.enablix.core.domain.content.ContentChangeDelta;
 import com.enablix.core.domain.trigger.ContentChange;
 import com.enablix.core.domain.trigger.ContentChange.TriggerType;
 import com.enablix.core.mq.EventSubscription;
@@ -31,6 +33,9 @@ public class ContentTriggerListener implements ContentDataEventListener {
 	
 	@Autowired
 	private ItemCorrelationService itemItemCorrService;
+	
+	@Autowired 
+	private ContentChangeEvaluator contentChangeEvaluator;
 	
 	@Override
 	public void onContentDataSave(ContentDataSaveEvent event) {
@@ -55,6 +60,10 @@ public class ContentTriggerListener implements ContentDataEventListener {
 		}
 		
 		ContentChange contentChangeTrigger = new ContentChange(contentTriggerDate);
+		
+		ContentChangeDelta delta = contentChangeEvaluator.findDelta(
+				event.getPriorData(), event.getDataAsMap(), event.getContainerType());
+		contentChangeTrigger.setContentChange(delta);
 		
 		ContentDataRef triggerItem = ContentDataUtil.contentDataToRef(
 				event.getDataAsMap(), event.getTemplateId(), event.getContainerType().getQualifiedId());

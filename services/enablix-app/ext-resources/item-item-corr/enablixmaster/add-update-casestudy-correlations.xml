@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<itemCorrelationRules xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/item-correlation-rule.xsd">
+	
+	<itemCorrelationRule id="casestudy-opp-via-soln" name="Casestudy to Opportunity Via Solution">
+		<triggerItem qualifiedId="caseStudy">
+		</triggerItem>
+		<relatedItems>
+			<relatedItem qualifiedId="customer.opportunity">
+				<filterCriteria>
+					<filter>
+						<attributeId>oppSolutions</attributeId>
+						<parentAttribute>solutions</parentAttribute>
+					</filter>
+				</filterCriteria>
+				<recordAsRelated>true</recordAsRelated>
+				<tags>
+					<tag>OPP_VIA_SOLN</tag>
+				</tags>
+			</relatedItem>
+		</relatedItems>
+	</itemCorrelationRule>	
+	
+</itemCorrelationRules>

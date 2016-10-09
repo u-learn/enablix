@@ -62,6 +62,8 @@ public class ElasticSearchItemCorrelator implements ItemItemCorrelator {
 	private void processItemCorrelationRule(ItemCorrelationRuleType corrRule, 
 			ContentTemplate template, ContentDataRef item) {
 
+		itemCorrRecorder.removeItemCorrelationsByRule(item, corrRule);
+		
 		MatchInputRecord matchInput = matchInputBuilder.buildTriggerMatchInput(template, corrRule.getTriggerItem(), item);
 		
 		if (matchInput != null) {

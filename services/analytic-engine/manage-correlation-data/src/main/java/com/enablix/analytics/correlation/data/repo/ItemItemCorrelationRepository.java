@@ -10,4 +10,6 @@ public interface ItemItemCorrelationRepository extends BaseMongoRepository<ItemI
 	
 	void deleteByItemInstanceIdentity(String itemIdentity);
 	
+	void deleteByItemInstanceIdentityAndItemCorrelationRuleId(String itemIdentity, String ruleId);
+	
 }

@@ -26,7 +26,7 @@ public class TriggerExecChangeOnEntityUpdateEvaluator {
 				contentChange, condition.getEntityMatch(), template);
 
 		// if both are null, then the conditions were missing, hence no change
-		return (updtAttrResult != null && entityMatchResult != null)
+		return !(updtAttrResult == null && entityMatchResult == null)
 				&& ((updtAttrResult == null || updtAttrResult) 
 						&& (entityMatchResult == null || entityMatchResult));
 	}
