@@ -8,6 +8,7 @@ enablix.dateFormat = 'MM/dd/yyyy';
 enablix.errorMsgShowTime = 10000; // in milli-seconds 
 enablix.defaultPageSize = 10;
 enablix.subContainerItemLimit = 5;
+enablix.uploadDocSizeLimit = 1 * 1024 * 1024; // size in bytes 
 
 var appSetup = function(StudioSetupService) {
 	return StudioSetupService.setupStudio();

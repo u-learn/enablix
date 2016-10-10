@@ -38,6 +38,7 @@ public class ProcessContext {
 	public static void clear() {
 		LOGGER.trace("Clearing " + get());
 		THREAD_LOCAL_PROCESS_CONTEXT.remove();
+		postDestroy();
 	}
 	
 	private static void postInitialization(final ProcessContext context) {
@@ -52,6 +53,11 @@ public class ProcessContext {
 				MDC.put(LOG_TENANT_ID_KEY, context.getTenantId());
 			}
 		}
+	}
+	
+	private static void postDestroy() {
+		MDC.put(LOG_PROCESS_ID_KEY, "");
+		MDC.put(LOG_TENANT_ID_KEY, "");
 	}
 	
 	private String userId;

@@ -1,9 +1,22 @@
 enablix.studioApp.controller('FileUploadCtrl', 
-			['$scope', 'FileUploader', 'ContentTemplateService', 'QIdUtil',
-    function ($scope,   FileUploader,   ContentTemplateService,   QIdUtil) {
+			['$scope', 'FileUploader', 'ContentTemplateService', 'QIdUtil', 'InfoModalWindow',
+    function ($scope,   FileUploader,   ContentTemplateService,   QIdUtil,   InfoModalWindow) {
     	
+		var file	
+			
 		var uploadUrl = enablix.serviceURL.uploadDocument;
-				
+		
+		var fileSizeCheckFilter = function(item) {
+			
+			var passed = item.size < enablix.uploadDocSizeLimit;
+			
+			if (!passed) {
+				InfoModalWindow.showInfoWindow("Error", "File size should be less than " + (enablix.uploadDocSizeLimit/(1024*1024)) + "MB");
+			}
+			
+			return passed;
+		}
+		
         var uploader = $scope.uploader = new FileUploader({
             url: uploadUrl,
             withCredentials: true,
@@ -19,6 +32,11 @@ enablix.studioApp.controller('FileUploadCtrl',
                 return this.queue.length < 10;
             }
         });
+        
+        /*uploader.filters.push({
+        	name: 'sizeCheckFilter',
+            fn: fileSizeCheckFilter
+        });*/
 
         // CALLBACKS
 
