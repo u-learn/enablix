@@ -11,69 +11,6 @@
 					<correlation execOrder="1"/>
 				</actions>
 			</checkpoint>
-			<checkpoint>
-				<executionTime type="LATER">
-					<after timeUnit="DAY" timeValue="30">
-						
-					</after>
-				</executionTime>
-				<actions>
-					<correlation execOrder="1"/>
-				</actions>
-			</checkpoint>
-			<checkpoint>
-				<executionTime type="LATER">
-					<after timeUnit="DAY" timeValue="30">
-						<resetOn>
-							<triggerEntityUpdate>
-								<attributeUpdate>
-									<on name="stage"/>
-								</attributeUpdate>
-							</triggerEntityUpdate>
-						</resetOn>
-						<disableOn>
-							<triggerEntityUpdate>
-								<entityMatch>
-									<filter>
-										<attributeId>stage.label</attributeId>
-										<constant>Closed</constant>
-									</filter>
-								</entityMatch>
-							</triggerEntityUpdate>
-						</disableOn>
-					</after>
-				</executionTime>
-				<actions>
-					<email execOrder="1">
-						<emailTemplate>
-							<subject templateName="salesTipOpp_subject.vm"/>
-							<body templateName="salesTipOpp_body.vm"/>
-						</emailTemplate>
-						<emailContent>
-							<triggerEntity/>
-							<correlatedEntities>
-								<entity>
-									<contentTypes>
-										<containerQId>whitepaper</containerQId>
-									</contentTypes>
-									<filterTags>
-										<tag>SOLN_DOC</tag>
-									</filterTags>
-								</entity>
-							</correlatedEntities>			
-						</emailContent>
-						<recipient>
-							<correlatedUsers>
-								<users>
-									<filterTags>
-										<tag>#CONTENT_CREATOR#</tag>
-									</filterTags>
-								</users>
-							</correlatedUsers>
-						</recipient>
-					</email>
-				</actions>
-			</checkpoint>
 		</lifecycle>
 	</contentTriggerDef>
 	<contentTriggerDef id="update-opportunity-trigger" type="CONTENT_UPDATE">

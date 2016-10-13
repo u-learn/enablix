@@ -2,63 +2,51 @@
 <itemCorrelationRules xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/item-correlation-rule.xsd">
 	<itemCorrelationRule id="opp-stage-corr" name="Opportunity - Stage correlation">
 		<triggerItem qualifiedId="customer.opportunity">
-		</triggerItem>
+		</triggerItem>		
 		<relatedItems>
-			<!-- Product datasheet -->
-			<relatedItem qualifiedId="product.dataSheet">
+			<!-- Priority Documents by stages -->
+			<relatedItem qualifiedId="solution">
 				<filterCriteria>
 					<filter>
-						<attributeId>__associations.parent.recordIdentity</attributeId>
-						<parentAttribute>oppProducts</parentAttribute>
-					</filter>
-				</filterCriteria>
-				<recordAsRelated>true</recordAsRelated>
-				<tags>
-					<tag>PRIORITY_Prospecting</tag>
-				</tags>	
-			</relatedItem>
-			<!-- Product Architecture -->
-			<relatedItem qualifiedId="product.prodArchitecture">
-				<filterCriteria>
-					<filter>
-						<attributeId>__associations.parent.recordIdentity</attributeId>
-						<parentAttribute>oppProducts</parentAttribute>
-					</filter>
-				</filterCriteria>
-				<recordAsRelated>true</recordAsRelated>
-				<tags>
-					<tag>PRIORITY_Prospecting</tag>
-				</tags>		
-			</relatedItem>
-			<!-- Solution Whitepaper -->
-			<relatedItem qualifiedId="whitepaper">
-				<filterCriteria>
-					<filter>
-						<attributeId>solutions</attributeId>
+						<attributeId>identity</attributeId>
 						<parentAttribute>oppSolutions</parentAttribute>
 					</filter>
 				</filterCriteria>
 				<recordAsRelated>true</recordAsRelated>
 				<tags>
-					<tag>PRIORITY_Prospecting</tag>
 					<tag>SOLN_DOC</tag>
-				</tags>		
+				</tags>
+				<!-- Product datasheet is correlated for qualification stage -->
+				<relatedItems>				
+					<relatedItem qualifiedId="product.dataSheet">
+						<filterCriteria>
+							<filter>
+								<attributeId>__associations.parent.recordIdentity</attributeId>
+								<parentAttribute>products</parentAttribute>
+							</filter>
+						</filterCriteria>
+						<recordAsRelated>true</recordAsRelated>
+						<tags>
+							<tag>PRIORITY_Qualification</tag>
+						</tags>
+					</relatedItem>
+				</relatedItems>				
 			</relatedItem>
-			<!-- Competitor Whitepaper -->
-			<relatedItem qualifiedId="whitepaper">
+			<!-- Solution Overview is correlated for qualification stage -->				
+			<relatedItem qualifiedId="solution.solOverview">
 				<filterCriteria>
 					<filter>
-						<attributeId>competitors</attributeId>
-						<parentAttribute>oppCompetitors</parentAttribute>
+						<attributeId>__associations.parent.recordIdentity</attributeId>
+						<parentAttribute>oppSolutions</parentAttribute>
 					</filter>
 				</filterCriteria>
 				<recordAsRelated>true</recordAsRelated>
 				<tags>
-					<tag>PRIORITY_Prospecting</tag>
-					<tag>COMP_DOC</tag>
-				</tags>		
-			</relatedItem>
-			<!-- Solution Discovery Questions -->
+					<tag>PRIORITY_Qualification</tag>
+					<tag>SOLN_DOC</tag>
+				</tags>
+			</relatedItem>	
+			<!-- Discovery Questions are correlated for qualification stage -->				
 			<relatedItem qualifiedId="discoveryQuestion">
 				<filterCriteria>
 					<filter>
@@ -69,78 +57,134 @@
 				<recordAsRelated>true</recordAsRelated>
 				<tags>
 					<tag>PRIORITY_Qualification</tag>
-				</tags>		
-			</relatedItem>
-			<!-- Competitor Discovery Questions -->
-			<relatedItem qualifiedId="discoveryQuestion">
-				<filterCriteria>
-					<filter>
-						<attributeId>competitors</attributeId>
-						<parentAttribute>oppCompetitors</parentAttribute>
-					</filter>
-				</filterCriteria>
-				<recordAsRelated>true</recordAsRelated>
-				<tags>
-					<tag>PRIORITY_Qualification</tag>
-				</tags>		
-			</relatedItem>
-			<!-- Solution Battle Card -->
-			<relatedItem qualifiedId="battlecard">
-				<filterCriteria>
-					<filter>
-						<attributeId>solutions</attributeId>
-						<parentAttribute>oppSolutions</parentAttribute>
-					</filter>
-				</filterCriteria>
-				<recordAsRelated>true</recordAsRelated>
-				<tags>
-					<tag>PRIORITY_Qualification</tag>
-				</tags>		
-			</relatedItem>
-			<!-- Solution Case Study -->
-			<relatedItem qualifiedId="caseStudy">
-				<filterCriteria>
-					<filter>
-						<attributeId>solutions</attributeId>
-						<parentAttribute>oppSolutions</parentAttribute>
-					</filter>
-				</filterCriteria>
-				<recordAsRelated>true</recordAsRelated>
-				<tags>
-					<tag>PRIORITY_Qualification</tag>
-					<tag>PRIORITY_Value Proposition</tag>
 					<tag>SOLN_DOC</tag>
-				</tags>		
-			</relatedItem>
-			<!-- Competitor Case Study -->
-			<relatedItem qualifiedId="caseStudy">
+				</tags>
+			</relatedItem>					
+			<!-- Executive Summary is correlated for proposal stage -->				
+			<relatedItem qualifiedId="execSummary">
 				<filterCriteria>
 					<filter>
-						<attributeId>competitors</attributeId>
-						<parentAttribute>oppCompetitors</parentAttribute>
+						<attributeId>solutions</attributeId>
+						<parentAttribute>oppSolutions</parentAttribute>
 					</filter>
 				</filterCriteria>
 				<recordAsRelated>true</recordAsRelated>
 				<tags>
-					<tag>PRIORITY_Qualification</tag>
-					<tag>PRIORITY_Value Proposition</tag>
-					<tag>COMP_DOC</tag>
-				</tags>		
-			</relatedItem>
-			<!-- Opportunity Sales Deck -->
+					<tag>PRIORITY_Proposal</tag>
+					<tag>SOLN_DOC</tag>
+				</tags>
+			</relatedItem>	
+			<!-- Proposal is correlated for proposal stage based on solution and competitor-->				
+			<relatedItem qualifiedId="proposal">
+				<filterCriteria>
+					<filter>
+						<attributeId>solutions</attributeId>
+						<parentAttribute>oppSolutions</parentAttribute>
+					</filter>
+					<filter>
+						<attributeId>competitors</attributeId>
+						<parentAttribute>oppCompetitors</parentAttribute>
+					</filter>					
+				</filterCriteria>
+				<recordAsRelated>true</recordAsRelated>
+				<tags>
+					<tag>PRIORITY_Proposal</tag>
+				</tags>
+			</relatedItem>									
+			<!-- Sales Deck is correlated for value proposition stage -->				
 			<relatedItem qualifiedId="salesDeck">
 				<filterCriteria>
 					<filter>
-						<attributeId>opportunities</attributeId>
-						<parentAttribute>identity</parentAttribute>
+						<attributeId>solutions</attributeId>
+						<parentAttribute>oppSolutions</parentAttribute>
 					</filter>
 				</filterCriteria>
 				<recordAsRelated>true</recordAsRelated>
 				<tags>
 					<tag>PRIORITY_Value Proposition</tag>
-				</tags>		
-			</relatedItem>
-			<!-- Competitor SWOT -->
+					<tag>SOLN_DOC</tag>
+				</tags>
+			</relatedItem>	
+			<!-- Case Study is correlated for value proposition stage based on solution and competitor -->				
+			<relatedItem qualifiedId="caseStudy">
+				<filterCriteria>
+					<filter>
+						<attributeId>solutions</attributeId>
+						<parentAttribute>oppSolutions</parentAttribute>
+					</filter>
+					<filter>
+						<attributeId>competitors</attributeId>
+						<parentAttribute>oppCompetitors</parentAttribute>
+					</filter>					
+				</filterCriteria>
+				<recordAsRelated>true</recordAsRelated>
+				<tags>
+					<tag>PRIORITY_Value Proposition</tag>
+					<tag>SOLN_DOC</tag>
+					<tag>COMP_DOC</tag>					
+				</tags>
+			</relatedItem>	
+			<!-- Win Loss Analysis is correlated for value proposition stage based on solution and competitor -->				
+			<relatedItem qualifiedId="winloss">
+				<filterCriteria>
+					<filter>
+						<attributeId>solutions</attributeId>
+						<parentAttribute>oppSolutions</parentAttribute>
+					</filter>
+					<filter>
+						<attributeId>competitors</attributeId>
+						<parentAttribute>oppCompetitors</parentAttribute>
+					</filter>					
+				</filterCriteria>
+				<recordAsRelated>true</recordAsRelated>
+				<tags>
+					<tag>PRIORITY_Value Proposition</tag>
+					<tag>PRIORITY_Negotiation</tag>
+					<tag>COMP_DOC</tag>					
+				</tags>
+			</relatedItem>		
+			<!-- Solution Documents in addition to the one already tagged -->
+			<!-- Blogs that are correlated to the solution -->				
+			<relatedItem qualifiedId="blog">
+				<filterCriteria>
+					<filter>
+						<attributeId>solutions</attributeId>
+						<parentAttribute>oppSolutions</parentAttribute>
+					</filter>
+				</filterCriteria>
+				<recordAsRelated>true</recordAsRelated>
+				<tags>
+					<tag>SOLN_DOC</tag>
+				</tags>
+			</relatedItem>				
+			<!-- Whitepapers that are correlated to the solution -->				
+			<relatedItem qualifiedId="whitepaper">
+				<filterCriteria>
+					<filter>
+						<attributeId>solutions</attributeId>
+						<parentAttribute>oppSolutions</parentAttribute>
+					</filter>
+				</filterCriteria>
+				<recordAsRelated>true</recordAsRelated>
+				<tags>
+					<tag>SOLN_DOC</tag>
+				</tags>
+			</relatedItem>	
+			<!-- Competitor documents in addition to the one already tagged -->
+			<!-- Competitor link -->
+			<relatedItem qualifiedId="competitor">
+				<filterCriteria>
+					<filter>
+						<attributeId>identity</attributeId>
+						<parentAttribute>oppCompetitors</parentAttribute>
+					</filter>
+				</filterCriteria>
+				<recordAsRelated>true</recordAsRelated>
+				<tags>
+					<tag>COMP_DOC</tag>
+				</tags>			
+			</relatedItem>	
+			<!-- Competitor SWOT -->								
 			<relatedItem qualifiedId="competitor.compswot">
 				<filterCriteria>
 					<filter>
@@ -150,25 +194,10 @@
 				</filterCriteria>
 				<recordAsRelated>true</recordAsRelated>
 				<tags>
-					<tag>PRIORITY_Value Proposition</tag>
 					<tag>COMP_DOC</tag>
-				</tags>		
+				</tags>
 			</relatedItem>
-			<!-- Solution Analyst Report -->
-			<relatedItem qualifiedId="analyst.report">
-				<filterCriteria>
-					<filter>
-						<attributeId>solutions</attributeId>
-						<parentAttribute>oppSolutions</parentAttribute>
-					</filter>
-				</filterCriteria>
-				<recordAsRelated>true</recordAsRelated>
-				<tags>
-					<tag>PRIORITY_Value Proposition</tag>
-					<tag>COMP_DOC</tag>
-				</tags>		
-			</relatedItem>
-			<!-- Competitor Analyst Report -->
+			<!-- Analyst Reports based on competitor -->											
 			<relatedItem qualifiedId="analyst.report">
 				<filterCriteria>
 					<filter>
@@ -178,28 +207,30 @@
 				</filterCriteria>
 				<recordAsRelated>true</recordAsRelated>
 				<tags>
-					<tag>PRIORITY_Value Proposition</tag>
-				</tags>		
-			</relatedItem>
+					<tag>COMP_DOC</tag>
+				</tags>
+			</relatedItem>			
+			<!-- Process documents based on stages -->			
 			<!-- NDA -->
 			<relatedItem qualifiedId="nda">
 				<recordAsRelated>true</recordAsRelated>
 				<tags>
-					<tag>PROCESS_Prospecting</tag>
+					<tag>PROCESS_Qualification</tag>
+					<tag>PROCESS_Value Proposition</tag>					
 				</tags>		
 			</relatedItem>
 			<!-- Pricing Template -->
 			<relatedItem qualifiedId="pricingtemplate">
 				<recordAsRelated>true</recordAsRelated>
 				<tags>
-					<tag>PROCESS_Qualification</tag>
+					<tag>PROCESS_Negotiations</tag>
+					<tag>PROCESS_Proposal</tag>					
 				</tags>		
 			</relatedItem>
 			<!-- PPT Template -->
 			<relatedItem qualifiedId="ppttemplate">
 				<recordAsRelated>true</recordAsRelated>
 				<tags>
-					<tag>PROCESS_Qualification</tag>
 					<tag>PROCESS_Value Proposition</tag>
 				</tags>		
 			</relatedItem>
@@ -208,71 +239,14 @@
 				<recordAsRelated>true</recordAsRelated>
 				<tags>
 					<tag>PROCESS_Value Proposition</tag>
+					<tag>PROCESS_Negotiations</tag>										
 				</tags>		
 			</relatedItem>
-			<!-- Solution Datasheet -->
-			<relatedItem qualifiedId="solution.solutionSheet">
-				<filterCriteria>
-					<filter>
-						<attributeId>__associations.parent.recordIdentity</attributeId>
-						<parentAttribute>oppSolutions</parentAttribute>
-					</filter>
-				</filterCriteria>
+			<!-- SOW -->
+			<relatedItem qualifiedId="sow">
 				<recordAsRelated>true</recordAsRelated>
 				<tags>
-					<tag>SOLN_DOC</tag>
-				</tags>		
-			</relatedItem>
-			<!-- Solution Sales Deck -->
-			<relatedItem qualifiedId="salesDeck">
-				<filterCriteria>
-					<filter>
-						<attributeId>solutions</attributeId>
-						<parentAttribute>oppSolutions</parentAttribute>
-					</filter>
-				</filterCriteria>
-				<recordAsRelated>true</recordAsRelated>
-				<tags>
-					<tag>SOLN_DOC</tag>
-				</tags>		
-			</relatedItem>
-			<!-- Competitor Opportunities -->
-			<relatedItem qualifiedId="customer.opportunity">
-				<filterCriteria>
-					<filter>
-						<attributeId>oppCompetitors</attributeId>
-						<parentAttribute>oppCompetitors</parentAttribute>
-					</filter>
-				</filterCriteria>
-				<recordAsRelated>true</recordAsRelated>
-				<tags>
-					<tag>COMP_DOC</tag>
-				</tags>		
-			</relatedItem>
-			<!-- Competitor Blogs -->
-			<relatedItem qualifiedId="blog">
-				<filterCriteria>
-					<filter>
-						<attributeId>competitors</attributeId>
-						<parentAttribute>oppCompetitors</parentAttribute>
-					</filter>
-				</filterCriteria>
-				<recordAsRelated>true</recordAsRelated>
-				<tags>
-					<tag>COMP_DOC</tag>
-				</tags>		
-			</relatedItem>
-			<!-- Competitor New Item -->
-			<relatedItem qualifiedId="article">
-				<filterCriteria>
-					<filter>
-						<attributeId>competitors</attributeId>
-						<parentAttribute>oppCompetitors</parentAttribute>
-					</filter>
-				</filterCriteria>
-				<recordAsRelated>true</recordAsRelated>
-				<tags>
-					<tag>COMP_DOC</tag>
+					<tag>PROCESS_Negotiations</tag>										
 				</tags>		
 			</relatedItem>
 		</relatedItems>

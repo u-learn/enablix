@@ -76,17 +76,15 @@
 					</refList>
 				</bounded>
 			</contentItem>
-			<container id="solutionSheet" label="Solution Sheet" single="true">
-				<contentItem id="file" label="File" type="doc"/>
-				<contentItem id="url" label="URL" type="text"/>
-			</container>
 			<container id="solOverview" label="Solution Overview" single="true">
+				<contentItem id="title" label="Title" type="text" searchBoost="7"/>		
 				<contentItem id="file" label="File" type="doc"/>
 				<contentItem id="summary" label="Summary" type="text"/>
 			</container>
 			<container id="solBattleCard" label="Battle Cards" linkContainerQId="battlecard" linkContentItemId="solutions"/>
 			<container id="solCaseStudy" label="Case Studies" linkContainerQId="caseStudy" linkContentItemId="solutions"/>
 			<container id="solDiscQuestions" label="Discovery Questions" linkContainerQId="discoveryQuestion" linkContentItemId="solutions"/>
+			<container id="solExecSummary" label="Executive Summary" linkContainerQId="execSummary" linkContentItemId="solutions"/>			
 			<container id="solFAQ" label="FAQ" linkContainerQId="faq" linkContentItemId="solutions"/>
 			<container id="solFeatureSheet" label="Feature Sheets" linkContainerQId="featureSheet" linkContentItemId="solutions"/>
 			<container id="solImpSlide" label="Important Slides" linkContainerQId="importantslide" linkContentItemId="solutions"/>
@@ -1013,8 +1011,9 @@
 			</contentItem>			
 		</container>
 		<container id="discoveryQuestion" label="Discovery Questions">
-			<contentItem id="question" label="Question" type="text"/>
-			<contentItem id="significance" label="Significance" type="text"/>
+			<contentItem id="title" label="Title" type="text"/>
+			<contentItem id="file" label="File" type="doc"/>
+			<contentItem id="desc" label="Description" type="text"/>			
 			<contentItem id="solutions" label="Solutions" type="bounded">
 				<bounded multivalued="true">
 					<refList>
@@ -1059,7 +1058,7 @@
 					</refList>
 				</bounded>
 			</contentItem>
-		</container>
+		</container>		
 		<container id="featureSheet" label="Feature Sheets">
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="file" label="File" type="doc"/>
@@ -2018,6 +2017,17 @@
 		<container id="execSummary" label="Executive Summary">
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="file" label="File" type="doc"/>
+			<contentItem id="solutions" label="Solutions" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>solution</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>			
 			<contentItem id="proposals" label="Proposal" type="bounded">
 				<bounded>
 					<refList>
@@ -2375,9 +2385,21 @@
 		<contentUIDef qualifiedId="customer.implProject.highlights">
 			<text type="long"/>
 		</contentUIDef>		
-		
 		<contentUIDef qualifiedId="solution">
 			<container labelQualifiedId="solution.shortName"/>
+		</contentUIDef>
+		<contentUIDef qualifiedId="solution.solOverview">
+			<container labelQualifiedId="solution.solOverview.title">
+				<listViewConfig>
+					<hideContentItem id="summary"/>
+				</listViewConfig>
+				<portalConfig>
+					<headingContentItem id="title"/>
+				</portalConfig>
+			</container>
+		</contentUIDef>
+		<contentUIDef qualifiedId="solution.solOverview.summary">
+			<text type="long"/>
 		</contentUIDef>
 		<contentUIDef qualifiedId="product">
 			<container labelQualifiedId="product.shortName"/>
@@ -2539,16 +2561,16 @@
 			<text type="long"/>
 		</contentUIDef>
 		<contentUIDef qualifiedId="discoveryQuestion">
-			<container labelQualifiedId="discoveryQuestion.question">
+			<container labelQualifiedId="discoveryQuestion.title">
 				<listViewConfig>
-					<hideContentItem id="significance"/>
+					<hideContentItem id="desc"/>
 				</listViewConfig>
 				<portalConfig>
-					<headingContentItem id="question"/>
+					<headingContentItem id="title"/>
 				</portalConfig>
 			</container>
 		</contentUIDef>
-		<contentUIDef qualifiedId="discoveryQuestion.significance">
+		<contentUIDef qualifiedId="discoveryQuestion.desc">
 			<text type="long"/>
 		</contentUIDef>
 		<contentUIDef qualifiedId="faq">
