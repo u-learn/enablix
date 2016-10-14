@@ -2,8 +2,8 @@ package com.enablix.app.content.label;
 
 import java.util.Map;
 
-import com.enablix.app.content.ContentDataUtil;
 import com.enablix.core.commons.xsdtopojo.ContentTemplate;
+import com.enablix.services.util.ContentDataUtil;
 
 public class DefaultContentLabelResolver implements ContentLabelResolver {
 

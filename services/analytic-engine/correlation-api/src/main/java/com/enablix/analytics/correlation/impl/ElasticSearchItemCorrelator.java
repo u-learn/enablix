@@ -12,12 +12,12 @@ import com.enablix.analytics.correlation.ItemItemCorrelator;
 import com.enablix.analytics.correlation.matcher.DataMatcher;
 import com.enablix.analytics.correlation.matcher.MatchInputRecord;
 import com.enablix.analytics.correlation.rule.ItemCorrelationRuleManager;
-import com.enablix.app.content.ContentDataUtil;
 import com.enablix.core.api.ContentDataRef;
 import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 import com.enablix.core.commons.xsdtopojo.ItemCorrelationRuleType;
 import com.enablix.core.commons.xsdtopojo.RelatedItemType;
 import com.enablix.core.commons.xsdtopojo.RelatedItemsType;
+import com.enablix.services.util.ContentDataUtil;
 
 @Component
 public class ElasticSearchItemCorrelator implements ItemItemCorrelator {
@@ -86,7 +86,7 @@ public class ElasticSearchItemCorrelator implements ItemItemCorrelator {
 			if (relatedItemDef.isRecordAsRelated()) {
 				
 				ContentDataRef relatedItem = ContentDataUtil.contentDataToRef(
-						match, template.getId(), relatedItemDef.getQualifiedId());
+						match, template, relatedItemDef.getQualifiedId());
 				
 				itemCorrRecorder.recordItemCorrelation(triggerItem, relatedItem, corrRule, relatedItemDef.getTags());
 			}

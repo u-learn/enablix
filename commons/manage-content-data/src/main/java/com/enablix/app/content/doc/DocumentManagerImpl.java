@@ -33,31 +33,39 @@ public class DocumentManagerImpl implements DocumentManager {
 	public DocumentMetadata saveUsingParentInfo(Document<?> doc, String docContainerQId, 
 			String docContainerParentInstanceIdentity) throws IOException {
 		
+		String contentPath = createContentPathUsingParentInfo(docContainerQId, docContainerParentInstanceIdentity);
+		return save(doc, contentPath);
+	}
+
+	private String createContentPathUsingParentInfo(String docContainerQId, String docContainerParentInstanceIdentity) {
 		String contentDataPath = pathResolver.resolveContentDataPath(
 				ProcessContext.get().getTemplateId(), 
 				QIdUtil.getParentQId(docContainerQId), 
-				docContainerParentInstanceIdentity);
+				docContainerParentInstanceIdentity, null);
 		
 		contentDataPath = pathResolver.addContainerLabelToPath(
 				ProcessContext.get().getTemplateId(), 
 				docContainerQId, contentDataPath);
-		
-		return save(doc, contentDataPath);
+		return contentDataPath;
 	}
 
 	@Override
 	public DocumentMetadata saveUsingContainerInfo(Document<?> doc, String docContainerQId, 
 			String docContainerInstanceIdentity) throws IOException {
 		
+		String contentPath = createContentPathUsingContainerInfo(docContainerQId, docContainerInstanceIdentity);
+		return save(doc, contentPath);
+	}
+
+	private String createContentPathUsingContainerInfo(String docContainerQId, String docContainerInstanceIdentity) {
 		String contentDataPath = pathResolver.resolveContentParentDataPath(
 				ProcessContext.get().getTemplateId(), 
-				docContainerQId, docContainerInstanceIdentity);
+				docContainerQId, docContainerInstanceIdentity, null);
 		
 		contentDataPath = pathResolver.addContainerLabelToPath(
 				ProcessContext.get().getTemplateId(), 
 				docContainerQId, contentDataPath);
-		
-		return save(doc, contentDataPath);
+		return contentDataPath;
 	}
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
@@ -111,6 +119,53 @@ public class DocumentManagerImpl implements DocumentManager {
 		
 		DocumentStore ds = storeFactory.getDocumentStore(storeType);
 		return ds.getDocumentBuilder().build(dataStream, name, contentType, contentQId, contentLength, docIdentity);
+	}
+
+	@Override
+	public DocumentMetadata attachUsingContainerInfo(DocumentMetadata docMd, String docContainerQId,
+			String docContainerInstanceIdentity) throws IOException {
+		
+		String contentPath = createContentPathUsingContainerInfo(docContainerQId, docContainerInstanceIdentity);
+		return move(docMd, contentPath);
+	}
+
+	@Override
+	public DocumentMetadata attachUsingParentInfo(DocumentMetadata docMd, String docContainerQId,
+			String docContainerParentInstanceIdentity) throws IOException {
+		
+		String contentPath = createContentPathUsingParentInfo(docContainerQId, docContainerParentInstanceIdentity);
+		return move(docMd, contentPath);
+	}
+	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	protected DocumentMetadata move(DocumentMetadata docMd, String toContentPath) throws IOException {
+		
+		DocumentStore ds = storeFactory.getDocumentStore(docMd);
+		
+		DocumentMetadata docMD = ds.move(docMd, toContentPath);
+		
+		docMD = docRepo.save(docMD);
+		
+		return docMD;
+	}
+	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@Override
+	public DocumentMetadata delete(DocumentMetadata docMd) throws IOException {
+		
+		DocumentStore ds = storeFactory.getDocumentStore(docMd);
+		
+		ds.delete(docMd);
+		
+		docMd.setDeleted(true);
+		docMd = docRepo.save(docMd);
+		
+		return docMd;
+	}
+	
+	@Override
+	public DocumentMetadata getDocumentMetadata(String docIdentity) {
+		return docRepo.findByIdentity(docIdentity);
 	}
 
 }

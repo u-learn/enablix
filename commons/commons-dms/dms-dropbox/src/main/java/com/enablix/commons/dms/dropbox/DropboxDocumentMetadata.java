@@ -13,6 +13,11 @@ public class DropboxDocumentMetadata extends DocumentMetadata {
 		super(null, null, null);
 	}
 	
+	protected DropboxDocumentMetadata(String docName, String contentType) {
+		this(null, docName, contentType, null);
+		setIdentity(IdentityUtil.generateIdentity(this));
+	}
+	
 	protected DropboxDocumentMetadata(String docName, String contentType, 
 			String contentQId) {
 		this(null, docName, contentType, contentQId);

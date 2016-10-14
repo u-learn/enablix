@@ -5,7 +5,6 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.enablix.app.content.ContentDataUtil;
 import com.enablix.app.content.label.ContentLabelResolver;
 import com.enablix.app.template.service.TemplateManager;
 import com.enablix.commons.constants.ContentDataConstants;
@@ -13,6 +12,7 @@ import com.enablix.commons.util.QIdUtil;
 import com.enablix.core.api.ContentDataRef;
 import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 import com.enablix.core.mongo.content.ContentCrudService;
+import com.enablix.services.util.ContentDataUtil;
 import com.enablix.services.util.TemplateUtil;
 
 @Component

@@ -6,7 +6,7 @@
 	</div> 
 	<div class="cont" ng-if="bodyData.length != 0">
 		<div ng-repeat="dataItem in bodyData" class = "dataItem">
-			<h4><a ng-click="toggleContainerItem($event, dataItem.containerId + $index, dataItem.containerQId, dataItem.identity)" class="toggle">{{dataItem.headingLabel}}</a>
+			<h4><a ng-click="toggleContainerItem($event, dataItem.containerId + $index, dataItem)" class="toggle">{{dataItem.headingLabel}}</a>
 			    <a ng-if="dataItem.hasSubContainers" ng-click="navToItemDetail(dataItem.containerQId, dataItem.identity)" class="detail fa fa-external-link"></a>
 			    <div class="action-icons">
 			    	<span ng-if="dataItem.downloadDocIdentity">

@@ -24,8 +24,12 @@ public abstract class BaseDocumentEntity extends BaseEntity {
 	@CreatedBy
 	protected String createdBy;
 	
+	protected String createdByName;
+	
 	@LastModifiedBy
 	protected String modifiedBy;
+	
+	protected String modifiedByName;
 
 	public String getId() {
 		return id;
@@ -67,6 +71,22 @@ public abstract class BaseDocumentEntity extends BaseEntity {
 		this.modifiedBy = modifiedBy;
 	}
 	
+	public String getCreatedByName() {
+		return createdByName;
+	}
+
+	public void setCreatedByName(String createdByName) {
+		this.createdByName = createdByName;
+	}
+
+	public String getModifiedByName() {
+		return modifiedByName;
+	}
+
+	public void setModifiedByName(String modifiedByName) {
+		this.modifiedByName = modifiedByName;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

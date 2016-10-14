@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import com.enablix.commons.dms.api.DocumentBuilder;
 import com.enablix.commons.dms.api.DocumentMetadata;
 import com.enablix.commons.dms.repository.DocumentMetadataRepository;
+import com.enablix.commons.util.StringUtil;
 
 @Component
 public class WebDAVDocumentBuilder implements DocumentBuilder<WebDAVDocumentMetadata, WebDAVDocument> {
@@ -19,13 +20,17 @@ public class WebDAVDocumentBuilder implements DocumentBuilder<WebDAVDocumentMeta
 	public WebDAVDocument build(InputStream dataStream, String name, String contentType, String contentQId,
 			long contentLength, String docIdentity) {
 		
-		DocumentMetadata existMd = metadataRepo.findByIdentity(docIdentity);
 		WebDAVDocumentMetadata dbxMd = null;
 		
-		if (existMd != null && existMd instanceof WebDAVDocumentMetadata) {
-			dbxMd = (WebDAVDocumentMetadata) existMd;
-			if (!dbxMd.getName().equals(name)) {
-				dbxMd = null;
+		if (!StringUtil.isEmpty(docIdentity)) {
+
+			DocumentMetadata existMd = metadataRepo.findByIdentity(docIdentity);
+			
+			if (existMd != null && existMd instanceof WebDAVDocumentMetadata) {
+				dbxMd = (WebDAVDocumentMetadata) existMd;
+				if (!dbxMd.getName().equals(name)) {
+					dbxMd = null;
+				}
 			}
 		}
 		

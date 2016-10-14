@@ -1,8 +1,12 @@
 package com.enablix.commons.dms.disk;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -95,6 +99,39 @@ public class DiskDocumentStore implements DocumentStore<DiskDocumentMetadata, Di
 	@Override
 	public DocumentBuilder<DiskDocumentMetadata, DiskDocument> getDocumentBuilder() {
 		return docBuilder;
+	}
+
+	@Override
+	public DiskDocumentMetadata move(DiskDocumentMetadata docMetadata, String newContentPath) throws IOException {
+		
+		String existLoc = docMetadata.getLocation();
+		String newLoc = locationResolver.getDocumentStoragePath(docMetadata, newContentPath);
+		
+		File existFile = new File(existLoc);
+		if (!existFile.exists()) {
+			throw new FileNotFoundException("File [" + existLoc + "] does not exist");
+		}
+		
+		// archive if the file already exist
+		File newFile = new File(newLoc);
+		if (newFile.exists()) {
+			archiveService.archiveDocument(docMetadata);
+		}
+		
+		// move the file
+		Files.move(FileSystems.getDefault().getPath(existLoc), 
+				   FileSystems.getDefault().getPath(newLoc), 
+				   StandardCopyOption.ATOMIC_MOVE);
+		
+		// update document metadata with new location
+		docMetadata.setLocation(newLoc);
+		
+		return docMetadata;
+	}
+
+	@Override
+	public void delete(DiskDocumentMetadata docMetadata) throws IOException {
+		archiveService.archiveDocument(docMetadata);
 	}
 
 }

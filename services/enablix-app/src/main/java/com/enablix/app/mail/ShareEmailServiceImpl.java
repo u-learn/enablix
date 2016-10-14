@@ -56,7 +56,7 @@ public class ShareEmailServiceImpl implements ShareEmailService {
 		
 		Map<String, Object> record = contentDataMgr.getContentRecord(
 					new ContentDataRef(templateId, data.getContainerQId(), 
-							data.getContentIdentity()), template);
+							data.getContentIdentity(), null), template);
 		
 		ContentDataRecord dataRecord = new ContentDataRecord(templateId, data.getContainerQId(), record);
 		
@@ -73,7 +73,7 @@ public class ShareEmailServiceImpl implements ShareEmailService {
 		
 		// Audit content sharing
 		ActivityLogger.auditContentShare(templateId, displayableContent, data.getEmailId(),
-				ShareMedium.WEB, Channel.EMAIL, mailInput.getIdentity());
+				ShareMedium.WEB, Channel.EMAIL, mailInput.getIdentity(), displayableContent.getTitle());
 		
 		return emailSent;
 		

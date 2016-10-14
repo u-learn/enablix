@@ -60,7 +60,7 @@ public class MailScheduler {
 					 */
 
 					String templateId = tenantRepo.findByTenantId(user.getTenantId()).getDefaultTemplateId();
-					ProcessContext.initialize(user.getUserId(), user.getTenantId(), templateId);
+					ProcessContext.initialize(user.getUserId(), user.getDisplayName(), user.getTenantId(), templateId);
 					
 					WeeklyDigestVelocityInput input = weeklyDigestScenarioInputBuilder.build();
 					if (!input.getRecentList().get("RecentlyUpdated").isEmpty()) {
@@ -87,12 +87,13 @@ public class MailScheduler {
 		
 		for (List<NavigableContent> contentList : sharedContent.getRecentList().values()) {
 			for (NavigableContent content : contentList) {
-				sharedContentList.add(new ContentDataRef(templateId, content.getQualifiedId(), content.getIdentity()));
+				sharedContentList.add(new ContentDataRef(templateId, content.getQualifiedId(), 
+						content.getIdentity(), content.getLabel()));
 			}
 		}
 		
 		ActivityLogger.auditContentShare(templateId, sharedContentList, ShareMedium.WEEKLY_DIGEST, 
-				Channel.EMAIL, sharedContent.getIdentity(), sharedWithEmailId);
+				Channel.EMAIL, sharedContent.getIdentity(), sharedWithEmailId, null);
 	}
 
 }

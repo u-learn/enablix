@@ -16,7 +16,8 @@ public class TenantSpecificFileBasedDataLoader extends FileBasedDataLoader {
 
 		String tenantId = resolveTenantIdFromFile(dataFile);
 
-		ProcessContext.initialize(AppConstants.SYSTEM_USER_ID, tenantId, null);
+		ProcessContext.initialize(AppConstants.SYSTEM_USER_ID, 
+				AppConstants.SYSTEM_USER_NAME, tenantId, null);
 		
 		try {
 			

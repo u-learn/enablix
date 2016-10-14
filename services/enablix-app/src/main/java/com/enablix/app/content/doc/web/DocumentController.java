@@ -225,17 +225,19 @@ public class DocumentController {
         
 		if (channel != null) {
         
-			String userId = ProcessContext.get().getUserId();
+			ProcessContext pc = ProcessContext.get();
+			String userId = pc.getUserId();
 			Actor actor = null;
         	
         	if (SecurityUtil.isGuestUserLogIn()) {
-        		actor = new NonRegisteredActor(userId);
+        		actor = new NonRegisteredActor(userId, pc.getUserDisplayName());
         	} else {
-        		actor = new RegisteredActor(userId);
+        		actor = new RegisteredActor(userId, pc.getUserDisplayName());
         	}
         	
         	ActivityLogger.auditDocActivity(activityType, doc.getMetadata().getContentQId(), 
-        			null, docIdentity, channel, actor, contextName, contextId, contextTerm);
+        			null, docIdentity, channel, actor, contextName, contextId, contextTerm, 
+        			doc.getMetadata().getName());
         }
 	}
 	

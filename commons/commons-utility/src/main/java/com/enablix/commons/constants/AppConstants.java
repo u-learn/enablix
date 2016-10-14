@@ -10,6 +10,7 @@ public class AppConstants {
 
 	public static final String ITEM_USER_CORR_COLL_NAME = "ebx_item_user_correlation";
 	public static final String SYSTEM_USER_ID = "system";
+	public static final String SYSTEM_USER_NAME = "System";
 	
 	public static final String GUEST_USER_IDENTITY = "~guest~";
 	public static final int DEFAULT_PAGE_SIZE = 10;

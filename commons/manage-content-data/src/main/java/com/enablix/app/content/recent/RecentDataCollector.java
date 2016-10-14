@@ -7,10 +7,13 @@ import com.enablix.app.content.event.ContentDataDelEvent;
 import com.enablix.app.content.event.ContentDataEventListener;
 import com.enablix.app.content.event.ContentDataSaveEvent;
 import com.enablix.app.content.recent.repo.RecentDataRepository;
+import com.enablix.app.template.service.TemplateManager;
 import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.core.api.ContentDataRef;
+import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 import com.enablix.core.domain.recent.RecentData;
 import com.enablix.core.domain.recent.RecentData.UpdateType;
+import com.enablix.services.util.ContentDataUtil;
 import com.enablix.core.domain.recent.RecentDataScope;
 
 @Component
@@ -18,6 +21,9 @@ public class RecentDataCollector implements ContentDataEventListener {
 
 	@Autowired
 	private RecentDataRepository recentDataRepo;
+	
+	@Autowired
+	private TemplateManager templateMgr;
 	
 	@Override
 	public void onContentDataSave(ContentDataSaveEvent event) {
@@ -51,8 +57,12 @@ public class RecentDataCollector implements ContentDataEventListener {
 	private void createNewRecord(ContentDataSaveEvent event, RecentData recentData, 
 			Object contentIdentity, UpdateType updateType) {
 		
+		ContentTemplate template = templateMgr.getTemplate(event.getTemplateId());
+		String contentQId = event.getContainerType().getQualifiedId();
+		String contentTitle = ContentDataUtil.findPortalLabelValue(event.getDataAsMap(), template, contentQId);
+		
 		ContentDataRef dataRef = new ContentDataRef(event.getTemplateId(), 
-				event.getContainerType().getQualifiedId(), String.valueOf(contentIdentity));
+				contentQId, String.valueOf(contentIdentity), contentTitle);
 		
 		// set data ref
 		recentData.setData(dataRef);

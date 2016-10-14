@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 import com.enablix.analytics.correlation.CorrelationConstants;
 import com.enablix.analytics.correlation.ItemUserCorrelator;
 import com.enablix.app.content.ContentDataManager;
-import com.enablix.app.content.ContentDataUtil;
 import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.commons.util.collection.CollectionUtil;
 import com.enablix.core.api.ContentDataRef;
@@ -18,6 +17,7 @@ import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 import com.enablix.core.mongo.content.ContentCrudService;
 import com.enablix.core.mongo.search.ConditionOperator;
 import com.enablix.core.mongo.search.StringFilter;
+import com.enablix.services.util.ContentDataUtil;
 import com.enablix.services.util.TemplateUtil;
 
 @Component
@@ -49,7 +49,7 @@ public class ContentCreatorCorrelator implements ItemUserCorrelator {
 		
 		if (CollectionUtil.isNotEmpty(userRecords)) {
 			Map<String, Object> user = userRecords.get(0);
-			ContentDataRef userRef = ContentDataUtil.contentDataToRef(user, template.getId(), userContainerQId);
+			ContentDataRef userRef = ContentDataUtil.contentDataToRef(user, template, userContainerQId);
 			
 			List<String> tags = new ArrayList<>();
 			tags.add(CorrelationConstants.CONTENT_CREATOR_ITEM_USER_CORR_TAG);

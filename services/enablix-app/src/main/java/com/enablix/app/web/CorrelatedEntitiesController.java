@@ -29,6 +29,7 @@ import com.enablix.core.mongo.content.ContentCrudService;
 import com.enablix.core.mongo.search.ConditionOperator;
 import com.enablix.core.mongo.search.StringFilter;
 import com.enablix.core.ui.DisplayableContent;
+import com.enablix.services.util.ContentDataUtil;
 import com.enablix.services.util.TemplateUtil;
 
 @RestController
@@ -65,21 +66,16 @@ public class CorrelatedEntitiesController {
 		ContentTemplate template = templateMgr.getTemplate(templateId);
 		
 		String instanceIdentity = null;
+		String contentTitle = null;
 		
-		if (attrId.equals(ContentDataConstants.IDENTITY_KEY)) {
-			
-			instanceIdentity = attrVal;
-			
-		} else {
-			
-			String collectionName = TemplateUtil.resolveCollectionName(template, contentQId);
-			StringFilter filter = new StringFilter(attrId, attrVal, ConditionOperator.EQ);
-			
-			List<Map<String, Object>> findRecords = contentCrud.findRecords(collectionName, filter);
-			
-			for (Map<String, Object> rec : findRecords) {
-				instanceIdentity = (String) rec.get(ContentDataConstants.IDENTITY_KEY);
-			}
+		String collectionName = TemplateUtil.resolveCollectionName(template, contentQId);
+		StringFilter filter = new StringFilter(attrId, attrVal, ConditionOperator.EQ);
+		
+		List<Map<String, Object>> findRecords = contentCrud.findRecords(collectionName, filter);
+		
+		for (Map<String, Object> rec : findRecords) {
+			instanceIdentity = (String) rec.get(ContentDataConstants.IDENTITY_KEY);
+			contentTitle = ContentDataUtil.findPortalLabelValue(rec, template, contentQId);
 		}
 		
 		List<String> filterTags = new ArrayList<>();
@@ -88,7 +84,7 @@ public class CorrelatedEntitiesController {
 			filterTags = Arrays.asList(tags);
 		}
 		
-		ContentDataRef triggerItem = new ContentDataRef(templateId, contentQId, instanceIdentity);
+		ContentDataRef triggerItem = new ContentDataRef(templateId, contentQId, instanceIdentity, contentTitle);
 		List<ContentDataRecord> correlatedEntities = itemCorrService.fetchCorrelatedEntityRecords(
 				template, triggerItem, new ArrayList<String>(), filterTags);
 		

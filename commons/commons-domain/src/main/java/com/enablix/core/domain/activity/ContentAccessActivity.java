@@ -12,14 +12,14 @@ public class ContentAccessActivity extends ContentActivity {
 		// for ORM
 	}
 	
-	public ContentAccessActivity(String itemIdentity, String containerQId, ContainerType containerType) {
-		this(itemIdentity, containerQId, containerType, null, null, null);
+	public ContentAccessActivity(String itemIdentity, String containerQId, ContainerType containerType, String itemTitle) {
+		this(itemIdentity, containerQId, containerType, null, null, null, itemTitle);
 	}
 
 	public ContentAccessActivity(String itemIdentity, String containerQId, ContainerType containerType,
-			String contextName, String contextId, String contextTerm) {
+			String contextName, String contextId, String contextTerm, String itemTitle) {
 
-		super(itemIdentity, containerQId, containerType, ContentActivityType.CONTENT_ACCESS);
+		super(itemIdentity, containerQId, containerType, ContentActivityType.CONTENT_ACCESS, itemTitle);
 		
 		this.contextName = contextName;
 		this.contextId = contextId;

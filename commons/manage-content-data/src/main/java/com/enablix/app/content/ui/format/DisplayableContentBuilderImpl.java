@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import com.enablix.app.content.ContentDataUtil;
 import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.commons.util.EnvPropertiesUtil;
 import com.enablix.core.api.ContentDataRecord;
@@ -17,6 +16,7 @@ import com.enablix.core.ui.DisplayField;
 import com.enablix.core.ui.DisplayableContent;
 import com.enablix.core.ui.DocRef;
 import com.enablix.core.ui.FieldValue;
+import com.enablix.services.util.ContentDataUtil;
 import com.enablix.services.util.TemplateUtil;
 
 @Component

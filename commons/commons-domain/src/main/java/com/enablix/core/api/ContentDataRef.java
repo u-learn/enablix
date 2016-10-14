@@ -7,16 +7,20 @@ public class ContentDataRef {
 	private String containerQId;
 	
 	private String instanceIdentity;
+	
+	private String title;
 
 	protected ContentDataRef() {
 		// for JSON conversions
 	}
 	
-	public ContentDataRef(String templateId, String containerQId, String instanceIdentity) {
+	public ContentDataRef(String templateId, String containerQId, 
+			String instanceIdentity, String title) {
 		super();
 		this.templateId = templateId;
 		this.containerQId = containerQId;
 		this.instanceIdentity = instanceIdentity;
+		this.title = title;
 	}
 
 	public String getTemplateId() {
@@ -41,6 +45,14 @@ public class ContentDataRef {
 
 	public void setInstanceIdentity(String instanceIdentity) {
 		this.instanceIdentity = instanceIdentity;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 	@Override

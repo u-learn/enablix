@@ -5,6 +5,7 @@
 			<contentItem id="name" label="Name" type="text" searchBoost="7"/>
 			<contentItem id="shortName" label="Short Name" type="text" searchBoost="7"/>
 			<container id="dataSheet" label="Data Sheet" single="true">
+				<contentItem id="title" label="Title" type="text"/>			
 				<contentItem id="file" label="File" type="doc"/>
 				<contentItem id="url" label="URL" type="text"/>
 			</container>
@@ -2403,6 +2404,19 @@
 		</contentUIDef>
 		<contentUIDef qualifiedId="product">
 			<container labelQualifiedId="product.shortName"/>
+		</contentUIDef>
+		<contentUIDef qualifiedId="product.dataSheet">
+			<container labelQualifiedId="product.dataSheet.title"/>
+		</contentUIDef>
+		<contentUIDef qualifiedId="product.dataSheet">
+			<container labelQualifiedId="product.dataSheet.title">
+				<listViewConfig>
+					<hideContentItem id="file"/>
+				</listViewConfig>
+				<portalConfig>
+					<headingContentItem id="title"/>
+				</portalConfig>
+			</container>
 		</contentUIDef>
 		<contentUIDef qualifiedId="product.productdocs">
 			<container labelQualifiedId="product.productdocs.title"/>

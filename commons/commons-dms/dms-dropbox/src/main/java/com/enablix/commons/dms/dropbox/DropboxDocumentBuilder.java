@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import com.enablix.commons.dms.api.DocumentBuilder;
 import com.enablix.commons.dms.api.DocumentMetadata;
 import com.enablix.commons.dms.repository.DocumentMetadataRepository;
+import com.enablix.commons.util.StringUtil;
 
 @Component
 public class DropboxDocumentBuilder implements DocumentBuilder<DropboxDocumentMetadata, DropboxDocument> {
@@ -19,13 +20,16 @@ public class DropboxDocumentBuilder implements DocumentBuilder<DropboxDocumentMe
 	public DropboxDocument build(InputStream dataStream, String name, 
 			String contentType, String contentQId, long contentLength, String docIdentity) {
 		
-		DocumentMetadata existMd = metadataRepo.findByIdentity(docIdentity);
 		DropboxDocumentMetadata dbxMd = null;
 		
-		if (existMd != null && existMd instanceof DropboxDocumentMetadata) {
-			dbxMd = (DropboxDocumentMetadata) existMd;
-			if (!dbxMd.getName().equals(name)) {
-				dbxMd = null;
+		if (!StringUtil.isEmpty(docIdentity)) {
+			DocumentMetadata existMd = metadataRepo.findByIdentity(docIdentity);
+		
+			if (existMd != null && existMd instanceof DropboxDocumentMetadata) {
+				dbxMd = (DropboxDocumentMetadata) existMd;
+				if (!dbxMd.getName().equals(name)) {
+					dbxMd = null;
+				}
 			}
 		}
 		

@@ -76,6 +76,7 @@ public class AuditInfoEnricher extends AbstractMongoEventListener<BaseEntity> im
 		
 		Date currDate = Calendar.getInstance().getTime();
 		String userId = ProcessContext.get().getUserId();
+		String username = ProcessContext.get().getUserDisplayName();
 		
 		Object obj = fieldSet.get(ContentDataConstants.CREATED_AT_KEY);
 		if (obj == null) {
@@ -90,11 +91,11 @@ public class AuditInfoEnricher extends AbstractMongoEventListener<BaseEntity> im
 
 		if (fieldSet.get(ContentDataConstants.CREATED_BY_KEY) == null) {
 			fieldSet.put(ContentDataConstants.CREATED_BY_KEY, userId);
+			fieldSet.put(ContentDataConstants.CREATED_BY_NAME_KEY, username);
 		}
 
-		if (fieldSet.get(ContentDataConstants.MODIFIED_BY_KEY) == null) {
-			fieldSet.put(ContentDataConstants.MODIFIED_BY_KEY, userId);
-		}
+		fieldSet.put(ContentDataConstants.MODIFIED_BY_KEY, userId);
+		fieldSet.put(ContentDataConstants.MODIFIED_BY_NAME_KEY, username);
 		
 		fieldSet.put(ContentDataConstants.MODIFIED_AT_KEY, currDate);
 		

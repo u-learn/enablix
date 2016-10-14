@@ -2,6 +2,7 @@ package com.enablix.app.content;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -30,6 +31,7 @@ import com.enablix.core.api.ContentDataRef;
 import com.enablix.core.commons.xsdtopojo.ContainerType;
 import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 import com.enablix.core.mongo.content.ContentCrudService;
+import com.enablix.services.util.ContentDataUtil;
 import com.enablix.services.util.TemplateUtil;
 
 @Component
@@ -120,10 +122,15 @@ public class ContentDataManagerImpl implements ContentDataManager {
 		String collName = TemplateUtil.resolveCollectionName(template, contentQId);
 		
 		if (TemplateUtil.hasOwnCollection(template, contentQId)) {
-			crud.deleteRecord(collName, request.getRecordIdentity());
-			ContainerType containerType = TemplateUtil.findContainer(template.getDataDefinition(), contentQId);
-			publishContentDeleteEvent(new ContentDataDelEvent(request.getTemplateId(), 
-					request.getContentQId(), request.getRecordIdentity(), containerType));
+			Map<String, Object> deletedRecord = crud.deleteRecord(collName, request.getRecordIdentity());
+			
+			if (deletedRecord != null) {
+				ContainerType containerType = TemplateUtil.findContainer(template.getDataDefinition(), contentQId);
+				String contentTitle = ContentDataUtil.findPortalLabelValue(deletedRecord, template, contentQId);
+				
+				publishContentDeleteEvent(new ContentDataDelEvent(request.getTemplateId(), 
+					request.getContentQId(), request.getRecordIdentity(), containerType, contentTitle));
+			}
 			
 		} else {
 			String qIdRelativeToParent = QIdUtil.getElementId(contentQId);
@@ -139,6 +146,7 @@ public class ContentDataManagerImpl implements ContentDataManager {
 		}
 	}
 	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private void deleteChildContainerData(ContentTemplate template, String containerQId, String recordIdentity) {
 		
 		List<String> childContainerIds = TemplateUtil.getChildContainerIds(template, containerQId);
@@ -149,15 +157,18 @@ public class ContentDataManagerImpl implements ContentDataManager {
 			if (TemplateUtil.hasOwnCollection(template, childQId)) {
 				
 				String collName = TemplateUtil.resolveCollectionName(template, childQId);
-				List<String> deletedChildRecordIds = 
+				List<HashMap> deletedChildRecords = 
 						crud.deleteRecordsWithParentId(collName, recordIdentity);
 				
 				ContainerType childContainer = TemplateUtil.findContainer(template.getDataDefinition(), childQId);
 				
-				for (String childRecordIdentity : deletedChildRecordIds) {
+				for (HashMap childRecord : deletedChildRecords) {
 
+					String childRecordIdentity = (String) childRecord.get(ContentDataConstants.IDENTITY_KEY);
+					String recordTitle = ContentDataUtil.findPortalLabelValue(childRecord, template, childQId);
+					
 					publishContentDeleteEvent(new ContentDataDelEvent(template.getId(), 
-							childQId, childRecordIdentity, childContainer));
+							childQId, childRecordIdentity, childContainer, recordTitle));
 
 					deleteChildContainerData(template, childQId, childRecordIdentity);
 				}

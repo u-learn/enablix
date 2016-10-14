@@ -13,13 +13,13 @@ import com.enablix.analytics.correlation.matcher.DataMatcher;
 import com.enablix.analytics.correlation.matcher.MatchInputRecord;
 import com.enablix.analytics.correlation.matcher.UserMatcher;
 import com.enablix.analytics.correlation.rule.ItemCorrelationRuleManager;
-import com.enablix.app.content.ContentDataUtil;
 import com.enablix.core.api.ContentDataRef;
 import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 import com.enablix.core.commons.xsdtopojo.ItemUserCorrelationRuleType;
 import com.enablix.core.commons.xsdtopojo.PathItemType;
 import com.enablix.core.commons.xsdtopojo.RelatedUserPathType;
 import com.enablix.core.commons.xsdtopojo.RelatedUserType;
+import com.enablix.services.util.ContentDataUtil;
 import com.enablix.services.util.TemplateUtil;
 
 @Component
@@ -134,7 +134,7 @@ public class ElasticSearchItemUserCorrelator implements ItemUserCorrelator {
 		
 		if (!users.isEmpty()) {
 			for (Map<String, Object> user : users) {
-				ContentDataRef userRef = ContentDataUtil.contentDataToRef(user, template.getId(), userContainerQId);
+				ContentDataRef userRef = ContentDataUtil.contentDataToRef(user, template, userContainerQId);
 				itemUserCorrRecorder.recordItemUserCorrelation(item, userRef, rule, relatedUserDef.getTags());
 			}
 		}

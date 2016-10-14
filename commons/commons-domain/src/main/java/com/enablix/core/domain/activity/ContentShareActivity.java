@@ -13,9 +13,10 @@ public class ContentShareActivity extends ContentActivity {
 	private String sharedWith;
 	
 	public ContentShareActivity(String itemIdentity, String containerQId, 
-			ContainerType containerType, String sharingId, ShareMedium sharedFrom, String sharedWith) {
+			ContainerType containerType, String sharingId, ShareMedium sharedFrom, 
+			String sharedWith, String itemTitle) {
 		
-		super(itemIdentity, containerQId, containerType, ContentActivityType.CONTENT_SHARE);
+		super(itemIdentity, containerQId, containerType, ContentActivityType.CONTENT_SHARE, itemTitle);
 		
 		this.sharingId = sharingId;
 		this.sharedFrom = sharedFrom;

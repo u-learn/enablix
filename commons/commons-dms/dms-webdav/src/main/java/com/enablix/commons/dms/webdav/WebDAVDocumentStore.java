@@ -22,7 +22,9 @@ import org.apache.commons.httpclient.params.HttpConnectionManagerParams;
 import org.apache.jackrabbit.webdav.DavConstants;
 import org.apache.jackrabbit.webdav.DavException;
 import org.apache.jackrabbit.webdav.client.methods.DavMethod;
+import org.apache.jackrabbit.webdav.client.methods.DeleteMethod;
 import org.apache.jackrabbit.webdav.client.methods.MkColMethod;
+import org.apache.jackrabbit.webdav.client.methods.MoveMethod;
 import org.apache.jackrabbit.webdav.client.methods.PropFindMethod;
 import org.apache.jackrabbit.webdav.client.methods.PutMethod;
 import org.apache.jackrabbit.webdav.property.DavPropertyName;
@@ -71,7 +73,7 @@ public class WebDAVDocumentStore extends AbstractDocumentStore<WebDAVDocumentMet
 			String baseWebDAVPath = config.getStringValue(BASE_DOC_PATH_KEY);
 
 			String host = config.getStringValue(HOST_KEY);
-		    String fileLocation = createFilepath(baseWebDAVPath, document, contentPath);
+		    String fileLocation = createFilepath(baseWebDAVPath, document.getMetadata(), contentPath);
 			
 			createFolder(host, baseWebDAVPath, contentPath, client);
 			
@@ -256,8 +258,8 @@ public class WebDAVDocumentStore extends AbstractDocumentStore<WebDAVDocumentMet
 	}
 
 	private String createFilepath(String baseWebDAVPath, 
-			WebDAVDocument document, String contentPath) {
-		String fileLocation = baseWebDAVPath + "/" + contentPath + "/" + document.getMetadata().getName();
+			WebDAVDocumentMetadata md, String contentPath) {
+		String fileLocation = baseWebDAVPath + "/" + contentPath + "/" + md.getName();
 		return sanitizeURI(fileLocation);
 	}
 	
@@ -283,6 +285,74 @@ public class WebDAVDocumentStore extends AbstractDocumentStore<WebDAVDocumentMet
 	@Override
 	public DocumentBuilder<WebDAVDocumentMetadata, WebDAVDocument> getDocumentBuilder() {
 		return docBuilder;
+	}
+
+	@Override
+	public WebDAVDocumentMetadata move(WebDAVDocumentMetadata docMetadata, String newContentPath) throws IOException {
+
+		try {
+			
+			Configuration config = getDocStoreConfiguration();
+			
+		    HttpClient client = createHttpClient(config);
+
+			String baseWebDAVPath = config.getStringValue(BASE_DOC_PATH_KEY);
+
+			String host = config.getStringValue(HOST_KEY);
+		    String newFileLoc = createFilepath(baseWebDAVPath, docMetadata, newContentPath);
+			
+			createFolder(host, baseWebDAVPath, newContentPath, client);
+			
+			String oldFileLoc = docMetadata.getFileLocation();
+			MoveMethod method = new MoveMethod(oldFileLoc, newFileLoc, true);
+		    client.executeMethod(method);
+		    
+		    docMetadata.setFileLocation(newFileLoc);
+		    
+		    LOGGER.debug(method.getStatusCode() + " " + method.getStatusText());
+		    
+		    checkMethodSuccess(method, "Unable to move file from: " + oldFileLoc + ", to " + newFileLoc);
+		    
+		} catch(HttpException ex){
+			LOGGER.error("Error moving document on webDAV server", ex);
+			throw ex;
+			
+		} catch(IOException ex){
+		    LOGGER.error("Error moving document on webDAV server", ex);
+		    throw ex;
+		    
+		}
+
+		return docMetadata;
+	}
+
+	@Override
+	public void delete(WebDAVDocumentMetadata docMetadata) throws IOException {
+		
+		try {
+			
+			Configuration config = getDocStoreConfiguration();
+			
+		    HttpClient client = createHttpClient(config);
+
+			String fileLoc = docMetadata.getFileLocation();
+			DeleteMethod method = new DeleteMethod(fileLoc);
+		    client.executeMethod(method);
+		    
+		    LOGGER.debug(method.getStatusCode() + " " + method.getStatusText());
+		    
+		    checkMethodSuccess(method, "Unable to delete file : " + fileLoc);
+		    
+		} catch(HttpException ex){
+			LOGGER.error("Error deleting document from webDAV server", ex);
+			throw ex;
+			
+		} catch(IOException ex){
+		    LOGGER.error("Error deleting document from webDAV server", ex);
+		    throw ex;
+		    
+		}
+
 	}
 
 }

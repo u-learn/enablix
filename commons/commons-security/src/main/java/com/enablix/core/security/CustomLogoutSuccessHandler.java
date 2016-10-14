@@ -46,17 +46,17 @@ public class CustomLogoutSuccessHandler extends SimpleUrlLogoutSuccessHandler {
 			
 			userLogout.setActivityTime(Calendar.getInstance().getTime());
 			
-			RegisteredActor actor = new RegisteredActor(ud.getUsername());
-			userLogout.setActor(actor);
-	
 			userLogout.setChannel(new ActivityChannel(Channel.WEB));
 			
 			if (ud instanceof LoggedInUser) {
 				
 				User user = ((LoggedInUser) ud).getUser();
+
+				RegisteredActor actor = new RegisteredActor(ud.getUsername(), user.getDisplayName());
+				userLogout.setActor(actor);
 				
 				// set up process context to fetch user roles from tenant specific database
-				ProcessContext.initialize(user.getUserId(), user.getTenantId(), null);
+				ProcessContext.initialize(user.getUserId(), user.getDisplayName(), user.getTenantId(), null);
 				
 				try {
 					

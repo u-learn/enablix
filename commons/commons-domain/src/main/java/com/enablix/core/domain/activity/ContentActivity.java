@@ -12,6 +12,8 @@ public class ContentActivity extends Activity {
 	
 	private String itemIdentity;
 	
+	private String itemTitle;
+	
 	private String containerQId;
 	
 	private ContainerType containerType;
@@ -23,12 +25,13 @@ public class ContentActivity extends Activity {
 	}
 
 	public ContentActivity(String itemIdentity, String containerQId, ContainerType containerType,
-			ContentActivityType activityType) {
+			ContentActivityType activityType, String itemTitle) {
 		super(Category.CONTENT);
 		this.itemIdentity = itemIdentity;
 		this.containerQId = containerQId;
 		this.containerType = containerType;
 		this.activityType = activityType;
+		this.itemTitle = itemTitle;
 	}
 
 	public String getItemIdentity() {
@@ -61,6 +64,14 @@ public class ContentActivity extends Activity {
 
 	public void setActivityType(ContentActivityType activityType) {
 		this.activityType = activityType;
+	}
+
+	public String getItemTitle() {
+		return itemTitle;
+	}
+
+	public void setItemTitle(String itemTitle) {
+		this.itemTitle = itemTitle;
 	}
 
 }

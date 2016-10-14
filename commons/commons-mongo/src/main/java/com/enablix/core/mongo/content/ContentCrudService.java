@@ -1,5 +1,6 @@
 package com.enablix.core.mongo.content;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -46,13 +47,13 @@ public interface ContentCrudService {
 	void insertChildContainer(String collectionName, String parentIdentity, String childQId,
 			Map<String, Object> data);
 	
-	void deleteRecord(String collectionName, String recordIdentity);
+	Map<String, Object> deleteRecord(String collectionName, String recordIdentity);
 	
 	void deleteChild(String collectionName, String childQId, String childIdentity);
 	
 	List<String> deleteAllChild(String collectionName, String recordIdentity, String childQId);
 	
-	List<String> deleteRecordsWithParentId(String collectionName, String parentIdentity);
+	List<HashMap> deleteRecordsWithParentId(String collectionName, String parentIdentity);
 
 	void upsert(String collectionName, String elementIdentity, Map<String, Object> data);
 

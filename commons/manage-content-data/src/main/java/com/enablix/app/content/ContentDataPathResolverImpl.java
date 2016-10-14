@@ -27,22 +27,25 @@ public class ContentDataPathResolverImpl implements ContentDataPathResolver {
 	
 	@Override
 	public String resolveContentDataPath(String templateId, String containerQId,
-			String containerInstanceIdentity) {
-		NavigableContent navContent = createNavigableContent(templateId, containerQId, containerInstanceIdentity);
+			String containerInstanceIdentity, String containerInstanceTitle) {
+		NavigableContent navContent = createNavigableContent(templateId, containerQId, 
+				containerInstanceIdentity, containerInstanceTitle);
 		return navContent == null ? "" : navContent.toPath("/");
 	}
 
 	private NavigableContent createNavigableContent(String templateId, String containerQId,
-			String containerInstanceIdentity) {
-		ContentDataRef dataRef = new ContentDataRef(templateId, containerQId, containerInstanceIdentity);
+			String containerInstanceIdentity, String itemTitle) {
+		ContentDataRef dataRef = new ContentDataRef(templateId, containerQId, containerInstanceIdentity, itemTitle);
 		NavigableContent navContent = navContentBuilder.build(dataRef, labelResolver);
 		return navContent;
 	}
 
 	@Override
-	public String resolveContentParentDataPath(String templateId, String containerQId, String containerInstanceIdentity) {
+	public String resolveContentParentDataPath(String templateId, String containerQId, 
+			String containerInstanceIdentity, String containerInstanceTitle) {
 		
-		NavigableContent navContent = createNavigableContent(templateId, containerQId, containerInstanceIdentity);
+		NavigableContent navContent = createNavigableContent(templateId, containerQId, 
+				containerInstanceIdentity, containerInstanceTitle);
 		
 		// remove the last node as that is the current node
 		removeLastContent(navContent, null);

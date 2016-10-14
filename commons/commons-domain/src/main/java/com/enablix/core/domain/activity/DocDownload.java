@@ -11,15 +11,15 @@ public class DocDownload extends DocumentActivity {
 	}
 	
 	public DocDownload(String itemIdentity, String containerQId, 
-			ContainerType containerType, String docIdentity) {
-		this(itemIdentity, containerQId, containerType, docIdentity, null, null, null);
+			ContainerType containerType, String docIdentity, String docTitle) {
+		this(itemIdentity, containerQId, containerType, docIdentity, null, null, null, docTitle);
 	}
 
 	public DocDownload(String itemIdentity, String containerQId, ContainerType containerType, 
-			String docIdentity, String contextName, String contextId, String contextTerm) {
+			String docIdentity, String contextName, String contextId, String contextTerm, String contentTitle) {
 		
 		super(ContentActivityType.DOC_DOWNLOAD, itemIdentity, containerQId, 
-				containerType, docIdentity, contextName, contextId, contextTerm);
+				containerType, docIdentity, contextName, contextId, contextTerm, contentTitle);
 	}
 
 	

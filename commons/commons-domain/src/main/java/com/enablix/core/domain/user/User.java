@@ -59,4 +59,7 @@ public class User extends BaseDocumentEntity {
 		this.profile = profile;
 	}
 	
+	public String getDisplayName() {
+		return profile == null ? getUserId() : profile.getName();
+	}
 }

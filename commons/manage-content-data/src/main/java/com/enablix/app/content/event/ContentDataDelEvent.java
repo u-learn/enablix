@@ -10,10 +10,12 @@ public class ContentDataDelEvent {
 	
 	private String contentIdentity;
 	
+	private String contentTitle;
+	
 	private ContainerType containerType;
 
 	public ContentDataDelEvent(String templateId, String containerQId, 
-			String contentIdentity, ContainerType containerType) {
+			String contentIdentity, ContainerType containerType, String contentTitle) {
 		super();
 		this.templateId = templateId;
 		this.containerQId = containerQId;
@@ -35,6 +37,10 @@ public class ContentDataDelEvent {
 
 	public ContainerType getContainerType() {
 		return containerType;
+	}
+
+	public String getContentTitle() {
+		return contentTitle;
 	}
 
 	public void setContainerType(ContainerType container) {

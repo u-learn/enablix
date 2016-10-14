@@ -53,7 +53,7 @@ public class DropboxDocumentStore extends AbstractDocumentStore<DropboxDocumentM
 			
 	        try {
 	        	
-	        	String fileLocation = createDropboxFilepath(document, contentPath);
+	        	String fileLocation = createDropboxFilepath(document.getMetadata(), contentPath);
 	        	
 				DbxEntry.File uploadedFile = client.uploadFile(
 	        			fileLocation, determineWriteMode(client, document), 
@@ -96,8 +96,8 @@ public class DropboxDocumentStore extends AbstractDocumentStore<DropboxDocumentM
 		return mode;
 	}
 
-	private String createDropboxFilepath(DropboxDocument document, String contentPath) {
-		return "/" + contentPath + "/" + document.getMetadata().getName();
+	private String createDropboxFilepath(DropboxDocumentMetadata md, String contentPath) {
+		return "/" + contentPath + "/" + md.getName();
 	}
 
 	private DbxClient createDbxClient() {
@@ -175,6 +175,54 @@ public class DropboxDocumentStore extends AbstractDocumentStore<DropboxDocumentM
 			return downloader.body.read();
 		}
 		
+	}
+
+	@Override
+	public DropboxDocumentMetadata move(DropboxDocumentMetadata docMetadata, 
+			String newContentPath) throws IOException {
+		
+		DbxClient client = createDbxClient();
+        
+        try {
+			
+        	LOGGER.debug("Linked account: {}", client.getAccountInfo().displayName);
+        	
+        	String newFileLoc = createDropboxFilepath(docMetadata, newContentPath);
+        	
+        	String oldLoc = docMetadata.getLocation();
+			DbxEntry dbxFileEntry = client.move(oldLoc, newFileLoc);
+        	
+			docMetadata.setLocation(dbxFileEntry.path);
+			
+        	LOGGER.debug("File move from: {}, to: {}", oldLoc, dbxFileEntry.path);
+	        	
+	        
+		} catch (DbxException e) {
+			LOGGER.error("Error connecting to Dropbox", e);
+			throw new IOException(e);
+		}
+        
+		return docMetadata;
+	}
+
+	@Override
+	public void delete(DropboxDocumentMetadata docMetadata) throws IOException {
+		
+		DbxClient client = createDbxClient();
+        
+        try {
+			
+        	LOGGER.debug("Linked account: {}", client.getAccountInfo().displayName);
+        	
+        	client.delete(docMetadata.getLocation());
+        	
+        	LOGGER.debug("File [{}] deleted from dropbox", docMetadata.getLocation());
+	        
+		} catch (DbxException e) {
+			LOGGER.error("Error connecting to Dropbox", e);
+			throw new IOException(e);
+		}
+        
 	}
 
 }

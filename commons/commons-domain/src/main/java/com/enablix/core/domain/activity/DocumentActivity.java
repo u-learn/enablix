@@ -9,14 +9,15 @@ public class DocumentActivity extends ContentAccessActivity {
 	}
 	
 	public DocumentActivity(ContentActivityType activityType, String itemIdentity, String containerQId, 
-			ContainerType containerType, String docIdentity) {
-		this(activityType, itemIdentity, containerQId, containerType, docIdentity, null, null, null);
+			ContainerType containerType, String docIdentity, String itemTitle) {
+		this(activityType, itemIdentity, containerQId, containerType, docIdentity, null, null, null, itemTitle);
 	}
 
 	public DocumentActivity(ContentActivityType activityType, String itemIdentity, String containerQId, 
-			ContainerType containerType, String docIdentity, String contextName, String contextId, String contextTerm) {
+			ContainerType containerType, String docIdentity, String contextName, String contextId, 
+			String contextTerm, String itemTitle) {
 		
-		super(itemIdentity, containerQId, containerType, contextName, contextId, contextTerm);
+		super(itemIdentity, containerQId, containerType, contextName, contextId, contextTerm, itemTitle);
 		this.docIdentity = docIdentity;
 		setActivityType(activityType);
 	}

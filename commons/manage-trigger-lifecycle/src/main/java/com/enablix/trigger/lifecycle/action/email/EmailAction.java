@@ -15,7 +15,6 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.stereotype.Component;
 
 import com.enablix.app.content.ContentDataManager;
-import com.enablix.app.content.ContentDataUtil;
 import com.enablix.app.content.share.DocUnsecureAccessUrlPopulator;
 import com.enablix.app.content.ui.format.DisplayContext;
 import com.enablix.app.content.ui.format.DisplayableContentBuilder;
@@ -48,6 +47,7 @@ import com.enablix.core.mongo.search.StringListFilter;
 import com.enablix.core.system.repo.UserRepository;
 import com.enablix.core.ui.DisplayableContent;
 import com.enablix.services.util.ActivityLogger;
+import com.enablix.services.util.ContentDataUtil;
 import com.enablix.services.util.TemplateUtil;
 import com.enablix.trigger.lifecycle.action.CheckpointAction;
 
@@ -272,19 +272,22 @@ public class EmailAction implements CheckpointAction<ContentChange, EmailActionT
 		DisplayableContent triggerEntity = sharedContent.getTriggerEntity();
 		if (triggerEntity != null) {
 			sharedContentList.add(new ContentDataRef(templateId, 
-				triggerEntity.getContainerQId(), triggerEntity.getRecordIdentity()));
+				triggerEntity.getContainerQId(), triggerEntity.getRecordIdentity(),
+				triggerEntity.getTitle()));
 		}
 		
 		Collection<DisplayableContent> emailContent = sharedContent.getEmailContent();
 		if (emailContent != null) {
 			for (DisplayableContent content : emailContent) {
 				sharedContentList.add(new ContentDataRef(templateId, 
-						content.getContainerQId(), content.getRecordIdentity()));
+						content.getContainerQId(), content.getRecordIdentity(),
+						content.getTitle()));
 			}
 		}
 		
 		ActivityLogger.auditContentShare(templateId, sharedContentList, 
-				ShareMedium.CORRELATION, Channel.EMAIL, sharedContent.getIdentity(), sharedWithEmailId);
+				ShareMedium.CORRELATION, Channel.EMAIL, sharedContent.getIdentity(), 
+				sharedWithEmailId, null);
 	}
 
 }

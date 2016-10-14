@@ -8,12 +8,12 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.enablix.app.content.ContentDataUtil;
 import com.enablix.core.api.ContentDataRef;
 import com.enablix.core.commons.xsdtopojo.BaseEmailRecipientType;
 import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 import com.enablix.core.commons.xsdtopojo.EmailAllUsersType;
 import com.enablix.core.mongo.content.ContentCrudService;
+import com.enablix.services.util.ContentDataUtil;
 import com.enablix.services.util.DatastoreUtil;
 import com.enablix.services.util.TemplateUtil;
 
@@ -35,7 +35,7 @@ public class AllUserEmailRecepientResolver implements EmailRecipientResolver<Ema
 		List<Map<String, Object>> allUserRecords = crud.findAllRecord(userCollName);
 		
 		for (Map<String, Object> userRecord : allUserRecords) {
-			users.add(ContentDataUtil.contentDataToRef(userRecord, template.getId(), userContainerQId));
+			users.add(ContentDataUtil.contentDataToRef(userRecord, template, userContainerQId));
 		}
 		
 		return users;

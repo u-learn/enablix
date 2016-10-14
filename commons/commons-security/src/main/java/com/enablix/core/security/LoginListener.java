@@ -45,20 +45,21 @@ public class LoginListener implements ApplicationListener<AuthenticationSuccessE
 		
 		userLogin.setActivityTime(Calendar.getInstance().getTime());
 		
-		RegisteredActor actor = new RegisteredActor(ud.getUsername());
-		userLogin.setActor(actor);
-
 		userLogin.setChannel(new ActivityChannel(Channel.WEB));
 		
 		if (ud instanceof LoggedInUser) {
 			
 			User user = ((LoggedInUser) ud).getUser();
+			
+			RegisteredActor actor = new RegisteredActor(ud.getUsername(), user.getDisplayName());
+			userLogin.setActor(actor);
+
 			Tenant tenant = tenantRepo.findByTenantId(user.getTenantId());
 			
 			String templateId = tenant == null ? "" : tenant.getDefaultTemplateId();
 			
 			// set up process context to fetch user roles from tenant specific database
-			ProcessContext.initialize(user.getUserId(), user.getTenantId(), templateId);
+			ProcessContext.initialize(user.getUserId(), user.getDisplayName(), user.getTenantId(), templateId);
 			
 			try {
 				

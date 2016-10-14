@@ -9,16 +9,18 @@ import org.springframework.stereotype.Component;
 import com.enablix.analytics.correlation.ItemCorrelationService;
 import com.enablix.analytics.correlation.ItemUserCorrelationService;
 import com.enablix.app.content.ContentChangeEvaluator;
-import com.enablix.app.content.ContentDataUtil;
 import com.enablix.app.content.event.ContentDataDelEvent;
 import com.enablix.app.content.event.ContentDataEventListener;
 import com.enablix.app.content.event.ContentDataSaveEvent;
+import com.enablix.app.template.service.TemplateManager;
 import com.enablix.commons.util.concurrent.Events;
 import com.enablix.core.api.ContentDataRef;
+import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 import com.enablix.core.domain.content.ContentChangeDelta;
 import com.enablix.core.domain.trigger.ContentChange;
 import com.enablix.core.domain.trigger.ContentChange.TriggerType;
 import com.enablix.core.mq.EventSubscription;
+import com.enablix.services.util.ContentDataUtil;
 import com.enablix.trigger.lifecycle.TriggerLifecycleManager;
 import com.enablix.trigger.lifecycle.TriggerLifecycleManagerFactory;
 
@@ -37,6 +39,9 @@ public class ContentTriggerListener implements ContentDataEventListener {
 	@Autowired 
 	private ContentChangeEvaluator contentChangeEvaluator;
 	
+	@Autowired
+	private TemplateManager templateMgr;
+	
 	@Override
 	public void onContentDataSave(ContentDataSaveEvent event) {
 		// Do Nothing
@@ -44,7 +49,8 @@ public class ContentTriggerListener implements ContentDataEventListener {
 
 	@Override
 	public void onContentDataDelete(ContentDataDelEvent event) {
-		ContentDataRef item = new ContentDataRef(event.getTemplateId(), event.getContainerQId(), event.getContentIdentity());
+		ContentDataRef item = new ContentDataRef(event.getTemplateId(), 
+				event.getContainerQId(), event.getContentIdentity(), event.getContentTitle());
 		itemItemCorrService.deleteCorrelationsForItem(item);
 		itemUserCorrService.deleteCorrelationsForItem(item);
 	}
@@ -59,6 +65,7 @@ public class ContentTriggerListener implements ContentDataEventListener {
 			contentTriggerDate = Calendar.getInstance().getTime();
 		}
 		
+		ContentTemplate template = templateMgr.getTemplate(event.getTemplateId());
 		ContentChange contentChangeTrigger = new ContentChange(contentTriggerDate);
 		
 		ContentChangeDelta delta = contentChangeEvaluator.findDelta(
@@ -66,7 +73,7 @@ public class ContentTriggerListener implements ContentDataEventListener {
 		contentChangeTrigger.setContentChange(delta);
 		
 		ContentDataRef triggerItem = ContentDataUtil.contentDataToRef(
-				event.getDataAsMap(), event.getTemplateId(), event.getContainerType().getQualifiedId());
+				event.getDataAsMap(), template, event.getContainerType().getQualifiedId());
 		
 		contentChangeTrigger.setTriggerItem(triggerItem);
 		contentChangeTrigger.setType(event.isNewRecord() ? TriggerType.ADD : TriggerType.UPDATE);

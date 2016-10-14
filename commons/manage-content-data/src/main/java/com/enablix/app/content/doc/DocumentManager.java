@@ -10,7 +10,7 @@ public interface DocumentManager {
 
 	Document<DocumentMetadata> load(String docIdentity) throws IOException;
 
-	DocumentMetadata saveUsingParentInfo(Document<?> doc, String docContainerQId, String docContainerInstanceIdentity)
+	DocumentMetadata saveUsingParentInfo(Document<?> doc, String docContainerQId, String docContainerParentInstanceIdentity)
 			throws IOException;
 	
 	DocumentMetadata save(Document<?> doc, String contentPath) throws IOException;
@@ -22,5 +22,15 @@ public interface DocumentManager {
 			String contentQId, long fileSize, String docIdentity);
 
 	DocumentMetadata loadDocMetadata(String docIdentity);
+	
+	DocumentMetadata attachUsingContainerInfo(DocumentMetadata docMd, 
+			String docContainerQId, String docContainerInstanceIdentity) throws IOException;
+	
+	DocumentMetadata attachUsingParentInfo(DocumentMetadata docMd, 
+			String docContainerQId, String docContainerParentInstanceIdentity) throws IOException;
+
+	DocumentMetadata delete(DocumentMetadata docMd) throws IOException;
+
+	DocumentMetadata getDocumentMetadata(String docIdentity);
 	
 }

@@ -1,4 +1,4 @@
-package com.enablix.app.content;
+package com.enablix.services.util;
 
 import java.util.Collection;
 import java.util.Date;
@@ -11,7 +11,6 @@ import com.enablix.core.commons.xsdtopojo.ContentItemClassType;
 import com.enablix.core.commons.xsdtopojo.ContentItemType;
 import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 import com.enablix.core.domain.content.ContentAssociation;
-import com.enablix.services.util.TemplateUtil;
 
 public class ContentDataUtil {
 
@@ -119,15 +118,16 @@ public class ContentDataUtil {
 	
 	
 	public static ContentDataRef contentDataToRef(
-			Map<String, Object> contentData, String templateId, String containerQId) {
+			Map<String, Object> contentData, ContentTemplate template, String containerQId) {
 		
 		Object identity = contentData.get(ContentDataConstants.IDENTITY_KEY);
 		
 		ContentDataRef contentDataRef = null;
 		
 		if (identity instanceof String) {
-			contentDataRef = new ContentDataRef(templateId, 
-								containerQId, (String) identity);	
+			String contentTitle = ContentDataUtil.findPortalLabelValue(contentData, template, containerQId);
+			contentDataRef = new ContentDataRef(template.getId(), 
+								containerQId, (String) identity, contentTitle);	
 		} else {
 			throw new IllegalStateException("[identity] not of type string. Found [" 
 						+ identity.getClass().getName() + "]");	

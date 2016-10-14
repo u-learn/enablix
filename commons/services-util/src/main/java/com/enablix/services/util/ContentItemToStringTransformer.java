@@ -1,4 +1,4 @@
-package com.enablix.app.content;
+package com.enablix.services.util;
 
 import java.text.SimpleDateFormat;
 import java.util.Collection;

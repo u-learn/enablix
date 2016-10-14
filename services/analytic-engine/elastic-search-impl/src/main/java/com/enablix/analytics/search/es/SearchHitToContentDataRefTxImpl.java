@@ -9,6 +9,7 @@ import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.core.api.ContentDataRef;
 import com.enablix.core.commons.xsdtopojo.ContainerType;
 import com.enablix.core.commons.xsdtopojo.ContentTemplate;
+import com.enablix.services.util.ContentDataUtil;
 import com.enablix.services.util.TemplateUtil;
 
 @Component
@@ -28,8 +29,9 @@ public class SearchHitToContentDataRefTxImpl implements SearchHitToContentDataRe
 		ContentDataRef contentDataRef = null;
 		
 		if (identity instanceof String) {
+			String contentTitle = ContentDataUtil.findPortalLabelValue(source, template, containerQId);
 			contentDataRef = new ContentDataRef(template.getId(), 
-								containerQId, (String) identity);	
+								containerQId, (String) identity, contentTitle);	
 		} else {
 			throw new IllegalStateException("[identity] not of type string. Found [" 
 						+ identity.getClass().getName() + "]");	

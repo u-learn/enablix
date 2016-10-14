@@ -9,6 +9,10 @@ public interface DocumentStore<DM extends DocumentMetadata, D extends Document<D
 	
 	D load(DM docMetadata) throws IOException;
 	
+	DM move(DM docMetadata, String newContentPath) throws IOException;
+	
+	void delete(DM docMetadata) throws IOException;
+	
 	boolean canHandle(DocumentMetadata docMetadata);
 	
 	boolean canHandle(Document<?> doc);

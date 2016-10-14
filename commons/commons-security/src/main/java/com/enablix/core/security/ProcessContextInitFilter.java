@@ -48,8 +48,8 @@ public class ProcessContextInitFilter extends OncePerRequestFilter {
 			if (principal instanceof LoggedInUser) {
 				
 				LoggedInUser user = (LoggedInUser) principal;
-				
-				ProcessContext.initialize(user.getUsername(), 
+			
+				ProcessContext.initialize(user.getUsername(), user.getUser().getDisplayName(),
 						user.getUser().getTenantId(), user.getTemplateId());
 				
 				processCtxInitialized = true;
@@ -62,7 +62,8 @@ public class ProcessContextInitFilter extends OncePerRequestFilter {
 			for (AntPathRequestMatcher matcher : systemUserRequestMatchers) {
 				
 				if (matcher.matches(request)) {
-					ProcessContext.initialize(AppConstants.SYSTEM_USER_ID, null, null);
+					ProcessContext.initialize(AppConstants.SYSTEM_USER_ID, 
+							AppConstants.SYSTEM_USER_NAME, null, null);
 					break;
 				}
 			}

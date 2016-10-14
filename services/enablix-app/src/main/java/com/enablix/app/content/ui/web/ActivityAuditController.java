@@ -18,7 +18,8 @@ public class ActivityAuditController {
 	@RequestMapping(method = RequestMethod.POST, value="/content/access/")
 	public void auditContentAccess(@RequestBody ContentAuditRequest request) {
 		String templateId = ProcessContext.get().getTemplateId();
-		ContentDataRef dataRef = new ContentDataRef(templateId, request.getContainerQId(), request.getInstanceIdentity());
+		ContentDataRef dataRef = new ContentDataRef(templateId, request.getContainerQId(), 
+				request.getInstanceIdentity(), request.getItemTitle());
 		ActivityLogger.auditContentAccess(dataRef, ContentActivity.ContainerType.CONTENT, Channel.WEB);
 	}
 	
@@ -26,6 +27,7 @@ public class ActivityAuditController {
 		
 		private String containerQId;
 		private String instanceIdentity;
+		private String itemTitle;
 		
 		public String getContainerQId() {
 			return containerQId;
@@ -41,6 +43,14 @@ public class ActivityAuditController {
 		
 		public void setInstanceIdentity(String instanceIdentity) {
 			this.instanceIdentity = instanceIdentity;
+		}
+
+		public String getItemTitle() {
+			return itemTitle;
+		}
+
+		public void setItemTitle(String itemTitle) {
+			this.itemTitle = itemTitle;
 		}
 		
 	}

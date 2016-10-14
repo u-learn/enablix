@@ -13,6 +13,8 @@ public abstract class DocumentMetadata extends BaseDocumentEntity {
 	
 	private String contentQId;
 	
+	private boolean deleted;
+	
 	protected DocumentMetadata(String docName, String contentType, 
 			String contentQId) {
 		this(null, docName, contentType, contentQId);
@@ -20,10 +22,12 @@ public abstract class DocumentMetadata extends BaseDocumentEntity {
 	
 	public DocumentMetadata(String identity, String name, String contentType, 
 			String contentQId) {
+		
 		setIdentity(identity);
 		this.name = name;
 		this.contentType = contentType;
 		this.contentQId = contentQId;
+		this.deleted = false;
 	}
 	
 	public String getName() {
@@ -44,6 +48,14 @@ public abstract class DocumentMetadata extends BaseDocumentEntity {
 
 	public void setContentQId(String contentQId) {
 		this.contentQId = contentQId;
+	}
+
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
 	}
 
 }

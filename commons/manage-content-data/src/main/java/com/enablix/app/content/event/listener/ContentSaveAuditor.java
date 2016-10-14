@@ -1,24 +1,31 @@
 package com.enablix.app.content.event.listener;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.enablix.app.content.ContentDataUtil;
 import com.enablix.app.content.event.ContentDataDelEvent;
 import com.enablix.app.content.event.ContentDataEventListener;
 import com.enablix.app.content.event.ContentDataSaveEvent;
+import com.enablix.app.template.service.TemplateManager;
 import com.enablix.core.api.ContentDataRef;
+import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 import com.enablix.core.domain.activity.ContentActivity.ContainerType;
 import com.enablix.core.domain.activity.ContentActivity.ContentActivityType;
 import com.enablix.services.util.ActivityLogger;
+import com.enablix.services.util.ContentDataUtil;
 
 @Component
 public class ContentSaveAuditor implements ContentDataEventListener {
 
+	@Autowired
+	private TemplateManager templateMgr;
+	
 	@Override
 	public void onContentDataSave(ContentDataSaveEvent event) {
 		
+		ContentTemplate template = templateMgr.getTemplate(event.getTemplateId());
 		ContentDataRef dataRef = ContentDataUtil.contentDataToRef(event.getDataAsMap(), 
-				event.getTemplateId(), event.getContainerType().getQualifiedId());
+				template, event.getContainerType().getQualifiedId());
 		
 		ActivityLogger.auditContentActivity(
 				event.isNewRecord() ? ContentActivityType.CONTENT_ADD : ContentActivityType.CONTENT_UPDATE, 
@@ -30,7 +37,7 @@ public class ContentSaveAuditor implements ContentDataEventListener {
 	public void onContentDataDelete(ContentDataDelEvent event) {
 		
 		ContentDataRef dataRef = new ContentDataRef(event.getTemplateId(), 
-				event.getContainerQId(), event.getContentIdentity());
+				event.getContainerQId(), event.getContentIdentity(), event.getContentTitle());
 		
 		ActivityLogger.auditContentActivity(
 				ContentActivityType.CONTENT_DELETE, 

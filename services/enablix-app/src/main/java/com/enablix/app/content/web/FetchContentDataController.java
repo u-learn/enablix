@@ -1,5 +1,7 @@
 package com.enablix.app.content.web;
 
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.enablix.app.content.ContentDataManager;
 import com.enablix.app.content.fetch.FetchContentRequest;
+import com.enablix.app.template.service.TemplateManager;
 import com.enablix.app.template.web.TemplateController;
 import com.enablix.commons.constants.AppConstants;
 import com.enablix.commons.util.StringUtil;
@@ -21,6 +24,7 @@ import com.enablix.core.api.ContentDataRef;
 import com.enablix.core.domain.activity.ActivityChannel.Channel;
 import com.enablix.core.domain.activity.ContentActivity.ContainerType;
 import com.enablix.services.util.ActivityLogger;
+import com.enablix.services.util.ContentDataUtil;
 
 @RestController
 @RequestMapping("data")
@@ -30,6 +34,9 @@ public class FetchContentDataController {
 
 	@Autowired
 	private ContentDataManager dataMgr;
+	
+	@Autowired
+	private TemplateManager templateMgr;
 	
 	@RequestMapping(method = RequestMethod.GET, 
 			value="/t/{templateId}/c/{contentQId}", 
@@ -71,6 +78,7 @@ public class FetchContentDataController {
 		return fetchData(new FetchContentRequest(templateId, contentQId, parentIdentity, null, pageable));
 	}
 	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@RequestMapping(method = RequestMethod.GET, 
 			value="/t/{templateId}/c/{contentQId}/d/{dataIdentity}", 
 			produces = "application/json")
@@ -90,8 +98,17 @@ public class FetchContentDataController {
 		// Audit access activity
 		Channel channel = Channel.parse(atChannel);
 		if (channel != null) {
+			
+			String contentTitle = null;
+			if (data instanceof Map) {
+				// single result 
+				Map record = (Map) data;
+				contentTitle = ContentDataUtil.findPortalLabelValue(record, 
+						templateMgr.getTemplate(templateId), contentQId);
+				
+			}
 			ActivityLogger.auditContentAccess(
-				new ContentDataRef(contentQId, contentQId, dataIdentity), 
+				new ContentDataRef(templateId, contentQId, dataIdentity, contentTitle), 
 				ContainerType.CONTENT, channel, atContext, atContextId, atContextTerm);
 		}
 		

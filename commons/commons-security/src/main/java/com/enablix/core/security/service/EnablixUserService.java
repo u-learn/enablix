@@ -59,7 +59,7 @@ public class EnablixUserService implements UserService, UserDetailsService {
 		String templateId = tenant == null ? "" : tenant.getDefaultTemplateId();
 		
 		// set up process context to fetch user roles from tenant specific database
-		ProcessContext.initialize(user.getUserId(), user.getTenantId(), templateId);
+		ProcessContext.initialize(user.getUserId(), user.getDisplayName(), user.getTenantId(), templateId);
 		
 		UserRole userRole = null;
 		
@@ -70,7 +70,6 @@ public class EnablixUserService implements UserService, UserDetailsService {
 		} finally {
 			ProcessContext.clear();
 		}
-		
 		
 		return new LoggedInUser(user, templateId, userRole);
 	}
@@ -83,11 +82,14 @@ public class EnablixUserService implements UserService, UserDetailsService {
 	
 	@Override
 	public User resetPassword(String userid){
+		
 		User user = userRepo.findByUserId(userid.toLowerCase());
+		
 		String password =UUID.randomUUID().toString().substring(0,8);//system generated default password
 		user.setPassword(password);
 		user.setIsPasswordSet(false);
-		ProcessContext.initialize(userid.toLowerCase(), user.getTenantId(),null);
+		
+		ProcessContext.initialize(userid.toLowerCase(), user.getDisplayName(), user.getTenantId(), null);
 		userRepo.save(user);		
 		return user;
 	}	

@@ -41,8 +41,8 @@ public class ActivityLogger {
 	}
 	
 	public static void auditActivity(Activity activity, Channel activityChannel) {
-		ProcessContext processContext = ProcessContext.get();
-		RegisteredActor actor = new RegisteredActor(processContext.getUserId());
+		ProcessContext pc = ProcessContext.get();
+		RegisteredActor actor = new RegisteredActor(pc.getUserId(), pc.getUserDisplayName());
 		auditActivity(activity, actor, activityChannel);
 	}
 	
@@ -69,7 +69,7 @@ public class ActivityLogger {
 			ActivityChannel.Channel activityChannel) {
 		
 		ContentActivity contentActvy = new ContentActivity(dataRef.getInstanceIdentity(), 
-				dataRef.getContainerQId(), containerType, activityType);
+				dataRef.getContainerQId(), containerType, activityType, dataRef.getTitle());
 		
 		auditContentActivity(contentActvy, activityChannel);
 	}
@@ -77,12 +77,12 @@ public class ActivityLogger {
 	private static void auditContentActivity(ContentActivity contentActvy, 
 			ActivityChannel.Channel activityChannel) {
 		
-		ProcessContext processContext = ProcessContext.get();
+		ProcessContext pc = ProcessContext.get();
 		
 		ActivityAudit activity = new ActivityAudit();
 		activity.setActivity(contentActvy);
 		
-		RegisteredActor actor = new RegisteredActor(processContext.getUserId());
+		RegisteredActor actor = new RegisteredActor(pc.getUserId(), pc.getUserDisplayName());
 		activity.setActor(actor);
 		
 		activity.setChannel(new ActivityChannel(activityChannel));
@@ -93,21 +93,22 @@ public class ActivityLogger {
 	
 	public static void auditDocDownload(ContentActivityType activityType, String contentQId,
 			String contentIdentity, String docIdentity, Channel channel, 
-			String contextName, String contextId, String contextTerm) {
+			String contextName, String contextId, String contextTerm, String contentTitle) {
 		
-		ProcessContext processContext = ProcessContext.get();
+		ProcessContext pc = ProcessContext.get();
 		auditDocActivity(activityType, contentQId, contentIdentity, docIdentity, channel, 
-				new RegisteredActor(processContext.getUserId()), contextName, contextId, contextTerm);
+				new RegisteredActor(pc.getUserId(), pc.getUserDisplayName()), contextName, 
+				contextId, contextTerm, contentTitle);
 	}
 	
 	public static void auditDocActivity(ContentActivityType activityType, String contentQId, 
 			String contentIdentity, String docIdentity, Channel channel, Actor actor,
-			String contextName, String contextId, String contextTerm) {
+			String contextName, String contextId, String contextTerm, String contentTitle) {
 		
 		ActivityAudit activity = new ActivityAudit();
 		
 		DocumentActivity docDownloadActvy = new DocumentActivity(activityType, contentIdentity, contentQId, 
-				ContainerType.CONTENT, docIdentity, contextName, contextId, contextTerm);
+				ContainerType.CONTENT, docIdentity, contextName, contextId, contextTerm, contentTitle);
 		
 		activity.setActivity(docDownloadActvy);
 		activity.setActor(actor);
@@ -119,27 +120,27 @@ public class ActivityLogger {
 	}
 
 	public static void auditContentShare(String templateId, DisplayableContent content, 
-			String sharedWith, ShareMedium sharedFrom, Channel channel, String sharingId) {
+			String sharedWith, ShareMedium sharedFrom, Channel channel, String sharingId, String contentTitle) {
 		auditContentShareInternal(templateId, content.getRecordIdentity(), 
-				content.getContainerQId(), sharedWith, sharedFrom, channel, sharingId);
+				content.getContainerQId(), sharedWith, sharedFrom, channel, sharingId, contentTitle);
 	}
 	
 	public static void auditContentShareInternal(String templateId, 
 			String contentIdentity, String containerQId, String sharedWith, 
-			ShareMedium sharedFrom, Channel channel, String sharingId) {
+			ShareMedium sharedFrom, Channel channel, String sharingId, String contentTitle) {
 		
 		ContentShareActivity shareActvy = new ContentShareActivity(contentIdentity, 
-				containerQId, ContainerType.CONTENT, sharingId, sharedFrom, sharedWith);
+				containerQId, ContainerType.CONTENT, sharingId, sharedFrom, sharedWith, contentTitle);
 		
 		auditContentActivity(shareActvy, channel);
 	}
 	
 	public static void auditContentShare(String templateId, List<ContentDataRef> contentList, 
-			ShareMedium sharedFrom, Channel channel, String sharingId, String sharedWith) {
+			ShareMedium sharedFrom, Channel channel, String sharingId, String sharedWith, String contentTitle) {
 		
 		for (ContentDataRef content : contentList) {
 			auditContentShareInternal(templateId, content.getInstanceIdentity(), 
-					content.getContainerQId(), sharedWith, sharedFrom, channel, sharingId);
+					content.getContainerQId(), sharedWith, sharedFrom, channel, sharingId, contentTitle);
 		}
 	}
 
@@ -147,7 +148,7 @@ public class ActivityLogger {
 			ContainerType containerType, Channel channel) {
 		
 		ContentActivity contentActvy = new ContentAccessActivity(dataRef.getInstanceIdentity(), 
-				dataRef.getContainerQId(), containerType);
+				dataRef.getContainerQId(), containerType, dataRef.getTitle());
 		
 		auditContentActivity(contentActvy, channel);
 	}
@@ -156,7 +157,7 @@ public class ActivityLogger {
 			ContainerType containerType, Channel channel, String contextName, String contextId, String contextTerm) {
 		
 		ContentActivity contentActvy = new ContentAccessActivity(dataRef.getInstanceIdentity(), 
-				dataRef.getContainerQId(), containerType, contextName, contextId, contextTerm);
+				dataRef.getContainerQId(), containerType, contextName, contextId, contextTerm, dataRef.getTitle());
 		
 		auditContentActivity(contentActvy, channel);
 	}
@@ -167,9 +168,9 @@ public class ActivityLogger {
 		Activity actvy = new ExternalLinkAccess(url, contentIdentity, contentItemQId);
 		Actor actor = null;
 		
-		ProcessContext processContext = ProcessContext.get();
-		if (processContext != null) {
-			actor = new RegisteredActor(processContext.getUserId());
+		ProcessContext pc = ProcessContext.get();
+		if (pc != null) {
+			actor = new RegisteredActor(pc.getUserId(), pc.getUserDisplayName());
 		} else if (!StringUtil.isEmpty(aid)) {
 			actor = new NonRegisteredActor(aid);
 		}
