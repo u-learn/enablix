@@ -121,7 +121,7 @@
 					</email>
 				</actions>
 			</checkpoint>	
-			<checkpoint>
+			<!--checkpoint>
 				<executionTime type="LATER">
 					<after timeUnit="MIN" timeValue="5"/>
 				</executionTime>
@@ -158,7 +158,7 @@
 						</recipient>
 					</email>
 				</actions>
-			</checkpoint>							
+			</checkpoint-->							
 		</lifecycle>
 	</contentTriggerDef>
 	<contentTriggerDef id="case-study-update-trigger" type="CONTENT_UPDATE">
@@ -173,7 +173,7 @@
 					<email execOrder="2">
 						<emailTemplate>
 							<subject templateName="addContentOpp_subject.vm"/>
-							<body templateName="addCasestudyOppt_body.vm"/>
+							<body templateName="addCasestudyOpp_body.vm"/>
 						</emailTemplate>
 						<emailContent>
 							<triggerEntity/>
