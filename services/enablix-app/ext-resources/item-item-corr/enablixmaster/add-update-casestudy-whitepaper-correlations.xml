@@ -33,18 +33,20 @@
 				<tags>
 					<tag>OPP_VIA_SOL</tag>
 				</tags>
-				<relatedItem qualifiedId="competitor">
-					<filterCriteria>
-						<filter>
-							<attributeId>identity</attributeId>
-							<parentAttribute>oppCompetitors</parentAttribute>
-						</filter>
-					</filterCriteria>
-					<recordAsRelated>true</recordAsRelated>
-					<tags>
-						<tag>COMP_VIA_OPP</tag>
-					</tags>
-				</relatedItem>
+				<relatedItems>
+					<relatedItem qualifiedId="competitor">
+						<filterCriteria>
+							<filter>
+								<attributeId>identity</attributeId>
+								<parentAttribute>oppCompetitors</parentAttribute>
+							</filter>
+						</filterCriteria>
+						<recordAsRelated>true</recordAsRelated>
+						<tags>
+							<tag>COMP_VIA_OPP</tag>
+						</tags>
+					</relatedItem>
+				</relatedItems>
 			</relatedItem>
 		</relatedItems>
 	</itemCorrelationRule>	
