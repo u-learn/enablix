@@ -223,7 +223,7 @@
 			<relatedItem qualifiedId="pricingtemplate">
 				<recordAsRelated>true</recordAsRelated>
 				<tags>
-					<tag>PROCESS_Negotiations</tag>
+					<tag>PROCESS_Negotiation</tag>
 					<tag>PROCESS_Proposal</tag>					
 				</tags>		
 			</relatedItem>
@@ -239,14 +239,14 @@
 				<recordAsRelated>true</recordAsRelated>
 				<tags>
 					<tag>PROCESS_Value Proposition</tag>
-					<tag>PROCESS_Negotiations</tag>										
+					<tag>PROCESS_Negotiation</tag>										
 				</tags>		
 			</relatedItem>
 			<!-- SOW -->
 			<relatedItem qualifiedId="sow">
 				<recordAsRelated>true</recordAsRelated>
 				<tags>
-					<tag>PROCESS_Negotiations</tag>										
+					<tag>PROCESS_Negotiation</tag>										
 				</tags>		
 			</relatedItem>
 		</relatedItems>
