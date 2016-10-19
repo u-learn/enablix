@@ -1,60 +1,295 @@
-<!DOCTYPE html>
-<html lang="en">
- <body style = "font: normal 14px/normal Arial, Helvetica, sans-serif;">
-	<p>Hello#if(${obj.recipientUser.profile.name}) ${obj.recipientUser.profile.name}#end,</p>
-	<p>For your opportunity, 
-		#foreach($item in $obj.emailContent)
-			#if($item.containerQId	== 'customer.opportunity')
-				#foreach($field in $item.fields)
-					#if($field.label == 'Opportunity Title')
-						${field.value.value} #break
-					#end
-				#end
-			#end
-		#end, here is 
-		#if($obj.triggerType == 'ADD') a new #else an updated 
-		#end Case Study. The Case Study title is
-		#foreach($field in $obj.triggerEntity.fields) 
-			#if($field.label == 'Title') ${field.value.value}#break
-			#end
-		#end
-	</p><br/>	
-		
-   
-    #if($obj.triggerEntity.doc)
-	      <br/>
-	      <div><a href="${obj.url}/doc/download//$obj.triggerEntity.doc.docIdentity?atChannel=EMAIL&atContext=CORRELATION&atContextId=$obj.identity" target="_blank">
-	      <button style="background: #3d85c6;
-	      font: normal 16px/normal Arial, Helvetica, sans-serif;
-	      color: rgba(255,255,255,0.9);
-	      -webkit-border-radius: 3px;
-	      border-radius: 3px;
-	      padding: 5px 5px 5px 5px;
-	      cursor: pointer;
-	      float:left;
-		  margin:5px 5px 5px 60px;
-	      border: 1px solid #3d85c6;
-	      width:200px">Download File</button>
-	      </a></div> 
-      #end
-     
-     <div><a href="${obj.url}/app.html#/portal/container/$obj.triggerEntity.containerQId/$obj.triggerEntity.recordIdentity/c/single/$obj.triggerEntity.containerQId/?atChannel=EMAIL&atContext=CORRELATION&atContextId=$obj.identity" target="_blank">
-      <button style="background: #3d85c6;
-      font: normal 16px/normal Arial, Helvetica, sans-serif;
-      color: rgba(255,255,255,0.9);
-      -webkit-border-radius: 3px;
-      border-radius: 3px;
-      padding: 5px 5px 5px 5px;
-      cursor: pointer;
-	  margin:5px 5px 5px 60px;
-      border: 1px solid #3d85c6;
-      width:200px">Access on Portal</button>
-      </a></div> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+<head>
+	<!--[if gte mso 15]>
+	<xml>
+		<o:OfficeDocumentSettings>
+		<o:AllowPNG/>
+		<o:PixelsPerInch>96</o:PixelsPerInch>
+		</o:OfficeDocumentSettings>
+	</xml>
+	<![endif]-->
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="format-detection" content="date=no" />
+	<meta name="format-detection" content="address=no" />
+	<meta name="format-detection" content="telephone=no" />
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,400italic,700,700italic' rel='stylesheet' type='text/css' />
+	<title>Email Template</title>
+	
 
-     <br/>
-      <p style = "font: normal 14px/normal Arial, Helvetica, sans-serif;">Have any questions or feedback? You can reply to this email.</p>
-      <p style = "font: normal 14px/normal Arial, Helvetica, sans-serif;">Cheers, <br/>Enablix Team for <b>${obj.tenant.name}</b> </p>
-      <p style = "font: normal 14px/normal Arial, Helvetica, sans-serif;">P.S. please add support@enablix.com to your address book or safe sender list. </p>
-      <p style = "font: normal 14px/normal Arial, Helvetica, sans-serif;">&copy; 2016 Enablix LLC. All rights reserved. For more information, please contact us at support@enablix.com</p>
-   </body>
+	<style type="text/css" media="screen">
+		[style*="OS"] { 
+			font-family: 'Open Sans', Arial, sans-serif !important;
+		}
+		/* Linked Styles */
+		body { padding:0 !important; margin:0 !important; display:block !important; min-width:100% !important; width:100% !important; background:#f2f2f2; -webkit-text-size-adjust:none }
+		a { color:#004ba1; text-decoration:none }
+		.header-text a { color:#727273; text-decoration:none }
+		p { padding:0 !important; margin:0 !important } 
+		img { -ms-interpolation-mode: bicubic; /* Allow smoother rendering of resized image in Internet Explorer */ }
+
+		/* Mobile styles */
+		@media only screen and (max-device-width: 480px), only screen and (max-width: 480px) { 
+			div[class='mobile-br-5'] { height: 5px !important; }
+			div[class='mobile-br-10'] { height: 10px !important; }
+			div[class='mobile-br-15'] { height: 15px !important; }
+
+			th[class='m-td'], 
+			td[class='m-td'], 
+			div[class='hide-for-mobile'], 
+			span[class='hide-for-mobile'] { display: none !important; width: 0 !important; height: 0 !important; font-size: 0 !important; line-height: 0 !important; min-height: 0 !important; }
+
+			span[class='mobile-block'] { display: block !important; }
+
+			div[class='img-m-center'] { text-align: center !important; }
+
+			div[class='fluid-img'] img,
+			td[class='fluid-img'] img { width: 100% !important; max-width: 100% !important; height: auto !important; }
+
+			table[class='mobile-shell'] { width: 100% !important; min-width: 100% !important; }
+			table[class='center'] { margin: 0 auto; }
+			
+			td[class='column-top'],
+			th[class='column-top'],
+			td[class='column'],
+			th[class='column'] { float: left !important; width: 100% !important; display: block !important; }
+
+			td[class='td'] { width: 100% !important; min-width: 100% !important; }
+
+			td[class='content-spacing'] { width: 15px !important; }
+			td[class='content-spacing2'] { width: 5px !important; }
+			td[class='header-text'] { text-align: center !important; }
+			td[class='header-text-r'] { text-align: center !important; }
+
+			td[class='footer-text'] { text-align: center !important; }
+			td[class='footer-text-r'] { text-align: center !important; }
+		} 
+	</style>
+</head>
+<body class="body" style="padding:0 !important; margin:0 !important; display:block !important; min-width:100% !important; width:100% !important; background:#f2f2f2; -webkit-text-size-adjust:none">
+	<table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="#f2f2f2">
+		<tr>
+			<td align="center" valign="top">
+				<table width="600" border="0" cellspacing="0" cellpadding="0" class="mobile-shell">
+					<tr>
+						<td class="td" style="width:600px; min-width:600px; font-size:0pt; line-height:0pt; padding:0; margin:0; font-weight:normal; Margin:0">
+							<!-- Header bar -->
+							<table width="100%" border="0" cellspacing="0" cellpadding="0">
+								<tr>
+									<td class="content-spacing" style="font-size:0pt; line-height:0pt; text-align:left" width="0"></td>
+									<td class="header-text" style="color:#727273; font-family:Arial,sans-serif, 'OS'; font-size:12px; line-height:16px; text-align:left">
+										<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="20" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
+<div class="hide-for-mobile"><table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="10" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
+</div>
+												#foreach($item in $obj.emailContent)
+													#if($item.containerQId	== 'customer.opportunity')
+														#foreach($field in $item.fields)
+															#if($field.label == 'Opportunity Title')
+																${field.value.value} #break
+															#end
+														#end
+													#end
+												#end Update
+										<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="20" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
+<div class="hide-for-mobile"><table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="10" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
+</div>
+									</td>
+									<td class="content-spacing" style="font-size:0pt; line-height:0pt; text-align:left" width="0"></td>
+								</tr>
+							</table>
+							<!-- END Header br -->
+
+							<!-- Header -->
+							<table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="#ffffff">
+								<tr>
+									<td class="content-spacing" style="font-size:0pt; line-height:0pt; text-align:left" width="30"></td>
+									<td>
+										<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="20" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
+<div class="hide-for-mobile"><table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="15" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
+</div>
+										<div class="img" style="font-size:0pt; line-height:0pt; text-align:left">
+											<a href="#" target="_blank"><img src="images/logo.jpg" border="0" width="134" height="29" alt="" /></a>
+										</div>
+										<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="20" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
+<div class="hide-for-mobile"><table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="15" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
+</div>
+									</td>
+									<td class="content-spacing" style="font-size:0pt; line-height:0pt; text-align:left" width="30"></td>
+								</tr>
+							</table>
+							<table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="#f2f2f2" class="border" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td bgcolor="#f2f2f2" height="1" class="border" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
+
+							<!-- END Header -->
+
+							<!-- Main -->
+							<table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="#ffffff">
+								<tr>
+									<td class="content-spacing" style="font-size:0pt; line-height:0pt; text-align:left" width="30"></td>
+									<td class="text" style="color:#626262; font-family:Arial,sans-serif, 'OS'; font-size:16px; line-height:27px; text-align:left">
+										<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="20" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
+<div class="hide-for-mobile"><table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="15" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
+</div>
+										<div class="h1" style="color:#0e2a49; font-family:Arial,sans-serif, 'OS'; font-size:26px; line-height:30px; text-align:left; font-weight:bold">Hello#if(${obj.recipientUser.profile.name}) ${obj.recipientUser.profile.name}#end,</div>
+										<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="15" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
+
+									
+										<br />
+										For your opportunity, 
+											#foreach($item in $obj.emailContent)
+												#if($item.containerQId	== 'customer.opportunity')
+													#foreach($field in $item.fields)
+														#if($field.label == 'Opportunity Title')
+															${field.value.value} #break
+														#end
+													#end
+												#end
+											#end, there is 
+												#if($obj.triggerType == 'ADD') a new #else an updated 
+											#end Case Study. The Case Study title is
+												#foreach($field in $obj.triggerEntity.fields) 
+													#if($field.label == 'Title') ${field.value.value}#break
+												#end
+											#end										
+										<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="20" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
+<div class="hide-for-mobile"><table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="10" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
+</div>
+
+										<!-- Btns -->
+										<table width="100%" border="0" cellspacing="0" cellpadding="0">
+											<tr>
+												<td align="left">
+													<table border="0" cellspacing="0" cellpadding="0">
+														<tr>
+															<th class="column-top" style="font-size:0pt; line-height:0pt; padding:0; margin:0; font-weight:normal; vertical-align:top; Margin:0" width="183">
+																<table width="100%" border="0" cellspacing="0" cellpadding="0">
+																	<tr>
+																		<td>
+																			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+																				<tr>
+																					<td align="center">
+																						<table border="0" cellspacing="0" cellpadding="0" bgcolor="#0e2a49" class="mobile-shell">
+																							<tr>
+																								<td class="img" style="font-size:0pt; line-height:0pt; text-align:left" width="42"></td>
+																								<td>
+																									<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="12" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
+
+																									<div class="text-button" style="color:#ffffff; font-family:Arial,sans-serif, 'OS'; font-size:16px; line-height:20px; text-align:center; font-weight:bold">
+																										<a href="${obj.url}/doc/download//$obj.triggerEntity.doc.docIdentity" target="_blank" class="link-white" style="color:#ffffff; text-decoration:none"><span class="link-white" style="color:#ffffff; text-decoration:none">Download File</span></a>
+																									</div>
+																									<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="12" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
+
+																								</td>
+																								<td class="img" style="font-size:0pt; line-height:0pt; text-align:left" width="42"></td>
+																							</tr>
+																						</table>
+																					</td>
+																				</tr>
+																			</table>
+																		</td>
+																	</tr>
+																</table>
+															</th>
+															<th class="column-top" style="font-size:0pt; line-height:0pt; padding:0; margin:0; font-weight:normal; vertical-align:top; Margin:0" width="10"><table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="20" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
+</th>
+															<th class="column-top" style="font-size:0pt; line-height:0pt; padding:0; margin:0; font-weight:normal; vertical-align:top; Margin:0">
+																<table width="100%" border="0" cellspacing="0" cellpadding="0">
+																	<tr>
+																		<td>
+																			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+																				<tr>
+																					<td align="center">
+																						<table border="0" cellspacing="0" cellpadding="0" bgcolor="#0e2a49" class="mobile-shell">
+																							<tr>
+																								<td class="img" style="font-size:0pt; line-height:0pt; text-align:left" width="42"></td>
+																								<td>
+																									<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="12" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
+
+																									<div class="text-button" style="color:#ffffff; font-family:Arial,sans-serif, 'OS'; font-size:16px; line-height:20px; text-align:center; font-weight:bold">
+																										<a href="${obj.url}/app.html#/portal/container/$obj.triggerEntity.containerQId/$obj.triggerEntity.recordIdentity/c/single/$obj.triggerEntity.containerQId/" target="_blank" class="link-white" style="color:#ffffff; text-decoration:none"><span class="link-white" style="color:#ffffff; text-decoration:none">Access on Portal</span></a>
+																									</div>
+																									<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="12" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
+
+																								</td>
+																								<td class="img" style="font-size:0pt; line-height:0pt; text-align:left" width="42"></td>
+																							</tr>
+																						</table>
+																					</td>
+																				</tr>
+																			</table>
+																		</td>
+																	</tr>
+																</table>
+															</th>
+														</tr>
+													</table>
+												</td>
+											</tr>
+										</table>
+										<!-- Btns -->
+										<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="20" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
+<div class="hide-for-mobile"><table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="10" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
+</div>
+
+										We hope you find this information useful. 
+										<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="20" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
+<div class="hide-for-mobile"><table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="10" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
+</div>
+
+										Cheers, <br />
+										Enablix Team for ${obj.tenant.name}
+
+										<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="20" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
+<div class="hide-for-mobile"><table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="15" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
+</div>
+									</td>
+									<td class="content-spacing" style="font-size:0pt; line-height:0pt; text-align:left" width="30"></td>
+								</tr>
+							</table>
+							<!-- END Main -->
+
+							<!-- Footer -->
+							<table width="100%" border="0" cellspacing="0" cellpadding="0">
+								<tr>
+									<td class="content-spacing" style="font-size:0pt; line-height:0pt; text-align:left" width="0"></td>
+									<td>
+										<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="25" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
+
+										<table width="100%" border="0" cellspacing="0" cellpadding="0">
+											<tr>
+												<th class="column" style="font-size:0pt; line-height:0pt; padding:0; margin:0; font-weight:normal; Margin:0">
+													<table width="100%" border="0" cellspacing="0" cellpadding="0">
+														<tr>
+															<td class="footer-text" style="color:#737373; font-family:Arial,sans-serif, 'OS'; font-size:12px; line-height:18px; text-align:left">&copy; 2016 Enablix LLC. All rights reserved. </td>
+														</tr>
+													</table>
+												</th>
+												<th class="column" style="font-size:0pt; line-height:0pt; padding:0; margin:0; font-weight:normal; Margin:0" width="10"><table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="10" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
+</th>
+												<th class="column" style="font-size:0pt; line-height:0pt; padding:0; margin:0; font-weight:normal; Margin:0" width="280">
+													<table width="100%" border="0" cellspacing="0" cellpadding="0">
+														<tr>
+															<td class="footer-text-r" style="color:#737373; font-family:Arial,sans-serif, 'OS'; font-size:12px; line-height:18px; text-align:right">
+																<a href="#" target="_blank" class="link3-u" style="color:#737373; text-decoration:underline"><span class="link3-u" style="color:#737373; text-decoration:underline">Add us to your address book</span></a>
+															</td>
+														</tr>
+													</table>
+												</th>
+											</tr>
+										</table>
+										<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="25" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
+
+									</td>
+									<td class="content-spacing" style="font-size:0pt; line-height:0pt; text-align:left" width="0"></td>
+								</tr>
+							</table>
+							<!-- END Footer -->
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+</body>
 </html>
