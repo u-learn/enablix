@@ -284,6 +284,51 @@ enablix.studioApp.factory('ContentTemplateService',
 			var getRootContainerIdForContainer = function(_containerQId) {
 				var cntnrQIdArr = _containerQId.split("\.");
 				return cntnrQIdArr[0];
+			};
+			
+			var getInheritableItems = function(_containerQId, _parentContainerQId) {
+				
+				var inheritableItems = [];
+				
+				var containerDef = getContainerDefinition(enablix.template, _containerQId);
+				var parentContainerDef = getContainerDefinition(enablix.template, _parentContainerQId);
+				
+				if (isNullOrUndefined(containerDef) || isNullOrUndefined(parentContainerDef)) {
+					return inheritableItems;
+				}
+				
+				angular.forEach(containerDef.contentItem, function(itemDef) {
+					
+					if (isBoundedRefListItem(itemDef)) {
+					
+						for (var i = 0; i < parentContainerDef.contentItem.length; i++) {
+						
+							var parentItemDef = parentContainerDef.contentItem[i];
+							
+							if (isBoundedRefListItem(parentItemDef)
+									&& matchBoundedRefListItems(itemDef, parentItemDef)) {
+							
+								inheritableItems.push({
+										contentItemId: itemDef.id,
+										parentContentItemId: parentItemDef.id
+									});
+								
+								break;
+							}
+						}
+						
+					}
+				});
+				
+				return inheritableItems;
+			};
+			
+			function isBoundedRefListItem(_itemDef) {
+				return _itemDef.type == "BOUNDED" && _itemDef.bounded.refList;
+			}
+			
+			function matchBoundedRefListItems(_item1, _item2) {
+				return angular.equals(_item1.bounded.refList.datastore, _item2.bounded.refList.datastore);
 			}
 			
 			return {
@@ -305,7 +350,8 @@ enablix.studioApp.factory('ContentTemplateService',
 				getPortalHeadingContentItem: getPortalHeadingContentItem,
 				getPortalEnclosureDefinition: getPortalEnclosureDefinition,
 				getParentEnclosureDefinition: getParentEnclosureDefinition,
-				getRootContainerIdForContainer: getRootContainerIdForContainer
+				getRootContainerIdForContainer: getRootContainerIdForContainer,
+				getInheritableItems: getInheritableItems
 			};
 		
 		}

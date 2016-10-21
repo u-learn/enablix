@@ -1352,7 +1352,7 @@ eb-nav-link:first-child li {
 }
 
 .ui-select-match-close {
-	padding-top: 3px;
+	/*padding-top: 3px;*/
 }
 
 .auth-error {

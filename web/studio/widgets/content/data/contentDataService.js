@@ -55,7 +55,7 @@ enablix.studioApp.factory('ContentDataService',
 	 					"recordIdentity": _recordIdentity
 	 			};
 	 			
-	 			RESTService.getForData("fetchRecordData", params, null, _onSuccess, _onError, reqParams);
+	 			return RESTService.getForData("fetchRecordData", params, null, _onSuccess, _onError, reqParams);
 	 			
 	 		};
 	 		

@@ -1,6 +1,6 @@
 enablix.studioApp.controller('ContentAddCtrl', 
-			['$scope', '$stateParams', 'ContentDataService', 'ContentTemplateService', 'StateUpdateService', 'StudioSetupService', 'Notification', 
-	function( $scope,   $stateParams,   ContentDataService,   ContentTemplateService,   StateUpdateService,   StudioSetupService, Notification) {
+			['$scope', '$stateParams', 'ContentDataService', 'ContentTemplateService', 'StateUpdateService', 'StudioSetupService', 'Notification', 'QIdUtil',
+	function( $scope,   $stateParams,   ContentDataService,   ContentTemplateService,   StateUpdateService,   StudioSetupService,   Notification,   QIdUtil) {
 		
 		var containerQId = $stateParams.containerQId;
 		var parentIdentity = $scope.parentIdentity = $stateParams.parentIdentity;
@@ -25,6 +25,28 @@ enablix.studioApp.controller('ContentAddCtrl',
 			if (isNullOrUndefined(containerLabel)) {
 				containerLabel = $scope.containerDef.label;
 			}
+		}
+		
+		$scope.parentRecord = {};
+		
+		if (!isNullOrUndefined($stateParams.parentIdentity)) {
+		
+			var parentQId = QIdUtil.getParentQId(containerQId);
+			
+			ContentDataService.getContentRecordData(enablix.templateId, parentQId, parentIdentity, null,
+				function(data) {
+			
+					$scope.parentRecord = data;
+					
+					if (!isNullOrUndefined($scope.parentRecord)) {
+						
+						var inheritableItems = ContentTemplateService.getInheritableItems($scope.containerDef.qualifiedId, parentQId);
+						
+						angular.forEach(inheritableItems, function(inheritableItem) {
+							$scope.containerData[inheritableItem.contentItemId] = $scope.parentRecord[inheritableItem.parentContentItemId];
+						});
+					}
+				});
 		}
 		
 		$scope.pageHeading = "Add " + containerLabel;
