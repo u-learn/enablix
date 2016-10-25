@@ -73,7 +73,7 @@ enablix.studioApp.factory('RESTService', [
 						});
 			};
 			
-			var checkAuthenticationErrorAndExecute = function(errorData, status, _onError) {
+			var checkAuthenticationErrorAndExecute = function(errorData, status, _error) {
 				
 				if (status && status == 401) {
 					

@@ -20,7 +20,7 @@
 							<datastore>
 								<storeId>productRelease</storeId>
 								<dataId>identity</dataId>
-								<dataLabel>release</dataLabel>
+								<dataLabel>releaseNumber</dataLabel>
 							</datastore>
 						</refList>
 					</bounded>
@@ -29,6 +29,7 @@
 				<contentItem id="url" label="URL" type="text"/>
 				<contentItem id="desc" label="Description" type="text"/>
 			</container>
+			<container id="prodProjects" label="Implementation Projects" linkContainerQId="customer.implProject" linkContentItemId="projProducts"/>			
 			<container id="prodBattleCard" label="Battle Cards" linkContainerQId="battlecard" linkContentItemId="products"/>
 			<container id="prodCaseStudy" label="Case Studies" linkContainerQId="caseStudy" linkContentItemId="products"/>
 			<container id="prodDiscQuestions" label="Discovery Questions" linkContainerQId="discoveryQuestion" linkContentItemId="products"/>
@@ -43,6 +44,7 @@
 			<container id="prodBlog" label="Blogs" linkContainerQId="blog" linkContentItemId="products"/>
 			<container id="prodWhitePaper" label="White Papers" linkContainerQId="whitepaper" linkContentItemId="products"/>
 			<container id="prodMultimedia" label="Multimedia" linkContainerQId="multimedia" linkContentItemId="products"/>
+			<container id="prodBenchmark" label="Benchmarks" linkContainerQId="benchmark" linkContentItemId="products"/>			
 			<container id="prodAnalystReports" label="Analyst Reports" linkContainerQId="analyst.report" linkContentItemId="products"/>
 			<container id="prodAnalystResearch" label="Analyst Research" linkContainerQId="analyst.research" linkContentItemId="products"/>
 			<container id="prodAnalystEngagement" label="Analyst Engagement" linkContainerQId="analyst.engagement" linkContentItemId="products"/>
@@ -84,6 +86,7 @@
 				<contentItem id="file" label="File" type="doc"/>
 				<contentItem id="summary" label="Summary" type="text"/>
 			</container>
+			<container id="solProjects" label="Implementation Projects" linkContainerQId="customer.implProject" linkContentItemId="projSolutions"/>			
 			<container id="solBattleCard" label="Battle Cards" linkContainerQId="battlecard" linkContentItemId="solutions"/>
 			<container id="solCaseStudy" label="Case Studies" linkContainerQId="caseStudy" linkContentItemId="solutions"/>
 			<container id="solDiscQuestions" label="Discovery Questions" linkContainerQId="discoveryQuestion" linkContentItemId="solutions"/>
@@ -98,6 +101,7 @@
 			<container id="solBlog" label="Blogs" linkContainerQId="blog" linkContentItemId="solutions"/>
 			<container id="solWhitePaper" label="White Papers" linkContainerQId="whitepaper" linkContentItemId="solutions"/>
 			<container id="solMultimedia" label="Multimedia" linkContainerQId="multimedia" linkContentItemId="solutions"/>
+			<container id="solBenchmark" label="Benchmarks" linkContainerQId="benchmark" linkContentItemId="solutions"/>			
 			<container id="solAnalystReports" label="Analyst Reports" linkContainerQId="analyst.report" linkContentItemId="solutions"/>
 			<container id="solAnalystResearch" label="Analyst Research" linkContainerQId="analyst.research" linkContentItemId="solutions"/>
 			<container id="solAnalystEngagement" label="Analyst Engagement" linkContainerQId="analyst.engagement" linkContentItemId="solutions"/>
@@ -167,7 +171,8 @@
 					</bounded>
 				</contentItem>
 				<contentItem id="file" label="Comparative Worksheet" type="doc"/>
-			</container>								
+			</container>	
+			<container id="compProjects" label="Implementation Projects" linkContainerQId="customer.implProject" linkContentItemId="projCompetitors"/>						
 			<container id="compFeatureSheet" label="Feature Sheets" linkContainerQId="featureSheet" linkContentItemId="competitors"/>
 			<container id="compCaseStudy" label="Case Studies" linkContainerQId="caseStudy" linkContentItemId="competitors"/>
 			<container id="compDiscQuestions" label="Discovery Questions" linkContainerQId="discoveryQuestion" linkContentItemId="competitors"/>
@@ -180,6 +185,7 @@
 			<container id="compBlog" label="Blogs" linkContainerQId="blog" linkContentItemId="competitors"/>
 			<container id="compWhitePaper" label="White Papers" linkContainerQId="whitepaper" linkContentItemId="competitors"/>
 			<container id="compMultimedia" label="Multimedia" linkContainerQId="multimedia" linkContentItemId="competitors"/>
+			<container id="compBenchmark" label="Benchmarks" linkContainerQId="benchmark" linkContentItemId="competitors"/>			
 			<container id="compAnalystReports" label="Analyst Reports" linkContainerQId="analyst.report" linkContentItemId="competitors"/>
 			<container id="compAnalystResearch" label="Analyst Research" linkContainerQId="analyst.research" linkContentItemId="competitors"/>
 			<container id="compAnalystEngagement" label="Analyst Engagement" linkContainerQId="analyst.engagement" linkContentItemId="competitors"/>
@@ -405,7 +411,8 @@
 						</refList>
 					</bounded>
 				</contentItem>
-				<container id="projContent" label="Project Content" linkContainerQId="content" linkContentItemId="opportunities"/>
+				<container id="projBenchmark" label="Benchmarks" linkContainerQId="benchmark" linkContentItemId="implProjects"/>											
+				<container id="projContent" label="Project Content" linkContainerQId="content" linkContentItemId="implProjects"/>
 			</container>
 			<container id="custCaseStudy" label="Case Studies" linkContainerQId="caseStudy" linkContentItemId="customers"/>
 			<container id="custFeatureSheet" label="Feature Sheets" linkContainerQId="featureSheet" linkContentItemId="customers"/>
@@ -413,6 +420,7 @@
 			<container id="custBlog" label="Blogs" linkContainerQId="blog" linkContentItemId="customers"/>
 			<container id="custWhitePaper" label="White Papers" linkContainerQId="whitepaper" linkContentItemId="customers"/>
 			<container id="custMultimedia" label="Multimedia" linkContainerQId="multimedia" linkContentItemId="customers"/>
+			<container id="custBenchmark" label="Benchmarks" linkContainerQId="benchmark" linkContentItemId="customers"/>			
 			<container id="custArticle" label="News Article" linkContainerQId="article" linkContentItemId="customers"/>
 			<container id="custContent" label="Other Content" linkContainerQId="content" linkContentItemId="customers"/>
 		</container>
@@ -430,6 +438,7 @@
 					</refList>
 				</bounded>
 			</contentItem>
+			<container id="partnerProjects" label="Implementation Projects" linkContainerQId="customer.implProject" linkContentItemId="projPartners"/>						
 			<container id="partnerCaseStudy" label="Case Studies" linkContainerQId="caseStudy" linkContentItemId="partners"/>
 			<container id="partnerDiscQuestions" label="Discovery Questions" linkContainerQId="discoveryQuestion" linkContentItemId="partners"/>
 			<container id="partnerFAQ" label="FAQ" linkContainerQId="faq" linkContentItemId="partners"/>
@@ -441,6 +450,7 @@
 			<container id="partnerWinLoss" label="Win Loss Analysis" linkContainerQId="winloss" linkContentItemId="partners"/>
 			<container id="partnerWhitePaper" label="White Papers" linkContainerQId="whitepaper" linkContentItemId="partners"/>
 			<container id="partnerMultimedia" label="Multimedia" linkContainerQId="multimedia" linkContentItemId="partners"/>
+			<container id="partnerBenchmark" label="Benchmarks" linkContainerQId="benchmark" linkContentItemId="partners"/>			
 			<container id="partnerAnalystReports" label="Analyst Reports" linkContainerQId="analyst.report" linkContentItemId="partners"/>
 			<container id="partnerAnalystResearch" label="Analyst Research" linkContainerQId="analyst.research" linkContentItemId="partners"/>
 			<container id="partnerAnalystEngagement" label="Analyst Engagement" linkContainerQId="analyst.engagement" linkContentItemId="partners"/>
@@ -820,6 +830,7 @@
 					</refList>
 				</bounded>
 			</contentItem>						
+			<container id="topicProjects" label="Implementation Projects" linkContainerQId="customer.implProject" linkContentItemId="projTopics"/>						
 			<container id="topicFAQ" label="FAQ" linkContainerQId="faq" linkContentItemId="topics"/>
 			<container id="topicBlog" label="Blogs" linkContainerQId="blog" linkContentItemId="topics"/>
 			<container id="topicCaseStudy" label="Case Studies" linkContainerQId="caseStudy" linkContentItemId="topics"/>			
@@ -827,6 +838,7 @@
 			<container id="topicMarketingEvent" label="Marketing Events" linkContainerQId="marketingevent" linkContentItemId="topics"/>	
 			<container id="topicWhitePaper" label="White Papers" linkContainerQId="whitepaper" linkContentItemId="topics"/>
 			<container id="topicMultimedia" label="Multimedia" linkContainerQId="multimedia" linkContentItemId="topics"/>
+			<container id="topicBenchmark" label="Benchmarks" linkContainerQId="benchmark" linkContentItemId="topics"/>						
 			<container id="topicPOC" label="Proof of Concepts" linkContainerQId="poc" linkContentItemId="topics"/>
 			<container id="topicPOV" label="Point of Views" linkContainerQId="pov" linkContentItemId="topics"/>
 			<container id="topicProposal" label="Proposals" linkContainerQId="proposal" linkContentItemId="topics"/>
@@ -1295,7 +1307,89 @@
 					</refList>
 				</bounded>
 			</contentItem>					
-		</container>		
+		</container>	
+		<container id="benchmark" label="Benchmarks">
+			<contentItem id="title" label="Title" type="text"/>
+			<contentItem id="file" label="File" type="doc"/>
+			<contentItem id="summary" label="Summary" type="text"/>			
+			<contentItem id="solutions" label="Solutions" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>solution</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="products" label="Products" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>product</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="customers" label="Customers" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>customer</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="implProjects" label="Implementation Projects" type="bounded">
+				<bounded>
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>customer.implProject</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>title</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>			
+			<contentItem id="competitors" label="Competitors" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>competitor</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="partners" label="Partners" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>partner</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="topics" label="Topics" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>topic</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+		</container>				
 		<container id="whitepaper" label="White Papers">
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="file" label="File" type="doc"/>
@@ -1409,7 +1503,7 @@
 						<datastore>
 							<storeId>mmformat</storeId>
 							<dataId>identity</dataId>
-							<dataLabel>format</dataLabel>
+							<dataLabel>formatName</dataLabel>
 						</datastore>
 					</refList>
 				</bounded>
@@ -2083,6 +2177,17 @@
 					</refList>
 				</bounded>
 			</contentItem>
+			<contentItem id="implProjects" label="Implementation Projects" type="bounded">
+				<bounded>
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>customer.implProject</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>title</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>				
 			<contentItem id="solutions" label="Solutions" type="bounded">
 				<bounded multivalued="true">
 					<refList>
@@ -2184,7 +2289,7 @@
 			<contentItem id="desc" label="Description" type="text"/>
 		</container>
 		<container id="mmformat" label="Multi Media Formats" refData="true">
-			<contentItem id="format" label="Format" type="text"/>
+			<contentItem id="formatName" label="Format" type="text"/>
 			<contentItem id="desc" label="Description" type="text"/>
 		</container>
 		<container id="mmtype" label="Multi Media Types" refData="true">
@@ -2200,7 +2305,7 @@
 			<contentItem id="desc" label="Description" type="text"/>
 		</container>
 		<container id="productRelease" label="Product Releases" refData="true">
-			<contentItem id="release" label="Release Number" type="text"/>
+			<contentItem id="releaseNumber" label="Release Number" type="text"/>
 			<contentItem id="desc" label="Description" type="text"/>
 		</container>
 		<container id="slideType" label="Slide Types" refData="true">
@@ -2245,6 +2350,7 @@
 				<enclosure id="collateral" label="Collateral">
 					<childContainer id="article"/>
 					<childContainer id="battlecard"/>
+					<childContainer id="benchmark"/>					
 					<childContainer id="blog"/>
 					<childContainer id="bom"/>									
 					<childContainer id="caseStudy"/>
@@ -2467,16 +2573,16 @@
 			<text type="long"/>
 		</contentUIDef>
 		<contentUIDef qualifiedId="discoveryQuestion">
-			<container labelQualifiedId="discoveryQuestion.question">
+			<container labelQualifiedId="discoveryQuestion.title">
 				<listViewConfig>
-					<hideContentItem id="significance"/>
+					<hideContentItem id="desc"/>
 				</listViewConfig>
 				<portalConfig>
-					<headingContentItem id="question"/>
+					<headingContentItem id="title"/>
 				</portalConfig>
 			</container>
 		</contentUIDef>
-		<contentUIDef qualifiedId="discoveryQuestion.significance">
+		<contentUIDef qualifiedId="discoveryQuestion.desc">
 			<text type="long"/>
 		</contentUIDef>
 		<contentUIDef qualifiedId="faq">
@@ -2578,6 +2684,24 @@
 				</portalConfig>
 			</container>
 		</contentUIDef>
+		<contentUIDef qualifiedId="benchmark">
+			<container labelQualifiedId="benchmark.title">
+				<listViewConfig>
+					<hideContentItem id="file"/>
+					<hideContentItem id="summary"/>
+					<hideContentItem id="implProjects"/>
+					<hideContentItem id="competitors"/>
+					<hideContentItem id="partners"/>
+					<hideContentItem id="topics"/>
+				</listViewConfig>
+				<portalConfig>
+					<headingContentItem id="title"/>
+				</portalConfig>
+			</container>
+		</contentUIDef>		
+		<contentUIDef qualifiedId="benchmark.summary">
+			<text type="long"/>
+		</contentUIDef>		
 		<contentUIDef qualifiedId="bom">
 			<container labelQualifiedId="bom.title">
 				<listViewConfig>
@@ -2729,6 +2853,7 @@
 				<enclosure id="collateral" label="Collateral">
 					<childContainer id="article"/>
 					<childContainer id="battlecard"/>
+					<childContainer id="benchmark"/>										
 					<childContainer id="blog"/>
 					<childContainer id="bom"/>					
 					<childContainer id="caseStudy"/>
