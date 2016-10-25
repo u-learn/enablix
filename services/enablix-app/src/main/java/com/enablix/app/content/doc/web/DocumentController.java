@@ -54,11 +54,12 @@ public class DocumentController {
     		@RequestParam(value = "parentIdentity", required = false) String parentIdentity,
     		@RequestParam(value = "containerIdentity", required = false) String containerIdentity,
     		@RequestParam(value = "docIdentity", required = false) String docIdentity,
+    		@RequestParam(value = "temporary", required = false) boolean temporary,
             @RequestParam(value="file", required = true) MultipartFile file) {
         
         try {
             Document<DocumentMetadata> document = docManager.buildDocument(file.getInputStream(), 
-            		file.getOriginalFilename(), file.getContentType(), contentQId, fileSize, docIdentity);
+            	file.getOriginalFilename(), file.getContentType(), contentQId, fileSize, docIdentity, temporary);
             
             DocumentMetadata docMd = saveDocument(contentQId, parentIdentity, containerIdentity, document);
 			

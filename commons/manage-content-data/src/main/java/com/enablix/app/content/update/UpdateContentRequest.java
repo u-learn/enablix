@@ -26,15 +26,15 @@ public class UpdateContentRequest implements ContentUpdateContext {
 	}
 	
 	public UpdateContentRequest(String templateId, 
-			String recordId, String contentQId, String jsonData) {
-		this(templateId, recordId, contentQId, JsonUtil.jsonToMap(jsonData));
+			String parentIdentity, String contentQId, String jsonData) {
+		this(templateId, parentIdentity, contentQId, JsonUtil.jsonToMap(jsonData));
 	}
 
 	public UpdateContentRequest(String templateId, 
-			String recordId, String contentQId, Map<String, Object> dataAsMap) {
+			String parentIdentity, String contentQId, Map<String, Object> dataAsMap) {
 		super();
 		this.templateId = templateId;
-		this.parentIdentity = recordId;
+		this.parentIdentity = parentIdentity;
 		this.contentQId = contentQId;
 		this.dataAsMap = dataAsMap;
 	}

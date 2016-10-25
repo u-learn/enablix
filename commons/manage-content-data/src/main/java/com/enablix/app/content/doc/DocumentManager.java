@@ -19,7 +19,7 @@ public interface DocumentManager {
 			throws IOException;
 	
 	Document<DocumentMetadata> buildDocument(InputStream dataStream, String name, String contentType, 
-			String contentQId, long fileSize, String docIdentity);
+			String contentQId, long fileSize, String docIdentity, boolean temporaryDoc);
 
 	DocumentMetadata loadDocMetadata(String docIdentity);
 	

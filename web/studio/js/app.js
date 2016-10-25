@@ -402,12 +402,29 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvi
 		.state('system.quicklinks', {
 			url: '/quicklinks',
 			templateUrl: 'views/system/quicklinks/quickLinksConfig.html',
-			controller: 'QuickLinksConfigController'
+			controller: 'QuickLinksConfigController',
+			resolve: {
+				setupData: appSetup
+			}
 		})
 		.state('system.recommendations', {
 			url: '/reco',
 			templateUrl: 'views/system/reco/recoConfig.html',
-			controller: 'RecommendationConfigController'
+			controller: 'RecommendationConfigController',
+			resolve: {
+				setupData: appSetup
+			}
+		})
+		.state('system.contentrequestlist', {
+			url: '/contentrequest',
+			templateUrl: 'views/content/content-suggest-list.html',
+			controller: 'ContentRequestListCtrl',
+			resolve: {
+				setupData: appSetup,
+				checkPageAccess: ['setupData', 'AuthorizationService', function(setupData, AuthorizationService) {
+					return AuthorizationService.userHasPageAccess('MANAGE_CONTENT_REQUEST')
+				}]
+			}
 		});
 	
 	// The custom “X-Requested-With” is a conventional header sent by browser clients, 

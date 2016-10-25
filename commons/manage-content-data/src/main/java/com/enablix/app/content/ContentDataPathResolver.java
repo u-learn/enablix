@@ -10,5 +10,7 @@ public interface ContentDataPathResolver {
 
 	String resolveContentDataPath(String templateId, String containerQId, String containerInstanceIdentity,
 			String containerInstanceTitle);
+
+	String appendPath(String currentPath, String addPath);
 	
 }

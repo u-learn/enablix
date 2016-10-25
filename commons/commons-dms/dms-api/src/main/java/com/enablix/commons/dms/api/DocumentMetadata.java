@@ -15,6 +15,8 @@ public abstract class DocumentMetadata extends BaseDocumentEntity {
 	
 	private boolean deleted;
 	
+	private boolean temporary;
+	
 	protected DocumentMetadata(String docName, String contentType, 
 			String contentQId) {
 		this(null, docName, contentType, contentQId);
@@ -56,6 +58,14 @@ public abstract class DocumentMetadata extends BaseDocumentEntity {
 
 	public void setDeleted(boolean deleted) {
 		this.deleted = deleted;
+	}
+
+	public boolean isTemporary() {
+		return temporary;
+	}
+
+	public void setTemporary(boolean temporary) {
+		this.temporary = temporary;
 	}
 
 }

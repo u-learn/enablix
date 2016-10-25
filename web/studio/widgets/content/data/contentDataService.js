@@ -102,6 +102,8 @@ enablix.studioApp.factory('ContentDataService',
 	 		};
 
 	 		
+	 		
+	 		
 	 		return {
 	 			getContentData: getContentData,
 	 			getContentRecordData: getContentRecordData,

@@ -58,6 +58,7 @@
 	<script type="text/javascript" src="widgets/filter/appFilterModule.js"></script>
 	<script type="text/javascript" src="widgets/filter/contentFormatFilter.js"></script>
 	<script type="text/javascript" src="widgets/filter/dateFilter.js"></script>
+	<script type="text/javascript" src="widgets/modal/actionNotesModal.js"></script>
 	<script type="text/javascript" src="widgets/modal/infoModal.js"></script>
 	<script type="text/javascript" src="widgets/modal/infoModalController.js"></script>
 
@@ -65,6 +66,7 @@
 	<script type="text/javascript" src="widgets/directive/text/textInputDirective.js"></script>
 	<script type="text/javascript" src="widgets/directive/renderData/renderDataDirective.js"></script>
 	<script type="text/javascript" src="widgets/directive/table/tableDirective.js"></script>
+	<script type="text/javascript" src="widgets/directive/genericTable/genericTableDirective.js"></script>
 	<script type="text/javascript" src="widgets/directive/pagination/paginationDirective.js"></script>
 	<script type="text/javascript" src="widgets/directive/doc/fileUploadDirective.js"></script>
 	<script type="text/javascript" src="widgets/directive/doc/fileUploadController.js"></script>
@@ -100,17 +102,22 @@
 	<script type="text/javascript" src="widgets/directive/portal/peers/peersDirective.js"></script>
 	<script type="text/javascript" src="widgets/directive/search/searchResultItemController.js"></script>
 	<script type="text/javascript" src="widgets/directive/search/searchResultItemDirective.js"></script>
+	<script type="text/javascript" src="widgets/directive/content/suggestContentDirective.js"></script>
 	<script type="text/javascript" src="widgets/directive/passwordChecked.js"></script>
 	<script type="text/javascript" src="widgets/directive/portal/sharePopup/share-content-popup.js"></script>
 	<script type="text/javascript" src="widgets/directive/portal/sharePopup/share-content-popupController.js"></script>
 	
 	<script type="text/javascript" src="widgets/stateUpdateService.js"></script>
 	<script type="text/javascript" src="widgets/content/template/contentTemplateService.js"></script>
+	<script type="text/javascript" src="widgets/content/data/contentRequestListController.js"></script>
 	<script type="text/javascript" src="widgets/content/data/contentDataService.js"></script>
+	<script type="text/javascript" src="widgets/content/data/contentOperInitService.js"></script>
+	<script type="text/javascript" src="widgets/content/data/contentApprovalService.js"></script>
 	<script type="text/javascript" src="widgets/content/index/contentIndexService.js"></script>
 	<script type="text/javascript" src="widgets/content/refdata/refdataIndexService.js"></script>
 	<script type="text/javascript" src="widgets/studio/studioInitService.js"></script>
 	<script type="text/javascript" src="widgets/search/searchService.js"></script>
+	<script type="text/javascript" src="widgets/search/data/dataSearchService.js"></script>
 	<script type="text/javascript" src="widgets/content/contentUtil.js"></script>
 	<script type="text/javascript" src="widgets/content/qIdUtil.js"></script>
 	<script type="text/javascript" src="widgets/auth/authorizationService.js"></script>
@@ -139,6 +146,7 @@
 	<script type="text/javascript" src="widgets/content/data/detail/contentDetailController.js"></script>
 	<script type="text/javascript" src="widgets/content/data/list/contentListController.js"></script>
 	<script type="text/javascript" src="widgets/content/data/add/contentAddController.js"></script>
+	<script type="text/javascript" src="widgets/content/data/add/contentSuggestController.js"></script>
 	<script type="text/javascript" src="widgets/content/data/edit/contentEditController.js"></script>
 	<script type="text/javascript" src="widgets/content/refdata/refdataIndexController.js"></script>
 	<script type="text/javascript" src="widgets/audit/activityAuditService.js"></script>
@@ -186,7 +194,13 @@
 							<li><a ui-sref="system.users.list">System Admin</a></li>
 						</ul>
 					</li>
-					<a href="#" ng-show="authenticated" ng-click="logout()">Logout</a>
+					<li requires-permission="MANAGE_CONTENT_REQUEST">
+						<a ng-class="{active:$state.includes('system.contentrequestlist')}"><i class="fa fa-user fa-lg"></i></a>
+						<ul class="main-nav-secondary">
+							<li><a ui-sref="system.contentrequestlist">Upload Requests</a></li>
+						</ul>
+					</li>
+					<a href="#" ng-show="authenticated" ng-click="logout()">Logout</a>					
 				</nav>
 				<!--/ main nav -->
 			</div>

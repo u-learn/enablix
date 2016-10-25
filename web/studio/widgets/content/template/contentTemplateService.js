@@ -301,22 +301,31 @@ enablix.studioApp.factory('ContentTemplateService',
 					
 					if (isBoundedRefListItem(itemDef)) {
 					
-						for (var i = 0; i < parentContainerDef.contentItem.length; i++) {
-						
-							var parentItemDef = parentContainerDef.contentItem[i];
+						if (itemDef.bounded.refList.datastore.storeId == parentContainerDef.id) {
 							
-							if (isBoundedRefListItem(parentItemDef)
-									&& matchBoundedRefListItems(itemDef, parentItemDef)) {
+							inheritableItems.push({
+									contentItemId: itemDef.id,
+									parentContentItemId: itemDef.bounded.refList.datastore.dataId
+								});
 							
-								inheritableItems.push({
-										contentItemId: itemDef.id,
-										parentContentItemId: parentItemDef.id
-									});
+						} else {
+							
+							for (var i = 0; i < parentContainerDef.contentItem.length; i++) {
+							
+								var parentItemDef = parentContainerDef.contentItem[i];
 								
-								break;
+								if (isBoundedRefListItem(parentItemDef)
+										&& matchBoundedRefListItems(itemDef, parentItemDef)) {
+								
+									inheritableItems.push({
+											contentItemId: itemDef.id,
+											parentContentItemId: parentItemDef.id
+										});
+									
+									break;
+								} 
 							}
 						}
-						
 					}
 				});
 				

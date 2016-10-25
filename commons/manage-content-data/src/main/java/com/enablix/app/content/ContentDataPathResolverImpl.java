@@ -94,5 +94,10 @@ public class ContentDataPathResolverImpl implements ContentDataPathResolver {
 		
 		return currentPath;
 	}
+	
+	@Override
+	public String appendPath(String currentPath, String addPath) {
+		return currentPath + "/" + addPath;
+	}
 
 }

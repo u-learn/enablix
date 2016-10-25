@@ -1,0 +1,15 @@
+<form class="block" style="margin-top: 0.5em;">
+<div class="head">
+	<h2>{{pageHeading}}</h2>
+	<button class="button button-close" type="button" ng-click="cancelOperation()">x</button>
+</div>
+<ng-include src="'views/content/content-add-fields.html'"></ng-include>
+<div class="cont">
+	<h2 class="form-label">Notes</h2>
+	<textarea placeholder="Add Notes" class="form-control" ng-model="notes" rows="3"></textarea>
+</div>
+<div class="foot clearfix">
+	<button ng-click="saveContentData()" class="button button-add">Save</button>
+	<a ng-click="cancelOperation()" class="button button-delete">Cancel</a>
+</div>
+</form>

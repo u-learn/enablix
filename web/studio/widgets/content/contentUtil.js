@@ -53,6 +53,10 @@ enablix.studioApp.factory('ContentUtil',
 			
 			var decorateData = function(_containerDef, _dataRecord, _processHyperlink) {
 				
+				if (_dataRecord && _dataRecord.__associations && _dataRecord.__associations.parent) {
+					_dataRecord.parentIdentity = _dataRecord.__associations.parent.recordIdentity;
+				}
+				
 				for (var i = 0; i < _containerDef.contentItem.length; i++) {
 					
 					var item = _containerDef.contentItem[i];

@@ -1373,7 +1373,7 @@ eb-nav-link:first-child li {
 	position: relative;
 	display: inline-block;
 	font-size: 0.98em;
-	margin-right: 1.5em;
+	/*margin-right: 1.5em;*/
 	font-weight: 400;
 }
 
@@ -1402,7 +1402,7 @@ eb-nav-link:first-child li {
 	content: '';
 	position: absolute;
 	bottom: 100%;
-	left: 1em;
+	left: 0.5em;
 	border-right: 5px solid transparent;
 	border-bottom: 5px solid #2980b9;
 	border-left: 5px solid transparent;
@@ -1491,4 +1491,14 @@ input[type=checkbox] {
 .sub-container-more-link a:hover,
 .sub-container-more-link a:focus {
 	color: #2980b9;
+}
+
+tbody tr td.action-cell:first-child {
+	padding-left: 0.5em;
+}
+
+.datatable .approve {
+	width: 1px;
+	color: #2ecc71;
+	padding-left: 0;
 }

@@ -69,22 +69,25 @@ enablix.studioApp.factory('RESTService', [
 							}
 							
 						}).error(function(data, status) {
-							
-							if (status && status == 401) {
-								
-								// authentication error
-								if (!$rootScope.loginProcess) {
-									$rootScope.authenticated = false;
-									StateUpdateService.goToLogin(window.location.href);
-								} else {
-									_error(data, status)
-								}
-								
-							} else {
-								_error(data, status);
-							}
-							
+							checkAuthenticationErrorAndExecute(data, status, _error);
 						});
+			};
+			
+			var checkAuthenticationErrorAndExecute = function(errorData, status, _onError) {
+				
+				if (status && status == 401) {
+					
+					// authentication error
+					if (!$rootScope.loginProcess) {
+						$rootScope.authenticated = false;
+						StateUpdateService.goToLogin(window.location.href);
+					} else {
+						_error(data, status)
+					}
+					
+				} else {
+					_error(data, status);
+				}
 			};
 
 			var postForData = function(_resourceKey, _params, _data,
@@ -114,8 +117,8 @@ enablix.studioApp.factory('RESTService', [
 						_success(data);
 					}
 					
-				}).error(function(data) {
-					_error(data);	
+				}).error(function(data, status) {
+					checkAuthenticationErrorAndExecute(data, status, _error);	
 				});
 
 			};

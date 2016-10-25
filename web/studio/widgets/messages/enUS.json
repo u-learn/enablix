@@ -1,3 +1,7 @@
 {
-	"app.name" : ""
+	"app.name" : "",
+	
+	"content.approval.status.PENDING_APPROVAL" : "Pending Approval",
+	"content.approval.status.REJECTED" : "Rejected",
+	"content.approval.status.APPROVED" : "Approved"
 }

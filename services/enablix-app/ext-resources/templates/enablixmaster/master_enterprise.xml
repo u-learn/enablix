@@ -227,6 +227,17 @@
 						</refList>
 					</bounded>
 				</contentItem>
+				<contentItem id="oppCustomers" label="Customer" type="bounded">
+					<bounded>
+						<refList>
+							<datastore hyperlink="true">
+								<storeId>customer</storeId>
+								<dataId>identity</dataId>
+								<dataLabel>shortName</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>				
 				<contentItem id="oppProducts" label="Products" type="bounded" searchBoost="6">
 					<bounded multivalued="true">
 						<refList>
@@ -2046,6 +2057,11 @@
 			<contentItem id="file" label="File" type="doc"/>
 			<contentItem id="summary" label="Summary" type="text"/>
 		</container>
+		<container id="sow" label="Statement of Work">
+			<contentItem id="title" label="Title" type="text"/>
+			<contentItem id="summary" label="Summary" type="text"/>
+			<contentItem id="file" label="File" type="doc"/>
+		</container>		
 		<container id="nda" label="Non Disclosure Agreement (NDA)">
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="summary" label="Summary" type="text"/>

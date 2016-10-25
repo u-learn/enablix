@@ -54,6 +54,7 @@ enablix.studioApp.controller('FileUploadCtrl',
             var fd = {
         			fileSize: item.file.size, 
         			contentQId: $scope.qualifiedId,
+        			temporary: $scope.temporary
         		};
             
             var fileContainerQId = QIdUtil.getParentQId(fd.contentQId);

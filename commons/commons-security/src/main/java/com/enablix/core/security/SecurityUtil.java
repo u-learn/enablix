@@ -40,4 +40,8 @@ public class SecurityUtil {
 		return false;
 	}
 	
+	/*public static boolean currentUserHasPermission(String permission) {
+		
+	}*/
+	
 }

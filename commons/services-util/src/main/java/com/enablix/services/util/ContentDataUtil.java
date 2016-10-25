@@ -72,7 +72,13 @@ public class ContentDataUtil {
 		ContainerType containerDef = TemplateUtil.findContainer(template.getDataDefinition(), qId);
 		
 		if (labelAttrId != null) {
+			
 			Object labelAttribute = record.get(labelAttrId);
+			
+			if (TemplateUtil.isLinkedContainer(containerDef)) {
+				containerDef = TemplateUtil.findContainer(template.getDataDefinition(), containerDef.getLinkContainerQId());
+			}
+			
 			labelAttributeValue = contentItemToString(labelAttribute, containerDef, labelAttrId);
 		}
 		

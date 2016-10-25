@@ -20,6 +20,8 @@ import com.enablix.core.domain.config.Configuration;
 @Component
 public class DocumentManagerImpl implements DocumentManager {
 
+	private static final String TEMP_SUB_FOLDER = "tmp";
+	
 	@Autowired
 	private DocumentStoreFactory storeFactory;
 	
@@ -33,11 +35,14 @@ public class DocumentManagerImpl implements DocumentManager {
 	public DocumentMetadata saveUsingParentInfo(Document<?> doc, String docContainerQId, 
 			String docContainerParentInstanceIdentity) throws IOException {
 		
-		String contentPath = createContentPathUsingParentInfo(docContainerQId, docContainerParentInstanceIdentity);
+		String contentPath = createContentPathUsingParentInfo(docContainerQId, 
+				docContainerParentInstanceIdentity, doc.getMetadata().isTemporary());
 		return save(doc, contentPath);
 	}
 
-	private String createContentPathUsingParentInfo(String docContainerQId, String docContainerParentInstanceIdentity) {
+	private String createContentPathUsingParentInfo(String docContainerQId, 
+			String docContainerParentInstanceIdentity, boolean temporaryDoc) {
+		
 		String contentDataPath = pathResolver.resolveContentDataPath(
 				ProcessContext.get().getTemplateId(), 
 				QIdUtil.getParentQId(docContainerQId), 
@@ -46,6 +51,11 @@ public class DocumentManagerImpl implements DocumentManager {
 		contentDataPath = pathResolver.addContainerLabelToPath(
 				ProcessContext.get().getTemplateId(), 
 				docContainerQId, contentDataPath);
+		
+		if (temporaryDoc) {
+			contentDataPath = pathResolver.appendPath(contentDataPath, TEMP_SUB_FOLDER);
+		}
+		
 		return contentDataPath;
 	}
 
@@ -53,11 +63,13 @@ public class DocumentManagerImpl implements DocumentManager {
 	public DocumentMetadata saveUsingContainerInfo(Document<?> doc, String docContainerQId, 
 			String docContainerInstanceIdentity) throws IOException {
 		
-		String contentPath = createContentPathUsingContainerInfo(docContainerQId, docContainerInstanceIdentity);
+		String contentPath = createContentPathUsingContainerInfo(docContainerQId, 
+				docContainerInstanceIdentity, doc.getMetadata().isTemporary());
 		return save(doc, contentPath);
 	}
 
-	private String createContentPathUsingContainerInfo(String docContainerQId, String docContainerInstanceIdentity) {
+	private String createContentPathUsingContainerInfo(String docContainerQId, 
+			String docContainerInstanceIdentity, boolean temporaryDoc) {
 		String contentDataPath = pathResolver.resolveContentParentDataPath(
 				ProcessContext.get().getTemplateId(), 
 				docContainerQId, docContainerInstanceIdentity, null);
@@ -65,6 +77,11 @@ public class DocumentManagerImpl implements DocumentManager {
 		contentDataPath = pathResolver.addContainerLabelToPath(
 				ProcessContext.get().getTemplateId(), 
 				docContainerQId, contentDataPath);
+		
+		if (temporaryDoc) {
+			contentDataPath = pathResolver.appendPath(contentDataPath, TEMP_SUB_FOLDER);
+		}
+		
 		return contentDataPath;
 	}
 	
@@ -105,8 +122,8 @@ public class DocumentManagerImpl implements DocumentManager {
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
-	public Document<DocumentMetadata> buildDocument(InputStream dataStream, 
-			String name, String contentType, String contentQId, long contentLength, String docIdentity) {
+	public Document<DocumentMetadata> buildDocument(InputStream dataStream, String name, 
+			String contentType, String contentQId, long contentLength, String docIdentity, boolean tmpDoc) {
 		
 		Configuration docStoreConfig = ConfigurationUtil.getConfig(DocumentStoreConstants.DEFUALT_DOC_STORE_CONFIG_KEY);
 		
@@ -118,14 +135,18 @@ public class DocumentManagerImpl implements DocumentManager {
 		}
 		
 		DocumentStore ds = storeFactory.getDocumentStore(storeType);
-		return ds.getDocumentBuilder().build(dataStream, name, contentType, contentQId, contentLength, docIdentity);
+		return ds.getDocumentBuilder().build(dataStream, name, contentType, contentQId, contentLength, docIdentity, tmpDoc);
 	}
 
 	@Override
 	public DocumentMetadata attachUsingContainerInfo(DocumentMetadata docMd, String docContainerQId,
 			String docContainerInstanceIdentity) throws IOException {
 		
-		String contentPath = createContentPathUsingContainerInfo(docContainerQId, docContainerInstanceIdentity);
+		String contentPath = createContentPathUsingContainerInfo(docContainerQId, 
+				docContainerInstanceIdentity, false);
+		
+		docMd.setTemporary(false);
+		
 		return move(docMd, contentPath);
 	}
 
@@ -133,7 +154,11 @@ public class DocumentManagerImpl implements DocumentManager {
 	public DocumentMetadata attachUsingParentInfo(DocumentMetadata docMd, String docContainerQId,
 			String docContainerParentInstanceIdentity) throws IOException {
 		
-		String contentPath = createContentPathUsingParentInfo(docContainerQId, docContainerParentInstanceIdentity);
+		String contentPath = createContentPathUsingParentInfo(docContainerQId, 
+				docContainerParentInstanceIdentity, false);
+		
+		docMd.setTemporary(false);
+		
 		return move(docMd, contentPath);
 	}
 	

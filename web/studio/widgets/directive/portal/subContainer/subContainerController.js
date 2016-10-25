@@ -75,11 +75,17 @@ enablix.studioApp.controller('PortalSubContainerCtrl',
 				
 			ContentDataService.getContentRecordData(enablix.templateId, cntnrQId, elemIdentity, 'PORTAL', 
 					function(recordData) {
+						
 						decorateData($scope.containerDef, recordData);
 						$scope.bodyData = recordData;
+						
 						if ($scope.bodyData != null && $scope.bodyData != undefined) {
+						
 							$scope.showSubContainer = true;
+							$scope.parentIdentity = recordData.parentIdentity;
+							
 						} else {
+							
 							if ($scope.parentList && $scope.index) {
 								$scope.parentList[$scope.index] = "null" + $scope.index; // hack to remove div in portal-container.html
 							}
@@ -94,6 +100,8 @@ enablix.studioApp.controller('PortalSubContainerCtrl',
 			var paginationData = isNullOrUndefined($scope.multiListLimit) ? undefined
 					: { pageNum: 0, pageSize: $scope.multiListLimit };
 			
+			$scope.parentIdentity = $stateParams.elementIdentity;
+					
 			ContentDataService.getContentData(enablix.templateId, $scope.subContainerQId, $stateParams.elementIdentity,
 				function(dataPage) {
 					
@@ -200,9 +208,13 @@ enablix.studioApp.controller('PortalSubContainerCtrl',
 		$scope.expanded = $scope.expanded || false;
 		
 		$scope.showSubContainerList = function() {
+			
 			if ($state.includes('portal.enclosure')) {
+			
 				StateUpdateService.goToPortalEnclosureDetail($stateParams.enclosureId, $scope.subContainerQId);
+				
 			} else {
+				
 				StateUpdateService.goToPortalSubContainerList(
 					QIdUtil.getParentQId($scope.subContainerQId), 
 					$scope.subContainerQId, $stateParams.elementIdentity);

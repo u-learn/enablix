@@ -15,6 +15,7 @@
 			<itemMapping itemId="stage" listAttribute="LABEL">StageName</itemMapping>
 			<itemMapping itemId="oppSolutions" listAttribute="LABEL">Solution__c</itemMapping>
 			<itemMapping itemId="oppCompetitors">Competitor__c</itemMapping>
+			<itemMapping itemId="oppCustomers">Account.Name</itemMapping>
 		</contentItemMappings>
 	</container>
 

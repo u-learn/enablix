@@ -7,14 +7,16 @@ enablix.studioApp.directive('ebFileUpload', function() {
 			contentDef : "=",
 			parentIdentity : "=",
 			containerIdentity : "=",
-			docIdentity : "="
+			docIdentity : "=",
+			temporary: "="
 		},
 
 		link: function(scope, element, attrs) {
 			var _dataDef = scope.contentDef;
 			scope.name = _dataDef.id;
 			scope.label = _dataDef.label;
-			scope.qualifiedId = _dataDef.qualifiedId;
+			scope.qualifiedId = _dataDef.qualifiedId
+			scope.temporary = scope.temporary || false;
 		},
 
 		controller: 'FileUploadCtrl',

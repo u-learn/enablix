@@ -18,7 +18,7 @@ public class WebDAVDocumentBuilder implements DocumentBuilder<WebDAVDocumentMeta
 	
 	@Override
 	public WebDAVDocument build(InputStream dataStream, String name, String contentType, String contentQId,
-			long contentLength, String docIdentity) {
+			long contentLength, String docIdentity, boolean temporary) {
 		
 		WebDAVDocumentMetadata dbxMd = null;
 		
@@ -38,8 +38,15 @@ public class WebDAVDocumentBuilder implements DocumentBuilder<WebDAVDocumentMeta
 						: new WebDAVDocument(dataStream, name, contentType, contentQId);
 		
 		doc.getMetadata().setContentLength(contentLength);
+		doc.getMetadata().setTemporary(temporary);
 		
 		return doc;
+	}
+
+	@Override
+	public WebDAVDocument build(InputStream dataStream, String name, String contentType, long contentLength,
+			String docIdentity, boolean temporary) {
+		return build(dataStream, name, contentType, null, contentLength, docIdentity, temporary);
 	}
 
 }

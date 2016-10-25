@@ -53,5 +53,10 @@ enablix.serviceURL = {
 	"contactUs": enablix.domainName + "/site/contactus",
 	"captchasitekey": enablix.domainName + "/site/captchasitekey",
 	"sharecontent": enablix.domainName + "/sharecontent",
-	"auditContentAccess": enablix.domainName + "/activity/content/access/"
+	"auditContentAccess": enablix.domainName + "/activity/content/access/",
+	"submitContentSuggestion": enablix.domainName + "/contentwf/submit/",
+	"approveContentSuggestion": enablix.domainName + "/contentwf/approve/",
+	"rejectContentSuggestion": enablix.domainName + "/contentwf/reject/",
+	"editContentSuggestion": enablix.domainName + "/contentwf/edit/",
+	"dataSearchRequest": enablix.domainName + "/data/search/t/:domainType/",
 };

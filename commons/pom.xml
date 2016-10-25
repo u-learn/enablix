@@ -25,5 +25,7 @@
 	<module>manage-trigger-lifecycle</module>
 	<module>commons-mq</module>
 	<module>content-mapper</module>
+	<module>state-change-workflow</module>
+	<module>content-approval-workflow</module>
   </modules>
 </project>

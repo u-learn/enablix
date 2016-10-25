@@ -17,8 +17,8 @@ public class DropboxDocumentBuilder implements DocumentBuilder<DropboxDocumentMe
 	private DocumentMetadataRepository metadataRepo;
 	
 	@Override
-	public DropboxDocument build(InputStream dataStream, String name, 
-			String contentType, String contentQId, long contentLength, String docIdentity) {
+	public DropboxDocument build(InputStream dataStream, String name, String contentType, 
+			String contentQId, long contentLength, String docIdentity, boolean temporary) {
 		
 		DropboxDocumentMetadata dbxMd = null;
 		
@@ -37,8 +37,15 @@ public class DropboxDocumentBuilder implements DocumentBuilder<DropboxDocumentMe
 						: new DropboxDocument(dataStream, name, contentType, contentQId);
 		
 		doc.getMetadata().setContentLength(contentLength);
+		doc.getMetadata().setTemporary(temporary);
 		
 		return doc;
+	}
+
+	@Override
+	public DropboxDocument build(InputStream dataStream, String name, String contentType, long contentLength,
+			String docIdentity, boolean temporary) {
+		return build(dataStream, name, contentType, null, contentLength, docIdentity, temporary);
 	}
 
 }

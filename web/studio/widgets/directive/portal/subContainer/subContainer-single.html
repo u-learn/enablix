@@ -5,6 +5,7 @@
 		<h2 ng-if="!navigableHeader">{{subContainerLabel}}</h2>
 		<h2><eb-nav-link hide-hierarchy="false" hide-doc-link="true" nav-link="navContentData" ng-if="navigableHeader"></eb-nav-link></h2>
 		<div class="action-icons bar-action-icons">
+			<ebx-suggest-content content-q-id="subContainerQId" parent-identity="parentIdentity"/>
 			<span ng-if="bodyData.downloadDocIdentity">
 				<eb-doc-download doc-value="bodyData.downloadDocIdentity"></eb-doc-download>
 				<eb-doc-preview-action doc-identity="bodyData.downloadDocIdentity"></eb-doc-preview-action>

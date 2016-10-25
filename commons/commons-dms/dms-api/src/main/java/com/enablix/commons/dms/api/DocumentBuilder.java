@@ -5,5 +5,9 @@ import java.io.InputStream;
 public interface DocumentBuilder<DM extends DocumentMetadata, D extends Document<DM>> {
 
 	D build(InputStream dataStream, String name, String contentType, 
-			String contentQId, long contentLength, String docIdentity);
+			String contentQId, long contentLength, String docIdentity, boolean temporary);
+	
+	D build(InputStream dataStream, String name, String contentType, 
+			long contentLength, String docIdentity, boolean temporary);
+	
 }
