@@ -3,7 +3,6 @@ enablix.studioApp.controller('ContentSuggestEditCtrl',
 	function( $scope,   $stateParams,   ContentApprovalService,   ContentTemplateService,   Notification,   StateUpdateService) {
 		
 		$scope.temporaryFileUpload = true;
-		$scope.headingCancelLabel = "Back";
 		
 		$scope.approvalRecord = {};
 		
@@ -40,8 +39,9 @@ enablix.studioApp.controller('ContentSuggestEditCtrl',
 					});
 		};
 		
+		$scope.headingCancelLabel = "Back";
 		$scope.cancelOperation = function() {
-			StateUpdateService.goToPreviousState();
+			StateUpdateService.goBack();
 		};
 		
 	}

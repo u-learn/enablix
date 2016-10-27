@@ -18,6 +18,7 @@ enablix.studioApp.controller('SystemAdminController',
 				$scope.breadcrumbList = 
 				[
 			         { label: "Setup" },
+			         { label: "System" },
 			         { label: "User Management" }
 				];
 				
@@ -26,6 +27,7 @@ enablix.studioApp.controller('SystemAdminController',
 				$scope.breadcrumbList = 
 				[
 			         { label: "Setup" },
+			         { label: "System" },
 			         { label: "Document Store" }
 				];
 				
@@ -34,6 +36,7 @@ enablix.studioApp.controller('SystemAdminController',
 				$scope.breadcrumbList = 
 				[
 			         { label: "Setup" },
+			         { label: "System" },
 			         { label: "Quick Links" }
 				];
 				
@@ -42,8 +45,27 @@ enablix.studioApp.controller('SystemAdminController',
 				$scope.breadcrumbList = 
 				[
 			         { label: "Setup" },
+			         { label: "System" },
 			         { label: "Email Configuration" }
 				];
+				
+			} else if ($state.includes("system.recommendations")) {
+				
+				$scope.breadcrumbList = 
+					[
+				         { label: "Setup" },
+				         { label: "System" },
+				         { label: "Recommendation" }
+					];
+				
+			} else if ($state.includes('system.contentrequestlist') || $state.includes('system.contentrequestedit') || $state.includes('system.contentrequestview')) {
+				
+				$scope.breadcrumbList = 
+					[
+				         { label: "Setup" },
+				         { label: "System" },
+				         { label: "Content Requests" }
+					];
 			}
 
 		};
