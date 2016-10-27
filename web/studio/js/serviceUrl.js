@@ -58,5 +58,6 @@ enablix.serviceURL = {
 	"approveContentSuggestion": enablix.domainName + "/contentwf/approve/",
 	"rejectContentSuggestion": enablix.domainName + "/contentwf/reject/",
 	"editContentSuggestion": enablix.domainName + "/contentwf/edit/",
+	"getContentSuggestion": enablix.domainName + "/contentwf/r/:refObjectIdentity/",
 	"dataSearchRequest": enablix.domainName + "/data/search/t/:domainType/",
 };

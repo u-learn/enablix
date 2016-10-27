@@ -1,0 +1,36 @@
+<div class="block">
+	<div class="head">
+		<h2>{{pageHeading}}</h2>
+		<ebx-back></ebx-back>
+	</div>
+	<div class="cont">
+		<table class="infotable" >
+			<tr ng-repeat="item in containerDef.contentItem">
+				<th>{{item.label}}:</td>
+				<td><span class="content-data" ng-bind-html="containerData[item.id] | ebxFormatData: item : containerData.identity"></span>&nbsp;
+					<span ng-if="item.type == 'DOC' && containerData[item.id].name" class="download">
+						<eb-doc-download doc-value="containerData[item.id].identity"></eb-doc-download>
+						<eb-doc-preview-action doc-identity="containerData[item.id].identity"></eb-doc-preview-action>
+					</span>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="cont">
+		<table class="infotable" >
+			<tr>
+				<td style="width:10%;"><h2>NOTES:</h2></td>
+				<td><span class="content-data">{{approvalRecord.objectRef.notes}}</span></td>
+			</tr>
+		</table>
+	</div>
+	<div class="cont">
+		<h2>Action History</h2>
+	</div>
+	<ebx-generic-table table-headers="actionHistoryTableHeaders" table-data="actionHistoryTableData"></ebx-generic-table>
+	<div class="foot clearfix">
+		<a ng-if="isApproveAllowed" ng-click="approveContent()" class="button button-add">Approve</a>
+		<a ng-if="isRejectAllowed" ng-click="rejectContent()" class="button button-delete">Reject</a>
+		<a ng-if="isEditAllowed" ng-click="editContent()" class="button button-edit">Edit</a>
+	</div>
+</div>

@@ -73,7 +73,7 @@ enablix.studioApp.factory('RESTService', [
 						});
 			};
 			
-			var checkAuthenticationErrorAndExecute = function(errorData, status, _error) {
+			var checkAuthenticationErrorAndExecute = function(data, status, _error) {
 				
 				if (status && status == 401) {
 					
@@ -82,11 +82,15 @@ enablix.studioApp.factory('RESTService', [
 						$rootScope.authenticated = false;
 						StateUpdateService.goToLogin(window.location.href);
 					} else {
-						_error(data, status)
+						if (_error) { 
+							_error(data, status);
+						}
 					}
 					
 				} else {
-					_error(data, status);
+					if (_error) {
+						_error(data, status);
+					}
 				}
 			};
 

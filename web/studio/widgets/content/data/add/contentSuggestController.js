@@ -5,6 +5,7 @@ enablix.studioApp.controller('ContentSuggestCtrl',
 		ContentOperInitService.initAddContentOper($scope, containerQId, parentIdentity);
 		
 		$scope.temporaryFileUpload = true;
+		$scope.headingCancelLabel = "x";
 		
 		$scope.saveContentData = function() {
 			

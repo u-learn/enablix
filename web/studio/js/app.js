@@ -425,6 +425,21 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvi
 					return AuthorizationService.userHasPageAccess('MANAGE_CONTENT_REQUEST')
 				}]
 			}
+		})
+		.state('system.contentrequestedit', {
+			url: '/contentrequest/edit/{refObjectIdentity}/',
+			templateUrl: 'views/content/content-suggest.html',
+			controller: 'ContentSuggestEditCtrl',
+			resolve: {
+				setupData: appSetup
+			}
+		}).state('system.contentrequestview', {
+			url: '/contentrequest/view/{refObjectIdentity}/',
+			templateUrl: 'views/content/content-suggest-detail.html',
+			controller: 'ContentSuggestDetailCtrl',
+			resolve: {
+				setupData: appSetup
+			}
 		});
 	
 	// The custom “X-Requested-With” is a conventional header sent by browser clients, 

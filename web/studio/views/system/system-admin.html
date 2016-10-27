@@ -34,7 +34,7 @@
 						<i class="fa fa-angle-right"></i>
 						<a href="#" ui-sref-active="active" ui-sref="system.recommendations">Manage Recommendations</a>
 					</li>
-					<li ng-class="{active: $state.includes('system.contentrequestlist')}">
+					<li ng-class="{active: $state.includes('system.contentrequestlist') || $state.includes('system.contentrequestedit') || $state.includes('system.contentrequestview')}">
 						<i class="fa fa-angle-right"></i>
 						<a href="#" ui-sref-active="active" ui-sref="system.contentrequestlist">Content Requests</a>
 					</li>

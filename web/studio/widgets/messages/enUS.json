@@ -3,5 +3,10 @@
 	
 	"content.approval.status.PENDING_APPROVAL" : "Pending Approval",
 	"content.approval.status.REJECTED" : "Rejected",
-	"content.approval.status.APPROVED" : "Approved"
+	"content.approval.status.APPROVED" : "Approved",
+	
+	"content.approval.action.SUBMIT" : "Submit",
+	"content.approval.action.APPROVE" : "Approve",
+	"content.approval.action.REJECT" : "Reject",
+	"content.approval.action.EDIT" : "Edit"
 }

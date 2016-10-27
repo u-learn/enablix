@@ -7,9 +7,9 @@ function(StateUpdateService) {
 		scope : {
 			tableData : "=",
 			tableHeaders : "=",
-			pageData : "=",
-			setPageFn : "=",
-			rowActions: "="
+			pageData : "=?",
+			setPageFn : "=?",
+			rowActions: "=?"
 		},
 		link: function(scope, element, attrs) {
 			

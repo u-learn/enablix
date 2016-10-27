@@ -1,9 +1,15 @@
 enablix.studioApp.controller('ContentRequestListCtrl', 
-			['$scope', '$state', '$stateParams', 'ContentApprovalService', 'ActionNotesWindow', 'DataSearchService', 'ContentTemplateService', 'Notification', '$filter',
-	function( $scope,   $state,   $stateParams,   ContentApprovalService,   ActionNotesWindow,   DataSearchService,   ContentTemplateService,   Notification,   $filter) {
+			['$scope', '$state', '$stateParams', 'ContentApprovalService', 'ActionNotesWindow', 'DataSearchService', 'ContentTemplateService', 'Notification', '$filter', 'StateUpdateService',
+	function( $scope,   $state,   $stateParams,   ContentApprovalService,   ActionNotesWindow,   DataSearchService,   ContentTemplateService,   Notification,   $filter,   StateUpdateService) {
 		
 		var DOMAIN_TYPE = "com.enablix.content.approval.model.ContentApproval";
 				
+		$scope.breadcrumbList = 
+			[
+		         { label: "Setup" },
+		         { label: "Content Requests" }
+			];
+		
 		$scope.pagination = {
 			pageSize: enablix.defaultPageSize,
 			pageNum: 0,
@@ -44,11 +50,11 @@ enablix.studioApp.controller('ContentRequestListCtrl',
 		     }];
 		
 		$scope.contentRequestDetails = function(record) {
-			
+			StateUpdateService.goToContentRequestDetail(record.objectRef.identity)
 		}
 		
 		$scope.contentRequestEdit = function(record) {
-			
+			StateUpdateService.goToContentRequestEdit(record.objectRef.identity);
 		}
 		
 		$scope.contentRequestApprove = function(record) {
@@ -69,17 +75,8 @@ enablix.studioApp.controller('ContentRequestListCtrl',
 			});
 		}
 		
-		var isActionAvailable = function(action, record) {
-			var nextActions = record.currentState.nextActions;
-			if (nextActions) {
-				for (var i = 0; i < nextActions.length; i++) {
-					var nextAction =  nextActions[i];
-					if (nextAction.actionName == action.actionName) {
-						return true;
-					}
-				}
-			}
-			return false;
+		var isActionAllowed = function(action, record) {
+			return ContentApprovalService.isActionAllowed(action.actionName, record);
 		};
 		
 		$scope.tableRecordActions = 
@@ -97,7 +94,7 @@ enablix.studioApp.controller('ContentRequestListCtrl',
 				iconClass: "fa fa-pencil",
 				tableCellClass: "edit",
 				actionCallbackFn: $scope.contentRequestEdit,
-				checkApplicable: isActionAvailable
+				checkApplicable: isActionAllowed
 			},
 			{
 				actionName: "APPROVE",
@@ -105,7 +102,7 @@ enablix.studioApp.controller('ContentRequestListCtrl',
 				iconClass: "fa fa-check",
 				tableCellClass: "approve",
 				actionCallbackFn: $scope.contentRequestApprove,
-				checkApplicable: isActionAvailable
+				checkApplicable: isActionAllowed
 			},
 			{
 				actionName: "REJECT",
@@ -113,7 +110,7 @@ enablix.studioApp.controller('ContentRequestListCtrl',
 				iconClass: "fa fa-ban",
 				tableCellClass: "remove",
 				actionCallbackFn: $scope.contentRequestReject,
-				checkApplicable: isActionAvailable
+				checkApplicable: isActionAllowed
 			}];
 		
 		$scope.dataList = [];

@@ -1,7 +1,7 @@
 enablix.studioApp.factory('StateUpdateService', 
 	[
-	 			'$state', '$stateParams', '$rootScope', '$location', '$window',
-	 	function($state,   $stateParams,   $rootScope,   $location,   $window) {
+	 			'$state', '$stateParams', '$rootScope', '$location', '$window', 'NavigationTracker',
+	 	function($state,   $stateParams,   $rootScope,   $location,   $window,   NavigationTracker) {
 	 		
 	 		var goToStudioList = function(_containerQId, _parentIdentity) {
 				$state.go('studio.list', {'containerQId' : _containerQId, 
@@ -186,6 +186,7 @@ enablix.studioApp.factory('StateUpdateService',
 	 		};
 	
 	 		var reload = function() {
+	 			NavigationTracker.stopRecording();
 	 			$state.transitionTo($state.current, $stateParams, {
 	 			    reload: true,
 	 			    inherit: false,
@@ -193,6 +194,32 @@ enablix.studioApp.factory('StateUpdateService',
 	 			});
 	 		};
 
+	 		var goToContentRequestEdit = function(refObjectIdentity) {
+	 			$state.go("system.contentrequestedit", {
+	 				"refObjectIdentity": refObjectIdentity
+	 			});
+	 		}
+	 		
+	 		var goToContentRequestDetail = function(refObjectIdentity) {
+	 			$state.go("system.contentrequestview", {
+	 				"refObjectIdentity": refObjectIdentity
+	 			});
+	 		}
+	 		
+	 		var goToPreviousState = function() {
+	 			var prevState = NavigationTracker.getPreviousState();
+	 			if (!isNullOrUndefined(prevState)) {
+	 				$state.go(prevState.route, prevState.routeParams);
+	 			}
+	 		}
+	 		
+	 		var goBack = function() {
+	 			NavigationTracker.stopRecording();
+	 			var prevState = NavigationTracker.getPreviousState(true);
+	 			if (!isNullOrUndefined(prevState)) {
+	 				$state.go(prevState.route, prevState.routeParams);
+	 			}
+	 		}
 	 		
 	 		return {
 	 			goToApp: goToApp,
@@ -219,7 +246,9 @@ enablix.studioApp.factory('StateUpdateService',
 	 			goToPortalSubItem: goToPortalSubItem,
 	 			goToPortalSearch: goToPortalSearch,
 	 			goToAuthError: goToAuthError,
+	 			goBack: goBack,
 	 			reload: reload,
+	 			goToPreviousState: goToPreviousState,
 	 			goAddUser : goAddUser,
 	 			goEditUser : goEditUser,
 	 			goToListUser : goToListUser,
@@ -227,7 +256,9 @@ enablix.studioApp.factory('StateUpdateService',
 	 			goToAddEmailConfig : goToAddEmailConfig,
 	 			goToEmailConfig : goToEmailConfig,
 	 			goToEditEmailConfig : goToEditEmailConfig,
-	 			goToForgotPasswordPage : goToForgotPasswordPage
+	 			goToForgotPasswordPage : goToForgotPasswordPage,
+	 			goToContentRequestEdit : goToContentRequestEdit,
+	 			goToContentRequestDetail : goToContentRequestDetail
 	 		};
 	 	}
 	 ]);

@@ -63,6 +63,7 @@
 	<script type="text/javascript" src="widgets/modal/infoModalController.js"></script>
 
 	<script type="text/javascript" src="widgets/directive/focus/focusDirective.js"></script>
+	<script type="text/javascript" src="widgets/directive/back/backButtonDirective.js"></script>
 	<script type="text/javascript" src="widgets/directive/text/textInputDirective.js"></script>
 	<script type="text/javascript" src="widgets/directive/renderData/renderDataDirective.js"></script>
 	<script type="text/javascript" src="widgets/directive/table/tableDirective.js"></script>
@@ -144,9 +145,11 @@
 	<script type="text/javascript" src="js/mainController.js"></script>
 	<script type="text/javascript" src="widgets/content/index/contentIndexController.js"></script>
 	<script type="text/javascript" src="widgets/content/data/detail/contentDetailController.js"></script>
+	<script type="text/javascript" src="widgets/content/data/detail/contentSuggestDetailController.js"></script>
 	<script type="text/javascript" src="widgets/content/data/list/contentListController.js"></script>
 	<script type="text/javascript" src="widgets/content/data/add/contentAddController.js"></script>
 	<script type="text/javascript" src="widgets/content/data/add/contentSuggestController.js"></script>
+	<script type="text/javascript" src="widgets/content/data/add/contentSuggestEditController.js"></script>
 	<script type="text/javascript" src="widgets/content/data/edit/contentEditController.js"></script>
 	<script type="text/javascript" src="widgets/content/refdata/refdataIndexController.js"></script>
 	<script type="text/javascript" src="widgets/audit/activityAuditService.js"></script>
@@ -194,12 +197,12 @@
 							<li><a ui-sref="system.users.list">System Admin</a></li>
 						</ul>
 					</li>
-					<li requires-permission="MANAGE_CONTENT_REQUEST">
-						<a ng-class="{active:$state.includes('system.contentrequestlist')}"><i class="fa fa-user fa-lg"></i></a>
+					<!--li requires-permission="MANAGE_CONTENT_REQUEST">
+						<a><i class="fa fa-user fa-lg"></i></a>
 						<ul class="main-nav-secondary">
 							<li><a ui-sref="system.contentrequestlist">Upload Requests</a></li>
 						</ul>
-					</li>
+					</li-->
 					<a href="#" ng-show="authenticated" ng-click="logout()">Logout</a>					
 				</nav>
 				<!--/ main nav -->

@@ -3,13 +3,16 @@ package com.enablix.content.approval.web;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.enablix.content.approval.ContentApprovalConstants;
+import com.enablix.content.approval.model.ContentApproval;
 import com.enablix.content.approval.model.ContentDetail;
+import com.enablix.content.approval.repo.ContentApprovalRepository;
 import com.enablix.state.change.ActionException;
 import com.enablix.state.change.StateChangeWorkflowManager;
 import com.enablix.state.change.model.SimpleActionInput;
@@ -22,6 +25,9 @@ public class ContentApprovalController {
 	
 	@Autowired
 	private StateChangeWorkflowManager wfManager;
+	
+	@Autowired
+	private ContentApprovalRepository repo;
 	
 	@RequestMapping(method = RequestMethod.POST, value="/submit/", consumes = "application/json")
 	public void submitContent(@RequestBody ContentDetail contentDetails) throws ActionException {
@@ -56,7 +62,13 @@ public class ContentApprovalController {
 		LOGGER.debug("Content workfow reject request");
 		
 		wfManager.executeAction(ContentApprovalConstants.WORKFLOW_NAME, contentDetails.getIdentity(), 
-				ContentApprovalConstants.ACTION_REJECT, contentDetails);
+				ContentApprovalConstants.ACTION_EDIT, contentDetails);
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, value="/r/{refObjectIdentity}/", produces = "application/json")
+	public ContentApproval getContentRequest(@PathVariable String refObjectIdentity) {
+		LOGGER.debug("Fetch content approval record: {}", refObjectIdentity);
+		return repo.findByObjectRefIdentity(refObjectIdentity);
 	}
 	
 }

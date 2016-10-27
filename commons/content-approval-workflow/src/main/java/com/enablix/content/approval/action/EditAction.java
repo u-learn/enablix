@@ -1,18 +1,12 @@
 package com.enablix.content.approval.action;
 
-import org.springframework.beans.BeanUtils;
-
 import com.enablix.content.approval.ContentApprovalConstants;
 import com.enablix.content.approval.model.ContentDetail;
 import com.enablix.state.change.ActionException;
 import com.enablix.state.change.model.GenericActionResult;
 
-public class EditAction extends BaseContentAction<ContentDetail, Boolean> {
+public class EditAction extends ContentSaveAction {
 
-	public EditAction() {
-		super(ContentDetail.class);
-	}
-	
 	@Override
 	public String getActionName() {
 		return ContentApprovalConstants.ACTION_EDIT;
@@ -22,9 +16,7 @@ public class EditAction extends BaseContentAction<ContentDetail, Boolean> {
 	public GenericActionResult<ContentDetail, Boolean> execute(ContentDetail actionData, ContentDetail objectRef)
 			throws ActionException {
 		
-		BeanUtils.copyProperties(actionData, objectRef);
-		
-		return new GenericActionResult<ContentDetail, Boolean>(objectRef, Boolean.TRUE);
+		return copyInputData(actionData, objectRef);
 	}
 
 }

@@ -65,10 +65,10 @@ enablix.studioApp.factory('ContentApprovalService',
 	 			
 	 		};
 	 		
-	 		var editContent = function(_contentRequestIdentity, _contentQId, _parentRecordIdentity, _notes, _data, _onSuccess, _onError) {
+	 		var editContent = function(_refObjectIdentity, _contentQId, _parentRecordIdentity, _notes, _data, _onSuccess, _onError) {
 	 			
 	 			var contentDetail = {
-	 					"identity": _contentRequestIdentity,
+	 					"identity": _refObjectIdentity,
 	 					"contentQId": _contentQId,
 	 					"parentIdentity": _parentRecordIdentity,
 	 					"notes": _notes,
@@ -79,11 +79,40 @@ enablix.studioApp.factory('ContentApprovalService',
 	 			
 	 		};
 	 		
+	 		var getContent = function(_refObjectIdentity, _onSuccess, _onError) {
+	 			
+	 			var params = {
+ 					"refObjectIdentity": _refObjectIdentity
+	 			};
+
+	 			RESTService.getForData("getContentSuggestion", params, null, _onSuccess, _onError);
+	 			
+	 		};
+	 		
+	 		var isActionAllowed = function(actionName, record) {
+	 			
+	 			if (!isNullOrUndefined(record)) {
+				
+	 				var nextActions = record.currentState.nextActions;
+					if (nextActions) {
+						for (var i = 0; i < nextActions.length; i++) {
+							var nextAction =  nextActions[i];
+							if (nextAction.actionName == actionName) {
+								return true;
+							}
+						}
+					}
+	 			}
+				return false;
+			};
+	 		
 	 		return {
 	 			submitContent: submitContent,
 	 			approveContent: approveContent,
 	 			rejectContent: rejectContent,
-	 			editContent: editContent
+	 			editContent: editContent,
+	 			getContent: getContent,
+	 			isActionAllowed: isActionAllowed
 	 		};
 	 	}
 	 ]);

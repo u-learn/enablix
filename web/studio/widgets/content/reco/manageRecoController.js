@@ -2,6 +2,12 @@ enablix.studioApp.controller('ManageRecoController',
 			['$scope', '$stateParams', 'RecommendationService', 'StateUpdateService', 'StudioSetupService', 'Notification', '$modalInstance', 'containerQId', 'contentInstanceIdentity',
 	function( $scope,   $stateParams,   RecommendationService,   StateUpdateService,   StudioSetupService,   Notification,   $modalInstance,   containerQId,   contentInstanceIdentity) {
 		
+		$scope.breadcrumbList = 
+			[
+		         { label: "Setup" },
+		         { label: "Recommendation" }
+			];
+				
 		$scope.close = function() {
 			$modalInstance.close();
 		}
