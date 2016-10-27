@@ -17,6 +17,10 @@ public class RecentData extends BaseDocumentEntity {
 	private ContentDataRef data;
 	
 	private UpdateType updateType;
+	
+	// If this is a record for UpdateType.NEW and has a corresponding UpdateType.UPDATE record,
+	// then obsolete flag will be set
+	private boolean obsolete;
 
 	public RecentDataScope getScope() {
 		return scope;
@@ -40,6 +44,14 @@ public class RecentData extends BaseDocumentEntity {
 
 	public void setUpdateType(UpdateType updateType) {
 		this.updateType = updateType;
+	}
+
+	public boolean isObsolete() {
+		return obsolete;
+	}
+
+	public void setObsolete(boolean obsolete) {
+		this.obsolete = obsolete;
 	}
 	
 }

@@ -37,4 +37,6 @@ public class ContentDataConstants {
 	
 	public static final String EXTERNAL_SOURCE_ID_KEY = "__extSourceId";
 	
+	public static final String RECENT_DATA_OBSOLETE_ATTR = "obsolete";
+	
 }

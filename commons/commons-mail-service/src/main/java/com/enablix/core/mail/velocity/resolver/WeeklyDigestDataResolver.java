@@ -19,6 +19,7 @@ import com.enablix.core.commons.xsdtopojo.ContainerType;
 import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 import com.enablix.core.mail.velocity.VelocityTemplateInputResolver;
 import com.enablix.core.mail.velocity.input.WeeklyDigestVelocityInput;
+import com.enablix.core.mongo.search.BoolFilter;
 import com.enablix.core.mongo.search.ConditionOperator;
 import com.enablix.core.mongo.search.DateFilter;
 import com.enablix.core.mongo.search.SearchCriteria;
@@ -80,10 +81,14 @@ public class WeeklyDigestDataResolver implements VelocityTemplateInputResolver<W
 		Calendar lookbackLimitDate = Calendar.getInstance();
 		lookbackLimitDate.add(Calendar.DAY_OF_YEAR, -recentDataLookbackDays);
 		
+		BoolFilter obsoleteFilter = new BoolFilter(
+				ContentDataConstants.RECENT_DATA_OBSOLETE_ATTR, 
+				Boolean.FALSE, ConditionOperator.EQ);
+		
 		DateFilter dateFilter = new DateFilter(ContentDataConstants.MODIFIED_AT_KEY, 
 				lookbackLimitDate.getTime(), ConditionOperator.GTE);
 		
-		return new SearchCriteria(dateFilter);
+		return new SearchCriteria(obsoleteFilter.and(dateFilter));
 	}
 
 	@Override

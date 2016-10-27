@@ -39,12 +39,14 @@ public class RecentDataCollector implements ContentDataEventListener {
 				
 			} else {
 				
+				String strContentIdentity = String.valueOf(contentIdentity);
 				RecentData existEntry = recentDataRepo.findByDataInstanceIdentityAndUpdateType(
-											String.valueOf(contentIdentity), UpdateType.UPDATED);
+											strContentIdentity, UpdateType.UPDATED);
 				
 				if (existEntry == null) {
 					
 					createNewRecord(event, recentData, contentIdentity, UpdateType.UPDATED);
+					markExistNewTypeRecordAsObsolete(strContentIdentity);
 					
 				} else {
 					// simply save it again, it will update the updated date
@@ -54,6 +56,17 @@ public class RecentDataCollector implements ContentDataEventListener {
 		}
 	}
 
+	private void markExistNewTypeRecordAsObsolete(String contentIdentity) {
+		
+		RecentData newRecord = recentDataRepo.findByDataInstanceIdentityAndUpdateType(
+				contentIdentity, UpdateType.NEW);
+		
+		if (newRecord != null) {
+			newRecord.setObsolete(true);
+			recentDataRepo.save(newRecord);
+		}
+	}
+	
 	private void createNewRecord(ContentDataSaveEvent event, RecentData recentData, 
 			Object contentIdentity, UpdateType updateType) {
 		
