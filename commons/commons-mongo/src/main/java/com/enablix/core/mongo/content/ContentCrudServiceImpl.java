@@ -194,7 +194,7 @@ public class ContentCrudServiceImpl implements ContentCrudService {
 	@Override
 	public Map<String, Object> deleteRecord(String collectionName, String recordIdentity) {
 		Query query = createIdentityQuery(null, recordIdentity);
-		HashMap record = mongoTemplate.findOne(query, HashMap.class);
+		HashMap record = mongoTemplate.findOne(query, HashMap.class, collectionName);
 		mongoTemplate.remove(query, collectionName);
 		return record;
 	}
