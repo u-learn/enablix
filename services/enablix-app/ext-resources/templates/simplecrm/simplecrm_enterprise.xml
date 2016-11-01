@@ -1814,6 +1814,15 @@
 					<childContainer id="salesDeck"/>					
 					<childContainer id="whitepaper"/>
 					<childContainer id="winloss"/>
+					<childContainer id="projectplan"/>
+					<childContainer id="commercial"/>	
+					<childContainer id="designandscope"/>									
+					<childContainer id="testcase"/>					
+					<childContainer id="technicaldoc"/>
+					<childContainer id="discoverydoc"/>
+					<childContainer id="crlist"/>					
+					<childContainer id="milestonepymt"/>
+					<childContainer id="releasenote"/>					
 					<childContainer id="othercontent"/>										
 				</enclosure>				
 				<enclosure id="corporate" label="Corporate">
