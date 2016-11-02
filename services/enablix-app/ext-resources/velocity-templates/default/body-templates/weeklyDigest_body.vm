@@ -126,7 +126,7 @@
 										<div class="h1" style="color:#0e2a49; font-family:Arial,sans-serif, 'OS'; font-size:26px; line-height:30px; text-align:left; font-weight:bold">Hello #if(${obj.loggedInUser.profile.name}) ${obj.loggedInUser.profile.name}#end,</div>
 										<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="15" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
 
-										Here are the OFSAA Sales Central updates from previous week.
+										Here are the ${obj.tenant.name} updates from previous week.
 										<table width="100%" border="0" cellspacing="0" cellpadding="0">
 											<tr>
 												<td class="content-spacing2" style="font-size:0pt; line-height:0pt; text-align:left" width="30"></td>
