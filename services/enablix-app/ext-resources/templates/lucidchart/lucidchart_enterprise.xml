@@ -149,7 +149,7 @@
 						<datastore>
 							<storeId>competitorType</storeId>
 							<dataId>identity</dataId>
-							<dataLabel>type</dataLabel>
+							<dataLabel>typeName</dataLabel>
 						</datastore>
 					</refList>
 				</bounded>
@@ -233,7 +233,7 @@
 							<datastore>
 								<storeId>opportunityStatus</storeId>
 								<dataId>identity</dataId>
-								<dataLabel>oppStatus</dataLabel>
+								<dataLabel>oppStatusName</dataLabel>
 							</datastore>
 						</refList>
 					</bounded>
@@ -327,7 +327,7 @@
 						<datastore>
 							<storeId>integrationType</storeId>
 							<dataId>identity</dataId>
-							<dataLabel>type</dataLabel>
+							<dataLabel>typeName</dataLabel>
 						</datastore>
 					</refList>
 				</bounded>
@@ -352,12 +352,12 @@
 			<contentItem id="name" label="Partner Name" type="text" searchBoost="7"/>
 			<contentItem id="shortName" label="Short Name" type="text" searchBoost="7"/>
 			<contentItem id="type" label="Partner Type" type="bounded" searchBoost="6">
-				<bounded>
+				<bounded multivalued="true">
 					<refList>
 						<datastore>
 							<storeId>partnerType</storeId>
 							<dataId>identity</dataId>
-							<dataLabel>type</dataLabel>
+							<dataLabel>typeName</dataLabel>
 						</datastore>
 					</refList>
 				</bounded>
@@ -389,7 +389,7 @@
 						<datastore>
 							<storeId>analystType</storeId>
 							<dataId>identity</dataId>
-							<dataLabel>type</dataLabel>
+							<dataLabel>typeName</dataLabel>
 						</datastore>
 					</refList>
 				</bounded>
@@ -413,7 +413,7 @@
 							<datastore>
 								<storeId>analystReportRating</storeId>
 								<dataId>identity</dataId>
-								<dataLabel>rating</dataLabel>
+								<dataLabel>ratingName</dataLabel>
 							</datastore>
 						</refList>
 					</bounded>
@@ -542,7 +542,7 @@
 							<datastore>
 								<storeId>analystEngagementType</storeId>
 								<dataId>identity</dataId>
-								<dataLabel>type</dataLabel>
+								<dataLabel>typeName</dataLabel>
 							</datastore>
 						</refList>
 					</bounded>
@@ -606,7 +606,7 @@
 						<datastore>
 							<storeId>mktEventType</storeId>
 							<dataId>identity</dataId>
-							<dataLabel>type</dataLabel>
+							<dataLabel>typeName</dataLabel>
 						</datastore>
 					</refList>
 				</bounded>
@@ -888,7 +888,7 @@
 						<datastore>
 							<storeId>caseStudyType</storeId>
 							<dataId>identity</dataId>
-							<dataLabel>type</dataLabel>
+							<dataLabel>typeName</dataLabel>
 						</datastore>
 					</refList>
 				</bounded>
@@ -1446,7 +1446,7 @@
 						<datastore>
 							<storeId>mmtype</storeId>
 							<dataId>identity</dataId>
-							<dataLabel>type</dataLabel>
+							<dataLabel>typeName</dataLabel>
 						</datastore>
 					</refList>
 				</bounded>
@@ -1819,7 +1819,7 @@
 						<datastore>
 							<storeId>slideType</storeId>
 							<dataId>identity</dataId>
-							<dataLabel>type</dataLabel>
+							<dataLabel>typeName</dataLabel>
 						</datastore>
 					</refList>
 				</bounded>
@@ -1901,7 +1901,7 @@
 						<datastore>
 							<storeId>emailTemplateType</storeId>
 							<dataId>identity</dataId>
-							<dataLabel>type</dataLabel>
+							<dataLabel>typeName</dataLabel>
 						</datastore>
 					</refList>
 				</bounded>
@@ -2122,9 +2122,13 @@
 			<contentItem id="name" label="Name" type="text"/>			
 		</container>
 		<container id="caseStudyType" label="Case Study Types" refData="true">
-			<contentItem id="type" label="Type" type="text"/>
+			<contentItem id="typeName" label="Type" type="text"/>
 			<contentItem id="desc" label="Description" type="text"/>
 		</container>
+		<container id="integrationType" label="Integration Types" refData="true">
+			<contentItem id="typeName" label="Type" type="text"/>
+			<contentItem id="desc" label="Description" type="text"/>
+		</container>		
 		<container id="industry" label="Industries" refData="true">
 			<contentItem id="name" label="Industry Name" type="text"/>
 			<contentItem id="desc" label="Description" type="text"/>
@@ -2138,7 +2142,7 @@
 			<contentItem id="desc" label="Description" type="text"/>
 		</container>
 		<container id="analystType" label="Analyst/Press Types" refData="true">
-			<contentItem id="type" label="Type" type="text"/>
+			<contentItem id="typeName" label="Type" type="text"/>
 			<contentItem id="desc" label="Description" type="text"/>
 		</container>
 		<container id="emailTemplateType" label="Email Template Types" refData="true">
@@ -2146,19 +2150,19 @@
 			<contentItem id="desc" label="Description" type="text"/>
 		</container>			
 		<container id="analystReportRating" label="Analyst Report Rating" refData="true">
-			<contentItem id="rating" label="Rating" type="text"/>
+			<contentItem id="ratingName" label="Rating" type="text"/>
 			<contentItem id="desc" label="Description" type="text"/>
 		</container>
 		<container id="analystEngagementType" label="Analyst Engagement Types" refData="true">
-			<contentItem id="type" label="Type" type="text"/>
+			<contentItem id="typeName" label="Type" type="text"/>
 			<contentItem id="desc" label="Description" type="text"/>
 		</container>
 		<container id="competitorType" label="Competitor Types" refData="true">
-			<contentItem id="type" label="Type" type="text"/>
+			<contentItem id="typeName" label="Type" type="text"/>
 			<contentItem id="desc" label="Description" type="text"/>
 		</container>
 		<container id="compRating" label="Competitive Rating" refData="true">
-			<contentItem id="rating" label="Rating" type="text"/>
+			<contentItem id="ratingName" label="Rating" type="text"/>
 			<contentItem id="desc" label="Description" type="text"/>
 		</container>		
 		<container id="faqCategory" label="FAQ Category" refData="true">
@@ -2170,11 +2174,11 @@
 			<contentItem id="desc" label="Description" type="text"/>
 		</container>
 		<container id="mmtype" label="Multi Media Types" refData="true">
-			<contentItem id="type" label="Type" type="text"/>
+			<contentItem id="typeName" label="Type" type="text"/>
 			<contentItem id="desc" label="Description" type="text"/>
 		</container>
 		<container id="partnerType" label="Partner Types" refData="true">
-			<contentItem id="type" label="Type" type="text"/>
+			<contentItem id="typeName" label="Type" type="text"/>
 			<contentItem id="desc" label="Description" type="text"/>
 		</container>
 		<container id="proposalTypes" label="Proposal Types" refData="true">
@@ -2186,15 +2190,15 @@
 			<contentItem id="desc" label="Description" type="text"/>
 		</container>
 		<container id="slideType" label="Slide Types" refData="true">
-			<contentItem id="type" label="Type" type="text"/>
+			<contentItem id="typeName" label="Type" type="text"/>
 			<contentItem id="desc" label="Description" type="text"/>
 		</container>
 		<container id="mktEventType" label="Marketing Event Types" refData="true">
-			<contentItem id="type" label="Type" type="text"/>
+			<contentItem id="typeName" label="Type" type="text"/>
 			<contentItem id="desc" label="Description" type="text"/>
 		</container>
 		<container id="opportunityStatus" label="Opportunity Status" refData="true">
-			<contentItem id="oppStatus" label="Status" type="text"/>
+			<contentItem id="oppStatusName" label="Status" type="text"/>
 			<contentItem id="desc" label="Description" type="text"/>
 		</container>
 		<container id="businessRole" label="Business Roles" refData="true">
@@ -2238,6 +2242,16 @@
 					<childContainer id="winloss"/>
 					<childContainer id="content"/>
 				</enclosure>
+				<enclosure id="corporate" label="Corporate">
+					<childContainer id="supportpolicy"/>
+					<childContainer id="nda"/>
+					<childContainer id="partneragreement"/>
+					<childContainer id="sow"/>
+					<childContainer id="mla"/>
+					<childContainer id="msa"/>
+					<childContainer id="orderingdoc"/>
+					<childContainer id="corporatecontent"/>
+				</enclosure>				
 			</container>
 		</contentUIDef>
 		<contentUIDef qualifiedId="customer">
@@ -2304,6 +2318,19 @@
 		<contentUIDef qualifiedId="competitor">
 			<container labelQualifiedId="competitor.shortName"/>
 		</contentUIDef>
+		<contentUIDef qualifiedId="integration.desc">
+			<text type="long"/>
+		</contentUIDef>		
+		<contentUIDef qualifiedId="integration">
+			<container labelQualifiedId="integration.shortName">
+				<listViewConfig>
+					<hideContentItem id="desc"/>
+				</listViewConfig>
+				<portalConfig>
+					<headingContentItem id="shortName"/>
+				</portalConfig>
+			</container>
+		</contentUIDef>		
 		<contentUIDef qualifiedId="partner">
 			<container labelQualifiedId="partner.shortName"/>
 		</contentUIDef>
