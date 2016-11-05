@@ -15,11 +15,11 @@ public class StateChangeWorkflowDefinitionImpl<T extends RefObject, A extends St
 	private String workflowName;
 	private StateChangeRecordingRepository<T, A> repo;
 	private RecordingInstantiator<T, A> instantiator;
-	private ActionRegistry<T> actionRegistry;
+	private ActionRegistry<T, A> actionRegistry;
 	
 	public StateChangeWorkflowDefinitionImpl(String workflowName, StateChangeRecordingRepository<T, A> repo,
 			RecordingInstantiator<T, A> instantiator,
-			ActionRegistry<T> actionRegistry) {
+			ActionRegistry<T, A> actionRegistry) {
 		super();
 		this.workflowName = workflowName;
 		this.repo = repo;
@@ -43,12 +43,12 @@ public class StateChangeWorkflowDefinitionImpl<T extends RefObject, A extends St
 	}
 	
 	public void registerAction(String stateName, 
-			ActionConfiguration<T, ? extends ActionInput, ?, ? extends ActionResult<T, ?>> action) {
+			ActionConfiguration<T, A, ? extends ActionInput, ?, ? extends ActionResult<T, ?>> action) {
 		actionRegistry.addAllowedActionForState(stateName, action);
 	}
 
 	@Override
-	public ActionConfiguration<T, ? extends ActionInput, ?, ? extends ActionResult<T, ?>> 
+	public ActionConfiguration<T, A, ? extends ActionInput, ?, ? extends ActionResult<T, ?>> 
 			getStateAction(String stateName, String actionName) {
 		return actionRegistry.getActionConfig(stateName, actionName);
 	}

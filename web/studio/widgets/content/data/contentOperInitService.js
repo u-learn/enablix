@@ -77,10 +77,40 @@ enablix.studioApp.factory('ContentOperInitService',
 	 			}
 	 			
 	 			return copiedVal
+	 		};
+	 		
+	 		var initEditContentOper = function(_scope, _containerQId, _contentIdentity) {
+	 			
+	 			_scope.containerDef = ContentTemplateService.getContainerDefinition(enablix.template, _containerQId);
+	 			var containerLabel = _scope.containerDef.label;
+	 			
+	 			if (!isNullOrUndefined(_scope.containerDef.linkContainerQId)) {
+	 				
+	 				_scope.containerDef = ContentTemplateService.getContainerDefinition(
+	 						enablix.template, _scope.containerDef.linkContainerQId);
+	 				
+	 				if (isNullOrUndefined(containerLabel)) {
+	 					containerLabel = _scope.containerDef.label;
+	 				}
+	 			}
+	 			
+	 			_scope.pageHeading = "Edit " + containerLabel;
+	 			
+	 			_scope.containerData = {};
+	 			
+	 			ContentDataService.getContentRecordData(enablix.templateId, _containerQId, _contentIdentity, null,
+	 					function(data) {
+	 						_scope.containerData = angular.copy(data);
+	 					}, 
+	 					function(data) {
+	 						//alert('Error retrieving record data');
+	 						Notification.error({message: "Error retrieving record data", delay: enablix.errorMsgShowTime});
+	 					});
 	 		}
 	 		    	
 	 		return {
-	 			initAddContentOper: initAddContentOper
+	 			initAddContentOper: initAddContentOper,
+	 			initEditContentOper: initEditContentOper
 	 		};
 	 	}
 	 ]);

@@ -1461,6 +1461,14 @@ input[type=checkbox] {
 	float: right;
 }
 
+.action-icons a {
+	color:#2ecc71;
+}
+
+.action-icons a:hover{
+	color: #27ae60;
+} 
+
 .bar-action-icons {
 	margin-top: -20px;
 	margin-right: 15px;

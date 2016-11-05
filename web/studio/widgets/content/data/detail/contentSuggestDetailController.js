@@ -1,6 +1,6 @@
 enablix.studioApp.controller('ContentSuggestDetailCtrl', 
-			['$scope', '$state', '$stateParams', 'ContentApprovalService', 'ContentTemplateService', 'StateUpdateService', 'Notification', 'ActionNotesWindow', '$filter',
-	function( $scope,   $state,   $stateParams,   ContentApprovalService,   ContentTemplateService,   StateUpdateService,   Notification,   ActionNotesWindow,   $filter) {
+			['$scope', '$state', '$stateParams', 'ContentApprovalService', 'ContentTemplateService', 'StateUpdateService', 'Notification', 'ActionNotesWindow', 'ConfirmationModalWindow', '$filter',
+	function( $scope,   $state,   $stateParams,   ContentApprovalService,   ContentTemplateService,   StateUpdateService,   Notification,   ActionNotesWindow,   ConfirmationModalWindow,   $filter) {
 		
 		var containerQId = $stateParams.containerQId;
 		
@@ -29,9 +29,10 @@ enablix.studioApp.controller('ContentSuggestDetailCtrl',
 
 			$scope.pageHeading = containerLabel + " - " + record.objectRef.contentTitle;
 			
-			$scope.isEditAllowed = ContentApprovalService.isActionAllowed('EDIT', $scope.approvalRecord);
-			$scope.isApproveAllowed = ContentApprovalService.isActionAllowed('APPROVE', $scope.approvalRecord);
-			$scope.isRejectAllowed = ContentApprovalService.isActionAllowed('REJECT', $scope.approvalRecord);
+			$scope.isEditAllowed = ContentApprovalService.isActionAllowed(ContentApprovalService.actionEdit(), $scope.approvalRecord);
+			$scope.isApproveAllowed = ContentApprovalService.isActionAllowed(ContentApprovalService.actionApprove(), $scope.approvalRecord);
+			$scope.isRejectAllowed = ContentApprovalService.isActionAllowed(ContentApprovalService.actionReject(), $scope.approvalRecord);
+			$scope.isWithdrawAllowed = ContentApprovalService.isActionAllowed(ContentApprovalService.actionWithdraw(), $scope.approvalRecord);
 			
 			$scope.actionHistoryTableData = record.actionHistory.actions;
 			$scope.actionHistoryTableHeaders = 
@@ -61,26 +62,27 @@ enablix.studioApp.controller('ContentSuggestDetailCtrl',
 		$scope.isEditAllowed = false;
 		$scope.isApproveAllowed = false;
 		$scope.isRejectAllowed = false;
+		$scope.isWithdrawAllowed = false;
 		
 		var isActionAllowed = function(actionName) {
 			ContentApprovalService.isActionAllowed(actionName, $scope.approvalRecord);
 		}
 		
 		$scope.approveContent = function() {
-			var modalInstance = ActionNotesWindow.showWindow("Approve Content", "Approval notes");
-			modalInstance.result.then(function(notes) {
-				ContentApprovalService.approveContent($scope.approvalRecord.objectRef.identity, notes, function(data) {
-					StateUpdateService.reload();
-				});
+			ContentApprovalService.initApproveAction($scope.approvalRecord.objectRef.identity, function(data) {
+				StateUpdateService.reload();
 			});
 		}
 		
 		$scope.rejectContent = function() {
-			var modalInstance = ActionNotesWindow.showWindow("Reject Content", "Rejection notes");
-			modalInstance.result.then(function(notes) {
-				ContentApprovalService.rejectContent($scope.approvalRecord.objectRef.identity, notes, function(data) {
-					StateUpdateService.reload();
-				});
+			ContentApprovalService.initRejectAction($scope.approvalRecord.objectRef.identity, function(data) {
+				StateUpdateService.reload();
+			});
+		}
+		
+		$scope.withdrawContent = function(record) {
+			ContentApprovalService.initWithdrawAction(record, function(data) {
+				StateUpdateService.reload();
 			});
 		}
 		

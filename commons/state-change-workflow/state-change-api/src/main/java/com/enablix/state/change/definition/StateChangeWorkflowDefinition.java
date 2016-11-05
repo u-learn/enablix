@@ -10,7 +10,7 @@ public interface StateChangeWorkflowDefinition<T extends RefObject, A extends St
 
 	String workflowName();
 	
-	ActionConfiguration<T, ? extends ActionInput, ?, ? extends ActionResult<T, ?>> 
+	ActionConfiguration<T, A, ? extends ActionInput, ?, ? extends ActionResult<T, ?>> 
 		getStateAction(String stateName, String actionName);
 	
 	StateChangeRecordingRepository<T, A> workflowRepository();

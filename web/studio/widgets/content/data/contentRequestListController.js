@@ -1,14 +1,6 @@
 enablix.studioApp.controller('ContentRequestListCtrl', 
-			['$scope', '$state', '$stateParams', 'ContentApprovalService', 'ActionNotesWindow', 'DataSearchService', 'ContentTemplateService', 'Notification', '$filter', 'StateUpdateService',
-	function( $scope,   $state,   $stateParams,   ContentApprovalService,   ActionNotesWindow,   DataSearchService,   ContentTemplateService,   Notification,   $filter,   StateUpdateService) {
-		
-		var DOMAIN_TYPE = "com.enablix.content.approval.model.ContentApproval";
-				
-		$scope.breadcrumbList = 
-			[
-		         { label: "Setup" },
-		         { label: "Content Requests" }
-			];
+			['$scope', '$state', '$stateParams', 'ContentApprovalService', 'ActionNotesWindow', 'DataSearchService', 'ContentTemplateService', 'Notification', '$filter', 'StateUpdateService', 'AuthorizationService',
+	function( $scope,   $state,   $stateParams,   ContentApprovalService,   ActionNotesWindow,   DataSearchService,   ContentTemplateService,   Notification,   $filter,   StateUpdateService,   AuthorizationService) {
 		
 		$scope.pagination = {
 			pageSize: enablix.defaultPageSize,
@@ -50,28 +42,36 @@ enablix.studioApp.controller('ContentRequestListCtrl',
 		     }];
 		
 		$scope.contentRequestDetails = function(record) {
-			StateUpdateService.goToContentRequestDetail(record.objectRef.identity)
+			if ($state.includes("myaccount")) {
+				StateUpdateService.goToMyContentRequestDetail(record.objectRef.identity)
+			} else {
+				StateUpdateService.goToContentRequestDetail(record.objectRef.identity)
+			}
 		}
 		
 		$scope.contentRequestEdit = function(record) {
-			StateUpdateService.goToContentRequestEdit(record.objectRef.identity);
+			if ($state.includes("myaccount")) {
+				StateUpdateService.goToMyContentRequestEdit(record.objectRef.identity);
+			} else {
+				StateUpdateService.goToContentRequestEdit(record.objectRef.identity);
+			}
 		}
 		
 		$scope.contentRequestApprove = function(record) {
-			var modalInstance = ActionNotesWindow.showWindow("Approve Content", "Approval notes");
-			modalInstance.result.then(function(notes) {
-				ContentApprovalService.approveContent(record.objectRef.identity, notes, function(data) {
-					fetchSearchResult();
-				});
+			ContentApprovalService.initApproveAction(record, function(data) {
+				fetchSearchResult();
 			});
 		}
 
 		$scope.contentRequestReject = function(record) {
-			var modalInstance = ActionNotesWindow.showWindow("Reject Content", "Rejection notes");
-			modalInstance.result.then(function(notes) {
-				ContentApprovalService.rejectContent(record.objectRef.identity, notes, function(data) {
-					fetchSearchResult();
-				});
+			ContentApprovalService.initRejectAction(record, function(data) {
+				fetchSearchResult();
+			});
+		}
+		
+		$scope.contentRequestWithdraw = function(record) {
+			ContentApprovalService.initWithdrawAction(record, function(data) {
+				fetchSearchResult();
 			});
 		}
 		
@@ -81,7 +81,7 @@ enablix.studioApp.controller('ContentRequestListCtrl',
 		
 		$scope.tableRecordActions = 
 			[{
-				actionName: "VIEW_DETAILS",
+				actionName: ContentApprovalService.actionViewDetails(),
 				tooltip: "Details",
 				iconClass: "fa fa-eye",
 				tableCellClass: "details",
@@ -89,7 +89,7 @@ enablix.studioApp.controller('ContentRequestListCtrl',
 				checkApplicable: function(record) { return true; }
 			},
 			{
-				actionName: "EDIT",
+				actionName: ContentApprovalService.actionEdit(),
 				tooltip: "Edit",
 				iconClass: "fa fa-pencil",
 				tableCellClass: "edit",
@@ -97,7 +97,7 @@ enablix.studioApp.controller('ContentRequestListCtrl',
 				checkApplicable: isActionAllowed
 			},
 			{
-				actionName: "APPROVE",
+				actionName: ContentApprovalService.actionApprove(),
 				tooltip: "Approve",
 				iconClass: "fa fa-check",
 				tableCellClass: "approve",
@@ -105,19 +105,33 @@ enablix.studioApp.controller('ContentRequestListCtrl',
 				checkApplicable: isActionAllowed
 			},
 			{
-				actionName: "REJECT",
+				actionName: ContentApprovalService.actionReject(),
 				tooltip: "Reject",
 				iconClass: "fa fa-ban",
 				tableCellClass: "remove",
 				actionCallbackFn: $scope.contentRequestReject,
 				checkApplicable: isActionAllowed
+			},
+			{
+				actionName: ContentApprovalService.actionWithdraw(),
+				tooltip: "Withdraw",
+				iconClass: "fa fa-undo",
+				tableCellClass: "remove",
+				actionCallbackFn: $scope.contentRequestWithdraw,
+				checkApplicable: isActionAllowed
 			}];
 		
 		$scope.dataList = [];
 		
+		$scope.dataFilters = {};
+		
+		if ($state.includes("myaccount")) {
+			$scope.dataFilters.createdBy = AuthorizationService.getCurrentUser().userId;
+		}
+		
 		var fetchSearchResult = function() {
 			
-			DataSearchService.getSearchResult(DOMAIN_TYPE, {}, $scope.pagination, {}, function(dataPage) {
+			ContentApprovalService.getContentRequests($scope.dataFilters, $scope.pagination, function(dataPage) {
 					
 					$scope.dataList = dataPage.content;
 					$scope.pageData = dataPage;

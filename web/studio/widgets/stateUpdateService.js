@@ -206,6 +206,18 @@ enablix.studioApp.factory('StateUpdateService',
 	 			});
 	 		}
 	 		
+	 		var goToMyContentRequestEdit = function(refObjectIdentity) {
+	 			$state.go("myaccount.contentrequestedit", {
+	 				"refObjectIdentity": refObjectIdentity
+	 			});
+	 		}
+	 		
+	 		var goToMyContentRequestDetail = function(refObjectIdentity) {
+	 			$state.go("myaccount.contentrequestview", {
+	 				"refObjectIdentity": refObjectIdentity
+	 			});
+	 		}
+	 		
 	 		var goToPreviousState = function() {
 	 			var prevState = NavigationTracker.getPreviousState();
 	 			if (!isNullOrUndefined(prevState)) {
@@ -258,7 +270,9 @@ enablix.studioApp.factory('StateUpdateService',
 	 			goToEditEmailConfig : goToEditEmailConfig,
 	 			goToForgotPasswordPage : goToForgotPasswordPage,
 	 			goToContentRequestEdit : goToContentRequestEdit,
-	 			goToContentRequestDetail : goToContentRequestDetail
+	 			goToContentRequestDetail : goToContentRequestDetail,
+	 			goToMyContentRequestEdit : goToMyContentRequestEdit,
+	 			goToMyContentRequestDetail : goToMyContentRequestDetail
 	 		};
 	 	}
 	 ]);

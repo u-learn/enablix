@@ -38,7 +38,7 @@ public class GenericDao extends BaseTenantDao {
 			
 		} else {
 			List<T> content = findByCriteria(criteria, collectionName, findType);
-			page = new PageImpl<T>(content, pageable, 0);
+			page = new PageImpl<T>(content, pageable, content.size());
 		}
 		
 		return page;

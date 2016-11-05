@@ -59,6 +59,7 @@
 	<script type="text/javascript" src="widgets/filter/contentFormatFilter.js"></script>
 	<script type="text/javascript" src="widgets/filter/dateFilter.js"></script>
 	<script type="text/javascript" src="widgets/modal/actionNotesModal.js"></script>
+	<script type="text/javascript" src="widgets/modal/confirmationModal.js"></script>
 	<script type="text/javascript" src="widgets/modal/infoModal.js"></script>
 	<script type="text/javascript" src="widgets/modal/infoModalController.js"></script>
 
@@ -130,6 +131,7 @@
 	<script type="text/javascript" src="widgets/system/reco/recoService.js"></script>
 	<script type="text/javascript" src="widgets/system/reco/recoConfigController.js"></script>
 	<script type="text/javascript" src="widgets/system/share/contentShareService.js"></script>
+	<script type="text/javascript" src="widgets/account/myAccountController.js"></script>
 	<script type="text/javascript" src="widgets/content/refdata/userCtrl.js"></script>
 	<script type="text/javascript" src="widgets/content/refdata/userService.js"></script>
 	<script type="text/javascript" src="widgets/content/quicklinks/assocQuickLinkController.js"></script>
@@ -197,12 +199,12 @@
 							<li><a ui-sref="system.users.list">System Admin</a></li>
 						</ul>
 					</li>
-					<!--li requires-permission="MANAGE_CONTENT_REQUEST">
+					<li>
 						<a><i class="fa fa-user fa-lg"></i></a>
 						<ul class="main-nav-secondary">
-							<li><a ui-sref="system.contentrequestlist">Upload Requests</a></li>
+							<li><a ui-sref="myaccount.contentrequestlist">My Content Requests</a></li>
 						</ul>
-					</li-->
+					</li>
 					<a href="#" ng-show="authenticated" ng-click="logout()">Logout</a>					
 				</nav>
 				<!--/ main nav -->

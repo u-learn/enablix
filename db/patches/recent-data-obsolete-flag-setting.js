@@ -1,8 +1,9 @@
 /**************************************************************
 Script to set the "obsolete" flag in recent data collection
+
 Execute: use mongo utility to run the script
 
-mongo <path>/user-roles.js 
+mongo <path>/<script-file-name>
 
 ****************************************************************/
 

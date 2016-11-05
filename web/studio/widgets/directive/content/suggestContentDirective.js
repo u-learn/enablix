@@ -6,9 +6,35 @@ enablix.studioApp.directive('ebxSuggestContent', [
 				restrict : 'E',
 				scope : {
 					contentQId: "=",
-					parentIdentity: "="
+					parentIdentity: "=?",
+					contentIdentity: "=?",
+					icon: "@"
 				},
 				link : function(scope, element, attrs) {
+					
+						
+					var checkEditSuggestion = function() {
+						
+						if (!isNullOrUndefined(scope.contentIdentity)) {
+							scope.editOper = true;
+						} else {
+							scope.editOper = false;
+						}
+						
+						if (!isNullOrUndefined(scope.icon)) {
+							scope.iconClass = scope.icon;
+						} else {
+							scope.iconClass = scope.editOper ? "fa fa-pencil" : "fa fa-plus-square";
+						}
+					}
+
+					checkEditSuggestion();
+					
+					
+					
+					scope.$watch('contentIdentity', function() {
+						checkEditSuggestion();
+					});
 					
 					scope.openAddContentWindow = function() {
 						var modalInstance = $modal.open({
@@ -21,6 +47,9 @@ enablix.studioApp.directive('ebxSuggestContent', [
 						    	  },
 						    	  containerQId: function() {
 						    		  return scope.contentQId;
+						    	  },
+						    	  contentIdentity: function() {
+						    		  return scope.contentIdentity
 						    	  }
 						      }
 						});

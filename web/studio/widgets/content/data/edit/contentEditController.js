@@ -1,41 +1,51 @@
 enablix.studioApp.controller('ContentEditCtrl', 
-			['$scope', '$stateParams', 'ContentDataService', 'ContentTemplateService', 'StateUpdateService', 'StudioSetupService', 'Notification', 
-	function( $scope,   $stateParams,   ContentDataService,   ContentTemplateService,   StateUpdateService,   StudioSetupService,   Notification) {
+			['$scope', '$stateParams', 'ContentDataService', 'ContentOperInitService', 'ContentTemplateService', 'StateUpdateService', 'StudioSetupService', 'Notification', 'ContentApprovalService', 'ConfirmationModalWindow', 
+	function( $scope,   $stateParams,   ContentDataService,   ContentOperInitService,   ContentTemplateService,   StateUpdateService,   StudioSetupService,   Notification,   ContentApprovalService,   ConfirmationModalWindow) {
 		
 		var containerQId = $stateParams.containerQId;
 		var elementIdentity = $stateParams.elementIdentity;
 		
 		$scope.$stateParams = $stateParams;
 		
-		$scope.containerDef = ContentTemplateService.getContainerDefinition(enablix.template, containerQId);
-		var containerLabel = $scope.containerDef.label;
+		ContentOperInitService.initEditContentOper($scope, containerQId, elementIdentity);
 		
-		if (!isNullOrUndefined($scope.containerDef.linkContainerQId)) {
-			
-			$scope.containerDef = ContentTemplateService.getContainerDefinition(
-					enablix.template, $scope.containerDef.linkContainerQId);
-			
-			if (isNullOrUndefined(containerLabel)) {
-				containerLabel = $scope.containerDef.label;
-			}
-		}
+		$scope.pendingEditRequests = null;
 		
-		$scope.pageHeading = "Edit " + containerLabel;
-		
-		$scope.containerData = {};
-		
-		ContentDataService.getContentRecordData(enablix.templateId, containerQId, elementIdentity, 'STUDIO',
-				function(data) {
-					$scope.containerData = angular.copy(data);
-				}, 
-				function(data) {
-					//alert('Error retrieving record data');
-					Notification.error({message: "Error retrieving record data", delay: enablix.errorMsgShowTime});
-				});
+		ContentApprovalService.getPendingRequestsForContent(elementIdentity, function(data) {
+			$scope.pendingEditRequests = data.content;
+		});
 		
 		$scope.saveContentData = function() {
 			
-			var dataToSave = $scope.containerData; 
+			if ($scope.pendingEditRequests && $scope.pendingEditRequests.length > 0) {
+				
+				var confirmModal = ConfirmationModalWindow.showWindow("Confirm", 
+						"There are existing edit requests for this content which will be rejected. Do you want to continue?", 
+						"Proceed", "Cancel");
+				
+				confirmModal.result.then(function(confirmed) {
+					
+					if (confirmed) {
+						
+						angular.forEach($scope.pendingEditRequests, function(record) {
+							ContentApprovalService.rejectContent(record.objectRef.identity, "", function(data) {
+								// do nothing
+							});
+						});
+						
+						proceedWithSave();
+					}
+				});
+				
+			} else {
+				proceedWithSave();
+			}
+			
+		};
+		
+		var proceedWithSave = function() {
+			
+			var dataToSave = $scope.containerData;
 			
 			ContentDataService.saveContainerData(
 					enablix.templateId, containerQId, 
@@ -49,7 +59,8 @@ enablix.studioApp.controller('ContentEditCtrl',
 						//alert("Error updating data");
 						Notification.error({message: "Error updating data", delay: enablix.errorMsgShowTime});
 					});
-		};
+			
+		}
 		
 		$scope.cancelOperation = function() {
 			$scope.updateCancelled($scope.containerData);

@@ -23,6 +23,19 @@ enablix.studioApp.factory('AuthorizationService',
 	 			return false;
 	 		}
 	 		
+	 		var userHasAllPermissions = function(permissions) {
+	 			
+	 			if (permissions) {
+		 			for (var i = 0; i < permissions.length; i++) {
+		 				if (!userHasPermission(permissions[i])) {
+		 					return false;
+		 				}
+		 			}
+	 			}
+	 			
+	 			return true;
+	 		}
+	 		
 	 		var userHasPageAccess = function(pagePermission) {
 	 			if (!userHasPermission(pagePermission)) {
 	 				StateUpdateService.goToAuthError();
@@ -92,6 +105,7 @@ enablix.studioApp.factory('AuthorizationService',
 	 		
 	 		return {
 	 			userHasPermission: userHasPermission,
+	 			userHasAllPermissions: userHasAllPermissions,
 	 			userHasPageAccess: userHasPageAccess,
 	 			authenticate: authenticate,
 	 			logoutUser: logoutUser,

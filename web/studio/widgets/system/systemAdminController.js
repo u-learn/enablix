@@ -58,7 +58,9 @@ enablix.studioApp.controller('SystemAdminController',
 				         { label: "Recommendation" }
 					];
 				
-			} else if ($state.includes('system.contentrequestlist') || $state.includes('system.contentrequestedit') || $state.includes('system.contentrequestview')) {
+			} else if ($state.includes('system.contentrequestlist') 
+					|| $state.includes('system.contentrequestedit') 
+					|| $state.includes('system.contentrequestview')) {
 				
 				$scope.breadcrumbList = 
 					[

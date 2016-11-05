@@ -1,6 +1,10 @@
 package com.enablix.content.approval.config;
 
-import static com.enablix.content.approval.ContentApprovalConstants.*;
+import static com.enablix.content.approval.ContentApprovalConstants.STATE_APPROVED;
+import static com.enablix.content.approval.ContentApprovalConstants.STATE_PENDING_APPROVAL;
+import static com.enablix.content.approval.ContentApprovalConstants.STATE_REJECTED;
+import static com.enablix.content.approval.ContentApprovalConstants.STATE_WITHDRAWN;
+import static com.enablix.content.approval.ContentApprovalConstants.WORKFLOW_NAME;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -10,9 +14,13 @@ import com.enablix.content.approval.action.ApproveAction;
 import com.enablix.content.approval.action.EditAction;
 import com.enablix.content.approval.action.RejectAction;
 import com.enablix.content.approval.action.SubmitAction;
+import com.enablix.content.approval.action.WithdrawAction;
 import com.enablix.content.approval.model.ContentApproval;
 import com.enablix.content.approval.model.ContentDetail;
 import com.enablix.content.approval.repo.ContentApprovalRepository;
+import com.enablix.state.change.action.access.impl.CreatedByAuthorizer;
+import com.enablix.state.change.action.access.impl.OrAuthorizer;
+import com.enablix.state.change.action.access.impl.PermissionBasedAuthorizer;
 import com.enablix.state.change.definition.ActionDefinition;
 import com.enablix.state.change.definition.StateChangeWorkflowDefinition;
 import com.enablix.state.change.impl.ActionConfigurationImpl;
@@ -33,6 +41,15 @@ public class ContentWorkflowConfiguration {
 	@Autowired
 	private NoChangeStateBuilder noChangeStateBuilder;
 	
+	@SuppressWarnings("rawtypes")
+	@Autowired
+	private PermissionBasedAuthorizer permissionAuth;
+	
+	@SuppressWarnings("rawtypes")
+	@Autowired
+	private CreatedByAuthorizer createdByAuth;
+	
+	
 	@Bean
 	public StateChangeWorkflowDefinition<ContentDetail, ContentApproval> contentApprovalWFDefinition() {
 		
@@ -46,6 +63,7 @@ public class ContentWorkflowConfiguration {
 		def.registerAction(STATE_PENDING_APPROVAL, contentEditActionConfig());
 		def.registerAction(STATE_PENDING_APPROVAL, contentApproveActionConfig());
 		def.registerAction(STATE_PENDING_APPROVAL, contentRejectActionConfig());
+		def.registerAction(STATE_PENDING_APPROVAL, contentWithdrawActionConfig());
 		
 		return def;
 	}
@@ -57,19 +75,19 @@ public class ContentWorkflowConfiguration {
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Bean
-	public ActionConfigurationImpl<ContentDetail, ContentDetail, Boolean, GenericActionResult<ContentDetail, Boolean>> 
+	public ActionConfigurationImpl<ContentDetail, ContentApproval, ContentDetail, Boolean, GenericActionResult<ContentDetail, Boolean>> 
 			contentSubmitActionConfig() {
 		
 		SubmitAction action = contentSubmitAction();
 		ActionDefinition actionDef = new ActionDefinition(action.getActionName());
 		
-		SimpleNextStateBuilder<ContentDetail, Object, ActionInput> nextStateBuilder = simpleContentNextStateBuilder();
+		SimpleNextStateBuilder<Object, ActionInput> nextStateBuilder = simpleContentNextStateBuilder();
 		nextStateBuilder.addNextStateConfig(ObjectState.START_STATE, action.getActionName(), STATE_PENDING_APPROVAL);
 		
-		ActionConfigurationImpl<ContentDetail, ContentDetail, Boolean, GenericActionResult<ContentDetail, Boolean>> 
-			orphanActionConfig = new ActionConfigurationImpl(actionDef, action, nextStateBuilder);
+		ActionConfigurationImpl<ContentDetail, ContentApproval, ContentDetail, Boolean, GenericActionResult<ContentDetail, Boolean>> 
+			submitActionConfig = new ActionConfigurationImpl(actionDef, action, nextStateBuilder, permissionAuth);
 		
-		return orphanActionConfig;
+		return submitActionConfig;
 	}
 	
 	@Bean
@@ -79,14 +97,15 @@ public class ContentWorkflowConfiguration {
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Bean
-	public ActionConfigurationImpl<ContentDetail, ContentDetail, Boolean, GenericActionResult<ContentDetail, Boolean>> 
+	public ActionConfigurationImpl<ContentDetail, ContentApproval, ContentDetail, Boolean, GenericActionResult<ContentDetail, Boolean>> 
 			contentEditActionConfig() {
 		
 		EditAction docEditAction = contentEditAction();
 		ActionDefinition actionDef = new ActionDefinition(docEditAction.getActionName());
 		
-		ActionConfigurationImpl<ContentDetail, ContentDetail, Boolean, GenericActionResult<ContentDetail, Boolean>> 
-			editActionConfig = new ActionConfigurationImpl(actionDef, docEditAction, noChangeStateBuilder);
+		ActionConfigurationImpl<ContentDetail, ContentApproval, ContentDetail, Boolean, GenericActionResult<ContentDetail, Boolean>> 
+			editActionConfig = new ActionConfigurationImpl(actionDef, docEditAction, noChangeStateBuilder, 
+								new OrAuthorizer<ContentDetail, ContentApproval>(permissionAuth, createdByAuth));
 		
 		return editActionConfig;
 	}
@@ -98,18 +117,18 @@ public class ContentWorkflowConfiguration {
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Bean
-	public ActionConfigurationImpl<ContentDetail, ContentDetail, Boolean, GenericActionResult<ContentDetail, Boolean>> 
+	public ActionConfigurationImpl<ContentDetail, ContentApproval, ContentDetail, Boolean, GenericActionResult<ContentDetail, Boolean>> 
 			contentApproveActionConfig() {
 		
 		ApproveAction action = contentApproveAction();
 		ActionDefinition actionDef = new ActionDefinition(action.getActionName());
 		
-		SimpleNextStateBuilder<ContentDetail, Object, ActionInput> nextStateBuilder = simpleContentNextStateBuilder();
+		SimpleNextStateBuilder<Object, ActionInput> nextStateBuilder = simpleContentNextStateBuilder();
 		nextStateBuilder.addNextStateConfig(ObjectState.START_STATE, action.getActionName(), STATE_APPROVED);
 		nextStateBuilder.addNextStateConfig(STATE_PENDING_APPROVAL, action.getActionName(), STATE_APPROVED);
 		
-		ActionConfigurationImpl<ContentDetail, ContentDetail, Boolean, GenericActionResult<ContentDetail, Boolean>> 
-			pubActionConfig = new ActionConfigurationImpl(actionDef, action, nextStateBuilder);
+		ActionConfigurationImpl<ContentDetail, ContentApproval, ContentDetail, Boolean, GenericActionResult<ContentDetail, Boolean>> 
+			pubActionConfig = new ActionConfigurationImpl(actionDef, action, nextStateBuilder, permissionAuth);
 		
 		return pubActionConfig;
 	}
@@ -121,34 +140,51 @@ public class ContentWorkflowConfiguration {
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Bean
-	public ActionConfigurationImpl<ContentDetail, ContentDetail, Boolean, GenericActionResult<ContentDetail, Boolean>> 
+	public ActionConfigurationImpl<ContentDetail, ContentApproval, ContentDetail, Boolean, GenericActionResult<ContentDetail, Boolean>> 
 			contentRejectActionConfig() {
 		
 		RejectAction action = contentRejectAction();
 		ActionDefinition actionDef = new ActionDefinition(action.getActionName());
 		
-		SimpleNextStateBuilder<ContentDetail, Object, ActionInput> nextStateBuilder = simpleContentNextStateBuilder();
+		SimpleNextStateBuilder<Object, ActionInput> nextStateBuilder = simpleContentNextStateBuilder();
 		nextStateBuilder.addNextStateConfig(STATE_PENDING_APPROVAL, action.getActionName(), STATE_REJECTED);
 		
-		ActionConfigurationImpl<ContentDetail, ContentDetail, Boolean, GenericActionResult<ContentDetail, Boolean>> 
-			actionConfig = new ActionConfigurationImpl(actionDef, action, nextStateBuilder);
+		ActionConfigurationImpl<ContentDetail, ContentApproval, ContentDetail, Boolean, GenericActionResult<ContentDetail, Boolean>> 
+			actionConfig = new ActionConfigurationImpl(actionDef, action, nextStateBuilder, permissionAuth);
 		
 		return actionConfig;
 	}
 	
 	@Bean
-	public ActionRegistry<ContentDetail> contentActionRegistry() {
+	public WithdrawAction contentWithdrawAction() {
+		return new WithdrawAction();
+	}
+	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@Bean
+	public ActionConfigurationImpl<ContentDetail, ContentApproval, ContentDetail, Boolean, GenericActionResult<ContentDetail, Boolean>> 
+			contentWithdrawActionConfig() {
+		
+		WithdrawAction action = contentWithdrawAction();
+		ActionDefinition actionDef = new ActionDefinition(action.getActionName());
+		
+		SimpleNextStateBuilder<Object, ActionInput> nextStateBuilder = simpleContentNextStateBuilder();
+		nextStateBuilder.addNextStateConfig(STATE_PENDING_APPROVAL, action.getActionName(), STATE_WITHDRAWN);
+		
+		ActionConfigurationImpl<ContentDetail, ContentApproval, ContentDetail, Boolean, GenericActionResult<ContentDetail, Boolean>> 
+			actionConfig = new ActionConfigurationImpl(actionDef, action, nextStateBuilder, createdByAuth);
+		
+		return actionConfig;
+	}
+	
+	@Bean
+	public ActionRegistry<ContentDetail, ContentApproval> contentActionRegistry() {
 		return new ActionRegistry<>();
 	}
 
 	@Bean
-	public SimpleNextStateBuilder<ContentDetail, Object, ActionInput> simpleContentNextStateBuilder() {
-		
-		SimpleNextStateBuilder<ContentDetail, Object, ActionInput> builder = 
-				new SimpleNextStateBuilder<>(contentActionRegistry());
-		
-		return builder;
-		
+	public SimpleNextStateBuilder<Object, ActionInput> simpleContentNextStateBuilder() {
+		return new SimpleNextStateBuilder<>();
 	}
 	
 	

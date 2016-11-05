@@ -1,7 +1,11 @@
 package com.enablix.core.security;
 
+import java.util.Set;
+
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import com.enablix.commons.constants.AppConstants;
 import com.enablix.core.security.service.EnablixUserService.LoggedInUser;
@@ -40,8 +44,44 @@ public class SecurityUtil {
 		return false;
 	}
 	
-	/*public static boolean currentUserHasPermission(String permission) {
+	public static boolean currentUserHasPermission(String permission) {
+		return currentUserHasAnyPermission(permission);
+	}
+	
+	public static boolean currentUserHasAnyPermission(String... permissions) {
 		
-	}*/
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		Set<String> authorities = AuthorityUtils.authorityListToSet(auth.getAuthorities());
+		
+		for (String perm : permissions) {
+			if (authorities.contains(perm)) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	public static boolean currentUserHasAllPermission(String... permissions) {
+		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		Set<String> authorities = AuthorityUtils.authorityListToSet(auth.getAuthorities());
+		
+		for (String perm : permissions) {
+			if (!authorities.contains(perm)) {
+				return false;
+			}
+		}
+		
+		return true;
+	}
+	
+	public static UserDetails currentUser() {
+		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		Object principal = auth.getPrincipal();
+	    
+		return principal instanceof UserDetails ? (UserDetails) principal : null;
+	}
 	
 }
