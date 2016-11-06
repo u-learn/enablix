@@ -1,0 +1,1 @@
+Action Required:#if($obj.triggerType == 'ADD') New #else Updated #end Content Approval: ${obj.triggerEntityTitle}
