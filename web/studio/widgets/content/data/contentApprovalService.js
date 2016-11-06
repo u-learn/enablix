@@ -82,7 +82,7 @@ enablix.studioApp.factory('ContentApprovalService',
 	 						
 	 					}, function(error) {
 	 						
-	 						Notification.error({message: "Error approving content.", delay: enablix.errorMsgShowTime});
+	 						Notification.error({message: "Error approving content : " + error.message, delay: enablix.errorMsgShowTime});
 	 						if (_onError) {
 	 							_onError(error);
 	 						}
@@ -106,7 +106,7 @@ enablix.studioApp.factory('ContentApprovalService',
 	 						}
 	 						
 	 					}, function(error) {
-	 						Notification.error({message: "Error rejecting content.", delay: enablix.errorMsgShowTime});
+	 						Notification.error({message: "Error rejecting content : " + error.message, delay: enablix.errorMsgShowTime});
 	 						if (_onError) {
 	 							_onError(error);
 	 						}
@@ -129,7 +129,7 @@ enablix.studioApp.factory('ContentApprovalService',
 	 						}
 	 						
 	 					}, function(error) {
-	 						Notification.error({message: "Error withdrawing content.", delay: enablix.errorMsgShowTime});
+	 						Notification.error({message: "Error withdrawing content : " + error.message, delay: enablix.errorMsgShowTime});
 	 						if (_onError) {
 	 							_onError(error);
 	 						}
@@ -163,6 +163,11 @@ enablix.studioApp.factory('ContentApprovalService',
 	 		
 	 		var isActionAllowed = function(actionName, record) {
 	 			
+	 			if (actionName == ACTION_WITHDRAW 
+						&& AuthorizationService.getCurrentUser().userId != record.createdBy) {
+					return false;
+				}
+	 			
 	 			if (!isNullOrUndefined(record)) {
 				
 	 				var nextActions = stateActionMap[record.currentState.stateName];
@@ -172,13 +177,18 @@ enablix.studioApp.factory('ContentApprovalService',
 						for (var i = 0; i < nextActions.length; i++) {
 						
 							var nextAction =  nextActions[i];
-							if (nextAction.actionName == actionName &&
-									AuthorizationService.userHasAllPermissions(nextAction.requiredPermissions)) {
+							if (nextAction.actionName == actionName) {
+								
+								if (!AuthorizationService.userHasAllPermissions(nextAction.requiredPermissions)) {
+									return false;
+								}
+									
 								return true;
 							}
 						}
 					}
 	 			}
+	 			
 				return false;
 			};
 			

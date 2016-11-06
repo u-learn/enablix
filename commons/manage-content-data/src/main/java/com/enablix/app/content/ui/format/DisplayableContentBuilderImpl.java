@@ -35,6 +35,9 @@ public class DisplayableContentBuilderImpl implements DisplayableContentBuilder 
 		Map<String, Object> contentRecord = record.getRecord();
 		
 		ContainerType containerDef = TemplateUtil.findContainer(template.getDataDefinition(), containerQId );
+		if (TemplateUtil.isLinkedContainer(containerDef)) {
+			containerDef = TemplateUtil.findContainer(template.getDataDefinition(), containerDef.getLinkContainerQId());
+		}
 		
 		DisplayableContent dispContent = new DisplayableContent();
 		dispContent.setContainerQId(record.getContainerQId());

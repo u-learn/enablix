@@ -17,7 +17,7 @@
 			    		<eb-doc-download doc-value="dataItem.downloadDocIdentity"></eb-doc-download>
 			    		<eb-doc-preview-action doc-identity="dataItem.downloadDocIdentity"></eb-doc-preview-action>
 			    	</span>
-					<a class="fa fa-share-alt" ng-click="openShareContentModal($index)" tooltip="Share"></a>
+					<a class="fa fa-share-alt" ng-click="openShareContentModal(dataItem.identity)" tooltip="Share"></a>
 			    </div>
 			</h4>
 			<div id="{{dataItem.containerId}}{{$index}}" class="toggle-cont">
