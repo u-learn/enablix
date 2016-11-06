@@ -31,7 +31,7 @@ public class DefautlSearchRequestTransformer implements SearchRequestTransformer
 			if (queryFilter == null) {
 				queryFilter = searchFilter;
 			} else {
-				queryFilter.and(searchFilter);
+				queryFilter = queryFilter.and(searchFilter);
 			}
 		}
 		

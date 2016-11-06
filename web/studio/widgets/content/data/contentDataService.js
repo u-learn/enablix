@@ -1,7 +1,7 @@
 enablix.studioApp.factory('ContentDataService', 
 	[
-	 	'RESTService', 'ContentTemplateService', '$location', '$state', 'NavigationTracker',
-	 	function(RESTService, ContentTemplateService, $location, $state, NavigationTracker) {
+	 			'RESTService', 'ContentTemplateService', '$location', '$state', 'NavigationTracker',
+	 	function(RESTService,  ContentTemplateService,    $location,   $state,   NavigationTracker) {
 	 		
 	 		var getContentData = function(_templateId, _contentQId, _parentIdentity, _onSuccess, _onError, _pagination) {
 	 			

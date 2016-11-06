@@ -18,6 +18,7 @@ import com.enablix.doc.state.change.model.DocActionResult;
 import com.enablix.doc.state.change.model.DocInfo;
 import com.enablix.doc.state.change.model.DocPublishing;
 import com.enablix.doc.state.change.repo.DocPublishingRepository;
+import com.enablix.state.change.action.access.impl.PermissionBasedAuthorizer;
 import com.enablix.state.change.definition.ActionDefinition;
 import com.enablix.state.change.definition.StateChangeWorkflowDefinition;
 import com.enablix.state.change.impl.ActionConfigurationImpl;
@@ -36,6 +37,10 @@ public class DocWorkflowConfiguration {
 	
 	@Autowired
 	private NoChangeStateBuilder noChangeStateBuilder;
+	
+	@SuppressWarnings("rawtypes")
+	@Autowired
+	private PermissionBasedAuthorizer permissionAuth;
 	
 	@Bean
 	public StateChangeWorkflowDefinition<DocInfo, DocPublishing> docStateChangeWFDefinition() {
@@ -61,16 +66,16 @@ public class DocWorkflowConfiguration {
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Bean
-	public ActionConfigurationImpl<DocInfo, DocInfo, Boolean, DocActionResult<Boolean>> docOrphanUploadActionConfig() {
+	public ActionConfigurationImpl<DocInfo, DocPublishing, DocInfo, Boolean, DocActionResult<Boolean>> docOrphanUploadActionConfig() {
 		
 		OrphanUploadAction action = docOrphanUploadAction();
 		ActionDefinition actionDef = new ActionDefinition(action.getActionName());
 		
-		SimpleNextStateBuilder<DocInfo, Object, ActionInput> nextStateBuilder = simpleDocNextStateBuilder();
+		SimpleNextStateBuilder<Object, ActionInput> nextStateBuilder = simpleDocNextStateBuilder();
 		nextStateBuilder.addNextStateConfig(ObjectState.START_STATE, action.getActionName(), STATE_PENDING);
 		
-		ActionConfigurationImpl<DocInfo, DocInfo, Boolean, DocActionResult<Boolean>> orphanActionConfig = 
-				new ActionConfigurationImpl(actionDef, action, nextStateBuilder);
+		ActionConfigurationImpl<DocInfo, DocPublishing, DocInfo, Boolean, DocActionResult<Boolean>> orphanActionConfig = 
+				new ActionConfigurationImpl(actionDef, action, nextStateBuilder, permissionAuth);
 		
 		return orphanActionConfig;
 	}
@@ -82,13 +87,13 @@ public class DocWorkflowConfiguration {
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Bean
-	public ActionConfigurationImpl<DocInfo, DocInfo, Boolean, DocActionResult<Boolean>> docEditActionConfig() {
+	public ActionConfigurationImpl<DocInfo, DocPublishing, DocInfo, Boolean, DocActionResult<Boolean>> docEditActionConfig() {
 		
 		EditAction docEditAction = docEditAction();
 		ActionDefinition actionDef = new ActionDefinition(docEditAction.getActionName());
 		
-		ActionConfigurationImpl<DocInfo, DocInfo, Boolean, DocActionResult<Boolean>> editActionConfig = 
-				new ActionConfigurationImpl(actionDef, docEditAction, noChangeStateBuilder);
+		ActionConfigurationImpl<DocInfo, DocPublishing, DocInfo, Boolean, DocActionResult<Boolean>> editActionConfig = 
+				new ActionConfigurationImpl(actionDef, docEditAction, noChangeStateBuilder, permissionAuth);
 		
 		return editActionConfig;
 	}
@@ -100,17 +105,17 @@ public class DocWorkflowConfiguration {
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Bean
-	public ActionConfigurationImpl<DocInfo, DocInfo, Boolean, DocActionResult<Boolean>> docPublishActionConfig() {
+	public ActionConfigurationImpl<DocInfo, DocPublishing, DocInfo, Boolean, DocActionResult<Boolean>> docPublishActionConfig() {
 		
 		PublishAction action = docPublishAction();
 		ActionDefinition actionDef = new ActionDefinition(action.getActionName());
 		
-		SimpleNextStateBuilder<DocInfo, Object, ActionInput> nextStateBuilder = simpleDocNextStateBuilder();
+		SimpleNextStateBuilder<Object, ActionInput> nextStateBuilder = simpleDocNextStateBuilder();
 		nextStateBuilder.addNextStateConfig(ObjectState.START_STATE, action.getActionName(), STATE_PUBLISHED);
 		nextStateBuilder.addNextStateConfig(STATE_PENDING, action.getActionName(), STATE_PUBLISHED);
 		
-		ActionConfigurationImpl<DocInfo, DocInfo, Boolean, DocActionResult<Boolean>> pubActionConfig = 
-				new ActionConfigurationImpl(actionDef, action, nextStateBuilder);
+		ActionConfigurationImpl<DocInfo, DocPublishing, DocInfo, Boolean, DocActionResult<Boolean>> pubActionConfig = 
+				new ActionConfigurationImpl(actionDef, action, nextStateBuilder, permissionAuth);
 		
 		return pubActionConfig;
 	}
@@ -122,33 +127,29 @@ public class DocWorkflowConfiguration {
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Bean
-	public ActionConfigurationImpl<DocInfo, DocInfo, Boolean, DocActionResult<Boolean>> docRejectActionConfig() {
+	public ActionConfigurationImpl<DocInfo, DocPublishing, DocInfo, Boolean, DocActionResult<Boolean>> 
+			docRejectActionConfig() {
 		
 		RejectAction action = docRejectAction();
 		ActionDefinition actionDef = new ActionDefinition(action.getActionName());
 		
-		SimpleNextStateBuilder<DocInfo, Object, ActionInput> nextStateBuilder = simpleDocNextStateBuilder();
+		SimpleNextStateBuilder<Object, ActionInput> nextStateBuilder = simpleDocNextStateBuilder();
 		nextStateBuilder.addNextStateConfig(STATE_PENDING, action.getActionName(), STATE_REJECTED);
 		
-		ActionConfigurationImpl<DocInfo, DocInfo, Boolean, DocActionResult<Boolean>> actionConfig = 
-				new ActionConfigurationImpl(actionDef, action, nextStateBuilder);
+		ActionConfigurationImpl<DocInfo, DocPublishing, DocInfo, Boolean, DocActionResult<Boolean>> actionConfig = 
+				new ActionConfigurationImpl(actionDef, action, nextStateBuilder, permissionAuth);
 		
 		return actionConfig;
 	}
 	
 	@Bean
-	public ActionRegistry<DocInfo> docActionRegistry() {
+	public ActionRegistry<DocInfo, DocPublishing> docActionRegistry() {
 		return new ActionRegistry<>();
 	}
 	
 	@Bean
-	public SimpleNextStateBuilder<DocInfo, Object, ActionInput> simpleDocNextStateBuilder() {
-		
-		SimpleNextStateBuilder<DocInfo, Object, ActionInput> builder = 
-				new SimpleNextStateBuilder<>(docActionRegistry());
-		
-		return builder;
-		
+	public SimpleNextStateBuilder<Object, ActionInput> simpleDocNextStateBuilder() {
+		return new SimpleNextStateBuilder<>();
 	}
 	
 	

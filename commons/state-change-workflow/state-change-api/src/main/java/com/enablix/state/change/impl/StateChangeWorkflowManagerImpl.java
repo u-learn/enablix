@@ -5,6 +5,7 @@ import java.util.Date;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Component;
 
 import com.enablix.commons.util.StringUtil;
@@ -14,6 +15,7 @@ import com.enablix.state.change.ActionException;
 import com.enablix.state.change.NextStateBuilder;
 import com.enablix.state.change.StateChangeAction;
 import com.enablix.state.change.StateChangeWorkflowManager;
+import com.enablix.state.change.action.access.ActionAccessAuthorizer;
 import com.enablix.state.change.definition.ActionConfiguration;
 import com.enablix.state.change.definition.StateChangeWorkflowDefinition;
 import com.enablix.state.change.definition.WorkflowDefinitionFactory;
@@ -56,11 +58,18 @@ public class StateChangeWorkflowManagerImpl implements StateChangeWorkflowManage
 		String workflowName = wfDefinition.workflowName();
 		String currentStateName = recording.getCurrentState().getStateName();
 		
-		ActionConfiguration<?, ? extends ActionInput, ?, ?> actionConfig = wfDefinition.getStateAction(
-																	currentStateName, actionName);
+		ActionConfiguration<?, ? extends StateChangeRecording<? extends RefObject>, ? extends ActionInput, ?, ?> actionConfig = 
+				wfDefinition.getStateAction(currentStateName, actionName);
 		if (actionConfig == null) {
 			LOGGER.error("No action [{}] found for state [{}] in workflow [{}]", actionName, currentStateName, workflowName);
 			throw new IllegalArgumentException("Action not found for current state");
+		}
+		
+		// check permission of the current user to perform action
+		ActionAccessAuthorizer authorizer = actionConfig.getAuthorizer();
+		if (!authorizer.check(recording, actionConfig.getActionDefinition())) {
+			LOGGER.error("Access denied for action [{}]", actionName);
+			throw new AccessDeniedException("Acess denied for action: " + actionName);
 		}
 		
 		StateChangeRecordingRepository repo = wfDefinition.workflowRepository();
@@ -100,7 +109,7 @@ public class StateChangeWorkflowManagerImpl implements StateChangeWorkflowManage
 		StateChangeWorkflowDefinition<?, ?> wfDefinition = factory.getWorkflowDefinition(workflowName);
 		StateChangeRecordingRepository<?, ?> repo = wfDefinition.workflowRepository();
 
-		StateChangeRecording<?> recording = repo.findByObjectRefIdentity(refObjectIdentity);
+		StateChangeRecording<? extends RefObject> recording = repo.findByObjectRefIdentity(refObjectIdentity);
 		if (recording == null) {
 			LOGGER.error("No existing workflow found for reference object [{}]", refObjectIdentity);
 			throw new IllegalArgumentException("No existing workflow found for reference object : " + refObjectIdentity);

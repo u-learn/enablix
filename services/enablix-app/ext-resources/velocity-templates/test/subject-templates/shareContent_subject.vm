@@ -1,1 +1,1 @@
-${obj.loggedInUser.profile.name} shared #if(${obj.sharedContent.bodyData.title}) "${obj.sharedContent.bodyData.title.toUpperCase()}" #else something #end with you! 
+${obj.loggedInUser.profile.name} shared #if(${obj.sharedContent.title}) "${obj.sharedContent.title.toUpperCase()}" #else something #end with you! 

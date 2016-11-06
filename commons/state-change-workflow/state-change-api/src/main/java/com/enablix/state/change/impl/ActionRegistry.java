@@ -10,10 +10,11 @@ import com.enablix.state.change.definition.ActionDefinition;
 import com.enablix.state.change.model.ActionInput;
 import com.enablix.state.change.model.ActionResult;
 import com.enablix.state.change.model.RefObject;
+import com.enablix.state.change.model.StateChangeRecording;
 
-public class ActionRegistry<T extends RefObject> {
+public class ActionRegistry<T extends RefObject, S extends StateChangeRecording<T>> {
 
-	private Map<String, Map<String, ActionConfiguration<T, ? extends ActionInput, ?, ? extends ActionResult<T, ?>>>> registry;
+	private Map<String, Map<String, ActionConfiguration<T, S, ? extends ActionInput, ?, ? extends ActionResult<T, ?>>>> registry;
 	
 	private Map<String, List<ActionDefinition>> nextActions;
 	
@@ -23,9 +24,9 @@ public class ActionRegistry<T extends RefObject> {
 	}
 	
 	public <I extends ActionInput, V, R extends ActionResult<T, V>> 
-	void addAllowedActionForState(String stateName, ActionConfiguration<T, I, V, R> action) {
+	void addAllowedActionForState(String stateName, ActionConfiguration<T, S, I, V, R> action) {
 		
-		Map<String, ActionConfiguration<T, ? extends ActionInput, ?, ? extends ActionResult<T, ?>>> 
+		Map<String, ActionConfiguration<T, S, ? extends ActionInput, ?, ? extends ActionResult<T, ?>>> 
 					actions = registry.get(stateName);
 		
 		if (actions == null) {
@@ -45,12 +46,12 @@ public class ActionRegistry<T extends RefObject> {
 		
 	}
 	
-	public ActionConfiguration<T, ? extends ActionInput, ?, ? extends ActionResult<T, ?>>
+	public ActionConfiguration<T, S, ? extends ActionInput, ?, ? extends ActionResult<T, ?>>
 			getActionConfig(String currentState, String nextAction) {
 		
-		ActionConfiguration<T, ? extends ActionInput, ?, ? extends ActionResult<T, ?>> action = null;
+		ActionConfiguration<T, S, ? extends ActionInput, ?, ? extends ActionResult<T, ?>> action = null;
 		
-		Map<String, ActionConfiguration<T, ? extends ActionInput, ?, ? extends ActionResult<T, ?>>> 
+		Map<String, ActionConfiguration<T, S, ? extends ActionInput, ?, ? extends ActionResult<T, ?>>> 
 					actions = registry.get(currentState);
 		if (actions != null) {
 			action = actions.get(nextAction);
@@ -61,6 +62,10 @@ public class ActionRegistry<T extends RefObject> {
 	
 	public List<ActionDefinition> getNextAllowedActions(String stateName) {
 		return nextActions.get(stateName);
+	}
+	
+	public Map<String, List<ActionDefinition>> getStateActionMap() {
+		return nextActions;
 	}
 	
 }

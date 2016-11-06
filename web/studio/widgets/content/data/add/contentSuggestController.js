@@ -1,8 +1,14 @@
 enablix.studioApp.controller('ContentSuggestCtrl', 
-			['$scope', 'containerQId', 'parentIdentity', 'ContentApprovalService', 'ContentOperInitService', 'ContentTemplateService', 'Notification', 'QIdUtil', '$modalInstance',
-	function( $scope,   containerQId,   parentIdentity,   ContentApprovalService,   ContentOperInitService,   ContentTemplateService,   Notification,   QIdUtil,   $modalInstance) {
+			['$scope', 'containerQId', 'contentIdentity', 'parentIdentity', 'ContentApprovalService', 'ContentOperInitService', 'ContentTemplateService', 'Notification', 'QIdUtil', '$modalInstance',
+	function( $scope,   containerQId,   contentIdentity,   parentIdentity,   ContentApprovalService,   ContentOperInitService,   ContentTemplateService,   Notification,   QIdUtil,   $modalInstance) {
 		
-		ContentOperInitService.initAddContentOper($scope, containerQId, parentIdentity);
+		if (!isNullOrUndefined(contentIdentity)) {
+			// edit suggestion
+			ContentOperInitService.initEditContentOper($scope, containerQId, contentIdentity);
+		} else {
+			// add suggestion
+			ContentOperInitService.initAddContentOper($scope, containerQId, parentIdentity);
+		}
 		
 		$scope.temporaryFileUpload = true;
 		$scope.headingCancelLabel = "x";

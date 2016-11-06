@@ -12,11 +12,12 @@
 			<h4><a ng-click="toggleContainerItem($event, dataItem.containerId + $index, dataItem)" class="toggle">{{dataItem.headingLabel}}</a>
 			    <a ng-if="dataItem.hasSubContainers" ng-click="navToItemDetail(dataItem.containerQId, dataItem.identity)" class="detail fa fa-external-link"></a>
 			    <div class="action-icons">
+			    	<ebx-suggest-content content-q-id="subContainerQId" parent-identity="parentIdentity" content-identity="dataItem.identity"></ebx-suggest-content>
 			    	<span ng-if="dataItem.downloadDocIdentity">
 			    		<eb-doc-download doc-value="dataItem.downloadDocIdentity"></eb-doc-download>
 			    		<eb-doc-preview-action doc-identity="dataItem.downloadDocIdentity"></eb-doc-preview-action>
 			    	</span>
-					<a class="fa fa-share-alt" ng-click="openShareContentModal($index)" tooltip="Share"></a>
+					<a class="fa fa-share-alt" ng-click="openShareContentModal(dataItem.identity)" tooltip="Share"></a>
 			    </div>
 			</h4>
 			<div id="{{dataItem.containerId}}{{$index}}" class="toggle-cont">

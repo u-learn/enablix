@@ -35,8 +35,8 @@ enablix.studioApp.controller('PortalSubContainerCtrl',
 			}
 		}
 		
-		$scope.openShareContentModal =function(counter){
-			shareContentModalWindow.showShareContentModal($scope.subContainerQId, $scope.bodyData.identity);
+		$scope.openShareContentModal =function(contentIdentity){
+			shareContentModalWindow.showShareContentModal($scope.subContainerQId, contentIdentity);
 		}
 		
 		$scope.toggleContainerItem = function($event, itemId, _dataRecord) {
@@ -46,7 +46,8 @@ enablix.studioApp.controller('PortalSubContainerCtrl',
 			$('#' + itemId).slideToggle('fast');
 			
 			var expanded = elem.className.indexOf('active') > 0;
-			if (_containerQId && _contentIdentity && expanded && !elem.accessAudited) {
+			
+			if (_dataRecord && expanded && !elem.accessAudited) {
 				ActivityAuditService.auditContentAccess(
 					_dataRecord.containerQId, _dataRecord.identity, _dataRecord.headingLabel, 
 					function() { 

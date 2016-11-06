@@ -98,6 +98,18 @@ enablix.studioApp.factory('ContentTemplateService',
 				return elemDataDef;
 			}
 			
+			var getConcreteContainerDefinition = function(_template, _containerQId) {
+				
+				var containerDef = ContentTemplateService.getContainerDefinition(enablix.template, containerQId);
+				
+				if (!isNullOrUndefined(containerDef.linkContainerQId)) {
+					containerDef = ContentTemplateService.getContainerDefinition(
+							enablix.template, $scope.containerDef.linkContainerQId);
+				}
+				
+				return containerDef;
+			}
+			
 			var getContainerLabelAttrId = function(_template, _containerQId) {
 				
 				var cntnrUIDef = getUIDefinition(_template, _containerQId);
@@ -346,6 +358,7 @@ enablix.studioApp.factory('ContentTemplateService',
 				getContainerLabelAttrId : getContainerLabelAttrId,
 				getUIDefinition: getUIDefinition,
 				getContainerDefinition: getContainerDefinition,
+				getConcreteContainerDefinition: getConcreteContainerDefinition,
 				isRootContainer: isRootContainer,
 				getBoundedValueList: getBoundedValueList,
 				loadTemplate: loadTemplate,

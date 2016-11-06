@@ -14,6 +14,10 @@ var appSetup = function(StudioSetupService) {
 	return StudioSetupService.setupStudio();
 };
 
+var contentWFInit = function(ContentApprovalService) {
+	return ContentApprovalService.init();
+}
+
 enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
 	
 	//$urlRouterProvider.otherwise("/login");
@@ -421,6 +425,7 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvi
 			controller: 'ContentRequestListCtrl',
 			resolve: {
 				setupData: appSetup,
+				contentWFInit: contentWFInit,
 				checkPageAccess: ['setupData', 'AuthorizationService', function(setupData, AuthorizationService) {
 					return AuthorizationService.userHasPageAccess('MANAGE_CONTENT_REQUEST')
 				}]
@@ -438,7 +443,38 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvi
 			templateUrl: 'views/content/content-suggest-detail.html',
 			controller: 'ContentSuggestDetailCtrl',
 			resolve: {
+				setupData: appSetup,
+				contentWFInit: contentWFInit
+			}
+		}).state('myaccount', {
+			url: '/account',
+			templateUrl: 'views/account/myaccount.html',
+			controller: 'MyAccountController',
+			resolve: {
+				setupData: appSetup 
+			}
+		}).state('myaccount.contentrequestlist', {
+			url: '/contentrequest',
+			templateUrl: 'views/content/content-suggest-list.html',
+			controller: 'ContentRequestListCtrl',
+			resolve: {
+				setupData: appSetup,
+				contentWFInit: contentWFInit
+			}
+		}).state('myaccount.contentrequestedit', {
+			url: '/contentrequest/edit/{refObjectIdentity}/',
+			templateUrl: 'views/content/content-suggest.html',
+			controller: 'ContentSuggestEditCtrl',
+			resolve: {
 				setupData: appSetup
+			}
+		}).state('myaccount.contentrequestview', {
+			url: '/contentrequest/view/{refObjectIdentity}/',
+			templateUrl: 'views/content/content-suggest-detail.html',
+			controller: 'ContentSuggestDetailCtrl',
+			resolve: {
+				setupData: appSetup,
+				contentWFInit: contentWFInit
 			}
 		});
 	

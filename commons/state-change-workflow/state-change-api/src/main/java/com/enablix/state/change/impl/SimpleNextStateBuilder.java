@@ -1,8 +1,6 @@
 package com.enablix.state.change.impl;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -10,20 +8,16 @@ import org.slf4j.LoggerFactory;
 
 import com.enablix.commons.util.StringUtil;
 import com.enablix.state.change.NextStateBuilder;
-import com.enablix.state.change.definition.ActionDefinition;
 import com.enablix.state.change.model.ActionInput;
 import com.enablix.state.change.model.ObjectState;
-import com.enablix.state.change.model.RefObject;
 
-public class SimpleNextStateBuilder<T extends RefObject, R, I extends ActionInput> implements NextStateBuilder<T, R, I> {
+public class SimpleNextStateBuilder<R, I extends ActionInput> implements NextStateBuilder<R, I> {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(SimpleNextStateBuilder.class);
 	
-	private ActionRegistry<T> actionRegistry;
 	private Map<NextStateId, String> nextStateConfig;
 	
-	public SimpleNextStateBuilder(ActionRegistry<T> actionRegistry) {
-		this.actionRegistry = actionRegistry;
+	public SimpleNextStateBuilder() {
 		this.nextStateConfig = new HashMap<>();
 	}
 	
@@ -38,13 +32,7 @@ public class SimpleNextStateBuilder<T extends RefObject, R, I extends ActionInpu
 			throw new IllegalStateException("No next state defined for: " + id);
 		}
 		
-		List<ActionDefinition> nextActions = actionRegistry.getNextAllowedActions(nextStateName);
-		if (nextActions == null) {
-			nextActions = new ArrayList<>();
-		}
-		
 		ObjectState nextState = new ObjectState(nextStateName);
-		nextState.setNextActions(nextActions);
 		
 		return nextState;
 	}
