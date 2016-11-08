@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import com.enablix.content.approval.ContentApprovalConstants;
 import com.enablix.content.approval.action.ApproveAction;
 import com.enablix.content.approval.action.EditAction;
 import com.enablix.content.approval.action.RejectAction;
@@ -55,7 +56,7 @@ public class ContentWorkflowConfiguration {
 		
 		StateChangeWorkflowDefinitionImpl<ContentDetail, ContentApproval> def = 
 				new StateChangeWorkflowDefinitionImpl<>(WORKFLOW_NAME, repo, 
-						new ContentApprovalInitiator(), contentActionRegistry());
+						new ContentApprovalInstantiator(), contentActionRegistry());
 		
 		def.registerAction(ObjectState.START_STATE, contentApproveActionConfig());
 		def.registerAction(ObjectState.START_STATE, contentSubmitActionConfig());
@@ -102,6 +103,7 @@ public class ContentWorkflowConfiguration {
 		
 		EditAction docEditAction = contentEditAction();
 		ActionDefinition actionDef = new ActionDefinition(docEditAction.getActionName());
+		actionDef.addRequiredPermission(ContentApprovalConstants.PERMISSION_MNG_CONTENT_REQUEST);
 		
 		ActionConfigurationImpl<ContentDetail, ContentApproval, ContentDetail, Boolean, GenericActionResult<ContentDetail, Boolean>> 
 			editActionConfig = new ActionConfigurationImpl(actionDef, docEditAction, noChangeStateBuilder, 
@@ -122,6 +124,7 @@ public class ContentWorkflowConfiguration {
 		
 		ApproveAction action = contentApproveAction();
 		ActionDefinition actionDef = new ActionDefinition(action.getActionName());
+		actionDef.addRequiredPermission(ContentApprovalConstants.PERMISSION_MNG_CONTENT_REQUEST);
 		
 		SimpleNextStateBuilder<Object, ActionInput> nextStateBuilder = simpleContentNextStateBuilder();
 		nextStateBuilder.addNextStateConfig(ObjectState.START_STATE, action.getActionName(), STATE_APPROVED);
@@ -145,6 +148,7 @@ public class ContentWorkflowConfiguration {
 		
 		RejectAction action = contentRejectAction();
 		ActionDefinition actionDef = new ActionDefinition(action.getActionName());
+		actionDef.addRequiredPermission(ContentApprovalConstants.PERMISSION_MNG_CONTENT_REQUEST);
 		
 		SimpleNextStateBuilder<Object, ActionInput> nextStateBuilder = simpleContentNextStateBuilder();
 		nextStateBuilder.addNextStateConfig(STATE_PENDING_APPROVAL, action.getActionName(), STATE_REJECTED);

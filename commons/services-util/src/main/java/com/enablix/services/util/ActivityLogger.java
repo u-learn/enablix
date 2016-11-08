@@ -74,7 +74,7 @@ public class ActivityLogger {
 		auditContentActivity(contentActvy, activityChannel);
 	}
 	
-	private static void auditContentActivity(ContentActivity contentActvy, 
+	public static void auditContentActivity(ContentActivity contentActvy, 
 			ActivityChannel.Channel activityChannel) {
 		
 		ProcessContext pc = ProcessContext.get();

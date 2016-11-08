@@ -54,11 +54,14 @@ enablix.studioApp.factory('ContentApprovalService',
 	 		
 	    	var submitContent = function(_contentQId, _parentRecordIdentity, _notes, _data, _onSuccess, _onError) {
 	 			
+	    		var addRequest = isNullOrUndefined(_data.identity);
+	    		
 	 			var contentDetail = {
 	 					"contentQId": _contentQId,
 	 					"parentIdentity": _parentRecordIdentity,
 	 					"notes": _notes,
-	 					"data": _data
+	 					"data": _data,
+	 					"addRequest": addRequest
 	 			};
 	 			
 	 			RESTService.postForData("submitContentSuggestion", {}, contentDetail, null, _onSuccess, _onError, null);
@@ -178,6 +181,11 @@ enablix.studioApp.factory('ContentApprovalService',
 						
 							var nextAction =  nextActions[i];
 							if (nextAction.actionName == actionName) {
+								
+								if (actionName == ACTION_EDIT 
+										&& AuthorizationService.getCurrentUser().userId == record.createdBy) {
+									return true;
+								}
 								
 								if (!AuthorizationService.userHasAllPermissions(nextAction.requiredPermissions)) {
 									return false;

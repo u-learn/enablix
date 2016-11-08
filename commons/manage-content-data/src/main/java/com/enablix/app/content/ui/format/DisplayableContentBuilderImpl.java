@@ -2,12 +2,15 @@ package com.enablix.app.content.ui.format;
 
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.commons.util.EnvPropertiesUtil;
+import com.enablix.commons.util.StringUtil;
 import com.enablix.core.api.ContentDataRecord;
 import com.enablix.core.commons.xsdtopojo.ContainerType;
 import com.enablix.core.commons.xsdtopojo.ContentItemType;
@@ -21,6 +24,8 @@ import com.enablix.services.util.TemplateUtil;
 
 @Component
 public class DisplayableContentBuilderImpl implements DisplayableContentBuilder {
+	
+	private static final Logger LOGGER = LoggerFactory.getLogger(DisplayableContentBuilderImpl.class);
 
 	@Value("${site.url.container.instance}")
 	private String containerInstanceUrl;
@@ -65,6 +70,12 @@ public class DisplayableContentBuilderImpl implements DisplayableContentBuilder 
 	}
 	
 	private String getContentInstanceAccessUrl(String containerQId, String contentIdentity) {
+		
+		if (StringUtil.isEmpty(containerQId) || StringUtil.isEmpty(contentIdentity)) {
+			LOGGER.error("Error creating access url. [containerQId={}, contentIdentity={}]", containerQId, contentIdentity);
+			return "";
+		} 
+		
 		return EnvPropertiesUtil.getProperties().getServerUrl() + 
 				containerInstanceUrl.replaceAll(":containerQId", containerQId)
 									.replaceAll(":contentIdentity", contentIdentity);

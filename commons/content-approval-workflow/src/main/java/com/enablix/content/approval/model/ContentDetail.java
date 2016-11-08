@@ -16,7 +16,9 @@ public class ContentDetail extends RefObject implements ActionInput {
 	private String contentTitle;
 	
 	private String notes;
-
+	
+	private boolean addRequest;
+	
 	public String getContentQId() {
 		return contentQId;
 	}
@@ -55,6 +57,14 @@ public class ContentDetail extends RefObject implements ActionInput {
 
 	public void setNotes(String notes) {
 		this.notes = notes;
+	}
+
+	public boolean isAddRequest() {
+		return addRequest;
+	}
+
+	public void setAddRequest(boolean addRequest) {
+		this.addRequest = addRequest;
 	}
 	
 }

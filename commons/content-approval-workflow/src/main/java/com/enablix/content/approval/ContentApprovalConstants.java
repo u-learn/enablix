@@ -14,6 +14,12 @@ public final class ContentApprovalConstants {
 	public static final String STATE_REJECTED = "REJECTED";
 	public static final String STATE_APPROVED = "APPROVED";
 	public static final String STATE_WITHDRAWN = "WITHDRAWN";
+	
+	public static final String PERMISSION_MNG_CONTENT_REQUEST = "MANAGE_CONTENT_REQUEST";
+
+	public static final String TEMPLATE_PORTAL_REQ_ADMIN_NOTIF = "portalRequestAdminNotif";
+	public static final String TEMPLATE_PORTAL_REQ_APPROVED_NOTIF = "portalRequestApproveRequesterNotif";
+	public static final String TEMPLATE_PORTAL_REQ_REJECT_NOTIF = "portalRequestRejectRequesterNotif";
 
 	private ContentApprovalConstants() { 
 		// object creation not allowed

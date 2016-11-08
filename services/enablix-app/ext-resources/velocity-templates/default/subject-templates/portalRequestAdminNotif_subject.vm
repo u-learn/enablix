@@ -1,1 +1,1 @@
-Action Required:#if($obj.triggerType == 'ADD') New #else Updated #end Content Approval: ${obj.triggerEntityTitle}
+Action Required:#if($obj.contentRequest.objectRef.addRequest) New#else Updated#end Content Approval: ${obj.contentRequest.objectRef.contentTitle}

@@ -202,6 +202,7 @@ enablix.studioApp.factory('StateUpdateService',
 	 		
 	 		var goToContentRequestDetail = function(refObjectIdentity) {
 	 			$state.go("system.contentrequestview", {
+	 				"action": "view",
 	 				"refObjectIdentity": refObjectIdentity
 	 			});
 	 		}
@@ -214,6 +215,7 @@ enablix.studioApp.factory('StateUpdateService',
 	 		
 	 		var goToMyContentRequestDetail = function(refObjectIdentity) {
 	 			$state.go("myaccount.contentrequestview", {
+	 				"action": "view",
 	 				"refObjectIdentity": refObjectIdentity
 	 			});
 	 		}

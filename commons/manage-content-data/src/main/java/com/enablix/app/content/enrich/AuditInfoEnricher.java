@@ -13,12 +13,12 @@ import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.commons.util.process.ProcessContext;
 import com.enablix.core.commons.xsdtopojo.ContainerType;
 import com.enablix.core.commons.xsdtopojo.ContentTemplate;
-import com.enablix.core.domain.BaseEntity;
+import com.enablix.core.domain.BaseDocumentEntity;
 import com.enablix.services.util.TemplateUtil;
 import com.mongodb.DBObject;
 
 @Component
-public class AuditInfoEnricher extends AbstractMongoEventListener<BaseEntity> implements ContentEnricher {
+public class AuditInfoEnricher extends AbstractMongoEventListener<BaseDocumentEntity> implements ContentEnricher {
 
 	@Override
 	public void enrich(ContentUpdateContext updateCtx, 
@@ -101,7 +101,7 @@ public class AuditInfoEnricher extends AbstractMongoEventListener<BaseEntity> im
 		
 	}
 
-	public void onBeforeSave(final BaseEntity source, final DBObject dbo) {
+	public void onBeforeSave(final BaseDocumentEntity source, final DBObject dbo) {
 		setAuditInfo(new FieldCollection() {
 
 			@Override
@@ -115,6 +115,15 @@ public class AuditInfoEnricher extends AbstractMongoEventListener<BaseEntity> im
 			}
 			
 		});
+		
+		source.setCreatedBy((String) dbo.get(ContentDataConstants.CREATED_BY_KEY));
+		source.setCreatedByName((String) dbo.get(ContentDataConstants.CREATED_BY_NAME_KEY));
+		source.setCreatedAt((Date) dbo.get(ContentDataConstants.CREATED_AT_KEY));
+		
+		source.setModifiedBy((String) dbo.get(ContentDataConstants.MODIFIED_BY_KEY));
+		source.setModifiedByName((String) dbo.get(ContentDataConstants.MODIFIED_BY_NAME_KEY));
+		source.setModifiedAt((Date) dbo.get(ContentDataConstants.MODIFIED_AT_KEY));
+		
 	}
 	
 	private static interface FieldCollection {

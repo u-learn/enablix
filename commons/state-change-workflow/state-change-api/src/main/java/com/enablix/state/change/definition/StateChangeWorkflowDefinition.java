@@ -17,4 +17,6 @@ public interface StateChangeWorkflowDefinition<T extends RefObject, A extends St
 	
 	RecordingInstantiator<T, A> recordInstantiator();
 	
+	
+	
 }

@@ -31,4 +31,10 @@ public class ActionDefinition {
 		this.requiredPermissions = requiredPermissions;
 	}
 	
+	public void addRequiredPermission(String permission) {
+		if (!requiredPermissions.contains(permission)) {
+			requiredPermissions.add(permission);
+		}
+	}
+	
 }

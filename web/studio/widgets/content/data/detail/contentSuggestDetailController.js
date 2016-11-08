@@ -57,6 +57,13 @@ enablix.studioApp.controller('ContentSuggestDetailCtrl',
 					valueFn: function(actRecord) { return actRecord.actionInput.notes; }
 				}];
 			
+			// check if the url has an action initiated
+			if ($stateParams.action == 'approve') {
+				$scope.approveContent();
+			} else if ($stateParams.action == 'reject') {
+				$scope.rejectContent();
+			}
+			
 		});
 		
 		$scope.isEditAllowed = false;
@@ -66,28 +73,42 @@ enablix.studioApp.controller('ContentSuggestDetailCtrl',
 		
 		var isActionAllowed = function(actionName) {
 			ContentApprovalService.isActionAllowed(actionName, $scope.approvalRecord);
-		}
+		};
+		
+		var reloadPage = function() {
+			if ($stateParams.action == 'view') {
+				StateUpdateService.reload();
+			} else if ($state.includes("myaccount")) {
+				StateUpdateService.goToMyContentRequestDetail($stateParams.refObjectIdentity);
+			} else {
+				StateUpdateService.goToContentRequestDetail($stateParams.refObjectIdentity);
+			}
+		};
 		
 		$scope.approveContent = function() {
-			ContentApprovalService.initApproveAction($scope.approvalRecord.objectRef.identity, function(data) {
-				StateUpdateService.reload();
+			ContentApprovalService.initApproveAction($scope.approvalRecord, function(data) {
+				reloadPage();
 			});
 		}
 		
 		$scope.rejectContent = function() {
-			ContentApprovalService.initRejectAction($scope.approvalRecord.objectRef.identity, function(data) {
-				StateUpdateService.reload();
+			ContentApprovalService.initRejectAction($scope.approvalRecord, function(data) {
+				reloadPage();
 			});
 		}
 		
 		$scope.withdrawContent = function(record) {
-			ContentApprovalService.initWithdrawAction(record, function(data) {
-				StateUpdateService.reload();
+			ContentApprovalService.initWithdrawAction($scope.approvalRecord, function(data) {
+				reloadPage();
 			});
 		}
 		
 		$scope.editContent = function() {
-			StateUpdateService.goToContentRequestEdit($scope.approvalRecord.objectRef.identity);
+			if ($state.includes("myaccount")) {
+				StateUpdateService.goToMyContentRequestEdit($stateParams.refObjectIdentity);
+			} else {
+				StateUpdateService.goToContentRequestEdit($stateParams.refObjectIdentity);
+			}
 		}
 		
 	}
