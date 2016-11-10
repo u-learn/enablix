@@ -150,13 +150,13 @@
 																			<td class="arrow" style="color:#9a9a9a; font-family:Arial,sans-serif, 'OS'; font-size:16px; line-height:20px; text-align:left" width="27">&rarr;</td>
 																			<td class="text" style="color:#626262; font-family:Arial,sans-serif, 'OS'; font-size:16px; line-height:20px; text-align:left">${field.label}:</td>
 																			#if($field.value.valueType == 'DOC')
-																				<td class="text" style="color:#626262; font-family:Arial,sans-serif, 'OS'; font-size:16px; line-height:20px; text-align:left">${field.value.name}</td>																				
+																				<td class="text" style="color:#626262; font-family:Arial,sans-serif, 'OS'; font-size:16px; line-height:20px; text-align:left">
+																					<a href="$obj.contentData.doc.accessUrl?atChannel=EMAIL&atContext=CONTENT_SUGGEST&atContextId=$obj.contentRequest.identity" target="_blank">${field.value.name}</a>
+																				</td>																				
 																			#elseif($field.value.valueType == 'LIST')
 																				<td class="text" style="color:#626262; font-family:Arial,sans-serif, 'OS'; font-size:16px; line-height:20px; text-align:left">
 																					#foreach($valListItem in $field.value.valueList)
-																						#if($valListItem.valueType == 'DOC')
-																						<a href="$obj.contentData.doc.accessUrl?atChannel=EMAIL&atContext=CONTENT_SUGGEST&atContextId=$obj.contentRequest.identity" target="_blank">${valListItem.value}</a>
-																						#elseif($valListItem.valueType == 'CONTENT_REF')
+																						#if($valListItem.valueType == 'CONTENT_REF')
 																							<a href="${obj.url}/app.html#/portal/container/$valListItem.containerQId/$valListItem.contentIdentity/c/single/$valListItem.containerQId/?atChannel=EMAIL&atContext=CONTENT_REQUEST&atContextId=$obj.contentRequest.identity">
 																								<span class="link-u" style="color:#004ba1; text-decoration:underline">${valListItem.textValue}</span>
 																							</a>  																								 
