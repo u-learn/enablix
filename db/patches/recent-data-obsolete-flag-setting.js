@@ -3,7 +3,7 @@ Script to set the "obsolete" flag in recent data collection
 
 Execute: use mongo utility to run the script
 
-mongo <path>/<script-file-name>
+mongo localhost:27017/admin -u enablix_app -p <password> <path>/<script-file-name> 
 
 ****************************************************************/
 
