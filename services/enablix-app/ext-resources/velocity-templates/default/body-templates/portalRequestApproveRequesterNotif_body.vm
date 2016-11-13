@@ -126,15 +126,24 @@
 										<div class="h1" style="color:#0e2a49; font-family:Arial,sans-serif, 'OS'; font-size:26px; line-height:30px; text-align:left; font-weight:bold">Hello #if(${obj.recipientUser.profile.name}) ${obj.recipientUser.profile.name}#else there#end,</div>
 										<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="15" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
 
-										#if(${obj.contentRequest.createdByName}) ${obj.contentRequest.createdByName}#else Someone #end has #if($obj.contentRequest.objectRef.addRequest) added #else updated #end 
+										#if(${obj.loggedInUser}) ${obj.loggedInUser}#else Someone #end has approved your request to #if($obj.contentRequest.objectRef.addRequest) add #else update #end 
 										#if(${obj.contentRequest.objectRef.contentTitle}) 
 										<a href="${obj.url}/app.html#/system/contentrequest/a/view/$obj.contentRequest.objectRef.identity/">
 											<span class="link-u" style="color:#004ba1; text-decoration:underline">${obj.contentRequest.objectRef.contentTitle}</span>
 										</a>
 										#else content
 										#end 
-										#if(${obj.tenant.name}) to ${obj.tenant.name}.
+										#if(${obj.tenant.name}) on ${obj.tenant.name}.
 										#end
+										
+										#if(${obj.contentRequest.objectRef.notes})
+										<table width="100%" border="0" cellspacing="0" cellpadding="0">	
+											<tr>
+												<td align="left"><u>Supporting Notes: </u> ${obj.contentRequest.objectRef.notes}</td>
+											</tr>
+										</table>										
+										#end
+										
 										<table width="100%" border="0" cellspacing="0" cellpadding="0">
 											<tr>
 												<td class="content-spacing2" style="font-size:0pt; line-height:0pt; text-align:left" width="30"></td>
@@ -185,7 +194,7 @@
 										
 										<table width="100%" border="0" cellspacing="0" cellpadding="0">	
 											<tr>
-												<td align="left">Your input is requested.</td>
+												<td align="left">Thanks for your input. Please continue to suggest new content and updates to existing content.</td>
 											</tr>
 										</table> 
 										<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tbody><tr><td height="15" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></tbody></table>
@@ -209,38 +218,7 @@
 																									<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="12" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
 
 																									<div class="text-button" style="color:#ffffff; font-family:Arial,sans-serif, 'OS'; font-size:16px; line-height:20px; text-align:center; font-weight:bold">
-																										<a href="${obj.url}/app.html#/system/contentrequest/a/approve/$obj.contentRequest.objectRef.identity/" target="_blank" class="link-white" style="color:#ffffff; text-decoration:none"><span class="link-white" style="color:#ffffff; text-decoration:none">Approve</span></a>
-																									</div>
-																									<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="12" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
-
-																								</td>
-																								<td class="img" style="font-size:0pt; line-height:0pt; text-align:left" width="42"></td>
-																							</tr>
-																						</table>
-																					</td>
-																				</tr>
-																			</table>
-																		</td>
-																	</tr>
-																</table>
-															</th>
-															<th class="column-top" style="font-size:0pt; line-height:0pt; padding:0; margin:0; font-weight:normal; vertical-align:top; Margin:0" width="10"><table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="20" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
-															</th>
-															<th class="column-top" style="font-size:0pt; line-height:0pt; padding:0; margin:0; font-weight:normal; vertical-align:top; Margin:0">
-																<table width="100%" border="0" cellspacing="0" cellpadding="0">
-																	<tr>
-																		<td>
-																			<table width="100%" border="0" cellspacing="0" cellpadding="0">
-																				<tr>
-																					<td align="center">
-																						<table border="0" cellspacing="0" cellpadding="0" bgcolor="#0e2a49" class="mobile-shell">
-																							<tr>
-																								<td class="img" style="font-size:0pt; line-height:0pt; text-align:left" width="42"></td>
-																								<td>
-																									<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="12" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
-
-																									<div class="text-button" style="color:#ffffff; font-family:Arial,sans-serif, 'OS'; font-size:16px; line-height:20px; text-align:center; font-weight:bold">
-																										<a href="${obj.url}/app.html#/system/contentrequest/a/reject/$obj.contentRequest.objectRef.identity/" target="_blank" class="link-white" style="color:#ffffff; text-decoration:none"><span class="link-white" style="color:#ffffff; text-decoration:none">Reject</span></a>
+																										<a href="${obj.url}/app.html#/system/contentrequest/a/approve/$obj.contentRequest.objectRef.identity/" target="_blank" class="link-white" style="color:#ffffff; text-decoration:none"><span class="link-white" style="color:#ffffff; text-decoration:none">View</span></a>
 																									</div>
 																									<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="12" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
 
@@ -298,7 +276,7 @@
 												<th class="column" style="font-size:0pt; line-height:0pt; padding:0; margin:0; font-weight:normal; Margin:0" width="280">
 													<table width="100%" border="0" cellspacing="0" cellpadding="0">
 														<tr>
-															<td class="footer-text-r" style="color:#737373; font-family:Arial,sans-serif, 'OS'; font-size:12px; line-height:18px; text-align:right"><a href="#" target="_blank" class="link3-u" style="color:#737373; text-decoration:underline"><span class="link3-u" style="color:#737373; text-decoration:underline">Add us to your address book</span></a></td>
+															<td class="footer-text-r" style="color:#737373; font-family:Arial,sans-serif, 'OS'; font-size:12px; line-height:18px; text-align:right">Add support@enablix.com to safe sender list.</td>
 														</tr>
 													</table>
 												</th>
