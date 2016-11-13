@@ -1,1 +1,1 @@
-Content Rejected: ${obj.contentRequest.objectRef.contentTitle}
+Content Not Approved: ${obj.contentRequest.objectRef.contentTitle}
