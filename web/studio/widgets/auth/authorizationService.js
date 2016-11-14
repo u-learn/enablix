@@ -49,6 +49,10 @@ enablix.studioApp.factory('AuthorizationService',
 			    			"authorization" : "Basic " + btoa(credentials.username + ":" + credentials.password)//,
 			    			//"remember-me" : "true",
 			    		} : {};
+			    		
+			    if (credentials && credentials.rememberMe) {
+			    	headers["remember-me"] = "true";
+			    }
 			    
 			    RESTService.getForData('user', null, null, function(data) {
 				    	

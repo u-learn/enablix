@@ -45,7 +45,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.and().httpBasic()
 			
 			// http://docs.spring.io/spring-security/site/docs/3.0.x/reference/remember-me.html#remember-me-persistent-token
-			//.and().rememberMe().rememberMeServices(rememberMeServices()).key(PERSISTENT_REMEMBER_ME_KEY)
+			.and().rememberMe().rememberMeServices(rememberMeServices()).key(PERSISTENT_REMEMBER_ME_KEY)
 			.and().logout().logoutSuccessHandler(logoutSuccessHandler()).permitAll()
 			.and().csrf().disable();
 			

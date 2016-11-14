@@ -11,18 +11,19 @@
 				</div>
 				<div class="cont clearfix">
 					<div class="form-group has-error" ng-if="error">
-						<label class="form-label" style="color:#e74c3c;">Invalid username or password</label>
+						<label class="form-label error">Invalid username or password</label>
 					</div>
 					<label class="form-label">Login</label>
 					<input type="text" name="username" ng-model="credentials.username" class="form-control">					 
-					  <br>
 					  <span class="form-label" style="color:#e74c3c;" ng-show="loginForm.username.$error.pattern && loginForm.username.$touched">
 						Not valid email !</span>
 		
 					<label class="form-label">Password</label>
 					<input type="password" name="password" ng-model="credentials.password" class="form-control" >
-					
-					<a ng-click="forgotpassword()" class="form-forgot">forgot password?</a>
+					<br>
+					<input type="checkbox" name="rememberMe" ng-model="credentials.rememberMe" style="display:inline; margin:0 0 0 4px;">
+						<label class="form-label" style="display:inline;">Remember me</label>
+					<div><a ng-click="forgotpassword()" class="form-forgot">forgot password?</a></div>
 				</div>
 				<div class="foot clearfix">
 					<button class="button button-add" type="submit">Login</button>

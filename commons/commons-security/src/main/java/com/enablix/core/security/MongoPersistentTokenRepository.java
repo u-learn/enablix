@@ -15,6 +15,9 @@ public class MongoPersistentTokenRepository implements PersistentTokenRepository
 	@Autowired
 	private RememberMeTokenRepository tokenRepo;
 	
+	@Autowired
+	private RememberMeTokenArchive tokenArchive;
+	
 	@Override
 	public void createNewToken(PersistentRememberMeToken token) {
 		
@@ -35,10 +38,13 @@ public class MongoPersistentTokenRepository implements PersistentTokenRepository
 	public void updateToken(String series, String tokenValue, Date lastUsed) {
 		
 		RememberMeToken rememberMeToken = tokenRepo.findByTokenSeries(series);
-		PersistentRememberMeToken token = rememberMeToken.getToken();
+
+		// archive to tackle simultaneous calls
+		PersistentRememberMeToken existToken = rememberMeToken.getToken();
+		tokenArchive.putToken(existToken);
 
 		PersistentRememberMeToken newToken = new PersistentRememberMeToken(
-				token.getUsername(), series, tokenValue, lastUsed);
+				existToken.getUsername(), series, tokenValue, lastUsed);
 
 		rememberMeToken.setToken(newToken);
 		
@@ -56,5 +62,5 @@ public class MongoPersistentTokenRepository implements PersistentTokenRepository
 	public void removeUserTokens(String username) {
 		tokenRepo.deleteByTokenUsername(username);
 	}
-
+	
 }
