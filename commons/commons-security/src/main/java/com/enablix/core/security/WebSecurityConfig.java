@@ -1,6 +1,7 @@
 package com.enablix.core.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -20,6 +21,9 @@ import com.enablix.core.security.service.EnablixUserService;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	private static final String PERSISTENT_REMEMBER_ME_KEY = "3nabl1xr0cks";
+	
+	@Value("${security.remember.me.tokenValiditySeconds:2419200}")
+	private Integer REMEMBER_ME_TOKEN_VALIDITY_IN_SECONDS;
 	
 	@Autowired
 	private EnablixUserService userService;
@@ -72,8 +76,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Bean
 	public RememberMeServices rememberMeServices() {
-		return new BasicAuthPersistedRememberMeServices(PERSISTENT_REMEMBER_ME_KEY, 
+		BasicAuthPersistedRememberMeServices rememberMeServices = 
+				new BasicAuthPersistedRememberMeServices(PERSISTENT_REMEMBER_ME_KEY, 
 					userService, mongoPersistentTokenRepository());
+		rememberMeServices.setTokenValiditySeconds(REMEMBER_ME_TOKEN_VALIDITY_IN_SECONDS);
+		return rememberMeServices;
 	}
 	
 	@Bean

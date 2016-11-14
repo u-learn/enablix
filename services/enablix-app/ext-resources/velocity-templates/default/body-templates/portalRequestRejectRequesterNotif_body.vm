@@ -136,11 +136,11 @@
 										#if(${obj.tenant.name}) on ${obj.tenant.name}.
 										#end
 										is not approved. 
-										
+										<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tbody><tr><td height="15" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></tbody></table>
 										#if(${obj.contentRequest.objectRef.notes})
 										<table width="100%" border="0" cellspacing="0" cellpadding="0">	
 											<tr>
-												<td align="left"><u>Supporting Notes: </u> ${obj.contentRequest.objectRef.notes}</td>
+												<td align="left"><u>Supporting Notes</u>: ${obj.contentRequest.objectRef.notes}</td>
 											</tr>
 										</table>										
 										#end
@@ -205,7 +205,7 @@
 												<td align="left">
 													<table border="0" cellspacing="0" cellpadding="0">
 														<tr>
-															<th class="column-top" style="font-size:0pt; line-height:0pt; padding:0; margin:0; font-weight:normal; vertical-align:top; Margin:0" width="183">
+															<th class="column-top" style="font-size:0pt; line-height:0pt; padding:0; margin:0; font-weight:normal; vertical-align:top; Margin:0" width="230">
 																<table width="100%" border="0" cellspacing="0" cellpadding="0">
 																	<tr>
 																		<td>

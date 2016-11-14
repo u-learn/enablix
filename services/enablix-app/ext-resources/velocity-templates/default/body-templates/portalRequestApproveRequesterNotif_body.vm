@@ -126,7 +126,7 @@
 										<div class="h1" style="color:#0e2a49; font-family:Arial,sans-serif, 'OS'; font-size:26px; line-height:30px; text-align:left; font-weight:bold">Hello #if(${obj.recipientUser.profile.name}) ${obj.recipientUser.profile.name}#else there#end,</div>
 										<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="15" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
 
-										#if(${obj.loggedInUser}) ${obj.loggedInUser}#else Someone #end has approved your request to #if($obj.contentRequest.objectRef.addRequest) add #else update #end 
+										#if(${obj.loggedInUser.profile.name}) ${obj.loggedInUser.profile.name}#else Someone #end has approved your request to #if($obj.contentRequest.objectRef.addRequest) add #else update #end 
 										#if(${obj.contentRequest.objectRef.contentTitle}) 
 										<a href="${obj.url}/app.html#/portal/container/$obj.contentData.containerQId/$obj.contentData.recordIdentity/c/single/$obj.contentData.containerQId/">
 											<span class="link-u" style="color:#004ba1; text-decoration:underline">${obj.contentRequest.objectRef.contentTitle}</span>
@@ -135,11 +135,11 @@
 										#end 
 										#if(${obj.tenant.name}) on ${obj.tenant.name}.
 										#end
-										
+										<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tbody><tr><td height="15" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></tbody></table>
 										#if(${obj.contentRequest.objectRef.notes})
 										<table width="100%" border="0" cellspacing="0" cellpadding="0">	
 											<tr>
-												<td align="left"><u>Supporting Notes: </u> ${obj.contentRequest.objectRef.notes}</td>
+												<td align="left"><u>Supporting Notes</u>: ${obj.contentRequest.objectRef.notes}</td>
 											</tr>
 										</table>										
 										#end
@@ -204,7 +204,7 @@
 												<td align="left">
 													<table border="0" cellspacing="0" cellpadding="0">
 														<tr>
-															<th class="column-top" style="font-size:0pt; line-height:0pt; padding:0; margin:0; font-weight:normal; vertical-align:top; Margin:0" width="183">
+															<th class="column-top" style="font-size:0pt; line-height:0pt; padding:0; margin:0; font-weight:normal; vertical-align:top; Margin:0" width="230">
 																<table width="100%" border="0" cellspacing="0" cellpadding="0">
 																	<tr>
 																		<td>
