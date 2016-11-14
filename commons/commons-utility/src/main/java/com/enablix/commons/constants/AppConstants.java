@@ -15,4 +15,6 @@ public class AppConstants {
 	public static final String GUEST_USER_IDENTITY = "~guest~";
 	public static final int DEFAULT_PAGE_SIZE = 10;
 	
+	public static final String TENANT_ID_REQ_PARAM = "tenantId";
+	
 }

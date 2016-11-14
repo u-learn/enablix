@@ -8,7 +8,6 @@ import javax.annotation.PostConstruct;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
-import org.apache.velocity.exception.ResourceNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -143,14 +142,7 @@ public class MailServiceImpl implements MailService {
 	}
 
 	private String generateTemplateMessage(Object objectTobeMerged, String templateName, String elementName, String path) {
-		Template emailTemplate = null;
-		try {
-			emailTemplate = velocityEngine.getTemplate(ProcessContext.get().getTenantId() + path + templateName);
-		} catch (ResourceNotFoundException ex) {
-			if (emailTemplate == null)
-				emailTemplate = velocityEngine.getTemplate("default" + path + templateName);
-		}
-
+		Template emailTemplate = velocityEngine.getTemplate(path + templateName);
 		VelocityContext velocityContext = new VelocityContext();
 		velocityContext.put(elementName, objectTobeMerged);
 		StringWriter stringWriter = new StringWriter();

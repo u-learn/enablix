@@ -39,7 +39,7 @@ public class ContentRefListValueBuilder implements FieldValueBuilder<ListValue, 
 			
 			ContainerType containerDef = TemplateUtil.findContainer(template.getDataDefinition(), containerId);
 			
-			if (containerDef == null) {
+			if (containerDef == null || containerDef.isRefData()) {
 				
 				addTextValues(fieldValue, listVal);
 				

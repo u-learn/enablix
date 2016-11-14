@@ -9,7 +9,7 @@
 		<input focus="true" name="Email" placeholder="Enter Email" class="form-control" type="text" ng-blur="emailForm.Email.$valid && getSmtp(newEmailData.emailId)" ng-model="newEmailData.emailId" size="80" ng-pattern="/^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/" required >
 	</div>
 	<div ng-messages="emailForm.Email.$error" ng-if="emailForm.Email.$touched" role="alert">
-    <div ng-message="required" class="error">You didn't enter a email</div> 
+    <div ng-message="required" class="error">Please enter email</div> 
     <!-- <div ng-message="email" class="error">Please enter a valid email</div> -->    
 	<div ng-message="pattern" class="error">Please enter a valid email</div> 
      
@@ -21,7 +21,7 @@
 		<input name="password" placeholder="Enter Password" class="form-control" ng-model="newEmailData.password" type="password" size="80" required>
 	</div>
 	<div ng-messages="emailForm.password.$error" ng-if='emailForm.password.$touched' role="alert">
-    <div ng-message="required" class="error">You didn't enter a Password</div>    
+    <div ng-message="required" class="error">Please enter password</div>    
   </div>
 </div>
 <div class="cont">
@@ -30,7 +30,7 @@
 		<input name="smtp" placeholder="Enter SMTP" class="form-control" ng-model="newEmailData.smtp" type="text" size="80" required>
 	</div>
 	<div ng-messages="emailForm.smtp.$error" ng-if='emailForm.smtp.$touched' role="alert">
-    <div ng-message="required" class="error">You didn't enter a SMTP</div>    
+    <div ng-message="required" class="error">Please enter SMTP server address</div>    
   </div>
 </div>
 <div class="cont">
@@ -39,7 +39,7 @@
 		<input name="port" placeholder="Enter PORT" class="form-control" ng-model="newEmailData.port" type="text" size="80" required>
 	</div>
 	<div ng-messages="emailForm.port.$error" ng-if='emailForm.port.$touched' role="alert">
-    <div ng-message="required" class="error">You didn't enter a SMTP</div>    
+    <div ng-message="required" class="error">Please enter SMTP Port</div>    
   </div>
 </div>
 <div class="foot clearfix">

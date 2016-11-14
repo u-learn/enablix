@@ -1,25 +1,24 @@
 <div class="modal-header">
     <h3 class="modal-title">Share</h3>
 </div>
+<form name="shareForm">
 <div class="modal-body">
 <div class="cont">
 <table class="datatable">	
 	<tbody>
 		<tr>
 		<label class="form-label">Enter email</label>
-		<form name="modalForm">
-			<input type="text" name="emailid" ng-model="emailid" class="form-control" ng-blur="modalForm.emailid.$valid" ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,5})$/" required>
-		
-			<div ng-messages="modalForm.emailid.$error" ng-if="modalForm.emailid.$touched" role="alert">
-				<div ng-message="required" class="error">You didn't enter a email</div>
+			<input type="text" name="emailid" ng-model="emailid" class="form-control" ng-blur="shareForm.emailid.$valid" ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,5})$/" required>
+			<div ng-messages="shareForm.emailid.$error" ng-if="shareForm.emailid.$touched" role="alert">
+				<div ng-message="required" class="error">Please enter an email</div>
 				<div ng-message="pattern" class="error">Please enter a valid email</div>      
 			</div>
-		</form>
 	</tr>
 	</tbody>
 </table>
 </div>
 </div>
+</form>
 <div class="modal-footer">
     <button class="button button-delete" type="button" ng-click="close()">Cancel</button>
 	<button class="button button-add" type="button" ng-click="shareContent()">Share</button>

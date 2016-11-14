@@ -14,6 +14,7 @@ import org.springframework.util.PathMatcher;
 import org.springframework.web.servlet.resource.PathResourceResolver;
 import org.springframework.web.servlet.resource.ResourceResolverChain;
 
+import com.enablix.commons.constants.AppConstants;
 import com.enablix.commons.util.process.ProcessContext;
 
 public class TenantBasedCustomResourceResolver extends PathResourceResolver {
@@ -28,11 +29,21 @@ public class TenantBasedCustomResourceResolver extends PathResourceResolver {
 	@Override
 	protected Resource resolveResourceInternal(HttpServletRequest request, String requestPath, 
 			List<? extends Resource> locations, ResourceResolverChain chain) {
-		Resource resource = super.resolveResourceInternal(request, requestPath, locations, chain);
-		if (resource != null) {
-			return resource;
+		
+		try {
+		
+			TenantIdHolder.setTenantId(request.getParameter(AppConstants.TENANT_ID_REQ_PARAM));
+			
+			Resource resource = super.resolveResourceInternal(request, requestPath, locations, chain);
+			if (resource != null) {
+				return resource;
+			}
+			
+			return chain.resolveResource(request, requestPath, locations);
+			
+		} finally {
+			TenantIdHolder.clear();
 		}
-		return chain.resolveResource(request, requestPath, locations);
 	}
 	
 	protected Resource getResource(String resourcePath, Resource location) throws IOException {
@@ -68,11 +79,36 @@ public class TenantBasedCustomResourceResolver extends PathResourceResolver {
 	}
 
 	private String resolveTenantId() {
+		
+		String tenantId = null;
+		
 		ProcessContext processContext = ProcessContext.get();
+		
 		if (processContext != null) {
-			return processContext.getTenantId();
+			tenantId = processContext.getTenantId();
+		} else {
+			tenantId = TenantIdHolder.getTenantId();
 		}
-		return null;
+		
+		return tenantId;
+	}
+	
+	private static class TenantIdHolder {
+		
+		public static final ThreadLocal<String> THREAD_LOCAL_TENANT_ID = new ThreadLocal<String>();
+		
+		public static void setTenantId(String tenantId) {
+			THREAD_LOCAL_TENANT_ID.set(tenantId);
+		}
+		
+		public static String getTenantId() {
+			return THREAD_LOCAL_TENANT_ID.get();
+		}
+		
+		public static void clear() {
+			THREAD_LOCAL_TENANT_ID.remove();
+		}
+		
 	}
 
 }

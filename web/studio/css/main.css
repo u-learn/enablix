@@ -545,7 +545,7 @@ form .row .form-label:first-child {
 	background: #fff;
 }
 .page-content {
-	border-bottom: 44px solid transparent;;
+	border-bottom: 44px solid transparent;
 	padding-bottom: 2em;
 }
 .page-footer {
@@ -1420,6 +1420,10 @@ eb-nav-link:first-child li {
 	color: white !important;
 }
 .error {
+	margin: 0.5em 0 0;
+	font-size: 0.875em;
+	font-weight: 300;
+	text-align: left;
 	color : red;
 }
 

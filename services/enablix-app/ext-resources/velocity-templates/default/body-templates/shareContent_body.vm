@@ -63,9 +63,6 @@
       </a></div> 
 
      <br/>
-      <p style = "font: normal 14px/normal Arial, Helvetica, sans-serif;">Have any questions or feedback? You can reply to this email.</p>
-      <p style = "font: normal 14px/normal Arial, Helvetica, sans-serif;">Cheers, <br/>Enablix Team for <b>${obj.tenant.name}</b> </p>
-      <p style = "font: normal 14px/normal Arial, Helvetica, sans-serif;">P.S. please add support@enablix.com to your address book or safe sender list. </p>
-      <p style = "font: normal 14px/normal Arial, Helvetica, sans-serif;">&copy; 2016 Enablix LLC. All rights reserved. For more information, please contact us at support@enablix.com</p>
+     #parse("body-templates/footer_body.vm") 
    </body>
 </html>

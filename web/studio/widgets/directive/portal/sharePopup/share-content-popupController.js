@@ -4,6 +4,11 @@ enablix.studioApp.controller('ShareController', [
 
 		$scope.shareContent = function() {
 			
+			$scope.shareForm.emailid.$touched = true;
+			if ($scope.shareForm.$invalid) {
+				return;
+			}
+			
 			ContentShareService.shareContent(containerQId, contentIdentity, $scope.emailid, function(sent) {
 				if(sent) {
 					Notification.primary({message: "Mail sent successfully", delay: enablix.errorMsgShowTime});
@@ -18,7 +23,7 @@ enablix.studioApp.controller('ShareController', [
 		}
 
 		$scope.close = function() {
-			$modalInstance.close();
+			$modalInstance.dismiss('cancel');
 		}
 
 }]);

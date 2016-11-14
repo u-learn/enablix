@@ -9,7 +9,12 @@ enablix.studioApp.directive('ebxBack',
 				},
 		
 				link: function(scope, element, attrs) {
+					
 					scope.text = scope.text || "Back";
+					
+					var prevState = NavigationTracker.getPreviousState();
+					scope.hideButton = isNullOrUndefined(prevState) || prevState.route.name == "";
+					
 					scope.goBack = function() {
 						StateUpdateService.goBack();
 					}
