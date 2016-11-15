@@ -95,6 +95,8 @@ public class NotificationManagerImpl implements NotificationManager {
 						emailInput.setRecipientUser(recipient);
 						emailInput.setRecipientUserId(recipient.getUserId());
 						
+						inputBuilder.prepareContentForEmailToUser(emailInput, recipient.getUserId());
+						
 						mailService.sendHtmlEmail(emailInput, recipient.getUserId(), 
 								ContentApprovalConstants.TEMPLATE_PORTAL_REQ_ADMIN_NOTIF);
 					}
@@ -113,8 +115,9 @@ public class NotificationManagerImpl implements NotificationManager {
 		
 		String recipientUserId = contentRequest.getCreatedBy();
 		
-		ContentApprovalEmailVelocityInput<SimpleActionInput> emailInput = inputBuilder.build(
-				ContentApprovalConstants.ACTION_APPROVE, actionInput, contentRequest, recipientUserId);
+		ContentApprovalEmailVelocityInput<SimpleActionInput> emailInput = 
+				inputBuilder.build(ContentApprovalConstants.ACTION_APPROVE, actionInput, 
+						contentRequest, recipientUserId, recipientUserId);
 		
 		mailService.sendHtmlEmail(emailInput, recipientUserId, 
 				ContentApprovalConstants.TEMPLATE_PORTAL_REQ_APPROVED_NOTIF);
@@ -130,8 +133,9 @@ public class NotificationManagerImpl implements NotificationManager {
 		
 		String recipientUserId = contentRequest.getCreatedBy();
 		
-		ContentApprovalEmailVelocityInput<SimpleActionInput> emailInput = inputBuilder.build(
-				ContentApprovalConstants.ACTION_APPROVE, actionInput, contentRequest, recipientUserId);
+		ContentApprovalEmailVelocityInput<SimpleActionInput> emailInput = 
+				inputBuilder.build(ContentApprovalConstants.ACTION_APPROVE, actionInput, 
+						contentRequest, recipientUserId, recipientUserId);
 		
 		mailService.sendHtmlEmail(emailInput, recipientUserId, 
 				ContentApprovalConstants.TEMPLATE_PORTAL_REQ_REJECT_NOTIF);

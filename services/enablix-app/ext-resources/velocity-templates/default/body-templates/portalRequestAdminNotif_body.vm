@@ -1,73 +1,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
-<head>
-	<!--[if gte mso 15]>
-	<xml>
-		<o:OfficeDocumentSettings>
-		<o:AllowPNG/>
-		<o:PixelsPerInch>96</o:PixelsPerInch>
-		</o:OfficeDocumentSettings>
-	</xml>
-	<![endif]-->
-	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-	<meta name="format-detection" content="date=no" />
-	<meta name="format-detection" content="address=no" />
-	<meta name="format-detection" content="telephone=no" />
-	<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,400italic,700,700italic' rel='stylesheet' type='text/css' />
-	<title>Email Template</title>
-	
 
-	<style type="text/css" media="screen">
-		[style*="OS"] { 
-			font-family: 'Open Sans', Arial, sans-serif !important;
-		}
-		/* Linked Styles */
-		body { padding:0 !important; margin:0 !important; display:block !important; min-width:100% !important; width:100% !important; background:#f2f2f2; -webkit-text-size-adjust:none }
-		a { color:#004ba1; text-decoration:none }
-		.header-text a { color:#727273; text-decoration:none }
-		p { padding:0 !important; margin:0 !important } 
-		img { -ms-interpolation-mode: bicubic; /* Allow smoother rendering of resized image in Internet Explorer */ }
+#include('body-templates/partials/head.vm')
 
-		/* Mobile styles */
-		@media only screen and (max-device-width: 480px), only screen and (max-width: 480px) { 
-			div[class='mobile-br-5'] { height: 5px !important; }
-			div[class='mobile-br-10'] { height: 10px !important; }
-			div[class='mobile-br-15'] { height: 15px !important; }
-
-			th[class='m-td'], 
-			td[class='m-td'], 
-			div[class='hide-for-mobile'], 
-			span[class='hide-for-mobile'] { display: none !important; width: 0 !important; height: 0 !important; font-size: 0 !important; line-height: 0 !important; min-height: 0 !important; }
-
-			span[class='mobile-block'] { display: block !important; }
-
-			div[class='img-m-center'] { text-align: center !important; }
-
-			div[class='fluid-img'] img,
-			td[class='fluid-img'] img { width: 100% !important; max-width: 100% !important; height: auto !important; }
-
-			table[class='mobile-shell'] { width: 100% !important; min-width: 100% !important; }
-			table[class='center'] { margin: 0 auto; }
-			
-			td[class='column-top'],
-			th[class='column-top'],
-			td[class='column'],
-			th[class='column'] { float: left !important; width: 100% !important; display: block !important; }
-
-			td[class='td'] { width: 100% !important; min-width: 100% !important; }
-
-			td[class='content-spacing'] { width: 15px !important; }
-			td[class='content-spacing2'] { width: 5px !important; }
-			td[class='header-text'] { text-align: center !important; }
-			td[class='header-text-r'] { text-align: center !important; }
-
-			td[class='footer-text'] { text-align: center !important; }
-			td[class='footer-text-r'] { text-align: center !important; }
-		} 
-	</style>
-</head>
 <body class="body" style="padding:0 !important; margin:0 !important; display:block !important; min-width:100% !important; width:100% !important; background:#f2f2f2; -webkit-text-size-adjust:none">
 	<table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="#f2f2f2">
 		<tr>
@@ -75,122 +10,41 @@
 				<table width="600" border="0" cellspacing="0" cellpadding="0" class="mobile-shell">
 					<tr>
 						<td class="td" style="width:600px; min-width:600px; font-size:0pt; line-height:0pt; padding:0; margin:0; font-weight:normal; Margin:0">
-							<!-- Header bar -->
-							<table width="100%" border="0" cellspacing="0" cellpadding="0">
-								<tr>
-									<td class="content-spacing" style="font-size:0pt; line-height:0pt; text-align:left" width="0"></td>
-									<td class="header-text" style="color:#727273; font-family:Arial,sans-serif, 'OS'; font-size:12px; line-height:16px; text-align:left">
-										<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="20" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
-<div class="hide-for-mobile"><table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="10" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
-</div>
-										${obj.contentRequest.objectRef.contentTitle}
-										<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="20" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
-<div class="hide-for-mobile"><table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="10" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
-</div>
-									</td>
-									<td class="content-spacing" style="font-size:0pt; line-height:0pt; text-align:left" width="0"></td>
-								</tr>
-							</table>
-							<!-- END Header br -->
 
-							<!-- Header -->
-							<table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="#ffffff">
-								<tr>
-									<td class="content-spacing" style="font-size:0pt; line-height:0pt; text-align:left" width="30"></td>
-									<td>
-										<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="20" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
-<div class="hide-for-mobile"><table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="15" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
-</div>
-										<div class="img" style="font-size:0pt; line-height:0pt; text-align:left">
-											<a href="#" target="_blank"><img src="$obj.url/widgets/img/logo.png?tenantId=$obj.tenant.tenantId" border="0" width="134" height="29" alt="" /></a>
-										</div>
-										<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="20" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
-<div class="hide-for-mobile"><table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="15" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
-</div>
-										<table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="#f2f2f2" class="border" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td bgcolor="#f2f2f2" height="1" class="border" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
+							#top_header_bar(${obj.contentRequest.objectRef.contentTitle})
 
-									</td>
-									<td class="content-spacing" style="font-size:0pt; line-height:0pt; text-align:left" width="30"></td>
-								</tr>
-							</table>
-							<!-- END Header -->
+							#parse('body-templates/partials/logo_header.vm')
 
 							<!-- Main -->
 							<table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="#ffffff">
 								<tr>
 									<td class="content-spacing" style="font-size:0pt; line-height:0pt; text-align:left" width="30"></td>
 									<td class="text" style="color:#626262; font-family:Arial,sans-serif, 'OS'; font-size:16px; line-height:20px; text-align:left">
-										<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="20" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
-<div class="hide-for-mobile"><table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="15" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
-</div>
-										<div class="h1" style="color:#0e2a49; font-family:Arial,sans-serif, 'OS'; font-size:26px; line-height:30px; text-align:left; font-weight:bold">Hello #if(${obj.recipientUser.profile.name}) ${obj.recipientUser.profile.name}#else there#end,</div>
-										<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="15" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
+										
+										#spacer_double_row('20' '15')
+										
+										#mail_opening(${obj.recipientUser.profile.name})
+										
+										#spacer_row('15')
 
 										#if(${obj.contentRequest.createdByName}) ${obj.contentRequest.createdByName}#else Someone #end has #if($obj.contentRequest.objectRef.addRequest) added #else updated #end 
 										#if(${obj.contentRequest.objectRef.contentTitle}) 
 										<a href="${obj.url}/app.html#/system/contentrequest/a/view/$obj.contentRequest.objectRef.identity/">
 											<span class="link-u" style="color:#004ba1; text-decoration:underline">${obj.contentRequest.objectRef.contentTitle}</span>
 										</a>
-										#else content
-										#end 
-										#if(${obj.tenant.name}) to ${obj.tenant.name}.
-										#end
-										<table width="100%" border="0" cellspacing="0" cellpadding="0">
-											<tr>
-												<td class="content-spacing2" style="font-size:0pt; line-height:0pt; text-align:left" width="30"></td>
-												<td>
-													<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="20" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
-		    										
-														<table width="100%" border="0" cellspacing="0" cellpadding="0">
-															<tr>
-																<td>
-																	<table width="100%" border="0" cellspacing="0" cellpadding="0">
-																		#foreach($field in $obj.contentData.fields)
-																		<tr>
-																			<td class="arrow" style="color:#9a9a9a; font-family:Arial,sans-serif, 'OS'; font-size:16px; line-height:20px; text-align:left" width="27">&rarr;</td>
-																			<td class="text" style="color:#626262; font-family:Arial,sans-serif, 'OS'; font-size:16px; line-height:20px; text-align:left">${field.label}:</td>
-																			#if($field.value.valueType == 'DOC')
-																				<td class="text" style="color:#626262; font-family:Arial,sans-serif, 'OS'; font-size:16px; line-height:20px; text-align:left">
-																					<a href="$obj.contentData.doc.accessUrl?atChannel=EMAIL&atContext=CONTENT_SUGGEST&atContextId=$obj.contentRequest.identity" target="_blank">${field.value.name}</a>
-																				</td>																				
-																			#elseif($field.value.valueType == 'LIST')
-																				<td class="text" style="color:#626262; font-family:Arial,sans-serif, 'OS'; font-size:16px; line-height:20px; text-align:left">
-																					#foreach($valListItem in $field.value.valueList)
-																						#if($valListItem.valueType == 'CONTENT_REF')
-																							<a href="${obj.url}/app.html#/portal/container/$valListItem.containerQId/$valListItem.contentIdentity/c/single/$valListItem.containerQId/?atChannel=EMAIL&atContext=CONTENT_REQUEST&atContextId=$obj.contentRequest.identity">
-																								<span class="link-u" style="color:#004ba1; text-decoration:underline">${valListItem.textValue}</span>
-																							</a>  																								 
-																						#else
-																							${valListItem.value} 
-																						#end	
-																						#if($foreach.hasNext), #end
-																					#end
-																				</td>																				
-																			#else
-																				<td class="text" style="color:#626262; font-family:Arial,sans-serif, 'OS'; font-size:16px; line-height:20px; text-align:left">${field.value.value}</td>																				
-																			#end
-																		</tr>
-																		#end
-																	</table>
-																	<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="7" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
-
-																</td>
-															</tr>
-														</table>
-													
-													<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="20" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
-
-												</td>
-												<td class="content-spacing2" style="font-size:0pt; line-height:0pt; text-align:left" width="30"></td>
-											</tr>
-										</table>
+										#else content #end 
+										#if(${obj.tenant.name}) to ${obj.tenant.name}. #end
+										
+										#content_table($obj.contentData $obj.url 'EMAIL' 'CONTENT_SUGGEST' $obj.contentRequest.identity)
 										
 										<table width="100%" border="0" cellspacing="0" cellpadding="0">	
 											<tr>
 												<td align="left">Your input is requested.</td>
 											</tr>
 										</table> 
-										<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tbody><tr><td height="15" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></tbody></table>
+										
+										#spacer_row('15')
+
 										<!-- Btns -->
 										<table width="100%" border="0" cellspacing="0" cellpadding="0">
 											<tr>
@@ -198,64 +52,13 @@
 													<table border="0" cellspacing="0" cellpadding="0">
 														<tr>
 															<th class="column-top" style="font-size:0pt; line-height:0pt; padding:0; margin:0; font-weight:normal; vertical-align:top; Margin:0" width="183">
-																<table width="100%" border="0" cellspacing="0" cellpadding="0">
-																	<tr>
-																		<td>
-																			<table width="100%" border="0" cellspacing="0" cellpadding="0">
-																				<tr>
-																					<td align="center">
-																						<table border="0" cellspacing="0" cellpadding="0" bgcolor="#0e2a49" class="mobile-shell">
-																							<tr>
-																								<td class="img" style="font-size:0pt; line-height:0pt; text-align:left" width="42"></td>
-																								<td>
-																									<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="12" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
-
-																									<div class="text-button" style="color:#ffffff; font-family:Arial,sans-serif, 'OS'; font-size:16px; line-height:20px; text-align:center; font-weight:bold">
-																										<a href="${obj.url}/app.html#/system/contentrequest/a/approve/$obj.contentRequest.objectRef.identity/" target="_blank" class="link-white" style="color:#ffffff; text-decoration:none"><span class="link-white" style="color:#ffffff; text-decoration:none">Approve</span></a>
-																									</div>
-																									<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="12" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
-
-																								</td>
-																								<td class="img" style="font-size:0pt; line-height:0pt; text-align:left" width="42"></td>
-																							</tr>
-																						</table>
-																					</td>
-																				</tr>
-																			</table>
-																		</td>
-																	</tr>
-																</table>
+																#action_button('Approve' "${obj.url}/app.html#/system/contentrequest/a/approve/$obj.contentRequest.objectRef.identity/")
 															</th>
-															<th class="column-top" style="font-size:0pt; line-height:0pt; padding:0; margin:0; font-weight:normal; vertical-align:top; Margin:0" width="10"><table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="20" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
+															<th class="column-top" style="font-size:0pt; line-height:0pt; padding:0; margin:0; font-weight:normal; vertical-align:top; Margin:0" width="10">
+																#spacer_row('20')
 															</th>
 															<th class="column-top" style="font-size:0pt; line-height:0pt; padding:0; margin:0; font-weight:normal; vertical-align:top; Margin:0">
-																<table width="100%" border="0" cellspacing="0" cellpadding="0">
-																	<tr>
-																		<td>
-																			<table width="100%" border="0" cellspacing="0" cellpadding="0">
-																				<tr>
-																					<td align="center">
-																						<table border="0" cellspacing="0" cellpadding="0" bgcolor="#0e2a49" class="mobile-shell">
-																							<tr>
-																								<td class="img" style="font-size:0pt; line-height:0pt; text-align:left" width="42"></td>
-																								<td>
-																									<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="12" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
-
-																									<div class="text-button" style="color:#ffffff; font-family:Arial,sans-serif, 'OS'; font-size:16px; line-height:20px; text-align:center; font-weight:bold">
-																										<a href="${obj.url}/app.html#/system/contentrequest/a/reject/$obj.contentRequest.objectRef.identity/" target="_blank" class="link-white" style="color:#ffffff; text-decoration:none"><span class="link-white" style="color:#ffffff; text-decoration:none">Reject</span></a>
-																									</div>
-																									<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="12" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
-
-																								</td>
-																								<td class="img" style="font-size:0pt; line-height:0pt; text-align:left" width="42"></td>
-																							</tr>
-																						</table>
-																					</td>
-																				</tr>
-																			</table>
-																		</td>
-																	</tr>
-																</table>
+																#action_button('Reject' "${obj.url}/app.html#/system/contentrequest/a/reject/$obj.contentRequest.objectRef.identity/")
 															</th>
 														</tr>
 													</table>
@@ -263,56 +66,16 @@
 											</tr>
 										</table>
 										<!-- Btns -->
-										<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="20" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
-<div class="hide-for-mobile"><table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="10" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
-</div>
-
-										Cheers, <br />
-										${obj.tenant.name} Team
-
-										<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="20" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
-<div class="hide-for-mobile"><table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="15" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
-</div>
+										
+										#mail_closing($obj.tenant.name)
+										
 									</td>
 									<td class="content-spacing" style="font-size:0pt; line-height:0pt; text-align:left" width="30"></td>
 								</tr>
 							</table>
 							<!-- END Main -->
 
-							<!-- Footer -->
-							<table width="100%" border="0" cellspacing="0" cellpadding="0">
-								<tr>
-									<td class="content-spacing" style="font-size:0pt; line-height:0pt; text-align:left" width="0"></td>
-									<td>
-										<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="25" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
-
-										<table width="100%" border="0" cellspacing="0" cellpadding="0">
-											<tr>
-												<th class="column" style="font-size:0pt; line-height:0pt; padding:0; margin:0; font-weight:normal; Margin:0">
-													<table width="100%" border="0" cellspacing="0" cellpadding="0">
-														<tr>
-															<td class="footer-text" style="color:#737373; font-family:Arial,sans-serif, 'OS'; font-size:12px; line-height:18px; text-align:left">&copy; 2016 Enablix LLC. All rights reserved.</td>
-														</tr>
-													</table>
-												</th>
-												<th class="column" style="font-size:0pt; line-height:0pt; padding:0; margin:0; font-weight:normal; Margin:0" width="10"><table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="10" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
-</th>
-												<th class="column" style="font-size:0pt; line-height:0pt; padding:0; margin:0; font-weight:normal; Margin:0" width="280">
-													<table width="100%" border="0" cellspacing="0" cellpadding="0">
-														<tr>
-															<td class="footer-text-r" style="color:#737373; font-family:Arial,sans-serif, 'OS'; font-size:12px; line-height:18px; text-align:right">Add support@enablix.com to safe sender list.</td>
-														</tr>
-													</table>
-												</th>
-											</tr>
-										</table>
-										<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="25" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
-
-									</td>
-									<td class="content-spacing" style="font-size:0pt; line-height:0pt; text-align:left" width="0"></td>
-								</tr>
-							</table>
-							<!-- END Footer -->
+							#include('body-templates/partials/footer.vm')
 						</td>
 					</tr>
 				</table>

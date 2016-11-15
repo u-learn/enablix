@@ -1,0 +1,34 @@
+<!-- Footer -->
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<td class="content-spacing" style="font-size:0pt; line-height:0pt; text-align:left" width="0"></td>
+		<td>
+			<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="25" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
+
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+				<tr>
+					<th class="column" style="font-size:0pt; line-height:0pt; padding:0; margin:0; font-weight:normal; Margin:0">
+						<table width="100%" border="0" cellspacing="0" cellpadding="0">
+							<tr>
+								<td class="footer-text" style="color:#737373; font-family:Arial,sans-serif, 'OS'; font-size:12px; line-height:18px; text-align:left">&copy; 2016 Enablix LLC. All rights reserved.</td>
+							</tr>
+						</table>
+					</th>
+					<th class="column" style="font-size:0pt; line-height:0pt; padding:0; margin:0; font-weight:normal; Margin:0" width="10"><table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="10" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
+					</th>
+					<th class="column" style="font-size:0pt; line-height:0pt; padding:0; margin:0; font-weight:normal; Margin:0" width="280">
+						<table width="100%" border="0" cellspacing="0" cellpadding="0">
+							<tr>
+								<td class="footer-text-r" style="color:#737373; font-family:Arial,sans-serif, 'OS'; font-size:12px; line-height:18px; text-align:right">Add support@enablix.com to safe sender list.</td>
+							</tr>
+						</table>
+					</th>
+				</tr>
+			</table>
+			<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="25" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
+
+		</td>
+		<td class="content-spacing" style="font-size:0pt; line-height:0pt; text-align:left" width="0"></td>
+	</tr>
+</table>
+<!-- END Footer -->

@@ -1,0 +1,136 @@
+#macro( content_portal_url $a_siteUrl $a_containerQId $a_contentIdentity )
+$a_siteUrl/app.html#/portal/container/$a_containerQId/$a_contentIdentity/c/single/$a_containerQId/
+#end
+
+
+
+#macro( action_button $a_btnText $a_btnUrl)
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<td>
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+				<tr>
+					<td align="center">
+						<table border="0" cellspacing="0" cellpadding="0" bgcolor="#0e2a49" class="mobile-shell">
+							<tr>
+								<td class="img" style="font-size:0pt; line-height:0pt; text-align:left" width="42"></td>
+								<td>
+									<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="12" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
+
+									<div class="text-button" style="color:#ffffff; font-family:Arial,sans-serif, 'OS'; font-size:16px; line-height:20px; text-align:center; font-weight:bold">
+										<a href="$a_btnUrl" target="_blank" class="link-white" style="color:#ffffff; text-decoration:none"><span class="link-white" style="color:#ffffff; text-decoration:none">$a_btnText</span></a>
+									</div>
+									<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="12" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
+
+								</td>
+								<td class="img" style="font-size:0pt; line-height:0pt; text-align:left" width="42"></td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+</table>
+#end
+
+
+
+#macro( top_header_bar $a_headerTitle)
+<!-- Header bar -->
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<td class="content-spacing" style="font-size:0pt; line-height:0pt; text-align:left" width="0"></td>
+		<td class="header-text" style="color:#727273; font-family:Arial,sans-serif, 'OS'; font-size:12px; line-height:16px; text-align:left">
+			#spacer_double_row('20' '10')
+			$a_headerTitle
+			#spacer_double_row('20' '10')
+		</td>
+		<td class="content-spacing" style="font-size:0pt; line-height:0pt; text-align:left" width="0"></td>
+	</tr>
+</table>
+<!-- END Header br -->
+#end
+
+
+
+#macro( mail_opening $a_userName)
+<div class="h1" style="color:#0e2a49; font-family:Arial,sans-serif, 'OS'; font-size:26px; line-height:30px; text-align:left; font-weight:bold">
+	Hello #if($a_userName) $a_userName#else there#end,
+</div>
+#end
+
+
+
+#macro( content_table $a_displayableContent $a_siteUrl $a_atChannel $a_atContext $a_atContextId)
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<td class="content-spacing2" style="font-size:0pt; line-height:0pt; text-align:left" width="30"></td>
+		<td>
+			#spacer_row('20')
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+				<tr>
+					<td>
+						<table width="100%" border="0" cellspacing="0" cellpadding="0">
+							#foreach($field in $a_displayableContent.fields)
+							<tr>
+								<td class="arrow" style="color:#9a9a9a; font-family:Arial,sans-serif, 'OS'; font-size:16px; line-height:20px; text-align:left" width="27">&rarr;</td>
+								<td class="text" style="color:#626262; font-family:Arial,sans-serif, 'OS'; font-size:16px; line-height:20px; text-align:left">${field.label}:</td>
+								#if($field.value.valueType == 'DOC')
+									<td class="text" style="color:#626262; font-family:Arial,sans-serif, 'OS'; font-size:16px; line-height:20px; text-align:left">
+										<a href="${field.value.accessUrl}?atChannel=$a_atChannel&atContext=$a_atContext&atContextId=$a_atContextId" target="_blank">${field.value.name}</a>
+									</td>																				
+								#elseif($field.value.valueType == 'LIST')
+									<td class="text" style="color:#626262; font-family:Arial,sans-serif, 'OS'; font-size:16px; line-height:20px; text-align:left">
+										#foreach($valListItem in $field.value.valueList)
+											#if($valListItem.valueType == 'CONTENT_REF')
+												<a href="#content_portal_url($a_siteUrl $valListItem.containerQId $valListItem.contentIdentity)?atChannel=$a_atChannel&atContext=$a_atContext&atContextId=$a_atContextId">
+													<span class="link-u" style="color:#004ba1; text-decoration:underline">${valListItem.textValue}</span>
+												</a>  																								 
+											#else
+												${valListItem.value} 
+											#end	
+											#if($foreach.hasNext), #end
+										#end
+									</td>																				
+								#else
+									<td class="text" style="color:#626262; font-family:Arial,sans-serif, 'OS'; font-size:16px; line-height:20px; text-align:left">${field.value.value}</td>																				
+								#end
+							</tr>
+							#end
+						</table>
+						#spacer_row('7')
+
+					</td>
+				</tr>
+			</table>
+			
+			#spacer_row('20')
+
+		</td>
+		<td class="content-spacing2" style="font-size:0pt; line-height:0pt; text-align:left" width="30"></td>
+	</tr>
+</table>
+#end
+
+
+
+#macro( spacer_row $a_rowHeight)
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tbody><tr><td height="$a_rowHeight" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></tbody></table>
+#end
+
+
+
+#macro( spacer_double_row $a_firstRowHeight $a_secondRowHeight)
+#spacer_row('20')
+<div class="hide-for-mobile">#spacer_row('15')</div>
+#end
+
+
+
+#macro( mail_closing $a_tenantName)
+#spacer_double_row('20' '15')
+Cheers, <br />
+$a_tenantName Team
+#spacer_double_row('20' '15')
+#end
