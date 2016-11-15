@@ -35,6 +35,30 @@ $a_siteUrl/app.html#/portal/container/$a_containerQId/$a_contentIdentity/c/singl
 
 
 
+#macro( action_button_cell $a_cellWidth)
+<th class="column-top" style="font-size:0pt; line-height:0pt; padding:0; margin:0; font-weight:normal; vertical-align:top; Margin:0" width="$a_cellWidth">
+	$!bodyContent
+</th>
+#end
+
+
+
+#macro( action_button_table )
+<!-- Btns -->
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<td align="left">
+			<table border="0" cellspacing="0" cellpadding="0">
+				<tr>$!bodyContent</tr>
+			</table>
+		</td>
+	</tr>
+</table>
+<!-- Btns -->
+#end
+
+
+
 #macro( top_header_bar $a_headerTitle )
 <!-- Header bar -->
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -132,4 +156,47 @@ $a_siteUrl/app.html#/portal/container/$a_containerQId/$a_contentIdentity/c/singl
 Cheers, <br />
 $a_tenantName Team
 #spacer_double_row('20' '15')
+#end
+
+
+
+#macro( mail_template $a_topHeaderTitle)
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+
+#include('body-templates/partials/head.vm')
+
+<body class="body" style="padding:0 !important; margin:0 !important; display:block !important; min-width:100% !important; width:100% !important; background:#f2f2f2; -webkit-text-size-adjust:none">
+	<table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="#f2f2f2">
+		<tr>
+			<td align="center" valign="top">
+				<table width="600" border="0" cellspacing="0" cellpadding="0" class="mobile-shell">
+					<tr>
+						<td class="td" style="width:600px; min-width:600px; font-size:0pt; line-height:0pt; padding:0; margin:0; font-weight:normal; Margin:0">
+
+							#top_header_bar(${a_topHeaderTitle})
+
+							#parse('body-templates/partials/logo_header.vm')
+
+							<!-- Main -->
+							<table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="#ffffff">
+								<tr>
+									<td class="content-spacing" style="font-size:0pt; line-height:0pt; text-align:left" width="30"></td>
+									<td class="text" style="color:#626262; font-family:Arial,sans-serif, 'OS'; font-size:16px; line-height:20px; text-align:left">
+										$!bodyContent
+									</td>
+									<td class="content-spacing" style="font-size:0pt; line-height:0pt; text-align:left" width="30"></td>
+								</tr>
+							</table>
+							<!-- END Main -->
+
+							#include('body-templates/partials/footer.vm')
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+</body>
+</html>
 #end

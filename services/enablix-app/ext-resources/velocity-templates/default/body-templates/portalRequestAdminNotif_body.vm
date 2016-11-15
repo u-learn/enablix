@@ -1,86 +1,41 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+#@mail_template(${obj.contentRequest.objectRef.contentTitle})
 
-#include('body-templates/partials/head.vm')
-
-<body class="body" style="padding:0 !important; margin:0 !important; display:block !important; min-width:100% !important; width:100% !important; background:#f2f2f2; -webkit-text-size-adjust:none">
-	<table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="#f2f2f2">
+	#spacer_double_row('20' '15')
+											
+	#mail_opening(${obj.recipientUser.profile.name})
+	
+	#spacer_row('15')
+	
+	#if(${obj.contentRequest.createdByName}) ${obj.contentRequest.createdByName}#else Someone #end has #if($obj.contentRequest.objectRef.addRequest) added #else updated #end 
+	
+	#if(${obj.contentRequest.objectRef.contentTitle}) 
+	<a href="${obj.url}/app.html#/system/contentrequest/a/view/$obj.contentRequest.objectRef.identity/">
+		<span class="link-u" style="color:#004ba1; text-decoration:underline">${obj.contentRequest.objectRef.contentTitle}</span>
+	</a>
+	#else content #end #if(${obj.tenant.name}) to ${obj.tenant.name}. #end
+	
+	#content_table($obj.contentData $obj.url 'EMAIL' 'CONTENT_SUGGEST' $obj.contentRequest.identity)
+	
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">	
 		<tr>
-			<td align="center" valign="top">
-				<table width="600" border="0" cellspacing="0" cellpadding="0" class="mobile-shell">
-					<tr>
-						<td class="td" style="width:600px; min-width:600px; font-size:0pt; line-height:0pt; padding:0; margin:0; font-weight:normal; Margin:0">
-
-							#top_header_bar(${obj.contentRequest.objectRef.contentTitle})
-
-							#parse('body-templates/partials/logo_header.vm')
-
-							<!-- Main -->
-							<table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="#ffffff">
-								<tr>
-									<td class="content-spacing" style="font-size:0pt; line-height:0pt; text-align:left" width="30"></td>
-									<td class="text" style="color:#626262; font-family:Arial,sans-serif, 'OS'; font-size:16px; line-height:20px; text-align:left">
-										
-										#spacer_double_row('20' '15')
-										
-										#mail_opening(${obj.recipientUser.profile.name})
-										
-										#spacer_row('15')
-
-										#if(${obj.contentRequest.createdByName}) ${obj.contentRequest.createdByName}#else Someone #end has #if($obj.contentRequest.objectRef.addRequest) added #else updated #end 
-										#if(${obj.contentRequest.objectRef.contentTitle}) 
-										<a href="${obj.url}/app.html#/system/contentrequest/a/view/$obj.contentRequest.objectRef.identity/">
-											<span class="link-u" style="color:#004ba1; text-decoration:underline">${obj.contentRequest.objectRef.contentTitle}</span>
-										</a>
-										#else content #end 
-										#if(${obj.tenant.name}) to ${obj.tenant.name}. #end
-										
-										#content_table($obj.contentData $obj.url 'EMAIL' 'CONTENT_SUGGEST' $obj.contentRequest.identity)
-										
-										<table width="100%" border="0" cellspacing="0" cellpadding="0">	
-											<tr>
-												<td align="left">Your input is requested.</td>
-											</tr>
-										</table> 
-										
-										#spacer_row('15')
-
-										<!-- Btns -->
-										<table width="100%" border="0" cellspacing="0" cellpadding="0">
-											<tr>
-												<td align="left">
-													<table border="0" cellspacing="0" cellpadding="0">
-														<tr>
-															<th class="column-top" style="font-size:0pt; line-height:0pt; padding:0; margin:0; font-weight:normal; vertical-align:top; Margin:0" width="183">
-																#action_button('Approve' "${obj.url}/app.html#/system/contentrequest/a/approve/$obj.contentRequest.objectRef.identity/")
-															</th>
-															<th class="column-top" style="font-size:0pt; line-height:0pt; padding:0; margin:0; font-weight:normal; vertical-align:top; Margin:0" width="10">
-																#spacer_row('20')
-															</th>
-															<th class="column-top" style="font-size:0pt; line-height:0pt; padding:0; margin:0; font-weight:normal; vertical-align:top; Margin:0">
-																#action_button('Reject' "${obj.url}/app.html#/system/contentrequest/a/reject/$obj.contentRequest.objectRef.identity/")
-															</th>
-														</tr>
-													</table>
-												</td>
-											</tr>
-										</table>
-										<!-- Btns -->
-										
-										#mail_closing($obj.tenant.name)
-										
-									</td>
-									<td class="content-spacing" style="font-size:0pt; line-height:0pt; text-align:left" width="30"></td>
-								</tr>
-							</table>
-							<!-- END Main -->
-
-							#include('body-templates/partials/footer.vm')
-						</td>
-					</tr>
-				</table>
-			</td>
+			<td align="left">Your input is requested.</td>
 		</tr>
-	</table>
-</body>
-</html>
+	</table> 
+	
+	#spacer_row('15')
+	
+	#@action_button_table()
+		#@action_button_cell('183')
+			#action_button('Approve' "${obj.url}/app.html#/system/contentrequest/a/approve/$obj.contentRequest.objectRef.identity/")
+		#end
+		#@action_button_cell('20')
+			#spacer_row('20')
+		#end
+		#@action_button_cell('183')
+			#action_button('Reject' "${obj.url}/app.html#/system/contentrequest/a/reject/$obj.contentRequest.objectRef.identity/")
+		#end
+	#end
+	
+	#mail_closing($obj.tenant.name)
+
+#end
