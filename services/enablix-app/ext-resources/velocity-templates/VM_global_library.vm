@@ -4,7 +4,7 @@ $a_siteUrl/app.html#/portal/container/$a_containerQId/$a_contentIdentity/c/singl
 
 
 
-#macro( action_button $a_btnText $a_btnUrl)
+#macro( action_button $a_btnText $a_btnUrl )
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 	<tr>
 		<td>
@@ -15,12 +15,11 @@ $a_siteUrl/app.html#/portal/container/$a_containerQId/$a_contentIdentity/c/singl
 							<tr>
 								<td class="img" style="font-size:0pt; line-height:0pt; text-align:left" width="42"></td>
 								<td>
-									<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="12" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
-
+									#spacer_row('12')
 									<div class="text-button" style="color:#ffffff; font-family:Arial,sans-serif, 'OS'; font-size:16px; line-height:20px; text-align:center; font-weight:bold">
 										<a href="$a_btnUrl" target="_blank" class="link-white" style="color:#ffffff; text-decoration:none"><span class="link-white" style="color:#ffffff; text-decoration:none">$a_btnText</span></a>
 									</div>
-									<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="12" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
+									#spacer_row('12')
 
 								</td>
 								<td class="img" style="font-size:0pt; line-height:0pt; text-align:left" width="42"></td>
@@ -36,7 +35,7 @@ $a_siteUrl/app.html#/portal/container/$a_containerQId/$a_contentIdentity/c/singl
 
 
 
-#macro( top_header_bar $a_headerTitle)
+#macro( top_header_bar $a_headerTitle )
 <!-- Header bar -->
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 	<tr>
@@ -54,7 +53,7 @@ $a_siteUrl/app.html#/portal/container/$a_containerQId/$a_contentIdentity/c/singl
 
 
 
-#macro( mail_opening $a_userName)
+#macro( mail_opening $a_userName )
 <div class="h1" style="color:#0e2a49; font-family:Arial,sans-serif, 'OS'; font-size:26px; line-height:30px; text-align:left; font-weight:bold">
 	Hello #if($a_userName) $a_userName#else there#end,
 </div>
@@ -62,7 +61,7 @@ $a_siteUrl/app.html#/portal/container/$a_containerQId/$a_contentIdentity/c/singl
 
 
 
-#macro( content_table $a_displayableContent $a_siteUrl $a_atChannel $a_atContext $a_atContextId)
+#macro( content_table $a_displayableContent $a_siteUrl $a_atChannel $a_atContext $a_atContextId )
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 	<tr>
 		<td class="content-spacing2" style="font-size:0pt; line-height:0pt; text-align:left" width="30"></td>
@@ -115,13 +114,13 @@ $a_siteUrl/app.html#/portal/container/$a_containerQId/$a_contentIdentity/c/singl
 
 
 
-#macro( spacer_row $a_rowHeight)
+#macro( spacer_row $a_rowHeight )
 <table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tbody><tr><td height="$a_rowHeight" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></tbody></table>
 #end
 
 
 
-#macro( spacer_double_row $a_firstRowHeight $a_secondRowHeight)
+#macro( spacer_double_row $a_firstRowHeight $a_secondRowHeight )
 #spacer_row('20')
 <div class="hide-for-mobile">#spacer_row('15')</div>
 #end
