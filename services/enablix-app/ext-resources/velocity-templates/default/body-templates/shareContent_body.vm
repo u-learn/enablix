@@ -1,71 +1,42 @@
-<!DOCTYPE html>
-<html lang="en">
-     <body>
-      <h3>Hello#if(${obj.recipientUser.profile.name}) ${obj.recipientUser.profile.name}#end,</h3>
-      <p style = "font: normal 14px/normal Arial, Helvetica, sans-serif;">${obj.loggedInUser.profile.name} shared  #if(${obj.sharedContent.title})<b>${obj.sharedContent.title}</b> #else few #end details with you.    
-      </p>
-      
-      <div style = "font: normal 14px/normal Arial, Helvetica, sans-serif;">
-		<table>
-			#foreach($field in $obj.sharedContent.fields)			
-			<tr>
-				<td>${field.label}:</td>
-				#if($field.value.valueType == 'DOC')
-				<td>${field.value.name}</td>
-				#elseif($field.value.valueType == 'LIST')
-				<td>
-					#foreach($valListItem in $field.value.valueList)
-						#if($valListItem.valueType == 'CONTENT_REF')
-							<a href="${obj.url}/app.html#/portal/container/$valListItem.containerQId/$valListItem.contentIdentity/c/single/$valListItem.containerQId/?atChannel=EMAIL&atContext=WEB_SHARE&atContextId=$obj.identity" target="_blank">${valListItem.textValue}</a>
-						#else
-							${valListItem.value} 
-						#end	
-						#if($foreach.hasNext), #end
-					#end
-				</td>
-				#else
-				<td>${field.value.value}</td>
-				#end
-			</tr>
-			#end
-		</table>
+#@mail_template(${obj.sharedContent.title})
 
-	</div>
-     
-      #if($obj.sharedContent.doc)
-	      <br/>
-	      <div><a href="$obj.sharedContent.doc.accessUrl?atChannel=EMAIL&atContext=WEB_SHARE&atContextId=$obj.identity" target="_blank">
-	      <button style="background: #3d85c6;
-	      font: normal 16px/normal Arial, Helvetica, sans-serif;
-	      color: rgba(255,255,255,0.9);
-	      -webkit-border-radius: 3px;
-	      border-radius: 3px;
-	      padding: 5px 5px 5px 5px;
-	      cursor: pointer;
-	      float:left;
-		  margin:5px 5px 5px 60px;
-	      border: 1px solid #3d85c6;
-	      width:200px">Download File</button>
-	      </a></div> 
-      #end
-     
-     <div><a href="${obj.url}/app.html#/portal/container/$obj.sharedContent.containerQId/$obj.sharedContent.recordIdentity/c/single/$obj.sharedContent.containerQId/?atChannel=EMAIL&atContext=WEB_SHARE&atContextId=$obj.identity" target="_blank">
-      <button style="background: #3d85c6;
-      font: normal 16px/normal Arial, Helvetica, sans-serif;
-      color: rgba(255,255,255,0.9);
-      -webkit-border-radius: 3px;
-      border-radius: 3px;
-      padding: 5px 5px 5px 5px;
-      cursor: pointer;
-	  margin:5px 5px 5px 60px;
-      border: 1px solid #3d85c6;
-      width:200px">Access on Portal</button>
-      </a></div> 
+	#spacer_double_row('20' '15')
+											
+	#mail_opening(${obj.recipientUser.profile.name})
+	
+	#spacer_row('15')
+	
+	#if(${obj.loggedInUser.profile.name}) 
+		${obj.loggedInUser.profile.name}
+	#else 
+		Someone 
+	#end 
+	has shared 
+	#if(${obj.sharedContent.title}) 
+		<a href="${obj.url}/app.html#/portal/container/$obj.sharedContent.containerQId/$obj.sharedContent.recordIdentity/c/single/$obj.sharedContent.containerQId/?atChannel=EMAIL&atContext=WEB_SHARE&atContextId=$obj.identity" target="_blank">
+			<span class="link-u" style="color:#004ba1; text-decoration:underline">${obj.shareContent.title}</span>
+		</a>
+	#else 
+		some content 
+	#end 
+	with you.
+		
+	#content_table($obj.contentData $obj.url 'EMAIL' 'WEB_SHARE' $obj.sharedContent.identity)
+	
+	#spacer_row('15')
+	
+	#@action_button_table()
+		#@action_button_cell('183')
+			#action_button('Download File' "$obj.sharedContent.doc.accessUrl?atChannel=EMAIL&atContext=WEB_SHARE&atContextId=$obj.identity")
+		#end
+		#@action_button_cell('20')
+			#spacer_row('20')
+		#end
+		#@action_button_cell('183')
+			#action_button('Access on Portal' "${obj.url}/app.html#/portal/container/$obj.sharedContent.containerQId/$obj.sharedContent.recordIdentity/c/single/$obj.sharedContent.containerQId/?atChannel=EMAIL&atContext=WEB_SHARE&atContextId=$obj.identity")
+		#end
+	#end
+	
+	#mail_closing($obj.tenant.name)
 
-     <br/>
-      <p style = "font: normal 14px/normal Arial, Helvetica, sans-serif;">Have any questions or feedback? You can reply to this email.</p>
-      <p style = "font: normal 14px/normal Arial, Helvetica, sans-serif;">Cheers, <br/>Enablix Team for <b>${obj.tenant.name}</b> </p>
-      <p style = "font: normal 14px/normal Arial, Helvetica, sans-serif;">P.S. please add support@enablix.com to your address book or safe sender list. </p>
-      <p style = "font: normal 14px/normal Arial, Helvetica, sans-serif;">&copy; 2016 Enablix LLC. All rights reserved. For more information, please contact us at support@enablix.com</p>
-   </body>
-</html>
+#end
