@@ -16,14 +16,19 @@
 	
 	#spacer_row('15')
 
-	#if(${obj.contentRequest.objectRef.notes})
-	<table width="100%" border="0" cellspacing="0" cellpadding="0">	
-		<tr>
-			<td align="left"><u>Supporting Notes</u>: ${obj.contentRequest.objectRef.notes}</td>
-		</tr>
-	</table>										
+	#foreach($action in $obj.contentRequest.actionHistory.actions)
+		#if($action.actionName == 'APPROVE')
+			#if ($action.actionInput.notes)
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">	
+				<tr>
+					<td align="left"><u>Supporting Notes</u>: ${action.actionInput.notes}</td>
+				</tr>
+			</table>
+			#end
+			#break
+		#end
 	#end
-	
+		
 	#content_table($obj.contentData $obj.url 'EMAIL' 'CONTENT_SUGGEST' $obj.contentRequest.identity)
 	
 	<table width="100%" border="0" cellspacing="0" cellpadding="0">	
