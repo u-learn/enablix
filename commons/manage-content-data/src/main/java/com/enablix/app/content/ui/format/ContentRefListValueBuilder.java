@@ -57,7 +57,7 @@ public class ContentRefListValueBuilder implements FieldValueBuilder<ListValue, 
 			}
 		}
 		
-		return listVal;
+		return listVal.isEmpty() ? null : listVal;
 	}
 
 	private void addTextValues(Collection<Map<String, Object>> fieldValue, ListValue listVal) {

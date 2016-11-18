@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import com.enablix.core.commons.xsdtopojo.ContentItemType;
 import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 import com.enablix.core.ui.DisplayField;
+import com.enablix.core.ui.FieldValue;
 
 @Component
 public class DisplayFieldBuilderImpl implements DisplayFieldBuilder {
@@ -24,8 +25,13 @@ public class DisplayFieldBuilderImpl implements DisplayFieldBuilder {
 		
 		Object value = contentRec.get(fieldDef.getId());
 		if (value != null) {
-			return new DisplayField(fieldDef.getId(), fieldDef.getLabel(), 
-					builder.build(fieldDef, value, template, ctx));
+			
+			FieldValue fieldVal = builder.build(fieldDef, value, template, ctx);
+			
+			if (fieldVal != null) {
+				return new DisplayField(fieldDef.getId(), fieldDef.getLabel(), 
+					fieldVal);
+			}
 		}
 		
 		return null;

@@ -26,6 +26,14 @@ public class ListValue extends AbstractFieldValue {
 	public void addValue(FieldValue value) {
 		valueList.add(value);
 	}
+	
+	public int size() {
+		return valueList.size();
+	}
+	
+	public boolean isEmpty() {
+		return valueList.isEmpty();
+	}
 
 	@Override
 	public String toString() {
