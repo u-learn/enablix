@@ -14,25 +14,25 @@
 	has shared 
 	#if(${obj.sharedContent.title}) 
 		<a href="${obj.url}/app.html#/portal/container/$obj.sharedContent.containerQId/$obj.sharedContent.recordIdentity/c/single/$obj.sharedContent.containerQId/?atChannel=EMAIL&atContext=WEB_SHARE&atContextId=$obj.identity" target="_blank">
-			<span class="link-u" style="color:#004ba1; text-decoration:underline">${obj.shareContent.title}</span>
+			<span class="link-u" style="color:#004ba1; text-decoration:underline">${obj.sharedContent.title}</span>
 		</a>
 	#else 
 		some content 
 	#end 
 	with you.
 		
-	#content_table($obj.contentData $obj.url 'EMAIL' 'WEB_SHARE' $obj.sharedContent.identity)
+	#content_table($obj.sharedContent $obj.url 'EMAIL' 'WEB_SHARE' $obj.sharedContent.identity)
 	
 	#spacer_row('15')
 	
 	#@action_button_table()
-		#@action_button_cell('183')
+		#@action_button_cell('200')
 			#action_button('Download File' "$obj.sharedContent.doc.accessUrl?atChannel=EMAIL&atContext=WEB_SHARE&atContextId=$obj.identity")
 		#end
 		#@action_button_cell('20')
 			#spacer_row('20')
 		#end
-		#@action_button_cell('183')
+		#@action_button_cell('220')
 			#action_button('Access on Portal' "${obj.url}/app.html#/portal/container/$obj.sharedContent.containerQId/$obj.sharedContent.recordIdentity/c/single/$obj.sharedContent.containerQId/?atChannel=EMAIL&atContext=WEB_SHARE&atContextId=$obj.identity")
 		#end
 	#end

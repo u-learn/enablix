@@ -6,13 +6,13 @@ import org.springframework.data.mongodb.core.SimpleMongoDbFactory;
 
 import com.enablix.commons.util.tenant.TenantUtil;
 import com.mongodb.DB;
-import com.mongodb.Mongo;
+import com.mongodb.MongoClient;
 
 public class MultiTenantMongoDbFactory extends SimpleMongoDbFactory {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(MultiTenantMongoDbFactory.class);
 	
-	public MultiTenantMongoDbFactory(Mongo mongo, String databaseName) {
+	public MultiTenantMongoDbFactory(MongoClient mongo, String databaseName) {
 		super(mongo, databaseName);
 	}
 	

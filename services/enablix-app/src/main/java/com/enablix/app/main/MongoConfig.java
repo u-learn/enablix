@@ -10,6 +10,7 @@ import org.springframework.boot.autoconfigure.mongo.MongoProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
 import org.springframework.data.mongodb.MongoDbFactory;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
@@ -17,7 +18,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 import com.enablix.commons.constants.AppConstants;
 import com.enablix.core.mongo.MultiTenantMongoDbFactory;
 import com.enablix.core.mongo.template.SystemMongoTemplateHolder;
-import com.mongodb.Mongo;
+import com.mongodb.MongoClient;
 import com.mongodb.MongoClientOptions;
 
 @Configuration
@@ -34,9 +35,12 @@ public class MongoConfig {
 
 	@Autowired(required = false)
 	private MongoClientOptions options;
+	
+	@Autowired
+	private Environment environment;
 
-	private Mongo mongo;
-
+	private MongoClient mongo;
+	
 	@PreDestroy
 	public void close() {
 		if (this.mongo != null) {
@@ -46,8 +50,8 @@ public class MongoConfig {
 
 	@Bean
 	@ConditionalOnMissingBean
-	public Mongo mongo() throws UnknownHostException {
-		this.mongo = this.properties.createMongoClient(this.options);
+	public MongoClient mongo() throws UnknownHostException {
+		this.mongo = this.properties.createMongoClient(this.options, environment);
 		return this.mongo;
 	}
 
@@ -68,5 +72,12 @@ public class MongoConfig {
 		SystemMongoTemplateHolder.registerSystemMongoTemplate(systemMongoTemplate);
 		return systemMongoTemplate;
 	}
+	
+	/*@Bean
+	public MultiTenantMongoDBIndexCreator multiTenantMongoDBIndexCreator() throws UnknownHostException {
+		return new MultiTenantMongoDBIndexCreator(
+				(MongoMappingContext) (mongoTemplate().getConverter().getMappingContext()), 
+				multiTenantMongoDbFactory());
+	}*/
 	
 }

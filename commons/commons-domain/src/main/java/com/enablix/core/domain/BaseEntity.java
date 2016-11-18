@@ -1,9 +1,11 @@
 package com.enablix.core.domain;
 
 import com.enablix.core.api.IdentityAware;
+import com.enablix.mongo.index.MultiTenantIndexed;
 
 public abstract class BaseEntity implements IdentityAware {
 
+	@MultiTenantIndexed
 	private String identity;
 
 	@Override

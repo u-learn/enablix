@@ -59,9 +59,20 @@ enablix.studioApp.controller('ContentSuggestDetailCtrl',
 			
 			// check if the url has an action initiated
 			if ($stateParams.action == 'approve') {
-				$scope.approveContent();
+				
+				if ($scope.isApproveAllowed) {
+					$scope.approveContent();
+				} else {
+					Notification.error({message: "Approve action not allowed.", delay: enablix.errorMsgShowTime});
+				}
+				
 			} else if ($stateParams.action == 'reject') {
-				$scope.rejectContent();
+				
+				if ($scope.isRejectAllowed) {
+					$scope.rejectContent();
+				} else {
+					Notification.error({message: "Reject action not allowed.", delay: enablix.errorMsgShowTime});
+				}
 			}
 			
 		});
