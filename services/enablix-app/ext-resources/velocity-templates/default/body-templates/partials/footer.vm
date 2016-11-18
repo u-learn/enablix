@@ -3,8 +3,7 @@
 	<tr>
 		<td class="content-spacing" style="font-size:0pt; line-height:0pt; text-align:left" width="0"></td>
 		<td>
-			<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="25" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
-
+			<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="15" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
 			<table width="100%" border="0" cellspacing="0" cellpadding="0">
 				<tr>
 					<th class="column" style="font-size:0pt; line-height:0pt; padding:0; margin:0; font-weight:normal; Margin:0">
@@ -25,8 +24,23 @@
 					</th>
 				</tr>
 			</table>
-			<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="25" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
+			<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="15" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+				<tr>
+					<th class="column" style="font-size:0pt; line-height:0pt; padding:0; margin:0; font-weight:normal; Margin:0">
+						<table width="100%" border="0" cellspacing="0" cellpadding="0">
+							<tr>
+								<td class="footer-text" style="color:#737373; font-family:Arial,sans-serif, 'OS'; font-size:12px; line-height:18px; text-align:center">
+									You are receiving this email because you are registered on the Enablix platform by your organization. If you don't want to receive these emails please contact your administrator. 
+								</td>
+							</tr>
+						</table>
+					</th>
+				</tr>
+			</table>									
+			<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="15" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
 
+					
 		</td>
 		<td class="content-spacing" style="font-size:0pt; line-height:0pt; text-align:left" width="0"></td>
 	</tr>
