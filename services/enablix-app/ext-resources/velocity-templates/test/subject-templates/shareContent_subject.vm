@@ -1,1 +1,0 @@
-Shared Content #if(${obj.sharedContent.title}) - ${obj.sharedContent.title} #end 
