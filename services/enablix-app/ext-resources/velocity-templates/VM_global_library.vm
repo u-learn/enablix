@@ -84,7 +84,7 @@ $a_siteUrl/app.html#/portal/container/$a_containerQId/$a_contentIdentity/c/singl
 #end
 
 
-
+<!--
 #macro( content_table $a_displayableContent $a_siteUrl $a_atChannel $a_atContext $a_atContextId )
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 	<tr>
@@ -135,6 +135,65 @@ $a_siteUrl/app.html#/portal/container/$a_containerQId/$a_contentIdentity/c/singl
 	</tr>
 </table>
 #end
+-->
+
+#macro( content_table $a_displayableContent $a_siteUrl $a_atChannel $a_atContext $a_atContextId )
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<td bgcolor="#f7f7f7">
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+				<tr>
+					<td class="content-spacing2" style="font-size:0pt; line-height:0pt; text-align:left" width="20"></td>
+					<td>
+						#spacer_row('15')
+						
+						<div class="text2" style="color:#424242; font-family:Arial,sans-serif, 'OS'; font-size:14px; line-height:18px; text-align:left; font-weight:bold">
+							#if($a_displayableContent.title) $a_displayableContent.title #else Content Details #end
+						</div>
+						#spacer_row('15')
+						
+						<table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="#e6e6e6" class="border" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td bgcolor="#e6e6e6" height="1" class="border" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
+
+						#spacer_row('15')
+						#foreach($field in $a_displayableContent.fields)
+							<table width="100%" border="0" cellspacing="0" cellpadding="0">
+								<tr>
+									<td class="text3" style="color:#626262; font-family:Arial,sans-serif, 'OS'; font-size:12px; line-height:20px; text-align:left" valign="top" width="111">${field.label}</td>
+									#if($field.value.valueType == 'DOC')
+										<td class="text3" style="color:#626262; font-family:Arial,sans-serif, 'OS'; font-size:12px; line-height:20px; text-align:left" valign="top">
+											<a href="${field.value.accessUrl}?atChannel=$a_atChannel&atContext=$a_atContext&atContextId=$a_atContextId" target="_blank">${field.value.name}</a>
+										</td>
+									#elseif($field.value.valueType == 'LIST')
+										<td class="text3" style="color:#626262; font-family:Arial,sans-serif, 'OS'; font-size:12px; line-height:20px; text-align:left" valign="top">
+										#foreach($valListItem in $field.value.valueList)
+											#if($valListItem.valueType == 'CONTENT_REF')
+												<a href="#content_portal_url($a_siteUrl $valListItem.containerQId $valListItem.contentIdentity)?atChannel=$a_atChannel&atContext=$a_atContext&atContextId=$a_atContextId">
+													<span class="link-u" style="color:#004ba1; text-decoration:underline">${valListItem.textValue}</span>
+												</a>  																								 
+											#else
+												${valListItem.value} 
+											#end	
+											#if($foreach.hasNext), #end
+										#end
+									</td>																				
+									#else
+										<td class="text" style="color:#626262; font-family:Arial,sans-serif, 'OS'; font-size:12px; line-height:20px; text-align:left" valign="top">${field.value.value}</td>																				
+									#end								
+								</tr>
+							</table>	
+							#spacer_row('2')											
+						#end
+						#spacer_row('13')
+					</td>
+					<td class="content-spacing2" style="font-size:0pt; line-height:0pt; text-align:left" width="20"></td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+</table>
+#end
+
+
 
 
 
