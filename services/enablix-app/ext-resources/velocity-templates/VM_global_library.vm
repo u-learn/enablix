@@ -145,8 +145,8 @@ $a_siteUrl/app.html#/portal/container/$a_containerQId/$a_contentIdentity/c/singl
 
 
 #macro( spacer_double_row $a_firstRowHeight $a_secondRowHeight )
-#spacer_row('20')
-<div class="hide-for-mobile">#spacer_row('15')</div>
+#spacer_row($a_firstRowHeight)
+<div class="hide-for-mobile">#spacer_row($a_secondRowHeight)</div>
 #end
 
 
