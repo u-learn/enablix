@@ -1,6 +1,6 @@
 #@mail_template(${obj.contentRequest.objectRef.contentTitle})
 
-	#spacer_double_row('20' '15')
+	#spacer_row('15')
 											
 	#mail_opening(${obj.recipientUser.profile.name})
 	
@@ -27,8 +27,12 @@
 			#break
 		#end
 	#end
+	
+	#spacer_row('15')
 		
 	#content_table($obj.contentData $obj.url 'EMAIL' 'CONTENT_SUGGEST' $obj.contentRequest.identity)
+	
+	#spacer_row('15')
 	
 	<table width="100%" border="0" cellspacing="0" cellpadding="0">	
 		<tr>

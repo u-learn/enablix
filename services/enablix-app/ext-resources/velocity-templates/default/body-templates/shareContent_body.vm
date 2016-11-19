@@ -1,6 +1,6 @@
 #@mail_template(${obj.sharedContent.title})
 
-	#spacer_double_row('20' '15')
+	#spacer_row('15')
 											
 	#mail_opening(${obj.recipientUser.profile.name})
 	
