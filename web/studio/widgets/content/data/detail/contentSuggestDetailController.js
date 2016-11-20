@@ -63,7 +63,8 @@ enablix.studioApp.controller('ContentSuggestDetailCtrl',
 				if ($scope.isApproveAllowed) {
 					$scope.approveContent();
 				} else {
-					Notification.error({message: "Approve action not allowed.", delay: enablix.errorMsgShowTime});
+					Notification.error({message: currentStateMessage(record) + "Approve action not allowed.", 
+										delay: enablix.errorMsgShowTime});
 				}
 				
 			} else if ($stateParams.action == 'reject') {
@@ -71,11 +72,27 @@ enablix.studioApp.controller('ContentSuggestDetailCtrl',
 				if ($scope.isRejectAllowed) {
 					$scope.rejectContent();
 				} else {
-					Notification.error({message: "Reject action not allowed.", delay: enablix.errorMsgShowTime});
+					Notification.error({message: currentStateMessage(record) + "Reject action not allowed.", 
+										delay: enablix.errorMsgShowTime});
 				}
 			}
 			
 		});
+		
+		var currentStateMessage = function(_actRecord) {
+			
+			var currState = _actRecord.currentState.stateName;
+			
+			if (currState == ContentApprovalService.stateApproved()) {
+				return "Request has already been approved. ";
+			} else if (currState == ContentApprovalService.stateRejected()) {
+				return "Request has already been rejected. "; 
+			} else if (currState == ContentApprovalService.stateWithdrawn()) {
+				return "Request has been withdrawn by the requester. ";
+			}
+			
+			return "";
+		};
 		
 		$scope.isEditAllowed = false;
 		$scope.isApproveAllowed = false;

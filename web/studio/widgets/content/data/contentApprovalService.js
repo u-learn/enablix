@@ -12,6 +12,9 @@ enablix.studioApp.factory('ContentApprovalService',
 	 		var ACTION_WITHDRAW = "WITHDRAW";
 	 		
 	 		var STATE_PENDING_APPROVAL = "PENDING_APPROVAL";
+	 		var STATE_WITHDRAWN = "WITHDRAWN";
+	 		var STATE_APPROVED = "APPROVED";
+	 		var STATE_REJECTED = "REJECTED";
 	 		
 	 		var FILTER_METADATA = {
 	 				"contentIdentity" : {
@@ -312,7 +315,11 @@ enablix.studioApp.factory('ContentApprovalService',
 	 			actionApprove: function() { return ACTION_APPROVE; },
 	 			actionEdit: function() { return ACTION_EDIT; },
 	 			actionWithdraw: function() { return ACTION_WITHDRAW; },
-	 			actionViewDetails: function() { return ACTION_VIEW_DETAILS; }
+	 			actionViewDetails: function() { return ACTION_VIEW_DETAILS; },
+	 			stateWithdrawn: function() { return STATE_WITHDRAWN; },
+	 			stateRejected: function() { return STATE_REJECTED; },
+	 			stateApproved: function() { return STATE_APPROVED; }
+	 			
 	 		};
 	 	}
 	 ]);
