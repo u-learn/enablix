@@ -20,7 +20,7 @@
 	
 	<tbody>
 		<tr ng-if="tableData.length == 0">
-			<td colspan="{{tableHeaders.length + 4}}">No data found</td>
+			<td colspan="{{tableHeaders.length + otherActions.length + 4}}">No data found</td>
 		</tr>
 		<tr ng-repeat="tableRecord in tableData | filter:searchText">
 			<td class="download"><eb-doc-download ng-if="tableRecord.downloadDocIdentity" doc-value="tableRecord.downloadDocIdentity"></eb-doc-download></td>
