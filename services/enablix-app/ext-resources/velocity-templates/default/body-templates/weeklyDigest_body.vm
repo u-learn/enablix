@@ -1,171 +1,65 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+#@mail_template('Weekly Digest')
 
-#parse('body-templates/partials/head.vm')
-
-<body class="body" style="padding:0 !important; margin:0 !important; display:block !important; min-width:100% !important; width:100% !important; background:#f2f2f2; -webkit-text-size-adjust:none">
-	<table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="#f2f2f2">
+	#spacer_row('15')
+											
+	#mail_opening(${obj.recipientUser.profile.name})
+	
+	#spacer_row('15')
+	
+	Here are the ${obj.tenant.name} updates from previous week.
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
 		<tr>
-			<td align="center" valign="top">
-				<table width="600" border="0" cellspacing="0" cellpadding="0" class="mobile-shell">
-					<tr>
-						<td class="td" style="width:600px; min-width:600px; font-size:0pt; line-height:0pt; padding:0; margin:0; font-weight:normal; Margin:0">
-							<!-- Header bar -->
-							<table width="100%" border="0" cellspacing="0" cellpadding="0">
-								<tr>
-									<td class="content-spacing" style="font-size:0pt; line-height:0pt; text-align:left" width="0"></td>
-									<td class="header-text" style="color:#727273; font-family:Arial,sans-serif, 'OS'; font-size:12px; line-height:16px; text-align:left">
-										<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="20" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
-<div class="hide-for-mobile"><table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="10" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
-</div>
-										Weekly Digest
-										<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="20" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
-<div class="hide-for-mobile"><table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="10" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
-</div>
-									</td>
-									<td class="content-spacing" style="font-size:0pt; line-height:0pt; text-align:left" width="0"></td>
-								</tr>
-							</table>
-							<!-- END Header br -->
+			<td class="content-spacing2" style="font-size:0pt; line-height:0pt; text-align:left" width="30"></td>
+			<td>
+				<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="20" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
 
-							<!-- Header -->
-							<table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="#ffffff">
-								<tr>
-									<td class="content-spacing" style="font-size:0pt; line-height:0pt; text-align:left" width="30"></td>
-									<td>
-										<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="20" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
-<div class="hide-for-mobile"><table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="15" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
-</div>
-										<div class="img" style="font-size:0pt; line-height:0pt; text-align:left">
-											<a href="#" target="_blank"><img src="$obj.url/widgets/img/logo.png?tenantId=$obj.tenant.tenantId" border="0" width="134" height="29" alt="" /></a>
-										</div>
-										<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="20" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
-<div class="hide-for-mobile"><table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="15" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
-</div>
-										<table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="#f2f2f2" class="border" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td bgcolor="#f2f2f2" height="1" class="border" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
-
-									</td>
-									<td class="content-spacing" style="font-size:0pt; line-height:0pt; text-align:left" width="30"></td>
-								</tr>
-							</table>
-							<!-- END Header -->
-
-							<!-- Main -->
-							<table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="#ffffff">
-								<tr>
-									<td class="content-spacing" style="font-size:0pt; line-height:0pt; text-align:left" width="30"></td>
-									<td class="text" style="color:#626262; font-family:Arial,sans-serif, 'OS'; font-size:16px; line-height:20px; text-align:left">
-										<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="20" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
-<div class="hide-for-mobile"><table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="15" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
-</div>
-										<div class="h1" style="color:#0e2a49; font-family:Arial,sans-serif, 'OS'; font-size:26px; line-height:30px; text-align:left; font-weight:bold">Hello #if(${obj.loggedInUser.profile.name}) ${obj.loggedInUser.profile.name}#end,</div>
-										<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="15" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
-
-										Here are the ${obj.tenant.name} updates from previous week.
-										<table width="100%" border="0" cellspacing="0" cellpadding="0">
-											<tr>
-												<td class="content-spacing2" style="font-size:0pt; line-height:0pt; text-align:left" width="30"></td>
-												<td>
-													<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="20" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
-
-		    										#foreach($key in $obj.recentList.keySet())
-														#set ($navigableContent = $obj.recentList.get($key)) 
-														#foreach($key1 in $navigableContent)  
-															<table width="100%" border="0" cellspacing="0" cellpadding="0">
-																<tr>
-																	<td>
-																		<table width="100%" border="0" cellspacing="0" cellpadding="0">
-																			<tr>
-																				<td class="arrow" style="color:#9a9a9a; font-family:Arial,sans-serif, 'OS'; font-size:16px; line-height:20px; text-align:left" width="27">&rarr;</td>
-																				<td class="text" style="color:#626262; font-family:Arial,sans-serif, 'OS'; font-size:16px; line-height:20px; text-align:left">
-																					#set ($currentNode = $key1)
-																					#foreach($number in [1..5])
-																						#if ($currentNode)
-																							#if ($number > 1) &gt; #end
-																							<a href="$obj.url/app.html#/portal/container/$currentNode.qualifiedId/$currentNode.identity/c/single/$currentNode.qualifiedId/?atChannel=EMAIL&atContext=WEEKLY_DIGEST&atContextId=$obj.identity">
-																								<span class="link-u" style="color:#004ba1; text-decoration:underline">$currentNode.label</span>
-																							</a>
-																							#if (!$currentNode.next) 
-																								#set ($currentNode = false)
-																							#else
-																								#set ($currentNode = $currentNode.next)
-																							#end
-																						#else
-																							#break
-																						#end
-																					#end																				
-																				</td>
-																			</tr>
-																		</table>
-																		<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="7" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
-
-																	</td>
-																</tr>
-															</table>
+				#foreach($key in $obj.recentList.keySet())
+					#set ($navigableContent = $obj.recentList.get($key)) 
+					#foreach($key1 in $navigableContent)  
+						<table width="100%" border="0" cellspacing="0" cellpadding="0">
+							<tr>
+								<td>
+									<table width="100%" border="0" cellspacing="0" cellpadding="0">
+										<tr>
+											<td class="arrow" style="color:#9a9a9a; font-family:Arial,sans-serif, 'OS'; font-size:16px; line-height:20px; text-align:left" width="27">&rarr;</td>
+											<td class="text" style="color:#626262; font-family:Arial,sans-serif, 'OS'; font-size:16px; line-height:20px; text-align:left">
+												#set ($currentNode = $key1)
+												#foreach($number in [1..5])
+													#if ($currentNode)
+														#if ($number > 1) &gt; #end
+														<a href="$obj.url/app.html#/portal/container/$currentNode.qualifiedId/$currentNode.identity/c/single/$currentNode.qualifiedId/?atChannel=EMAIL&atContext=WEEKLY_DIGEST&atContextId=$obj.identity">
+															<span class="link-u" style="color:#004ba1; text-decoration:underline">$currentNode.label</span>
+														</a>
+														#if (!$currentNode.next) 
+															#set ($currentNode = false)
+														#else
+															#set ($currentNode = $currentNode.next)
 														#end
+													#else
+														#break
 													#end
-													<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="20" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
+												#end																				
+											</td>
+										</tr>
+									</table>
+									<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="7" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
 
-												</td>
-												<td class="content-spacing2" style="font-size:0pt; line-height:0pt; text-align:left" width="30"></td>
-											</tr>
-										</table>										
-										We hope you find this information useful. Have any questions or feedback? You can reply to this email.
-										<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="20" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
-<div class="hide-for-mobile"><table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="10" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
-</div>
+								</td>
+							</tr>
+						</table>
+					#end
+				#end
+				<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="20" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
 
-										Cheers, <br />
-										${obj.tenant.name} Team
-
-										<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="20" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
-<div class="hide-for-mobile"><table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="15" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
-</div>
-									</td>
-									<td class="content-spacing" style="font-size:0pt; line-height:0pt; text-align:left" width="30"></td>
-								</tr>
-							</table>
-							<!-- END Main -->
-
-							<!-- Footer -->
-							<table width="100%" border="0" cellspacing="0" cellpadding="0">
-								<tr>
-									<td class="content-spacing" style="font-size:0pt; line-height:0pt; text-align:left" width="0"></td>
-									<td>
-										<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="25" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
-
-										<table width="100%" border="0" cellspacing="0" cellpadding="0">
-											<tr>
-												<th class="column" style="font-size:0pt; line-height:0pt; padding:0; margin:0; font-weight:normal; Margin:0">
-													<table width="100%" border="0" cellspacing="0" cellpadding="0">
-														<tr>
-															<td class="footer-text" style="color:#737373; font-family:Arial,sans-serif, 'OS'; font-size:12px; line-height:18px; text-align:left">&copy; 2016 Enablix LLC. All rights reserved.</td>
-														</tr>
-													</table>
-												</th>
-												<th class="column" style="font-size:0pt; line-height:0pt; padding:0; margin:0; font-weight:normal; Margin:0" width="10"><table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="10" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
-</th>
-												<th class="column" style="font-size:0pt; line-height:0pt; padding:0; margin:0; font-weight:normal; Margin:0" width="280">
-													<table width="100%" border="0" cellspacing="0" cellpadding="0">
-														<tr>
-															<td class="footer-text-r" style="color:#737373; font-family:Arial,sans-serif, 'OS'; font-size:12px; line-height:18px; text-align:right">Add support@enablix.com to safe sender list.</td>
-														</tr>
-													</table>
-												</th>
-											</tr>
-										</table>
-										<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="25" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
-
-									</td>
-									<td class="content-spacing" style="font-size:0pt; line-height:0pt; text-align:left" width="0"></td>
-								</tr>
-							</table>
-							<!-- END Footer -->
-						</td>
-					</tr>
-				</table>
 			</td>
+			<td class="content-spacing2" style="font-size:0pt; line-height:0pt; text-align:left" width="30"></td>
 		</tr>
-	</table>
-</body>
-</html>
+	</table>	
+	
+	#spacer_row('15')
+										
+	We hope you find this information useful. 
+	
+	#mail_closing($obj.tenant.name)
+
+#end
