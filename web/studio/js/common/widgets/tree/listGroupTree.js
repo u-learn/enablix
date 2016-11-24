@@ -52,10 +52,10 @@
 				//tree template
 				var template =
 						'<li data-ng-repeat="node in ' + treeModel + '" data-ng-init="node.collapsed = true" data-ng-class="{\'active\': node.selected == \'selected\'}">' 
-							+ '<i data-ng-show="node.' + nodeChildren + '.length" class="fa fa-angle-right" data-ng-class="{\'active\': !node.collapsed}" data-ng-click="' + treeId + '.selectNodeHead(node, $event)"></i>'
+							+ '<i data-ng-show="node.' + nodeChildren + '.length || (!node.dataLoaded && node.expandable)" class="fa fa-angle-right" data-ng-class="{\'active\': !node.collapsed}" data-ng-click="' + treeId + '.selectNodeHead(node, $event)"></i>'
 							+ '<a data-ng-click="' + treeId + '.selectNodeLabel(node)">'
-							+ '<i data-ng-show="!node.' + nodeChildren + '.length">-</i>'
-							+ '{{node.' + nodeLabel + '}}</a>'
+							+ '<i data-ng-show="!node.' + nodeChildren + '.length && (node.dataLoaded || !node.expandable)">-</i>'
+							+ '{{node.' + nodeLabel + '}}<img data-ng-show="node.dataLoading" src="img/loading.gif" class="index-loading"/></a>'
 								//+ '<i ng-class="{\'glyphicon-chevron-left\' : node.collapsed, \'glyphicon-chevron-down\' : !node.collapsed}" ' 
 								//		+ ' data-ng-show="node.' + nodeChildren + '.length" data-ng-click="' + treeId + '.selectNodeHead(node, $event)" class="glyphicon pull-right">&nbsp;</i>'
 								+ '<ul data-ng-hide="node.collapsed" data-tree-id="' + treeId + '" data-list-group-tree-model="node.' + nodeChildren + '" data-node-id=' + nodeId 
@@ -74,14 +74,20 @@
 						scope[treeId] = scope[treeId] || {};
 
 						//if node head clicks,
-						scope[treeId].selectNodeHead = scope[treeId].selectNodeHead || function( selectedNode, $event ){
+						var defaultSelectNodeHead = function( selectedNode, $event ){
 
 							//Collapse or Expand
 							selectedNode.collapsed = !selectedNode.collapsed;
 							
 							$event.stopPropagation();
 						};
-
+						
+						var customSelectNodeHead = scope[treeId].selectNodeHeadCallback;
+						scope[treeId].selectNodeHead = customSelectNodeHead ? function(selectedNode, $event) {
+							defaultSelectNodeHead(selectedNode, $event);
+							customSelectNodeHead(selectedNode, $event);
+						} : defaultSelectNodeHead;
+						
 						//if node label clicks,
 						var defaultSelectNode = function( selectedNode ){
 

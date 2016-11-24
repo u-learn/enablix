@@ -145,6 +145,7 @@ public class MailServiceImpl implements MailService {
 		Template emailTemplate = velocityEngine.getTemplate(path + templateName);
 		VelocityContext velocityContext = new VelocityContext();
 		velocityContext.put(elementName, objectTobeMerged);
+		velocityContext.put(MailConstants.EMAIL_TEMPLATE_STRINGUTIL, new StringUtil());
 		StringWriter stringWriter = new StringWriter();
 		emailTemplate.merge(velocityContext, stringWriter);
 		return stringWriter.toString();

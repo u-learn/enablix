@@ -8,7 +8,9 @@ enablix.studioApp.factory('ContentIndexService',
 			var contentIndexTransformer = function(containerList, ignoreInstanceLoad, prntContainerQId) {
 				
 				var indexData = [];
-
+				
+				ignoreInstanceLoad = true;
+				
 				var parentCntnrQId = prntContainerQId || '~root~';
 				buildContentIndexFromContainer(indexData, containerList, null, parentCntnrQId, null, ignoreInstanceLoad);
 				
@@ -23,6 +25,7 @@ enablix.studioApp.factory('ContentIndexService',
 				var enclosureNodes = new Array();
 				var cntnrIdToEnclosureMap = new Array();
 				
+				// identify and build enclosure by grouping the container which belong to an enclosure
 				angular.forEach(enclosures, function(enclosure) {
 					
 					var enclosureNd = {
@@ -35,7 +38,8 @@ enablix.studioApp.factory('ContentIndexService',
 							"containerDef": null,
 							"type": "enclosure",
 							"uiClass": "eb-indx-container",
-							"parentNode": _parentNode
+							"parentNode": _parentNode,
+							"expandable": true
 						};
 					
 					angular.forEach(enclosure.childContainer, function(childCntnr) {
@@ -45,7 +49,7 @@ enablix.studioApp.factory('ContentIndexService',
 					enclosureNodes.push(enclosureNd);
 				});
 				
-				angular.forEach(_containerList, function(cntnr) {
+				angular.forEach(_containerList, function(cntnr, index) {
 
 					var cntnrLabel = cntnr.label;
 					var cntnrQId = cntnr.qualifiedId;
@@ -81,6 +85,8 @@ enablix.studioApp.factory('ContentIndexService',
 						"type": cntnrType,
 						"uiClass": "eb-indx-container"
 					};
+					
+					setIndexNodeExpandable(indxItem);
 				
 					var enclosureOfChildCntnr = cntnrIdToEnclosureMap[cntnr.id];
 					
@@ -94,22 +100,24 @@ enablix.studioApp.factory('ContentIndexService',
 						_childrenList.push(indxItem);
 					}
 					
-					var childLabelAttrId = ContentTemplateService.getContainerLabelAttrId(enablix.template, cntnr.qualifiedId);
+					if (!ignoreInstanceLoad) {
+						loadIndexChildren(indxItem, !ignoreInstanceLoad);
+					}
+					
+					/*var childLabelAttrId = ContentTemplateService.getContainerLabelAttrId(enablix.template, cntnr.qualifiedId);
 					
 					if ((!isNullOrUndefined(childLabelAttrId) || cntnr.single) && !ignoreInstanceLoad) {
 						// add container data instance node
 						ContentDataService.getContentData(templateId, indxItem.qualifiedId, _elementIdentity, function(data) {
 							
-							angular.forEach(data, function(dataItem) {
-								addInstanceDataChild(indxItem, cntnr, dataItem);
-							});
+							addInstanceDataChildren(indxItem, cntnr, data);
 							
 						}, function(data) {
 							Notification.error({message: "Error retrieving content data for template [" 
 									+ templateId + ", " + indxItem.qualifiedId + "]", delay: enablix.errorMsgShowTime});
 							//alert("Error retrieving content data for template [" + templateId + ", " + indxItem.qualifiedId + "]");
 						});
-					}
+					}*/
 				});
 				
 				angular.forEach(enclosureNodes, function(encNode) {
@@ -117,7 +125,21 @@ enablix.studioApp.factory('ContentIndexService',
 				});
 			};
 			
-			var addInstanceDataChild = function(_indxDataParent, _containerDef, dataItem) {
+			var setIndexNodeExpandable = function(_indxNode) {
+				return _indxNode.expandable = _indxNode.type == "container" 
+					|| (_indxNode.type == "instance" && _indxNode.containerDef.container 
+							&& _indxNode.containerDef.container.length > 0);
+			};
+			
+			var addInstanceDataChildren = function(_indxDataParent, _containerDef, _dataItems, _ignoreInstanceLoad) {
+				_indxDataParent.children = [];
+				angular.forEach(_dataItems, function(dataItem) {
+					addInstanceDataChild(_indxDataParent, _containerDef, dataItem, _ignoreInstanceLoad);
+				});
+				_indxDataParent.dataLoaded = true;
+			};
+			
+			var addInstanceDataChild = function(_indxDataParent, _containerDef, dataItem, _ignoreInstanceLoad) {
 
 				var childLabelAttrId = ContentTemplateService.getContainerLabelAttrId(
 											enablix.template, _containerDef.qualifiedId);
@@ -146,6 +168,8 @@ enablix.studioApp.factory('ContentIndexService',
 							"parentNode": _indxDataParent
 						};
 						
+						setIndexNodeExpandable(indxDataItem);
+						
 						_indxDataParent.children.push(indxDataItem);
 					}
 				}
@@ -153,7 +177,7 @@ enablix.studioApp.factory('ContentIndexService',
 				if (!isNullOrUndefined(indxDataItem)) {
 					// recursively build the child elements
 					buildContentIndexFromContainer(indxDataItem.children, _containerDef.container, 
-							dataItem.identity, _containerDef.qualifiedId, indxDataItem);
+							dataItem.identity, _containerDef.qualifiedId, indxDataItem, _ignoreInstanceLoad);
 				}
 
 				return indxDataItem;
@@ -165,7 +189,7 @@ enablix.studioApp.factory('ContentIndexService',
 				
 				if (isNullOrUndefined(cachedContentIndexData)) {
 					RESTService.getForData("fetchRootContainers", params, contentIndexTransformer, function(data) {
-							cachedContentIndexData = data;
+							//cachedContentIndexData = data;
 							_onSuccess(data)
 						}, _onError);
 				} else {
@@ -227,12 +251,54 @@ enablix.studioApp.factory('ContentIndexService',
 				return indexList;
 			}
 			
+			var refreshNodeChildren = function(_indxNode, _childrenList, _loadChildren) {
+				loadIndexChildren(_indxNode, _loadChildren, _childrenList);
+			};
+			
+			var loadIndexChildren = function(_indxNode, _loadChildren, _childrenList) {
+				
+				var cntnr = _indxNode.containerDef;
+				
+				var childLabelAttrId = ContentTemplateService.getContainerLabelAttrId(enablix.template, cntnr.qualifiedId);
+				
+				if ((!isNullOrUndefined(childLabelAttrId) || cntnr.single) && _indxNode.type != "instance") {
+					
+					_indxNode.dataLoading = true;
+					
+					if (isNullOrUndefined(_childrenList)) {
+						// add container data instance node
+						ContentDataService.getContentData(templateId, _indxNode.qualifiedId, _indxNode.elementIdentity, function(data) {
+							
+							addInstanceDataChildren(_indxNode, cntnr, data, !_loadChildren);
+							_indxNode.dataLoading = false;
+							
+						}, function(data) {
+							Notification.error({message: "Error retrieving content data for template [" 
+									+ templateId + ", " + _indxNode.label + "]", delay: enablix.errorMsgShowTime});
+							
+							_indxNode.dataLoading = true;
+						});
+						
+					} else {
+						addInstanceDataChildren(_indxNode, cntnr, _childrenList, !_loadChildren);
+						_indxNode.dataLoading = false;
+					}
+					
+				}
+				
+				_indxNode.dataLoaded = true;
+				
+			};
+			
 			return {
 				getContentIndexData: getContentIndexData,
 				addInstanceDataChild: addInstanceDataChild,
+				addInstanceDataChildren: addInstanceDataChildren,
 				updateNodeData: updateNodeData,
 				deleteInstanceChildNode: deleteInstanceChildNode,
-				getPortalIndexForContainer: getPortalIndexForContainer
+				getPortalIndexForContainer: getPortalIndexForContainer,
+				loadIndexChildren: loadIndexChildren,
+				refreshNodeChildren: refreshNodeChildren
 			};
 	 	}
 	]);

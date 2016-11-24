@@ -26,7 +26,7 @@ enablix.studioApp.factory('ContentOperInitService',
 	 			
 	 			_scope.parentRecord = {};
 	 			
-	 			if (!isNullOrUndefined(_parentIdentity)) {
+	 			if (!isNullOrUndefined(_parentIdentity) && _parentIdentity != "") {
 	 			
 	 				var parentQId = QIdUtil.getParentQId(_containerQId);
 	 				

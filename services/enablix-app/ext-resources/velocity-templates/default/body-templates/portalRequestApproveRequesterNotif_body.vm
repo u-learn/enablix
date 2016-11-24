@@ -18,7 +18,7 @@
 
 	#foreach($action in $obj.contentRequest.actionHistory.actions)
 		#if($action.actionName == 'APPROVE')
-			#if ($action.actionInput.notes)
+			#if ($StringUtil.hasText($action.actionInput.notes))
 			<table width="100%" border="0" cellspacing="0" cellpadding="0">	
 				<tr>
 					<td align="left"><u>Approver Notes</u>: ${action.actionInput.notes}</td>

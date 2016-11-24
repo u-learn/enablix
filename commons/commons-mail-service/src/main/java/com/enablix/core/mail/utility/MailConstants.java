@@ -16,4 +16,5 @@ public class MailConstants {
 	public static final String SCENARIO_RESET_PASSWORD = "resetpassword";
 	public static final String SCENARIO_WEEKLY_DIGEST = "weeklyDigest";
 	public static final String SCENARIO_SHARE_CONTENT = "shareContent";
+	public static final String EMAIL_TEMPLATE_STRINGUTIL = "StringUtil";
 }

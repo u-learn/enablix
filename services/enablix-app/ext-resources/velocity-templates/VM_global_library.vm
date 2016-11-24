@@ -156,6 +156,18 @@ $a_siteUrl/app.html#/portal/container/$a_containerQId/$a_contentIdentity/c/singl
 
 
 
+#macro( portal_home_link $a_linkText )
+<a href="${obj.url}/app.html#/portal/home">
+<span class="link-u" style="color:#004ba1; text-decoration:underline">${a_linkText}</span>
+</a>
+#end
+
+
+#macro( tenant_portal_link )
+#portal_home_link(${obj.tenant.name})
+#end
+
+
 #macro( mail_closing $a_tenantName)
 #spacer_double_row('20' '15')
 Cheers, <br />

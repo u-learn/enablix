@@ -362,6 +362,8 @@ form .row .form-label:first-child {
 .block {
 	margin-top: 2em;
 	background: #fff;
+	/*box-shadow: 0 0 15px rgba(0,0,0,.2);
+    border-radius: 4px;*/
 }
 .block .head {
 	position: relative;
@@ -432,6 +434,7 @@ form .row .form-label:first-child {
 	cursor: pointer;
 	-webkit-user-select: none;
 	background: #2980b9;
+	/*border-radius: 4px 4px 0 0;*/
 }
 
 .block .head-toggle h2{
@@ -1513,4 +1516,11 @@ tbody tr td.action-cell:first-child {
 	width: 1px;
 	color: #2ecc71;
 	padding-left: 0;
+}
+
+.index-loading {
+	width: 18px;
+	height: 18px;
+	vertical-align: bottom;
+	margin: 0 0 0 4px;
 }

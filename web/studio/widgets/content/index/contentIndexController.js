@@ -51,6 +51,12 @@ enablix.studioApp.controller('contentIndexCtrl',
 			}
 		}
 		
+		$scope.contentIndex.selectNodeHeadCallback = function(selectedNode, $event) {
+			if (!selectedNode.dataLoaded) {
+				ContentIndexService.loadIndexChildren(selectedNode, false);
+			}
+		}
+		
 		$scope.contentIndex.selectNodeCallback = moveToNodeView;
 		
 		$scope.goToDetailEdit = function(containerQId, elementIdentity) {
@@ -73,7 +79,7 @@ enablix.studioApp.controller('contentIndexCtrl',
 			
 			var currentNode = $scope.contentIndex.currentNode;
 			var childNode = ContentIndexService.addInstanceDataChild(
-					currentNode, currentNode.containerDef, childData);
+					currentNode, currentNode.containerDef, childData, true);
 			
 			if (selectChildAsCurrent) {
 				$scope.selectChildOfCurrent($scope.contentIndex.currentNode.containerDef.qualifiedId, childData.identity);

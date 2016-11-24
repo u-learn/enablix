@@ -1,6 +1,6 @@
 enablix.studioApp.controller('ContentListCtrl', 
-			['$scope', '$state', '$stateParams', 'ContentDataService', 'ContentTemplateService', 'StateUpdateService', 'StudioSetupService', 'Notification', 'ContentUtil', 'QuickLinksService', 'AssocQuickLinkModalWindow', 'ManageRecoModalWindow',
-	function( $scope,   $state,   $stateParams,   ContentDataService,   ContentTemplateService,   StateUpdateService,   StudioSetupService,   Notification,   ContentUtil,   QuickLinksService,   AssocQuickLinkModalWindow,   ManageRecoModalWindow) {
+			['$scope', '$state', '$stateParams', 'ContentDataService', 'ContentIndexService', 'ContentTemplateService', 'StateUpdateService', 'StudioSetupService', 'Notification', 'ContentUtil', 'QuickLinksService', 'AssocQuickLinkModalWindow', 'ManageRecoModalWindow',
+	function( $scope,   $state,   $stateParams,   ContentDataService,   ContentIndexService,   ContentTemplateService,   StateUpdateService,   StudioSetupService,   Notification,   ContentUtil,   QuickLinksService,   AssocQuickLinkModalWindow,   ManageRecoModalWindow) {
 		
 		var containerQId = $stateParams.containerQId;
 		var parentIdentity = $stateParams.parentIdentity;
@@ -48,6 +48,11 @@ enablix.studioApp.controller('ContentListCtrl',
 			ContentDataService.getContentData(enablix.templateId, containerQId, parentIdentity, 
 				function(data) {
 					$scope.listData = data;
+					
+					var currentIndexNode = $scope.$parent.getCurrentIndexNode();
+					if (!isNullOrUndefined(currentIndexNode)) {
+						ContentIndexService.refreshNodeChildren(currentIndexNode, data, false);
+					}
 					
 					angular.forEach($scope.listData, function(item) {
 						ContentUtil.decorateData($scope.containerDef, item);
