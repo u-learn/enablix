@@ -52,7 +52,7 @@ enablix.studioApp.controller('contentIndexCtrl',
 		}
 		
 		$scope.contentIndex.selectNodeHeadCallback = function(selectedNode, $event) {
-			if (!selectedNode.dataLoaded) {
+			if (!selectedNode.dataLoaded && selectedNode.containerDef) {
 				ContentIndexService.loadIndexChildren(selectedNode, false);
 			}
 		}
