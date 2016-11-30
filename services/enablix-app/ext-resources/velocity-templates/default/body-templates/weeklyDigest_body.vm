@@ -6,7 +6,7 @@
 	
 	#spacer_row('15')
 	
-	Here are the ${obj.tenant.name} updates from previous week.
+	Here are the #tenant_portal_link() updates from previous week.
 	<table width="100%" border="0" cellspacing="0" cellpadding="0">
 		<tr>
 			<td class="content-spacing2" style="font-size:0pt; line-height:0pt; text-align:left" width="30"></td>

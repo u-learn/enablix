@@ -12,7 +12,7 @@
 	<a href="#content_portal_url(${obj.url} $obj.contentData.containerQId $obj.contentData.recordIdentity)">
 		<span class="link-u" style="color:#004ba1; text-decoration:underline">${obj.contentRequest.objectRef.contentTitle}</span>
 	</a>
-	#else content #end #if(${obj.tenant.name}) on ${obj.tenant.name}. #end
+	#else content #end #if(${obj.tenant.name}) on #tenant_portal_link(). #end
 	
 	#spacer_row('15')
 
