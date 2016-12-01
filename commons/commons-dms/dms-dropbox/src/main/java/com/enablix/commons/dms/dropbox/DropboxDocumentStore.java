@@ -56,7 +56,7 @@ public class DropboxDocumentStore extends AbstractDocumentStore<DropboxDocumentM
 	        	String fileLocation = createDropboxFilepath(document.getMetadata(), contentPath);
 	        	
 				DbxEntry.File uploadedFile = client.uploadFile(
-	        			fileLocation, determineWriteMode(client, document), 
+	        			fileLocation, determineWriteMode(client, fileLocation), 
 	        			document.getContentLength(), inputStream);
 	        	
 				fileLocation = uploadedFile.path;
@@ -76,15 +76,13 @@ public class DropboxDocumentStore extends AbstractDocumentStore<DropboxDocumentM
 		return document.getMetadata();
 	}
 	
-	private DbxWriteMode determineWriteMode(DbxClient client, DropboxDocument doc) throws DbxException {
+	private DbxWriteMode determineWriteMode(DbxClient client, String docLocation) throws DbxException {
 		
 		DbxWriteMode mode = DbxWriteMode.add();
 		
-		String location = doc.getMetadata().getLocation();
-		
-		if (!StringUtil.isEmpty(location)) {
+		if (!StringUtil.isEmpty(docLocation)) {
 			
-			DbxEntry entry = client.getMetadata(location);
+			DbxEntry entry = client.getMetadata(docLocation);
 			
 			if (entry != null && entry instanceof DbxEntry.File) {
 				DbxEntry.File file = (DbxEntry.File) entry;
@@ -121,6 +119,10 @@ public class DropboxDocumentStore extends AbstractDocumentStore<DropboxDocumentM
 
 	@Override
 	public DropboxDocument load(DropboxDocumentMetadata docMetadata) throws IOException {
+		return new DropboxDocument(getDocReader(docMetadata.getLocation()), docMetadata);
+	}
+	
+	private DropboxReader getDocReader(String docLocation) throws IOException {
 		
 		DbxClient client = createDbxClient();
 		
@@ -128,7 +130,7 @@ public class DropboxDocumentStore extends AbstractDocumentStore<DropboxDocumentM
 		
         try {
         	
-        	Downloader downloader = client.startGetFile(docMetadata.getLocation(), null);
+        	Downloader downloader = client.startGetFile(docLocation, null);
 			reader = new DropboxReader(downloader);
 			
             LOGGER.debug("Metadata: {}", downloader.metadata);
@@ -139,7 +141,7 @@ public class DropboxDocumentStore extends AbstractDocumentStore<DropboxDocumentM
 			
 		} 
         
-		return new DropboxDocument(reader, docMetadata);
+        return reader;
 	}
 
 	@Override
@@ -196,7 +198,7 @@ public class DropboxDocumentStore extends AbstractDocumentStore<DropboxDocumentM
         	
 			if (dbxFileEntry == null) {
 				// move command may have failed because of existing file with same name
-				// try DELETE existing and MOVE
+				// try DELETE and MOVE approach
 				dbxFileEntry = tryDeleteAndMove(client, oldLoc, newFileLoc);
 			}
 			
@@ -238,6 +240,23 @@ public class DropboxDocumentStore extends AbstractDocumentStore<DropboxDocumentM
 		
 		return newLocFile;
 	}
+	
+	/*private DbxEntry tryDownloadAndUpload(DbxClient client, String oldLoc, 
+			String newFileLoc, DropboxDocumentMetadata docMetadata) throws DbxException, IOException {
+		
+		LOGGER.debug("Trying upload approach as a file already exists in the new location: {}", newFileLoc);
+		
+		DropboxReader docReader = getDocReader(oldLoc);
+		
+		DbxEntry.File uploadedFile = client.uploadFile(
+				newFileLoc, determineWriteMode(client, newFileLoc), 
+				docMetadata.getContentLength(), docReader);
+
+		// delete the file from temporary location
+		client.delete(oldLoc);
+			
+		return uploadedFile;
+	}*/
 
 	@Override
 	public void delete(DropboxDocumentMetadata docMetadata) throws IOException {
