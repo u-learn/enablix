@@ -190,8 +190,21 @@ public class DropboxDocumentStore extends AbstractDocumentStore<DropboxDocumentM
         	String newFileLoc = createDropboxFilepath(docMetadata, newContentPath);
         	
         	String oldLoc = docMetadata.getLocation();
+        	
+        	LOGGER.debug("Moving file from: {}, to: {}", oldLoc, newFileLoc);
 			DbxEntry dbxFileEntry = client.move(oldLoc, newFileLoc);
         	
+			if (dbxFileEntry == null) {
+				// move command may have failed because of existing file with same name
+				// try DELETE existing and MOVE
+				dbxFileEntry = tryDeleteAndMove(client, oldLoc, newFileLoc);
+			}
+			
+			if (dbxFileEntry == null) {
+				LOGGER.error("Error moving file from: {}, to: {}", oldLoc, newFileLoc);
+				throw new IOException("Unable to move file");
+			}
+			
 			docMetadata.setLocation(dbxFileEntry.path);
 			
         	LOGGER.debug("File move from: {}, to: {}", oldLoc, dbxFileEntry.path);
@@ -203,6 +216,27 @@ public class DropboxDocumentStore extends AbstractDocumentStore<DropboxDocumentM
 		}
         
 		return docMetadata;
+	}
+
+	private DbxEntry tryDeleteAndMove(DbxClient client, String oldLoc, String newFileLoc) throws DbxException, IOException {
+		
+		LOGGER.debug("Trying delete and move as a file already exists in the new location: {}", newFileLoc);
+		
+		DbxEntry newLocFile = null;
+		
+		String archiveFileLoc = newFileLoc + "." + System.currentTimeMillis();
+		DbxEntry archivedFile = client.move(newFileLoc, archiveFileLoc);
+		
+		if (archivedFile != null) {
+			
+			newLocFile = client.move(oldLoc, newFileLoc);
+			client.delete(archiveFileLoc);
+			
+		} else {
+			throw new IOException("Unable to archive existing file: " + newFileLoc);
+		}
+		
+		return newLocFile;
 	}
 
 	@Override
