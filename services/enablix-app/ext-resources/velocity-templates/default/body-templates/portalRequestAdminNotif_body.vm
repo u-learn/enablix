@@ -9,7 +9,7 @@
 	#if(${obj.contentRequest.createdByName}) ${obj.contentRequest.createdByName}#else Someone #end has #if($obj.contentRequest.objectRef.addRequest) added #else updated #end 
 	
 	#if(${obj.contentRequest.objectRef.contentTitle}) 
-	<a href="${obj.url}/app.html#/system/contentrequest/a/view/$obj.contentRequest.objectRef.identity/">
+	<a href="${obj.url}/app.html#/system/contentrequest/a/view/$obj.contentRequest.objectRef.identity/?atChannel=EMAIL">
 		<span class="link-u" style="color:#004ba1; text-decoration:underline">${obj.contentRequest.objectRef.contentTitle}</span>
 	</a>
 	#else content #end #if(${obj.tenant.name}) to ${obj.tenant.name}. #end
@@ -40,13 +40,13 @@
 	
 	#@action_button_table()
 		#@action_button_cell('183')
-			#action_button('Approve' "${obj.url}/app.html#/system/contentrequest/a/approve/$obj.contentRequest.objectRef.identity/")
+			#action_button('Approve' "${obj.url}/app.html#/system/contentrequest/a/approve/$obj.contentRequest.objectRef.identity/?atChannel=EMAIL")
 		#end
 		#@action_button_cell('20')
 			#spacer_row('20')
 		#end
 		#@action_button_cell('183')
-			#action_button('Reject' "${obj.url}/app.html#/system/contentrequest/a/reject/$obj.contentRequest.objectRef.identity/")
+			#action_button('Reject' "${obj.url}/app.html#/system/contentrequest/a/reject/$obj.contentRequest.objectRef.identity/?atChannel=EMAIL")
 		#end
 	#end
 	
