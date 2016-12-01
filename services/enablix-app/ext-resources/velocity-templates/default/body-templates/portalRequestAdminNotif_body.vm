@@ -12,7 +12,7 @@
 	<a href="${obj.url}/app.html#/system/contentrequest/a/view/$obj.contentRequest.objectRef.identity/?atChannel=EMAIL">
 		<span class="link-u" style="color:#004ba1; text-decoration:underline">${obj.contentRequest.objectRef.contentTitle}</span>
 	</a>
-	#else content #end #if(${obj.tenant.name}) to ${obj.tenant.name}. #end
+	#else content #end #if(${obj.tenant.name}) to #tenant_portal_link(). #end
 	
 	#spacer_row('15')
 	
