@@ -46,7 +46,7 @@
 	
 	#@action_button_table()
 		#@action_button_cell('200')
-			#action_button('View Request' "${obj.url}/app.html#/account/contentrequest/a/view/$obj.contentRequest.objectRef.identity/")
+			#action_button('View Request' "${obj.url}/app.html#/account/contentrequest/a/view/$obj.contentRequest.objectRef.identity/?atChannel=EMAIL")
 		#end
 	#end
 	

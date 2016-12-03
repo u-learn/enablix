@@ -32,6 +32,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		String[] systemUserRequestPatterns = {"/site/*", "site-doc/**/*"};
 		http = http.addFilterAfter(new ProcessContextInitFilter(systemUserRequestPatterns), SwitchUserFilter.class);
+		http = http.addFilterAfter(new AuditTrackingContextInitFilter(), SwitchUserFilter.class);
 		
 		// Add guest login filter ahead of username/password filter. Also, read the following:
 		// http://mtyurt.net/2015/07/15/spring-how-to-insert-a-filter-before-springsecurityfilterchain/

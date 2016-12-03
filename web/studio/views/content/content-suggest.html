@@ -4,7 +4,7 @@
 	<button class="button button-close" type="button" ng-click="cancelOperation()">{{headingCancelLabel}}</button>
 </div>
 <ng-include src="'views/content/content-add-fields.html'"></ng-include>
-<div class="cont">
+<div class="cont" ng-show="approvalWFRequired">
 	<h2 class="form-label">Notes</h2>
 	<textarea placeholder="Add Notes" class="form-control" ng-model="notes" rows="3"></textarea>
 </div>

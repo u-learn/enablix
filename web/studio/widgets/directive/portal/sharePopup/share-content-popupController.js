@@ -1,6 +1,6 @@
 enablix.studioApp.controller('ShareController', [
-             '$scope', '$stateParams', '$modalInstance', 'containerQId', 'contentIdentity', 'ContentShareService', 'Notification',
-	function( $scope,   $stateParams,   $modalInstance,   containerQId,   contentIdentity,   ContentShareService,   Notification) {
+             '$scope', '$stateParams', '$modalInstance', '$timeout', 'containerQId', 'contentIdentity', 'ContentShareService', 'Notification',
+	function( $scope,   $stateParams,   $modalInstance,   $timeout,   containerQId,   contentIdentity,   ContentShareService,   Notification) {
 
 		$scope.shareContent = function() {
 			

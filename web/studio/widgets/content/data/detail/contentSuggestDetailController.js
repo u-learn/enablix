@@ -77,7 +77,11 @@ enablix.studioApp.controller('ContentSuggestDetailCtrl',
 				}
 			}
 			
-		});
+		}, function(errorData) {
+			
+			Notification.error({message: "Error fetching recor data.", delay: enablix.errorMsgShowTime});
+			
+		}, true);
 		
 		var currentStateMessage = function(_actRecord) {
 			

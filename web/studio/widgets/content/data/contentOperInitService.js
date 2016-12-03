@@ -106,8 +106,8 @@ enablix.studioApp.factory('ContentOperInitService',
 	 						//alert('Error retrieving record data');
 	 						Notification.error({message: "Error retrieving record data", delay: enablix.errorMsgShowTime});
 	 					});
-	 		}
-	 		    	
+	 		};
+	 		
 	 		return {
 	 			initAddContentOper: initAddContentOper,
 	 			initEditContentOper: initEditContentOper

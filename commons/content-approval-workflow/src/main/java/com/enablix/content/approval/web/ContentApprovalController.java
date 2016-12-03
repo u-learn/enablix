@@ -14,9 +14,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.enablix.content.approval.ContentApprovalConstants;
+import com.enablix.content.approval.ContentApprovalUtil;
 import com.enablix.content.approval.model.ContentApproval;
 import com.enablix.content.approval.model.ContentDetail;
 import com.enablix.content.approval.repo.ContentApprovalRepository;
+import com.enablix.core.activity.audit.ActivityTrackingContext;
+import com.enablix.core.domain.activity.ActivityChannel.Channel;
+import com.enablix.core.domain.activity.ContentActivity.ContentActivityType;
+import com.enablix.services.util.ActivityLogger;
 import com.enablix.state.change.ActionException;
 import com.enablix.state.change.StateChangeWorkflowManager;
 import com.enablix.state.change.definition.ActionDefinition;
@@ -86,8 +91,21 @@ public class ContentApprovalController {
 	
 	@RequestMapping(method = RequestMethod.GET, value="/r/{refObjectIdentity}/", produces = "application/json")
 	public ContentApproval getContentRequest(@PathVariable String refObjectIdentity) {
+		
 		LOGGER.debug("Fetch content approval record: {}", refObjectIdentity);
-		return repo.findByObjectRefIdentity(refObjectIdentity);
+		ContentApproval content = repo.findByObjectRefIdentity(refObjectIdentity);
+		
+		Channel channel = ActivityTrackingContext.get().getActivityChannel();
+		
+		if (channel != null) {
+		
+			ActivityLogger.auditContentActivity(
+					ContentApprovalUtil.createAuditActivityInstance(
+							content, ContentActivityType.CONTENT_SUGGEST_VIEW), 
+					channel);
+		}
+		
+		return content;
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value="/actionmap/", produces = "application/json")

@@ -1,7 +1,7 @@
 enablix.studioApp.factory('ContentApprovalService', 
 	[
-	 		    'RESTService', 'Notification', 'DataSearchService', 'ActionNotesWindow', 'ConfirmationModalWindow', 'AuthorizationService',
-	 	function(RESTService,   Notification,   DataSearchService,   ActionNotesWindow,   ConfirmationModalWindow,   AuthorizationService) {
+	 		    'RESTService', 'Notification', 'DataSearchService', 'ActionNotesWindow', 'ConfirmationModalWindow', 'AuthorizationService', '$location',
+	 	function(RESTService,   Notification,   DataSearchService,   ActionNotesWindow,   ConfirmationModalWindow,   AuthorizationService,   $location) {
 
 	 		var DOMAIN_TYPE = "com.enablix.content.approval.model.ContentApproval";
 	 		
@@ -15,6 +15,8 @@ enablix.studioApp.factory('ContentApprovalService',
 	 		var STATE_WITHDRAWN = "WITHDRAWN";
 	 		var STATE_APPROVED = "APPROVED";
 	 		var STATE_REJECTED = "REJECTED";
+	 		
+	 		var PERM_SUBMIT_CONTENT_FROM_PORTAL = "VIEW_STUDIO";
 	 		
 	 		var FILTER_METADATA = {
 	 				"contentIdentity" : {
@@ -67,7 +69,8 @@ enablix.studioApp.factory('ContentApprovalService',
 	 					"addRequest": addRequest
 	 			};
 	 			
-	 			RESTService.postForData("submitContentSuggestion", {}, contentDetail, null, _onSuccess, _onError, null);
+	 			var headers = getUrlParameters($location);
+	 			RESTService.postForData("submitContentSuggestion", {}, contentDetail, null, _onSuccess, _onError, null, headers);
 	 			
 	 		};
 	 		
@@ -78,6 +81,7 @@ enablix.studioApp.factory('ContentApprovalService',
 	 					"notes": _notes
 	 			};
 	 			
+	 			var headers = getUrlParameters($location);
 	 			RESTService.postForData("approveContentSuggestion", {}, actionInput, null, 
 	 					function(data) {
 	 						
@@ -93,7 +97,7 @@ enablix.studioApp.factory('ContentApprovalService',
 	 							_onError(error);
 	 						}
 	 						
-	 					}, null);
+	 					}, null), headers;
 	 			
 	 		};
 	 		
@@ -104,6 +108,7 @@ enablix.studioApp.factory('ContentApprovalService',
 	 					"notes": _notes
 	 			};
 	 			
+	 			var headers = getUrlParameters($location);
 	 			RESTService.postForData("rejectContentSuggestion", {}, actionInput, null, 
 	 					function(data) {
 	 						Notification.primary("Content rejected!");
@@ -116,7 +121,7 @@ enablix.studioApp.factory('ContentApprovalService',
 	 						if (_onError) {
 	 							_onError(error);
 	 						}
-	 					}, null);
+	 					}, null, headers);
 	 			
 	 		};
 	 		
@@ -127,6 +132,7 @@ enablix.studioApp.factory('ContentApprovalService',
 	 					"notes": _notes
 	 			};
 	 			
+	 			var headers = getUrlParameters($location);
 	 			RESTService.postForData("withdrawContentSuggestion", {}, actionInput, null, 
 	 					function(data) {
 	 						Notification.primary("Content request withdrawn!");
@@ -139,7 +145,7 @@ enablix.studioApp.factory('ContentApprovalService',
 	 						if (_onError) {
 	 							_onError(error);
 	 						}
-	 					}, null);
+	 					}, null, headers);
 	 			
 	 		};
 	 		
@@ -157,13 +163,25 @@ enablix.studioApp.factory('ContentApprovalService',
 	 			
 	 		};
 	 		
-	 		var getContent = function(_refObjectIdentity, _onSuccess, _onError) {
+	 		var getContent = function(_refObjectIdentity, _onSuccess, _onError, _auditAsViewAction) {
 	 			
 	 			var params = {
  					"refObjectIdentity": _refObjectIdentity
 	 			};
+	 			
+	 			var headers = null;
+	 			
+	 			if (_auditAsViewAction) {
+	 			
+	 				var urlParams = getUrlParameters($location);
+	 				if (isNullOrUndefined(urlParams.atChannel)) {
+	 					urlParams.atChannel = 'WEB';
+	 				}
+	 				
+	 				headers = urlParams;
+	 			}
 
-	 			RESTService.getForData("getContentSuggestion", params, null, _onSuccess, _onError);
+	 			RESTService.getForData("getContentSuggestion", params, null, _onSuccess, _onError, headers);
 	 			
 	 		};
 	 		
@@ -294,7 +312,12 @@ enablix.studioApp.factory('ContentApprovalService',
 					withdrawContent(_approvalRecord.objectRef.identity, notes, _onActionCompletion);
 				});
 			};
-	 		
+			
+			
+			var isApprovalWFRequired = function() {
+				return !AuthorizationService.userHasPermission(PERM_SUBMIT_CONTENT_FROM_PORTAL);
+			};
+			
 	 		return {
 	 			init: init,
 	 			submitContent: submitContent,
@@ -310,6 +333,7 @@ enablix.studioApp.factory('ContentApprovalService',
 	 			initApproveAction: initApproveAction,
 	 			initRejectAction: initRejectAction,
 	 			initWithdrawAction: initWithdrawAction,
+	 			isApprovalWFRequired: isApprovalWFRequired,
 	 			
 	 			actionReject: function() { return ACTION_REJECT; },
 	 			actionApprove: function() { return ACTION_APPROVE; },

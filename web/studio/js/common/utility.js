@@ -19,3 +19,8 @@ function linkify(text) {
         return '<a href="' + url + '">' + url + '</a>';
     });
 };
+
+
+function getUrlParameters($location) {
+	return $location.search();
+}

@@ -11,12 +11,12 @@ import java.util.Map;
 
 import org.springframework.stereotype.Component;
 
-import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.content.approval.ContentApprovalConstants;
+import com.enablix.content.approval.ContentApprovalUtil;
 import com.enablix.content.approval.model.ContentApproval;
 import com.enablix.content.approval.model.ContentDetail;
+import com.enablix.core.activity.audit.ActivityTrackingContext;
 import com.enablix.core.domain.activity.ActivityChannel.Channel;
-import com.enablix.core.domain.activity.ContentActivity.ContainerType;
 import com.enablix.core.domain.activity.ContentActivity.ContentActivityType;
 import com.enablix.core.domain.activity.ContentSuggestActivity;
 import com.enablix.services.util.ActivityLogger;
@@ -39,14 +39,11 @@ public class ActivityAuditInterceptor extends ActionInterceptorAdapter<ContentDe
 	@Override
 	public void onActionComplete(String actionName, ActionInput actionIn, ContentApproval recording) {
 		
-		ContentDetail objectRef = recording.getObjectRef();
-
-		ContentSuggestActivity activity = new ContentSuggestActivity(
-				(String) objectRef.getData().get(ContentDataConstants.IDENTITY_KEY), 
-				objectRef.getContentQId(), ContainerType.CONTENT, objectRef.getContentTitle(), 
-				mapContentActivityType(actionName, recording), recording.getIdentity(), objectRef.getIdentity());
+		ContentSuggestActivity activity = ContentApprovalUtil.createAuditActivityInstance(
+				recording, mapContentActivityType(actionName, recording));
 		
-		ActivityLogger.auditContentActivity(activity, Channel.WEB);
+		Channel channel = ActivityTrackingContext.get().getActivityChannel(Channel.WEB);
+		ActivityLogger.auditContentActivity(activity, channel);
 	}
 	
 	private ContentActivityType mapContentActivityType(String actionName, ContentApproval recording) {

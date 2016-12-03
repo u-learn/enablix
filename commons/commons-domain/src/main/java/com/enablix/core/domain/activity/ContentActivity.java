@@ -8,7 +8,8 @@ public class ContentActivity extends Activity {
 	
 	public enum ContentActivityType {
 		CONTENT_ADD, CONTENT_UPDATE, CONTENT_DELETE, CONTENT_SHARE, CONTENT_ACCESS, DOC_DOWNLOAD, DOC_UPLOAD, DOC_PREVIEW,
-		CONTENT_ADD_SUGGEST, CONTENT_UPDATE_SUGGEST, CONTENT_SUGGEST_APPROVED, CONTENT_SUGGEST_REJECT, CONTENT_SUGGEST_WITHDRAW, CONTENT_SUGGEST_EDIT
+		CONTENT_ADD_SUGGEST, CONTENT_UPDATE_SUGGEST, CONTENT_SUGGEST_APPROVED, CONTENT_SUGGEST_REJECT, CONTENT_SUGGEST_WITHDRAW, CONTENT_SUGGEST_EDIT,
+		CONTENT_SUGGEST_VIEW
 	}
 	
 	private String itemIdentity;
@@ -20,6 +21,8 @@ public class ContentActivity extends Activity {
 	private ContainerType containerType;
 	
 	private ContentActivityType activityType;
+	
+	private String activityOrigin;
 	
 	protected ContentActivity() {
 		super(Category.CONTENT);
@@ -73,6 +76,14 @@ public class ContentActivity extends Activity {
 
 	public void setItemTitle(String itemTitle) {
 		this.itemTitle = itemTitle;
+	}
+
+	public String getActivityOrigin() {
+		return activityOrigin;
+	}
+
+	public void setActivityOrigin(String activityOrigin) {
+		this.activityOrigin = activityOrigin;
 	}
 
 }

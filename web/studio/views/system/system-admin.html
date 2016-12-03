@@ -34,9 +34,13 @@
 						<i class="fa fa-angle-right"></i>
 						<a href="#" ui-sref-active="active" ui-sref="system.recommendations">Manage Recommendations</a>
 					</li>
-					<li ng-class="{active: $state.includes('system.contentrequestlist') || $state.includes('system.contentrequestedit') || $state.includes('system.contentrequestview')}">
+					<li ng-class="{active: $state.includes('system.contentrequestlist') || $state.includes('system.contentrequestedit') || $state.includes('system.contentrequestview')}" requires-permission="MANAGE_CONTENT_REQUEST">
 						<i class="fa fa-angle-right"></i>
 						<a href="#" ui-sref-active="active" ui-sref="system.contentrequestlist">Content Requests</a>
+					</li>
+					<li ng-class="{active: $state.includes('system.contentmappinglist') || $state.includes('system.contentmappingview') || $state.includes('system.contentmappingadd')}">
+						<i class="fa fa-angle-right"></i>
+						<a href="#" ui-sref-active="active" ui-sref="system.contentmappinglist">Content Requests</a>
 					</li>
 				</ul>
 		    </nav>

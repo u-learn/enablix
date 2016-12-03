@@ -76,7 +76,12 @@ enablix.studioApp.factory('ContentDataService',
 	 				url = "insertChildContainerData";
 	 			}
 	 			
-	 			RESTService.postForData(url, params, _data, null, _onSuccess, _onError, null);
+	 			var headers = {"atActivityOrigin" : "Studio"};
+	 			if ($state.includes('portal')) {
+	 				headers.atActivityOrigin = "Portal";
+	 			}
+	 			
+	 			RESTService.postForData(url, params, _data, null, _onSuccess, _onError, null, headers);
 	 		}
 	 		
 	 		var deleteContentData = function(_contentQId, _recordIdentity, _onSuccess, _onError) {
@@ -102,14 +107,17 @@ enablix.studioApp.factory('ContentDataService',
 	 		};
 
 	 		
-	 		
+	 		var contentChangeEventId = function(_contentQId) {
+	 			return "event.content.change:" + _contentQId;
+	 		};
 	 		
 	 		return {
 	 			getContentData: getContentData,
 	 			getContentRecordData: getContentRecordData,
 	 			getNavigationPath: getNavigationPath,
 	 			saveContainerData: saveContainerData,
-	 			deleteContentData: deleteContentData
+	 			deleteContentData: deleteContentData,
+	 			contentChangeEventId: contentChangeEventId
 	 		};
 	 	}
 	 ]);

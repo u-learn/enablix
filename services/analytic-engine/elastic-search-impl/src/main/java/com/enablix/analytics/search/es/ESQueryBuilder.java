@@ -161,7 +161,10 @@ public class ESQueryBuilder {
 			fieldName += ".name";
 		}
 		
-		LOGGER.debug("ES Query field name: {}", fieldName);
+		if (LOGGER.isTraceEnabled()) {
+			LOGGER.trace("ES Query field name: {}", fieldName);
+		}
+		
 		return fieldName;
 	}
 

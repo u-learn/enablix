@@ -4,11 +4,11 @@
 <form name="shareForm">
 <div class="modal-body">
 <div class="cont">
-<table class="datatable">	
+<table class="datatable" ng-form>	
 	<tbody>
 		<tr>
 		<label class="form-label">Enter email</label>
-			<input type="text" name="emailid" ng-model="emailid" class="form-control" ng-blur="shareForm.emailid.$valid" ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,5})$/" required>
+			<input type="text" name="emailid" id="emailid" ng-model="emailid" class="form-control" ng-blur="shareForm.emailid.$valid" ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,5})$/" required>
 			<div ng-messages="shareForm.emailid.$error" ng-if="shareForm.emailid.$touched" role="alert">
 				<div ng-message="required" class="error">Please enter an email</div>
 				<div ng-message="pattern" class="error">Please enter a valid email</div>      

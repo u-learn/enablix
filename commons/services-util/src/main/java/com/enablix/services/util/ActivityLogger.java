@@ -6,6 +6,7 @@ import java.util.List;
 import com.enablix.commons.util.StringUtil;
 import com.enablix.commons.util.concurrent.Events;
 import com.enablix.commons.util.process.ProcessContext;
+import com.enablix.core.activity.audit.ActivityTrackingContext;
 import com.enablix.core.api.ContentDataRef;
 import com.enablix.core.domain.activity.Activity;
 import com.enablix.core.domain.activity.ActivityAudit;
@@ -61,7 +62,8 @@ public class ActivityLogger {
 	
 	public static void auditContentActivity(ContentActivityType activityType,
 			ContentDataRef dataRef, ContainerType containerType) {
-		auditContentActivity(activityType, dataRef, containerType, Channel.WEB);
+		Channel channel = ActivityTrackingContext.get().getActivityChannel(Channel.WEB);
+		auditContentActivity(activityType, dataRef, containerType, channel);
 	}
 	
 	public static void auditContentActivity(ContentActivityType activityType,
@@ -70,6 +72,8 @@ public class ActivityLogger {
 		
 		ContentActivity contentActvy = new ContentActivity(dataRef.getInstanceIdentity(), 
 				dataRef.getContainerQId(), containerType, activityType, dataRef.getTitle());
+		
+		contentActvy.setActivityOrigin(ActivityTrackingContext.get().getActivityOrigin());
 		
 		auditContentActivity(contentActvy, activityChannel);
 	}
