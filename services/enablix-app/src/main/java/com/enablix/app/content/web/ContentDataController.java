@@ -14,13 +14,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.enablix.app.content.ContentDataManager;
 import com.enablix.app.content.delete.DeleteContentRequest;
 import com.enablix.app.content.update.UpdateContentRequest;
-import com.enablix.app.template.web.TemplateController;
 
 @RestController
 @RequestMapping("content")
 public class ContentDataController {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(TemplateController.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(ContentDataController.class);
 	
 	@Autowired
 	private ContentDataManager dataMgr;

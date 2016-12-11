@@ -8,10 +8,9 @@ import org.springframework.stereotype.Component;
 import com.enablix.analytics.correlation.ItemUserCorrelationService;
 import com.enablix.analytics.correlation.ItemUserCorrelator;
 import com.enablix.analytics.correlation.ItemUserCorrelatorRegistry;
-import com.enablix.app.template.service.TemplateManager;
+import com.enablix.analytics.correlation.context.CorrelationContext;
 import com.enablix.core.api.ContentDataRef;
 import com.enablix.core.api.Tag;
-import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 import com.enablix.core.correlation.ItemUserCorrelation;
 
 @Component
@@ -20,14 +19,10 @@ public class ItemUserCorrelationServiceImpl implements ItemUserCorrelationServic
 	@Autowired
 	private ItemUserCorrelatorRegistry itemUserCorrelatorRegistry;
 	
-	@Autowired
-	private TemplateManager templateManager;
-	
 	@Override
-	public void correlateUsers(ContentDataRef item) {
-		ContentTemplate template = templateManager.getTemplate(item.getTemplateId());
+	public void correlateUsers(ContentDataRef item, CorrelationContext context) {
 		for (ItemUserCorrelator correlator : itemUserCorrelatorRegistry.getCorrelators()) {
-			correlator.correlateUsers(item, template);	
+			correlator.correlateUsers(item, context);	
 		}
 	}
 

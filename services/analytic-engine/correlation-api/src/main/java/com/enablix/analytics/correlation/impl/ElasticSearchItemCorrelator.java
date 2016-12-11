@@ -9,11 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.enablix.analytics.correlation.ItemItemCorrelator;
+import com.enablix.analytics.correlation.context.CorrelationContext;
 import com.enablix.analytics.correlation.matcher.DataMatcher;
 import com.enablix.analytics.correlation.matcher.MatchInputRecord;
 import com.enablix.analytics.correlation.rule.ItemCorrelationRuleManager;
 import com.enablix.core.api.ContentDataRef;
-import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 import com.enablix.core.commons.xsdtopojo.ItemCorrelationRuleType;
 import com.enablix.core.commons.xsdtopojo.RelatedItemType;
 import com.enablix.core.commons.xsdtopojo.RelatedItemsType;
@@ -37,7 +37,7 @@ public class ElasticSearchItemCorrelator implements ItemItemCorrelator {
 	private ItemItemCorrelationRecorder itemCorrRecorder;
 	
 	@Override
-	public void correlateItem(ContentTemplate template, ContentDataRef item) {
+	public void correlateItem(ContentDataRef item, CorrelationContext context) {
 		
 		List<ItemCorrelationRuleType> itemCorrRules = 
 				itemCorrRuleMgr.getItemItemCorrelationRulesForTriggerItemQId(item.getContainerQId());
@@ -46,7 +46,7 @@ public class ElasticSearchItemCorrelator implements ItemItemCorrelator {
 		
 			for (ItemCorrelationRuleType rule : itemCorrRules) {
 				LOGGER.debug("Processing correlation rule [{}] on trigger item [{}]", rule.getName(), item);
-				processItemCorrelationRule(rule, template, item);
+				processItemCorrelationRule(rule, context, item);
 			}
 		}
 		
@@ -60,50 +60,63 @@ public class ElasticSearchItemCorrelator implements ItemItemCorrelator {
 	 * 3. Navigate through related item path recording items if defined as related item
 	 */
 	private void processItemCorrelationRule(ItemCorrelationRuleType corrRule, 
-			ContentTemplate template, ContentDataRef item) {
+			CorrelationContext context, ContentDataRef item) {
 
 		itemCorrRecorder.removeItemCorrelationsByRule(item, corrRule);
 		
-		MatchInputRecord matchInput = matchInputBuilder.buildTriggerMatchInput(template, corrRule.getTriggerItem(), item);
+		MatchInputRecord matchInput = matchInputBuilder.buildTriggerMatchInput(
+				context.getTemplate(), corrRule.getTriggerItem(), item);
 		
 		if (matchInput != null) {
 			for (RelatedItemType relatedItemDef : corrRule.getRelatedItems().getRelatedItem()) {
-				processRelatedItemRule(corrRule, template, item, matchInput, relatedItemDef);
+				processRelatedItemRule(corrRule, context, item, matchInput, relatedItemDef);
 			}
 		}
 		
 	}
 
-	private void processRelatedItemRule(ItemCorrelationRuleType corrRule, ContentTemplate template, ContentDataRef triggerItem,
-			MatchInputRecord matchInput, RelatedItemType relatedItemDef) {
+	private void processRelatedItemRule(ItemCorrelationRuleType corrRule, CorrelationContext context, 
+			ContentDataRef triggerItem, MatchInputRecord matchInput, RelatedItemType relatedItemDef) {
 		
 		LOGGER.debug("Finding related item: {}", relatedItemDef.getQualifiedId());
 		
-		List<Map<String, Object>> matchedRecords = dataMatcher.findMatchingRecords(template, relatedItemDef, matchInput);
+		boolean relatedAndRecordContainerType = relatedItemDef.isRecordAsRelated() 
+				&& context.shouldCorrelateContainer(relatedItemDef.getQualifiedId());
+
+		// only related if the container record being related is in list of containers in correlation
+		// scope and is marked to be recorded as related; OR if there are any child items to be related
+		// i.e. there is further path to be navigated
+		if (relatedAndRecordContainerType || relatedItemDef.getRelatedItems() != null) {
 		
-		for (Map<String, Object> match : matchedRecords) {
+			List<Map<String, Object>> matchedRecords = dataMatcher.findMatchingRecords(
+					context.getTemplate(), relatedItemDef, matchInput);
 			
-			if (relatedItemDef.isRecordAsRelated()) {
-				
-				ContentDataRef relatedItem = ContentDataUtil.contentDataToRef(
-						match, template, relatedItemDef.getQualifiedId());
-				
-				itemCorrRecorder.recordItemCorrelation(triggerItem, relatedItem, corrRule, relatedItemDef.getTags());
-			}
-			
-			RelatedItemsType relatedItemsDef = relatedItemDef.getRelatedItems();
-			
-			if (relatedItemsDef != null) {
-			
-				for (RelatedItemType nextRelatedItemDef : relatedItemsDef.getRelatedItem()) {
+			for (Map<String, Object> match : matchedRecords) {
+
+				// record the matched content records
+				if (relatedAndRecordContainerType) {
 					
-					if (nextRelatedItemDef != null) {
+					ContentDataRef relatedItem = ContentDataUtil.contentDataToRef(
+							match, context.getTemplate(), relatedItemDef.getQualifiedId());
+					
+					itemCorrRecorder.recordItemCorrelation(triggerItem, relatedItem, corrRule, relatedItemDef.getTags());
+				}
+				
+				// continue correlating the next level in navigation path of related item
+				RelatedItemsType relatedItemsDef = relatedItemDef.getRelatedItems();
+				
+				if (relatedItemsDef != null) {
+				
+					for (RelatedItemType nextRelatedItemDef : relatedItemsDef.getRelatedItem()) {
 						
-						MatchInputRecord nextMatchInput = new MatchInputRecord(
-								triggerItem.getContainerQId(), relatedItemDef.getQualifiedId(), match);
-						nextMatchInput.setParent(matchInput);
-						
-						processRelatedItemRule(corrRule, template, triggerItem, nextMatchInput, nextRelatedItemDef);
+						if (nextRelatedItemDef != null) {
+							
+							MatchInputRecord nextMatchInput = new MatchInputRecord(
+									triggerItem.getContainerQId(), relatedItemDef.getQualifiedId(), match);
+							nextMatchInput.setParent(matchInput);
+							
+							processRelatedItemRule(corrRule, context, triggerItem, nextMatchInput, nextRelatedItemDef);
+						}
 					}
 				}
 			}

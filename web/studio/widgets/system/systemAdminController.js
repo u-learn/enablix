@@ -68,11 +68,22 @@ enablix.studioApp.controller('SystemAdminController',
 				         { label: "System" },
 				         { label: "Content Requests" }
 					];
+				
+			} else if ($state.includes('system.contentconnlist') 
+					|| $state.includes('system.contentconndetail') 
+					|| $state.includes('system.contentconnadd') 
+					|| $state.includes('system.contentconnedit')) {
+				
+				$scope.breadcrumbList = 
+					[
+				         { label: "Setup" },
+				         { label: "System" },
+				         { label: "Content Mappings" }
+					];
 			}
 
 		};
 		
 		setSetupBreadcrumb();
-		//StateUpdateService.goToListUser();
 	}
 ]);			

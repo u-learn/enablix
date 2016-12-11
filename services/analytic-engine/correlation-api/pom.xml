@@ -32,5 +32,10 @@
   		<artifactId>manage-correlation-data</artifactId>
   		<version>1.0-SNAPSHOT</version>
   	</dependency>
+  	<dependency>
+  		<groupId>com.enablix.commons</groupId>
+  		<artifactId>manage-content-connection</artifactId>
+  		<version>1.0-SNAPSHOT</version>
+  	</dependency>
   </dependencies>
 </project>

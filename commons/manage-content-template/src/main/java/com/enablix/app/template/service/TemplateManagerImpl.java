@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.enablix.commons.util.StringUtil;
+import com.enablix.commons.util.concurrent.Events;
 import com.enablix.core.commons.xsd.parser.XMLParser;
 import com.enablix.core.commons.xsd.parser.XMLParserRegistry;
 import com.enablix.core.commons.xsdtopojo.ContainerType;
@@ -19,6 +20,8 @@ import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 import com.enablix.core.commons.xsdtopojo.DataDefinitionType;
 import com.enablix.core.commons.xsdtopojo.UiDefinitionType;
 import com.enablix.core.domain.content.TemplateDocument;
+import com.enablix.core.mq.Event;
+import com.enablix.core.mq.util.EventUtil;
 import com.enablix.services.util.TemplateUtil;
 
 @Service
@@ -34,10 +37,14 @@ public class TemplateManagerImpl implements TemplateManager {
 	
 	@Override
 	public void save(ContentTemplate template) {
+
 		TemplateDocument templateDoc = new TemplateDocument();
 		templateDoc.setTemplate(template);
 		templateDoc.setIdentity(template.getId());
+		
 		crudService.saveOrUpdate(templateDoc);
+		
+		EventUtil.publishEvent(new Event<ContentTemplate>(Events.CONTENT_TEMPLATE_UPDATED, template));
 	}
 	
 	@Override

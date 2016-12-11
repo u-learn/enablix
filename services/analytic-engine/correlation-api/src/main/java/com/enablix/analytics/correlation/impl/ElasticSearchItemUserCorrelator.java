@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.enablix.analytics.correlation.ItemUserCorrelator;
+import com.enablix.analytics.correlation.context.CorrelationContext;
 import com.enablix.analytics.correlation.matcher.DataMatcher;
 import com.enablix.analytics.correlation.matcher.MatchInputRecord;
 import com.enablix.analytics.correlation.matcher.UserMatcher;
@@ -43,7 +44,7 @@ public class ElasticSearchItemUserCorrelator implements ItemUserCorrelator {
 	private MatchInputRecordBuilder matchInputBuilder;
 	
 	@Override
-	public void correlateUsers(ContentDataRef item, ContentTemplate template) {
+	public void correlateUsers(ContentDataRef item, CorrelationContext context) {
 
 		List<ItemUserCorrelationRuleType> corrRules = 
 				corrRuleMgr.getItemUserCorrelationRulesForTriggerItemQId(item.getContainerQId());
@@ -52,16 +53,18 @@ public class ElasticSearchItemUserCorrelator implements ItemUserCorrelator {
 			
 			for (ItemUserCorrelationRuleType rule : corrRules) {
 				LOGGER.debug("Processing item user correlation rule [{}] on trigger item [{}]", rule.getName(), item);
-				processItemUserCorrelationRule(rule, template, item);
+				processItemUserCorrelationRule(rule, context, item);
 			}
 		}
 		
 	}
 
-	private void processItemUserCorrelationRule(ItemUserCorrelationRuleType corrRule, ContentTemplate template,
+	private void processItemUserCorrelationRule(ItemUserCorrelationRuleType corrRule, CorrelationContext context,
 			ContentDataRef triggerItem) {
 		
 		itemUserCorrRecorder.removeItemUserCorrelationByRule(triggerItem, corrRule);
+		
+		ContentTemplate template = context.getTemplate();
 		
 		MatchInputRecord matchInput = matchInputBuilder.buildTriggerMatchInput(template, corrRule.getTriggerItem(), triggerItem);
 

@@ -18,6 +18,10 @@
 						<i class="fa fa-angle-right"></i>
 						<a href="#" ui-sref="system.users.list">User Management</a>
 					</li>
+					<li ng-class="{active: $state.includes('system.audit')}">
+						<i class="fa fa-angle-right"></i>
+						<a href="#" ui-sref="system.audit">Audit</a>
+					</li>
 					<li ng-class="{active: $state.includes('system.docstore')}">
 						<i class="fa fa-angle-right"></i>
 						<a href="#" ui-sref-active="active" ui-sref="system.docstore">Document Store</a>
@@ -38,9 +42,9 @@
 						<i class="fa fa-angle-right"></i>
 						<a href="#" ui-sref-active="active" ui-sref="system.contentrequestlist">Content Requests</a>
 					</li>
-					<li ng-class="{active: $state.includes('system.contentmappinglist') || $state.includes('system.contentmappingview') || $state.includes('system.contentmappingadd')}">
+					<li ng-class="{active: $state.includes('system.contentconnlist') || $state.includes('system.contentconndetail') || $state.includes('system.contentconnadd') || $state.includes('system.contentconnedit')}">
 						<i class="fa fa-angle-right"></i>
-						<a href="#" ui-sref-active="active" ui-sref="system.contentmappinglist">Content Requests</a>
+						<a href="#" ui-sref-active="active" ui-sref="system.contentconnlist">Content Type Mappings</a>
 					</li>
 				</ul>
 		    </nav>

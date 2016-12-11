@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <contentTemplate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="master_enterprise" xsi:noNamespaceSchemaLocation="../xsd/content-template.xsd">
 	<dataDefinition>
-		<container id="product" label="Products">
+		<container id="product" label="Products" businessCategory="BUSINESS_DIMENSION">
 			<contentItem id="name" label="Name" type="text" searchBoost="7"/>
 			<contentItem id="shortName" label="Short Name" type="text" searchBoost="7"/>
-			<container id="dataSheet" label="Data Sheet" single="true">
+			<container id="dataSheet" label="Data Sheet" single="true" businessCategory="BUSINESS_CONTENT">
 				<contentItem id="title" label="Title" type="text"/>			
 				<contentItem id="file" label="File" type="doc"/>
 				<contentItem id="url" label="URL" type="text"/>
 			</container>
-			<container id="prodArchitecture" label="Product Architecture" single="true">
+			<container id="prodArchitecture" label="Product Architecture" single="true" businessCategory="BUSINESS_CONTENT">
 				<contentItem id="file" label="File" type="doc"/>
 				<contentItem id="summary" label="Summary" type="text"/>
 			</container>
-			<container id="productdocs" label="Product Documentation">
+			<container id="productdocs" label="Product Documentation" businessCategory="BUSINESS_CONTENT">
 				<contentItem id="title" label="Title" type="text"/>
 				<contentItem id="release" label="Product Release" type="bounded">
 					<bounded>
@@ -52,7 +52,7 @@
 			<container id="prodArticle" label="News Article" linkContainerQId="article" linkContentItemId="products"/>
 			<container id="prodContent" label="Other Content" linkContainerQId="content" linkContentItemId="products"/>
 		</container>
-		<container id="solution" label="Solutions">
+		<container id="solution" label="Solutions" businessCategory="BUSINESS_DIMENSION">
 			<contentItem id="name" label="Name" type="text" searchBoost="7"/>
 			<contentItem id="shortName" label="Short Name" type="text" searchBoost="7"/>
 			<contentItem id="solArea" label="Solution Area" type="bounded" searchBoost="7">
@@ -105,10 +105,10 @@
 			<container id="solArticle" label="News Article" linkContainerQId="article" linkContentItemId="solutions"/>
 			<container id="solContent" label="Other Content" linkContainerQId="content" linkContentItemId="solutions"/>
 		</container>
-		<container id="competitor" label="Competitors">
+		<container id="competitor" label="Competitors" businessCategory="BUSINESS_DIMENSION">
 			<contentItem id="name" label="Competitor Name" type="text" searchBoost="7"/>
 			<contentItem id="shortName" label="Short Name" type="text" searchBoost="7"/>
-			<container id="compswot" label="SWOT">
+			<container id="compswot" label="SWOT" businessCategory="BUSINESS_CONTENT">
 				<contentItem id="title" label="Title" type="text" searchBoost="7"/>
 				<contentItem id="products" label="Product" type="bounded" searchBoost="5">
 					<bounded>
@@ -187,7 +187,7 @@
 			<container id="compArticle" label="News Article" linkContainerQId="article" linkContentItemId="competitors"/>
 			<container id="compContent" label="Other Content" linkContainerQId="content" linkContentItemId="competitors"/>
 		</container>
-		<container id="customer" label="Customers">
+		<container id="customer" label="Customers" businessCategory="BUSINESS_DIMENSION">
 			<contentItem id="name" label="Account Name" type="text" searchBoost="7"/>
 			<contentItem id="shortName" label="Account Short Name" type="text" searchBoost="7"/>
 			<container id="opportunity" label="Sales Opportunities">
@@ -843,7 +843,7 @@
 			<container id="topicArticle" label="Articles" linkContainerQId="article" linkContentItemId="topics"/>			
 			<container id="topicContent" label="Other Content" linkContainerQId="content" linkContentItemId="topics"/>
 		</container>
-		<container id="battlecard" label="Battle Cards">
+		<container id="battlecard" label="Battle Cards" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="file" label="File" type="doc"/>
 			<contentItem id="summary" label="Summary" type="text"/>
@@ -940,7 +940,7 @@
 				</bounded>
 			</contentItem>
 		</container>
-		<container id="caseStudy" label="Case Studies">
+		<container id="caseStudy" label="Case Studies" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="file" label="File" type="doc"/>
 			<contentItem id="highlights" label="Case Highlights" type="text"/>
@@ -1022,7 +1022,7 @@
 				</bounded>
 			</contentItem>			
 		</container>
-		<container id="discoveryQuestion" label="Discovery Questions">
+		<container id="discoveryQuestion" label="Discovery Questions" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="file" label="File" type="doc"/>
 			<contentItem id="desc" label="Description" type="text"/>			
@@ -1071,7 +1071,7 @@
 				</bounded>
 			</contentItem>
 		</container>		
-		<container id="featureSheet" label="Feature Sheets">
+		<container id="featureSheet" label="Feature Sheets" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="file" label="File" type="doc"/>
 			<contentItem id="products" label="Products" type="bounded">
@@ -1119,7 +1119,7 @@
 				</bounded>
 			</contentItem>
 		</container>
-		<container id="winloss" label="Win Loss Analysis">
+		<container id="winloss" label="Win Loss Analysis" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="winorloss" label="Result" type="bounded">
 				<bounded>
@@ -1187,7 +1187,7 @@
 				</bounded>
 			</contentItem>
 		</container>
-		<container id="blog" label="Blogs">
+		<container id="blog" label="Blogs" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="url" label="URL" type="text"/>
 			<contentItem id="blogSource" label="Source" type="bounded">
@@ -1276,7 +1276,7 @@
 				</bounded>
 			</contentItem>
 		</container>
-		<container id="bom" label="Bill of Materials">
+		<container id="bom" label="Bill of Materials" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="file" label="File" type="doc"/>			
 			<contentItem id="opportunities" label="Sales Opportunity" type="bounded">
@@ -1291,7 +1291,7 @@
 				</bounded>
 			</contentItem>					
 		</container>		
-		<container id="whitepaper" label="White Papers">
+		<container id="whitepaper" label="White Papers" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="file" label="File" type="doc"/>
 			<contentItem id="url" label="URL" type="text"/>
@@ -1382,7 +1382,7 @@
 				</bounded>
 			</contentItem>
 		</container>
-		<container id="multimedia" label="Multimedia">
+		<container id="multimedia" label="Multimedia" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="url" label="URL" type="text"/>
 			<contentItem id="file" label="File" type="doc"/>
@@ -1487,7 +1487,7 @@
 				</bounded>
 			</contentItem>
 		</container>
-		<container id="salesDeck" label="Sales Decks">
+		<container id="salesDeck" label="Sales Decks" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="file" label="File" type="doc"/>
 			<contentItem id="summary" label="Summary" type="text"/>
@@ -1778,7 +1778,7 @@
 				</bounded>
 			</contentItem>
 		</container>
-		<container id="proposal" label="Proposals">
+		<container id="proposal" label="Proposals" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="file" label="File" type="doc"/>
 			<contentItem id="significance" label="Significance" type="text"/>
@@ -1872,7 +1872,7 @@
 			</contentItem>
 			<container id="propExecSummary" label="Executive Summary" linkContainerQId="execSummary" linkContentItemId="proposals"/>			
 		</container>
-		<container id="article" label="News Article">
+		<container id="article" label="News Article" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="url" label="URL" type="text"/>
 			<contentItem id="file" label="File" type="doc"/>
@@ -1955,7 +1955,7 @@
 				</bounded>
 			</contentItem>
 		</container>
-		<container id="importantslide" label="Important Slides">
+		<container id="importantslide" label="Important Slides" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="file" label="File" type="doc"/>
 			<contentItem id="summary" label="Summary" type="text"/>
@@ -2026,7 +2026,7 @@
 				</bounded>
 			</contentItem>			
 		</container>
-		<container id="execSummary" label="Executive Summary">
+		<container id="execSummary" label="Executive Summary" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="file" label="File" type="doc"/>
 			<contentItem id="solutions" label="Solutions" type="bounded">
@@ -2052,37 +2052,37 @@
 				</bounded>
 			</contentItem>					
 		</container>			
-		<container id="template" label="Templates">
+		<container id="template" label="Templates" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="file" label="File" type="doc"/>
 			<contentItem id="summary" label="Summary" type="text"/>
 		</container>
-		<container id="sow" label="Statement of Work">
+		<container id="sow" label="Statement of Work" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="summary" label="Summary" type="text"/>
 			<contentItem id="file" label="File" type="doc"/>
 		</container>		
-		<container id="nda" label="Non Disclosure Agreement (NDA)">
+		<container id="nda" label="Non Disclosure Agreement (NDA)" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="summary" label="Summary" type="text"/>
 			<contentItem id="file" label="File" type="doc"/>
 		</container>
-		<container id="partneragreement" label="Partnership Agreement">
+		<container id="partneragreement" label="Partnership Agreement" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="summary" label="Summary" type="text"/>
 			<contentItem id="file" label="File" type="doc"/>
 		</container>
-		<container id="mla" label="Master License Agreement">
+		<container id="mla" label="Master License Agreement" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="summary" label="Summary" type="text"/>
 			<contentItem id="file" label="File" type="doc"/>
 		</container>
-		<container id="msa" label="Master Services Agreement">
+		<container id="msa" label="Master Services Agreement" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="summary" label="Summary" type="text"/>
 			<contentItem id="file" label="File" type="doc"/>
 		</container>
-		<container id="supportpolicy" label="Support Policy">
+		<container id="supportpolicy" label="Support Policy" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="summary" label="Summary" type="text"/>
 			<contentItem id="file" label="File" type="doc"/>
@@ -2092,23 +2092,23 @@
 			<contentItem id="summary" label="Summary" type="text"/>
 			<contentItem id="file" label="File" type="doc"/>
 		</container>
-		<container id="ppttemplate" label="Corporate PPT Template">
+		<container id="ppttemplate" label="Corporate PPT Template" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="summary" label="Summary" type="text"/>
 			<contentItem id="file" label="File" type="doc"/>
 		</container>
-		<container id="pricingtemplate" label="Corporate Pricing Template">
+		<container id="pricingtemplate" label="Corporate Pricing Template" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="summary" label="Summary" type="text"/>
 			<contentItem id="file" label="File" type="doc"/>
 		</container>
-		<container id="corporatecontent" label="Corporate Content">
+		<container id="corporatecontent" label="Corporate Content" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="summary" label="Summary" type="text"/>
 			<contentItem id="url" label="URL" type="text"/>
 			<contentItem id="file" label="File" type="doc"/>
 		</container>
-		<container id="content" label="Other Content">
+		<container id="content" label="Other Content" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="Document Type" label="Document Type" type="text"/>
 			<contentItem id="file" label="File" type="doc"/>
@@ -2317,11 +2317,8 @@
 			</contentItem>						
 		</container>
 		<userProfileRef>
-			
 			<containerQId>user</containerQId>
-			
 			<emailAttributeId>email</emailAttributeId>
-		
 		</userProfileRef>
 	</dataDefinition>
 	<uiDefinition>
@@ -3037,4 +3034,10 @@
 			</enclosures>
 		</topNavigation>
 	</portalUIDefinition>
+	<contentTypeMappingConfig>
+		<contextConfig>
+			<containerDataContext qualifiedId="regions"/>
+			<containerDataContext qualifiedId="marketTier"/>
+		</contextConfig>
+	</contentTypeMappingConfig>
 </contentTemplate>

@@ -1,7 +1,7 @@
 var enablix = enablix || {};
 enablix.studioApp = angular.module("studio", ['ui.router', 'angularTreeview', 'listGroupTreeview', 
            'angularFileUpload', 'ui.bootstrap', 'isteven-multi-select', 'ui-notification', 'enablixFilters',
-           'ngSanitize', 'ui.select', 'ngMessages', 'pascalprecht.translate', 'noCAPTCHA', 'PubSub']);
+           'ngSanitize', 'ui.select', 'ngMessages', 'pascalprecht.translate', 'noCAPTCHA', 'PubSub', 'ngMaterial']);
 
 //enablix.templateId = "entSoftwareTemplate"; //"amlSalesTemplate";
 enablix.dateFormat = 'MM/dd/yyyy';
@@ -355,6 +355,14 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvi
 				setupData: appSetup 
 			}
 		})
+		.state('system.audit', {
+			url: '/audit',
+			templateUrl: 'views/system/audit/auditList.html',
+			controller: 'AuditController',
+			resolve: {
+				setupData: appSetup 
+			}
+		})
 		.state('system.docstore', {
 			url: '/docstore',
 			templateUrl: 'views/system/docstore/doc-store-config.html',
@@ -452,6 +460,34 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvi
 				checkPageAccess: ['setupData', 'AuthorizationService', function(setupData, AuthorizationService) {
 					return AuthorizationService.userHasPageAccess('MANAGE_CONTENT_REQUEST')
 				}]
+			}
+		}).state('system.contentconnlist', {
+			url: '/contentconn/list/',
+			templateUrl: 'views/system/contentconn/content-conn-list.html',
+			controller: 'ContentConnListController',
+			resolve: {
+				setupData: appSetup
+			}
+		}).state('system.contentconndetail', {
+			url: '/contentconn/detail/{connectionIdentity}/',
+			templateUrl: 'views/system/contentconn/content-conn-add-edit.html',
+			controller: 'ContentConnAddEditController',
+			resolve: {
+				setupData: appSetup
+			}
+		}).state('system.contentconnadd', {
+			url: '/contentconn/add/',
+			templateUrl: 'views/system/contentconn/content-conn-add-edit.html',
+			controller: 'ContentConnAddEditController',
+			resolve: {
+				setupData: appSetup
+			}
+		}).state('system.contentconnedit', {
+			url: '/contentconn/edit/{connectionIdentity}/',
+			templateUrl: 'views/system/contentconn/content-conn-add-edit.html',
+			controller: 'ContentConnAddEditController',
+			resolve: {
+				setupData: appSetup
 			}
 		}).state('myaccount', {
 			url: '/account',

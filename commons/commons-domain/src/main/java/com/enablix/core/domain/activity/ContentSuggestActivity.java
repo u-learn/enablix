@@ -6,6 +6,11 @@ public class ContentSuggestActivity extends ContentActivity {
 	
 	private String contentDetailIdentity;
 	
+	@SuppressWarnings("unused")
+	private ContentSuggestActivity() {
+		// for ORM
+	}
+	
 	public ContentSuggestActivity(String itemIdentity, String containerQId, 
 			ContainerType containerType, String itemTitle, ContentActivityType actType,
 			String contentApprovalIdentity, String contentDetailIdentity) {

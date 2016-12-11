@@ -11,4 +11,7 @@ public final class Events {
 	public static final String NOTIFY_CONTENT_REQUEST_APPROVED = "NOTIFY_CONTENT_REQUEST_APPROVED";
 	public static final String NOTIFY_CONTENT_REQUEST_REJECTED = "NOTIFY_CONTENT_REQUEST_REJECTED";
 	
+	// Content template events
+	public static final String CONTENT_TEMPLATE_UPDATED = "CONTENT_TEMPLATE_UPDATED";
+	
 }

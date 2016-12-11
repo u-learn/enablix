@@ -20,7 +20,7 @@
 		</tr>
 		<tr ng-repeat="tableRecord in tableData | filter:searchText">
 			<td ng-repeat="action in rowActions" class="action-cell" ng-class="action.tableCellClass">
-				<a ng-if="action.checkApplicable(action, tableRecord)" ng-class="action.iconClass" 
+				<a ng-if="!action.checkApplicable || action.checkApplicable(action, tableRecord)" ng-class="action.iconClass" 
 					ng-click="callRowAction(action, tableRecord)" tooltip="{{action.tooltip}}"></a>
 			</td>
 			<td ng-repeat="col in tableHeaders">

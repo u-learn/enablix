@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import com.enablix.analytics.correlation.CorrelationConstants;
 import com.enablix.analytics.correlation.ItemUserCorrelator;
+import com.enablix.analytics.correlation.context.CorrelationContext;
 import com.enablix.app.content.ContentDataManager;
 import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.commons.util.collection.CollectionUtil;
@@ -33,7 +34,9 @@ public class ContentCreatorCorrelator implements ItemUserCorrelator {
 	private ItemUserCorrelationRecorder userCorrRecorder;
 	
 	@Override
-	public void correlateUsers(ContentDataRef item, ContentTemplate template) {
+	public void correlateUsers(ContentDataRef item, CorrelationContext context) {
+		
+		ContentTemplate template = context.getTemplate();
 		
 		Map<String, Object> contentRecord = contentDataMgr.getContentRecord(item, template);
 		String creatorEmail = (String) contentRecord.get(ContentDataConstants.CREATED_BY_KEY);

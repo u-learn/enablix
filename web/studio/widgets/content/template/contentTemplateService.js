@@ -1,6 +1,9 @@
 enablix.studioApp.factory('ContentTemplateService', 
-	[	'RESTService', 'Notification', 'AuthorizationService',
-	 	function(RESTService, Notification, AuthorizationService) {
+	[			'RESTService', 'Notification', 'AuthorizationService', 'CacheService',
+	 	function(RESTService,   Notification,   AuthorizationService,   CacheService) {
+		
+			var CACHE_KEY_REF_DATA_CONTAINERS = "content.template.refdata.containers";
+			var CACHE_KEY_BUS_CAT_CONTAINERS_PREFIX = "content.template.business.category.";
 		
 			var loadTemplate = function() {
 				
@@ -100,11 +103,10 @@ enablix.studioApp.factory('ContentTemplateService',
 			
 			var getConcreteContainerDefinition = function(_template, _containerQId) {
 				
-				var containerDef = ContentTemplateService.getContainerDefinition(enablix.template, containerQId);
+				var containerDef = getContainerDefinition(enablix.template, _containerQId);
 				
 				if (!isNullOrUndefined(containerDef.linkContainerQId)) {
-					containerDef = ContentTemplateService.getContainerDefinition(
-							enablix.template, $scope.containerDef.linkContainerQId);
+					containerDef = getContainerDefinition(enablix.template, $scope.containerDef.linkContainerQId);
 				}
 				
 				return containerDef;
@@ -352,6 +354,61 @@ enablix.studioApp.factory('ContentTemplateService',
 				return angular.equals(_item1.bounded.refList.datastore, _item2.bounded.refList.datastore);
 			}
 			
+			var getRefDataContainers = function() {
+				
+				var refDataContainers = CacheService.get(CACHE_KEY_REF_DATA_CONTAINERS);
+				
+				if (!isNullOrUndefined(refDataContainers)) {
+					return refDataContainers;
+				}
+				
+				refDataContainers = [];
+				
+				var containerList = enablix.template.dataDefinition.container;
+				angular.forEach(containerList, function(containerDef) {
+					if (containerDef.refData) {
+						refDataContainers.push(containerDef);
+					}
+				});
+				
+				CacheService.put(CACHE_KEY_REF_DATA_CONTAINERS, refDataContainers);
+				
+				return refDataContainers;
+			};
+			
+			var getContainersByBusinessCategory = function(_businessCategory) {
+				
+				var cacheKey = CACHE_KEY_BUS_CAT_CONTAINERS_PREFIX + _businessCategory;
+				var businessCategoryContainers = CacheService.get(cacheKey);
+				
+				if (!isNullOrUndefined(businessCategoryContainers)) {
+					return businessCategoryContainers;
+				}
+				
+				businessCategoryContainers = [];
+				
+				findContainersByBusinessCategory(enablix.template.dataDefinition.container, 
+						_businessCategory, businessCategoryContainers);
+				
+				CacheService.put(cacheKey, businessCategoryContainers);
+				
+				return businessCategoryContainers;
+			};
+			
+			function findContainersByBusinessCategory(_containerList, _businessCategory, _containerHolderArr) {
+				angular.forEach(_containerList, function(containerDef) {
+					if (containerDef.businessCategory && !isLinkedContainer(containerDef)
+							&& containerDef.businessCategory == _businessCategory) {
+						_containerHolderArr.push(containerDef);
+					}
+					findContainersByBusinessCategory(containerDef.container, _businessCategory, _containerHolderArr);
+				});
+			}
+			
+			var isLinkedContainer = function(_containerDef) {
+				return !isNullOrUndefined(_containerDef.linkContainerQId);
+			};
+			
 			return {
 				getTemplate : getTemplate,
 				getDefaultTemplate : getDefaultTemplate,
@@ -373,7 +430,9 @@ enablix.studioApp.factory('ContentTemplateService',
 				getPortalEnclosureDefinition: getPortalEnclosureDefinition,
 				getParentEnclosureDefinition: getParentEnclosureDefinition,
 				getRootContainerIdForContainer: getRootContainerIdForContainer,
-				getInheritableItems: getInheritableItems
+				getInheritableItems: getInheritableItems,
+				getRefDataContainers: getRefDataContainers,
+				getContainersByBusinessCategory: getContainersByBusinessCategory
 			};
 		
 		}

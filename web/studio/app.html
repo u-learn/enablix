@@ -8,7 +8,6 @@
     <link rel="icon" type="image/png" href="/favicon.png">
 	
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-	<script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
 	<!-- <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css"> -->
 	<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"> -->
 	<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
@@ -22,12 +21,15 @@
 	<link rel="stylesheet" type="text/css" href="css/angular-ui-notification.min.css">
 	<link rel="stylesheet" type="text/css" href="css/select.css">
 	<link rel="stylesheet" type="text/css" href="css/main.css">
+	<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
 	
 	<script type="text/javascript" src="js/vendor/jquery/jquery-1.11.2.min.js"></script>
 	<script type="text/javascript" src="js/vendor/bootstrap/bootstrap.min.js"></script>
 	
 	<!-- angular scripts -->
-	<script type="text/javascript" src="js/vendor/angular/angular.js"></script>
+	<script type="text/javascript" src="js/vendor/angular/angular.min.js"></script>
+	<script type="text/javascript" src="js/vendor/angular/angular-animate.min.js"></script>
+	<script type="text/javascript" src="js/vendor/angular/angular-aria.min.js"></script>
 	<script type="text/javascript" src="js/vendor/angular/angular-resource.min.js"></script>
 	<script type="text/javascript" src="js/vendor/angular/angular-ui-router.js"></script>
 	<script type="text/javascript" src="js/vendor/angular/angular-sanitize.js"></script>
@@ -44,7 +46,7 @@
 	<script type="text/javascript" src="js/vendor/angular/angular-translate-loader-static-files.js"></script>
 	<script type="text/javascript" src="js/vendor/angular/angular-no-captcha.js"></script>
 	<script type="text/javascript" src="js/vendor/angular/angular-pubsub.min.js"></script>
-	<script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
+	<script type="text/javascript" src="js/vendor/angular/angular-material.min.js"></script>
 	
 	<!-- application scripts -->
 	<script type="text/javascript" src="js/common/utility.js"></script>
@@ -64,6 +66,7 @@
 	<script type="text/javascript" src="widgets/modal/confirmationModal.js"></script>
 	<script type="text/javascript" src="widgets/modal/infoModal.js"></script>
 	<script type="text/javascript" src="widgets/modal/infoModalController.js"></script>
+	<script type="text/javascript" src="widgets/cache/cacheService.js"></script>
 
 	<script type="text/javascript" src="widgets/directive/focus/focusDirective.js"></script>
 	<script type="text/javascript" src="widgets/directive/back/backButtonDirective.js"></script>
@@ -127,6 +130,8 @@
 	<script type="text/javascript" src="widgets/auth/authorizationService.js"></script>
 	<script type="text/javascript" src="widgets/auth/requiresPermDirective.js"></script>
 	<script type="text/javascript" src="widgets/system/systemAdminController.js"></script>
+	<script type="text/javascript" src="widgets/system/audit/auditConfigController.js"></script>
+	<script type="text/javascript" src="widgets/system/audit/auditConfigService.js"></script>
 	<script type="text/javascript" src="widgets/system/docstore/docstoreConfigController.js"></script>
 	<script type="text/javascript" src="widgets/system/quicklinks/quickLinksService.js"></script>
 	<script type="text/javascript" src="widgets/system/quicklinks/quickLinksConfigController.js"></script>
@@ -145,6 +150,10 @@
 	<script type="text/javascript" src="widgets/system/docstore/docstoreConfigMetadata.js"></script>
 	<script type="text/javascript" src="widgets/content/refdata/saveUserController.js"></script>
 	<script type="text/javascript" src="widgets/content/refdata/emailConfController.js"></script>
+	<script type="text/javascript" src="widgets/system/contentconn/contentConnectionService.js"></script>
+	<script type="text/javascript" src="widgets/system/contentconn/contentConnListController.js"></script>
+	<script type="text/javascript" src="widgets/system/contentconn/contentConnDetailController.js"></script>
+	<script type="text/javascript" src="widgets/system/contentconn/contentConnAddEditController.js"></script>
 	
 	<script type="text/javascript" src="js/mainController.js"></script>
 	<script type="text/javascript" src="widgets/content/index/contentIndexController.js"></script>
@@ -191,7 +200,7 @@
 			<div class="col-sm-8" ng-if="authenticated">
 				<!-- main nav -->
 				<nav class="main-nav container-fluid">
-					<a href="#" ui-sref-active="active" ui-sref="portal">Portal</a>
+					<a href="#" ng-class="{active:$state.includes('portal')}" ui-sref="portal.home">Portal</a>
 					<a href="#" ui-sref-active="active" ui-sref="studio" requires-permission="VIEW_STUDIO">Studio</a>
 					<!-- <a href="#" ui-sref-active="active" ui-sref="refdata">Setup</a> -->
 					<li requires-permission="VIEW_STUDIO">

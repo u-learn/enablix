@@ -41,7 +41,10 @@ public class SearchServiceImpl implements SearchService {
 		
 		if (searchResult != null) {
 			for (ContentDataRef dataRef : searchResult.getContent()) {
-				content.add(navContentBuilder.build(dataRef, labelResolver));
+				NavigableContent resultItem = navContentBuilder.build(dataRef, labelResolver);
+				if (resultItem != null) {
+					content.add(resultItem);
+				}
 			}
 		}
 		

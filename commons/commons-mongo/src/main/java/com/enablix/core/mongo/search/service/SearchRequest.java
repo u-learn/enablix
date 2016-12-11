@@ -1,18 +1,27 @@
 package com.enablix.core.mongo.search.service;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 
 import com.enablix.core.mongo.search.ConditionOperator;
+import com.enablix.core.mongo.search.DateFilter;
 import com.enablix.core.mongo.search.SearchFilter;
 import com.enablix.core.mongo.search.StringFilter;
 
 public class SearchRequest {
+	
+	private static final Logger LOGGER = LoggerFactory.getLogger(SearchRequest.class);
 	
 	private Map<String, Object> filters = new HashMap<>();
 	private Map<String, FilterMetadata> filterMetadata = new HashMap<>();
@@ -81,7 +90,17 @@ public class SearchRequest {
 			SearchFilter filter = null;
 			
 			switch (dataType) {
-			
+				
+				case DATE:
+					DateFormat formatter = new SimpleDateFormat("dd-MMM-yy");
+					try {
+						Date date = formatter.parse(String.valueOf(filterValue));
+						filter = new DateFilter(field, date, operator);
+					} catch (ParseException e) {
+						LOGGER.error("Error parsing date [" + String.valueOf(filterValue) +"]", e);
+					}
+					break;
+					
 				case STRING:
 				default:
 					filter = new StringFilter(field, String.valueOf(filterValue), operator);

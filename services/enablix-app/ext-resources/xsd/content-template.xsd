@@ -8,6 +8,7 @@
 				<xs:element name="dataDefinition" type="dataDefinitionType"/>
 				<xs:element name="uiDefinition" type="uiDefinitionType"/>
 				<xs:element name="portalUIDefinition" type="portalUIDefType" minOccurs="0"/>
+				<xs:element name="contentTypeMappingConfig" type="contentTypeMappingConfigType" minOccurs="0"/>
 			</xs:sequence>
 			<xs:attribute name="id" type="xs:string" use="required"/>
 		</xs:complexType>
@@ -25,6 +26,22 @@
 			<xs:element name="containerQId" type="xs:string"/>
 			<xs:element name="emailAttributeId" type="xs:string"/> 
 		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="contentTypeMappingConfigType">
+		<xs:sequence>
+			<xs:element name="contextConfig" type="contentTypeMappingContextType"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="contentTypeMappingContextType">
+		<xs:sequence>
+			<xs:element name="containerDataContext" type="containerDataContextType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="containerDataContextType">
+		<xs:attribute name="qualifiedId" type="xs:string" use="required"/>
 	</xs:complexType>
 	
 	<xs:complexType name="baseContentType">
@@ -45,9 +62,17 @@
 				<xs:attribute name="single" type="xs:boolean" default="false"/>
 				<xs:attribute name="linkContainerQId" type="xs:string"/>
 				<xs:attribute name="linkContentItemId" type="xs:string"/>
+				<xs:attribute name="businessCategory" type="containerBusinessCategoryType"/>
 			</xs:extension>
 		</xs:complexContent>
 	</xs:complexType>
+	
+	<xs:simpleType name="containerBusinessCategoryType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="BUSINESS_CONTENT" />
+			<xs:enumeration value="BUSINESS_DIMENSION" />
+		</xs:restriction>
+	</xs:simpleType>
 	
 	<xs:complexType name="contentItemType">
 		<xs:complexContent>

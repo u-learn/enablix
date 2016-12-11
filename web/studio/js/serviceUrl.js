@@ -39,6 +39,8 @@ enablix.serviceURL = {
 	"getemailconfiguration" : enablix.domainName + "/getemailconfiguration",
 	"addemailconfiguration" : enablix.domainName + "/addemailconfiguration",
 	"deleteemailconfiguration" : enablix.domainName + "/deleteemailconfiguration",
+	"getAuditConfiguration" : enablix.domainName + "/data/search/c/ebx_activity_audit/t/com.enablix.core.domain.activity.ActivityAudit/",
+	"getAuditActivityTypes" : enablix.domainName + "/getAuditConfiguration/getAuditActivityTypes",
 	"getsmtpconfig" : enablix.domainName + "/getsmtpconfig/:domainName",
 	"checkusername" : enablix.domainName + "/checkusername",
 	"fetchAllRoles" : enablix.domainName + "/roles",
@@ -62,4 +64,6 @@ enablix.serviceURL = {
 	"getContentSuggestion": enablix.domainName + "/contentwf/r/:refObjectIdentity/",
 	"getContentWFStateActionMap": enablix.domainName + "/contentwf/actionmap/",
 	"dataSearchRequest": enablix.domainName + "/data/search/t/:domainType/",
+	"saveContentConnection": enablix.domainName + "/contentconn/save",
+	"getContentConnection": enablix.domainName + "/contentconn/r/:connIdentity/"
 };

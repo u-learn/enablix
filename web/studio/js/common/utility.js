@@ -24,3 +24,22 @@ function linkify(text) {
 function getUrlParameters($location) {
 	return $location.search();
 }
+
+
+function chunkArray(arr, size) {
+	
+	size = arr.length < size ? arr.length : size;
+	
+	var newArr = [];
+	for (var n = 0; n < size; n++) {
+		newArr.push([]);
+	}
+	
+	for (var i = 0; i < arr.length; i+=size) {
+		for (var k = 0; k < size && (i+k) < arr.length; k++) {
+			newArr[k].push(arr[i+k]);
+		}
+	}
+	
+	return newArr;
+}

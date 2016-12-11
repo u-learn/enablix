@@ -1,0 +1,48 @@
+<div class="block" ng-form="contentMappingForm">
+	<div class="head">
+		<h2>{{pageHeading}} <span ng-if="contentConnection.connectionName"> - {{contentConnection.connectionName}}</span></h2>
+	</div>
+	<div layout="row">
+		<div class="cont" flex="50%">
+			<div>
+				<label class="form-label">Name<span ng-if="readOnly">: {{contentConnection.connectionName}}</span></label>
+				<input ng-if="!readOnly" name="name" placeholder="Enter Name" 
+					class="form-control" type="text" ng-model="contentConnection.connectionName" required>
+			</div>
+			<div ng-messages="contentMappingForm.name.$error" ng-if='contentMappingForm.name.$touched' role="alert">
+		    	<div ng-message="required" class="error">Please enter name</div>    
+		  	</div>
+		</div>
+		<div class="cont" flex="50%">
+			<div>
+				<label class="form-label">Content Type<span ng-if="readOnly">: {{contentConnectionContainerName}}</span></label>
+				<select ng-if="!readOnly" class="form-control" ng-change="onContentTypeSelected()"
+					ng-options="cntnr.qualifiedId as cntnr.label for cntnr in refDataContainers" 
+					ng-model="contentConnection.contentQId"></select>
+			</div>
+		</div>
+	</div>
+	<div class="cont" ng-show="contentConnection.connections.length > 0">
+		<h2>Select Mapping</h2>
+		<md-tabs md-dynamic-height md-border-bottom>
+			<md-tab ng-repeat="connection in contentConnection.connections" label="{{contentItemIdentityMap[connection.contentValue].title}}">
+				<div class="cont" layout="row">
+					<div ng-repeat="cntnrChunk in chunkedConnectContainers" layout="column" flex>
+						<span ng-repeat="connectCntnr in cntnrChunk" class="chckBox" layout="row">
+							<input type="checkbox" name="selectedContainers[]" value="connectCntnr.qualifiedId" 
+								ng-checked="connection.connectedContainers.indexOf(connectCntnr.qualifiedId) > -1"
+								ng-click="toggleSelection(connection, connectCntnr.qualifiedId)"
+								ng-disabled="readOnly">
+							<label>{{connectCntnr.label}}</label>
+						</span>
+					</div>
+				</div>
+			</md-tab>
+		</md-tabs>
+	</div>
+	<div class="foot clearfix">
+		<button ng-if="readOnly" ng-click="editContentConnection()" class="button button-add">Edit</button>
+		<button ng-if="!readOnly" ng-click="saveContentConnection()" class="button button-add">Save</button>
+		<a ng-if="!readOnly" ng-click="cancelOperation()" class="button button-delete">Cancel</a>
+	</div>	
+</div>

@@ -7,9 +7,24 @@ public class ContentActivity extends Activity {
 	}
 	
 	public enum ContentActivityType {
-		CONTENT_ADD, CONTENT_UPDATE, CONTENT_DELETE, CONTENT_SHARE, CONTENT_ACCESS, DOC_DOWNLOAD, DOC_UPLOAD, DOC_PREVIEW,
-		CONTENT_ADD_SUGGEST, CONTENT_UPDATE_SUGGEST, CONTENT_SUGGEST_APPROVED, CONTENT_SUGGEST_REJECT, CONTENT_SUGGEST_WITHDRAW, CONTENT_SUGGEST_EDIT,
-		CONTENT_SUGGEST_VIEW
+		
+		CONTENT_ADD("Added"), CONTENT_UPDATE("Updated"), CONTENT_DELETE("Deleted"), 
+		CONTENT_SHARE("Shared"), CONTENT_ACCESS("Accessed"), DOC_DOWNLOAD("Downloaded"), 
+		DOC_UPLOAD("Uploaded"), DOC_PREVIEW("Previewed"), CONTENT_ADD_SUGGEST("Content Request Added"), 
+		CONTENT_UPDATE_SUGGEST("Content Request Updated"), CONTENT_SUGGEST_APPROVED("Content Request Approved"), 
+		CONTENT_SUGGEST_REJECT("Content Request Rejected"), CONTENT_SUGGEST_WITHDRAW("Content Request Withdrawn"), 
+		CONTENT_SUGGEST_EDIT("Content Request Edited"), CONTENT_SUGGEST_VIEW("Content Request Viewed");
+		
+		private String value;
+
+		private ContentActivityType(String value) {
+			this.value = value;
+		}
+
+		public String getValue() {
+			return value;
+		}
+		
 	}
 	
 	private String itemIdentity;

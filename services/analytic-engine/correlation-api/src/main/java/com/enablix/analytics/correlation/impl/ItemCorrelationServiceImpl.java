@@ -11,9 +11,9 @@ import org.springframework.stereotype.Component;
 import com.enablix.analytics.correlation.ItemCorrelationService;
 import com.enablix.analytics.correlation.ItemItemCorrelator;
 import com.enablix.analytics.correlation.ItemItemCorrelatorRegistry;
+import com.enablix.analytics.correlation.context.CorrelationContext;
 import com.enablix.analytics.correlation.data.dao.ItemItemCorrelationDao;
 import com.enablix.app.content.ContentDataManager;
-import com.enablix.app.template.service.TemplateManager;
 import com.enablix.core.api.ContentDataRecord;
 import com.enablix.core.api.ContentDataRef;
 import com.enablix.core.commons.xsdtopojo.ContentTemplate;
@@ -26,19 +26,15 @@ public class ItemCorrelationServiceImpl implements ItemCorrelationService {
 	private ItemItemCorrelatorRegistry itemCorrelatorRegistry;
 	
 	@Autowired
-	private TemplateManager templateManager;
-	
-	@Autowired
 	private ContentDataManager contentDataMgr;
 	
 	@Autowired
 	private ItemItemCorrelationDao dao;
 	
 	@Override
-	public void correlateItems(ContentDataRef item) {
-		ContentTemplate template = templateManager.getTemplate(item.getTemplateId());
+	public void correlateItems(ContentDataRef item, CorrelationContext context) {
 		for (ItemItemCorrelator correlator : itemCorrelatorRegistry.getCorrelators()) {
-			correlator.correlateItem(template, item);
+			correlator.correlateItem(item, context);
 		}
 	}
 

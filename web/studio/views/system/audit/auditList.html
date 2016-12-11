@@ -1,0 +1,87 @@
+<div class="block">
+	
+	<div class="head">
+		<h2 class="ng-binding">Audit Summary</h2>
+	</div>
+	
+ <div class="container-fluid">
+        <div class="row">
+            <div>
+               <!--panel-->
+               <div class="panel panel-default">
+                <div class="panel-heading" data-toggle="collapse" data-target="#collapse1">
+                  <h5 class="panel-title">
+                   Search
+                  </h5>
+                </div>
+                <div id="collapse1" class="collapse out">
+                  <div class="panel-body">
+                    	<div class="cont">
+								<div>
+									<label class="form-label">User</label>
+									<select class="form-control" ng-change=""
+										ng-options="item.id as item.label for item in userLst" 
+										ng-model="searchCriteria.user"></select>
+								</div>
+							</div>	
+							<div class="cont">
+								<div>
+									<label class="form-label">Activity Type</label>
+									<select class="form-control" ng-change=""
+										ng-options="item.id as item.label for item in activityTypeLst" 
+										ng-model="searchCriteria.activity"></select>
+								</div>
+							</div>
+							<div class="cont">
+								<div>
+									<label class="form-label">Event Occurence</label>
+									<select class="form-control" ng-change=""
+										ng-options="item.id as item.label for item in eventOccurenceLst" 
+										ng-model="searchCriteria.eventOccurence"></select>
+								</div>
+								<div class="foot clearfix">
+								<button ng-click="searchAudit()" class="button button-add">Search</button>
+								<a href="#" ng-click="resetAudit()" class="button button-delete">Reset</a>
+							</div>
+							</div>
+                    	
+                  </div>
+                </div>
+              </div><!--/panel-->
+              <!--notify widget-->
+            </div><!--/col-->            
+        </div><!--/row-->
+    </div><!--/container-->
+
+<table class="datatable">
+	<thead>
+		<tr>
+			
+			<th><a><span>Name</span></a></th>
+			<th><span>Activity Type</span></th>
+			<th><span>Date</span></th>	
+			<th><span>User</span></th>
+		</tr>
+	</thead>	
+	
+	
+	<tbody>
+		<tr ng-repeat="auditRow in filteredAudits">
+			<td><a class="five" ng-click="navToContent(auditRow)" ng-bind="auditRow.activity.itemTitle"></a></td>
+			<td><span ng-bind="auditRow.activity.activityTypeDesc"></span></td>
+			<td><span ng-bind="auditRow.activityTime"></span></td>
+			<td><span ng-bind="auditRow.actor.name"></span></td>			
+		</tr>
+	</tbody>	
+</table>
+
+<div align="right"> 
+<hr>
+<pagination boundary-links="true" 
+    max-size="5" 
+    items-per-page="itemsPerPage"
+    total-items="auditData.content.length" 
+    ng-model="currentPage" 
+    ng-change="pageChanged()"></pagination>&nbsp
+    </div>
+</div>

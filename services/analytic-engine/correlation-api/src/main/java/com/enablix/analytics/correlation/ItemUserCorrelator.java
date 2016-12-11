@@ -1,11 +1,11 @@
 package com.enablix.analytics.correlation;
 
+import com.enablix.analytics.correlation.context.CorrelationContext;
 import com.enablix.core.api.ContentDataRef;
-import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 
 public interface ItemUserCorrelator {
 
-	void correlateUsers(ContentDataRef item, ContentTemplate template);
+	void correlateUsers(ContentDataRef item, CorrelationContext context);
 	
 	void deleteCorrelationForItem(ContentDataRef item);
 	
