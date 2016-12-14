@@ -51,8 +51,13 @@ public class ContentActivity extends Activity {
 		this.containerType = containerType;
 		this.activityType = activityType;
 		this.itemTitle = itemTitle;
+		this.activityTypeDesc=this.activityType.getValue();
 	}
+	private String activityTypeDesc;
 
+	public String getActivityTypeDesc() {
+		return activityTypeDesc;
+	}
 	public String getItemIdentity() {
 		return itemIdentity;
 	}
