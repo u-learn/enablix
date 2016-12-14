@@ -52,36 +52,7 @@
             </div><!--/col-->            
         </div><!--/row-->
     </div><!--/container-->
-
-<table class="datatable">
-	<thead>
-		<tr>
-			
-			<th><a><span>Name</span></a></th>
-			<th><span>Activity Type</span></th>
-			<th><span>Date</span></th>	
-			<th><span>User</span></th>
-		</tr>
-	</thead>	
+	<ebx-generic-table table-headers="tableHeaders" table-data="dataList" row-actions="tableRecordActions" 
+						page-data="pageData" set-page-fn="setPage"></ebx-generic-table>
 	
-	
-	<tbody>
-		<tr ng-repeat="auditRow in filteredAudits">
-			<td><a class="five" ng-click="navToContent(auditRow)" ng-bind="auditRow.activity.itemTitle"></a></td>
-			<td><span ng-bind="auditRow.activity.activityTypeDesc"></span></td>
-			<td><span ng-bind="auditRow.activityTime"></span></td>
-			<td><span ng-bind="auditRow.actor.name"></span></td>			
-		</tr>
-	</tbody>	
-</table>
-
-<div align="right"> 
-<hr>
-<pagination boundary-links="true" 
-    max-size="5" 
-    items-per-page="itemsPerPage"
-    total-items="auditData.content.length" 
-    ng-model="currentPage" 
-    ng-change="pageChanged()"></pagination>&nbsp
-    </div>
 </div>
