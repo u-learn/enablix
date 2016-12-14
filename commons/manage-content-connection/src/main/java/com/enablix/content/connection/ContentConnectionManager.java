@@ -9,8 +9,6 @@ public interface ContentConnectionManager {
 	
 	ContentTypeConnection getContentConnection(String connectionIdentity);
 
-	void refreshHoldingContainers(ContentTypeConnection contentConnection);
-
 	void refreshHoldingContainersForAllConnections();
 	
 }

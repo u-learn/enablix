@@ -1,6 +1,8 @@
 <ul class="pagination">
+	<li><a ng-click="setPage(0)">❮❮</a></li>
 	<li><a ng-click="setPage(currentPage-1)">❮</a></li>
-	<li ng-class="{active: currentPage == n}" ng-repeat="n in getPageNumbers(totalPages)">
+	<li ng-class="{active: currentPage == n}" ng-repeat="n in getPageNumbers(totalPages, currentPage)">
 		<a ng-click="setPage(n)" ng-bind="n+1">1</a></li>
 	<li><a ng-click="setPage(currentPage+1)">❯</a></li>
+	<li><a ng-click="setPage(totalPages-1)">❯❯</a></li>
 </ul>

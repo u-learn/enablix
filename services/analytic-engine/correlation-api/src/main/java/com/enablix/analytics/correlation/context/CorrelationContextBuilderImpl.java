@@ -19,6 +19,7 @@ import com.enablix.core.commons.xsdtopojo.ContainerType;
 import com.enablix.core.commons.xsdtopojo.ContentItemClassType;
 import com.enablix.core.commons.xsdtopojo.ContentItemType;
 import com.enablix.core.commons.xsdtopojo.ContentTemplate;
+import com.enablix.core.domain.content.connection.ConnectionContextAttribute;
 import com.enablix.core.domain.content.connection.ContentTypeConnection;
 import com.enablix.core.domain.content.connection.ContentValueConnection;
 import com.enablix.services.util.TemplateUtil;
@@ -48,13 +49,132 @@ public class CorrelationContextBuilderImpl implements CorrelationContextBuilder 
 		Map<String, Object> contentRecord = contentDataMgr.getContentRecord(item, template);
 		ContainerType itemContainer = TemplateUtil.findContainer(template.getDataDefinition(), item.getContainerQId());
 		
+		// find and match content type connections
 		List<ContentTypeConnection> matchedConnections = contentConnRepo.findByHoldingContainers(item.getContainerQId());
+
 		for (ContentTypeConnection contentConn : matchedConnections) {
-			context.getContainersInScope().addAll(
+			
+			if (matchConnectionContextWithRecord(contentConn, contentRecord, template, itemContainer)) {
+				context.getContainersInScope().addAll(
 					findContainersInScope(contentConn, contentRecord, template, itemContainer));
+			}
 		}
 		
 		return context;
+	}
+
+	private boolean matchConnectionContextWithRecord(ContentTypeConnection contentConn,
+			Map<String, Object> contentRecord, ContentTemplate template, ContainerType recordContainer) {
+		
+		if (contentConn.getConnectionContext() != null) {
+			// check if all of the connection context attribute match the content record
+			// if any attribute is not present in the current record, then it is assumed to have matched
+			for (ConnectionContextAttribute attr : contentConn.getConnectionContext().getContextAttributes()) {
+				if (!matchConnContextAttrWithRecord(attr, contentRecord, template, recordContainer)) {
+					return false;
+				}
+			}
+		}
+		
+		return true;
+	}
+
+	private boolean matchConnContextAttrWithRecord(ConnectionContextAttribute attr, 
+			Map<String, Object> contentRecord, ContentTemplate template, ContainerType recordContainer) {
+		
+		return recordHasSubContent(attr.getAttributeQId(), attr.getAttributeValue(), 
+				contentRecord, template, recordContainer, true);
+	}
+	
+	/*
+	 * Check if the given content record has an attribute matching the <code>subContentQId</code> passed in
+	 * as an argument and if present, does the value matches the given value of sub-content 
+	 */
+	private boolean recordHasSubContent(String subContentQId, Object subContentValue, Map<String, Object> contentRecord,
+			ContentTemplate template, ContainerType recordContainer, boolean defaultMatchValue) {
+		
+		ContainerType subContentContainer = TemplateUtil.findContainer(template.getDataDefinition(), subContentQId);
+		
+		// Traverse through each attribute-type for the content record;
+		// and match the attribute type and value in the content record with
+		// values passed in the method
+		for (ContentItemType contentItem : recordContainer.getContentItem()) {
+			
+			Object contentRecordValue = contentRecord.get(contentItem.getId());
+			
+			if (contentRecordValue != null) {
+				
+				// if sub-content is a container type, then check if the content record attribute is
+				// a bounded list (i.e. drop-down value) and match with it
+				if (subContentContainer != null) {
+					
+					if (contentItem.getType() == ContentItemClassType.BOUNDED) {
+						return matchSubContentWithBoundedContentItem(subContentContainer, subContentValue,
+								contentItem.getBounded(), contentRecordValue, defaultMatchValue);
+					}
+					
+				} else if (contentItem.getQualifiedId().equals(subContentQId)) {
+					return subContentValue.equals(contentRecordValue);
+				} 
+			}
+		}
+		
+		return defaultMatchValue;
+	}
+	
+	@SuppressWarnings("unchecked")
+	private boolean matchSubContentWithBoundedContentItem(
+			ContainerType subContentContainer, Object subContentValue, BoundedType recordBoundedType, 
+			Object recordBoundedItemValue, boolean defaultMatchValue) {
+		
+		if (recordBoundedType.getRefList() != null) {
+		
+			// first check that the sub-content that we are looking for matches the
+			// data store id configured for this bounded type attribute
+			if (subContentContainer.getId().equals(
+					recordBoundedType.getRefList().getDatastore().getStoreId())) {
+				
+				if (recordBoundedItemValue instanceof List) {
+					
+					List<Map<String, Object>> contentRecListVal = (List<Map<String, Object>>) recordBoundedItemValue;
+					
+					// now check that the value in the record matches the value of sub-content
+					if (subContentValue instanceof String) {
+
+						String strSubContentVal = (String) subContentValue;
+						
+						return matchSubContentValWithRecordValue(contentRecListVal, strSubContentVal);
+						
+					} else if (subContentValue instanceof List) {
+						// sub-content value to match is also a list then there needs to be one common value between
+						// the two list items to call it a match
+						List<Map<String, Object>> subContentListVal = (List<Map<String, Object>>) subContentValue;
+						
+						for (Map<String, Object> subContentListItem : subContentListVal) {
+						
+							if (matchSubContentValWithRecordValue(contentRecListVal, 
+									(String) subContentListItem.get(ContentDataConstants.BOUNDED_ID_ATTR))) {
+								return true;
+							}
+						}
+					}
+				}
+			}
+		}
+		
+		return defaultMatchValue;
+	}
+
+	private boolean matchSubContentValWithRecordValue(List<Map<String, Object>> contentRecListVal,
+			String strSubContentVal) {
+		
+		for (Map<String, Object> refVal : contentRecListVal) {
+			if (strSubContentVal.equals(refVal.get(ContentDataConstants.BOUNDED_ID_ATTR))) {
+				return true;
+			}
+		}
+		
+		return false;
 	}
 
 	private Set<String> findContainersInScope(ContentTypeConnection contentConn, 
@@ -62,74 +182,15 @@ public class CorrelationContextBuilderImpl implements CorrelationContextBuilder 
 		
 		Set<String> inScopeContainers = new HashSet<>();
 		
-		ContainerType contentConnContainer = TemplateUtil.findContainer(
-				template.getDataDefinition(), contentConn.getContentQId());
+		for (ContentValueConnection valueConn : contentConn.getConnections()) {
 		
-		for (ContentItemType contentItem : itemContainer.getContentItem()) {
-			
-			Object contentRecordValue = contentRecord.get(contentItem.getId());
-			
-			if (contentRecordValue != null) {
-				
-				if (contentConnContainer != null) {
-					
-					if (contentItem.getType() == ContentItemClassType.BOUNDED) {
-						matchAndAddConnectedContainersForBoundedContentItem(
-								contentConn, inScopeContainers, contentConnContainer,
-								contentItem, contentRecordValue);
-					}
-					
-				} else if (contentItem.getQualifiedId().equals(contentConn.getContentQId())) {
-					
-					if (contentRecordValue != null) {
-						findAndAddConnectedContainers(contentConn, inScopeContainers, contentRecordValue);
-					}
-					
-				} 
+			if (recordHasSubContent(contentConn.getContentQId(), valueConn.getContentValue(), 
+					contentRecord, template, itemContainer, false)) {
+				inScopeContainers.addAll(valueConn.getConnectedContainers());
 			}
 		}
 		
 		return inScopeContainers;
-	}
-
-	@SuppressWarnings("unchecked")
-	private void matchAndAddConnectedContainersForBoundedContentItem(
-			ContentTypeConnection contentConn, Set<String> inScopeContainers,
-			ContainerType contentConnContainer, ContentItemType contentItem, Object contentRecordValue) {
-		
-		BoundedType boundedItem = contentItem.getBounded();
-		
-		if (boundedItem.getRefList() != null) {
-		
-			if (contentConnContainer.getId().equals(
-					boundedItem.getRefList().getDatastore().getStoreId())) {
-				
-				if (contentRecordValue instanceof List) {
-					
-					List<Map<String, Object>> contentRecListVal = (List<Map<String, Object>>) contentRecordValue;
-					
-					for (Map<String, Object> refVal : contentRecListVal) {
-						findAndAddConnectedContainers(contentConn, inScopeContainers, 
-								refVal.get(ContentDataConstants.BOUNDED_ID_ATTR));
-					}
-				}
-				
-			}
-			 
-		}
-	}
-
-	private void findAndAddConnectedContainers(ContentTypeConnection contentConn, 
-			Set<String> inScopeContainers, Object contentRecordValue) {
-		
-		if (contentRecordValue != null) {
-		
-			for (ContentValueConnection contentConnVal : contentConn.getConnections()) {
-				if (contentConnVal.getContentValue().equals(contentRecordValue)) {
-					inScopeContainers.addAll(contentConnVal.getConnectedContainers());
-				}
-			}
-		}
 	}
 
 }

@@ -1,6 +1,7 @@
 <div class="block" ng-form="contentMappingForm">
 	<div class="head">
 		<h2>{{pageHeading}} <span ng-if="contentConnection.connectionName"> - {{contentConnection.connectionName}}</span></h2>
+		<ebx-back></ebx-back>
 	</div>
 	<div layout="row">
 		<div class="cont" flex="50%">
@@ -22,8 +23,30 @@
 			</div>
 		</div>
 	</div>
+	<div class="head ebx-top-border">
+		<i ng-class="isConnContextCollapse ? 'fa fa-chevron-right' : 'fa fa-chevron-down'" class="ebx-float-right" 
+			aria-hidden="true" ng-click="isConnContextCollapse = !isConnContextCollapse"></i>
+		<h2>Mapping Scope</h2>
+	</div>
+	<div collapse="isConnContextCollapse">
+		<div class="cont" ng-repeat="contextAttr in contentConnection.connectionContext.contextAttributes">
+			<label class="form-label">{{contextContainerQIdToCntnrMap[contextAttr.attributeQId].label}}
+				<span ng-if="readOnly">: <span ng-repeat="ctxAttrVal in contextAttr.attributeValue">{{ctxAttrVal.title}}<span ng-if="!$last">, </span></span></span>
+			</label>
+			<ui-select multiple ng-if="!readOnly" ng-model="contentConnection.connectionContext.contextAttributes[$index].attributeValue" 
+				theme="bootstrap" ng-disabled="disabled" sortable="true" 
+				close-on-select="false" remove-selected="false">
+			  <ui-select-match>{{$item.title}}</ui-select-match>
+			  <ui-select-choices repeat="opt in contextContainerQIdToCntnrMap[contextAttr.attributeQId].data">
+			    {{opt.title}}
+			  </ui-select-choices>
+			</ui-select>
+		</div>
+	</div>
+	<div class="head ebx-top-border" ng-show="contentConnection.connections.length > 0">
+		<h2>Map Content Types</h2>
+	</div>
 	<div class="cont" ng-show="contentConnection.connections.length > 0">
-		<h2>Select Mapping</h2>
 		<md-tabs md-dynamic-height md-border-bottom>
 			<md-tab ng-repeat="connection in contentConnection.connections" label="{{contentItemIdentityMap[connection.contentValue].title}}">
 				<div class="cont" layout="row">

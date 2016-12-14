@@ -4,6 +4,7 @@ enablix.studioApp.factory('ContentTemplateService',
 		
 			var CACHE_KEY_REF_DATA_CONTAINERS = "content.template.refdata.containers";
 			var CACHE_KEY_BUS_CAT_CONTAINERS_PREFIX = "content.template.business.category.";
+			var CACHE_KEY_CONTENT_CONN_CONTEXT_CONTAINER = "content.template.conn.context.containers";
 		
 			var loadTemplate = function() {
 				
@@ -409,6 +410,33 @@ enablix.studioApp.factory('ContentTemplateService',
 				return !isNullOrUndefined(_containerDef.linkContainerQId);
 			};
 			
+			var getContentConnectionContextContainers = function() {
+				
+				var contextContainers = CacheService.get(CACHE_KEY_CONTENT_CONN_CONTEXT_CONTAINER);
+				
+				if (!isNullOrUndefined(contextContainers)) {
+					return contextContainers;
+				}
+				
+				contextContainers = [];
+				
+				if (!isNullOrUndefined(enablix.template.contentTypeMappingConfig)) {
+					
+					angular.forEach(enablix.template.contentTypeMappingConfig.contextConfig.containerDataContext, 
+							function(contextCnt) {
+								var containerDef = getConcreteContainerDefinition(enablix.template, contextCnt.qualifiedId);
+								if (!isNullOrUndefined(containerDef)) {
+									contextContainers.push(containerDef);
+								}
+							});
+					
+				} 
+				
+				CacheService.put(CACHE_KEY_CONTENT_CONN_CONTEXT_CONTAINER, contextContainers);
+				
+				return contextContainers;
+			};
+			
 			return {
 				getTemplate : getTemplate,
 				getDefaultTemplate : getDefaultTemplate,
@@ -432,7 +460,8 @@ enablix.studioApp.factory('ContentTemplateService',
 				getRootContainerIdForContainer: getRootContainerIdForContainer,
 				getInheritableItems: getInheritableItems,
 				getRefDataContainers: getRefDataContainers,
-				getContainersByBusinessCategory: getContainersByBusinessCategory
+				getContainersByBusinessCategory: getContainersByBusinessCategory,
+				getContentConnectionContextContainers: getContentConnectionContextContainers
 			};
 		
 		}

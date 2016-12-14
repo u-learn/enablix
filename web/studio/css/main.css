@@ -1530,3 +1530,11 @@ tbody tr td.action-cell:first-child {
 	vertical-align: bottom;
 	margin: 0 0 0 4px;
 }
+
+.ebx-float-right {
+	float: right;
+}
+
+.ebx-top-border {
+	border-top: 1px solid #ecf0f1;
+}

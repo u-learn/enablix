@@ -32,20 +32,24 @@ public class ContentConnectionManagerImpl implements ContentConnectionManager {
 
 	private void populateHoldingContainers(ContentTypeConnection contentConnection) {
 		ContentTemplate template = templateManager.getTemplate(ProcessContext.get().getTemplateId());
+		populateHoldingContainers(contentConnection, template);
+	}
+	
+	private void populateHoldingContainers(ContentTypeConnection contentConnection, ContentTemplate template) {
 		contentConnection.setHoldingContainers(
 				affectedContainerResolver.findAffectedContainers(template, contentConnection));
 	}
 	
-	@Override
-	public void refreshHoldingContainers(ContentTypeConnection contentConnection) {
-		populateHoldingContainers(contentConnection);
+	public void refreshHoldingContainers(ContentTypeConnection contentConnection, ContentTemplate template) {
+		populateHoldingContainers(contentConnection, template);
 		crudService.getRepository().save(contentConnection);
 	}
 	
 	@Override
 	public void refreshHoldingContainersForAllConnections() {
+		ContentTemplate template = templateManager.getTemplate(ProcessContext.get().getTemplateId());
 		for (ContentTypeConnection contentConnection : crudService.getRepository().findAll()) {
-			refreshHoldingContainers(contentConnection);
+			refreshHoldingContainers(contentConnection, template);
 		}
 	}
 
