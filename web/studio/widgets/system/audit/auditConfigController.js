@@ -7,41 +7,81 @@ enablix.studioApp.controller('AuditController', ['$scope', '$stateParams', 'REST
 		 ];
 	var userData=JSON.parse(window.localStorage.getItem("userData"));
 
-	var defaultSearchJSONTemplate = JSON.parse('{   	"filters" : {       "activitycat" : "CONTENT"     },   	"filterMetadata" : {       "activitycat" : {         "field" : "activity.category",         "operator" : "EQ",         "dataType" : "STRING"       }     }, 	"pagination" : {       	"pageSize" : 10,       	"pageNum" : 0,     	"sort" : {           	"field" : "activityTime",           	"direction" : "DESC"         }     } }');
-	var searchJSONTemplate = JSON.parse('{   	"filters" : {            },   	"filterMetadata" : {            }, 	"pagination" : {       	"pageSize" : 10,       	"pageNum" : 0,     	"sort" : {           	"field" : "activityTime",           	"direction" : "DESC"         }     } }');
-	var activityUserMetaData = JSON.parse('{"searchKey":"auditUser","searchOperator":"EQ","searchField":"actor.name","searchDataType":"STRING"}');
-	var activityTypeMetaData = JSON.parse('{"searchKey":"auditActivityType","searchOperator":"EQ","searchField":"activity.activityType","searchDataType":"STRING"}');
-	var eventOccMetaData = JSON.parse('{"searchKey":"auditEventOcc","searchOperator":"GTE","searchField":"activityTime","searchDataType":"DATE"}');
-	$scope.filteredAudits = [];
-	$scope.itemsPerPage = 10;
-	$scope.currentPage = 4;
 
-
-	$scope.navToContent = function(auditRow) {
-		var _containerQId = auditRow.activity.containerQId;
-		var _contentIdentity = auditRow.activity.itemIdentity;
+	$scope.navToContent = function(record) {
+		var _containerQId = record.activity.containerQId;
+		var _contentIdentity = record.activity.itemIdentity;
 		StateUpdateService.goToPortalContainerBody(_containerQId, _contentIdentity, 'single', _containerQId);
 	}
 
-	$scope.pageChanged = function() {
-		var begin = (($scope.currentPage - 1) * $scope.itemsPerPage);
-		var end = begin + $scope.itemsPerPage;
-		$scope.filteredAudits = $scope.auditData.content.slice(begin, end);
-	};
+	$scope.pagination = {
+			pageSize: enablix.defaultPageSize,
+			pageNum: 0,
+			sort: {
+				field: "createdAt",
+				direction: "DESC"
+			}
+	}
 
-
+	$scope.tableHeaders =
+		[{
+			desc: "Name",
+			valueFn: function(record) {
+				return record.activity.itemTitle;
+			} 
+		},
+		{
+			desc: "Activity Type",
+			valueFn: function(record) { return record.activity.activityTypeDesc; }
+		},
+		{
+			desc: "Date",
+			valueFn: function(record) { return  record.activityTime }
+		},
+		{
+			desc: "User",
+			valueFn: function(record) { return record.actor.name }
+		}];
+	$scope.tableRecordActions = 
+		[{
+			actionName: "View Details",
+			tooltip: "Details",
+			iconClass: "fa fa-eye",
+			tableCellClass: "details",
+			actionCallbackFn: $scope.navToContent,
+			checkApplicable: function(record) { return true; }
+		}];
+	$scope.setPage = function(pageNum) {
+		$scope.pagination.pageNum = pageNum;
+		fetchAuditResult();
+	}
+	$scope.dataList = [];
 	$scope.userLst=[];
 	$scope.activityTypeLst=[]; 
 	$scope.searchCriteria = {};
-	auditConfigService.getAuditData(userData.tenantId,defaultSearchJSONTemplate ,function(auditData) {
-		//prompt('auditData',JSON.stringify(auditData));
-		$scope.auditData=auditData;
-		var begin = (($scope.currentPage - 1) * $scope.itemsPerPage);
-		var end = begin + $scope.itemsPerPage;
-		$scope.filteredAudits = $scope.auditData.content.slice(begin, end);
+	$scope.dataFilters = {};
+	$scope.dataFilters.activitycat = "CONTENT";
+	var fetchAuditResult = function(){
+		auditConfigService.getAuditData($scope.dataFilters,$scope.pagination ,function(dataPage) {
+			$scope.dataList = dataPage.content;
+			$scope.pageData = dataPage;
+		}, function(errorData) {
+			Notification.error({message: "Error retrieving data", delay: enablix.errorMsgShowTime});
+		});
+	}
+
+
+	auditConfigService.getAuditData($scope.dataFilters,$scope.pagination ,function(dataPage) {
+		$scope.dataList = dataPage.content;
+		$scope.pageData = dataPage;
 		getAllUsers(initUserDropDown);
-		getActivityTypes(initActivityTypes);	
+		getActivityTypes(initActivityTypes);
+	}, function(errorData) {
+		Notification.error({message: "Error retrieving data", delay: enablix.errorMsgShowTime});
 	});
+
+
+
 
 	var getAllUsers= function(_success){
 		RESTService.getForData('systemuser', null, null, function(data) {
@@ -106,53 +146,28 @@ enablix.studioApp.controller('AuditController', ['$scope', '$stateParams', 'REST
 	$scope.resetAudit = function(){
 		var d = new Date();
 		$scope.searchCriteria = {};
-		searchJSONTemplate = JSON.parse('{   	"filters" : {            },   	"filterMetadata" : {            }, 	"pagination" : {       	"pageSize" : 10,       	"pageNum" : 0,     	"sort" : {           	"field" : "activityTime",           	"direction" : "DESC"         }     } }');
-		auditConfigService.getAuditData(userData.tenantId,defaultSearchJSONTemplate,function(auditData) {
-			//prompt('auditData in search',JSON.stringify(auditData));
-			$scope.auditData=auditData;
-			var begin = (($scope.currentPage - 1) * $scope.itemsPerPage);
-			var end = begin + $scope.itemsPerPage;
-			$scope.filteredAudits = $scope.auditData.content.slice(begin, end);
-		});
+		$scope.dataFilters = {};
+		$scope.dataFilters.activitycat = "CONTENT";
+		fetchAuditResult();
 	}
 	$scope.searchAudit = function(){
-		//alert(""+$scope.searchCriteria.eventOccurence);
-		//alert(""+$scope.searchCriteria.activity);
-		//alert(""+$scope.searchCriteria.user);
 		formSearchObject();
-		//prompt("Search JSON Template",JSON.stringify(searchJSONTemplate))	;
-		auditConfigService.getAuditData(userData.tenantId,searchJSONTemplate,function(auditData) {
-			//prompt('auditData in search',JSON.stringify(auditData));
-			$scope.auditData=auditData;
-			var begin = (($scope.currentPage - 1) * $scope.itemsPerPage);
-			var end = begin + $scope.itemsPerPage;
-			$scope.filteredAudits = $scope.auditData.content.slice(begin, end);
-		});
+		fetchAuditResult();
 	}
 	var formSearchObject = function(){
 		if($scope.searchCriteria.user!=undefined){
-			appendIndividualSearchCriteria(activityUserMetaData ,$scope.searchCriteria.user);
+			$scope.dataFilters.auditUser=$scope.searchCriteria.user;
 		}
 		if($scope.searchCriteria.activity!=undefined){
-			appendIndividualSearchCriteria(activityTypeMetaData,$scope.searchCriteria.activity);
+			$scope.dataFilters.auditActivityType=$scope.searchCriteria.activity;
 		}
 		if($scope.searchCriteria.eventOccurence!=undefined){
-			appendIndividualSearchCriteria(eventOccMetaData,getEventDate());
+			$scope.dataFilters.auditEventOcc=getEventDate();
 		}
 	}
 
 
 
-	var appendIndividualSearchCriteria = function(searchMetadata, searchVal){
-		var searchKey = searchMetadata["searchKey"];
-		searchJSONTemplate.filters[searchKey]=searchVal;
-		var filterMetadata = JSON.parse('{"field":"","dataType":"","operator":""}');
-		filterMetadata["field"]=searchMetadata["searchField"];
-		filterMetadata["operator"]=searchMetadata["searchOperator"];
-		filterMetadata["dataType"]=searchMetadata["searchDataType"];;
-		searchJSONTemplate.filterMetadata[searchKey]=filterMetadata;
-
-	}
 
 	$scope.eventOccurenceLst = [{
 		label: 'Last 1 day',
