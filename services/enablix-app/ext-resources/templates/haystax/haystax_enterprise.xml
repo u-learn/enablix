@@ -3285,7 +3285,7 @@
 					<childContainer id="salesDeck"/>
 					<childContainer id="press"/>										
 					<childContainer id="poc"/>					
-					<childContainer id="proposals"/>
+					<childContainer id="proposal"/>
 					<childContainer id="template"/>
 					<childContainer id="topic"/>
 					<childContainer id="whitepaper"/>
