@@ -80,6 +80,15 @@ enablix.studioApp.controller('SystemAdminController',
 				         { label: "System" },
 				         { label: "Content Mappings" }
 					];
+				
+			} else if ($state.includes('system.audit')) {
+				
+				$scope.breadcrumbList = 
+					[
+					 	{ label: "Setup" },
+					 	{ label: "System" },
+					 	{ label: "Audit" }
+					];
 			}
 
 		};

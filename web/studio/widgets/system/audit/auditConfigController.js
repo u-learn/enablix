@@ -1,10 +1,8 @@
-enablix.studioApp.controller('AuditController', ['$scope', '$stateParams', 'RESTService', 'AuditConfigService', '$rootScope', 'StateUpdateService',
-                                                 function($scope, $stateParams, RESTService, auditConfigService, $rootScope, StateUpdateService) {  
-	$scope.breadcrumbList = 
-		[
-		 { label: "Setup" },
-		 { label: "Audit" }
-		 ];
+enablix.studioApp.controller('AuditController', 
+				['$scope', '$stateParams', '$filter', 'RESTService', 'AuditConfigService', '$rootScope', 'StateUpdateService',
+		 function($scope,   $stateParams,   $filter,   RESTService,   auditConfigService,   $rootScope,   StateUpdateService) {
+					
+	
 	var userData=JSON.parse(window.localStorage.getItem("userData"));
 
 
@@ -23,6 +21,8 @@ enablix.studioApp.controller('AuditController', ['$scope', '$stateParams', 'REST
 			}
 	}
 
+	$scope.activityTypeNameMap = {};
+	
 	$scope.tableHeaders =
 		[{
 			desc: "Name",
@@ -32,11 +32,11 @@ enablix.studioApp.controller('AuditController', ['$scope', '$stateParams', 'REST
 		},
 		{
 			desc: "Activity Type",
-			valueFn: function(record) { return record.activity.activityTypeDesc; }
+			valueFn: function(record) { return $scope.activityTypeNameMap[record.activity.activityType]; }
 		},
 		{
 			desc: "Date",
-			valueFn: function(record) { return  record.activityTime }
+			valueFn: function(record) { return $filter('ebDate')(record.activityTime); }
 		},
 		{
 			desc: "User",
@@ -70,19 +70,6 @@ enablix.studioApp.controller('AuditController', ['$scope', '$stateParams', 'REST
 		});
 	}
 
-
-	auditConfigService.getAuditData($scope.dataFilters,$scope.pagination ,function(dataPage) {
-		$scope.dataList = dataPage.content;
-		$scope.pageData = dataPage;
-		getAllUsers(initUserDropDown);
-		getActivityTypes(initActivityTypes);
-	}, function(errorData) {
-		Notification.error({message: "Error retrieving data", delay: enablix.errorMsgShowTime});
-	});
-
-
-
-
 	var getAllUsers= function(_success){
 		RESTService.getForData('systemuser', null, null, function(data) {
 			_success(data);	    	
@@ -90,14 +77,14 @@ enablix.studioApp.controller('AuditController', ['$scope', '$stateParams', 'REST
 			Notification.error({message: "Error loading user data", delay: enablix.errorMsgShowTime});
 		});
 	};
-	var getActivityTypes= function(_success){
+	var getActivityTypes= function(_success) {
 		RESTService.getForData('getAuditActivityTypes', null, null, function(data) {
 			_success(data);	    	
 		}, function() {    		
 			Notification.error({message: "Error loading user data", delay: enablix.errorMsgShowTime});
 		});
 	};
-	var initUserDropDown = function (data){
+	var initUserDropDown = function (data) {
 		var size = data.length;
 		for(var i=0; i<size;i++)
 		{
@@ -108,16 +95,33 @@ enablix.studioApp.controller('AuditController', ['$scope', '$stateParams', 'REST
 			$scope.userLst.push(UserObj);
 		}
 	}
-	var initActivityTypes = function(data)
-	{
+	
+	var initActivityTypes = function(data) {
 		$.each( data, function(index,value){		
 			var activityObj= {
 					label: value,
 					id: index,
 			};
 			$scope.activityTypeLst.push(activityObj);
+			
+			$scope.activityTypeLst.sort(function(a,b) {
+				return a.label === b.label ? 0 : (a.label < b.label ? -1 : 1);
+			});
+			
+			$scope.activityTypeNameMap[index] = value;
 		})
 	}
+	
+	getAllUsers(initUserDropDown);
+	getActivityTypes(initActivityTypes);
+	
+	auditConfigService.getAuditData($scope.dataFilters,$scope.pagination ,function(dataPage) {
+		$scope.dataList = dataPage.content;
+		$scope.pageData = dataPage;
+	}, function(errorData) {
+		Notification.error({message: "Error retrieving data", delay: enablix.errorMsgShowTime});
+	});
+	
 	var getEventDate = function(noDeduced){
 		var m_names = new Array("Jan", "Feb", "Mar", 
 				"Apr", "May", "Jun", "Jul", "Aug", "Sep", 
