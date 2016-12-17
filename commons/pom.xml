@@ -28,5 +28,6 @@
 	<module>state-change-workflow</module>
 	<module>content-approval-workflow</module>
 	<module>manage-content-connection</module>
+	<module>commons-caching</module>
   </modules>
 </project>

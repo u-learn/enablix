@@ -133,7 +133,7 @@ enablix.studioApp.controller('PortalSubContainerCtrl',
 						
 						if (!$scope.showSubContainer) {
 							if ($scope.parentList && $scope.index) {
-								$scope.parentList[$scope.index] = "null" + $scope.index; // hack to remove div in portal-container.html
+								$scope.parentList[$scope.index] = "null" + $scope.index; // hack to remove div in portal-container.html. Setting it to null cause duplicate entry error in ng-repeat
 							}
 						}
 						

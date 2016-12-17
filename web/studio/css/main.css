@@ -1458,13 +1458,14 @@ input[type=checkbox] {
 
 .subcontainer {    
 	width: 50%;
-    float: left;
     border: 53pxblack;
     padding-right: 15px;
     padding-left: 15px;
     position: relative;
     min-height: 1px;
 }
+
+
 
 .doc-preview {
 	color: #2ecc71 !important;
@@ -1533,6 +1534,10 @@ tbody tr td.action-cell:first-child {
 
 .ebx-float-right {
 	float: right;
+}
+
+.ebx-float-left {
+	float: left;
 }
 
 .ebx-top-border {

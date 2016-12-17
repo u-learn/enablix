@@ -80,13 +80,13 @@ public class ElasticSearchItemCorrelator implements ItemItemCorrelator {
 		
 		LOGGER.debug("Finding related item: {}", relatedItemDef.getQualifiedId());
 		
-		boolean relatedAndRecordContainerType = relatedItemDef.isRecordAsRelated() 
+		boolean relateAndRecordContainerType = relatedItemDef.isRecordAsRelated() 
 				&& context.shouldCorrelateContainer(relatedItemDef.getQualifiedId());
 
-		// only related if the container record being related is in list of containers in correlation
+		// only relate if the container record being related is in list of containers in correlation
 		// scope and is marked to be recorded as related; OR if there are any child items to be related
 		// i.e. there is further path to be navigated
-		if (relatedAndRecordContainerType || relatedItemDef.getRelatedItems() != null) {
+		if (relateAndRecordContainerType || relatedItemDef.getRelatedItems() != null) {
 		
 			List<Map<String, Object>> matchedRecords = dataMatcher.findMatchingRecords(
 					context.getTemplate(), relatedItemDef, matchInput);
@@ -94,7 +94,7 @@ public class ElasticSearchItemCorrelator implements ItemItemCorrelator {
 			for (Map<String, Object> match : matchedRecords) {
 
 				// record the matched content records
-				if (relatedAndRecordContainerType) {
+				if (relateAndRecordContainerType) {
 					
 					ContentDataRef relatedItem = ContentDataUtil.contentDataToRef(
 							match, context.getTemplate(), relatedItemDef.getQualifiedId());
