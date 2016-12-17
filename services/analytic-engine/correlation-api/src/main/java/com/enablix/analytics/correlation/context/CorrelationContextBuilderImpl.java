@@ -1,5 +1,6 @@
 package com.enablix.analytics.correlation.context;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -70,13 +71,19 @@ public class CorrelationContextBuilderImpl implements CorrelationContextBuilder 
 			// check if all of the connection context attribute match the content record
 			// if any attribute is not present in the current record, then it is assumed to have matched
 			for (ConnectionContextAttribute attr : contentConn.getConnectionContext().getContextAttributes()) {
-				if (!matchConnContextAttrWithRecord(attr, contentRecord, template, recordContainer)) {
+				
+				if (isNotNullOrEmptyCollection(attr.getAttributeValue()) && 
+						!matchConnContextAttrWithRecord(attr, contentRecord, template, recordContainer)) {
 					return false;
 				}
 			}
 		}
 		
 		return true;
+	}
+
+	private boolean isNotNullOrEmptyCollection(Object attrVal) {
+		return attrVal != null && (attrVal instanceof Collection ? !((Collection<?>) attrVal).isEmpty() : true);
 	}
 
 	private boolean matchConnContextAttrWithRecord(ConnectionContextAttribute attr, 
@@ -102,21 +109,22 @@ public class CorrelationContextBuilderImpl implements CorrelationContextBuilder 
 			
 			Object contentRecordValue = contentRecord.get(contentItem.getId());
 			
-			if (contentRecordValue != null) {
+			// if sub-content is a container type, then check if the content record attribute is
+			// a bounded list (i.e. drop-down value) and match with it
+			if (subContentContainer != null) {
 				
-				// if sub-content is a container type, then check if the content record attribute is
-				// a bounded list (i.e. drop-down value) and match with it
-				if (subContentContainer != null) {
+				if (contentItem.getType() == ContentItemClassType.BOUNDED
+						&& matchBoundedDatastoreWithSubContent(subContentContainer, contentItem.getBounded())) {
 					
-					if (contentItem.getType() == ContentItemClassType.BOUNDED) {
-						return matchSubContentWithBoundedContentItem(subContentContainer, subContentValue,
-								contentItem.getBounded(), contentRecordValue, defaultMatchValue);
-					}
-					
-				} else if (contentItem.getQualifiedId().equals(subContentQId)) {
-					return subContentValue.equals(contentRecordValue);
-				} 
+					return isNotNullOrEmptyCollection(contentRecordValue) && 
+								matchSubContentWithBoundedContentItem(subContentContainer, subContentValue,
+									contentItem.getBounded(), contentRecordValue, defaultMatchValue);
+				}
+				
+			} else if (contentItem.getQualifiedId().equals(subContentQId)) {
+				return subContentValue.equals(contentRecordValue);
 			}
+			
 		}
 		
 		return defaultMatchValue;
@@ -131,8 +139,7 @@ public class CorrelationContextBuilderImpl implements CorrelationContextBuilder 
 		
 			// first check that the sub-content that we are looking for matches the
 			// data store id configured for this bounded type attribute
-			if (subContentContainer.getId().equals(
-					recordBoundedType.getRefList().getDatastore().getStoreId())) {
+			if (matchBoundedDatastoreWithSubContent(subContentContainer, recordBoundedType)) {
 				
 				if (recordBoundedItemValue instanceof List) {
 					
@@ -157,6 +164,8 @@ public class CorrelationContextBuilderImpl implements CorrelationContextBuilder 
 								return true;
 							}
 						}
+						
+						return false;
 					}
 				}
 			}
@@ -164,6 +173,13 @@ public class CorrelationContextBuilderImpl implements CorrelationContextBuilder 
 		
 		return defaultMatchValue;
 	}
+
+	private boolean matchBoundedDatastoreWithSubContent(ContainerType subContentContainer,
+			BoundedType recordBoundedType) {
+		return recordBoundedType.getRefList() != null && subContentContainer.getId().equals(
+				recordBoundedType.getRefList().getDatastore().getStoreId());
+	}
+	
 
 	private boolean matchSubContentValWithRecordValue(List<Map<String, Object>> contentRecListVal,
 			String strSubContentVal) {

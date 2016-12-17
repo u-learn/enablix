@@ -194,7 +194,7 @@ enablix.studioApp.controller('ContentConnAddEditController',
 			ContentConnectionService.saveContentConnection($scope.contentConnection, 
 				function() {
 					Notification.primary("Saved successfully!");
-					$scope.readOnly = true;
+					StateUpdateService.goToContentConnDetail(contentConnIdentity);
 					
 				}, function(errorData) {
 					Notification.error({message: "Error saving data", delay: enablix.errorMsgShowTime});
