@@ -2847,11 +2847,17 @@
 		</contentUIDef>
 		<contentUIDef qualifiedId="onepager">
 			<container labelQualifiedId="onepager.title">
+				<listViewConfig>
+					<hideContentItem id="file"/>
+				</listViewConfig>
 				<portalConfig>
 					<headingContentItem id="title"/>
 				</portalConfig>
 			</container>
-		</contentUIDef>		
+		</contentUIDef>	
+		<contentUIDef qualifiedId="onepager.comment">
+			<text type="long"/>
+		</contentUIDef>			
 		<contentUIDef qualifiedId="poc">
 			<container labelQualifiedId="poc.title">
 				<listViewConfig>
