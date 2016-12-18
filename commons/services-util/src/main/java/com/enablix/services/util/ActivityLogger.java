@@ -17,12 +17,15 @@ import com.enablix.core.domain.activity.ContentAccessActivity;
 import com.enablix.core.domain.activity.ContentActivity;
 import com.enablix.core.domain.activity.ContentActivity.ContainerType;
 import com.enablix.core.domain.activity.ContentActivity.ContentActivityType;
+import com.enablix.core.domain.activity.ContentConnActivity;
+import com.enablix.core.domain.activity.ContentConnActivity.ContentConnActivityType;
 import com.enablix.core.domain.activity.ContentShareActivity;
 import com.enablix.core.domain.activity.ContentShareActivity.ShareMedium;
 import com.enablix.core.domain.activity.DocumentActivity;
 import com.enablix.core.domain.activity.ExternalLinkAccess;
 import com.enablix.core.domain.activity.NonRegisteredActor;
 import com.enablix.core.domain.activity.RegisteredActor;
+import com.enablix.core.domain.content.connection.ContentTypeConnection;
 import com.enablix.core.mq.Event;
 import com.enablix.core.mq.util.EventUtil;
 import com.enablix.core.ui.DisplayableContent;
@@ -181,6 +184,17 @@ public class ActivityLogger {
 		
 		auditActivity(actvy, actor, channel);
 		
+	}
+	
+	public static void auditContentConnActivity(ContentTypeConnection contentConn, ContentConnActivityType activityType) {
+		
+		ContentConnActivity activity = new ContentConnActivity();
+		
+		activity.setItemIdentity(contentConn.getIdentity());
+		activity.setItemTitle(contentConn.getConnectionName());
+		activity.setActivityType(activityType);
+		
+		auditActivity(activity);
 	}
 
 }

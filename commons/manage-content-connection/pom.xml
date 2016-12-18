@@ -27,5 +27,10 @@
   		<artifactId>manage-content-template</artifactId>
   		<version>1.0-SNAPSHOT</version>
   	</dependency>
+  	<dependency>
+  		<groupId>com.enablix.commons.util</groupId>
+  		<artifactId>commons-utility</artifactId>
+  		<version>1.0-SNAPSHOT</version>
+  	</dependency>
   </dependencies>
 </project>

@@ -10,7 +10,10 @@ import com.enablix.content.connection.AffectedContainerResolver;
 import com.enablix.content.connection.ContentConnectionManager;
 import com.enablix.content.connection.crud.ContentConnectionCrudService;
 import com.enablix.core.commons.xsdtopojo.ContentTemplate;
+import com.enablix.core.domain.activity.ContentConnActivity.ContentConnActivityType;
 import com.enablix.core.domain.content.connection.ContentTypeConnection;
+import com.enablix.services.util.ActivityLogger;
+import com.enablix.commons.util.StringUtil;
 
 @Component
 public class ContentConnectionManagerImpl implements ContentConnectionManager {
@@ -26,8 +29,15 @@ public class ContentConnectionManagerImpl implements ContentConnectionManager {
 	
 	@Override
 	public CrudResponse<ContentTypeConnection> save(ContentTypeConnection contentConnection) {
+		
+		ContentConnActivityType activityType = StringUtil.isEmpty(contentConnection.getIdentity()) ? 
+								ContentConnActivityType.ADDED : ContentConnActivityType.UPDATED;
+		
 		populateHoldingContainers(contentConnection);
-		return crudService.saveOrUpdate(contentConnection);
+		CrudResponse<ContentTypeConnection> response = crudService.saveOrUpdate(contentConnection);
+
+		ActivityLogger.auditContentConnActivity(response.getPayload(), activityType);
+		return response;
 	}
 
 	private void populateHoldingContainers(ContentTypeConnection contentConnection) {
@@ -60,7 +70,15 @@ public class ContentConnectionManagerImpl implements ContentConnectionManager {
 
 	@Override
 	public void deleteContentConnection(String connectionIdentity) {
+		
+		ContentTypeConnection contentConn = crudService.getRepository().findByIdentity(connectionIdentity);
+		if (contentConn == null) {
+			throw new IllegalArgumentException("Invalid content connection identity [" + connectionIdentity + "]");
+		}
+		
 		crudService.getRepository().deleteByIdentity(connectionIdentity);
+		
+		ActivityLogger.auditContentConnActivity(contentConn, ContentConnActivityType.DELETED);
 	}
 
 }
