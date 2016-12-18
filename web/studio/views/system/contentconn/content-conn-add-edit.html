@@ -65,6 +65,7 @@
 	</div>
 	<div class="foot clearfix">
 		<button ng-if="readOnly" ng-click="editContentConnection()" class="button button-add">Edit</button>
+		<a ng-if="readOnly" ng-click="deleteContentConn()" class="button button-delete">Delete</a>
 		<button ng-if="!readOnly" ng-click="saveContentConnection()" class="button button-add">Save</button>
 		<a ng-if="!readOnly" ng-click="cancelOperation()" class="button button-delete">Cancel</a>
 	</div>	

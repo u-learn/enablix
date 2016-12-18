@@ -56,6 +56,7 @@ public class CorrelationContextBuilderImpl implements CorrelationContextBuilder 
 		for (ContentTypeConnection contentConn : matchedConnections) {
 			
 			if (matchConnectionContextWithRecord(contentConn, contentRecord, template, itemContainer)) {
+				context.getFilteredContainerCategories().add(contentConn.getConnectedContainerCategory());
 				context.getContainersInScope().addAll(
 					findContainersInScope(contentConn, contentRecord, template, itemContainer));
 			}

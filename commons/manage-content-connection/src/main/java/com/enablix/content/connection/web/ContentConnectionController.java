@@ -35,4 +35,10 @@ public class ContentConnectionController {
 		return content;
 	}
 	
+	@RequestMapping(method = RequestMethod.POST, value="/del/{connectionIdentity}/")
+	public void deleteContentConnection(@PathVariable String connectionIdentity) {
+		LOGGER.debug("Delete content connection record: {}", connectionIdentity);
+		connMgr.deleteContentConnection(connectionIdentity);
+	}
+	
 }

@@ -58,4 +58,9 @@ public class ContentConnectionManagerImpl implements ContentConnectionManager {
 		return crudService.getRepository().findByIdentity(connectionIdentity);
 	}
 
+	@Override
+	public void deleteContentConnection(String connectionIdentity) {
+		crudService.getRepository().deleteByIdentity(connectionIdentity);
+	}
+
 }

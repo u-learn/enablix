@@ -1,12 +1,14 @@
 enablix.studioApp.controller('SystemAdminController', 
-			['$scope', '$state', '$rootScope', 'RESTService', 'StateUpdateService',
-	function( $scope,   $state,   $rootScope,   RESTService,   StateUpdateService) {
+			['$scope', '$state', '$stateParams', '$rootScope', 'RESTService', 'StateUpdateService', 'ContentConnectionService',
+	function( $scope,   $state,   $stateParams,   $rootScope,   RESTService,   StateUpdateService,   ContentConnectionService) {
 		
 		$scope.$state = $state;
+		$scope.$stateParams = $state.params;
 		
 		$rootScope.$on('$stateChangeSuccess', 
 			function(event, toState, toParams, fromState, fromParams) {
 				if ($state.includes("system")) {
+					$scope.$stateParams = toParams;
 					setSetupBreadcrumb();
 				}
 			});
@@ -78,7 +80,7 @@ enablix.studioApp.controller('SystemAdminController',
 					[
 				         { label: "Setup" },
 				         { label: "System" },
-				         { label: "Content Mappings" }
+				         { label: ContentConnectionService.getLabelForCategory($scope.$stateParams.category) + " Mappings" }
 					];
 				
 			} else if ($state.includes('system.audit')) {

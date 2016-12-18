@@ -12,6 +12,7 @@ import com.enablix.commons.util.QIdUtil;
 import com.enablix.commons.util.StringUtil;
 import com.enablix.core.commons.xsdtopojo.BoundedRefListType;
 import com.enablix.core.commons.xsdtopojo.BoundedType;
+import com.enablix.core.commons.xsdtopojo.ContainerBusinessCategoryType;
 import com.enablix.core.commons.xsdtopojo.ContainerPortalConfigType;
 import com.enablix.core.commons.xsdtopojo.ContainerPortalConfigType.HeadingContentItem;
 import com.enablix.core.commons.xsdtopojo.ContainerType;
@@ -348,6 +349,11 @@ public class TemplateUtil {
 							allContainers, QIdUtil.getElementId(forContainerQId)));
 		
 		return containers;
+	}
+	
+	public static ContainerBusinessCategoryType getContainerBusinessCategory(ContentTemplate template, String containerQId) {
+		ContainerType containerDef = findContainer(template.getDataDefinition(), containerQId);
+		return containerDef == null ? null : containerDef.getBusinessCategory();
 	}
 	
 	private static List<ContainerType> findContainersWithDatastoreAssociation(

@@ -462,28 +462,28 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvi
 				}]
 			}
 		}).state('system.contentconnlist', {
-			url: '/contentconn/list/',
+			url: '/contentconn/{category}/list/',
 			templateUrl: 'views/system/contentconn/content-conn-list.html',
 			controller: 'ContentConnListController',
 			resolve: {
 				setupData: appSetup
 			}
 		}).state('system.contentconndetail', {
-			url: '/contentconn/detail/{connectionIdentity}/',
+			url: '/contentconn/{category}/detail/{connectionIdentity}/',
 			templateUrl: 'views/system/contentconn/content-conn-add-edit.html',
 			controller: 'ContentConnAddEditController',
 			resolve: {
 				setupData: appSetup
 			}
 		}).state('system.contentconnadd', {
-			url: '/contentconn/add/',
+			url: '/contentconn/{category}/add/',
 			templateUrl: 'views/system/contentconn/content-conn-add-edit.html',
 			controller: 'ContentConnAddEditController',
 			resolve: {
 				setupData: appSetup
 			}
 		}).state('system.contentconnedit', {
-			url: '/contentconn/edit/{connectionIdentity}/',
+			url: '/contentconn/{category}/edit/{connectionIdentity}/',
 			templateUrl: 'views/system/contentconn/content-conn-add-edit.html',
 			controller: 'ContentConnAddEditController',
 			resolve: {

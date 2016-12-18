@@ -65,5 +65,6 @@ enablix.serviceURL = {
 	"getContentWFStateActionMap": enablix.domainName + "/contentwf/actionmap/",
 	"dataSearchRequest": enablix.domainName + "/data/search/t/:domainType/",
 	"saveContentConnection": enablix.domainName + "/contentconn/save",
-	"getContentConnection": enablix.domainName + "/contentconn/r/:connIdentity/"
+	"getContentConnection": enablix.domainName + "/contentconn/r/:connIdentity/",
+	"delContentConnection": enablix.domainName + "/contentconn/del/:connIdentity/",
 };

@@ -10,5 +10,7 @@ public interface ContentConnectionManager {
 	ContentTypeConnection getContentConnection(String connectionIdentity);
 
 	void refreshHoldingContainersForAllConnections();
+
+	void deleteContentConnection(String connectionIdentity);
 	
 }

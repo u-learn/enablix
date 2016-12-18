@@ -33,15 +33,27 @@ enablix.studioApp.controller('ContentConnListController',
 		     }];
 		
 		$scope.navToContentConnDetail = function(record) {
-			StateUpdateService.goToContentConnDetail(record.identity)
+			StateUpdateService.goToContentConnDetail($stateParams.category, record.identity)
 		}
 		
 		$scope.navToEditContentConn = function(record) {
-			StateUpdateService.goToContentConnEdit(record.identity);
+			StateUpdateService.goToContentConnEdit($stateParams.category, record.identity);
 		}
 		
 		$scope.navToAddContentConn = function() {
-			StateUpdateService.goToContentConnAdd();
+			StateUpdateService.goToContentConnAdd($stateParams.category);
+		}
+		
+		$scope.deleteContentConn = function(record) {
+			
+			ContentConnectionService.deleteContentConnection(record.identity, function() {
+				
+				Notification.primary("Deleted successfully!");
+				StateUpdateService.reload();
+				
+			}, function(errorData) {
+				Notification.error({message: "Error deleting record. Please try later.", delay: enablix.errorMsgShowTime});
+			});
 		}
 		
 		$scope.tableRecordActions = 
@@ -58,11 +70,21 @@ enablix.studioApp.controller('ContentConnListController',
 				iconClass: "fa fa-pencil",
 				tableCellClass: "edit",
 				actionCallbackFn: $scope.navToEditContentConn
+			},
+			{
+				actionName: "Remove",
+				tooltip: "Delete",
+				iconClass: "fa fa-times",
+				tableCellClass: "remove",
+				actionCallbackFn: $scope.deleteContentConn
 			}];
 		
+		$scope.categoryLabel = ContentConnectionService.getLabelForCategory($stateParams.category);
 		$scope.dataList = [];
 		
-		$scope.dataFilters = {};
+		$scope.dataFilters = {
+			connCategory: ContentConnectionService.getCategoryTag($stateParams.category)
+		};
 		
 		var fetchSearchResult = function() {
 			

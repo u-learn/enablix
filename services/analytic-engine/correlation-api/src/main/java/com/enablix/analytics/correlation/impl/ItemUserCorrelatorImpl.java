@@ -24,9 +24,9 @@ import com.enablix.services.util.ContentDataUtil;
 import com.enablix.services.util.TemplateUtil;
 
 @Component
-public class ElasticSearchItemUserCorrelator implements ItemUserCorrelator {
+public class ItemUserCorrelatorImpl implements ItemUserCorrelator {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(ElasticSearchItemUserCorrelator.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(ItemUserCorrelatorImpl.class);
 	
 	@Autowired
 	private ItemCorrelationRuleManager corrRuleMgr;

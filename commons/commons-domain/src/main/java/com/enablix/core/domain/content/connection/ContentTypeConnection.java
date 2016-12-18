@@ -1,9 +1,12 @@
 package com.enablix.core.domain.content.connection;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.enablix.core.api.Tag;
+import com.enablix.core.commons.xsdtopojo.ContainerBusinessCategoryType;
 import com.enablix.core.domain.BaseDocumentEntity;
 
 @Document(collection = "ebx_content_type_connection")
@@ -16,6 +19,10 @@ public class ContentTypeConnection extends BaseDocumentEntity {
 	private List<ContentValueConnection> connections;
 	
 	private ConnectionContext connectionContext;
+	
+	private ContainerBusinessCategoryType connectedContainerCategory;
+	
+	private Set<Tag> tags;
 	
 	// The containers which encapsulate the content represented by contentQId
 	private List<String> holdingContainers;
@@ -52,12 +59,28 @@ public class ContentTypeConnection extends BaseDocumentEntity {
 		this.connectionContext = connectionContext;
 	}
 
+	public ContainerBusinessCategoryType getConnectedContainerCategory() {
+		return connectedContainerCategory;
+	}
+
+	public void setConnectedContainerCategory(ContainerBusinessCategoryType connectedContainerCategory) {
+		this.connectedContainerCategory = connectedContainerCategory;
+	}
+
 	public List<String> getHoldingContainers() {
 		return holdingContainers;
 	}
 
 	public void setHoldingContainers(List<String> affectedContainers) {
 		this.holdingContainers = affectedContainers;
+	}
+
+	public Set<Tag> getTags() {
+		return tags;
+	}
+
+	public void setTags(Set<Tag> tags) {
+		this.tags = tags;
 	}
 	
 }

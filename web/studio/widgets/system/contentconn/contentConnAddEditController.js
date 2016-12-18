@@ -4,6 +4,7 @@ enablix.studioApp.controller('ContentConnAddEditController',
 	
 		$scope.isConnContextCollapse = true;
 		$scope.readOnly = $state.includes("system.contentconndetail");
+		$scope.categoryLabel = ContentConnectionService.getLabelForCategory($stateParams.category);
 		
 		$scope.contentConnection = {};
 		var contentConnIdentity = $stateParams.connectionIdentity;
@@ -13,7 +14,7 @@ enablix.studioApp.controller('ContentConnAddEditController',
 		
 		if (!$scope.addOperation) {
 			
-			$scope.pageHeading = "Content Type Mapping"
+			$scope.pageHeading = $scope.categoryLabel + " Mapping"
 			
 			ContentConnectionService.getContentConnection(contentConnIdentity,
 				function(data) {
@@ -30,7 +31,7 @@ enablix.studioApp.controller('ContentConnAddEditController',
 			
 		} else {
 			
-			$scope.pageHeading = "Add Content Type Mapping";
+			$scope.pageHeading = "Add " + $scope.categoryLabel + " Mapping";
 			
 			$scope.contentConnection.connectionContext = {
 				contextAttributes: []
@@ -40,7 +41,7 @@ enablix.studioApp.controller('ContentConnAddEditController',
 			
 		}
 		
-		$scope.containerBusinessCategory = "BUSINESS_CONTENT";
+		$scope.containerBusinessCategory = ContentConnectionService.getBusinessCategory($stateParams.category);
 		
 		// set up master data for content source
 		$scope.refDataContainers = ContentTemplateService.getRefDataContainers();
@@ -191,10 +192,24 @@ enablix.studioApp.controller('ContentConnAddEditController',
 		
 		$scope.saveContentConnection = function() {
 			
+			$scope.contentConnection.connectedContainerCategory = $scope.containerBusinessCategory;
+			
+			if (isNullOrUndefined($scope.contentConnection.tags)) {
+				$scope.contentConnection.tags = [];
+			}
+			
+			var tags = ["usage:correlation", "category:" + $stateParams.category];
+
+			angular.forEach(tags, function(tag) {
+				if (!$scope.contentConnection.tags.contains(tag)) {
+					$scope.contentConnection.tags.push(tag);
+				}
+			});
+			
 			ContentConnectionService.saveContentConnection($scope.contentConnection, 
-				function() {
+				function(result) {
 					Notification.primary("Saved successfully!");
-					StateUpdateService.goToContentConnDetail(contentConnIdentity);
+					StateUpdateService.goToContentConnDetail($stateParams.category, result.payload.identity);
 					
 				}, function(errorData) {
 					Notification.error({message: "Error saving data", delay: enablix.errorMsgShowTime});
@@ -202,15 +217,27 @@ enablix.studioApp.controller('ContentConnAddEditController',
 		};
 		
 		$scope.editContentConnection = function() {
-			StateUpdateService.goToContentConnEdit(contentConnIdentity);
+			StateUpdateService.goToContentConnEdit($stateParams.category, contentConnIdentity);
 		}
 		
 		$scope.cancelOperation = function() {
 			if ($scope.addOperation) {
-				StateUpdateService.goToContentConnList();
+				StateUpdateService.goToContentConnList($stateParams.category);
 			} else {
-				StateUpdateService.goToContentConnDetail(contentConnIdentity);
+				StateUpdateService.goToContentConnDetail($stateParams.category, contentConnIdentity);
 			}
+		}
+		
+		$scope.deleteContentConn = function() {
+			
+			ContentConnectionService.deleteContentConnection(contentConnIdentity, function() {
+				
+				Notification.primary("Deleted successfully!");
+				StateUpdateService.goToContentConnList($stateParams.category);
+				
+			}, function(errorData) {
+				Notification.error({message: "Error deleting record. Please try later.", delay: enablix.errorMsgShowTime});
+			});
 		}
 		
 	}

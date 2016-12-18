@@ -4,6 +4,11 @@ public class Tag {
 
 	private String name;
 
+	@SuppressWarnings("unused")
+	private Tag() {
+		// for ORM
+	}
+	
 	public Tag(String name) {
 		super();
 		this.name = name;

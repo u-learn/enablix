@@ -20,9 +20,9 @@ import com.enablix.core.commons.xsdtopojo.RelatedItemsType;
 import com.enablix.services.util.ContentDataUtil;
 
 @Component
-public class ElasticSearchItemCorrelator implements ItemItemCorrelator {
+public class ItemItemCorrelatorImpl implements ItemItemCorrelator {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(ElasticSearchItemCorrelator.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(ItemItemCorrelatorImpl.class);
 	
 	@Autowired
 	private ItemCorrelationRuleManager itemCorrRuleMgr;

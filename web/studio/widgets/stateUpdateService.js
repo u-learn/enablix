@@ -235,24 +235,30 @@ enablix.studioApp.factory('StateUpdateService',
 	 			}
 	 		}
 	 		
-	 		var goToContentConnList = function() {
-	 			$state.go("system.contentconnlist");
+	 		var goToContentConnList = function(_category) {
+	 			$state.go("system.contentconnlist", {
+	 				category: _category
+	 			});
 	 		};
 	 		
-	 		var goToContentConnDetail = function(_connIdentity) {
+	 		var goToContentConnDetail = function(_category, _connIdentity) {
 	 			$state.go("system.contentconndetail", {
+	 				"category": _category,
 	 				"connectionIdentity": _connIdentity
 	 			});
 	 		};
 	 		
-	 		var goToContentConnEdit = function(_connIdentity) {
+	 		var goToContentConnEdit = function(_category, _connIdentity) {
 	 			$state.go("system.contentconnedit", {
+	 				"category": _category,
 	 				"connectionIdentity": _connIdentity
 	 			});
 	 		};
 	 		
-	 		var goToContentConnAdd = function(_connIdentity) {
-	 			$state.go("system.contentconnadd");
+	 		var goToContentConnAdd = function(_category) {
+	 			$state.go("system.contentconnadd", {
+	 				category: _category
+	 			});
 	 		};
 	 		
 	 		return {
