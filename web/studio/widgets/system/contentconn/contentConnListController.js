@@ -13,7 +13,7 @@ enablix.studioApp.controller('ContentConnListController',
 			
 		$scope.tableHeaders =
 			 [{
-				 desc: "Content Mapping Name",
+				 desc: "Mapping Name",
 				 valueKey: "connectionName"
 			 },
 		     {
