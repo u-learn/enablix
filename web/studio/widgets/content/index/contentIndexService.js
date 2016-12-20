@@ -100,7 +100,7 @@ enablix.studioApp.factory('ContentIndexService',
 						_childrenList.push(indxItem);
 					}
 					
-					if (!ignoreInstanceLoad) {
+					if (!ignoreInstanceLoad || indxItem.type == "container-instance") {
 						loadIndexChildren(indxItem, !ignoreInstanceLoad);
 					}
 					
@@ -276,7 +276,7 @@ enablix.studioApp.factory('ContentIndexService',
 							Notification.error({message: "Error retrieving content data for template [" 
 									+ templateId + ", " + _indxNode.label + "]", delay: enablix.errorMsgShowTime});
 							
-							_indxNode.dataLoading = true;
+							_indxNode.dataLoading = false;
 						});
 						
 					} else {
