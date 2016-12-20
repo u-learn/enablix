@@ -1,5 +1,5 @@
 enablix.studioApp.controller('contentIndexCtrl', 
-			['$scope', '$state', '$stateParams', 'ContentIndexService', 'StateUpdateService', 'Notification', 
+			['$scope', '$state', '$stateParams', 'ContentIndexService', 'StateUpdateService', 'Notification',
     function( $scope,   $state,   $stateParams,   ContentIndexService,   StateUpdateService,   Notification) {
 	
 		$scope.contentIndex = $scope.contentIndex || {};
