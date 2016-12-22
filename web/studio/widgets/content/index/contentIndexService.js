@@ -266,8 +266,11 @@ enablix.studioApp.factory('ContentIndexService',
 					_indxNode.dataLoading = true;
 					
 					if (isNullOrUndefined(_childrenList)) {
+						
+						var parentIdentity = isNullOrUndefined(_indxNode.parentIdentity) ? _indxNode.elementIdentity : _indxNode.parentIdentity;
+						
 						// add container data instance node
-						ContentDataService.getContentData(templateId, _indxNode.qualifiedId, _indxNode.elementIdentity, function(data) {
+						ContentDataService.getContentData(templateId, _indxNode.qualifiedId, parentIdentity, function(data) {
 							
 							addInstanceDataChildren(_indxNode, cntnr, data, !_loadChildren);
 							_indxNode.dataLoading = false;
