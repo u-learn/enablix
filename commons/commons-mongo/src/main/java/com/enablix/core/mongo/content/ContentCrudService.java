@@ -53,6 +53,7 @@ public interface ContentCrudService {
 	
 	List<String> deleteAllChild(String collectionName, String recordIdentity, String childQId);
 	
+	@SuppressWarnings("rawtypes")
 	List<HashMap> deleteRecordsWithParentId(String collectionName, String parentIdentity);
 
 	void upsert(String collectionName, String elementIdentity, Map<String, Object> data);

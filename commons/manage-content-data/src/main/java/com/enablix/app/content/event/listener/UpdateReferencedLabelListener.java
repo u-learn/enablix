@@ -68,19 +68,27 @@ public class UpdateReferencedLabelListener implements ContentDataEventListener {
 									
 									// update the label of the existing records as per the value in the updated record
 									String boundedLabelAttr = contentItem.getBounded().getRefList().getDatastore().getDataLabel();
-									Object labelValue = event.getDataAsMap().get(boundedLabelAttr);
-									String labelValueStr = labelValue == null ? null : String.valueOf(labelValue);
 									
-									String recordIdentity = (String) event.getDataAsMap().get(ContentDataConstants.IDENTITY_KEY);
-									
-									String collectionName = DatastoreUtil.getCollectionName(event.getTemplateId(), assocCntnr);
-									crudService.updateBoundedLabel(collectionName, contentItem.getId(), recordIdentity, labelValueStr);
+									// check if the change has occured on the label attribute
+									if (event.getChangeDelta().hasAttribute(boundedLabelAttr)) {
+										
+										Object labelValue = event.getDataAsMap().get(boundedLabelAttr);
+										String labelValueStr = labelValue == null ? null : String.valueOf(labelValue);
+										
+										String recordIdentity = (String) event.getDataAsMap().get(ContentDataConstants.IDENTITY_KEY);
+										
+										String collectionName = DatastoreUtil.getCollectionName(event.getTemplateId(), assocCntnr);
+										crudService.updateBoundedLabel(collectionName, contentItem.getId(), recordIdentity, labelValueStr);
+									}
 								}
 							}
+							
 						}
 					}
 				}
+				
 			}
+			
 		}
 		
 	}

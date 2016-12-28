@@ -30,6 +30,7 @@ import com.enablix.commons.util.StringUtil;
 import com.enablix.core.api.ContentDataRef;
 import com.enablix.core.commons.xsdtopojo.ContainerType;
 import com.enablix.core.commons.xsdtopojo.ContentTemplate;
+import com.enablix.core.domain.content.ContentChangeDelta;
 import com.enablix.core.mongo.content.ContentCrudService;
 import com.enablix.services.util.ContentDataUtil;
 import com.enablix.services.util.TemplateUtil;
@@ -56,6 +57,9 @@ public class ContentDataManagerImpl implements ContentDataManager {
 	
 	@Autowired
 	private ContentDataEventListenerRegistry listenerRegistry;
+	
+	@Autowired
+	private ContentChangeEvaluator contentChangeEvaluator;
 	
 	/*
 	 * Use cases:
@@ -104,6 +108,10 @@ public class ContentDataManagerImpl implements ContentDataManager {
 		ContentDataSaveEvent saveEvent = new ContentDataSaveEvent(
 				contentDataMap, request.getTemplateId(), container, newRecord);
 		saveEvent.setPriorData(oldRecord);
+		
+		ContentChangeDelta delta = contentChangeEvaluator.findDelta(saveEvent.getPriorData(), 
+				saveEvent.getDataAsMap(), saveEvent.getContainerType());
+		saveEvent.setChangeDelta(delta);
 		
 		for (ContentDataEventListener listener : listenerRegistry.getListeners()) {
 			listener.onContentDataSave(saveEvent);

@@ -49,7 +49,13 @@ public class RecentDataCollector implements ContentDataEventListener {
 					markExistNewTypeRecordAsObsolete(strContentIdentity);
 					
 				} else {
-					// simply save it again, it will update the updated date
+					// clear created at date and simply save it again, create date will be updated
+					// the modified at date of the NEW type record is updated as we update the
+					// obsolete flag. As a result of which, the NEW record starts showing along with 
+					// the updated recent records as we query by modified date. We will now use the
+					// created date for sorting instead of modified date
+					existEntry.setCreatedAt(null);
+					existEntry.setCreatedBy(null);
 					recentDataRepo.save(existEntry);
 				}
 			}

@@ -13,6 +13,22 @@ var isNullOrUndefined = function(obj) {
 	return obj === null || obj  === undefined;
 };
 
+var isArray = function(obj) {
+	return obj.constructor === Array;
+};
+
+var isArrayAndEmpty = function(obj) {
+	return  isArray(obj) && obj.length == 0;
+};
+
+var isString = function(obj) {
+	return typeof obj === 'string';
+}
+
+var isStringAndEmpty = function(obj) {
+	return isString(obj) && obj.trim().length == 0;
+}
+
 function linkify(text) {
     var urlRegex =/(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
     return text.replace(urlRegex, function(url) {

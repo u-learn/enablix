@@ -17,7 +17,7 @@
 	<div ng-class="{'active': !expanded}" class="cont clearfix" ng-if="!(bodyData == null || bodyData == undefined || bodyData.length == 0)">	
 	
 		<table class="infotable" >		
-			<tr ng-repeat="header in singleHeaders" ng-switch="header.dataType" ng-if="bodyData[header.key]!=null">
+			<tr ng-repeat="header in singleHeaders" ng-switch="header.dataType" ng-if="hasData(bodyData[header.key])">
 				<th>{{header.label}}:</th>
 				<td><eb-render-data content-value="bodyData[header.key]" content-def="header" content-identity="bodyData.identity" show-doc-link="false"/></td>
 			</tr>

@@ -103,7 +103,7 @@ public class RecentContentServiceImpl implements RecentContentService {
 	}
 
 	private Pageable createDefaultPageable() {
-		Sort sort = new Sort(Sort.Direction.DESC, ContentDataConstants.MODIFIED_AT_KEY);
+		Sort sort = new Sort(Sort.Direction.DESC, ContentDataConstants.CREATED_AT_KEY);
 		Pageable pageable = new PageRequest(0, pageSize, sort);
 		return pageable;
 	}

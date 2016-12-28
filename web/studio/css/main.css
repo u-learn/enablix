@@ -1544,3 +1544,7 @@ tbody tr td.action-cell:first-child {
 .ebx-top-border {
 	border-top: 1px solid #ecf0f1;
 }
+
+.md-tab {
+	text-transform: none;
+}

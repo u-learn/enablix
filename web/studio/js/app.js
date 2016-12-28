@@ -3,6 +3,17 @@ enablix.studioApp = angular.module("studio", ['ui.router', 'angularTreeview', 'l
            'angularFileUpload', 'ui.bootstrap', 'isteven-multi-select', 'ui-notification', 'enablixFilters',
            'ngSanitize', 'ui.select', 'ngMessages', 'pascalprecht.translate', 'noCAPTCHA', 'PubSub', 'ngMaterial']);
 
+//md default theme
+enablix.studioApp.config(function($mdThemingProvider) {
+	$mdThemingProvider.theme('default')
+		.primaryPalette('blue-grey', {
+			'default': '900'
+		})
+	    .accentPalette('blue', {
+	    	'default': '800'
+	    });	
+});
+
 //enablix.templateId = "entSoftwareTemplate"; //"amlSalesTemplate";
 enablix.dateFormat = 'MM/dd/yyyy';
 enablix.errorMsgShowTime = 10000; // in milli-seconds 

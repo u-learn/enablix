@@ -224,6 +224,10 @@ enablix.studioApp.controller('PortalSubContainerCtrl',
 			}
 		};
 		
+		$scope.hasData = function(_data) {
+			return !isNullOrUndefined(_data) && !isArrayAndEmpty(_data) && !isStringAndEmpty(_data);
+		}
+		
 		$scope.render();
 		
 		PubSub.subscribe(ContentDataService.contentChangeEventId($scope.subContainerQId), function() {

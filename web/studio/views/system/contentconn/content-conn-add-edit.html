@@ -52,6 +52,13 @@
 				<div class="cont" layout="row">
 					<div ng-repeat="cntnrChunk in chunkedConnectContainers" layout="column" flex>
 						<span ng-repeat="connectCntnr in cntnrChunk" class="chckBox" layout="row">
+							<!--<md-checkbox 
+							    value="connectCntnr.qualifiedId" 
+								ng-checked="connection.connectedContainers.indexOf(connectCntnr.qualifiedId) > -1"
+								ng-click="toggleSelection(connection, connectCntnr.qualifiedId)"
+								ng-disabled="readOnly"> 
+							    {{connectCntnr.label}}
+							</md-checkbox>-->
 							<input type="checkbox" name="selectedContainers[]" value="connectCntnr.qualifiedId" 
 								ng-checked="connection.connectedContainers.indexOf(connectCntnr.qualifiedId) > -1"
 								ng-click="toggleSelection(connection, connectCntnr.qualifiedId)"

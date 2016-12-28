@@ -23,6 +23,10 @@ public class ContentChangeDelta {
 		this.changedAttributes = changedAttributes;
 	}
 	
+	public boolean hasAttribute(String attributeId) {
+		return changedAttributes.containsKey(attributeId);
+	}
+	
 	public static class AttributeChange {
 		
 		private String attributeId;

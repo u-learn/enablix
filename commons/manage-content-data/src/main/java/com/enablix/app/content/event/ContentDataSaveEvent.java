@@ -3,6 +3,7 @@ package com.enablix.app.content.event;
 import java.util.Map;
 
 import com.enablix.core.commons.xsdtopojo.ContainerType;
+import com.enablix.core.domain.content.ContentChangeDelta;
 
 public class ContentDataSaveEvent {
 
@@ -16,7 +17,9 @@ public class ContentDataSaveEvent {
 	
 	// Old data before the record update. Only applicable when
 	// update action was taken i.e. newRecord == false
-	private Map<String, Object> priorData; 
+	private Map<String, Object> priorData;
+	
+	private ContentChangeDelta changeDelta;
 
 	public ContentDataSaveEvent(Map<String, Object> dataAsMap, 
 			String templateId, ContainerType containerQId, boolean newRecord) {
@@ -49,6 +52,14 @@ public class ContentDataSaveEvent {
 
 	public void setPriorData(Map<String, Object> priorData) {
 		this.priorData = priorData;
+	}
+
+	public ContentChangeDelta getChangeDelta() {
+		return changeDelta;
+	}
+
+	public void setChangeDelta(ContentChangeDelta changeDelta) {
+		this.changeDelta = changeDelta;
 	}
 
 }
