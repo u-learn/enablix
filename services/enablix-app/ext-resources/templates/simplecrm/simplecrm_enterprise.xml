@@ -69,6 +69,8 @@
 					linkContainerQId="discoverydoc" linkContentItemId="customerProjects"/>
 				<container id="custProjCRList" label="CR Lists" 
 					linkContainerQId="crlist" linkContentItemId="customerProjects"/>
+				<container id="custProjMedia" label="Media" 
+					linkContainerQId="media" linkContentItemId="customerProjects"/>					
 				<container id="custProjMilestonePymt" label="Milestone Payments" 
 					linkContainerQId="milestonepymt" linkContentItemId="customerProjects"/>
 				<container id="custProjReleaseNote" label="Release Notes" 
@@ -120,6 +122,10 @@
 				linkContainerQId="caseStudy" linkContentItemId="products"/>	
 			<container id="prodFeatureSheet" label="Feature Sheets" 
 				linkContainerQId="featureSheet" linkContentItemId="products"/>	
+			<container id="prodMedia" label="Media" 
+				linkContainerQId="media" linkContentItemId="products"/>							
+			<container id="prodReference" label="Reference Material" 
+				linkContainerQId="reference" linkContentItemId="products"/>											
 			<container id="prodSalesDeck" label="Presentations" 
 				linkContainerQId="salesDeck" linkContentItemId="products"/>				
 			<container id="prodWinLoss" label="Win Loss Analysis" 
@@ -150,6 +156,10 @@
 				linkContainerQId="caseStudy" linkContentItemId="solutions"/>	
 			<container id="solFeatureSheet" label="Feature Sheets" 
 				linkContainerQId="featureSheet" linkContentItemId="solutions"/>	
+			<container id="solMedia" label="Media" 
+				linkContainerQId="media" linkContentItemId="solutions"/>	
+			<container id="solReference" label="Reference Material" 
+				linkContainerQId="reference" linkContentItemId="solutions"/>									
 			<container id="solSalesDeck" label="Presentations" 
 				linkContainerQId="salesDeck" linkContentItemId="solutions"/>	
 			<container id="solProposal" label="Proposals" 
@@ -176,6 +186,10 @@
 				linkContainerQId="featureSheet" linkContentItemId="competitors"/>	
 			<container id="compCaseStudy" label="Case Studies" 
 				linkContainerQId="caseStudy" linkContentItemId="competitors"/>
+			<container id="compMedia" label="Media" 
+				linkContainerQId="media" linkContentItemId="competitors"/>		
+			<container id="compReference" label="Reference Material" 
+				linkContainerQId="reference" linkContentItemId="competitors"/>							
 			<container id="compWinLoss" label="Win Loss Analysis" 
 				linkContainerQId="winloss" linkContentItemId="competitors"/>	
 			<container id="compBlog" label="Blogs" 
@@ -207,6 +221,10 @@
 				linkContainerQId="partneragreement" linkContentItemId="partners"/>			
 			<container id="partnerCaseStudy" label="Case Studies" 
 				linkContainerQId="caseStudy" linkContentItemId="partners"/>
+			<container id="partnerReference" label="Reference Material" 
+				linkContainerQId="reference" linkContentItemId="partners"/>					
+			<container id="partnerMedia" label="Media" 
+				linkContainerQId="media" linkContentItemId="partners"/>				
 			<container id="partnerSalesDeck" label="Presentations" 
 				linkContainerQId="salesDeck" linkContentItemId="partners"/>									
 			<container id="partnerProposal" label="Proposals" 
@@ -385,7 +403,7 @@
 			<contentItem id="title" label="Title" type="text"/>		
 			<contentItem id="file" label="File" type="doc"/>
 			<contentItem id="highlights" label="Case Highlights" type="text" searchBoost="2"/>
-			<contentItem id="type" label="Type" type="bounded">
+			<contentItem id="type" label="Type" type="bounded" searchBoost="6">
 				<bounded multivalued="true">
 					<refList>
 						<datastore>
@@ -636,6 +654,56 @@
 				</bounded>
 			</contentItem>		
 		</container>										
+		<container id="reference" label="Reference Material">
+			<contentItem id="title" label="Title" type="text" searchBoost="7"/>	
+			<contentItem id="url" label="URL" type="text"/>					
+			<contentItem id="file" label="File" type="doc"/>
+			<contentItem id="desc" label="Description" type="text"/>
+			<contentItem id="solutions" label="Industry Solutions" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>solution</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>name</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="products" label="Products" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>product</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>name</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="competitors" label="Competitors" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>competitor</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>name</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>			
+			<contentItem id="partners" label="Partners" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>partner</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>name</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>			
+		</container>				
 		<container id="salesDeck" label="Presentations">
 			<contentItem id="title" label="Title" type="text"/>			
 			<contentItem id="file" label="File" type="doc"/>
@@ -685,6 +753,78 @@
 				</bounded>
 			</contentItem>
 		</container>
+		<container id="media" label="Media">
+			<contentItem id="title" label="Title" type="text" searchBoost="7"/>	
+			<contentItem id="url" label="URL" type="text"/>					
+			<contentItem id="file" label="File" type="doc"/>
+			<contentItem id="type" label="Media Type" type="bounded" searchBoost="6">
+				<bounded>
+					<refList>
+						<datastore>
+							<storeId>mediaType</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>typeName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>			
+			<contentItem id="desc" label="Description" type="text"/>
+			<contentItem id="solutions" label="Industry Solutions" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>solution</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>name</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="products" label="Products" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>product</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>name</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="competitors" label="Competitors" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>competitor</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>name</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>			
+			<contentItem id="customerProjects" label="Customer Projects" type="bounded" searchBoost="6">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>customer.project</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>name</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>					
+			<contentItem id="partners" label="Partners" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>partner</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>name</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+		</container>		
 		<container id="whitepaper" label="White Papers">
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="file" label="File" type="doc"/>
@@ -1763,6 +1903,10 @@
 			<contentItem id="typeName" label="Type" type="text"/>
 			<contentItem id="desc" label="Description" type="text"/>
 		</container>
+		<container id="mediaType" label="Media Types" refData="true">
+			<contentItem id="typeName" label="Type" type="text"/>
+			<contentItem id="desc" label="Description" type="text"/>
+		</container>		
 		<container id="partnerType" label="Partner Types" refData="true">
 			<contentItem id="typeName" label="Type" type="text"/>
 			<contentItem id="desc" label="Description" type="text"/>
@@ -1810,7 +1954,9 @@
 					<childContainer id="featureSheet"/>					
 					<childContainer id="flyer"/>
 					<childContainer id="infographic"/>	
-					<childContainer id="importantslides"/>									
+					<childContainer id="importantslides"/>	
+					<childContainer id="media"/>
+					<childContainer id="reference"/>																			
 					<childContainer id="salesDeck"/>					
 					<childContainer id="whitepaper"/>
 					<childContainer id="winloss"/>
@@ -1938,6 +2084,37 @@
 		<contentUIDef qualifiedId="whitepaper.summary">
 			<text type="long"/>
 		</contentUIDef>				
+		<contentUIDef qualifiedId="media">
+			<container labelQualifiedId="media.title">
+				<listViewConfig>
+					<hideContentItem id="file"/>
+					<hideContentItem id="desc"/>
+					<hideContentItem id="partners"/>										
+					<hideContentItem id="customerProjects"/>															
+				</listViewConfig>
+				<portalConfig>
+					<headingContentItem id="title"/>
+				</portalConfig>					
+			</container>
+		</contentUIDef>
+		<contentUIDef qualifiedId="media.desc">
+			<text type="long"/>
+		</contentUIDef>
+		<contentUIDef qualifiedId="reference">
+			<container labelQualifiedId="reference.title">
+				<listViewConfig>
+					<hideContentItem id="file"/>
+					<hideContentItem id="desc"/>
+					<hideContentItem id="partners"/>										
+				</listViewConfig>
+				<portalConfig>
+					<headingContentItem id="title"/>
+				</portalConfig>					
+			</container>
+		</contentUIDef>
+		<contentUIDef qualifiedId="reference.desc">
+			<text type="long"/>
+		</contentUIDef>				
 		<contentUIDef qualifiedId="salesDeck">
 			<container labelQualifiedId="salesDeck.title">
 				<listViewConfig>
@@ -1951,7 +2128,7 @@
 		</contentUIDef>
 		<contentUIDef qualifiedId="salesDeck.summary">
 			<text type="long"/>
-		</contentUIDef>					
+		</contentUIDef>	
 		<contentUIDef qualifiedId="article">
 			<container labelQualifiedId="article.title">
 				<listViewConfig>
@@ -2247,8 +2424,8 @@
 				<itemContainer qualifiedId="solution"/>
 				<itemContainer qualifiedId="product"/>
 				<itemContainer qualifiedId="competitor"/>
-				<itemContainer qualifiedId="analyst"/>
-				<itemContainer qualifiedId="partner"/>
+				<itemContainer qualifiedId="template"/>				
+				<itemContainer qualifiedId="othercontent"/>
 			</itemContainers>
 			<enclosures>
 				<enclosure id="collateral" label="Collateral">
@@ -2259,14 +2436,15 @@
 					<childContainer id="featureSheet"/>					
 					<childContainer id="flyer"/>
 					<childContainer id="infographic"/>					
-					<childContainer id="importantslides"/>					
+					<childContainer id="importantslides"/>
+					<childContainer id="media"/>					
+					<childContainer id="partner"/>
+					<childContainer id="reference"/>						
 					<childContainer id="salesDeck"/>					
 					<childContainer id="whitepaper"/>
 					<childContainer id="winloss"/>
 					<childContainer id="othercontent"/>
 					<childContainer id="template"/>															
-				</enclosure>			
-				<enclosure  id="corporate" label="Corporate">
 					<childContainer id="licenseAgreement"/>
 					<childContainer id="nda"/>
 					<childContainer id="orderingdoc"/>				
@@ -2274,7 +2452,7 @@
 					<childContainer id="ppttemplate"/>					
 					<childContainer id="servicesAgreement"/>				
 					<childContainer id="supportpolicy"/>
-				</enclosure>
+				</enclosure>			
 			</enclosures>
 		</topNavigation>
 	</portalUIDefinition>
