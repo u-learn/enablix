@@ -29,5 +29,6 @@
 	<module>content-approval-workflow</module>
 	<module>manage-content-connection</module>
 	<module>commons-caching</module>
+	<module>manage-play-lifecycle</module>
   </modules>
 </project>

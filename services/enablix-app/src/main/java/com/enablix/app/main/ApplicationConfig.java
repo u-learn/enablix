@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
 
 import com.enablix.app.corr.rule.processor.ItemCorrelationRuleProcessor;
 import com.enablix.app.corr.rule.processor.ItemUserCorrelationRuleProcessor;
+import com.enablix.app.play.definition.PlayDefinitionProcessor;
 import com.enablix.app.template.provider.TemplateFileProcessor;
 import com.enablix.app.trigger.rule.TriggerLifecycleRuleProcessor;
 import com.enablix.commons.util.StringUtil;
@@ -43,6 +44,11 @@ public class ApplicationConfig {
 	
 	private static final String[] CONTENT_MAPPING_FILE_EXTN = {"xml"};
 	
+	private static final String PLAY_TEMPLATE_DIR = "play-template";
+	
+	private static final String[] PLAY_TEMPLATE_FILE_EXTN = {"xml"};
+
+
 	//private static final String DOCSTORE_CONFIG_DIR = "config/docstore";
 
 	//private static final String[] DOCSTORE_CONFIG_FILE_EXTN = {"json"};
@@ -89,6 +95,12 @@ public class ApplicationConfig {
 	}
 	
 	@Bean
+	public FileBasedDataLoader playDefinitionFilesLoader() {
+		String templatesBaseDir = getDataDirPath() + File.separator + PLAY_TEMPLATE_DIR;
+		return new TenantSpecificFileBasedDataLoader(templatesBaseDir, PLAY_TEMPLATE_FILE_EXTN, playTemplateProcessor());
+	}
+	
+	@Bean
 	public ItemCorrelationRuleProcessor itemItemCorrRuleProcessor() {
 		return new ItemCorrelationRuleProcessor();
 	}
@@ -106,6 +118,11 @@ public class ApplicationConfig {
 	@Bean
 	public ContentMappingFileProcessor contentMappingProcessor() {
 		return new ContentMappingFileProcessor();
+	}
+	
+	@Bean
+	public PlayDefinitionProcessor playTemplateProcessor() {
+		return new PlayDefinitionProcessor();
 	}
 
 	private String getDataDirPath() {

@@ -1,0 +1,61 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+	<xs:include schemaLocation="enablix-commons.xsd" />
+	<xs:include schemaLocation="lifecycle-commons.xsd" />
+	
+	<xs:element name="playTemplate">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="describedAndVersionedType">
+					<xs:sequence>
+						<xs:element name="title" type="xs:string" minOccurs="0"/>
+						<xs:element name="focusItems" type="focusItemsType"/>
+						<xs:element name="scope" type="playScopeType" minOccurs="0"/>
+						<xs:element name="userGroups" type="userGroupsType" minOccurs="0"/>
+						<xs:element name="contentGroups" type="contentGroupsType" minOccurs="0"/>
+						<xs:element name="execution" type="playExecutionType" minOccurs="0"/>
+					</xs:sequence>
+					<xs:attribute name="prototype" type="xs:boolean" default="true"/>
+					<xs:attribute name="executable" type="xs:boolean" default="false"/>
+					<xs:attribute name="prototypeId" type="xs:string"/>	
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:complexType name="focusItemsType">
+		<xs:sequence>
+			<xs:element name="focusItem" type="focusItemType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="focusItemType">
+		<xs:attribute name="qualifiedId" type="xs:string"/>
+	</xs:complexType>
+	
+	<xs:complexType name="playScopeType">
+		<xs:sequence>
+			<xs:element name="focusItemMatch" type="focusItemMatchType"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="focusItemMatchType">
+		<xs:complexContent>
+			<xs:extension base="conditionType">
+				<xs:attribute name="itemQId" type="xs:string"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	
+	<xs:complexType name="userGroupsType">
+		<xs:sequence>
+			<xs:element name="userGroup" type="userGroupType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="playExecutionType">
+		<xs:sequence>
+			<xs:element name="lifecycle" type="lifecycleType"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+</xs:schema>

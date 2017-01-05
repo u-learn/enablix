@@ -12,4 +12,6 @@ public class SchemaConstants {
 	
 	public static final String CONTENT_MAPPING_XSD_LOCATION = "xsd/content-mapping.xsd";
 	
+	public static final String PLAY_TEMPLATE_XSD_LOCATION = "xsd/play-template.xsd";
+	
 }

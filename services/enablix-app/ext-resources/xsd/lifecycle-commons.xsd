@@ -1,0 +1,370 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+	<xs:include schemaLocation="enablix-commons.xsd" />
+	
+	<xs:simpleType name="execTimeType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="NOW" />
+			<xs:enumeration value="LATER" />
+			<xs:enumeration value="RECURRING" />
+			<xs:enumeration value="ON_CONTENT_UPDATE"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:complexType name="laterExecutionTimeType">
+		<xs:sequence>
+			<xs:element name="resetOn" type="resetExecutionOnType" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+		<xs:attribute name="timeUnit" type="timeUnitEnum"/>
+		<xs:attribute name="timeValue" type="xs:integer"/>
+	</xs:complexType>
+	
+	<xs:complexType name="timeReferenceType">
+		<xs:attribute name="timeUnit" type="timeUnitEnum"/>
+		<xs:attribute name="timeValue" type="xs:integer"/>
+	</xs:complexType>
+	
+	<xs:simpleType name="timeUnitEnum">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="MIN" />
+			<xs:enumeration value="DAY" />
+			<xs:enumeration value="WEEK" />
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:complexType name="recurringScheduleType">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="interval" type="timeReferenceType"/>
+			</xs:choice>
+			<xs:element name="after" type="timeReferenceType" minOccurs="0"/>	
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="resetExecutionOnType">
+		<xs:sequence>
+			<xs:element name="triggerEntityUpdate" type="triggerEntityUpdateCondType" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="disableExecutionOnType">
+		<xs:sequence>
+			<xs:element name="triggerEntityUpdate" type="triggerEntityUpdateCondType" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="triggerEntityUpdateCondType">
+		<xs:sequence>
+			<xs:element name="attributeUpdate" type="attributeUpdateType" minOccurs="0"/>
+			<xs:element name="entityMatch" type="filterCriteriaType" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute name="qualifiedId" type="xs:string"/>
+	</xs:complexType>
+	
+	<xs:complexType name="attributeUpdateType">
+		<xs:sequence>
+			<xs:element name="on" type="attributeCheckType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="except" type="attributeCheckType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="attributeCheckType">
+		<xs:attribute name="name" type="xs:string"/>
+	</xs:complexType>
+	
+	<xs:complexType name="candidateContainersType">
+		<xs:sequence>
+			<xs:element name="containerQId" type="xs:string" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="lifecycleType">
+		<xs:sequence>
+			<xs:element name="checkpoint" type="checkpointType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="checkpointType">
+		<xs:sequence>
+			<xs:element name="execCondition" type="execConditionType" minOccurs="0"/>
+			<xs:element name="executionTime" type="executionTimeType"/>
+			<xs:element name="actions" type="actionsType"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="executionTimeType">
+		<xs:sequence>
+			<xs:element name="after" type="laterExecutionTimeType" minOccurs="0"/>
+			<xs:element name="recurringSchedule" type="recurringScheduleType" minOccurs="0"/>
+			<xs:element name="updateOn" type="updateOnExecType" minOccurs="0"/>
+			<xs:element name="disableOn" type="disableExecutionOnType" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+		<xs:attribute name="type" type="execTimeType"/>
+	</xs:complexType>
+	
+	<xs:complexType name="updateOnExecType">
+		<xs:sequence>
+			<xs:element name="contentGroups" type="updateOnContentGroupsType" minOccurs="0"/>
+			<xs:element name="focusItem" type="focusItemRefType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="focusItemRefType">
+		<xs:attribute name="qualifiedId" type="xs:string" use="required"/>
+	</xs:complexType>
+	
+	<xs:complexType name="updateOnContentGroupsType">
+		<xs:sequence>
+			<xs:element name="contentGroup" type="contentGroupRefType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="actionsType">
+		<xs:sequence>
+			<xs:element name="correlation" type="correlationActionType" minOccurs="0"/>
+			<xs:element name="email" type="emailActionType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="reevaluateCheckpoint" type="reevaluatePendingCheckpointType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="actionType">
+		<xs:sequence>
+			<xs:element name="execCondition" type="execConditionType" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute name="execOrder" type="xs:integer" use="required"/>
+		<xs:attribute name="id" type="xs:string"/>
+		<xs:attribute name="name" type="xs:string"/>
+	</xs:complexType>
+	
+	<xs:complexType name="execConditionType">
+		<xs:complexContent>
+			<xs:extension base="conditionType">
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	
+	<xs:complexType name="correlationActionType">
+		<xs:complexContent>
+			<xs:extension base="actionType">
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	
+	<xs:complexType name="reevaluatePendingCheckpointType">
+		<xs:complexContent>
+			<xs:extension base="actionType">
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	
+	<xs:complexType name="emailActionType">
+		<xs:complexContent>
+			<xs:extension base="actionType">
+				<xs:sequence>
+					<xs:element name="emailTemplate" type="emailTemplateType"/>
+					<xs:element name="emailContent" type="emailContentType"/>
+					<xs:element name="recipient" type="emailRecipientType"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	
+	<xs:complexType name="emailTemplateType">
+		<xs:sequence>
+			<xs:element name="subject" type="templateType"/>
+			<xs:element name="body" type="templateType"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="templateType">
+		<xs:attribute name="templateName" type="xs:string" use="required"/>
+	</xs:complexType>
+	
+	<xs:complexType name="emailContentType">
+		<xs:all>
+			<xs:element name="triggerEntity" type="emailContentTriggerEntityType" minOccurs="0"/>
+			<xs:element name="correlatedEntities" type="correlatedEntitiesType" minOccurs="0"/>
+			<xs:element name="contentGroups" type="emailContentGroupsType" minOccurs="0"/>
+		</xs:all>
+	</xs:complexType>
+	
+	<xs:complexType name="baseEmailContentType">
+		<xs:attribute name="name" type="xs:string"/>
+	</xs:complexType>
+	
+	<xs:complexType name="emailContentTriggerEntityType">
+		<xs:complexContent>
+			<xs:extension base="baseEmailContentType">
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	
+	<xs:complexType name="correlatedEntitiesType">
+		<xs:complexContent>
+			<xs:extension base="baseEmailContentType">
+				<xs:sequence>
+					<xs:element name="entity" type="entityContentType" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	
+	<xs:complexType name="entityContentType">
+		<xs:sequence>
+			<xs:element name="contentTypes" type="candidateContainersType" minOccurs="0"/>
+			<xs:element name="filterTags" type="filterTagsType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="filterTagsType">
+		<xs:sequence>
+			<xs:element name="tag" type="xs:string" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="emailContentGroupsType">
+		<xs:complexContent>
+			<xs:extension base="baseEmailContentType">
+				<xs:sequence>
+					<xs:element name="contentGroup" type="contentGroupRefType" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	
+	<xs:complexType name="contentGroupRefType">
+		<xs:attribute name="id" type="xs:string" use="required"/>
+	</xs:complexType>
+	
+	<xs:complexType name="emailRecipientType">
+		<xs:sequence>
+			<xs:element name="correlatedUsers" type="emailCorrelatedUsersType" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="allUsers" type="emailAllUsersType"  minOccurs="0" maxOccurs="1"/>
+			<xs:element name="userGroups" type="emailUserGroupsType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="baseEmailRecipientType">
+		<xs:attribute name="name" type="xs:string"/>
+	</xs:complexType>
+
+	<xs:complexType name="emailUserGroupsType">
+		<xs:complexContent>
+			<xs:extension base="baseEmailRecipientType">
+				<xs:sequence>
+					<xs:element name="userGroup" type="userGroupRefType" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="userGroupRefType">
+		<xs:attribute name="id" type="xs:string" use="required"/>
+	</xs:complexType>
+	
+	<xs:complexType name="emailAllUsersType">
+		<xs:complexContent>
+			<xs:extension base="baseEmailRecipientType"/>
+		</xs:complexContent>
+	</xs:complexType>
+	
+	<xs:complexType name="emailCorrelatedUsersType">
+		<xs:complexContent>
+			<xs:extension base="baseEmailRecipientType">
+				<xs:sequence>
+					<xs:element name="users" type="emailUsersType" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	
+	<xs:complexType name="emailUsersType">
+		<xs:sequence>
+			<xs:element name="filterTags" type="filterTagsType"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="userGroupType">
+		<xs:complexContent>
+			<xs:extension base="describedType">
+				<xs:sequence>
+					<xs:element name="userSet" type="userSetType" minOccurs="0"/>
+					<xs:element name="referenceUserSet" type="referenceUserSetType" minOccurs="0"/>
+					<xs:element name="filteredUserSet" type="filteredUserSetType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	
+	<xs:complexType name="userSetType">
+		<xs:sequence>
+			<xs:element name="userId" type="xs:string" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="referenceUserSetType">
+		<xs:sequence>
+			<xs:element name="focusItemAttr" type="focusItemAttrType"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="focusItemAttrType">
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute name="itemQId" type="xs:string" use="required"/>	
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	
+	<xs:complexType name="filteredUserSetType">
+		<xs:complexContent>
+			<xs:extension base="conditionType"/>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="contentGroupsType">
+		<xs:sequence>
+			<xs:element name="contentGroup" type="contentGroupType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="contentGroupType">
+		<xs:complexContent>
+			<xs:extension base="describedType">
+				<xs:sequence>
+					<xs:element name="focusItemCorrelatedContent" type="focusItemCorrelatedContentType" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="contentSet" type="contentSetType" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	
+	<xs:complexType name="focusItemCorrelatedContentType">
+		<xs:sequence>
+			<xs:element name="correlatedItem" type="contentCorrelatedItemType" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute name="itemQId" type="xs:string"/>
+	</xs:complexType>
+	
+	<xs:complexType name="contentCorrelatedItemType">
+		<xs:sequence>
+			<xs:element name="correlatedItem" type="contentCorrelatedItemType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute name="qualifiedId" type="xs:string" use="required"/>
+	</xs:complexType>
+	
+	<xs:complexType name="contentSetType">
+		<xs:sequence>
+			<xs:element name="contentRecord" type="contentRecordType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="contentRecordType">
+		<xs:complexContent>
+			<xs:extension base="basicConditionType">
+				<xs:attribute name="qualifiedId" type="xs:string"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+
+</xs:schema>

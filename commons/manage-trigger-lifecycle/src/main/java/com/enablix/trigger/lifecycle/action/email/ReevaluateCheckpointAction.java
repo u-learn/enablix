@@ -56,10 +56,15 @@ public class ReevaluateCheckpointAction implements CheckpointAction<ContentChang
 					
 					pendingCheckpt = checkAndReset(pendingCheckpt, currentTrigger, 
 										laterExecDef.getResetOn(), template);
-					
-					pendingCheckpt = checkAndDisable(pendingCheckpt, currentTrigger, 
-										laterExecDef.getDisableOn(), template); 
 				}
+				
+				DisableExecutionOnType disableOn = checkpointDef.getExecutionTime().getDisableOn();
+
+				if (disableOn != null) {
+					pendingCheckpt = checkAndDisable(pendingCheckpt, currentTrigger, 
+							disableOn, template); 
+				}
+				
 			}
 		}
 		

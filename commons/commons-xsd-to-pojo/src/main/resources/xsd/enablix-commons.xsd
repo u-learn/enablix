@@ -57,4 +57,88 @@
 		</xs:sequence>
 	</xs:complexType>
 	
+	  
+	<xs:complexType name="identifiableType">
+		<xs:attribute name="id" type="xs:string"/>
+		<xs:attribute name="name" type="xs:string"/>
+	</xs:complexType>
+	
+	<xs:complexType name="describedType">
+		<xs:complexContent>
+			<xs:extension base="identifiableType">
+				<xs:sequence>
+					<xs:element name="description" type="xs:string" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	
+	<xs:complexType name="describedAndVersionedType">
+		<xs:complexContent>
+			<xs:extension base="describedType">
+				<xs:attribute name="version" type="xs:integer" use="required"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	
+	<xs:complexType name="baseConditionType">
+		<xs:attribute name="onItem" type="xs:string"/>
+		<xs:attribute name="negate" type="xs:boolean" default="false"/>
+	</xs:complexType>
+	
+	<xs:complexType name="basicConditionType">
+		<xs:complexContent>
+			<xs:extension base="baseConditionType">
+				<xs:sequence>
+					<xs:element name="attribute" type="condAttrType"/>
+					<xs:element name="value" type="condValueType" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>	
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	
+	<xs:complexType name="condAttrType">
+		<xs:simpleContent>
+			<xs:extension base="xs:string"/>
+		</xs:simpleContent>
+	</xs:complexType>
+	
+	<xs:complexType name="condValueType">
+		<xs:simpleContent>
+			<xs:extension base="xs:string"/>
+		</xs:simpleContent>
+	</xs:complexType>
+	 
+	<xs:complexType name="andConditionType">
+		<xs:complexContent>
+			<xs:extension base="groupConditionType"/>
+		</xs:complexContent>
+	</xs:complexType>
+	
+	<xs:complexType name="orConditionType">
+		<xs:complexContent>
+			<xs:extension base="groupConditionType"/>
+		</xs:complexContent>
+	</xs:complexType>
+	
+	<xs:complexType name="groupConditionType">
+		<xs:complexContent>
+			<xs:extension base="baseConditionType">
+				<xs:sequence>
+					<xs:element name="andCondition" type="andConditionType" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="orCondition" type="orConditionType" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="basicCondition" type="basicConditionType" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>	
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	
+	<xs:complexType name="conditionType">
+		<xs:choice>
+			<xs:element name="andCondition" type="andConditionType"/>
+			<xs:element name="orCondition" type="orConditionType"/>
+			<xs:element name="basicCondition" type="basicConditionType"/>
+		</xs:choice>
+	</xs:complexType>
+	
 </xs:schema>

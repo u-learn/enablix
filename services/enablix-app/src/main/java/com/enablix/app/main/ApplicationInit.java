@@ -52,7 +52,8 @@ import com.enablix.commons.util.StringUtil;
 				"com.enablix.content.mapping.repo",
 				"com.enablix.doc.state.change.repo",
 				"com.enablix.content.approval.repo",
-				"com.enablix.content.connection.repo"})
+				"com.enablix.content.connection.repo",
+				"com.enablix.play.definition.repo"})
 @EnableScheduling
 public class ApplicationInit extends WebMvcAutoConfigurationAdapter {
 

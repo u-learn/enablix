@@ -6,6 +6,8 @@ import java.io.FileNotFoundException;
 
 import javax.xml.bind.JAXBException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.enablix.analytics.correlation.rule.ItemCorrelationRuleManager;
@@ -13,6 +15,8 @@ import com.enablix.util.data.loader.DataFileProcessor;
 
 public class ItemUserCorrelationRuleProcessor implements DataFileProcessor {
 
+	private static final Logger LOGGER = LoggerFactory.getLogger(ItemUserCorrelationRuleProcessor.class);
+	
 	@Autowired
 	private ItemCorrelationRuleManager corrRuleManager;
 	
@@ -26,7 +30,7 @@ public class ItemUserCorrelationRuleProcessor implements DataFileProcessor {
 			corrRuleManager.saveItemUserCorrelationRuleXml(fis);
 			
 		} catch (FileNotFoundException | JAXBException e) {
-			e.printStackTrace();
+			LOGGER.error("Error loading item-user-corr file: " + templateFile.getAbsolutePath(), e);
 			
 		} finally {
 			

@@ -17,7 +17,8 @@ enablix.studioApp.factory('DocPreviewService',
 	 			};
 	 			
 	 			this.canHandleDoc = function(_docMd) {
-	 				return _docMd.contentType && _docMd.contentType == 'application/pdf';
+	 				return (_docMd.contentType && _docMd.contentType == 'application/pdf') 
+	 						|| (_docMd.name && _docMd.name.toLowerCase().endsWith(".pdf"));
 	 			};
 	 		};
 	 		

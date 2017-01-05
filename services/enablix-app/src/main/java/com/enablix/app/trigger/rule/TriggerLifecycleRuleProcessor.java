@@ -6,6 +6,8 @@ import java.io.FileNotFoundException;
 
 import javax.xml.bind.JAXBException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.enablix.trigger.lifecycle.rule.TriggerLifecycleRuleManager;
@@ -13,6 +15,8 @@ import com.enablix.util.data.loader.DataFileProcessor;
 
 public class TriggerLifecycleRuleProcessor implements DataFileProcessor {
 
+	private static final Logger LOGGER = LoggerFactory.getLogger(TriggerLifecycleRuleProcessor.class);
+	
 	@Autowired
 	private TriggerLifecycleRuleManager triggerLifecycleRuleMgr;
 	
@@ -26,7 +30,7 @@ public class TriggerLifecycleRuleProcessor implements DataFileProcessor {
 			triggerLifecycleRuleMgr.saveTriggerLifecycleRuleXml(fis);
 			
 		} catch (FileNotFoundException | JAXBException e) {
-			e.printStackTrace();
+			LOGGER.error("Error loading trigger file: " + templateFile.getName(), e);
 			
 		} finally {
 			

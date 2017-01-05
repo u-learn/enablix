@@ -9,6 +9,7 @@ import com.enablix.core.commons.xsd.parser.DefaultXMLParser;
 import com.enablix.core.commons.xsdtopojo.ContentMapping;
 import com.enablix.core.commons.xsdtopojo.ItemCorrelationRules;
 import com.enablix.core.commons.xsdtopojo.ItemUserCorrelationRules;
+import com.enablix.core.commons.xsdtopojo.PlayTemplate;
 import com.enablix.core.commons.xsdtopojo.TriggersDef;
 
 @Configuration
@@ -46,6 +47,13 @@ public class SchemaConfig {
 	public DefaultXMLParser<ContentMapping> contentMappingParser() {
 		DefaultXMLParser<ContentMapping> parser = new DefaultXMLParser<ContentMapping>(
 				SchemaConstants.CONTENT_MAPPING_XSD_LOCATION, ContentMapping.class);
+		return parser;
+	}
+	
+	@Bean
+	public DefaultXMLParser<PlayTemplate> playTemplateParser() {
+		DefaultXMLParser<PlayTemplate> parser = new DefaultXMLParser<PlayTemplate>(
+				SchemaConstants.PLAY_TEMPLATE_XSD_LOCATION, PlayTemplate.class);
 		return parser;
 	}
 
