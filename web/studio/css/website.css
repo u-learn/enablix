@@ -1,12 +1,3 @@
-h2 {
-	color: #222;
-}
-h3 {
-	color: #222;
-}
-h4 {
-	color: #222;	
-}
 .form-label {
 	color: #222;
 }
@@ -94,3 +85,17 @@ h4 {
 .button-yellow:hover {
 	background: #d58512;
 }
+
+.page-footer {
+	margin-top: -44px;
+	padding: 1.25em 0;
+	border-top: 1px solid transparent;
+	border-bottom: 1px solid transparent;
+	text-align: center;
+}
+
+.copyrights a {
+	color: #337ab7;
+}
+
+

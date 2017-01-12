@@ -2,8 +2,6 @@ enablix.studioApp.controller('FileUploadCtrl',
 			['$scope', 'FileUploader', 'ContentTemplateService', 'QIdUtil', 'InfoModalWindow',
     function ($scope,   FileUploader,   ContentTemplateService,   QIdUtil,   InfoModalWindow) {
     	
-		var file	
-			
 		var uploadUrl = enablix.serviceURL.uploadDocument;
 		
 		var fileSizeCheckFilter = function(item) {

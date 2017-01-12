@@ -1,0 +1,17 @@
+<div class="head ebx-top-border">
+	<i ng-class="isCollapsed ? 'fa fa-chevron-right' : 'fa fa-chevron-down'" class="ebx-float-right" 
+		aria-hidden="true" ng-click="isCollapsed = !isCollapsed"></i>
+	<h2>Scope</h2>
+</div>
+
+<div collapse="isCollapsed">
+	<ebx-condition-attributes condition-holder="scopeDef.focusItemMatch" condition-on-container="scopeDef.focusItemMatch.itemQId"></ebx-condition-attributes>
+	<div class="cont" ng-repeat="scopeAttr in playScopeAttrs">
+		<div ng-if="scopeAttr.itemDef.type == 'TEXT' || scopeAttr.itemDef.type == 'NUMERIC'">
+			<eb-text content-def="scopeAttr.itemDef" text-value=""></eb-text>
+		</div>
+		<div ng-if="scopeAttr.itemDef.type == 'BOUNDED'">
+			<eb-bounded content-def="scopeAttr.itemDef" select-value=""></eb-bounded>
+		</div>
+	</div>
+</div>

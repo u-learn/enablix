@@ -461,7 +461,8 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvi
 					return AuthorizationService.userHasPageAccess('MANAGE_CONTENT_REQUEST')
 				}]
 			}
-		}).state('system.contentrequestview', {
+		})
+		.state('system.contentrequestview', {
 			url: '/contentrequest/a/{action}/{refObjectIdentity}/',
 			templateUrl: 'views/content/content-suggest-detail.html',
 			controller: 'ContentSuggestDetailCtrl',
@@ -472,42 +473,48 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvi
 					return AuthorizationService.userHasPageAccess('MANAGE_CONTENT_REQUEST')
 				}]
 			}
-		}).state('system.contentconnlist', {
+		})
+		.state('system.contentconnlist', {
 			url: '/contentconn/{category}/list/',
 			templateUrl: 'views/system/contentconn/content-conn-list.html',
 			controller: 'ContentConnListController',
 			resolve: {
 				setupData: appSetup
 			}
-		}).state('system.contentconndetail', {
+		})
+		.state('system.contentconndetail', {
 			url: '/contentconn/{category}/detail/{connectionIdentity}/',
 			templateUrl: 'views/system/contentconn/content-conn-add-edit.html',
 			controller: 'ContentConnAddEditController',
 			resolve: {
 				setupData: appSetup
 			}
-		}).state('system.contentconnadd', {
+		})
+		.state('system.contentconnadd', {
 			url: '/contentconn/{category}/add/',
 			templateUrl: 'views/system/contentconn/content-conn-add-edit.html',
 			controller: 'ContentConnAddEditController',
 			resolve: {
 				setupData: appSetup
 			}
-		}).state('system.contentconnedit', {
+		})
+		.state('system.contentconnedit', {
 			url: '/contentconn/{category}/edit/{connectionIdentity}/',
 			templateUrl: 'views/system/contentconn/content-conn-add-edit.html',
 			controller: 'ContentConnAddEditController',
 			resolve: {
 				setupData: appSetup
 			}
-		}).state('myaccount', {
+		})
+		.state('myaccount', {
 			url: '/account',
 			templateUrl: 'views/account/myaccount.html',
 			controller: 'MyAccountController',
 			resolve: {
 				setupData: appSetup 
 			}
-		}).state('myaccount.contentrequestlist', {
+		})
+		.state('myaccount.contentrequestlist', {
 			url: '/contentrequest',
 			templateUrl: 'views/content/content-suggest-list.html',
 			controller: 'ContentRequestListCtrl',
@@ -515,7 +522,8 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvi
 				setupData: appSetup,
 				contentWFInit: contentWFInit
 			}
-		}).state('myaccount.contentrequestedit', {
+		})
+		.state('myaccount.contentrequestedit', {
 			url: '/contentrequest/edit/{refObjectIdentity}/',
 			templateUrl: 'views/content/content-suggest.html',
 			controller: 'ContentSuggestEditCtrl',
@@ -523,13 +531,46 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvi
 				setupData: appSetup,
 				contentWFInit: contentWFInit
 			}
-		}).state('myaccount.contentrequestview', {
+		})
+		.state('myaccount.contentrequestview', {
 			url: '/contentrequest/a/{action}/{refObjectIdentity}/',
 			templateUrl: 'views/content/content-suggest-detail.html',
 			controller: 'ContentSuggestDetailCtrl',
 			resolve: {
 				setupData: appSetup,
 				contentWFInit: contentWFInit
+			}
+		})
+		.state('play', {
+			url: '/play',
+			templateUrl: 'views/play/play.html',
+			controller: 'PlayMainController',
+			resolve: {
+				setupData: appSetup
+			}
+		})
+		.state('play.executablelist', { // list of executable play template with given playDefId as the prototypeId
+			url: '/xlist/{playDefId}',
+			templateUrl: 'views/play/def/play-xlist.html',
+			controller: 'PlayXListCtrl',
+			resolve: {
+				setupData: appSetup
+			}
+		})
+		.state('play.addExecutable', { // list of executable play template with given playDefId as the prototypeId
+			url: '/xadd/{playDefId}',
+			templateUrl: 'views/play/def/add-xplay.html',
+			controller: 'AddXPlayCtrl',
+			resolve: {
+				setupData: appSetup
+			}
+		})
+		.state('play.runlist', {
+			url: '/rlist/{playDefId}', // list of play run instances created from an executable play for the given playDefId
+			templateUrl: 'views/play/def/play-rlist.html',
+			controller: 'PlayRListCtrl',
+			resolve: {
+				setupData: appSetup
 			}
 		});
 	

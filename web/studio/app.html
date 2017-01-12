@@ -20,7 +20,7 @@
 	<!-- <link rel="stylesheet" type="text/css" href="css/listGroupTreeview.css"> -->
 	<link rel="stylesheet" type="text/css" href="css/angular-ui-notification.min.css">
 	<link rel="stylesheet" type="text/css" href="css/select.css">
-		<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
+	<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
 	<link rel="stylesheet" type="text/css" href="css/main.css">
 	
 	<script type="text/javascript" src="js/vendor/jquery/jquery-1.11.2.min.js"></script>
@@ -113,6 +113,18 @@
 	<script type="text/javascript" src="widgets/directive/passwordChecked.js"></script>
 	<script type="text/javascript" src="widgets/directive/portal/sharePopup/share-content-popup.js"></script>
 	<script type="text/javascript" src="widgets/directive/portal/sharePopup/share-content-popupController.js"></script>
+	<script type="text/javascript" src="widgets/directive/condition/conditionAttrsController.js"></script>
+	<script type="text/javascript" src="widgets/directive/condition/conditionAttrsDirective.js"></script>
+	<script type="text/javascript" src="widgets/directive/play/scope/playScopeDirective.js"></script>
+	<script type="text/javascript" src="widgets/directive/play/userGroup/playUserGroupsController.js"></script>
+	<script type="text/javascript" src="widgets/directive/play/userGroup/playUserGroupsDirective.js"></script>
+	<script type="text/javascript" src="widgets/directive/play/contentGroup/playContentGroupsController.js"></script>
+	<script type="text/javascript" src="widgets/directive/play/contentGroup/playContentGroupsDirective.js"></script>
+	<script type="text/javascript" src="widgets/directive/play/contentGroup/detail/playContentGroupDetailController.js"></script>
+	<script type="text/javascript" src="widgets/directive/play/execution/playExecutionDefController.js"></script>
+	<script type="text/javascript" src="widgets/directive/play/execution/playExecutionDefDirective.js"></script>
+	<script type="text/javascript" src="widgets/directive/content/browser/systemBrowserWindowController.js"></script>
+	<script type="text/javascript" src="widgets/directive/content/browser/systemContentBrowser.js"></script>
 	
 	<script type="text/javascript" src="widgets/stateUpdateService.js"></script>
 	<script type="text/javascript" src="widgets/content/template/contentTemplateService.js"></script>
@@ -127,6 +139,7 @@
 	<script type="text/javascript" src="widgets/search/data/dataSearchService.js"></script>
 	<script type="text/javascript" src="widgets/content/contentUtil.js"></script>
 	<script type="text/javascript" src="widgets/content/qIdUtil.js"></script>
+	<script type="text/javascript" src="widgets/condition/conditionUtil.js"></script>
 	<script type="text/javascript" src="widgets/auth/authorizationService.js"></script>
 	<script type="text/javascript" src="widgets/auth/requiresPermDirective.js"></script>
 	<script type="text/javascript" src="widgets/system/systemAdminController.js"></script>
@@ -154,6 +167,10 @@
 	<script type="text/javascript" src="widgets/system/contentconn/contentConnListController.js"></script>
 	<script type="text/javascript" src="widgets/system/contentconn/contentConnDetailController.js"></script>
 	<script type="text/javascript" src="widgets/system/contentconn/contentConnAddEditController.js"></script>
+	<script type="text/javascript" src="widgets/play/playMainController.js"></script>
+	<script type="text/javascript" src="widgets/play/def/playDefinitionService.js"></script>
+	<script type="text/javascript" src="widgets/play/playXListController.js"></script>
+	<script type="text/javascript" src="widgets/play/addXPlayCtrl.js"></script>
 	
 	<script type="text/javascript" src="js/mainController.js"></script>
 	<script type="text/javascript" src="widgets/content/index/contentIndexController.js"></script>
@@ -201,7 +218,13 @@
 				<!-- main nav -->
 				<nav class="main-nav container-fluid">
 					<a href="#" ng-class="{active:$state.includes('portal')}" ui-sref="portal.home">Portal</a>
-					<a href="#" ui-sref-active="active" ui-sref="studio" requires-permission="VIEW_STUDIO">Studio</a>
+					<li requires-permission="VIEW_STUDIO">
+						<a href="#" ng-class="{active:$state.includes('studio') || $state.includes('play')}">Studio&nbsp;<i class="fa fa-angle-down"></i></a>
+						<ul class="main-nav-secondary">
+							<li><a ui-sref="studio">Content Studio</a></li>
+							<li><a ui-sref="play" requires-permission="MANAGE_PLAYS">Play Studio</a></li>
+						</ul>
+					</li>
 					<!-- <a href="#" ui-sref-active="active" ui-sref="refdata">Setup</a> -->
 					<li requires-permission="VIEW_STUDIO">
 						<a href="#" ng-class="{active:$state.includes('refdata') || $state.includes('system')}">Setup&nbsp;<i class="fa fa-angle-down"></i></a>

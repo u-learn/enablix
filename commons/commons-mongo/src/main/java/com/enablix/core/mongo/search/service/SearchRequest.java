@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -14,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 
+import com.enablix.core.mongo.search.BoolFilter;
 import com.enablix.core.mongo.search.ConditionOperator;
 import com.enablix.core.mongo.search.DateFilter;
 import com.enablix.core.mongo.search.SearchFilter;
@@ -26,6 +28,7 @@ public class SearchRequest {
 	private Map<String, Object> filters = new HashMap<>();
 	private Map<String, FilterMetadata> filterMetadata = new HashMap<>();
 	private Pagination pagination;
+	private List<String> projectedFields;
 	
 	public Map<String, Object> getFilters() {
 		return filters;
@@ -49,6 +52,14 @@ public class SearchRequest {
 
 	public void setPagination(Pagination pagination) {
 		this.pagination = pagination;
+	}
+
+	public List<String> getProjectedFields() {
+		return projectedFields;
+	}
+
+	public void setProjectedFields(List<String> projectedFields) {
+		this.projectedFields = projectedFields;
 	}
 
 	public static class FilterMetadata {
@@ -99,6 +110,12 @@ public class SearchRequest {
 					} catch (ParseException e) {
 						LOGGER.error("Error parsing date [" + String.valueOf(filterValue) +"]", e);
 					}
+					break;
+					
+				case BOOL:
+					Boolean propValue = filterValue instanceof Boolean ? (Boolean) filterValue : 
+											Boolean.valueOf(String.valueOf(filterValue));
+					filter = new BoolFilter(field, propValue, operator);
 					break;
 					
 				case STRING:

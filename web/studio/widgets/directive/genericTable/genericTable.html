@@ -3,7 +3,8 @@
 <table class="datatable">
 	<thead>
 		<tr>
-			<th ng-repeat="action in rowActions" ng-class="action.tableCellClass"></th>
+			<th ng-repeat="action in rowActions"></th>
+			<th ng-if="selectAction"></th>
 			<th ng-repeat="col in tableHeaders">
 				<span ng-switch on="col.dataType">
 					<span ng-switch-when="number"><span class="text-right">{{col.desc}}</span></span>
@@ -20,8 +21,12 @@
 		</tr>
 		<tr ng-repeat="tableRecord in tableData | filter:searchText">
 			<td ng-repeat="action in rowActions" class="action-cell" ng-class="action.tableCellClass">
-				<a ng-if="!action.checkApplicable || action.checkApplicable(action, tableRecord)" ng-class="action.iconClass" 
-					ng-click="callRowAction(action, tableRecord)" tooltip="{{action.tooltip}}"></a>
+				<a ng-if="!action.checkApplicable || action.checkApplicable(action, tableRecord)" 
+					ng-class="action.iconClass" ng-click="callRowAction(action, tableRecord, $event)" tooltip="{{action.tooltip}}"></a>
+			</td>
+			<td ng-if="selectAction">
+				<a ng-class="tableRecord._selected ? 'fa fa-check-square-o' : 'fa fa-square-o'"
+					ng-click="selectActionCallback(tableRecord, $event)" tooltip="Select"></a>
 			</td>
 			<td ng-repeat="col in tableHeaders">
 				<span ng-class="{'text-right': col.dataType == 'NUMERIC'}">{{getColumnValue(col, tableRecord)}}</span>

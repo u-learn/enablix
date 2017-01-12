@@ -1,0 +1,249 @@
+<playTemplate id="marketing-event-play" version="1" 
+		name="Marketing Event" 
+		prototype="true"
+		executable="true" prototypeId="marketing-event-play">
+		<!-- Prototype = true denotes that this is a prototype and cannot be executed. An executable instance needs to be
+		     created from this instance for execution. Executable = true denotes that this instance can be executed or played.
+		     Only executable templates can be modified. An executable instance needs to be created from UI to edit a prototype
+		     template. We will later add ability to edit prototype when we provide a UI to create play templates from scratch.
+		     For an executable template, prototypeId refers to the original prototype template which is the parent for this 
+		     executable template. -->
+	<title>Title of the play</title>
+	<focusItems>
+		<focusItem qualifiedId="customer.opportunity"/>
+	</focusItems>
+	<scope>
+		<focusItemMatch itemQId="customer.opportunity">
+			<!-- Back-end will have support for defining AND and OR of conditions. From UI, we 
+			 	 will only support creation of only AND on different attributes to keep the UI simple -->
+			<orCondition>
+				<andCondition>
+					<basicCondition negate="true"><!-- negate defines a NOT condition. Default value is false -->
+						<attribute>oppRegions</attribute>
+					</basicCondition>
+					<basicCondition>
+						<attribute>oppStatus</attribute>
+					</basicCondition>
+				</andCondition>
+				<andCondition>
+					<basicCondition negate="false">
+						<attribute>oppIndustry</attribute>
+					</basicCondition>
+					<basicCondition onItem="oppSolutions">
+						<attribute>solArea</attribute>
+					</basicCondition>
+				</andCondition>
+			</orCondition>
+		</focusItemMatch>
+	</scope>
+	<userGroups>
+		<userGroup id="opp-owners" name="Opportunity Owners">
+			<!-- A user group is a collection of one of more types of user sets -->
+			<description>A group of opportunity owners</description>
+
+			<!-- A play template can have a user group defined only with "id" and "name".
+				 The composition of the user group can be left to be defined from the UI. -->
+				 				
+			<!-- Specific user selection -->
+			<userSet>
+				<userId>user1@gmail.com</userId>
+				<userId>user2@gmail.com</userId>
+			</userSet>
+			
+			<!-- User set based on a attribute of focus entity -->
+			<referenceUserSet>
+				<focusItemAttr itemQId="customer.opportunity">oppSalesMember</focusItemAttr>
+			</referenceUserSet>
+			
+			<!-- User set created by filtering the complete list of users defined
+				 in the system -->
+			<filteredUserSet>
+				<andCondition>
+					<basicCondition negate="false">
+						<attribute>role</attribute>
+					</basicCondition>
+					<basicCondition>
+						<attribute>region</attribute>
+					</basicCondition>
+				</andCondition>
+			</filteredUserSet>
+		</userGroup>
+		<userGroup id="opp-team" name="Opportunity Team">
+			<!-- A user group is a collection of one of more types of user sets -->
+			<description>A group of opportunity sales team</description>
+
+			<!-- A play template can have a user group defined only with "id" and "name".
+				 The composition of the user group can be left to be defined from the UI. -->
+				 				
+			<!-- User set based on a attribute of focus entity -->
+			<referenceUserSet>
+				<focusItemAttr itemQId="customer.opportunity">oppSalesMember</focusItemAttr>
+			</referenceUserSet>
+		</userGroup>
+		<userGroup id="opp-contributors" name="Contributors">
+			<!-- A user group is a collection of one of more types of user sets -->
+			<description>A group of opportunity contributors</description>
+
+			<!-- A play template can have a user group defined only with "id" and "name".
+				 The composition of the user group can be left to be defined from the UI. -->
+				 				
+		</userGroup>
+		<userGroup id="opp-play-admins" name="Play Admins">
+			<!-- A user group is a collection of one of more types of user sets -->
+			<description>A group of opportunity play admins</description>
+
+			<!-- A play template can have a user group defined only with "id" and "name".
+				 The composition of the user group can be left to be defined from the UI. -->
+				 				
+		</userGroup>
+				
+	</userGroups>
+	<contentGroups>
+		<contentGroup id="opp-content" name="Opportunity content">
+			<description>Opportunity related content</description>
+			
+			<!-- A play template can have a content group defined only with "id" and "name".
+				 The composition of the content group can be left to be defined from the UI. -->
+			
+			<!-- Content from the universe of correlated item. Correlation rules need to be defined
+			     for the containers separately -->
+			<focusItemCorrelatedContent itemQId="customer.opportunity">
+				<!-- Define the type of correlated item to include in this content group. -->
+				
+				<!-- "solution" correlated to "customer.opportunity" will be include. There
+					 should be a correlation rule defined from opportunity to solution -->
+				<correlatedItem qualifiedId="solution">
+					<!-- "caseStudy" related to "solution" will also be included. There should 
+					   	 be a correlation rule defined from solution to case study -->
+					<correlatedItem qualifiedId="caseStudy"/>
+				</correlatedItem>
+				
+				<!-- "caseStudy" correlated to "customer.opportunity" will also be included -->
+				<correlatedItem qualifiedId="caseStudy"/>
+				
+				<correlatedItem qualifiedId="product.dataSheet"/>
+			</focusItemCorrelatedContent>
+		</contentGroup>
+		<contentGroup id="soln-collateral" name="Solution Collateral">
+			<!-- Empty content group -->
+		</contentGroup>
+		<contentGroup id="comp-collateral" name="Competitive Collateral">
+			<!-- Empty content group -->
+		</contentGroup>
+		<contentGroup id="process-collateral" name="Process Collateral">
+			<!-- Empty content group -->
+		</contentGroup>
+	</contentGroups>
+	<execution>
+		<!-- We will extends and re-use the concepts defined for triggers. The auto-execution 
+			 of a play when an opportunity is created in the system, will not be defined here.
+			 Auto-execution of play will be defined in the add-update trigger defined for an 
+			 opportunity. A new action will be added to execute associated plays after executing
+			 the correlation action defined in the trigger. -->
+		<lifecycle>
+			<checkpoint>
+				<executionTime type="RECURRING">
+					<recurringSchedule>
+						<interval timeUnit="DAY" timeValue="7"/><!-- Weekly -->
+						<after timeUnit="DAY" timeValue="3"/>
+					</recurringSchedule>
+					
+					<!-- RECURRING checkpoints are disabled either on content update based on
+						 the condition defined for it or when the play ends  -->
+					<disableOn>
+						<triggerEntityUpdate qualifiedId="customer.opportunity">
+							<entityMatch>
+								<filter>
+									<attributeId>stage.label</attributeId>
+									<constant>Proposal</constant>
+								</filter>
+							</entityMatch>
+						</triggerEntityUpdate>
+					</disableOn>
+				</executionTime>
+				<actions>
+					<email execOrder="1" id="relevant-content-email" name="Relevant Content">
+						<emailTemplate>
+							<subject templateName="addContentOpp_subject.vm"/>
+							<body templateName="addContentOpp_body.vm"/>
+						</emailTemplate>
+						<emailContent>
+							<contentGroups>
+								<contentGroup id="opp-content"/>
+								<contentGroup id="soln-collateral"/>
+							</contentGroups>		
+						</emailContent>
+						<recipient>
+							<userGroups>
+								<userGroup id="opp-team"/>
+								<userGroup id="opp-play-admins"/>
+							</userGroups>
+						</recipient>
+					</email>
+				</actions>
+			</checkpoint>
+			<checkpoint>
+				<executionTime type="RECURRING">
+					<recurringSchedule>
+						<interval timeUnit="DAY" timeValue="3"/>
+					</recurringSchedule>
+				</executionTime>
+				<actions>
+					<email execOrder="1" id="soln-intro-email" name="Solution Introduction">
+						<emailTemplate>
+							<subject templateName="addContentOpp_subject.vm"/>
+							<body templateName="addContentOpp_body.vm"/>
+						</emailTemplate>
+						<emailContent>
+							<contentGroups>
+								<contentGroup id="opp-content"/>
+								<contentGroup id="soln-collateral"/>
+							</contentGroups>		
+						</emailContent>
+						<recipient>
+							<userGroups>
+								<userGroup id="opp-team"/>
+								<userGroup id="opp-play-admins"/>
+							</userGroups>
+						</recipient>
+					</email>
+				</actions>
+			</checkpoint>
+			<checkpoint>
+				<executionTime type="ON_CONTENT_UPDATE">
+					<updateOn>
+						<contentGroups>
+							<!-- If any item that belongs to a content group is updated or 
+								 a new item gets added which belongs to this group -->
+							<contentGroup id="opp-content"/>
+						</contentGroups>
+						
+						<!-- if there is an update on the focus entity of the play -->
+						<focusItem qualifiedId="customer.opportunity"/>
+					</updateOn>
+				</executionTime>
+				
+				<actions>
+					<email execOrder="1" id="comp-positioning-email" name="Competitive Positioning">
+						<emailTemplate>
+							<subject templateName="addContentOpp_subject.vm"/>
+							<body templateName="addContentOpp_body.vm"/>
+						</emailTemplate>
+						<emailContent>
+							<contentGroups>
+								<contentGroup id="opp-content"/>
+								<contentGroup id="comp-collateral"/>
+							</contentGroups>		
+						</emailContent>
+						<recipient>
+							<userGroups>
+								<userGroup id="opp-team"/>
+								<userGroup id="opp-play-admins"/>
+							</userGroups>
+						</recipient>
+					</email>
+				</actions>
+			</checkpoint>
+		</lifecycle>
+	</execution>
+</playTemplate>

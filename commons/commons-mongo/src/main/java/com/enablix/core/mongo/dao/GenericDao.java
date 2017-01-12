@@ -25,6 +25,7 @@ public class GenericDao extends BaseTenantDao {
 		Assert.notNull(findType, "findType is null");
 		
 		Criteria criteria = requestTx.buildQueryCriteria(searchRequest);
+		List<String> projectedFields = searchRequest.getProjectedFields();
 		
 		Page<T> page = null;
 		
@@ -34,10 +35,10 @@ public class GenericDao extends BaseTenantDao {
 		if (pagination != null) {
 			
 			pageable = pagination.toPageableObject();
-			page = findByCriteria(criteria, collectionName, findType, pageable);
+			page = findByCriteria(criteria, collectionName, findType, pageable, projectedFields);
 			
 		} else {
-			List<T> content = findByCriteria(criteria, collectionName, findType);
+			List<T> content = findByCriteria(criteria, collectionName, findType, projectedFields);
 			page = new PageImpl<T>(content, pageable, content.size());
 		}
 		

@@ -1,0 +1,25 @@
+<div class="block">
+	<div class="head">
+		<h2>New {{prototypePlayTemplate.name}} Play</h2>
+	</div>
+	<form name="addXPlayForm">
+		<div layout="row">
+			<div class="cont" flex="50%">
+				<label class="form-label">Focus</label>
+				<input class="form-control" ng-model="focusItemContainer.label" disabled/>
+			</div>
+			<div class="cont" flex>
+				<label class="form-label">Title</label>
+				<input required name="playTitle" placeholder="Enter Title" 
+						class="form-control" ng-model="prototypePlayTemplate.title"/>
+				<div ng-messages="addXPlayForm.playTitle.$error">
+					<div ng-message="required">This is required.</div>
+		        </div>
+			</div>
+		</div>
+		<ebx-play-scope scope-def="prototypePlayTemplate.scope"></ebx-play-scope>
+		<ebx-play-user-groups user-groups-def="prototypePlayTemplate.userGroups"></ebx-play-user-groups>
+		<ebx-play-content-groups content-groups-def="prototypePlayTemplate.contentGroups"></ebx-play-content-groups>
+		<ebx-play-execution-def execution-def="prototypePlayTemplate.execution"></ebx-play-execution-def>
+	</form>
+</div>

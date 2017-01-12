@@ -1,0 +1,21 @@
+<div class="block modal-block">
+	<div class="head">
+		<h2>Content Group</h2>
+		<button class="button button-close" type="button" ng-click="cancelOperation()">x</button>
+	</div>
+	<form name="editContentGroupForm">
+		<div class="cont">
+			<label class="form-label">Name</label>
+			<input required name="contentGroupName" placeholder="Enter Name" 
+					class="form-control" ng-model="contentGroup.name"/>
+			<div ng-messages="editContentGroupForm.contentGroupName.$error">
+				<div ng-message="required">This is required.</div>
+	        </div>
+		</div>
+		<div class="head ebx-top-border">
+			<h2>Select Content<ebx-system-content-browser></ebx-system-content-browser></h2>
+		</div>
+		<div class="cont">
+		</div>
+	</form>
+</div>

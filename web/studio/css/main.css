@@ -94,6 +94,7 @@ a, a:hover {
 	text-decoration: none;
 	cursor: pointer;
 	color: inherit;
+	outline: none !important;
 }
 a:focus {
 	text-decoration: none;	
@@ -630,7 +631,7 @@ form .row .form-label:first-child {
 }
 
 .main-nav-secondary {
-	text-align: center;
+	text-align: left;
 }
 
 .main-nav-secondary a {
@@ -1047,12 +1048,20 @@ form .row .form-label:first-child {
 .bread-crumbs a:hover {
 	text-decoration: none;
 }
+
+.browser-path .cont,
 .bread-crumbs .cont {
 	padding: 0;
 	border: 0;
 	font-size: 0.75em;
 }
 
+.browser-path {
+	position: relative;
+	z-index: 1;
+	margin: 0.5em 1.5em;
+	background: none;
+}
 
 /**/
 /* about */
@@ -1547,4 +1556,47 @@ tbody tr td.action-cell:first-child {
 
 .md-tab {
 	text-transform: none;
+}
+
+.modal-block {
+	margin-top: 0.5em;
+}
+
+.browser-container {
+	margin-left: 0.5em;
+	margin-right: 0.5em;
+	text-transform: none;
+}
+
+.align-left {
+	text-align: left;
+}
+
+.md-button.md-min {
+	min-width: 1%;
+}
+
+.md-chips {
+  box-shadow: 0 0px !important;
+}
+
+md-chip-template {
+	font-size: 14px;
+}
+
+.md-chips md-chip .md-chip-remove md-icon {
+	width: 16px;
+	height: 16px;
+	min-width: 16px;
+	min-height: 16px;
+}
+
+.wrapper {
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+}
+
+.strong-text {
+	font-weight: 600;
 }

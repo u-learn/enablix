@@ -48,4 +48,9 @@ public class PlayDefinitionManagerImpl implements PlayDefinitionManager {
 		
 	}
 
+	@Override
+	public PlayDefinition getPlayDefinition(String playDefId) {
+		return crudService.getRepository().findOne(playDefId);
+	}
+
 }

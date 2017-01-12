@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.enablix.analytics.correlation.ItemCorrelationService;
+import com.enablix.analytics.correlation.rule.ItemCorrelationRuleManager;
 import com.enablix.app.content.share.DocUnsecureAccessUrlPopulator;
 import com.enablix.app.content.ui.format.DisplayContext;
 import com.enablix.app.content.ui.format.DisplayableContentBuilder;
@@ -24,6 +25,7 @@ import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.commons.util.process.ProcessContext;
 import com.enablix.core.api.ContentDataRecord;
 import com.enablix.core.api.ContentDataRef;
+import com.enablix.core.commons.xsdtopojo.ContentCorrelatedItemType;
 import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 import com.enablix.core.mongo.content.ContentCrudService;
 import com.enablix.core.mongo.search.ConditionOperator;
@@ -53,6 +55,9 @@ public class CorrelatedEntitiesController {
 	
 	@Autowired
 	private TextLinkProcessor textLinkProcessor;
+	
+	@Autowired
+	private ItemCorrelationRuleManager corrRuleManager;
 	
 	@RequestMapping(method = RequestMethod.GET, 
 			value="/te/{contentQId}/{attrId}/{attrVal}", 
@@ -100,6 +105,11 @@ public class CorrelatedEntitiesController {
 		}
 		
 		return displayRecords;
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, value="/itemtypes/{sourceItemQId}/", produces = "application/json")
+	public List<ContentCorrelatedItemType> getCorrelatedItemTypeHierarchy(@PathVariable String sourceItemQId) {
+		return corrRuleManager.getContentCorrelatedItemTypeHierarchy(sourceItemQId, 2);
 	}
 	
 }

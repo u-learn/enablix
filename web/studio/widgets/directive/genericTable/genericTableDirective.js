@@ -9,7 +9,8 @@ function(StateUpdateService) {
 			tableHeaders : "=",
 			pageData : "=?",
 			setPageFn : "=?",
-			rowActions: "=?"
+			rowActions: "=?",
+			selectAction: "=?"
 		},
 		link: function(scope, element, attrs) {
 			
@@ -21,9 +22,9 @@ function(StateUpdateService) {
 		    	}
 		    };
 		    
-		    scope.callRowAction = function(action, dataRecord) {
+		    scope.callRowAction = function(action, dataRecord, $event) {
 		    	if (action.actionCallbackFn) {
-		    		action.actionCallbackFn(dataRecord);
+		    		action.actionCallbackFn(dataRecord, $event);
 		    	}
 		    };
 		    
@@ -37,7 +38,14 @@ function(StateUpdateService) {
 		    	
 		    	return "--";
 		    }
-
+		    
+		    scope.selectActionCallback = function(dataRecord, $event) {
+		    	dataRecord._selected = !dataRecord._selected;
+		    	if (scope.selectAction && scope.selectAction.actionCallbackFn) {
+		    		scope.selectAction.actionCallbackFn(dataRecord, $event)
+		    	}
+		    }
+		    
 		},
 
 		templateUrl: "widgets/directive/genericTable/genericTable.html"

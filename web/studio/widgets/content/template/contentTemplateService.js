@@ -100,7 +100,19 @@ enablix.studioApp.factory('ContentTemplateService',
 				}
 				
 				return elemDataDef;
-			}
+			};
+			
+			var getContentItem = function(_containerDef, _contentItemId) {
+
+				for (var i = 0; i < _containerDef.contentItem.length; i++) {
+					var item = _containerDef.contentItem[i];
+					if (item.id == _contentItemId) {
+						return item;
+					}
+				}
+				
+				return null;
+			};
 			
 			var getConcreteContainerDefinition = function(_template, _containerQId) {
 				
@@ -122,6 +134,13 @@ enablix.studioApp.factory('ContentTemplateService',
 				if (!angular.isUndefined(cntnrUIDef)) {
 					
 					var labelQId = cntnrUIDef.container.labelQualifiedId;
+					
+					if (isNullOrUndefined(labelQId)) {
+						// check for portal heading config
+						if (cntnrUIDef.container.portalConfig && cntnrUIDef.container.portalConfig.headingContentItem) {
+							labelQId = cntnrUIDef.container.portalConfig.headingContentItem.id;
+						}
+					}
 
 					if (!angular.isUndefined(labelQId) && labelQId != null) {
 					
@@ -131,7 +150,7 @@ enablix.studioApp.factory('ContentTemplateService',
 						} else {
 							labelFieldId = labelQId;
 						}
-					}
+					} 
 				}
 				
 				return labelFieldId;
@@ -150,7 +169,17 @@ enablix.studioApp.factory('ContentTemplateService',
 				}
 				
 				return false;
-			}
+			};
+			
+			var getBoundedRefListContainer = function(_contentItemDef) {
+				
+				if (isBoundedRefListItem(_contentItemDef)) {
+					var refContainerId = _contentItemDef.bounded.refList.datastore.storeId;
+					return getContainerDefinition(enablix.template, refContainerId);
+				}
+				
+				return null;
+			};
 			
 			var getBoundedValueList = function(_templateId, _contentItemDef, _transform, _onSuccess, _onError) {
 				
@@ -444,6 +473,8 @@ enablix.studioApp.factory('ContentTemplateService',
 				getUIDefinition: getUIDefinition,
 				getContainerDefinition: getContainerDefinition,
 				getConcreteContainerDefinition: getConcreteContainerDefinition,
+				getContentItem: getContentItem,
+				getBoundedRefListContainer: getBoundedRefListContainer,
 				isRootContainer: isRootContainer,
 				getBoundedValueList: getBoundedValueList,
 				loadTemplate: loadTemplate,

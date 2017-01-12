@@ -1,0 +1,8 @@
+<div class="cont" ng-repeat="condAttr in condAttrs">
+	<div ng-if="condAttr.itemDef.type == 'TEXT' || condAttr.itemDef.type == 'NUMERIC'">
+		<eb-text content-def="condAttr.itemDef" text-value=""></eb-text>
+	</div>
+	<div ng-if="condAttr.itemDef.type == 'BOUNDED'">
+		<eb-bounded content-def="condAttr.itemDef" select-value=""></eb-bounded>
+	</div>
+</div>

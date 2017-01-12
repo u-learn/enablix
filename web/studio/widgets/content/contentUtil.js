@@ -118,11 +118,25 @@ enablix.studioApp.factory('ContentUtil',
 				return listHeaders;
 			};
 			
+			var getContentLabelValue = function(_containerDef, _dataRecord) {
+				var labelAttrId = ContentTemplateService.getContainerLabelAttrId(enablix.template, _containerDef.qualifiedId);
+				return _dataRecord[labelAttrId];
+			};
+			
+			var resolveAndAddTitle = function(_containerDef, _dataList) {
+				var labelAttrId = ContentTemplateService.getContainerLabelAttrId(enablix.template, _containerDef.qualifiedId);
+				angular.forEach(_dataList, function(dataRec) {
+					dataRec._title = dataRec[labelAttrId];
+				});
+			}
+			
 	 		return {
 	 			resolveContainerInstanceLabel: resolveContainerInstanceLabel,
 	 			resolveContainerInstancePortalLabel: resolveContainerInstancePortalLabel,
 	 			decorateData: decorateData,
-	 			getContentListHeaders: getContentListHeaders
+	 			getContentListHeaders: getContentListHeaders,
+	 			getContentLabelValue: getContentLabelValue,
+	 			resolveAndAddTitle: resolveAndAddTitle
 	 		};
 	 		
 	 		

@@ -261,6 +261,24 @@ enablix.studioApp.factory('StateUpdateService',
 	 			});
 	 		};
 	 		
+	 		var goToPlayXList = function(_playDefId) {
+	 			$state.go("play.executablelist", {
+	 				playDefId: _playDefId
+	 			});
+	 		};
+	 		
+	 		var goToPlayRList = function(_playDefId) {
+	 			$state.go("play.runlist", {
+	 				playDefId: _playDefId
+	 			});
+	 		};
+	 		
+	 		var goToAddXPlay = function(_playDefId) {
+	 			$state.go("play.addExecutable", {
+	 				playDefId: _playDefId
+	 			});
+	 		};
+	 		
 	 		return {
 	 			goToApp: goToApp,
 	 			goToAppSetPassword: goToAppSetPassword,
@@ -304,7 +322,10 @@ enablix.studioApp.factory('StateUpdateService',
 	 			goToContentConnList : goToContentConnList,
 	 			goToContentConnDetail : goToContentConnDetail,
 	 			goToContentConnEdit : goToContentConnEdit,
-	 			goToContentConnAdd : goToContentConnAdd
+	 			goToContentConnAdd : goToContentConnAdd,
+	 			goToPlayXList : goToPlayXList,
+	 			goToPlayRList : goToPlayRList,
+	 			goToAddXPlay : goToAddXPlay
 	 		};
 	 	}
 	 ]);

@@ -1,0 +1,30 @@
+<div class="block modal-block">
+	<div class="head">
+		<h2>Content Browser</h2>
+		<button class="button button-close" type="button" ng-click="cancelOperation()">x</button>
+	</div>
+	<div class="browser-path">
+		<div class="cont">
+			<span ng-repeat="breadcrumbItem in browserPath.path">
+				<span ng-if="$last" class="strong-text">{{breadcrumbItem.label}}</span>
+				<a ng-click="navToBreadcrumbItem(breadcrumbItem, $index)" 
+					ng-if="!$last">{{breadcrumbItem.label}}</a>&nbsp;&nbsp;<i ng-if="!$last" class="fa fa-angle-right"></i>
+			</span>
+		</div>
+	</div>
+	<div class="cont" layout="row" ng-if="selectedContentItems.length > 0">
+		<md-chips class="readonly-chips" ng-model="selectedContentItems" readonly="true" md-removable="true">
+			<md-chip-template>
+				<span><strong>{{$chip.label}}</strong></span>
+			</md-chip-template>
+		</md-chips>
+	</div>
+	<div class="cont" layout="row" layout-wrap ng-if="containerList && containerList.length > 0">
+		<div ng-repeat="cntnr in containerList">
+			<md-button class="md-raised align-left" ng-click="containerSelected(cntnr)"><i class="fa fa-folder-o"></i><span class="browser-container">{{cntnr.label}}</span></md-button>
+		</div>
+	</div>
+	<ebx-generic-table ng-if="contentList && contentList.length > 0" table-headers="tableHeaders" 
+						table-data="contentList" row-actions="tableRecordActions" select-action="tableRecordSelectAction" 
+						page-data="pageData" set-page-fn="setPage"></ebx-generic-table>
+</div>

@@ -8,26 +8,24 @@
     <meta name="description" content="Enablix Information that matters">
     <meta name="author" content="Enablix">
     <link rel="icon" type="image/png" href="/favicon.png">
-    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" />
-    <!-- Bootstrap -->
+    <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <link href="css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+    <!-- Custom Fonts -->
+    <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic" rel='stylesheet' type='text/css'>
 
-    <!-- Custom styles for this template -->
-    <link href="css/home.css" rel="stylesheet">
+    <!-- Theme CSS -->
+    <link href="css/creative.min.css" rel="stylesheet">
 
-    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
-    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
-    <script src="js/website/ie-emulation-modes-warning.js"></script>
-
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-    <link rel="stylesheet" type="text/css" href="css/jquery.fancybox.css" media="screen" />
+    
 	<link rel="stylesheet" type="text/css" href="css/website.css"/>
 	    
    	<script type="text/javascript" src="js/vendor/angular/angular.js"></script>
@@ -73,51 +71,319 @@
     <script type="text/javascript" src="widgets/navigationTracker.js"></script>
     
   </head>
- <body ng-app="studio">
-    <div class="site-wrapper" ng-controller="WebsiteMainCtrl">
-      <div class="site-wrapper-inner">
-        <div class="cover-container">
-          
-          <div class="masthead clearfix">
-            <div class="inner">
-              <h3 class="masthead-brand"><img src="img/logo.png" border="0" /></h3>
-              <nav>
-                <ul class="nav masthead-nav">
-                  <li class="active"><a ng-click="showAboutUsModal()" href="javascript:;">About</a></li>
-                  <li class="blueSepa">|</li>
-                  <li><a href="https://enablix.wordpress.com/" target="_blank">Blog</a></li>
-                  <li class="blueSepa">|</li>
-                  <li><a ng-click="showContactUsModal()" href="javascript:;">Contact Us</a></li>
-                  <li><a href="app.html#/portal/home" class="loginBox" id="login">Customer Login &nbsp;<img src="img/bArrow.png" border="0" /></a></li>
+  <body id="page-top" ng-app="studio" ng-controller="WebsiteMainCtrl">
+
+    <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
+        <!-- <div class="container-fluid"> -->
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
+                </button>
+                <a class="navbar-brand page-scroll" href="#page-top" style="padding-top: 10px;"><img src="img/logo.png" border="0" alt="Enablix"/></a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a class="page-scroll" href="#about">About</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#services">Use Cases</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#integrations">Integrations</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="https://enablix.wordpress.com/" target=“_blank”>Blog</a>
+                    </li>
+                    <!--<li>
+                        <a class="page-scroll" ng-click="showContactUsModal()" href="javascript:;">Contact Us</a>
+                    </li>-->     
+                    <li>
+                        <a class="page-scroll" href="app.html#/portal/home">Customer Login</a>
+                    </li>                    
                 </ul>
-              </nav>
             </div>
-          </div>
-          
-          <div id="slogan" class="inner cover bgImg">
-            <div>
-              <h1 class="cover-heading">We deliver the right information<br />at the right time to deliver the right sales outcome<span class="blue">.</span><br /><br /></h1>
-              <p class="lead"></p>
-              <p class="lead">
-                <a href="javascript:;" ng-click="showContactUsModal()" class="btn btn-lg btn-default btn-meeeting">Request a meeting</a>
-              </p>
-            </div>
-          </div>
-
-		  <div class="mastfoot">
-            <div class="inner">
-              <p><div class="copyrights">&copy 2016 Enablix LLC. All rights reserved. | <a href="/terms" target="_blank">Terms and Conditions</a> | <a href="/privacy" target="_blank">Privacy Policy</a></div></p>
-            </div>
-          </div>
+            <!-- /.navbar-collapse -->
         </div>
-      </div>
-    </div>
+        <!-- /.container-fluid -->
+    </nav>
 
+    <header>
+        <div class="header-content">
+            <div class="header-content-inner">
+                <h1 id="homeHeading">B2B Marketers, lets put your content to use</h1>
+                <hr>
+                <p><h3>We help B2B marketers accelerate and grow sales pipeline by automating delivery of 
+                hyper-relevant intelligence to sales.</h3></p>
+                <a href="#about" class="btn btn-primary btn-xl page-scroll">Learn More</a> 
+                <!-- <a href="#about" class="page-scroll btn btn-default btn-xl sr-button">Find Out More</a> -->
+            </div>
+        </div>
+    </header>
+
+    <section class="bg-primary" id="about">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 text-center">
+                    <h2 class="section-heading">Content is Everywhere</h2>
+                    <hr class="light">
+                    <p>Organizations already have content resources that can drive pipeline growth. But B2B marketers are struggling to put that information in front of sales when they need it. 
+                    With Enablix B2B marketers can automate content recommendation to sales and grow sales output. Marketers can leverage our packaged process templates and automate enablement. </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-md-6 text-center">
+                    <div class="service-box">
+                        <i class="fa fa-4x fa-mouse-pointer  text-secondary sr-icons"></i>
+                        <h3>Select</h3>
+                        <p class="text">Start with our ready-to-use content enablement templates that come packaged with Enablix</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 text-center">
+                    <div class="service-box">
+                        <i class="fa fa-4x fa-pencil text-secondary sr-icons"></i>
+                        <h3>Refine</h3>
+                        <p class="text">Refine and tweak it for your specific goals. It's quick and easy. </p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 text-center">
+                    <div class="service-box">
+                        <i class="fa fa-4x fa-play-circle-o text-secondary sr-icons"></i>
+                        <h3>Execute</h3>
+                        <p class="text">Sit back, relax and see how automated sales enablement works its wonders</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 text-center">
+                	<br/>
+                	<br/>
+                    <a href="#services" class="page-scroll btn btn-default btn-xl sr-button">Use Cases</a>
+                </div>
+            </div>            
+        </div>
+    </section>
+    <section id="services">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading">Our Popular Use Cases</h2>
+                    <hr class="primary">
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-6 text-center">
+                    <div class="service-box">
+                        <i class="fa fa-4x fa-compass text-primary sr-icons"></i>
+                        <h3>Guide Sales</h3>
+                        <p class="text-muted">Drive them to a win with targeted content and recommendations</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 text-center">
+                    <div class="service-box">
+                        <i class="fa fa-4x fa-paper-plane text-primary sr-icons"></i>
+                        <h3>Go-To-Market</h3>
+                        <p class="text-muted">Execute your growth strategy with never-before seen simplicity</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 text-center">
+                    <div class="service-box">
+                        <i class="fa fa-4x fa-calendar text-primary sr-icons"></i>
+                        <h3>Marketing Events</h3>
+                        <p class="text-muted">Guide your sales team to drive quality targets to events</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-md-6 text-center">
+                    <div class="service-box">
+                        <i class="fa fa-4x fa-home text-primary sr-icons"></i>
+                        <h3>Account Nurturing</h3>
+                        <p class="text-muted">Put your account based strategy in super drive</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 text-center">
+                    <div class="service-box">
+                        <i class="fa fa-4x fa-bullseye text-primary sr-icons"></i>
+                        <h3>Sales On-Boarding</h3>
+                        <p class="text-muted">Stop worrying about new hire enablement. Automate their on-boarding</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 text-center">
+                    <div class="service-box">
+                        <i class="fa fa-4x fa-rocket text-primary sr-icons"></i>
+                        <h3>Product Launch</h3>
+                        <p class="text-muted">New products are meant to drive revenue. We have the tools to make it happen</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+            	<div class="col-lg-8 col-lg-offset-2 text-center">
+                	<br/>
+                	<br/>
+                    <a href="#integrations" class="btn btn-primary btn-xl page-scroll">Integrations</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="integrations">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading">We integrate with your ecosystem</h2>
+                    <hr class="primary">
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-6 text-center">
+                    <div class="service-box">
+                        <i class="fa fa-4x fa-diamond text-primary sr-icons"></i>
+                        <h3>CRM</h3>
+                        <p class="text-muted">We recommend content and guide sales reps in the context of their opportunities and accounts</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 text-center">
+                    <div class="service-box">
+                        <i class="fa fa-4x fa-archive text-primary sr-icons"></i>
+                        <h3>Content Stores</h3>
+                        <p class="text-muted">We leverage your content in your content management systems</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 text-center">
+                    <div class="service-box">
+                        <i class="fa fa-4x fa-cog text-primary sr-icons"></i>
+                        <h3>Marketing Automation</h3>
+                        <p class="text-muted">We help marketers save time and maintain consistency</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-md-6 text-center">
+                    <div class="service-box">
+                        <i class="fa fa-4x fa-comments text-primary sr-icons"></i>
+                        <h3>Communication Tools</h3>
+                        <p class="text-muted">Increase content adoption by leveraging existing methods of communication</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 text-center">
+                    <div class="service-box">
+                        <i class="fa fa-4x fa-lightbulb-o text-primary sr-icons"></i>
+                        <h3>Learning Management</h3>
+                        <p class="text-muted">Scale your LMS. Leverage it for driving successful outcomes.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 text-center">
+                    <div class="service-box">
+                        <i class="fa fa-4x fa-bars text-primary sr-icons"></i>
+                        <h3>And Much More...</h3>
+                        <p class="text-muted">We want to work in your sales/marketing ecosystem. Not disrupt it</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="no-padding" id="portfolio">
+        <div class="container-fluid">
+            <div class="row no-gutter">
+                <div class="col-lg-4 col-sm-6">
+                    <a class="portfolio-box" href="https://enablix.wordpress.com/category/sales-enablement/" target="_blank">
+                        <img src="img/portfolio/thumbnails/1.jpg" class="img-responsive" alt="">
+                        <div class="portfolio-box-caption">
+                            <div class="portfolio-box-caption-content">
+                                <div class="project-category text-faded">
+                                    <h3>Sales Enablement</h3>
+                                </div>
+                                <div class="project-name">
+                                    Sales Enablement is a critical function for B2B Marketers. However many organizations 
+                                    struggle to operationalize it. We discuss strategies that can help marketers 
+                                    put their sales enablement strategy in action. 
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-sm-6">
+                    <a href="https://enablix.wordpress.com/category/measure-roi/" class="portfolio-box" target="_blank">
+                        <img src="img/portfolio/thumbnails/2.jpg" class="img-responsive" alt="">
+                        <div class="portfolio-box-caption">
+                            <div class="portfolio-box-caption-content">
+                                <div class="project-category text-faded">
+                                    <h3>Measure</h3>
+                                </div>
+                                <div class="project-name">
+                                    Everyone agrees that measuring the return on your efforts is super critical. We discuss how B2B Marketers can measure the return on enabling sales with 
+                                    the right content and intelligence. 
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-sm-6">
+                    <a href="https://enablix.wordpress.com/category/content-stories/" class="portfolio-box" target="_blank">
+                        <img src="img/portfolio/thumbnails/3.jpg" class="img-responsive" alt="">
+                        <div class="portfolio-box-caption">
+                            <div class="portfolio-box-caption-content">
+                                <div class="project-category text-faded">
+                                    <h3>Content Stories</h3>
+                                </div>
+                                <div class="project-name">
+									Content is the focal point of our customer’s interaction. Every day we work with our 
+									customers to make it easy for them to capture, distribute and consume content. Here, 
+									we share our and our customer’s stories as we all deal with the challenges and benefits 
+									of using content to drive pipeline velocity and growth. 
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="contact">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 text-center">
+                    <h2 class="section-heading">Let's Get In Touch!</h2>
+                    <hr class="primary">
+                    <p>Ready to start helping sales win more and win faster? Who wouldn't be! Send us an email and we will help you help sales make money!</p>
+                </div>
+                <div class="col-lg-8 col-lg-offset-2 text-center">
+                    <i class="fa fa-envelope-o fa-3x sr-contact"></i>
+                    <p><a href="mailto:support@enablix.com">support@enablix.com</a></p>
+                </div>
+            </div>
+        </div>
+    </section>
+	<!-- page footer -->
+	<footer class="page-footer">
+		<!-- copyrights -->
+		<div class="copyrights">&copy 2017 Enablix LLC. All rights reserved. | <a href="/terms" target="_blank">Terms and Conditions</a> | <a href="/privacy" target="_blank">Privacy Policy</a></div>
+		<!--/ copyrights -->
+	</footer>
+	<!--/ page footer -->
+
+    <!-- jQuery -->
     <script src="js/vendor/jquery/jquery-2.1.3.min.js"></script>
-    <script>window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')</script>
+
+    <!-- Bootstrap Core JavaScript -->
     <script src="js/vendor/bootstrap/bootstrap.min.js"></script>
-    <script src="js/website/home.js"></script>
-    <script src="js/website/ie10-viewport-bug-workaround.js"></script>
-    <script src="js/website/jquery.fancybox.js" type="text/javascript"></script>
-  </body>
+
+    <!-- Plugin JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+    <script src="js/vendor/scrollreveal/scrollreveal.min.js"></script>
+
+    <!-- Theme JavaScript -->
+    <script src="js/website/creative.min.js"></script>
+
+</body>
 </html>

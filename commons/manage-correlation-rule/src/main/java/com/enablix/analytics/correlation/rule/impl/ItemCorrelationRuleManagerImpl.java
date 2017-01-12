@@ -2,7 +2,9 @@ package com.enablix.analytics.correlation.rule.impl;
 
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.xml.bind.JAXBException;
 
@@ -14,12 +16,16 @@ import org.springframework.stereotype.Component;
 import com.enablix.analytics.correlation.repo.ItemCorrelationRuleRepository;
 import com.enablix.analytics.correlation.repo.ItemUserCorrelationRuleRepository;
 import com.enablix.analytics.correlation.rule.ItemCorrelationRuleManager;
+import com.enablix.commons.util.StringUtil;
 import com.enablix.core.commons.xsd.parser.XMLParser;
 import com.enablix.core.commons.xsd.parser.XMLParserRegistry;
+import com.enablix.core.commons.xsdtopojo.ContentCorrelatedItemType;
 import com.enablix.core.commons.xsdtopojo.ItemCorrelationRuleType;
 import com.enablix.core.commons.xsdtopojo.ItemCorrelationRules;
 import com.enablix.core.commons.xsdtopojo.ItemUserCorrelationRuleType;
 import com.enablix.core.commons.xsdtopojo.ItemUserCorrelationRules;
+import com.enablix.core.commons.xsdtopojo.RelatedItemType;
+import com.enablix.core.commons.xsdtopojo.RelatedItemsType;
 import com.enablix.core.correlation.ItemCorrelationRuleDocument;
 import com.enablix.core.correlation.ItemUserCorrelationRuleDocument;
 
@@ -131,6 +137,75 @@ public class ItemCorrelationRuleManagerImpl implements ItemCorrelationRuleManage
 		LOGGER.debug("Item user correlation rule count: {}", rules.size());
 		
 		return rules;
+	}
+
+	@Override
+	public Set<String> getCorrelatedItemQIdsForTriggerItemQId(String triggerItemQId) {
+		
+		List<ItemCorrelationRuleType> corrRules = getItemItemCorrelationRulesForTriggerItemQId(triggerItemQId);
+		
+		Set<String> correlatedItemQIds = new HashSet<>();
+		for (ItemCorrelationRuleType corrRule : corrRules) {
+			RelatedItemsType relatedItems = corrRule.getRelatedItems();
+			findAndAddRelatedItemQId(correlatedItemQIds, relatedItems);
+		}
+		
+		return correlatedItemQIds;
+	}
+
+	private void findAndAddRelatedItemQId(Set<String> correlatedItemQIds, RelatedItemsType relatedItems) {
+		
+		if (relatedItems != null) {
+		
+			List<RelatedItemType> relatedItemList = relatedItems.getRelatedItem();
+			
+			for (RelatedItemType relatedItem : relatedItemList) {
+			
+				if (relatedItem.isRecordAsRelated()) {
+					correlatedItemQIds.add(relatedItem.getQualifiedId());
+					findAndAddRelatedItemQId(correlatedItemQIds, relatedItem.getRelatedItems());
+				}
+			}
+		}
+	}
+
+	@Override
+	public List<ContentCorrelatedItemType> getContentCorrelatedItemTypeHierarchy(String sourceItemQId, int depth) {
+		
+		ContentCorrelatedItemType sourceItem = new ContentCorrelatedItemType();
+		sourceItem.setQualifiedId(sourceItemQId);
+		
+		addCorrelatedItemType(new ArrayList<String>(), sourceItem, depth);
+		
+		return sourceItem.getCorrelatedItem();
+	}
+	
+	private void addCorrelatedItemType(List<String> parents, ContentCorrelatedItemType sourceItem, int depth) {
+		
+		if (depth > 0 && sourceItem != null && !StringUtil.isEmpty(sourceItem.getQualifiedId())) {
+			
+			// create a copy of parents and add current node to it
+			List<String> parentCopy = new ArrayList<>(parents);
+			parents.add(sourceItem.getQualifiedId());
+			
+			Set<String> corrItemQIds = getCorrelatedItemQIdsForTriggerItemQId(sourceItem.getQualifiedId());
+			
+			int nextDepth = depth - 1;
+			
+			for (String correlatedItemQId : corrItemQIds) {
+				
+				if (!parents.contains(correlatedItemQId)) {
+					
+					ContentCorrelatedItemType correlatedItem = new ContentCorrelatedItemType();
+					correlatedItem.setQualifiedId(correlatedItemQId);
+					sourceItem.getCorrelatedItem().add(correlatedItem);
+					
+					addCorrelatedItemType(parentCopy, correlatedItem, nextDepth);
+				}
+				
+			}
+			
+		}
 	}
 	
 }

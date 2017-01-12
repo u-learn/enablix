@@ -28,7 +28,8 @@ enablix.studioApp.factory('DataSearchService',
     		 *  
 			 */
 		
-			var getSearchResult = function(_domainType, _searchFilters, _pagination, _filterMetadata, _onSuccess, _onError) {
+			var getSearchResult = function(_domainType, _searchFilters, _pagination, 
+									_filterMetadata, _onSuccess, _onError, _projectedFields) {
 				
 				var params = {
 					domainType : _domainType
@@ -37,7 +38,8 @@ enablix.studioApp.factory('DataSearchService',
 				var data = {
 					filters : _searchFilters,
 					filterMetadata : _filterMetadata,
-					pagination : _pagination
+					pagination : _pagination,
+					projectedFields: _projectedFields
 				};
 				
 				return RESTService.postForData("dataSearchRequest", params, data, null, _onSuccess, _onError);

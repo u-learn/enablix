@@ -67,4 +67,6 @@ enablix.serviceURL = {
 	"saveContentConnection": enablix.domainName + "/contentconn/save",
 	"getContentConnection": enablix.domainName + "/contentconn/r/:connIdentity/",
 	"delContentConnection": enablix.domainName + "/contentconn/del/:connIdentity/",
+	"getPlayDefinition": enablix.domainName + "/play/def/r/:playDefId",
+	"getCorrelatedItemTypeHierarchy": enablix.domainName + "/corr/itemtypes/:sourceItemQId",
 };

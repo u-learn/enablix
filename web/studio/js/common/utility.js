@@ -8,6 +8,12 @@ Array.prototype.contains = function(obj) {
     return false;
 };
 
+Array.prototype.remove = function(obj) {
+	var indx = this.indexOf(obj);
+	if (indx != -1) {
+		this.splice(0, 1);
+	}
+}
 
 var isNullOrUndefined = function(obj) {
 	return obj === null || obj  === undefined;
