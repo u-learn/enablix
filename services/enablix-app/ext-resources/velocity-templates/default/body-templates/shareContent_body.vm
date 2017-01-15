@@ -22,6 +22,13 @@
 	with you.
 	
 	#spacer_row('15')
+	
+	#if(${obj.sharedContent.emailCustomContent})
+		${obj.sharedContent.emailCustomContent}
+		#spacer_row('15')
+	#end
+	
+	#spacer_row('15')
 		
 	#content_table($obj.sharedContent $obj.url 'EMAIL' 'WEB_SHARE' $obj.sharedContent.identity)
 	
