@@ -69,4 +69,7 @@ enablix.serviceURL = {
 	"delContentConnection": enablix.domainName + "/contentconn/del/:connIdentity/",
 	"getPlayDefinition": enablix.domainName + "/play/def/r/:playDefId",
 	"getCorrelatedItemTypeHierarchy": enablix.domainName + "/corr/itemtypes/:sourceItemQId",
+		"shareOptsGetPortalURL" : enablix.domainName + "/shareOptions/getPortalURL/",
+	"shareOptsEmailClient" : enablix.domainName + "/shareOptions/getShareEmailClient/",
+	"shareOptsPortalAudit" : enablix.domainName + "/shareOptions/portalURLAudit/"
 };
