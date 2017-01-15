@@ -18,6 +18,7 @@ import com.enablix.core.api.ContentDataRef;
 import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 import com.enablix.core.domain.activity.ActivityChannel.Channel;
 import com.enablix.core.domain.activity.ContentShareActivity.ShareMedium;
+import com.enablix.core.mail.entities.ShareEmailClientDtls;
 import com.enablix.core.mail.service.MailService;
 import com.enablix.core.mail.velocity.ShareContentScenarioInputBuilder;
 import com.enablix.core.mail.velocity.input.ShareContentVelocityInput;
@@ -29,25 +30,25 @@ public class ShareEmailServiceImpl implements ShareEmailService {
 
 	@Autowired
 	private ContentDataManager contentDataMgr;
-	
+
 	@Autowired
 	private TemplateManager templateMgr;
-	
+
 	@Autowired
 	private DisplayableContentBuilder contentBuilder;
-	
+
 	@Autowired
 	private MailService mailService;
-	
+
 	@Autowired
 	private ShareContentScenarioInputBuilder mailInputBuilder;
-	
+
 	@Autowired
 	private DocUnsecureAccessUrlPopulator docUrlPopulator;
-	
+
 	@Autowired
 	private TextLinkProcessor textLinkProcessor;
-	
+
 	@Override
 	public boolean sendEmail(EmailData data) {
 		
@@ -58,7 +59,7 @@ public class ShareEmailServiceImpl implements ShareEmailService {
 					new ContentDataRef(templateId, data.getContainerQId(), 
 							data.getContentIdentity(), null), template);
 		
-		ContentDataRecord dataRecord = new ContentDataRecord(templateId, data.getContainerQId(), record);
+		ContentDataRecord dataRecord = new ContentDataRecord(templateId, data.getContainerQId(),data.getEmailCustomContent(), record);
 		
 		DisplayContext ctx = new DisplayContext();
 		
@@ -78,5 +79,34 @@ public class ShareEmailServiceImpl implements ShareEmailService {
 		return emailSent;
 		
 	}
+	@Override
+	public ShareEmailClientDtls getEmailContent(String containerQID, String contentID) {
 
+		String templateId = ProcessContext.get().getTemplateId();
+		ContentTemplate template = templateMgr.getTemplate(templateId);
+
+		Map<String, Object> record = contentDataMgr.getContentRecord(
+				new ContentDataRef(templateId, containerQID, 
+						contentID, null), template);
+
+		ContentDataRecord dataRecord = new ContentDataRecord(templateId, containerQID, record);
+
+		DisplayContext ctx = new DisplayContext();
+
+		DisplayableContent displayableContent = contentBuilder.build(template, dataRecord, ctx);
+
+		docUrlPopulator.process(displayableContent, "");
+		textLinkProcessor.process(displayableContent, template, "");
+
+		ShareContentVelocityInput mailInput = mailInputBuilder.build("", displayableContent);
+
+		ShareEmailClientDtls emailClientDtls = mailService.getHtmlEmail(mailInput, "", "shareContent");
+
+		// Audit content sharing
+		ActivityLogger.auditContentShare(templateId, displayableContent, "",
+				ShareMedium.WEB, Channel.EMAILCLIENT, mailInput.getIdentity(), displayableContent.getTitle());
+
+		return emailClientDtls;
+
+	}
 }
