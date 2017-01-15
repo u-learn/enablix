@@ -19,6 +19,7 @@ import com.enablix.core.domain.activity.ContentActivity.ContainerType;
 import com.enablix.core.domain.activity.ContentActivity.ContentActivityType;
 import com.enablix.core.domain.activity.ContentConnActivity;
 import com.enablix.core.domain.activity.ContentConnActivity.ContentConnActivityType;
+import com.enablix.core.domain.activity.ContentPortalURLCopy;
 import com.enablix.core.domain.activity.ContentShareActivity;
 import com.enablix.core.domain.activity.ContentShareActivity.ShareMedium;
 import com.enablix.core.domain.activity.DocumentActivity;
@@ -80,7 +81,14 @@ public class ActivityLogger {
 		
 		auditContentActivity(contentActvy, activityChannel);
 	}
-	
+	public static void auditContentPortalURLCopied(ContentDataRef dataRef,
+			ContainerType containerType, Channel channel) {
+		
+		ContentActivity contentActvy = new ContentPortalURLCopy(dataRef.getInstanceIdentity(), 
+				dataRef.getContainerQId(), containerType, dataRef.getTitle());
+		
+		auditContentActivity(contentActvy, channel);
+	}
 	public static void auditContentActivity(ContentActivity contentActvy, 
 			ActivityChannel.Channel activityChannel) {
 		
