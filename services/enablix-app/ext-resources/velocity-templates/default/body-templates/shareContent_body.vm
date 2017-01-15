@@ -35,11 +35,13 @@
 	#spacer_row('15')
 	
 	#@action_button_table()
+		#if($obj.sharedContent.doc)
 		#@action_button_cell('200')
 			#action_button('Download File' "$obj.sharedContent.doc.accessUrl?atChannel=EMAIL&atContext=WEB_SHARE&atContextId=$obj.identity")
 		#end
 		#@action_button_cell('20')
 			#spacer_row('20')
+		#end
 		#end
 		#@action_button_cell('220')
 			#action_button('Access on Portal' "${obj.url}/app.html#/portal/container/$obj.sharedContent.containerQId/$obj.sharedContent.recordIdentity/c/single/$obj.sharedContent.containerQId/?atChannel=EMAIL&atContext=WEB_SHARE&atContextId=$obj.identity")
