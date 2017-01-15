@@ -13,8 +13,8 @@ public class ContentActivity extends Activity {
 		DOC_UPLOAD("Uploaded"), DOC_PREVIEW("Previewed"), CONTENT_ADD_SUGGEST("Content Request Added"), 
 		CONTENT_UPDATE_SUGGEST("Content Request Updated"), CONTENT_SUGGEST_APPROVED("Content Request Approved"), 
 		CONTENT_SUGGEST_REJECT("Content Request Rejected"), CONTENT_SUGGEST_WITHDRAW("Content Request Withdrawn"), 
-		CONTENT_SUGGEST_EDIT("Content Request Edited"), CONTENT_SUGGEST_VIEW("Content Request Viewed");
-		
+		CONTENT_SUGGEST_EDIT("Content Request Edited"), CONTENT_SUGGEST_VIEW("Content Request Viewed"),
+		CONTENT_PORTAL_URL_COPIED("Content Portal URL Copied");
 		private String value;
 
 		private ContentActivityType(String value) {
