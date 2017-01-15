@@ -11,6 +11,7 @@
 			<container id="prodBlog" label="Blogs" linkContainerQId="blog" linkContentItemId="products"/>
 			<container id="prodBlurb" label="Blurbs" linkContainerQId="blurb" linkContentItemId="products"/>					
 			<container id="prodCaseStudy" label="Case Studies" linkContainerQId="caseStudy" linkContentItemId="products"/>			
+			<container id="prodPositioning" label="Corporate Positioning" linkContainerQId="positioning" linkContentItemId="products"/>						
 			<container id="prodDiscQuestions" label="Discovery Questions" linkContainerQId="discoveryQuestion" linkContentItemId="products"/>			
 			<container id="prodDocs" label="Product Documentation" linkContainerQId="docs" linkContentItemId="products"/>			
 			<container id="prodFAQ" label="FAQ" linkContainerQId="faq" linkContentItemId="products"/>
@@ -25,7 +26,6 @@
 			<container id="prodSalesDeck" label="Presentations" linkContainerQId="salesDeck" linkContentItemId="products"/>						
 			<container id="prodPress" label="Press" linkContainerQId="press" linkContentItemId="products"/>	
 			<container id="prodPOC" label="Proof of Concepts" linkContainerQId="poc" linkContentItemId="products"/>
-			<container id="prodPositioning" label="Corporate Positioning" linkContainerQId="positioning" linkContentItemId="products"/>			
 			<container id="prodProposal" label="Proposals" linkContainerQId="proposal" linkContentItemId="products"/>
 			<container id="prodTopic" label="Topics" linkContainerQId="topic" linkContentItemId="products"/>							
 			<container id="prodWhitePaper" label="White Papers" linkContainerQId="whitepaper" linkContentItemId="products"/>			
@@ -64,6 +64,7 @@
 			<container id="solBlog" label="Blogs" linkContainerQId="blog" linkContentItemId="solutions"/>
 			<container id="solBlurb" label="Blurbs" linkContainerQId="blurb" linkContentItemId="solutions"/>						
 			<container id="solCaseStudy" label="Case Studies" linkContainerQId="caseStudy" linkContentItemId="solutions"/>
+			<container id="solPositioning" label="Corporate Positioning" linkContainerQId="positioning" linkContentItemId="solutions"/>									
 			<container id="solDocs" label="Solution Documentation" linkContainerQId="docs" linkContentItemId="solutions"/>						
 			<container id="solDiscQuestions" label="Discovery Questions" linkContainerQId="discoveryQuestion" linkContentItemId="solutions"/>
 			<container id="solFAQ" label="FAQ" linkContainerQId="faq" linkContentItemId="solutions"/>
@@ -78,7 +79,6 @@
 			<container id="solSalesDeck" label="Presentations" linkContainerQId="salesDeck" linkContentItemId="solutions"/>			
 			<container id="solPress" label="Press" linkContainerQId="press" linkContentItemId="solutions"/>						
 			<container id="solPOC" label="Proof of Concepts" linkContainerQId="poc" linkContentItemId="solutions"/>
-			<container id="solPositioning" label="Corporate Positioning" linkContainerQId="positioning" linkContentItemId="solutions"/>						
 			<container id="solProposal" label="Proposals" linkContainerQId="proposal" linkContentItemId="solutions"/>			
 			<container id="solOverview" label="Solution Overview" single="true">
 				<contentItem id="file" label="File" type="doc"/>
@@ -142,6 +142,7 @@
 			<container id="compBlog" label="Blogs" linkContainerQId="blog" linkContentItemId="competitors"/>
 			<container id="compBlurb" label="Blurbs" linkContainerQId="blurb" linkContentItemId="competitors"/>									
 			<container id="compCaseStudy" label="Case Studies" linkContainerQId="caseStudy" linkContentItemId="competitors"/>
+			<container id="compPositioning" label="Corporate Positioning" linkContainerQId="positioning" linkContentItemId="competitors"/>						
 			<container id="compDiscQuestions" label="Discovery Questions" linkContainerQId="discoveryQuestion" linkContentItemId="competitors"/>
 			<container id="compFAQ" label="FAQ" linkContainerQId="faq" linkContentItemId="competitors"/>
 			<container id="compImpSlide" label="Important Slides" linkContainerQId="importantslide" linkContentItemId="competitors"/>
@@ -1320,7 +1321,51 @@
 					</refList>
 				</bounded>
 			</contentItem>
-		</container>		
+		</container>	
+		<container id="positioning" label="Corporate Positioning">
+			<contentItem id="title" label="Title" type="text"/>
+			<contentItem id="file" label="File" type="doc"/>
+			<contentItem id="summary" label="Summary" type="text"/>
+			<contentItem id="solutions" label="Solutions" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>solution</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="products" label="Products" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>product</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="competitors" label="Competitors" type="bounded" searchBoost="6">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>competitor</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>			
+			<container id="supportingResearch" label="Supporting Research">
+				<contentItem id="title" label="Title" type="text" searchBoost="7"/>
+				<contentItem id="file" label="File" type="doc"/>
+				<contentItem id="url" label="URL" type="text" searchBoost="5"/>
+				<contentItem id="summary" label="Summary" type="text" searchBoost="2"/>
+			</container>									
+		</container>				
 		<container id="whitepaper" label="White Papers">
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="file" label="File" type="doc"/>
@@ -1913,51 +1958,6 @@
 				</bounded>
 			</contentItem>
 		</container>
-		<container id="positioning" label="Corporate Positioning">
-			<contentItem id="title" label="Title" type="text"/>
-			<contentItem id="file" label="File" type="doc"/>
-			<contentItem id="summary" label="Summary" type="text"/>
-			<contentItem id="solutions" label="Solutions" type="bounded">
-				<bounded multivalued="true">
-					<refList>
-						<datastore hyperlink="true">
-							<storeId>solution</storeId>
-							<dataId>identity</dataId>
-							<dataLabel>shortName</dataLabel>
-						</datastore>
-					</refList>
-				</bounded>
-			</contentItem>
-			<contentItem id="products" label="Products" type="bounded">
-				<bounded multivalued="true">
-					<refList>
-						<datastore hyperlink="true">
-							<storeId>product</storeId>
-							<dataId>identity</dataId>
-							<dataLabel>shortName</dataLabel>
-						</datastore>
-					</refList>
-				</bounded>
-			</contentItem>
-			<container id="messagingBrief" label="Messaging Brief">
-				<contentItem id="title" label="Title" type="text" searchBoost="7"/>
-				<contentItem id="file" label="File" type="doc"/>
-				<contentItem id="url" label="URL" type="text" searchBoost="5"/>
-				<contentItem id="summary" label="Summary" type="text" searchBoost="2"/>
-			</container>
-			<container id="positioningDeck" label="Positioning Deck">
-				<contentItem id="title" label="Title" type="text" searchBoost="7"/>
-				<contentItem id="file" label="File" type="doc"/>
-				<contentItem id="url" label="URL" type="text" searchBoost="5"/>
-				<contentItem id="summary" label="Summary" type="text" searchBoost="2"/>
-			</container>
-			<container id="supportingResearch" label="Supporting Research">
-				<contentItem id="title" label="Title" type="text" searchBoost="7"/>
-				<contentItem id="file" label="File" type="doc"/>
-				<contentItem id="url" label="URL" type="text" searchBoost="5"/>
-				<contentItem id="summary" label="Summary" type="text" searchBoost="2"/>
-			</container>									
-		</container>		
 		<container id="proposal" label="Proposals">
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="file" label="File" type="doc"/>
@@ -2658,6 +2658,7 @@
 					<childContainer id="blog"/>
 					<childContainer id="blurb"/>					
 					<childContainer id="caseStudy"/>
+					<childContainer id="positioning"/>										
 					<childContainer id="discoveryQuestion"/>
 					<childContainer id="docs"/>
 					<childContainer id="faq"/>
@@ -2671,7 +2672,6 @@
 					<childContainer id="salesDeck"/>										
 					<childContainer id="press"/>															
 					<childContainer id="poc"/>
-					<childContainer id="positioning"/>					
 					<childContainer id="proposal"/>
 					<childContainer id="template"/>
 					<childContainer id="topic"/>					
@@ -2944,7 +2944,6 @@
 		<contentUIDef qualifiedId="poc.poccontent.detail">
 			<text type="long"/>
 		</contentUIDef>
-
 		<contentUIDef qualifiedId="positioning">
 			<container labelQualifiedId="positioning.title">
 				<listViewConfig>
@@ -2958,32 +2957,6 @@
 		<contentUIDef qualifiedId="positioning.summary">
 			<text type="long"/>
 		</contentUIDef>
-		<contentUIDef qualifiedId="positioning.messagingBrief">
-			<container labelQualifiedId="positioning.messagingBrief.title">
-				<listViewConfig>
-					<hideContentItem id="summary"/>
-				</listViewConfig>
-				<portalConfig>
-					<headingContentItem id="title"/>
-				</portalConfig>
-			</container>
-		</contentUIDef>
-		<contentUIDef qualifiedId="positioning.messagingBrief.summary">
-			<text type="long"/>
-		</contentUIDef>	
-		<contentUIDef qualifiedId="positioning.positioningDeck">
-			<container labelQualifiedId="positioning.positioningDeck.title">
-				<listViewConfig>
-					<hideContentItem id="summary"/>
-				</listViewConfig>
-				<portalConfig>
-					<headingContentItem id="title"/>
-				</portalConfig>
-			</container>
-		</contentUIDef>
-		<contentUIDef qualifiedId="positioning.positioningDeck.summary">
-			<text type="long"/>
-		</contentUIDef>				
 		<contentUIDef qualifiedId="positioning.supportingResearch">
 			<container labelQualifiedId="positioning.supportingResearch.title">
 				<listViewConfig>
@@ -3391,6 +3364,7 @@
 					<childContainer id="blog"/>
 					<childContainer id="blurb"/>					
 					<childContainer id="caseStudy"/>
+					<childContainer id="positioning"/>															
 					<childContainer id="discoveryQuestion"/>
 					<childContainer id="docs"/>					
 					<childContainer id="faq"/>
@@ -3404,7 +3378,6 @@
 					<childContainer id="salesDeck"/>
 					<childContainer id="press"/>										
 					<childContainer id="poc"/>
-					<childContainer id="positioning"/>										
 					<childContainer id="proposal"/>
 					<childContainer id="template"/>
 					<childContainer id="topic"/>
