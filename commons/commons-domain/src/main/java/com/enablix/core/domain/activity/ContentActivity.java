@@ -14,7 +14,7 @@ public class ContentActivity extends Activity {
 		CONTENT_UPDATE_SUGGEST("Content Request Updated"), CONTENT_SUGGEST_APPROVED("Content Request Approved"), 
 		CONTENT_SUGGEST_REJECT("Content Request Rejected"), CONTENT_SUGGEST_WITHDRAW("Content Request Withdrawn"), 
 		CONTENT_SUGGEST_EDIT("Content Request Edited"), CONTENT_SUGGEST_VIEW("Content Request Viewed"),
-		CONTENT_PORTAL_URL_COPIED("Content Portal URL Copied");
+		CONTENT_PORTAL_URL_COPIED("Content Portal URL Copied"),CONTENT_DOWNLD_URL_COPIED("Content Download URL Copied");
 		private String value;
 
 		private ContentActivityType(String value) {
