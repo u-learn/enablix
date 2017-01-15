@@ -1,5 +1,5 @@
-.table-hover tbody tr:hover > td {
-  	cursor: pointer
+.table-hover tbody tr:hover>td {
+	cursor: pointer
 }
 
 .eb-indx-container {
@@ -12,7 +12,9 @@
 	font-style: italic;
 }
 
-ul.nav a:hover { background-color: #e7e7e7 !important; }
+ul.nav a:hover {
+	background-color: #e7e7e7 !important;
+}
 
 div[data-tree-model] li {
 	line-height: 25px;
@@ -40,28 +42,28 @@ div[data-tree-model] li .selected {
 }
 
 .page-body {
-    padding-left: 0;
-    padding-right: 0;
+	padding-left: 0;
+	padding-right: 0;
 }
 
 .portal-left-nav-section, .left-nav-section {
-    overflow-y: auto;
-    padding-left: 0;
-    padding-right: 0;
+	overflow-y: auto;
+	padding-left: 0;
+	padding-right: 0;
 }
 
 .left-nav-section {
 	min-height: 90vh; /* viewport height */
-    max-height: 90vh;
+	max-height: 90vh;
 }
 
 .portal-left-nav-section {
 	min-height: 80vh; /* viewport height */
-    max-height: 80vh;
+	max-height: 80vh;
 }
 
-.nav, .pagination, .carousel, .panel-title a { 
-	cursor: pointer; 
+.nav, .pagination, .carousel, .panel-title a {
+	cursor: pointer;
 }
 
 .portal-top-nav {
@@ -84,15 +86,16 @@ div[data-tree-model] li .selected {
 }
 
 .portal-top-nav .nav>li>a {
-  padding: 5px 15px;
+	padding: 5px 15px;
 }
 
-.borderless tbody tr td, .borderless tbody tr th, .borderless thead tr th {
-    border: none;
+.borderless tbody tr td, .borderless tbody tr th, .borderless thead tr th
+	{
+	border: none;
 }
 
 .breadcrumb>li+li:before {
-  content: "\003e";
+	content: "\003e";
 }
 
 .breadcrumb {
@@ -126,4 +129,27 @@ label, h4 {
 .nav-separator {
 	padding-left: 3px;
 	padding-right: 3px;
+}
+
+ul.dropdown-menu {
+	background-color: #FFFFFF;
+}
+
+.dropdown-menu>li>a:focus, .dropdown-menu>li>a:hover {
+	color: #262626;
+	text-decoration: none;
+	background-color: #2680BE;
+}
+
+.contextAnchor {
+	opacity: 0.75;
+	color: #000000;
+}
+
+.md-autocomplete-suggestions-container {
+	z-index: 100000 !important; /* any number of choice > 1050*/
+}
+
+body.modal-open {
+	overflow: auto;
 }
