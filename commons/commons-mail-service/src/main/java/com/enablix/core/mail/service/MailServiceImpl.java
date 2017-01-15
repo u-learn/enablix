@@ -22,6 +22,7 @@ import com.enablix.core.domain.config.EmailConfiguration;
 import com.enablix.core.domain.config.SMTPConfiguration;
 import com.enablix.core.domain.config.TemplateConfiguration;
 import com.enablix.core.domain.tenant.Tenant;
+import com.enablix.core.mail.entities.ShareEmailClientDtls;
 import com.enablix.core.mail.utility.MailConstants;
 import com.enablix.core.mail.utility.MailUtility;
 import com.enablix.core.mail.velocity.NewUserScenarioInputBuilder;
@@ -111,7 +112,6 @@ public class MailServiceImpl implements MailService {
 					MailConstants.BODY_TEMPLATE_PATH);
 			String subject = generateTemplateMessage(objectTobeMerged, subjectTemplateName, elementName,
 					MailConstants.SUBJECT_TEMPLATE_PATH);
-
 			preprocessMailContent(objectTobeMerged, scenario);
 			mailSent = MailUtility.sendEmail(emailid, subject, htmlBody, this.getEmailConfiguration());
 			postprocessMailContent(objectTobeMerged, scenario);
@@ -140,7 +140,41 @@ public class MailServiceImpl implements MailService {
 			}
 		}
 	}
-
+	@Override
+	public ShareEmailClientDtls getHtmlEmail(Object objectTobeMerged, String emailid, String scenario) {
+		String templateName = scenario + MailConstants.EMAIL_BODY_SUFFIX;
+		String subjectTemplateName = scenario + MailConstants.EMAIL_SUBJECT_SUFFIX;
+		return getHtmlEmail(objectTobeMerged, emailid, scenario, templateName, subjectTemplateName);
+	}
+	@Override
+	public ShareEmailClientDtls getHtmlEmail(Object objectTobeMerged, String emailid, String scenario, String bodyTemplateName,
+			String subjectTemplateName) {
+		ShareEmailClientDtls emailClientDtls=null;
+		String elementName = MailConstants.EMAIL_TEMPLATE_OBJECTNAME;
+		switch (scenario) {
+		case MailConstants.SCENARIO_SET_PASSWORD:
+		case MailConstants.SCENARIO_RESET_PASSWORD:
+		case MailConstants.SCENARIO_PASSWORD_CONFIRMATION:
+			objectTobeMerged = newUserScenarioInputBuilder.build(emailid);
+			break;
+		default:
+			break;
+		}
+		try {
+			String htmlBody = generateTemplateMessage(objectTobeMerged, bodyTemplateName, elementName,
+					MailConstants.BODY_TEMPLATE_PATH);
+			String subject = generateTemplateMessage(objectTobeMerged, subjectTemplateName, elementName,
+					MailConstants.SUBJECT_TEMPLATE_PATH);
+			preprocessMailContent(objectTobeMerged, scenario);
+			emailClientDtls = new ShareEmailClientDtls(subject,htmlBody);
+			postprocessMailContent(objectTobeMerged, scenario);
+			
+			
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+		}
+		return emailClientDtls;
+	};
 	private String generateTemplateMessage(Object objectTobeMerged, String templateName, String elementName, String path) {
 		Template emailTemplate = velocityEngine.getTemplate(path + templateName);
 		VelocityContext velocityContext = new VelocityContext();
