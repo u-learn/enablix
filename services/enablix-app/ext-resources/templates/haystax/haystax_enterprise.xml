@@ -28,6 +28,7 @@
 			<container id="prodPress" label="Press" linkContainerQId="press" linkContentItemId="products"/>	
 			<container id="prodPOC" label="Proof of Concepts" linkContainerQId="poc" linkContentItemId="products"/>
 			<container id="prodProposal" label="Proposals" linkContainerQId="proposal" linkContentItemId="products"/>
+			<container id="prodResearch" label="Research" linkContainerQId="research" linkContentItemId="products"/>			
 			<container id="prodTopic" label="Topics" linkContainerQId="topic" linkContentItemId="products"/>							
 			<container id="prodWhitePaper" label="White Papers" linkContainerQId="whitepaper" linkContentItemId="products"/>			
 			<container id="prodWinLoss" label="Win Loss Analysis" linkContainerQId="winloss" linkContentItemId="products"/>			
@@ -82,6 +83,7 @@
 			<container id="solPress" label="Press" linkContainerQId="press" linkContentItemId="solutions"/>						
 			<container id="solPOC" label="Proof of Concepts" linkContainerQId="poc" linkContentItemId="solutions"/>
 			<container id="solProposal" label="Proposals" linkContainerQId="proposal" linkContentItemId="solutions"/>			
+			<container id="solResearch" label="Research" linkContainerQId="research" linkContentItemId="solutions"/>			
 			<container id="solOverview" label="Solution Overview" single="true">
 				<contentItem id="file" label="File" type="doc"/>
 				<contentItem id="summary" label="Summary" type="text"/>
@@ -131,6 +133,7 @@
 			<container id="appPress" label="Press" linkContainerQId="press" linkContentItemId="apps"/>				
 			<container id="appProposal" label="Proposals" linkContainerQId="proposal" linkContentItemId="apps"/>			
 			<container id="appPOC" label="Proof of Concepts" linkContainerQId="poc" linkContentItemId="apps"/>
+			<container id="appResearch" label="Research" linkContainerQId="research" linkContentItemId="apps"/>						
 			<container id="appTopic" label="Topics" linkContainerQId="topic" linkContentItemId="apps"/>				
 			<container id="appWinLoss" label="Win Loss Analysis" linkContainerQId="winloss" linkContentItemId="apps"/>
 			<container id="appWhitePaper" label="White Papers" linkContainerQId="whitepaper" linkContentItemId="apps"/>
@@ -190,6 +193,7 @@
 			</container>								
 			<container id="compPOC" label="Proof of Concepts" linkContainerQId="poc" linkContentItemId="competitors"/>
 			<container id="compProposal" label="Proposals" linkContainerQId="proposal" linkContentItemId="competitors"/>
+			<container id="compResearch" label="Research" linkContainerQId="research" linkContentItemId="competitors"/>						
 			<container id="compswot" label="SWOT">
 				<contentItem id="title" label="Title" type="text" searchBoost="7"/>
 				<contentItem id="products" label="Product" type="bounded" searchBoost="5">
@@ -364,6 +368,7 @@
 			<container id="partnerPress" label="Press" linkContainerQId="press" linkContentItemId="partners"/>									
 			<container id="partnerPOC" label="Proof of Concepts" linkContainerQId="poc" linkContentItemId="partners"/>
 			<container id="partnerProposal" label="Proposals" linkContainerQId="proposal" linkContentItemId="partners"/>
+			<container id="partnerResearch" label="Research" linkContainerQId="research" linkContentItemId="partners"/>									
 			<container id="partnerTopic" label="Topics" linkContainerQId="topic" linkContentItemId="partners"/>				
 			<container id="partnerWinLoss" label="Win Loss Analysis" linkContainerQId="winloss" linkContentItemId="partners"/>
 			<container id="partnerWhitePaper" label="White Papers" linkContainerQId="whitepaper" linkContentItemId="partners"/>
@@ -460,133 +465,7 @@
 			</container>	
 			<container id="analystPresentation" label="Presentations" linkContainerQId="salesDeck" linkContentItemId="analysts"/>			
 			<container id="analystPress" label="Press" linkContainerQId="press" linkContentItemId="analysts"/>																	
-			<container id="report" label="Reports">
-				<contentItem id="title" label="Report Title" type="text" searchBoost="7"/>
-				<contentItem id="file" label="File" type="doc"/>
-				<contentItem id="distributionrights" label="Distribution Rights" type="bounded">
-					<bounded>
-						<fixedList>
-							<data id="yes" label="Yes"/>
-							<data id="no" label="No"/>
-						</fixedList>
-					</bounded>
-				</contentItem>
-				<contentItem id="summary" label="Report Summary" type="text" searchBoost="2"/>
-				<contentItem id="highlights" label="Report Highlights" type="text" searchBoost="3"/>
-				<contentItem id="rating" label="Report Rating" type="bounded" searchBoost="6">
-					<bounded>
-						<refList>
-							<datastore>
-								<storeId>analystReportRating</storeId>
-								<dataId>identity</dataId>
-								<dataLabel>ratingName</dataLabel>
-							</datastore>
-						</refList>
-					</bounded>
-				</contentItem>
-				<contentItem id="solutions" label="Solutions" type="bounded" searchBoost="6">
-					<bounded multivalued="true">
-						<refList>
-							<datastore hyperlink="true">
-								<storeId>solution</storeId>
-								<dataId>identity</dataId>
-								<dataLabel>shortName</dataLabel>
-							</datastore>
-						</refList>
-					</bounded>
-				</contentItem>
-				<contentItem id="products" label="Products" type="bounded" searchBoost="6">
-					<bounded multivalued="true">
-						<refList>
-							<datastore hyperlink="true">
-								<storeId>product</storeId>
-								<dataId>identity</dataId>
-								<dataLabel>shortName</dataLabel>
-							</datastore>
-						</refList>
-					</bounded>
-				</contentItem>
-				<contentItem id="competitors" label="Competitors" type="bounded" searchBoost="6">
-					<bounded multivalued="true">
-						<refList>
-							<datastore hyperlink="true">
-								<storeId>competitor</storeId>
-								<dataId>identity</dataId>
-								<dataLabel>shortName</dataLabel>
-							</datastore>
-						</refList>
-					</bounded>
-				</contentItem>
-				<contentItem id="partners" label="Partners" type="bounded" searchBoost="6">
-					<bounded multivalued="true">
-						<refList>
-							<datastore hyperlink="true">
-								<storeId>partner</storeId>
-								<dataId>identity</dataId>
-								<dataLabel>shortName</dataLabel>
-							</datastore>
-						</refList>
-					</bounded>
-				</contentItem>
-			</container>
-			<container id="research" label="Research">
-				<contentItem id="title" label="Research Title" type="text" searchBoost="7"/>
-				<contentItem id="file" label="File" type="doc"/>
-				<contentItem id="distributionrights" label="Distribution Rights" type="bounded">
-					<bounded>
-						<fixedList>
-							<data id="yes" label="Yes"/>
-							<data id="no" label="No"/>
-						</fixedList>
-					</bounded>
-				</contentItem>
-				<contentItem id="summary" label="Research Summary" type="text" searchBoost="2"/>
-				<contentItem id="highlights" label="Research Highlights" type="text" searchBoost="3"/>
-				<contentItem id="solutions" label="Solutions" type="bounded" searchBoost="6">
-					<bounded multivalued="true">
-						<refList>
-							<datastore hyperlink="true">
-								<storeId>solution</storeId>
-								<dataId>identity</dataId>
-								<dataLabel>shortName</dataLabel>
-							</datastore>
-						</refList>
-					</bounded>
-				</contentItem>
-				<contentItem id="products" label="Products" type="bounded" searchBoost="6">
-					<bounded multivalued="true">
-						<refList>
-							<datastore hyperlink="true">
-								<storeId>product</storeId>
-								<dataId>identity</dataId>
-								<dataLabel>shortName</dataLabel>
-							</datastore>
-						</refList>
-					</bounded>
-				</contentItem>
-				<contentItem id="competitors" label="Competitors" type="bounded" searchBoost="6">
-					<bounded multivalued="true">
-						<refList>
-							<datastore hyperlink="true">
-								<storeId>competitor</storeId>
-								<dataId>identity</dataId>
-								<dataLabel>shortName</dataLabel>
-							</datastore>
-						</refList>
-					</bounded>
-				</contentItem>
-				<contentItem id="partners" label="Partners" type="bounded" searchBoost="6">
-					<bounded multivalued="true">
-						<refList>
-							<datastore hyperlink="true">
-								<storeId>partner</storeId>
-								<dataId>identity</dataId>
-								<dataLabel>shortName</dataLabel>
-							</datastore>
-						</refList>
-					</bounded>
-				</contentItem>
-			</container>
+			<container id="analystResearch" label="Research" linkContainerQId="research" linkContentItemId="analysts"/>												
 			<container id="analystTopic" label="Topics" linkContainerQId="topic" linkContentItemId="analysts"/>	
 			<container id="analystWhitePaper" label="White Papers" linkContainerQId="whitepaper" linkContentItemId="analysts"/>
 			<container id="analystContent" label="Other Content" linkContainerQId="content" linkContentItemId="analysts"/>			
@@ -972,13 +851,8 @@
 						</datastore>
 					</refList>
 				</bounded>
-			</contentItem>			
-			<container id="supportingResearch" label="Supporting Research">
-				<contentItem id="title" label="Title" type="text" searchBoost="7"/>
-				<contentItem id="file" label="File" type="doc"/>
-				<contentItem id="url" label="URL" type="text" searchBoost="5"/>
-				<contentItem id="summary" label="Summary" type="text" searchBoost="2"/>
-			</container>									
+			</contentItem>	
+			<container id="posResearch" label="Research" linkContainerQId="research" linkContentItemId="positionings"/>									
 		</container>			
 		<container id="discoveryQuestion" label="Discovery Questions">
 			<contentItem id="question" label="Question" type="text" searchBoost="6"/>
@@ -2101,6 +1975,109 @@
 				<contentItem id="summary" label="Summary" type="text"/>
 		</container>			
 		</container>
+		<container id="research" label="Research">
+			<contentItem id="title" label="Title" type="text" searchBoost="7"/>
+			<contentItem id="file" label="File" type="doc"/>
+			<contentItem id="url" label="URL" type="text"/>
+			<contentItem id="distributionrights" label="Distribution Rights" type="bounded">
+				<bounded>
+					<fixedList>
+						<data id="yes" label="Yes"/>
+						<data id="no" label="No"/>
+					</fixedList>
+				</bounded>
+			</contentItem>
+			<contentItem id="summary" label="Summary" type="text" searchBoost="2"/>
+			<contentItem id="highlights" label="Highlights" type="text" searchBoost="3"/>
+			<contentItem id="products" label="Products" type="bounded" searchBoost="6">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>product</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>			
+			<contentItem id="solutions" label="Solutions" type="bounded" searchBoost="6">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>solution</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="apps" label="Apps" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>app</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>									
+			<contentItem id="competitors" label="Competitors" type="bounded" searchBoost="6">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>competitor</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>					
+			<contentItem id="partners" label="Partners" type="bounded" searchBoost="6">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>partner</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="analysts" label="Analysts" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>analyst</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>	
+			<contentItem id="topics" label="Topics" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>topic</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="positionings" label="Corporate Positioning" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>positioning</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>title</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>									
+		</container>
 		<container id="template" label="Templates">
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="file" label="File" type="doc"/>
@@ -2190,6 +2167,7 @@
 			<container id="topicPress" label="Press" linkContainerQId="press" linkContentItemId="topics"/>													
 			<container id="topicPOC" label="Proof of Concepts" linkContainerQId="poc" linkContentItemId="topics"/>
 			<container id="topicProposal" label="Proposals" linkContainerQId="proposal" linkContentItemId="topics"/>
+			<container id="topicResearch" label="Research" linkContainerQId="research" linkContentItemId="topics"/>									
 			<container id="topicWhitePaper" label="White Papers" linkContainerQId="whitepaper" linkContentItemId="topics"/>
 			<container id="topicContent" label="Other Content" linkContainerQId="content" linkContentItemId="topics"/>
 		</container>		
@@ -2751,6 +2729,7 @@
 					<childContainer id="press"/>															
 					<childContainer id="poc"/>
 					<childContainer id="proposal"/>
+					<childContainer id="research"/>					
 					<childContainer id="template"/>
 					<childContainer id="topic"/>					
 					<childContainer id="whitepaper"/>
@@ -2816,40 +2795,28 @@
 		<contentUIDef qualifiedId="analyst">
 			<container labelQualifiedId="analyst.shortName"/>
 		</contentUIDef>
-		<contentUIDef qualifiedId="analyst.report">
-			<container labelQualifiedId="analyst.report.title">
+		<contentUIDef qualifiedId="research">
+			<container labelQualifiedId="research.title">
 				<listViewConfig>
 					<hideContentItem id="summary"/>
 					<hideContentItem id="file"/>
 					<hideContentItem id="highlights"/>
+					<hideContentItem id="apps"/>
+					<hideContentItem id="competitors"/>
+					<hideContentItem id="partners"/>	
+					<hideContentItem id="analysts"/>																													
+					<hideContentItem id="topics"/>					
+					<hideContentItem id="positioning"/>					
 				</listViewConfig>
 				<portalConfig>
 					<headingContentItem id="title"/>
 				</portalConfig>
 			</container>
 		</contentUIDef>
-		<contentUIDef qualifiedId="analyst.report.summary">
+		<contentUIDef qualifiedId="research.summary">
 			<text type="long"/>
 		</contentUIDef>
-		<contentUIDef qualifiedId="analyst.report.highlights">
-			<text type="long"/>
-		</contentUIDef>
-		<contentUIDef qualifiedId="analyst.research">
-			<container labelQualifiedId="analyst.research.title">
-				<listViewConfig>
-					<hideContentItem id="summary"/>
-					<hideContentItem id="file"/>
-					<hideContentItem id="highlights"/>
-				</listViewConfig>
-				<portalConfig>
-					<headingContentItem id="title"/>
-				</portalConfig>
-			</container>
-		</contentUIDef>
-		<contentUIDef qualifiedId="analyst.research.summary">
-			<text type="long"/>
-		</contentUIDef>
-		<contentUIDef qualifiedId="analyst.research.highlights">
+		<contentUIDef qualifiedId="research.highlights">
 			<text type="long"/>
 		</contentUIDef>
 		<contentUIDef qualifiedId="analyst.engagement">
@@ -3474,6 +3441,7 @@
 					<childContainer id="press"/>										
 					<childContainer id="poc"/>
 					<childContainer id="proposal"/>
+					<childContainer id="research"/>										
 					<childContainer id="template"/>
 					<childContainer id="topic"/>
 					<childContainer id="whitepaper"/>
