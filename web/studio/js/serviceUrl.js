@@ -70,7 +70,7 @@ enablix.serviceURL = {
 	"getPlayDefinition": enablix.domainName + "/play/def/r/:playDefId",
 	"getCorrelatedItemTypeHierarchy": enablix.domainName + "/corr/itemtypes/:sourceItemQId",
 		"shareOptsGetPortalURL" : enablix.domainName + "/shareOptions/getPortalURL/",
-	"shareOptsEmailClient" : enablix.domainName + "/shareOptions/getShareEmailClient/",
+	"shareOptsEmailClientAudit" : enablix.domainName + "/shareOptions/auditShareViaEmailClient/",
 	"shareOptsPortalAudit" : enablix.domainName + "/shareOptions/portalURLAudit/",
 	"shareOptsDocDownloadAudit" : enablix.domainName + "/shareOptions/downldDocURLAudit/"
 };
