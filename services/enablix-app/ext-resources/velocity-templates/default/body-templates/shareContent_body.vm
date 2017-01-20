@@ -23,8 +23,8 @@
 	
 	#spacer_row('15')
 	
-	#if(${obj.sharedContent.emailCustomContent})
-		${obj.sharedContent.emailCustomContent}
+	#if(${obj.emailCustomContent})
+		${obj.emailCustomContent}
 		#spacer_row('15')
 	#end
 	
