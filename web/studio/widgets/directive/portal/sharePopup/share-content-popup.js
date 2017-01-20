@@ -5,7 +5,7 @@ enablix.studioApp.factory('shareContentModalWindow',
 			var showShareContentModal = function(containerQId, contentIdentity,$event) {
 				var modalInstance = $modal.open({
 					templateUrl: 'widgets/directive/portal/sharePopup/share-content-popup.html',
-					size: 'sm', // 'sm', 'lg'
+					size: 'md', // 'sm', 'lg'
 					controller: 'ShareController',
 					parent: angular.element(document.body),
 					targetEvent: $event,
