@@ -5,7 +5,7 @@ enablix.studioApp.controller('ShareController', [
 		var email ;
 		$scope.querySearch   = querySearch;
 		function querySearch (query) {
-			return query ? $scope.states.filter( createFilterFor(query) ) : $scope.states;
+			return query ? $scope.users.filter( createFilterFor(query) ) : $scope.users;
 		}
 		function validateEmail() {
 			
@@ -18,7 +18,7 @@ enablix.studioApp.controller('ShareController', [
 			}
 			var atpos = email.indexOf("@");
 			var dotpos = email.lastIndexOf(".");
-			if (atpos<1 || dotpos<atpos+2 || dotpos+2>=email.length) {
+			if ( atpos<1 || dotpos<atpos+2 || dotpos+2>=email.length ) {
 				return false;
 			}
 			return true;
@@ -31,7 +31,7 @@ enablix.studioApp.controller('ShareController', [
 			});
 		};
 		function populateUserIds(data){
-			$scope.states = data.map(function (data) {
+			$scope.users = data.map(function (data) {
 				return {
 					value: data.userId.toLowerCase(),
 					display: data.profile.name
