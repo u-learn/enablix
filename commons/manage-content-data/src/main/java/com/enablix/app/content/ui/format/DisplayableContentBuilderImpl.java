@@ -50,7 +50,6 @@ public class DisplayableContentBuilderImpl implements DisplayableContentBuilder 
 		dispContent.setRecordIdentity((String) record.getRecord().get(ContentDataConstants.IDENTITY_KEY));
 		dispContent.setTitle(ContentDataUtil.findStudioLabelValue(contentRecord, template, containerQId));
 		dispContent.setPortalUrl(getContentInstanceAccessUrl(dispContent.getContainerQId(), dispContent.getRecordIdentity()));
-		dispContent.setEmailCustomContent(record.getEmailCustomContent());
 		for (ContentItemType fieldDef : containerDef.getContentItem()) {
 			
 			DisplayField<?> field = fieldBuilder.build(fieldDef, template, contentRecord, ctx);
