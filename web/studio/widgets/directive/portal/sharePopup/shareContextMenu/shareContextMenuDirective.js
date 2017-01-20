@@ -18,7 +18,7 @@ enablix.studioApp.directive('ebxContextMenu',['RESTService','Notification',
 					var _body=portalURL;
 					if ( downloadDocId != null ) { 
 						var downloadURL  = "Download URL : "+getDownloadURL(downloadDocId);
-						_body=_body+"\\r\\n"+downloadURL;
+						_body=_body+"<br/>"+downloadURL;
 					}
 					openLocalEmailClient(_subject,_body);	   
 				}, function(data){}, null);
@@ -33,6 +33,7 @@ enablix.studioApp.directive('ebxContextMenu',['RESTService','Notification',
 				var link = document.createElement("a");    
 				link.href = requestConfig.url  + "/" + downloadDocId
 				+ ($state.includes('portal') ? '?atChannel=WEB' : "");
+				return link.href;
 			}
 			scope.copyDownloadURL = function(downloadDocId,contentIdentity,contentName){
 				var downloadURL = getDownloadURL(downloadDocId)
@@ -60,11 +61,7 @@ enablix.studioApp.directive('ebxContextMenu',['RESTService','Notification',
 				+ ":" + $location.port() + "/app.html#/portal/container/"+scope.subContainerQId+"/"+contentIdentity;
 			
 			}
-			function getDownloadURL(contentIdentity){
-				return $location.protocol() + "://" + $location.host() 
-				+ ":" + $location.port() + "/app.html#/portal/container/"+scope.subContainerQId+"/"+contentIdentity;
 			
-			}
 			scope.copyPortalURL =function(contentIdentity,contentName){
 
 				var portalURL = getPortalURL(contentIdentity);
