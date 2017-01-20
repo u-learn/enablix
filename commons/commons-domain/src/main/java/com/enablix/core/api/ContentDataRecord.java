@@ -12,28 +12,6 @@ public class ContentDataRecord {
 
 	private Map<String, Object> record;
 
-	private String emailCustomContent;
-
-	public String getEmailCustomContent() {
-		return emailCustomContent;
-	}
-
-	public void setEmailCustomContent(String emailCustomContent) {
-		this.emailCustomContent = emailCustomContent;
-	}
-	public ContentDataRecord(String templateId, String containerQId, String emailCustomContent,Map<String, Object> record) {
-
-		super();
-
-		Assert.notNull(templateId);
-		Assert.notNull(containerQId);
-		Assert.notNull(record, "Content record cannot be null");
-
-		this.templateId = templateId;
-		this.containerQId = containerQId;
-		this.emailCustomContent = emailCustomContent;
-		this.record = record;
-	}
 	public ContentDataRecord(String templateId, String containerQId, Map<String, Object> record) {
 
 		super();
