@@ -15,14 +15,6 @@ public class DisplayableContent {
 	private String title;
 	private DocRef doc;
 	private String portalUrl;
-	private String emailCustomContent;
-	public String getEmailCustomContent() {
-		return emailCustomContent;
-	}
-
-	public void setEmailCustomContent(String emailCustomContent) {
-		this.emailCustomContent = emailCustomContent;
-	}
 	public DisplayableContent() {
 		this.fields = new ArrayList<>();
 	}
