@@ -6,31 +6,37 @@ enablix.studioApp.directive('ebxContextMenu',['RESTService','Notification',
 		scope : true,
 		link: function(scope, element, attrs) {
 
-			scope.openMailClient =function(contentIdentity){
-
-				var params = {containerQId: scope.subContainerQId,
-						contentIdentity:contentIdentity};
-
-				RESTService.getForData('shareOptsEmailClient', params, null, function(data) {
-					openLocalEmailClient(data);	    	
-				}, function() {    		
-					Notification.error({message: "Error loading user data", delay: enablix.errorMsgShowTime});
-				});
-
+			scope.openMailClient =function(downloadDocId,contentIdentity,contentName){
+				var _data = {
+						"containerQId" : scope.subContainerQId,
+						"instanceIdentity" : contentIdentity,
+						"itemTitle" : contentName
+				};
+				RESTService.postForData("shareOptsEmailClientAudit", {}, _data, null, function(data){
+					var _subject = "Shared Content - "+contentName;
+					var portalURL = "Portal URL : "+getPortalURL(contentIdentity);
+					var _body=portalURL;
+					if ( downloadDocId != null ) { 
+						var downloadURL  = "Download URL : "+getDownloadURL(downloadDocId);
+						_body=_body+"\\r\\n"+downloadURL;
+					}
+					openLocalEmailClient(_subject,_body);	   
+				}, function(data){}, null);
 			}
 
-			var openLocalEmailClient = function(data){
-				var replaceHTMLBody = data.htmlBodyContent.replace(/\n/g,'');
-				var encodeHTML = encodeURIComponent(replaceHTMLBody);
-				$window.open("mailto:"+ "" + "?subject="+data.subject+"&body="+encodeHTML,"_self");
+			var openLocalEmailClient = function(_subject,_body){
+				$window.open("mailto:"+ "" + "?subject="+_subject+"&body="+_body,"_self");
 			};
-			scope.copyDownloadURL = function(downloadDocId,contentIdentity,contentName){
+			function getDownloadURL(downloadDocId){
 				var params = { };
 				var requestConfig = genereateRequestConfig("downloadDocument", params);
 				var link = document.createElement("a");    
 				link.href = requestConfig.url  + "/" + downloadDocId
 				+ ($state.includes('portal') ? '?atChannel=WEB' : "");
-				copyToClipboard(link.href);
+			}
+			scope.copyDownloadURL = function(downloadDocId,contentIdentity,contentName){
+				var downloadURL = getDownloadURL(downloadDocId)
+				copyToClipboard(downloadURL);
 				var _data = {
 						"containerQId" : scope.subContainerQId,
 						"instanceIdentity" : contentIdentity,
@@ -49,11 +55,19 @@ enablix.studioApp.directive('ebxContextMenu',['RESTService','Notification',
 				document.execCommand("copy");
 				document.body.removeChild(aux);
 			}
+			function getPortalURL(contentIdentity){
+				return $location.protocol() + "://" + $location.host() 
+				+ ":" + $location.port() + "/app.html#/portal/container/"+scope.subContainerQId+"/"+contentIdentity;
+			
+			}
+			function getDownloadURL(contentIdentity){
+				return $location.protocol() + "://" + $location.host() 
+				+ ":" + $location.port() + "/app.html#/portal/container/"+scope.subContainerQId+"/"+contentIdentity;
+			
+			}
 			scope.copyPortalURL =function(contentIdentity,contentName){
 
-
-				var portalURL=$location.protocol() + "://" + $location.host() 
-				+ ":" + $location.port() + "/app.html#/portal/container/"+scope.subContainerQId+"/"+contentIdentity;
+				var portalURL = getPortalURL(contentIdentity);
 				copyToClipboard(portalURL);
 				var _data = {
 						"containerQId" : scope.subContainerQId,
