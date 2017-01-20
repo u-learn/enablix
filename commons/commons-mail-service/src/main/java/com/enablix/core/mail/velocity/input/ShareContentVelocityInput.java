@@ -8,11 +8,20 @@ public class ShareContentVelocityInput extends UserWelcomeVelocityInput implemen
 	private DisplayableContent sharedContent;
 	private String url;
 	private String identity;
+	private String emailCustomContent;
+	public String getEmailCustomContent() {
+		return emailCustomContent;
+	}
 
-	public ShareContentVelocityInput(String newUserId, DisplayableContent sharedContent) {
+	public void setEmailCustomContent(String emailCustomContent) {
+		this.emailCustomContent = emailCustomContent;
+	}
+
+	public ShareContentVelocityInput(String newUserId, DisplayableContent sharedContent,String emailCustomContent) {
 		super(newUserId);
 		this.sharedContent = sharedContent;
 		this.identity = IdentityUtil.generateIdentity(this);
+		this.emailCustomContent=emailCustomContent;
 	}
 
 	public DisplayableContent getSharedContent() {
