@@ -10,16 +10,16 @@
 			By Email</a></li>
 	<li role="presentation" class="divider"></li>
 	<li role="presentation"><a class="contextAnchor" role="menuitem"
-		tabindex="-1" href="#" ng-click="openMailClient(bodyData.downloadDocIdentity,bodyData.identity,bodyData.name)">Share
+		tabindex="-1" href="#" ng-click="openMailClient(bodyData.downloadDocIdentity,bodyData.identity,bodyData.title)">Share
 			By Email Client</a></li>
 	<li role="presentation" class="divider"></li>
 	<li role="presentation"><a class="contextAnchor" role="menuitem"
 		tabindex="-1" href="#"
-		ng-click="copyPortalURL(bodyData.identity,bodyData.name)">Copy
+		ng-click="copyPortalURL(bodyData.identity,bodyData.title)">Copy
 			Portal URL</a></li>
 	<li ng-if ="bodyData.downloadDocIdentity" role="presentation" class="divider"></li>
 	<li ng-if ="bodyData.downloadDocIdentity" role="presentation"><a class="contextAnchor" role="menuitem"
 		tabindex="-1" href="#"
-		ng-click="copyDownloadURL(bodyData.downloadDocIdentity,bodyData.identity,bodyData.name)">Copy
+		ng-click="copyDownloadURL(bodyData.downloadDocIdentity,bodyData.identity,bodyData.title)">Copy
 			Download URL</a></li>
 </ul>
