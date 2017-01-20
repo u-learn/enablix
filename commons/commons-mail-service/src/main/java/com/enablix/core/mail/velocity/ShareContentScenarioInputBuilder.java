@@ -15,9 +15,9 @@ public class ShareContentScenarioInputBuilder {
 	private VelocityTemplateInputResolverFactory factory;
 	
 	@SuppressWarnings({ "rawtypes", "unchecked"})
-	public ShareContentVelocityInput build(String newUserId, DisplayableContent sharedContent) {
+	public ShareContentVelocityInput build(String newUserId, DisplayableContent sharedContent,String emailCustomContent) {
 		
-		ShareContentVelocityInput input = new ShareContentVelocityInput(newUserId, sharedContent);
+		ShareContentVelocityInput input = new ShareContentVelocityInput(newUserId, sharedContent,emailCustomContent);
 		
 		Collection<VelocityTemplateInputResolver<ShareContentVelocityInput>> resolvers = 
 				factory.getResolvers(input);
