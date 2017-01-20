@@ -18,7 +18,6 @@ import com.enablix.core.api.ContentDataRef;
 import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 import com.enablix.core.domain.activity.ActivityChannel.Channel;
 import com.enablix.core.domain.activity.ContentShareActivity.ShareMedium;
-import com.enablix.core.mail.entities.ShareEmailClientDtls;
 import com.enablix.core.mail.service.MailService;
 import com.enablix.core.mail.velocity.ShareContentScenarioInputBuilder;
 import com.enablix.core.mail.velocity.input.ShareContentVelocityInput;
@@ -51,62 +50,32 @@ public class ShareEmailServiceImpl implements ShareEmailService {
 
 	@Override
 	public boolean sendEmail(EmailData data) {
-		
+
 		String templateId = ProcessContext.get().getTemplateId();
 		ContentTemplate template = templateMgr.getTemplate(templateId);
-		
+
 		Map<String, Object> record = contentDataMgr.getContentRecord(
-					new ContentDataRef(templateId, data.getContainerQId(), 
-							data.getContentIdentity(), null), template);
-		
-		ContentDataRecord dataRecord = new ContentDataRecord(templateId, data.getContainerQId(),data.getEmailCustomContent(), record);
-		
+				new ContentDataRef(templateId, data.getContainerQId(), 
+						data.getContentIdentity(), null), template);
+
+		ContentDataRecord dataRecord = new ContentDataRecord(templateId, data.getContainerQId(), record);
+
 		DisplayContext ctx = new DisplayContext();
-		
+
 		DisplayableContent displayableContent = contentBuilder.build(template, dataRecord, ctx);
-		
+
 		docUrlPopulator.process(displayableContent, data.getEmailId());
 		textLinkProcessor.process(displayableContent, template, data.getEmailId());
-		
-		ShareContentVelocityInput mailInput = mailInputBuilder.build(data.getEmailId(), displayableContent);
-		
+
+		ShareContentVelocityInput mailInput = mailInputBuilder.build(data.getEmailId(), displayableContent,data.getEmailCustomContent());
+
 		boolean emailSent = mailService.sendHtmlEmail(mailInput, data.getEmailId(), "shareContent");
-		
+
 		// Audit content sharing
 		ActivityLogger.auditContentShare(templateId, displayableContent, data.getEmailId(),
 				ShareMedium.WEB, Channel.EMAIL, mailInput.getIdentity(), displayableContent.getTitle());
-		
+
 		return emailSent;
-		
-	}
-	@Override
-	public ShareEmailClientDtls getEmailContent(String containerQID, String contentID) {
-
-		String templateId = ProcessContext.get().getTemplateId();
-		ContentTemplate template = templateMgr.getTemplate(templateId);
-
-		Map<String, Object> record = contentDataMgr.getContentRecord(
-				new ContentDataRef(templateId, containerQID, 
-						contentID, null), template);
-
-		ContentDataRecord dataRecord = new ContentDataRecord(templateId, containerQID, record);
-
-		DisplayContext ctx = new DisplayContext();
-
-		DisplayableContent displayableContent = contentBuilder.build(template, dataRecord, ctx);
-
-		docUrlPopulator.process(displayableContent, "");
-		textLinkProcessor.process(displayableContent, template, "");
-
-		ShareContentVelocityInput mailInput = mailInputBuilder.build("", displayableContent);
-
-		ShareEmailClientDtls emailClientDtls = mailService.getHtmlEmail(mailInput, "", "shareContent");
-
-		// Audit content sharing
-		ActivityLogger.auditContentShare(templateId, displayableContent, "",
-				ShareMedium.WEB, Channel.EMAILCLIENT, mailInput.getIdentity(), displayableContent.getTitle());
-
-		return emailClientDtls;
 
 	}
 }
