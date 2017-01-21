@@ -1,8 +1,8 @@
 enablix.studioApp.controller('SystemContentBrowserController', 
-			['$scope', 'ContentTemplateService', 'ContentDataService', 'ContentUtil', '$modalInstance', 'QIdUtil', 'Notification', 
-    function ($scope,   ContentTemplateService,   ContentDataService,   ContentUtil,   $modalInstance,   QIdUtil,   Notification) {
+			['$scope', 'ContentTemplateService', 'ContentDataService', 'ContentUtil', '$modalInstance', 'QIdUtil', 'Notification', 'preSelectedRecords',
+    function ($scope,   ContentTemplateService,   ContentDataService,   ContentUtil,   $modalInstance,   QIdUtil,   Notification,   preSelectedRecords) {
 
-		$scope.selectedContentItems = [];
+		$scope.selectedContentItems = angular.copy(preSelectedRecords);
 		$scope.chunkedSelectedContent = [];
 		$scope.browsePath = [];
 
@@ -144,7 +144,7 @@ enablix.studioApp.controller('SystemContentBrowserController',
 			$scope.currentContainer = null;
 			$scope.currentContentRecord = null;
 			
-			$scope.contentList = [];
+			$scope.contentList = null;
 		}
 
 		
@@ -152,15 +152,23 @@ enablix.studioApp.controller('SystemContentBrowserController',
 			$modalInstance.dismiss('cancel');
 		};
 		
+		$scope.doneBrowsing = function() {
+			$modalInstance.close($scope.selectedContentItems);
+		};
+		
 		$scope.addToSelectedContent = function(dataRecord) {
 			
 			var indx = $scope.indexInSelectedContent(dataRecord.identity);
 			
 			if (indx == -1) {
+				
+				var containerQId = $scope.currentContainer.linkContainerQId ? 
+						$scope.currentContainer.linkContainerQId : $scope.currentContainer.qualifiedId;
+						
 				$scope.selectedContentItems.push({
 					identity: dataRecord.identity,
 					label: dataRecord._title,
-					qualifiedId: $scope.currentContainer.qualifiedId,
+					qualifiedId: containerQId,
 					containerLabel: $scope.currentContainer.label
 				});
 			}
@@ -182,6 +190,16 @@ enablix.studioApp.controller('SystemContentBrowserController',
 		$scope.removeFromSelectedContent = function(dataRecord) {
 			$scope.removeFromSelectedContentByIdentity(dataRecord.identity);
 		};
+		
+		$scope.selectedContentItemRemoved = function(_removedContentItem, $index) {
+			if ($scope.contentList) {
+				angular.forEach($scope.contentList, function(contentItem) {
+					if (contentItem.identity == _removedContentItem.identity) {
+						contentItem._selected = false;
+					}
+				});
+			}
+		}
 		
 		$scope.removeFromSelectedContentByIdentity = function(_dataIdentity) {
 			var indx = $scope.indexInSelectedContent(_dataIdentity);
@@ -211,7 +229,7 @@ enablix.studioApp.controller('SystemContentBrowserController',
 		
 		var showEnclosureView = function(enclosureDef) {
 			
-			$scope.contentList = [];
+			$scope.contentList = null;
 			$scope.containerList = [];
 			
 			angular.forEach(enclosureDef.childContainer, function(childContainer) {
@@ -228,7 +246,7 @@ enablix.studioApp.controller('SystemContentBrowserController',
 		var sortContainerByLabel = function(c1, c2) {
 			return c1.label == c2.label ? 0 : (c1.label < c2.label ? -1 : 1);
 		}
-
+		
 		var showContainerView = function(containerDef) {
 		
 			$scope.containerList = [];
@@ -246,10 +264,20 @@ enablix.studioApp.controller('SystemContentBrowserController',
 			var parentIdentity = $scope.currentContentRecord ? $scope.currentContentRecord.identity : null;
 			
 			var fetchData = function() {
+				
 				ContentDataService.getContentData(enablix.templateId, containerDef.qualifiedId, parentIdentity, function(data) {
+					
 					$scope.contentList = data.content;
 					$scope.pageData = data;
+					
 					ContentUtil.resolveAndAddTitle(containerDef, $scope.contentList);
+					
+					// mark selected records
+					angular.forEach($scope.contentList, function(contentItem) {
+						if ($scope.indexInSelectedContent(contentItem.identity) != -1) {
+							contentItem._selected = true; 
+						}
+					});
 					
 				}, function(errorData) {
 					Notification.error({message: "Error retrieving data", delay: enablix.errorMsgShowTime});
@@ -323,7 +351,7 @@ enablix.studioApp.controller('SystemContentBrowserController',
 				}
 			});
 			
-			$scope.contentList = [];
+			$scope.contentList = null;
 			
 			$scope.containerList.sort(sortContainerByLabel);
 			$scope.chunkedContainerList = chunkArray($scope.containerList, 3);

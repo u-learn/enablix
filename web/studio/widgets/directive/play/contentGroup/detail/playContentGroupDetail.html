@@ -13,9 +13,29 @@
 	        </div>
 		</div>
 		<div class="head ebx-top-border">
-			<h2>Select Content<ebx-system-content-browser></ebx-system-content-browser></h2>
+			<i ng-class="isContentSetCollapsed ? 'fa fa-chevron-right' : 'fa fa-chevron-down'" class="ebx-float-right" 
+						aria-hidden="true" ng-click="isContentSetCollapsed = !isContentSetCollapsed"></i>
+			<h2>Content Set <ebx-system-content-browser pre-selected-records="contentSetRecords" selection-callback="contentSelected"></ebx-system-content-browser></h2>
 		</div>
-		<div class="cont">
+		<div collapse="isContentSetCollapsed">
+			<ebx-generic-table ng-if="contentSetRecords && contentSetRecords.length > 0" table-headers="contentSetTableHeaders" 
+						table-data="contentSetRecords" row-actions="contentSetTableRecordActions"></ebx-generic-table>
+		</div>
+		<div ng-if="masterCorrItemTypes && masterCorrItemTypes.length > 0">
+			<div class="head ebx-top-border">
+				<i ng-class="isCorrContentCollapsed ? 'fa fa-chevron-right' : 'fa fa-chevron-down'" class="ebx-float-right" 
+							aria-hidden="true" ng-click="isCorrContentCollapsed = !isCorrContentCollapsed"></i>
+				<h2>Content Correlated To {{focusName}}</h2>
+			</div>
+			<div class="cont" collapse="isCorrContentCollapsed">
+				<div class="corr-item-cont">
+					<ebx-content-group-corr-items type-hierarchy="masterCorrItemTypes"></ebx-content-group-corr-items>
+				</div>
+			</div>
+		</div>
+		<div class="foot clearfix">
+			<button ng-click="updateContentGroup()" class="button button-add">Save</button>
+			<a ng-click="cancelOperation()" class="button button-delete">Cancel</a>
 		</div>
 	</form>
 </div>

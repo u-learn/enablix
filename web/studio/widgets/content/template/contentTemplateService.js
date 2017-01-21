@@ -48,6 +48,11 @@ enablix.studioApp.factory('ContentTemplateService',
 				
 			};
 			
+			var getContainerLabel = function(_containerQId) {
+				var containerDef = getContainerDefinition(enablix.template, _containerQId);
+				return containerDef ? containerDef.label : "";
+			}
+			
 			var getUIDefinition = function(_template, _elementQId) {
 				
 				var elemUIDef = undefined;
@@ -118,11 +123,15 @@ enablix.studioApp.factory('ContentTemplateService',
 				
 				var containerDef = getContainerDefinition(enablix.template, _containerQId);
 				
-				if (!isNullOrUndefined(containerDef.linkContainerQId)) {
-					containerDef = getContainerDefinition(enablix.template, $scope.containerDef.linkContainerQId);
+				if (isLinkedContainer(containerDef)) {
+					containerDef = getContainerDefinition(enablix.template, containerDef.linkContainerQId);
 				}
 				
 				return containerDef;
+			}
+			
+			var isLinkedContainer = function(_containerDef) {
+				return !isNullOrUndefined(_containerDef.linkContainerQId);
 			}
 			
 			var getContainerLabelAttrId = function(_template, _containerQId) {
@@ -181,6 +190,13 @@ enablix.studioApp.factory('ContentTemplateService',
 				return null;
 			};
 			
+			var checkAndGetBoundedRefListContainerQId = function(_contentItemDef) {
+				if (isBoundedRefListItem(_contentItemDef)) {
+					return _contentItemDef.bounded.refList.datastore.storeId;
+				}
+				return null;
+			};
+			
 			var getBoundedValueList = function(_templateId, _contentItemDef, _transform, _onSuccess, _onError) {
 				
 				if (_contentItemDef.bounded.fixedList) {
@@ -199,11 +215,18 @@ enablix.studioApp.factory('ContentTemplateService',
 					
 				} else if(_contentItemDef.bounded.refList) {
 					
-					var params = { 
-							"templateId": _templateId,
-							"contentQId": _contentItemDef.qualifiedId
-						};
-					RESTService.getForData("fetchBoundedRefList", params, _transform, _onSuccess, _onError);
+					if (!isNullOrUndefined(_contentItemDef.qualifiedId)) {
+						
+						var params = { 
+								"templateId": _templateId,
+								"contentQId": _contentItemDef.qualifiedId
+							};
+						
+						RESTService.getForData("fetchBoundedRefList", params, _transform, _onSuccess, _onError);
+						
+					} else {
+						RESTService.postForData("fetchBoundedDefRefList", null, _contentItemDef.bounded, _transform, _onSuccess, _onError, null);
+					}
 				}
 			}
 			
@@ -376,7 +399,7 @@ enablix.studioApp.factory('ContentTemplateService',
 				return inheritableItems;
 			};
 			
-			function isBoundedRefListItem(_itemDef) {
+			var isBoundedRefListItem = function(_itemDef) {
 				return _itemDef.type == "BOUNDED" && _itemDef.bounded.refList;
 			}
 			
@@ -466,16 +489,30 @@ enablix.studioApp.factory('ContentTemplateService',
 				return contextContainers;
 			};
 			
+			var getUserContainerQId = function() {
+				
+				var userContainerQId = "user";
+				
+				if (enablix.template.dataDefinition.userProfileRef && 
+						enablix.template.dataDefinition.userProfileRef.containerQId) {
+					userContainerQId = enablix.template.dataDefinition.userProfileRef.containerQId;
+				}
+				
+				return userContainerQId;
+			};
+			
 			return {
 				getTemplate : getTemplate,
 				getDefaultTemplate : getDefaultTemplate,
 				getContainerLabelAttrId : getContainerLabelAttrId,
+				getContainerLabel: getContainerLabel,
 				getUIDefinition: getUIDefinition,
 				getContainerDefinition: getContainerDefinition,
 				getConcreteContainerDefinition: getConcreteContainerDefinition,
 				getContentItem: getContentItem,
 				getBoundedRefListContainer: getBoundedRefListContainer,
 				isRootContainer: isRootContainer,
+				isLinkedContainer: isLinkedContainer,
 				getBoundedValueList: getBoundedValueList,
 				loadTemplate: loadTemplate,
 				getContainerEnclosures: getContainerEnclosures,
@@ -492,7 +529,10 @@ enablix.studioApp.factory('ContentTemplateService',
 				getInheritableItems: getInheritableItems,
 				getRefDataContainers: getRefDataContainers,
 				getContainersByBusinessCategory: getContainersByBusinessCategory,
-				getContentConnectionContextContainers: getContentConnectionContextContainers
+				getContentConnectionContextContainers: getContentConnectionContextContainers,
+				getUserContainerQId: getUserContainerQId,
+				isBoundedRefListItem: isBoundedRefListItem,
+				checkAndGetBoundedRefListContainerQId: checkAndGetBoundedRefListContainerQId
 			};
 		
 		}

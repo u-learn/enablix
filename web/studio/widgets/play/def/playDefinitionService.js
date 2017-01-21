@@ -29,8 +29,8 @@ enablix.studioApp.factory('PlayDefinitionService',
 				};
 	 		
 	 		var SUMMARY_FIELDS = 
-	 			[ "playTemplate.id", "playTemplate.name", "playTemplate.prototype", "playTemplate.executable", 
-	 			  "playTemplate.prototypeId", "createdAt", "createdBy", "modifiedAt", "modifiedBy"];
+	 			[ "playTemplate.id", "playTemplate.name", "playTemplate.prototype", "playTemplate.executable", "playTemplate.title", 
+	 			  "playTemplate.prototypeId", "createdAt", "createdBy", "createdByName", "modifiedAt", "modifiedBy", "modifiedByName"];
 	 				
 	 		var getAllPrototypePlaysSummary = function(_onSuccess, _onError) {
 	 			
@@ -65,11 +65,21 @@ enablix.studioApp.factory('PlayDefinitionService',
 				
 				RESTService.getForData("getPlayDefinition", params, null, _onSuccess, _onError);
 			};
+			
+			var saveOrUpdatePlayTemplate = function(_playTemplate, _onSuccess, _onError) {
+				RESTService.postForData("saveOrUpdatePlayDefinition", null, _playTemplate, null, _onSuccess, _onError, null);
+			}
 	 		
+			var getContentSetRecords = function(_contentSet, _onSuccess, _onError) {
+				RESTService.postForData("getContentSetRecords", null, _contentSet, null, _onSuccess, _onError, null);
+			}
+			
 	 		return {
 	 			getAllPrototypePlaysSummary: getAllPrototypePlaysSummary,
 	 			getPlayDefSummaryList: getPlayDefSummaryList,
-	 			getPlayDefinition: getPlayDefinition
+	 			getPlayDefinition: getPlayDefinition,
+	 			saveOrUpdatePlayTemplate: saveOrUpdatePlayTemplate,
+	 			getContentSetRecords: getContentSetRecords
 	 		};
 	 	}
 	 ]);

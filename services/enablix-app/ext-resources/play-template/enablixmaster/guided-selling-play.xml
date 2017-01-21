@@ -118,7 +118,9 @@
 				</correlatedItem>
 				
 				<!-- "caseStudy" correlated to "customer.opportunity" will also be included -->
-				<correlatedItem qualifiedId="caseStudy"/>
+				<correlatedItem qualifiedId="caseStudy">
+					<correlatedItem qualifiedId="competitor"/>
+				</correlatedItem>
 				
 				<correlatedItem qualifiedId="product.dataSheet"/>
 			</focusItemCorrelatedContent>

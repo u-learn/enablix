@@ -1,0 +1,82 @@
+<div class="block">
+	<div class="head">
+		<h2>{{pageHeading}}</h2>
+	</div>
+	<form name="addXPlayForm">
+		<div layout="row">
+			<div class="cont" flex="50%">
+				<label class="form-label">Focus</label>
+				<input class="form-control" ng-model="focusItemContainer.label" disabled/>
+			</div>
+			<div class="cont" flex>
+				<label class="form-label">Title</label>
+				<input required name="playTitle" placeholder="Enter Title" 
+						class="form-control" ng-model="prototypePlayTemplate.title"/>
+				<div ng-messages="addXPlayForm.playTitle.$error">
+					<div ng-message="required">This is required.</div>
+		        </div>
+			</div>
+		</div>
+		
+		<div class="cont">
+			<md-tabs md-dynamic-height md-border-bottom>
+				<md-tab label="Scope">
+					<ebx-play-scope scope-def="prototypePlayTemplate.scope"></ebx-play-scope>
+				</md-tab>
+				<md-tab label="Members">
+					<ebx-play-user-groups user-groups-def="prototypePlayTemplate.userGroups" focus-items="prototypePlayTemplate.focusItems"></ebx-play-user-groups>
+				</md-tab>
+				<md-tab label="Content">
+					<ebx-play-content-groups content-groups-def="prototypePlayTemplate.contentGroups" focus-items="prototypePlayTemplate.focusItems"></ebx-play-content-groups>
+				</md-tab>
+				<md-tab label="Player">
+					<ebx-play-execution-def execution-def="prototypePlayTemplate.execution" focus-items="prototypePlayTemplate.focusItems"
+							user-groups-def="prototypePlayTemplate.userGroups" content-groups-def="prototypePlayTemplate.contentGroups"></ebx-play-execution-def>
+				</md-tab>
+			</md-tabs>
+		</div>
+		
+		<!-- 
+		<div class="head ebx-top-border">
+			<i ng-class="isScopeDefCollapsed ? 'fa fa-chevron-right' : 'fa fa-chevron-down'" class="ebx-float-right" 
+				aria-hidden="true" ng-click="isScopeDefCollapsed = !isScopeDefCollapsed"></i>
+			<h2>Scope</h2>
+		</div>
+		<div collapse="isScopeDefCollapsed">
+			<ebx-play-scope scope-def="prototypePlayTemplate.scope"></ebx-play-scope>
+		</div>
+		
+		<div class="head ebx-top-border">
+			<i ng-class="isUserGroupsCollapsed ? 'fa fa-chevron-right' : 'fa fa-chevron-down'" class="ebx-float-right" 
+				aria-hidden="true" ng-click="isUserGroupsCollapsed = !isUserGroupsCollapsed"></i>
+			<h2>Members</h2>
+		</div>
+		<div collapse="isUserGroupsCollapsed">
+			<ebx-play-user-groups user-groups-def="prototypePlayTemplate.userGroups" focus-items="prototypePlayTemplate.focusItems"></ebx-play-user-groups>
+		</div>
+		
+		<div class="head ebx-top-border">
+			<i ng-class="isContentGroupsCollapsed ? 'fa fa-chevron-right' : 'fa fa-chevron-down'" class="ebx-float-right" 
+				aria-hidden="true" ng-click="isContentGroupsCollapsed = !isContentGroupsCollapsed"></i>
+			<h2>Content</h2>
+		</div>
+		<div collapse="isContentGroupsCollapsed">
+			<ebx-play-content-groups content-groups-def="prototypePlayTemplate.contentGroups" focus-items="prototypePlayTemplate.focusItems"></ebx-play-content-groups>
+		</div>
+		
+		<div class="head ebx-top-border">
+			<i ng-class="isPlayerCollapsed ? 'fa fa-chevron-right' : 'fa fa-chevron-down'" class="ebx-float-right" 
+				aria-hidden="true" ng-click="isPlayerCollapsed = !isPlayerCollapsed"></i>
+			<h2>Player</h2>
+		</div>
+		<div collapse="isPlayerCollapsed">
+			<ebx-play-execution-def execution-def="prototypePlayTemplate.execution"></ebx-play-execution-def>
+		</div>
+		 -->
+
+		<div class="foot clearfix">
+			<button ng-click="updatePlay()" class="button button-add">Save</button>
+			<a ng-click="cancelOperation()" class="button button-delete">Cancel</a>
+		</div>
+	</form>
+</div>

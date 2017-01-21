@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import com.enablix.app.template.service.TemplateManager;
 import com.enablix.commons.util.QIdUtil;
+import com.enablix.commons.util.process.ProcessContext;
 import com.enablix.core.commons.xsdtopojo.BoundedType;
 import com.enablix.core.commons.xsdtopojo.ContainerType;
 import com.enablix.core.commons.xsdtopojo.ContentItemType;
@@ -40,6 +41,19 @@ public class BoundedListManagerImpl implements BoundedListManager {
 			}
 		}
 
+		Collection<DataItem> items = null;
+		if (boundedType != null) {
+			items = builderFactory.getBuilder(boundedType).buildBoundedList(template, boundedType);
+		}
+		
+		return items == null ? new ArrayList<DataItem>() : items;
+	}
+	
+	@Override
+	public Collection<DataItem> getBoundedList(BoundedType boundedType) {
+		
+		ContentTemplate template = templateMgr.getTemplate(ProcessContext.get().getTemplateId());
+		
 		Collection<DataItem> items = null;
 		if (boundedType != null) {
 			items = builderFactory.getBuilder(boundedType).buildBoundedList(template, boundedType);

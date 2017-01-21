@@ -94,7 +94,7 @@ a, a:hover {
 	text-decoration: none;
 	cursor: pointer;
 	color: inherit;
-	outline: none;
+	outline: none !important;
 }
 a:focus {
 	text-decoration: none;	
@@ -1599,4 +1599,25 @@ md-chip-template {
 
 .strong-text {
 	font-weight: 600;
+}
+
+.browser-selected-content {
+	padding: 0.25em 1.25em !important;
+}
+
+.browser-icon {
+	padding: 0em 0.5em
+}
+
+.cg-corr-items.inner {
+	padding: 0px 0px 5px 50px;
+}
+
+.cg-corr-items .chckBox-label {
+	margin: 0px 10px;
+	font-size: 14px;
+}
+
+.corr-item-cont {
+	margin: 0px 20px;
 }

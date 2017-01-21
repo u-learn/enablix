@@ -47,6 +47,30 @@ enablix.studioApp.controller('PlayExecutionDefCtrl',
 		
 		$scope.viewPlayActionDetail = function(record) {
 			
+			var modalInstance = $modal.open({
+			      templateUrl: 'widgets/directive/play/execution/detail/playActionDetail.html',
+			      size: 'lg', // 'sm', 'lg'
+			      controller: 'PlayActionDetailCtrl',
+			      backdrop: 'static',
+			      resolve: {
+			    	  checkpointDef: function() {
+			    		  return record;
+			    	  },
+			    	  focusItems: function() {
+			    		  return $scope.focusItems;
+			    	  },
+			    	  userGroupsDef: function() {
+			    		  return $scope.userGroupsDef;
+			    	  },
+			    	  contentGroupsDef: function() {
+			    		  return $scope.contentGroupsDef;
+			    	  }
+			      }
+			});
+			
+			modalInstance.result.then(function(updtContentGroup) {
+				angular.copy(updtContentGroup, record);
+			});
 		};
 		
 		$scope.editPlayActionDetail = function(record) {

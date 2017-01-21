@@ -1,8 +1,34 @@
 enablix.studioApp.controller('PlayUserGroupsCtrl', 
-			['$scope', 
-    function ($scope) {
+			['$scope', '$modal',
+    function ($scope,   $modal) {
 
 		$scope.isCollapsed = false;
+		
+		$scope.viewUserGroupDetail = function(record) {
+			
+			var modalInstance = $modal.open({
+			      templateUrl: 'widgets/directive/play/userGroup/detail/playUserGroupDetail.html',
+			      size: 'lg', // 'sm', 'lg'
+			      controller: 'PlayUserGroupDetailCtrl',
+			      backdrop: 'static',
+			      resolve: {
+			    	  userGroup: function() {
+			    		  return record;
+			    	  },
+			    	  focusItems: function() {
+			    		  return $scope.focusItems;
+			    	  }
+			      }
+			});
+			
+			modalInstance.result.then(function(updtUserGroup) {
+				angular.copy(updtUserGroup, record);
+			});
+		};
+		
+		$scope.editUserGroupDetail = function(record) {
+			
+		};
 		
 		$scope.tableHeaders =
 			 [{
@@ -25,12 +51,5 @@ enablix.studioApp.controller('PlayUserGroupsCtrl',
 				actionCallbackFn: $scope.editUserGroupDetail
 			}];
 		
-		$scope.viewUserGroupDetail = function(record) {
-			
-		};
-		
-		$scope.editUserGroupDetail = function(record) {
-			
-		};
 		
 }]);

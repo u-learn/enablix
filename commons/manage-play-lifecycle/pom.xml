@@ -18,5 +18,15 @@
   		<artifactId>commons-crud</artifactId>
   		<version>1.0-SNAPSHOT</version>
   	</dependency>
+  	<dependency>
+  		<groupId>com.enablix.commons</groupId>
+  		<artifactId>services-util</artifactId>
+  		<version>1.0-SNAPSHOT</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>com.enablix.commons</groupId>
+  		<artifactId>manage-content-template</artifactId>
+  		<version>1.0-SNAPSHOT</version>
+  	</dependency>
   </dependencies>
 </project>

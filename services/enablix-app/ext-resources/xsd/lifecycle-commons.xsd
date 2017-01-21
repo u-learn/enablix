@@ -303,7 +303,7 @@
 	
 	<xs:complexType name="referenceUserSetType">
 		<xs:sequence>
-			<xs:element name="focusItemAttr" type="focusItemAttrType"/>
+			<xs:element name="focusItemAttr" type="focusItemAttrType" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
 	
@@ -332,7 +332,7 @@
 			<xs:extension base="describedType">
 				<xs:sequence>
 					<xs:element name="focusItemCorrelatedContent" type="focusItemCorrelatedContentType" minOccurs="0" maxOccurs="unbounded"/>
-					<xs:element name="contentSet" type="contentSetType" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="contentSet" type="contentSetType" minOccurs="0" maxOccurs="1"/>
 				</xs:sequence>
 			</xs:extension>
 		</xs:complexContent>

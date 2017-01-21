@@ -124,6 +124,11 @@ enablix.studioApp.factory('ContentUtil',
 			};
 			
 			var resolveAndAddTitle = function(_containerDef, _dataList) {
+				
+				if (ContentTemplateService.isLinkedContainer(_containerDef)) {
+					_containerDef = ContentTemplateService.getContainerDefinition(enablix.template, _containerDef.linkContainerQId)
+				}
+				
 				var labelAttrId = ContentTemplateService.getContainerLabelAttrId(enablix.template, _containerDef.qualifiedId);
 				angular.forEach(_dataList, function(dataRec) {
 					dataRec._title = dataRec[labelAttrId];

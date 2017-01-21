@@ -3,6 +3,7 @@ enablix.studioApp.controller('ConditionAttrsCtrl',
     function ($scope,   ConditionUtil,   QIdUtil,   ContentTemplateService,   InfoModalWindow) {
 
 		$scope.condAttrs = [];
+		$scope.initialized = false;
 				
 		$scope.$watch('conditionHolder', function(newValue, oldValue) {
 			if (newValue) {
@@ -12,9 +13,10 @@ enablix.studioApp.controller('ConditionAttrsCtrl',
 				
 		var initConditionAttrs = function() {
 			
-			if ($scope.conditionHolder) {
+			if ($scope.conditionHolder && !$scope.initialized) {
 				
 				$scope.condAttrs = [];
+				$scope.condDefNodes = [];
 				
 				var globalParentQId = $scope.conditionOnContainer;
 				var globalParentContainer = ContentTemplateService.getContainerDefinition(enablix.template, globalParentQId);
@@ -39,14 +41,37 @@ enablix.studioApp.controller('ConditionAttrsCtrl',
 								parentQId: parentQId,
 								attributeId: attrId,
 								label: contentItemDef.label,
-								itemDef: contentItemDef
+								itemDef: contentItemDef,
+								condDef: _condNode,
+								values: []
 							};
+						
+						angular.forEach(_condNode.value, function(condVal) {
+							condAttr.values.push({id: condVal.value});
+						});
 						
 						$scope.condAttrs.push(condAttr);
 						
 					}
 					
 				});
+				
+				$scope.initialized = true;
 			}
+		}
+		
+		$scope.condValueSelected = function($item, condAttr) {
+			updateCondAttrValue(condAttr);
+		}
+		
+		var updateCondAttrValue = function(condAttr) {
+			condAttr.condDef.value = [];
+			angular.forEach(condAttr.values, function(val) {
+				condAttr.condDef.value.push({'value': val.id});
+			});
+		}
+		
+		$scope.condValueRemoved = function($item, condAttr) {
+			updateCondAttrValue(condAttr, condNode);
 		}
 }]);

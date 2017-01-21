@@ -9,6 +9,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.enablix.commons.util.StringUtil;
+import com.enablix.commons.util.id.IdentityUtil;
 import com.enablix.core.commons.xsd.parser.XMLParser;
 import com.enablix.core.commons.xsd.parser.XMLParserRegistry;
 import com.enablix.core.commons.xsdtopojo.PlayTemplate;
@@ -28,7 +30,13 @@ public class PlayDefinitionManagerImpl implements PlayDefinitionManager {
 	
 	@Override
 	public void savePlayTemplate(PlayTemplate playTemplate) {
+		
 		PlayDefinition playDef = new PlayDefinition();
+		
+		if (StringUtil.isEmpty(playTemplate.getId())) {
+			playTemplate.setId(IdentityUtil.generateIdentity(playTemplate));
+		}
+		
 		playDef.setId(playTemplate.getId());
 		playDef.setPlayTemplate(playTemplate);
 		crudService.saveOrUpdate(playDef);

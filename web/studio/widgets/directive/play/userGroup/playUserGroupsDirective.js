@@ -3,7 +3,8 @@ enablix.studioApp.directive('ebxPlayUserGroups', function() {
 	return {
 		restrict: 'E',
 		scope : {
-			userGroupsDef : "="
+			userGroupsDef : "=",
+			focusItems : "="
 		},
 
 		link: function(scope, element, attrs) {

@@ -3,7 +3,10 @@ enablix.studioApp.directive('ebxPlayExecutionDef', function() {
 	return {
 		restrict: 'E',
 		scope : {
-			executionDef : "="
+			executionDef : "=",
+			focusItems : "=",
+			contentGroupsDef : "=",
+			userGroupsDef: "="
 		},
 
 		link: function(scope, element, attrs) {

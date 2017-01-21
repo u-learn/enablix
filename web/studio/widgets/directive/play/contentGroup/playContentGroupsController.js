@@ -18,11 +18,19 @@ enablix.studioApp.controller('PlayContentGroupsCtrl',
 			      templateUrl: 'widgets/directive/play/contentGroup/detail/playContentGroupDetail.html',
 			      size: 'lg', // 'sm', 'lg'
 			      controller: 'PlayContentGroupDetailCtrl',
+			      backdrop: 'static',
 			      resolve: {
 			    	  contentGroup: function() {
 			    		  return record;
+			    	  },
+			    	  focusItems: function() {
+			    		  return $scope.focusItems;
 			    	  }
 			      }
+			});
+			
+			modalInstance.result.then(function(updtContentGroup) {
+				angular.copy(updtContentGroup, record);
 			});
 			
 		};

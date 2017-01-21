@@ -279,6 +279,12 @@ enablix.studioApp.factory('StateUpdateService',
 	 			});
 	 		};
 	 		
+	 		var goToEditXPlay = function(_playDefId) {
+	 			$state.go("play.editExecutable", {
+	 				playDefId: _playDefId
+	 			});
+	 		};
+	 		
 	 		return {
 	 			goToApp: goToApp,
 	 			goToAppSetPassword: goToAppSetPassword,
@@ -325,7 +331,8 @@ enablix.studioApp.factory('StateUpdateService',
 	 			goToContentConnAdd : goToContentConnAdd,
 	 			goToPlayXList : goToPlayXList,
 	 			goToPlayRList : goToPlayRList,
-	 			goToAddXPlay : goToAddXPlay
+	 			goToAddXPlay : goToAddXPlay,
+	 			goToEditXPlay : goToEditXPlay
 	 		};
 	 	}
 	 ]);

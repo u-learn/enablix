@@ -3,7 +3,8 @@ enablix.studioApp.directive('ebxPlayContentGroups', function() {
 	return {
 		restrict: 'E',
 		scope : {
-			contentGroupsDef : "="
+			contentGroupsDef : "=",
+			focusItems : "="
 		},
 
 		link: function(scope, element, attrs) {

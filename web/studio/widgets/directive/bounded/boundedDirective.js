@@ -87,7 +87,9 @@ function(ContentTemplateService, Notification) {
 		restrict: 'E',
 		scope : {
 			selectValue: '=',
-			contentDef: '='
+			contentDef: '=',
+			onSelectItem: '&',
+			onRemoveItem: '&'
 		},
 		link: function(scope, element, attrs) {
 			
@@ -141,6 +143,9 @@ function(ContentTemplateService, Notification) {
 				
 				if (isNullOrUndefined(existIndex)) {
 					scope.selectValue.push($item);
+					if (scope.onSelectItem) {
+						scope.onSelectItem({'$item': $item});
+					}
 				}
 				
 			};
@@ -158,6 +163,9 @@ function(ContentTemplateService, Notification) {
       		  	
           		if (!isNullOrUndefined(removeIndex)) {
           			scope.selectValue.splice(removeIndex, 1);
+          			if (scope.onRemoveItem) {
+						scope.onRemoveItem({'$item': $item});
+					}
           		}
           		
 			};

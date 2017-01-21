@@ -17,7 +17,7 @@ enablix.studioApp.config(function($mdThemingProvider) {
 //enablix.templateId = "entSoftwareTemplate"; //"amlSalesTemplate";
 enablix.dateFormat = 'MM/dd/yyyy';
 enablix.errorMsgShowTime = 10000; // in milli-seconds 
-enablix.defaultPageSize = 10;
+enablix.defaultPageSize = 5;
 enablix.subContainerItemLimit = 5;
 enablix.uploadDocSizeLimit = 1 * 1024 * 1024; // size in bytes 
 
@@ -557,10 +557,18 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvi
 				setupData: appSetup
 			}
 		})
-		.state('play.addExecutable', { // list of executable play template with given playDefId as the prototypeId
+		.state('play.addExecutable', { 
 			url: '/xadd/{playDefId}',
-			templateUrl: 'views/play/def/add-xplay.html',
+			templateUrl: 'views/play/def/add-edit-xplay.html',
 			controller: 'AddXPlayCtrl',
+			resolve: {
+				setupData: appSetup
+			}
+		})
+		.state('play.editExecutable', { 
+			url: '/xedit/{playDefId}',
+			templateUrl: 'views/play/def/add-edit-xplay.html',
+			controller: 'AddEditXPlayCtrl',
 			resolve: {
 				setupData: appSetup
 			}

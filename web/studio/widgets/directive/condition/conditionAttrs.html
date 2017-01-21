@@ -1,8 +1,10 @@
 <div class="cont" ng-repeat="condAttr in condAttrs">
 	<div ng-if="condAttr.itemDef.type == 'TEXT' || condAttr.itemDef.type == 'NUMERIC'">
-		<eb-text content-def="condAttr.itemDef" text-value=""></eb-text>
+		<eb-text content-def="condAttr.itemDef" text-value="condAttr.values"></eb-text>
 	</div>
 	<div ng-if="condAttr.itemDef.type == 'BOUNDED'">
-		<eb-bounded content-def="condAttr.itemDef" select-value=""></eb-bounded>
+		<eb-bounded content-def="condAttr.itemDef" select-value="condAttr.values" 
+			on-select-item="condValueSelected($item, condAttr)" 
+			on-remove-item="condValueRemoved($item, condAttr)"></eb-bounded>
 	</div>
 </div>

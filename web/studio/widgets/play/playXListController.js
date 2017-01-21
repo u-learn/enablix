@@ -42,7 +42,11 @@ enablix.studioApp.controller('PlayXListCtrl',
 		});
 		
 		$scope.navToPlayDefDetail = function(record) {
-			StateUpdateService.goToContentConnDetail($stateParams.category, record.identity)
+			StateUpdateService.goToEditXPlay(record.id);
+		}
+		
+		$scope.navToEditPlayDef = function(record) {
+			StateUpdateService.goToEditXPlay(record.id);
 		}
 		
 		$scope.tableRecordActions = 
@@ -52,6 +56,13 @@ enablix.studioApp.controller('PlayXListCtrl',
 				iconClass: "fa fa-eye",
 				tableCellClass: "details",
 				actionCallbackFn: $scope.navToPlayDefDetail
+			},
+			{
+				actionName: "Edit",
+				tooltip: "Edit",
+				iconClass: "fa fa-pencil",
+				tableCellClass: "edit",
+				actionCallbackFn: $scope.navToEditPlayDef
 			}];
 		
 		$scope.dataList = [];
