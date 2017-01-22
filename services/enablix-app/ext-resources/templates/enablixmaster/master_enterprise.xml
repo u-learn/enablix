@@ -190,6 +190,50 @@
 		<container id="customer" label="Customers" businessCategory="BUSINESS_DIMENSION">
 			<contentItem id="name" label="Account Name" type="text" searchBoost="7"/>
 			<contentItem id="shortName" label="Account Short Name" type="text" searchBoost="7"/>
+			<contentItem id="custRegions" label="Regions" type="bounded" searchBoost="6">
+				<bounded multivalued="true">
+					<refList>
+						<datastore>
+							<storeId>regions</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>name</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="custIndustry" label="Industry" type="bounded" searchBoost="6">
+				<bounded multivalued="true">
+					<refList>
+						<datastore>
+							<storeId>industry</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>name</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="custTier" label="Customer Tier" type="bounded" searchBoost="6">
+				<bounded multivalued="true">
+					<refList>
+						<datastore>
+							<storeId>marketTier</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>tier</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="custAccTeam" label="Account Team" type="bounded" searchBoost="6">
+				<bounded multivalued="true">
+					<refList>
+						<datastore>
+							<storeId>user</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>userName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>									
 			<container id="opportunity" label="Sales Opportunities">
 				<contentItem id="title" label="Opportunity Title" type="text" searchBoost="7"/>
 				<contentItem id="id" label="Opportunity ID" type="text" searchBoost="7"/>
@@ -222,7 +266,7 @@
 							<datastore>
 								<storeId>opportunityStatus</storeId>
 								<dataId>identity</dataId>
-								<dataLabel>oppStatus</dataLabel>
+								<dataLabel>opStatusName</dataLabel>
 							</datastore>
 						</refList>
 					</bounded>
