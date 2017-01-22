@@ -1,25 +1,27 @@
-
 <a id="shareBttn" data-toggle="dropdown"
-	class="fa fa-share-alt bar-share dropdown-toggle" tooltip="Share"></a>
-
-<ul class="dropdown-menu dropdown-menu-right" role="menu"
-	aria-labelledby="shareBttn">
-	<li role="presentation"><a class="contextAnchor" role="menuitem"
-		tabindex="-1" href="#"
-		ng-click="openShareContentModal(bodyData.identity,$event)">Share
-			By Email</a></li>
-	<li role="presentation" class="divider"></li>
-	<li role="presentation"><a class="contextAnchor" role="menuitem"
-		tabindex="-1" href="#" ng-click="openMailClient(bodyData.downloadDocIdentity,bodyData.identity,bodyData.title)">Share
-			By Email Client</a></li>
-	<li role="presentation" class="divider"></li>
-	<li role="presentation"><a class="contextAnchor" role="menuitem"
-		tabindex="-1" href="#"
-		ng-click="copyPortalURL(bodyData.identity,bodyData.title)">Copy
-			Portal URL</a></li>
-	<li ng-if ="bodyData.downloadDocIdentity" role="presentation" class="divider"></li>
-	<li ng-if ="bodyData.downloadDocIdentity" role="presentation"><a class="contextAnchor" role="menuitem"
-		tabindex="-1" href="#"
-		ng-click="copyDownloadURL(bodyData.downloadDocIdentity,bodyData.identity,bodyData.title)">Copy
-			Download URL</a></li>
-</ul>
+		class="fa fa-share-alt bar-share dropdown-toggle" tooltip="Share"></a>
+	<ul id={{contextData.identity}}
+		class="dropdown-menu dropdown-menu-right" role="menu"
+		aria-labelledby="shareBttn">
+		<li role="presentation"><a class="contextAnchor" role="menuitem"
+			tabindex="-1" href="#"
+			ng-click="openShareContentModal(contextData.identity,$event)">Share
+				By Email</a></li>
+		<li role="presentation" class="divider"></li>
+		<li role="presentation"><a class="contextAnchor" role="menuitem"
+			tabindex="-1" href="#"
+			ng-click="openMailClient(contextData.downloadDocIdentity,contextData.identity,contextData.title)">Share
+				By Email Client</a></li>
+		<li role="presentation" class="divider"></li>
+		<li role="presentation"><a class="contextAnchor" role="menuitem"
+			tabindex="-1" href="#"
+			ng-click="copyPortalURL(contextData.identity,contextData.title)">Copy
+				Portal URL</a></li>
+		<li ng-if="contextData.downloadDocIdentity" role="presentation"
+			class="divider"></li>
+		<li ng-if="contextData.downloadDocIdentity" role="presentation"><a
+			class="contextAnchor" role="menuitem" tabindex="-1" href="#"
+			ng-click="copyDownloadURL(contextData.downloadDocIdentity,contextData.identity,contextData.title)">Copy
+				Download URL</a></li>
+		
+	</ul>
