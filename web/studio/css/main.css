@@ -1621,3 +1621,26 @@ md-chip-template {
 .corr-item-cont {
 	margin: 0px 20px;
 }
+
+input[type=radio] {
+	display: inline-block;
+	margin: 5px 5px 5px 10px;
+}
+
+.radio-label {
+	margin: 5px 10px 0px 0px;
+	vertical-align: text-bottom;
+}
+
+/* set overflow as visible as otherwise the select dropdown gets cut in the Scope tab */
+.play-tabs md-tabs, 
+.play-tabs md-tabs.md-dynamic-height md-tab-content.md-active {
+	overflow: visible !important;
+}
+
+/* disable animation on play tabs */
+.play-tabs md-tabs md-tab-content {
+	-webkit-transition: none !important;
+    transition: none !important;
+    animation: 0s !important;
+}

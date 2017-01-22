@@ -33,9 +33,11 @@
 	</xs:complexType>
 	
 	<xs:complexType name="playScopeType">
-		<xs:sequence>
+		<xs:choice>
 			<xs:element name="focusItemMatch" type="focusItemMatchType"/>
-		</xs:sequence>
+			<xs:element name="focusItemRecord" type="focusItemRecordType" maxOccurs="unbounded"/>
+		</xs:choice>
+		<xs:attribute name="label" type="xs:string"/>
 	</xs:complexType>
 	
 	<xs:complexType name="focusItemMatchType">
@@ -46,16 +48,23 @@
 		</xs:complexContent>
 	</xs:complexType>
 	
+	<xs:complexType name="focusItemRecordType">
+		<xs:attribute name="itemQId" type="xs:string"/>
+		<xs:attribute name="label" type="xs:string"/>
+	</xs:complexType>
+	
 	<xs:complexType name="userGroupsType">
 		<xs:sequence>
 			<xs:element name="userGroup" type="userGroupType" maxOccurs="unbounded"/>
 		</xs:sequence>
+		<xs:attribute name="label" type="xs:string"/>
 	</xs:complexType>
 	
 	<xs:complexType name="playExecutionType">
 		<xs:sequence>
 			<xs:element name="lifecycle" type="lifecycleType"/>
 		</xs:sequence>
+		<xs:attribute name="label" type="xs:string"/>
 	</xs:complexType>
 	
 </xs:schema>

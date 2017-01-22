@@ -11,22 +11,21 @@ package com.enablix.core.commons.xsdtopojo;
 import java.io.Serializable;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for entityContentType complex type.
+ * <p>Java class for focusItemRecordType complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="entityContentType">
+ * &lt;complexType name="focusItemRecordType">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *       &lt;sequence>
- *         &lt;element name="contentTypes" type="{}candidateContainersType" minOccurs="0"/>
- *         &lt;element name="filterTags" type="{}filterTagsType" minOccurs="0"/>
- *       &lt;/sequence>
+ *       &lt;attribute name="itemQId" type="{http://www.w3.org/2001/XMLSchema}string" />
+ *       &lt;attribute name="label" type="{http://www.w3.org/2001/XMLSchema}string" />
  *     &lt;/restriction>
  *   &lt;/complexContent>
  * &lt;/complexType>
@@ -35,64 +34,63 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "entityContentType", propOrder = {
-    "contentTypes",
-    "filterTags"
-})
-public class EntityContentType
+@XmlType(name = "focusItemRecordType")
+public class FocusItemRecordType
     implements Serializable
 {
 
     private final static long serialVersionUID = 1L;
-    protected CandidateContainersType contentTypes;
-    protected FilterTagsType filterTags;
+    @XmlAttribute(name = "itemQId")
+    protected String itemQId;
+    @XmlAttribute(name = "label")
+    protected String label;
 
     /**
-     * Gets the value of the contentTypes property.
+     * Gets the value of the itemQId property.
      * 
      * @return
      *     possible object is
-     *     {@link CandidateContainersType }
+     *     {@link String }
      *     
      */
-    public CandidateContainersType getContentTypes() {
-        return contentTypes;
+    public String getItemQId() {
+        return itemQId;
     }
 
     /**
-     * Sets the value of the contentTypes property.
+     * Sets the value of the itemQId property.
      * 
      * @param value
      *     allowed object is
-     *     {@link CandidateContainersType }
+     *     {@link String }
      *     
      */
-    public void setContentTypes(CandidateContainersType value) {
-        this.contentTypes = value;
+    public void setItemQId(String value) {
+        this.itemQId = value;
     }
 
     /**
-     * Gets the value of the filterTags property.
+     * Gets the value of the label property.
      * 
      * @return
      *     possible object is
-     *     {@link FilterTagsType }
+     *     {@link String }
      *     
      */
-    public FilterTagsType getFilterTags() {
-        return filterTags;
+    public String getLabel() {
+        return label;
     }
 
     /**
-     * Sets the value of the filterTags property.
+     * Sets the value of the label property.
      * 
      * @param value
      *     allowed object is
-     *     {@link FilterTagsType }
+     *     {@link String }
      *     
      */
-    public void setFilterTags(FilterTagsType value) {
-        this.filterTags = value;
+    public void setLabel(String value) {
+        this.label = value;
     }
 
 }

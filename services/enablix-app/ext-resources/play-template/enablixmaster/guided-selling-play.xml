@@ -11,31 +11,31 @@
 	<focusItems>
 		<focusItem qualifiedId="customer.opportunity"/>
 	</focusItems>
-	<scope>
+	<scope label="Scope">
 		<focusItemMatch itemQId="customer.opportunity">
 			<!-- Back-end will have support for defining AND and OR of conditions. From UI, we 
 			 	 will only support creation of only AND on different attributes to keep the UI simple -->
 			<orCondition>
 				<andCondition>
-					<basicCondition negate="true"><!-- negate defines a NOT condition. Default value is false -->
+					<basicCondition label="Opp Regions" negate="true"><!-- negate defines a NOT condition. Default value is false -->
 						<attribute>oppRegions</attribute>
 					</basicCondition>
-					<basicCondition>
+					<basicCondition label="Opp Status">
 						<attribute>oppStatus</attribute>
 					</basicCondition>
 				</andCondition>
 				<andCondition>
-					<basicCondition negate="false">
+					<basicCondition label="Opp Industry" negate="false">
 						<attribute>oppIndustry</attribute>
 					</basicCondition>
-					<basicCondition onItem="oppSolutions">
+					<basicCondition label="Solution Area" onItem="oppSolutions">
 						<attribute>solArea</attribute>
 					</basicCondition>
 				</andCondition>
 			</orCondition>
 		</focusItemMatch>
 	</scope>
-	<userGroups>
+	<userGroups label="User Groups">
 		<userGroup id="opp-owners" name="Opportunity Owners">
 			<!-- A user group is a collection of one of more types of user sets -->
 			<description>A group of opportunity owners</description>
@@ -97,7 +97,7 @@
 		</userGroup>
 				
 	</userGroups>
-	<contentGroups>
+	<contentGroups label="Content Groups">
 		<contentGroup id="opp-content" name="Opportunity content">
 			<description>Opportunity related content</description>
 			
@@ -135,7 +135,7 @@
 			<!-- Empty content group -->
 		</contentGroup>
 	</contentGroups>
-	<execution>
+	<execution label="Play Execution">
 		<!-- We will extends and re-use the concepts defined for triggers. The auto-execution 
 			 of a play when an opportunity is created in the system, will not be defined here.
 			 Auto-execution of play will be defined in the add-update trigger defined for an 

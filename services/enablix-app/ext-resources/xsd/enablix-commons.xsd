@@ -84,6 +84,7 @@
 	<xs:complexType name="baseConditionType">
 		<xs:attribute name="onItem" type="xs:string"/>
 		<xs:attribute name="negate" type="xs:boolean" default="false"/>
+		<xs:attribute name="label" type="xs:string"/>
 	</xs:complexType>
 	
 	<xs:complexType name="basicConditionType">

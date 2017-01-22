@@ -9,22 +9,36 @@
 			<input required name="userGroupName" placeholder="Enter Name" 
 					class="form-control" ng-model="userGroup.name"/>
 			<div ng-messages="editUserGroupForm.userGroupName.$error">
-				<div ng-message="required">This is required.</div>
+				<div class="error" ng-message="required">Name is required.</div>
 	        </div>
 		</div>
-		<div class="head ebx-top-border">
-			<i ng-class="isUserSetCollapsed ? 'fa fa-chevron-right' : 'fa fa-chevron-down'" class="ebx-float-right" 
-						aria-hidden="true" ng-click="isUserSetCollapsed = !isUserSetCollapsed"></i>
-			<h2>User Set</h2>
+		<div class="cont">
+			<label class="form-label">Group Type</label>
+			<span class="form-label">
+			    <input type="radio" ng-model="userGroupType" value="userSet"><span class="radio-label">User Set</span>
+			</span>
+			<span class="form-label" ng-show="masterRefSetList && masterRefSetList.length > 0">
+			    <input type="radio" ng-model="userGroupType" value="refSet"><span class="radio-label">User Group from {{focusName}}</span>
+			</span>
+			<span class="form-label">
+			    <input type="radio" ng-model="userGroupType" value="filterSet"><span class="radio-label">Filter User Group</span>
+			</span>
 		</div>
-		<div class="cont" collapse="isUserSetCollapsed">
-			<eb-bounded content-def="userBoundedRefItemDef" select-value="userSet"></eb-bounded>
+		<div ng-show="userGroupType == 'userSet'">
+			<div class="head ebx-top-border">
+				<i ng-class="isUserSetCollapsed ? 'fa fa-chevron-right' : 'fa fa-chevron-down'" class="ebx-float-right" 
+							aria-hidden="true" ng-click="isUserSetCollapsed = !isUserSetCollapsed"></i>
+				<h2>User Set</h2>
+			</div>
+			<div class="cont" collapse="isUserSetCollapsed">
+				<eb-bounded content-def="userBoundedRefItemDef" select-value="userSet"></eb-bounded>
+			</div>
 		</div>
-		<div ng-if="masterRefSetList && masterRefSetList.length > 0">
+		<div ng-show="userGroupType == 'refSet'" ng-if="masterRefSetList && masterRefSetList.length > 0">
 			<div class="head ebx-top-border">
 				<i ng-class="isRefSetCollapsed ? 'fa fa-chevron-right' : 'fa fa-chevron-down'" class="ebx-float-right" 
 							aria-hidden="true" ng-click="isRefSetCollapsed = !isRefSetCollapsed"></i>
-				<h2>User Set From {{focusName}}</h2>
+				<h2>User Group from {{focusName}}</h2>
 			</div>
 			<div class="cont" collapse="isRefSetCollapsed">
 				<div class="corr-item-cont">
@@ -37,13 +51,15 @@
 				</div>
 			</div>
 		</div>
-		<div class="head ebx-top-border">
-			<i ng-class="isFilterSetCollapsed ? 'fa fa-chevron-right' : 'fa fa-chevron-down'" class="ebx-float-right" 
-						aria-hidden="true" ng-click="isFilterSetCollapsed = !isFilterSetCollapsed"></i>
-			<h2>Filter User Set</h2>
-		</div>
-		<div collapse="isFilterSetCollapsed">
-			<ebx-condition-attributes condition-holder="filteredUsers" condition-on-container="userContainerId"></ebx-condition-attributes>
+		<div ng-show="userGroupType == 'filterSet'">
+			<div class="head ebx-top-border">
+				<i ng-class="isFilterSetCollapsed ? 'fa fa-chevron-right' : 'fa fa-chevron-down'" class="ebx-float-right" 
+							aria-hidden="true" ng-click="isFilterSetCollapsed = !isFilterSetCollapsed"></i>
+				<h2>Filter User Group</h2>
+			</div>
+			<div collapse="isFilterSetCollapsed">
+				<ebx-condition-attributes condition-holder="filteredUsers" condition-on-container="userContainerId"></ebx-condition-attributes>
+			</div>
 		</div>
 		<div class="foot clearfix">
 			<button ng-click="updateUserGroup()" class="button button-add">Save</button>

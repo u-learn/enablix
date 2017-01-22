@@ -1,7 +1,7 @@
 <playTemplate id="marketing-event-play" version="1" 
 		name="Marketing Event" 
 		prototype="true"
-		executable="true" prototypeId="marketing-event-play">
+		executable="false" prototypeId="marketing-event-play">
 		<!-- Prototype = true denotes that this is a prototype and cannot be executed. An executable instance needs to be
 		     created from this instance for execution. Executable = true denotes that this instance can be executed or played.
 		     Only executable templates can be modified. An executable instance needs to be created from UI to edit a prototype
@@ -13,28 +13,7 @@
 		<focusItem qualifiedId="customer.opportunity"/>
 	</focusItems>
 	<scope>
-		<focusItemMatch itemQId="customer.opportunity">
-			<!-- Back-end will have support for defining AND and OR of conditions. From UI, we 
-			 	 will only support creation of only AND on different attributes to keep the UI simple -->
-			<orCondition>
-				<andCondition>
-					<basicCondition negate="true"><!-- negate defines a NOT condition. Default value is false -->
-						<attribute>oppRegions</attribute>
-					</basicCondition>
-					<basicCondition>
-						<attribute>oppStatus</attribute>
-					</basicCondition>
-				</andCondition>
-				<andCondition>
-					<basicCondition negate="false">
-						<attribute>oppIndustry</attribute>
-					</basicCondition>
-					<basicCondition onItem="oppSolutions">
-						<attribute>solArea</attribute>
-					</basicCondition>
-				</andCondition>
-			</orCondition>
-		</focusItemMatch>
+		<focusItemRecord itemQId="customer.opportunity" label="Select Opportunity"/>
 	</scope>
 	<userGroups>
 		<userGroup id="opp-owners" name="Opportunity Owners">

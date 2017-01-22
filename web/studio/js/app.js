@@ -560,7 +560,7 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvi
 		.state('play.addExecutable', { 
 			url: '/xadd/{playDefId}',
 			templateUrl: 'views/play/def/add-edit-xplay.html',
-			controller: 'AddXPlayCtrl',
+			controller: 'AddEditXPlayCtrl',
 			resolve: {
 				setupData: appSetup
 			}

@@ -12,6 +12,11 @@ enablix.studioApp.controller('AddEditXPlayCtrl',
 		$scope.prototypePlayTemplate = {};
 		$scope.pageHeading = $scope.editOperation ? "Edit Play" : "New Play";
 		
+		$scope.scopeLabel = "Scope";
+		$scope.contentGroupsLabel = "Content";
+		$scope.userGroupsLabel = "Member";
+		$scope.executionLabel = "Player";
+		
 		PlayDefinitionService.getPlayDefinition($stateParams.playDefId, function(playDef) {
 				initializeAddXPlay(playDef);
 			}, function(errorData) {
@@ -32,6 +37,11 @@ enablix.studioApp.controller('AddEditXPlayCtrl',
 			
 			$scope.prototypePlayTemplate = playTemplate;
 			
+			$scope.scopeLabel = playTemplate.scope.label || $scope.scopeLabel;
+			$scope.contentGroupsLabel = playTemplate.contentGroups.label || $scope.contentGroupsLabel;
+			$scope.userGroupsLabel = playTemplate.userGroups.label || $scope.userGroupsLabel;
+			$scope.executionLabel = playTemplate.execution.label || $scope.executionLabel;
+			
 			var focusItemQId = playTemplate.focusItems.focusItem[0].qualifiedId;
 			$scope.focusItemContainer = ContentTemplateService.getContainerDefinition(enablix.template, focusItemQId);
 		}
@@ -45,6 +55,10 @@ enablix.studioApp.controller('AddEditXPlayCtrl',
 				function (data) {
 					Notification.error({message: "Error saving data", delay: enablix.errorMsgShowTime});
 				});
+		};
+		
+		$scope.cancelOperation = function() {
+			StateUpdateService.goBack();
 		}
 		
 	}

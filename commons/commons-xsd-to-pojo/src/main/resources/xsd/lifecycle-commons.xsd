@@ -325,6 +325,7 @@
 		<xs:sequence>
 			<xs:element name="contentGroup" type="contentGroupType" maxOccurs="unbounded"/>
 		</xs:sequence>
+		<xs:attribute name="label" type="xs:string"/>
 	</xs:complexType>
 	
 	<xs:complexType name="contentGroupType">

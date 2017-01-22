@@ -37,10 +37,15 @@ enablix.studioApp.controller('ConditionAttrsCtrl',
 						var attrId = _condNode.attribute.value;
 						var contentItemDef = ContentTemplateService.getContentItem(parentContainer, attrId);
 						
+						// if there is a label override, make of copy of item def and change label
+						if (_condNode.label) {
+							contentItemDef = angular.copy(contentItemDef);
+							contentItemDef.label = _condNode.label;
+						}
+						
 						var condAttr = {
 								parentQId: parentQId,
 								attributeId: attrId,
-								label: contentItemDef.label,
 								itemDef: contentItemDef,
 								condDef: _condNode,
 								values: []

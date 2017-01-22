@@ -8,6 +8,8 @@ enablix.studioApp.controller('PlayContentGroupDetailCtrl',
 		$scope.contentGroup = angular.copy(contentGroup);
 		$scope.contentSetRecords = [];
 		
+		$scope.contentGroupType = "";
+		
 		$scope.focusQId = focusItems.focusItem[0].qualifiedId;
 		var focusContainerDef = ContentTemplateService.getContainerDefinition(enablix.template, $scope.focusQId);
 		$scope.focusName = focusContainerDef.label;
@@ -51,7 +53,12 @@ enablix.studioApp.controller('PlayContentGroupDetailCtrl',
 				
 				if ($scope.contentGroup.focusItemCorrelatedContent 
 						&& $scope.contentGroup.focusItemCorrelatedContent.length > 0) {
+					
 					selectedCorrItems = $scope.contentGroup.focusItemCorrelatedContent[0].correlatedItem;
+					
+					if (selectedCorrItems.length > 0) {
+						$scope.contentGroupType = 'corrContent';
+					}
 				} 
 				
 				decorateCorrItems($scope.masterCorrItemTypes, selectedCorrItems);
@@ -65,26 +72,35 @@ enablix.studioApp.controller('PlayContentGroupDetailCtrl',
 			deleteRecordFromContentGroup(record);
 		}
 		
-		PlayDefinitionService.getContentSetRecords($scope.contentGroup.contentSet, function(data) {
+		if (!isNullOrUndefined($scope.contentGroup.contentSet)) {
 			
-				angular.forEach(data, function(contentDataRec) {
-					
-					var containerDef = ContentTemplateService.getContainerDefinition(enablix.template, contentDataRec.containerQId);
-					var containerLabel = containerDef.label;
-					var contentLabel = ContentUtil.getContentLabelValue(containerDef, contentDataRec.record);
-					
-					$scope.contentSetRecords.push({
-						identity: contentDataRec.record.identity,
-						qualifiedId: contentDataRec.containerQId,
-						label: contentLabel,
-						containerLabel: containerLabel
+			PlayDefinitionService.getContentSetRecords($scope.contentGroup.contentSet, function(data) {
+				
+					angular.forEach(data, function(contentDataRec) {
+						
+						var containerDef = ContentTemplateService.getContainerDefinition(enablix.template, contentDataRec.containerQId);
+						var containerLabel = containerDef.label;
+						var contentLabel = ContentUtil.getContentLabelValue(containerDef, contentDataRec.record);
+						
+						$scope.contentSetRecords.push({
+							identity: contentDataRec.record.identity,
+							qualifiedId: contentDataRec.containerQId,
+							label: contentLabel,
+							containerLabel: containerLabel
+						});
+						
 					});
 					
+				}, function(errorData) {
+					Notification.error({message: "Error retrieving content set records", delay: enablix.errorMsgShowTime});
 				});
-				
-			}, function(errorData) {
-				Notification.error({message: "Error retrieving content set records", delay: enablix.errorMsgShowTime});
-			});
+			
+			if ($scope.contentGroup.contentSet.contentRecord 
+					&& $scope.contentGroup.contentSet.contentRecord.length > 0) {
+				$scope.contentGroupType = 'contentSet';
+			}
+			
+		}
 		
 		var deleteRecordFromScopeContentSet = function(record) {
 			
@@ -161,7 +177,35 @@ enablix.studioApp.controller('PlayContentGroupDetailCtrl',
 			$modalInstance.dismiss('cancel');
 		}
 		
+		var clearCorrItemHierarchySelection = function(_corrItemList) {
+			
+			if (!isNullOrUndefined(_corrItemList)) {
+			
+				angular.forEach(_corrItemList, function(corrItem) {
+					corrItem._selected = false;
+					clearCorrItemHierarchySelection(corrItem.correlatedItem);
+				});
+			}
+		}
+		
+		var resetNotSelectedContentGroupType = function() {
+			
+			if ($scope.contentGroupType === 'corrContent') {
+				
+				$scope.contentSetRecords = [];
+				$scope.contentGroup.contentSet = {};
+				$scope.contentGroup.contentSet.contentRecord = [];
+				
+			} else if ($scope.contentGroupType === 'contentSet') {
+				
+				$scope.contentGroup.focusItemCorrelatedContent = [];
+				clearCorrItemHierarchySelection($scope.masterCorrItemTypes);
+			}
+		}
+		
 		$scope.updateContentGroup = function() {
+			
+			resetNotSelectedContentGroupType();
 			
 			// populate focusItemCorrelatedcontent in content group
 			$scope.contentGroup.focusItemCorrelatedContent = [];
@@ -198,6 +242,8 @@ enablix.studioApp.controller('PlayContentGroupDetailCtrl',
 			$scope.isContentSetCollapsed = false;
 		}
 		
-		
+		$scope.contentGroupTypeChanged = function() {
+			// may be reset not selected content group type??
+		}
 		
 }]);

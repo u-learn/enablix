@@ -3,33 +3,31 @@
 		<h2>{{pageHeading}}</h2>
 	</div>
 	<form name="addXPlayForm">
-		<div layout="row">
-			<div class="cont" flex="50%">
-				<label class="form-label">Focus</label>
-				<input class="form-control" ng-model="focusItemContainer.label" disabled/>
-			</div>
-			<div class="cont" flex>
-				<label class="form-label">Title</label>
-				<input required name="playTitle" placeholder="Enter Title" 
-						class="form-control" ng-model="prototypePlayTemplate.title"/>
-				<div ng-messages="addXPlayForm.playTitle.$error">
-					<div ng-message="required">This is required.</div>
-		        </div>
-			</div>
+		<div class="cont">
+			<label class="form-label">Focus</label>
+			<input class="form-control" ng-model="focusItemContainer.label" disabled/>
+		</div>
+		<div class="cont">
+			<label class="form-label">Title</label>
+			<input required name="playTitle" placeholder="Enter Title" 
+					class="form-control" ng-model="prototypePlayTemplate.title"/>
+			<div ng-messages="addXPlayForm.playTitle.$error">
+				<div class="error" ng-message="required">Title is required.</div>
+	        </div>
 		</div>
 		
-		<div class="cont">
+		<div class="cont play-tabs">
 			<md-tabs md-dynamic-height md-border-bottom>
-				<md-tab label="Scope">
+				<md-tab label="{{scopeLabel}}">
 					<ebx-play-scope scope-def="prototypePlayTemplate.scope"></ebx-play-scope>
 				</md-tab>
-				<md-tab label="Members">
+				<md-tab label="{{userGroupsLabel}}">
 					<ebx-play-user-groups user-groups-def="prototypePlayTemplate.userGroups" focus-items="prototypePlayTemplate.focusItems"></ebx-play-user-groups>
 				</md-tab>
-				<md-tab label="Content">
+				<md-tab label="{{contentGroupsLabel}}">
 					<ebx-play-content-groups content-groups-def="prototypePlayTemplate.contentGroups" focus-items="prototypePlayTemplate.focusItems"></ebx-play-content-groups>
 				</md-tab>
-				<md-tab label="Player">
+				<md-tab label="{{executionLabel}}">
 					<ebx-play-execution-def execution-def="prototypePlayTemplate.execution" focus-items="prototypePlayTemplate.focusItems"
 							user-groups-def="prototypePlayTemplate.userGroups" content-groups-def="prototypePlayTemplate.contentGroups"></ebx-play-execution-def>
 				</md-tab>
