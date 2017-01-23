@@ -51,6 +51,7 @@
 	<xs:complexType name="focusItemRecordType">
 		<xs:attribute name="itemQId" type="xs:string"/>
 		<xs:attribute name="label" type="xs:string"/>
+		<xs:attribute name="identity" type="xs:string"/>
 	</xs:complexType>
 	
 	<xs:complexType name="userGroupsType">

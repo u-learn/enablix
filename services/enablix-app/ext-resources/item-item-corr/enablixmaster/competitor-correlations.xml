@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<itemCorrelationRules xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/item-correlation-rule.xsd">
+	<itemCorrelationRule id="competitor-corr" name="Competitor correlations">
+		<triggerItem qualifiedId="competitor">
+		</triggerItem>		
+		<relatedItems>
+			<!-- Customer to customer opportunity -->
+			<relatedItem qualifiedId="customer.opportunity">
+				<filterCriteria>
+					<filter>
+						<attributeId>oppCompetitors</attributeId>
+						<parentAttribute>identity</parentAttribute>
+					</filter>
+				</filterCriteria>
+				<recordAsRelated>true</recordAsRelated>
+			</relatedItem>	
+		</relatedItems>
+	</itemCorrelationRule>		
+</itemCorrelationRules>

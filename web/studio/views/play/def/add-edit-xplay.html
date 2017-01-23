@@ -4,10 +4,6 @@
 	</div>
 	<form name="addXPlayForm">
 		<div class="cont">
-			<label class="form-label">Focus</label>
-			<input class="form-control" ng-model="focusItemContainer.label" disabled/>
-		</div>
-		<div class="cont">
 			<label class="form-label">Title</label>
 			<input required name="playTitle" placeholder="Enter Title" 
 					class="form-control" ng-model="prototypePlayTemplate.title"/>
@@ -15,7 +11,10 @@
 				<div class="error" ng-message="required">Title is required.</div>
 	        </div>
 		</div>
-		
+		<div class="cont">
+			<label class="form-label">Focus</label>
+			<input class="form-control" ng-model="focusItemContainer.label" disabled/>
+		</div>
 		<div class="cont play-tabs">
 			<md-tabs md-dynamic-height md-border-bottom>
 				<md-tab label="{{scopeLabel}}">

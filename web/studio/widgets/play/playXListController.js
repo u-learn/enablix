@@ -20,7 +20,7 @@ enablix.studioApp.controller('PlayXListCtrl',
 				 valueFn: function(record) { return record.playTemplate.title; }
 			 },
 		     {
-		    	 desc: "Creation Date",
+		    	 desc: "Created On",
 		    	 valueFn: function(record) { return $filter('ebDate')(record.createdAt); }
 		     },
 		     {

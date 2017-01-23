@@ -1,1 +1,7 @@
+<div class="cont" ng-if="focusRecordList.length > 0">
+	<label class="form-label">{{focusItemRecord.label}}</label>
+	<select class="form-control" ng-change=""
+		ng-options="item.id as item.label for item in focusRecordList" 
+		ng-model="focusItemRecord.identity"></select>
+</div>
 <ebx-condition-attributes condition-holder="scopeDef.focusItemMatch" condition-on-container="scopeDef.focusItemMatch.itemQId"></ebx-condition-attributes>
