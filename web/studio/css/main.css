@@ -1644,3 +1644,16 @@ input[type=radio] {
     transition: none !important;
     animation: 0s !important;
 }
+
+.search-input .dataItem:first-child {
+	padding-top: 0px;
+}
+
+.panel-body .cont {
+	padding: .5em 1.25em .5em;
+	border: 0px; 
+}
+
+.panel-body .foot {
+	border: 0px; 
+}
