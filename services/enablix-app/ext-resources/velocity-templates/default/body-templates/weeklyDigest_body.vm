@@ -2,7 +2,7 @@
 
 	#spacer_row('15')
 											
-	#mail_opening(${obj.recipientUser.profile.name})
+	#mail_opening(${obj.loggedInUser.profile.name})
 	
 	#spacer_row('15')
 	
