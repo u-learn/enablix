@@ -61,6 +61,8 @@ public class ContentTemplate
     protected ContentTypeMappingConfigType contentTypeMappingConfig;
     @XmlAttribute(name = "id", required = true)
     protected String id;
+    @XmlAttribute(name = "version", required = false)
+    protected String version;
 
     /**
      * Gets the value of the dataDefinition property.
@@ -180,6 +182,30 @@ public class ContentTemplate
      */
     public void setId(String value) {
         this.id = value;
+    }
+    
+    /**
+     * Gets the value of the version property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getVersion() {
+        return version;
+    }
+
+    /**
+     * Sets the value of the version property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setVersion(String value) {
+        this.version = value;
     }
 
 }

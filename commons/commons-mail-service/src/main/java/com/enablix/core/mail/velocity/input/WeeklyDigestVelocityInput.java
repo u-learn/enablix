@@ -11,7 +11,7 @@ public class WeeklyDigestVelocityInput extends BaseVelocityInput implements  Log
 	private HashMap<String, List<NavigableContent>> recentList ;
 	private HashMap<String,List<HashMap<String,Object>>> sideBarItems; 
 	private String url;
-	private User loggedInUser;
+	private User recipientUser;
 	private String identity; // unique identifier for weekly digest
 
 	public String getIdentity() {
@@ -56,12 +56,20 @@ public class WeeklyDigestVelocityInput extends BaseVelocityInput implements  Log
 	
 	@Override
 	public User getLoggedInUser() {
-		return loggedInUser;
+		return recipientUser;
 	}
 	
 	@Override
 	public void setLoggedInUser(User loggedInUser) {
-		this.loggedInUser = loggedInUser;
+		this.recipientUser = loggedInUser;
+	}
+
+	public User getRecipientUser() {
+		return recipientUser;
+	}
+
+	public void setRecipientUser(User recepientUser) {
+		this.recipientUser = recepientUser;
 	}
 		
 }

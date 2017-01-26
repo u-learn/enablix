@@ -7,6 +7,7 @@ enablix.studioApp.factory('ConfirmationModalWindow',
 				      templateUrl: 'views/modal/confirmModal.html',
 				      size: 'sm', // 'sm', 'lg'
 				      controller: 'ConfirmationModalController',
+				      backdrop: 'static',
 				      resolve: {
 				    	  modalTitle: function() {
 				    		  return title;

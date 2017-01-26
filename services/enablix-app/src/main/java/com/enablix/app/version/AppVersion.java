@@ -1,19 +1,13 @@
 package com.enablix.app.version;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import com.enablix.commons.caching.api.CachingService;
+import com.enablix.core.web.versioning.VersionedResource;
 
 @Component
-public class AppVersion {
+public class AppVersion implements VersionedResource {
 
-	private static final String TEMPLATE_VERSION_CACHE_KEY = "template.version";
-	
-	@Autowired
-	private CachingService cache;
-	
 	@Value("${app.version:1.0.0}")
 	private String appVersion;
 	
@@ -25,16 +19,19 @@ public class AppVersion {
 		return appVersion;
 	}
 	
-	public void setTenantTemplateVersion(String tenantId, String templateId, String version) {
-		cache.put(tenantId, getTemplateVersionCacheKey(templateId), version);
+	@Override
+	public String getResourceName() {
+		return "webapp";
 	}
-	
-	public String getTenantTemplateVersion(String tenantId, String templateId) {
-		return (String) cache.get(tenantId, getTemplateVersionCacheKey(templateId));
+
+	@Override
+	public String getResourceVersion() {
+		return appVersion;
 	}
-	
-	private String getTemplateVersionCacheKey(String templateId) {
-		return templateId + "." + TEMPLATE_VERSION_CACHE_KEY;
+
+	@Override
+	public boolean isVersionCompatible(String version) {
+		return appVersion.equals(version);
 	}
 	
 }

@@ -75,5 +75,6 @@ enablix.serviceURL = {
 	"shareOptsGetPortalURL" : enablix.domainName + "/shareOptions/getPortalURL/",
 	"shareOptsEmailClientAudit" : enablix.domainName + "/shareOptions/auditShareViaEmailClient/",
 	"shareOptsPortalAudit" : enablix.domainName + "/shareOptions/portalURLAudit/",
-	"shareOptsDocDownloadAudit" : enablix.domainName + "/shareOptions/downldDocURLAudit/"
+	"shareOptsDocDownloadAudit" : enablix.domainName + "/shareOptions/downldDocURLAudit/",
+	"loadResourceVersions" : enablix.domainName + "/version/all/",
 };

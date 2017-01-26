@@ -22,8 +22,8 @@ var genereateRequestConfig = function(_resourceKey, _params) {
 };
 
 enablix.studioApp.factory('RESTService', [
-		'$http', '$rootScope', '$window', 'StateUpdateService',
-		function($http, $rootScope, $window, StateUpdateService) {	
+		'$http', '$rootScope', '$window', 'InfoModalWindow', 'StateUpdateService', 'ResourceVersionHolder',
+		function($http, $rootScope, $window, InfoModalWindow, StateUpdateService, ResourceVersionHolder) {	
 			
 			var postForFile = function(_resourceKey, _params, files, _data, _success, _error, _headers) {
 				
@@ -50,15 +50,36 @@ enablix.studioApp.factory('RESTService', [
 		            });
 			}
 			
+			
+			var addResourceVersionHeaders = function(_headers) {
+				
+				var callHeaders = {};
+				if (!isNullOrUndefined(_headers)) {
+					callHeaders = _headers;
+				}
+				
+				var versionHeaders = ResourceVersionHolder.getResourceVersionHeaders();
+				
+				if (!isNullOrUndefined(versionHeaders)) {
+					angular.forEach(versionHeaders, function(value, key) {
+						callHeaders[key] = value;
+					});
+				}
+				
+				return callHeaders;
+			};
+			
 			var getForData = function(_resourceKey, _params, transformer, _success, _error, _headers) {
 				
 				var requestConfig = genereateRequestConfig(_resourceKey, _params);
+				
+				var callHeaders = addResourceVersionHeaders(_headers);
 				
 				return $http({
 							method : 'GET',
 							url : requestConfig.url,
 							params : requestConfig.paramsJson,
-							headers : _headers
+							headers : callHeaders
 							
 						}).success(function(data) {
 							
@@ -69,9 +90,33 @@ enablix.studioApp.factory('RESTService', [
 							}
 							
 						}).error(function(data, status) {
+							
+							if (isVersionMismatchError(data, status)) {
+								return;
+							}
+							
 							checkAuthenticationErrorAndExecute(data, status, _error);
 						});
 			};
+			
+			var isVersionMismatchError = function(data, status) {
+				
+				if (status == 418) {
+					console.log("Version mis-match error");
+					
+					var modalInstance = InfoModalWindow.showInfoWindow(
+							"Application Update", 
+							"Newer version of the application is available. Application will be reloaded.");
+					
+					modalInstance.result.then(function() {
+						window.location.reload();
+					});
+					
+					return true;
+				}
+				
+				return false;
+			}
 			
 			var checkAuthenticationErrorAndExecute = function(data, status, _error) {
 				

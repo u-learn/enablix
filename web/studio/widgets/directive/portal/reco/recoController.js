@@ -4,7 +4,6 @@ enablix.studioApp.controller('PortalRecoCtrl',
 		
 		RecommendationService.getRecommendations($scope.containerQId, $scope.contentIdentity, 
 			function(recommendations) {
-				console.log(recommendations);
 				$scope.recoList = recommendations;
 			});
 		

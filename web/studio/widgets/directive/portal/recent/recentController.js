@@ -4,7 +4,6 @@ enablix.studioApp.controller('PortalRecentCtrl',
 		
 		RecentDataService.getRecentData($scope.containerQId, $scope.contentIdentity, 
 			function(recentDataList) {
-				console.log(recentDataList);
 				$scope.recentList = recentDataList;
 			});
 		
