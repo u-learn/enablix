@@ -21,7 +21,7 @@ enablix.studioApp.directive('ebxContextMenu',['RESTService','Notification',
 					var _body=portalURL;
 					if ( downloadDocId != null ) { 
 						var downloadURL  = "Download URL : "+getDownloadURL(downloadDocId);
-						_body=_body+"<br/>"+downloadURL;
+						_body=_body+"%0D%0A"+downloadURL;
 					}
 					openLocalEmailClient(_subject,_body);	   
 				}, function(data){}, null);
