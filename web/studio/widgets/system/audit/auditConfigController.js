@@ -1,6 +1,6 @@
 enablix.studioApp.controller('AuditController', 
-				['$scope', '$stateParams', '$filter', 'RESTService', 'AuditConfigService', '$rootScope', 'StateUpdateService',
-		 function($scope,   $stateParams,   $filter,   RESTService,   auditConfigService,   $rootScope,   StateUpdateService) {
+				['$scope', '$stateParams', '$filter', 'RESTService', 'AuditConfigService', '$rootScope', 'StateUpdateService', 'Notification',
+		 function($scope,   $stateParams,   $filter,   RESTService,   auditConfigService,   $rootScope,   StateUpdateService,   Notification) {
 					
 	
 	var userData=JSON.parse(window.localStorage.getItem("userData"));

@@ -149,6 +149,8 @@ enablix.studioApp.factory('RESTService', [
 					$http.defaults.headers.post['Content-Type'] = 'application/json; charset=utf-8';
 				}
 				
+				var callHeaders = addResourceVersionHeaders(_headers);
+				
 				var requestConfig = genereateRequestConfig(_resourceKey, _params);
 				
 				$http({
@@ -156,7 +158,7 @@ enablix.studioApp.factory('RESTService', [
 					url : requestConfig.url,
 					params : requestConfig.paramsJson,
 					data : _data,
-					headers : _headers
+					headers : callHeaders
 					
 				}).success(function(data) {
 					
