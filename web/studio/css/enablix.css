@@ -143,6 +143,7 @@ ul.dropdown-menu {
 
 .contextAnchor {
 	opacity: 0.75;
+	position: static !important;
 	color: #000000;
 }
 
