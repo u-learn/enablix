@@ -28,20 +28,25 @@ enablix.studioApp.controller('AuditController',
 			desc: "Name",
 			valueFn: function(record) {
 				return record.activity.itemTitle;
-			} 
+			},
+			sortProperty: "activity.itemTitle"
 		},
 		{
 			desc: "Activity Type",
-			valueFn: function(record) { return $scope.activityTypeNameMap[record.activity.activityType]; }
+			valueFn: function(record) { return $scope.activityTypeNameMap[record.activity.activityType]; },
+			sortProperty: "activity.activityType"
 		},
 		{
 			desc: "Date",
-			valueFn: function(record) { return $filter('ebDate')(record.activityTime); }
+			valueFn: function(record) { return $filter('ebDate')(record.activityTime); },
+			sortProperty: "activityTime"
 		},
 		{
 			desc: "User",
-			valueFn: function(record) { return record.actor.name }
+			valueFn: function(record) { return record.actor.name },
+			sortProperty: "actor.name"
 		}];
+	
 	$scope.tableRecordActions = 
 		[{
 			actionName: "View Details",
@@ -51,17 +56,21 @@ enablix.studioApp.controller('AuditController',
 			actionCallbackFn: $scope.navToContent,
 			checkApplicable: function(record) { return true; }
 		}];
+	
+	
 	$scope.setPage = function(pageNum) {
 		$scope.pagination.pageNum = pageNum;
 		fetchAuditResult();
 	}
+	
 	$scope.dataList = [];
 	$scope.userLst=[];
 	$scope.activityTypeLst=[]; 
 	$scope.searchCriteria = {};
 	$scope.dataFilters = {};
 	$scope.dataFilters.activitycat = "CONTENT";
-	var fetchAuditResult = function(){
+	
+	var fetchAuditResult = function() {
 		auditConfigService.getAuditData($scope.dataFilters,$scope.pagination ,function(dataPage) {
 			$scope.dataList = dataPage.content;
 			$scope.pageData = dataPage;
@@ -77,6 +86,7 @@ enablix.studioApp.controller('AuditController',
 			Notification.error({message: "Error loading user data", delay: enablix.errorMsgShowTime});
 		});
 	};
+	
 	var getActivityTypes= function(_success) {
 		RESTService.getForData('getAuditActivityTypes', null, null, function(data) {
 			_success(data);	    	
@@ -84,10 +94,10 @@ enablix.studioApp.controller('AuditController',
 			Notification.error({message: "Error loading user data", delay: enablix.errorMsgShowTime});
 		});
 	};
+	
 	var initUserDropDown = function (data) {
 		var size = data.length;
-		for(var i=0; i<size;i++)
-		{
+		for (var i=0; i<size;i++) {
 			var UserObj= {
 					label: data[i].profile.name,
 					id: data[i].profile.name,
@@ -109,7 +119,7 @@ enablix.studioApp.controller('AuditController',
 			});
 			
 			$scope.activityTypeNameMap[index] = value;
-		})
+		});
 	}
 	
 	getAllUsers(initUserDropDown);
@@ -130,23 +140,21 @@ enablix.studioApp.controller('AuditController',
 		var curr_month;
 		var curr_date;
 		curr_date = d.getDate()-$scope.searchCriteria.eventOccurence;
-		if(curr_date<0)
-		{
+		if(curr_date < 0) {
 			curr_date = 30+curr_date;
 			curr_month = d.getMonth()-1;
 		}
 		else if (curr_date==0){
 			curr_date=curr_date+1;
 			curr_month = d.getMonth();
-		}
-		else{
+		} else {
 			curr_date = d.getDate()-$scope.searchCriteria.eventOccurence;
 			curr_month = d.getMonth();
 		}
 		var curr_year = d.getFullYear().toString().substr(2,2);
-		return curr_date + "-" + m_names[curr_month] 
-		+ "-" + curr_year;
+		return curr_date + "-" + m_names[curr_month] + "-" + curr_year;
 	}
+	
 	$scope.resetAudit = function(){
 		var d = new Date();
 		$scope.searchCriteria = {};
@@ -154,10 +162,12 @@ enablix.studioApp.controller('AuditController',
 		$scope.dataFilters.activitycat = "CONTENT";
 		fetchAuditResult();
 	}
+	
 	$scope.searchAudit = function(){
 		formSearchObject();
 		fetchAuditResult();
 	}
+	
 	var formSearchObject = function(){
 		if($scope.searchCriteria.user!=undefined){
 			$scope.dataFilters.auditUser=$scope.searchCriteria.user;
@@ -169,9 +179,6 @@ enablix.studioApp.controller('AuditController',
 			$scope.dataFilters.auditEventOcc=getEventDate();
 		}
 	}
-
-
-
 
 	$scope.eventOccurenceLst = [{
 		label: 'Last 1 day',
