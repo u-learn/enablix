@@ -7,6 +7,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,22 +45,30 @@ public class FetchContentDataController {
 			produces = "application/json")
 	public Object fetchRootData(@PathVariable String templateId, @PathVariable String contentQId,
 			@RequestParam(required=false) String page, 
-			@RequestParam(required=false) String size) {
+			@RequestParam(required=false) String size,
+			@RequestParam(required=false) String sortProp,
+			@RequestParam(required=false) Sort.Direction sortDir) {
 		
 		LOGGER.debug("Fetch root content data");
 		
-		Pageable pageable = createPaginationInfo(page, size);
+		Pageable pageable = createPaginationInfo(page, size, sortProp, sortDir);
 		return fetchData(new FetchContentRequest(templateId, contentQId, null, null, pageable));
 	}
 	
-	private Pageable createPaginationInfo(String page, String size) {
+	private Pageable createPaginationInfo(String page, String size, String sortProp, Direction sortDir) {
 		
 		Pageable pageable = null;
 		
 		if (!StringUtil.isEmpty(page)) {
+			
 			int pageInt = Integer.parseInt(page);
 			int sizeInt = StringUtil.isEmpty(size) ? AppConstants.DEFAULT_PAGE_SIZE : Integer.parseInt(size);
-			pageable = new PageRequest(pageInt, sizeInt);
+			
+			if (StringUtil.hasText(sortProp)) {
+				pageable = new PageRequest(pageInt, sizeInt, sortDir == null ? Direction.ASC : sortDir, sortProp);
+			} else {
+				pageable = new PageRequest(pageInt, sizeInt);
+			}
 		}
 		
 		return pageable;
@@ -71,10 +81,12 @@ public class FetchContentDataController {
 			@PathVariable String contentQId, 
 			@PathVariable String parentIdentity,
 			@RequestParam(required=false) String page, 
-			@RequestParam(required=false) String size) {
+			@RequestParam(required=false) String size,
+			@RequestParam(required=false) String sortProp,
+			@RequestParam(required=false) Sort.Direction sortDir) {
 		
 		LOGGER.debug("Fetch child content data");
-		Pageable pageable = createPaginationInfo(page, size);
+		Pageable pageable = createPaginationInfo(page, size, sortProp, sortDir);
 		return fetchData(new FetchContentRequest(templateId, contentQId, parentIdentity, null, pageable));
 	}
 	

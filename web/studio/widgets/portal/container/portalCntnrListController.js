@@ -1,20 +1,27 @@
 enablix.studioApp.controller('PortalCntnrListCtrl', 
-		   ['$scope', 'ContentTemplateService', '$state', '$stateParams', 'ContentDataService', 'StudioSetupService', 'ContentUtil', 'StateUpdateService', 'Notification',
-    function($scope,   ContentTemplateService,   $state,   $stateParams,   ContentDataService,   StudioSetupService,   ContentUtil,   StateUpdateService,   Notification) {
+		   ['$scope', 'ContentTemplateService', '$state', '$stateParams', 'ContentDataService', 'StudioSetupService', 'ContentUtil', 'StateUpdateService', 'Notification', 'DataSearchService',
+    function($scope,   ContentTemplateService,   $state,   $stateParams,   ContentDataService,   StudioSetupService,   ContentUtil,   StateUpdateService,   Notification,   DataSearchService) {
 
 		$scope.$stateParams = $stateParams;
 		
 		var containerDef = ContentTemplateService.getContainerDefinition(
 									enablix.template, $stateParams.containerQId);
 		
-		var pagination = {
-				pageNum: $stateParams.page
-		};
+		 $scope.pagination = {
+				pageSize: enablix.defaultPageSize,
+				pageNum: $stateParams.page,
+				sort: {
+					field: "createdAt",
+					direction: "ASC"
+				}
+			};
 		
 		$scope.listHeaders = ContentUtil.getContentListHeaders(containerDef);
+		$scope.dataFilters = {};
 
-		var fetchData = function() {
-		ContentDataService.getContentData(enablix.templateId, $stateParams.containerQId, null, 
+		$scope.fetchData = function() {
+			
+			DataSearchService.getContainerDataSearchResult($stateParams.containerQId, $scope.dataFilters, $scope.pagination, {}, 
 				function(dataPage) {
 					$scope.listData = dataPage.content;
 					$scope.pageData = dataPage;
@@ -23,13 +30,12 @@ enablix.studioApp.controller('PortalCntnrListCtrl',
 					});
 				}, 
 				function(data) {
-					//alert('Error retrieving list data');
 					Notification.error({message: "Error retrieving list data", delay: enablix.errorMsgShowTime});
-				}, pagination);
+				});
 		
 		}
 		
-		fetchData();
+		$scope.fetchData();
 		
 		$scope.navToContentDetail = function(contentRecordIdentity) {
 			StateUpdateService.goToPortalContainerDetail($stateParams.containerQId, contentRecordIdentity);
@@ -40,9 +46,5 @@ enablix.studioApp.controller('PortalCntnrListCtrl',
 					_containerQId, _contentIdentity, 'single', _containerQId);
 		}
 		
-		$scope.setPage = function(pageNum) {
-			pagination.pageNum = pageNum;
-			fetchData();
-		};
 	}                                          
 ]);

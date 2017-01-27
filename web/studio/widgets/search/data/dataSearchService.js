@@ -35,18 +35,38 @@ enablix.studioApp.factory('DataSearchService',
 					domainType : _domainType
 				};
 				
+				return getDataSearchResult("containerDataSearchRequest", params, _searchFilters, _pagination, 
+						_filterMetadata, _onSuccess, _onError, _projectedFields);
+			};
+			
+			var getDataSearchResult = function(urlKey, params, _searchFilters, _pagination, 
+					_filterMetadata, _onSuccess, _onError, _projectedFields) {
+				
 				var data = {
-					filters : _searchFilters,
-					filterMetadata : _filterMetadata,
-					pagination : _pagination,
-					projectedFields: _projectedFields
+						filters : _searchFilters,
+						filterMetadata : _filterMetadata,
+						pagination : _pagination,
+						projectedFields: _projectedFields
+					};
+					
+				return RESTService.postForData(urlKey, params, data, null, _onSuccess, _onError);
+			}
+			
+			var getContainerDataSearchResult = function(_containerQId, _searchFilters, _pagination, 
+					_filterMetadata, _onSuccess, _onError, _projectedFields) {
+
+				var params = {
+					containerQId : _containerQId
 				};
 				
-				return RESTService.postForData("dataSearchRequest", params, data, null, _onSuccess, _onError);
+				return getDataSearchResult("containerDataSearchRequest", params, _searchFilters, _pagination, 
+					_filterMetadata, _onSuccess, _onError, _projectedFields);
+				
 			};
 		
 			return {
-				getSearchResult: getSearchResult
+				getSearchResult: getSearchResult,
+				getContainerDataSearchResult: getContainerDataSearchResult 
 			};
 	 	}
 	]);

@@ -187,7 +187,7 @@ public class SearchRequest {
 		}
 		
 		public Pageable toPageableObject() {
-			return new PageRequest(pageNum, pageSize, sort.toSortObject()); 
+			return new PageRequest(pageNum, pageSize, sort == null ? null : sort.toSortObject()); 
 		}
 		
 	}

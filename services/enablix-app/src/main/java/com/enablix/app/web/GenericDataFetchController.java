@@ -1,5 +1,7 @@
 package com.enablix.app.web;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -8,8 +10,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.enablix.commons.util.process.ProcessContext;
 import com.enablix.core.mongo.dao.GenericDao;
 import com.enablix.core.mongo.search.service.SearchRequest;
+import com.enablix.services.util.DatastoreUtil;
 
 @RestController
 @RequestMapping("/data/search")
@@ -32,6 +36,15 @@ public class GenericDataFetchController {
 			@PathVariable String className) throws ClassNotFoundException {
 		Class<?> findType = Class.forName(className);
 		return dao.findByQuery(searchRequest, findType);
+	}
+	
+	@RequestMapping(method = RequestMethod.POST, value="/cq/{containerQId}",
+			consumes = "application/json", produces = "application/json")
+	public Page<?> filterContainerData(@RequestBody SearchRequest searchRequest,
+			@PathVariable String containerQId) throws ClassNotFoundException {
+		String templateId = ProcessContext.get().getTemplateId();
+		String collectionName = DatastoreUtil.getCollectionName(templateId, containerQId);
+		return dao.findByQuery(searchRequest, collectionName, Map.class);
 	}
 	
 }

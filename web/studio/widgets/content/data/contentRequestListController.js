@@ -22,23 +22,27 @@ enablix.studioApp.controller('ContentRequestListCtrl',
 						 value = containerDef.label
 					 }
 					 return value;
-				 } 
+				 }
 			 },
 		     {
 				 desc: "Content Title",
-				 valueFn: function(record) { return record.objectRef.contentTitle; }
+				 valueFn: function(record) { return record.objectRef.contentTitle; },
+				 sortProperty: "objectRef.contentTitle"
 		     },
 		     {
 				 desc: "Status",
-				 valueFn: function(record) { return $filter('translate')("content.approval.status." + record.currentState.stateName); }
+				 valueFn: function(record) { return $filter('translate')("content.approval.status." + record.currentState.stateName); },
+		     	 sortProperty: "currentState.stateName"
 		     },
 		     {
 		    	 desc: "Creation Date",
-		    	 valueFn: function(record) { return $filter('ebDate')(record.createdAt); }
+		    	 valueFn: function(record) { return $filter('ebDate')(record.createdAt); },
+		    	 sortProperty: "createdAt"
 		     },
 		     {
 		    	 desc: "Created By",
-		    	 valueKey: "createdByName"
+		    	 valueKey: "createdByName",
+		    	 sortProperty: "createdByName"
 		     }];
 		
 		$scope.contentRequestDetails = function(record) {
@@ -141,8 +145,7 @@ enablix.studioApp.controller('ContentRequestListCtrl',
 				});
 		}
 		
-		$scope.setPage = function(pageNum) {
-			$scope.pagination.pageNum = pageNum;
+		$scope.fetchResult = function(_pagination) {
 			fetchSearchResult();
 		}
 		

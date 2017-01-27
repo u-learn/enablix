@@ -10,6 +10,7 @@
 					<span ng-switch-when="number"><span class="text-right">{{col.desc}}</span></span>
 					<span ng-switch-default>{{col.desc}}</span>
 				</span>
+				<eb-sort sort-property="col.sortProperty" table-sort-info="pageData.sort" sort-data-fn="sortData"></eb-sort>
 			</th>
 			<!-- <th>Actions</th> -->
 		</tr>

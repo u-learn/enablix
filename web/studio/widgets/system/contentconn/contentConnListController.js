@@ -14,7 +14,8 @@ enablix.studioApp.controller('ContentConnListController',
 		$scope.tableHeaders =
 			 [{
 				 desc: "Mapping Name",
-				 valueKey: "connectionName"
+				 valueKey: "connectionName",
+				 sortProperty: "connectionName"
 			 },
 		     {
 				 desc: "Content Type",
@@ -25,11 +26,13 @@ enablix.studioApp.controller('ContentConnListController',
 		     },
 		     {
 		    	 desc: "Creation Date",
-		    	 valueFn: function(record) { return $filter('ebDate')(record.createdAt); }
+		    	 valueFn: function(record) { return $filter('ebDate')(record.createdAt); },
+		    	 sortProperty: "createdAt"
 		     },
 		     {
 		    	 desc: "Created By",
-		    	 valueKey: "createdByName"
+		    	 valueKey: "createdByName",
+		    	 sortProperty: "createdByName"
 		     }];
 		
 		$scope.navToContentConnDetail = function(record) {

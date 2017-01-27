@@ -13,9 +13,13 @@ enablix.studioApp.factory('ContentDataService',
 	 			if (!isNullOrUndefined(_pagination)) {
 	 				params.page = _pagination.pageNum;
 	 				params.pageSize = isNullOrUndefined(_pagination.pageSize) ? enablix.defaultPageSize : _pagination.pageSize;
+	 				params.sortProp = _pagination.sort.field;
+	 				params.sortDir = _pagination.sort.direction;
 	 			} else {
 	 				params.page = "";
 	 				params.pageSize = "";
+	 				params.sortProp = "";
+	 				params.sortDir = "";
 	 			}
 	 			
 

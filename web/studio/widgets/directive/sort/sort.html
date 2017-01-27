@@ -1,0 +1,11 @@
+<span ng-if="sortProperty && tableSortInfo && tableSortInfo.length > 0">
+	<a ng-if="tableSortInfo[0].property == sortProperty && tableSortInfo[0].ascending" ng-click="sortData(sortProperty, 'DESC')">
+		<i class="fa fa-sort-asc"></i>
+	</a>
+	<a ng-if="tableSortInfo[0].property == sortProperty && !tableSortInfo[0].ascending" ng-click="sortData(sortProperty, 'ASC')">
+		<i class="fa fa-sort-desc"></i>
+	</a>
+	<a ng-if="tableSortInfo[0].property != sortProperty" ng-click="sortData(sortProperty, 'ASC')">
+		<i class="fa fa-sort"></i>
+	</a>
+</span>
