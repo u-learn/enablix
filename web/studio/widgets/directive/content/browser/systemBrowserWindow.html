@@ -27,7 +27,7 @@
 	</div>
 	<ebx-generic-table ng-if="contentList" table-headers="tableHeaders" 
 						table-data="contentList" row-actions="tableRecordActions" select-action="tableRecordSelectAction" 
-						page-data="pageData" set-page-fn="setPage"></ebx-generic-table>
+						page-data="pageData" pagination-data="pagination" fetch-result-fn="fetchData"></ebx-generic-table>
 	<div class="foot clearfix">
 		<button ng-click="doneBrowsing()" class="button button-add">Done</button>
 		<a ng-click="cancelOperation()" class="button button-delete">Cancel</a>

@@ -35,7 +35,7 @@ enablix.studioApp.factory('DataSearchService',
 					domainType : _domainType
 				};
 				
-				return getDataSearchResult("containerDataSearchRequest", params, _searchFilters, _pagination, 
+				return getDataSearchResult("dataSearchRequest", params, _searchFilters, _pagination, 
 						_filterMetadata, _onSuccess, _onError, _projectedFields);
 			};
 			

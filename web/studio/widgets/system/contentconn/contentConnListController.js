@@ -22,7 +22,7 @@ enablix.studioApp.controller('ContentConnListController',
 				 valueFn: function(record) {
 					 var containerDef = ContentTemplateService.getContainerDefinition(enablix.template, record.contentQId);
 					 return containerDef ? containerDef.label : ""; 
-				}
+				 }
 		     },
 		     {
 		    	 desc: "Creation Date",
@@ -89,7 +89,7 @@ enablix.studioApp.controller('ContentConnListController',
 			connCategory: ContentConnectionService.getCategoryTag($stateParams.category)
 		};
 		
-		var fetchSearchResult = function() {
+		$scope.fetchSearchResult = function() {
 			
 			ContentConnectionService.getContentConnectionList($scope.dataFilters, $scope.pagination, function(dataPage) {
 					
@@ -106,7 +106,7 @@ enablix.studioApp.controller('ContentConnListController',
 			fetchSearchResult();
 		}
 		
-		fetchSearchResult();
+		$scope.fetchSearchResult();
 		
 	}
 ]);			

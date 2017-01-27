@@ -17,15 +17,18 @@ enablix.studioApp.controller('PlayXListCtrl',
 		$scope.tableHeaders =
 			 [{
 				 desc: "Title",
-				 valueFn: function(record) { return record.playTemplate.title; }
+				 valueFn: function(record) { return record.playTemplate.title; },
+				 sortProperty: "playTemplate.title"
 			 },
 		     {
 		    	 desc: "Created On",
-		    	 valueFn: function(record) { return $filter('ebDate')(record.createdAt); }
+		    	 valueFn: function(record) { return $filter('ebDate')(record.createdAt); },
+		    	 sortProperty: "createdAt"
 		     },
 		     {
 		    	 desc: "Created By",
-		    	 valueKey: "createdByName"
+		    	 valueKey: "createdByName",
+		    	 sortProperty: "createdByName"
 		     }];
 		
 		PlayDefinitionService.getPlayDefSummaryList({id: $stateParams.playDefId}, null, function(dataPage) {
@@ -71,7 +74,7 @@ enablix.studioApp.controller('PlayXListCtrl',
 				prototypeId: $stateParams.playDefId
 		};
 		
-		var fetchSearchResult = function() {
+		$scope.fetchSearchResult = function() {
 			
 			PlayDefinitionService.getPlayDefSummaryList($scope.dataFilters, $scope.pagination, function(dataPage) {
 					
@@ -83,12 +86,7 @@ enablix.studioApp.controller('PlayXListCtrl',
 				});
 		}
 		
-		$scope.setPage = function(pageNum) {
-			$scope.pagination.pageNum = pageNum;
-			fetchSearchResult();
-		}
-		
-		fetchSearchResult();
+		$scope.fetchSearchResult();
 		
 		$scope.navToAddExecutablePlay = function() {
 			StateUpdateService.goToAddXPlay($stateParams.playDefId);
