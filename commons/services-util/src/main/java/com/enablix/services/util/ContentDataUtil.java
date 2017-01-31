@@ -11,6 +11,7 @@ import com.enablix.core.commons.xsdtopojo.ContentItemClassType;
 import com.enablix.core.commons.xsdtopojo.ContentItemType;
 import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 import com.enablix.core.domain.content.ContentAssociation;
+import com.enablix.services.util.template.TemplateWrapper;
 
 public class ContentDataUtil {
 
@@ -49,34 +50,51 @@ public class ContentDataUtil {
 		return parentIdentity;
 	}
 
+
+	/**
+	 * @deprecated use {@link #findPortalLabelValue(Map, TemplateWrapper, String)} instead
+	 */
 	public static String findPortalLabelValue(
 			Map<String, Object> record, ContentTemplate template, String qId) {
+		return findPortalLabelValue(record, new TemplateWrapper(template), qId);
+	}
+	
+	public static String findPortalLabelValue(
+			Map<String, Object> record, TemplateWrapper template, String qId) {
 		
-		String portalLabelAttributeId = TemplateUtil.getPortalLabelAttributeId(template, qId);
+		String portalLabelAttributeId = template.getPortalLabelAttributeId(qId);
 		
 		return findLabelAttributeValue(record, template, qId, portalLabelAttributeId);
 	}
 	
+	/**
+	 * @deprecated use {@link #findStudioLabelValue(Map, TemplateWrapper, String)} instead
+	 */
 	public static String findStudioLabelValue(
 			Map<String, Object> record, ContentTemplate template, String qId) {
+		return findStudioLabelValue(record, new TemplateWrapper(template), qId);
+	}
+	
+	public static String findStudioLabelValue(
+			Map<String, Object> record, TemplateWrapper template, String qId) {
 		
-		String studioLabelAttributeId = TemplateUtil.getStudioLabelAttributeId(template, qId);
+		String studioLabelAttributeId = template.getStudioLabelAttributeId(qId);
 		
 		return findLabelAttributeValue(record, template, qId, studioLabelAttributeId);
 	}
 	
 	public static String findLabelAttributeValue(Map<String, Object> record, 
-			ContentTemplate template, String qId, String labelAttrId) {
+			TemplateWrapper template, String qId, String labelAttrId) {
 		
 		String labelAttributeValue = null;
-		ContainerType containerDef = TemplateUtil.findContainer(template.getDataDefinition(), qId);
+		ContainerType containerDef = template.getContainerDefinition(qId);
 		
 		if (labelAttrId != null) {
 			
 			Object labelAttribute = record.get(labelAttrId);
 			
 			if (TemplateUtil.isLinkedContainer(containerDef)) {
-				containerDef = TemplateUtil.findContainer(template.getDataDefinition(), containerDef.getLinkContainerQId());
+				containerDef = template.getContainerDefinition(containerDef.getLinkContainerQId());
 			}
 			
 			labelAttributeValue = contentItemToString(labelAttribute, containerDef, labelAttrId);
@@ -85,11 +103,9 @@ public class ContentDataUtil {
 		return labelAttributeValue == null ? containerDef.getLabel() : labelAttributeValue;
 	}
 	
-	public static String findDocIdentity(Map<String, Object> record, ContentTemplate template, String qId) {
+	public static String findDocIdentity(Map<String, Object> record, ContainerType containerDef) {
 		
 		String docIdentity = null;
-		
-		ContainerType containerDef = TemplateUtil.findContainer(template.getDataDefinition(), qId);
 		
 		for (ContentItemType itemType : containerDef.getContentItem()) {
 			

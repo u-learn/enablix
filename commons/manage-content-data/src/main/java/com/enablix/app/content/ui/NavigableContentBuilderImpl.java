@@ -10,10 +10,11 @@ import com.enablix.app.template.service.TemplateManager;
 import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.commons.util.QIdUtil;
 import com.enablix.core.api.ContentDataRef;
-import com.enablix.core.commons.xsdtopojo.ContentTemplate;
+import com.enablix.core.commons.xsdtopojo.ContainerType;
 import com.enablix.core.mongo.content.ContentCrudService;
 import com.enablix.services.util.ContentDataUtil;
 import com.enablix.services.util.TemplateUtil;
+import com.enablix.services.util.template.TemplateWrapper;
 
 @Component
 public class NavigableContentBuilderImpl implements NavigableContentBuilder {
@@ -26,46 +27,49 @@ public class NavigableContentBuilderImpl implements NavigableContentBuilder {
 	
 	@Override
 	public NavigableContent build(ContentDataRef data, ContentLabelResolver labelResolver) {
-		ContentTemplate template = templateMgr.getTemplate(data.getTemplateId());
+		TemplateWrapper template = templateMgr.getTemplateWrapper(data.getTemplateId());
 		return buildNavigableContent(template, data.getContainerQId(), data.getInstanceIdentity(), null);
 	}
 	
-	private NavigableContent buildNavigableContent(ContentTemplate template, 
+	private NavigableContent buildNavigableContent(TemplateWrapper template, 
 			String qId, String identity, NavigableContent child) {
 
 		NavigableContent navigableContent = null;
 		
+		ContainerType container = template.getContainerDefinition(qId);
+		
 		// check if data is self contained or in parent container
-		String collName = TemplateUtil.resolveCollectionName(template, qId);
+		String collName = template.getCollectionName(qId);
 		
 		Map<String, Object> record = null;
 		
-		if (TemplateUtil.hasOwnCollection(template, qId)) {
+		if (TemplateUtil.hasOwnCollection(container)) {
 			record = crudService.findRecord(collName, identity);
 			
 		} else {
 			record = crudService.findRecord(collName, QIdUtil.getElementId(qId), identity);
 		}
 		
-		navigableContent = buildNavigableContent(template, qId, child, record);
+		navigableContent = buildNavigableContent(template, container, child, record);
 		
 		return navigableContent;
 	}
 
 	private NavigableContent buildNavigableContent(
-			ContentTemplate template, String qId, NavigableContent child,
+			TemplateWrapper template, ContainerType container, NavigableContent child,
 			Map<String, Object> record) {
 		
 		NavigableContent navigableContent = null;
 
 		if (record != null) {
 			
-			navigableContent = createNavigableContent(record, qId, template, child);
+			navigableContent = createNavigableContent(record, container, template, child);
 			
 			String parentIdentity = ContentDataUtil.findParentIdentityFromAssociation(record);
 			
 			if (parentIdentity != null) {
-				navigableContent = buildNavigableContent(template, QIdUtil.getParentQId(qId), 
+				navigableContent = buildNavigableContent(template, 
+						QIdUtil.getParentQId(container.getQualifiedId()), 
 						parentIdentity, navigableContent);
 			}
 		}
@@ -74,14 +78,15 @@ public class NavigableContentBuilderImpl implements NavigableContentBuilder {
 	}
 	
 	private NavigableContent createNavigableContent(Map<String, Object> record, 
-			String containerQId, ContentTemplate template, NavigableContent child) {
+			ContainerType container, TemplateWrapper template, NavigableContent child) {
 		
+		String containerQId = container.getQualifiedId();
 		String label = ContentDataUtil.findPortalLabelValue(record, template, containerQId);
 		
 		NavigableContent content = new NavigableContent(containerQId, 
-				(String) record.get(ContentDataConstants.IDENTITY_KEY), label);
+				(String) record.get(ContentDataConstants.IDENTITY_KEY), label, container.getLabel());
 		
-		String docIdentity = ContentDataUtil.findDocIdentity(record, template, containerQId);
+		String docIdentity = ContentDataUtil.findDocIdentity(record, container);
 		content.setDocIdentity(docIdentity);
 		
 		content.setNext(child);
@@ -92,8 +97,8 @@ public class NavigableContentBuilderImpl implements NavigableContentBuilder {
 	@Override
 	public NavigableContent build(Map<String, Object> record, String templateId, 
 			String qId, ContentLabelResolver labelResolver) {
-		ContentTemplate template = templateMgr.getTemplate(templateId);
-		return buildNavigableContent(template, qId, null, record);
+		TemplateWrapper template = templateMgr.getTemplateWrapper(templateId);
+		return buildNavigableContent(template, template.getContainerDefinition(qId), null, record);
 	}
 	
 

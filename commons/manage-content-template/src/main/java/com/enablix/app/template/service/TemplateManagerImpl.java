@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import com.enablix.commons.util.StringUtil;
 import com.enablix.commons.util.concurrent.Events;
+import com.enablix.commons.util.process.ProcessContext;
 import com.enablix.core.commons.xsd.parser.XMLParser;
 import com.enablix.core.commons.xsd.parser.XMLParserRegistry;
 import com.enablix.core.commons.xsdtopojo.ContainerType;
@@ -23,6 +24,7 @@ import com.enablix.core.domain.content.TemplateDocument;
 import com.enablix.core.mq.Event;
 import com.enablix.core.mq.util.EventUtil;
 import com.enablix.services.util.TemplateUtil;
+import com.enablix.services.util.template.TemplateWrapper;
 
 @Service
 public class TemplateManagerImpl implements TemplateManager {
@@ -38,6 +40,9 @@ public class TemplateManagerImpl implements TemplateManager {
 	@Autowired
 	private TemplateVersionManager templateVersionManager;
 	
+	@Autowired
+	private TemplateCache templateCache;
+	
 	@Override
 	public void save(ContentTemplate template) {
 
@@ -47,27 +52,54 @@ public class TemplateManagerImpl implements TemplateManager {
 		
 		crudService.saveOrUpdate(templateDoc);
 		
+		updateTemplateInCache(template);
 		templateVersionManager.updateTemplateVersion(template);
 		
 		EventUtil.publishEvent(new Event<ContentTemplate>(Events.CONTENT_TEMPLATE_UPDATED, template));
 	}
 	
+	private void updateTemplateInCache(ContentTemplate template) {
+		updateTemplateInCache(new TemplateWrapper(template));
+	}
+	
+	private void updateTemplateInCache(TemplateWrapper templateWrapper) {
+		templateCache.put(ProcessContext.get().getTenantId(), templateWrapper);
+	}
+	
 	@Override
 	public ContentTemplate getTemplate(String templateId) {
-		TemplateDocument template = crudService.findByIdentity(templateId);
-		return template == null ? null : template.getTemplate();
+		TemplateWrapper templateWrapper = getTemplateWrapper(templateId);
+		return templateWrapper == null ? null : templateWrapper.getTemplate();
+	}
+	
+	@Override
+	public TemplateWrapper getTemplateWrapper(String templateId) {
+		
+		TemplateWrapper templateWrapper = templateCache.getTemplate(ProcessContext.get().getTenantId(), templateId);
+		
+		if (templateWrapper == null) {
+		
+			TemplateDocument templateDoc = crudService.findByIdentity(templateId);
+			if (templateDoc != null) {
+				templateWrapper = new TemplateWrapper(templateDoc.getTemplate());
+				updateTemplateInCache(templateWrapper);
+			}
+			
+		} 
+		
+		return templateWrapper;
 	}
 
 	@Override
 	public DataDefinitionType getDataDefinition(String templateId) {
-		TemplateDocument template = crudService.findByIdentity(templateId);
-		return template == null ? null : template.getTemplate().getDataDefinition();
+		ContentTemplate template = getTemplate(templateId);
+		return template == null ? null : template.getDataDefinition();
 	}
 
 	@Override
 	public UiDefinitionType getUIDefinition(String templateId) {
-		TemplateDocument template = crudService.findByIdentity(templateId);
-		return template == null ? null : template.getTemplate().getUiDefinition();
+		ContentTemplate template = getTemplate(templateId);
+		return template == null ? null : template.getUiDefinition();
 	}
 
 	@Override

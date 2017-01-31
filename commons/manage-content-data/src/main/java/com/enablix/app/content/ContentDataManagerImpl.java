@@ -34,6 +34,7 @@ import com.enablix.core.domain.content.ContentChangeDelta;
 import com.enablix.core.mongo.content.ContentCrudService;
 import com.enablix.services.util.ContentDataUtil;
 import com.enablix.services.util.TemplateUtil;
+import com.enablix.services.util.template.TemplateWrapper;
 
 @Component
 public class ContentDataManagerImpl implements ContentDataManager {
@@ -77,31 +78,31 @@ public class ContentDataManagerImpl implements ContentDataManager {
 			throw new IllegalArgumentException("Update request validation error: " + errors);
 		}
 		
-		ContentTemplate template = templateMgr.getTemplate(request.getTemplateId());
+		TemplateWrapper templateWrapper = templateMgr.getTemplateWrapper(request.getTemplateId());
 		
 		// check for linked container
-		ContainerType container = TemplateUtil.findContainer(template.getDataDefinition(), request.getContentQId());
+		ContainerType container = templateWrapper.getContainerDefinition(request.getContentQId()); 
 		
 		String linkedContainerQId = container.getLinkContainerQId();
 		if (!StringUtil.isEmpty(linkedContainerQId)) {
 			request.setParentIdentity(null);
 			request.setContentQId(linkedContainerQId);
-			container = TemplateUtil.findContainer(template.getDataDefinition(), linkedContainerQId);
+			container = templateWrapper.getContainerDefinition(linkedContainerQId);
 		}
 		
 		// update the data store with content
 		ContentUpdateHandler updateHandler = handlerFactory.getHandler(request);
 		boolean newRecord = (request.isInsertRootRequest() || request.isInsertChildRequest()) 
-				&& TemplateUtil.hasOwnCollection(template, request.getContentQId());
+				&& TemplateUtil.hasOwnCollection(container);
 		
 		Map<String, Object> contentDataMap = request.getDataAsMap();
 		
 		// Enrichment step
 		for (ContentEnricher enricher : enricherRegistry.getEnrichers()) {
-			enricher.enrich(request, contentDataMap, template);
+			enricher.enrich(request, contentDataMap, templateWrapper.getTemplate());
 		}
 		
-		Map<String, Object> oldRecord = updateHandler.updateContent(template, request.getParentIdentity(), 
+		Map<String, Object> oldRecord = updateHandler.updateContent(templateWrapper.getTemplate(), request.getParentIdentity(), 
 				request.getContentQId(), contentDataMap);
 		
 		// notify listeners
@@ -126,15 +127,17 @@ public class ContentDataManagerImpl implements ContentDataManager {
 		
 		String contentQId = request.getContentQId();
 		
-		ContentTemplate template = templateMgr.getTemplate(request.getTemplateId());
-		String collName = TemplateUtil.resolveCollectionName(template, contentQId);
+		TemplateWrapper templateWrapper = templateMgr.getTemplateWrapper(request.getTemplateId());
 		
-		if (TemplateUtil.hasOwnCollection(template, contentQId)) {
+		String collName = templateWrapper.getCollectionName(contentQId);
+		
+		ContainerType containerType = templateWrapper.getContainerDefinition(contentQId);
+		
+		if (TemplateUtil.hasOwnCollection(containerType)) {
 			Map<String, Object> deletedRecord = crud.deleteRecord(collName, request.getRecordIdentity());
 			
 			if (deletedRecord != null) {
-				ContainerType containerType = TemplateUtil.findContainer(template.getDataDefinition(), contentQId);
-				String contentTitle = ContentDataUtil.findPortalLabelValue(deletedRecord, template, contentQId);
+				String contentTitle = ContentDataUtil.findPortalLabelValue(deletedRecord, templateWrapper, contentQId);
 				
 				publishContentDeleteEvent(new ContentDataDelEvent(request.getTemplateId(), 
 					request.getContentQId(), request.getRecordIdentity(), containerType, contentTitle));
@@ -145,7 +148,7 @@ public class ContentDataManagerImpl implements ContentDataManager {
 			crud.deleteChild(collName, qIdRelativeToParent, request.getRecordIdentity());
 		}
 		
-		deleteChildContainerData(template, contentQId, request.getRecordIdentity());
+		deleteChildContainerData(templateWrapper, contentQId, request.getRecordIdentity());
 	}
 	
 	private void publishContentDeleteEvent(ContentDataDelEvent event) {
@@ -155,30 +158,31 @@ public class ContentDataManagerImpl implements ContentDataManager {
 	}
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	private void deleteChildContainerData(ContentTemplate template, String containerQId, String recordIdentity) {
+	private void deleteChildContainerData(TemplateWrapper templateWrapper, String containerQId, String recordIdentity) {
+		
+		ContentTemplate template = templateWrapper.getTemplate();
 		
 		List<String> childContainerIds = TemplateUtil.getChildContainerIds(template, containerQId);
 		for (String childContainerId : childContainerIds) {
 			
 			String childQId = QIdUtil.createQualifiedId(containerQId, childContainerId);
+			ContainerType childContainer = templateWrapper.getContainerDefinition(childQId);
 			
-			if (TemplateUtil.hasOwnCollection(template, childQId)) {
+			if (TemplateUtil.hasOwnCollection(childContainer)) {
 				
-				String collName = TemplateUtil.resolveCollectionName(template, childQId);
+				String collName = templateWrapper.getCollectionName(childQId);
 				List<HashMap> deletedChildRecords = 
 						crud.deleteRecordsWithParentId(collName, recordIdentity);
-				
-				ContainerType childContainer = TemplateUtil.findContainer(template.getDataDefinition(), childQId);
 				
 				for (HashMap childRecord : deletedChildRecords) {
 
 					String childRecordIdentity = (String) childRecord.get(ContentDataConstants.IDENTITY_KEY);
-					String recordTitle = ContentDataUtil.findPortalLabelValue(childRecord, template, childQId);
+					String recordTitle = ContentDataUtil.findPortalLabelValue(childRecord, templateWrapper, childQId);
 					
 					publishContentDeleteEvent(new ContentDataDelEvent(template.getId(), 
 							childQId, childRecordIdentity, childContainer, recordTitle));
 
-					deleteChildContainerData(template, childQId, childRecordIdentity);
+					deleteChildContainerData(templateWrapper, childQId, childRecordIdentity);
 				}
 			}
 		}
@@ -256,8 +260,10 @@ public class ContentDataManagerImpl implements ContentDataManager {
 		
 		String contentQId = request.getContentQId();
 		
-		ContentTemplate template = templateMgr.getTemplate(request.getTemplateId());
-		String collName = TemplateUtil.resolveCollectionName(template, contentQId);
+		TemplateWrapper templateWrapper = templateMgr.getTemplateWrapper(request.getTemplateId());
+		ContentTemplate template = templateWrapper.getTemplate();
+		
+		String collName = templateWrapper.getCollectionName(contentQId);
 		String qIdRelativeToParent = TemplateUtil.getQIdRelativeToParentContainer(template, contentQId);
 
 		List<Map<String, Object>> peers = new ArrayList<Map<String, Object>>();
@@ -268,7 +274,7 @@ public class ContentDataManagerImpl implements ContentDataManager {
 		
 		if (recordData != null) {
 			// Fetch all child containers
-			if (TemplateUtil.hasOwnCollection(template, contentQId)) {
+			if (TemplateUtil.hasOwnCollection(templateWrapper.getContainerDefinition(contentQId))) {
 				
 				String parentIdentity = ContentDataUtil.findParentIdentityFromAssociation(recordData);
 				
