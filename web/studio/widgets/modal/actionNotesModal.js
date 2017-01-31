@@ -7,6 +7,7 @@ enablix.studioApp.factory('ActionNotesWindow',
 				      templateUrl: 'views/modal/actionNotesModal.html',
 				      size: 'sm', // 'sm', 'lg'
 				      controller: 'ActionNotesController',
+				      backdrop: 'static',
 				      resolve: {
 				    	  modalTitle: function() {
 				    		  return title;

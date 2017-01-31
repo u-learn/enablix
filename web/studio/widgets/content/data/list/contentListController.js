@@ -1,12 +1,20 @@
 enablix.studioApp.controller('ContentListCtrl', 
-			['$scope', '$state', '$stateParams', 'ContentDataService', 'ContentIndexService', 'ContentTemplateService', 'StateUpdateService', 'StudioSetupService', 'Notification', 'ContentUtil', 'QuickLinksService', 'AssocQuickLinkModalWindow', 'ManageRecoModalWindow',
-	function( $scope,   $state,   $stateParams,   ContentDataService,   ContentIndexService,   ContentTemplateService,   StateUpdateService,   StudioSetupService,   Notification,   ContentUtil,   QuickLinksService,   AssocQuickLinkModalWindow,   ManageRecoModalWindow) {
+			['$scope', '$state', '$stateParams', 'ContentDataService', 'ContentIndexService', 'ContentTemplateService', 'StateUpdateService', 'StudioSetupService', 'Notification', 'ContentUtil', 'QuickLinksService', 'AssocQuickLinkModalWindow', 'ManageRecoModalWindow', 'DataSearchService',
+	function( $scope,   $state,   $stateParams,   ContentDataService,   ContentIndexService,   ContentTemplateService,   StateUpdateService,   StudioSetupService,   Notification,   ContentUtil,   QuickLinksService,   AssocQuickLinkModalWindow,   ManageRecoModalWindow,   DataSearchService) {
 		
 		var containerQId = $stateParams.containerQId;
 		var parentIdentity = $stateParams.parentIdentity;
 		
 		$scope.containerDef = {};
 		$scope.listHeaders = [];
+		
+		$scope.pagination = {
+				pageNum: 0,
+				sort: {
+					field: "createdAt",
+					direction: "ASC"
+				}
+		};
 		
 		$scope.containerDef = ContentTemplateService.getContainerDefinition(enablix.template, containerQId);
 		var containerLabel = $scope.containerDef.label;
@@ -36,7 +44,7 @@ enablix.studioApp.controller('ContentListCtrl',
 					if (parentNode && parentNode.children && parentNode.children.length > 0) {
 						$scope.postDataDelete(parentNode, elementIdentity);
 					}
-					fetchData();
+					$scope.fetchData();
 				}, 
 				function(data) {
 					Notification.error({message: "Error deleting record", delay: enablix.errorMsgShowTime});
@@ -44,14 +52,16 @@ enablix.studioApp.controller('ContentListCtrl',
 			
 		}
 		
-		var fetchData = function() {
+		$scope.fetchData = function() {
+			
 			ContentDataService.getContentData(enablix.templateId, containerQId, parentIdentity, 
 				function(data) {
-					$scope.listData = data;
+					$scope.listData = data.content;
+					$scope.pageData = data;
 					
 					var currentIndexNode = $scope.$parent.getCurrentIndexNode();
 					if (!isNullOrUndefined(currentIndexNode)) {
-						ContentIndexService.refreshNodeChildren(currentIndexNode, data, false);
+						ContentIndexService.refreshNodeChildren(currentIndexNode, $scope.listData, false);
 					}
 					
 					angular.forEach($scope.listData, function(item) {
@@ -61,10 +71,10 @@ enablix.studioApp.controller('ContentListCtrl',
 				function(data) {
 					//alert('Error retrieving list data');
 					Notification.error({message: "Error retrieving list data", delay: enablix.errorMsgShowTime});
-				});
+				}, $scope.pagination);
 		};
 		
-		fetchData();
+		$scope.fetchData();
 		
 		if ($state.includes('studio.list')) {
 			$scope.tableRecordActions = 

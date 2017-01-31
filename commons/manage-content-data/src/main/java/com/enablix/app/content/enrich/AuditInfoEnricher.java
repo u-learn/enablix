@@ -3,6 +3,7 @@ package com.enablix.app.content.enrich;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.data.mongodb.core.mapping.event.AbstractMongoEventListener;
@@ -28,26 +29,17 @@ public class AuditInfoEnricher extends AbstractMongoEventListener<BaseDocumentEn
 				contentTemplate.getDataDefinition(), updateCtx.contentQId());
 		
 		setAuditInfoInHierarchy(content, containerDef);
+		
+		// format audit dates if exists in any child structure
+		formatAuditDatesInHierarchy(content);
 	}
 	
 	private void setAuditInfoInHierarchy(
 			final Map<String, Object> containerData, ContainerType containerDef) {
 		
-		setAuditInfo(new FieldCollection() {
-
-			@Override
-			public void put(String fieldName, Object value) {
-				containerData.put(fieldName, value);
-			}
-
-			@Override
-			public Object get(String fieldName) {
-				return containerData.get(fieldName);
-			}
-			
-		});
+		setAuditInfo(new MapFieldCollection(containerData));
 		
-		// populate identity in hierarchy
+		// populate audit info in hierarchy
 		for (ContainerType childContainer : containerDef.getContainer()) {
 			Object childContainerData = containerData.get(childContainer.getId());
 			if (childContainerData != null) {
@@ -70,6 +62,41 @@ public class AuditInfoEnricher extends AbstractMongoEventListener<BaseDocumentEn
 			}
 		}
 		
+	}
+	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	private void formatAuditDatesInHierarchy(final Map<String, Object> dataMap) {
+		
+		formatAuditDates(new MapFieldCollection(dataMap));
+		
+		for (Map.Entry<String, Object> entry : dataMap.entrySet()) {
+			
+			Object value = entry.getValue();
+			if (value instanceof Map) {
+				
+				formatAuditDatesInHierarchy((Map) value);
+				
+			} else if (value instanceof List) {
+				
+				for (Object listEntry : (List) value) {
+					if (value instanceof Map) {
+						formatAuditDatesInHierarchy((Map) listEntry);
+					}
+				}
+			}
+		}
+	}
+	
+	private void formatAuditDates(FieldCollection fieldSet) {
+		checkAndFormatDateField(fieldSet, ContentDataConstants.CREATED_AT_KEY);
+		checkAndFormatDateField(fieldSet, ContentDataConstants.MODIFIED_AT_KEY);
+	}
+	
+	private void checkAndFormatDateField(FieldCollection fieldSet, String fieldName) {
+		Object obj = fieldSet.get(fieldName);
+		if (obj != null && obj instanceof Long) {
+			fieldSet.put(fieldName, new Date((Long) obj)); 
+		}
 	}
 	
 	private void setAuditInfo(FieldCollection fieldSet) {
@@ -131,6 +158,26 @@ public class AuditInfoEnricher extends AbstractMongoEventListener<BaseDocumentEn
 		public void put(String fieldName, Object value);
 		
 		public Object get(String fieldName);
+	}
+	
+	private static class MapFieldCollection implements FieldCollection {
+		
+		private Map<String, Object> fields;
+		
+		MapFieldCollection(Map<String, Object> fields) {
+			this.fields = fields;
+		}
+		
+		@Override
+		public void put(String fieldName, Object value) {
+			fields.put(fieldName, value);
+		}
+
+		@Override
+		public Object get(String fieldName) {
+			return fields.get(fieldName);
+		}
+		
 	}
 	
 }

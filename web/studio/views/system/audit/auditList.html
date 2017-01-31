@@ -16,35 +16,28 @@
                 </div>
                 <div id="collapse1" class="collapse out">
                   <div class="panel-body">
-                    	<div class="cont">
-								<div>
-									<label class="form-label">User</label>
-									<select class="form-control" ng-change=""
-										ng-options="item.id as item.label for item in userLst" 
-										ng-model="searchCriteria.user"></select>
-								</div>
-							</div>	
-							<div class="cont">
-								<div>
-									<label class="form-label">Activity Type</label>
-									<select class="form-control" ng-change=""
-										ng-options="item.id as item.label for item in activityTypeLst" 
-										ng-model="searchCriteria.activity"></select>
-								</div>
-							</div>
-							<div class="cont">
-								<div>
-									<label class="form-label">Event Occurence</label>
-									<select class="form-control" ng-change=""
-										ng-options="item.id as item.label for item in eventOccurenceLst" 
-										ng-model="searchCriteria.eventOccurence"></select>
-								</div>
-								<div class="foot clearfix">
-								<button ng-click="searchAudit()" class="button button-add">Search</button>
-								<a href="#" ng-click="resetAudit()" class="button button-delete">Reset</a>
-							</div>
-							</div>
-                    	
+						<div class="cont">
+							<label class="form-label">User</label>
+							<select class="form-control" ng-change=""
+								ng-options="item.id as item.label for item in userLst" 
+								ng-model="searchCriteria.user"></select>
+						</div>
+						<div class="cont">
+							<label class="form-label">Activity Type</label>
+							<select class="form-control" ng-change=""
+								ng-options="item.id as item.label for item in activityTypeLst" 
+								ng-model="searchCriteria.activity"></select>
+						</div>
+						<div class="cont">
+							<label class="form-label">Event Occurence</label>
+							<select class="form-control" ng-change=""
+								ng-options="item.id as item.label for item in eventOccurenceLst" 
+								ng-model="searchCriteria.eventOccurence"></select>
+						</div>
+						<div class="foot clearfix">
+							<button ng-click="searchAudit()" class="button button-add">Search</button>
+							<a href="#" ng-click="resetAudit()" class="button button-delete">Reset</a>
+						</div>
                   </div>
                 </div>
               </div><!--/panel-->
@@ -53,6 +46,6 @@
         </div><!--/row-->
     </div><!--/container-->
 	<ebx-generic-table table-headers="tableHeaders" table-data="dataList" row-actions="tableRecordActions" 
-						page-data="pageData" set-page-fn="setPage"></ebx-generic-table>
+						page-data="pageData" pagination-data="pagination" fetch-result-fn="searchAudit"></ebx-generic-table>
 	
 </div>

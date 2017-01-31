@@ -30,5 +30,6 @@
 	<module>manage-content-connection</module>
 	<module>commons-caching</module>
 	<module>manage-play-lifecycle</module>
+	<module>resource-versioning</module>
   </modules>
 </project>

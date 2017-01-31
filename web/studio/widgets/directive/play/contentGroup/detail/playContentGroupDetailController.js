@@ -8,7 +8,7 @@ enablix.studioApp.controller('PlayContentGroupDetailCtrl',
 		$scope.contentGroup = angular.copy(contentGroup);
 		$scope.contentSetRecords = [];
 		
-		$scope.contentGroupType = "";
+		$scope.contentGroupType = "contentSet";
 		
 		$scope.focusQId = focusItems.focusItem[0].qualifiedId;
 		var focusContainerDef = ContentTemplateService.getContainerDefinition(enablix.template, $scope.focusQId);

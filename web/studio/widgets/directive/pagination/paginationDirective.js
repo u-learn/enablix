@@ -34,6 +34,8 @@ function(StateUpdateService) {
 		        for (var i = firstPageNum; i <= lastPageNum; i++) {
 		        	ret.push(i);
 		        }
+
+		        scope.showingPages = ret.length;
 		        
 		        return ret;
 		    };

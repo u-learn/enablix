@@ -12,7 +12,31 @@ function(StateUpdateService) {
 			recordDeleteFn : "=",
 			pageData : "=",
 			setPageFn : "=",
-			otherActions: "="
+			otherActions: "=",
+			
+			/**
+			 * fetchResultFn is a callback function of type
+			 * 
+			 * fetchResult(paginationData) {
+			 * 	// TODO: fetch data list
+			 * }
+			 * 
+			 */
+			fetchResultFn: "=?",
+			
+			/**
+			 * Pagination attribute is a JSON structure of type:
+			 * 
+			 * paginationData = {
+			 *		pageSize: enablix.defaultPageSize,
+			 *		pageNum: 0,
+			 *		sort: {
+			 *			field: "createdAt",
+			 *			direction: "DESC"
+			 *		}
+			 *	};
+			 */
+			paginationData: "=?"
 		},
 		link: function(scope, element, attrs) {
 			scope.navToRowDetail = function(elementIdentity) {
@@ -33,17 +57,32 @@ function(StateUpdateService) {
 				}
 			};
 			
-			scope.getPageNumbers = function (totalPages) {
-		        var ret = [];
-		        for (var i = 0; i < totalPages; i++) {
-		        	ret.push(i);
-		        }
-		        return ret;
-		    };
-		    
 		    scope.setPage = function (pageNum) {
 		    	if (scope.setPageFn && pageNum >=0 && pageNum < scope.pageData.totalPages) {
 		    		scope.setPageFn(pageNum);
+		    	} else {
+		    		scope.fetchResult(pageNum);
+		    	}
+		    };
+		    
+		    scope.sortData = function(sortProperty, sortDir) {
+		    	scope.fetchResult(0, sortProperty, sortDir);
+		    };
+		    
+		    scope.fetchResult = function(pageNum, sortProperty, sortDir) {
+		    	
+		    	if (scope.fetchResultFn && scope.paginationData) {
+
+		    		scope.paginationData.pageNum = pageNum;
+		    		
+		    		if (!isNullOrUndefined(sortProperty)) {
+		    			scope.paginationData.sort = {
+		    					field: sortProperty,
+		    					direction: isNullOrUndefined(sortDir) ? 'ASC' : sortDir
+		    			}
+		    		}
+		    		
+		    		scope.fetchResultFn(scope.paginationData);
 		    	}
 		    };
 		    

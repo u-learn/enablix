@@ -35,6 +35,9 @@ public class TemplateManagerImpl implements TemplateManager {
 	@Autowired
 	private XMLParserRegistry xmlParserRegistry;
 	
+	@Autowired
+	private TemplateVersionManager templateVersionManager;
+	
 	@Override
 	public void save(ContentTemplate template) {
 
@@ -43,6 +46,8 @@ public class TemplateManagerImpl implements TemplateManager {
 		templateDoc.setIdentity(template.getId());
 		
 		crudService.saveOrUpdate(templateDoc);
+		
+		templateVersionManager.updateTemplateVersion(template);
 		
 		EventUtil.publishEvent(new Event<ContentTemplate>(Events.CONTENT_TEMPLATE_UPDATED, template));
 	}

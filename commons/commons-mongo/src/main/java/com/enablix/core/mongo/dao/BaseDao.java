@@ -77,7 +77,8 @@ public abstract class BaseDao {
 		
 		MongoTemplate mongoTemplate = getMongoTemplate();
 		
-		long count = mongoTemplate.count(query, findType);
+		long count = StringUtil.hasText(collectionName) ? mongoTemplate.count(query, collectionName) 
+										: mongoTemplate.count(query, findType);
 				
 		query.with(pageable);
 		

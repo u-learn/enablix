@@ -3,12 +3,15 @@ enablix.studioApp.directive('ebxContextMenu',['RESTService','Notification',
 	function(RESTService,Notification,shareContentModalWindow,$window,$location,$state) {
 	return {
 		restrict: 'E',
-		scope : true,
+		scope : {
+			contextData : "=",
+			contentQId: "="
+		},
 		link: function(scope, element, attrs) {
 
 			scope.openMailClient =function(downloadDocId,contentIdentity,contentName){
 				var _data = {
-						"containerQId" : scope.subContainerQId,
+						"containerQId" : scope.contentQId,
 						"instanceIdentity" : contentIdentity,
 						"itemTitle" : contentName
 				};
@@ -18,7 +21,7 @@ enablix.studioApp.directive('ebxContextMenu',['RESTService','Notification',
 					var _body=portalURL;
 					if ( downloadDocId != null ) { 
 						var downloadURL  = "Download URL : "+getDownloadURL(downloadDocId);
-						_body=_body+"<br/>"+downloadURL;
+						_body=_body+"%0D%0A"+downloadURL;
 					}
 					openLocalEmailClient(_subject,_body);	   
 				}, function(data){}, null);
@@ -39,7 +42,7 @@ enablix.studioApp.directive('ebxContextMenu',['RESTService','Notification',
 				var downloadURL = getDownloadURL(downloadDocId)
 				copyToClipboard(downloadURL);
 				var _data = {
-						"containerQId" : scope.subContainerQId,
+						"containerQId" : scope.contentQId,
 						"instanceIdentity" : contentIdentity,
 						"itemTitle" : contentName
 				};
@@ -58,7 +61,7 @@ enablix.studioApp.directive('ebxContextMenu',['RESTService','Notification',
 			}
 			function getPortalURL(contentIdentity){
 				return $location.protocol() + "://" + $location.host() 
-				+ ":" + $location.port() + "/app.html#/portal/container/"+scope.subContainerQId+"/"+contentIdentity;
+				+ ":" + $location.port() + "/app.html#/portal/container/"+scope.contentQId+"/"+contentIdentity;
 			
 			}
 			
@@ -67,7 +70,7 @@ enablix.studioApp.directive('ebxContextMenu',['RESTService','Notification',
 				var portalURL = getPortalURL(contentIdentity);
 				copyToClipboard(portalURL);
 				var _data = {
-						"containerQId" : scope.subContainerQId,
+						"containerQId" : scope.contentQId,
 						"instanceIdentity" : contentIdentity,
 						"itemTitle" : contentName
 				};
@@ -78,7 +81,7 @@ enablix.studioApp.directive('ebxContextMenu',['RESTService','Notification',
 
 			}
 			scope.openShareContentModal =function(contentIdentity,$event){
-				shareContentModalWindow.showShareContentModal(scope.subContainerQId, contentIdentity,$event);
+				shareContentModalWindow.showShareContentModal(scope.contentQId, contentIdentity,$event);
 			}
 
 		},

@@ -30,6 +30,7 @@ import com.enablix.commons.util.StringUtil;
 @Configuration
 @PropertySources({
 		@PropertySource("file:${baseDir}/config/properties/mongodb.properties"),
+		@PropertySource("file:${baseDir}/config/properties/env.properties"),
 		@PropertySource("file:${baseDir}/config/properties/app.properties"),
 		@PropertySource("file:${baseDir}/config/properties/security.properties"),
 		@PropertySource("file:${baseDir}/config/properties/elasticsearch.properties"),

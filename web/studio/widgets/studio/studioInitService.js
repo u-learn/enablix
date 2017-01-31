@@ -1,7 +1,7 @@
 enablix.studioApp.factory('StudioSetupService', 
 	[
-	 	         '$rootScope', 'ContentTemplateService', 
-	 	function ($rootScope,   ContentTemplateService) {
+	 	         '$rootScope', '$q', 'ContentTemplateService', 'ResourceVersionService',
+	 	function ($rootScope,   $q,   ContentTemplateService,   ResourceVersionService) {
 	 		
 	 		var setupStudio = function() {
 	 			
@@ -9,7 +9,12 @@ enablix.studioApp.factory('StudioSetupService',
 	 				return enablix;
 	 			}
 	 			
-	 			return ContentTemplateService.loadTemplate();
+	 			var promises = [
+	 			    ResourceVersionService.loadResourceVersions(),
+	 			    ContentTemplateService.loadTemplate(),
+	 			];
+	 			
+	 			return $q.all(promises);
 	 			
 	 		};
 	 		

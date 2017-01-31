@@ -263,7 +263,7 @@ enablix.studioApp.controller('SystemContentBrowserController',
 			$scope.currentContentRecord = $scope.browserPath.getLastDataInstance();
 			var parentIdentity = $scope.currentContentRecord ? $scope.currentContentRecord.identity : null;
 			
-			var fetchData = function() {
+			$scope.fetchData = function() {
 				
 				ContentDataService.getContentData(enablix.templateId, containerDef.qualifiedId, parentIdentity, function(data) {
 					
@@ -284,7 +284,7 @@ enablix.studioApp.controller('SystemContentBrowserController',
 				}, $scope.pagination);
 			}
 			
-			fetchData();
+			$scope.fetchData();
 
 			var labelAttrId = ContentTemplateService.getContainerLabelAttrId(enablix.template, containerDef.qualifiedId);
 			var labelAttrItemDef = ContentTemplateService.getContentItem(containerDef, labelAttrId);
@@ -294,7 +294,8 @@ enablix.studioApp.controller('SystemContentBrowserController',
 			$scope.tableHeaders =
 				 [{
 					 desc: labelHeaderDesc,
-					 valueFn: function(record) { return record._title; }
+					 valueFn: function(record) { return record._title; },
+					 sortProperty: labelAttrId
 				 }];
 				 
 			$scope.tableRecordActions = 
@@ -319,11 +320,6 @@ enablix.studioApp.controller('SystemContentBrowserController',
 					}
 				}
 			};
-			
-			$scope.setPage = function(pageNum) {
-				$scope.pagination.pageNum = pageNum;
-				fetchData();
-			}
 			
 			$scope.currentContainer = containerDef;
 			

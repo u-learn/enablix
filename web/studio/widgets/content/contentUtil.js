@@ -111,6 +111,26 @@ enablix.studioApp.factory('ContentUtil',
 							"typeDef" : containerAttr
 						};
 						
+						switch (containerAttr.type) {
+							case "DOC_TYPE":
+								header.sortProperty = containerAttr.id + ".name";
+								break;
+								
+							case "BOUNDED":
+								header.sortProperty = containerAttr.id + ".label";
+								break;
+								
+							case "TEXT":
+							case "DATE_TIME":
+							case "NUMERIC":
+								header.sortProperty = containerAttr.id;
+								break;
+						}
+						
+						if (containerAttr.type != "BOUNDED") {
+							header.sortProperty = containerAttr.id;
+						}
+						
 						listHeaders.push(header);
 					}
 				});

@@ -14,22 +14,25 @@ enablix.studioApp.controller('ContentConnListController',
 		$scope.tableHeaders =
 			 [{
 				 desc: "Mapping Name",
-				 valueKey: "connectionName"
+				 valueKey: "connectionName",
+				 sortProperty: "connectionName"
 			 },
 		     {
 				 desc: "Content Type",
 				 valueFn: function(record) {
 					 var containerDef = ContentTemplateService.getContainerDefinition(enablix.template, record.contentQId);
 					 return containerDef ? containerDef.label : ""; 
-				}
+				 }
 		     },
 		     {
 		    	 desc: "Creation Date",
-		    	 valueFn: function(record) { return $filter('ebDate')(record.createdAt); }
+		    	 valueFn: function(record) { return $filter('ebDate')(record.createdAt); },
+		    	 sortProperty: "createdAt"
 		     },
 		     {
 		    	 desc: "Created By",
-		    	 valueKey: "createdByName"
+		    	 valueKey: "createdByName",
+		    	 sortProperty: "createdByName"
 		     }];
 		
 		$scope.navToContentConnDetail = function(record) {
@@ -86,7 +89,7 @@ enablix.studioApp.controller('ContentConnListController',
 			connCategory: ContentConnectionService.getCategoryTag($stateParams.category)
 		};
 		
-		var fetchSearchResult = function() {
+		$scope.fetchSearchResult = function() {
 			
 			ContentConnectionService.getContentConnectionList($scope.dataFilters, $scope.pagination, function(dataPage) {
 					
@@ -103,7 +106,7 @@ enablix.studioApp.controller('ContentConnListController',
 			fetchSearchResult();
 		}
 		
-		fetchSearchResult();
+		$scope.fetchSearchResult();
 		
 	}
 ]);			
