@@ -350,6 +350,7 @@
 					</refList>
 				</bounded>
 			</contentItem>			
+			<container id="partnerAgreements" label="Agreements" linkContainerQId="partneragreement" linkContentItemId="partners"/>			
 			<container id="partnerAnalystReports" label="Analyst Reports" linkContainerQId="analyst.report" linkContentItemId="partners"/>
 			<container id="partnerAnalystResearch" label="Analyst Research" linkContainerQId="analyst.research" linkContentItemId="partners"/>
 			<container id="partnerAnalystEngagement" label="Analyst Engagement" linkContainerQId="analyst.engagement" linkContentItemId="partners"/>			
@@ -857,6 +858,17 @@
 		<container id="discoveryQuestion" label="Discovery Questions">
 			<contentItem id="question" label="Question" type="text" searchBoost="6"/>
 			<contentItem id="significance" label="Significance" type="text" searchBoost="2"/>
+			<contentItem id="buyer" label="Buyer Role" type="bounded" searchBoost="6">
+				<bounded multivalued="true">
+					<refList>
+						<datastore>
+							<storeId>buyerRole</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>			
 			<contentItem id="products" label="Products" type="bounded">
 				<bounded multivalued="true">
 					<refList>
@@ -956,6 +968,17 @@
 				</bounded>
 			</contentItem>
 			<contentItem id="answer" label="Answer" type="text" searchBoost="4"/>
+			<contentItem id="buyer" label="Buyer Role" type="bounded" searchBoost="6">
+				<bounded multivalued="true">
+					<refList>
+						<datastore>
+							<storeId>buyerRole</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>				
 			<contentItem id="products" label="Products" type="bounded">
 				<bounded multivalued="true">
 					<refList>
@@ -2452,8 +2475,19 @@
 		</container>
 		<container id="partneragreement" label="Partnership Agreement">
 			<contentItem id="title" label="Title" type="text"/>
+			<contentItem id="file" label="File" type="doc"/>			
 			<contentItem id="summary" label="Summary" type="text"/>
-			<contentItem id="file" label="File" type="doc"/>
+			<contentItem id="partners" label="Partners" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>partner</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>			
 		</container>
 		<container id="mla" label="Master License Agreement">
 			<contentItem id="title" label="Title" type="text"/>
@@ -2626,6 +2660,10 @@
 			<contentItem id="typeName" label="Type" type="text"/>
 			<contentItem id="desc" label="Description" type="text"/>
 		</container>
+		<container id="buyerRole" label="Buyer Role" refData="true">
+			<contentItem id="name" label="Role Name" type="text"/>
+			<contentItem id="shortName" label="Role Short Name" type="text"/>	
+		</container>		
 		<container id="competitorType" label="Competitor Types" refData="true">
 			<contentItem id="typeName" label="Type" type="text"/>
 			<contentItem id="desc" label="Description" type="text"/>
