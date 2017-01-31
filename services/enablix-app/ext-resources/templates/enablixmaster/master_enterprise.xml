@@ -168,6 +168,7 @@
 				<contentItem id="file" label="Comparative Worksheet" type="doc"/>
 			</container>								
 			<container id="compFeatureSheet" label="Feature Sheets" linkContainerQId="featureSheet" linkContentItemId="competitors"/>
+			<container id="compBattleCard" label="Battle Cards" linkContainerQId="battlecard" linkContentItemId="competitors"/>			
 			<container id="compCaseStudy" label="Case Studies" linkContainerQId="caseStudy" linkContentItemId="competitors"/>
 			<container id="compDiscQuestions" label="Discovery Questions" linkContainerQId="discoveryQuestion" linkContentItemId="competitors"/>
 			<container id="compFAQ" label="FAQ" linkContainerQId="faq" linkContentItemId="competitors"/>
@@ -913,6 +914,17 @@
 					</refList>
 				</bounded>
 			</contentItem>
+			<contentItem id="competitors" label="Competitors" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>competitor</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>			
 		</container>
 		<container id="faq" label="FAQ">
 			<contentItem id="question" label="Question" type="text"/>
