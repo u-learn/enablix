@@ -7,6 +7,8 @@ public class NavigableContent {
 
 	private String qualifiedId;
 	
+	private String containerLabel;
+	
 	private String identity;
 	
 	private String label;
@@ -17,11 +19,12 @@ public class NavigableContent {
 
 	private NavigableContent next;
 	
-	public NavigableContent(String qualifiedId, String identity, String label) {
+	public NavigableContent(String qualifiedId, String identity, String label, String containerLabel) {
 		super();
 		this.qualifiedId = qualifiedId;
 		this.identity = identity;
 		this.label = label;
+		this.containerLabel = containerLabel;
 		this.additionalInfo = new HashMap<>();
 	}
 
@@ -39,6 +42,14 @@ public class NavigableContent {
 
 	public void setQualifiedId(String qualifiedId) {
 		this.qualifiedId = qualifiedId;
+	}
+
+	public String getContainerLabel() {
+		return containerLabel;
+	}
+
+	public void setContainerLabel(String containerLabel) {
+		this.containerLabel = containerLabel;
 	}
 
 	public void setIdentity(String identity) {

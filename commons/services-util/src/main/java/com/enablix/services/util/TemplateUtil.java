@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.Assert;
 
 import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.commons.util.QIdUtil;
@@ -143,6 +144,9 @@ public class TemplateUtil {
 		return false;
 	}
 	
+	/**
+	 * @deprecated use {@link #hasOwnCollection(ContainerType)} instead
+	 */
 	public static boolean hasOwnCollection(ContentTemplate template, String containerQId) {
 		
 		ContainerType container = findContainer(template.getDataDefinition(), containerQId);
@@ -154,6 +158,11 @@ public class TemplateUtil {
 		}
 		
 		return container.getQualifiedId().equals(containerQId) && container.isReferenceable();
+	}
+	
+	public static boolean hasOwnCollection(ContainerType container) {
+		Assert.notNull(container, "Container object in null");
+		return container.isReferenceable();
 	}
 	
 	public static String findParentCollectionName(ContentTemplate template, String containerQId) {
@@ -234,7 +243,9 @@ public class TemplateUtil {
 		// check if this is a linked container, then look for linked container's UI def
 		if (cntUIDef == null) {
 			ContainerType containerDef = findContainer(template.getDataDefinition(), qId);
-			if (isLinkedContainer(containerDef)) {
+			if (containerDef == null) {
+				LOGGER.warn("Qualified Id [{}] used in template but definition not found", qId);
+			} else if (isLinkedContainer(containerDef)) {
 				cntUIDef = getContentUIDef(template, containerDef.getLinkContainerQId());
 			}
 		}

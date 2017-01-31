@@ -24,6 +24,9 @@
 											<td class="arrow" style="color:#9a9a9a; font-family:Arial,sans-serif, 'OS'; font-size:16px; line-height:20px; text-align:left" width="27">&rarr;</td>
 											<td class="text" style="color:#626262; font-family:Arial,sans-serif, 'OS'; font-size:16px; line-height:20px; text-align:left">
 												#set ($currentNode = $key1)
+												<a href="$obj.url/app.html#/portal/containerlist/$currentNode.qualifiedId?atChannel=EMAIL&atContext=WEEKLY_DIGEST&atContextId=$obj.identity">
+													<span class="link-u" style="color:#004ba1; text-decoration:underline">$currentNode.containerLabel</span>
+												</a> &gt;
 												#foreach($number in [1..5])
 													#if ($currentNode)
 														#if ($number > 1) &gt; #end
