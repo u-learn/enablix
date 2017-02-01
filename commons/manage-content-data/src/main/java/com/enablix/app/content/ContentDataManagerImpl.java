@@ -196,7 +196,8 @@ public class ContentDataManagerImpl implements ContentDataManager {
 		
 		String contentQId = request.getContentQId();
 		
-		ContentTemplate template = templateMgr.getTemplate(request.getTemplateId());
+		TemplateWrapper templateWrapper = templateMgr.getTemplateWrapper(request.getTemplateId());
+		ContentTemplate template = templateWrapper.getTemplate();
 		
 		// check for linked container
 		ContainerType container = TemplateUtil.findContainer(template.getDataDefinition(), contentQId);
@@ -234,7 +235,7 @@ public class ContentDataManagerImpl implements ContentDataManager {
 		} else if (!StringUtil.isEmpty(request.getParentRecordIdentity())) {
 			
 			// Fetch all child containers
-			if (TemplateUtil.hasOwnCollection(template, contentQId)) {
+			if (TemplateUtil.hasOwnCollection(templateWrapper.getContainerDefinition(contentQId))) {
 				// content is in its own collection, hence query with parent id
 				data = request.getPageable() == null ? crud.findAllRecordWithParentId(collName, request.getParentRecordIdentity())
 						: crud.findAllRecordWithParentId(collName, request.getParentRecordIdentity(), request.getPageable());

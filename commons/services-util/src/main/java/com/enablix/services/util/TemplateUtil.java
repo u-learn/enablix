@@ -185,13 +185,8 @@ public class TemplateUtil {
 		}
 
 		String holdingContainerQId = holdingContainer.getQualifiedId();
-		if (!contentQId.startsWith(holdingContainerQId)) {
-			LOGGER.error("Incorrect contentQId [{}] for parent QId [{}]", contentQId, holdingContainerQId);
-			throw new IllegalStateException("Incorrect contentQId [" + contentQId 
-					+ "] for parent QId [" + holdingContainerQId + "]");
-		}
 		
-		return holdingContainerQId.equals(contentQId) ? "" :
+		return holdingContainerQId.equals(contentQId) || !contentQId.startsWith(holdingContainerQId) ? "" :
 				// substring - +1 for excluding '.' after holding container QId
 				contentQId.substring(holdingContainerQId.length() + 1, contentQId.length());
 		
