@@ -1,6 +1,6 @@
 enablix.studioApp.directive('ebxGenericTable', [
-        'StateUpdateService',
-function(StateUpdateService) {
+        '$compile',
+function($compile) {
 
 	return {
 		restrict: 'E',
@@ -92,6 +92,13 @@ function(StateUpdateService) {
 		    	}
 		    	
 		    	return "--";
+		    }
+		    
+		    scope.getTableCellClass = function(col, dataRecord) {
+		    	if (isFunction(col.tableCellClass)) {
+		    		return col.tableCellClass(dataRecord)
+		    	}
+		    	return isNullOrUndefined(col.tableCellClass) ? "" : col.tableCellClass; 
 		    }
 		    
 		    scope.selectActionCallback = function(dataRecord, $event) {

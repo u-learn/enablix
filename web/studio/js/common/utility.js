@@ -65,3 +65,21 @@ function chunkArray(arr, size) {
 	
 	return newArr;
 }
+
+function subtractDaysFromDate(_date, _noOfDays) {
+	
+	var noOfDaysInMilliseconds = (24*60*60*1000) * _noOfDays;
+	
+	var newDate = new Date();
+	newDate.setTime(_date.getTime() - noOfDaysInMilliseconds);
+	
+	return newDate;
+}
+
+function isDateObject(_obj) {
+	return typeof _obj.getMonth === 'function';
+}
+
+function isFunction(_obj) {
+	return typeof _obj === 'function';
+}

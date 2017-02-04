@@ -1,7 +1,12 @@
 enablix.studioApp.factory('DataSearchService', 
-	[	        'RESTService', 'Notification', 'StateUpdateService',
-	 	function(RESTService,   Notification,   StateUpdateService) {
-
+	[	        'RESTService', 'Notification', 'StateUpdateService', '$location', '$filter',
+	 	function(RESTService,   Notification,   StateUpdateService,   $location,   $filter) {
+		
+			var URL_SEARCH_FIELD_PREFIX = "sf_";
+			
+			var DATE_FILTER_TYPE_GO_BACK_DAYS = "GO_BACK_DAYS";
+			var FILTER_DATE_FORMAT = "dd-MMM-yy";
+			
 			/**
 			 * Sample inputs:
 			 * 
@@ -63,10 +68,26 @@ enablix.studioApp.factory('DataSearchService',
 					_filterMetadata, _onSuccess, _onError, _projectedFields);
 				
 			};
+			
+			var readUrlSearchFilters = function() {
+				
+				var filters = {};
+				var urlParams = $location.search();
+				
+				angular.forEach(urlParams, function(value, key) {
+					if (key.startsWith("sf_")) {
+						var filterKey = key.substring(3, key.length);
+						filters[filterKey] = value;
+					}
+				});
+				
+				return filters;
+			};
 		
 			return {
 				getSearchResult: getSearchResult,
-				getContainerDataSearchResult: getContainerDataSearchResult 
+				getContainerDataSearchResult: getContainerDataSearchResult,
+				readUrlSearchFilters: readUrlSearchFilters
 			};
 	 	}
 	]);

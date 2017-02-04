@@ -7,4 +7,8 @@ enablix.studioApp.controller('PortalRecentCtrl',
 				$scope.recentList = recentDataList;
 			});
 		
+		$scope.showRecentDataList = function() {
+			StateUpdateService.goToRecentUpdateList({sf_lastXDays : 30});
+		}
+		
 	}]);

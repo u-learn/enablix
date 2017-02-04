@@ -57,7 +57,13 @@
 			</td>
 			<td class="content-spacing2" style="font-size:0pt; line-height:0pt; text-align:left" width="30"></td>
 		</tr>
-	</table>	
+	</table>
+	
+	#@action_button_table()
+		#@action_button_cell('230')
+			#action_button('Recent Updates...' "${obj.url}/app.html#/portal/recentlist?sf_lastXDays=30&atChannel=EMAIL&atContext=WEEKLY_DIGEST&atContextId=$obj.identity")
+		#end
+	#end	
 	
 	#spacer_row('15')
 										

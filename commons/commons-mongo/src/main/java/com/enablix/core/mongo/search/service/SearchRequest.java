@@ -3,6 +3,7 @@ package com.enablix.core.mongo.search.service;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -20,6 +21,7 @@ import com.enablix.core.mongo.search.ConditionOperator;
 import com.enablix.core.mongo.search.DateFilter;
 import com.enablix.core.mongo.search.SearchFilter;
 import com.enablix.core.mongo.search.StringFilter;
+import com.enablix.core.mongo.search.service.SearchRequest.DateFilterConfig.ValueType;
 
 public class SearchRequest {
 	
@@ -71,6 +73,7 @@ public class SearchRequest {
 		private String field;
 		private ConditionOperator operator = ConditionOperator.EQ;
 		private DataType dataType = DataType.STRING;
+		private DateFilterConfig dateFilter;
 		
 		public String getField() {
 			return field;
@@ -96,6 +99,14 @@ public class SearchRequest {
 			this.dataType = dataType;
 		}
 		
+		public DateFilterConfig getDateFilter() {
+			return dateFilter;
+		}
+
+		public void setDateFilter(DateFilterConfig dateFilter) {
+			this.dateFilter = dateFilter;
+		}
+
 		public SearchFilter buildSearchFilter(Object filterValue) {
 			
 			SearchFilter filter = null;
@@ -103,13 +114,8 @@ public class SearchRequest {
 			switch (dataType) {
 				
 				case DATE:
-					DateFormat formatter = new SimpleDateFormat("dd-MMM-yy");
-					try {
-						Date date = formatter.parse(String.valueOf(filterValue));
-						filter = new DateFilter(field, date, operator);
-					} catch (ParseException e) {
-						LOGGER.error("Error parsing date [" + String.valueOf(filterValue) +"]", e);
-					}
+					
+					filter = getDateFilter(filterValue);
 					break;
 					
 				case BOOL:
@@ -125,6 +131,57 @@ public class SearchRequest {
 			}
 			
 			return filter;
+		}
+	
+		private DateFilter getDateFilter(Object filterValue) {
+			
+			DateFilter filter = null;
+			
+			try {
+
+				Date filterDate = null;
+				
+				if (dateFilter != null && dateFilter.valueType == ValueType.LAST_X_DAYS) {
+
+					int noOfDays = Integer.parseInt(String.valueOf(filterValue));
+					Calendar date = Calendar.getInstance();
+					date.add(Calendar.DAY_OF_MONTH, -noOfDays);
+					filterDate = date.getTime();
+					
+				} else {
+					
+					DateFormat formatter = new SimpleDateFormat("dd-MMM-yy");
+					filterDate = formatter.parse(String.valueOf(filterValue));
+				}
+				
+				
+				filter = new DateFilter(field, filterDate, operator);
+				
+			} catch (ParseException e) {
+				LOGGER.error("Error parsing date [" + String.valueOf(filterValue) +"]", e);
+			}
+			
+			return filter;
+		}
+		
+	}
+	
+	
+	
+	public static class DateFilterConfig {
+		
+		public enum ValueType {
+			LAST_X_DAYS
+		}
+		
+		private ValueType valueType;
+
+		public ValueType getValueType() {
+			return valueType;
+		}
+
+		public void setValueType(ValueType valueType) {
+			this.valueType = valueType;
 		}
 		
 	}

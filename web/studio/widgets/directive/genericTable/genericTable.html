@@ -29,8 +29,10 @@
 				<a ng-class="tableRecord._selected ? 'fa fa-check-square-o' : 'fa fa-square-o'"
 					ng-click="selectActionCallback(tableRecord, $event)" tooltip="Select"></a>
 			</td>
-			<td ng-repeat="col in tableHeaders">
-				<span ng-class="{'text-right': col.dataType == 'NUMERIC'}">{{getColumnValue(col, tableRecord)}}</span>
+			<td ng-repeat="col in tableHeaders" ng-switch on="col.dataType" ng-class="getTableCellClass(col, tableRecord)">
+				<span ng-switch-when="html" ng-bind-html="getColumnValue(col, tableRecord)"></span>
+				<span ng-switch-when="angular-html" bind-html-compile="getColumnValue(col, tableRecord)"></span>
+				<span ng-switch-default ng-class="{'text-right': col.dataType == 'NUMERIC'}">{{getColumnValue(col, tableRecord)}}</span>
 			</td>
 		</tr>
 	</tbody>

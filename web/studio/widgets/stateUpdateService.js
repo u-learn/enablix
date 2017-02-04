@@ -285,6 +285,10 @@ enablix.studioApp.factory('StateUpdateService',
 	 			});
 	 		};
 	 		
+	 		var goToRecentUpdateList = function(_params) {
+	 			$state.go("portal.recentdatalist", _params);
+	 		};
+	 		
 	 		return {
 	 			goToApp: goToApp,
 	 			goToAppSetPassword: goToAppSetPassword,
@@ -332,7 +336,8 @@ enablix.studioApp.factory('StateUpdateService',
 	 			goToPlayXList : goToPlayXList,
 	 			goToPlayRList : goToPlayRList,
 	 			goToAddXPlay : goToAddXPlay,
-	 			goToEditXPlay : goToEditXPlay
+	 			goToEditXPlay : goToEditXPlay,
+	 			goToRecentUpdateList : goToRecentUpdateList
 	 		};
 	 	}
 	 ]);

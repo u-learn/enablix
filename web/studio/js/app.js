@@ -169,12 +169,22 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvi
 				setupData: appSetup 
 			}
 		})
+		.state('portal.recentdatalist', {
+			url: '/recentlist?sf_lastXDays',
+			templateUrl: 'views/portal/recent-list.html',
+			controller: 'RecentListCtrl',
+			resolve: {
+				setupData: appSetup 
+			},
+			noBreadcrumbs: true
+		})
 		.state('portal.home', {
 			url: '/home',
 			templateUrl: 'views/portal/portal-home.html',
 			resolve: {
 				setupData: appSetup 
-			}
+			},
+			noBreadcrumbs: true
 		})
 		.state('portal.search', {
 			url: '/search/t/{searchText}/?page',
@@ -188,7 +198,8 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvi
 			controller: 'PortalSearchCtrl',
 			resolve: {
 				setupData: appSetup 
-			}
+			},
+			noBreadcrumbs: true
 		})
 		.state('portal.containerlist', {
 			url: '/containerlist/{containerQId}?page',

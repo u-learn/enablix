@@ -9,6 +9,7 @@ import com.enablix.app.content.label.ContentLabelResolver;
 import com.enablix.app.template.service.TemplateManager;
 import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.commons.util.QIdUtil;
+import com.enablix.commons.util.StringUtil;
 import com.enablix.core.api.ContentDataRef;
 import com.enablix.core.commons.xsdtopojo.ContainerType;
 import com.enablix.core.mongo.content.ContentCrudService;
@@ -41,16 +42,18 @@ public class NavigableContentBuilderImpl implements NavigableContentBuilder {
 		// check if data is self contained or in parent container
 		String collName = template.getCollectionName(qId);
 		
-		Map<String, Object> record = null;
-		
-		if (TemplateUtil.hasOwnCollection(container)) {
-			record = crudService.findRecord(collName, identity);
+		if (StringUtil.hasText(collName)) {
+			Map<String, Object> record = null;
 			
-		} else {
-			record = crudService.findRecord(collName, QIdUtil.getElementId(qId), identity);
+			if (TemplateUtil.hasOwnCollection(container)) {
+				record = crudService.findRecord(collName, identity);
+				
+			} else {
+				record = crudService.findRecord(collName, QIdUtil.getElementId(qId), identity);
+			}
+			
+			navigableContent = buildNavigableContent(template, container, child, record);
 		}
-		
-		navigableContent = buildNavigableContent(template, container, child, record);
 		
 		return navigableContent;
 	}

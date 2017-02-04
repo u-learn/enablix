@@ -12,7 +12,6 @@ enablix.studioApp.controller('PortalSearchCtrl',
 		fetchSearchResult = function() {
 			SearchService.getSearchResult(searchText, pagination,
 				function(data) {
-					console.log(data);
 					$scope.searchResult = data.content;
 					$scope.totalPages = data.totalPages;
 					$scope.pageNum = pagination.pageNum;

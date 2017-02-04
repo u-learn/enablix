@@ -1,6 +1,6 @@
 enablix.studioApp.factory('RecentDataService', 
-	[	'RESTService', 'Notification',
-	 	function(RESTService, Notification) {
+	[	'RESTService', 'Notification', 'DataSearchService',
+	 	function(RESTService, Notification, DataSearchService) {
 		
 			var getRecentData = function(_containerQId, _contentIdentity, _onSuccess) {
 				
@@ -23,8 +23,20 @@ enablix.studioApp.factory('RecentDataService',
 				
 			};
 	
+			var getRecentDataList = function(_searchFilters, _pagination, _filterMetadata, _onSuccess, _onError) {
+				
+				var data = {
+						filters : _searchFilters,
+						filterMetadata : _filterMetadata,
+						pagination : _pagination
+					};
+					
+				return RESTService.postForData("getRecentDataList", null, data, null, _onSuccess, _onError);
+			};
+			
 			return {
-				getRecentData : getRecentData
+				getRecentData : getRecentData,
+				getRecentDataList : getRecentDataList
 			};
 		
 		}

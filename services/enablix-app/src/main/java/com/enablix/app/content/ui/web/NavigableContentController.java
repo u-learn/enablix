@@ -3,7 +3,9 @@ package com.enablix.app.content.ui.web;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,10 +13,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.enablix.analytics.recommendation.builder.web.WebRecommendationRequest;
 import com.enablix.analytics.web.request.WebContentRequest;
 import com.enablix.app.content.recent.RecentContentService;
+import com.enablix.app.content.recent.RecentUpdateVO;
 import com.enablix.app.content.ui.NavigableContent;
 import com.enablix.app.content.ui.nav.NavigationPathService;
 import com.enablix.app.content.ui.peers.PeerContentService;
 import com.enablix.app.content.ui.reco.RecommendedContentService;
+import com.enablix.core.mongo.search.service.SearchRequest;
 
 @RestController
 @RequestMapping("navcontent")
@@ -70,6 +74,11 @@ public class NavigableContentController {
 		
 		WebContentRequest request = new WebContentRequest(containerQId, contentIdentity);
 		return recentService.getRecentContent(request);
+	}
+	
+	@RequestMapping(method = RequestMethod.POST, value="/recentlist")
+	public Page<RecentUpdateVO> fetchRecentUpdateList(@RequestBody SearchRequest searchRequest) {
+		return recentService.getRecentContentByRequest(searchRequest);
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value="/peers/{containerQId}/{contentIdentity}/")

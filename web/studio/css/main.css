@@ -1223,6 +1223,19 @@ eb-nav-link:first-child li {
 .recomended-content a:hover::after, .search-result a:hover::after {
 	display: none;
 }
+
+.recent-update-type span {
+	display: block;
+	float: left;
+	width: 50px;
+	margin: 0 1.5em 1px 0;
+	padding: 2px 0;
+	font-size: 0.75em;
+	text-align: center;
+	color: #fff;
+	height: 16px;
+}
+
 .recomended-content em {
 	display: block;
 	float: left;
@@ -1233,9 +1246,13 @@ eb-nav-link:first-child li {
 	text-align: center;
 	color: #fff;
 }
+
+.rct-new span,
 .recomended-content .new {
 	background: #2ecc71;
 }
+
+.rct-updated span,
 .recomended-content .updated {
 	background: #e67e22;
 }
@@ -1477,8 +1494,8 @@ input[type=checkbox] {
 
 
 
-.doc-preview {
-	color: #2ecc71 !important;
+eb-doc-preview-action .doc-preview {
+	color: #2ecc71;
 }
 
 .action-icons {

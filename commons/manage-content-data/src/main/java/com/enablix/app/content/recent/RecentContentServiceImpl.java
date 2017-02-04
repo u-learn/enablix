@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -26,6 +27,7 @@ import com.enablix.commons.util.collection.CollectionUtil;
 import com.enablix.core.domain.recent.RecentData;
 import com.enablix.core.mongo.dao.GenericDao;
 import com.enablix.core.mongo.search.SearchCriteria;
+import com.enablix.core.mongo.search.service.SearchRequest;
 
 @Component
 public class RecentContentServiceImpl implements RecentContentService {
@@ -88,18 +90,30 @@ public class RecentContentServiceImpl implements RecentContentService {
 		List<NavigableContent> navRecentData = new ArrayList<>();
 
 		if (recentDataList != null) {
+			
 			for (RecentData recentData : recentDataList) {
-				NavigableContent navContent = navContentBuilder.build(recentData.getData(), labelResolver);
+			
+				NavigableContent navContent = createNavigableContent(recentData);
 				if (navContent != null) {
-					navContent.getAdditionalInfo().put("updateType", recentData.getUpdateType().toString());
 					navRecentData.add(navContent);
-				} else {
-					LOGGER.error("Unable to build nav content for recent data [{}]", recentData.getIdentity());
 				}
 			}
 		}
 		
 		return navRecentData;
+	}
+
+	private NavigableContent createNavigableContent(RecentData recentData) {
+		
+		NavigableContent navContent = navContentBuilder.build(recentData.getData(), labelResolver);
+		
+		if (navContent != null) {
+			navContent.getAdditionalInfo().put("updateType", recentData.getUpdateType().toString());
+		} else {
+			LOGGER.error("Unable to build nav content for recent data [{}]", recentData.getIdentity());
+		}
+		
+		return navContent;
 	}
 
 	private Pageable createDefaultPageable() {
@@ -110,10 +124,27 @@ public class RecentContentServiceImpl implements RecentContentService {
 	
 	@Override
 	public List<NavigableContent> getRecentContentByCriteria(SearchCriteria criteria) {
-		Pageable pageable = createDefaultPageable();
+		return getRecentContentByCriteriaAndPageable(criteria, createDefaultPageable());
+	}
+	
+	private List<NavigableContent> getRecentContentByCriteriaAndPageable(SearchCriteria criteria, Pageable pageable) {
 		Page<RecentData> contentPage = dao.findByCriteria(
 				criteria.toPredicate(new Criteria()), RecentData.class, pageable);
 		return buildNavagableContent(contentPage);
+	}
+
+	@Override
+	public Page<RecentUpdateVO> getRecentContentByRequest(SearchRequest request) {
+	
+		List<RecentUpdateVO> recentList = new ArrayList<>();
+		Page<RecentData> contentPage = dao.findByQuery(request, RecentData.class);
+		
+		for (RecentData recentData : contentPage) {
+			recentList.add(new RecentUpdateVO(recentData, createNavigableContent(recentData)));
+		}
+		
+		Pageable pageable = request.getPagination().toPageableObject();
+		return new PageImpl<>(recentList, pageable, contentPage.getTotalElements());
 	}
 	
 

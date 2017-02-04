@@ -21,6 +21,7 @@ enablix.serviceURL = {
 	"saveRecommendation": enablix.domainName + "/reco/save",
 	"deleteRecommendation": enablix.domainName + "/reco/delete",
 	"fetchRecommendationList": enablix.domainName + "/reco/list",
+	"getRecentDataList": enablix.domainName + "/navcontent/recentlist",
 	"generalRecentData": enablix.domainName + "/navcontent/recent/",
 	"containerSpecificRecentData": enablix.domainName + "/navcontent/recent/:containerQId/",
 	"contentSpecificRecentData": enablix.domainName + "/navcontent/recent/:containerQId/:contentIdentity/",

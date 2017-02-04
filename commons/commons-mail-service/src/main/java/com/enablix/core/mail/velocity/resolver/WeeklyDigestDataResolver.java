@@ -85,7 +85,7 @@ public class WeeklyDigestDataResolver implements VelocityTemplateInputResolver<W
 				ContentDataConstants.RECENT_DATA_OBSOLETE_ATTR, 
 				Boolean.FALSE, ConditionOperator.EQ);
 		
-		DateFilter dateFilter = new DateFilter(ContentDataConstants.MODIFIED_AT_KEY, 
+		DateFilter dateFilter = new DateFilter(ContentDataConstants.CREATED_AT_KEY, 
 				lookbackLimitDate.getTime(), ConditionOperator.GTE);
 		
 		return new SearchCriteria(obsoleteFilter.and(dateFilter));
