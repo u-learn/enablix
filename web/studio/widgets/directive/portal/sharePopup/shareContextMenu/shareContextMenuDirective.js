@@ -64,7 +64,10 @@ enablix.studioApp.directive('ebxContextMenu',['RESTService','Notification',
 				+ ":" + $location.port() + "/app.html#/portal/container/"+scope.contentQId+"/"+contentIdentity;
 			
 			}
-			scope.shareToSlack = function(contentIdentity,contentName,$event){
+			scope.shareToSlack = function(contentIdentity,contentName,contentTitle,$event){
+				if( contentName==null || contentName == undefined){
+					contentName=contentTitle;
+				}
 				var portalURL = getPortalURL(contentIdentity);
 				checkAuthAndShare(contentIdentity,contentName,portalURL,$event);
 			}
@@ -84,7 +87,10 @@ enablix.studioApp.directive('ebxContextMenu',['RESTService','Notification',
 					Notification.error({message: "Error Sharing to Slack", delay: enablix.errorMsgShowTime});
 				},null);
 			}
-			scope.copyPortalURL =function(contentIdentity,contentName){
+			scope.copyPortalURL =function(contentIdentity,contentName,contentTitle){
+				if( contentName==null || contentName == undefined){
+					contentName=contentTitle;
+				}
 				var portalURL = getPortalURL(contentIdentity);
 				copyToClipboard(portalURL);
 				var _data = {
