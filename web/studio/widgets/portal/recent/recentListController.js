@@ -30,11 +30,6 @@ enablix.studioApp.controller('RecentListCtrl',
 		    	 desc: "Updated On",
 		    	 valueFn: function(record) { return $filter('ebDate')(record.recentData.createdAt); },
 		    	 sortProperty: "createdAt"
-		     },
-		     {
-		    	 desc: "Updated By",
-		    	 valueFn: function(record) { return record.recentData.createdByName; },
-		    	 sortProperty: "createdByName"
 		     }];
 		
 		$scope.dataFilters = DataSearchService.readUrlSearchFilters();

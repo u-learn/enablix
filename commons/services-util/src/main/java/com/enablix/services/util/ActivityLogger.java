@@ -164,7 +164,7 @@ public class ActivityLogger {
 		
 		for (ContentDataRef content : contentList) {
 			auditContentShareInternal(templateId, content.getInstanceIdentity(), 
-					content.getContainerQId(), sharedWith, sharedFrom, channel, sharingId, contentTitle);
+					content.getContainerQId(), sharedWith, sharedFrom, channel, sharingId, content.getTitle());
 		}
 	}
 
