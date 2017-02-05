@@ -15,7 +15,7 @@
 	<li role="presentation" class="divider"></li>
 	<li role="presentation"><a class="contextAnchor" role="menuitem"
 		tabindex="-1" href="#"
-		ng-click="copyPortalURL(contextData.identity,contextData.title)">Copy
+		ng-click="copyPortalURL(contextData.identity,contextData.title,contextData.name)">Copy
 			Portal URL</a></li>
 	<!--  <li ng-if="contextData.downloadDocIdentity" role="presentation"
 		class="divider"></li>
@@ -27,6 +27,6 @@
 		class="divider"></li>
 	<li role="presentation">
 	<a class="contextAnchor" role="menuitem"
-		tabindex="-1" ng-click="shareToSlack(contextData.identity,contextData.title,$event)">Share To Slack</a>
+		tabindex="-1" ng-click="shareToSlack(contextData.identity,contextData.title,contextData.name,$event)">Share To Slack</a>
 	</li> 
 </ul>
