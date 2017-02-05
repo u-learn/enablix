@@ -22,6 +22,14 @@ enablix.studioApp.controller('MyAccountController',
 				         { label: "My Account" },
 				         { label: "Content Requests" }
 					];
+			} else if ($state.includes('myaccount.slackdtls') 
+					|| $state.includes('myaccount.slackauthorization')) {
+				
+				$scope.breadcrumbList = 
+					[
+				         { label: "My Account" },
+				         { label: "Slack Integration" }
+					];
 			}
 
 		};
