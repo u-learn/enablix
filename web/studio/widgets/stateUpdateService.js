@@ -288,7 +288,16 @@ enablix.studioApp.factory('StateUpdateService',
 	 		var goToRecentUpdateList = function(_params) {
 	 			$state.go("portal.recentdatalist", _params);
 	 		};
-	 		
+	 		var goToSlackDtls = function(teamName) {
+	 			$state.go("myaccount.slackdtls", {
+	 				teamName: teamName
+	 			});
+	 		};
+	 		var goToSlackAuth = function(source) {
+	 			$state.go("myaccount.slackauthorization",{
+	 				source :source
+	 			});
+	 		};
 	 		return {
 	 			goToApp: goToApp,
 	 			goToAppSetPassword: goToAppSetPassword,
@@ -337,7 +346,9 @@ enablix.studioApp.factory('StateUpdateService',
 	 			goToPlayRList : goToPlayRList,
 	 			goToAddXPlay : goToAddXPlay,
 	 			goToEditXPlay : goToEditXPlay,
-	 			goToRecentUpdateList : goToRecentUpdateList
+	 			goToRecentUpdateList : goToRecentUpdateList,
+				goToSlackDtls:goToSlackDtls,
+	 			goToSlackAuth:goToSlackAuth
 	 		};
 	 	}
 	 ]);
