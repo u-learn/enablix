@@ -18,6 +18,10 @@
 						<i class="fa fa-angle-right"></i>
 						<a href="#" ui-sref-active="active" ui-sref="myaccount.contentrequestlist">My Content Requests</a>
 					</li>
+					<li ng-class="{active: $state.includes('myaccount.slackauthorization') || $state.includes('myaccount.slackdtls') }">
+						<i class="fa fa-angle-right"></i>
+						<a href="#" ui-sref-active="active" ui-sref="myaccount.slackauthorization">Slack Integration</a>
+					</li>
 				</ul>
 		    </nav>
 		</aside>
