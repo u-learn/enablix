@@ -99,7 +99,7 @@ public class SlackServiceImpl implements SlackService{
 				ObjectNode.class);
 		boolean resp = objNode.get("ok").asBoolean();
 		if( resp ){
-			slackTokenRepo.delete(slackAccessToken);
+			//slackTokenRepo.delete(slackAccessToken);
 			return true;
 		}
 		return false;
