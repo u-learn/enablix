@@ -17,4 +17,8 @@ public class AppConstants {
 	
 	public static final String TENANT_ID_REQ_PARAM = "tenantId";
 	
+	public static final String SYSTEM_SLACK_DTLS = "ebxSlackAppDtls";
+	public static final String SYSTEM_SLACK_TOKEN = "ebxSlackTokenDtls";
+
+	public static final String SLACK_ENABLIX_FOOTER="Shared via Enablix";
 }
