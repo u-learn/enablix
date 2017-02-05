@@ -11,30 +11,22 @@
 	<li role="presentation"><a class="contextAnchor" role="menuitem"
 		tabindex="-1" href="#"
 		ng-click="openMailClient(contextData.downloadDocIdentity,contextData.identity,contextData.title)">Share
-			By Email Client</a></li> -->
+			By Email Client</a></li>  -->
 	<li role="presentation" class="divider"></li>
 	<li role="presentation"><a class="contextAnchor" role="menuitem"
 		tabindex="-1" href="#"
 		ng-click="copyPortalURL(contextData.identity,contextData.title)">Copy
 			Portal URL</a></li>
-	<!-- <li ng-if="contextData.downloadDocIdentity" role="presentation"
+	<!--  <li ng-if="contextData.downloadDocIdentity" role="presentation"
 		class="divider"></li>
 	<li ng-if="contextData.downloadDocIdentity" role="presentation"><a
 		class="contextAnchor" role="menuitem" tabindex="-1" href="#"
 		ng-click="copyDownloadURL(contextData.downloadDocIdentity,contextData.identity,contextData.title)">Copy
-			Download URL</a></li>
-
+			Download URL</a></li> -->
 	<li role="presentation"
 		class="divider"></li>
 	<li role="presentation">
-	
 	<a class="contextAnchor" role="menuitem"
-		tabindex="-1" ng-click="shareToSlack(contextData.identity,contextData.title)">Share To Slack</a>
-	
-	
-	</li> -->
-
-
-
-	
+		tabindex="-1" ng-click="shareToSlack(contextData.identity,contextData.title,$event)">Share To Slack</a>
+	</li> 
 </ul>

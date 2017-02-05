@@ -20,8 +20,35 @@ enablix.studioApp.factory('shareContentModalWindow',
 					}
 				});
 			};
+		
+			var showShareToSlackModal = function(containerQId, contentIdentity,contentName,
+					portalURL,$event) {
+				var modalInstance = $modal.open({
+					templateUrl: 'widgets/directive/portal/sharePopup/shareSlack/shareToSlack.html',
+					size: 'sm', // 'sm', 'lg'
+					controller: 'ShareToSlackController',
+					parent: angular.element(document.body),
+					targetEvent: $event,
+					clickOutsideToClose:true,
+					resolve: {				    	  
+						containerQId: function() {
+							return containerQId;
+						},
+						contentIdentity : function() {
+							return contentIdentity;
+						},
+						contentName : function() {
+							return contentName;
+						},
+						portalURL : function() {
+							return portalURL;
+						}
+					}
+				});
+			};
 			return {
-				showShareContentModal : showShareContentModal
+				showShareContentModal : showShareContentModal,
+				showShareToSlackModal: showShareToSlackModal
 			};	
 
 		}]);

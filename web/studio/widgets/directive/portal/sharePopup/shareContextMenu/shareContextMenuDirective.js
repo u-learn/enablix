@@ -1,6 +1,6 @@
 enablix.studioApp.directive('ebxContextMenu',['RESTService','Notification',
-	'shareContentModalWindow','$window','$location','$state',
-	function(RESTService,Notification,shareContentModalWindow,$window,$location,$state) {
+	'shareContentModalWindow','$window','$location','$state','StateUpdateService',
+	function(RESTService,Notification,shareContentModalWindow,$window,$location,$state,StateUpdateService) {
 	return {
 		restrict: 'E',
 		scope : {
@@ -8,7 +8,7 @@ enablix.studioApp.directive('ebxContextMenu',['RESTService','Notification',
 			contentQId: "="
 		},
 		link: function(scope, element, attrs) {
-
+			var userData=JSON.parse(window.localStorage.getItem("userData"));
 			scope.openMailClient =function(downloadDocId,contentIdentity,contentName){
 				var _data = {
 						"containerQId" : scope.contentQId,
@@ -64,9 +64,27 @@ enablix.studioApp.directive('ebxContextMenu',['RESTService','Notification',
 				+ ":" + $location.port() + "/app.html#/portal/container/"+scope.contentQId+"/"+contentIdentity;
 			
 			}
-			
+			scope.shareToSlack = function(contentIdentity,contentName,$event){
+				var portalURL = getPortalURL(contentIdentity);
+				checkAuthAndShare(contentIdentity,contentName,portalURL,$event);
+			}
+			var checkAuthAndShare= function(contentIdentity,contentName,portalURL,$event){
+				var _data = {
+						"userID" : userData.userId
+				};
+				RESTService.getForData('getSlackStoredAuthAccessToken', _data, null, function(data) {
+					if( data != null && data.accessToken!=null && data.teamName!=null ){
+						shareContentModalWindow.showShareToSlackModal(
+								scope.contentQId,contentIdentity,contentName, portalURL,$event);
+					}
+					else{
+						StateUpdateService.goToSlackAuth("shareContextMenu");
+					}
+				}, function() {    		
+					Notification.error({message: "Error Sharing to Slack", delay: enablix.errorMsgShowTime});
+				},null);
+			}
 			scope.copyPortalURL =function(contentIdentity,contentName){
-
 				var portalURL = getPortalURL(contentIdentity);
 				copyToClipboard(portalURL);
 				var _data = {
