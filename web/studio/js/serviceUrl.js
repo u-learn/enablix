@@ -79,4 +79,10 @@ enablix.serviceURL = {
 	"shareOptsPortalAudit" : enablix.domainName + "/shareOptions/portalURLAudit/",
 	"shareOptsDocDownloadAudit" : enablix.domainName + "/shareOptions/downldDocURLAudit/",
 	"loadResourceVersions" : enablix.domainName + "/version/all/",
+		"getSlackCode" : "https://slack.com/oauth/authorize?scope=chat:write:user,files:write:user,channels:read&client_id=4660743314.130107027025",
+	"getSlackAccessToken" : enablix.domainName + "/slack/authorizeSlack/",
+	"getSlackStoredAuthAccessToken" : enablix.domainName +"/slack/getStoredSlackToken",
+	"unauthSlackAcc" : enablix.domainName +"/slack/unauthSlack",
+	"getSlackChannels": enablix.domainName +"/slack/getChannelsLst",
+	"sendMessageToSlack": enablix.domainName +"/slack/sendMessage"
 };
