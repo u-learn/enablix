@@ -552,6 +552,22 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvi
 				contentWFInit: contentWFInit
 			}
 		})
+		.state('myaccount.slackauthorization', {
+			url: '/slackauthorization?source',
+			templateUrl: 'views/account/slack/slackauthorization.html',
+			controller: 'slackAuthController',
+			resolve: {
+				setupData: appSetup 
+			}
+		})
+		.state('myaccount.slackdtls', {
+			url: '/slackdtls?code&state&teamName',
+			templateUrl: 'views/account/slack/slackdtls.html',
+			controller: 'slackDtlsController',
+			resolve: {
+				setupData: appSetup 
+			}
+		})
 		.state('play', {
 			url: '/play',
 			templateUrl: 'views/play/play.html',
