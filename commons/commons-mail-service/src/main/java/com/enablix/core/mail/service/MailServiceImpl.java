@@ -48,6 +48,9 @@ public class MailServiceImpl implements MailService {
 	@Value("${smtp.default.server}")
 	private String server;
 	
+	@Value("${mail.use.tenant.server:false}")
+	private boolean useTenantServer;
+	
 	@Autowired
 	private VelocityEngine velocityEngine;
 	
@@ -113,7 +116,7 @@ public class MailServiceImpl implements MailService {
 			String subject = generateTemplateMessage(objectTobeMerged, subjectTemplateName, elementName,
 					MailConstants.SUBJECT_TEMPLATE_PATH);
 			preprocessMailContent(objectTobeMerged, scenario);
-			mailSent = MailUtility.sendEmail(emailid, subject, htmlBody, this.getEmailConfiguration());
+			mailSent = MailUtility.sendEmail(emailid, subject, htmlBody, this.resolveEmailConfiguration());
 			postprocessMailContent(objectTobeMerged, scenario);
 			
 		} catch (Exception e) {
@@ -174,7 +177,8 @@ public class MailServiceImpl implements MailService {
 			logger.error(e.getMessage(), e);
 		}
 		return emailClientDtls;
-	};
+	}
+	
 	private String generateTemplateMessage(Object objectTobeMerged, String templateName, String elementName, String path) {
 		Template emailTemplate = velocityEngine.getTemplate(path + templateName);
 		VelocityContext velocityContext = new VelocityContext();
@@ -189,40 +193,41 @@ public class MailServiceImpl implements MailService {
 
 	@Override
 	public EmailConfiguration getEmailConfiguration() {
+
+		EmailConfiguration emailConfig = null;
+		
+		List<EmailConfiguration> emailConfigs = emailConfigRepo.findAll();
+		if (emailConfigs != null && !emailConfigs.isEmpty()) {
+			emailConfig = emailConfigs.get(0);
+		}			
+		
+		return emailConfig;
+	}
+	
+	private EmailConfiguration resolveEmailConfiguration() {
 		
 		EmailConfiguration emailConfig = null;
 		
-		String tenantId = ProcessContext.get().getTenantId();
-		String tenantName = null;
-		
-		if (!StringUtil.isEmpty(tenantId)) {
-			
-			Tenant tenant = tenantRepo.findByTenantId(tenantId);
-			tenantName = tenant.getName();
-			
-			List<EmailConfiguration> emailConfigs = emailConfigRepo.findAll();
-			if (emailConfigs != null && !emailConfigs.isEmpty()) {
-				emailConfig = emailConfigs.get(0);
-				if (StringUtil.isEmpty(emailConfig.getPersonalName())) {
-					// for email configs already in the system
-					emailConfig.setPersonalName(tenantName);
-				}
-			}
-			
+		if (useTenantServer) {
+			emailConfig = getEmailConfiguration();
 		}
 		
-		
 		if (emailConfig == null) {
-			// for default settings
 			emailConfig = EmailConfiguration.createCopy(defaultEmailConfig);
-			if (!StringUtil.isEmpty(tenantName)) {
-				emailConfig.setPersonalName(tenantName);
-			}
+		}
+		
+		if (StringUtil.isEmpty(emailConfig.getPersonalName())) {
+			emailConfig.setPersonalName(getTenantName());
 		}
 		
 		return emailConfig;
-	};
-
+	}
+	
+	private String getTenantName() {
+		Tenant tenant = tenantRepo.findByTenantId(ProcessContext.get().getTenantId());
+		return tenant.getName();
+	}
+	
 	@Override
 	public EmailConfiguration addEmailConfiguration(EmailConfiguration emailConfiguration) {
 		Tenant tenant = tenantRepo.findByTenantId(ProcessContext.get().getTenantId());

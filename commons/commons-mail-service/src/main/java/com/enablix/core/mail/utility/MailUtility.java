@@ -62,7 +62,7 @@ public class MailUtility {
             MimeBodyPart htmlPart = new MimeBodyPart();
             htmlPart.setContent(htmlBody, "text/html");
             multipart.addBodyPart(htmlPart);
-            logger.debug("To: " + msg.getAllRecipients()[0] + "From: " +  msg.getFrom()[0]);
+            logger.debug("To: " + msg.getAllRecipients()[0] + ", From: " +  msg.getFrom()[0]);
             msg.setContent(multipart);
             Transport.send(msg);  
             return true;
