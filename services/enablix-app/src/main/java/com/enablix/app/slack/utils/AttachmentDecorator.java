@@ -9,7 +9,7 @@ public class AttachmentDecorator {
 	public static SlackAttachments getDecoratedAttachment(String portalURL,String contentName,String fallbackText){
 		SlackAttachments slackAttachments = new SlackAttachments();
 		SlackAttachment slackAttachment = new SlackAttachment.SlackAttachmentBuidler()
-				.fallback(String.join(" : ",fallbackText, portalURL)).title(contentName).text(portalURL).title_link(portalURL).build();
+				.fallback(" : " + fallbackText + portalURL).title(contentName).text(portalURL).title_link(portalURL).build();
 		slackAttachments.getAttachments().add(slackAttachment);
 		return slackAttachments;
 	}

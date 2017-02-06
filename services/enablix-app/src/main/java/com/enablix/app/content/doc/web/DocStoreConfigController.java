@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.enablix.app.config.ConfigurationCrudService;
-import com.enablix.commons.config.ConfigurationProvider;
+import com.enablix.commons.config.TenantDBConfigurationProvider;
 import com.enablix.commons.dms.DMSUtil;
 import com.enablix.commons.dms.DocumentStoreConstants;
 import com.enablix.core.domain.config.Configuration;
@@ -21,7 +21,7 @@ public class DocStoreConfigController {
 	private static final Logger LOGGER = LoggerFactory.getLogger(DocStoreConfigController.class);
 	
 	@Autowired
-	private ConfigurationProvider configProvider;
+	private TenantDBConfigurationProvider configProvider;
 	
 	@Autowired
 	private ConfigurationCrudService configManager;
