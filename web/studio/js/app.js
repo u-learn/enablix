@@ -1,7 +1,8 @@
 var enablix = enablix || {};
 enablix.studioApp = angular.module("studio", ['ui.router', 'angularTreeview', 'listGroupTreeview', 
            'angularFileUpload', 'ui.bootstrap', 'isteven-multi-select', 'ui-notification', 'enablixFilters',
-           'ngSanitize', 'ui.select', 'ngMessages', 'pascalprecht.translate', 'noCAPTCHA', 'PubSub', 'ngMaterial']);
+           'ngSanitize', 'ui.select', 'ngMessages', 'pascalprecht.translate', 'noCAPTCHA', 'PubSub', 
+           'ngMaterial', 'ngLoadingSpinner']);
 
 //md default theme
 enablix.studioApp.config(function($mdThemingProvider) {
