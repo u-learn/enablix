@@ -1674,3 +1674,14 @@ input[type=radio] {
 .panel-body .foot {
 	border: 0px; 
 }
+
+.spinner:before {
+	background-color: rgba(49, 37, 37, 0.1);
+	border-radius: 6px;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	position: fixed;
+	content: " ";
+}
