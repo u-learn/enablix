@@ -136,7 +136,7 @@ ul.dropdown-menu {
 }
 
 .dropdown-menu>li>a:focus, .dropdown-menu>li>a:hover {
-	color: #262626;
+	color: rgb(250,250,250);
 	text-decoration: none;
 	background-color: #2680BE;
 }
