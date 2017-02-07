@@ -169,6 +169,11 @@ enablix.studioApp.factory('RESTService', [
 					}
 					
 				}).error(function(data, status) {
+					
+					if (isVersionMismatchError(data, status)) {
+						return;
+					}
+					
 					checkAuthenticationErrorAndExecute(data, status, _error);	
 				});
 
