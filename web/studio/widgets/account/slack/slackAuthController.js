@@ -2,13 +2,10 @@ enablix.studioApp.controller('slackAuthController',
 		['$scope', '$state', '$rootScope', 'RESTService', 'StateUpdateService','$stateParams',
 			function( $scope,   $state,   $rootScope,   RESTService,   StateUpdateService,$stateParams) {
 
-			var userData=JSON.parse(window.localStorage.getItem("userData"));
 			var source = $stateParams.source;
 			var checkIfAlreadyAuth= function(){
-				var _data = {
-						"userID" : userData.userId
-				};
-				RESTService.getForData('getSlackStoredAuthAccessToken', _data, null, function(data) {
+				
+				RESTService.getForData('getSlackStoredAuthAccessToken', null, null, function(data) {
 					if( data != null && data.accessToken!=null && data.teamName!=null ){
 						StateUpdateService.goToSlackDtls(data.teamName);
 					}
