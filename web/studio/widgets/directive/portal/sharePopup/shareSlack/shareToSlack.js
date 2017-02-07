@@ -2,14 +2,10 @@ enablix.studioApp.controller('ShareToSlackController', [
 	'$scope', '$stateParams', '$modalInstance', '$timeout', 'containerQId', 'contentIdentity', 'ContentShareService', 'Notification','RESTService','contentName','portalURL',
 	function( $scope,   $stateParams,   $modalInstance,   $timeout,   containerQId,   contentIdentity,   ContentShareService,   Notification,RESTService,contentName,portalURL) {
 		
-		var userData=JSON.parse(window.localStorage.getItem("userData"));
 		$scope.channelLst=[];
 
 		function getChannels(_success){
-			var params = {
-					userID : userData.userId
-			}
-			RESTService.getForData('getSlackChannels', params, null, function(data) {
+			RESTService.getForData('getSlackChannels', null, null, function(data) {
 				_success(data);	    	
 			}, function() {    		
 				Notification.error({message: "Error loading channels ", delay: enablix.errorMsgShowTime});
@@ -30,7 +26,7 @@ enablix.studioApp.controller('ShareToSlackController', [
 		}
 
 		$scope.shareContent = function() {
-			ContentShareService.shareContentToSlack(userData.userId,containerQId, contentName,contentIdentity, portalURL ,$scope.channelID,function(sent) {
+			ContentShareService.shareContentToSlack(containerQId, contentName,contentIdentity, portalURL ,$scope.channelID,function(sent) {
 				if(sent) {
 					Notification.primary({message: "Content Shared successfully", delay: enablix.errorMsgShowTime});
 				} else {
