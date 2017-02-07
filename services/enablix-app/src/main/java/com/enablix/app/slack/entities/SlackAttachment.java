@@ -3,90 +3,105 @@ package com.enablix.app.slack.entities;
 import org.springframework.beans.factory.annotation.Value;
 
 import com.enablix.commons.constants.AppConstants;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class SlackAttachment {
+
+	private final static String FOOTER=AppConstants.SLACK_ENABLIX_FOOTER;
+
 	String text;
+
+	@JsonProperty("fallback")
+	String fallBack;
+
+	String color;
+
+	String title;
+
+	@JsonProperty("title_link")
+	String titleLink;
+
+	@Value("${slack.attachment.footer.icon}")
+	String FOOTER_ICON;	
+
+	private SlackAttachment(String fallBack, String title, String titleLink) {
+		this.fallBack=fallBack;
+		this.title=title;
+		this.titleLink=titleLink;
+	}
+
 	public String getText() {
 		return text;
 	}
+
 	public void setText(String text) {
 		this.text = text;
 	}
-	String fallback;
-	String color;
-	String title;
-	String title_link;
-	@Value("${slack.attachment.footer.icon}")
-	String footer_icon;	
-	private SlackAttachment(String fallback, String title, String title_link) {
-		this.fallback=fallback;
-		this.title=title;
-		this.title_link=title_link;
-	}
-	final String footer=AppConstants.SLACK_ENABLIX_FOOTER;
 
+	public String getFallBack() {
+		return fallBack;
+	}
 
-	public String getFallback() {
-		return fallback;
+	public void setFallBack(String fallBack) {
+		this.fallBack = fallBack;
 	}
-	public void setFallback(String fallback) {
-		this.fallback = fallback;
-	}
+
 	public String getColor() {
 		return color;
 	}
+
 	public void setColor(String color) {
 		this.color = color;
 	}
+
 	public String getTitle() {
 		return title;
 	}
+
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	public String getTitle_link() {
-		return title_link;
+
+	public String getTitleLink() {
+		return titleLink;
 	}
-	public void setTitle_link(String title_link) {
-		this.title_link = title_link;
+
+	public void setTitleLink(String titleLink) {
+		this.titleLink = titleLink;
 	}
-	public String getFooter_icon() {
-		return footer_icon;
+
+	public String getFOOTER() {
+		return FOOTER;
 	}
-	public void setFooter_icon(String footer_icon) {
-		this.footer_icon = footer_icon;
-	}
-	public String getFooter() {
-		return footer;
-	}
-	public static class SlackAttachmentBuidler{
-		String fallback;
+
+	public static class SlackAttachmentBuidler {
+		String fallBack;
 		String title;
-		String title_link;
+		String titleLink;
 		String text;
-		public SlackAttachmentBuidler fallback(String fallback)
-		{
-			this.fallback = fallback;
+		
+		public SlackAttachmentBuidler fallBack(String fallBack)	{
+			this.fallBack = fallBack;
 			return this;
 		}
-		public SlackAttachmentBuidler text(String text)
-		{
+		
+		public SlackAttachmentBuidler text(String text)	{
 			this.text = text;
 			return this;
 		}
-		public SlackAttachmentBuidler title(String title)
-		{
+		
+		public SlackAttachmentBuidler title(String title) {
 			this.title = title;
 			return this;
 		}
-		public SlackAttachmentBuidler title_link(String title_link)
-		{
-			this.title_link = title_link;
+		
+		public SlackAttachmentBuidler titleLink(String titleLink) {
+			this.titleLink = titleLink;
 			return this;
 		}
-		public SlackAttachment build()
-	      {
-	         return new SlackAttachment(fallback,title,title_link);
-	      }
+		
+		public SlackAttachment build() {
+			return new SlackAttachment(fallBack,title,titleLink);
+		}
 	}
 }

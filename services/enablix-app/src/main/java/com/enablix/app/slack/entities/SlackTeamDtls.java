@@ -1,20 +1,29 @@
 package com.enablix.app.slack.entities;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class SlackTeamDtls {
-	String team_name;
-	String access_token;
 	
-	public String getTeam_name() {
-		return team_name;
+	@JsonProperty("team_name")
+	String teamName;
+	
+	@JsonProperty("access_token")
+	String accessToken;
+
+	public String getTeamName() {
+		return teamName;
 	}
-	public void setTeam_name(String team_name) {
-		this.team_name = team_name;
+
+	public void setTeamName(String teamName) {
+		this.teamName = teamName;
 	}
-	public String getAccess_token() {
-		return access_token;
+
+	public String getAccessToken() {
+		return accessToken;
 	}
-	public void setAccess_token(String access_token) {
-		this.access_token = access_token;
+
+	public void setAccessToken(String accessToken) {
+		this.accessToken = accessToken;
 	}
 	
 }

@@ -19,44 +19,47 @@ import com.enablix.core.system.repo.SlackAppDtlsRepository;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 @Component
-public class SlackServiceImpl implements SlackService{
-	RestTemplate restTemplate ;
+public class SlackServiceImpl implements SlackService {
+	
+	private static final Logger LOGGER = LoggerFactory.getLogger(SlackServiceImpl.class);
 
 	@Value("${slack.base.url}")
-	String BASEURL;
+	private String BASE_URL;
 
 	@Value("${slack.attachment.fallback.text}")
-	String fallbackText;
+	private String FALL_BACK_TEXT;
 	
 	@Value("${slack.oauth.access.api}")
-	String OAUTH_ACCESS_API ;
+	private String OAUTH_ACCESS_API ;
 
 	@Value("${slack.oauth.revoke.api}")
-	String OAUTH_REVOKE;
+	private String OAUTH_REVOKE;
 
 	@Value("${slack.channel.list}")
-	String CHANNEL_LIST_API;
-
+	private String CHANNEL_LIST_API;
 
 	@Value("${slack.channel.post.message}")
-	String CHANNEL_POST_TEXTMSG;
+	private String CHANNEL_POST_TEXTMSG;
 
 	@Value("${slack.enablixapp.name}")
 	private String appName;
-
-	private static final Logger LOGGER = LoggerFactory.getLogger(SlackServiceImpl.class);
-
+	
 	@Autowired
 	private SlackAppDtlsRepository slackDtlsRepo;
 
 	@Autowired
 	private SlackAccessTokenRepository slackTokenRepo;
+	
+	RestTemplate restTemplate;
+	
+	public SlackServiceImpl() {
+		restTemplate = new RestTemplate();
+	}
 
 	@Override
 	public SlackAccessToken authorize(String _code,String userID) throws Exception {
 		SlackAppDtls slackDtls = slackDtlsRepo.findByAppName(appName);
-		restTemplate = new RestTemplate();
-		URI targetUrl= UriComponentsBuilder.fromUriString(BASEURL)
+		URI targetUrl= UriComponentsBuilder.fromUriString(BASE_URL)
 				.path(OAUTH_ACCESS_API)
 				.queryParam("client_id", slackDtls.getClientID())
 				.queryParam("client_secret", slackDtls.getClientSecret())
@@ -71,9 +74,8 @@ public class SlackServiceImpl implements SlackService{
 
 	@Override
 	public SlackChannels getChannelDtls(String usrID)  {
-		restTemplate = new RestTemplate();
 		SlackAccessToken slackAccessToken = getStoredSlackTeamDtls(usrID) ;
-		URI targetUrl= UriComponentsBuilder.fromUriString(BASEURL)
+		URI targetUrl= UriComponentsBuilder.fromUriString(BASE_URL)
 				.path(CHANNEL_LIST_API)
 				.queryParam("token",slackAccessToken.getAccessToken())
 				.queryParam("exclude_archived",true)
@@ -86,9 +88,8 @@ public class SlackServiceImpl implements SlackService{
 
 	@Override
 	public boolean postMessageToChannel(String userID,String channelID, String portalURL,String contentName) {
-		restTemplate = new RestTemplate();
 		SlackAccessToken slackAccessToken = getStoredSlackTeamDtls(userID) ;
-		URI targetUrl= UriComponentsBuilder.fromUriString(BASEURL)
+		URI targetUrl= UriComponentsBuilder.fromUriString(BASE_URL)
 				.path(CHANNEL_POST_TEXTMSG)
 				.queryParam("token",slackAccessToken.getAccessToken())
 				.queryParam("channel",channelID)
@@ -99,7 +100,6 @@ public class SlackServiceImpl implements SlackService{
 				ObjectNode.class);
 		boolean resp = objNode.get("ok").asBoolean();
 		if( resp ){
-			//slackTokenRepo.delete(slackAccessToken);
 			return true;
 		}
 		return false;
@@ -107,15 +107,13 @@ public class SlackServiceImpl implements SlackService{
 
 	@Override
 	public SlackAccessToken saveUserSpecificToken(SlackTeamDtls slackTeamDtls, String userID) {
-		try
-		{
+		try	{
 			SlackAccessToken slackAccessToken = new SlackAccessToken(userID
-					,slackTeamDtls.getAccess_token(),slackTeamDtls.getTeam_name());
+					,slackTeamDtls.getAccessToken(),slackTeamDtls.getTeamName());
 			slackTokenRepo.save(slackAccessToken);
 			return slackAccessToken;
 		}
-		catch(Exception e)
-		{
+		catch(Exception e)	{
 			LOGGER.error(" Error in saving User Specific Token", e);
 			throw e;
 		}
@@ -129,10 +127,8 @@ public class SlackServiceImpl implements SlackService{
 
 	@Override
 	public boolean unauthorize(String userID) {
-		restTemplate = new RestTemplate();
-
 		SlackAccessToken slackAccessToken= slackTokenRepo.findByUserID(userID);
-		URI targetUrl= UriComponentsBuilder.fromUriString(BASEURL)
+		URI targetUrl= UriComponentsBuilder.fromUriString(BASE_URL)
 				.path(OAUTH_REVOKE)
 				.queryParam("token", slackAccessToken.getAccessToken())
 				.build()
