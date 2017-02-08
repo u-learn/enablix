@@ -8,7 +8,6 @@ enablix.studioApp.directive('ebxContextMenu',['RESTService','Notification',
 			contentQId: "="
 		},
 		link: function(scope, element, attrs) {
-			var userData=JSON.parse(window.localStorage.getItem("userData"));
 			scope.openMailClient =function(downloadDocId,contentIdentity,contentName){
 				var _data = {
 						"containerQId" : scope.contentQId,
@@ -72,10 +71,8 @@ enablix.studioApp.directive('ebxContextMenu',['RESTService','Notification',
 				checkAuthAndShare(contentIdentity,contentName,portalURL,$event);
 			}
 			var checkAuthAndShare= function(contentIdentity,contentName,portalURL,$event){
-				var _data = {
-						"userID" : userData.userId
-				};
-				RESTService.getForData('getSlackStoredAuthAccessToken', _data, null, function(data) {
+				
+				RESTService.getForData('getSlackStoredAuthAccessToken', null, null, function(data) {
 					if( data != null && data.accessToken!=null && data.teamName!=null ){
 						shareContentModalWindow.showShareToSlackModal(
 								scope.contentQId,contentIdentity,contentName, portalURL,$event);

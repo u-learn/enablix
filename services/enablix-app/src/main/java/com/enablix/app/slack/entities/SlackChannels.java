@@ -5,6 +5,7 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class SlackChannels {
+	
 	@JsonProperty("channels")
     private List<SlackChannelDtls> slackChannels;
 

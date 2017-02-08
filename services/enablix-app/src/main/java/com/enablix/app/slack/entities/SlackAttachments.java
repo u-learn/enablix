@@ -4,10 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SlackAttachments {
+	
 	List<SlackAttachment> attachments;
+	
 	public SlackAttachments() {
 		attachments= new ArrayList<>();
 	}
+	
 	public List<SlackAttachment> getAttachments() {
 		return attachments;
 	}

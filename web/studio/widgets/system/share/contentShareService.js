@@ -13,12 +13,11 @@ enablix.studioApp.factory('ContentShareService',
 				
 			};
 	
-			var shareContentToSlack = function(userId,containerQId, contentName,contentIdentity, portalURL ,
+			var shareContentToSlack = function(containerQId, contentName,contentIdentity, portalURL ,
 					channelID,
 					 _onSuccess, _onError) {
 				
-				var shareSlackData = {"userID" : userId,
-									  "containerQId" : containerQId,
+				var shareSlackData = {"containerQId" : containerQId,
 									  "contentName": contentName,
 									  "contentIdentity": contentIdentity,
 									  "portalURL": portalURL,
