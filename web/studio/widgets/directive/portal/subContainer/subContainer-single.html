@@ -9,7 +9,7 @@
 				<ebx-suggest-content content-q-id="subContainerQId" parent-identity="parentIdentity" content-identity="bodyData.identity"></ebx-suggest-content>
 				<span ng-if="bodyData.downloadDocIdentity">
 					<eb-doc-download doc-value="bodyData.downloadDocIdentity"></eb-doc-download>
-					<eb-doc-preview-action doc-identity="bodyData.downloadDocIdentity"></eb-doc-preview-action>
+					<eb-doc-preview-action doc-identity="bodyData.downloadDocIdentity" doc-metadata="bodyData.docMetadata"></eb-doc-preview-action>
 				</span>
 				<ebx-context-menu context-data="bodyData" content-q-id="subContainerQId"></ebx-context-menu>
 			</div>

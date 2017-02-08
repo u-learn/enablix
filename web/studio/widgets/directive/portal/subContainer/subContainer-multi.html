@@ -16,7 +16,7 @@
 			    	<ebx-suggest-content content-q-id="subContainerQId" parent-identity="parentIdentity" content-identity="dataItem.identity"></ebx-suggest-content>
 			    	<span ng-if="dataItem.downloadDocIdentity">
 			    		<eb-doc-download doc-value="dataItem.downloadDocIdentity"></eb-doc-download>
-			    		<eb-doc-preview-action doc-identity="dataItem.downloadDocIdentity"></eb-doc-preview-action>
+			    		<eb-doc-preview-action doc-identity="dataItem.downloadDocIdentity" doc-metadata="dataItem.docMetadata"></eb-doc-preview-action>
 			    	</span>
 			    	
 						<ebx-context-menu context-data="dataItem" content-q-id="subContainerQId" ></ebx-context-menu>

@@ -6,7 +6,7 @@ enablix.studioApp.controller('PortalBreadcrumbCtrl',
 		var PORTAL_HOME_LABEL = "Home";
 				
 		
-		$rootScope.$on('$stateChangeSuccess', 
+		$scope.$on('$stateChangeSuccess', 
 			function(event, toState, toParams, fromState, fromParams) {
 				if (toState.name.indexOf("portal") == 0
 						&& fromState.name.indexOf("portal") == 0
@@ -34,6 +34,8 @@ enablix.studioApp.controller('PortalBreadcrumbCtrl',
 		}
 		
 		var createBreadCrumbList = function($stateParams) {
+			
+			console.log("creating breadcrumb");
 
 			$scope.breadcrumbList = $scope.breadcrumbList || [];
 			

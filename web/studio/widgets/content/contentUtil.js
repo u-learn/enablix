@@ -66,6 +66,7 @@ enablix.studioApp.factory('ContentUtil',
 						var docInstance = _dataRecord[item.id];
 						if (docInstance && docInstance.identity) {
 							_dataRecord.downloadDocIdentity = docInstance.identity;
+							_dataRecord.docMetadata = docInstance;
 						}
 						
 					} else if (item.type == 'BOUNDED') {

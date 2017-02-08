@@ -10,7 +10,7 @@
 				<td><span class="content-data" ng-bind-html="containerData[item.id] | ebxFormatData: item : containerData.identity"></span>&nbsp;
 					<span ng-if="item.type == 'DOC' && containerData[item.id].name" class="download">
 						<eb-doc-download doc-value="containerData[item.id].identity"></eb-doc-download>
-						<eb-doc-preview-action doc-identity="containerData[item.id].identity"></eb-doc-preview-action>
+						<eb-doc-preview-action doc-identity="containerData[item.id].identity" doc-metadata="containerData[item.id]"></eb-doc-preview-action>
 					</span>
 				</td>
 			</tr>

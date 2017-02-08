@@ -18,6 +18,8 @@ public class NavigableContent {
 	private Map<String, String> additionalInfo;
 
 	private NavigableContent next;
+
+	private Map<String, Object> docDetails;
 	
 	public NavigableContent(String qualifiedId, String identity, String label, String containerLabel) {
 		super();
@@ -84,6 +86,14 @@ public class NavigableContent {
 		this.additionalInfo = additionalInfo;
 	}
 
+	public void setDocDetails(Map<String, Object> docDetails) {
+		this.docDetails = docDetails;
+	}
+	
+	public Map<String, Object> getDocDetails() {
+		return docDetails;
+	}
+
 	public String toPath(String pathSeparator) {
 		
 		String path = getLabel();
@@ -94,4 +104,5 @@ public class NavigableContent {
 		
 		return path;
 	}
+
 }

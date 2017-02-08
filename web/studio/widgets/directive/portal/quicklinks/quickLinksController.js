@@ -4,7 +4,6 @@ enablix.studioApp.controller('PortalQuickLinksCtrl',
 		
 		QuickLinksService.getQuickLinks( 
 			function(quickLinks) {
-				console.log(quickLinks);
 				$scope.quickLinks = quickLinks;
 			});
 		

@@ -3,7 +3,8 @@ enablix.studioApp.directive('ebDocPreviewAction', function() {
 	return {
 		restrict: 'E',
 		scope : {
-			docIdentity : "="
+			docIdentity : "=",
+			docMetadata : "=?"
 		},
 
 		link: function(scope, element, attrs) {

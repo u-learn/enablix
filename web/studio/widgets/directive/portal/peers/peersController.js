@@ -5,7 +5,6 @@ enablix.studioApp.controller('PortalPeersCtrl',
 		if (!isNullOrUndefined($scope.containerQId) && !isNullOrUndefined($scope.contentIdentity)) {
 			PeerContentService.getPeers($scope.containerQId, $scope.contentIdentity, 
 				function(peers) {
-					console.log(peers);
 					$scope.peers = peers;
 				});
 		}

@@ -124,6 +124,27 @@ public class ContentDataUtil {
 		
 		return docIdentity;
 	}
+	
+	@SuppressWarnings("unchecked")
+	public static Map<String, Object> findDocRecord(Map<String, Object> record, ContainerType containerDef) {
+		
+		Map<String, Object> docDetails = null;
+		
+		for (ContentItemType itemType : containerDef.getContentItem()) {
+			
+			if (ContentItemClassType.DOC.equals(itemType.getType())) {
+				
+				Object doc = record.get(itemType.getId());
+				if (doc != null && doc instanceof Map<?,?>) {
+					docDetails = (Map<String, Object>) doc;
+				}
+				
+				break;
+			}
+		}
+		
+		return docDetails;
+	}
 
 	private static String contentItemToString(Object labelAttribute, ContainerType containerDef,
 			String portalLabelAttributeId) {
