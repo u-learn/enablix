@@ -1116,7 +1116,10 @@ form .row .form-label:first-child {
 }*/
 
 .fa-download{
+	position: relative;
+	top: 2px;
 	color: #2ecc71;
+	border: 0px;
 }
 
 .fa-download:hover{
@@ -1492,10 +1495,14 @@ input[type=checkbox] {
     float: left;
 }
 
-
+td eb-doc-preview-action .doc-preview {
+	position: relative;
+	top: 2px;	
+}
 
 eb-doc-preview-action .doc-preview {
 	color: #2ecc71;
+	border: 0px;
 }
 
 .action-icons {
@@ -1684,4 +1691,9 @@ input[type=radio] {
 	width: 100%;
 	position: fixed;
 	content: " ";
+}
+
+td eb-nav-link span a {
+	border-bottom: 1px solid;
+	color: #3498db;
 }
