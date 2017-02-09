@@ -6,8 +6,15 @@
             {
                 if(attrs.$attr.usSpinnerStandalone) return;
                 $rootScope.spinnerActive = false;
+                
+                var onlyIgnoredUrlsPending = function() {
+                	// do not show spinner for audit requests
+                	return ($http.pendingRequests.length != 1 || 
+            				$http.pendingRequests[0].url != enablix.serviceURL.auditContentAccess);
+                }
+                
                 scope.isLoading = function () {
-                    return $http.pendingRequests.length > 0;
+                    return $http.pendingRequests.length > 0 && onlyIgnoredUrlsPending();
                 };
 
                 scope.$watch(scope.isLoading, function (loading)
