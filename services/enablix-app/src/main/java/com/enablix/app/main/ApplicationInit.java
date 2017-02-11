@@ -35,7 +35,8 @@ import com.enablix.commons.util.StringUtil;
 		@PropertySource("file:${baseDir}/config/properties/security.properties"),
 		@PropertySource("file:${baseDir}/config/properties/elasticsearch.properties"),
 		@PropertySource("file:${baseDir}/config/properties/mail.properties"),
-		@PropertySource("file:${baseDir}/config/properties/log4j.properties")})
+		@PropertySource("file:${baseDir}/config/properties/log4j.properties"),
+		@PropertySource("file:${baseDir}/config/properties/slack.properties")})
 @ComponentScan(basePackages = { "com.enablix" })
 @EnableMongoRepositories(
 		basePackages = {"com.enablix.app.mongo.repository", 
