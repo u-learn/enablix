@@ -63,19 +63,15 @@ enablix.studioApp.directive('ebxContextMenu',['RESTService','Notification',
 				+ ":" + $location.port() + "/app.html#/portal/container/"+scope.contentQId+"/"+contentIdentity;
 			
 			}
-			scope.shareToSlack = function(contentIdentity,contentName,contentTitle,$event){
-				if( contentName==null || contentName == undefined){
-					contentName=contentTitle;
-				}
-				var portalURL = getPortalURL(contentIdentity);
-				checkAuthAndShare(contentIdentity,contentName,portalURL,$event);
+			scope.shareToSlack = function(contentIdentity,$event){
+				checkAuthAndShare(contentIdentity, $event);
 			}
-			var checkAuthAndShare= function(contentIdentity,contentName,portalURL,$event){
+			var checkAuthAndShare= function(contentIdentity,$event){
 				
 				RESTService.getForData('getSlackStoredAuthAccessToken', null, null, function(data) {
 					if( data != null && data.accessToken!=null && data.teamName!=null ){
 						shareContentModalWindow.showShareToSlackModal(
-								scope.contentQId,contentIdentity,contentName, portalURL,$event);
+								scope.contentQId, contentIdentity, $event);
 					}
 					else{
 						StateUpdateService.goToSlackAuth("shareContextMenu");

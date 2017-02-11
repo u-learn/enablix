@@ -9,6 +9,13 @@
 				ng-change="" ng-options="item.id as item.label for item in channelLst"
 				ng-model="channelID"></select>
 		</div>
+		<br />
+		<div class="cont">
+			<div>
+				<textarea placeholder="Enter message (optional)" class="form-control"
+					ng-model="slackCustomContent" rows="8"></textarea>
+			</div>
+		</div>
 	</div>
 </form>
 <div class="modal-footer">

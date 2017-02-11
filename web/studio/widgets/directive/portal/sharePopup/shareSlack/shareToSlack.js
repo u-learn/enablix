@@ -1,9 +1,9 @@
 enablix.studioApp.controller('ShareToSlackController', [
-	'$scope', '$stateParams', '$modalInstance', '$timeout', 'containerQId', 'contentIdentity', 'ContentShareService', 'Notification','RESTService','contentName','portalURL',
-	function( $scope,   $stateParams,   $modalInstance,   $timeout,   containerQId,   contentIdentity,   ContentShareService,   Notification,RESTService,contentName,portalURL) {
+	'$scope', '$stateParams', '$modalInstance', '$timeout', 'containerQId', 'contentIdentity', 'ContentShareService', 'Notification','RESTService',
+	function( $scope,   $stateParams,   $modalInstance,   $timeout,   containerQId,   contentIdentity,   ContentShareService,   Notification,RESTService) {
 		
 		$scope.channelLst=[];
-
+		$scope.slackCustomContent="";
 		function getChannels(_success){
 			RESTService.getForData('getSlackChannels', null, null, function(data) {
 				_success(data);	    	
@@ -21,12 +21,14 @@ enablix.studioApp.controller('ShareToSlackController', [
 						label: channelsDtls[i].name,
 						id: channelsDtls[i].id
 				};
+				//prompt("channelObj",JSON.stringify(channelObj));
 				$scope.channelLst.push(channelObj);
 			}
 		}
 
 		$scope.shareContent = function() {
-			ContentShareService.shareContentToSlack(containerQId, contentName,contentIdentity, portalURL ,$scope.channelID,function(sent) {
+			ContentShareService.shareContentToSlack(containerQId, contentIdentity, $scope.channelID,$scope.slackCustomContent,
+					function(sent) {
 				if(sent) {
 					Notification.primary({message: "Content Shared successfully", delay: enablix.errorMsgShowTime});
 				} else {

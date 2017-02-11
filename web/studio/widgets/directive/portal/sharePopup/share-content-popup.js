@@ -21,11 +21,10 @@ enablix.studioApp.factory('shareContentModalWindow',
 				});
 			};
 		
-			var showShareToSlackModal = function(containerQId, contentIdentity,contentName,
-					portalURL,$event) {
+			var showShareToSlackModal = function(containerQId, contentIdentity,$event) {
 				var modalInstance = $modal.open({
 					templateUrl: 'widgets/directive/portal/sharePopup/shareSlack/shareToSlack.html',
-					size: 'sm', // 'sm', 'lg'
+					size: 'md', // 'sm', 'lg'
 					controller: 'ShareToSlackController',
 					parent: angular.element(document.body),
 					targetEvent: $event,
@@ -36,12 +35,6 @@ enablix.studioApp.factory('shareContentModalWindow',
 						},
 						contentIdentity : function() {
 							return contentIdentity;
-						},
-						contentName : function() {
-							return contentName;
-						},
-						portalURL : function() {
-							return portalURL;
 						}
 					}
 				});
