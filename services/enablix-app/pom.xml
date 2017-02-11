@@ -162,5 +162,10 @@
 			<artifactId>configuration-provider</artifactId>
 			<version>1.0-SNAPSHOT</version>
 		</dependency>
+		<dependency>
+			<groupId>com.enablix.slack</groupId>
+			<artifactId>slack-integration</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 </project>
