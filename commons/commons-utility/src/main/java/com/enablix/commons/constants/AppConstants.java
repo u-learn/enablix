@@ -19,6 +19,4 @@ public class AppConstants {
 	
 	public static final String SYSTEM_SLACK_DTLS = "ebxSlackAppDtls";
 	public static final String SYSTEM_SLACK_TOKEN = "ebxSlackTokenDtls";
-
-	public static final String SLACK_ENABLIX_FOOTER="Shared via Enablix";
 }
