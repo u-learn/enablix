@@ -31,5 +31,6 @@
 	<module>commons-caching</module>
 	<module>manage-play-lifecycle</module>
 	<module>resource-versioning</module>
+	<module>slack-integration</module>
   </modules>
 </project>
