@@ -8,10 +8,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.enablix.app.slack.entities.SlackChannels;
-import com.enablix.app.slack.service.SlackServiceImpl;
 import com.enablix.commons.util.process.ProcessContext;
 import com.enablix.core.domain.slackdtls.SlackAccessToken;
+import com.enablix.slack.integration.entities.SlackChannels;
+import com.enablix.slack.integration.services.SlackServiceImpl;
 
 
 @RestController
@@ -19,10 +19,10 @@ import com.enablix.core.domain.slackdtls.SlackAccessToken;
 public class SlackController {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(SlackController.class);
-	
+
 	@Autowired
 	SlackServiceImpl slackServiceImpl;
-	
+
 	@RequestMapping(method = RequestMethod.POST, value = "/authorizeSlack")
 	public SlackAccessToken authorizeSlack(@RequestParam("code") String code) {
 		try{
@@ -33,7 +33,7 @@ public class SlackController {
 			return null;
 		}
 	}
-	
+
 	@RequestMapping(method = RequestMethod.POST, value = "/sendMessage")
 	public boolean sendMessage(@RequestParam("channelID") String channelID,
 			@RequestParam("containerQId") String containerQId,
@@ -48,7 +48,7 @@ public class SlackController {
 			return false;
 		}
 	}
-	
+
 	@RequestMapping(method = RequestMethod.POST, value = "/unauthSlack")
 	public boolean unauthorizeSlack() {
 		try	{
@@ -59,7 +59,7 @@ public class SlackController {
 			return false;
 		}
 	}
-	
+
 	@RequestMapping(method = RequestMethod.GET, value = "/getChannelsLst")
 	public SlackChannels getChannelsLst() {
 		try	{
@@ -70,7 +70,7 @@ public class SlackController {
 			return null;
 		}
 	}
-	
+
 	@RequestMapping(method = RequestMethod.GET, value = "/getStoredSlackToken")
 	public SlackAccessToken getStoredSlackDtls() {
 		try	{
