@@ -1,15 +1,16 @@
 package com.enablix.app.slack.entities;
 
-import org.springframework.beans.factory.annotation.Value;
+import java.util.LinkedList;
+import java.util.List;
 
-import com.enablix.commons.constants.AppConstants;
+import com.enablix.core.ui.DisplayField;
+import com.enablix.core.ui.TextValue;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class SlackAttachment {
 
-	private final static String FOOTER=AppConstants.SLACK_ENABLIX_FOOTER;
-
-	String text;
+	@JsonProperty("footer")
+	private String footerText;
 
 	@JsonProperty("fallback")
 	String fallBack;
@@ -21,21 +22,30 @@ public class SlackAttachment {
 	@JsonProperty("title_link")
 	String titleLink;
 
-	@Value("${slack.attachment.footer.icon}")
-	String FOOTER_ICON;	
+	@JsonProperty("footer_icon")
+	String footerIcon;
 
-	private SlackAttachment(String fallBack, String title, String titleLink) {
+	List<SlackAttachmentFields> fields;
+	
+	private SlackAttachment(String fallBack, String title, String titleLink, String footerIcon, String color,
+			String footerText,List<SlackAttachmentFields> fields) {
+
 		this.fallBack=fallBack;
 		this.title=title;
 		this.titleLink=titleLink;
+		this.footerIcon= footerIcon;
+		this.color=color;
+		this.footerText=footerText;
+		this.fields=fields;
 	}
 
-	public String getText() {
-		return text;
+
+	public String getFooterIcon() {
+		return footerIcon;
 	}
 
-	public void setText(String text) {
-		this.text = text;
+	public void setFooterIcon(String footerIcon) {
+		this.footerIcon = footerIcon;
 	}
 
 	public String getFallBack() {
@@ -70,38 +80,93 @@ public class SlackAttachment {
 		this.titleLink = titleLink;
 	}
 
-	public String getFOOTER() {
-		return FOOTER;
+	public String getFooterText() {
+		return footerText;
 	}
 
+	public void setFooterText(String footerText) {
+		this.footerText = footerText;
+	}
+
+	public List<SlackAttachmentFields> getFields() {
+		return fields;
+	}
+
+	public void setFields(List<SlackAttachmentFields> fields) {
+		this.fields = fields;
+	}
+	
 	public static class SlackAttachmentBuidler {
 		String fallBack;
 		String title;
 		String titleLink;
 		String text;
-		
+		String footerIcon;
+		String color;
+		String footerText;
+		List<DisplayField<?>> fields;
 		public SlackAttachmentBuidler fallBack(String fallBack)	{
 			this.fallBack = fallBack;
 			return this;
 		}
-		
+		public SlackAttachmentBuidler footerText(String footerText)
+		{
+			this.footerText=footerText;
+			return this;
+		}
+		public SlackAttachmentBuidler footerIcon(String footerIcon)	{
+			this.footerIcon = footerIcon;
+			return this;
+		}
 		public SlackAttachmentBuidler text(String text)	{
 			this.text = text;
 			return this;
 		}
-		
+
 		public SlackAttachmentBuidler title(String title) {
 			this.title = title;
 			return this;
 		}
-		
+
 		public SlackAttachmentBuidler titleLink(String titleLink) {
 			this.titleLink = titleLink;
 			return this;
 		}
 		
+		public SlackAttachmentBuidler color(String color) {
+			this.color = color;
+			return this;
+		}
+		
+		public SlackAttachmentBuidler fields(List<DisplayField<?>> fields) {
+			this.fields = fields;
+			return this;
+		}
+		
 		public SlackAttachment build() {
-			return new SlackAttachment(fallBack,title,titleLink);
+			List<SlackAttachmentFields> slackAttachLst = new LinkedList<SlackAttachmentFields>();
+			SlackAttachmentFields slackAttcField;
+			for(DisplayField<?> field:fields)
+			{
+				String value = processDisplayField(field);
+				if(value!=null && !value.isEmpty()){
+					slackAttcField = new SlackAttachmentFields(field.getLabel(), value);
+					slackAttachLst.add(slackAttcField);
+				}
+			}
+			return new SlackAttachment(fallBack,title,titleLink,footerIcon,color,footerText,slackAttachLst);
+		}
+		
+		private String processDisplayField(DisplayField<?> field) {
+			if(field.getValue() instanceof TextValue)
+			{
+				TextValue txtVal = (TextValue) field.getValue();
+				return txtVal.getValue();
+			}
+			else{
+				return null;	
+			}
+
 		}
 	}
 }

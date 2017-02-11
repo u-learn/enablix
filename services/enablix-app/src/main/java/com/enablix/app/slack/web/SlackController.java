@@ -38,11 +38,10 @@ public class SlackController {
 	public boolean sendMessage(@RequestParam("channelID") String channelID,
 			@RequestParam("containerQId") String containerQId,
 			@RequestParam("contentIdentity") String contentIdentity,
-			@RequestParam("contentName") String contentName, 
-			@RequestParam("portalURL") String portalURL) {
+			@RequestParam("slackCustomContent") String slackCustomContent) {
 		try	{
 			return slackServiceImpl.postMessageToChannel(ProcessContext.get().getUserId()
-					, channelID, portalURL, contentName);
+					, channelID, containerQId,contentIdentity,slackCustomContent);
 		}
 		catch(Exception e) {
 			LOGGER.error("Error Retrieving Slack Dtls ",e);

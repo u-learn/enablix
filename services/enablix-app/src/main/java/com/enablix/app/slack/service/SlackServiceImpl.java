@@ -1,6 +1,7 @@
 package com.enablix.app.slack.service;
 
 import java.net.URI;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,12 +11,23 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.enablix.app.content.ContentDataManager;
+import com.enablix.app.content.ui.format.DisplayContext;
+import com.enablix.app.content.ui.format.DisplayableContentBuilder;
 import com.enablix.app.slack.entities.SlackChannels;
 import com.enablix.app.slack.entities.SlackTeamDtls;
+import com.enablix.app.slack.utils.AttachmentDecorator;
+import com.enablix.app.template.service.TemplateManager;
+import com.enablix.commons.util.process.ProcessContext;
+import com.enablix.core.api.ContentDataRecord;
+import com.enablix.core.api.ContentDataRef;
+import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 import com.enablix.core.domain.slackdtls.SlackAccessToken;
 import com.enablix.core.domain.slackdtls.SlackAppDtls;
 import com.enablix.core.system.repo.SlackAccessTokenRepository;
 import com.enablix.core.system.repo.SlackAppDtlsRepository;
+import com.enablix.core.ui.DisplayableContent;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 @Component
@@ -41,14 +53,32 @@ public class SlackServiceImpl implements SlackService {
 	@Value("${slack.channel.post.message}")
 	private String CHANNEL_POST_TEXTMSG;
 
+	@Value("${slack.attachment.footer.icon}")
+	private String FOOTER_ICON;
+
+	@Value("${slack.attachment.color}")
+	private String COLOR;
+	
 	@Value("${slack.enablixapp.name}")
 	private String appName;
+	
+	@Value("${slack.attachment.footer.label}")
+	private String FOOTER_TEXT;
 	
 	@Autowired
 	private SlackAppDtlsRepository slackDtlsRepo;
 
 	@Autowired
 	private SlackAccessTokenRepository slackTokenRepo;
+	
+	@Autowired
+	private ContentDataManager contentDataMgr;
+
+	@Autowired
+	private TemplateManager templateMgr;
+	
+	@Autowired
+	private DisplayableContentBuilder contentBuilder;
 	
 	RestTemplate restTemplate;
 	
@@ -87,13 +117,34 @@ public class SlackServiceImpl implements SlackService {
 	}
 
 	@Override
-	public boolean postMessageToChannel(String userID,String channelID, String portalURL,String contentName) {
+	public boolean postMessageToChannel(String userID, String channelID,
+			String containerQId, String contentIdentity, String slackCustomContent) 
+			throws JsonProcessingException {
+		
+		String templateId = ProcessContext.get().getTemplateId();
+		ContentTemplate template = templateMgr.getTemplate(templateId);
+
+		Map<String, Object> record = contentDataMgr.getContentRecord(
+				new ContentDataRef(templateId, containerQId, 
+						contentIdentity, null), template);
+
+		ContentDataRecord dataRecord = new ContentDataRecord(templateId, containerQId, record);
+
+		DisplayContext ctx = new DisplayContext();
+
+		DisplayableContent displayableContent = contentBuilder.build(template, dataRecord, ctx);
+
+		
+		String slackAttachments = AttachmentDecorator.getDecoratedAttachment(displayableContent,
+				FALL_BACK_TEXT, FOOTER_ICON,COLOR,FOOTER_TEXT);
 		SlackAccessToken slackAccessToken = getStoredSlackTeamDtls(userID) ;
+		
 		URI targetUrl= UriComponentsBuilder.fromUriString(BASE_URL)
 				.path(CHANNEL_POST_TEXTMSG)
 				.queryParam("token",slackAccessToken.getAccessToken())
 				.queryParam("channel",channelID)
-				.queryParam("text", portalURL)
+				.queryParam("text", slackCustomContent)
+				.queryParam("attachments", slackAttachments)
 				.build()
 				.toUri();
 		ObjectNode objNode = restTemplate.getForObject(targetUrl,
