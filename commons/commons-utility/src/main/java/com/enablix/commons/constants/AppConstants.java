@@ -17,6 +17,8 @@ public class AppConstants {
 	
 	public static final String TENANT_ID_REQ_PARAM = "tenantId";
 	
-	public static final String SYSTEM_SLACK_DTLS = "ebxSlackAppDtls";
 	public static final String SYSTEM_SLACK_TOKEN = "ebxSlackTokenDtls";
+	public static final String SLACK_APP = "SLACK_APP";
+	public static final String SLACK_APP_CLIENT_ID = "clientID";
+	public static final String SLACK_APP_CLIENT_SECRET = "clientSecret";
 }
