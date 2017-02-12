@@ -32,7 +32,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 
 @Component
 public class SlackServiceImpl implements SlackService {
-	
+
 	private static final Logger LOGGER = LoggerFactory.getLogger(SlackServiceImpl.class);
 
 	@Value("${slack.base.url}")
@@ -40,7 +40,7 @@ public class SlackServiceImpl implements SlackService {
 
 	@Value("${slack.attachment.fallback.text}")
 	private String FALL_BACK_TEXT;
-	
+
 	@Value("${slack.oauth.access.api}")
 	private String OAUTH_ACCESS_API ;
 
@@ -58,30 +58,30 @@ public class SlackServiceImpl implements SlackService {
 
 	@Value("${slack.attachment.color}")
 	private String COLOR;
-	
+
 	@Value("${slack.enablixapp.name}")
 	private String appName;
-	
+
 	@Value("${slack.attachment.footer.label}")
 	private String FOOTER_TEXT;
-	
+
 	@Autowired
 	private SlackAppDtlsRepository slackDtlsRepo;
 
 	@Autowired
 	private SlackAccessTokenRepository slackTokenRepo;
-	
+
 	@Autowired
 	private ContentDataManager contentDataMgr;
 
 	@Autowired
 	private TemplateManager templateMgr;
-	
+
 	@Autowired
 	private DisplayableContentBuilder contentBuilder;
-	
+
 	RestTemplate restTemplate;
-	
+
 	public SlackServiceImpl() {
 		restTemplate = new RestTemplate();
 	}
@@ -97,8 +97,13 @@ public class SlackServiceImpl implements SlackService {
 				.toUri();
 		SlackTeamDtls slackTeamDtls = restTemplate.getForObject(targetUrl,
 				SlackTeamDtls.class);
-		SlackAccessToken slackAccessToken = saveUserSpecificToken(slackTeamDtls, userID);
-		return slackAccessToken;
+		if( slackTeamDtls!=null  && slackTeamDtls.getAccessToken()!=null && !slackTeamDtls.getAccessToken().isEmpty() ){
+			SlackAccessToken slackAccessToken = saveUserSpecificToken(slackTeamDtls, userID);
+			return slackAccessToken;
+		}
+		else {
+			throw new Exception("Access Token is not present in the response");
+		}
 	}
 
 	public SlackChannels getChannelDtls(String usrID)  {
@@ -116,8 +121,8 @@ public class SlackServiceImpl implements SlackService {
 
 	public boolean postMessageToChannel(String userID, String channelID,
 			String containerQId, String contentIdentity, String slackCustomContent) 
-			throws JsonProcessingException {
-		
+					throws JsonProcessingException {
+
 		String templateId = ProcessContext.get().getTemplateId();
 		ContentTemplate template = templateMgr.getTemplate(templateId);
 
@@ -131,11 +136,11 @@ public class SlackServiceImpl implements SlackService {
 
 		DisplayableContent displayableContent = contentBuilder.build(template, dataRecord, ctx);
 
-		
+
 		String slackAttachments = AttachmentDecorator.getDecoratedAttachment(displayableContent,
 				FALL_BACK_TEXT, FOOTER_ICON,COLOR,FOOTER_TEXT);
 		SlackAccessToken slackAccessToken = getStoredSlackTeamDtls(userID) ;
-		
+
 		URI targetUrl= UriComponentsBuilder.fromUriString(BASE_URL)
 				.path(CHANNEL_POST_TEXTMSG)
 				.queryParam("token",slackAccessToken.getAccessToken())

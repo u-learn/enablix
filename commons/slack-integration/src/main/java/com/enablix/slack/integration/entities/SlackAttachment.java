@@ -144,7 +144,8 @@ public class SlackAttachment {
 		}
 		
 		public SlackAttachment build() {
-			List<SlackAttachmentFields> slackAttachLst = new LinkedList<SlackAttachmentFields>();
+			// To be used later when we extend the Slack Attachment functionality
+			/*List<SlackAttachmentFields> slackAttachLst = new LinkedList<SlackAttachmentFields>();
 			SlackAttachmentFields slackAttcField;
 			for(DisplayField<?> field:fields)
 			{
@@ -153,11 +154,11 @@ public class SlackAttachment {
 					slackAttcField = new SlackAttachmentFields(field.getLabel(), value);
 					slackAttachLst.add(slackAttcField);
 				}
-			}
-			return new SlackAttachment(fallBack,title,titleLink,footerIcon,color,footerText,slackAttachLst);
+			}*/
+			return new SlackAttachment(fallBack,title,titleLink,footerIcon,color,footerText,null);
 		}
-		
-		private String processDisplayField(DisplayField<?> field) {
+		// To be used later when we extend the Slack Attachment functionality
+		/*private String processDisplayField(DisplayField<?> field) {
 			if(field.getValue() instanceof TextValue)
 			{
 				TextValue txtVal = (TextValue) field.getValue();
@@ -167,6 +168,6 @@ public class SlackAttachment {
 				return null;	
 			}
 
-		}
+		}*/
 	}
 }
