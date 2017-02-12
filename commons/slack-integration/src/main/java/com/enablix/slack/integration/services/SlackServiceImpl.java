@@ -15,28 +15,28 @@ import org.springframework.web.util.UriComponentsBuilder;
 import com.enablix.app.content.ContentDataManager;
 import com.enablix.app.content.ui.format.DisplayContext;
 import com.enablix.app.content.ui.format.DisplayableContentBuilder;
-import com.enablix.slack.integration.services.SlackService;
-import com.enablix.slack.integration.utils.AttachmentDecorator;
-import com.enablix.slack.integration.entities.*;
 import com.enablix.app.template.service.TemplateManager;
+import com.enablix.commons.config.ConfigurationProviderChain;
+import com.enablix.commons.constants.AppConstants;
 import com.enablix.commons.util.id.IdentityUtil;
 import com.enablix.commons.util.process.ProcessContext;
 import com.enablix.core.api.ContentDataRecord;
 import com.enablix.core.api.ContentDataRef;
 import com.enablix.core.commons.xsdtopojo.ContentTemplate;
-import com.enablix.core.domain.activity.Activity;
 import com.enablix.core.domain.activity.ActivityAudit;
 import com.enablix.core.domain.activity.ActivityChannel;
-import com.enablix.core.domain.activity.UserAccountActivity;
 import com.enablix.core.domain.activity.ActivityChannel.Channel;
 import com.enablix.core.domain.activity.ContentShareActivity.ShareMedium;
+import com.enablix.core.domain.activity.UserAccountActivity;
 import com.enablix.core.domain.activity.UserAccountActivity.AccountActivityType;
+import com.enablix.core.domain.config.Configuration;
 import com.enablix.core.domain.slackdtls.SlackAccessToken;
-import com.enablix.core.domain.slackdtls.SlackAppDtls;
 import com.enablix.core.system.repo.SlackAccessTokenRepository;
-import com.enablix.core.system.repo.SlackAppDtlsRepository;
 import com.enablix.core.ui.DisplayableContent;
 import com.enablix.services.util.ActivityLogger;
+import com.enablix.slack.integration.entities.SlackChannels;
+import com.enablix.slack.integration.entities.SlackTeamDtls;
+import com.enablix.slack.integration.utils.AttachmentDecorator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
@@ -76,9 +76,6 @@ public class SlackServiceImpl implements SlackService {
 	private String FOOTER_TEXT;
 
 	@Autowired
-	private SlackAppDtlsRepository slackDtlsRepo;
-
-	@Autowired
 	private SlackAccessTokenRepository slackTokenRepo;
 
 	@Autowired
@@ -90,6 +87,9 @@ public class SlackServiceImpl implements SlackService {
 	@Autowired
 	private DisplayableContentBuilder contentBuilder;
 
+	@Autowired
+	private ConfigurationProviderChain configProvider;
+	
 	RestTemplate restTemplate;
 
 	public SlackServiceImpl() {
@@ -97,11 +97,15 @@ public class SlackServiceImpl implements SlackService {
 	}
 
 	public SlackAccessToken authorize(String _code,String userID) throws Exception {
-		SlackAppDtls slackDtls = slackDtlsRepo.findByAppName(appName);
+		
+		Configuration config = configProvider.getConfiguration(AppConstants.SLACK_APP);
+		String clientId = config.getStringValue(AppConstants.SLACK_APP_CLIENT_ID);
+		String clientSecret =  config.getStringValue(AppConstants.SLACK_APP_CLIENT_SECRET);
+		
 		URI targetUrl= UriComponentsBuilder.fromUriString(BASE_URL)
 				.path(OAUTH_ACCESS_API)
-				.queryParam("client_id", slackDtls.getClientID())
-				.queryParam("client_secret", slackDtls.getClientSecret())
+				.queryParam("client_id", clientId)
+				.queryParam("client_secret", clientSecret)
 				.queryParam("code",_code)
 				.build()
 				.toUri();
