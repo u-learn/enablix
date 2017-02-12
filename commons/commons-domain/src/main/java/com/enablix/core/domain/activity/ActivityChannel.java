@@ -6,7 +6,7 @@ public class ActivityChannel {
 
 	public enum Channel {
 		
-		WEB, EMAIL, EXTERNAL,EMAILCLIENT;
+		WEB, EMAIL, EXTERNAL,EMAILCLIENT,SLACK;
 		
 		public static Channel parse(String channel) {
 			
