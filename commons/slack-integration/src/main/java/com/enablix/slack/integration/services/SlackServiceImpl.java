@@ -1,6 +1,7 @@
 package com.enablix.slack.integration.services;
 
 import java.net.URI;
+import java.util.Calendar;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -18,15 +19,24 @@ import com.enablix.slack.integration.services.SlackService;
 import com.enablix.slack.integration.utils.AttachmentDecorator;
 import com.enablix.slack.integration.entities.*;
 import com.enablix.app.template.service.TemplateManager;
+import com.enablix.commons.util.id.IdentityUtil;
 import com.enablix.commons.util.process.ProcessContext;
 import com.enablix.core.api.ContentDataRecord;
 import com.enablix.core.api.ContentDataRef;
 import com.enablix.core.commons.xsdtopojo.ContentTemplate;
+import com.enablix.core.domain.activity.Activity;
+import com.enablix.core.domain.activity.ActivityAudit;
+import com.enablix.core.domain.activity.ActivityChannel;
+import com.enablix.core.domain.activity.UserAccountActivity;
+import com.enablix.core.domain.activity.ActivityChannel.Channel;
+import com.enablix.core.domain.activity.ContentShareActivity.ShareMedium;
+import com.enablix.core.domain.activity.UserAccountActivity.AccountActivityType;
 import com.enablix.core.domain.slackdtls.SlackAccessToken;
 import com.enablix.core.domain.slackdtls.SlackAppDtls;
 import com.enablix.core.system.repo.SlackAccessTokenRepository;
 import com.enablix.core.system.repo.SlackAppDtlsRepository;
 import com.enablix.core.ui.DisplayableContent;
+import com.enablix.services.util.ActivityLogger;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
@@ -99,13 +109,21 @@ public class SlackServiceImpl implements SlackService {
 				SlackTeamDtls.class);
 		if( slackTeamDtls!=null  && slackTeamDtls.getAccessToken()!=null && !slackTeamDtls.getAccessToken().isEmpty() ){
 			SlackAccessToken slackAccessToken = saveUserSpecificToken(slackTeamDtls, userID);
+			auditUserActivity(AccountActivityType.SLACK_AUTH);
 			return slackAccessToken;
 		}
 		else {
 			throw new Exception("Access Token is not present in the response");
 		}
 	}
-
+	private void auditUserActivity(AccountActivityType activityType){
+		ActivityAudit slackUser = new ActivityAudit();
+		UserAccountActivity slackUserAcc = new UserAccountActivity(activityType);
+		slackUser.setActivity(slackUserAcc);
+		slackUser.setActivityTime(Calendar.getInstance().getTime());
+		slackUser.setChannel(new ActivityChannel(Channel.WEB));
+		ActivityLogger.auditActivity(slackUser); 
+	}
 	public SlackChannels getChannelDtls(String usrID)  {
 		SlackAccessToken slackAccessToken = getStoredSlackTeamDtls(usrID) ;
 		URI targetUrl= UriComponentsBuilder.fromUriString(BASE_URL)
@@ -153,6 +171,9 @@ public class SlackServiceImpl implements SlackService {
 				ObjectNode.class);
 		boolean resp = objNode.get("ok").asBoolean();
 		if( resp ){
+			String sharingId = IdentityUtil.generateIdentity(this);
+			ActivityLogger.auditContentShare(templateId, displayableContent, channelID,
+					ShareMedium.WEB, Channel.SLACK, sharingId, displayableContent.getTitle());
 			return true;
 		}
 		return false;
@@ -188,6 +209,7 @@ public class SlackServiceImpl implements SlackService {
 		boolean resp = objNode.get("ok").asBoolean();
 		if( resp ){
 			slackTokenRepo.delete(slackAccessToken);
+			auditUserActivity(AccountActivityType.SLACK_UNAUTH);
 			return true;
 		}
 		return false;
