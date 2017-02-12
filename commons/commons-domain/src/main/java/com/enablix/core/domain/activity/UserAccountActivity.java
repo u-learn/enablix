@@ -3,7 +3,7 @@ package com.enablix.core.domain.activity;
 public class UserAccountActivity extends Activity {
 
 	public enum AccountActivityType {
-		LOGIN, LOGOUT
+		LOGIN, LOGOUT,SLACK_AUTH,SLACK_UNAUTH
 	}
 
 	private AccountActivityType accountActivityType;
