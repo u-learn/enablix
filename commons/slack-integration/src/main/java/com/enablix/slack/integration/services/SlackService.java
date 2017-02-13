@@ -10,7 +10,7 @@ public interface SlackService {
 	
 	boolean unauthorize(String userID);
 	
-	SlackChannels getChannelDtls(String usrID);
+	SlackChannels getChannelDtls(String usrID) throws Exception;
 	
 	boolean postMessageToChannel(String userID, String channelID, String containerQId, String contentIdentity, String slackCustomContent) throws Exception;
 	
