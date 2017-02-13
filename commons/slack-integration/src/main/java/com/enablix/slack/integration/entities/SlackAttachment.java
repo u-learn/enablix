@@ -1,10 +1,8 @@
 package com.enablix.slack.integration.entities;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import com.enablix.core.ui.DisplayField;
-import com.enablix.core.ui.TextValue;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class SlackAttachment {
@@ -13,19 +11,19 @@ public class SlackAttachment {
 	private String footerText;
 
 	@JsonProperty("fallback")
-	String fallBack;
+	private String fallBack;
 
-	String color;
+	private String color;
 
-	String title;
+	private String title;
 
 	@JsonProperty("title_link")
-	String titleLink;
+	private String titleLink;
 
 	@JsonProperty("footer_icon")
-	String footerIcon;
+	private String footerIcon;
 
-	List<SlackAttachmentFields> fields;
+	private List<SlackAttachmentFields> fields;
 	
 	private SlackAttachment(String fallBack, String title, String titleLink, String footerIcon, String color,
 			String footerText,List<SlackAttachmentFields> fields) {
@@ -38,7 +36,6 @@ public class SlackAttachment {
 		this.footerText=footerText;
 		this.fields=fields;
 	}
-
 
 	public String getFooterIcon() {
 		return footerIcon;
@@ -97,18 +94,20 @@ public class SlackAttachment {
 	}
 	
 	public static class SlackAttachmentBuidler {
-		String fallBack;
-		String title;
-		String titleLink;
-		String text;
-		String footerIcon;
-		String color;
-		String footerText;
-		List<DisplayField<?>> fields;
+		private String fallBack;
+		private String title;
+		private String titleLink;
+		private String text;
+		private String footerIcon;
+		private String color;
+		private String footerText;
+		private List<DisplayField<?>> fields;
+		
 		public SlackAttachmentBuidler fallBack(String fallBack)	{
 			this.fallBack = fallBack;
 			return this;
 		}
+		
 		public SlackAttachmentBuidler footerText(String footerText)
 		{
 			this.footerText=footerText;
@@ -145,29 +144,31 @@ public class SlackAttachment {
 		
 		public SlackAttachment build() {
 			// To be used later when we extend the Slack Attachment functionality
-			/*List<SlackAttachmentFields> slackAttachLst = new LinkedList<SlackAttachmentFields>();
-			SlackAttachmentFields slackAttcField;
-			for(DisplayField<?> field:fields)
-			{
+			/*
+			List<SlackAttachmentFields> slackAttachLst = new LinkedList<SlackAttachmentFields>();
+			for (DisplayField<?> field : fields) {
+			
 				String value = processDisplayField(field);
-				if(value!=null && !value.isEmpty()){
-					slackAttcField = new SlackAttachmentFields(field.getLabel(), value);
+				
+				if (value != null && !value.isEmpty()){
+					SlackAttachmentFields slackAttcField = new SlackAttachmentFields(field.getLabel(), value);
 					slackAttachLst.add(slackAttcField);
 				}
-			}*/
-			return new SlackAttachment(fallBack,title,titleLink,footerIcon,color,footerText,null);
+			}
+			*/
+			return new SlackAttachment(fallBack, title, titleLink, footerIcon, color, footerText, null);
 		}
+		
 		// To be used later when we extend the Slack Attachment functionality
-		/*private String processDisplayField(DisplayField<?> field) {
-			if(field.getValue() instanceof TextValue)
-			{
+		/*
+		private String processDisplayField(DisplayField<?> field) {
+			
+			if (field.getValue() instanceof TextValue) {
 				TextValue txtVal = (TextValue) field.getValue();
 				return txtVal.getValue();
 			}
-			else{
-				return null;	
-			}
-
+		
+			return null;	
 		}*/
 	}
 }

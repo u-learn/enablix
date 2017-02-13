@@ -1,13 +1,14 @@
 package com.enablix.slack.integration.entities;
 
 public class SlackAttachmentFields {
-	String title;
+	
+	private String title;
 
-	String value;
+	private String value;
 
 	public SlackAttachmentFields(String title, String value) {
-		this.title=title;
-		this.value=value;
+		this.title = title;
+		this.value = value;
 	}
 
 	public String getTitle() {

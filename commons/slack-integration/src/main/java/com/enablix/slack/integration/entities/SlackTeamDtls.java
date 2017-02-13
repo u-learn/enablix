@@ -5,10 +5,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class SlackTeamDtls {
 	
 	@JsonProperty("team_name")
-	String teamName;
+	private String teamName;
 	
 	@JsonProperty("access_token")
-	String accessToken;
+	private String accessToken;
 
 	public String getTeamName() {
 		return teamName;

@@ -2,9 +2,9 @@ package com.enablix.slack.integration.entities;
 
 public class SlackChannelDtls {
 	
-	String id;
+	private String id;
 	
-	String name;
+	private String name;
 	
 	public String getId() {
 		return id;
