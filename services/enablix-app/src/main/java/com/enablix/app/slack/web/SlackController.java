@@ -29,7 +29,7 @@ public class SlackController {
 			return slackServiceImpl.authorize(code, ProcessContext.get().getUserId());
 		}
 		catch(Exception e){
-			LOGGER.error("Error Retrieving Slack Dtls ",e);
+			LOGGER.error(" Error Authorizing Slack Account ",e);
 			return null;
 		}
 	}
@@ -44,7 +44,7 @@ public class SlackController {
 					, channelID, containerQId,contentIdentity,slackCustomContent);
 		}
 		catch(Exception e) {
-			LOGGER.error("Error Retrieving Slack Dtls ",e);
+			LOGGER.error(" Error Posting message to Slack ",e);
 			return false;
 		}
 	}
@@ -55,7 +55,7 @@ public class SlackController {
 			return slackServiceImpl.unauthorize(ProcessContext.get().getUserId());
 		}
 		catch(Exception e) {
-			LOGGER.error("Error Retrieving Slack Dtls ",e);
+			LOGGER.error(" Error Unauthorizing Slack Account ",e);
 			return false;
 		}
 	}
@@ -66,7 +66,7 @@ public class SlackController {
 			return slackServiceImpl.getChannelDtls(ProcessContext.get().getUserId());
 		}
 		catch(Exception e) {
-			LOGGER.error("Error Retrieving Slack Channel Dtls ",e);
+			LOGGER.error("Error Retrieving Slack Channel Details ",e);
 			return null;
 		}
 	}
@@ -77,7 +77,7 @@ public class SlackController {
 			return slackServiceImpl.getStoredSlackTeamDtls(ProcessContext.get().getUserId());
 		}
 		catch(Exception e) {
-			LOGGER.error("Error Retrieving Slack Dtls ",e);
+			LOGGER.error("Error Retrieving Slack Details ",e);
 			return null;
 		}
 	}
