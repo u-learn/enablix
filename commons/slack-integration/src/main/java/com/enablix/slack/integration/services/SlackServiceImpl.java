@@ -135,7 +135,7 @@ public class SlackServiceImpl implements SlackService {
 		ActivityLogger.auditActivity(slackActivity); 
 	}
 	
-	public SlackChannels getChannelDtls(String usrID)  {
+	public SlackChannels getChannelDtls(String usrID) throws Exception  {
 	
 		SlackAccessToken slackAccessToken = getStoredSlackTeamDtls(usrID) ;
 		
@@ -147,7 +147,9 @@ public class SlackServiceImpl implements SlackService {
 				.toUri();
 		
 		SlackChannels channelDtls = restTemplate.getForObject(targetUrl, SlackChannels.class);
-		
+		if(channelDtls==null || channelDtls.getSlackChannels()==null || channelDtls.getSlackChannels().size()==0){
+			throw new Exception(" Channel List is Empty ");
+		}
 		return channelDtls;
 	}
 

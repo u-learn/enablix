@@ -14,15 +14,16 @@ enablix.studioApp.controller('ShareToSlackController', [
 		
 		function populateChannels(data){
 			var channelsDtls = data.channels;
-			var size = channelsDtls.length;
-			for(var i=0; i<size;i++)
-			{
-				var channelObj= {
-						label: channelsDtls[i].name,
-						id: channelsDtls[i].id
-				};
-				//prompt("channelObj",JSON.stringify(channelObj));
-				$scope.channelLst.push(channelObj);
+			if(channelsDtls!=null && channelsDtls!=undefined){
+				var size = channelsDtls.length;
+				for(var i=0; i<size;i++)
+				{
+					var channelObj= {
+							label: channelsDtls[i].name,
+							id: channelsDtls[i].id
+					};
+					$scope.channelLst.push(channelObj);
+				}
 			}
 		}
 
