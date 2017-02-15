@@ -10,11 +10,11 @@ import com.enablix.app.content.recent.repo.RecentDataRepository;
 import com.enablix.app.template.service.TemplateManager;
 import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.core.api.ContentDataRef;
-import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 import com.enablix.core.domain.recent.RecentData;
 import com.enablix.core.domain.recent.RecentData.UpdateType;
-import com.enablix.services.util.ContentDataUtil;
 import com.enablix.core.domain.recent.RecentDataScope;
+import com.enablix.services.util.ContentDataUtil;
+import com.enablix.services.util.template.TemplateWrapper;
 
 @Component
 public class RecentDataCollector implements ContentDataEventListener {
@@ -76,11 +76,11 @@ public class RecentDataCollector implements ContentDataEventListener {
 	private void createNewRecord(ContentDataSaveEvent event, RecentData recentData, 
 			Object contentIdentity, UpdateType updateType) {
 		
-		ContentTemplate template = templateMgr.getTemplate(event.getTemplateId());
+		TemplateWrapper templateWrapper = templateMgr.getTemplateWrapper(event.getTemplateId());
 		String contentQId = event.getContainerType().getQualifiedId();
-		String contentTitle = ContentDataUtil.findPortalLabelValue(event.getDataAsMap(), template, contentQId);
+		String contentTitle = ContentDataUtil.findPortalLabelValue(event.getDataAsMap(), templateWrapper, contentQId);
 		
-		ContentDataRef dataRef = new ContentDataRef(event.getTemplateId(), 
+		ContentDataRef dataRef = ContentDataRef.createContentRef(event.getTemplateId(), 
 				contentQId, String.valueOf(contentIdentity), contentTitle);
 		
 		// set data ref

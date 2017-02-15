@@ -1,0 +1,24 @@
+<div class="block modal-block">
+	<div class="head">
+		<h2>{{browserHeading}}</h2>
+		<button class="button button-close" type="button" ng-click="cancelOperation()">x</button>
+	</div>
+	<div class="cont browser-selected-content" layout="row" ng-if="selectedContentItems.length > 0">
+		<md-chips class="readonly-chips" ng-model="selectedContentItems" readonly="true" 
+					md-removable="true" md-on-remove="selectedContentItemRemoved($chip, $index)">
+			<md-chip-template>
+				<span><strong>{{$chip[labelField]}}</strong></span>
+			</md-chip-template>
+		</md-chips>
+	</div>
+	
+	<ebx-generic-table table-headers="tableHeaders" 
+			table-data="contentList" row-actions="tableRecordActions" select-action="tableRecordSelectAction" 
+			page-data="pageData" pagination-data="pagination" fetch-result-fn="fetchData"></ebx-generic-table>
+			
+	<div class="foot clearfix">
+		<button ng-click="doneBrowsing()" class="button button-add">Done</button>
+		<a ng-click="cancelOperation()" class="button button-delete">Cancel</a>
+	</div>
+		
+</div>

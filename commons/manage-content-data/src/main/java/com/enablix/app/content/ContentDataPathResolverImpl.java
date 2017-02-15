@@ -35,7 +35,7 @@ public class ContentDataPathResolverImpl implements ContentDataPathResolver {
 
 	private NavigableContent createNavigableContent(String templateId, String containerQId,
 			String containerInstanceIdentity, String itemTitle) {
-		ContentDataRef dataRef = new ContentDataRef(templateId, containerQId, containerInstanceIdentity, itemTitle);
+		ContentDataRef dataRef = ContentDataRef.createContentRef(templateId, containerQId, containerInstanceIdentity, itemTitle);
 		NavigableContent navContent = navContentBuilder.build(dataRef, labelResolver);
 		return navContent;
 	}

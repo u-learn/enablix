@@ -1,0 +1,25 @@
+<div class="container-fluid">
+	<!-- bread crumbs -->
+	<div class="bread-crumbs">
+		<div class="cont">
+			<span>Content Kit</span>
+		</div>
+	</div>
+	<!--/ bread crumbs -->
+
+	<div class="row">
+		<aside class="col-sm-4 col-md-3">
+			<nav id="side-nav" class="side-nav">
+				<ul>
+					<li ng-class="{active: $state.includes('contentkit')}">
+						<i class="fa fa-angle-right"></i>
+						<a href="#" ui-sref="contentkit.list">Content Kits</a>
+					</li>
+				</ul>
+		    </nav>
+		</aside>
+		<div class="col-sm-9">
+			<div ui-view></div>
+		</div>
+	</div>
+</div>

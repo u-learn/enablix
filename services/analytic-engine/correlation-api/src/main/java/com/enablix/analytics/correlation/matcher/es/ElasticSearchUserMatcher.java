@@ -14,9 +14,9 @@ import org.springframework.stereotype.Component;
 
 import com.enablix.analytics.correlation.matcher.MatchInputRecord;
 import com.enablix.analytics.correlation.matcher.UserMatcher;
-import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 import com.enablix.core.commons.xsdtopojo.FilterCriteriaType;
 import com.enablix.core.commons.xsdtopojo.RelatedUserType;
+import com.enablix.services.util.template.TemplateWrapper;
 
 @Component
 public class ElasticSearchUserMatcher implements UserMatcher {
@@ -28,7 +28,7 @@ public class ElasticSearchUserMatcher implements UserMatcher {
 	private ESCorrelationQueryBuilder esCorrQueryBuilder;
 	
 	@Override
-	public List<Map<String, Object>> findMatchingUsers(ContentTemplate template, String userQualifiedId, 
+	public List<Map<String, Object>> findMatchingUsers(TemplateWrapper template, String userQualifiedId, 
 			RelatedUserType relatedUserDef, MatchInputRecord matchInput) {
 		
 		FilterCriteriaType userFilterCriteria = relatedUserDef.getFilterCriteria();

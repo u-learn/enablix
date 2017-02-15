@@ -12,7 +12,8 @@ enablix.studioApp.directive('ebPortalSubContainer', [
 				index: "=",
 				parentList: "=",
 				expanded: "@",
-				multiListLimit: "="
+				multiListLimit: "=",
+				info: "=?"
 			},
 			controller : 'PortalSubContainerCtrl',
 			templateUrl : function(elem, attr) {

@@ -7,7 +7,7 @@ import com.enablix.app.content.delete.DeleteContentRequest;
 import com.enablix.app.content.fetch.FetchContentRequest;
 import com.enablix.app.content.update.UpdateContentRequest;
 import com.enablix.core.api.ContentDataRef;
-import com.enablix.core.commons.xsdtopojo.ContentTemplate;
+import com.enablix.services.util.template.TemplateWrapper;
 
 public interface ContentDataManager {
 
@@ -19,11 +19,11 @@ public interface ContentDataManager {
 
 	List<Map<String, Object>> fetchPeers(FetchContentRequest request);
 
-	Map<String, Object> fetchParentRecord(ContentTemplate template, 
+	Map<String, Object> fetchParentRecord(TemplateWrapper template, 
 			String recordQId, Map<String, Object> record);
 	
-	Map<String, Object> getContentRecord(ContentDataRef dataRef, ContentTemplate template);
+	Map<String, Object> getContentRecord(ContentDataRef dataRef, TemplateWrapper template);
 	
-	List<Map<String, Object>> getContentRecords(String containerQId, List<String> recordIdentities, ContentTemplate template);
+	List<Map<String, Object>> getContentRecords(String containerQId, List<String> recordIdentities, TemplateWrapper template);
 	
 }

@@ -2,6 +2,10 @@ package com.enablix.core.api;
 
 public class ContentDataRef {
 
+	public enum DataType {
+		CONTENT, CONTENT_KIT
+	}
+	
 	private String templateId;
 	
 	private String containerQId;
@@ -9,18 +13,28 @@ public class ContentDataRef {
 	private String instanceIdentity;
 	
 	private String title;
+	
+	private DataType type;
 
 	protected ContentDataRef() {
 		// for JSON conversions
+		this.type = DataType.CONTENT;
 	}
 	
-	public ContentDataRef(String templateId, String containerQId, 
+	private ContentDataRef(String templateId, String containerQId, 
 			String instanceIdentity, String title) {
 		super();
 		this.templateId = templateId;
 		this.containerQId = containerQId;
 		this.instanceIdentity = instanceIdentity;
 		this.title = title;
+		this.type = DataType.CONTENT;
+	}
+	
+	private ContentDataRef(String instanceIdentity, String title, DataType type) {
+		this.instanceIdentity = instanceIdentity;
+		this.title = title;
+		this.type = type;
 	}
 
 	public String getTemplateId() {
@@ -53,6 +67,14 @@ public class ContentDataRef {
 
 	public void setTitle(String title) {
 		this.title = title;
+	}
+
+	public DataType getType() {
+		return type;
+	}
+
+	public void setType(DataType type) {
+		this.type = type;
 	}
 
 	@Override
@@ -96,6 +118,14 @@ public class ContentDataRef {
 	public String toString() {
 		return "ContentDataRef [templateId=" + templateId + ", containerQId=" + containerQId + ", instanceIdentity="
 				+ instanceIdentity + "]";
+	}
+	
+	public static ContentDataRef createContentRef(String templateId, String containerQId, String instanceIdentity, String title) {
+		return new ContentDataRef(templateId, containerQId, instanceIdentity, title);
+	}
+	
+	public static ContentDataRef createContentKitRef(String instanceIdentity, String kitName) {
+		return new ContentDataRef(instanceIdentity, kitName, DataType.CONTENT_KIT);
 	}
 	
 }

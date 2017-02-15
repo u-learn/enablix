@@ -14,11 +14,11 @@ import com.enablix.app.content.event.ContentDataSaveEvent;
 import com.enablix.app.template.service.TemplateManager;
 import com.enablix.commons.util.concurrent.Events;
 import com.enablix.core.api.ContentDataRef;
-import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 import com.enablix.core.domain.trigger.ContentChange;
 import com.enablix.core.domain.trigger.ContentChange.TriggerType;
 import com.enablix.core.mq.EventSubscription;
 import com.enablix.services.util.ContentDataUtil;
+import com.enablix.services.util.template.TemplateWrapper;
 import com.enablix.trigger.lifecycle.TriggerLifecycleManager;
 import com.enablix.trigger.lifecycle.TriggerLifecycleManagerFactory;
 
@@ -44,7 +44,7 @@ public class ContentTriggerListener implements ContentDataEventListener {
 
 	@Override
 	public void onContentDataDelete(ContentDataDelEvent event) {
-		ContentDataRef item = new ContentDataRef(event.getTemplateId(), 
+		ContentDataRef item = ContentDataRef.createContentRef(event.getTemplateId(), 
 				event.getContainerQId(), event.getContentIdentity(), event.getContentTitle());
 		itemItemCorrService.deleteCorrelationsForItem(item);
 		itemUserCorrService.deleteCorrelationsForItem(item);
@@ -60,7 +60,7 @@ public class ContentTriggerListener implements ContentDataEventListener {
 			contentTriggerDate = Calendar.getInstance().getTime();
 		}
 		
-		ContentTemplate template = templateMgr.getTemplate(event.getTemplateId());
+		TemplateWrapper template = templateMgr.getTemplateWrapper(event.getTemplateId());
 		ContentChange contentChangeTrigger = new ContentChange(contentTriggerDate);
 		
 		contentChangeTrigger.setContentChange(event.getChangeDelta());

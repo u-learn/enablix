@@ -16,13 +16,13 @@ import com.enablix.analytics.correlation.impl.DataSyncPendingException;
 import com.enablix.app.template.service.TemplateManager;
 import com.enablix.core.commons.xsdtopojo.ActionType;
 import com.enablix.core.commons.xsdtopojo.CheckpointType;
-import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 import com.enablix.core.commons.xsdtopojo.CorrelationActionType;
 import com.enablix.core.commons.xsdtopojo.EmailActionType;
 import com.enablix.core.commons.xsdtopojo.ReevaluatePendingCheckpointType;
 import com.enablix.core.domain.trigger.ContentChange;
 import com.enablix.core.domain.trigger.LifecycleCheckpoint;
 import com.enablix.core.domain.trigger.LifecycleCheckpoint.ExecutionStatus;
+import com.enablix.services.util.template.TemplateWrapper;
 import com.enablix.trigger.lifecycle.CheckpointExecutor;
 import com.enablix.trigger.lifecycle.action.CheckpointAction;
 import com.enablix.trigger.lifecycle.action.CheckpointActionFactory;
@@ -53,7 +53,7 @@ public class ContentChangeCheckpointExecutor implements CheckpointExecutor<Conte
 			
 			CheckpointType checkpointDef = checkpoint.getCheckpointDefinition();
 			
-			ContentTemplate template = templateManager.getTemplate(
+			TemplateWrapper template = templateManager.getTemplateWrapper(
 					checkpoint.getTrigger().getTriggerItem().getTemplateId());
 			
 			Set<ActionType> actionDefs = createActionList(checkpointDef);
@@ -98,7 +98,7 @@ public class ContentChangeCheckpointExecutor implements CheckpointExecutor<Conte
 	}
 
 	protected void executeCheckpoint(LifecycleCheckpoint<ContentChange> checkpoint, 
-			Set<ActionType> actionDefs, ContentTemplate template) {
+			Set<ActionType> actionDefs, TemplateWrapper template) {
 		
 		for (ActionType actionDef : actionDefs) {
 			
@@ -127,7 +127,7 @@ public class ContentChangeCheckpointExecutor implements CheckpointExecutor<Conte
 		}
 	}
 
-	private void executeAction(LifecycleCheckpoint<ContentChange> checkpoint, ContentTemplate template,
+	private void executeAction(LifecycleCheckpoint<ContentChange> checkpoint, TemplateWrapper template,
 			ActionType actionDef) {
 		
 		CheckpointAction<ContentChange, ActionType> action = actionFactory.getCheckpointAction(actionDef);

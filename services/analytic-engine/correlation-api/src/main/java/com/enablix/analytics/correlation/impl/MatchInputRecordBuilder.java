@@ -16,11 +16,11 @@ import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.commons.util.QIdUtil;
 import com.enablix.commons.util.collection.CollectionUtil;
 import com.enablix.core.api.ContentDataRef;
-import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 import com.enablix.core.commons.xsdtopojo.FilterConstantType;
 import com.enablix.core.commons.xsdtopojo.FilterCriteriaType;
 import com.enablix.core.commons.xsdtopojo.FilterType;
 import com.enablix.core.commons.xsdtopojo.TriggerItemType;
+import com.enablix.services.util.template.TemplateWrapper;
 
 @Component
 public class MatchInputRecordBuilder {
@@ -33,7 +33,7 @@ public class MatchInputRecordBuilder {
 	@Autowired
 	private DataMatcher dataMatcher;
 
-	public MatchInputRecord buildTriggerMatchInput(ContentTemplate template, 
+	public MatchInputRecord buildTriggerMatchInput(TemplateWrapper template, 
 			TriggerItemType triggerItemType, ContentDataRef triggerItem) {
 		
 		FilterCriteriaType filterCriteria = triggerItemType.getFilterCriteria();
@@ -53,7 +53,7 @@ public class MatchInputRecordBuilder {
 		return matchInput;
 	}
 	
-	private boolean triggerRecordMatchesFilter(FilterCriteriaType filterCriteria, ContentTemplate template,
+	private boolean triggerRecordMatchesFilter(FilterCriteriaType filterCriteria, TemplateWrapper template,
 			ContentDataRef triggerItem) {
 		
 		MatchInputRecord emptyMatchInput = new MatchInputRecord(triggerItem.getContainerQId(), 
@@ -90,7 +90,7 @@ public class MatchInputRecordBuilder {
 		return CollectionUtil.isNotEmpty(matchedRecords);
 	}
 
-	private void populateParent(MatchInputRecord matchInput, ContentTemplate template) {
+	private void populateParent(MatchInputRecord matchInput, TemplateWrapper template) {
 		
 		Map<String, Object> parentRecord = contentDataMgr.fetchParentRecord(
 				template, matchInput.getContentQId(), matchInput.getRecord());

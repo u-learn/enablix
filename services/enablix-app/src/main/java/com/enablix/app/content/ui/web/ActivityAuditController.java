@@ -18,7 +18,7 @@ public class ActivityAuditController {
 	@RequestMapping(method = RequestMethod.POST, value="/content/access/")
 	public void auditContentAccess(@RequestBody ContentAuditRequest request) {
 		String templateId = ProcessContext.get().getTemplateId();
-		ContentDataRef dataRef = new ContentDataRef(templateId, request.getContainerQId(), 
+		ContentDataRef dataRef = ContentDataRef.createContentRef(templateId, request.getContainerQId(), 
 				request.getInstanceIdentity(), request.getItemTitle());
 		ActivityLogger.auditContentAccess(dataRef, ContentActivity.ContainerType.CONTENT, Channel.WEB);
 	}

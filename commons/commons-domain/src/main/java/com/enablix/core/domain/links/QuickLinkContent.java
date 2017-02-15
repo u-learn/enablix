@@ -13,7 +13,7 @@ public class QuickLinkContent extends BaseDocumentEntity {
 	private QuickLinkCategory category;
 	
 	private ContentDataRef data;
-
+	
 	public QuickLinkCategory getCategory() {
 		return category;
 	}
@@ -29,5 +29,5 @@ public class QuickLinkContent extends BaseDocumentEntity {
 	public void setData(ContentDataRef data) {
 		this.data = data;
 	}
-	
+
 }

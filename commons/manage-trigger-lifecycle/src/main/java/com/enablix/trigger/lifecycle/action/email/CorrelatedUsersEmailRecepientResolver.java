@@ -11,11 +11,11 @@ import org.springframework.stereotype.Component;
 import com.enablix.analytics.correlation.data.dao.ItemUserCorrelationDao;
 import com.enablix.core.api.ContentDataRef;
 import com.enablix.core.commons.xsdtopojo.BaseEmailRecipientType;
-import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 import com.enablix.core.commons.xsdtopojo.EmailCorrelatedUsersType;
 import com.enablix.core.commons.xsdtopojo.EmailUsersType;
 import com.enablix.core.commons.xsdtopojo.FilterTagsType;
 import com.enablix.core.correlation.ItemUserCorrelation;
+import com.enablix.services.util.template.TemplateWrapper;
 
 @Component
 public class CorrelatedUsersEmailRecepientResolver implements EmailRecipientResolver<EmailCorrelatedUsersType> {
@@ -25,7 +25,7 @@ public class CorrelatedUsersEmailRecepientResolver implements EmailRecipientReso
 	
 	@Override
 	public Set<ContentDataRef> resolveRecepientEmails(ContentDataRef triggerEntity, 
-			ContentTemplate template, EmailCorrelatedUsersType emailCorrUsersDef) {
+			TemplateWrapper template, EmailCorrelatedUsersType emailCorrUsersDef) {
 		
 		Set<ContentDataRef> users = new HashSet<>();
 		

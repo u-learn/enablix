@@ -288,16 +288,46 @@ enablix.studioApp.factory('StateUpdateService',
 	 		var goToRecentUpdateList = function(_params) {
 	 			$state.go("portal.recentdatalist", _params);
 	 		};
+	 		
 	 		var goToSlackDtls = function(teamName) {
 	 			$state.go("myaccount.slackdtls", {
 	 				teamName: teamName
 	 			});
 	 		};
+	 		
 	 		var goToSlackAuth = function(source) {
 	 			$state.go("myaccount.slackauthorization",{
 	 				source :source
 	 			});
 	 		};
+	 		
+	 		var goToContentKitList = function() {
+	 			$state.go("contentkit.list");
+	 		};
+	 		
+	 		var goToContentKitEdit = function(_contentKitIdentity) {
+	 			$state.go("contentkit.edit", {
+	 				contentKitIdentity: _contentKitIdentity
+	 			});
+	 		};
+	 		
+	 		var goToContentKitDetail = function(_contentKitIdentity) {
+	 			$state.go("contentkit.detail", {
+	 				contentKitIdentity: _contentKitIdentity
+	 			});
+	 		};
+	 		
+	 		var goToAddContentConnKit = function() {
+	 			$state.go("contentkit.add");
+	 		};
+	 		
+	 		var goToPortalContentKitDetail = function(_contentKitIdentity) {
+	 			$state.go("portal.contentkit", {
+	 				contentKitIdentity: _contentKitIdentity
+	 			});
+	 		};
+
+	 		
 	 		return {
 	 			goToApp: goToApp,
 	 			goToAppSetPassword: goToAppSetPassword,
@@ -347,8 +377,13 @@ enablix.studioApp.factory('StateUpdateService',
 	 			goToAddXPlay : goToAddXPlay,
 	 			goToEditXPlay : goToEditXPlay,
 	 			goToRecentUpdateList : goToRecentUpdateList,
-				goToSlackDtls:goToSlackDtls,
-	 			goToSlackAuth:goToSlackAuth
+				goToSlackDtls : goToSlackDtls,
+	 			goToSlackAuth : goToSlackAuth,
+	 			goToContentKitList : goToContentKitList,
+	 			goToContentKitDetail : goToContentKitDetail,
+	 			goToContentKitEdit : goToContentKitEdit,
+	 			goToAddContentConnKit : goToAddContentConnKit,
+	 			goToPortalContentKitDetail : goToPortalContentKitDetail
 	 		};
 	 	}
 	 ]);

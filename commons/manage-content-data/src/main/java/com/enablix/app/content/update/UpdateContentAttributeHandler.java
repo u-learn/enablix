@@ -9,9 +9,9 @@ import org.springframework.stereotype.Component;
 
 import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.commons.util.StringUtil;
-import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 import com.enablix.core.mongo.content.ContentCrudService;
 import com.enablix.services.util.TemplateUtil;
+import com.enablix.services.util.template.TemplateWrapper;
 
 @Component
 public class UpdateContentAttributeHandler implements ContentUpdateHandler {
@@ -22,14 +22,14 @@ public class UpdateContentAttributeHandler implements ContentUpdateHandler {
 	private ContentCrudService crudService;
 	
 	@Override
-	public Map<String, Object> updateContent(ContentTemplate template, String recordId, String contentQId,
+	public Map<String, Object> updateContent(TemplateWrapper template, String recordId, String contentQId,
 			Map<String, Object> contentDataMap) {
 		
 		LOGGER.debug("Updating content attributes for templateId: {}, recordId: {}, "
 				+ "contentQId: {}, data: {}", template.getId(), recordId, contentQId, contentDataMap);
 		
-		String collectionName = TemplateUtil.resolveCollectionName(template, contentQId);
-		String relativeContentQId = TemplateUtil.getQIdRelativeToParentContainer(template, contentQId);
+		String collectionName = template.getCollectionName(contentQId);
+		String relativeContentQId = TemplateUtil.getQIdRelativeToParentContainer(template.getTemplate(), contentQId);
 
 		String contentIdentity = (String) contentDataMap.get(ContentDataConstants.IDENTITY_KEY);
 		if (StringUtil.isEmpty(contentIdentity)) {

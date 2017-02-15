@@ -19,7 +19,7 @@
 
 
 <!-- other solutions -->
-<div class="block quick-links" ng-if="!$state.includes('portal.containerlist')">
+<div class="block quick-links" ng-if="$state.includes('portal.container')">
 	<div class="head"><h3>Other {{containerLabel}}</h3></div>
 	<div class="cont">
 		<eb-portal-peers container-q-id="containerQId" content-identity="contentIdentity"></eb-portal-peers>

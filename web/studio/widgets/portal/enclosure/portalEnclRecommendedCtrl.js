@@ -1,6 +1,6 @@
 enablix.studioApp.controller('PortalEnclRecommendedCtrl', 
-		   ['$scope', '$rootScope', '$stateParams', 'StudioSetupService', 
-    function($scope,   $rootScope,   $stateParams,   StudioSetupService) {
-
+		   ['$scope', '$rootScope', '$state', '$stateParams', 'StudioSetupService', 
+    function($scope,   $rootScope,   $state,   $stateParams,   StudioSetupService) {
+		$scope.$state = $state;
 	}                                          
 ]);

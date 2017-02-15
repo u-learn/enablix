@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.enablix.app.template.service.TemplateManager;
 import com.enablix.commons.util.process.ProcessContext;
 import com.enablix.content.approval.model.ContentDetail;
-import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 import com.enablix.services.util.ContentDataUtil;
+import com.enablix.services.util.template.TemplateWrapper;
 import com.enablix.state.change.model.GenericActionResult;
 
 public abstract class ContentSaveAction extends BaseContentAction<ContentDetail, Boolean> {
@@ -23,7 +23,7 @@ public abstract class ContentSaveAction extends BaseContentAction<ContentDetail,
 			ContentDetail objectRef) {
 		
 		// evaluate title of the content
-		ContentTemplate template = templateMgr.getTemplate(ProcessContext.get().getTemplateId());
+		TemplateWrapper template = templateMgr.getTemplateWrapper(ProcessContext.get().getTemplateId());
 		String title = ContentDataUtil.findPortalLabelValue(actionData.getData(), template, actionData.getContentQId());
 		actionData.setContentTitle(title);
 		

@@ -10,8 +10,8 @@ import org.springframework.stereotype.Component;
 
 import com.enablix.core.commons.xsdtopojo.ContentItemClassType;
 import com.enablix.core.commons.xsdtopojo.ContentItemType;
-import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 import com.enablix.core.ui.TextValue;
+import com.enablix.services.util.template.TemplateWrapper;
 
 @Component
 public class DateToTextValueBuilder implements FieldValueBuilder<TextValue, String>{
@@ -25,7 +25,7 @@ public class DateToTextValueBuilder implements FieldValueBuilder<TextValue, Stri
 	private SimpleDateFormat outDateFormatter = new SimpleDateFormat(OUT_DATE_FORMAT);
 	
 	@Override
-	public TextValue build(ContentItemType fieldDef, String fieldValue, ContentTemplate template, DisplayContext ctx) {
+	public TextValue build(ContentItemType fieldDef, String fieldValue, TemplateWrapper template, DisplayContext ctx) {
 		
 		Date date = null;
 		

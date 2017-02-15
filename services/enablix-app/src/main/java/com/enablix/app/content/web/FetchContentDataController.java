@@ -116,11 +116,11 @@ public class FetchContentDataController {
 				// single result 
 				Map record = (Map) data;
 				contentTitle = ContentDataUtil.findPortalLabelValue(record, 
-						templateMgr.getTemplate(templateId), contentQId);
+						templateMgr.getTemplateWrapper(templateId), contentQId);
 				
 			}
 			ActivityLogger.auditContentAccess(
-				new ContentDataRef(templateId, contentQId, dataIdentity, contentTitle), 
+				ContentDataRef.createContentRef(templateId, contentQId, dataIdentity, contentTitle), 
 				ContainerType.CONTENT, channel, atContext, atContextId, atContextTerm);
 		}
 		

@@ -6,9 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.enablix.core.commons.xsdtopojo.ContentItemType;
-import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 import com.enablix.core.ui.DisplayField;
 import com.enablix.core.ui.FieldValue;
+import com.enablix.services.util.template.TemplateWrapper;
 
 @Component
 public class DisplayFieldBuilderImpl implements DisplayFieldBuilder {
@@ -18,7 +18,7 @@ public class DisplayFieldBuilderImpl implements DisplayFieldBuilder {
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
-	public DisplayField<?> build(ContentItemType fieldDef, ContentTemplate template, 
+	public DisplayField<?> build(ContentItemType fieldDef, TemplateWrapper template, 
 			Map<String, Object> contentRec, DisplayContext ctx) {
 		
 		FieldValueBuilder builder = fvBuilderFactory.getBuilder(fieldDef);

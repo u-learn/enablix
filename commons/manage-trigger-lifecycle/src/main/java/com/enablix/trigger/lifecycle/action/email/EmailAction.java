@@ -26,7 +26,6 @@ import com.enablix.core.api.ContentDataRecord;
 import com.enablix.core.api.ContentDataRef;
 import com.enablix.core.commons.xsdtopojo.ActionType;
 import com.enablix.core.commons.xsdtopojo.BaseEmailContentType;
-import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 import com.enablix.core.commons.xsdtopojo.CorrelatedEntitiesType;
 import com.enablix.core.commons.xsdtopojo.EmailActionType;
 import com.enablix.core.commons.xsdtopojo.EmailContentTriggerEntityType;
@@ -49,6 +48,7 @@ import com.enablix.core.ui.DisplayableContent;
 import com.enablix.services.util.ActivityLogger;
 import com.enablix.services.util.ContentDataUtil;
 import com.enablix.services.util.TemplateUtil;
+import com.enablix.services.util.template.TemplateWrapper;
 import com.enablix.trigger.lifecycle.action.CheckpointAction;
 
 @Component
@@ -94,7 +94,7 @@ public class EmailAction implements CheckpointAction<ContentChange, EmailActionT
 	}
 
 	@Override
-	public void run(LifecycleCheckpoint<ContentChange> checkpoint, ContentTemplate template, EmailActionType actionType) {
+	public void run(LifecycleCheckpoint<ContentChange> checkpoint, TemplateWrapper template, EmailActionType actionType) {
 		
 		// map of content identity to content record, keeping a map helps in removing the duplicates
 		// of the same record returned from different content resolvers
@@ -125,8 +125,8 @@ public class EmailAction implements CheckpointAction<ContentChange, EmailActionT
 					userIdentities.add(userRef.getInstanceIdentity());
 				}
 				
-				String userContainerQId = TemplateUtil.getUserContainerQId(template);
-				String userContainerCollName = TemplateUtil.resolveCollectionName(template, userContainerQId);
+				String userContainerQId = TemplateUtil.getUserContainerQId(template.getTemplate());
+				String userContainerCollName = template.getCollectionName(userContainerQId);
 				
 				SearchFilter usersIdentitiesInFilter = new StringListFilter(
 						ContentDataConstants.IDENTITY_KEY, userIdentities, ConditionOperator.IN);
@@ -144,7 +144,7 @@ public class EmailAction implements CheckpointAction<ContentChange, EmailActionT
 		}
 	}
 
-	private void sendEmails(ContentTemplate template, EmailActionType actionType, TriggerType triggerType,
+	private void sendEmails(TemplateWrapper template, EmailActionType actionType, TriggerType triggerType,
 			Map<String, ContentDataRecord> emailContent, ContentDataRef triggerItemRef, Set<String> recepientEmailIds) {
 		
 		TriggerEmailVelocityInput velocityIn = new TriggerEmailVelocityInput();
@@ -206,11 +206,11 @@ public class EmailAction implements CheckpointAction<ContentChange, EmailActionT
 					actionType.getEmailTemplate().getBody().getTemplateName(), 
 					actionType.getEmailTemplate().getSubject().getTemplateName());
 			
-			auditContentShare(template.getId(), velocityIn, emailId);
+			auditContentShare(template.getTemplate().getId(), velocityIn, emailId);
 		}
 	}
 	
-	private List<DisplayableContent> createDisplayableContent(ContentTemplate template, 
+	private List<DisplayableContent> createDisplayableContent(TemplateWrapper template, 
 			Collection<ContentDataRecord> collection, DisplayContext ctx) {
 		
 		List<DisplayableContent> displayableContentList = new ArrayList<>();
@@ -223,11 +223,11 @@ public class EmailAction implements CheckpointAction<ContentChange, EmailActionT
 		return displayableContentList;
 	}
 	
-	private Set<String> extractEmailIdsFromUsers(List<Map<String, Object>> userRecords, ContentTemplate template) {
+	private Set<String> extractEmailIdsFromUsers(List<Map<String, Object>> userRecords, TemplateWrapper template) {
 		
 		Set<String> emailIds = new HashSet<>();
 		
-		String emailAttrId = TemplateUtil.getUserContainerEmailAttrId(template);
+		String emailAttrId = TemplateUtil.getUserContainerEmailAttrId(template.getTemplate());
 		if (!StringUtil.isEmpty(emailAttrId)) {
 			
 			for (Map<String, Object> user : userRecords) {
@@ -242,7 +242,7 @@ public class EmailAction implements CheckpointAction<ContentChange, EmailActionT
 		return emailIds;
 	}
 	
-	private void fetchEmailContent(LifecycleCheckpoint<ContentChange> checkpoint, ContentTemplate template,
+	private void fetchEmailContent(LifecycleCheckpoint<ContentChange> checkpoint, TemplateWrapper template,
 			Map<String, ContentDataRecord> emailContent, BaseEmailContentType triggerEntityContent) {
 		
 		EmailContentResolver<BaseEmailContentType> resolver = 
@@ -271,7 +271,7 @@ public class EmailAction implements CheckpointAction<ContentChange, EmailActionT
 		
 		DisplayableContent triggerEntity = sharedContent.getTriggerEntity();
 		if (triggerEntity != null) {
-			sharedContentList.add(new ContentDataRef(templateId, 
+			sharedContentList.add(ContentDataRef.createContentRef(templateId, 
 				triggerEntity.getContainerQId(), triggerEntity.getRecordIdentity(),
 				triggerEntity.getTitle()));
 		}
@@ -279,7 +279,7 @@ public class EmailAction implements CheckpointAction<ContentChange, EmailActionT
 		Collection<DisplayableContent> emailContent = sharedContent.getEmailContent();
 		if (emailContent != null) {
 			for (DisplayableContent content : emailContent) {
-				sharedContentList.add(new ContentDataRef(templateId, 
+				sharedContentList.add(ContentDataRef.createContentRef(templateId, 
 						content.getContainerQId(), content.getRecordIdentity(),
 						content.getTitle()));
 			}

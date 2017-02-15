@@ -1,0 +1,40 @@
+<div class="block">
+	<div class="head">
+		<h2>{{heading}}</h2>
+	</div>
+	<form name="addContentKitForm">
+		<div class="cont">
+			<label class="form-label">Name<span ng-if="viewOper">: {{contentKit.name}}</span></label>
+			<input ng-if="!viewOper" required name="name" placeholder="Enter Name" 
+					class="form-control" ng-model="contentKit.name"/>
+			<div ng-messages="addContentKitForm.name.$error">
+				<div class="error" ng-message="required">Name is required.</div>
+	        </div>
+		</div>
+		<div>
+			<div class="head ebx-top-border">
+				<h2>Content List <ebx-system-content-browser ng-if="!viewOper" pre-selected-records="selectedContent" selection-callback="contentSelected"></ebx-system-content-browser></h2>
+			</div>
+			<div>	
+				<ebx-generic-table table-headers="contentTableHeaders" table-data="contentKit.contentList" 
+									row-actions="contentTableRecordActions" client-sort="true"></ebx-generic-table>
+			</div>
+		</div>
+		<div>
+			<div class="head ebx-top-border">
+				<h2>Linked Kits <ebx-generic-list-browser ng-if="!viewOper" pre-selected-records="linkedKitRecords" selection-callback="linkedKitsSelected" filter-metadata="linkedKitsFilterMetadata"
+										list-filters="linkedKitsFilter" table-headers="linkedKitHeaders" projection-fields="linkedKitProjectedFields"
+										domain-type="contentKitDomainType" browser-heading="Select Content Kit" label-field="name"></ebx-generic-list-browser></h2>
+			</div>
+			<div>	
+				<ebx-generic-table table-headers="linkedKitHeaders" table-data="linkedKitRecords" 
+									row-actions="linkedKitTableRecordActions" client-sort="true"></ebx-generic-table>
+			</div>
+		</div>
+		<div class="foot clearfix">
+			<button ng-if="!viewOper" ng-click="updateContentKit()" class="button button-add">Save</button>
+			<a ng-if="!viewOper" ng-click="cancelOperation()" class="button button-delete">Cancel</a>
+			<a ng-if="viewOper" ng-click="editOperation()" class="button button-delete">Edit</a>
+		</div>
+	</form>
+</div>

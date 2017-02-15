@@ -14,10 +14,10 @@ import com.enablix.commons.util.StringUtil;
 import com.enablix.commons.util.process.ProcessContext;
 import com.enablix.content.approval.model.ContentApproval;
 import com.enablix.core.api.ContentDataRecord;
-import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 import com.enablix.core.mail.velocity.VelocityTemplateInputResolver;
 import com.enablix.core.mail.velocity.VelocityTemplateInputResolverFactory;
 import com.enablix.core.ui.DisplayableContent;
+import com.enablix.services.util.template.TemplateWrapper;
 import com.enablix.state.change.model.ActionInput;
 
 @Component
@@ -52,8 +52,9 @@ public class NotificationTemplateInputBuilder {
 		input.setRecipientUserId(recipientUserId);
 		input.setContentRequest(contentRequest);
 		
-		ContentTemplate template = templateManager.getTemplate(ProcessContext.get().getTemplateId());
-		ContentDataRecord dataRecord = new ContentDataRecord(template.getId(), 
+		String templateId = ProcessContext.get().getTemplateId();
+		TemplateWrapper template = templateManager.getTemplateWrapper(templateId);
+		ContentDataRecord dataRecord = new ContentDataRecord(templateId, 
 				contentRequest.getObjectRef().getContentQId(), contentRequest.getObjectRef().getData());
 		
 		DisplayContext ctx = new DisplayContext();
@@ -84,7 +85,7 @@ public class NotificationTemplateInputBuilder {
 	
 	public void prepareContentForEmailToUser(ContentApprovalEmailVelocityInput<?> velocityInput, String emailTo) {
 		
-		ContentTemplate template = templateManager.getTemplate(ProcessContext.get().getTemplateId());
+		TemplateWrapper template = templateManager.getTemplateWrapper(ProcessContext.get().getTemplateId());
 		
 		docUrlPopulator.process(velocityInput.getContentData(), emailTo);
 		textLinkProcessor.process(velocityInput.getContentData(), template, emailTo);

@@ -15,7 +15,6 @@ import com.enablix.app.template.service.TemplateManager;
 import com.enablix.commons.util.process.ProcessContext;
 import com.enablix.core.api.ContentDataRecord;
 import com.enablix.core.api.ContentDataRef;
-import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 import com.enablix.core.domain.activity.ActivityChannel.Channel;
 import com.enablix.core.domain.activity.ContentShareActivity.ShareMedium;
 import com.enablix.core.mail.service.MailService;
@@ -23,6 +22,7 @@ import com.enablix.core.mail.velocity.ShareContentScenarioInputBuilder;
 import com.enablix.core.mail.velocity.input.ShareContentVelocityInput;
 import com.enablix.core.ui.DisplayableContent;
 import com.enablix.services.util.ActivityLogger;
+import com.enablix.services.util.template.TemplateWrapper;
 
 @Component
 public class ShareEmailServiceImpl implements ShareEmailService {
@@ -52,10 +52,10 @@ public class ShareEmailServiceImpl implements ShareEmailService {
 	public boolean sendEmail(EmailData data) {
 
 		String templateId = ProcessContext.get().getTemplateId();
-		ContentTemplate template = templateMgr.getTemplate(templateId);
+		TemplateWrapper template = templateMgr.getTemplateWrapper(templateId);
 
 		Map<String, Object> record = contentDataMgr.getContentRecord(
-				new ContentDataRef(templateId, data.getContainerQId(), 
+				ContentDataRef.createContentRef(templateId, data.getContainerQId(), 
 						data.getContentIdentity(), null), template);
 
 		ContentDataRecord dataRecord = new ContentDataRecord(templateId, data.getContainerQId(), record);

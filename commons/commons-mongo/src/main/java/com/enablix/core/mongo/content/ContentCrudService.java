@@ -60,8 +60,7 @@ public interface ContentCrudService {
 
 	Map<String, Object> findContainingRecord(String collectionName, String childQId, String childIdentity);
 
-	@SuppressWarnings("rawtypes")
-	List findRecords(String collectionName, List<String> elementIdentities);
+	List<Map<String, Object>> findRecords(String collectionName, List<String> elementIdentities);
 	
 	List<Map<String, Object>> findRecords(String collectionName, SearchFilter filter);
 

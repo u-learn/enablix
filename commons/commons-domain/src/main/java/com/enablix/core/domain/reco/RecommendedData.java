@@ -5,7 +5,7 @@ import com.enablix.core.api.ContentDataRef;
 public class RecommendedData {
 
 	private ContentDataRef data;
-
+	
 	public ContentDataRef getData() {
 		return data;
 	}
@@ -13,5 +13,5 @@ public class RecommendedData {
 	public void setData(ContentDataRef data) {
 		this.data = data;
 	}
-	
+
 }

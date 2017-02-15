@@ -19,11 +19,10 @@ import com.enablix.core.commons.xsdtopojo.BoundedType;
 import com.enablix.core.commons.xsdtopojo.ContainerType;
 import com.enablix.core.commons.xsdtopojo.ContentItemClassType;
 import com.enablix.core.commons.xsdtopojo.ContentItemType;
-import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 import com.enablix.core.domain.content.connection.ConnectionContextAttribute;
 import com.enablix.core.domain.content.connection.ContentTypeConnection;
 import com.enablix.core.domain.content.connection.ContentValueConnection;
-import com.enablix.services.util.TemplateUtil;
+import com.enablix.services.util.template.TemplateWrapper;
 
 @Component
 public class CorrelationContextBuilderImpl implements CorrelationContextBuilder {
@@ -43,12 +42,12 @@ public class CorrelationContextBuilderImpl implements CorrelationContextBuilder 
 		CorrelationContext context = new CorrelationContext();
 		
 		// set the content template in the context
-		ContentTemplate template = templateMgr.getTemplate(ProcessContext.get().getTemplateId());
+		TemplateWrapper template = templateMgr.getTemplateWrapper(ProcessContext.get().getTemplateId());
 		context.setTemplate(template);
 		
 		// find the content connections applicable based on containerQId
 		Map<String, Object> contentRecord = contentDataMgr.getContentRecord(item, template);
-		ContainerType itemContainer = TemplateUtil.findContainer(template.getDataDefinition(), item.getContainerQId());
+		ContainerType itemContainer = template.getContainerDefinition(item.getContainerQId());
 		
 		// find and match content type connections
 		List<ContentTypeConnection> matchedConnections = contentConnRepo.findByHoldingContainers(item.getContainerQId());
@@ -66,7 +65,7 @@ public class CorrelationContextBuilderImpl implements CorrelationContextBuilder 
 	}
 
 	private boolean matchConnectionContextWithRecord(ContentTypeConnection contentConn,
-			Map<String, Object> contentRecord, ContentTemplate template, ContainerType recordContainer) {
+			Map<String, Object> contentRecord, TemplateWrapper template, ContainerType recordContainer) {
 		
 		if (contentConn.getConnectionContext() != null) {
 			// check if all of the connection context attribute match the content record
@@ -88,7 +87,7 @@ public class CorrelationContextBuilderImpl implements CorrelationContextBuilder 
 	}
 
 	private boolean matchConnContextAttrWithRecord(ConnectionContextAttribute attr, 
-			Map<String, Object> contentRecord, ContentTemplate template, ContainerType recordContainer) {
+			Map<String, Object> contentRecord, TemplateWrapper template, ContainerType recordContainer) {
 		
 		return recordHasSubContent(attr.getAttributeQId(), attr.getAttributeValue(), 
 				contentRecord, template, recordContainer, true);
@@ -99,9 +98,9 @@ public class CorrelationContextBuilderImpl implements CorrelationContextBuilder 
 	 * as an argument and if present, does the value matches the given value of sub-content 
 	 */
 	private boolean recordHasSubContent(String subContentQId, Object subContentValue, Map<String, Object> contentRecord,
-			ContentTemplate template, ContainerType recordContainer, boolean defaultMatchValue) {
+			TemplateWrapper template, ContainerType recordContainer, boolean defaultMatchValue) {
 		
-		ContainerType subContentContainer = TemplateUtil.findContainer(template.getDataDefinition(), subContentQId);
+		ContainerType subContentContainer = template.getContainerDefinition(subContentQId);
 		
 		// Traverse through each attribute-type for the content record;
 		// and match the attribute type and value in the content record with
@@ -195,7 +194,7 @@ public class CorrelationContextBuilderImpl implements CorrelationContextBuilder 
 	}
 
 	private Set<String> findContainersInScope(ContentTypeConnection contentConn, 
-			Map<String, Object> contentRecord, ContentTemplate template, ContainerType itemContainer) {
+			Map<String, Object> contentRecord, TemplateWrapper template, ContainerType itemContainer) {
 		
 		Set<String> inScopeContainers = new HashSet<>();
 		

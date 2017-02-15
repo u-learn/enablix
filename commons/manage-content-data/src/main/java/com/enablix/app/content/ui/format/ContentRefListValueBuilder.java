@@ -11,18 +11,17 @@ import com.enablix.core.commons.xsdtopojo.BoundedRefListType;
 import com.enablix.core.commons.xsdtopojo.ContainerType;
 import com.enablix.core.commons.xsdtopojo.ContentItemClassType;
 import com.enablix.core.commons.xsdtopojo.ContentItemType;
-import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 import com.enablix.core.ui.ContentRef;
 import com.enablix.core.ui.ListValue;
 import com.enablix.core.ui.TextValue;
-import com.enablix.services.util.TemplateUtil;
+import com.enablix.services.util.template.TemplateWrapper;
 
 @Component
 public class ContentRefListValueBuilder implements FieldValueBuilder<ListValue, Collection<Map<String, Object>>> {
 
 	@Override
 	public ListValue build(ContentItemType fieldDef, Collection<Map<String, Object>> fieldValue, 
-			ContentTemplate template, DisplayContext ctx) {
+			TemplateWrapper template, DisplayContext ctx) {
 		
 		ListValue listVal = new ListValue();
 		
@@ -37,7 +36,7 @@ public class ContentRefListValueBuilder implements FieldValueBuilder<ListValue, 
 			BoundedRefListType refList = fieldDef.getBounded().getRefList();
 			String containerId = refList.getDatastore().getStoreId();
 			
-			ContainerType containerDef = TemplateUtil.findContainer(template.getDataDefinition(), containerId);
+			ContainerType containerDef = template.getContainerDefinition(containerId);
 			
 			if (containerDef == null || containerDef.isRefData()) {
 				

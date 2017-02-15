@@ -4,9 +4,9 @@ import org.springframework.stereotype.Component;
 
 import com.enablix.core.commons.xsdtopojo.AttributeCheckType;
 import com.enablix.core.commons.xsdtopojo.AttributeUpdateType;
-import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 import com.enablix.core.domain.content.ContentChangeDelta;
 import com.enablix.core.domain.trigger.ContentChange;
+import com.enablix.services.util.template.TemplateWrapper;
 
 @Component
 public class TriggerExecAttrUpdateChecker {
@@ -21,7 +21,7 @@ public class TriggerExecAttrUpdateChecker {
 	 * @return
 	 */
 	public Boolean evaluateCondition(ContentChange contentChange, 
-			AttributeUpdateType attrUpdtCond, ContentTemplate template) {
+			AttributeUpdateType attrUpdtCond, TemplateWrapper template) {
 		
 		Boolean result = null;
 		

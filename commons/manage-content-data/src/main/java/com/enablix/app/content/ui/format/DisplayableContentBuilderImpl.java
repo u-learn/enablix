@@ -14,13 +14,13 @@ import com.enablix.commons.util.StringUtil;
 import com.enablix.core.api.ContentDataRecord;
 import com.enablix.core.commons.xsdtopojo.ContainerType;
 import com.enablix.core.commons.xsdtopojo.ContentItemType;
-import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 import com.enablix.core.ui.DisplayField;
 import com.enablix.core.ui.DisplayableContent;
 import com.enablix.core.ui.DocRef;
 import com.enablix.core.ui.FieldValue;
 import com.enablix.services.util.ContentDataUtil;
 import com.enablix.services.util.TemplateUtil;
+import com.enablix.services.util.template.TemplateWrapper;
 
 @Component
 public class DisplayableContentBuilderImpl implements DisplayableContentBuilder {
@@ -34,14 +34,14 @@ public class DisplayableContentBuilderImpl implements DisplayableContentBuilder 
 	private DisplayFieldBuilder fieldBuilder;
 	
 	@Override
-	public DisplayableContent build(ContentTemplate template, ContentDataRecord record, DisplayContext ctx) {
+	public DisplayableContent build(TemplateWrapper template, ContentDataRecord record, DisplayContext ctx) {
 		
 		String containerQId = record.getContainerQId();
 		Map<String, Object> contentRecord = record.getRecord();
 		
-		ContainerType containerDef = TemplateUtil.findContainer(template.getDataDefinition(), containerQId );
+		ContainerType containerDef = template.getContainerDefinition(containerQId);
 		if (TemplateUtil.isLinkedContainer(containerDef)) {
-			containerDef = TemplateUtil.findContainer(template.getDataDefinition(), containerDef.getLinkContainerQId());
+			containerDef = template.getContainerDefinition(containerDef.getLinkContainerQId());
 		}
 		
 		DisplayableContent dispContent = new DisplayableContent();

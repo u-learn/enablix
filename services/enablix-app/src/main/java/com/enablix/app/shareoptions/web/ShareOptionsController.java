@@ -32,7 +32,7 @@ public class ShareOptionsController {
 	public @ResponseBody Boolean auditDownldDoc(@RequestBody ContentAuditRequest request) {
 		try	{
 			String templateId = ProcessContext.get().getTemplateId();
-			ContentDataRef dataRef = new ContentDataRef(templateId, request.getContainerQId(), 
+			ContentDataRef dataRef = ContentDataRef.createContentRef(templateId, request.getContainerQId(), 
 					request.getInstanceIdentity(), request.getItemTitle());
 			ActivityLogger.auditContentDownldURLCopied(dataRef, ContentActivity.ContainerType.CONTENT, Channel.WEB);
 			return true;
@@ -47,7 +47,7 @@ public class ShareOptionsController {
 	public @ResponseBody Boolean auditPortalURL(@RequestBody ContentAuditRequest request) {
 		try	{
 			String templateId = ProcessContext.get().getTemplateId();
-			ContentDataRef dataRef = new ContentDataRef(templateId, request.getContainerQId(), 
+			ContentDataRef dataRef = ContentDataRef.createContentRef(templateId, request.getContainerQId(), 
 					request.getInstanceIdentity(), request.getItemTitle());
 			ActivityLogger.auditContentPortalURLCopied(dataRef, ContentActivity.ContainerType.CONTENT, Channel.WEB);
 			return true;

@@ -1,0 +1,9 @@
+<div ng-repeat="(contentQId, contentGroup) in contentGroupsMap" class="subcontainer">					
+	<eb-portal-sub-container ng-if="contentGroup.records.length == 1" type="single" sub-container-label="contentGroup.label" 
+		sub-container-q-id="contentGroup.qualifiedId" index="$index" info="contentGroup.records"></eb-portal-sub-container>
+	<eb-portal-sub-container ng-if="contentGroup.records.length > 1" type="multi" sub-container-label="contentGroup.label" 
+		sub-container-q-id="contentGroup.qualifiedId" index="$index" info="contentGroup.records"></eb-portal-sub-container>
+</div>
+<div class="subcontainer">
+	<ebx-linked-kits heading-text="Linked Kits" expanded="true" records="linkedKits"></ebx-linked-kits>
+</div>

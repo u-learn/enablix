@@ -14,7 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.enablix.analytics.search.SearchClient;
 import com.enablix.core.api.ContentDataRef;
 import com.enablix.core.api.SearchResult;
-import com.enablix.core.commons.xsdtopojo.ContentTemplate;
+import com.enablix.services.util.template.TemplateWrapper;
 
 public class ElasticSearchClient implements SearchClient {
 
@@ -25,9 +25,10 @@ public class ElasticSearchClient implements SearchClient {
 	private SearchHitToContentDataRefTransformer searchHitTx;
 	
 	@Override
-	public SearchResult<ContentDataRef> search(String text, ContentTemplate template, int pageSize, int pageNum) {
+	public SearchResult<ContentDataRef> search(String text, TemplateWrapper template, int pageSize, int pageNum) {
 		
-		SearchRequest searchRequest = ESQueryBuilder.builder(text, template).withPagination(pageSize, pageNum).build();
+		SearchRequest searchRequest = ESQueryBuilder.builder(text, template.getTemplate())
+													.withPagination(pageSize, pageNum).build();
 		
 		ActionFuture<SearchResponse> searchResponseFuture = esClient.search(searchRequest);
 		SearchResponse searchResponse = searchResponseFuture.actionGet();

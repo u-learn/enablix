@@ -7,15 +7,15 @@ import org.springframework.stereotype.Component;
 import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.core.commons.xsdtopojo.ContentItemClassType;
 import com.enablix.core.commons.xsdtopojo.ContentItemType;
-import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 import com.enablix.core.ui.DocRef;
+import com.enablix.services.util.template.TemplateWrapper;
 
 @Component
 public class DocRefValueBuilder implements FieldValueBuilder<DocRef, Map<String, Object>> {
 
 	@Override
 	public DocRef build(ContentItemType fieldDef, Map<String, Object> fieldValue, 
-			ContentTemplate template, DisplayContext ctx) {
+			TemplateWrapper template, DisplayContext ctx) {
 		DocRef doc = new DocRef();
 		doc.setName((String) fieldValue.get(ContentDataConstants.DOC_NAME_ATTR));
 		doc.setDocIdentity((String) fieldValue.get(ContentDataConstants.IDENTITY_KEY)); 

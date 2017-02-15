@@ -135,6 +135,9 @@
 	<script type="text/javascript" src="widgets/directive/play/userGroup/detail/playUserGroupDetailController.js"></script>
 	<script type="text/javascript" src="widgets/directive/content/browser/systemBrowserWindowController.js"></script>
 	<script type="text/javascript" src="widgets/directive/content/browser/systemContentBrowser.js"></script>
+	<script type="text/javascript" src="widgets/directive/browser/genericListBrowser.js"></script>
+	<script type="text/javascript" src="widgets/directive/browser/genericListBrowserCtrl.js"></script>
+	<script type="text/javascript" src="widgets/directive/contentkit/linkedKitsDirective.js"></script>
 	
 	<script type="text/javascript" src="widgets/stateUpdateService.js"></script>
 	<script type="text/javascript" src="widgets/content/template/contentTemplateService.js"></script>
@@ -182,6 +185,11 @@
 	<script type="text/javascript" src="widgets/play/playXListController.js"></script>
 	<script type="text/javascript" src="widgets/play/addEditXPlayCtrl.js"></script>
 	<script type="text/javascript" src="widgets/corr/correlationService.js"></script>
+	<script type="text/javascript" src="widgets/content/kit/contentKitService.js"></script>
+	<script type="text/javascript" src="widgets/content/kit/contentKitMainController.js"></script>
+	<script type="text/javascript" src="widgets/content/kit/contentKitListController.js"></script>
+	<script type="text/javascript" src="widgets/content/kit/addEditContentKitCtrl.js"></script>
+	<script type="text/javascript" src="widgets/content/kit/contentKitDetailController.js"></script>
 	
 	<script type="text/javascript" src="js/mainController.js"></script>
 	<script type="text/javascript" src="widgets/content/index/contentIndexController.js"></script>
@@ -234,10 +242,11 @@
 				<nav class="main-nav container-fluid">
 					<a href="#" ng-class="{active:$state.includes('portal')}" ui-sref="portal.home">Portal</a>
 					<li requires-permission="VIEW_STUDIO">
-						<a href="#" ng-class="{active:$state.includes('studio') || $state.includes('play')}">Studio&nbsp;<i class="fa fa-angle-down"></i></a>
+						<a href="#" ng-class="{active:$state.includes('studio') || $state.includes('play')  || $state.includes('contentkit')}">Studio&nbsp;<i class="fa fa-angle-down"></i></a>
 						<ul class="main-nav-secondary">
 							<li><a ui-sref="studio">Content Manager</a></li>
 							<li><a ui-sref="play" requires-permission="MANAGE_PLAYS">PlayMaker</a></li>
+							<li><a ui-sref="contentkit.list" requires-permission="MANAGE_CONTENT_KIT">Content Kit</a></li>
 						</ul>
 					</li>
 					<!-- <a href="#" ui-sref-active="active" ui-sref="refdata">Setup</a> -->

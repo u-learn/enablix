@@ -15,8 +15,7 @@ import com.enablix.commons.util.json.JsonUtil;
 import com.enablix.core.commons.xsdtopojo.ContainerType;
 import com.enablix.core.commons.xsdtopojo.ContentItemClassType;
 import com.enablix.core.commons.xsdtopojo.ContentItemType;
-import com.enablix.core.commons.xsdtopojo.ContentTemplate;
-import com.enablix.services.util.TemplateUtil;
+import com.enablix.services.util.template.TemplateWrapper;
 
 @Component
 public class TemporaryDocConfimation implements ContentEnricher {
@@ -25,13 +24,13 @@ public class TemporaryDocConfimation implements ContentEnricher {
 	private DocumentManager docManager;
 	
 	@Override
-	public void enrich(ContentUpdateContext updateCtx, Map<String, Object> content, ContentTemplate contentTemplate) {
+	public void enrich(ContentUpdateContext updateCtx, Map<String, Object> content, TemplateWrapper contentTemplate) {
 		
 		String parentIdentity = updateCtx.parentIdentity();
 		String contentQId = updateCtx.contentQId();
 		String contentIdentity = (String) content.get(ContentDataConstants.IDENTITY_KEY);
 		
-		ContainerType containerDef = TemplateUtil.findContainer(contentTemplate.getDataDefinition(), contentQId);
+		ContainerType containerDef = contentTemplate.getContainerDefinition(contentQId);
 		
 		for (ContentItemType itemDef : containerDef.getContentItem()) {
 

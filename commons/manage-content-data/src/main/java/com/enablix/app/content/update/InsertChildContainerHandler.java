@@ -8,9 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.enablix.commons.util.StringUtil;
-import com.enablix.core.commons.xsdtopojo.ContentTemplate;
+import com.enablix.core.commons.xsdtopojo.ContainerType;
 import com.enablix.core.mongo.content.ContentCrudService;
 import com.enablix.services.util.TemplateUtil;
+import com.enablix.services.util.template.TemplateWrapper;
 
 @Component
 public class InsertChildContainerHandler implements ContentUpdateHandler {
@@ -22,22 +23,23 @@ public class InsertChildContainerHandler implements ContentUpdateHandler {
 	private ContentCrudService crudService;
 	
 	@Override
-	public Map<String, Object> updateContent(ContentTemplate template, String recordId, String contentQId,
+	public Map<String, Object> updateContent(TemplateWrapper template, String recordId, String contentQId,
 			Map<String, Object> contentDataMap) {
 		
 		LOGGER.debug("Insert child - templateId: {}, recordId: {}, contentQId: {}, data: {}",
 				template.getId(), recordId, contentQId, contentDataMap);
 		
-		String collectionName = TemplateUtil.resolveCollectionName(template, contentQId);
+		String collectionName = template.getCollectionName(contentQId);
+		ContainerType container = template.getContainerDefinition(contentQId);
 		
-		if (TemplateUtil.hasOwnCollection(template, contentQId)) {
+		if (TemplateUtil.hasOwnCollection(container)) {
 			
 			LOGGER.debug("Inserting new record in collection [{}]", collectionName);
 			crudService.insert(collectionName, contentDataMap);
 			
 		} else {
 			
-			String relativeChildQId = TemplateUtil.getQIdRelativeToParentContainer(template, contentQId);
+			String relativeChildQId = TemplateUtil.getQIdRelativeToParentContainer(template.getTemplate(), contentQId);
 
 			if (StringUtil.isEmpty(relativeChildQId)) {
 				LOGGER.error("Relative Child QId is null or empty");

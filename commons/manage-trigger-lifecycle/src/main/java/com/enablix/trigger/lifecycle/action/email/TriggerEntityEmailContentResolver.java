@@ -11,8 +11,8 @@ import com.enablix.app.content.ContentDataManager;
 import com.enablix.core.api.ContentDataRecord;
 import com.enablix.core.api.ContentDataRef;
 import com.enablix.core.commons.xsdtopojo.BaseEmailContentType;
-import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 import com.enablix.core.commons.xsdtopojo.EmailContentTriggerEntityType;
+import com.enablix.services.util.template.TemplateWrapper;
 
 @Component
 public class TriggerEntityEmailContentResolver implements EmailContentResolver<EmailContentTriggerEntityType> {
@@ -22,7 +22,7 @@ public class TriggerEntityEmailContentResolver implements EmailContentResolver<E
 	
 	@Override
 	public List<ContentDataRecord> getEmailContent(EmailContentTriggerEntityType emailContentDef,
-			ContentTemplate template, ContentDataRef triggerItem) {
+			TemplateWrapper template, ContentDataRef triggerItem) {
 		
 		Map<String, Object> triggerRecord = contentDataMgr.getContentRecord(triggerItem, template);
 		

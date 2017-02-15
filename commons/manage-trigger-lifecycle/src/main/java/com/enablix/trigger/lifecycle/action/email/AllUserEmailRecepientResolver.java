@@ -10,12 +10,12 @@ import org.springframework.stereotype.Component;
 
 import com.enablix.core.api.ContentDataRef;
 import com.enablix.core.commons.xsdtopojo.BaseEmailRecipientType;
-import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 import com.enablix.core.commons.xsdtopojo.EmailAllUsersType;
 import com.enablix.core.mongo.content.ContentCrudService;
 import com.enablix.services.util.ContentDataUtil;
 import com.enablix.services.util.DatastoreUtil;
 import com.enablix.services.util.TemplateUtil;
+import com.enablix.services.util.template.TemplateWrapper;
 
 @Component
 public class AllUserEmailRecepientResolver implements EmailRecipientResolver<EmailAllUsersType> {
@@ -25,12 +25,12 @@ public class AllUserEmailRecepientResolver implements EmailRecipientResolver<Ema
 	
 	@Override
 	public Set<ContentDataRef> resolveRecepientEmails(ContentDataRef triggerEntity, 
-			ContentTemplate template, EmailAllUsersType allEmailUserDef) {
+			TemplateWrapper template, EmailAllUsersType allEmailUserDef) {
 		
 		Set<ContentDataRef> users = new HashSet<>();
 		
-		String userContainerQId = TemplateUtil.getUserContainerQId(template);
-		String userCollName = DatastoreUtil.getCollectionName(template.getId(), userContainerQId);
+		String userContainerQId = TemplateUtil.getUserContainerQId(template.getTemplate());
+		String userCollName = DatastoreUtil.getCollectionName(template.getTemplate().getId(), userContainerQId);
 		
 		List<Map<String, Object>> allUserRecords = crud.findAllRecord(userCollName);
 		

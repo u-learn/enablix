@@ -8,8 +8,8 @@ import org.springframework.stereotype.Component;
 
 import com.enablix.core.api.ContentDataRef;
 import com.enablix.core.commons.xsdtopojo.BaseEmailRecipientType;
-import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 import com.enablix.core.commons.xsdtopojo.EmailRecipientType;
+import com.enablix.services.util.template.TemplateWrapper;
 
 @Component
 public class EmailRecipientHelper {
@@ -18,7 +18,7 @@ public class EmailRecipientHelper {
 	private EmailRecipientResolverFactory resolverFactory;
 	
 	public Set<ContentDataRef> getEmailRecipients(ContentDataRef triggerItemRef, 
-			ContentTemplate template, EmailRecipientType recepientDef) {
+			TemplateWrapper template, EmailRecipientType recepientDef) {
 		
 		Set<ContentDataRef> recipientUsers = new HashSet<>();
 		
@@ -28,8 +28,8 @@ public class EmailRecipientHelper {
 		return recipientUsers;
 	}
 
-	private <T extends BaseEmailRecipientType> void resolveRecipients(ContentDataRef triggerItemRef, ContentTemplate template,
-			Set<ContentDataRef> recepientUsers, T recipientDef) {
+	private <T extends BaseEmailRecipientType> void resolveRecipients(ContentDataRef triggerItemRef, 
+			TemplateWrapper template, Set<ContentDataRef> recepientUsers, T recipientDef) {
 		if (recipientDef != null) {
 			EmailRecipientResolver<T> resolver = resolverFactory.getResolver(recipientDef);
 			recepientUsers.addAll(resolver.resolveRecepientEmails(

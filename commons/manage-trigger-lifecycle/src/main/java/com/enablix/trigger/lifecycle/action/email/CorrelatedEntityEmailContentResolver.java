@@ -14,11 +14,11 @@ import com.enablix.core.api.ContentDataRecord;
 import com.enablix.core.api.ContentDataRef;
 import com.enablix.core.commons.xsdtopojo.BaseEmailContentType;
 import com.enablix.core.commons.xsdtopojo.CandidateContainersType;
-import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 import com.enablix.core.commons.xsdtopojo.CorrelatedEntitiesType;
 import com.enablix.core.commons.xsdtopojo.EntityContentType;
 import com.enablix.core.commons.xsdtopojo.FilterTagsType;
 import com.enablix.core.correlation.ItemItemCorrelation;
+import com.enablix.services.util.template.TemplateWrapper;
 
 @Component
 public class CorrelatedEntityEmailContentResolver implements EmailContentResolver<CorrelatedEntitiesType> {
@@ -31,7 +31,7 @@ public class CorrelatedEntityEmailContentResolver implements EmailContentResolve
 	
 	@Override
 	public List<ContentDataRecord> getEmailContent(CorrelatedEntitiesType corrEntitiesDef,
-			ContentTemplate template, ContentDataRef triggerItem) {
+			TemplateWrapper template, ContentDataRef triggerItem) {
 
 		List<ItemItemCorrelation> itemCorrs = new ArrayList<>();
 		

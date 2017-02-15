@@ -26,13 +26,12 @@ import com.enablix.commons.util.process.ProcessContext;
 import com.enablix.core.api.ContentDataRecord;
 import com.enablix.core.api.ContentDataRef;
 import com.enablix.core.commons.xsdtopojo.ContentCorrelatedItemType;
-import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 import com.enablix.core.mongo.content.ContentCrudService;
 import com.enablix.core.mongo.search.ConditionOperator;
 import com.enablix.core.mongo.search.StringFilter;
 import com.enablix.core.ui.DisplayableContent;
 import com.enablix.services.util.ContentDataUtil;
-import com.enablix.services.util.TemplateUtil;
+import com.enablix.services.util.template.TemplateWrapper;
 
 @RestController
 @RequestMapping("corr")
@@ -68,12 +67,12 @@ public class CorrelatedEntitiesController {
 			@PathVariable String attrVal) {
 		
 		String templateId = ProcessContext.get().getTemplateId();
-		ContentTemplate template = templateMgr.getTemplate(templateId);
+		TemplateWrapper template = templateMgr.getTemplateWrapper(templateId);
 		
 		String instanceIdentity = null;
 		String contentTitle = null;
 		
-		String collectionName = TemplateUtil.resolveCollectionName(template, contentQId);
+		String collectionName = template.getCollectionName(contentQId);
 		StringFilter filter = new StringFilter(attrId, attrVal, ConditionOperator.EQ);
 		
 		List<Map<String, Object>> findRecords = contentCrud.findRecords(collectionName, filter);
@@ -89,7 +88,7 @@ public class CorrelatedEntitiesController {
 			filterTags = Arrays.asList(tags);
 		}
 		
-		ContentDataRef triggerItem = new ContentDataRef(templateId, contentQId, instanceIdentity, contentTitle);
+		ContentDataRef triggerItem = ContentDataRef.createContentRef(templateId, contentQId, instanceIdentity, contentTitle);
 		List<ContentDataRecord> correlatedEntities = itemCorrService.fetchCorrelatedEntityRecords(
 				template, triggerItem, new ArrayList<String>(), filterTags);
 		

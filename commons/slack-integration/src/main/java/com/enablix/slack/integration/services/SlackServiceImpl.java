@@ -22,7 +22,6 @@ import com.enablix.commons.util.id.IdentityUtil;
 import com.enablix.commons.util.process.ProcessContext;
 import com.enablix.core.api.ContentDataRecord;
 import com.enablix.core.api.ContentDataRef;
-import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 import com.enablix.core.domain.activity.ActivityAudit;
 import com.enablix.core.domain.activity.ActivityChannel;
 import com.enablix.core.domain.activity.ActivityChannel.Channel;
@@ -34,6 +33,7 @@ import com.enablix.core.domain.slackdtls.SlackAccessToken;
 import com.enablix.core.system.repo.SlackAccessTokenRepository;
 import com.enablix.core.ui.DisplayableContent;
 import com.enablix.services.util.ActivityLogger;
+import com.enablix.services.util.template.TemplateWrapper;
 import com.enablix.slack.integration.entities.SlackChannels;
 import com.enablix.slack.integration.entities.SlackTeamDtls;
 import com.enablix.slack.integration.utils.AttachmentDecorator;
@@ -156,10 +156,10 @@ public class SlackServiceImpl implements SlackService {
 					throws JsonProcessingException {
 
 		String templateId = ProcessContext.get().getTemplateId();
-		ContentTemplate template = templateMgr.getTemplate(templateId);
+		TemplateWrapper template = templateMgr.getTemplateWrapper(templateId);
 
 		Map<String, Object> record = contentDataMgr.getContentRecord(
-				new ContentDataRef(templateId, containerQId, 
+				ContentDataRef.createContentRef(templateId, containerQId, 
 						contentIdentity, null), template);
 
 		ContentDataRecord dataRecord = new ContentDataRecord(templateId, containerQId, record);

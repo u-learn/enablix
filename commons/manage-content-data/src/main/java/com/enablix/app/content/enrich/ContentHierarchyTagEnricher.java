@@ -21,11 +21,12 @@ import com.enablix.commons.util.QIdUtil;
 import com.enablix.commons.util.StringUtil;
 import com.enablix.commons.util.concurrent.Events;
 import com.enablix.core.api.Tag;
-import com.enablix.core.commons.xsdtopojo.ContentTemplate;
+import com.enablix.core.commons.xsdtopojo.ContainerType;
 import com.enablix.core.mongo.content.ContentCrudService;
 import com.enablix.core.mq.EventSubscription;
 import com.enablix.services.util.ContentDataUtil;
 import com.enablix.services.util.TemplateUtil;
+import com.enablix.services.util.template.TemplateWrapper;
 
 @Component
 public class ContentHierarchyTagEnricher implements ContentEnricher {
@@ -48,7 +49,7 @@ public class ContentHierarchyTagEnricher implements ContentEnricher {
 	private DefaultContentLabelResolver labelResolver = new DefaultContentLabelResolver();
 	
 	@Override
-	public void enrich(ContentUpdateContext updateCtx, Map<String, Object> content, ContentTemplate contentTemplate) {
+	public void enrich(ContentUpdateContext updateCtx, Map<String, Object> content, TemplateWrapper contentTemplate) {
 		
 		List<Tag> tags = new ArrayList<>();
 		
@@ -69,9 +70,9 @@ public class ContentHierarchyTagEnricher implements ContentEnricher {
 	}
 
 	private void addParentLabelAsTag(ContentUpdateContext updateCtx, String parentIdentity, 
-			ContentTemplate contentTemplate, List<Tag> tags) {
+			TemplateWrapper contentTemplate, List<Tag> tags) {
 		
-		String parentCollection = TemplateUtil.findParentCollectionName(contentTemplate, updateCtx.contentQId());
+		String parentCollection = contentTemplate.getCollectionName(updateCtx.contentQId());
 		
 		if (parentCollection != null) {
 		
@@ -81,7 +82,7 @@ public class ContentHierarchyTagEnricher implements ContentEnricher {
 		}
 	}
 
-	private void resolveAndAddParentLabelAsTag(String parentQId, ContentTemplate contentTemplate,
+	private void resolveAndAddParentLabelAsTag(String parentQId, TemplateWrapper contentTemplate,
 			List<Tag> tags, Map<String, Object> parent) {
 		
 		String parentLabel = labelResolver.findContentLabel(parent, contentTemplate, parentQId);
@@ -92,7 +93,7 @@ public class ContentHierarchyTagEnricher implements ContentEnricher {
 		findAndAddNextParentLabelAsTag(contentTemplate, parentQId, parent, tags);
 	}
 	
-	private void findAndAddNextParentLabelAsTag(ContentTemplate template, 
+	private void findAndAddNextParentLabelAsTag(TemplateWrapper template, 
 			String recordQId, Map<String, Object> record, List<Tag> tags) {
 		
 		Map<String, Object> parentRecord = contentDataManager.fetchParentRecord(template, recordQId, record);
@@ -108,11 +109,11 @@ public class ContentHierarchyTagEnricher implements ContentEnricher {
 		
 		if (!event.isNewRecord()) {
 		
-			ContentTemplate template = templateMgr.getTemplate(event.getTemplateId());
+			TemplateWrapper template = templateMgr.getTemplateWrapper(event.getTemplateId());
 			
 			String containerQId = event.getContainerType().getQualifiedId();
 			
-			String labelAttrId = TemplateUtil.getStudioLabelAttributeId(template, containerQId);
+			String labelAttrId = template.getStudioLabelAttributeId(containerQId);
 			
 			// if there is change in the label attribute then we need to update the parent tags in children
 			if (StringUtil.hasText(labelAttrId) && event.getChangeDelta().hasAttribute(labelAttrId)) {
@@ -122,18 +123,20 @@ public class ContentHierarchyTagEnricher implements ContentEnricher {
 	}
 
 	private void updateHierarchyTagOfChildren(
-			Map<String, Object> parentRecord, ContentTemplate template, String containerQId) {
+			Map<String, Object> parentRecord, TemplateWrapper template, String containerQId) {
 		
 		String recordIdentity = (String) parentRecord.get(ContentDataConstants.IDENTITY_KEY);
-		List<String> childContainerIds = TemplateUtil.getChildContainerIds(template, containerQId);
+		ContainerType container = template.getContainerDefinition(containerQId);
+		List<String> childContainerIds = TemplateUtil.getChildContainerIds(container);
 		
 		for (String childContainerId : childContainerIds) {
 			
 			String childQId = QIdUtil.createQualifiedId(containerQId, childContainerId);
+			ContainerType childContainer = template.getContainerDefinition(childContainerId);
 			
-			if (TemplateUtil.hasOwnCollection(template, childQId)) {
+			if (TemplateUtil.hasOwnCollection(childContainer)) {
 				
-				String collName = TemplateUtil.resolveCollectionName(template, childQId);
+				String collName = template.getCollectionName(childQId);
 				
 				// find all children records and update their hierarchy tags
 				

@@ -161,7 +161,7 @@ public class ContentDataUtil {
 	
 	
 	public static ContentDataRef contentDataToRef(
-			Map<String, Object> contentData, ContentTemplate template, String containerQId) {
+			Map<String, Object> contentData, TemplateWrapper template, String containerQId) {
 		
 		Object identity = contentData.get(ContentDataConstants.IDENTITY_KEY);
 		
@@ -169,7 +169,7 @@ public class ContentDataUtil {
 		
 		if (identity instanceof String) {
 			String contentTitle = ContentDataUtil.findPortalLabelValue(contentData, template, containerQId);
-			contentDataRef = new ContentDataRef(template.getId(), 
+			contentDataRef = ContentDataRef.createContentRef(template.getTemplate().getId(), 
 								containerQId, (String) identity, contentTitle);	
 		} else {
 			throw new IllegalStateException("[identity] not of type string. Found [" 

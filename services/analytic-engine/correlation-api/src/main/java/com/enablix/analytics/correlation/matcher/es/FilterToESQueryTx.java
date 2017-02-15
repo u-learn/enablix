@@ -17,9 +17,8 @@ import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.core.commons.xsdtopojo.ContainerType;
 import com.enablix.core.commons.xsdtopojo.ContentItemClassType;
 import com.enablix.core.commons.xsdtopojo.ContentItemType;
-import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 import com.enablix.core.commons.xsdtopojo.FilterType;
-import com.enablix.services.util.TemplateUtil;
+import com.enablix.services.util.template.TemplateWrapper;
 
 @Component
 public class FilterToESQueryTx {
@@ -28,7 +27,7 @@ public class FilterToESQueryTx {
 	private FilterValueResolverFactory resolverFactory;
 	
 	public List<QueryBuilder> createESQuery(FilterType filter, String targetItemQId, 
-			MatchInputRecord matchInput, ContentTemplate template) {
+			MatchInputRecord matchInput, TemplateWrapper template) {
 		
 		FilterValueResolver resolver = resolverFactory.getResolver(filter);
 		Object value = resolver.resolve(filter, matchInput, template);
@@ -87,9 +86,9 @@ public class FilterToESQueryTx {
 		return qbs;
 	}
 
-	private String extractFilterAttributeId(FilterType filter, String targetItemQId, ContentTemplate template) {
+	private String extractFilterAttributeId(FilterType filter, String targetItemQId, TemplateWrapper template) {
 		
-		ContainerType targetContainer = TemplateUtil.findContainer(template.getDataDefinition(), targetItemQId);
+		ContainerType targetContainer = template.getContainerDefinition(targetItemQId);
 		ContentItemType filterContentItem = null;
 		
 		String filterAttrId = filter.getAttributeId();

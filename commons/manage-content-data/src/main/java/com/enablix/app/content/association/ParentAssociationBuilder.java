@@ -10,10 +10,10 @@ import org.springframework.stereotype.Component;
 import com.enablix.app.content.update.ContentUpdateContext;
 import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.commons.util.StringUtil;
-import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 import com.enablix.core.domain.content.ContentAssociation;
 import com.enablix.core.mongo.content.ContentCrudService;
 import com.enablix.services.util.TemplateUtil;
+import com.enablix.services.util.template.TemplateWrapper;
 
 @Component
 public class ParentAssociationBuilder implements ContentAssociationBuilder {
@@ -23,17 +23,17 @@ public class ParentAssociationBuilder implements ContentAssociationBuilder {
 	
 	@Override
 	public Collection<ContentAssociation> buildAssociations(
-			ContentTemplate template, ContentUpdateContext request, Map<String, Object> dataAsMap) {
+			TemplateWrapper template, ContentUpdateContext request, Map<String, Object> dataAsMap) {
 		
 		Collection<ContentAssociation> associations = new ArrayList<ContentAssociation>();
 		
 		// if content is a root element i.e. it has a separate collection
 		// then add an association to the parent collection record 
 		if (!StringUtil.isEmpty(request.parentIdentity())
-				&& !TemplateUtil.isRootContainer(template, request.contentQId()) 
-				&& TemplateUtil.hasOwnCollection(template, request.contentQId())) {
+				&& !TemplateUtil.isRootContainer(template.getTemplate(), request.contentQId()) 
+				&& TemplateUtil.hasOwnCollection(template.getContainerDefinition(request.contentQId()))) {
 			
-			String parentCollection = TemplateUtil.findParentCollectionName(template, request.contentQId());
+			String parentCollection = TemplateUtil.findParentCollectionName(template.getTemplate(), request.contentQId());
 			
 			Map<String, Object> parent = crudService.findRecord(parentCollection, request.parentIdentity());
 			

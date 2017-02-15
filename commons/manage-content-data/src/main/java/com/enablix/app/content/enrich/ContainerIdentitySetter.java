@@ -11,8 +11,8 @@ import com.enablix.app.content.update.ContentUpdateContext;
 import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.commons.util.id.IdentityGenerator;
 import com.enablix.core.api.IdentityAware;
-import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 import com.enablix.core.domain.BaseEntity;
+import com.enablix.services.util.template.TemplateWrapper;
 
 @Component
 public class ContainerIdentitySetter extends AbstractMongoEventListener<BaseEntity> implements ContentEnricher {
@@ -22,7 +22,7 @@ public class ContainerIdentitySetter extends AbstractMongoEventListener<BaseEnti
 	
 	@Override
 	public void enrich(ContentUpdateContext updateCtx, 
-			Map<String, Object> content, ContentTemplate contentTemplate) {
+			Map<String, Object> content, TemplateWrapper contentTemplate) {
 		setIdentityInHierarchy(content);
 	}
 	

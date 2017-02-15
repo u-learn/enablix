@@ -19,6 +19,7 @@ public class TemplateWrapper {
 	private Map<String, String> qIdCollectionMap;
 	private Map<String, String> containerPortalLabelAttrIdMap;
 	private Map<String, String> containerStudioLabelAttrIdMap;
+	private Map<String, ContainerType> collectionNameContainerMap;
 
 	public TemplateWrapper(ContentTemplate template) {
 		super();
@@ -45,6 +46,7 @@ public class TemplateWrapper {
 		this.qIdCollectionMap = new HashMap<>();
 		this.containerPortalLabelAttrIdMap = new HashMap<>();
 		this.containerStudioLabelAttrIdMap = new HashMap<>();
+		this.collectionNameContainerMap = new HashMap<>();
 		
 		TemplateContainerWalker walker = new TemplateContainerWalker(this.template);
 		walker.walk(new ContainerVisitor() {
@@ -56,13 +58,16 @@ public class TemplateWrapper {
 				
 				containerQIdMap.put(containerQId, container);
 				
-				qIdCollectionMap.put(containerQId, TemplateUtil.resolveCollectionName(template, containerQId));
+				String collectionName = TemplateUtil.resolveCollectionName(template, containerQId);
+				qIdCollectionMap.put(containerQId, collectionName);
 				
 				containerPortalLabelAttrIdMap.put(containerQId, 
 						TemplateUtil.getPortalLabelAttributeId(template, containerQId));
 				
 				containerStudioLabelAttrIdMap.put(containerQId, 
 						TemplateUtil.getStudioLabelAttributeId(template, containerQId));
+				
+				collectionNameContainerMap.put(collectionName, container);
 			}
 		});
 	}
@@ -81,6 +86,14 @@ public class TemplateWrapper {
 
 	public String getStudioLabelAttributeId(String containerQId) {
 		return containerStudioLabelAttrIdMap.get(containerQId);
+	}
+	
+	public ContainerType getContainerForCollection(String collectionName) {
+		return collectionNameContainerMap.get(collectionName);
+	}
+
+	public String getId() {
+		return template.getId();
 	}
 	
 }

@@ -16,8 +16,8 @@ import com.enablix.analytics.correlation.data.dao.ItemItemCorrelationDao;
 import com.enablix.app.content.ContentDataManager;
 import com.enablix.core.api.ContentDataRecord;
 import com.enablix.core.api.ContentDataRef;
-import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 import com.enablix.core.correlation.ItemItemCorrelation;
+import com.enablix.services.util.template.TemplateWrapper;
 
 @Component
 public class ItemCorrelationServiceImpl implements ItemCorrelationService {
@@ -39,7 +39,7 @@ public class ItemCorrelationServiceImpl implements ItemCorrelationService {
 	}
 
 	@Override
-	public List<ContentDataRecord> fetchCorrelatedEntityRecords(ContentTemplate template, 
+	public List<ContentDataRecord> fetchCorrelatedEntityRecords(TemplateWrapper template, 
 			ContentDataRef item, List<String> relatedItemQIds, List<String> tags) {
 		
 		List<ItemItemCorrelation> itemCorrs = 

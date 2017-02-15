@@ -16,11 +16,11 @@ import org.springframework.stereotype.Component;
 
 import com.enablix.analytics.correlation.matcher.DataMatcher;
 import com.enablix.analytics.correlation.matcher.MatchInputRecord;
-import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 import com.enablix.core.commons.xsdtopojo.FilterCriteriaType;
 import com.enablix.core.commons.xsdtopojo.MatchCriteriaType;
 import com.enablix.core.commons.xsdtopojo.PathItemType;
 import com.enablix.core.commons.xsdtopojo.RelatedItemType;
+import com.enablix.services.util.template.TemplateWrapper;
 
 @Component
 public class ElasticSearchDataMatcher implements DataMatcher {
@@ -34,13 +34,13 @@ public class ElasticSearchDataMatcher implements DataMatcher {
 	private ESCorrelationQueryBuilder esCorrQueryBuilder;
 	
 	@Override
-	public List<Map<String, Object>> findMatchingRecords(String matchItemQId, ContentTemplate template,
+	public List<Map<String, Object>> findMatchingRecords(String matchItemQId, TemplateWrapper template,
 			FilterCriteriaType filterCriteria, MatchInputRecord matchInput) {
 		
 		return searchMatchingRecords(matchItemQId, template, filterCriteria, null, matchInput);
 	}
 
-	private List<Map<String, Object>> searchMatchingRecords(String matchItemQId, ContentTemplate template,
+	private List<Map<String, Object>> searchMatchingRecords(String matchItemQId, TemplateWrapper template,
 			FilterCriteriaType filterCriteria, MatchCriteriaType matchCriteria, MatchInputRecord matchInput) {
 		
 		LOGGER.debug("searching matched records of type: {}", matchItemQId);
@@ -65,7 +65,7 @@ public class ElasticSearchDataMatcher implements DataMatcher {
 	}
 	
 	@Override
-	public List<Map<String, Object>> findMatchingRecords(ContentTemplate template, RelatedItemType relatedItemDef,
+	public List<Map<String, Object>> findMatchingRecords(TemplateWrapper template, RelatedItemType relatedItemDef,
 			MatchInputRecord matchInput) {
 		
 		return searchMatchingRecords(relatedItemDef.getQualifiedId(), template, 
@@ -73,7 +73,7 @@ public class ElasticSearchDataMatcher implements DataMatcher {
 	}
 
 	@Override
-	public List<Map<String, Object>> findMatchingRecords(ContentTemplate template, PathItemType pathItem,
+	public List<Map<String, Object>> findMatchingRecords(TemplateWrapper template, PathItemType pathItem,
 			MatchInputRecord matchInput) {
 		
 		return searchMatchingRecords(pathItem.getQualifiedId(), template, 

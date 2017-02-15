@@ -7,6 +7,7 @@ import java.util.Map;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchType;
 import org.elasticsearch.client.Requests;
+import org.elasticsearch.common.unit.Fuzziness;
 import org.elasticsearch.index.query.MultiMatchQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
@@ -65,6 +66,7 @@ public class ESQueryBuilder {
 				template.getDataDefinition().getContainer());
 		MultiMatchQueryBuilder multiMatchQuery = QueryBuilders.multiMatchQuery(
 				searchText, convertToMultiMatchBoostedFields(fieldBoostIndex));
+		multiMatchQuery.fuzziness(Fuzziness.AUTO);
 		
 		//MatchQueryBuilder matchQuery = QueryBuilders.matchQuery("_all", searchText);
 		SearchSourceBuilder searchSource = SearchSourceBuilder.searchSource().query(multiMatchQuery);

@@ -14,12 +14,12 @@ import com.enablix.app.content.ContentDataManager;
 import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.commons.util.collection.CollectionUtil;
 import com.enablix.core.api.ContentDataRef;
-import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 import com.enablix.core.mongo.content.ContentCrudService;
 import com.enablix.core.mongo.search.ConditionOperator;
 import com.enablix.core.mongo.search.StringFilter;
 import com.enablix.services.util.ContentDataUtil;
 import com.enablix.services.util.TemplateUtil;
+import com.enablix.services.util.template.TemplateWrapper;
 
 @Component
 public class ContentCreatorCorrelator implements ItemUserCorrelator {
@@ -36,15 +36,15 @@ public class ContentCreatorCorrelator implements ItemUserCorrelator {
 	@Override
 	public void correlateUsers(ContentDataRef item, CorrelationContext context) {
 		
-		ContentTemplate template = context.getTemplate();
+		TemplateWrapper template = context.getTemplate();
 		
 		Map<String, Object> contentRecord = contentDataMgr.getContentRecord(item, template);
 		String creatorEmail = (String) contentRecord.get(ContentDataConstants.CREATED_BY_KEY);
 		
-		String userContainerQId = TemplateUtil.getUserContainerQId(template);
-		String userCollectionName = TemplateUtil.resolveCollectionName(template, userContainerQId);
+		String userContainerQId = TemplateUtil.getUserContainerQId(template.getTemplate());
+		String userCollectionName = template.getCollectionName(userContainerQId);
 		
-		String userEmailAttrId = TemplateUtil.getUserContainerEmailAttrId(template);
+		String userEmailAttrId = TemplateUtil.getUserContainerEmailAttrId(template.getTemplate());
 		
 		StringFilter emailIdFilter = new StringFilter(userEmailAttrId, creatorEmail, ConditionOperator.EQ);
 		

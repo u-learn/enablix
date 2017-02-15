@@ -10,7 +10,7 @@
 					<span ng-switch-when="number"><span class="text-right">{{col.desc}}</span></span>
 					<span ng-switch-default>{{col.desc}}</span>
 				</span>
-				<eb-sort sort-property="col.sortProperty" table-sort-info="pageData.sort" sort-data-fn="sortData"></eb-sort>
+				<eb-sort sort-property="col.sortProperty" table-sort-info="pageData.sort ? pageData.sort : sortInfo" sort-data-fn="sortData"></eb-sort>
 			</th>
 			<!-- <th>Actions</th> -->
 		</tr>
@@ -23,11 +23,11 @@
 		<tr ng-repeat="tableRecord in tableData | filter:searchText">
 			<td ng-repeat="action in rowActions" class="action-cell" ng-class="action.tableCellClass">
 				<a ng-if="!action.checkApplicable || action.checkApplicable(action, tableRecord)" 
-					ng-class="action.iconClass" ng-click="callRowAction(action, tableRecord, $event)" tooltip="{{action.tooltip}}"></a>
+					ng-class="action.iconClass" ng-click="callRowAction(action, tableRecord, $event, $parent.$parent.$index)" tooltip="{{action.tooltip}}"></a>
 			</td>
 			<td ng-if="selectAction">
 				<a ng-class="tableRecord._selected ? 'fa fa-check-square-o' : 'fa fa-square-o'"
-					ng-click="selectActionCallback(tableRecord, $event)" tooltip="Select"></a>
+					ng-click="selectActionCallback(tableRecord, $event, $index)" tooltip="Select"></a>
 			</td>
 			<td ng-repeat="col in tableHeaders" ng-switch on="col.dataType" ng-class="getTableCellClass(col, tableRecord)">
 				<span ng-switch-when="html" ng-bind-html="getColumnValue(col, tableRecord)"></span>

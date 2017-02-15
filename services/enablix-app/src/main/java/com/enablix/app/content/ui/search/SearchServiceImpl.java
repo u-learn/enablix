@@ -35,7 +35,7 @@ public class SearchServiceImpl implements SearchService {
 		
 		String templateId = ProcessContext.get().getTemplateId();
 		SearchResult<ContentDataRef> searchResult = searchClient.search(
-				searchText, templateMgr.getTemplate(templateId), pageSize, pageNum);
+				searchText, templateMgr.getTemplateWrapper(templateId), pageSize, pageNum);
 		
 		List<NavigableContent> content = new ArrayList<>();
 		

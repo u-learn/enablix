@@ -4,8 +4,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.enablix.core.commons.xsdtopojo.ContainerBusinessCategoryType;
-import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 import com.enablix.services.util.TemplateUtil;
+import com.enablix.services.util.template.TemplateWrapper;
 
 public class CorrelationContext {
 
@@ -15,7 +15,7 @@ public class CorrelationContext {
 	
 	private Set<ContainerBusinessCategoryType> filteredContainerCategories;
 	
-	private ContentTemplate template;
+	private TemplateWrapper template;
 	
 	public CorrelationContext() {
 		this.containersInScope = new HashSet<>();
@@ -38,11 +38,11 @@ public class CorrelationContext {
 		this.filteredContainerCategories = filteredContainerCategories;
 	}
 
-	public ContentTemplate getTemplate() {
+	public TemplateWrapper getTemplate() {
 		return template;
 	}
 
-	public void setTemplate(ContentTemplate template) {
+	public void setTemplate(TemplateWrapper template) {
 		this.template = template;
 	}
 
@@ -57,7 +57,7 @@ public class CorrelationContext {
 			// check the business category of the container. If the business category of the container
 			// is not in the list of filtered business categories, then we allow correlation
 			ContainerBusinessCategoryType businessCategory = 
-					TemplateUtil.getContainerBusinessCategory(getTemplate(), containerQId);
+					TemplateUtil.getContainerBusinessCategory(getTemplate().getTemplate(), containerQId);
 			
 			return businessCategory == null || !filteredContainerCategories.contains(businessCategory); 
 		}

@@ -16,6 +16,7 @@ import com.enablix.core.commons.xsdtopojo.BoundedType;
 import com.enablix.core.commons.xsdtopojo.ContainerBusinessCategoryType;
 import com.enablix.core.commons.xsdtopojo.ContainerPortalConfigType;
 import com.enablix.core.commons.xsdtopojo.ContainerPortalConfigType.HeadingContentItem;
+import com.enablix.services.util.template.TemplateWrapper;
 import com.enablix.core.commons.xsdtopojo.ContainerType;
 import com.enablix.core.commons.xsdtopojo.ContainerUIDefType;
 import com.enablix.core.commons.xsdtopojo.ContentItemClassType;
@@ -56,6 +57,10 @@ public class TemplateUtil {
 		return container;
 	}
 	
+	/**
+	 * @deprecated use {@link TemplateUtil#getChildContainerIds(ContainerType)} after fetching 
+	 * the container type from {@link TemplateWrapper#getContainerDefinition(String)}
+	 */
 	public static List<String> getChildContainerIds(ContentTemplate template, String parentContainerQId) {
 		
 		ContainerType container = findContainer(template.getDataDefinition(), parentContainerQId);
@@ -274,6 +279,9 @@ public class TemplateUtil {
 		return null;
 	}
 	
+	/**
+	 * @deprecated use {@link TemplateWrapper#getContainerForCollection(String)} instead
+	 */
 	public static ContainerType findContainerForCollection(String collectionName, ContentTemplate template) {
 		return findContainerForCollectionName(collectionName, 
 				template.getDataDefinition().getContainer(), template.getId());

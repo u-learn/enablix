@@ -1,6 +1,6 @@
 enablix.studioApp.directive('ebxGenericTable', [
-        '$compile',
-function($compile) {
+        '$compile', 'orderByFilter',
+function($compile,   orderByFilter) {
 
 	return {
 		restrict: 'E',
@@ -37,11 +37,14 @@ function($compile) {
 			 *		}
 			 *	};
 			 */
-			paginationData: "=?"
+			paginationData: "=?",
+			
+			clientSort: "@" 
 		},
 		link: function(scope, element, attrs) {
 			
 			scope.rowActions = scope.rowActions || [];
+			scope.clientSort = scope.clientSort || false;
 			
 		    scope.setPage = function (pageNum) {
 		    	
@@ -57,7 +60,24 @@ function($compile) {
 		    };
 		    
 		    scope.sortData = function(sortProperty, sortDir) {
-		    	scope.fetchResult(0, sortProperty, sortDir);
+		    	
+		    	if (scope.clientSort) {
+		    		
+		    		var sortInfo = scope.pageData ? scope.pageData.sort : scope.sortInfo;
+		    		
+		    		sortInfo[0].property = sortProperty;
+		    		
+		    		var ascending = !(sortDir === 'DESC');
+		    		sortInfo[0].ascending = ascending;
+		    		
+		    		var dirAndSortProp = (ascending ? "+" : "-") + sortProperty
+		    		
+		    		scope.tableData = orderByFilter(scope.tableData, dirAndSortProp);
+		    		
+		    	} else {
+		    		scope.fetchResult(0, sortProperty, sortDir);
+		    	}
+		    	
 		    };
 		    
 		    scope.fetchResult = function(pageNum, sortProperty, sortDir) {
@@ -77,9 +97,9 @@ function($compile) {
 		    	}
 		    };
 		    
-		    scope.callRowAction = function(action, dataRecord, $event) {
+		    scope.callRowAction = function(action, dataRecord, $event, $index) {
 		    	if (action.actionCallbackFn) {
-		    		action.actionCallbackFn(dataRecord, $event);
+		    		action.actionCallbackFn(dataRecord, $event, $index);
 		    	}
 		    };
 		    
@@ -106,6 +126,11 @@ function($compile) {
 		    	if (scope.selectAction && scope.selectAction.actionCallbackFn) {
 		    		scope.selectAction.actionCallbackFn(dataRecord, $event)
 		    	}
+		    }
+		    
+		    // set up sort info data
+		    if (scope.clientSort && !scope.pageData) {
+		    	scope.sortInfo = [{}]; // no sort info
 		    }
 		    
 		},

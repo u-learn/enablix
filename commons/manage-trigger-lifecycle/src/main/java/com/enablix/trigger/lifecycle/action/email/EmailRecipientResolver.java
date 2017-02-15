@@ -4,11 +4,11 @@ import java.util.Set;
 
 import com.enablix.core.api.ContentDataRef;
 import com.enablix.core.commons.xsdtopojo.BaseEmailRecipientType;
-import com.enablix.core.commons.xsdtopojo.ContentTemplate;
+import com.enablix.services.util.template.TemplateWrapper;
 
 public interface EmailRecipientResolver<T extends BaseEmailRecipientType> {
 
-	Set<ContentDataRef> resolveRecepientEmails(ContentDataRef triggerEntity, ContentTemplate template,
+	Set<ContentDataRef> resolveRecepientEmails(ContentDataRef triggerEntity, TemplateWrapper template,
 			T emailRecipientDef);
 	
 	boolean canHandle(BaseEmailRecipientType recipientDef);

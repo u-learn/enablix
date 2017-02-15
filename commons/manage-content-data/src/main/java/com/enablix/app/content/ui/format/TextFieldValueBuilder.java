@@ -5,15 +5,15 @@ import org.springframework.stereotype.Component;
 import com.enablix.commons.util.StringUtil;
 import com.enablix.core.commons.xsdtopojo.ContentItemClassType;
 import com.enablix.core.commons.xsdtopojo.ContentItemType;
-import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 import com.enablix.core.ui.TextValue;
+import com.enablix.services.util.template.TemplateWrapper;
 
 @Component
 public class TextFieldValueBuilder implements FieldValueBuilder<TextValue, String> {
 
 	@Override
 	public TextValue build(ContentItemType fieldDef, String fieldValue, 
-			ContentTemplate template, DisplayContext ctx) {
+			TemplateWrapper template, DisplayContext ctx) {
 		return StringUtil.hasText(fieldValue) ? new TextValue(fieldValue) : null;
 	}
 

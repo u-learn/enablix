@@ -99,10 +99,10 @@ public class ContentDataManagerImpl implements ContentDataManager {
 		
 		// Enrichment step
 		for (ContentEnricher enricher : enricherRegistry.getEnrichers()) {
-			enricher.enrich(request, contentDataMap, templateWrapper.getTemplate());
+			enricher.enrich(request, contentDataMap, templateWrapper);
 		}
 		
-		Map<String, Object> oldRecord = updateHandler.updateContent(templateWrapper.getTemplate(), request.getParentIdentity(), 
+		Map<String, Object> oldRecord = updateHandler.updateContent(templateWrapper, request.getParentIdentity(), 
 				request.getContentQId(), contentDataMap);
 		
 		// notify listeners
@@ -162,7 +162,7 @@ public class ContentDataManagerImpl implements ContentDataManager {
 		
 		ContentTemplate template = templateWrapper.getTemplate();
 		
-		List<String> childContainerIds = TemplateUtil.getChildContainerIds(template, containerQId);
+		List<String> childContainerIds = TemplateUtil.getChildContainerIds(templateWrapper.getContainerDefinition(containerQId));
 		for (String childContainerId : childContainerIds) {
 			
 			String childQId = QIdUtil.createQualifiedId(containerQId, childContainerId);
@@ -300,7 +300,7 @@ public class ContentDataManagerImpl implements ContentDataManager {
 	}
 	
 	@Override
-	public Map<String, Object> fetchParentRecord(ContentTemplate template, String recordQId, Map<String, Object> record) {
+	public Map<String, Object> fetchParentRecord(TemplateWrapper template, String recordQId, Map<String, Object> record) {
 		
 		Map<String, Object> parentRecord = null;
 		
@@ -311,9 +311,10 @@ public class ContentDataManagerImpl implements ContentDataManager {
 		if (!StringUtil.isEmpty(parentIdentity)) {
 		
 			// check if data is self contained or in parent container
-			String collName = TemplateUtil.resolveCollectionName(template, parentQId);
+			String collName = template.getCollectionName(parentQId);
+			ContainerType parentContainer = template.getContainerDefinition(parentQId);
 			
-			if (TemplateUtil.hasOwnCollection(template, parentQId)) {
+			if (TemplateUtil.hasOwnCollection(parentContainer)) {
 				parentRecord = crud.findRecord(collName, parentIdentity);
 				
 			} else {
@@ -326,20 +327,19 @@ public class ContentDataManagerImpl implements ContentDataManager {
 
 
 	@Override
-	public Map<String, Object> getContentRecord(ContentDataRef dataRef, ContentTemplate template) {
+	public Map<String, Object> getContentRecord(ContentDataRef dataRef, TemplateWrapper template) {
 		
-		String collName = TemplateUtil.resolveCollectionName(template, dataRef.getContainerQId());
+		String collName = template.getCollectionName(dataRef.getContainerQId());
 		Map<String, Object> triggerItemRecord = crud.findRecord(collName, dataRef.getInstanceIdentity());
 
 		return triggerItemRecord;
 	}
 
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public List<Map<String, Object>> getContentRecords(String containerQId, List<String> recordIdentities,
-			ContentTemplate template) {
-		String collName = TemplateUtil.resolveCollectionName(template, containerQId);
+			TemplateWrapper template) {
+		String collName = template.getCollectionName(containerQId);
 		return crud.findRecords(collName, recordIdentities);
 	}
 	

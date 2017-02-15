@@ -84,5 +84,11 @@ enablix.serviceURL = {
 	"getSlackStoredAuthAccessToken" : enablix.domainName +"/slack/getStoredSlackToken",
 	"unauthSlackAcc" : enablix.domainName +"/slack/unauthSlack",
 	"getSlackChannels": enablix.domainName +"/slack/getChannelsLst",
-	"sendMessageToSlack": enablix.domainName +"/slack/sendMessage"
+	"sendMessageToSlack": enablix.domainName +"/slack/sendMessage",
+	"saveContentKit": enablix.domainName + "/contentkit/save",
+	"getContentKit": enablix.domainName + "/contentkit/r/:contentKitIdentity/",
+	"getContentKitBundle": enablix.domainName + "/contentkit/b/:contentKitIdentity/",
+	"getContentKitDetail": enablix.domainName + "/contentkit/d/:contentKitIdentity/",
+	"delContentKit": enablix.domainName + "/contentkit/del/:contentKitIdentity/"
+
 };

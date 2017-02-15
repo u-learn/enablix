@@ -87,7 +87,7 @@ public class MailScheduler {
 		
 		for (List<NavigableContent> contentList : sharedContent.getRecentList().values()) {
 			for (NavigableContent content : contentList) {
-				sharedContentList.add(new ContentDataRef(templateId, content.getQualifiedId(), 
+				sharedContentList.add(ContentDataRef.createContentRef(templateId, content.getQualifiedId(), 
 						content.getIdentity(), content.getLabel()));
 			}
 		}

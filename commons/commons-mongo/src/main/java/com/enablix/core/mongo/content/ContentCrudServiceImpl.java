@@ -152,11 +152,9 @@ public class ContentCrudServiceImpl implements ContentCrudService {
 		return mongoTemplate.findOne(query, HashMap.class, collectionName);
 	}
 	
-	@SuppressWarnings("rawtypes")
 	@Override
-	public List<HashMap> findRecords(String collectionName, List<String> elementIdentities) {
-		Query query = Query.query(createIdentityInCriteria(null, elementIdentities));
-		return mongoTemplate.find(query, HashMap.class, collectionName);
+	public List<Map<String, Object>> findRecords(String collectionName, List<String> elementIdentities) {
+		return findAllRecordForCriteria(collectionName, createIdentityInCriteria(null, elementIdentities));
 	}
 
 	@Override
