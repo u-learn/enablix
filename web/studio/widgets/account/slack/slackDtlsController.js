@@ -4,6 +4,7 @@ enablix.studioApp.controller('slackDtlsController',
 			
 			var code = $stateParams.code;
 			var teamName = $stateParams.teamName;
+			var error = $stateParams.error;
 			//Add a state check
 			var initSlackDtls= function(){
 				if( code != null ){
@@ -31,6 +32,12 @@ enablix.studioApp.controller('slackDtlsController',
 					Notification.error({message: "Error in Configuring Slack", delay: enablix.errorMsgShowTime});
 				},null,null);
 			}
-			initSlackDtls();
+			if(error==null || error==undefined) {
+				initSlackDtls();
+			}
+			else {
+				StateUpdateService.goToSlackAuth("slackDtls");
+			}
+				
 		}
 		]);
