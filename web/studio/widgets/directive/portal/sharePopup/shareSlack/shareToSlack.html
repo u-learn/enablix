@@ -4,19 +4,21 @@
 <form name="shareForm">
 	<div class="modal-body">
 		<div class="cont">
-			<label class="form-label">Channel Name</label> 
-			<select class="form-control"
-				ng-change="" ng-options="item.id as item.label for item in channelLst"
-				ng-model="channelID"></select>
-		</div>
-		<br />
-		<div class="cont">
 			<div>
-				<textarea placeholder="Enter message (optional)" class="form-control"
-					ng-model="slackCustomContent" rows="8"></textarea>
+				<label class="form-label">Channel Name</label> <select required
+					class="form-control" ng-change=""
+					ng-options="item.id as item.label for item in channelLst"
+					ng-model="channelID"></select>
+				</div>
+			</div>
+			<br /> <br /> <br />
+			<div class="cont">
+				<div>
+					<textarea placeholder="Enter message (optional)"
+						class="form-control" ng-model="slackCustomContent" rows="8"></textarea>
+				</div>
 			</div>
 		</div>
-	</div>
 </form>
 <div class="modal-footer">
 	<button ng-click="shareContent()" class="button button-add">Share</button>
