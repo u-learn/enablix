@@ -606,7 +606,7 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvi
 			}
 		})
 		.state('myaccount.slackdtls', {
-			url: '/slackdtls?code&state&teamName',
+			url: '/slackdtls?code&state&teamName&error',
 			templateUrl: 'views/account/slack/slackdtls.html',
 			controller: 'slackDtlsController',
 			resolve: {
