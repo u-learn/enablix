@@ -58,7 +58,7 @@ enablix.studioApp.controller('PortalBreadcrumbCtrl',
 					ContentDataService.getNavigationPath(containerQId, elemIdentity, 
 					function(navPath) {
 						
-						if (!isNullOrUndefined(navPath)) {
+						if (!isNullOrUndefined(navPath) && navPath.qualifiedId) {
 							
 							var navContentPointer = navPath;
 							

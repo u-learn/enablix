@@ -3,7 +3,7 @@ package com.enablix.core.domain.activity;
 public abstract class Activity {
 
 	public enum Category {
-		USER_ACCOUNT, CONTENT, SEARCH, NAVIGATION, CONTENT_CONNECTION
+		USER_ACCOUNT, CONTENT, CONTENT_KIT, SEARCH, NAVIGATION, CONTENT_CONNECTION
 	}
 	
 	protected Category category;

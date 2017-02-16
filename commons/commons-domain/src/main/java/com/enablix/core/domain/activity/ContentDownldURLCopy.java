@@ -1,8 +1,6 @@
 package com.enablix.core.domain.activity;
 
-public class ContentDownldURLCopy extends ContentActivity{
-
-
+public class ContentDownldURLCopy extends ContentActivity {
 
 	private String contextName;
 	

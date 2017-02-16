@@ -30,7 +30,11 @@ public class ActivityTrackingContext {
 	}
 	
 	public static void clear() {
-		LOGGER.trace("Clearing " + get());
+		
+		if (LOGGER.isTraceEnabled()) {
+			LOGGER.trace("Clearing " + get());
+		}
+		
 		THREAD_LOCAL_REQ_AUDIT_CONTEXT.remove();
 	}
 	

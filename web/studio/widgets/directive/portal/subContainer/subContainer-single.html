@@ -24,8 +24,8 @@
 			</tr>
 	  	</table>
 	</div>
-	<div ng-if="bodyData == null || bodyData == undefined || bodyData.length == 0" 
-		 class="cont cont-hidden cont-empty">
+	<div ng-class="{'active': !expanded}" ng-if="bodyData == null || bodyData == undefined || bodyData.length == 0" 
+		 class="cont cont-empty">
 		No data found.
 	</div>
 </div>

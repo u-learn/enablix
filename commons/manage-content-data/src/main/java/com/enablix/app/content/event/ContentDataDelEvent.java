@@ -21,6 +21,7 @@ public class ContentDataDelEvent {
 		this.containerQId = containerQId;
 		this.contentIdentity = contentIdentity;
 		this.containerType = containerType;
+		this.contentTitle = contentTitle;
 	}
 
 	public String getTemplateId() {

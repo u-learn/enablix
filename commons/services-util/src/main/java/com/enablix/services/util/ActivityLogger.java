@@ -82,6 +82,7 @@ public class ActivityLogger {
 		
 		auditContentActivity(contentActvy, activityChannel);
 	}
+	
 	public static void auditContentPortalURLCopied(ContentDataRef dataRef,
 			ContainerType containerType, Channel channel) {
 		
@@ -90,6 +91,7 @@ public class ActivityLogger {
 		
 		auditContentActivity(contentActvy, channel);
 	}
+	
 	public static void auditContentDownldURLCopied(ContentDataRef dataRef,
 			ContainerType containerType, Channel channel) {
 		
@@ -98,6 +100,7 @@ public class ActivityLogger {
 		
 		auditContentActivity(contentActvy, channel);
 	}
+	
 	public static void auditContentActivity(ContentActivity contentActvy, 
 			ActivityChannel.Channel activityChannel) {
 		
