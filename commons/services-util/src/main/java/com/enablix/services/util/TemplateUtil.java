@@ -1,7 +1,6 @@
 package com.enablix.services.util;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -16,7 +15,6 @@ import com.enablix.core.commons.xsdtopojo.BoundedType;
 import com.enablix.core.commons.xsdtopojo.ContainerBusinessCategoryType;
 import com.enablix.core.commons.xsdtopojo.ContainerPortalConfigType;
 import com.enablix.core.commons.xsdtopojo.ContainerPortalConfigType.HeadingContentItem;
-import com.enablix.services.util.template.TemplateWrapper;
 import com.enablix.core.commons.xsdtopojo.ContainerType;
 import com.enablix.core.commons.xsdtopojo.ContainerUIDefType;
 import com.enablix.core.commons.xsdtopojo.ContentItemClassType;
@@ -26,6 +24,7 @@ import com.enablix.core.commons.xsdtopojo.ContentUIDefType;
 import com.enablix.core.commons.xsdtopojo.DataDefinitionType;
 import com.enablix.core.commons.xsdtopojo.UiDefinitionType;
 import com.enablix.core.commons.xsdtopojo.UserProfileRefType;
+import com.enablix.services.util.template.TemplateWrapper;
 
 public class TemplateUtil {
 
@@ -170,12 +169,9 @@ public class TemplateUtil {
 		return container.isReferenceable();
 	}
 	
-	public static String findParentCollectionName(ContentTemplate template, String containerQId) {
-		String[] idHierarchy = QIdUtil.splitQId(containerQId);
-		ContainerType parentContainer = findReferenceableParentContainer(
-				template.getDataDefinition(), 
-				Arrays.copyOfRange(idHierarchy, 0, idHierarchy.length - 1));
-		return DatastoreUtil.getCollectionName(template.getId(), parentContainer);
+	public static String findParentCollectionName(TemplateWrapper template, String containerQId) {
+		String parentQId = QIdUtil.getParentQId(containerQId);
+		return template.getCollectionName(parentQId);
 	}
 	
 	public static String getQIdRelativeToParentContainer(ContentTemplate template, String contentQId) {

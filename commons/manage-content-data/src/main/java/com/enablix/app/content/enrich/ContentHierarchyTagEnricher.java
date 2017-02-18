@@ -72,13 +72,14 @@ public class ContentHierarchyTagEnricher implements ContentEnricher {
 	private void addParentLabelAsTag(ContentUpdateContext updateCtx, String parentIdentity, 
 			TemplateWrapper contentTemplate, List<Tag> tags) {
 		
-		String parentCollection = contentTemplate.getCollectionName(updateCtx.contentQId());
+		String parentQId = QIdUtil.getParentQId(updateCtx.contentQId());
+		String parentCollection = contentTemplate.getCollectionName(parentQId);
 		
 		if (parentCollection != null) {
 		
 			Map<String, Object> parent = crudService.findRecord(parentCollection, parentIdentity);
 			
-			resolveAndAddParentLabelAsTag(QIdUtil.getParentQId(updateCtx.contentQId()), contentTemplate, tags, parent);
+			resolveAndAddParentLabelAsTag(parentQId, contentTemplate, tags, parent);
 		}
 	}
 

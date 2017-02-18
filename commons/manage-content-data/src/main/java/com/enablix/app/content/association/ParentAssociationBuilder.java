@@ -33,7 +33,7 @@ public class ParentAssociationBuilder implements ContentAssociationBuilder {
 				&& !TemplateUtil.isRootContainer(template.getTemplate(), request.contentQId()) 
 				&& TemplateUtil.hasOwnCollection(template.getContainerDefinition(request.contentQId()))) {
 			
-			String parentCollection = TemplateUtil.findParentCollectionName(template.getTemplate(), request.contentQId());
+			String parentCollection = TemplateUtil.findParentCollectionName(template, request.contentQId());
 			
 			Map<String, Object> parent = crudService.findRecord(parentCollection, request.parentIdentity());
 			
