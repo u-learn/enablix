@@ -5,18 +5,23 @@
 	aria-labelledby="shareBttn">
 	<li role="presentation"><a class="contextAnchor" role="menuitem"
 		tabindex="-1" href="#"
-		ng-click="openShareContentModal(contextData.identity,$event)">Share
-			By Email</a></li>
+		ng-click="openShareContentModal(contextData.identity,$event)">
+			<span class='fa fa-envelope'></span>
+   			<span class="my-text">Share By Email</span>
+		</a></li>
 	<!-- <li role="presentation" class="divider"></li>
 	<li role="presentation"><a class="contextAnchor" role="menuitem"
 		tabindex="-1" href="#"
 		ng-click="openMailClient(contextData.downloadDocIdentity,contextData.identity,contextData.title)">Share
 			By Email Client</a></li>  -->
 	<li role="presentation" class="divider"></li>
-	<li role="presentation"><a class="contextAnchor" role="menuitem"
-		tabindex="-1" href="#"
-		ng-click="copyPortalURL(contextData.identity,contextData.title,contextData.name)">Copy
-			Portal URL</a></li>
+	<li role="presentation">
+		<a class="contextAnchor" role="menuitem" tabindex="-1" href="#"	
+			ng-click="copyPortalURL(contextData.identity,contextData.title,contextData.name)">
+			<span class='fa fa-clipboard'></span>
+   			<span class="my-text">Copy Portal URL</span>
+		</a>
+	</li>
 	<!--  <li ng-if="contextData.downloadDocIdentity" role="presentation"
 		class="divider"></li>
 	<li ng-if="contextData.downloadDocIdentity" role="presentation"><a
@@ -27,6 +32,9 @@
 		class="divider"></li>
 	<li role="presentation">
 	<a class="contextAnchor" role="menuitem"
-		tabindex="-1" ng-click="shareToSlack(contextData.identity,$event)">Share To Slack</a>
+		tabindex="-1" ng-click="shareToSlack(contextData.identity,$event)">
+		    <span class='fa fa-slack'></span>
+   			<span class="my-text">Share To Slack</span>
+   		</a>
 	</li> 
 </ul>
