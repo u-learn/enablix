@@ -133,7 +133,7 @@ public class ContentHierarchyTagEnricher implements ContentEnricher {
 		for (String childContainerId : childContainerIds) {
 			
 			String childQId = QIdUtil.createQualifiedId(containerQId, childContainerId);
-			ContainerType childContainer = template.getContainerDefinition(childContainerId);
+			ContainerType childContainer = template.getContainerDefinition(childQId);
 			
 			if (TemplateUtil.hasOwnCollection(childContainer)) {
 				
