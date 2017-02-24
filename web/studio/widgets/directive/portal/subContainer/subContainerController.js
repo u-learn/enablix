@@ -4,7 +4,7 @@ enablix.studioApp.controller('PortalSubContainerCtrl',
 		
 		$scope.toggleContainer = function($event) {
 			var elem = $event.currentTarget;
-			if ($event.target.nodeName != 'A' ) {
+			if ($event.target.nodeName != 'A' && $event.target.nodeName != 'SPAN') {
 				$(elem).toggleClass('active');
 				$(elem).next().slideToggle('fast');
 			}

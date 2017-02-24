@@ -34,7 +34,7 @@ enablix.studioApp.controller('ShareController', [
 			$scope.users = data.map(function (data) {
 				return {
 					value: data.userId.toLowerCase(),
-					display: (data.profile.name+"<"+data.userId.toLowerCase()+">")
+					display: (data.profile.name+" <"+data.userId.toLowerCase()+">")
 				};
 			});
 		}
