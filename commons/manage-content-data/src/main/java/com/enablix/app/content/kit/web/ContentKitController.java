@@ -13,6 +13,9 @@ import com.enablix.app.content.kit.ContentKitBundle;
 import com.enablix.app.content.kit.ContentKitManager;
 import com.enablix.app.content.kit.ContentKitDetail;
 import com.enablix.app.service.CrudResponse;
+import com.enablix.core.activity.audit.ActivityTrackingContext;
+import com.enablix.core.domain.activity.ActivityChannel.Channel;
+import com.enablix.core.domain.activity.ContentKitActivity.ActivityType;
 import com.enablix.core.domain.content.kit.ContentKit;
 
 @RestController
@@ -38,8 +41,17 @@ public class ContentKitController {
 	
 	@RequestMapping(method = RequestMethod.GET, value="/b/{contentKitIdentity}/", produces = "application/json")
 	public ContentKitBundle getContentKitBundle(@PathVariable String contentKitIdentity) {
+		
 		LOGGER.debug("Fetch content kit bundle: {}", contentKitIdentity);
 		ContentKitBundle bundle = ckMgr.getContentKitBundle(contentKitIdentity);
+		
+		if (bundle != null) {
+			Channel channel = ActivityTrackingContext.get().getActivityChannel();
+			if (channel != null) {
+				ckMgr.auditKitActivity(bundle.getContentKitDetail().getContentKit(), ActivityType.KIT_ACCESS);
+			}
+		}
+		
 		return bundle;
 	}
 	

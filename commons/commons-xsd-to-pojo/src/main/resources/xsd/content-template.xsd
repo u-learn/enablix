@@ -84,6 +84,8 @@
 					<xs:element name="doc" type="docType"/>
 					<xs:element name="dateTime" type="dateTimeType"/>
 					<xs:element name="numeric" type="numericType"/>
+					<xs:element name="contentStack" type="contentStackType"/>
+					<xs:element name="richText" type="richTextType"/>
 				</xs:choice>
 				<xs:attribute name="type" type="contentItemClassType" use="optional"/>
 			</xs:extension>
@@ -97,6 +99,8 @@
 			<xs:enumeration value="doc" />
 			<xs:enumeration value="dateTime" />
 			<xs:enumeration value="numeric" />
+			<xs:enumeration value="contentStack" />
+			<xs:enumeration value="richText" />
 		</xs:restriction>
 	</xs:simpleType>
 		
@@ -156,6 +160,14 @@
 	</xs:complexType>
 	
 	<xs:complexType name="numericType">
+		<!-- no definition as of now -->
+	</xs:complexType>
+	
+	<xs:complexType name="contentStackType">
+		<!-- no definition as of now -->
+	</xs:complexType>
+	
+	<xs:complexType name="richTextType">
 		<!-- no definition as of now -->
 	</xs:complexType>
 	

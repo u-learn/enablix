@@ -501,6 +501,38 @@ enablix.studioApp.factory('ContentTemplateService',
 				return userContainerQId;
 			};
 			
+			var getStudioContainers = function(_studioName) {
+				return getStudioConfig(_studioName).containerList;
+			};
+			
+			var getStudioConfig = function(_studioName) {
+				
+				// current we have not introduced the configuration of different studios
+				// hence all containers are shown under 'content' studio
+				var studioContainers = getRootContainers();
+				
+				return {
+					containerList: studioContainers,
+					navigableIndex: true // are the index tree nodes expandable
+				};
+			};
+			
+			var hasContentStackConfigItem = function(_containerDef) {
+				
+				if (!isNullOrUndefined(_containerDef)) {
+					
+					for (var i = 0; i < _containerDef.contentItem.length; i++) {
+					
+						var itemDef = _containerDef.contentItem[i];
+						if (itemDef.type == 'CONTENT_STACK') {
+							return true;
+						}
+					}
+				}
+				
+				return false;
+			};
+			
 			return {
 				getTemplate : getTemplate,
 				getDefaultTemplate : getDefaultTemplate,
@@ -532,7 +564,10 @@ enablix.studioApp.factory('ContentTemplateService',
 				getContentConnectionContextContainers: getContentConnectionContextContainers,
 				getUserContainerQId: getUserContainerQId,
 				isBoundedRefListItem: isBoundedRefListItem,
-				checkAndGetBoundedRefListContainerQId: checkAndGetBoundedRefListContainerQId
+				checkAndGetBoundedRefListContainerQId: checkAndGetBoundedRefListContainerQId,
+				getStudioContainers: getStudioContainers,
+				getStudioConfig: getStudioConfig,
+				hasContentStackConfigItem: hasContentStackConfigItem
 			};
 		
 		}

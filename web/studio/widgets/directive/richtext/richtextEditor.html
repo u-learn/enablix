@@ -1,0 +1,4 @@
+<label class="form-label">{{label}}</label>
+<!-- <pre><code>{{richText}}</code></pre>-->
+<!-- if you put any text in between the ng-quill-editor tags, we get truncated toolbar. for compelete toolbar remove all content including new line -->
+<ng-quill-editor ng-model="richText" modules="quillModules" placeholder="placeholder" on-content-changed="contentChanged(editor, html, text)"></ng-quill-editor>

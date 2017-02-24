@@ -1,21 +1,23 @@
 enablix.studioApp.controller('contentIndexCtrl', 
-			['$scope', '$state', '$stateParams', 'ContentIndexService', 'StateUpdateService', 'Notification',
-    function( $scope,   $state,   $stateParams,   ContentIndexService,   StateUpdateService,   Notification) {
+			['$scope', '$state', '$stateParams', 'ContentTemplateService', 'ContentIndexService', 'StateUpdateService', 'Notification',
+    function( $scope,   $state,   $stateParams,   ContentTemplateService,   ContentIndexService,   StateUpdateService,   Notification) {
 	
 		$scope.contentIndex = $scope.contentIndex || {};
+		var studioConfig = ContentTemplateService.getStudioConfig($stateParams.studioName);
 		
-		ContentIndexService.getContentIndexData(enablix.templateId, function(data) {
-	    	
-			$scope.indexData = data; 
-			if (!$stateParams.containerQId && $scope.contentIndex.selectNodeLabel) {
-				var firstNode = data[0];
-				$scope.contentIndex.selectNodeLabel(firstNode);
-			}
-	    	
-	    }, function(data) {
-	    	//alert("Error fetching content index");
-	    	Notification.error({message: "Error fetching content index", delay: enablix.errorMsgShowTime});
-	    });
+		ContentIndexService.getContentIndexData(enablix.templateId, $stateParams.studioName, 
+			function(data) {
+		    	
+				$scope.indexData = data; 
+				if (!$stateParams.containerQId && $scope.contentIndex.selectNodeLabel) {
+					var firstNode = data[0];
+					$scope.contentIndex.selectNodeLabel(firstNode);
+				}
+		    	
+		    }, function(data) {
+		    	//alert("Error fetching content index");
+		    	Notification.error({message: "Error fetching content index", delay: enablix.errorMsgShowTime});
+		    });
 	    
 		var moveToNodeView = function(selectedNode) {
 			
@@ -53,7 +55,11 @@ enablix.studioApp.controller('contentIndexCtrl',
 		
 		$scope.contentIndex.selectNodeHeadCallback = function(selectedNode, $event) {
 			if (!selectedNode.dataLoaded && selectedNode.containerDef) {
-				ContentIndexService.loadIndexChildren(selectedNode, false);
+				if (studioConfig.navigableIndex) {
+					ContentIndexService.loadIndexChildren(selectedNode, false);
+				} else {
+					selectedNode.collapsed = true;
+				}
 			}
 		}
 		
@@ -64,7 +70,11 @@ enablix.studioApp.controller('contentIndexCtrl',
 		}
 		
 		$scope.postDataSave = function(data) {
-			addChildToCurrentNode(data, true);
+			if (studioConfig.navigableIndex) {
+				addChildToCurrentNode(data, true);
+			} else {
+				StateUpdateService.goToStudioDetail($scope.contentIndex.currentNode.containerDef.qualifiedId, data.identity);
+			}
 		}
 		
 		$scope.addCancelled = function() {
@@ -89,20 +99,40 @@ enablix.studioApp.controller('contentIndexCtrl',
 		};
 		
 		$scope.postDataUpdate = function(data) {
+			
 			$scope.updateCurrentNodeData(data);
-			moveToNodeView($scope.contentIndex.currentNode);
+			
+			if (data.identity == $scope.contentIndex.elementIdentity) {
+				moveToNodeView($scope.contentIndex.currentNode);
+			} else {
+				StateUpdateService.goToStudioDetail($scope.contentIndex.currentNode.containerDef.qualifiedId, data.identity);
+			}
 		}
 
 		$scope.updateCancelled = function(data) {
-			moveToNodeView($scope.contentIndex.currentNode);
+			
+			if (data.identity == $scope.contentIndex.elementIdentity) {
+				moveToNodeView($scope.contentIndex.currentNode);
+			} else {
+				StateUpdateService.goToStudioDetail($scope.contentIndex.currentNode.containerDef.qualifiedId, data.identity);
+			}
 		}
 		
 		$scope.postDataDelete = function(parentNode, deletedChildIdentity) {
-			ContentIndexService.deleteInstanceChildNode(parentNode, deletedChildIdentity);
-			if (parentNode.type === "enclosure") {
-				parentNode = parentNode.parentNode;
+			
+			if (!isNullOrUndefined(parentNode)) {
+				
+				ContentIndexService.deleteInstanceChildNode(parentNode, deletedChildIdentity);
+				if (parentNode.type === "enclosure") {
+					parentNode = parentNode.parentNode;
+				}
+				
+				$scope.contentIndex.selectNodeLabel(parentNode);
+				
+			} else {
+				// move to the root container list
+				moveToNodeView($scope.contentIndex.currentNode);
 			}
-			$scope.contentIndex.selectNodeLabel(parentNode);
 		}
 		
 		$scope.updateCurrentNodeData = function(updatedData) {

@@ -21,5 +21,11 @@
 	<div ng-if="item.type == 'DATE_TIME'">
 		<eb-date-picker content-def="item" date-value="containerData[item.id]"></eb-date-picker>
 	</div>
+	<div ng-if="item.type == 'CONTENT_STACK'">
+		<eb-content-stack content-def="item" content-list="containerData[item.id]"></eb-content-stack>
+	</div>
+	<div ng-if="item.type == 'RICH_TEXT'">
+		<eb-richtext-editor content-def="item" plain-text="containerData[item.id]" rich-text="containerData[item.id + '_rt']"></eb-richtext-editor>
+	</div>
 	</div>
 </div>

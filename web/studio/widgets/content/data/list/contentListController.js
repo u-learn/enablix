@@ -4,6 +4,7 @@ enablix.studioApp.controller('ContentListCtrl',
 		
 		var containerQId = $stateParams.containerQId;
 		var parentIdentity = $stateParams.parentIdentity;
+		var studioConfig = ContentTemplateService.getStudioConfig($stateParams.studioName);
 		
 		$scope.containerDef = {};
 		$scope.listHeaders = [];
@@ -59,8 +60,8 @@ enablix.studioApp.controller('ContentListCtrl',
 					$scope.listData = data.content;
 					$scope.pageData = data;
 					
-					var currentIndexNode = $scope.$parent.getCurrentIndexNode();
-					if (!isNullOrUndefined(currentIndexNode)) {
+					var currentIndexNode = $scope.$parent.getCurrentIndexNode ? $scope.$parent.getCurrentIndexNode() : null;
+					if (!isNullOrUndefined(currentIndexNode) && studioConfig.navigableIndex) {
 						ContentIndexService.refreshNodeChildren(currentIndexNode, $scope.listData, false);
 					}
 					

@@ -3,12 +3,14 @@ package com.enablix.app.content;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import com.enablix.app.content.delete.DeleteContentRequest;
@@ -27,8 +29,15 @@ import com.enablix.app.template.service.TemplateManager;
 import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.commons.util.QIdUtil;
 import com.enablix.commons.util.StringUtil;
+import com.enablix.commons.util.collection.CollectionUtil;
+import com.enablix.commons.util.process.ProcessContext;
+import com.enablix.core.api.ContentDataRecord;
 import com.enablix.core.api.ContentDataRef;
+import com.enablix.core.api.ContentRecordGroup;
+import com.enablix.core.api.ContentStackItem;
 import com.enablix.core.commons.xsdtopojo.ContainerType;
+import com.enablix.core.commons.xsdtopojo.ContentItemClassType;
+import com.enablix.core.commons.xsdtopojo.ContentItemType;
 import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 import com.enablix.core.domain.content.ContentChangeDelta;
 import com.enablix.core.mongo.content.ContentCrudService;
@@ -341,6 +350,186 @@ public class ContentDataManagerImpl implements ContentDataManager {
 			TemplateWrapper template) {
 		String collName = template.getCollectionName(containerQId);
 		return crud.findRecords(collName, recordIdentities);
+	}
+	
+	@Override
+	public List<ContentDataRecord> getContentStackRecords(List<ContentStackItem> contentStackItems) {
+
+		// group by containerQId so that we can reduce the number of DB queries
+		Map<String, List<String>> containerIdentities = groupContentIdentitiesByContainerQId(contentStackItems);
+
+		return fetchContentStackRecords(containerIdentities);
+	}
+
+
+	private List<ContentDataRecord> fetchContentStackRecords(Map<String, List<String>> containerIdentities) {
+		
+		List<ContentDataRecord> records = new ArrayList<>();
+		
+		String templateId = ProcessContext.get().getTemplateId();
+		TemplateWrapper templateWrapper = templateMgr.getTemplateWrapper(templateId);
+		
+		// iterate for each container type and fetch corresponding records
+		for (Map.Entry<String, List<String>> entry : containerIdentities.entrySet()) {
+		
+			String containerQId = entry.getKey();
+			String collectionName = templateWrapper.getCollectionName(containerQId);
+			
+			if (!StringUtil.isEmpty(collectionName)) {
+				
+				List<Map<String, Object>> dataRecords = crud.findRecords(collectionName, entry.getValue());
+				
+				for (Map<String, Object> dataRec : dataRecords) {
+					records.add(new ContentDataRecord(templateId, containerQId, dataRec));
+				}
+				
+			} else {
+				LOGGER.warn("Collection name not resolved for [{}] container", containerQId);
+			}
+		}
+			
+		return records;
+	}
+	
+	private Map<String, List<String>> groupContentIdentitiesByContainerQId(List<ContentStackItem> contentStackItems) {
+		
+		Map<String, List<String>> containerIdentities = new LinkedHashMap<>();
+		
+		for (ContentStackItem ref : contentStackItems) {
+			checkAndAddIdentityForContainer(containerIdentities, ref.getQualifiedId(), ref.getIdentity());
+		}
+		
+		return containerIdentities;
+	}
+
+
+	private void checkAndAddIdentityForContainer(Map<String, List<String>> containerIdentities, String qualifiedId, String identity) {
+		
+		List<String> identities = containerIdentities.get(qualifiedId);
+		
+		if (identities == null) {
+			identities = new ArrayList<>();
+			containerIdentities.put(qualifiedId, identities);
+		}
+		
+		identities.add(identity);
+	}
+
+
+	@Override
+	public List<ContentDataRecord> getContentStackForContentRecord(String containerQId, String instanceIdentity) {
+		
+		TemplateWrapper template = templateMgr.getTemplateWrapper(ProcessContext.get().getTemplateId());
+		String collectionName = template.getCollectionName(containerQId);
+		
+		List<ContentDataRecord> stackRecords = null;
+		
+		Map<String, Object> contentRecord = crud.findRecord(collectionName, instanceIdentity);
+		
+		if (CollectionUtil.isNotEmpty(contentRecord)) {
+			
+			Map<String, List<String>> containerIdentities = new LinkedHashMap<>();
+			ContainerType container = template.getContainerDefinition(containerQId);
+			
+			for (ContentItemType itemType : container.getContentItem()) {
+			
+				if (itemType.getType() == ContentItemClassType.CONTENT_STACK) {
+					
+					@SuppressWarnings("unchecked")
+					List<Map<String, String>> contentStackAttrVal = 
+							(List<Map<String, String>>) contentRecord.get(itemType.getId());
+					
+					for (Map<String, String> contentStackEntry : contentStackAttrVal) {
+						
+						String qualifiedId = contentStackEntry.get(ContentDataConstants.QUALIFIED_ID_KEY);
+						String identity = contentStackEntry.get(ContentDataConstants.IDENTITY_KEY);
+						
+						checkAndAddIdentityForContainer(containerIdentities, qualifiedId, identity);
+					}
+					
+				}
+			}
+			
+			// fetch content data records
+			stackRecords = fetchContentStackRecords(containerIdentities);
+		}
+		
+		return stackRecords == null ? new ArrayList<ContentDataRecord>() : stackRecords;
+	}
+
+
+	@SuppressWarnings({"rawtypes", "unchecked"})
+	@Override
+	public List<ContentRecordGroup> fetchAllChildrenData(String parentQId, String parentIdentity, Pageable pageable) {
+		
+		List<ContentRecordGroup> contentGroups = new ArrayList<>();
+		
+		String templateId = ProcessContext.get().getTemplateId();
+		TemplateWrapper template = templateMgr.getTemplateWrapper(templateId);
+		
+		ContainerType parentContainer = template.getContainerDefinition(parentQId);
+		if (parentContainer != null) {
+			
+			for (ContainerType childContainer : parentContainer.getContainer()) {
+				
+				String childQId = childContainer.getQualifiedId();
+				FetchContentRequest request = new FetchContentRequest(
+						templateId, childQId, parentIdentity, null, pageable);
+				
+				Object data = fetchDataJson(request);
+				
+				ContentRecordGroup contentGroup = new ContentRecordGroup();
+				contentGroup.setContentQId(childQId);
+				
+				if (data instanceof Iterable) {
+					
+					for (Object record : (Iterable) data) {
+						
+						if (record instanceof Map) {
+							ContentDataRecord dataRecord = new ContentDataRecord(templateId, childQId, (Map) record);
+							contentGroup.getRecords().add(dataRecord);
+						}
+					}
+					
+				} else if (data instanceof Map) {
+					ContentDataRecord dataRecord = new ContentDataRecord(templateId, childQId, (Map) data);
+					contentGroup.getRecords().add(dataRecord);
+				}
+			}
+			
+		} else {
+			LOGGER.warn("Invalid container qualified id [{}]", parentQId);
+		}
+		
+		return contentGroups;
+	}
+	
+	@Override
+	public List<ContentRecordGroup> fetchRecordAndChildData(String contentQId, String contentIdentity, Pageable childPagination) {
+		
+		List<ContentRecordGroup> contentGroups = new ArrayList<>();
+		
+		String templateId = ProcessContext.get().getTemplateId();
+		TemplateWrapper template = templateMgr.getTemplateWrapper(templateId);
+		
+		ContentDataRef dataRef = ContentDataRef.createContentRef(templateId, contentQId, contentIdentity, null);
+		
+		Map<String, Object> contentRecord = getContentRecord(dataRef, template);
+		
+		if (CollectionUtil.isNotEmpty(contentRecord)) {
+		
+			ContentRecordGroup contentGroup = new ContentRecordGroup();
+			
+			contentGroup.setContentQId(contentQId);
+			contentGroup.getRecords().add(new ContentDataRecord(templateId, contentQId, contentRecord));
+			
+			contentGroups.add(contentGroup);
+			
+			// add child data
+			contentGroups.addAll(fetchAllChildrenData(contentQId, contentIdentity, childPagination));
+		}
+		
+		return contentGroups;
 	}
 	
 }

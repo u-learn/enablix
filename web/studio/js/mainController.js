@@ -1,6 +1,6 @@
 enablix.studioApp.controller('MainStudioCtrl', 
-		   ['$scope', 'ContentTemplateService', 'StudioSetupService', 'AuthorizationService', 
-    function($scope,   ContentTemplateService,   StudioSetupService,   AuthorizationService) {
-
+		   ['$scope', '$stateParams', 'ContentTemplateService', 'StudioSetupService', 'AuthorizationService', 
+    function($scope,   $stateParams,   ContentTemplateService,   StudioSetupService,   AuthorizationService) {
+		console.log("studio name - " + $stateParams.studioName)
 	}                                          
 ]);

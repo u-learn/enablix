@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<contentTemplate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="master_enterprise" version="1" xsi:noNamespaceSchemaLocation="../xsd/content-template.xsd">
+<contentTemplate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="master_enterprise" version="2" xsi:noNamespaceSchemaLocation="../xsd/content-template.xsd">
 	<dataDefinition>
 		<container id="product" label="Products" businessCategory="BUSINESS_DIMENSION">
 			<contentItem id="name" label="Name" type="text" searchBoost="7"/>
@@ -939,7 +939,7 @@
 					</refList>
 				</bounded>
 			</contentItem>
-			<contentItem id="answer" label="Answer" type="text"/>
+			<contentItem id="answer" label="Answer" type="richText"/>
 			<contentItem id="solutions" label="Solutions" type="bounded">
 				<bounded multivalued="true">
 					<refList>
@@ -1022,7 +1022,7 @@
 					</refList>
 				</bounded>
 			</contentItem>
-			<contentItem id="products" label="Products" type="bounded">
+			<contentItem id="products" label="Products" type="bounded" searchBoost="7">
 				<bounded multivalued="true">
 					<refList>
 						<datastore hyperlink="true">
@@ -1081,7 +1081,7 @@
 		<container id="discoveryQuestion" label="Discovery Questions" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="file" label="File" type="doc"/>
-			<contentItem id="desc" label="Description" type="text"/>			
+			<contentItem id="desc" label="Description" type="richText"/>			
 			<contentItem id="solutions" label="Solutions" type="bounded">
 				<bounded multivalued="true">
 					<refList>
@@ -2372,6 +2372,21 @@
 				</bounded>
 			</contentItem>						
 		</container>
+		<container id="contentKit" label="Content Kits">
+			<contentItem id="kitName" label="Name" type="text"/>
+			<contentItem id="kitContent" label="Content List" type="contentStack"/>
+			<contentItem id="linkedKit" label="Linked Kits" type="bounded">
+				<bounded>
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>contentKit</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>kitName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>	
+		</container>
 		<userProfileRef>
 			<containerQId>user</containerQId>
 			<emailAttributeId>email</emailAttributeId>
@@ -3039,6 +3054,13 @@
 		<contentUIDef qualifiedId="content.summary">
 			<text type="long"/>
 		</contentUIDef>
+		<contentUIDef qualifiedId="contentKit">
+			<container labelQualifiedId="contentKit.kitName">
+				<portalConfig>
+					<headingContentItem id="kitName"/>
+				</portalConfig>
+			</container>
+		</contentUIDef>
 	</uiDefinition>
 	<portalUIDefinition>
 		<topNavigation>
@@ -3051,6 +3073,7 @@
 				<itemContainer qualifiedId="marketingevent"/>				
 				<itemContainer qualifiedId="topic"/>
 				<itemContainer qualifiedId="customer"/>
+				<itemContainer qualifiedId="contentKit"/>
 			</itemContainers>
 			<enclosures>
 				<enclosure id="collateral" label="Collateral">

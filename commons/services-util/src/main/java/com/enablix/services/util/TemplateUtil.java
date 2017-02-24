@@ -175,17 +175,24 @@ public class TemplateUtil {
 	}
 	
 	public static String getQIdRelativeToParentContainer(ContentTemplate template, String contentQId) {
-		ContainerType holdingContainer = findReferenceableParentContainer(
-				template.getDataDefinition(), contentQId);
 		
-		if (holdingContainer == null) {
-			LOGGER.error("No holding container found in template [{}] for content [{}]", 
-					template.getId(), contentQId);
-			throw new IllegalArgumentException("No holding container found in template [" 
-					+ template.getId() + "] for content [" + contentQId + "]");
+		String holdingContainerQId = contentQId;
+		
+		if (QIdUtil.hasParent(contentQId)) {
+			
+			ContainerType holdingContainer = findReferenceableParentContainer(
+					template.getDataDefinition(), contentQId);
+			
+			if (holdingContainer == null) {
+				LOGGER.error("No holding container found in template [{}] for content [{}]", 
+						template.getId(), contentQId);
+				throw new IllegalArgumentException("No holding container found in template [" 
+						+ template.getId() + "] for content [" + contentQId + "]");
+			}
+			
+			holdingContainerQId = holdingContainer.getQualifiedId();
+			
 		}
-
-		String holdingContainerQId = holdingContainer.getQualifiedId();
 		
 		return holdingContainerQId.equals(contentQId) || !contentQId.startsWith(holdingContainerQId) ? "" :
 				// substring - +1 for excluding '.' after holding container QId

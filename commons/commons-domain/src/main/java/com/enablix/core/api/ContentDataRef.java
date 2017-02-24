@@ -3,7 +3,7 @@ package com.enablix.core.api;
 public class ContentDataRef {
 
 	public enum DataType {
-		CONTENT, CONTENT_KIT
+		CONTENT
 	}
 	
 	private String templateId;
@@ -31,12 +31,6 @@ public class ContentDataRef {
 		this.type = DataType.CONTENT;
 	}
 	
-	private ContentDataRef(String instanceIdentity, String title, DataType type) {
-		this.instanceIdentity = instanceIdentity;
-		this.title = title;
-		this.type = type;
-	}
-
 	public String getTemplateId() {
 		return templateId;
 	}
@@ -122,10 +116,6 @@ public class ContentDataRef {
 	
 	public static ContentDataRef createContentRef(String templateId, String containerQId, String instanceIdentity, String title) {
 		return new ContentDataRef(templateId, containerQId, instanceIdentity, title);
-	}
-	
-	public static ContentDataRef createContentKitRef(String instanceIdentity, String kitName) {
-		return new ContentDataRef(instanceIdentity, kitName, DataType.CONTENT_KIT);
 	}
 	
 }

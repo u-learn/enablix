@@ -3,10 +3,15 @@ package com.enablix.app.content;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.data.domain.Pageable;
+
 import com.enablix.app.content.delete.DeleteContentRequest;
 import com.enablix.app.content.fetch.FetchContentRequest;
 import com.enablix.app.content.update.UpdateContentRequest;
+import com.enablix.core.api.ContentDataRecord;
 import com.enablix.core.api.ContentDataRef;
+import com.enablix.core.api.ContentRecordGroup;
+import com.enablix.core.api.ContentStackItem;
 import com.enablix.services.util.template.TemplateWrapper;
 
 public interface ContentDataManager {
@@ -25,5 +30,13 @@ public interface ContentDataManager {
 	Map<String, Object> getContentRecord(ContentDataRef dataRef, TemplateWrapper template);
 	
 	List<Map<String, Object>> getContentRecords(String containerQId, List<String> recordIdentities, TemplateWrapper template);
+
+	List<ContentDataRecord> getContentStackRecords(List<ContentStackItem> contentStackItems);
+
+	List<ContentDataRecord> getContentStackForContentRecord(String containerQId, String instanceIdentity);
+
+	List<ContentRecordGroup> fetchAllChildrenData(String parentQId, String parentIdentity, Pageable pageable);
+
+	List<ContentRecordGroup> fetchRecordAndChildData(String contentQId, String contentIdentity, Pageable childPagination);
 	
 }

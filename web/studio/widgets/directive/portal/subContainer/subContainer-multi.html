@@ -25,9 +25,9 @@
 			</h4>
 			<div id="{{dataItem.containerId}}{{$index}}" class="toggle-cont">
 				<table class="infotable" >
-					<tr ng-repeat="header in headers" ng-switch="header.dataType" ng-if="hasData(dataItem[header.key])">
+					<tr ng-repeat="header in headers" ng-switch="header.dataType" ng-if="isRenderable(header, dataItem[header.key])">
 						<th>{{header.label}}:</th>
-						<td><eb-render-data content-value="dataItem[header.key]" content-def="header" content-identity="dataItem.identity" show-doc-link="false"/></td>
+						<td><eb-render-data content-value="dataItem[header.key]" content-def="header" content-record="dataItem" show-doc-link="false"/></td>
 					</tr>
 			  	</table>
 			</div>

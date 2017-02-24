@@ -8,7 +8,7 @@ function(ContentTemplateService,   StateUpdateService) {
 			contentValue: '=',
 			contentDef: '=',
 			showDocLink:'=',
-			contentIdentity: '='
+			contentRecord: '='
 		},
 		link: function(scope, element, attrs) {
 			scope.navToItemDetail = function(_containerQId, _contentIdentity) {

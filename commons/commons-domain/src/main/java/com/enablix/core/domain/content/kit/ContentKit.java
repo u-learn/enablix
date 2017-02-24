@@ -9,7 +9,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import com.enablix.core.api.ContentDataRef;
 import com.enablix.core.domain.BaseDocumentEntity;
 
-@Document(collection = "ebx_content_kit")
+@Document(collection = ContentKitConstants.CONTENT_KIT_COLLECTION)
 public class ContentKit extends BaseDocumentEntity {
 
 	private String name;

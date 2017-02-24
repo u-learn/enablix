@@ -7,8 +7,15 @@
 	<div class="cont">
 		<table class="infotable" >
 			<tr ng-repeat="item in containerDef.contentItem">
-				<th>{{item.label}}:</td>
-				<td><span class="content-data" ng-bind-html="containerData[item.id] | ebxFormatData: item : containerData.identity"></span>&nbsp;
+				<!--td ng-if="item.type == 'CONTENT_STACK'" class="display-table" colspan="2">
+					<eb-content-stack content-def="item" content-list="containerData[item.id]" read-only="true"></eb-content-stack>
+				</td-->
+				<th>{{item.label}}:</th>
+				<td ng-if="item.type == 'CONTENT_STACK'" class="display-table">
+					<eb-content-stack content-def="item" content-list="containerData[item.id]" read-only="true"></eb-content-stack>
+				</td>
+				<td ng-if="item.type != 'CONTENT_STACK'">
+					<span class="content-data" ng-bind-html="containerData[item.id] | ebxFormatData: item : containerData"></span>
 					<span ng-if="item.type == 'DOC' && containerData[item.id].name" class="download">
 						<eb-doc-download doc-value="containerData[item.id].identity"></eb-doc-download>
 						<eb-doc-preview-action doc-identity="containerData[item.id].identity" doc-metadata="containerData[item.id]"></eb-doc-preview-action>

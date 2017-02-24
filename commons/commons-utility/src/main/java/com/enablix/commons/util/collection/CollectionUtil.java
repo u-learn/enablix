@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -268,9 +269,15 @@ public final class CollectionUtil {
 		return collection;
 	}
 	
+	public static boolean isNotEmpty(Map<?, ?> contentRecord) {
+		return contentRecord != null && !contentRecord.isEmpty();
+	}
+	
 	/**
 	 * Prevent instantiation.
 	 */
 	private CollectionUtil() {
 	}
+
+	
 }

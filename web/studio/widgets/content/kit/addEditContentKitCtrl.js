@@ -115,7 +115,6 @@ enablix.studioApp.controller('ContentKitAddEditCtrl',
 		
 		$scope.linkedKitsSelected = function(selectedContentKits) {
 			$scope.linkedKitRecords = selectedContentKits;
-			$scope.contentKit
 		};
 		
 		$scope.linkedKitsFilter = {};

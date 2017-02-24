@@ -4,7 +4,7 @@
 <table ng-hide="bodyData == null || bodyData == undefined || bodyData.length == 0" class="table borderless" >
 <tr ng-repeat="header in singleHeaders" ng-switch="header.dataType">
 	<td class="col-sm-2 text-right"><label>{{header.label}}:</label></td>
-	<td class="col-sm-4">{{bodyData[header.key] | ebxFormatData: header.typeDef : bodyData.identity}}&nbsp;
+	<td class="col-sm-4">{{bodyData[header.key] | ebxFormatData: header.typeDef : bodyData}}&nbsp;
 		<span ng-if="header.dataType == 'DOC' && bodyData[header.key].name">
 			<eb-doc-download doc-value="bodyData[header.key].identity"></eb-doc-download>
 			<eb-doc-preview-action doc-identity="bodyData[header.key].identity" doc-metadata="bodyData[header.key]"></eb-doc-preview-action>

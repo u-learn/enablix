@@ -111,11 +111,12 @@ enablix.studioApp.controller('PortalSubContainerCtrl',
 			if ($scope.info) {
 				
 				// data record already provided
-				
 				if ($scope.type === 'single') {
 					
 					var dataRecord = isArray($scope.info) && $scope.info.length > 0 ? $scope.info[0] : null;
-					setUpSingleRecordData(dataRecord);
+					if (dataRecord != null) {
+						setUpSingleRecordData(dataRecord);
+					}
 					
 				} else {
 					setUpMultiRecordData($scope.info);
@@ -129,8 +130,8 @@ enablix.studioApp.controller('PortalSubContainerCtrl',
 				
 					var elemIdentity = isNullOrUndefined($scope.elementIdentity) ? $stateParams.elementIdentity
 											: $scope.elementIdentity;
-										
-						var cntnrQId = isNullOrUndefined($stateParams.containerQId) ? $scope.subContainerQId 
+					
+					var cntnrQId = isNullOrUndefined($stateParams.containerQId) ? $scope.subContainerQId 
 											: $stateParams.containerQId;
 						
 					ContentDataService.getContentRecordData(enablix.templateId, cntnrQId, elemIdentity, 'PORTAL', 
@@ -201,6 +202,10 @@ enablix.studioApp.controller('PortalSubContainerCtrl',
 		
 		$scope.hasData = function(_data) {
 			return !isNullOrUndefined(_data) && !isArrayAndEmpty(_data) && !isStringAndEmpty(_data);
+		}
+		
+		$scope.isRenderable = function(_contentDef, _data) {
+			return _contentDef.dataType != 'CONTENT_STACK' && $scope.hasData(_data);
 		}
 		
 		$scope.render();

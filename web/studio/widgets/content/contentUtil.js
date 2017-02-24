@@ -86,6 +86,12 @@ enablix.studioApp.factory('ContentUtil',
 								};
 							}
 						}
+						
+					} else if (item.type == 'RICH_TEXT') {
+						
+						if (isNullOrUndefined(_dataRecord[item.id + "_rt"])) {
+							_dataRecord[item.id + "_rt"] = _dataRecord[item.id];
+						}
 					}
 				}
 			}
@@ -103,7 +109,8 @@ enablix.studioApp.factory('ContentUtil',
 				
 				angular.forEach(_containerDef.contentItem, function(containerAttr) {
 					
-					if (!hiddenContentItemIds.contains(containerAttr.id)) {
+					if (!hiddenContentItemIds.contains(containerAttr.id)
+							&& containerAttr.type != "CONTENT_STACK") {
 						
 						var header = {
 							"key" : containerAttr.id,
@@ -154,6 +161,37 @@ enablix.studioApp.factory('ContentUtil',
 				angular.forEach(_dataList, function(dataRec) {
 					dataRec._title = dataRec[labelAttrId];
 				});
+			};
+			
+			var groupContentRecordsByQId = function(_contentRecords, _addToMap) {
+				
+				// create a map of contentQId (containerQId) -> content group
+				// the content group will group all records with same containerQId
+				var contentGroupMap = _addToMap;
+				
+				angular.forEach(_contentRecords, function(contentDataRecord) {
+					
+					var contentQId = contentDataRecord.containerQId;
+					var contentGroup = contentGroupMap[contentQId];
+				
+					if (isNullOrUndefined(contentGroup)) {
+						
+						var containerDef = ContentTemplateService.getContainerDefinition(enablix.template, contentQId);
+						
+						contentGroup = {
+							qualifiedId: contentQId,
+							label: containerDef.label,
+							containerDef: containerDef,
+							records: []
+						};
+						
+						contentGroupMap[contentQId] = contentGroup;
+					}
+					
+					contentGroup.records.push(contentDataRecord.record);
+				});
+				
+				return contentGroupMap;
 			}
 			
 	 		return {
@@ -162,7 +200,8 @@ enablix.studioApp.factory('ContentUtil',
 	 			decorateData: decorateData,
 	 			getContentListHeaders: getContentListHeaders,
 	 			getContentLabelValue: getContentLabelValue,
-	 			resolveAndAddTitle: resolveAndAddTitle
+	 			resolveAndAddTitle: resolveAndAddTitle,
+	 			groupContentRecordsByQId: groupContentRecordsByQId
 	 		};
 	 		
 	 		

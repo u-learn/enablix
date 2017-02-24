@@ -12,6 +12,10 @@ public class QIdUtil {
 		return "";
 	}
 	
+	public static boolean hasParent(String elementQId) {
+		return elementQId.indexOf('.') > 0;
+	}
+	
 	public static String getElementId(String elementQId) {
 		int lastIndxOfDot = elementQId.lastIndexOf('.');
 		if (lastIndxOfDot > 0) {

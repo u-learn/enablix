@@ -1,5 +1,6 @@
 package com.enablix.app.content.web;
 
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -22,7 +23,9 @@ import com.enablix.app.template.service.TemplateManager;
 import com.enablix.app.template.web.TemplateController;
 import com.enablix.commons.constants.AppConstants;
 import com.enablix.commons.util.StringUtil;
+import com.enablix.core.api.ContentDataRecord;
 import com.enablix.core.api.ContentDataRef;
+import com.enablix.core.api.ContentStackItem;
 import com.enablix.core.domain.activity.ActivityChannel.Channel;
 import com.enablix.core.domain.activity.ContentActivity.ContainerType;
 import com.enablix.services.util.ActivityLogger;
@@ -55,6 +58,10 @@ public class FetchContentDataController {
 		return fetchData(new FetchContentRequest(templateId, contentQId, null, null, pageable));
 	}
 	
+	private Pageable createPaginationInfo(String page, String size) {
+		return createPaginationInfo(page, size, null, null);
+	}
+	
 	private Pageable createPaginationInfo(String page, String size, String sortProp, Direction sortDir) {
 		
 		Pageable pageable = null;
@@ -74,6 +81,21 @@ public class FetchContentDataController {
 		return pageable;
 	}
 
+	@RequestMapping(method = RequestMethod.POST, value="/fetchcs", produces = "application/json")
+	public List<ContentDataRecord> getContentStack(List<ContentStackItem> contentStackItems) {
+		return dataMgr.getContentStackRecords(contentStackItems);
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, 
+			value="/fetchcs/c/{containerQId}/r/{instanceIdentity}", 
+			produces = "application/json")
+	public List<ContentDataRecord> fetchRecordContentStack(@PathVariable String containerQId, 
+			@PathVariable String instanceIdentity) {
+		
+		LOGGER.debug("Fetch child content data");
+		return dataMgr.getContentStackForContentRecord(containerQId, instanceIdentity);
+	}
+	
 	@RequestMapping(method = RequestMethod.GET, 
 			value="/t/{templateId}/c/{contentQId}/p/{parentIdentity}", 
 			produces = "application/json")
@@ -88,6 +110,24 @@ public class FetchContentDataController {
 		LOGGER.debug("Fetch child content data");
 		Pageable pageable = createPaginationInfo(page, size, sortProp, sortDir);
 		return fetchData(new FetchContentRequest(templateId, contentQId, parentIdentity, null, pageable));
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, 
+			value="/rnc/c/{contentQId}/r/{contentIdentity}", 
+			produces = "application/json")
+	public Object fetchRecordAndAllChildrenData(
+			@PathVariable String contentQId, 
+			@PathVariable String contentIdentity,
+			@RequestParam(required=false) String size) {
+		
+		LOGGER.debug("Fetch record and all children content data");
+		
+		Pageable pageable = null;
+		if (StringUtil.hasText(size)) {
+			pageable = createPaginationInfo("0", size);
+		}
+		
+		return dataMgr.fetchRecordAndChildData(contentQId, contentIdentity, pageable);
 	}
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })

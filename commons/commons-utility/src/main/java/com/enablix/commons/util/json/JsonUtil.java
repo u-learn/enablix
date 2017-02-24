@@ -41,11 +41,6 @@ public class JsonUtil {
 		return mapper.convertValue(json, objectType);
 	}
 	
-	public static Map<?,?> beanToMap(Object bean) {
-		final ObjectMapper mapper = new ObjectMapper();
-		return mapper.convertValue(bean, HashMap.class);
-	}
-	
 	/*public static void main(String[] args) {
 		String json = "{\"name\" : \"abc\" ,"
 			+ "\"email id\" : [\"abc@gmail.com\",\"def@gmail.com\",\"ghi@gmail.com\"],"

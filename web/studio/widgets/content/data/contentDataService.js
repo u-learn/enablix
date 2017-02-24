@@ -32,6 +32,20 @@ enablix.studioApp.factory('ContentDataService',
 	 			RESTService.getForData(resourceKey, params, null, _onSuccess, _onError);
 	 			
 	 		};
+	 		
+	 		var getRecordAndChildData = function(_contentQId, _contentIdentity, _onSuccess, _onError, _childSizeLimit) {
+	 			
+	 			var params = {
+	 				contentQId: _contentQId,
+	 				contentIdentity: _contentIdentity
+	 			}
+	 			
+	 			if (!isNullOrUndefined(_childSizeLimit)) {
+	 				params.pageSize = _childSizeLimit;
+	 			}
+	 			
+	 			RESTService.getForData("fetchRecordAndChildData", params, null, _onSuccess, _onError);
+	 		};
 
 	 		var getContentRecordData = function(_templateId, _contentQId, _recordIdentity, _accessFrom, _onSuccess, _onError) {
 	 			
@@ -115,13 +129,31 @@ enablix.studioApp.factory('ContentDataService',
 	 			return "event.content.change:" + _contentQId;
 	 		};
 	 		
+	 		
+	 		var getContentStack = function(_contentStackItems, _onSuccess, _onError) {
+	 			RESTService.postForData("fetchContentStack", null, _contentStackItems, null, _onSuccess, _onError, null);
+	 		};
+	 		
+	 		var getContentStackForRecord = function(_containerQId, _instanceIdentity, _onSuccess, _onError) {
+	 			
+	 			var params = {
+	 					containerQId: _containerQId,
+	 					instanceIdentity: _instanceIdentity
+	 			};
+	 			
+	 			RESTService.getForData("fetchContentStackForRecord", params, null, _onSuccess, _onError);
+	 		};
+	 		
 	 		return {
 	 			getContentData: getContentData,
 	 			getContentRecordData: getContentRecordData,
 	 			getNavigationPath: getNavigationPath,
 	 			saveContainerData: saveContainerData,
 	 			deleteContentData: deleteContentData,
-	 			contentChangeEventId: contentChangeEventId
+	 			contentChangeEventId: contentChangeEventId,
+	 			getContentStack: getContentStack,
+	 			getContentStackForRecord: getContentStackForRecord,
+	 			getRecordAndChildData: getRecordAndChildData
 	 		};
 	 	}
 	 ]);

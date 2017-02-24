@@ -2,12 +2,12 @@ package com.enablix.core.domain.activity;
 
 import com.enablix.core.domain.content.kit.ContentKit;
 
-public class ContentKitActivity extends Activity {
+public class ContentKitActivity extends ContextAwareActivity {
 
 	public enum ActivityType {
 		
-		KIT_ADDED ("Added"), KIT_UPDATE("Updated"), KIT_DELETE("Deleted"), 
-		KIT_SHARE("Shared"), KIT_ACCESS("Accessed"); 
+		KIT_ADDED("Kit Added"), KIT_UPDATE("Kit Updated"), KIT_DELETE("Kit Deleted"), 
+		KIT_SHARE("Kit Shared"), KIT_ACCESS("Kit Accessed"); 
 	
 		private String value;
 
@@ -26,14 +26,6 @@ public class ContentKitActivity extends Activity {
 	private String itemTitle;
 	
 	private ActivityType activityType;
-	
-	private String activityOrigin;
-	
-	private String contextName;
-	
-	private String contextId;
-	
-	private String contextTerm;
 	
 	protected ContentKitActivity() {
 		super(Category.CONTENT_KIT);
@@ -68,38 +60,6 @@ public class ContentKitActivity extends Activity {
 
 	public void setActivityType(ActivityType activityType) {
 		this.activityType = activityType;
-	}
-
-	public String getActivityOrigin() {
-		return activityOrigin;
-	}
-
-	public void setActivityOrigin(String activityOrigin) {
-		this.activityOrigin = activityOrigin;
-	}
-
-	public String getContextName() {
-		return contextName;
-	}
-
-	public void setContextName(String contextName) {
-		this.contextName = contextName;
-	}
-
-	public String getContextId() {
-		return contextId;
-	}
-
-	public void setContextId(String contextId) {
-		this.contextId = contextId;
-	}
-
-	public String getContextTerm() {
-		return contextTerm;
-	}
-
-	public void setContextTerm(String contextTerm) {
-		this.contextTerm = contextTerm;
 	}
 
 	public static ContentKitActivity createActivity(ContentKit contentKit, ActivityType activityType) {

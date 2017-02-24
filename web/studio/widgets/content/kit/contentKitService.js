@@ -1,6 +1,6 @@
 enablix.studioApp.factory('ContentKitService', 
-	[			'RESTService', 'Notification', 'DataSearchService',
-	 	function(RESTService,   Notification,   DataSearchService) {
+	[			'RESTService', '$state', 'Notification', 'DataSearchService',
+	 	function(RESTService,   $state,   Notification,   DataSearchService) {
 		
 			var DOMAIN_TYPE = "com.enablix.core.domain.content.kit.ContentKit";
 		
@@ -34,7 +34,12 @@ enablix.studioApp.factory('ContentKitService',
  					"contentKitIdentity": _kitIdentity
 	 			};
 	 			
-	 			RESTService.getForData("getContentKitBundle", params, null, _onSuccess, _onError);
+	 			var headers = {};
+	 			if ($state.includes("portal")) {
+	 				headers.atChannel = "WEB";
+	 			}
+	 			
+	 			RESTService.getForData("getContentKitBundle", params, null, _onSuccess, _onError, headers);
 	 		};
 	 		
 	 		var getContentKitDetail = function(_kitIdentity, _onSuccess, _onError) {

@@ -11,7 +11,7 @@ import com.enablix.app.content.update.ContentUpdateContext;
 import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.commons.dms.api.DocumentMetadata;
 import com.enablix.commons.util.StringUtil;
-import com.enablix.commons.util.json.JsonUtil;
+import com.enablix.commons.util.beans.BeanUtil;
 import com.enablix.core.commons.xsdtopojo.ContainerType;
 import com.enablix.core.commons.xsdtopojo.ContentItemClassType;
 import com.enablix.core.commons.xsdtopojo.ContentItemType;
@@ -56,7 +56,7 @@ public class TemporaryDocConfimation implements ContentEnricher {
 								docMd = docManager.attachUsingContainerInfo(docMd, contentQId, contentIdentity);
 							}
 							
-							content.put(itemDef.getId(), JsonUtil.beanToMap(docMd));
+							content.put(itemDef.getId(), BeanUtil.beanToMap(docMd));
 							
 						} catch (IOException e) {
 							throw new RuntimeException("Unable to attach document", e);

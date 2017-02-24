@@ -3,7 +3,6 @@ enablix.studioApp.factory('ContentIndexService',
 	 	function(RESTService, ContentDataService, ContentTemplateService, ContentUtil, Notification) {
 		
 			var templateId = "";
-			var cachedContentIndexData = null;
 			
 			var contentIndexTransformer = function(containerList, ignoreInstanceLoad, prntContainerQId) {
 				
@@ -121,7 +120,9 @@ enablix.studioApp.factory('ContentIndexService',
 				});
 				
 				angular.forEach(enclosureNodes, function(encNode) {
-					_childrenList.push(encNode);
+					if (encNode.children && encNode.children.length > 0) {
+						_childrenList.push(encNode);
+					}
 				});
 			};
 			
@@ -183,18 +184,16 @@ enablix.studioApp.factory('ContentIndexService',
 				return indxDataItem;
 			} 
 			
-			var getContentIndexData = function(_templateId, _onSuccess, _onError) {
-				templateId = _templateId;
-				var params = {"templateId": _templateId};
+			var getContentIndexData = function(_templateId, _studioName, _onSuccess, _onError) {
 				
-				if (isNullOrUndefined(cachedContentIndexData)) {
-					RESTService.getForData("fetchRootContainers", params, contentIndexTransformer, function(data) {
-							//cachedContentIndexData = data;
-							_onSuccess(data)
-						}, _onError);
-				} else {
-					_onSuccess(cachedContentIndexData);
-				}
+				templateId = _templateId;
+
+				var studioConfig = ContentTemplateService.getStudioConfig(_studioName);
+				var rootContainers = studioConfig.containerList;
+				
+				rootContainers = contentIndexTransformer(rootContainers, !studioConfig.navigableIndex);
+				
+				_onSuccess(rootContainers);
 			};
 			
 			var updateNodeData = function(_treeNode, _data) {
@@ -206,21 +205,24 @@ enablix.studioApp.factory('ContentIndexService',
 			
 			var deleteInstanceChildNode = function(_parentNode, childIdentity) {
 				
-				var childrenList = _parentNode.children;
-				
-				for (var i = 0; i < childrenList.length; i++) {
+				if (!isNullOrUndefined(_parentNode)) {
 					
-					var child = childrenList[i];
+					var childrenList = _parentNode.children || [];
 					
-					if (child.elementIdentity == childIdentity) {
+					for (var i = 0; i < childrenList.length; i++) {
 						
-						if (child.containerDef.single) {
-							child.elementIdentity = null;
-						} else {
-							childrenList.splice(i, 1);
+						var child = childrenList[i];
+						
+						if (child.elementIdentity == childIdentity) {
+							
+							if (child.containerDef.single) {
+								child.elementIdentity = null;
+							} else {
+								childrenList.splice(i, 1);
+							}
+							
+							break;
 						}
-						
-						break;
 					}
 				}
 			};

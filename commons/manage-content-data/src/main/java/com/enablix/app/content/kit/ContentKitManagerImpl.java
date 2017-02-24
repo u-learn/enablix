@@ -11,20 +11,27 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.stereotype.Component;
 
+import com.enablix.app.content.ContentDataManager;
+import com.enablix.app.content.update.UpdateContentRequest;
 import com.enablix.app.service.CrudResponse;
 import com.enablix.app.template.service.TemplateManager;
 import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.commons.util.StringUtil;
+import com.enablix.commons.util.beans.BeanUtil;
 import com.enablix.commons.util.collection.CollectionUtil;
 import com.enablix.commons.util.process.ProcessContext;
 import com.enablix.core.api.ContentDataRecord;
 import com.enablix.core.api.ContentDataRef;
+import com.enablix.core.domain.activity.ContentKitActivity;
+import com.enablix.core.domain.activity.ContentKitActivity.ActivityType;
 import com.enablix.core.domain.content.kit.ContentKit;
+import com.enablix.core.domain.content.kit.ContentKitConstants;
 import com.enablix.core.domain.content.kit.ContentKitSummary;
 import com.enablix.core.mongo.content.ContentCrudService;
 import com.enablix.core.mongo.dao.GenericDao;
 import com.enablix.core.mongo.search.ConditionOperator;
 import com.enablix.core.mongo.search.StringListFilter;
+import com.enablix.services.util.ActivityLogger;
 import com.enablix.services.util.template.TemplateWrapper;
 
 @Component
@@ -32,7 +39,6 @@ public class ContentKitManagerImpl implements ContentKitManager {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(ContentKitManagerImpl.class);
 
-	private static final String NAME_ATTR = "name";
 	private static final List<String> KIT_REF_FIELDS = new ArrayList<>();
 	
 	static {
@@ -43,7 +49,7 @@ public class ContentKitManagerImpl implements ContentKitManager {
 		KIT_REF_FIELDS.add(ContentDataConstants.MODIFIED_AT_KEY);
 		KIT_REF_FIELDS.add(ContentDataConstants.MODIFIED_BY_KEY);
 		KIT_REF_FIELDS.add(ContentDataConstants.MODIFIED_BY_NAME_KEY);
-		KIT_REF_FIELDS.add(NAME_ATTR);
+		KIT_REF_FIELDS.add(ContentKitConstants.NAME_ATTR);
 	}
 	
 	@Autowired
@@ -58,9 +64,39 @@ public class ContentKitManagerImpl implements ContentKitManager {
 	@Autowired
 	private GenericDao genericDao;
 	
+	@Autowired
+	private ContentDataManager contentDataMgr;
+	
+	@SuppressWarnings("unchecked")
 	@Override
 	public CrudResponse<ContentKit> saveOrUpdateKit(ContentKit kit) {
-		return crud.saveOrUpdate(kit);
+		
+		ActivityType activity = ActivityType.KIT_ADDED;
+		if (StringUtil.hasText(kit.getIdentity())) {
+			activity = ActivityType.KIT_UPDATE;
+		}
+		
+		String templateId = ProcessContext.get().getTemplateId();
+		Map<String, Object> kitAsMap = (Map<String, Object>) BeanUtil.beanToMap(kit);
+		
+		UpdateContentRequest request = new UpdateContentRequest(templateId, null, 
+										ContentKitConstants.CONTENT_KIT_QID, kitAsMap);
+		kitAsMap = contentDataMgr.saveData(request);
+
+		kit = BeanUtil.mapToBean(kitAsMap, ContentKit.class);
+		CrudResponse<ContentKit> response = new CrudResponse<ContentKit>(kit);
+		
+		// CrudResponse<ContentKit> response = crud.saveOrUpdate(kit);
+		
+		auditKitActivity(response.getPayload(), activity);
+		
+		return response;
+	}
+	
+	@Override
+	public void auditKitActivity(ContentKit kit, ActivityType activity) {
+		ContentKitActivity kitActivity = ContentKitActivity.createActivity(kit, activity);
+		ActivityLogger.auditActivity(kitActivity);
 	}
 
 	@Override
@@ -132,7 +168,12 @@ public class ContentKitManagerImpl implements ContentKitManager {
 
 	@Override
 	public void deleteKit(String contentKitIdentity) {
-		crud.getRepository().deleteByIdentity(contentKitIdentity);
+		
+		List<ContentKit> deletedKit = crud.getRepository().removeByIdentity(contentKitIdentity);
+		
+		if (CollectionUtil.isNotEmpty(deletedKit)) {
+			auditKitActivity(deletedKit.get(0), ActivityType.KIT_DELETE);
+		}
 	}
 
 	@Override

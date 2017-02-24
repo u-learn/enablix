@@ -2,9 +2,39 @@ var enablix = enablix || {};
 enablix.studioApp = angular.module("studio", ['ui.router', 'angularTreeview', 'listGroupTreeview', 
            'angularFileUpload', 'ui.bootstrap', 'isteven-multi-select', 'ui-notification', 'enablixFilters',
            'ngSanitize', 'ui.select', 'ngMessages', 'pascalprecht.translate', 'noCAPTCHA', 'PubSub', 
-           'ngMaterial', 'ngLoadingSpinner']);
+           'ngMaterial', 'ngLoadingSpinner', 'ngQuill']);
 
-//md default theme
+// default configuration for quill-editor [rich text editor]
+enablix.studioApp.config(['ngQuillConfigProvider', function (ngQuillConfigProvider) {
+    ngQuillConfigProvider.set({
+    	modules: {
+	        toolbar: 
+	        	[
+	                  ['bold'/*, 'italic', 'underline', 'strike'*/],        // toggled buttons
+	                  //['blockquote', 'code-block'],
+
+	                  //[{ 'header': 1 }, { 'header': 2 }],               // custom button values
+	                  [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+	                  //[{ 'script': 'sub' }, { 'script': 'super' }],      // superscript/subscript
+	                  [{ 'indent': '-1' }, { 'indent': '+1' }],          // outdent/indent
+	                  //[{ 'direction': 'rtl' }],                         // text direction
+
+	                  //[{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
+	                  //[{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+
+	                  //[{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
+	                  //[{ 'font': [] }],
+	                  //[{ 'align': [] }],
+
+	                  //['clean'],                                         // remove formattingbutton
+
+	                  //['link', 'image', 'video']                         // link and image, video
+	            ]
+		}
+    });
+}]);
+
+//material design default theme
 enablix.studioApp.config(function($mdThemingProvider) {
 	$mdThemingProvider.theme('default')
 		.primaryPalette('blue-grey', {
@@ -15,7 +45,6 @@ enablix.studioApp.config(function($mdThemingProvider) {
 	    });	
 });
 
-//enablix.templateId = "entSoftwareTemplate"; //"amlSalesTemplate";
 enablix.dateFormat = 'MM/dd/yyyy';
 enablix.errorMsgShowTime = 10000; // in milli-seconds 
 enablix.defaultPageSize = 10;
@@ -53,7 +82,7 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvi
 			templateUrl: 'views/authError.html'
 		})
 		.state('studio', {
-			url: '/studio',
+			url: '/studio/{studioName}',
 			templateUrl: 'views/studio/studio.html',
 			controller: 'MainStudioCtrl',
 			resolve: {
@@ -235,8 +264,13 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvi
 			views: {
 				// the main template
 				'': {
-					templateUrl: 'views/portal/portal-container.html',
-					controller: 'PortalCntnrDetailCtrl',
+					templateUrl: function($stateParams) {
+						return 'views/portal/portal-container.html';
+					},
+					controllerProvider: function($stateParams) {
+						var ctrlName = 'PortalCntnrDetailCtrl';
+						return ctrlName;
+					},
 					resolve: {
 						setupData: appSetup 
 					}

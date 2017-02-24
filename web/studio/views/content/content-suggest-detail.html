@@ -7,7 +7,7 @@
 		<table class="infotable" >
 			<tr ng-repeat="item in containerDef.contentItem">
 				<th>{{item.label}}:</td>
-				<td><span class="content-data" ng-bind-html="containerData[item.id] | ebxFormatData: item : containerData.identity"></span>&nbsp;
+				<td><span class="content-data" ng-bind-html="containerData[item.id] | ebxFormatData: item : containerData"></span>&nbsp;
 					<span ng-if="item.type == 'DOC' && containerData[item.id].name" class="download">
 						<eb-doc-download doc-value="containerData[item.id].identity"></eb-doc-download>
 						<eb-doc-preview-action doc-identity="containerData[item.id].identity" doc-metadata="containerData[item.id]"></eb-doc-preview-action>

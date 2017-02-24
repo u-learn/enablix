@@ -1,6 +1,6 @@
 enablix.filters.filter('ebxFormatData', function($filter, $compile) {
 	
-	return function(input, inputTypeDef, contentIdentity, scope) {
+	return function(input, inputTypeDef, contentRecord, scope) {
 		
 		if (isNullOrUndefined(input)) { 
 			return ""; 
@@ -10,6 +10,10 @@ enablix.filters.filter('ebxFormatData', function($filter, $compile) {
 		var dataType = inputTypeDef.type;
 		
 		switch(dataType) {
+			
+			case "NUMERIC": 
+				text = input;
+				break;
 			
 			case "DOC": 
 				text = input.name;
@@ -36,13 +40,39 @@ enablix.filters.filter('ebxFormatData', function($filter, $compile) {
 					}
 				}
 				break;
+				
+			case "CONTENT_STACK":
+				if (input) {
+				
+					text = "";
+					
+					for (var i = 0; i < input.length; i++) {
+						
+						if (i != 0) {
+							text += "<br/>"
+						}
+					
+						var item = input[i];
+						var formattedItem = item.label + " [" + item.containerLabel + "]";
+						text += item.containerLabel + " - " + item.label;
+					}
+
+				}
+				break;
 			
+			case "RICH_TEXT":
+				var richText = contentRecord[inputTypeDef.id + "_rt"];
+				if (richText) {
+					text = "<div class='ql-editor'>" + richText + "</div>";
+				}
+				break;
+				
 			case "TEXT":
 								
 				if (input) {
 					
 					var linkParams = {
-						"cId" : contentIdentity,
+						"cId" : contentRecord.identity,
 						"cQId" : inputTypeDef.qualifiedId
 					}
 					

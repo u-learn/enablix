@@ -101,6 +101,19 @@ enablix.studioApp.factory('ContentOperInitService',
 	 			ContentDataService.getContentRecordData(enablix.templateId, _containerQId, _contentIdentity, null,
 	 					function(data) {
 	 						_scope.containerData = angular.copy(data);
+	 						
+	 						angular.forEach(_scope.containerDef.contentItem, function(itemDef) {
+	 							// check if the rich text content is set for the RICH_TEXT content
+	 							if (itemDef.type === 'RICH_TEXT') {
+	 								
+	 								var plainText = data[itemDef.id];
+	 								var richText = data[itemDef.id + "_rt"];
+	 								
+	 								if (isNullOrUndefined(richText) && !isNullOrUndefined(plainText)) {
+	 									_scope.containerData[itemDef.id + "_rt"] = plainText;
+	 								}
+	 							}
+	 						})
 	 					}, 
 	 					function(data) {
 	 						//alert('Error retrieving record data');

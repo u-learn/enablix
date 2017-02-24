@@ -75,4 +75,23 @@ public class ActivityTrackingContext {
 		return auditContextParams.get(ActivityTrackingConstants.REQ_CONTEXT_ACTIVITY_ORIGIN);
 	}
 	
+	public String getActivityContextId() {
+		return auditContextParams.get(ActivityTrackingConstants.CONTEXT_ID);
+	}
+	
+	public String getActivityContextName() {
+		return auditContextParams.get(ActivityTrackingConstants.CONTEXT_NAME);
+	}
+	
+	public String getActivityContextTerm() {
+		return auditContextParams.get(ActivityTrackingConstants.CONTEXT_TERM);
+	}
+	
+	public void setActivityContext(ActivityContextAware activity) {
+		activity.setActivityOrigin(getActivityOrigin());
+		activity.setContextId(getActivityContextId());
+		activity.setContextName(getActivityContextName());
+		activity.setContextTerm(getActivityContextTerm());
+	}
+	
 }
