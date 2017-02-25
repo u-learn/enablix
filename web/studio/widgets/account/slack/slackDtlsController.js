@@ -27,9 +27,13 @@ enablix.studioApp.controller('slackDtlsController',
 			}
 			$scope.unauthorizeSlack = function(){		
 				RESTService.postForData('unauthSlackAcc', null,null ,null, function(data) {
-					StateUpdateService.goToSlackAuth("slackDtls");
+					if(data) {
+						StateUpdateService.goToSlackAuth("slackDtls");
+					} else {
+						Notification.error({message: "Oops! There was an error unauthorizing account on Slack.", delay: enablix.errorMsgShowTime});
+					}
 				}, function() {    		
-					Notification.error({message: "Error in Configuring Slack", delay: enablix.errorMsgShowTime});
+					Notification.error({message: "Oops! There was an error unauthorizing account on Slack.", delay: enablix.errorMsgShowTime});
 				},null,null);
 			}
 			if(error==null || error==undefined) {
