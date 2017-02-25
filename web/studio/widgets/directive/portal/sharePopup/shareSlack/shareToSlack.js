@@ -42,10 +42,10 @@ enablix.studioApp.controller('ShareToSlackController', [
 					if(sent) {
 						Notification.primary({message: "Done! Shared successfully on Slack.", delay: enablix.errorMsgShowTime});
 					} else {
-						Notification.error({message: "Error sending content to Slack. ", delay: enablix.errorMsgShowTime});
+						Notification.error({message: "Oops! There was an error sharing on Slack.", delay: enablix.errorMsgShowTime});
 					}
 				}, function(fail) {
-					Notification.error({message: "Error sending content to Slack. ", delay: enablix.errorMsgShowTime});
+					Notification.error({message: "Oops! There was an error sharing on Slack.", delay: enablix.errorMsgShowTime});
 				});
 				$modalInstance.close();
 			}
