@@ -2,6 +2,7 @@ package com.enablix.slack.integration.services;
 
 import java.net.URI;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -160,10 +161,10 @@ public class SlackServiceImpl implements SlackService {
 		return channelDtls;
 	}
 
-	public boolean postMessageToChannel(String userID, String channelID,
+	public boolean postMessageToChannel(String userID, List<String> channelIDs,
 			String containerQId, String contentIdentity, String slackCustomContent) 
 					throws JsonProcessingException {
-
+		boolean resp = false;
 		String templateId = ProcessContext.get().getTemplateId();
 		TemplateWrapper template = templateMgr.getTemplateWrapper(templateId);
 
@@ -181,30 +182,36 @@ public class SlackServiceImpl implements SlackService {
 		String slackAttachments = AttachmentDecorator.getDecoratedAttachment(displayableContent,
 				FALL_BACK_TEXT, FOOTER_ICON,COLOR,FOOTER_TEXT);
 		SlackAccessToken slackAccessToken = getStoredSlackTeamDtls(userID) ;
-		
+
 		String redirectURI = getRedirectURI();
-		URI targetUrl= UriComponentsBuilder.fromUriString(BASE_URL)
+		UriComponentsBuilder uriComponentBuildr= UriComponentsBuilder.fromUriString(BASE_URL)
 				.path(CHANNEL_POST_TEXTMSG)
 				.queryParam("token",slackAccessToken.getAccessToken())
-				.queryParam("channel",channelID)
 				.queryParam("text", slackCustomContent)
 				.queryParam("attachments", slackAttachments)
-				.queryParam("redirect_uri",redirectURI)
-				.build()
-				.toUri();
+				.queryParam("redirect_uri",redirectURI);
 
-		ObjectNode objNode = restTemplate.getForObject(targetUrl, ObjectNode.class);
+		URI targetUrl;
 
-		boolean resp = objNode.get("ok").asBoolean();
+		for(String channelId : channelIDs){
+			uriComponentBuildr.queryParam("channel",channelId);
 
-		if (resp) {
-			String sharingId = IdentityUtil.generateIdentity(this);
-			ActivityLogger.auditContentShare(templateId, displayableContent, channelID,
-					ShareMedium.WEB, Channel.SLACK, sharingId, displayableContent.getTitle());
-			return true;
+			targetUrl = uriComponentBuildr.build().toUri();
+
+			ObjectNode objNode = restTemplate.getForObject(targetUrl, ObjectNode.class);
+
+			resp = objNode.get("ok").asBoolean();
+
+			if (resp) {
+				String sharingId = IdentityUtil.generateIdentity(this);
+				ActivityLogger.auditContentShare(templateId, displayableContent, channelId,
+						ShareMedium.WEB, Channel.SLACK, sharingId, displayableContent.getTitle());
+			}
+			else{
+				return false;
+			}
 		}
-
-		return false;
+		return resp;
 	}
 
 	public SlackAccessToken saveUserSpecificToken(SlackTeamDtls slackTeamDtls, String userID) throws Exception {
