@@ -1,5 +1,7 @@
 package com.enablix.app.slack.web;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,13 +37,13 @@ public class SlackController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST, value = "/sendMessage")
-	public boolean sendMessage(@RequestParam("channelID") String channelID,
+	public boolean sendMessage(@RequestParam("channelsSelectd") List<String> channelIDs,
 			@RequestParam("containerQId") String containerQId,
 			@RequestParam("contentIdentity") String contentIdentity,
 			@RequestParam("slackCustomContent") String slackCustomContent) {
 		try	{
 			return slackServiceImpl.postMessageToChannel(ProcessContext.get().getUserId()
-					, channelID, containerQId,contentIdentity,slackCustomContent);
+					, channelIDs, containerQId,contentIdentity,slackCustomContent);
 		}
 		catch(Exception e) {
 			LOGGER.error(" Error Posting message to Slack ",e);
