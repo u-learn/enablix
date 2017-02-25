@@ -1,17 +1,30 @@
 enablix.studioApp.controller('ShareToSlackController', [
 	'$scope', '$stateParams', '$modalInstance', '$timeout', 'containerQId', 'contentIdentity', 'ContentShareService', 'Notification','RESTService',
 	function( $scope,   $stateParams,   $modalInstance,   $timeout,   containerQId,   contentIdentity,   ContentShareService,   Notification,RESTService) {
-
+		$scope.channelsSelectd=[];
 		$scope.channelLst=[];
 		$scope.slackCustomContent="";
+		getChannels(populateChannels);
+		$scope.channelBoundedRefItemDef = {
+				"id" : "playUserSet",
+				"bounded" : {
+	                "fixedList" : {
+	                    "data" :$scope.channelLst
+	                }, 
+	                "multivalued" : true,
+				},
+                "type" : "BOUNDED", 
+                "label" : "Select Channel", 
+            }; 
+		
 		function getChannels(_success){
-			RESTService.getForData('getSlackChannels', null, null, function(data) {
+			RESTService.getForDataSync('getSlackChannels', null, null, function(data) {
 				_success(data);	    	
 			}, function() {    		
 				Notification.error({message: "Error loading channels ", delay: enablix.errorMsgShowTime});
 			});
 		};
-
+		
 		function populateChannels(data){
 			var channelsDtls = data.channels;
 			if(channelsDtls!=null && channelsDtls!=undefined){
@@ -27,7 +40,7 @@ enablix.studioApp.controller('ShareToSlackController', [
 			}
 		}
 		function validateChannel() {
-			if($scope.channelID==null || $scope.channelID==undefined) {
+			if($scope.channelsSelectd==null || $scope.channelsSelectd==undefined || $scope.channelsSelectd.length==0) {
 				return false;
 			}
 			else {
@@ -37,7 +50,7 @@ enablix.studioApp.controller('ShareToSlackController', [
 		$scope.shareContent = function() {
 			var valResp = validateChannel();
 			if(valResp) {
-				ContentShareService.shareContentToSlack(containerQId, contentIdentity, $scope.channelID,$scope.slackCustomContent,
+				ContentShareService.shareContentToSlack(containerQId, contentIdentity, $scope.channelsSelectd,$scope.slackCustomContent,
 						function(sent) {
 					if(sent) {
 						Notification.primary({message: "Done! Shared successfully on Slack.", delay: enablix.errorMsgShowTime});
@@ -57,5 +70,5 @@ enablix.studioApp.controller('ShareToSlackController', [
 		$scope.close = function() {
 			$modalInstance.dismiss('cancel');
 		}
-		getChannels(populateChannels);
+		
 	}]);
