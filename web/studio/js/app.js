@@ -456,6 +456,14 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvi
 				setupData: appSetup 
 			}
 		})
+		.state('system.users.view', {
+			url: '/view/{identity}/',
+			templateUrl: 'views/user/viewuser.html',
+			controller: 'SaveUserController',
+			resolve: {
+				setupData: appSetup 
+			}
+		})
 		.state('system.audit', {
 			url: '/audit',
 			templateUrl: 'views/system/audit/auditList.html',
