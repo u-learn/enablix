@@ -2436,11 +2436,10 @@
 				</bounded>
 			</contentItem>						
 			<contentItem id="kitContent" label="Content Items" type="contentStack"/>
+		</container>
 		<userProfileRef>
-			
 			<containerQId>user</containerQId>
 			<emailAttributeId>email</emailAttributeId>
-		
 		</userProfileRef>
 	</dataDefinition>
 	<uiDefinition>
