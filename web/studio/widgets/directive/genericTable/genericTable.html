@@ -17,7 +17,7 @@
 	</thead>
 	
 	<tbody>
-		<tr ng-if="tableData.length == 0">
+		<tr ng-if="!tableData || tableData.length == 0">
 			<td colspan="{{tableHeaders.length + rowActions.length + (selectAction ? 1 : 0)}}">No data found</td>
 		</tr>
 		<tr ng-repeat="tableRecord in tableData | filter:searchText">
