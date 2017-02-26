@@ -99,6 +99,37 @@ enablix.studioApp.factory('RESTService', [
 						});
 			};
 			
+			var getForDataSync = function(_resourceKey, _params, transformer, _success, _error, _headers) {
+				
+				var requestConfig = genereateRequestConfig(_resourceKey, _params);
+				
+				var callHeaders = addResourceVersionHeaders(_headers);
+				
+				
+				return $.ajax({
+					    type: 'GET',
+					    url: requestConfig.url,
+					    params : requestConfig.paramsJson,
+					    headers : callHeaders,
+					    async: false,
+					    success: function(data, textStatus ){
+					    	if (transformer != undefined) {
+								_success(transformer(data));
+							} else {
+								_success(data);
+							}
+					    },
+					    error: function(xhr, textStatus, errorThrown){
+					    	if (isVersionMismatchError(data, status)) {
+								return;
+							}
+							
+							checkAuthenticationErrorAndExecute(data, status, _error);
+					    }
+					  });
+				 
+			};
+			
 			var isVersionMismatchError = function(data, status) {
 				
 				if (status == 418) {
@@ -183,7 +214,8 @@ enablix.studioApp.factory('RESTService', [
 			return {
 				getForData : getForData,
 				postForData : postForData,
-				postForFile : postForFile
+				postForFile : postForFile,
+				getForDataSync:getForDataSync
 			};
 		}]);
 

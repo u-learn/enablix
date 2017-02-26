@@ -14,12 +14,15 @@ enablix.studioApp.factory('ContentShareService',
 			};
 	
 			var shareContentToSlack = function(containerQId, contentIdentity, 
-					channelID,slackCustomContent,
+					channelsSelectd,slackCustomContent,
 					 _onSuccess, _onError) {
-				
+				var channelIds = [];
+				for(var i=0; i < channelsSelectd.length;i++){
+					channelIds.push(channelsSelectd[i].id);
+				}
 				var shareSlackData = {"containerQId" : containerQId,
 									  "contentIdentity": contentIdentity,
-									  "channelID": channelID,
+									  "channelsSelectd": channelIds,
 									  "slackCustomContent" : slackCustomContent
 							  		};
 				RESTService.postForData("sendMessageToSlack", shareSlackData, null, null, _onSuccess, _onError);

@@ -10,7 +10,7 @@ enablix.studioApp.controller('slackAuthController',
 						StateUpdateService.goToSlackDtls(data.teamName);
 					}
 				}, function() {    		
-					Notification.error({message: "Error in Configuring Slack", delay: enablix.errorMsgShowTime});
+					Notification.error({message: "Oops! There was an error on Slack.", delay: enablix.errorMsgShowTime});
 				},null);
 			}
 

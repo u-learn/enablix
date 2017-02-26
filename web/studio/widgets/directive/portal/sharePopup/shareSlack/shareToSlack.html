@@ -4,12 +4,7 @@
 <form name="shareForm">
 	<div class="modal-body">
 		<div class="cont">
-			<div>
-				<label class="form-label">Select Channel</label> <select required
-					class="form-control" ng-change=""
-					ng-options="item.id as item.label for item in channelLst"
-					ng-model="channelID"></select>
-				</div>
+				<eb-bounded content-def="channelBoundedRefItemDef" select-value="channelsSelectd"></eb-bounded>
 			</div>
 			<br /> <br /> <br />
 			<div class="cont">
