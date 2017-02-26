@@ -5,6 +5,8 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.enablix.commons.constants.ContentDataConstants;
+import com.enablix.core.commons.xsdtopojo.ContentItemClassType;
 import com.enablix.core.commons.xsdtopojo.ContentItemType;
 import com.enablix.core.ui.DisplayField;
 import com.enablix.core.ui.FieldValue;
@@ -23,7 +25,7 @@ public class DisplayFieldBuilderImpl implements DisplayFieldBuilder {
 		
 		FieldValueBuilder builder = fvBuilderFactory.getBuilder(fieldDef);
 		
-		Object value = contentRec.get(fieldDef.getId());
+		Object value = getFieldRawValue(fieldDef, contentRec);
 		if (value != null) {
 			
 			FieldValue fieldVal = builder.build(fieldDef, value, template, ctx);
@@ -35,6 +37,22 @@ public class DisplayFieldBuilderImpl implements DisplayFieldBuilder {
 		}
 		
 		return null;
+	}
+
+	private Object getFieldRawValue(ContentItemType fieldDef, Map<String, Object> contentRec) {
+		
+		Object rawValue = contentRec.get(fieldDef.getId());
+		
+		if (fieldDef.getType() == ContentItemClassType.RICH_TEXT) {
+		
+			Object richTextValue = contentRec.get(fieldDef.getId() 
+									+ ContentDataConstants.RICH_TEXT_FIELD_SUFFIX);
+			if (richTextValue != null) {
+				rawValue = richTextValue;
+			}
+		}
+		
+		return rawValue;
 	}
 
 }

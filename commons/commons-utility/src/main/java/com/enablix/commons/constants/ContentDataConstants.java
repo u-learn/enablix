@@ -39,6 +39,8 @@ public class ContentDataConstants {
 	
 	public static final String RECENT_DATA_OBSOLETE_ATTR = "obsolete";
 	public static final String CONTENT_TITLE_KEY = "__title";
-	public static final Object QUALIFIED_ID_KEY = "qualifiedId";
+	public static final String QUALIFIED_ID_KEY = "qualifiedId";
+
 	
+	public static final String RICH_TEXT_FIELD_SUFFIX = "_rt";
 }
