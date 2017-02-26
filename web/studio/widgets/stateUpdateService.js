@@ -148,6 +148,10 @@ enablix.studioApp.factory('StateUpdateService',
 	 			$state.go("system.users.edit",{"identity" : _identity});
 	 		};
 	 		
+	 		var goViewUser=function(_identity){
+	 			$state.go("system.users.view",{"identity" : _identity});
+	 		};
+	 		
 	 		var goToSetPassword=function(){
 	 			$state.go("setpassword");
 	 		};
@@ -358,6 +362,7 @@ enablix.studioApp.factory('StateUpdateService',
 	 			goToPreviousState: goToPreviousState,
 	 			goAddUser : goAddUser,
 	 			goEditUser : goEditUser,
+	 			goViewUser : goViewUser,
 	 			goToListUser : goToListUser,
 	 			goToSetPassword : goToSetPassword,
 	 			goToAddEmailConfig : goToAddEmailConfig,
