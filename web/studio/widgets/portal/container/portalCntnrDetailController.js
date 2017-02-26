@@ -18,6 +18,7 @@ enablix.studioApp.controller('PortalCntnrDetailCtrl',
 			var containerDef = ContentTemplateService.getContainerDefinition(
 									enablix.template, $stateParams.containerQId);
 		
+			/*
 			var abtSubCntnrItem = {
 					"id" : containerDef.id,
 					"qualifiedId" : containerDef.qualifiedId,
@@ -28,8 +29,9 @@ enablix.studioApp.controller('PortalCntnrDetailCtrl',
 			
 			$scope.subContainerList.push(abtSubCntnrItem);
 			cntnrList = containerDef.container;
+			*/
 			
-			/*ContentDataService.getRecordAndChildData($stateParams.containerQId, $scope.instanceIdentity,
+			ContentDataService.getRecordAndChildData($stateParams.containerQId, $scope.instanceIdentity,
 				function(data) {
 				
 					angular.forEach(data, function(contentGroup) {
@@ -38,7 +40,7 @@ enablix.studioApp.controller('PortalCntnrDetailCtrl',
 												enablix.template, contentGroup.contentQId);
 						
 						var containerLabel = $stateParams.containerQId == containerDef.qualifiedId ? "About" : containerDef.label;
-						var containerType = $stateParams.containerQId == containerDef.qualifiedId ? "single" : (subCntnr.single ? "single" : "multi");
+						var containerType = $stateParams.containerQId == containerDef.qualifiedId ? "single" : (containerDef.single ? "single" : "multi");
 						
 						var subCntnrItem = {
 								"id" : containerDef.id,
@@ -55,7 +57,6 @@ enablix.studioApp.controller('PortalCntnrDetailCtrl',
 				function(errorData) {
 					Notification.error({message: "Error retrieving content records", delay: enablix.errorMsgShowTime});
 				}, enablix.subContainerItemLimit);
-			*/
 			
 			$scope.subCntnrMultiListLimit = enablix.subContainerItemLimit;
 			$scope.hasContentStack = ContentTemplateService.hasContentStackConfigItem(containerDef);

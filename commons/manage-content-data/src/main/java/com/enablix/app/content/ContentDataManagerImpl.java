@@ -486,14 +486,16 @@ public class ContentDataManagerImpl implements ContentDataManager {
 					for (Object record : (Iterable) data) {
 						
 						if (record instanceof Map) {
-							ContentDataRecord dataRecord = new ContentDataRecord(templateId, childQId, (Map) record);
-							contentGroup.getRecords().add(dataRecord);
+							contentGroup.getRecords().add((Map) record);
 						}
 					}
 					
 				} else if (data instanceof Map) {
-					ContentDataRecord dataRecord = new ContentDataRecord(templateId, childQId, (Map) data);
-					contentGroup.getRecords().add(dataRecord);
+					contentGroup.getRecords().add((Map) data);
+				}
+				
+				if (CollectionUtil.isNotEmpty(contentGroup.getRecords())) {
+					contentGroups.add(contentGroup);
 				}
 			}
 			
@@ -521,7 +523,7 @@ public class ContentDataManagerImpl implements ContentDataManager {
 			ContentRecordGroup contentGroup = new ContentRecordGroup();
 			
 			contentGroup.setContentQId(contentQId);
-			contentGroup.getRecords().add(new ContentDataRecord(templateId, contentQId, contentRecord));
+			contentGroup.getRecords().add(contentRecord);
 			
 			contentGroups.add(contentGroup);
 			

@@ -21,7 +21,7 @@
 				<div ng-if = "subContainerList.length > 1">
 					<div ng-repeat="subContainer in subContainerList|limitTo:1">
 						<eb-portal-sub-container ng-if="subContainer.type == 'single'" 
-							type="single" sub-container-label="subContainer.label" 
+							type="single" sub-container-label="subContainer.label" info="subContainer.records"
 							sub-container-q-id="subContainer.qualifiedId" index="$index"></eb-portal-sub-container>
 					</div>
 				</div>
