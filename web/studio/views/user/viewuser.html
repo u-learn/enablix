@@ -1,0 +1,33 @@
+<form class="block" name="userForm" novalidate="novalidate">
+<div class="head">
+	<h2>User Details</h2>
+</div>
+<div class="cont">
+	<div>
+		<label class="form-label">Name </label>
+		<input name="name" placeholder="Enter Name" class="form-control" disabled type="text" ng-readonly="all" ng-model="newUser.profile.name" size="80" >
+	</div>
+  </div>
+</div>
+<div class="cont">
+	<div>
+		<label class="form-label">Email</label>
+		<input name="userId" placeholder="Enter Email Id " class="form-control" disabled ng-readonly="all" ng-model="newUser.userId" ng-blur="checkUserName()" type="text" size="80">
+	</div>
+  </div>
+</div>
+<div class="cont">
+	<div>
+		<label class="form-label">Roles</label>
+		<span ng-repeat="role in allRoles" class="chckBox">
+		<input type="checkbox" name="selectedRoles[]" 
+			value="role.identity" ng-readonly="all" disabled ng-model="role.selected">&nbsp;&nbsp;{{role.roleName}}<br/>
+		</span>
+	</div>
+  </div>
+</div>
+<div class="foot clearfix">
+	<button ng-click="userRecordEdit(newUser.userId)" class="button button-add">Edit</button>
+	<a ng-click="cancelOperation()" class="button button-delete">Back</a>
+</div>
+</form>
