@@ -19,6 +19,10 @@ enablix.studioApp.controller('UserController',
 			 StateUpdateService.goAddUser();
 		 }
 		 
+		 $scope.userRecordView=function(identity) {
+			 StateUpdateService.goViewUser(identity);
+		 }	 
+		 
 		 $scope.userRecordEdit=function(identity) {
 			 StateUpdateService.goEditUser(identity);
 		 }	 
