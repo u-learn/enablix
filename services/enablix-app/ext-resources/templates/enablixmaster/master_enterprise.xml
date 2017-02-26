@@ -932,7 +932,7 @@
 			</contentItem>			
 		</container>
 		<container id="faq" label="FAQ" businessCategory="BUSINESS_CONTENT">
-			<contentItem id="question" label="Question" type="text"searchBoost="6"/>
+			<contentItem id="question" label="Question" type="text" searchBoost="6"/>
 			<contentItem id="type" label="Category" type="bounded">
 				<bounded multivalued="true">
 					<refList>
