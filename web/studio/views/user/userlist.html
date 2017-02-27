@@ -8,6 +8,7 @@
 		<table class="datatable">
 			<thead>
 				<tr>
+					<th class="fa fa-eye"></th>
 					<th class="edit"></th>
 					<th class="remove"></th>
 					<th><span>Name</span></th>
@@ -16,6 +17,7 @@
 			</thead>
 			<tbody>
 				<tr ng-repeat="user in userData">
+					<td class="view"><a class="fa fa-eye" ng-click="userRecordEdit(user.identity)"></a></td>
 					<td class="edit"><a class="fa fa-pencil" ng-click="userRecordEdit(user.identity)"></a></td>
 					<td class="remove"><a class="fa fa-times" ng-click="deleteUserRecord(user.identity)"></a></td>
 					<td><span ng-bind="user.profile.name"></span></td>
