@@ -16,7 +16,7 @@ enablix.studioApp.controller('slackAuthController',
 
 			$scope.authorizeSlack = function(){
 				var redirectURI="redirect_uri="+$location.protocol() + "://" + $location.host() 
-				+ ":" + $location.port() + "/app.html%23/account/slackdtls";
+				 + "/app.html%23/account/slackdtls";
 				var url = enablix.serviceURL["getSlackCode"];
 				window.location.href=url +"&"+redirectURI;
 			}
