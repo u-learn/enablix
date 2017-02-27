@@ -27,6 +27,7 @@ enablix.studioApp.controller('PortalCntnrDetailCtrl',
 					"type": "single"
 				};
 			
+			$scope.aboutSubContainer = abtSubCntnrItem;
 			$scope.subContainerList.push(abtSubCntnrItem);
 			cntnrList = containerDef.container;
 			*/
@@ -34,22 +35,25 @@ enablix.studioApp.controller('PortalCntnrDetailCtrl',
 			ContentDataService.getRecordAndChildData($stateParams.containerQId, $scope.instanceIdentity,
 				function(data) {
 				
-					angular.forEach(data, function(contentGroup) {
+					angular.forEach(data, function(contentGroup, $index) {
 						
 						var containerDef = ContentTemplateService.getContainerDefinition(
 												enablix.template, contentGroup.contentQId);
 						
-						var containerLabel = $stateParams.containerQId == containerDef.qualifiedId ? "About" : containerDef.label;
-						var containerType = $stateParams.containerQId == containerDef.qualifiedId ? "single" : (containerDef.single ? "single" : "multi");
-						
 						var subCntnrItem = {
 								"id" : containerDef.id,
 								"qualifiedId" : containerDef.qualifiedId,
-								"label" : containerLabel,
+								"label" : containerDef.label,
 								"containerDef": containerDef,
-								"type": containerType,
+								"type": containerDef.single ? "single" : "multi",
 								"records": contentGroup.records
 							};
+						
+						if ($stateParams.containerQId == containerDef.qualifiedId) {
+							subCntnrItem.label = "About";
+							subCntnrItem.type = 'single';
+							$scope.aboutSubContainer = subCntnrItem;
+						}
 						
 						$scope.subContainerList.push(subCntnrItem);
 					});

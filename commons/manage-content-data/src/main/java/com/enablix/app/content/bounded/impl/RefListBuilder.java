@@ -15,9 +15,8 @@ import com.enablix.commons.util.StringUtil;
 import com.enablix.core.commons.xsdtopojo.BoundedListDatastoreType;
 import com.enablix.core.commons.xsdtopojo.BoundedRefListType;
 import com.enablix.core.commons.xsdtopojo.BoundedType;
-import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 import com.enablix.core.mongo.content.ContentCrudService;
-import com.enablix.services.util.DatastoreUtil;
+import com.enablix.services.util.template.TemplateWrapper;
 
 @Component
 public class RefListBuilder implements BoundedListBuilder {
@@ -26,14 +25,14 @@ public class RefListBuilder implements BoundedListBuilder {
 	private ContentCrudService contentCrudService;
 	
 	@Override
-	public Collection<DataItem> buildBoundedList(ContentTemplate template, BoundedType boundedTypeDef) {
+	public Collection<DataItem> buildBoundedList(TemplateWrapper template, BoundedType boundedTypeDef) {
 		
 		Set<DataItem> itemList = new HashSet<>();
 		
 		BoundedRefListType refListType = boundedTypeDef.getRefList();
 		BoundedListDatastoreType boundedListDS = refListType.getDatastore();
 		
-		String collectionName = DatastoreUtil.getCollectionName(template.getId(), boundedListDS.getStoreId());
+		String collectionName = template.getCollectionName(boundedListDS.getStoreId());
 		
 		List<Map<String, Object>> records = contentCrudService.findAllRecord(collectionName);
 		

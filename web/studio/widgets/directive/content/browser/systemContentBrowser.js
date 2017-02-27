@@ -6,10 +6,12 @@ enablix.studioApp.directive('ebxSystemContentBrowser', [
 				restrict : 'E',
 				scope : {
 					selectionCallback: "=",
-					preSelectedRecords: "=?"
+					preSelectedRecords: "=?",
+					iconClass: "@"
 				},
 				link : function(scope, element, attrs) {
 						
+					scope.iconClass = scope.iconClass || "fa fa-plus"
 					scope.openBrowserWindow = function() {
 						
 						var modalInstance = $modal.open({

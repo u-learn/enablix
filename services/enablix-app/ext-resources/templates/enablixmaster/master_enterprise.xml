@@ -2379,7 +2379,7 @@
 		</container>
 		<container id="salesKit" label="Sales Kits" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="kitName" label="Name" type="text" searchBoost="7"/>
-			<contentItem id="kitDesc" label="Name" type="richText" searchBoost="2"/>	
+			<contentItem id="kitDesc" label="Description" type="richText" searchBoost="2"/>	
 			<contentItem id="products" label="Products" type="bounded" searchBoost="7">
 				<bounded multivalued="true">
 					<refList>

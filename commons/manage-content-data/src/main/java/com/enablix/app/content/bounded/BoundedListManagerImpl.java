@@ -12,8 +12,7 @@ import com.enablix.commons.util.process.ProcessContext;
 import com.enablix.core.commons.xsdtopojo.BoundedType;
 import com.enablix.core.commons.xsdtopojo.ContainerType;
 import com.enablix.core.commons.xsdtopojo.ContentItemType;
-import com.enablix.core.commons.xsdtopojo.ContentTemplate;
-import com.enablix.services.util.TemplateUtil;
+import com.enablix.services.util.template.TemplateWrapper;
 
 @Component
 public class BoundedListManagerImpl implements BoundedListManager {
@@ -27,10 +26,9 @@ public class BoundedListManagerImpl implements BoundedListManager {
 	@Override
 	public Collection<DataItem> getBoundedList(String templateId, String contentQId) {
 		
-		ContentTemplate template = templateMgr.getTemplate(templateId);
+		TemplateWrapper template = templateMgr.getTemplateWrapper(templateId);
 		
-		ContainerType container = TemplateUtil.findContainer(
-				template.getDataDefinition(), QIdUtil.getParentQId(contentQId));
+		ContainerType container = template.getContainerDefinition(QIdUtil.getParentQId(contentQId));
 		
 		BoundedType boundedType = null;
 		
@@ -41,7 +39,13 @@ public class BoundedListManagerImpl implements BoundedListManager {
 			}
 		}
 
+		return fetchBoundedListDataItems(template, boundedType);
+	}
+
+	private Collection<DataItem> fetchBoundedListDataItems(TemplateWrapper template, BoundedType boundedType) {
+		
 		Collection<DataItem> items = null;
+		
 		if (boundedType != null) {
 			items = builderFactory.getBuilder(boundedType).buildBoundedList(template, boundedType);
 		}
@@ -51,15 +55,8 @@ public class BoundedListManagerImpl implements BoundedListManager {
 	
 	@Override
 	public Collection<DataItem> getBoundedList(BoundedType boundedType) {
-		
-		ContentTemplate template = templateMgr.getTemplate(ProcessContext.get().getTemplateId());
-		
-		Collection<DataItem> items = null;
-		if (boundedType != null) {
-			items = builderFactory.getBuilder(boundedType).buildBoundedList(template, boundedType);
-		}
-		
-		return items == null ? new ArrayList<DataItem>() : items;
+		TemplateWrapper template = templateMgr.getTemplateWrapper(ProcessContext.get().getTemplateId());
+		return fetchBoundedListDataItems(template, boundedType);
 	}
 
 }

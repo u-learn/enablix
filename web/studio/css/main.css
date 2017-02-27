@@ -1716,10 +1716,6 @@ td eb-nav-link span a {
 	min-height: 6em;
 }
 
-.ql-editor ol, .ql-editor ul {
-    padding-left: 1em;
-}
-
 .content-data .ql-editor {
 	padding: 0px
 }

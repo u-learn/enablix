@@ -19,11 +19,8 @@
 			
 			<aside class="col-md-4">
 				<div ng-if = "subContainerList.length > 1">
-					<div ng-repeat="subContainer in subContainerList|limitTo:1">
-						<eb-portal-sub-container ng-if="subContainer.type == 'single'" 
-							type="single" sub-container-label="subContainer.label" info="subContainer.records"
-							sub-container-q-id="subContainer.qualifiedId" index="$index"></eb-portal-sub-container>
-					</div>
+					<eb-portal-sub-container type="single" sub-container-label="aboutSubContainer.label" info="aboutSubContainer.records"
+						sub-container-q-id="aboutSubContainer.qualifiedId"></eb-portal-sub-container>
 				</div>
 				<div ui-view="rightSection">					
 				</div>
