@@ -13,11 +13,6 @@
 					md-item-text="item.display" md-floating-label="Email Address">
 				<md-item-template> <span
 					md-highlight-text="searchText">{{item.display}}</span> </md-item-template>
-				<div ng-messages="shareForm.emailid.$error"
-					ng-if="shareForm.emailid.$touched">
-					<div ng-message="required" class="error">Please enter an
-						E-Mail</div>
-				</div>
 				</md-autocomplete>
 			</div>
 		</div>
