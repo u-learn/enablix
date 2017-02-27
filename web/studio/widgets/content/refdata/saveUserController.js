@@ -39,6 +39,10 @@ enablix.studioApp.controller('SaveUserController', [
 			}
 		});
 		
+		$scope.userRecordEdit=function(identity) {
+			 StateUpdateService.goEditUser(identity);
+		 }	 
+		
 		$scope.saveUserData = function() {
 			
 			var selectedRoles = [];
