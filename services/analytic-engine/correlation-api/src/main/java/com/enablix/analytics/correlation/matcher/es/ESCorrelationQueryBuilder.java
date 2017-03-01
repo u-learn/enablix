@@ -58,7 +58,7 @@ public class ESCorrelationQueryBuilder {
 
 		// Add match criteria
 		if (matchCriteria != null && CollectionUtil.isNotEmpty(matchCriteria.getMatch())) {
-			// TODO: do we need match criteria of the filter criteria is sufficient
+			// TODO: do we need match criteria or the filter criteria is sufficient
 			for (MatchType match : matchCriteria.getMatch()) {
 				addFilterToQuer(template, targetItemQId, matchInput, qb, match);
 			}
