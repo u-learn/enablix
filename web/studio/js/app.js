@@ -372,50 +372,6 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvi
 				setupData: appSetup 
 			}
 		})
-		.state('portal.contentkitlist', {
-			url: '/cklist', 
-			views: {
-				// the main template
-				'': {
-					templateUrl: 'views/contentkit/portal-cklist.html',
-					controller: 'ContentKitListCtrl',
-					resolve: {
-						setupData: appSetup
-					}
-				},
-				
-				// right section template
-				'rightSection@portal.contentkitlist' : {
-					templateUrl: 'views/portal/container/recommended-section.html',
-					controller: 'PortalEnclRecommendedCtrl',
-					resolve: {
-						setupData: appSetup 
-					}
-				}
-			}
-		})
-		.state('portal.contentkit', {
-			url: '/ck/{contentKitIdentity}', 
-			views: {
-				// the main template
-				'': {
-					templateUrl: 'views/contentkit/portal-ckdetail.html',
-					controller: 'ContentKitDetailCtrl',
-					resolve: {
-						setupData: appSetup
-					}
-				},
-				
-				// right section template
-				'rightSection@portal.contentkit' : {
-					templateUrl: 'views/portal/container/recommended-section.html',
-					controller: 'PortalEnclRecommendedCtrl',
-					resolve: {
-						setupData: appSetup 
-					}
-				}
-			}
-		})
 		.state('system', {
 			url: '/system',
 			templateUrl: 'views/system/system-admin.html',
@@ -691,46 +647,6 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvi
 			url: '/rlist/{playDefId}', // list of play run instances created from an executable play for the given playDefId
 			templateUrl: 'views/play/def/play-rlist.html',
 			controller: 'PlayRListCtrl',
-			resolve: {
-				setupData: appSetup
-			}
-		})
-		.state('contentkit', {
-			url: '/contentkit', 
-			templateUrl: 'views/contentkit/content-kit.html',
-			controller: 'ContentKitMainCtrl',
-			resolve: {
-				setupData: appSetup
-			}
-		})
-		.state('contentkit.list', {
-			url: '/list', 
-			templateUrl: 'views/contentkit/ck-list.html',
-			controller: 'ContentKitListCtrl',
-			resolve: {
-				setupData: appSetup
-			}
-		})
-		.state('contentkit.add', {
-			url: '/add', 
-			templateUrl: 'views/contentkit/ck-addEdit.html',
-			controller: 'ContentKitAddEditCtrl',
-			resolve: {
-				setupData: appSetup
-			}
-		})
-		.state('contentkit.edit', {
-			url: '/edit/{contentKitIdentity}', 
-			templateUrl: 'views/contentkit/ck-addEdit.html',
-			controller: 'ContentKitAddEditCtrl',
-			resolve: {
-				setupData: appSetup
-			}
-		})
-		.state('contentkit.detail', {
-			url: '/detail/{contentKitIdentity}', 
-			templateUrl: 'views/contentkit/ck-addEdit.html',
-			controller: 'ContentKitAddEditCtrl',
 			resolve: {
 				setupData: appSetup
 			}

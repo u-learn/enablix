@@ -7,7 +7,6 @@ import org.springframework.util.Assert;
 
 import com.enablix.core.commons.xsdtopojo.ContainerType;
 import com.enablix.core.commons.xsdtopojo.ContentTemplate;
-import com.enablix.core.domain.content.kit.ContentKitConstants;
 import com.enablix.services.util.TemplateUtil;
 import com.enablix.services.util.template.walker.ContainerVisitor;
 import com.enablix.services.util.template.walker.TemplateContainerWalker;
@@ -72,26 +71,8 @@ public class TemplateWrapper {
 			}
 		});
 		
-		initForContentKit();
 	}
 	
-	private void initForContentKit() {
-
-		ContainerType contentKitContainer = new ContainerType();
-		contentKitContainer.setId(ContentKitConstants.CONTENT_KIT_QID);
-		contentKitContainer.setQualifiedId(ContentKitConstants.CONTENT_KIT_QID);
-		contentKitContainer.setLabel(ContentKitConstants.CONTENT_KIT_LABEL);
-		contentKitContainer.setRefData(Boolean.FALSE);
-		contentKitContainer.setReferenceable(Boolean.TRUE);
-		
-		containerQIdMap.put(ContentKitConstants.CONTENT_KIT_QID, contentKitContainer);
-		qIdCollectionMap.put(ContentKitConstants.CONTENT_KIT_QID, ContentKitConstants.CONTENT_KIT_COLLECTION);
-		containerPortalLabelAttrIdMap.put(ContentKitConstants.CONTENT_KIT_QID, ContentKitConstants.NAME_ATTR);
-		containerStudioLabelAttrIdMap.put(ContentKitConstants.CONTENT_KIT_QID, ContentKitConstants.NAME_ATTR);
-		collectionNameContainerMap.put(ContentKitConstants.CONTENT_KIT_COLLECTION, contentKitContainer);
-		
-	}
-
 	public ContainerType getContainerDefinition(String containerQId) {
 		return containerQIdMap.get(containerQId);
 	}
