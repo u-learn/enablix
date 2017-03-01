@@ -5,6 +5,7 @@ enablix.studioApp.controller('slackDtlsController',
 			var code = $stateParams.code;
 			var teamName = $stateParams.teamName;
 			var error = $stateParams.error;
+			var slackUserID = $stateParams.slackUserID;
 			//Add a state check
 			var initSlackDtls= function(){
 				if( code != null ){
@@ -12,6 +13,7 @@ enablix.studioApp.controller('slackDtlsController',
 				}
 				else if( teamName != null ){
 					$scope.name=teamName;
+					$scope.slackUserID=slackUserID;
 				}
 			}
 
@@ -21,6 +23,7 @@ enablix.studioApp.controller('slackDtlsController',
 				};
 				RESTService.postForData('getSlackAccessToken', params,null ,null, function(data) {
 					$scope.name=data.teamName;
+					$scope.slackUserID=data.slackUserID;
 				}, function() {    		
 					Notification.error({message: "Error in Configuring Slack", delay: enablix.errorMsgShowTime});
 				},null,null);
