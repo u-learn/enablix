@@ -293,11 +293,13 @@ enablix.studioApp.factory('StateUpdateService',
 	 			$state.go("portal.recentdatalist", _params);
 	 		};
 	 		
-	 		var goToSlackDtls = function(teamName) {
+	 		var goToSlackDtls = function(teamName,slackUserID) {
 	 			$state.go("myaccount.slackdtls", {
-	 				teamName: teamName
+	 				teamName: teamName,
+	 				slackUserID: slackUserID
 	 			});
 	 		};
+	 		
 	 		
 	 		var goToSlackAuth = function(source) {
 	 			$state.go("myaccount.slackauthorization",{
