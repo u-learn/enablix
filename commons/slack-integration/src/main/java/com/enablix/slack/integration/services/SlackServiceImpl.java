@@ -14,6 +14,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.enablix.app.content.ContentDataManager;
+import com.enablix.app.content.share.DocUnsecureAccessUrlPopulator;
 import com.enablix.app.content.ui.format.DisplayContext;
 import com.enablix.app.content.ui.format.DisplayableContentBuilder;
 import com.enablix.app.template.service.TemplateManager;
@@ -59,6 +60,9 @@ public class SlackServiceImpl implements SlackService {
 	@Value("${slack.oauth.revoke.api}")
 	private String OAUTH_REVOKE;
 
+	@Value("${slack.auth.test}")
+	private String OAUTH_TEST;
+	
 	@Value("${slack.channel.list}")
 	private String CHANNEL_LIST_API;
 
@@ -92,6 +96,9 @@ public class SlackServiceImpl implements SlackService {
 	@Autowired
 	private ConfigurationProviderChain configProvider;
 
+	@Autowired
+	private DocUnsecureAccessUrlPopulator docUrlPopulator;
+	
 	private RestTemplate restTemplate;
 
 	public SlackServiceImpl() {
@@ -178,7 +185,8 @@ public class SlackServiceImpl implements SlackService {
 
 		DisplayableContent displayableContent = contentBuilder.build(template, dataRecord, ctx);
 
-
+		docUrlPopulator.process(displayableContent, userID);
+		
 		String slackAttachments = AttachmentDecorator.getDecoratedAttachment(displayableContent,
 				FALL_BACK_TEXT, FOOTER_ICON,COLOR,FOOTER_TEXT);
 		SlackAccessToken slackAccessToken = getStoredSlackTeamDtls(userID) ;
@@ -218,8 +226,19 @@ public class SlackServiceImpl implements SlackService {
 
 		try	{
 
+			String redirectURI = getRedirectURI();
+			URI targetUrl= UriComponentsBuilder.fromUriString(BASE_URL)
+					.path(OAUTH_TEST)
+					.queryParam("token",slackTeamDtls.getAccessToken())
+					.queryParam("redirect_uri",redirectURI)
+					.build()
+					.toUri();
+
+			ObjectNode objNode = restTemplate.getForObject(targetUrl, ObjectNode.class);
+			String slackUserID = objNode.get("user").asText();
+			
 			SlackAccessToken slackAccessToken = new SlackAccessToken(
-					userID, slackTeamDtls.getAccessToken(), slackTeamDtls.getTeamName());
+					userID, slackTeamDtls.getAccessToken(), slackTeamDtls.getTeamName(),slackUserID);
 
 			slackTokenRepo.save(slackAccessToken);
 			return slackAccessToken;
