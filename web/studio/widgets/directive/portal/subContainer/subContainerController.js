@@ -34,6 +34,10 @@ enablix.studioApp.controller('PortalSubContainerCtrl',
 		var setUpMultiRecordData = function(_contentRecords) {
 	
 			var data = _contentRecords;
+			if (_contentRecords.content) {
+				data = _contentRecords.content;
+				$scope.pageData = _contentRecords;
+			}
 			
 			if ($scope.type == 'single' && data && data.length > 0) {
 				$scope.bodyData = data[0];
@@ -113,10 +117,13 @@ enablix.studioApp.controller('PortalSubContainerCtrl',
 				// data record already provided
 				if ($scope.type === 'single') {
 					
-					var dataRecord = isArray($scope.info) && $scope.info.length > 0 ? $scope.info[0] : null;
-					if (dataRecord != null) {
-						setUpSingleRecordData(dataRecord);
+					var dataRecord = $scope.info;
+					if (dataRecord.content) {
+						dataRecord = dataRecord.content;
 					}
+					
+					var dataRecord = isArray(dataRecord) && dataRecord.length > 0 ? dataRecord[0] : null;
+					setUpSingleRecordData(dataRecord);
 					
 				} else {
 					setUpMultiRecordData($scope.info);
@@ -151,15 +158,7 @@ enablix.studioApp.controller('PortalSubContainerCtrl',
 							
 					ContentDataService.getContentData(enablix.templateId, $scope.subContainerQId, $stateParams.elementIdentity,
 						function(dataPage) {
-							
-							var data = dataPage;
-							if (dataPage.content) {
-								data = dataPage.content;
-								$scope.pageData = dataPage;
-							}
-							
-							setUpMultiRecordData(data);
-							
+							setUpMultiRecordData(dataPage);
 						},
 						function(errResp) {
 							Notification.error({message: "Error retrieving data", delay: enablix.errorMsgShowTime});

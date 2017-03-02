@@ -10,6 +10,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
@@ -481,17 +482,17 @@ public class ContentDataManagerImpl implements ContentDataManager {
 				ContentRecordGroup contentGroup = new ContentRecordGroup();
 				contentGroup.setContentQId(childQId);
 				
-				if (data instanceof Iterable) {
+				if (data instanceof Page) {
 					
-					for (Object record : (Iterable) data) {
-						
-						if (record instanceof Map) {
-							contentGroup.getRecords().add((Map) record);
-						}
-					}
+					contentGroup.setRecords((Page) data);
+					
+				} else if (data instanceof List) {
+					
+					contentGroup.setRecords((List) data);
 					
 				} else if (data instanceof Map) {
-					contentGroup.getRecords().add((Map) data);
+					
+					contentGroup.setRecords((Map) data);
 				}
 				
 				if (CollectionUtil.isNotEmpty(contentGroup.getRecords())) {
@@ -523,7 +524,7 @@ public class ContentDataManagerImpl implements ContentDataManager {
 			ContentRecordGroup contentGroup = new ContentRecordGroup();
 			
 			contentGroup.setContentQId(contentQId);
-			contentGroup.getRecords().add(contentRecord);
+			contentGroup.setRecords(contentRecord);
 			
 			contentGroups.add(contentGroup);
 			
