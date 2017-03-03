@@ -3,9 +3,6 @@ enablix.studioApp.controller('AuditController',
 		 function($scope,   $stateParams,   $filter,   RESTService,   auditConfigService,   $rootScope,   StateUpdateService,   Notification) {
 					
 	
-	var userData=JSON.parse(window.localStorage.getItem("userData"));
-
-
 	$scope.navToContent = function(record) {
 		var _containerQId = record.activity.containerQId;
 		var _contentIdentity = record.activity.itemIdentity;
@@ -71,15 +68,19 @@ enablix.studioApp.controller('AuditController',
 	$scope.dataFilters.activitycat = "CONTENT";
 	
 	var fetchAuditResult = function() {
-		auditConfigService.getAuditData($scope.dataFilters,$scope.pagination ,function(dataPage) {
-			$scope.dataList = dataPage.content;
-			$scope.pageData = dataPage;
-		}, function(errorData) {
-			Notification.error({message: "Error retrieving data", delay: enablix.errorMsgShowTime});
-		});
+		
+		auditConfigService.getAuditData($scope.dataFilters,$scope.pagination, 
+			function(dataPage) {
+				$scope.dataList = dataPage.content;
+				$scope.pageData = dataPage;
+			}, 
+			function(errorData) {
+				Notification.error({message: "Error retrieving data", delay: enablix.errorMsgShowTime});
+			});
 	}
 
 	var getAllUsers= function(_success){
+		
 		RESTService.getForData('systemuser', null, null, function(data) {
 			_success(data);	    	
 		}, function() {    		
@@ -88,6 +89,7 @@ enablix.studioApp.controller('AuditController',
 	};
 	
 	var getActivityTypes= function(_success) {
+		
 		RESTService.getForData('getAuditActivityTypes', null, null, function(data) {
 			_success(data);	    	
 		}, function() {    		
@@ -96,22 +98,29 @@ enablix.studioApp.controller('AuditController',
 	};
 	
 	var initUserDropDown = function (data) {
+		
 		var size = data.length;
+		
 		for (var i=0; i<size;i++) {
+		
 			var UserObj= {
 					label: data[i].profile.name,
 					id: data[i].profile.name,
 			};
+			
 			$scope.userLst.push(UserObj);
 		}
 	}
 	
 	var initActivityTypes = function(data) {
-		$.each( data, function(index,value){		
+		
+		$.each(data, function(index, value){		
+			
 			var activityObj= {
 					label: value,
 					id: index,
 			};
+			
 			$scope.activityTypeLst.push(activityObj);
 			
 			$scope.activityTypeLst.sort(function(a,b) {
@@ -125,32 +134,40 @@ enablix.studioApp.controller('AuditController',
 	getAllUsers(initUserDropDown);
 	getActivityTypes(initActivityTypes);
 	
-	auditConfigService.getAuditData($scope.dataFilters,$scope.pagination ,function(dataPage) {
-		$scope.dataList = dataPage.content;
-		$scope.pageData = dataPage;
-	}, function(errorData) {
-		Notification.error({message: "Error retrieving data", delay: enablix.errorMsgShowTime});
-	});
+	auditConfigService.getAuditData($scope.dataFilters,$scope.pagination, 
+		function(dataPage) {
+			$scope.dataList = dataPage.content;
+			$scope.pageData = dataPage;
+		}, 
+		function(errorData) {
+			Notification.error({message: "Error retrieving data", delay: enablix.errorMsgShowTime});
+		});
 	
-	var getEventDate = function(noDeduced){
+	var getEventDate = function(noDeduced) {
+		
 		var m_names = new Array("Jan", "Feb", "Mar", 
 				"Apr", "May", "Jun", "Jul", "Aug", "Sep", 
 				"Oct", "Nov", "Dec");
+		
 		var d = new Date();
 		var curr_month;
-		var curr_date;
-		curr_date = d.getDate()-$scope.searchCriteria.eventOccurence;
+		var curr_date = d.getDate() - $scope.searchCriteria.eventOccurence;
+		
 		if(curr_date < 0) {
+			
 			curr_date = 30+curr_date;
-			curr_month = d.getMonth()-1;
-		}
-		else if (curr_date==0){
+			curr_month = d.getMonth() - 1;
+			
+		} else if (curr_date == 0) {
+			
 			curr_date=curr_date+1;
 			curr_month = d.getMonth();
+			
 		} else {
-			curr_date = d.getDate()-$scope.searchCriteria.eventOccurence;
+			curr_date = d.getDate() - $scope.searchCriteria.eventOccurence;
 			curr_month = d.getMonth();
 		}
+		
 		var curr_year = d.getFullYear().toString().substr(2,2);
 		return curr_date + "-" + m_names[curr_month] + "-" + curr_year;
 	}
@@ -163,35 +180,48 @@ enablix.studioApp.controller('AuditController',
 		fetchAuditResult();
 	}
 	
-	$scope.searchAudit = function(){
+	$scope.searchAudit = function(_pagination, freshSearch) {
+		
+		if (freshSearch) {
+			$scope.pagination.pageNum = 0;
+		}
+		
 		formSearchObject();
 		fetchAuditResult();
 	}
 	
-	var formSearchObject = function(){
-		if($scope.searchCriteria.user!=undefined){
-			$scope.dataFilters.auditUser=$scope.searchCriteria.user;
+	var formSearchObject = function() {
+		
+		if ($scope.searchCriteria.user != undefined) {
+			$scope.dataFilters.auditUser = $scope.searchCriteria.user;
 		}
-		if($scope.searchCriteria.activity!=undefined){
-			$scope.dataFilters.auditActivityType=$scope.searchCriteria.activity;
+		
+		if ($scope.searchCriteria.activity != undefined) {
+			$scope.dataFilters.auditActivityType = $scope.searchCriteria.activity;
 		}
-		if($scope.searchCriteria.eventOccurence!=undefined){
-			$scope.dataFilters.auditEventOcc=getEventDate();
+		
+		if ($scope.searchCriteria.eventOccurence != undefined) {
+			$scope.dataFilters.auditEventOcc = getEventDate();
 		}
 	}
 
-	$scope.eventOccurenceLst = [{
-		label: 'Last 1 day',
-		id: '1'
-	},{
-		label: 'Last 3 days',
-		id: '3'
-	},{
-		label: 'Last 1 Week',
-		id: '7'
-	},{
-		label: 'Last Month',
-		id: '30'
-	}];
+	$scope.eventOccurenceLst = [
+		{
+			label: 'Last 1 day',
+			id: '1'
+		},
+		{
+			label: 'Last 3 days',
+			id: '3'
+		},
+		{
+			label: 'Last 1 Week',
+			id: '7'
+		},
+		{
+			label: 'Last Month',
+			id: '30'
+
+		}];
 }	
 ]);
