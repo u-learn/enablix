@@ -15,4 +15,6 @@ public interface PlayDefinitionManager {
 	
 	PlayDefinition getPlayDefinition(String playDefId);
 	
+	void updateActiveStatus(String playDefId, boolean status);
+	
 }

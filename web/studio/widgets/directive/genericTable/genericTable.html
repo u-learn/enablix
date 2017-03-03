@@ -21,9 +21,10 @@
 			<td colspan="{{tableHeaders.length + rowActions.length + (selectAction ? 1 : 0)}}">No data found</td>
 		</tr>
 		<tr ng-repeat="tableRecord in tableData | filter:searchText">
-			<td ng-repeat="action in rowActions" class="action-cell" ng-class="action.tableCellClass">
+			<td ng-repeat="action in rowActions" class="action-cell" ng-class="getActionCellClass(action, tableRecord)">
 				<a ng-if="!action.checkApplicable || action.checkApplicable(action, tableRecord)" 
-					ng-class="action.iconClass" ng-click="callRowAction(action, tableRecord, $event, $parent.$parent.$index)" tooltip="{{action.tooltip}}"></a>
+					ng-class="getActionIconClass(action, tableRecord)" ng-click="callRowAction(action, tableRecord, $event, $parent.$parent.$index)" 
+					tooltip="{{getActionTooltip(action, tableRecord)}}"></a>
 			</td>
 			<td ng-if="selectAction">
 				<a ng-class="tableRecord._selected ? 'fa fa-check-square-o' : 'fa fa-square-o'"

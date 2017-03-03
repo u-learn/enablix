@@ -30,7 +30,7 @@ enablix.studioApp.factory('PlayDefinitionService',
 	 		
 	 		var SUMMARY_FIELDS = 
 	 			[ "playTemplate.id", "playTemplate.name", "playTemplate.prototype", "playTemplate.executable", "playTemplate.title", 
-	 			  "playTemplate.prototypeId", "createdAt", "createdBy", "createdByName", "modifiedAt", "modifiedBy", "modifiedByName"];
+	 			  "playTemplate.prototypeId", "active", "createdAt", "createdBy", "createdByName", "modifiedAt", "modifiedBy", "modifiedByName"];
 	 				
 	 		var getAllPrototypePlaysSummary = function(_onSuccess, _onError) {
 	 			
@@ -110,6 +110,16 @@ enablix.studioApp.factory('PlayDefinitionService',
 				return null;
 			};
 			
+			var updateActiveStatusOfPlayDef = function(_playDefId, _active, _onSuccess, _onError) {
+				
+				var data = {
+						playDefId: _playDefId,
+						active: _active
+				};
+				
+				RESTService.postForData("updateActiveStatusOfPlayDef", null, data, null, _onSuccess, _onError, null);
+			}
+			
 	 		return {
 	 			getAllPrototypePlaysSummary: getAllPrototypePlaysSummary,
 	 			getPlayDefSummaryList: getPlayDefSummaryList,
@@ -119,8 +129,8 @@ enablix.studioApp.factory('PlayDefinitionService',
 	 			getActionType: getActionType,
 	 			getActionDef: getActionDef,
 	 			getFirstActionName: getFirstActionName,
-	 			findContentGroupDef: findContentGroupDef
-	 			
+	 			findContentGroupDef: findContentGroupDef,
+	 			updateActiveStatusOfPlayDef: updateActiveStatusOfPlayDef
 	 		};
 	 	}
 	 ]);

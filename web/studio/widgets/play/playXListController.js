@@ -20,6 +20,11 @@ enablix.studioApp.controller('PlayXListCtrl',
 				 valueFn: function(record) { return record.playTemplate.title; },
 				 sortProperty: "playTemplate.title"
 			 },
+			 {
+				 desc: "Status",
+				 valueFn: function(record) { return record.active ? "Active" : "In-active"; },
+				 sortProperty: "active"
+			 },
 		     {
 		    	 desc: "Created On",
 		    	 valueFn: function(record) { return $filter('ebDate')(record.createdAt); },
@@ -52,6 +57,16 @@ enablix.studioApp.controller('PlayXListCtrl',
 			StateUpdateService.goToEditXPlay(record.id);
 		}
 		
+		$scope.toggleActiveStatus = function(record) {
+			
+			PlayDefinitionService.updateActiveStatusOfPlayDef(record.id, !record.active, 
+				function() {
+					record.active = !record.active;
+				}, function(errorData) {
+					Notification.error({message: "Error updating status", delay: enablix.errorMsgShowTime});
+				});
+		}
+		
 		$scope.tableRecordActions = 
 			[{
 				actionName: "Detail",
@@ -66,6 +81,17 @@ enablix.studioApp.controller('PlayXListCtrl',
 				iconClass: "fa fa-pencil",
 				tableCellClass: "edit",
 				actionCallbackFn: $scope.navToEditPlayDef
+			},
+			{
+				actionName: "Activate",
+				tooltip: function(record) {
+					return record.active ? "De-activate" : "Activate";
+				},
+				iconClass: function(record) {
+					return record.active ? "fa fa-toggle-on" : "fa fa-toggle-off";
+				},
+				tableCellClass: "toggle-switch",
+				actionCallbackFn: $scope.toggleActiveStatus
 			}];
 		
 		$scope.dataList = [];

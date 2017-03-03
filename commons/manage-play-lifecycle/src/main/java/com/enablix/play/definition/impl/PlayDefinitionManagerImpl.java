@@ -61,4 +61,21 @@ public class PlayDefinitionManagerImpl implements PlayDefinitionManager {
 		return crudService.getRepository().findOne(playDefId);
 	}
 
+	@Override
+	public void updateActiveStatus(String playDefId, boolean status) {
+		
+		PlayDefinition playDefinition = getPlayDefinition(playDefId);
+		
+		if (playDefinition != null) {
+			
+			playDefinition.setActive(status);
+			crudService.doSave(playDefinition);
+			
+		} else {
+			LOGGER.error("Invalid play definition id [{}]", playDefId);
+			throw new IllegalArgumentException("Invalid play definition id");
+		}
+		
+	}
+
 }

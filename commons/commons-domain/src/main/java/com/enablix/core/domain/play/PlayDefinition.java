@@ -9,6 +9,8 @@ import com.enablix.core.domain.BaseDocumentEntity;
 public class PlayDefinition extends BaseDocumentEntity {
 	
 	private PlayTemplate playTemplate;
+	
+	private boolean active;
 
 	public PlayTemplate getPlayTemplate() {
 		return playTemplate;
@@ -16,6 +18,14 @@ public class PlayDefinition extends BaseDocumentEntity {
 
 	public void setPlayTemplate(PlayTemplate playTemplate) {
 		this.playTemplate = playTemplate;
+	}
+
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
 	}
 	
 }

@@ -115,10 +115,26 @@ function($compile,   orderByFilter) {
 		    }
 		    
 		    scope.getTableCellClass = function(col, dataRecord) {
-		    	if (isFunction(col.tableCellClass)) {
-		    		return col.tableCellClass(dataRecord)
+		    	return scope.checkFunctionAndGetValue(col.tableCellClass, dataRecord); 
+		    }
+		    
+		    scope.getActionIconClass = function(action, dataRecord) {
+		    	return scope.checkFunctionAndGetValue(action.iconClass, dataRecord);
+		    }
+		    
+		    scope.getActionCellClass = function(action, dataRecord) {
+		    	return scope.checkFunctionAndGetValue(action.tableCellClass, dataRecord);
+		    }
+		    
+		    scope.getActionTooltip = function(action, dataRecord) {
+		    	return scope.checkFunctionAndGetValue(action.tooltip, dataRecord);
+		    }
+		    
+		    scope.checkFunctionAndGetValue = function(_functionOrVal, dataRecord) {
+		    	if (isFunction(_functionOrVal)) {
+		    		return _functionOrVal(dataRecord);
 		    	}
-		    	return isNullOrUndefined(col.tableCellClass) ? "" : col.tableCellClass; 
+		    	return _functionOrVal;
 		    }
 		    
 		    scope.selectActionCallback = function(dataRecord, $event) {

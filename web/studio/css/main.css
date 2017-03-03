@@ -1751,3 +1751,11 @@ td eb-nav-link span a {
 	margin: 0px 2px 0px 5px
 }
 
+.fa-toggle-on, .fa-toggle-on:hover, .fa-toggle-on:focus {
+	color: #2ecc71;
+}
+
+.datatable .toggle-switch {
+	width: 1px;
+	padding-left: 0;
+}

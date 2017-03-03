@@ -75,6 +75,7 @@ enablix.serviceURL = {
 	"delContentConnection": enablix.domainName + "/contentconn/del/:connIdentity/",
 	"getPlayDefinition": enablix.domainName + "/play/def/r/:playDefId",
 	"saveOrUpdatePlayDefinition": enablix.domainName + "/play/def/update",
+	"updateActiveStatusOfPlayDef": enablix.domainName + "/play/def/active/update",
 	"getCorrelatedItemTypeHierarchy": enablix.domainName + "/corr/itemtypes/:sourceItemQId/",
 	"getContentSetRecords": enablix.domainName + "/play/data/contentsetrecords/",
 	"shareOptsGetPortalURL" : enablix.domainName + "/shareOptions/getPortalURL/",
