@@ -1719,3 +1719,35 @@ td eb-nav-link span a {
 .content-data .ql-editor {
 	padding: 0px
 }
+
+.ui-select-match-close {
+	padding-top: 2px;
+}
+
+.ui-select-container input {
+	display: inline;
+}
+
+.inline-textbox {
+	display: inline;
+	margin-right: 0em 0.5em 0em 0.5em;
+}
+
+.small-number-textbox {
+	width: 45px;
+}
+
+.sub-cont {
+	margin: 1em 0em 0em 1.5em;
+}
+
+.sub-cont .cont {
+	border-top: 0px;
+	padding-bottom: 0px
+}
+
+.mid-align input[type=checkbox], .mid-align span, .mid-align input[type=radio] {
+	vertical-align: middle; 
+	margin: 0px 2px 0px 5px
+}
+

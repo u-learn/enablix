@@ -1,0 +1,19 @@
+<div class="cont">
+	<div class="form-label mid-align">
+	    <input type="radio" ng-model="executeOnDef.type" value="ON_CONTENT_UPDATE" ng-change="onExecTypeChange()"/><span class="radio-label">On Content Update</span>
+	</div>
+	<ui-select class="unwrapped-ui-select" multiple ng-model="onUpdateContentGroup.items" theme="bootstrap" ng-disabled="disabled" sortable="true" 
+		close-on-select="false" remove-selected="false" on-select="updateContentGroups($item, $model)" 
+		on-remove="updateContentGroups($item, $model)">
+	  <ui-select-match>{{$item.name}}</ui-select-match>
+	  <ui-select-choices repeat="opt in allContentGroups | filter: {name: $select.search}">
+	    {{opt.name}}
+	  </ui-select-choices>
+	</ui-select>
+</div>
+<div class="cont">
+	<span class="form-label mid-align">
+	    <input type="radio" ng-model="executeOnDef.type" value="RECURRING" ng-change="onExecTypeChange()"></input><span class="radio-label">Repeat every</span>
+	    <input class="form-control inline-textbox small-number-textbox" ng-model="executeOnDef.recurringSchedule.interval.timeValue"/><span>days</span>
+	</span>
+</div>

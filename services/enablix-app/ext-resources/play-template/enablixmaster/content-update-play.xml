@@ -1,0 +1,67 @@
+<playTemplate id="content-update-play-template" version="1" 
+		name="Content Update" 
+		prototype="true">
+		<!-- Prototype = true denotes that this is a prototype and cannot be executed. An executable instance needs to be
+		     created from this instance for execution. Executable = true denotes that this instance can be executed or played.
+		     Only executable templates can be modified. An executable instance needs to be created from UI to edit a prototype
+		     template. We will later add ability to edit prototype when we provide a UI to create play templates from scratch.
+		     For an executable template, prototypeId refers to the original prototype template which is the parent for this 
+		     executable template. -->
+	<title>Content Update play</title>
+	<focusItems editable="true">
+	</focusItems>
+	<userGroups allowAdd="true">
+		<userGroup id="content-creator" name="Content Creator">
+			<!-- A user group is a collection of one of more types of user sets -->
+			<description>The content creator</description>
+
+			<!-- A play template can have a user group defined only with "id" and "name".
+				 The composition of the user group can be left to be defined from the UI. -->
+			<referenceUserSet>
+				<focusItemAttr>createdBy</focusItemAttr> 
+			</referenceUserSet>
+		</userGroup>
+		<userGroup id="content-modifier" name="Content Modifier">
+			<!-- A user group is a collection of one of more types of user sets -->
+			<description>The content modifier</description>
+			<referenceUserSet>
+				<focusItemAttr>modifiedBy</focusItemAttr> 
+			</referenceUserSet>
+		</userGroup>			
+	</userGroups>
+	<execution>
+		<!-- We will extends and re-use the concepts defined for triggers. The auto-execution 
+			 of a play when an opportunity is created in the system, will not be defined here.
+			 Auto-execution of play will be defined in the add-update trigger defined for an 
+			 opportunity. A new action will be added to execute associated plays after executing
+			 the correlation action defined in the trigger. -->
+		<lifecycle>
+			<checkpoint>
+				<executionTime type="ON_CONTENT_UPDATE">
+					<updateOn>
+						<!-- if there is an update on the focus entity of the play -->
+						<focusItem/>
+					</updateOn>
+				</executionTime>
+				
+				<actions>
+					<email execOrder="1" id="email-notif-on-update" name="Email Notification on Content Update">
+						<emailTemplate>
+							<subject templateName="addUpdateContent_subject.vm"/>
+							<body templateName="addUpdateContent_body.vm"/>
+						</emailTemplate>
+						<emailContent>
+							<triggerEntity/><!-- Entity that triggered the play -->
+						</emailContent>
+						<recipient>
+							<userGroups>
+								<userGroup id="content-creator"/>
+								<userGroup id="content-modifier"/>
+							</userGroups>
+						</recipient>
+					</email>
+				</actions>
+			</checkpoint>
+		</lifecycle>
+	</execution>
+</playTemplate>

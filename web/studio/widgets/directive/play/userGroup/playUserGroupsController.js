@@ -22,7 +22,18 @@ enablix.studioApp.controller('PlayUserGroupsCtrl',
 			});
 			
 			modalInstance.result.then(function(updtUserGroup) {
+				
 				angular.copy(updtUserGroup, record);
+				
+				if (isNullOrUndefined(record.id)) {
+					
+					if (!$scope.userGroupsDef.userGroup) {
+						$scope.userGroupsDef.userGroup = [];
+					}
+					
+					record.id = generateUID();
+					$scope.userGroupsDef.userGroup.push(record)
+				}
 			});
 		};
 		

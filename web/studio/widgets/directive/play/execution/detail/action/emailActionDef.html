@@ -1,0 +1,22 @@
+<div class="cont">
+	<label class="form-label">Email To:</label>
+	<ui-select class="unwrapped-ui-select" multiple ng-model="emailUserGroup.items" theme="bootstrap" ng-disabled="disabled" sortable="true" 
+		close-on-select="false" remove-selected="false" on-select="updateUserGroups($item, $model)" 
+		on-remove="updateUserGroups($item, $model)">
+	  <ui-select-match>{{$item.name}}</ui-select-match>
+	  <ui-select-choices repeat="opt in userGroupsDef.userGroup | filter: {name: $select.search}">
+	    {{opt.name}}
+	  </ui-select-choices>
+	</ui-select>
+</div>
+<div class="cont">
+	<label class="form-label">Email Content:</label>
+	<ui-select class="unwrapped-ui-select" multiple ng-model="emailContentGroup.items" theme="bootstrap" ng-disabled="disabled" sortable="true" 
+		close-on-select="false" remove-selected="false" on-select="updateContentGroups($item, $model)" 
+		on-remove="updateContentGroups($item, $model)">
+	  <ui-select-match>{{$item.name}}</ui-select-match>
+	  <ui-select-choices repeat="opt in allContentGroups | filter: {name: $select.search}">
+	    {{opt.name}}
+	  </ui-select-choices>
+	</ui-select>
+</div>

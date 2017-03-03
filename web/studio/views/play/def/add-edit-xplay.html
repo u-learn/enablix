@@ -13,11 +13,18 @@
 		</div>
 		<div class="cont">
 			<label class="form-label">Focus</label>
-			<input class="form-control" ng-model="focusItemContainer.label" disabled/>
+			<ui-select ng-disabled="!focusEditable" class="unwrapped-ui-select" multiple ng-model="selectedFocus.items" theme="bootstrap" ng-disabled="disabled" sortable="true" 
+				close-on-select="false" remove-selected="false" on-select="updateFocusInPlayTemplate($item, $model)" 
+				on-remove="updateFocusInPlayTemplate($item, $model)">
+			  <ui-select-match>{{$item.label}}</ui-select-match>
+			  <ui-select-choices repeat="opt in focusOptions | filter: {label: $select.search}">
+			    {{opt.label}}
+			  </ui-select-choices>
+			</ui-select>
 		</div>
 		<div class="cont play-tabs">
 			<md-tabs md-dynamic-height md-border-bottom>
-				<md-tab label="{{scopeLabel}}">
+				<md-tab ng-if="prototypePlayTemplate.scope" label="{{scopeLabel}}">
 					<ebx-play-scope scope-def="prototypePlayTemplate.scope"></ebx-play-scope>
 				</md-tab>
 				<md-tab label="{{userGroupsLabel}}">
@@ -33,44 +40,6 @@
 			</md-tabs>
 		</div>
 		
-		<!-- 
-		<div class="head ebx-top-border">
-			<i ng-class="isScopeDefCollapsed ? 'fa fa-chevron-right' : 'fa fa-chevron-down'" class="ebx-float-right" 
-				aria-hidden="true" ng-click="isScopeDefCollapsed = !isScopeDefCollapsed"></i>
-			<h2>Scope</h2>
-		</div>
-		<div collapse="isScopeDefCollapsed">
-			<ebx-play-scope scope-def="prototypePlayTemplate.scope"></ebx-play-scope>
-		</div>
-		
-		<div class="head ebx-top-border">
-			<i ng-class="isUserGroupsCollapsed ? 'fa fa-chevron-right' : 'fa fa-chevron-down'" class="ebx-float-right" 
-				aria-hidden="true" ng-click="isUserGroupsCollapsed = !isUserGroupsCollapsed"></i>
-			<h2>Members</h2>
-		</div>
-		<div collapse="isUserGroupsCollapsed">
-			<ebx-play-user-groups user-groups-def="prototypePlayTemplate.userGroups" focus-items="prototypePlayTemplate.focusItems"></ebx-play-user-groups>
-		</div>
-		
-		<div class="head ebx-top-border">
-			<i ng-class="isContentGroupsCollapsed ? 'fa fa-chevron-right' : 'fa fa-chevron-down'" class="ebx-float-right" 
-				aria-hidden="true" ng-click="isContentGroupsCollapsed = !isContentGroupsCollapsed"></i>
-			<h2>Content</h2>
-		</div>
-		<div collapse="isContentGroupsCollapsed">
-			<ebx-play-content-groups content-groups-def="prototypePlayTemplate.contentGroups" focus-items="prototypePlayTemplate.focusItems"></ebx-play-content-groups>
-		</div>
-		
-		<div class="head ebx-top-border">
-			<i ng-class="isPlayerCollapsed ? 'fa fa-chevron-right' : 'fa fa-chevron-down'" class="ebx-float-right" 
-				aria-hidden="true" ng-click="isPlayerCollapsed = !isPlayerCollapsed"></i>
-			<h2>Player</h2>
-		</div>
-		<div collapse="isPlayerCollapsed">
-			<ebx-play-execution-def execution-def="prototypePlayTemplate.execution"></ebx-play-execution-def>
-		</div>
-		 -->
-
 		<div class="foot clearfix">
 			<button ng-click="updatePlay()" class="button button-add">Save</button>
 			<a ng-click="cancelOperation()" class="button button-delete">Cancel</a>

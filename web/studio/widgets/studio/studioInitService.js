@@ -23,6 +23,9 @@ enablix.studioApp.factory('StudioSetupService',
 	 			if (!$rootScope.authenticated) {
 	 				enablix.template = null;
 	 				enablix.templateId = null;
+	 			} else {
+	 				// make the body visible only after authentication is complete
+	 				$(document.body).css({"display": "block"});
 	 			}
 	 			
 	 		});

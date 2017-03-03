@@ -72,14 +72,55 @@ enablix.studioApp.factory('PlayDefinitionService',
 	 		
 			var getContentSetRecords = function(_contentSet, _onSuccess, _onError) {
 				RESTService.postForData("getContentSetRecords", null, _contentSet, null, _onSuccess, _onError, null);
-			}
+			};
+			
+			var getFirstActionName = function(actions) {
+				if (actions.email && actions.email.length > 0) {
+					return actions.email[0].name;
+				}
+				return "";
+			};
+			
+			var getActionDef = function(actions) {
+				if (actions.email && actions.email.length > 0) {
+					return actions.email[0];
+				}
+				return null;
+			};
+			
+			var getActionType = function(actions) {
+				 if (actions && actions.email) {
+					 return "Email";
+				 }
+				 return "";
+			};
+			
+			
+			var findContentGroupDef = function(_contentGroupsDef, _contentGrpId) {
+				
+				for (var i = 0; i < _contentGroupsDef.contentGroup.length; i++) {
+					
+					var cg = _contentGroupsDef.contentGroup[i];			
+					
+					if (cg.id == contentGrp.id) {
+						return cg;
+					}
+				}
+				
+				return null;
+			};
 			
 	 		return {
 	 			getAllPrototypePlaysSummary: getAllPrototypePlaysSummary,
 	 			getPlayDefSummaryList: getPlayDefSummaryList,
 	 			getPlayDefinition: getPlayDefinition,
 	 			saveOrUpdatePlayTemplate: saveOrUpdatePlayTemplate,
-	 			getContentSetRecords: getContentSetRecords
+	 			getContentSetRecords: getContentSetRecords,
+	 			getActionType: getActionType,
+	 			getActionDef: getActionDef,
+	 			getFirstActionName: getFirstActionName,
+	 			findContentGroupDef: findContentGroupDef
+	 			
 	 		};
 	 	}
 	 ]);

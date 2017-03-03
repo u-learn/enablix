@@ -24,7 +24,7 @@ public class PlayDefinitionController {
 	private PlayExecutor playExecutor;
 	
 	@RequestMapping(method = RequestMethod.POST, value="/contentsetrecords", produces = "application/json")
-	public List<ContentDataRecord> updatePlayDefinition(@RequestBody ContentSetType contentSet) {
+	public List<ContentDataRecord> getContentSetRecords(@RequestBody ContentSetType contentSet) {
 		LOGGER.debug("Fetching content set records");
 		return playExecutor.findContentSetRecords(contentSet);
 	}

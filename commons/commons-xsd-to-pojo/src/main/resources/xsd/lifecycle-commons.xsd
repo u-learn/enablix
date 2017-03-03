@@ -104,12 +104,12 @@
 	<xs:complexType name="updateOnExecType">
 		<xs:sequence>
 			<xs:element name="contentGroups" type="updateOnContentGroupsType" minOccurs="0"/>
-			<xs:element name="focusItem" type="focusItemRefType" minOccurs="0"/>
+			<xs:element name="focusItem" type="focusItemRefType" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
 	
 	<xs:complexType name="focusItemRefType">
-		<xs:attribute name="qualifiedId" type="xs:string" use="required"/>
+		<xs:attribute name="qualifiedId" type="xs:string" use="optional"/>
 	</xs:complexType>
 	
 	<xs:complexType name="updateOnContentGroupsType">
@@ -310,7 +310,7 @@
 	<xs:complexType name="focusItemAttrType">
 		<xs:simpleContent>
 			<xs:extension base="xs:string">
-				<xs:attribute name="itemQId" type="xs:string" use="required"/>	
+				<xs:attribute name="itemQId" type="xs:string" use="optional"/>	
 			</xs:extension>
 		</xs:simpleContent>
 	</xs:complexType>

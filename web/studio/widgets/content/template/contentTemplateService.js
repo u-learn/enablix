@@ -533,6 +533,35 @@ enablix.studioApp.factory('ContentTemplateService',
 				return false;
 			};
 			
+			/**
+			 * filterFn: function(_containerDef) {
+			 * 		// check condition and return true or false
+			 * }
+			 */
+			var getFilteredListOfContainers = function(_filterFn) {
+				
+				var containerList = [];
+				
+				walkContainers(function(containerDef) {
+					if (_filterFn(containerDef)) {
+						containerList.push(containerDef);
+					}
+				});
+				
+				return containerList;
+			};
+			
+			var walkContainers = function(_callbackFn) {
+				walkContainerList(enablix.template.dataDefinition.container, _callbackFn);
+			};
+			
+			var walkContainerList = function(_containerList, _callbackFn) {
+				angular.forEach(_containerList, function(containerDef) {
+					_callbackFn(containerDef);
+					walkContainerList(containerDef.container, _callbackFn);
+				});
+			};
+			
 			return {
 				getTemplate : getTemplate,
 				getDefaultTemplate : getDefaultTemplate,
@@ -567,7 +596,9 @@ enablix.studioApp.factory('ContentTemplateService',
 				checkAndGetBoundedRefListContainerQId: checkAndGetBoundedRefListContainerQId,
 				getStudioContainers: getStudioContainers,
 				getStudioConfig: getStudioConfig,
-				hasContentStackConfigItem: hasContentStackConfigItem
+				hasContentStackConfigItem: hasContentStackConfigItem,
+				getFilteredListOfContainers: getFilteredListOfContainers,
+				walkContainers: walkContainers
 			};
 		
 		}

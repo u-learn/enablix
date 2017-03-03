@@ -9,7 +9,8 @@ enablix.studioApp.controller('PlayUserGroupDetailCtrl',
 		$scope.userGroupType = "userSet";
 				
 		$scope.userGroup = angular.copy(userGroup);
-		$scope.focusQId = focusItems.focusItem[0].qualifiedId;
+		$scope.singleFocus = (focusItems.focusItem && focusItems.focusItem.length == 1);
+		$scope.focusQId = $scope.singleFocus ? focusItems.focusItem[0].qualifiedId : null;
 		
 		$scope.userContainerId = ContentTemplateService.getUserContainerQId();
 		var userContainerDef = ContentTemplateService.getContainerDefinition(enablix.template, $scope.userContainerId);
@@ -77,41 +78,72 @@ enablix.studioApp.controller('PlayUserGroupDetailCtrl',
 		
 		// set master data for user reference set
 		$scope.masterRefSetList = [];
-		var focusContainerDef = ContentTemplateService.getContainerDefinition(enablix.template, $scope.focusQId);
-		$scope.focusName = focusContainerDef.label;
+		if ($scope.singleFocus) {
+			var focusContainerDef = ContentTemplateService.getContainerDefinition(enablix.template, $scope.focusQId);
+			$scope.focusName = focusContainerDef.label;
+		}
 		
-		angular.forEach(focusContainerDef.contentItem, function(contentItemDef) {
+		var checkAndSetSelectedRefUserSet = function(_userRefSet) {
 			
-			var boundedRefListQId = ContentTemplateService.checkAndGetBoundedRefListContainerQId(contentItemDef);
-			
-			if (boundedRefListQId != null && boundedRefListQId == $scope.userContainerId) {
+			if ($scope.userGroup.referenceUserSet && $scope.userGroup.referenceUserSet.focusItemAttr) {
 				
-				var userRefSet = {
-						focusQId: $scope.focusQId,
-						attributeId: contentItemDef.id,
-						attributeLabel: contentItemDef.label
-					};
+				var groupUserRefSet = $scope.userGroup.referenceUserSet.focusItemAttr;
 				
-				$scope.masterRefSetList.push(userRefSet);
-				
-				// check if this is already selected
-				if ($scope.userGroup.referenceUserSet && $scope.userGroup.referenceUserSet.focusItemAttr) {
-					
-					var groupUserRefSet = $scope.userGroup.referenceUserSet.focusItemAttr;
-					
-					for (var i = 0; i < groupUserRefSet.length; i++) {
-						if (contentItemDef.id == groupUserRefSet[i].value) {
-							userRefSet._selected = true;
-						}
-					}
-					
-					if ($scope.userGroup.referenceUserSet.focusItemAttr.length > 0) {
-						$scope.userGroupType = 'refSet';
+				for (var i = 0; i < groupUserRefSet.length; i++) {
+					if (_userRefSet.attributeId == groupUserRefSet[i].value) {
+						_userRefSet._selected = true;
 					}
 				}
-				
 			}
-		});
+		};
+		
+		// add reference group set for creator and modifier
+		var creatorRefSet = {
+				attributeId: "createdBy",
+				attributeLabel: "Content Creator"
+			};
+		
+		$scope.masterRefSetList.push(creatorRefSet);
+		checkAndSetSelectedRefUserSet(creatorRefSet);
+		
+		var modifierRefSet = {
+				attributeId: "modifiedBy",
+				attributeLabel: "Content Modifier"
+			};
+		
+		$scope.masterRefSetList.push(modifierRefSet);
+		checkAndSetSelectedRefUserSet(modifierRefSet);
+		
+		if ($scope.singleFocus) {
+			
+			// add reference group set present in the container
+			angular.forEach(focusContainerDef.contentItem, function(contentItemDef) {
+				
+				var boundedRefListQId = ContentTemplateService.checkAndGetBoundedRefListContainerQId(contentItemDef);
+				
+				if (boundedRefListQId != null && boundedRefListQId == $scope.userContainerId) {
+					
+					var userRefSet = {
+							focusQId: $scope.focusQId,
+							attributeId: contentItemDef.id,
+							attributeLabel: contentItemDef.label
+						};
+					
+					$scope.masterRefSetList.push(userRefSet);
+					
+					// check if this is already selected
+					checkAndSetSelectedRefUserSet(contentItemDef.id, userRefSet);
+					
+				}
+			});
+			
+		}
+		
+		if ($scope.userGroup.referenceUserSet && $scope.userGroup.referenceUserSet.focusItemAttr 
+				&& $scope.userGroup.referenceUserSet.focusItemAttr.length > 0) {
+			$scope.userGroupType = 'refSet';
+		}
+		
 		
 		$scope.toggleRefSetSelection = function(refUserSet) {
 			refUserSet._selected = !refUserSet._selected; 
@@ -178,7 +210,7 @@ enablix.studioApp.controller('PlayUserGroupDetailCtrl',
 			});
 			
 			$modalInstance.close($scope.userGroup);
-		}
+		};
 		
 		
 	}]);

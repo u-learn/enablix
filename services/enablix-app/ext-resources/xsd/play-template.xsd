@@ -24,8 +24,9 @@
 	
 	<xs:complexType name="focusItemsType">
 		<xs:sequence>
-			<xs:element name="focusItem" type="focusItemType" maxOccurs="unbounded"/>
+			<xs:element name="focusItem" type="focusItemType" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
+		<xs:attribute name="editable" type="xs:boolean" default="false"/>
 	</xs:complexType>
 	
 	<xs:complexType name="focusItemType">
@@ -59,6 +60,7 @@
 			<xs:element name="userGroup" type="userGroupType" maxOccurs="unbounded"/>
 		</xs:sequence>
 		<xs:attribute name="label" type="xs:string"/>
+		<xs:attribute name="allowAdd" type="xs:string"/>
 	</xs:complexType>
 	
 	<xs:complexType name="playExecutionType">

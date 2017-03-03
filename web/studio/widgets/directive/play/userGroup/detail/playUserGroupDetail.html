@@ -14,15 +14,17 @@
 		</div>
 		<div class="cont">
 			<label class="form-label">Group Type</label>
-			<span class="form-label">
-			    <input type="radio" ng-model="userGroupType" value="userSet"><span class="radio-label">User Set</span>
-			</span>
-			<span class="form-label" ng-show="masterRefSetList && masterRefSetList.length > 0">
-			    <input type="radio" ng-model="userGroupType" value="refSet"><span class="radio-label">User Group from {{focusName}}</span>
-			</span>
-			<span class="form-label">
-			    <input type="radio" ng-model="userGroupType" value="filterSet"><span class="radio-label">Filter User Group</span>
-			</span>
+			<div class="sub-cont">
+				<span class="form-label mid-align">
+				    <input type="radio" ng-model="userGroupType" value="userSet"><span class="radio-label">User Set</span>
+				</span>
+				<span class="form-label mid-align" ng-show="masterRefSetList && masterRefSetList.length > 0">
+				    <input type="radio" ng-model="userGroupType" value="refSet"><span class="radio-label">User Group <span ng-if="singleFocus">from {{focusName}}</span></span>
+				</span>
+				<span class="form-label mid-align">
+				    <input type="radio" ng-model="userGroupType" value="filterSet"><span class="radio-label">Filter User Group</span>
+				</span>
+			</div>
 		</div>
 		<div ng-show="userGroupType == 'userSet'">
 			<div class="head ebx-top-border">
@@ -38,7 +40,7 @@
 			<div class="head ebx-top-border">
 				<i ng-class="isRefSetCollapsed ? 'fa fa-chevron-right' : 'fa fa-chevron-down'" class="ebx-float-right" 
 							aria-hidden="true" ng-click="isRefSetCollapsed = !isRefSetCollapsed"></i>
-				<h2>User Group from {{focusName}}</h2>
+				<h2>User Group <span ng-if="singleFocus">from {{focusName}}</span></h2>
 			</div>
 			<div class="cont" collapse="isRefSetCollapsed">
 				<div class="corr-item-cont">

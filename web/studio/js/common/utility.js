@@ -83,3 +83,17 @@ function isDateObject(_obj) {
 function isFunction(_obj) {
 	return typeof _obj === 'function';
 }
+
+var ALPHABET = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+var RANDOM_ID_LENGTH = 4;
+var generateUIDRandom = function() {
+	var rtn = '';
+	for (var i = 0; i < RANDOM_ID_LENGTH; i++) {
+		rtn += ALPHABET.charAt(Math.floor(Math.random() * ALPHABET.length));	
+	}
+	return rtn;
+}
+
+function generateUID() {
+	return generateUIDRandom() + "" + new Date().getTime();
+}

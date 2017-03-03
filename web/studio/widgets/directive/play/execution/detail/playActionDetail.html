@@ -12,41 +12,23 @@
 				<div ng-message="required">This is required.</div>
 	        </div>
 		</div>
-		<div class="head ebx-top-border">
-			<i ng-class="isUserSetCollapsed ? 'fa fa-chevron-right' : 'fa fa-chevron-down'" class="ebx-float-right" 
-						aria-hidden="true" ng-click="isUserSetCollapsed = !isUserSetCollapsed"></i>
-			<h2>User Set</h2>
+		<div class="cont">
+			<label class="form-label">Type</label>
+			<input required name="actionType" class="form-control" ng-model="actionType" ng-disabled="true"/>
 		</div>
-		<div class="cont" collapse="isUserSetCollapsed">
-			<eb-bounded content-def="userBoundedRefItemDef" select-value="userSet"></eb-bounded>
+		<div ng-if="actionType == 'Email'">
+			<ebx-play-email-action-def action-def="actionDef" focus-items="focusItems"
+				user-groups-def="userGroupsDef" content-groups-def="contentGroupsDef"></ebx-play-email-action-def>
 		</div>
-		<div ng-if="masterRefSetList && masterRefSetList.length > 0">
+		<div>
 			<div class="head ebx-top-border">
-				<i ng-class="isRefSetCollapsed ? 'fa fa-chevron-right' : 'fa fa-chevron-down'" class="ebx-float-right" 
-							aria-hidden="true" ng-click="isRefSetCollapsed = !isRefSetCollapsed"></i>
-				<h2>User Set From {{focusName}}</h2>
+				<h2>Execution Time</h2>
 			</div>
-			<div class="cont" collapse="isRefSetCollapsed">
-				<div class="corr-item-cont">
-					<div class="cg-corr-items">
-						<span ng-repeat="refSet in masterRefSetList" class="chckBox"> 
-							<input type="checkbox" ng-checked="refSet._selected" ng-click="toggleRefSetSelection(refSet)">
-						 	<span class="chckBox-label">{{refSet.attributeLabel}}</span>
-						 </span>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="head ebx-top-border">
-			<i ng-class="isFilterSetCollapsed ? 'fa fa-chevron-right' : 'fa fa-chevron-down'" class="ebx-float-right" 
-						aria-hidden="true" ng-click="isFilterSetCollapsed = !isFilterSetCollapsed"></i>
-			<h2>Filter User Set</h2>
-		</div>
-		<div collapse="isFilterSetCollapsed">
-			<ebx-condition-attributes condition-holder="filteredUsers" condition-on-container="userContainerId"></ebx-condition-attributes>
+			<ebx-play-execute-on execute-on-def="checkpointDef.executionTime" focus-items="focusItems"
+					content-groups-def="contentGroupsDef"></ebx-play-execute-on>
 		</div>
 		<div class="foot clearfix">
-			<button ng-click="updateUserGroup()" class="button button-add">Save</button>
+			<button ng-click="updatePlayAction()" class="button button-add">Save</button>
 			<a ng-click="cancelOperation()" class="button button-delete">Cancel</a>
 		</div>
 	</form>

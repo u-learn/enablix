@@ -1,2 +1,6 @@
-	<ebx-generic-table table-headers="tableHeaders" table-data="userGroupsDef.userGroup" 
+<div class="head" ng-if="userGroupsDef.allowAdd">
+	<a ng-click="viewUserGroupDetail({})" class="button button-add" tabindex="0">Add new</a>
+	<h2>&nbsp;</h2>
+</div>
+<ebx-generic-table table-headers="tableHeaders" table-data="userGroupsDef.userGroup" 
 						row-actions="tableRecordActions"></ebx-generic-table>
