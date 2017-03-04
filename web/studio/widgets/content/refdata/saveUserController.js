@@ -39,7 +39,7 @@ enablix.studioApp.controller('SaveUserController', [
 			}
 		});
 		
-		$scope.userRecordEdit=function(identity) {
+		$scope.userRecordEdit=function() {
 			 StateUpdateService.goEditUser(identity);
 		 }	 
 		
