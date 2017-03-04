@@ -2,7 +2,7 @@
 	<div ng-class="{'active': expanded}" class="head head-toggle active" ng-click="toggleContainer($event)">
 		<i class="expandable"></i>
 		<em class="fa fa-square-o"></em>		
-		<h2 ng-if="!navigableHeader">{{subContainerLabel}}</h2>
+		<h2 ng-if="!navigableHeader">{{::subContainerLabel}}</h2>
 		<h2><eb-nav-link hide-hierarchy="false" hide-doc-link="true" nav-link="navContentData" ng-if="navigableHeader"></eb-nav-link></h2>
 			<div class="dropdown">
 			<div class="action-icons bar-action-icons">
@@ -18,8 +18,8 @@
 	<div ng-class="{'active': !expanded}" class="cont clearfix" ng-if="!(bodyData == null || bodyData == undefined || bodyData.length == 0)">	
 	
 		<table class="infotable" >		
-			<tr ng-repeat="header in headers" ng-switch="header.dataType" ng-if="isRenderable(header, bodyData[header.key])">
-				<th>{{header.label}}:</th>
+			<tr ng-repeat="header in headers track by header.id" ng-switch="header.dataType" ng-if="::isRenderable(header, bodyData[header.key])">
+				<th>{{::header.label}}:</th>
 				<td><eb-render-data content-value="bodyData[header.key]" content-def="header" content-record="bodyData" show-doc-link="false"/></td>
 			</tr>
 	  	</table>

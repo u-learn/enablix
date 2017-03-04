@@ -58,7 +58,7 @@ enablix.studioApp.controller('PortalSubContainerCtrl',
 			
 			if (!$scope.showSubContainer) {
 				if ($scope.parentList && $scope.index) {
-					$scope.parentList[$scope.index] = "null" + $scope.index; // hack to remove div in portal-container.html. Setting it to null cause duplicate entry error in ng-repeat
+					$scope.parentList[$scope.index].id = "null" + $scope.index; // hack to remove div in portal-container.html. Setting it to null cause duplicate entry error in ng-repeat
 				}
 			}
 		}
@@ -89,7 +89,7 @@ enablix.studioApp.controller('PortalSubContainerCtrl',
 			_dataRecord.hasSubContainers = !isNullOrUndefined(_containerDef.container)
 											&& _containerDef.container.length > 0;
 		
-			ContentUtil.decorateData(_containerDef, _dataRecord, true);
+			ContentUtil.decorateData(_containerDef, _dataRecord, true, true);
 		}
 				
 		$scope.render = function() {
@@ -172,6 +172,7 @@ enablix.studioApp.controller('PortalSubContainerCtrl',
 			angular.forEach($scope.containerDef.contentItem, function(containerAttr) {
 				
 				var header = {
+					"id": containerAttr.qualifiedId,
 					"key" : containerAttr.id,
 					"label" : containerAttr.label,
 					"dataType" : containerAttr.type,
@@ -199,12 +200,16 @@ enablix.studioApp.controller('PortalSubContainerCtrl',
 			}
 		};
 		
+		$scope.hasData2 = function(_data) {
+			return !isNullOrUndefined(_data) && (_data.length != 0); //!isArrayAndEmpty(_data) && !isStringAndEmpty(_data);
+		}
+		
 		$scope.hasData = function(_data) {
 			return !isNullOrUndefined(_data) && !isArrayAndEmpty(_data) && !isStringAndEmpty(_data);
 		}
 		
 		$scope.isRenderable = function(_contentDef, _data) {
-			return _contentDef.dataType != 'CONTENT_STACK' && $scope.hasData(_data);
+			return _contentDef.dataType !== 'CONTENT_STACK' && $scope.hasData(_data);
 		}
 		
 		$scope.render();

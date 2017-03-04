@@ -4,14 +4,10 @@
 		<eb-portal-breadcrumb></eb-portal-breadcrumb>
 		<div class="row">							
 			<main class="col-md-8">
-				<div ng-repeat="subContainer in subContainerList" ng-class = "{'subcontainer': subContainerList.length>1}" 
-						ng-if ="subContainer != ('null' + $index) && !(subContainerList.length>1 && subContainer.label =='About')">					
-					<eb-portal-sub-container ng-if="subContainer.type == 'single'" 
-						type="single" sub-container-label="subContainer.label" info="subContainer.records"
-						sub-container-q-id="subContainer.qualifiedId" index="$index" parent-list="subContainerList"></eb-portal-sub-container>
-					<eb-portal-sub-container ng-if="subContainer.type == 'multi'"
-						type="multi" sub-container-label="subContainer.label" info="subContainer.records"
-						sub-container-q-id="subContainer.qualifiedId" index="$index" parent-list="subContainerList" multi-list-limit="subCntnrMultiListLimit"></eb-portal-sub-container>
+				<div ng-repeat="subContainer in subContainerList track by subContainer.id" ng-class = "{'subcontainer': subContainerList.length>1}" 
+						ng-if ="subContainer.id != ('null' + $index) && !(subContainerList.length>1 && subContainer.label =='About')">					
+					<eb-portal-sub-container type="{{::subContainer.type}}" sub-container-label="subContainer.label" info="subContainer.records"
+						sub-container-q-id="subContainer.qualifiedId" index="$index" parent-list="subContainerList" multi-list-limit="{{::subCntnrMultiListLimit}}"></eb-portal-sub-container>
 				</div>
 				<eb-content-stack-display ng-if="hasContentStack" container-q-id="containerQId" content-identity="instanceIdentity" container-list="subContainerList"></eb-content-stack-display>
 			</main>

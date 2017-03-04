@@ -2,14 +2,14 @@
 	<div class="head head-toggle active" ng-click="toggleContainer($event)">
 		<i class="expandable"></i>
 		<em class="fa fa-clone"></em>
-		<h2>{{subContainerLabel}}</h2>
+		<h2>{{::subContainerLabel}}</h2>
 		<div class="action-icons bar-action-icons">
 			<ebx-suggest-content content-q-id="subContainerQId" parent-identity="parentIdentity"></ebx-suggest-content>
 		</div>
 	</div> 
 	<div class="cont" ng-if="bodyData.length != 0">
-		<div ng-repeat="dataItem in bodyData" class = "dataItem">
-			<h4><a ng-click="toggleContainerItem($event, dataItem.containerId + $index, dataItem)" class="toggle">{{dataItem.headingLabel}}</a>
+		<div ng-repeat="dataItem in bodyData track by dataItem.identity" class = "dataItem">
+			<h4><a ng-click="toggleContainerItem($event, dataItem.containerId + $index, dataItem)" class="toggle">{{::dataItem.headingLabel}}</a>
 			    <a ng-if="dataItem.hasSubContainers" ng-click="navToItemDetail(dataItem.containerQId, dataItem.identity)" class="detail fa fa-external-link"></a>
 			    <div class="action-icons">
 			    <div class="dropdown">
@@ -23,10 +23,10 @@
 					</div>
 			    </div>
 			</h4>
-			<div id="{{dataItem.containerId}}{{$index}}" class="toggle-cont">
+			<div id="{{::dataItem.containerId}}{{::$index}}" class="toggle-cont">
 				<table class="infotable" >
-					<tr ng-repeat="header in headers" ng-switch="header.dataType" ng-if="isRenderable(header, dataItem[header.key])">
-						<th>{{header.label}}:</th>
+					<tr ng-repeat="header in headers track by header.id" ng-switch="header.dataType" ng-if="::isRenderable(header, dataItem[header.key])">
+						<th>{{::header.label}}:</th>
 						<td><eb-render-data content-value="dataItem[header.key]" content-def="header" content-record="dataItem" show-doc-link="false"/></td>
 					</tr>
 			  	</table>

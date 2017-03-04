@@ -35,8 +35,6 @@ enablix.studioApp.controller('PortalBreadcrumbCtrl',
 		
 		var createBreadCrumbList = function($stateParams) {
 			
-			console.log("creating breadcrumb");
-
 			$scope.breadcrumbList = $scope.breadcrumbList || [];
 			
 			var containerQId = $stateParams.containerQId;

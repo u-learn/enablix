@@ -1,5 +1,4 @@
-<span ng-if="contentDef.dataType == 'DOC' || contentDef.dataType == 'TEXT' || contentDef.dataType == 'DATE_TIME' || contentDef.dataType == 'NUMERIC' || contentDef.dataType == 'RICH_TEXT'" 
-		class="content-data" ng-bind-html="contentValue | ebxFormatData: contentDef.typeDef : contentRecord"></span>
+<span ng-if="displayValue" class="content-data" ng-bind-html="displayValue"></span>
 <span ng-if="contentDef.dataType == 'BOUNDED'" class="content-data" ng-repeat="bndItem in contentValue track by $index">
 	<span ng-if="bndItem.hrefData">
 		<a ng-click="navToItemDetail(bndItem.hrefData.containerQId, bndItem.hrefData.contentIdentity)">{{bndItem.label}}</a>

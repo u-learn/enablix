@@ -2,7 +2,16 @@ var enablix = enablix || {};
 enablix.studioApp = angular.module("studio", ['ui.router', 'angularTreeview', 'listGroupTreeview', 
            'angularFileUpload', 'ui.bootstrap', 'isteven-multi-select', 'ui-notification', 'enablixFilters',
            'ngSanitize', 'ui.select', 'ngMessages', 'pascalprecht.translate', 'noCAPTCHA', 'PubSub', 
-           'ngMaterial', 'ngLoadingSpinner', 'ngQuill']);
+           'ngMaterial', 'ngLoadingSpinner', 'ngQuill', 'digestHud']);
+
+enablix.studioApp.config(['digestHudProvider', function(digestHudProvider) {
+	  digestHudProvider.enable();
+
+	  // Optional configuration settings:
+	  digestHudProvider.setHudPosition('top right'); // setup hud position on the page: top right, bottom left, etc. corner
+	  digestHudProvider.numTopWatches = 20;  // number of items to display in detailed table
+	  digestHudProvider.numDigestStats = 25;  // number of most recent digests to use for min/med/max stats
+	}]);
 
 // default configuration for quill-editor [rich text editor]
 enablix.studioApp.config(['ngQuillConfigProvider', function (ngQuillConfigProvider) {
