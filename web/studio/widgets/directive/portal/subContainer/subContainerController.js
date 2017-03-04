@@ -12,6 +12,8 @@ enablix.studioApp.controller('PortalSubContainerCtrl',
 		
 		$scope.toggleContainerItem = function($event, itemId, _dataRecord) {
 			
+			_dataRecord.showDetails = true;
+			
 			var elem = $event.currentTarget;
 			$(elem).toggleClass('active');
 			$('#' + itemId).slideToggle('fast');

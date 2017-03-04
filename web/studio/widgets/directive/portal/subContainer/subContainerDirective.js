@@ -16,12 +16,12 @@ enablix.studioApp.directive('ebPortalSubContainer', [
 				info: "=?"
 			},
 			controller : 'PortalSubContainerCtrl',
-			template : '<ng-include src="::templateUrl"></ng-include>',
-			/*templateUrl : function(elem, attr) {
+			//template : '<ng-include src="::templateUrl"></ng-include>',
+			templateUrl : function(elem, attr) {
 				return "widgets/directive/portal/subContainer/subContainer-both.html";
-			},*/
+			},
 			link: function(scope, element, attrs) {
-				scope.templateUrl = 'widgets/directive/portal/subContainer/subContainer-' + scope.type + '.html';
+				scope.singleItemCard = scope.type === 'single';
 			}
 			
 		};
