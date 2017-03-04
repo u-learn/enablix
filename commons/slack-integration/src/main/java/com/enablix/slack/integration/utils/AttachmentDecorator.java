@@ -3,6 +3,7 @@ package com.enablix.slack.integration.utils;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.enablix.commons.constants.AppConstants;
 import com.enablix.commons.util.json.JsonUtil;
 import com.enablix.core.ui.DisplayableContent;
 import com.enablix.core.ui.DocRef;
@@ -23,7 +24,7 @@ public class AttachmentDecorator {
 		String docURL="";
 		if(docRef!=null) {
 			docName = docRef.getName();
-			docURL = docRef.getAccessUrl();
+			docURL = docRef.getAccessUrl()+AppConstants.DOC_DOWN_TRACK_SLACK;
 		}
 		
 		SlackAttachment slackAttachment = new SlackAttachment.SlackAttachmentBuidler()
