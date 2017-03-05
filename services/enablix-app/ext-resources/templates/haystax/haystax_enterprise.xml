@@ -11,6 +11,8 @@
 			<container id="prodBlurb" label="Blurbs" linkContainerQId="blurb" linkContentItemId="products"/>					
 			<container id="prodCaseStudy" label="Case Studies" linkContainerQId="caseStudy" linkContentItemId="products"/>			
 			<container id="prodPositioning" label="Corporate Positioning" linkContainerQId="positioning" linkContentItemId="products"/>						
+			<container id="prodDemoEnv" label="Demo Environments" linkContainerQId="demoenvironment" linkContentItemId="products"/>									
+			<container id="prodDemoScript" label="Demo Scripts" linkContainerQId="demoscript" linkContentItemId="products"/>												
 			<container id="prodDiscQuestions" label="Discovery Questions" linkContainerQId="discoveryQuestion" linkContentItemId="products"/>			
 			<container id="prodDocs" label="Product Documentation" linkContainerQId="docs" linkContentItemId="products"/>			
 			<container id="prodFAQ" label="FAQ" linkContainerQId="faq" linkContentItemId="products"/>
@@ -65,6 +67,8 @@
 			<container id="solBlurb" label="Blurbs" linkContainerQId="blurb" linkContentItemId="solutions"/>						
 			<container id="solCaseStudy" label="Case Studies" linkContainerQId="caseStudy" linkContentItemId="solutions"/>
 			<container id="solPositioning" label="Corporate Positioning" linkContainerQId="positioning" linkContentItemId="solutions"/>									
+			<container id="solDemoEnv" label="Demo Environments" linkContainerQId="demoenvironment" linkContentItemId="solutions"/>												
+			<container id="solDemoScript" label="Demo Scripts" linkContainerQId="demoscript" linkContentItemId="solutions"/>															
 			<container id="solDocs" label="Solution Documentation" linkContainerQId="docs" linkContentItemId="solutions"/>						
 			<container id="solDiscQuestions" label="Discovery Questions" linkContainerQId="discoveryQuestion" linkContentItemId="solutions"/>
 			<container id="solFAQ" label="FAQ" linkContainerQId="faq" linkContentItemId="solutions"/>
@@ -120,6 +124,8 @@
 			<container id="appBlog" label="Blogs" linkContainerQId="blog" linkContentItemId="apps"/>
 			<container id="appBlurb" label="Blurbs" linkContainerQId="blurb" linkContentItemId="apps"/>									
 			<container id="appCaseStudy" label="Case Studies" linkContainerQId="caseStudy" linkContentItemId="apps"/>
+			<container id="appDemoEnv" label="Demo Environments" linkContainerQId="demoenvironment" linkContentItemId="apps"/>												
+			<container id="appDemoScript" label="Demo Scripts" linkContainerQId="demoscript" linkContentItemId="apps"/>																		
 			<container id="appDiscQuestions" label="Discovery Questions" linkContainerQId="discoveryQuestion" linkContentItemId="apps"/>
 			<container id="appFAQ" label="FAQ" linkContainerQId="faq" linkContentItemId="apps"/>
 			<container id="appImpSlide" label="Important Slides" linkContainerQId="importantslide" linkContentItemId="apps"/>
@@ -850,6 +856,129 @@
 				</bounded>
 			</contentItem>	
 			<container id="posResearch" label="Research" linkContainerQId="research" linkContentItemId="positionings"/>									
+		</container>	
+		<container id="demoenvironment" label="Demo Environments" businessCategory="BUSINESS_CONTENT">
+			<contentItem id="title" label="Title" type="text"/>
+			<contentItem id="desc" label="Description" type="richText" searchBoost="2"/>			
+			<contentItem id="url" label="URL" type="text" searchBoost="3"/>			
+			<contentItem id="credentials" label="Credentials" type="text"/>	
+			<contentItem id="products" label="Products" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>product</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>			
+			<contentItem id="solutions" label="Solutions" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>solution</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="apps" label="Apps" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>app</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="topics" label="Topics" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>topic</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<container id="demoDemoScripts" label="Supported Demo Scripts" linkContainerQId="demoscript" linkContentItemId="demoenvironments"/>									
+		</container>	
+		<container id="demoscript" label="Demo Scripts" businessCategory="BUSINESS_CONTENT">
+			<contentItem id="title" label="Title" type="text"/>
+			<contentItem id="desc" label="Description" type="richText" searchBoost="1"/>			
+			<contentItem id="file" label="File" type="doc"/>			
+			<contentItem id="experts" label="Experts" type="bounded" searchBoost="5">
+				<bounded multivalued="true">
+					<refList>
+						<datastore>
+							<storeId>user</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>userName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>	
+			<contentItem id="demoenvironments" label="Demo Environments" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>demoenvironment</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>title</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>								
+			<contentItem id="products" label="Products" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>product</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>			
+			<contentItem id="solutions" label="Solutions" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>solution</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="apps" label="Apps" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>app</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="topics" label="Topics" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>topic</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="relatedContent" label="Supporting Content" type="contentStack"/>			
 		</container>			
 		<container id="discoveryQuestion" label="Discovery Questions">
 			<contentItem id="question" label="Question" type="text" searchBoost="6"/>
@@ -2237,6 +2366,8 @@
 			<container id="topicBlog" label="Blogs" linkContainerQId="blog" linkContentItemId="topics"/>
 			<container id="topicBlurb" label="Blurbs" linkContainerQId="blurb" linkContentItemId="topics"/>			
 			<container id="topicCaseStudy" label="Case Studies" linkContainerQId="caseStudy" linkContentItemId="topics"/>						
+			<container id="topicDemoEnv" label="Demo Environments" linkContainerQId="demoenvironment" linkContentItemId="topics"/>												
+			<container id="topicDemoScript" label="Demo Scripts" linkContainerQId="demoscript" linkContentItemId="topics"/>																		
 			<container id="topicFAQ" label="FAQ" linkContainerQId="faq" linkContentItemId="topics"/>
 			<container id="topicLunchLearn" label="Lunch and Learn" linkContainerQId="lunchandlearn" linkContentItemId="topics"/>									
 			<container id="topicMarketingEvent" label="Marketing Events" linkContainerQId="marketingevent" linkContentItemId="topics"/>	
@@ -2808,7 +2939,9 @@
 					<childContainer id="blog"/>
 					<childContainer id="blurb"/>					
 					<childContainer id="caseStudy"/>
-					<childContainer id="positioning"/>										
+					<childContainer id="positioning"/>	
+					<childContainer id="demoenvironment"/>	
+					<childContainer id="demoscript"/>																			
 					<childContainer id="discoveryQuestion"/>
 					<childContainer id="docs"/>
 					<childContainer id="faq"/>
@@ -3005,6 +3138,38 @@
 		<contentUIDef qualifiedId="caseStudy.highlights">
 			<text type="long"/>
 		</contentUIDef>
+		<contentUIDef qualifiedId="demoenvironment">
+			<container labelQualifiedId="demoenvironment.title">
+				<listViewConfig>
+					<hideContentItem id="desc"/>
+					<hideContentItem id="credentials"/>		
+					<hideContentItem id="topics"/>										
+				</listViewConfig>
+				<portalConfig>
+					<headingContentItem id="title"/>
+				</portalConfig>
+			</container>
+		</contentUIDef>
+		<contentUIDef qualifiedId="demoenvironment.desc">
+			<text type="long"/>
+		</contentUIDef>		
+		<contentUIDef qualifiedId="demoscript">
+			<container labelQualifiedId="demoscript.title">
+				<listViewConfig>
+					<hideContentItem id="desc"/>
+					<hideContentItem id="file"/>
+					<hideContentItem id="experts"/>	
+					<hideContentItem id="demoenvironments"/>											
+					<hideContentItem id="topics"/>										
+				</listViewConfig>
+				<portalConfig>
+					<headingContentItem id="title"/>
+				</portalConfig>
+			</container>
+		</contentUIDef>
+		<contentUIDef qualifiedId="demoscript.desc">
+			<text type="long"/>
+		</contentUIDef>				
 		<contentUIDef qualifiedId="discoveryQuestion">
 			<container labelQualifiedId="discoveryQuestion.question">
 				<listViewConfig>
@@ -3530,7 +3695,9 @@
 					<childContainer id="blog"/>
 					<childContainer id="blurb"/>					
 					<childContainer id="caseStudy"/>
-					<childContainer id="positioning"/>															
+					<childContainer id="positioning"/>		
+					<childContainer id="demoenvironment"/>	
+					<childContainer id="demoscript"/>																							
 					<childContainer id="discoveryQuestion"/>
 					<childContainer id="docs"/>					
 					<childContainer id="faq"/>
