@@ -153,8 +153,8 @@ enablix.studioApp.controller('PortalSubContainerCtrl',
 					
 				} else {
 					
-					var paginationData = isNullOrUndefined($scope.multiListLimit) ? undefined
-							: { pageNum: 0, pageSize: $scope.multiListLimit };
+					var paginationData = isNullOrUndefined($scope.multiListLimit) || isStringAndEmpty($scope.multiListLimit) ? 
+							undefined : { pageNum: 0, pageSize: $scope.multiListLimit };
 					
 					$scope.parentIdentity = $stateParams.elementIdentity;
 							
