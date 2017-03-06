@@ -17,8 +17,16 @@ enablix.studioApp.controller('slackAuthController',
 			$scope.authorizeSlack = function(){
 				var redirectURI="redirect_uri="+$location.protocol() + "://" + $location.host() 
 				+ "/app.html%23/account/slackdtls";
+				
 				var url = enablix.serviceURL["getSlackCode"];
-				window.location.href=url +"&"+redirectURI;
+				
+				RESTService.getForData('getSlackAppDtls', null, null, function(data) {
+					if( data != null && data!="" ){
+						window.location.href = url + data.clientID + "&" +redirectURI;
+					}
+				}, function() {    		
+					Notification.error({message: "Oops! There was an error on Slack.", delay: enablix.errorMsgShowTime});
+				},null);
 			}
 			if(source==null)
 				checkIfAlreadyAuth();
