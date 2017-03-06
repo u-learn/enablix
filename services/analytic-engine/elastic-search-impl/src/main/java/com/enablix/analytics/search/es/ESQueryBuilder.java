@@ -121,7 +121,7 @@ public class ESQueryBuilder {
 				Integer itemBoostValue = contentItem.getSearchBoost() == null ? 1 
 											: contentItem.getSearchBoost().intValue();
 				
-				if (itemBoostValue > -1) { // ignore the fields which have negative boost score
+				if (itemBoostValue == 0) { // ignore the fields which have 0 boost score
 					
 					String esFieldName = getESFieldName(contentItem, container);
 					
