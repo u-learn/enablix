@@ -114,24 +114,27 @@ public class ESQueryBuilder {
 				
 				if (contentItem.getType() == ContentItemClassType.DATE_TIME
 						|| contentItem.getType() == ContentItemClassType.NUMERIC) {
-					// do not search on Data and numeric fields
+					// do not search on Date and numeric fields
 					continue;
 				}
 				
 				Integer itemBoostValue = contentItem.getSearchBoost() == null ? 1 
 											: contentItem.getSearchBoost().intValue();
 				
-				String esFieldName = getESFieldName(contentItem, container);
-				
-				if (fieldSearchBoost.containsKey(esFieldName)) {
-				
-					Integer boostValue = fieldSearchBoost.get(esFieldName);
-					if (itemBoostValue > boostValue) {
+				if (itemBoostValue > -1) { // ignore the fields which have negative boost score
+					
+					String esFieldName = getESFieldName(contentItem, container);
+					
+					if (fieldSearchBoost.containsKey(esFieldName)) {
+					
+						Integer boostValue = fieldSearchBoost.get(esFieldName);
+						if (itemBoostValue > boostValue) {
+							fieldSearchBoost.put(esFieldName, itemBoostValue);
+						}
+						
+					} else {
 						fieldSearchBoost.put(esFieldName, itemBoostValue);
 					}
-					
-				} else {
-					fieldSearchBoost.put(esFieldName, itemBoostValue);
 				}
 			}
 		
@@ -157,7 +160,8 @@ public class ESQueryBuilder {
 			fieldName = fieldName.substring(containerQId.length() + 1);
 		}
 		
-		if (contentItem.getType() == ContentItemClassType.BOUNDED) {
+		if (contentItem.getType() == ContentItemClassType.BOUNDED 
+				|| contentItem.getType() == ContentItemClassType.CONTENT_STACK) {
 			fieldName += ".label";
 		} else if (contentItem.getType() == ContentItemClassType.DOC) {
 			fieldName += ".name";
