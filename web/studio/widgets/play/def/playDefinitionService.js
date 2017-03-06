@@ -102,7 +102,7 @@ enablix.studioApp.factory('PlayDefinitionService',
 					
 					var cg = _contentGroupsDef.contentGroup[i];			
 					
-					if (cg.id == contentGrp.id) {
+					if (cg.id == _contentGrpId) {
 						return cg;
 					}
 				}

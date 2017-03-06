@@ -4,7 +4,7 @@
 		<eb-portal-breadcrumb></eb-portal-breadcrumb>
 		<div class="row">							
 			<main class="col-md-8">
-				<div ng-repeat="subContainer in subContainerList track by subContainer.id" ng-class = "{'subcontainer': subContainerList.length>1}" 
+				<div ng-repeat="subContainer in subContainerList track by $index" ng-class = "{'subcontainer': subContainerList.length>1}" 
 						ng-if ="subContainer.id != ('null' + $index) && !(subContainerList.length>1 && subContainer.label =='About')">					
 					<eb-portal-sub-container type="{{::subContainer.type}}" sub-container-label="subContainer.label" info="subContainer.records"
 						sub-container-q-id="subContainer.qualifiedId" index="$index" parent-list="subContainerList" multi-list-limit="{{::subCntnrMultiListLimit}}"></eb-portal-sub-container>

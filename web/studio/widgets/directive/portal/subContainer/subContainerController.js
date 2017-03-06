@@ -88,8 +88,9 @@ enablix.studioApp.controller('PortalSubContainerCtrl',
 									_containerDef, _dataRecord);
 			_dataRecord.containerId = _containerDef.id;
 			_dataRecord.containerQId = _containerDef.qualifiedId;
-			_dataRecord.hasSubContainers = !isNullOrUndefined(_containerDef.container)
-											&& _containerDef.container.length > 0;
+			_dataRecord.hasSubContainers =  _dataRecord.identity != $stateParams.elementIdentity && 
+							((!isNullOrUndefined(_containerDef.container) && _containerDef.container.length > 0)
+											|| (ContentTemplateService.hasContentStackConfigItem(_containerDef)));
 		
 			ContentUtil.decorateData(_containerDef, _dataRecord, true, true);
 		}
