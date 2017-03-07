@@ -1,5 +1,6 @@
 package com.enablix.app.slack.web;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.enablix.commons.constants.AppConstants;
 import com.enablix.commons.util.process.ProcessContext;
 import com.enablix.core.domain.slackdtls.SlackAccessToken;
 import com.enablix.slack.integration.entities.SlackChannels;
@@ -83,4 +85,19 @@ public class SlackController {
 			return null;
 		}
 	}
+
+	@RequestMapping(method = RequestMethod.GET, value = "/getSlackAppDtls", produces = "application/json")
+	public HashMap<String, String> getSlackAppDtls() {
+		try	{
+			HashMap<String, String> slackAppDtls = new HashMap<String, String>();
+			String clientId = slackServiceImpl.getClientId();
+			slackAppDtls.put(AppConstants.SLACK_APP_CLIENT_ID, clientId);
+			return slackAppDtls;
+		}
+		catch(Exception e) {
+			LOGGER.error("Error Retrieving Slack Client Id ",e);
+			return null;
+		}
+	}
+	
 }

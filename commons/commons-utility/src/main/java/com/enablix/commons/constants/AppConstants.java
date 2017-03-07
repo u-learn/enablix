@@ -19,7 +19,21 @@ public class AppConstants {
 	
 	public static final String SYSTEM_SLACK_TOKEN = "ebxSlackTokenDtls";
 	public static final String SLACK_APP = "SLACK_APP";
+	public static final String DOC_DOWN_TRACK_SLACK = "?atChannel=SLACK";
+	
 	public static final String SLACK_APP_CLIENT_ID = "clientID";
 	public static final String SLACK_APP_CLIENT_SECRET = "clientSecret";
-	public static final String DOC_DOWN_TRACK_SLACK = "?atChannel=SLACK";
+	public static final String SLACK_RESPONSE_OK = "ok";
+	public static final String SLACK_ERROR_TOKEN_REVOKED = "token_revoked";
+	public static final String SLACK_ERROR = "error";
+	public static final String SLACK_REQUEST_TOKEN = "token";
+	public static final String SLACK_REQUEST_REDIRECT_URI = "redirect_uri";
+	public static final String SLACK_RESPONSE_USER = "user";
+	public static final String SLACK_REQUEST_ATTACHMENT = "attachments";
+	public static final String SLACK_REQUEST_TEXT = "text";
+	public static final String SLACK_REQUEST_CHANNEL = "channel";
+	public static final String SLACK_REQUEST_ARCHIVED = "exclude_archived";
+	public static final String SLACK_REQUEST_CODE = "code";
+	public static final String SLACK_REQUEST_CLIENT_SEC = "client_secret";
+	public static final String SLACK_REQUEST_CLIENT_ID = "client_id";
 }
