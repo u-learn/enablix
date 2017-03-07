@@ -283,8 +283,9 @@ enablix.studioApp.factory('StateUpdateService',
 	 			});
 	 		};
 	 		
-	 		var goToEditXPlay = function(_playDefId) {
+	 		var goToEditXPlay = function(_playProtoId, _playDefId) {
 	 			$state.go("play.editExecutable", {
+	 				playProtoId: _playProtoId,
 	 				playDefId: _playDefId
 	 			});
 	 		};

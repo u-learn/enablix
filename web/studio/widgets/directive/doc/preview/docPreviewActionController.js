@@ -3,17 +3,17 @@ enablix.studioApp.controller('DocPreviewActionCtrl',
     function ($scope,   $modal,   DocPreviewService,   DocService) {
     
 		$scope.previewSupported = false;
-		$scope.docMetadata = $scope.docMetadata || {};
+		$scope.docMd = $scope.docMetadata || {};
 		
 		var checkPreviewSupported = function() {
-			var previewHandler = DocPreviewService.getPreviewHandler($scope.docMetadata);
+			var previewHandler = DocPreviewService.getPreviewHandler($scope.docMd);
 			$scope.previewSupported = !isNullOrUndefined(previewHandler);
 		}
 		
-		if (!$scope.docMetadata.identity) {
+		if (!$scope.docMd.identity) {
 			
 			DocService.getDocMetadata($scope.docIdentity, function(data) {
-				$scope.docMetadata = data;
+				$scope.docMd = data;
 				checkPreviewSupported();
 			});
 			
@@ -28,7 +28,7 @@ enablix.studioApp.controller('DocPreviewActionCtrl',
 			      controller: 'DocPreviewCtrl',
 			      resolve: {
 			    	  docMetadata: function() {
-			    		  return $scope.docMetadata;
+			    		  return $scope.docMd;
 			    	  }
 			      }
 			    });

@@ -50,11 +50,11 @@ enablix.studioApp.controller('PlayXListCtrl',
 		});
 		
 		$scope.navToPlayDefDetail = function(record) {
-			StateUpdateService.goToEditXPlay(record.id);
+			StateUpdateService.goToEditXPlay(record.playTemplate.prototypeId, record.id);
 		}
 		
 		$scope.navToEditPlayDef = function(record) {
-			StateUpdateService.goToEditXPlay(record.id);
+			StateUpdateService.goToEditXPlay(record.playTemplate.prototypeId, record.id);
 		}
 		
 		$scope.toggleActiveStatus = function(record) {
