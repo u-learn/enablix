@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.enablix.commons.constants.ContentDataConstants;
+import com.enablix.commons.util.StringUtil;
 import com.enablix.core.commons.xsdtopojo.ContentItemClassType;
 import com.enablix.core.commons.xsdtopojo.ContentItemType;
 import com.enablix.core.ui.DisplayField;
@@ -26,7 +27,7 @@ public class DisplayFieldBuilderImpl implements DisplayFieldBuilder {
 		FieldValueBuilder builder = fvBuilderFactory.getBuilder(fieldDef);
 		
 		Object value = getFieldRawValue(fieldDef, contentRec);
-		if (value != null) {
+		if (value != null && StringUtil.isNotStringAndEmpty(value)) {
 			
 			FieldValue fieldVal = builder.build(fieldDef, value, template, ctx);
 			
