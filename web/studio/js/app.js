@@ -647,7 +647,7 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvi
 			}
 		})
 		.state('play.editExecutable', { 
-			url: '/xedit/{playDefId}',
+			url: '/xedit/{playProtoId}/{playDefId}',
 			templateUrl: 'views/play/def/add-edit-xplay.html',
 			controller: 'AddEditXPlayCtrl',
 			resolve: {

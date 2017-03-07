@@ -29,6 +29,9 @@
 			</referenceUserSet>
 		</userGroup>			
 	</userGroups>
+	<!-- empty content group -->
+	<contentGroups allowAdd="true">
+	</contentGroups>
 	<execution>
 		<!-- We will extends and re-use the concepts defined for triggers. The auto-execution 
 			 of a play when an opportunity is created in the system, will not be defined here.

@@ -57,6 +57,10 @@ enablix.studioApp.controller('AddEditXPlayCtrl',
 						};
 					
 					$scope.focusOptions.push(focusOpt);
+					
+					$scope.focusOptions.sort(function(c1, c2) {
+						return c1.label == c2.label ? 0 : (c1.label < c2.label ? -1 : 1);
+					});
 				}
 			});
 
@@ -75,6 +79,7 @@ enablix.studioApp.controller('AddEditXPlayCtrl',
 							break;
 						}
 					}
+					
 				});
 			}
 			

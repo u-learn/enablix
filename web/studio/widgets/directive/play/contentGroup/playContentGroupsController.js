@@ -31,6 +31,16 @@ enablix.studioApp.controller('PlayContentGroupsCtrl',
 			
 			modalInstance.result.then(function(updtContentGroup) {
 				angular.copy(updtContentGroup, record);
+				
+				if (isNullOrUndefined(record.id)) {
+					
+					if (!$scope.contentGroupsDef.contentGroup) {
+						$scope.contentGroupsDef.contentGroup = [];
+					}
+					
+					record.id = generateUID();
+					$scope.contentGroupsDef.contentGroup.push(record)
+				}
 			});
 			
 		};

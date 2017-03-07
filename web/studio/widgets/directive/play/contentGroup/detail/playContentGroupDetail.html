@@ -13,11 +13,11 @@
 	        </div>
 		</div>
 		<div class="cont">
-			<label class="form-label">Group Type</label>
+			<label class="form-label">Group Type [{{contentGroupType}}]</label>
 			<span class="form-label">
 			    <input type="radio" ng-model="contentGroupType" value="contentSet" ng-change="contentGroupTypeChanged()"><span class="radio-label">Content Set</span>
 			</span>
-			<span class="form-label">
+			<span class="form-label" ng-show="singleFocus">
 			    <input type="radio" ng-model="contentGroupType" value="corrContent" ng-change="contentGroupTypeChanged()"><span class="radio-label">Content Correlated to {{focusName}}</span>
 			</span>
 		</div>
@@ -32,7 +32,7 @@
 							table-data="contentSetRecords" row-actions="contentSetTableRecordActions"></ebx-generic-table>
 			</div>
 		</div>
-		<div ng-show="contentGroupType == 'corrContent'">
+		<div ng-show="contentGroupType == 'corrContent'" ng-if="singleFocus">
 			<div class="head ebx-top-border">
 				<i ng-class="isCorrContentCollapsed ? 'fa fa-chevron-right' : 'fa fa-chevron-down'" class="ebx-float-right" 
 							aria-hidden="true" ng-click="isCorrContentCollapsed = !isCorrContentCollapsed"></i>

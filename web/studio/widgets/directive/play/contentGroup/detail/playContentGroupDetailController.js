@@ -9,10 +9,15 @@ enablix.studioApp.controller('PlayContentGroupDetailCtrl',
 		$scope.contentSetRecords = [];
 		
 		$scope.contentGroupType = "contentSet";
+
+		$scope.singleFocus = (focusItems.focusItem && focusItems.focusItem.length == 1);
+		$scope.focusQId = $scope.singleFocus ? focusItems.focusItem[0].qualifiedId : null;
+
 		
-		$scope.focusQId = focusItems.focusItem[0].qualifiedId;
-		var focusContainerDef = ContentTemplateService.getContainerDefinition(enablix.template, $scope.focusQId);
-		$scope.focusName = focusContainerDef.label;
+		if ($scope.singleFocus) {
+			var focusContainerDef = ContentTemplateService.getContainerDefinition(enablix.template, $scope.focusQId);
+			$scope.focusName = focusContainerDef.label;
+		}
 		
 		$scope.masterCorrItemTypes = [];
 		
@@ -46,26 +51,30 @@ enablix.studioApp.controller('PlayContentGroupDetailCtrl',
 			}
 		}
 		
-		CorrelationService.getCorrelatedItemTypeHierarchy($scope.focusQId, function(corrItemTypeHierarchy) {
-				
-				$scope.masterCorrItemTypes = corrItemTypeHierarchy;
-				var selectedCorrItems = null;
-				
-				if ($scope.contentGroup.focusItemCorrelatedContent 
-						&& $scope.contentGroup.focusItemCorrelatedContent.length > 0) {
+		if ($scope.singleFocus) {
+			
+			CorrelationService.getCorrelatedItemTypeHierarchy($scope.focusQId, function(corrItemTypeHierarchy) {
 					
-					selectedCorrItems = $scope.contentGroup.focusItemCorrelatedContent[0].correlatedItem;
+					$scope.masterCorrItemTypes = corrItemTypeHierarchy;
+					var selectedCorrItems = null;
 					
-					if (selectedCorrItems.length > 0) {
-						$scope.contentGroupType = 'corrContent';
-					}
-				} 
-				
-				decorateCorrItems($scope.masterCorrItemTypes, selectedCorrItems);
-				
-			}, function (errorData) {
-				Notification.error({message: "Error retrieving correlation types", delay: enablix.errorMsgShowTime});
-			});
+					if ($scope.contentGroup.focusItemCorrelatedContent 
+							&& $scope.contentGroup.focusItemCorrelatedContent.length > 0) {
+						
+						selectedCorrItems = $scope.contentGroup.focusItemCorrelatedContent[0].correlatedItem;
+						
+						if (selectedCorrItems.length > 0) {
+							$scope.contentGroupType = 'corrContent';
+						}
+					} 
+					
+					decorateCorrItems($scope.masterCorrItemTypes, selectedCorrItems);
+					
+				}, function (errorData) {
+					Notification.error({message: "Error retrieving correlation types", delay: enablix.errorMsgShowTime});
+				});
+		}
+		
 		
 		$scope.deleteContentSetRecord = function(record) {
 			deleteRecordFromScopeContentSet(record);

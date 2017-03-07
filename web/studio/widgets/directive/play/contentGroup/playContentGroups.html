@@ -1,2 +1,6 @@
-	<ebx-generic-table table-headers="tableHeaders" table-data="contentGroupsDef.contentGroup" 
+<div class="head" ng-if="contentGroupsDef.allowAdd">
+	<a ng-click="viewContentGroupDetail({})" class="button button-add" tabindex="0">Add new</a>
+	<h2>&nbsp;</h2>
+</div>
+<ebx-generic-table table-headers="tableHeaders" table-data="contentGroupsDef.contentGroup" 
 						row-actions="tableRecordActions"></ebx-generic-table>

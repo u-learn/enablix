@@ -96,7 +96,7 @@ enablix.studioApp.factory('ContentOperInitService',
 	 			
 	 			_scope.pageHeading = "Edit " + containerLabel;
 	 			
-	 			_scope.containerData = {};
+	 			//_scope.containerData = {};
 	 			
 	 			ContentDataService.getContentRecordData(enablix.templateId, _containerQId, _contentIdentity, null,
 	 					function(data) {

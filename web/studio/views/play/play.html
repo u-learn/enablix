@@ -14,7 +14,7 @@
 		<aside class="col-sm-4 col-md-3">
 			<nav id="side-nav" class="side-nav">
 				<ul>
-					<li ng-repeat="playDef in playDefinitions" ng-class="{active: $stateParams.playDefId == playDef.id}">
+					<li ng-repeat="playDef in playDefinitions" ng-class="{active: $stateParams.playDefId == playDef.id || $stateParams.playProtoId == playDef.id}">
 						<i class="fa fa-angle-right"></i>
 						<a ng-click="navToPlayDefinition(playDef)">{{playDef.playTemplate.name}}</a>
 					</li>

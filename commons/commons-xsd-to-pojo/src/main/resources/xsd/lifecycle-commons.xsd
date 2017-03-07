@@ -323,9 +323,10 @@
 
 	<xs:complexType name="contentGroupsType">
 		<xs:sequence>
-			<xs:element name="contentGroup" type="contentGroupType" maxOccurs="unbounded"/>
+			<xs:element name="contentGroup" type="contentGroupType" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 		<xs:attribute name="label" type="xs:string"/>
+		<xs:attribute name="allowAdd" type="xs:string"/>
 	</xs:complexType>
 	
 	<xs:complexType name="contentGroupType">
