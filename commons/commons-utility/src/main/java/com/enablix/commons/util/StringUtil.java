@@ -17,4 +17,8 @@ public class StringUtil {
 		return null;
 	}
 	
+	public static boolean isNotStringAndEmpty(Object obj) {
+		return !((obj instanceof String) && isEmpty((String) obj));
+	}
+	
 }
