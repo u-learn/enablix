@@ -3,21 +3,25 @@
 	<div class="container-fluid">
 		<eb-portal-breadcrumb></eb-portal-breadcrumb>
 		<div class="row">							
-			<main class="col-md-8">
-				<div ng-repeat="subContainer in subContainerList track by $index" ng-class = "{'subcontainer': subContainerList.length>1}" 
-						ng-if ="subContainer.id != ('null' + $index) && !(subContainerList.length>1 && subContainer.label =='About')">					
+			<main ng-class="subContainerList.length > 1 ? 'col-md-4' : 'col-md-8'">
+				<div ng-repeat="subContainer in subContainerList track by $index" 
+						ng-if ="subContainer.id != ('null' + $index) && ($index % 2 == 0) ">					
 					<eb-portal-sub-container type="{{::subContainer.type}}" sub-container-label="subContainer.label" info="subContainer.records"
 						sub-container-q-id="subContainer.qualifiedId" index="$index" parent-list="subContainerList" multi-list-limit="{{::subCntnrMultiListLimit}}"></eb-portal-sub-container>
 				</div>
 				<eb-content-stack-display ng-if="hasContentStack" container-q-id="containerQId" content-identity="instanceIdentity" container-list="subContainerList"></eb-content-stack-display>
 			</main>
 			
+			<aside class="col-md-4" ng-if="subContainerList.length > 1">
+				<div ng-repeat="subContainer in subContainerList track by $index"
+						ng-if ="subContainer.id != ('null' + $index) && ($index % 2 == 1)">				
+					<eb-portal-sub-container type="{{::subContainer.type}}" sub-container-label="subContainer.label" info="subContainer.records"
+						sub-container-q-id="subContainer.qualifiedId" index="$index" parent-list="subContainerList" multi-list-limit="{{::subCntnrMultiListLimit}}"></eb-portal-sub-container>
+				</div>
+				<eb-content-stack-display ng-if="hasContentStack" container-q-id="containerQId" content-identity="instanceIdentity" container-list="subContainerList"></eb-content-stack-display>
+			</aside>
 			
 			<aside class="col-md-4">
-				<div ng-if = "subContainerList.length > 1 && aboutSubContainer">
-					<eb-portal-sub-container type="single" sub-container-label="aboutSubContainer.label" info="aboutSubContainer.records"
-						sub-container-q-id="aboutSubContainer.qualifiedId"></eb-portal-sub-container>
-				</div>
 				<div ui-view="rightSection">					
 				</div>
 			</aside>

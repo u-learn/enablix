@@ -11,7 +11,7 @@ Array.prototype.contains = function(obj) {
 Array.prototype.remove = function(obj) {
 	var indx = this.indexOf(obj);
 	if (indx != -1) {
-		this.splice(0, 1);
+		this.splice(indx, 1);
 	}
 }
 
