@@ -308,32 +308,16 @@ enablix.studioApp.factory('StateUpdateService',
 	 			});
 	 		};
 	 		
-	 		var goToContentKitList = function() {
-	 			$state.go("contentkit.list");
+	 		
+	 		var goToReports = function() {
+	 			$state.go("reports");
 	 		};
 	 		
-	 		var goToContentKitEdit = function(_contentKitIdentity) {
-	 			$state.go("contentkit.edit", {
-	 				contentKitIdentity: _contentKitIdentity
+	 		var goToReportDetail = function(_reportId) {
+	 			$state.go("reports.detail", {
+	 				reportId: _reportId
 	 			});
-	 		};
-	 		
-	 		var goToContentKitDetail = function(_contentKitIdentity) {
-	 			$state.go("contentkit.detail", {
-	 				contentKitIdentity: _contentKitIdentity
-	 			});
-	 		};
-	 		
-	 		var goToAddContentConnKit = function() {
-	 			$state.go("contentkit.add");
-	 		};
-	 		
-	 		var goToPortalContentKitDetail = function(_contentKitIdentity) {
-	 			$state.go("portal.contentkit", {
-	 				contentKitIdentity: _contentKitIdentity
-	 			});
-	 		};
-
+	 		}
 	 		
 	 		return {
 	 			goToApp: goToApp,
@@ -387,11 +371,8 @@ enablix.studioApp.factory('StateUpdateService',
 	 			goToRecentUpdateList : goToRecentUpdateList,
 				goToSlackDtls : goToSlackDtls,
 	 			goToSlackAuth : goToSlackAuth,
-	 			goToContentKitList : goToContentKitList,
-	 			goToContentKitDetail : goToContentKitDetail,
-	 			goToContentKitEdit : goToContentKitEdit,
-	 			goToAddContentConnKit : goToAddContentConnKit,
-	 			goToPortalContentKitDetail : goToPortalContentKitDetail
+	 			goToReports : goToReports,
+	 			goToReportDetail : goToReportDetail
 	 		};
 	 	}
 	 ]);

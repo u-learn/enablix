@@ -9,6 +9,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Field;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.util.Assert;
 
 import com.enablix.commons.util.StringUtil;
@@ -86,6 +87,10 @@ public abstract class BaseDao {
 				: mongoTemplate.find(query, findType, collectionName);
 
 		return new PageImpl<>(content, pageable, count);
+	}
+	
+	public void updateMulti(Query query, Update update, Class<?> entityClass) {
+		getMongoTemplate().updateMulti(query, update, entityClass);
 	}
 	
 }

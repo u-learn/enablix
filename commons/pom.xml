@@ -32,5 +32,7 @@
 	<module>manage-play-lifecycle</module>
 	<module>resource-versioning</module>
 	<module>slack-integration</module>
+	<module>condition-evaluator</module>
+	<module>commons-scheduler</module>
   </modules>
 </project>

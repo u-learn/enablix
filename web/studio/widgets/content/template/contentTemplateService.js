@@ -5,6 +5,7 @@ enablix.studioApp.factory('ContentTemplateService',
 			var CACHE_KEY_REF_DATA_CONTAINERS = "content.template.refdata.containers";
 			var CACHE_KEY_BUS_CAT_CONTAINERS_PREFIX = "content.template.business.category.";
 			var CACHE_KEY_CONTENT_CONN_CONTEXT_CONTAINER = "content.template.conn.context.containers";
+			var CACHE_KEY_CONTAINER_DEF_PREFIX = "content.template.containerdef.";
 		
 			var loadTemplate = function() {
 				
@@ -75,33 +76,41 @@ enablix.studioApp.factory('ContentTemplateService',
 
 			var getContainerDefinition = function(_template, _elementQId) {
 				
-				var elemDataDef = undefined;
-				var elemQIdArr = _elementQId.split("\.");
+				var cacheKey = CACHE_KEY_CONTAINER_DEF_PREFIX + _elementQId;
 				
-				var containers = _template.dataDefinition.container;
-
-				for (var k = 0; k < elemQIdArr.length; k++) {
+				var elemDataDef = CacheService.get(cacheKey);
+				
+				if (isNullOrUndefined(elemDataDef)) {
 					
-					var nextCntnrId = elemQIdArr[k];
-					var matchFound = false;
+					var elemQIdArr = _elementQId.split("\.");
 					
-					// find the container Data definition
-					for (var i = 0; i < containers.length; i++) {
+					var containers = _template.dataDefinition.container;
 	
-						var currCntnr = containers[i];
+					for (var k = 0; k < elemQIdArr.length; k++) {
 						
-						if (currCntnr.id == nextCntnrId) {
-							matchFound = true;
-							elemDataDef = currCntnr;
-							containers = currCntnr.container;
-							break;
+						var nextCntnrId = elemQIdArr[k];
+						var matchFound = false;
+						
+						// find the container Data definition
+						for (var i = 0; i < containers.length; i++) {
+		
+							var currCntnr = containers[i];
+							
+							if (currCntnr.id == nextCntnrId) {
+								matchFound = true;
+								elemDataDef = currCntnr;
+								containers = currCntnr.container;
+								break;
+							}
+							
+							if (!matchFound) {
+								elemDataDef = undefined;
+							}
+							
 						}
-						
-						if (!matchFound) {
-							elemDataDef = undefined;
-						}
-						
 					}
+				
+					CacheService.put(cacheKey, elemDataDef);
 				}
 				
 				return elemDataDef;
@@ -123,7 +132,7 @@ enablix.studioApp.factory('ContentTemplateService',
 				
 				var containerDef = getContainerDefinition(enablix.template, _containerQId);
 				
-				if (isLinkedContainer(containerDef)) {
+				if (!isNullOrUndefined(containerDef) && isLinkedContainer(containerDef)) {
 					containerDef = getContainerDefinition(enablix.template, containerDef.linkContainerQId);
 				}
 				

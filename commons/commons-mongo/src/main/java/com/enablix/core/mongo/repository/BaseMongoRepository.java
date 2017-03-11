@@ -16,4 +16,6 @@ public interface BaseMongoRepository<T extends BaseEntity> extends MongoReposito
 	
 	List<T> removeByIdentity(String identity);
 	
+	List<T> findByIdentityIn(List<String> identity);
+	
 }

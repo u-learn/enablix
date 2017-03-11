@@ -2,7 +2,9 @@ var enablix = enablix || {};
 enablix.studioApp = angular.module("studio", ['ui.router', 'angularTreeview', 'listGroupTreeview', 
            'angularFileUpload', 'ui.bootstrap', 'isteven-multi-select', 'ui-notification', 'enablixFilters',
            'ngSanitize', 'ui.select', 'ngMessages', 'pascalprecht.translate', 'noCAPTCHA', 'PubSub', 
-           'ngMaterial', 'ngLoadingSpinner', 'ngQuill'/*, 'digestHud'*/]);
+           'ngMaterial', 'ngLoadingSpinner', 'ngQuill', 'heatmap' /*, 'digestHud'*/]);
+
+enablix.reports = [];
 
 /*
 enablix.studioApp.config(['digestHudProvider', function(digestHudProvider) {
@@ -658,6 +660,22 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvi
 			url: '/rlist/{playDefId}', // list of play run instances created from an executable play for the given playDefId
 			templateUrl: 'views/play/def/play-rlist.html',
 			controller: 'PlayRListCtrl',
+			resolve: {
+				setupData: appSetup
+			}
+		})
+		.state('reports', {
+			url: '/reports',
+			templateUrl: 'views/reports/reports.html',
+			controller: 'ReportsMainController',
+			resolve: {
+				setupData: appSetup
+			}
+		})
+		.state('reports.detail', {
+			url: '/d/{reportId}',
+			templateUrl: 'views/reports/report-detail.html',
+			controller: 'ReportDetailCtrl',
 			resolve: {
 				setupData: appSetup
 			}

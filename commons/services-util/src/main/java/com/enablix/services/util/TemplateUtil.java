@@ -434,5 +434,26 @@ public class TemplateUtil {
 		}
 		return null;
 	}
+
+
+	public static boolean hasContentStackItem(ContainerType containerType) {
+		for (ContentItemType itemType : containerType.getContentItem()) {
+			if (itemType.getType() == ContentItemClassType.CONTENT_STACK) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+
+	public static List<ContentItemType> getContentStackItems(ContainerType containerType) {
+		List<ContentItemType> contentStackItems = new ArrayList<>();
+		for (ContentItemType itemType : containerType.getContentItem()) {
+			if (itemType.getType() == ContentItemClassType.CONTENT_STACK) {
+				contentStackItems.add(itemType);
+			}
+		}
+		return contentStackItems;
+	}
 	
 }

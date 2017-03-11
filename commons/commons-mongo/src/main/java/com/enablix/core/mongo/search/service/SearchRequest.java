@@ -21,6 +21,7 @@ import com.enablix.core.mongo.search.ConditionOperator;
 import com.enablix.core.mongo.search.DateFilter;
 import com.enablix.core.mongo.search.SearchFilter;
 import com.enablix.core.mongo.search.StringFilter;
+import com.enablix.core.mongo.search.StringListFilter;
 import com.enablix.core.mongo.search.service.SearchRequest.DateFilterConfig.ValueType;
 
 public class SearchRequest {
@@ -107,6 +108,7 @@ public class SearchRequest {
 			this.dateFilter = dateFilter;
 		}
 
+		@SuppressWarnings("unchecked")
 		public SearchFilter buildSearchFilter(Object filterValue) {
 			
 			SearchFilter filter = null;
@@ -125,6 +127,12 @@ public class SearchRequest {
 					break;
 					
 				case STRING:
+					
+					if (filterValue instanceof List) {
+						filter = new StringListFilter(field, (List<String>) filterValue, operator);
+						break;
+					}
+					
 				default:
 					filter = new StringFilter(field, String.valueOf(filterValue), operator);
 					break;

@@ -217,7 +217,7 @@ public class ContentDataManagerImpl implements ContentDataManager {
 			contentQId = linkedContainerQId;
 		}
 		
-		String collName = TemplateUtil.resolveCollectionName(template, contentQId);
+		String collName = templateWrapper.getCollectionName(contentQId);
 		String qIdRelativeToParent = TemplateUtil.getQIdRelativeToParentContainer(template, contentQId);
 		
 		if (!StringUtil.isEmpty(linkedContainerQId)) {

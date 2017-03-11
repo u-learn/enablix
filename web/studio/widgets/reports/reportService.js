@@ -1,0 +1,157 @@
+enablix.studioApp.factory('ReportService', 
+	[	        '$q', '$filter', 'RESTService', 'Notification', 'StateUpdateService', 'DataSearchService', 'ContentTemplateService', 
+	 	function($q,   $filter,   RESTService,   Notification,   StateUpdateService,   DataSearchService,   ContentTemplateService) {
+
+			/** ----------------------------------------- Report Definitions start -----------------------------------------**/
+		
+			/** ========================================= Content Coverage Report ======================================= **/
+			var contentCoverageReport = {
+					id: "content-coverage-report",
+					name: "Content Coverage Report",
+					heading: "Content Coverage Report",
+					type: "HEATMAP",
+					options: {
+								margin: { top: 150, right: 0, bottom: 70, left: 120 },
+								colors: [/*"#f7fbff", */"#deebf7", /*"#c6dbef", */"#9ecae1", /*"#6baed6", */"#4292c6", /*"#2171b5", */"#08519c", /*"#08306b"*/],
+								customColors : { "0": "#f58080"},
+								buckets: 4,
+								valueText: true,
+								categorize: true
+							 },
+					init: function($scope) { },
+					filterMetadata: {
+						"latest" : {
+		 					"field" : "latest",
+		 					"operator" : "EQ",
+		 					"dataType" : "BOOL"
+		 				},
+		 				"contentQIdIn" : {
+		 					"field" : "contentQId",
+		 					"operator" : "IN",
+		 					"dataType" : "STRING"
+		 				}
+					},
+					filters: 
+						[{
+							id: "contentQIdIn",
+							type: "multi-select",
+							name: "Business Dimensions",
+							masterList: function() { // This must return a promise
+								var businessDimensionContainers = ContentTemplateService.getContainersByBusinessCategory("BUSINESS_DIMENSION");
+								var contentTypeList = [];
+								
+								angular.forEach(businessDimensionContainers, function(cont) {
+									contentTypeList.push({
+										id: cont.qualifiedId,
+										label: cont.label
+									});
+								});
+								
+								var deferred = $q.defer();
+								deferred.resolve(contentTypeList);
+								
+								return deferred.promise;
+							},
+							filterValueTransformer: function(_selectedValues) {
+								
+								var returnVal = [];
+								
+								angular.forEach(_selectedValues, function(val) {
+									returnVal.push(val.id);
+								});
+								
+								return returnVal;
+							},
+							defaultValue: function() {
+								
+								var businessDimensionContainers = ContentTemplateService.getContainersByBusinessCategory("BUSINESS_DIMENSION");
+								var contentTypeList = [];
+								
+								angular.forEach(businessDimensionContainers, function(cont) {
+									contentTypeList.push({
+										id: cont.qualifiedId,
+										label: cont.label
+									});
+								});
+								
+								return contentTypeList;
+							}
+						}],
+					dataTransformer: function(_data) {
+						
+						var reportData = [];
+						
+						// change heading
+						if (_data.length > 0) {
+							this.heading = this.name + " ( As of " + $filter('ebDate')(_data[0].asOfDate) + ")";
+						}
+						
+						angular.forEach(_data, function(dataRecord) {
+							
+							var recCategory = ContentTemplateService.getContainerLabel(dataRecord.contentQId);
+							
+							angular.forEach(dataRecord.stats, function(stat) {
+								
+								var contDef = ContentTemplateService.getConcreteContainerDefinition(enablix.template, stat.itemId);
+								
+								if (!isNullOrUndefined(contDef)) {
+									reportData.push({
+										y: dataRecord.recordTitle,
+										x: contDef.label,
+										value: stat.count,
+										category: recCategory
+									});
+								}
+								
+							})
+							
+						});
+						
+						return reportData;
+					},
+					fetchData: function(_dataFilters, _onSuccess, _onError) {
+						
+						var CONTENT_COVERAGE_DOMAIN = "com.enablix.core.domain.content.summary.ContentCoverage";
+						
+						var searchFilters = _dataFilters || {};
+						searchFilters.latest = true;
+						
+						DataSearchService.getSearchResult(CONTENT_COVERAGE_DOMAIN, searchFilters, null, 
+									this.filterMetadata, _onSuccess, _onError)
+					} 
+			};
+			
+			enablix.reports.push(contentCoverageReport);
+			
+			/** =========================================== Content coverage report end ================================= **/
+			
+			
+		
+			/** ------------------------------------------ Report Definitions end here ------------------------------------------**/
+			
+			
+			
+			var getReportDefinitions = function() {
+				return enablix.reports;
+			};
+			
+			
+			var getReportDef = function(_reportId) {
+				
+				var reportDefs = getReportDefinitions();
+				
+				for (var i in reportDefs) {
+					if (reportDefs[i].id == _reportId) {
+						return reportDefs[i];
+					}
+				}
+				
+				return null;
+			}
+		
+			return {
+				getReportDefinitions: getReportDefinitions,
+				getReportDef: getReportDef
+			};
+	 	}
+	]);

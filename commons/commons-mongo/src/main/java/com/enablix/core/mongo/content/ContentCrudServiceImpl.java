@@ -303,6 +303,13 @@ public class ContentCrudServiceImpl implements ContentCrudService {
 		Query query = Query.query(Criteria.where(linkContentItemId + ".id").is(linkContainerIdentity));
 		return findRecords(query, collectionName, pageable);
 	}
+
+	@Override
+	public long findRecordCountWithLinkContainerId(String collectionName, String linkContentItemId, String linkContainerIdentity) {
+		Query query = Query.query(Criteria.where(linkContentItemId + ".id").is(linkContainerIdentity));
+		return mongoTemplate.count(query, collectionName);
+	}
+	
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private Page<Map<String, Object>> findRecords(Query query, String collectionName, Pageable pageable) {
@@ -330,7 +337,26 @@ public class ContentCrudServiceImpl implements ContentCrudService {
 		mongoTemplate.updateMulti(query, set, collectionName);
 		
 	}
+	
+	@Override
+	public void updateContentStackLabel(String collectionName, String contentStackAttrId, String contentIdentity,
+			String newContentLabel) {
+		
+		Query query = Query.query(Criteria.where(contentStackAttrId + ".identity").is(contentIdentity));
+		
+		String setId = contentStackAttrId + "." + ARR_POSITIONAL_OP + ".label";
+		Update set = new Update().set(setId, newContentLabel);
+		mongoTemplate.updateMulti(query, set, collectionName);
+		
+	}
 
+	@Override
+	public void deleteContentStackItem(String collectionName, String contentStackAttrId, String contentIdentity) {
+		Query query = Query.query(new Criteria());
+		Update pull = new Update().pull(contentStackAttrId, Collections.singletonMap("identity", contentIdentity));
+		mongoTemplate.updateMulti(query, pull, collectionName);
+	}
+	
 	@Override
 	public void deleteBoundedItem(String collectionName, String boundedAttrId, String boundedAttrIdValue) {
 		Query query = Query.query(new Criteria());
@@ -373,6 +399,17 @@ public class ContentCrudServiceImpl implements ContentCrudService {
 		
 		childElements = childElements.subList(startFrom, endAt);
 		return new PageImpl<>(childElements, pageable, childElements.size());
+	}
+
+	@Override
+	public long findRecordCountWithParentId(String collName, String recordIdentity) {
+		Query query = Query.query(createParentCriteria(recordIdentity));
+		return mongoTemplate.count(query, collName);
+	}
+
+	@Override
+	public long findChildElementsCount(String collName, String qIdRelativeToParent, String parentIdentity) {
+		return findChildElements(collName, qIdRelativeToParent, parentIdentity).size();
 	}
 	
 }

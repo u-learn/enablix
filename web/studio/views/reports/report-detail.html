@@ -1,0 +1,11 @@
+<div class="block">
+	<div class="head">
+		<h2>{{reportDef.heading}}</h2>
+	</div>
+	<div class="data-filter-cont" ng-if="reportDef.filters">
+		<ebx-data-filters heading="Filter Data" filters="reportDef.filters" filter-values="reportFilterValues" on-search="onReportSearch"/>
+	</div>
+	<div class="cont" ng-if="reportDef.type == 'HEATMAP'">
+		<heatmap class="hm-chart" data="data" dispatch="$parent.dispatch" options="reportDef.options"></heatmap>
+	</div>
+</div>

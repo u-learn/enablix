@@ -197,6 +197,10 @@ public final class CollectionUtil {
 
 		return result;
 	}
+	
+	public static boolean isCollectionAndEmpty(Object obj) {
+		return (obj instanceof Collection) && isEmpty((Collection<?>) obj);
+	}
 
 	/**
 	 * Converts a collection of specific type to an array of same type. It returns null if collection is null or empty or all elements in collection are null.

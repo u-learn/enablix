@@ -21,4 +21,9 @@ public class StringUtil {
 		return !((obj instanceof String) && isEmpty((String) obj));
 	}
 	
+	
+	public static boolean isStringAndEmpty(Object obj) {
+		return ((obj instanceof String) && isEmpty((String) obj));
+	}
+	
 }

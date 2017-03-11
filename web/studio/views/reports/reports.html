@@ -1,0 +1,28 @@
+<div class="container-fluid">
+	<!-- bread crumbs -->
+	<div class="bread-crumbs">
+		<div class="cont">
+			<span ng-repeat="breadcrumbItem in breadcrumbList track by $index">
+				<span ng-if="$last">{{breadcrumbItem.label}}</span>
+				<a ng-if="!$last">{{breadcrumbItem.label}}</a>&nbsp;&nbsp;<i ng-if="!$last" class="fa fa-angle-right"></i>
+			</span>
+		</div>
+	</div>
+	<!--/ bread crumbs -->
+
+	<div class="row">
+		<aside class="col-sm-4 col-md-3">
+			<nav id="side-nav" class="side-nav">
+				<ul>
+					<li ng-repeat="reportDef in reportDefinitions" ng-class="{active: $stateParams.reportId == reportDef.id}">
+						<i class="fa fa-angle-right"></i>
+						<a ng-click="navToReport(reportDef)">{{reportDef.name}}</a>
+					</li>
+				</ul>
+		    </nav>
+		</aside>
+		<div class="col-sm-9">
+			<div ui-view></div>
+		</div>
+	</div>
+</div>

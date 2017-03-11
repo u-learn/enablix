@@ -66,5 +66,17 @@ public interface ContentCrudService {
 
 	Page<Map<String, Object>> findChildElements(String collName, String qIdRelativeToParent,
 			String parentRecordIdentity, Pageable pageable);
-	
+
+	long findRecordCountWithLinkContainerId(String collectionName, String linkContentItemId,
+			String linkContainerIdentity);
+
+	long findRecordCountWithParentId(String collName, String recordIdentity);
+
+	long findChildElementsCount(String collName, String qIdRelativeToParent, String recordIdentity);
+
+	void updateContentStackLabel(String collectionName, String contentStackAttrId, String contentIdentity,
+			String newContentLabel);
+
+	void deleteContentStackItem(String collectionName, String contentStackAttrId, String contentIdentity);
+
 }

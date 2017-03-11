@@ -20,7 +20,7 @@
 	<!-- <link rel="stylesheet" type="text/css" href="css/listGroupTreeview.css"> -->
 	<link rel="stylesheet" type="text/css" href="css/angular-ui-notification.min.css">
 	<link rel="stylesheet" type="text/css" href="css/select.css">
-	<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
+	<link rel="stylesheet" href="css/angular-material.min.css">
 	<link rel="stylesheet" href="//cdn.quilljs.com/1.1.5/quill.snow.css">
 	<link rel="stylesheet" href="//cdn.quilljs.com/1.1.5/quill.bubble.css">
 	<link rel="stylesheet" type="text/css" href="css/main.css">
@@ -29,7 +29,7 @@
 	<script type="text/javascript" src="js/vendor/bootstrap/bootstrap.min.js"></script>
 	
 	<!-- angular scripts -->
-	<script type="text/javascript" src="js/vendor/angular/angular.js"></script>
+	<script type="text/javascript" src="js/vendor/angular/angular.min.js"></script>
 	<script type="text/javascript" src="js/vendor/angular/angular-animate.min.js"></script>
 	<script type="text/javascript" src="js/vendor/angular/angular-aria.min.js"></script>
 	<script type="text/javascript" src="js/vendor/angular/angular-resource.min.js"></script>
@@ -55,6 +55,8 @@
 	<script type="text/javascript" src="//cdn.quilljs.com/1.1.5/quill.js"></script>
 	<script type="text/javascript" src="js/vendor/ng-quill-3.0.0/ng-quill.js"></script>
 	<script type="text/javascript" src="js/vendor/angular/digest-hud.js"></script>
+	<script type="text/javascript" src="//d3js.org/d3.v3.js"></script>
+	<script type="text/javascript" src="js/vendor/charts/heatmap.js"></script>
 	
 	<!-- application scripts -->
 	<script type="text/javascript" src="js/common/utility.js"></script>
@@ -146,7 +148,8 @@
 	<script type="text/javascript" src="widgets/directive/content/browser/systemContentBrowser.js"></script>
 	<script type="text/javascript" src="widgets/directive/browser/genericListBrowser.js"></script>
 	<script type="text/javascript" src="widgets/directive/browser/genericListBrowserCtrl.js"></script>
-	<script type="text/javascript" src="widgets/directive/contentkit/linkedKitsDirective.js"></script>
+	<script type="text/javascript" src="widgets/directive/dataFilter/dataFiltersDirective.js"></script>
+	<script type="text/javascript" src="widgets/directive/dataFilter/multiselect/multiSelectFilterDirective.js"></script>
 	
 	<script type="text/javascript" src="widgets/stateUpdateService.js"></script>
 	<script type="text/javascript" src="widgets/content/template/contentTemplateService.js"></script>
@@ -220,6 +223,10 @@
 	<script type="text/javascript" src="widgets/account/slack/slackAuthController.js"></script>
 	<script type="text/javascript" src="widgets/account/slack/slackDtlsController.js"></script>
 	<script type="text/javascript" src="widgets/directive/portal/sharePopup/shareSlack/shareToSlack.js"></script>
+	
+	<script type="text/javascript" src="widgets/reports/reportsMainController.js"></script>
+	<script type="text/javascript" src="widgets/reports/reportDetailController.js"></script>
+	<script type="text/javascript" src="widgets/reports/reportService.js"></script>
 
 </head>
 
@@ -246,7 +253,7 @@
 				<nav class="main-nav container-fluid">
 					<a href="#" ng-class="{active:$state.includes('portal')}" ui-sref="portal.home">Portal</a>
 					<li requires-permission="VIEW_STUDIO">
-						<a href="#" ng-class="{active:$state.includes('studio') || $state.includes('play')  || $state.includes('contentkit')}">Studio&nbsp;<i class="fa fa-angle-down"></i></a>
+						<a href="#" ng-class="{active:$state.includes('studio') || $state.includes('play')}">Studio&nbsp;<i class="fa fa-angle-down"></i></a>
 						<ul class="main-nav-secondary">
 							<li><a ui-sref="studio({studioName: 'content'})">Content Manager</a></li>
 							<li><a ui-sref="play" requires-permission="MANAGE_PLAYS">PlayMaker</a></li>
@@ -261,6 +268,7 @@
 							<li><a ui-sref="system.users.list">System Admin</a></li>
 						</ul>
 					</li>
+					<a requires-permission="VIEW_REPORTS" href="#" ng-class="{active:$state.includes('reports')}" ui-sref="reports">Reports</a>
 					<li>
 						<a title="My Account" ui-sref="myaccount.contentrequestlist"><i class="fa fa-user fa-lg"></i></a>
 						<i></i>
