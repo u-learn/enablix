@@ -69,6 +69,8 @@ public class ContentCoverageCalculator implements Task {
 		
 		final Date currentDate = Calendar.getInstance().getTime();
 		
+		LOGGER.info("Running content coverage task at [{}]", currentDate);
+		
 		final String templateId = ProcessContext.get().getTemplateId();
 		final TemplateWrapper template = templateManager.getTemplateWrapper(templateId);
 
@@ -126,7 +128,6 @@ public class ContentCoverageCalculator implements Task {
 						contentCoverage.addCoverageStat(subContainer.getQualifiedId(), count);
 					}
 					
-					LOGGER.debug("Content Coverage = {}", contentCoverage);
 					contentCoverageRepo.save(contentCoverage);
 				}
 			}
