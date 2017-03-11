@@ -70,6 +70,17 @@ angular.module("heatmap", []).directive("heatmap",
 				}
 				
 				setupTooltip();
+
+				var getCategory = function(d) {
+
+					var dc = "All";
+						
+					if (options.categorize) {
+						dc = d.category ? d.category : "Others";
+					}
+
+					return dc;
+				}
 				
 				var render = function() {
 
@@ -90,18 +101,15 @@ angular.module("heatmap", []).directive("heatmap",
 					var x = [];
 					var yu = {};
 					var y = [];
+					var yc = [];
 					
 					var categories = [];
 					var categoryInfo = {}; // order map with values starting for 1 when data needs to be categorized
 					
 					for (var i = 0; i < scope.data.length; i++) {
 						
-						var dc = "All";
-						
-						if (options.categorize) {
-							dc = scope.data[i].category ? scope.data[i].category : "Others";
-						}
-						
+						var dc = getCategory(scope.data[i]);
+												
 						if (typeof(categoryInfo[dc]) == "undefined") {
 							categories.push(dc);
 							categoryInfo[dc] = {
@@ -113,18 +121,22 @@ angular.module("heatmap", []).directive("heatmap",
 							x.push(scope.data[i].x);
 						}
 						xu[scope.data[i].x] = 0;
-						if (typeof(yu[scope.data[i].y]) == "undefined") {
+						if (typeof(yu[dc + "-" + scope.data[i].y]) == "undefined") {
 							categoryInfo[dc].yLabels.push(scope.data[i].y);
 						}
-						yu[scope.data[i].y] = 0;
+						yu[dc + "-" + scope.data[i].y] = 0;
 						
 					}
 					
 					// populate y axis labels
 					if (categories.length == 1) {
 						// if there is only one category, then do not show category label
-						y = categoryInfo[categories[0]].yLabels; //.sort();
-						
+						var ct = categories[0];
+						y = categoryInfo[ct].yLabels; //.sort();
+						for (var yi = 0; yi < y.length; yi++) {
+							yc.push(ct + "-" + y[yi]);
+						}
+					
 					} else {
 						
 						// categories.sort();
@@ -132,10 +144,12 @@ angular.module("heatmap", []).directive("heatmap",
 						for (var c = 0; c < categories.length; c++) {
 							var dc = categories[c];
 							y.push(dc);
-							
+							yc.push("category-" + dc);
+
 							var categoryYs = categoryInfo[dc].yLabels; //.sort();
 							for (var cy = 0; cy < categoryYs.length; cy++) {
 								y.push(categoryYs[cy]);
+								yc.push(dc + "-" + categoryYs[cy]);
 							}
 						}
 					}
@@ -145,7 +159,7 @@ angular.module("heatmap", []).directive("heatmap",
 					// populate x and y index on data
 					for (var d = 0; d < scope.data.length; d++) {
 						scope.data[d].xIndex = x.indexOf(scope.data[d].x);
-						scope.data[d].yIndex = y.indexOf(scope.data[d].y);
+						scope.data[d].yIndex = yc.indexOf(getCategory(scope.data[d]) + "-" + scope.data[d].y);
 					}
 
 					var xGridSize = Math.floor(width / x.length);
@@ -308,8 +322,3 @@ angular.module("heatmap", []).directive("heatmap",
 		}
 	}
 );
-
-
-
-
-
