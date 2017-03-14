@@ -89,10 +89,52 @@ enablix.studioApp.factory('ReportService',
 								
 								return contentTypeList;
 							}
+						},
+						{
+							id: "contentTypes",
+							type: "multi-select",
+							name: "Content Type",
+							masterList: function() { // This must return a promise
+								var contentTypeContainers = ContentTemplateService.getContainersByBusinessCategory("BUSINESS_CONTENT");
+								var contentTypeList = [];
+								
+								angular.forEach(contentTypeContainers, function(cont) {
+									contentTypeList.push({
+										id: cont.qualifiedId,
+										label: cont.label
+									});
+								});
+								
+								contentTypeList.sort(sortByLabelProp);
+								
+								var deferred = $q.defer();
+								deferred.resolve(contentTypeList);
+								
+								return deferred.promise;
+							},
+							filterValueTransformer: function(_selectedValues) {
+								// this will be a client side filtering, so do not send any value to server
+								return null;
+							},
+							defaultValue: function() {
+								// nothing selected by default
+								return [];
+							}
 						}],
-					dataTransformer: function(_data) {
+					dataTransformer: function(_data, _filterValues) {
 						
 						var reportData = [];
+						var reportDef = this;
+						
+						this.options.restrictedXLabels = [];
+						
+						if (_filterValues.contentTypes && _filterValues.contentTypes.length > 0) {
+							var restrictedXLabels = [];
+							angular.forEach(_filterValues.contentTypes, function(contTypeVal) {
+								restrictedXLabels.push(contTypeVal.label);
+							});
+							this.options.restrictedXLabels = restrictedXLabels;
+						}
 						
 						// change heading
 						if (_data.length > 0) {
@@ -107,7 +149,9 @@ enablix.studioApp.factory('ReportService',
 								
 								var contDef = ContentTemplateService.getConcreteContainerDefinition(enablix.template, stat.itemId);
 								
-								if (!isNullOrUndefined(contDef)) {
+								if (!isNullOrUndefined(contDef) && // below check is to remove data items which do not belong to selected content type
+										(!reportDef.options.restrictedXLabels || reportDef.options.restrictedXLabels.length == 0
+												|| reportDef.options.restrictedXLabels.indexOf(contDef.label) > -1)) {
 									// x, y, value, category are required for the heatmap chart to display
 									reportData.push({
 										y: dataRecord.recordTitle,

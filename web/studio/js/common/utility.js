@@ -40,6 +40,21 @@ var isStringAndEmpty = function(obj) {
 	return isString(obj) && obj.trim().length == 0;
 }
 
+var removeNullProperties = function(obj) {
+	
+	var removeProps = [];
+	
+	angular.forEach(obj, function(value, key) {
+		if (isNullOrUndefined(value)) {
+			removeProps.push(key);
+		}
+	});
+	
+	angular.forEach(removeProps, function(prop) {
+		delete obj[prop];
+	});
+}
+
 function linkify(text) {
     var urlRegex =/(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
     return text.replace(urlRegex, function(url) {
@@ -79,6 +94,11 @@ function subtractDaysFromDate(_date, _noOfDays) {
 	newDate.setTime(_date.getTime() - noOfDaysInMilliseconds);
 	
 	return newDate;
+}
+
+
+function sortByLabelProp(c1, c2) {
+	return c1.label == c2.label ? 0 : (c1.label < c2.label ? -1 : 1);
 }
 
 function isDateObject(_obj) {

@@ -31,7 +31,8 @@ angular.module("heatmap", []).directive("heatmap",
 					legendWidth: 0.3,
 					breaks: null,
 					valueText: true,
-					categorize: false
+					categorize: false,
+					restrictedXLabels: []
 				};
 
 				if (scope.options) {
@@ -129,6 +130,10 @@ angular.module("heatmap", []).directive("heatmap",
 						yu[dc + "-" + scope.data[i].y] = 0;
 						
 					}
+			
+					if (scope.options.restrictedXLabels && scope.options.restrictedXLabels.length > 0) {
+						x = scope.options.restrictedXLabels;
+					}
 					
 					// populate y axis labels
 					if (categories.length == 1 && categories[0] === 'All') {
@@ -156,7 +161,7 @@ angular.module("heatmap", []).directive("heatmap",
 						}
 					}
 					
-					x.sort();
+					//x.sort();
 					
 					// populate x and y index on data
 					for (var d = 0; d < scope.data.length; d++) {
@@ -165,6 +170,8 @@ angular.module("heatmap", []).directive("heatmap",
 					}
 
 					var xGridSize = Math.floor(width / x.length);
+					xGridSize = Math.min(xGridSize, 60);
+					
 					var yGridSize = Math.floor(height / y.length);
 					
 					yGridSize = Math.min(yGridSize, 30);
@@ -221,7 +228,7 @@ angular.module("heatmap", []).directive("heatmap",
 							.on("mousemove", function(d) { scope.dispatch.mousemove(d); });
 					
 					var rects = cardsG.append("rect")
-						.filter(function(d) { return d.value != null })
+						.filter(function(d) { return d.value != null && d.xIndex >= 0 && d.yIndex >= 0; })
 						.attr("x", function(d) { return d.xIndex * xGridSize; })
 						.attr("y", function(d) { return d.yIndex * yGridSize; })
 						.attr("class", "hm-square")

@@ -8,6 +8,10 @@ enablix.studioApp.controller('ReportDetailCtrl',
 		
 		var fetchReportData = function(_filterValues) {
 			
+			// remove search keys with null values as those get treated as null value on back end
+			removeNullProperties(_filterValues);
+			
+			// now run the query
 			$scope.reportDef.fetchData(_filterValues, function(data) {
 				
 				$scope.data = data;
@@ -17,7 +21,7 @@ enablix.studioApp.controller('ReportDetailCtrl',
 				}
 				
 				if ($scope.reportDef.dataTransformer) {
-					$scope.data = $scope.reportDef.dataTransformer($scope.data);
+					$scope.data = $scope.reportDef.dataTransformer($scope.data, $scope.reportFilterValues);
 				}
 				
 			}, function(errorData) {
