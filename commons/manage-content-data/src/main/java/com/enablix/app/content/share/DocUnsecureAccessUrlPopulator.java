@@ -17,7 +17,7 @@ public class DocUnsecureAccessUrlPopulator {
 	@Autowired
 	private SharedContentUrlCreator urlCreator;
 	
-	public void process(DisplayableContent content, String sharedWithEmail) {
+	public void populateUnsecureUrl(DisplayableContent content, String sharedWithEmail) {
 		
 		DocRef contentDoc = content.getDoc();
 		
@@ -29,8 +29,20 @@ public class DocUnsecureAccessUrlPopulator {
 		
 	}
 	
-	private String getActualDocDownloadUrl(String docIdentity) {
+	public String getActualDocDownloadUrl(String docIdentity) {
 		return docDownloadUrl.replaceAll(":docIdentity", docIdentity);
 	}
 	
+	
+	public void populateSecureUrl(DisplayableContent content) {
+		
+		DocRef contentDoc = content.getDoc();
+		
+		if (contentDoc != null) {
+			String shareableUrl = getActualDocDownloadUrl(contentDoc.getDocIdentity());
+			contentDoc.setAccessUrl(EnvPropertiesUtil.getProperties().getServerUrl() + shareableUrl);
+		}
+		
+	}
+
 }

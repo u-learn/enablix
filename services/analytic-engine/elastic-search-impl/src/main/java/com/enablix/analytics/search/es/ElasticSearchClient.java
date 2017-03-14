@@ -12,6 +12,7 @@ import org.elasticsearch.search.SearchHits;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.enablix.analytics.search.SearchClient;
+import com.enablix.core.api.ContentDataRecord;
 import com.enablix.core.api.ContentDataRef;
 import com.enablix.core.api.SearchResult;
 import com.enablix.services.util.template.TemplateWrapper;
@@ -22,35 +23,76 @@ public class ElasticSearchClient implements SearchClient {
 	private Client esClient;
 	
 	@Autowired
-	private SearchHitToContentDataRefTransformer searchHitTx;
+	private SearchHitTransformer searchHitTx;
 	
 	@Override
 	public SearchResult<ContentDataRef> search(String text, TemplateWrapper template, int pageSize, int pageNum) {
+
+		return searchAndGetTransformedResult(text, template, pageSize, pageNum, new ResultTx<ContentDataRef>() {
+
+			@Override
+			public ContentDataRef transform(SearchHit hit, TemplateWrapper template) {
+				return searchHitTx.toContentDataRef(hit, template);
+			}
+			
+		});
+	}
+
+	private <T> SearchResult<T> searchAndGetTransformedResult(String text, TemplateWrapper template,
+			int pageSize, int pageNum, ResultTx<T> resultTx) {
+		
+		SearchResponse searchResponse = searchAndGetResponse(text, template, pageSize, pageNum);
+		
+		List<T> result = new ArrayList<>();
+		
+		SearchHits hits = searchResponse.getHits();
+		for (SearchHit hit : hits) {
+			T txHit = resultTx.transform(hit, template); //searchHitTx.toContentDataRef(hit, template);
+			if (txHit != null) {
+				result.add(txHit);
+			}
+		}
+		
+		return createSearchResult(pageSize, pageNum, result, hits.getTotalHits());
+	}
+
+	private <T> SearchResult<T> createSearchResult(int pageSize, int pageNum, List<T> result, long totalHits) {
+		
+		SearchResult<T> searchResult = new SearchResult<>();
+		
+		searchResult.setContent(result);
+		searchResult.setNumberOfElements(totalHits);
+		searchResult.setPageSize(pageSize);
+		searchResult.setCurrentPage(pageNum);
+		searchResult.setTotalPages((long) Math.ceil(((double) totalHits)/pageSize));
+		
+		return searchResult;
+	}
+
+	private SearchResponse searchAndGetResponse(String text, TemplateWrapper template, int pageSize, int pageNum) {
 		
 		SearchRequest searchRequest = ESQueryBuilder.builder(text, template.getTemplate())
 													.withPagination(pageSize, pageNum).build();
 		
 		ActionFuture<SearchResponse> searchResponseFuture = esClient.search(searchRequest);
-		SearchResponse searchResponse = searchResponseFuture.actionGet();
+		return searchResponseFuture.actionGet();
+	}
+	
+	@Override
+	public SearchResult<ContentDataRecord> searchAndGetRecords(String text, TemplateWrapper template, int pageSize, int pageNum) {
 		
-		List<ContentDataRef> result = new ArrayList<>();
-		
-		SearchHits hits = searchResponse.getHits();
-		for (SearchHit hit : hits) {
-			ContentDataRef contentDataRef = searchHitTx.transform(hit, template);
-			if (contentDataRef != null) {
-				result.add(contentDataRef);
+		return searchAndGetTransformedResult(text, template, pageSize, pageNum, new ResultTx<ContentDataRecord>() {
+
+			@Override
+			public ContentDataRecord transform(SearchHit hit, TemplateWrapper template) {
+				return searchHitTx.toContentDataRecord(hit, template);
 			}
-		}
-		
-		SearchResult<ContentDataRef> searchResult = new SearchResult<>();
-		searchResult.setContent(result);
-		searchResult.setNumberOfElements(hits.getTotalHits());
-		searchResult.setPageSize(pageSize);
-		searchResult.setCurrentPage(pageNum);
-		searchResult.setTotalPages((long) Math.ceil(((double) hits.getTotalHits())/pageSize));
-		
-		return searchResult;
+			
+		});
+	}
+	
+	private static interface ResultTx<T> {
+		T transform(SearchHit hit, TemplateWrapper template);
 	}
 
 }

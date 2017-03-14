@@ -193,7 +193,7 @@ public class EmailAction implements CheckpointAction<ContentChange, EmailActionT
 		for (String emailId : recepientEmailIds) {
 			
 			for (DisplayableContent displayableContent : velocityIn.getEmailContent()) {
-				docUrlPopulator.process(displayableContent, emailId);
+				docUrlPopulator.populateUnsecureUrl(displayableContent, emailId);
 				textLinkProcessor.process(displayableContent, template, emailId);
 			}
 			

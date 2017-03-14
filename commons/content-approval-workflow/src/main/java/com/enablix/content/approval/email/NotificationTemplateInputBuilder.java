@@ -70,7 +70,7 @@ public class NotificationTemplateInputBuilder {
 		}
 		
 		if (!StringUtil.isEmpty(recipientEmailId)) {
-			docUrlPopulator.process(displayableContent, recipientEmailId);
+			docUrlPopulator.populateUnsecureUrl(displayableContent, recipientEmailId);
 			textLinkProcessor.process(displayableContent, template, recipientEmailId);
 		}
 		
@@ -87,7 +87,7 @@ public class NotificationTemplateInputBuilder {
 		
 		TemplateWrapper template = templateManager.getTemplateWrapper(ProcessContext.get().getTemplateId());
 		
-		docUrlPopulator.process(velocityInput.getContentData(), emailTo);
+		docUrlPopulator.populateUnsecureUrl(velocityInput.getContentData(), emailTo);
 		textLinkProcessor.process(velocityInput.getContentData(), template, emailTo);
 	}
 	

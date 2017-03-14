@@ -9,12 +9,18 @@ import org.springframework.stereotype.Component;
 import com.enablix.analytics.search.SearchClient;
 import com.enablix.app.content.label.ContentLabelResolver;
 import com.enablix.app.content.label.PortalContentLabelResolver;
+import com.enablix.app.content.share.DocUnsecureAccessUrlPopulator;
 import com.enablix.app.content.ui.NavigableContent;
 import com.enablix.app.content.ui.NavigableContentBuilder;
+import com.enablix.app.content.ui.format.DisplayContext;
+import com.enablix.app.content.ui.format.DisplayableContentBuilder;
 import com.enablix.app.template.service.TemplateManager;
 import com.enablix.commons.util.process.ProcessContext;
+import com.enablix.core.api.ContentDataRecord;
 import com.enablix.core.api.ContentDataRef;
 import com.enablix.core.api.SearchResult;
+import com.enablix.core.ui.DisplayableContent;
+import com.enablix.services.util.template.TemplateWrapper;
 
 @Component
 public class SearchServiceImpl implements SearchService {
@@ -24,6 +30,12 @@ public class SearchServiceImpl implements SearchService {
 	
 	@Autowired
 	private NavigableContentBuilder navContentBuilder;
+	
+	@Autowired
+	private DisplayableContentBuilder dsContentBuilder;
+	
+	@Autowired
+	private DocUnsecureAccessUrlPopulator docUrlPopulator;
 	
 	@Autowired
 	private TemplateManager templateMgr;
@@ -49,6 +61,42 @@ public class SearchServiceImpl implements SearchService {
 		}
 		
 		SearchResult<NavigableContent> result = new SearchResult<NavigableContent>();
+		result.setContent(content);
+		result.setNumberOfElements(searchResult.getNumberOfElements());
+		result.setPageSize(searchResult.getPageSize());
+		result.setCurrentPage(pageNum);
+		result.setTotalPages(searchResult.getTotalPages());
+		
+		return result;
+	}
+	
+	@Override
+	public SearchResult<DisplayableContent> searchAndGetResultAsDisplayContent(String searchText, int pageSize, int pageNum) {
+		
+		String templateId = ProcessContext.get().getTemplateId();
+		TemplateWrapper template = templateMgr.getTemplateWrapper(templateId);
+		
+		SearchResult<ContentDataRecord> searchResult = searchClient.searchAndGetRecords(
+				searchText, template, pageSize, pageNum);
+		
+		List<DisplayableContent> content = new ArrayList<>();
+		
+		if (searchResult != null) {
+			
+			DisplayContext ctx = new DisplayContext();
+			
+			for (ContentDataRecord dataRec : searchResult.getContent()) {
+				
+				DisplayableContent resultItem = dsContentBuilder.build(template, dataRec, ctx);
+				
+				if (resultItem != null) {
+					docUrlPopulator.populateSecureUrl(resultItem);
+					content.add(resultItem);
+				}
+			}
+		}
+		
+		SearchResult<DisplayableContent> result = new SearchResult<>();
 		result.setContent(content);
 		result.setNumberOfElements(searchResult.getNumberOfElements());
 		result.setPageSize(searchResult.getPageSize());

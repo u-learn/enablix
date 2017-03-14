@@ -12,6 +12,15 @@ public class SearchResult<T> {
 	
 	private List<T> content;
 	
+	public SearchResult(int pageSize, long currentPage, long totalPages, long numberOfElements, List<T> content) {
+		super();
+		this.pageSize = pageSize;
+		this.currentPage = currentPage;
+		this.totalPages = totalPages;
+		this.numberOfElements = numberOfElements;
+		this.content = content;
+	}
+
 	public SearchResult() {
 		this.content = new ArrayList<>();
 	}

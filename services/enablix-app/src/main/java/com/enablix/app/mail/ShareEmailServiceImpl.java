@@ -64,7 +64,7 @@ public class ShareEmailServiceImpl implements ShareEmailService {
 
 		DisplayableContent displayableContent = contentBuilder.build(template, dataRecord, ctx);
 
-		docUrlPopulator.process(displayableContent, data.getEmailId());
+		docUrlPopulator.populateUnsecureUrl(displayableContent, data.getEmailId());
 		textLinkProcessor.process(displayableContent, template, data.getEmailId());
 
 		ShareContentVelocityInput mailInput = mailInputBuilder.build(data.getEmailId(), displayableContent,data.getEmailCustomContent());

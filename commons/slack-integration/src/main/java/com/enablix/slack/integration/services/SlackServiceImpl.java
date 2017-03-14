@@ -182,7 +182,7 @@ public class SlackServiceImpl implements SlackService {
 
 		DisplayableContent displayableContent = contentBuilder.build(template, dataRecord, ctx);
 
-		docUrlPopulator.process(displayableContent, userID);
+		docUrlPopulator.populateUnsecureUrl(displayableContent, userID);
 		
 		String slackAttachments = AttachmentDecorator.getDecoratedAttachment(displayableContent,
 				FALL_BACK_TEXT, FOOTER_ICON,COLOR,FOOTER_TEXT);
