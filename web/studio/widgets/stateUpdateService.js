@@ -308,7 +308,10 @@ enablix.studioApp.factory('StateUpdateService',
 	 			});
 	 		};
 	 		
-	 		
+	 		var goToPasswordReset = function(){
+	 			$state.go('passwordreset');
+	 		};
+			
 	 		var goToReports = function() {
 	 			$state.go("reports");
 	 		};
@@ -372,7 +375,8 @@ enablix.studioApp.factory('StateUpdateService',
 				goToSlackDtls : goToSlackDtls,
 	 			goToSlackAuth : goToSlackAuth,
 	 			goToReports : goToReports,
-	 			goToReportDetail : goToReportDetail
+	 			goToReportDetail : goToReportDetail,
+				goToPasswordReset : goToPasswordReset
 	 		};
 	 	}
 	 ]);
