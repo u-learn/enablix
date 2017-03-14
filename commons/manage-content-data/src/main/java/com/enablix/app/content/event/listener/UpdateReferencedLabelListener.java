@@ -65,7 +65,7 @@ public class UpdateReferencedLabelListener implements ContentDataEventListener {
 					public void execute(ContainerType containerToUpdate,
 							ContentItemType itemOfUpdateContainer, TemplateWrapper template) {
 						String collectionName = template.getCollectionName(containerToUpdate.getQualifiedId());
-						crudService.updateBoundedLabel(collectionName, itemOfUpdateContainer.getId(), recordIdentity, labelValueStr);
+						crudService.updateContentStackLabel(collectionName, itemOfUpdateContainer.getId(), recordIdentity, labelValueStr);
 					}
 				});
 				

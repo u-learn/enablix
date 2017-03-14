@@ -218,8 +218,13 @@ enablix.studioApp.controller('PortalSubContainerCtrl',
 		$scope.render();
 		
 		PubSub.subscribe(ContentDataService.contentChangeEventId($scope.subContainerQId), function() {
-			$scope.info = null; // setting it to null so that we pick up fresh data from database
-			$scope.render();
+			
+			if ($scope.category === 'content-stack') {
+				StateUpdateService.reload();
+			} else {
+				$scope.info = null; // setting it to null so that we pick up fresh data from database
+				$scope.render();
+			}
 		});
 		
 	}]);

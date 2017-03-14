@@ -13,7 +13,8 @@ enablix.studioApp.directive('ebPortalSubContainer', [
 				parentList: "=",
 				expanded: "@",
 				multiListLimit: "@",
-				info: "=?"
+				info: "=?",
+				category: "=?"
 			},
 			controller : 'PortalSubContainerCtrl',
 			//template : '<ng-include src="::templateUrl"></ng-include>',

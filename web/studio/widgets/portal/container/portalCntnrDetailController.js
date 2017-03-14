@@ -46,12 +46,14 @@ enablix.studioApp.controller('PortalCntnrDetailCtrl',
 								"label" : containerDef.label,
 								"containerDef": containerDef,
 								"type": containerDef.single ? "single" : "multi",
-								"records": contentGroup.records
+								"records": contentGroup.records,
+								"category": "sub-container"
 							};
 						
 						if ($stateParams.containerQId == containerDef.qualifiedId) {
 							subCntnrItem.label = "About";
 							subCntnrItem.type = 'single';
+							subCntnrItem.category = 'about';
 							$scope.aboutSubContainer = subCntnrItem;
 						}
 						
@@ -143,7 +145,8 @@ enablix.studioApp.controller('PortalCntnrDetailCtrl',
 										"label" : value.label,
 										"containerDef": value.containerDef,
 										"type": value.records.length == 1 ? "single" : "multi",
-										"records": value.records
+										"records": value.records,
+										"category": "content-stack"
 									};
 								
 								$scope.subContainerList.push(subCntnrItem);
