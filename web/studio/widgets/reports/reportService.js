@@ -11,7 +11,7 @@ enablix.studioApp.factory('ReportService',
 					heading: "Content Coverage",
 					type: "HEATMAP",
 					options: {
-								margin: { top: 150, right: 0, bottom: 70, left: 120 },
+								margin: { top: 150, right: 0, bottom: 70, left: 170 },
 								colors: [/*"#f7fbff", */"#deebf7", "#c6dbef", /*"#9ecae1", */"#6baed6", "#4292c6", /*"#2171b5", "#08519c", "#08306b"*/],
 								customColors : { "0": "#f58080"},
 								buckets: 4,
