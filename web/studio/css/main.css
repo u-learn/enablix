@@ -1764,6 +1764,9 @@ td eb-nav-link span a {
     padding: 0em 1.25em;
 }
 
+.panel-title .fa {
+	padding-right: 0.5em;
+}
 
 /** Report charts */
 /* hm classes are for heatmap */

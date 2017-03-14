@@ -8,6 +8,8 @@ function($compile) {
 			filters: '=',
 			filterValues: '=',
 			heading: '@',
+			searchLabel: '@',
+			resetLabel: '@',
 			onSearch:'=?',
 			onReset: '=?'
 		},
@@ -15,6 +17,8 @@ function($compile) {
 			
 			var filterValuesCopy = {};
 			
+			scope.resetLabel = scope.resetLabel || "Reset";
+			scope.searchLabel = scope.searchLabel || "Search";
 			scope.filterValues = scope.filterValues || {};
 
 			angular.copy(scope.filterValues, filterValuesCopy);

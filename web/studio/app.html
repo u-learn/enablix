@@ -260,6 +260,7 @@
 							<!--<li><a ui-sref="contentkit.list" requires-permission="MANAGE_CONTENT_KIT">Content Kit</a></li>-->
 						</ul>
 					</li>
+					<a requires-permission="VIEW_REPORTS" href="#" ng-class="{active:$state.includes('reports')}" ui-sref="reports">Reports</a>
 					<!-- <a href="#" ui-sref-active="active" ui-sref="refdata">Setup</a> -->
 					<li requires-permission="VIEW_STUDIO">
 						<a href="#" ng-class="{active:$state.includes('refdata') || $state.includes('system')}">Setup&nbsp;<i class="fa fa-angle-down"></i></a>
@@ -268,7 +269,6 @@
 							<li><a ui-sref="system.users.list">System Admin</a></li>
 						</ul>
 					</li>
-					<a requires-permission="VIEW_REPORTS" href="#" ng-class="{active:$state.includes('reports')}" ui-sref="reports">Reports</a>
 					<li>
 						<a title="My Account" ui-sref="myaccount.contentrequestlist"><i class="fa fa-user fa-lg"></i></a>
 						<i></i>

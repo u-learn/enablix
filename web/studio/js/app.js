@@ -1,4 +1,13 @@
 var enablix = enablix || {};
+
+enablix.dateFormat = 'MM/dd/yyyy';
+enablix.dateTimeFormat = 'h:mm a Z MM/dd/yyyy';
+enablix.errorMsgShowTime = 10000; // in milli-seconds 
+enablix.defaultPageSize = 10;
+enablix.subContainerItemLimit = 5;
+enablix.uploadDocSizeLimit = 1 * 1024 * 1024; // size in bytes 
+
+
 enablix.studioApp = angular.module("studio", ['ui.router', 'angularTreeview', 'listGroupTreeview', 
            'angularFileUpload', 'ui.bootstrap', 'isteven-multi-select', 'ui-notification', 'enablixFilters',
            'ngSanitize', 'ui.select', 'ngMessages', 'pascalprecht.translate', 'noCAPTCHA', 'PubSub', 
@@ -57,12 +66,6 @@ enablix.studioApp.config(function($mdThemingProvider) {
 	    	'default': '800'
 	    });	
 });
-
-enablix.dateFormat = 'MM/dd/yyyy';
-enablix.errorMsgShowTime = 10000; // in milli-seconds 
-enablix.defaultPageSize = 10;
-enablix.subContainerItemLimit = 5;
-enablix.uploadDocSizeLimit = 1 * 1024 * 1024; // size in bytes 
 
 var appSetup = function(StudioSetupService) {
 	return StudioSetupService.setupStudio();

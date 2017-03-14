@@ -43,24 +43,26 @@ angular.module("heatmap", []).directive("heatmap",
 				// set up tooltip
 				var setupTooltip = function() {
 					
-					var tooltip = d3.select("body")
+					var tooltip = d3.select(".hm-tooltip");
+					
+					if (tooltip.empty()) {
+						
+						tooltip = d3.select(element[0])
 									.append("div")
 									.style("position", "absolute")
 									.style("z-index", "10")
 									.style("visibility", "hidden")
 									.text("a simple tooltip")
 									.classed("hm-tooltip", true);
-					
-					scope.dispatch.on("click", function(e) {
-						console.log(e);
-					});
+					}
 					
 					scope.dispatch.on("mouseover", function(e) {
 						return tooltip.text(e.y + ": " + e.x + " (" + e.value + ")").style("visibility", "visible");
 					})
 					
 					scope.dispatch.on("mousemove", function(e) {
-						return tooltip.style("top", (d3.event.pageY - 10) + "px").style("left", (d3.event.pageX + 10) + "px");
+						console.log(d3.event);
+						return tooltip.style("top", (d3.event.layerY - 10) + "px").style("left", (d3.event.layerX + 10) + "px");
 					})
 					
 					scope.dispatch.on("mouseout", function(e) {
@@ -129,10 +131,10 @@ angular.module("heatmap", []).directive("heatmap",
 					}
 					
 					// populate y axis labels
-					if (categories.length == 1) {
-						// if there is only one category, then do not show category label
+					if (categories.length == 1 && categories[0] === 'All') {
+						// if there is only one category and that value is 'All', then do not show category label
 						var ct = categories[0];
-						y = categoryInfo[ct].yLabels; //.sort();
+						y = categoryInfo[ct].yLabels.sort();
 						for (var yi = 0; yi < y.length; yi++) {
 							yc.push(ct + "-" + y[yi]);
 						}
@@ -146,7 +148,7 @@ angular.module("heatmap", []).directive("heatmap",
 							y.push(dc);
 							yc.push("category-" + dc);
 
-							var categoryYs = categoryInfo[dc].yLabels; //.sort();
+							var categoryYs = categoryInfo[dc].yLabels.sort();
 							for (var cy = 0; cy < categoryYs.length; cy++) {
 								y.push(categoryYs[cy]);
 								yc.push(dc + "-" + categoryYs[cy]);
@@ -154,7 +156,7 @@ angular.module("heatmap", []).directive("heatmap",
 						}
 					}
 					
-					//x.sort();
+					x.sort();
 					
 					// populate x and y index on data
 					for (var d = 0; d < scope.data.length; d++) {

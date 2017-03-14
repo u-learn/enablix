@@ -7,18 +7,31 @@ enablix.studioApp.factory('ReportService',
 			/** ========================================= Content Coverage Report ======================================= **/
 			var contentCoverageReport = {
 					id: "content-coverage-report",
-					name: "Content Coverage Report",
-					heading: "Content Coverage Report",
+					name: "Content Coverage",
+					heading: "Content Coverage",
 					type: "HEATMAP",
 					options: {
 								margin: { top: 150, right: 0, bottom: 70, left: 120 },
-								colors: [/*"#f7fbff", */"#deebf7", /*"#c6dbef", */"#9ecae1", /*"#6baed6", */"#4292c6", /*"#2171b5", */"#08519c", /*"#08306b"*/],
+								colors: [/*"#f7fbff", */"#deebf7", "#c6dbef", /*"#9ecae1", */"#6baed6", "#4292c6", /*"#2171b5", "#08519c", "#08306b"*/],
 								customColors : { "0": "#f58080"},
 								buckets: 4,
 								valueText: true,
 								categorize: true
 							 },
-					init: function($scope) { },
+					init: function($scope) {
+						
+						$scope.$watch('dispatch', function(newValue, oldValue) {
+							if (newValue !== oldValue && !isNullOrUndefined(newValue)) {
+								$scope.dispatch.on("click", function(e) {
+									if (e.value != 0) { // if there are any records, then nav to list page
+										StateUpdateService.goToPortalSubContainerList(
+												e.data.contentQId, e.data.subContainerQId, e.data.recordIdentity);
+									}
+								});
+							}
+						})
+						
+					},
 					filterMetadata: {
 						"latest" : {
 		 					"field" : "latest",
@@ -83,7 +96,7 @@ enablix.studioApp.factory('ReportService',
 						
 						// change heading
 						if (_data.length > 0) {
-							this.heading = this.name + " ( As of " + $filter('ebDate')(_data[0].asOfDate) + ")";
+							this.heading = this.name + " ( As of " + $filter('ebDateTime')(_data[0].asOfDate) + ")";
 						}
 						
 						angular.forEach(_data, function(dataRecord) {
@@ -95,11 +108,17 @@ enablix.studioApp.factory('ReportService',
 								var contDef = ContentTemplateService.getConcreteContainerDefinition(enablix.template, stat.itemId);
 								
 								if (!isNullOrUndefined(contDef)) {
+									// x, y, value, category are required for the heatmap chart to display
 									reportData.push({
 										y: dataRecord.recordTitle,
 										x: contDef.label,
 										value: stat.count,
-										category: recCategory
+										category: recCategory,
+										data: {
+											contentQId: dataRecord.contentQId,
+											recordIdentity: dataRecord.recordIdentity,
+											subContainerQId: stat.itemId
+										}
 									});
 								}
 								
