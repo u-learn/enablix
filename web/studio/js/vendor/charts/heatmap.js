@@ -161,7 +161,7 @@ angular.module("heatmap", []).directive("heatmap",
 						}
 					}
 					
-					//x.sort();
+					x.sort();
 					
 					// populate x and y index on data
 					for (var d = 0; d < scope.data.length; d++) {
