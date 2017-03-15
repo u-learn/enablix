@@ -30,7 +30,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
+		
 		String[] systemUserRequestPatterns = {"/site/*", "site-doc/**/*"};
+		
 		http = http.addFilterAfter(new ProcessContextInitFilter(systemUserRequestPatterns), SwitchUserFilter.class);
 		http = http.addFilterAfter(new AuditTrackingContextInitFilter(), SwitchUserFilter.class);
 		
@@ -38,7 +40,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		// http://mtyurt.net/2015/07/15/spring-how-to-insert-a-filter-before-springsecurityfilterchain/
 		http = http.addFilterBefore(guestLoginFilter(), FilterSecurityInterceptor.class);
 		
-		http.headers().frameOptions().sameOrigin();
+		// commenting below to allow embedding in iFrame
+		http.headers().frameOptions().disable();
 		
 		http
 			.authorizeRequests()
