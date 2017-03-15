@@ -455,6 +455,11 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvi
 			controller: 'ForgotPasswordController'
 			
 		})
+		.state('passwordreset', {
+			url: '/passwordreset',
+			templateUrl: 'views/passwordReset.html',
+			controller: 'ForgotPasswordController'
+		})
 		.state('setpassword', {
 			url: '/setpassword',
 			templateUrl: 'views/set-password.html',
