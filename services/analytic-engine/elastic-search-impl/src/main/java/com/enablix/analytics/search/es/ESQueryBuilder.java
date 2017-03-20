@@ -66,7 +66,11 @@ public class ESQueryBuilder {
 				template.getDataDefinition().getContainer());
 		MultiMatchQueryBuilder multiMatchQuery = QueryBuilders.multiMatchQuery(
 				searchText, convertToMultiMatchBoostedFields(fieldBoostIndex));
-		multiMatchQuery.fuzziness(Fuzziness.AUTO);
+		
+		if (ESPropertiesUtil.getProperties().isFuzzyMatchOn() 
+				&& this.searchText.length() >= ESPropertiesUtil.getProperties().getFuzzyMatchMinChars()) {
+			multiMatchQuery.fuzziness(Fuzziness.AUTO);
+		}
 		
 		//MatchQueryBuilder matchQuery = QueryBuilders.matchQuery("_all", searchText);
 		SearchSourceBuilder searchSource = SearchSourceBuilder.searchSource().query(multiMatchQuery);
