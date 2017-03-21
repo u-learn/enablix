@@ -33,7 +33,10 @@ enablix.studioApp.factory('ContentDataService',
 	 			
 	 		};
 	 		
-	 		var getRecordAndChildData = function(_contentQId, _contentIdentity, _onSuccess, _onError, _childSizeLimit) {
+	 		var getRecordAndChildData = function(_contentQId, _contentIdentity, _onSuccess, _onError, _childSizeLimit, _accessFrom) {
+	 			
+	 			var reqParams = $location.search();
+	 			setActivityTrackingParams(reqParams, _accessFrom);
 	 			
 	 			var params = {
 	 				contentQId: _contentQId,
@@ -44,28 +47,35 @@ enablix.studioApp.factory('ContentDataService',
 	 				params.pageSize = _childSizeLimit;
 	 			}
 	 			
-	 			RESTService.getForData("fetchRecordAndChildData", params, null, _onSuccess, _onError);
+	 			RESTService.getForData("fetchRecordAndChildData", params, null, _onSuccess, _onError, reqParams);
 	 		};
 
-	 		var getContentRecordData = function(_templateId, _contentQId, _recordIdentity, _accessFrom, _onSuccess, _onError) {
+	 		var setActivityTrackingParams = function(_reqParams, _accessFrom) {
 	 			
 	 			var reqParams = $location.search();
 	 			var previousState = NavigationTracker.getPreviousState();
 	 			
-	 			if (isNullOrUndefined(reqParams.atChannel)
+	 			if (isNullOrUndefined(_reqParams.atChannel)
 	 					&& !$state.includes('portal.search')) { // ignore search result listing
 	 				
 	 				// if navigating from search results, then track the search action as well
 	 				if (previousState != null && previousState.route.name == 'portal.search') {
 	 					
-	 					reqParams.atChannel = 'WEB';
-	 					reqParams.atContext = 'SEARCH_RESULT';
-	 					reqParams.atContextTerm = previousState.routeParams.searchText;
+	 					_reqParams.atChannel = 'WEB';
+	 					_reqParams.atContext = 'SEARCH_RESULT';
+	 					_reqParams.atContextTerm = previousState.routeParams.searchText;
 	 					
 	 				} else {
-	 					reqParams.atChannel = _accessFrom == 'PORTAL' ? 'WEB' : null;
+	 					_reqParams.atChannel = _accessFrom == 'PORTAL' ? 'WEB' : null;
 	 				}
 	 			}
+	 			
+	 		}
+	 		
+	 		var getContentRecordData = function(_templateId, _contentQId, _recordIdentity, _accessFrom, _onSuccess, _onError) {
+	 			
+	 			var reqParams = $location.search();
+	 			setActivityTrackingParams(reqParams, _accessFrom);
 	 			
 	 			var params = {
 	 					"templateId": _templateId,

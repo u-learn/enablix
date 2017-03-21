@@ -62,7 +62,7 @@ enablix.studioApp.controller('PortalCntnrDetailCtrl',
 				},
 				function(errorData) {
 					Notification.error({message: "Error retrieving content records", delay: enablix.errorMsgShowTime});
-				}, enablix.subContainerItemLimit);
+				}, enablix.subContainerItemLimit, "PORTAL");
 			
 			$scope.subCntnrMultiListLimit = enablix.subContainerItemLimit;
 			$scope.hasContentStack = ContentTemplateService.hasContentStackConfigItem(containerDef);

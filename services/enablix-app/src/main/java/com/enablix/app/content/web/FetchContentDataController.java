@@ -22,9 +22,14 @@ import com.enablix.app.content.fetch.FetchContentRequest;
 import com.enablix.app.template.service.TemplateManager;
 import com.enablix.app.template.web.TemplateController;
 import com.enablix.commons.constants.AppConstants;
+import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.commons.util.StringUtil;
+import com.enablix.commons.util.collection.CollectionUtil;
+import com.enablix.commons.util.process.ProcessContext;
+import com.enablix.core.activity.audit.ActivityTrackingContext;
 import com.enablix.core.api.ContentDataRecord;
 import com.enablix.core.api.ContentDataRef;
+import com.enablix.core.api.ContentRecordGroup;
 import com.enablix.core.api.ContentStackItem;
 import com.enablix.core.domain.activity.ActivityChannel.Channel;
 import com.enablix.core.domain.activity.ContentActivity.ContainerType;
@@ -127,7 +132,41 @@ public class FetchContentDataController {
 			pageable = createPaginationInfo("0", size);
 		}
 		
-		return dataMgr.fetchRecordAndChildData(contentQId, contentIdentity, pageable);
+		List<ContentRecordGroup> recordAndChildren = dataMgr.fetchRecordAndChildData(contentQId, contentIdentity, pageable);
+		
+		// Audit Access activity
+		if (CollectionUtil.isNotEmpty(recordAndChildren)) {
+
+			ActivityTrackingContext atCtx = ActivityTrackingContext.get();
+			Channel channel = atCtx.getActivityChannel();
+			
+			if (channel != null) {
+			
+				for (ContentRecordGroup recGrp : recordAndChildren) {
+				
+					if (recGrp.getContentQId().equals(contentQId)) {
+					
+						for (Map<String, Object> rec : recGrp.getRecords()) {
+						
+							String recIdentity = (String) rec.get(ContentDataConstants.IDENTITY_KEY);
+							
+							if (recIdentity.equals(contentIdentity)) {
+							
+								String recTitle = (String) rec.get(ContentDataConstants.CONTENT_TITLE_KEY);
+								String templateId = ProcessContext.get().getTemplateId();
+								
+								ActivityLogger.auditContentAccess(
+										ContentDataRef.createContentRef(templateId, contentQId, recIdentity, recTitle), 
+										ContainerType.CONTENT, channel, atCtx.getActivityContextName(), 
+											atCtx.getActivityContextId(), atCtx.getActivityContextTerm());
+							}
+						}
+					}
+				}
+			}
+		}
+		
+		return recordAndChildren;
 	}
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
