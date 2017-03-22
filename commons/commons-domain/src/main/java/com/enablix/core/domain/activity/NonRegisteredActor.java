@@ -6,6 +6,11 @@ public class NonRegisteredActor extends Actor {
 	
 	private String name;
 	
+	@SuppressWarnings("unused")
+	private NonRegisteredActor() {
+		// for ORM
+	}
+	
 	public NonRegisteredActor(String externalId) {
 		super();
 		this.externalId = externalId;
