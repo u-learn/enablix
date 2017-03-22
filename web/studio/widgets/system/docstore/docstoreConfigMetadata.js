@@ -36,5 +36,27 @@ enablix.docstore.metadata =
 			"paramName" : "Password"
 		}
 	]
+},
+{
+	"storeTypeName" : "Sharepoint",
+	"storeTypeCode" : "SHAREPOINT",
+	"params" : [
+		{
+			"paramKey" : "SITE_URL",
+			"paramName" : "Sharepoint Site Url"
+		},
+		{
+			"paramKey" : "BASE_FOLDER",
+			"paramName" : "Base Folder"
+		},
+		{
+			"paramKey" : "USERNAME",
+			"paramName" : "Username"
+		},
+		{
+			"paramKey" : "PASSWORD_ENC",
+			"paramName" : "Password"
+		}
+	]
 }
 ];

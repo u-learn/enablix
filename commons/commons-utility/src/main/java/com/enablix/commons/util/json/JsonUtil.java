@@ -3,6 +3,7 @@ package com.enablix.commons.util.json;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.enablix.commons.content.ContentParser;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -15,6 +16,11 @@ public class JsonUtil {
 		} catch (final Exception e) {
 			throw new RuntimeException("Failed to perform json serialization", e);
 		}
+	}
+	
+	public static Object getJsonpathValue(String jsonStr, String jsonpath) {
+		Map<String, Object> jsonToMap = jsonToMap(jsonStr);
+		return ContentParser.getSingleValue(jsonToMap, jsonpath);
 	}
 	
 	public static Map<String, Object> jsonToMap(String json) {

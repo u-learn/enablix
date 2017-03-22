@@ -5,6 +5,7 @@ import java.io.File;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.client.RestTemplate;
 
 import com.enablix.app.corr.rule.processor.ItemCorrelationRuleProcessor;
 import com.enablix.app.corr.rule.processor.ItemUserCorrelationRuleProcessor;
@@ -153,5 +154,9 @@ public class ApplicationConfig {
 		return new FileBasedDataLoader(refdataBaseDir, DOCSTORE_CONFIG_FILE_EXTN, jsonDocStoreConfigMetadataProcessor());
 	}*/
 	
+	@Bean
+	public RestTemplate restTemplate() {
+		return new RestTemplate();
+	}
 	
 }

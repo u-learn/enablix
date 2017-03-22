@@ -32,4 +32,8 @@ public class WebUtils {
 	    return sb.toString();
 	}
 	
+	public static String sanitizeURI(String uri) {
+		return uri.replace(" ", "%20");
+	}
+	
 }

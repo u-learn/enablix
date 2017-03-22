@@ -34,11 +34,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.enablix.commons.dms.DMSConstants;
 import com.enablix.commons.dms.api.AbstractDocumentStore;
 import com.enablix.commons.dms.api.Document;
 import com.enablix.commons.dms.api.DocumentBuilder;
 import com.enablix.commons.dms.api.DocumentMetadata;
 import com.enablix.commons.util.StringUtil;
+import com.enablix.commons.util.web.WebUtils;
 import com.enablix.core.domain.config.Configuration;
 
 @Component
@@ -48,10 +50,6 @@ public class WebDAVDocumentStore extends AbstractDocumentStore<WebDAVDocumentMet
 	
 	private static final String BASE_DOC_PATH_KEY = "BASE_DOC_PATH";
 
-	private static final String USERNAME_KEY = "USERNAME";
-
-	private static final String PASSWORD_KEY = "PASSWORD_ENC";
-	
 	private static final String HOST_KEY = "HOST";
 	
 	private static final String MAX_HOST_CONNECTIONS_KEY = "MAX_HOST_CONNECTIONS";
@@ -102,14 +100,14 @@ public class WebDAVDocumentStore extends AbstractDocumentStore<WebDAVDocumentMet
 	}
 
 	private String getResourceURI(String host, String fileLocation) {
-		return sanitizeURI(host + fileLocation);
+		return WebUtils.sanitizeURI(host + fileLocation);
 	}
 
 	private HttpClient createHttpClient(Configuration config) {
 
 		// TODO: initialization should be done once only instead of reading the properties on each call
-		String userName = config.getStringValue(USERNAME_KEY);
-		String password = config.getStringValue(PASSWORD_KEY);
+		String userName = config.getStringValue(DMSConstants.CFG_USERNAME_KEY);
+		String password = config.getStringValue(DMSConstants.CFG_PASSWORD_KEY);
 		
 		String maxConn = config.getStringValue(MAX_HOST_CONNECTIONS_KEY);
 		int maxHostConnections = 10;
@@ -246,11 +244,11 @@ public class WebDAVDocumentStore extends AbstractDocumentStore<WebDAVDocumentMet
 		    }
 		    
 		} catch(HttpException ex){
-			LOGGER.error("Error saving document on webDAV server", ex);
+			LOGGER.error("Error loading document from webDAV server", ex);
 			throw ex;
 			
 		} catch(IOException ex){
-		    LOGGER.error("Error saving document on webDAV server", ex);
+		    LOGGER.error("Error loading document from webDAV server", ex);
 		    throw ex;
 		}
 
@@ -260,11 +258,7 @@ public class WebDAVDocumentStore extends AbstractDocumentStore<WebDAVDocumentMet
 	private String createFilepath(String baseWebDAVPath, 
 			WebDAVDocumentMetadata md, String contentPath) {
 		String fileLocation = baseWebDAVPath + "/" + contentPath + "/" + md.getName();
-		return sanitizeURI(fileLocation);
-	}
-	
-	private String sanitizeURI(String uri) {
-		return uri.replace(" ", "%20");
+		return WebUtils.sanitizeURI(fileLocation);
 	}
 	
 	@Override
