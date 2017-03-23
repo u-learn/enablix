@@ -13,7 +13,7 @@ enablix.studioApp.controller('AuditController',
 			pageSize: enablix.defaultPageSize,
 			pageNum: 0,
 			sort: {
-				field: "createdAt",
+				field: "activityTime",
 				direction: "DESC"
 			}
 	}
