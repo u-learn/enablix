@@ -17,43 +17,42 @@ public class SharepointAPI {
 	
 	public String getGetFolderByServerRelativePathUrl(String siteUrl, String folderUrl) {
 		return getFormattedString(spProperties.getGetFolderByServerRelativePathUrl(), 
-				siteUrl, WebUtils.sanitizeURI(folderUrl));
+				true, siteUrl, folderUrl);
 	}
 	
 	public String getCreateFolderJson(String folderUrl) {
-		return getFormattedString(spProperties.getCreateFolderJson(), folderUrl);
+		return getFormattedString(spProperties.getCreateFolderJson(), false, folderUrl);
 	}
 	
 	public String getCreateFolderUri(String siteUrl) {
-		return getFormattedString(spProperties.getCreateFolderUri(), siteUrl);
+		return getFormattedString(spProperties.getCreateFolderUri(), true, siteUrl);
 	}
 	
 	public String getPostFileUri(String siteUrl, String folderPath, String filename) {
-		return getFormattedString(spProperties.getPostFileUri(), siteUrl, 
-					WebUtils.sanitizeURI(folderPath), WebUtils.sanitizeURI(filename));
+		return getFormattedString(spProperties.getPostFileUri(), true, siteUrl, folderPath, filename);
 	}
 	
 	public String getDownloadFileUri(String siteUrl, String fileLocation) {
-		return getFormattedString(spProperties.getDownloadFileUri(), siteUrl, WebUtils.sanitizeURI(fileLocation));
+		return getFormattedString(spProperties.getDownloadFileUri(), true, siteUrl, fileLocation);
 	}
 	
 	public String getMoveFileUri(String siteUrl, String currentFileLocation, String moveToFileLocation) {
-		return getFormattedString(spProperties.getMoveFileUri(), siteUrl, 
-				WebUtils.sanitizeURI(currentFileLocation), WebUtils.sanitizeURI(moveToFileLocation));
+		return getFormattedString(spProperties.getMoveFileUri(), true, siteUrl, currentFileLocation, moveToFileLocation);
 	}
 	
 	public String getDeleteFileUri(String siteUrl, String fileLocation) {
-		return getFormattedString(spProperties.getDeleteFileUri(), siteUrl, WebUtils.sanitizeURI(fileLocation));
+		return getFormattedString(spProperties.getDeleteFileUri(), true, siteUrl, fileLocation);
 	}
 	
-	private String getFormattedString(String value, final String... args) {
+	private String getFormattedString(String value, boolean sanitize, final String... args) {
 		
 		Map<String, String> values = new HashMap<>();
 		for (int i = 0; i < args.length; i++) {
 			values.put(String.valueOf(i), args[i]);
 		}
 		
-		return StrSubstitutor.replace(value, values);
+		String str = StrSubstitutor.replace(value, values);
+		return sanitize ? WebUtils.sanitizeURI(str) : str;
 	}
 	
 	
