@@ -269,13 +269,6 @@ public class EmailAction implements CheckpointAction<ContentChange, EmailActionT
 		
 		List<ContentDataRef> sharedContentList = new ArrayList<>();
 		
-		DisplayableContent triggerEntity = sharedContent.getTriggerEntity();
-		if (triggerEntity != null) {
-			sharedContentList.add(ContentDataRef.createContentRef(templateId, 
-				triggerEntity.getContainerQId(), triggerEntity.getRecordIdentity(),
-				triggerEntity.getTitle()));
-		}
-		
 		Collection<DisplayableContent> emailContent = sharedContent.getEmailContent();
 		if (emailContent != null) {
 			for (DisplayableContent content : emailContent) {
