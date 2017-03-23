@@ -41,35 +41,37 @@ public class ProcessContextInitFilter extends OncePerRequestFilter {
 		
 		boolean processCtxInitialized = false;
 		
-		if (securityCtx != null && securityCtx.getAuthentication() != null) {
+		try {
 			
-			Object principal = securityCtx.getAuthentication().getPrincipal();
-			
-			if (principal instanceof LoggedInUser) {
+			if (securityCtx != null && securityCtx.getAuthentication() != null) {
 				
-				LoggedInUser user = (LoggedInUser) principal;
-			
-				ProcessContext.initialize(user.getUsername(), user.getUser().getDisplayName(),
-						user.getUser().getTenantId(), user.getTemplateId());
+				Object principal = securityCtx.getAuthentication().getPrincipal();
 				
-				processCtxInitialized = true;
+				if (principal instanceof LoggedInUser) {
+					
+					LoggedInUser user = (LoggedInUser) principal;
+				
+					ProcessContext.initialize(user.getUsername(), user.getUser().getDisplayName(),
+							user.getUser().getTenantId(), user.getTemplateId());
+					
+					processCtxInitialized = true;
+				}
+				
 			}
 			
-		}
-		
-		if (!processCtxInitialized) {
-			// check if the request is for system url, then init with system user
-			for (AntPathRequestMatcher matcher : systemUserRequestMatchers) {
-				
-				if (matcher.matches(request)) {
-					ProcessContext.initialize(AppConstants.SYSTEM_USER_ID, 
-							AppConstants.SYSTEM_USER_NAME, null, null);
-					break;
+			if (!processCtxInitialized) {
+				// check if the request is for system url, then init with system user
+				for (AntPathRequestMatcher matcher : systemUserRequestMatchers) {
+					
+					if (matcher.matches(request)) {
+						ProcessContext.initialize(AppConstants.SYSTEM_USER_ID, 
+								AppConstants.SYSTEM_USER_NAME, null, null);
+						break;
+					}
 				}
 			}
-		}
 		
-		try {
+		
 			chain.doFilter(request, response);
 			
 		} finally {
