@@ -29,12 +29,30 @@ function($compile) {
 				
 					var searchValues = {};
 					
+					var filterValuesValid = true;
 					angular.forEach(scope.filters, function(filter) {
-						searchValues[filter.id] = filter.filterValueTransformer ? 
-								filter.filterValueTransformer(scope.filterValues[filter.id]) : scope.filterValues[filter.id]; 
+						
+						var valid = true;
+						if (filter.validateBeforeSubmit) {
+							
+							valid = filter.validateBeforeSubmit(scope.filterValues[filter.id]);
+							
+							if (!valid) {
+								filterValuesValid = false;
+							}
+						}
+						
+						if (valid) {
+							searchValues[filter.id] = filter.filterValueTransformer ? 
+								filter.filterValueTransformer(scope.filterValues[filter.id]) : scope.filterValues[filter.id];
+						}
+						
 					});
 					
-					scope.onSearch(searchValues);
+					if (filterValuesValid) {
+						scope.onSearch(searchValues);
+					}
+					
 				}
 			};
 			

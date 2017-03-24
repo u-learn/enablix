@@ -136,6 +136,8 @@ angular.module("heatmap", []).directive("heatmap",
 					}
 					
 					// populate y axis labels
+					var noDataCategories = [];
+					
 					if (categories.length == 1 && categories[0] === 'All') {
 						// if there is only one category and that value is 'All', then do not show category label
 						var ct = categories[0];
@@ -159,6 +161,25 @@ angular.module("heatmap", []).directive("heatmap",
 								yc.push(dc + "-" + categoryYs[cy]);
 							}
 						}
+						
+						angular.forEach(scope.options.yLabelCategories, function(yLabelCat) {
+							if (!categories.contains(yLabelCat)) {
+								
+								if (noDataCategories.length == 0) {
+									// add a separator
+									y.push("");
+									yc.push("");
+								}
+								
+								noDataCategories.push({label: yLabelCat});
+								
+								categories.push(yLabelCat);
+								categoryInfo[yLabelCat] = {};
+								
+								y.push(""); // do not show label
+								yc.push("category-" + yLabelCat);
+							}
+						});
 					}
 					
 					x.sort();
@@ -167,6 +188,12 @@ angular.module("heatmap", []).directive("heatmap",
 					for (var d = 0; d < scope.data.length; d++) {
 						scope.data[d].xIndex = x.indexOf(scope.data[d].x);
 						scope.data[d].yIndex = yc.indexOf(getCategory(scope.data[d]) + "-" + scope.data[d].y);
+					}
+					
+					// populate index for no data found
+					for (var d = 0; d < noDataCategories.length; d++) {
+						noDataCategories[d].xIndex = 0;
+						noDataCategories[d].yIndex = yc.indexOf("category-" + noDataCategories[d].label);
 					}
 
 					var xGridSize = Math.floor(width / x.length);
@@ -241,7 +268,7 @@ angular.module("heatmap", []).directive("heatmap",
 					if (options.valueText) {
 						var textVals = cardsG.append("text")
 							.attr("x", function(d) { return d.xIndex * xGridSize + xGridSize/2; })
-							.attr("y", function(d) { var _y = d.yIndex * yGridSize + yGridSize/2 + 4; maxY = Math.max(maxY, _y); return _y})
+							.attr("y", function(d) { var _y = d.yIndex * yGridSize + yGridSize/2 + 4; maxY = Math.max(maxY, _y); return _y; })
 							.attr("class", function (d, i) { return ("hm-yLabel"); })
 							.style("text-anchor", "middle")
 							.text(function(d) { return d.value; });
@@ -271,7 +298,7 @@ angular.module("heatmap", []).directive("heatmap",
 						
 						categorySeps.enter().append("rect")
 							.attr("x", function(d, i) { return 0; })
-							.attr("y", function(d, i) { return y.indexOf(d) * yGridSize; })
+							.attr("y", function(d, i) { return yc.indexOf("category-" + d) * yGridSize; })
 							.attr("class", "hm-category-separator")
 							.attr("width", function(d, i) { return x.length * xGridSize})
 							.attr("height", yGridSize)
@@ -281,8 +308,24 @@ angular.module("heatmap", []).directive("heatmap",
 						
 						categorySeps.exit().remove();
 					} */
+					
+					// draw no data categories
+					if (noDataCategories.length > 0) {
+						
+						var noDataCatMessages = svg.selectAll("hm-no-data-category").data(noDataCategories);
+						
+						var noDataG = noDataCatMessages.enter().append("g");						
+						noDataG.append("text")
+							.attr("x", function(d, i) { return d.xIndex * xGridSize; })
+							.attr("y", function(d, i) { var _y = d.yIndex * yGridSize + yGridSize/2 + 5; maxY = Math.max(maxY, _y); return _y; })
+							.attr("class", "hm-no-data-category")
+							.style("text-anchor", "left")
+							.text(function(d) { return "No data found for " + d.label; });
+						
+						noDataCatMessages.exit().remove();
+					} 
 
-					if (options.legend) {
+					if (options.legend && scope.data && scope.data.length > 0) {
 
 						var legendY = maxY + 40;
 						

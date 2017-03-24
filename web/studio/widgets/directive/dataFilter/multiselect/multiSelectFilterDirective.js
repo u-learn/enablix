@@ -22,7 +22,7 @@ function($compile,   Notification) {
 					scope.options = data;
 				}, function(error) {
 					Notification.error({message: "Error retrieving data for " + scope.filterDef.name, delay: enablix.errorMsgShowTime});
-				})
+				});
 			}
 			
 			scope.onItemSelect = function() {

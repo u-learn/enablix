@@ -65,6 +65,16 @@ enablix.studioApp.factory('ReportService',
 								
 								return deferred.promise;
 							},
+							validateBeforeSubmit: function(_selectedValues) {
+								
+								if (_selectedValues.length == 0) {
+									this.errorMessage = "Please select one or more Business Dimensions";
+									return false;
+								}
+								
+								this.errorMessage = null;
+								return true;
+							},
 							filterValueTransformer: function(_selectedValues) {
 								
 								var returnVal = [];
@@ -134,6 +144,16 @@ enablix.studioApp.factory('ReportService',
 								restrictedXLabels.push(contTypeVal.label);
 							});
 							this.options.restrictedXLabels = restrictedXLabels;
+						}
+						
+						
+						this.options.yLabelCategories = [];
+						if (_filterValues.contentQIdIn && _filterValues.contentQIdIn.length > 0) {
+							var yLabelCategories = [];
+							angular.forEach(_filterValues.contentQIdIn, function(contentCat) {
+								yLabelCategories.push(contentCat.label);
+							});
+							this.options.yLabelCategories = yLabelCategories;
 						}
 						
 						// change heading

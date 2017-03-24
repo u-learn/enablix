@@ -1774,6 +1774,12 @@ td eb-nav-link span a {
 	font-size: 12px;
 }
 
+.hm-no-data-category {
+	font-size: 12px;
+	/*fill: #f58080;*/
+	font-weight: bold;
+}
+
 .hm-tooltip {
 	font-size: 11px;
 	background-color: #333333;
