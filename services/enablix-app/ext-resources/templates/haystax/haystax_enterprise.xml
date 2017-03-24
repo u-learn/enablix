@@ -3670,6 +3670,11 @@
 		</contentUIDef>
 		<contentUIDef qualifiedId="salesKit">
 			<container labelQualifiedId="salesKit.kitName">
+				<listViewConfig>
+					<hideContentItem id="kitDesc"/>
+					<hideContentItem id="partners"/>
+					<hideContentItem id="topics"/>
+				</listViewConfig>			
 				<portalConfig>
 					<headingContentItem id="kitName"/>
 				</portalConfig>
