@@ -4,6 +4,7 @@ package com.enablix.trigger.lifecycle.action.email;
 import java.util.Collection;
 
 import com.enablix.commons.util.id.IdentityUtil;
+import com.enablix.core.domain.security.authorization.UserProfile;
 import com.enablix.core.domain.trigger.ContentChange.TriggerType;
 import com.enablix.core.domain.user.User;
 import com.enablix.core.mail.velocity.input.BaseVelocityInput;
@@ -16,11 +17,11 @@ public class TriggerEmailVelocityInput extends BaseVelocityInput implements Logg
 
 	private String identity;
 	private String url;
-	private User loggedInUser;
+	private UserProfile loggedInUser;
 	private Collection<DisplayableContent> emailContent;
 	private String triggerEntityTitle;
 	private String recipientUserId;
-	private User recipientUser;
+	private UserProfile recipientUser;
 	private TriggerType triggerType;
 	private DisplayableContent triggerEntity;
 	
@@ -47,12 +48,12 @@ public class TriggerEmailVelocityInput extends BaseVelocityInput implements Logg
 	}
 
 	@Override
-	public void setLoggedInUser(User loggedInUser) {
+	public void setLoggedInUser(UserProfile loggedInUser) {
 		this.loggedInUser = loggedInUser;
 	}
 
 	@Override
-	public User getLoggedInUser() {
+	public UserProfile getLoggedInUser() {
 		return loggedInUser;
 	}
 
@@ -78,11 +79,11 @@ public class TriggerEmailVelocityInput extends BaseVelocityInput implements Logg
 	}
 
 	@Override
-	public void setRecipientUser(User recipientUser) {
+	public void setRecipientUser(UserProfile recipientUser) {
 		this.recipientUser = recipientUser;
 	}
 
-	public User getRecipientUser() {
+	public UserProfile getRecipientUser() {
 		return recipientUser;
 	}
 

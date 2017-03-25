@@ -17,8 +17,10 @@ import com.enablix.core.domain.activity.ActivityChannel.Channel;
 import com.enablix.core.domain.activity.RegisteredActor;
 import com.enablix.core.domain.activity.UserAccountActivity;
 import com.enablix.core.domain.activity.UserAccountActivity.AccountActivityType;
+import com.enablix.core.domain.security.authorization.UserProfile;
 import com.enablix.core.domain.tenant.Tenant;
 import com.enablix.core.domain.user.User;
+import com.enablix.core.security.auth.repo.UserProfileRepository;
 import com.enablix.core.security.service.EnablixUserService.LoggedInUser;
 import com.enablix.core.system.repo.TenantRepository;
 import com.enablix.services.util.ActivityLogger;
@@ -27,48 +29,54 @@ import com.enablix.services.util.ActivityLogger;
 public class LoginListener implements ApplicationListener<AuthenticationSuccessEvent> {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(LoginListener.class);
-	
+
 	@Autowired
 	private TenantRepository tenantRepo;
-	
+
+	@Autowired
+	private UserProfileRepository userProfileRepo;
+
 	@Override
 	public void onApplicationEvent(AuthenticationSuccessEvent event) {
-		
+
 		UserDetails ud = (UserDetails) event.getAuthentication().getPrincipal();
-		
+
 		LOGGER.info("User {} logged-in successfully", ud.getUsername());
-		
+
 		ActivityAudit userLogin = new ActivityAudit();
-		
+
 		UserAccountActivity userLoginActvy = new UserAccountActivity(AccountActivityType.LOGIN);
 		userLogin.setActivity(userLoginActvy);
-		
-		userLogin.setActivityTime(Calendar.getInstance().getTime());
-		
-		userLogin.setChannel(new ActivityChannel(Channel.WEB));
-		
-		if (ud instanceof LoggedInUser) {
-			
-			User user = ((LoggedInUser) ud).getUser();
-			
-			RegisteredActor actor = new RegisteredActor(ud.getUsername(), user.getDisplayName());
-			userLogin.setActor(actor);
 
+		userLogin.setActivityTime(Calendar.getInstance().getTime());
+
+		userLogin.setChannel(new ActivityChannel(Channel.WEB));
+
+		if (ud instanceof LoggedInUser) {
+
+			User user = ((LoggedInUser) ud).getUser();
 			Tenant tenant = tenantRepo.findByTenantId(user.getTenantId());
-			
+
 			String templateId = tenant == null ? "" : tenant.getDefaultTemplateId();
+			ProcessContext.initialize(user.getUserId(), user.getUserId(), user.getTenantId(), templateId);
 			
+			UserProfile userProfile = userProfileRepo.findByEmail(user.getUserId());
+			RegisteredActor actor = new RegisteredActor(ud.getUsername(), userProfile.getName());
+			userLogin.setActor(actor);
+			ProcessContext.clear();
+
+
 			// set up process context to fetch user roles from tenant specific database
-			ProcessContext.initialize(user.getUserId(), user.getDisplayName(), user.getTenantId(), templateId);
-			
+			ProcessContext.initialize(user.getUserId(), userProfile.getName(), user.getTenantId(), templateId);
+
 			try {
-				
+
 				ActivityLogger.auditActivity(userLogin);
-				
+
 			} finally {
 				ProcessContext.clear();
 			}
-			
+
 		}
 	}
 

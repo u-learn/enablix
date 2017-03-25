@@ -21,20 +21,21 @@ enablix.studioApp.factory('UserService',
 			});
 		};
 		
-		var addUserData= function(userData, roles)
+		var addUserData= function(user, userProfile)
 		{
-			userData.userId = userData.userId.toLowerCase();
-			if (isNullOrUndefined(userData.isPasswordSet)) {
-				userData.isPasswordSet=false;
+			 userProfile.email =  userProfile.email;
+			if (isNullOrUndefined(user.isPasswordSet)) {
+				user.isPasswordSet=false;
 			}
-			userData.identity=userData.userId;
+			user.identity = userProfile.email;
+			userProfile.identity = userProfile.email;
+			user.userId = userProfile.email ;
 			var sessionUser=JSON.parse(window.localStorage.getItem("userData"));
-			userData.tenantId=sessionUser.tenantId;
-			var userVO = { user: userData, roles: roles };			
-				
+			user.tenantId=sessionUser.tenantId;
+			var userVO = { user: user, userProfile: userProfile};	
+			
 			RESTService.postForData('systemuser', null, userVO, null,function(data) {	    	
 					Notification.primary({message: "User Saved successfully", delay: enablix.errorMsgShowTime});
-					sendMail(userData,userData.userId,"setpassword",true);	
 					StateUpdateService.goToListUser();				
 	    	}, function() {    		
 	    		Notification.error({message: "Error saving user ", delay: enablix.errorMsgShowTime});
@@ -43,15 +44,36 @@ enablix.studioApp.factory('UserService',
 			
 		};
 		
-		var updatepassword= function(_password)
-		{		
+		var editUserData= function(user, userProfile)
+		{
+			userProfile.email =  userProfile.email;
+			if (isNullOrUndefined(user.isPasswordSet)) {
+				user.isPasswordSet=false;
+			}
+			user.identity = userProfile.email;
+			userProfile.identity = userProfile.email;
+			user.userId = userProfile.email ;
 			var sessionUser=JSON.parse(window.localStorage.getItem("userData"));
-			sessionUser.password=_password;
-			sessionUser.isPasswordSet=true;
-			var userVO = { user: sessionUser, roles: [] };
-				RESTService.postForData('systemuser', null, userVO, null,function(data) {	    	
+			user.tenantId=sessionUser.tenantId;
+			var userVO = { user: user, userProfile: userProfile};	
+			
+			RESTService.postForData('systemuseredit', null, userVO, null,function(data) {	    	
+					Notification.primary({message: "User Saved successfully", delay: enablix.errorMsgShowTime});
+					StateUpdateService.goToListUser();				
+	    	}, function() {    		
+	    		Notification.error({message: "Error saving user ", delay: enablix.errorMsgShowTime});
+	    		StateUpdateService.goToListUser();
+	    	});
+			
+		};
+		
+		var updatepassword= function( userId, _password)
+		{		
+
+			var userData = { userId : userId, password :_password, isPasswordSet: true };
+			RESTService.postForData('systemuserchangepwd', null, userData, null,function(data) {	    	
 					Notification.primary({message: "Password saved successfully", delay: enablix.errorMsgShowTime});
-					sendMail(sessionUser,sessionUser.userId,"passwordconfirmation", false);
+					//sendMail(sessionUser,sessionUser.userId,"passwordconfirmation", false);
 					StateUpdateService.goToPortalHome();
 	    	}, function() {    		
 	    		Notification.error({message: "Error ", delay: enablix.errorMsgShowTime});
@@ -182,7 +204,8 @@ enablix.studioApp.factory('UserService',
 			saveEmailData : saveEmailData,
 			deleteEmailData : deleteEmailData,
 			getAllRoles: getAllRoles,
-			sendMail:sendMail
+			sendMail:sendMail,
+			editUserData:editUserData
 			
 		};
 	}

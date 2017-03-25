@@ -2,12 +2,12 @@
 
 	#spacer_row('15')
 											
-	#mail_opening(${obj.recipientUser.profile.name})
+	#mail_opening(${obj.recipientUser.name})
 	
 	#spacer_row('15')
 	
-	#if(${obj.loggedInUser.profile.name}) 
-		${obj.loggedInUser.profile.name}
+	#if(${obj.loggedInUser.name}) 
+		${obj.loggedInUser.name}
 	#else 
 		Someone 
 	#end 

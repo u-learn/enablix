@@ -78,9 +78,12 @@ enablix.studioApp.factory('StateUpdateService',
 	 			$state.go('forgotpassword');
 	 		};
 
-	 		var goToAppSetPassword = function() {
+	 		var goToAppSetPassword = function(identity) {
 	 			$window.location.href = $location.protocol() + "://" + $location.host() 
-					+ ":" + $location.port() + "/app.html#/setpassword";
+					+ ":" + $location.port() + "/app.html#/setpassword/"+identity;
+	 			//$state.go("setpassword", {
+	 			//	"identity": identity
+	 			//});
 	 		}
 	 		
 	 		var goToStudio = function(_containerQId) {

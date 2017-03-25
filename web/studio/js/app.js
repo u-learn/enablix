@@ -422,8 +422,8 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvi
 		})
 		.state('system.users.edit', {
 			url: '/edit/{identity}/',
-			templateUrl: 'views/user/adduser.html',
-			controller: 'SaveUserController',
+			templateUrl: 'views/user/editUser.html',
+			controller: 'EditUserController',
 			resolve: {
 				setupData: appSetup 
 			}
@@ -431,7 +431,7 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvi
 		.state('system.users.view', {
 			url: '/view/{identity}/',
 			templateUrl: 'views/user/viewuser.html',
-			controller: 'SaveUserController',
+			controller: 'EditUserController',
 			resolve: {
 				setupData: appSetup 
 			}
@@ -461,7 +461,7 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvi
 			controller: 'ForgotPasswordController'
 		})
 		.state('setpassword', {
-			url: '/setpassword',
+			url: '/setpassword/{identity}',
 			templateUrl: 'views/set-password.html',
 			controller: 'SetPasswordController'
 			

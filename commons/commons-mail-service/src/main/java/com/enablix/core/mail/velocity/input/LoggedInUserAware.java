@@ -1,11 +1,11 @@
 package com.enablix.core.mail.velocity.input;
 
-import com.enablix.core.domain.user.User;
+import com.enablix.core.domain.security.authorization.UserProfile;
 
 public interface LoggedInUserAware {
 
-	void setLoggedInUser(User loggedInUser);
+	void setLoggedInUser(UserProfile loggedInUser);
 	
-	User getLoggedInUser();
+	UserProfile getLoggedInUser();
 	
 }

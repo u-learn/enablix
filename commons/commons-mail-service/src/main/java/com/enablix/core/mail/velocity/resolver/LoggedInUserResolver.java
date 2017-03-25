@@ -4,22 +4,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.enablix.commons.util.process.ProcessContext;
-import com.enablix.core.domain.user.User;
+import com.enablix.core.domain.security.authorization.UserProfile;
 import com.enablix.core.mail.velocity.VelocityTemplateInputResolver;
 import com.enablix.core.mail.velocity.input.LoggedInUserAware;
-import com.enablix.core.system.repo.UserRepository;
+import com.enablix.core.security.auth.repo.UserProfileRepository;
 
 @Component
 public class LoggedInUserResolver implements VelocityTemplateInputResolver<LoggedInUserAware> {
 
 	@Autowired
-	private UserRepository userRepo;
+	private UserProfileRepository userProfileRepo;
 	
 	@Override
 	public void work(LoggedInUserAware velocityTemplateInput) {
 		String userId = ProcessContext.get().getUserId();
-		User loggedInUser = userRepo.findByUserId(userId.toLowerCase());
-		velocityTemplateInput.setLoggedInUser(loggedInUser);
+		
+		UserProfile loggedInUserProfile = userProfileRepo.findByEmail(userId.toLowerCase());
+		velocityTemplateInput.setLoggedInUser(loggedInUserProfile);
 	}
 
 	@Override

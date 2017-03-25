@@ -39,6 +39,8 @@ enablix.serviceURL = {
 	"navPath": enablix.domainName + "/navcontent/navpath/:containerQId/:contentIdentity/",
 	"user": enablix.domainName + "/user",
 	"systemuser" : enablix.domainName + "/systemuser",
+	"systemuseredit" : enablix.domainName + "/systemuseredit",
+	"systemuserchangepwd" : enablix.domainName + "/systemuserchangepwd",
 	"fetchUser" : enablix.domainName + "/d/user/:userIdentity/",
 	"deletesystemuser" : enablix.domainName + "/deletesystemuser",
 	"getemailconfiguration" : enablix.domainName + "/getemailconfiguration",

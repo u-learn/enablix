@@ -4,7 +4,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.enablix.commons.constants.AppConstants;
 import com.enablix.core.domain.BaseDocumentEntity;
-import com.enablix.core.domain.profile.Profile;
 
 @Document(collection = AppConstants.SYSTEM_USER_COLL_NAME)
 public class User extends BaseDocumentEntity {
@@ -14,8 +13,6 @@ public class User extends BaseDocumentEntity {
 	private String password;
 	
 	private String tenantId;
-	
-	private Profile profile = new Profile();
 	
 	private Boolean isPasswordSet;
 	
@@ -51,15 +48,4 @@ public class User extends BaseDocumentEntity {
 		this.tenantId = tenantId;
 	}
 
-	public Profile getProfile() {
-		return profile;
-	}
-
-	public void setProfile(Profile profile) {
-		this.profile = profile;
-	}
-	
-	public String getDisplayName() {
-		return profile == null ? getUserId() : profile.getName();
-	}
 }

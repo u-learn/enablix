@@ -1,8 +1,10 @@
 package com.enablix.core.security.service;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,17 +18,20 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
 import com.enablix.commons.util.collection.CollectionUtil;
+import com.enablix.commons.util.json.JsonUtil;
 import com.enablix.commons.util.process.ProcessContext;
 import com.enablix.core.domain.security.authorization.Role;
-import com.enablix.core.domain.security.authorization.UserRole;
+import com.enablix.core.domain.security.authorization.UserBusinessProfile;
+import com.enablix.core.domain.security.authorization.UserProfile;
+import com.enablix.core.domain.security.authorization.UserSystemProfile;
 import com.enablix.core.domain.tenant.Tenant;
 import com.enablix.core.domain.user.User;
+import com.enablix.core.mail.service.MailService;
 import com.enablix.core.security.auth.repo.RoleRepository;
-import com.enablix.core.security.auth.repo.UserRoleRepository;
-import com.enablix.core.security.web.UserAndRolesVO;
+import com.enablix.core.security.auth.repo.UserProfileRepository;
 import com.enablix.core.system.repo.TenantRepository;
 import com.enablix.core.system.repo.UserRepository;
-
+import com.fasterxml.jackson.databind.JsonNode;
 @Component
 public class EnablixUserService implements UserService, UserDetailsService {
 
@@ -37,13 +42,16 @@ public class EnablixUserService implements UserService, UserDetailsService {
 	private TenantRepository tenantRepo;
 	
 	@Autowired
-	private UserRoleRepository userRoleRepo;
+	private UserProfileRepository userProfileRepo;
 	
 	@Autowired
 	private RoleRepository roleRepo;
 	
 	@Autowired
 	private GuestUserProviderFactory guestUserProviderFactory;
+	
+	@Autowired
+	private MailService mailService;
 	
 	@Override
 	public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
@@ -59,19 +67,20 @@ public class EnablixUserService implements UserService, UserDetailsService {
 		String templateId = tenant == null ? "" : tenant.getDefaultTemplateId();
 		
 		// set up process context to fetch user roles from tenant specific database
-		ProcessContext.initialize(user.getUserId(), user.getDisplayName(), user.getTenantId(), templateId);
+		//Setting the name also as the user id
+		ProcessContext.initialize(user.getUserId(), user.getUserId(), user.getTenantId(), templateId);
 		
-		UserRole userRole = null;
+		UserProfile userProfile = null;
 		
 		try {
 			
-			 userRole = userRoleRepo.findByUserIdentity(user.getIdentity());
+			userProfile = userProfileRepo.findByEmail(user.getUserId());
 			
 		} finally {
 			ProcessContext.clear();
 		}
 		
-		return new LoggedInUser(user, templateId, userRole);
+		return new LoggedInUser(user, templateId, userProfile.getSystemProfile().getRoles(),userProfile);
 	}
 	
 	@Override
@@ -89,50 +98,128 @@ public class EnablixUserService implements UserService, UserDetailsService {
 		user.setPassword(password);
 		user.setIsPasswordSet(false);
 		
-		ProcessContext.initialize(userid.toLowerCase(), user.getDisplayName(), user.getTenantId(), null);
-		userRepo.save(user);		
+		ProcessContext.clear();
+		ProcessContext.initialize(userid.toLowerCase(), userid.toLowerCase(), user.getTenantId(), null);
+		userRepo.save(user);	
+		ProcessContext.clear();
 		return user;
 	}	
+	
 	@Override
-	public User addUser(UserAndRolesVO userVO) {
+	public User changePassword(User user){
 		
-		if (userVO.getUser().getPassword() == null) {
+		User modUser = userRepo.findByUserId(user.getUserId());
+		
+		modUser.setPassword(user.getPassword());
+		modUser.setIsPasswordSet(true);
+		
+		//Setting the name also as the user id
+		ProcessContext.clear();
+		ProcessContext.initialize(modUser.getUserId(), modUser.getUserId(), modUser.getTenantId(), null);
+		userRepo.save(modUser);		
+		
+		mailService.sendHtmlEmail(modUser,modUser.getUserId(),"passwordconfirmation");
+		ProcessContext.clear();
+		return modUser;
+	}	
+	
+	@Override
+	public User addUser(String userDataJSON) {
+		
+		JsonNode userData = JsonUtil.getJSONNode(userDataJSON);
+
+		User user = JsonUtil.<User>jsonToJavaPojo(userData.get("user"), User.class);
+
+		UserSystemProfile userSystemProfile = getSystemProfile(userData.get("userProfile").get("systemProfile"));
+
+		UserProfile userProfile = JsonUtil.<UserProfile>jsonToJavaPojo(userData.get("userProfile"), UserProfile.class);
+
+		UserBusinessProfile usrBusinessProfile = getBusinessProfile(userData.get("userProfile").get("businessProfile"));
+
+		if (user.getPassword() == null) {
 			String password =UUID.randomUUID().toString().substring(0,8);//system generated default password
-			userVO.getUser().setPassword(password);
+			user.setPassword(password);
 		}
+
+		User newuser = userRepo.save(user);
+		userProfile.setIdentity(newuser.getIdentity());
+		userProfile.setId(newuser.getId());
+		userProfile.setSystemProfile(userSystemProfile);
+		userProfile.setBusinessProfile(usrBusinessProfile);
+		userProfileRepo.save(userProfile);
 		
-		User newuser = userRepo.save(userVO.getUser());
-		
-		if (!userVO.getRoles().isEmpty()) {
-			
-			List<Role> roles = roleRepo.findByIdentityIn(userVO.getRoles());
-			
-			if (!CollectionUtil.isEmpty(roles)) {
-				
-				UserRole userRole = userRoleRepo.findByUserIdentity(newuser.getIdentity());
-				
-				if (userRole == null) {
-					userRole = new UserRole();
-					userRole.setUserIdentity(newuser.getIdentity());
-				}
-				
-				userRole.setRoles(roles);
-				userRoleRepo.save(userRole);
-			}
-		}
+		mailService.sendHtmlEmail(newuser,userProfile.getEmail(),"setpassword");
 		
 		return newuser;
 	}
 	
 	@Override
-	public List<User> getAllUsers(String tenantId) {
-		return userRepo.findByTenantId(tenantId);
+	public User editUser(String userDataJSON) {
+		
+		JsonNode userData = JsonUtil.getJSONNode(userDataJSON);
+
+		User user = JsonUtil.<User>jsonToJavaPojo(userData.get("user"), User.class);
+
+		UserSystemProfile userSystemProfile = getSystemProfile(userData.get("userProfile").get("systemProfile"));
+
+		UserProfile userProfile = JsonUtil.<UserProfile>jsonToJavaPojo(userData.get("userProfile"), UserProfile.class);
+
+		UserBusinessProfile usrBusinessProfile = getBusinessProfile(userData.get("userProfile").get("businessProfile"));
+
+		if (user.getPassword() == null) {
+			String password =UUID.randomUUID().toString().substring(0,8);//system generated default password
+			user.setPassword(password);
+		}
+		User modUser  = userRepo.findByIdentity(user.getUserId());
+		modUser.setUserId(user.getUserId());
+		userRepo.save(modUser);
+		
+		UserProfile modUserProfile = userProfileRepo.findByIdentity(user.getUserId());
+		modUserProfile.setId(userProfile.getId());
+		modUserProfile.setName(userProfile.getName());
+		modUserProfile.setSystemProfile(userSystemProfile);
+		modUserProfile.setBusinessProfile(usrBusinessProfile);
+		userProfileRepo.save(modUserProfile);
+		
+		return modUser;
+	}
+	
+	private UserBusinessProfile getBusinessProfile(JsonNode jsonNode) {
+		UserBusinessProfile usrBusinessProfile = new UserBusinessProfile();
+		Map<String, Object> userBusinessProfileMap = JsonUtil.jsonToMap(jsonNode.toString());
+		usrBusinessProfile.setAttributes(userBusinessProfileMap);
+		return usrBusinessProfile;
+	}
+
+	private UserSystemProfile getSystemProfile(JsonNode systemProfile) {
+		JsonNode roleArr = systemProfile.get("systemRoles");
+		List<String> roleArrLst = new ArrayList<String>();
+		if (roleArr.isArray()) {
+			for (final JsonNode objNode : roleArr) {
+				roleArrLst.add(objNode.asText());
+			}
+		}
+
+		UserSystemProfile userSystemProfile = JsonUtil.<UserSystemProfile>jsonToJavaPojo(systemProfile, UserSystemProfile.class);
+
+		List<Role> roles = roleRepo.findByIdentityIn(roleArrLst);
+
+		if (!CollectionUtil.isEmpty(roles)) {
+			userSystemProfile.setRoles(roles);
+		}
+		return userSystemProfile;
+	}
+	
+	@Override
+	public List<UserProfile> getAllUsers(String tenantId) {
+		return userProfileRepo.findAll();
 	}
 	
 	@Override
 	public Boolean deleteUser(User user) {
 		try {
-			userRepo.delete(user);
+			userProfileRepo.deleteByIdentity(user.getIdentity());
+			userRepo.deleteByIdentity(user.getIdentity());
 			return true;
 		} catch (Exception e) {
 			return false;
@@ -142,24 +229,25 @@ public class EnablixUserService implements UserService, UserDetailsService {
 	public static class LoggedInUser implements UserDetails {
 
 		private static final long serialVersionUID = 1L;
-		
+		private UserProfile usrProfile;
 		private User user;
 		private String templateId;
 		Collection<GrantedAuthority> auths;
 		
-		private LoggedInUser(User user, String templateId, UserRole userRole) {
+		private LoggedInUser(User user, String templateId, List<Role> roles, UserProfile usrProfile) {
 			this.user = user;
 			this.templateId = templateId;
-			initAuthorities(userRole);
+			this.usrProfile=usrProfile;
+			initAuthorities(roles);
 		}
 		
-		private void initAuthorities(UserRole userRole) {
+		private void initAuthorities(List<Role> roles) {
 			
 			auths = new HashSet<>();
 			
-			if (userRole != null && userRole.getRoles() != null) {
+			if (roles != null) {
 			
-				for (Role role : userRole.getRoles()) {
+				for (Role role : roles) {
 				
 					if (role.getPermissions() != null) {
 					
@@ -173,6 +261,10 @@ public class EnablixUserService implements UserService, UserDetailsService {
 		
 		public User getUser() {
 			return user;
+		}
+
+		public String getDisplayName() {
+			return usrProfile.getName();
 		}
 
 		public String getTemplateId() {
@@ -217,27 +309,9 @@ public class EnablixUserService implements UserService, UserDetailsService {
 	}
 
 	@Override
-	public UserAndRolesVO getUserByIdentity(String userIdentity, String tenantId) {
-		
-		UserAndRolesVO userVO = new UserAndRolesVO();
-		
-		User user = userRepo.findByIdentityAndTenantId(userIdentity, tenantId);
-		
-		if (user != null) {
-		
-			userVO.setUser(user);
-			
-			UserRole userRole = userRoleRepo.findByUserIdentity(userIdentity);
-			
-			if (userRole != null) {
-				
-				for (Role role : userRole.getRoles()) {
-					userVO.addRole(role.getIdentity());
-				}
-			}
-		}
-		
-		return userVO;
+	public UserProfile getUserByIdentity(String userIdentity) {
+		UserProfile userProfile = userProfileRepo.findByEmail(userIdentity);
+		return userProfile;
 	}
 
 	@Override
@@ -248,15 +322,12 @@ public class EnablixUserService implements UserService, UserDetailsService {
 		
 		if (provider != null) {
 		
-			UserAndRolesVO guestUser = provider.getGuestUser(request);
-			
+			User guestUser = provider.getGuestUser(request);
+			UserProfile usrProfile = provider.getGuestUserProfile(guestUser);
 			if (guestUser != null) {
-				UserRole userRole = new UserRole();
-				userRole.setUserIdentity(guestUser.getUser().getIdentity());
-				userRole.setRoles(guestUser.getDetailedRoles());
-				
-				user = new LoggedInUser(guestUser.getUser(), 
-						null, userRole);
+				// Adding the role as null for the guest user
+				user = new LoggedInUser(guestUser, 
+						null, null, usrProfile);
 			}
 		}
 		

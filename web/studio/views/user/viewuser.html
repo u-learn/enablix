@@ -1,33 +1,85 @@
 <form class="block" name="userForm" novalidate="novalidate">
-<div class="head">
-	<h2>User Details</h2>
-</div>
-<div class="cont">
-	<div>
-		<label class="form-label">Name </label>
-		<input name="name" placeholder="Enter Name" class="form-control" disabled type="text" ng-readonly="all" ng-model="newUser.profile.name" size="80" >
+	<div class="head">
+		<h2>{{pageHeading}}</h2>
 	</div>
-  </div>
-</div>
-<div class="cont">
-	<div>
-		<label class="form-label">Email</label>
-		<input name="userId" placeholder="Enter Email Id " class="form-control" disabled ng-readonly="all" ng-model="newUser.userId" ng-blur="checkUserName()" type="text" size="80">
+	<div class="cont">
+		<div>
+			<label class="form-label">Name </label> <input disabled focus="true"
+				name="name" placeholder="Enter Name" class="form-control"
+				type="text" ng-model="userProfile.name" size="80" required>
+		</div>
+		<div ng-messages="userForm.name.$error" ng-if='userForm.name.$touched'
+			role="alert">
+			<div ng-message="required" class="error">Please enter name</div>
+		</div>
 	</div>
-  </div>
-</div>
-<div class="cont">
-	<div>
-		<label class="form-label">Roles</label>
-		<span ng-repeat="role in allRoles" class="chckBox">
-		<input type="checkbox" name="selectedRoles[]" 
-			value="role.identity" ng-readonly="all" disabled ng-model="role.selected">&nbsp;&nbsp;{{role.roleName}}<br/>
-		</span>
+	<div class="cont">
+		<div>
+			<label class="form-label">Email</label> <input name="userId" disabled
+				placeholder="Enter Email Id " class="form-control"
+				ng-model="userProfile.email" ng-blur="checkUserName()" type="text"
+				size="80" required
+				ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,5})$/">
+		</div>
+		<div ng-messages="userForm.userId.$error"
+			ng-if='userForm.userId.$touched' role="alert">
+			<div ng-message="required" class="error">Please enter a valid
+				email address</div>
+			<div ng-message="pattern" class="error">Please enter valid
+				email</div>
+			<div ng-message="unexits" class="error">User email already
+				registered</div>
+		</div>
 	</div>
-  </div>
-</div>
-<div class="foot clearfix">
-	<button ng-click="userRecordEdit()" class="button button-add">Edit</button>
-	<a ng-click="cancelOperation()" class="button button-delete">Back</a>
-</div>
+	<div class="cont play-tabs">
+		<md-tabs md-dynamic-height md-border-bottom> <md-tab
+			label="System Profile"> <br />
+		<div>
+			<label class="form-label">Roles</label> <span
+				ng-repeat="role in allRoles" class="chckBox"> <input
+				type="checkbox" disabled value="role.identity"
+				ng-model="role.selected">&nbsp;&nbsp;{{role.roleName}}<br />
+			</span>
+		</div>
+
+		<br />
+
+		<div>
+			<label class="form-label">Preferences</label> <span class="chckBox">
+				<input type="checkbox" disabled
+				ng-model="userProfile.systemProfile.sendWeeklyDigest">&nbsp;&nbsp;Send
+				Weekly Digest
+			</span>
+		</div>
+
+		</md-tab> <md-tab label="Business Profile">
+		<div class="cont">
+			<table class="infotable">
+				<tr ng-repeat="item in containerDef.contentItem">
+					<!--td ng-if="item.type == 'CONTENT_STACK'" class="display-table" colspan="2">
+								<eb-content-stack content-def="item" content-list="containerData[item.id]" read-only="true"></eb-content-stack>
+							</td-->
+					<th>{{item.label}}:</th>
+					<td ng-if="item.type == 'CONTENT_STACK'" class="display-table">
+						<eb-content-stack content-def="item"
+							content-list="containerData[item.id]" read-only="true"></eb-content-stack>
+					</td>
+					<td ng-if="item.type != 'CONTENT_STACK'"><span
+						class="content-data"
+						ng-bind-html="containerData[item.id] | ebxFormatData: item : containerData"></span>
+						<span ng-if="item.type == 'DOC' && containerData[item.id].name"
+						class="download"> <eb-doc-download
+								doc-value="containerData[item.id].identity"></eb-doc-download> <eb-doc-preview-action
+								doc-identity="containerData[item.id].identity"
+								doc-metadata="containerData[item.id]"></eb-doc-preview-action>
+					</span></td>
+				</tr>
+			</table>
+		</div>
+		</md-tab> </md-tabs>
+	</div>
+	<div class="foot clearfix">
+		<button ng-click="userRecordEdit()" class="button button-add">Edit</button>
+		<a ng-click="cancelOperation()" class="button button-delete">Back</a>
+	</div>
 </form>

@@ -33,8 +33,8 @@ enablix.studioApp.controller('ShareController', [
 		function populateUserIds(data){
 			$scope.users = data.map(function (data) {
 				return {
-					value: data.userId.toLowerCase(),
-					display: (data.profile.name+" <"+data.userId.toLowerCase()+">")
+					value: data.email.toLowerCase(),
+					display: (data.name+" <"+data.email.toLowerCase()+">")
 				};
 			});
 		}

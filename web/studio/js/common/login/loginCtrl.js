@@ -11,7 +11,7 @@ enablix.studioApp.controller('LoginController',
 				if(AuthorizationService.getCurrentUser().isPasswordSet){
 					StateUpdateService.goToPortalHome();	
 				} else {
-					StateUpdateService.goToSetPassword();
+					StateUpdateService.goToSetPassword(AuthorizationService.getCurrentUser().identity);
 				}	
 				
 				$scope.error = false;
@@ -27,6 +27,7 @@ enablix.studioApp.controller('LoginController',
 		
 		$scope.login = function() {
 			$rootScope.loginProcess = true;
+			
 			AuthorizationService.authenticate($scope.credentials, function() {
 				$rootScope.loginProcess = false;
 				authCallback();

@@ -4,23 +4,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.enablix.commons.util.StringUtil;
-import com.enablix.core.domain.user.User;
+import com.enablix.core.domain.security.authorization.UserProfile;
 import com.enablix.core.mail.velocity.VelocityTemplateInputResolver;
 import com.enablix.core.mail.velocity.input.RecipientUserAware;
-import com.enablix.core.system.repo.UserRepository;
+import com.enablix.core.security.auth.repo.UserProfileRepository;
 
 @Component
 public class RecipientUserResolver implements VelocityTemplateInputResolver<RecipientUserAware> {
 
 	@Autowired
-	private UserRepository userRepo;
+	private UserProfileRepository userProfileRepo;
 	
 	@Override
 	public void work(RecipientUserAware velocityTemplateInput) {
 		String userId = velocityTemplateInput.getRecipientUserId();
 		if (!StringUtil.isEmpty(userId)) {
-			User recipientUser = userRepo.findByUserId(userId.toLowerCase());
-			velocityTemplateInput.setRecipientUser(recipientUser);
+			UserProfile recipientUserProfile = userProfileRepo.findByEmail(userId.toLowerCase());
+			velocityTemplateInput.setRecipientUser(recipientUserProfile);
 		}
 	}
 

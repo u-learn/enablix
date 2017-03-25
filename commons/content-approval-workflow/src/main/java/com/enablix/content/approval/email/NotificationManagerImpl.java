@@ -15,12 +15,12 @@ import com.enablix.content.approval.ContentApprovalConstants;
 import com.enablix.content.approval.model.ContentApproval;
 import com.enablix.content.approval.model.ContentDetail;
 import com.enablix.core.domain.security.authorization.Role;
-import com.enablix.core.domain.security.authorization.UserRole;
+import com.enablix.core.domain.security.authorization.UserProfile;
 import com.enablix.core.domain.user.User;
 import com.enablix.core.mail.service.MailService;
 import com.enablix.core.mq.EventSubscription;
 import com.enablix.core.security.auth.repo.RoleRepository;
-import com.enablix.core.security.auth.repo.UserRoleRepository;
+import com.enablix.core.security.auth.repo.UserProfileRepository;
 import com.enablix.core.system.repo.UserRepository;
 import com.enablix.state.change.model.SimpleActionInput;
 
@@ -34,7 +34,7 @@ public class NotificationManagerImpl implements NotificationManager {
 	private RoleRepository roleRepo;
 	
 	@Autowired
-	private UserRoleRepository userRoleRepo;
+	private UserProfileRepository userProfileRepo;
 	
 	@Autowired
 	private UserRepository userRepo;
@@ -56,7 +56,7 @@ public class NotificationManagerImpl implements NotificationManager {
 		
 		if (!adminRoles.isEmpty()) {
 			
-			List<String> roleIds = CollectionUtil.transform(adminRoles, new CollectionCreator<List<String>, String>() {
+			/*List<String> roleIds = CollectionUtil.transform(adminRoles, new CollectionCreator<List<String>, String>() {
 
 					@Override
 					public List<String> create() {
@@ -70,40 +70,39 @@ public class NotificationManagerImpl implements NotificationManager {
 						return in.getId();
 					}
 					
-				});
+				});*/
 
 			// find the user identities who have these roles
-			List<UserRole> userRoles = userRoleRepo.findByRolesIdIn(roleIds);
+			List<UserProfile> userprofiles = userProfileRepo.findBySystemProfile_RolesIn(adminRoles);
 			
 			ContentApprovalEmailVelocityInput<ContentDetail> emailInput = null;
-			for (UserRole userRole : userRoles) {
+			for (UserProfile userProfile : userprofiles) {
 				
 				// exclude the user who has submitted the request.
-				if (!userRole.getUserIdentity().equals(contentRequest.getCreatedBy())) {
+				if (!userProfile.getIdentity().equals(contentRequest.getCreatedBy())) {
 					
 					// find the user details
-					User recipient = userRepo.findByIdentityAndTenantId(
-							userRole.getUserIdentity(), ProcessContext.get().getTenantId());
 					
-					if (recipient != null) {
-						
-						if (emailInput == null) {
-							emailInput = inputBuilder.build(
-									ContentApprovalConstants.ACTION_APPROVE, actionInput, contentRequest);
-						}
-						
-						emailInput.setRecipientUser(recipient);
-						emailInput.setRecipientUserId(recipient.getUserId());
-						
-						inputBuilder.prepareContentForEmailToUser(emailInput, recipient.getUserId());
-						
-						mailService.sendHtmlEmail(emailInput, recipient.getUserId(), 
-								ContentApprovalConstants.TEMPLATE_PORTAL_REQ_ADMIN_NOTIF);
+					//User recipient = userRepo.findByIdentityAndTenantId(
+						//	userProfile.getIdentity(), ProcessContext.get().getTenantId());
+					
+					
+					if (emailInput == null) {
+						emailInput = inputBuilder.build(
+								ContentApprovalConstants.ACTION_APPROVE, actionInput, contentRequest);
 					}
+					
+					emailInput.setRecipientUser(userProfile);
+					emailInput.setRecipientUserId(userProfile.getEmail());
+					
+					inputBuilder.prepareContentForEmailToUser(emailInput, userProfile.getEmail());
+					
+					mailService.sendHtmlEmail(emailInput, userProfile.getEmail(), 
+							ContentApprovalConstants.TEMPLATE_PORTAL_REQ_ADMIN_NOTIF);
+				
 				}
 			}
 		}
-		
 	}
 
 	@Override

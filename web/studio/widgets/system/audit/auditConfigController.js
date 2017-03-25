@@ -104,8 +104,8 @@ enablix.studioApp.controller('AuditController',
 		for (var i=0; i<size;i++) {
 		
 			var UserObj= {
-					label: data[i].profile.name,
-					id: data[i].profile.name,
+					label: data[i].name,
+					id: data[i].name,
 			};
 			
 			$scope.userLst.push(UserObj);

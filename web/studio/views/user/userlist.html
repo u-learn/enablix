@@ -20,8 +20,8 @@
 					<td class="details"><a class="fa fa-eye" ng-click="userRecordView(user.identity)"></a></td>
 					<td class="edit"><a class="fa fa-pencil" ng-click="userRecordEdit(user.identity)"></a></td>
 					<td class="remove"><a class="fa fa-times" ng-click="deleteUserRecord(user.identity)"></a></td>
-					<td><span ng-bind="user.profile.name"></span></td>
-					<td><span ng-bind="user.userId"></span></td>
+					<td><span ng-bind="user.name"></span></td>
+					<td><span ng-bind="user.email"></span></td>
 				</tr>
 			</tbody>
 		</table>

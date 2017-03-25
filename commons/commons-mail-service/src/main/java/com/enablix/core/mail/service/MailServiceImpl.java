@@ -22,10 +22,12 @@ import com.enablix.core.domain.config.EmailConfiguration;
 import com.enablix.core.domain.config.SMTPConfiguration;
 import com.enablix.core.domain.config.TemplateConfiguration;
 import com.enablix.core.domain.tenant.Tenant;
+import com.enablix.core.domain.user.User;
 import com.enablix.core.mail.entities.ShareEmailClientDtls;
 import com.enablix.core.mail.utility.MailConstants;
 import com.enablix.core.mail.utility.MailUtility;
 import com.enablix.core.mail.velocity.NewUserScenarioInputBuilder;
+import com.enablix.core.mail.web.EmailData;
 import com.enablix.core.mongo.config.repo.EmailConfigRepo;
 import com.enablix.core.mongo.config.repo.SMTPConfigRepo;
 import com.enablix.core.mongo.config.repo.TemplateConfigRepo;
@@ -102,7 +104,8 @@ public class MailServiceImpl implements MailService {
 		case MailConstants.SCENARIO_SET_PASSWORD:
 		case MailConstants.SCENARIO_RESET_PASSWORD:
 		case MailConstants.SCENARIO_PASSWORD_CONFIRMATION:
-			objectTobeMerged = newUserScenarioInputBuilder.build(emailid);
+			User user = (User) objectTobeMerged;
+			objectTobeMerged = newUserScenarioInputBuilder.build(emailid,user.getPassword());
 			break;
 		default:
 			break;

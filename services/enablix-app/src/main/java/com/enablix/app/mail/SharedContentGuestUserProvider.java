@@ -11,10 +11,10 @@ import org.springframework.stereotype.Component;
 
 import com.enablix.app.content.share.ShareContentConstants;
 import com.enablix.commons.constants.AppConstants;
+import com.enablix.core.domain.security.authorization.UserProfile;
 import com.enablix.core.domain.share.SharedSiteUrl;
 import com.enablix.core.domain.user.User;
 import com.enablix.core.security.service.GuestUserProvider;
-import com.enablix.core.security.web.UserAndRolesVO;
 import com.enablix.core.system.repo.SharedSiteUrlRepository;
 
 @Component
@@ -31,26 +31,41 @@ public class SharedContentGuestUserProvider implements GuestUserProvider {
 	}
 	
 	@Override
-	public UserAndRolesVO getGuestUser(HttpServletRequest request) {
+	public User getGuestUser(HttpServletRequest request) {
 		
-		UserAndRolesVO userAndRoles = null;
+		User user = new User();
 		
 		SharedSiteUrl shareDetails = getSharedUrlDetails(request);
 		
 		if (shareDetails != null) {
-			userAndRoles = new UserAndRolesVO();
 			
-			User user = new User();
+			
 			user.setIdentity(AppConstants.GUEST_USER_IDENTITY);
 			user.setUserId(shareDetails.getSharedWith());
 			user.setTenantId(shareDetails.getTenantId());
 			
-			userAndRoles.setUser(user);
 		}
 		
-		return userAndRoles;
+		return user;
 	}
 
+	@Override
+	public UserProfile getGuestUserProfile(User user) {
+		
+		UserProfile usrProfile = new UserProfile();
+		
+		
+		if (user != null) {
+			
+			usrProfile.setIdentity(AppConstants.GUEST_USER_IDENTITY);
+			usrProfile.setEmail(user.getUserId());
+			usrProfile.setName(user.getUserId());
+			
+		}
+		
+		return usrProfile;
+	}
+	
 	private SharedSiteUrl getSharedUrlDetails(HttpServletRequest request) {
 		String sharedUrl = request.getRequestURI();
 		return sharedUrlRepo.findBySharedUrl(sharedUrl);

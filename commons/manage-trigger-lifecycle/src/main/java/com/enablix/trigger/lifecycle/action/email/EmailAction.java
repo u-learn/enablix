@@ -32,10 +32,10 @@ import com.enablix.core.commons.xsdtopojo.EmailContentTriggerEntityType;
 import com.enablix.core.commons.xsdtopojo.EmailRecipientType;
 import com.enablix.core.domain.activity.ActivityChannel.Channel;
 import com.enablix.core.domain.activity.ContentShareActivity.ShareMedium;
+import com.enablix.core.domain.security.authorization.UserProfile;
 import com.enablix.core.domain.trigger.ContentChange;
 import com.enablix.core.domain.trigger.ContentChange.TriggerType;
 import com.enablix.core.domain.trigger.LifecycleCheckpoint;
-import com.enablix.core.domain.user.User;
 import com.enablix.core.mail.service.MailService;
 import com.enablix.core.mail.velocity.VelocityTemplateInputResolver;
 import com.enablix.core.mail.velocity.VelocityTemplateInputResolverFactory;
@@ -43,6 +43,7 @@ import com.enablix.core.mongo.content.ContentCrudService;
 import com.enablix.core.mongo.search.ConditionOperator;
 import com.enablix.core.mongo.search.SearchFilter;
 import com.enablix.core.mongo.search.StringListFilter;
+import com.enablix.core.security.auth.repo.UserProfileRepository;
 import com.enablix.core.system.repo.UserRepository;
 import com.enablix.core.ui.DisplayableContent;
 import com.enablix.services.util.ActivityLogger;
@@ -55,6 +56,9 @@ import com.enablix.trigger.lifecycle.action.CheckpointAction;
 public class EmailAction implements CheckpointAction<ContentChange, EmailActionType> {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(EmailAction.class);
+	
+	@Autowired
+	private UserProfileRepository userProfileRepo;
 	
 	@Autowired
 	private EmailContentResolverFactory contentResolverFactory;
@@ -199,7 +203,7 @@ public class EmailAction implements CheckpointAction<ContentChange, EmailActionT
 			
 			velocityIn.setRecipientUserId(emailId);
 			
-			User recipientUser = userRepo.findByUserId(emailId.toLowerCase());
+			UserProfile recipientUser = userProfileRepo.findByEmail(emailId.toLowerCase());
 			velocityIn.setRecipientUser(recipientUser);
 			
 			mailService.sendHtmlEmail(velocityIn, emailId, "TRIGGER_CHECKPOINT", 

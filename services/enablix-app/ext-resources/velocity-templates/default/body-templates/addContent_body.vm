@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
  <body>
-	<p>Hello#if(${obj.recipientUser.profile.name}) ${obj.recipientUser.profile.name}#end,</p>
+	<p>Hello#if(${obj.recipientUser.name}) ${obj.recipientUser.name}#end,</p>
 	<p style = "font: normal 14px/normal Arial, Helvetica, sans-serif;">${obj.triggerEntityTitle} was recently 
 		#if($obj.triggerType == 'ADD') added #else updated #end 
 		on #if(${obj.tenant.name})<b>${obj.tenant.name}</b>#end. Here are the details:    

@@ -19,5 +19,4 @@ public class MailController {
 	public @ResponseBody Boolean sentMail(@RequestBody EmailData emailData) {
 		return shareEmailService.sendEmail(emailData);
 	}
-	
 }

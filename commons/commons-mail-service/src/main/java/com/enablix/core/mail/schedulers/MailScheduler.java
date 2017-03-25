@@ -14,11 +14,13 @@ import com.enablix.commons.util.process.ProcessContext;
 import com.enablix.core.api.ContentDataRef;
 import com.enablix.core.domain.activity.ActivityChannel.Channel;
 import com.enablix.core.domain.activity.ContentShareActivity.ShareMedium;
+import com.enablix.core.domain.security.authorization.UserProfile;
 import com.enablix.core.domain.user.User;
 import com.enablix.core.mail.service.MailService;
 import com.enablix.core.mail.utility.MailConstants;
 import com.enablix.core.mail.velocity.WeeklyDigestScenarioInputBuilder;
 import com.enablix.core.mail.velocity.input.WeeklyDigestVelocityInput;
+import com.enablix.core.security.auth.repo.UserProfileRepository;
 import com.enablix.core.system.repo.TenantRepository;
 import com.enablix.core.system.repo.UserRepository;
 import com.enablix.services.util.ActivityLogger;
@@ -40,14 +42,18 @@ public class MailScheduler {
 	@Autowired
 	private TenantRepository tenantRepo;
 
+	@Autowired
+	private UserProfileRepository userProfileRepo;
+	
 	@Scheduled(cron = "${weekly.digest.timing}")
 	public void scheduleWeeklyDigest() {
 
-		List<User> users = userRepo.findAll();
 		
-		for (User user : users) {
+		List<UserProfile> users = userProfileRepo.findAll();
 		
-			if (user.getProfile().isSendWeeklyDigest()) {
+		for (UserProfile userProfile : users) {
+		
+			if (userProfile.getSystemProfile().isSendWeeklyDigest()) {
 			
 				try {
 					/*
@@ -58,9 +64,9 @@ public class MailScheduler {
 					 * SecurityContextHolder.getContext().setAuthentication(
 					 * authenticate);
 					 */
-
+					User user = userRepo.findByIdentity(userProfile.getIdentity());
 					String templateId = tenantRepo.findByTenantId(user.getTenantId()).getDefaultTemplateId();
-					ProcessContext.initialize(user.getUserId(), user.getDisplayName(), user.getTenantId(), templateId);
+					ProcessContext.initialize(user.getUserId(), userProfile.getName(), user.getTenantId(), templateId);
 					
 					WeeklyDigestVelocityInput input = weeklyDigestScenarioInputBuilder.build();
 					if (!input.getRecentList().get("RecentlyUpdated").isEmpty()) {
@@ -70,7 +76,7 @@ public class MailScheduler {
 					
 				} catch (Throwable e) {
 					
-					LOGGER.error("Error sending weekly digest for user: {}", user.getUserId());
+					LOGGER.error("Error sending weekly digest for user: {}", userProfile.getIdentity());
 					LOGGER.error("Exception: ", e);
 					
 				} finally {

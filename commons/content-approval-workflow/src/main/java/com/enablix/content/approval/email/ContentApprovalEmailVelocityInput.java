@@ -2,6 +2,7 @@
 package com.enablix.content.approval.email;
 
 import com.enablix.content.approval.model.ContentApproval;
+import com.enablix.core.domain.security.authorization.UserProfile;
 import com.enablix.core.domain.user.User;
 import com.enablix.core.mail.velocity.input.BaseVelocityInput;
 import com.enablix.core.mail.velocity.input.EnvPropertiesAware;
@@ -13,9 +14,9 @@ import com.enablix.state.change.model.ActionInput;
 public class ContentApprovalEmailVelocityInput<I extends ActionInput> extends BaseVelocityInput implements LoggedInUserAware, RecipientUserAware, EnvPropertiesAware {
 
 	private String url;
-	private User loggedInUser;
+	private UserProfile loggedInUser;
 	private String recipientUserId;
-	private User recipientUser;
+	private UserProfile recipientUser;
 	private String actionName;
 	private I actionInput;
 	private ContentApproval contentRequest;
@@ -38,12 +39,12 @@ public class ContentApprovalEmailVelocityInput<I extends ActionInput> extends Ba
 	}
 
 	@Override
-	public void setLoggedInUser(User loggedInUser) {
+	public void setLoggedInUser(UserProfile loggedInUser) {
 		this.loggedInUser = loggedInUser;
 	}
 
 	@Override
-	public User getLoggedInUser() {
+	public UserProfile getLoggedInUser() {
 		return loggedInUser;
 	}
 
@@ -53,11 +54,11 @@ public class ContentApprovalEmailVelocityInput<I extends ActionInput> extends Ba
 	}
 
 	@Override
-	public void setRecipientUser(User recipientUser) {
+	public void setRecipientUser(UserProfile recipientUser) {
 		this.recipientUser = recipientUser;
 	}
 
-	public User getRecipientUser() {
+	public UserProfile getRecipientUser() {
 		return recipientUser;
 	}
 

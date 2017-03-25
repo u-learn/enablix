@@ -2458,8 +2458,6 @@
 			<contentItem id="desc" label="Description" type="text"/>
 		</container>
 		<container id="user" label="Users" refData="true">
-			<contentItem id="userName" label="Name" type="text"/>
-			<contentItem id="email" label="Email" type="text"/>
 			<contentItem id="role" label="Business Roles" type="bounded">
 				<bounded>
 					<refList>

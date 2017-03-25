@@ -7,11 +7,8 @@ enablix.studioApp.controller('Login2Controller',
 		$scope.credentials = {};
 				
 		var authCallback = function() {
-			
 			if ($rootScope.authenticated) {
-				
 				var currentUser = AuthorizationService.getCurrentUser();
-				
 				if(currentUser.isPasswordSet){
 						var previousURL = decodeURIComponent(window.location.href);
 						if(previousURL.indexOf("redirect") > 0){ 
@@ -21,7 +18,7 @@ enablix.studioApp.controller('Login2Controller',
 						else
 							StateUpdateService.goToApp();	
 				} else {
-					StateUpdateService.goToAppSetPassword();
+					StateUpdateService.goToAppSetPassword(currentUser.identity);
 				}
 				
 				$scope.error = false;
