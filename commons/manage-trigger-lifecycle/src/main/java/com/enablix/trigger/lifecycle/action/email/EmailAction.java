@@ -82,9 +82,6 @@ public class EmailAction implements CheckpointAction<ContentChange, EmailActionT
 	private ContentDataManager contentDataMgr;
 	
 	@Autowired
-	private UserRepository userRepo;
-
-	@Autowired
 	private DocUnsecureAccessUrlPopulator docUrlPopulator;
 	
 	@Autowired

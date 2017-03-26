@@ -310,7 +310,7 @@ public class EnablixUserService implements UserService, UserDetailsService {
 
 	@Override
 	public UserProfile getUserByIdentity(String userIdentity) {
-		UserProfile userProfile = userProfileRepo.findByEmail(userIdentity);
+		UserProfile userProfile = userProfileRepo.findByIdentity(userIdentity);
 		return userProfile;
 	}
 
