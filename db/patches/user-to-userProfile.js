@@ -76,7 +76,7 @@ dbs.forEach(function(database) {
                 var roles = getRoles(usr.identity, db);
                 var referenceData = getReferenceData(usr.userId, db, template._id);
 
-                db.ebx_user_profile.insertOne({
+                db.ebx_user_profile.insert({
                     "_id": usr._id,
                     "_class": "com.enablix.core.domain.user.UserProfile",
                     "name": usr.profile.name,
@@ -96,7 +96,7 @@ dbs.forEach(function(database) {
                     "modifiedBy": usr.modifiedBy,
                     "modifiedByName": usr.modifiedBy,
                     "modifiedAt": usr.modifiedAt
-                })
+                });
             }
         });
     }
