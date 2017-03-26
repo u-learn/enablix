@@ -73,7 +73,7 @@ dbs.forEach(function(database) {
 
                 print(" Processing the user " + usr.userId);
 
-                var roles = getRoles(usr.userId, db);
+                var roles = getRoles(usr.identity, db);
                 var referenceData = getReferenceData(usr.userId, db, template._id);
 
                 db.ebx_user_profile.insertOne({
