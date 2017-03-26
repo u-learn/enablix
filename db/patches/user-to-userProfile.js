@@ -17,7 +17,7 @@ var getRoles = function(userId, tenantDb) {
     userRoles = tenantDb.ebx_user_role.findOne({
         "userIdentity": userId
     });
-    var roles = userRoles.roles;
+    var roles = userRoles ? userRoles.roles : [];
     print("Roles are  " + roles + " for User Id :: " + userId + " for the tenant  :: " + tenantDb);
     return roles;
 };
