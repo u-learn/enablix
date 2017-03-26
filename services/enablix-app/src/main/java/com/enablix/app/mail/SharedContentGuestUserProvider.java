@@ -58,6 +58,7 @@ public class SharedContentGuestUserProvider implements GuestUserProvider {
 		if (user != null) {
 			
 			usrProfile.setIdentity(AppConstants.GUEST_USER_IDENTITY);
+			usrProfile.setUserIdentity(AppConstants.GUEST_USER_IDENTITY);
 			usrProfile.setEmail(user.getUserId());
 			usrProfile.setName(user.getUserId());
 			

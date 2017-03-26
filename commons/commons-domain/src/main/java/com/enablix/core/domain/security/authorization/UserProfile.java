@@ -13,6 +13,8 @@ public class UserProfile extends BaseDocumentEntity {
 	
 	private String email;
 	
+	private String userIdentity;
+	
 	private UserSystemProfile systemProfile;
 	
 	private UserBusinessProfile businessProfile;
@@ -33,6 +35,14 @@ public class UserProfile extends BaseDocumentEntity {
 		this.email = email;
 	}
 	
+	public String getUserIdentity() {
+		return userIdentity;
+	}
+
+	public void setUserIdentity(String userIdentity) {
+		this.userIdentity = userIdentity;
+	}
+
 	public UserSystemProfile getSystemProfile() {
 		return systemProfile;
 	}

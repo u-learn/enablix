@@ -18,6 +18,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
 import com.enablix.commons.util.collection.CollectionUtil;
+import com.enablix.commons.util.id.IdentityUtil;
 import com.enablix.commons.util.json.JsonUtil;
 import com.enablix.commons.util.process.ProcessContext;
 import com.enablix.core.domain.security.authorization.Role;
@@ -142,7 +143,8 @@ public class EnablixUserService implements UserService, UserDetailsService {
 		}
 
 		User newuser = userRepo.save(user);
-		userProfile.setIdentity(newuser.getIdentity());
+		userProfile.setIdentity(IdentityUtil.generateIdentity(newuser));
+		userProfile.setUserIdentity(newuser.getIdentity());
 		userProfile.setId(newuser.getId());
 		userProfile.setSystemProfile(userSystemProfile);
 		userProfile.setBusinessProfile(usrBusinessProfile);

@@ -8,9 +8,11 @@ enablix.studioApp.factory('RefdataIndexService',
 				
 				var indexData = [];
 				
+				var usrContainerQId = ContentTemplateService.getUserContainerQId();
+				
 				angular.forEach(_containerList, function(cntnr) {
 					
-					if (cntnr.refData) {
+					if (cntnr.refData && cntnr.qualifiedId != usrContainerQId) {
 					
 						var indxItem = {
 							id: cntnr.id,
