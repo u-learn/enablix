@@ -22,7 +22,7 @@
 										<containerQId>customer.opportunity</containerQId>
 									</contentTypes>
 									<filterTags>
-										<tag>OPP_VIA_PROD</tag>
+										<tag>OPP_VIA_SOL</tag>
 									</filterTags>
 								</entity>
 							</correlatedEntities>			
@@ -63,7 +63,7 @@
 										<containerQId>customer.opportunity</containerQId>
 									</contentTypes>
 									<filterTags>
-										<tag>OPP_VIA_PROD</tag>
+										<tag>OPP_VIA_SOL</tag>
 									</filterTags>
 								</entity>
 							</correlatedEntities>			

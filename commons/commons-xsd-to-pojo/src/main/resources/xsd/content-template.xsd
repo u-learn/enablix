@@ -9,6 +9,7 @@
 				<xs:element name="uiDefinition" type="uiDefinitionType"/>
 				<xs:element name="portalUIDefinition" type="portalUIDefType" minOccurs="0"/>
 				<xs:element name="contentTypeMappingConfig" type="contentTypeMappingConfigType" minOccurs="0"/>
+				<xs:element name="dataSegmentDefinition" type="dataSegmentDefinitionType" minOccurs="0"/>
 			</xs:sequence>
 			<xs:attribute name="id" type="xs:string" use="required"/>
 			<xs:attribute name="version" type="xs:string"/>
@@ -38,6 +39,12 @@
 	<xs:complexType name="contentTypeMappingContextType">
 		<xs:sequence>
 			<xs:element name="containerDataContext" type="containerDataContextType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="dataSegmentDefinitionType">
+		<xs:sequence>
+			<xs:element name="segmentAttr" type="contentItemType" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
 	
@@ -141,6 +148,7 @@
 			<xs:element name="dataLabel" type="xs:string"/>
 		</xs:sequence>
 		<xs:attribute name="hyperlink" type="xs:boolean"/>
+		<xs:attribute name="location" type="datastoreLocationType" default="CONTENT"/>
 	</xs:complexType>
 	
 	<xs:complexType name="docType">
@@ -170,6 +178,14 @@
 	<xs:complexType name="richTextType">
 		<!-- no definition as of now -->
 	</xs:complexType>
+	
+	<xs:simpleType name="datastoreLocationType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="CONTENT" />
+			<xs:enumeration value="TENANT_DB" />
+			<xs:enumeration value="SYSTEM_DB" />
+		</xs:restriction>
+	</xs:simpleType>
 	
 	<xs:complexType name="baseContainerType">
 		<xs:complexContent>

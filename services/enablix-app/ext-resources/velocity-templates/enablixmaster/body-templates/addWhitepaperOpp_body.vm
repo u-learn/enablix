@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
  <body style = "font: normal 14px/normal Arial, Helvetica, sans-serif;">
-	<p>Hello#if(${obj.recipientUser.profile.name}) ${obj.recipientUser.profile.name}#end,</p>
+	<p>Hello#if(${obj.recipientUser.name}) ${obj.recipientUser.name}#end,</p>
 	<p>For your opportunity, 
 		#foreach($item in $obj.emailContent)
 			#if($item.containerQId	== 'customer.opportunity')

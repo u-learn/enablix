@@ -19,7 +19,7 @@ import com.enablix.core.commons.xsdtopojo.ItemUserCorrelationRuleType;
 import com.enablix.core.commons.xsdtopojo.PathItemType;
 import com.enablix.core.commons.xsdtopojo.RelatedUserPathType;
 import com.enablix.core.commons.xsdtopojo.RelatedUserType;
-import com.enablix.services.util.ContentDataUtil;
+import com.enablix.core.domain.security.authorization.UserProfile;
 import com.enablix.services.util.TemplateUtil;
 import com.enablix.services.util.template.TemplateWrapper;
 
@@ -132,13 +132,12 @@ public class ItemUserCorrelatorImpl implements ItemUserCorrelator {
 			RelatedUserType relatedUserDef, MatchInputRecord nextMatchInput) {
 		
 		String userContainerQId = TemplateUtil.getUserContainerQId(template.getTemplate());
-		List<Map<String, Object>> users = userMatcher.findMatchingUsers(template, 
+		List<UserProfile> users = userMatcher.findMatchingUsers(template, 
 				userContainerQId, relatedUserDef, nextMatchInput);
 		
 		if (!users.isEmpty()) {
-			for (Map<String, Object> user : users) {
-				ContentDataRef userRef = ContentDataUtil.contentDataToRef(user, template, userContainerQId);
-				itemUserCorrRecorder.recordItemUserCorrelation(item, userRef, rule, relatedUserDef.getTags());
+			for (UserProfile user : users) {
+				itemUserCorrRecorder.recordItemUserCorrelation(item, user, rule, relatedUserDef.getTags());
 			}
 		}
 	}

@@ -34,5 +34,6 @@
 	<module>slack-integration</module>
 	<module>condition-evaluator</module>
 	<module>commons-scheduler</module>
+	<module>manage-data-segment</module>
   </modules>
 </project>

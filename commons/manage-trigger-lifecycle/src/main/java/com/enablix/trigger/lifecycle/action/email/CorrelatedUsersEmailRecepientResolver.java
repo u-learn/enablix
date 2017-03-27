@@ -24,10 +24,10 @@ public class CorrelatedUsersEmailRecepientResolver implements EmailRecipientReso
 	private ItemUserCorrelationDao itemUserCorrelationDao;
 	
 	@Override
-	public Set<ContentDataRef> resolveRecepientEmails(ContentDataRef triggerEntity, 
+	public Set<String> resolveRecepientUsers(ContentDataRef triggerEntity, 
 			TemplateWrapper template, EmailCorrelatedUsersType emailCorrUsersDef) {
 		
-		Set<ContentDataRef> users = new HashSet<>();
+		Set<String> users = new HashSet<>();
 		
 		for (EmailUsersType usersDef : emailCorrUsersDef.getUsers()) {
 			
@@ -43,7 +43,7 @@ public class CorrelatedUsersEmailRecepientResolver implements EmailRecipientReso
 			
 			if (itemUserCorrs != null) {
 				for (ItemUserCorrelation itemUserCorr : itemUserCorrs) {
-					users.add(itemUserCorr.getUser());
+					users.add(itemUserCorr.getUserProfileIdentity());
 				}
 			}
 			

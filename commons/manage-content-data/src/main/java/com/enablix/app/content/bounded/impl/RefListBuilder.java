@@ -1,12 +1,15 @@
 package com.enablix.app.content.bounded.impl;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.stereotype.Component;
 
 import com.enablix.app.content.bounded.BoundedListBuilder;
@@ -15,7 +18,11 @@ import com.enablix.commons.util.StringUtil;
 import com.enablix.core.commons.xsdtopojo.BoundedListDatastoreType;
 import com.enablix.core.commons.xsdtopojo.BoundedRefListType;
 import com.enablix.core.commons.xsdtopojo.BoundedType;
+import com.enablix.core.commons.xsdtopojo.DatastoreLocationType;
 import com.enablix.core.mongo.content.ContentCrudService;
+import com.enablix.core.mongo.dao.BaseDao;
+import com.enablix.core.mongo.dao.GenericDao;
+import com.enablix.core.mongo.dao.GenericSystemDao;
 import com.enablix.services.util.template.TemplateWrapper;
 
 @Component
@@ -24,6 +31,12 @@ public class RefListBuilder implements BoundedListBuilder {
 	@Autowired
 	private ContentCrudService contentCrudService;
 	
+	@Autowired
+	private GenericSystemDao systemDao;
+	
+	@Autowired
+	private GenericDao tenantDao;
+	
 	@Override
 	public Collection<DataItem> buildBoundedList(TemplateWrapper template, BoundedType boundedTypeDef) {
 		
@@ -31,10 +44,26 @@ public class RefListBuilder implements BoundedListBuilder {
 		
 		BoundedRefListType refListType = boundedTypeDef.getRefList();
 		BoundedListDatastoreType boundedListDS = refListType.getDatastore();
+		String storeId = boundedListDS.getStoreId();
 		
-		String collectionName = template.getCollectionName(boundedListDS.getStoreId());
+		DatastoreLocationType dsLocation = boundedListDS.getLocation();
 		
-		List<Map<String, Object>> records = contentCrudService.findAllRecord(collectionName);
+		List<Map<String, Object>> records = null;
+		
+		switch(dsLocation) {
+
+			case TENANT_DB:
+				records = getDBCollectionRecords(storeId, tenantDao);
+				break;
+				
+			case SYSTEM_DB:
+				records = getDBCollectionRecords(storeId, systemDao);
+				break;
+				
+			default:
+				String collectionName = template.getCollectionName(boundedListDS.getStoreId());
+				records = contentCrudService.findAllRecord(collectionName);
+		}
 		
 		if (records != null) {
 		
@@ -51,6 +80,20 @@ public class RefListBuilder implements BoundedListBuilder {
 		
 		return itemList;
 	}
+
+
+
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	private List<Map<String, Object>> getDBCollectionRecords(String storeId, BaseDao dao) {
+		
+		List<Map<String, Object>> records = new ArrayList<>();
+		List<HashMap> systemDBRecords = dao.findByCriteria(new Criteria(), storeId, HashMap.class);
+
+		records.addAll((Collection<? extends Map<String, Object>>) systemDBRecords);
+		return records;
+	}
+	
+	
 
 	private String getStringValue(Object data) {
 		return data == null ? null : String.valueOf(data);

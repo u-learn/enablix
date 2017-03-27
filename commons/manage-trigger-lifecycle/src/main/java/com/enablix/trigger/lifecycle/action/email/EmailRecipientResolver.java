@@ -8,7 +8,7 @@ import com.enablix.services.util.template.TemplateWrapper;
 
 public interface EmailRecipientResolver<T extends BaseEmailRecipientType> {
 
-	Set<ContentDataRef> resolveRecepientEmails(ContentDataRef triggerEntity, TemplateWrapper template,
+	Set<String> resolveRecepientUsers(ContentDataRef triggerEntity, TemplateWrapper template,
 			T emailRecipientDef);
 	
 	boolean canHandle(BaseEmailRecipientType recipientDef);

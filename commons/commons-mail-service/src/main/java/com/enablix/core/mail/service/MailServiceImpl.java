@@ -27,7 +27,6 @@ import com.enablix.core.mail.entities.ShareEmailClientDtls;
 import com.enablix.core.mail.utility.MailConstants;
 import com.enablix.core.mail.utility.MailUtility;
 import com.enablix.core.mail.velocity.NewUserScenarioInputBuilder;
-import com.enablix.core.mail.web.EmailData;
 import com.enablix.core.mongo.config.repo.EmailConfigRepo;
 import com.enablix.core.mongo.config.repo.SMTPConfigRepo;
 import com.enablix.core.mongo.config.repo.TemplateConfigRepo;

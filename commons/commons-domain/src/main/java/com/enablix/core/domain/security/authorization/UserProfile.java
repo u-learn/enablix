@@ -2,10 +2,11 @@ package com.enablix.core.domain.security.authorization;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.enablix.commons.constants.AppConstants;
 import com.enablix.core.domain.BaseDocumentEntity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-@Document(collection = "ebx_user_profile")
+@Document(collection = AppConstants.USER_PROFILE_COLL_NAME)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class UserProfile extends BaseDocumentEntity {
 	

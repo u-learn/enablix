@@ -10,15 +10,23 @@ import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.search.SearchHit;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import com.enablix.analytics.correlation.matcher.MatchInputRecord;
 import com.enablix.analytics.correlation.matcher.UserMatcher;
 import com.enablix.core.commons.xsdtopojo.FilterCriteriaType;
 import com.enablix.core.commons.xsdtopojo.RelatedUserType;
+import com.enablix.core.domain.security.authorization.UserProfile;
 import com.enablix.services.util.template.TemplateWrapper;
 
-@Component
+//@Component
+@Deprecated
+/**
+ * 
+ * @Use {@link com.enablix.analytics.correlation.matcher.mongo.MongoUserMatcher}
+ * 
+ * @author dluthra
+ *
+ */
 public class ElasticSearchUserMatcher implements UserMatcher {
 
 	@Autowired
@@ -28,7 +36,7 @@ public class ElasticSearchUserMatcher implements UserMatcher {
 	private ESCorrelationQueryBuilder esCorrQueryBuilder;
 	
 	@Override
-	public List<Map<String, Object>> findMatchingUsers(TemplateWrapper template, String userQualifiedId, 
+	public List<UserProfile> findMatchingUsers(TemplateWrapper template, String userQualifiedId, 
 			RelatedUserType relatedUserDef, MatchInputRecord matchInput) {
 		
 		FilterCriteriaType userFilterCriteria = relatedUserDef.getFilterCriteria();
@@ -48,7 +56,7 @@ public class ElasticSearchUserMatcher implements UserMatcher {
 			matchedUsers.add(matchedUser);
 		}
 		
-		return matchedUsers;
+		return null;
 	}
 
 }

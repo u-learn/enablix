@@ -12,13 +12,9 @@ import com.enablix.analytics.correlation.ItemUserCorrelator;
 import com.enablix.analytics.correlation.context.CorrelationContext;
 import com.enablix.app.content.ContentDataManager;
 import com.enablix.commons.constants.ContentDataConstants;
-import com.enablix.commons.util.collection.CollectionUtil;
 import com.enablix.core.api.ContentDataRef;
-import com.enablix.core.mongo.content.ContentCrudService;
-import com.enablix.core.mongo.search.ConditionOperator;
-import com.enablix.core.mongo.search.StringFilter;
-import com.enablix.services.util.ContentDataUtil;
-import com.enablix.services.util.TemplateUtil;
+import com.enablix.core.domain.security.authorization.UserProfile;
+import com.enablix.core.security.auth.repo.UserProfileRepository;
 import com.enablix.services.util.template.TemplateWrapper;
 
 @Component
@@ -28,7 +24,7 @@ public class ContentCreatorCorrelator implements ItemUserCorrelator {
 	private ContentDataManager contentDataMgr;
 	
 	@Autowired
-	private ContentCrudService crudService;
+	private UserProfileRepository userProfileRepo;
 	
 	@Autowired
 	private ItemUserCorrelationRecorder userCorrRecorder;
@@ -41,23 +37,14 @@ public class ContentCreatorCorrelator implements ItemUserCorrelator {
 		Map<String, Object> contentRecord = contentDataMgr.getContentRecord(item, template);
 		String creatorEmail = (String) contentRecord.get(ContentDataConstants.CREATED_BY_KEY);
 		
-		String userContainerQId = TemplateUtil.getUserContainerQId(template.getTemplate());
-		String userCollectionName = template.getCollectionName(userContainerQId);
+		UserProfile creator = userProfileRepo.findByEmail(creatorEmail);
 		
-		String userEmailAttrId = TemplateUtil.getUserContainerEmailAttrId(template.getTemplate());
-		
-		StringFilter emailIdFilter = new StringFilter(userEmailAttrId, creatorEmail, ConditionOperator.EQ);
-		
-		List<Map<String, Object>> userRecords = crudService.findAllRecordForCriteria(userCollectionName, emailIdFilter.toPredicate(null));
-		
-		if (CollectionUtil.isNotEmpty(userRecords)) {
-			Map<String, Object> user = userRecords.get(0);
-			ContentDataRef userRef = ContentDataUtil.contentDataToRef(user, template, userContainerQId);
+		if (creator != null) {
 			
 			List<String> tags = new ArrayList<>();
 			tags.add(CorrelationConstants.CONTENT_CREATOR_ITEM_USER_CORR_TAG);
 			
-			userCorrRecorder.recordItemUserCorrelation(item, userRef, tags);
+			userCorrRecorder.recordItemUserCorrelation(item, creator, tags);
 		}
 		
 	}

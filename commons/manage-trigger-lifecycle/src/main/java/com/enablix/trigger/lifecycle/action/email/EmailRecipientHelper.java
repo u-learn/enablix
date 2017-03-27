@@ -17,10 +17,10 @@ public class EmailRecipientHelper {
 	@Autowired
 	private EmailRecipientResolverFactory resolverFactory;
 	
-	public Set<ContentDataRef> getEmailRecipients(ContentDataRef triggerItemRef, 
+	public Set<String> getEmailRecipients(ContentDataRef triggerItemRef, 
 			TemplateWrapper template, EmailRecipientType recepientDef) {
 		
-		Set<ContentDataRef> recipientUsers = new HashSet<>();
+		Set<String> recipientUsers = new HashSet<>();
 		
 		resolveRecipients(triggerItemRef, template, recipientUsers, recepientDef.getCorrelatedUsers());
 		resolveRecipients(triggerItemRef, template, recipientUsers, recepientDef.getAllUsers());
@@ -29,10 +29,10 @@ public class EmailRecipientHelper {
 	}
 
 	private <T extends BaseEmailRecipientType> void resolveRecipients(ContentDataRef triggerItemRef, 
-			TemplateWrapper template, Set<ContentDataRef> recepientUsers, T recipientDef) {
+			TemplateWrapper template, Set<String> recepientUsers, T recipientDef) {
 		if (recipientDef != null) {
 			EmailRecipientResolver<T> resolver = resolverFactory.getResolver(recipientDef);
-			recepientUsers.addAll(resolver.resolveRecepientEmails(
+			recepientUsers.addAll(resolver.resolveRecepientUsers(
 											triggerItemRef, template, recipientDef));
 		}
 	}

@@ -13,6 +13,7 @@ import com.enablix.core.correlation.CorrelationRuleSource;
 import com.enablix.core.correlation.CorrelationSource;
 import com.enablix.core.correlation.ItemUserCorrelation;
 import com.enablix.core.correlation.SourceMetadata.SourceType;
+import com.enablix.core.domain.security.authorization.UserProfile;
 import com.enablix.services.util.TagUtil;
 
 @Component
@@ -23,11 +24,11 @@ public class ItemUserCorrelationMongoRecorder implements ItemUserCorrelationReco
 	
 	@Override
 	public ItemUserCorrelation recordItemUserCorrelation(ContentDataRef item, 
-			ContentDataRef user, ItemUserCorrelationRuleType rule, TagsType tags) {
+			UserProfile user, ItemUserCorrelationRuleType rule, TagsType tags) {
 		
 		ItemUserCorrelation itemUserCorr = new ItemUserCorrelation();
 		itemUserCorr.setItem(item);
-		itemUserCorr.setUser(user);
+		itemUserCorr.setUserProfileIdentity(user.getIdentity());
 		itemUserCorr.setTags(TagUtil.createTags(tags.getTag()));
 		
 		CorrelationSource<CorrelationRuleSource> corrSrc = new CorrelationSource<>();
@@ -40,11 +41,12 @@ public class ItemUserCorrelationMongoRecorder implements ItemUserCorrelationReco
 	}
 
 	@Override
-	public ItemUserCorrelation recordItemUserCorrelation(ContentDataRef item, ContentDataRef userRef, List<String> tags) {
+	public ItemUserCorrelation recordItemUserCorrelation(
+			ContentDataRef item, UserProfile userProfile, List<String> tags) {
 		
 		ItemUserCorrelation itemUserCorr = new ItemUserCorrelation();
 		itemUserCorr.setItem(item);
-		itemUserCorr.setUser(userRef);
+		itemUserCorr.setUserProfileIdentity(userProfile.getIdentity());
 		itemUserCorr.setTags(TagUtil.createTags(tags));
 		
 		return saveCorrelation(itemUserCorr);
@@ -52,8 +54,8 @@ public class ItemUserCorrelationMongoRecorder implements ItemUserCorrelationReco
 	
 	private ItemUserCorrelation saveCorrelation(ItemUserCorrelation itemUserCorr) {
 		
-		ItemUserCorrelation existingCorr = itemUserCorrelationRepo.findByItemInstanceIdentityAndUserInstanceIdentity(
-				itemUserCorr.getItem().getInstanceIdentity(), itemUserCorr.getUser().getInstanceIdentity());
+		ItemUserCorrelation existingCorr = itemUserCorrelationRepo.findByItemInstanceIdentityAndUserProfileIdentity(
+				itemUserCorr.getItem().getInstanceIdentity(), itemUserCorr.getUserProfileIdentity());
 		
 		if (existingCorr != null) {
 			existingCorr.getTags().addAll(itemUserCorr.getTags());

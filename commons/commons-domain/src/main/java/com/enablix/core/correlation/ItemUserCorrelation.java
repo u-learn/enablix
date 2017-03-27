@@ -16,7 +16,7 @@ public class ItemUserCorrelation extends BaseDocumentEntity {
 
 	private ContentDataRef item;
 	
-	private ContentDataRef user;
+	private String userProfileIdentity;
 	
 	@SuppressWarnings("rawtypes")
 	private List<CorrelationSource> sources;
@@ -38,12 +38,12 @@ public class ItemUserCorrelation extends BaseDocumentEntity {
 		this.item = item;
 	}
 
-	public ContentDataRef getUser() {
-		return user;
+	public String getUserProfileIdentity() {
+		return userProfileIdentity;
 	}
 
-	public void setUser(ContentDataRef user) {
-		this.user = user;
+	public void setUserProfileIdentity(String userIdentity) {
+		this.userProfileIdentity = userIdentity;
 	}
 
 	@SuppressWarnings("rawtypes")

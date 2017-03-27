@@ -1,5 +1,6 @@
 package com.enablix.core.mongo.repository;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
@@ -16,6 +17,6 @@ public interface BaseMongoRepository<T extends BaseEntity> extends MongoReposito
 	
 	List<T> removeByIdentity(String identity);
 	
-	List<T> findByIdentityIn(List<String> identity);
+	List<T> findByIdentityIn(Collection<String> identity);
 	
 }
