@@ -39,11 +39,11 @@ var getReferenceData = function(userId, tenantDb, templateId) {
         identity: 0,
         __title: 0,
         modifiedBy: 0,
-		email: 0,
-		"~container~": 0
+        email: 0,
+        "~container~": 0
     });
     if (userTemplateDoc == null)
-		userTemplateDoc={};
+        userTemplateDoc = {};
     return userTemplateDoc;
 };
 
@@ -78,7 +78,8 @@ dbs.forEach(function(database) {
 
                 var roles = getRoles(usr.identity, db);
                 var referenceData = getReferenceData(usr.userId, db, template._id);
-
+                if (usr.profile.sendWeeklyDigest == null || usr.profile.sendWeeklyDigest == undefined)
+                    usr.profile.sendWeeklyDigest = false;
                 db.ebx_user_profile.insert({
                     "_id": usr._id,
                     "_class": "com.enablix.core.domain.user.UserProfile",
