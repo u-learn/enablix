@@ -1,6 +1,5 @@
 package com.enablix.app.content.bounded.impl;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -37,6 +36,7 @@ public class RefListBuilder implements BoundedListBuilder {
 	@Autowired
 	private GenericDao tenantDao;
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public Collection<DataItem> buildBoundedList(TemplateWrapper template, BoundedType boundedTypeDef) {
 		
@@ -83,14 +83,9 @@ public class RefListBuilder implements BoundedListBuilder {
 
 
 
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	private List<Map<String, Object>> getDBCollectionRecords(String storeId, BaseDao dao) {
-		
-		List<Map<String, Object>> records = new ArrayList<>();
-		List<HashMap> systemDBRecords = dao.findByCriteria(new Criteria(), storeId, HashMap.class);
-
-		records.addAll((Collection<? extends Map<String, Object>>) systemDBRecords);
-		return records;
+	@SuppressWarnings({ "rawtypes" })
+	private List getDBCollectionRecords(String storeId, BaseDao dao) {
+		return dao.findByCriteria(new Criteria(), storeId, HashMap.class);
 	}
 	
 	
