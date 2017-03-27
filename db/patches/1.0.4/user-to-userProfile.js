@@ -42,6 +42,8 @@ var getReferenceData = function(userId, tenantDb, templateId) {
 		email: 0,
 		"~container~": 0
     });
+    if (userTemplateDoc == null)
+		userTemplateDoc={};
     return userTemplateDoc;
 };
 
