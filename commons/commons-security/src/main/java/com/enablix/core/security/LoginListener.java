@@ -58,18 +58,19 @@ public class LoginListener implements ApplicationListener<AuthenticationSuccessE
 			Tenant tenant = tenantRepo.findByTenantId(user.getTenantId());
 
 			String templateId = tenant == null ? "" : tenant.getDefaultTemplateId();
-			ProcessContext.initialize(user.getUserId(), user.getUserId(), user.getTenantId(), templateId);
-			
-			UserProfile userProfile = userProfileRepo.findByEmail(user.getUserId());
-			RegisteredActor actor = new RegisteredActor(ud.getUsername(), userProfile.getName());
-			userLogin.setActor(actor);
-			ProcessContext.clear();
-
-
-			// set up process context to fetch user roles from tenant specific database
-			ProcessContext.initialize(user.getUserId(), userProfile.getName(), user.getTenantId(), templateId);
-
 			try {
+				ProcessContext.initialize(user.getUserId(), user.getUserId(), user.getTenantId(), templateId);
+
+				UserProfile userProfile = userProfileRepo.findByEmail(user.getUserId());
+				RegisteredActor actor = new RegisteredActor(ud.getUsername(), userProfile.getName());
+				userLogin.setActor(actor);
+				ProcessContext.clear();
+
+
+				// set up process context to fetch user roles from tenant specific database
+				ProcessContext.initialize(user.getUserId(), userProfile.getName(), user.getTenantId(), templateId);
+
+
 
 				ActivityLogger.auditActivity(userLogin);
 

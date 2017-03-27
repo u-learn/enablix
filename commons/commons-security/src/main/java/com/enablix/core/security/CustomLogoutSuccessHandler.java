@@ -30,56 +30,56 @@ import com.enablix.services.util.ActivityLogger;
 public class CustomLogoutSuccessHandler extends SimpleUrlLogoutSuccessHandler {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(CustomLogoutSuccessHandler.class);
-	
+
 	@Autowired
 	private UserProfileRepository userProfileRepo;
-	
+
 	public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) throws IOException, ServletException {
-		
+
 		super.handle(request, response, authentication);
-		
+
 		if (authentication != null) {
-			
+
 			UserDetails ud = (UserDetails) authentication.getPrincipal();
-			
+
 			LOGGER.info("User {} logged-out successfully", ud.getUsername());
-			
+
 			ActivityAudit userLogout = new ActivityAudit();
-			
+
 			UserAccountActivity userLoginActvy = new UserAccountActivity(AccountActivityType.LOGOUT);
 			userLogout.setActivity(userLoginActvy);
-			
+
 			userLogout.setActivityTime(Calendar.getInstance().getTime());
-			
+
 			userLogout.setChannel(new ActivityChannel(Channel.WEB));
-			
+
 			if (ud instanceof LoggedInUser) {
-				
-				User user = ((LoggedInUser) ud).getUser();
-
-				ProcessContext.initialize(user.getUserId(), user.getUserId(), user.getTenantId(), null);
-				UserProfile userProfile = userProfileRepo.findByEmail(user.getUserId());
-
-				ProcessContext.clear();
-				ProcessContext.initialize(user.getUserId(), userProfile.getName(), user.getTenantId(), null);
-				
-				RegisteredActor actor = new RegisteredActor(ud.getUsername(), userProfile.getName());
-				userLogout.setActor(actor);
-				
-				// set up process context to fetch user roles from tenant specific database
-				
 				try {
-					
+					User user = ((LoggedInUser) ud).getUser();
+
+					ProcessContext.initialize(user.getUserId(), user.getUserId(), user.getTenantId(), null);
+					UserProfile userProfile = userProfileRepo.findByEmail(user.getUserId());
+
+					ProcessContext.clear();
+					ProcessContext.initialize(user.getUserId(), userProfile.getName(), user.getTenantId(), null);
+
+					RegisteredActor actor = new RegisteredActor(ud.getUsername(), userProfile.getName());
+					userLogout.setActor(actor);
+
+					// set up process context to fetch user roles from tenant specific database
+
+
+
 					ActivityLogger.auditActivity(userLogout);
-					
+
 				} finally {
 					ProcessContext.clear();
 				}
-				
+
 			}
 		}
-		
+
 	}
-	
+
 }

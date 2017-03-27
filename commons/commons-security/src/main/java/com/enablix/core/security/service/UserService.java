@@ -15,9 +15,9 @@ public interface UserService {
 	public User addUser(String userDataJSON);
 	public User editUser(String userDataJSON);
 	public List<UserProfile> getAllUsers(String tenantId);
-	public Boolean deleteUser(User user);
+	public Boolean deleteUser(String identity);
 	public UserProfile getUserByIdentity(String userIdentity);
-	public User resetPassword(String userid);
+	public void resetPassword(String userid);
 	public User changePassword(User user);
 	public UserDetails getGuestUser(HttpServletRequest request);
 	

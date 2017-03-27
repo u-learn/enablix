@@ -57,8 +57,8 @@ public class SecurityController {
 
 	@RequestMapping(method = RequestMethod.POST, value="/deletesystemuser", 
 			produces = "application/json")
-	public Boolean deleteUser(@RequestBody User user) {
-		return userService.deleteUser(user);
+	public Boolean deleteUser(@RequestBody String identity) {
+		return userService.deleteUser(identity);
 	}
 
 
@@ -84,9 +84,7 @@ public class SecurityController {
 			produces = "application/json")
 	public Boolean resetPassword(@RequestBody String userid ) {
 		if(userService.checkUserByUserId(userid)){
-			User user = userService.resetPassword(userid);
-			mailService.sendHtmlEmail(user, userid, MailConstants.SCENARIO_RESET_PASSWORD);
-			ProcessContext.clear();
+			userService.resetPassword(userid);
 			return true;
 		}
 		else

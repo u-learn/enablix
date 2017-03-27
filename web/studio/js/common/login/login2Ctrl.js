@@ -18,7 +18,7 @@ enablix.studioApp.controller('Login2Controller',
 						else
 							StateUpdateService.goToApp();	
 				} else {
-					StateUpdateService.goToAppSetPassword(currentUser.identity);
+					StateUpdateService.goToAppSetPassword(currentUser.id);
 				}
 				
 				$scope.error = false;

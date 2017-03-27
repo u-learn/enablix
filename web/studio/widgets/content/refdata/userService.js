@@ -67,10 +67,10 @@ enablix.studioApp.factory('UserService',
 			
 		};
 		
-		var updatepassword= function( userId, _password)
+		var updatepassword= function( id, _password)
 		{		
 
-			var userData = { userId : userId, password :_password, isPasswordSet: true };
+			var userData = { id : id, password :_password, isPasswordSet: true };
 			RESTService.postForData('systemuserchangepwd', null, userData, null,function(data) {	    	
 					Notification.primary({message: "Password saved successfully", delay: enablix.errorMsgShowTime});
 					//sendMail(sessionUser,sessionUser.userId,"passwordconfirmation", false);
@@ -119,9 +119,9 @@ enablix.studioApp.factory('UserService',
 	    		//Notification.error({message: "Error while checking userName", delay: enablix.errorMsgShowTime});
 	    	});
 		};
-		var deleteUser= function(userData,_success)
+		var deleteUser= function(identity,_success)
 		{
-			RESTService.postForData('deletesystemuser', null, userData, null,function(data) {
+			RESTService.postForData('deletesystemuser', null, identity, null,function(data) {
 				 if(data){
 					Notification.primary({message: "User deleted successfully", delay: enablix.errorMsgShowTime});
 					_success(data);
