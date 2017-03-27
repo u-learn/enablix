@@ -219,10 +219,10 @@
 				<contentItem id="oppPreSalesMember" label="Pre-Sales Team" type="bounded" searchBoost="6">
 					<bounded multivalued="true">
 						<refList>
-							<datastore>
-								<storeId>user</storeId>
+							<datastore location="TENANT_DB">
+								<storeId>ebx_user_profile</storeId>
 								<dataId>identity</dataId>
-								<dataLabel>userName</dataLabel>
+								<dataLabel>name</dataLabel>
 							</datastore>
 						</refList>
 					</bounded>

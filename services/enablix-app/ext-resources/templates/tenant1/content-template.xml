@@ -28,11 +28,11 @@
       	<contentItem id="team" label="Team Contacts" type="bounded">
       		<bounded multivalued="true">
       			<refList>
-      				<datastore>
-      					<storeId>user</storeId>
-      					<dataId>userId</dataId>
-      					<dataLabel>userName</dataLabel>
-      				</datastore>
+      				<datastore location="TENANT_DB">
+						<storeId>ebx_user_profile</storeId>
+						<dataId>identity</dataId>
+						<dataLabel>name</dataLabel>
+					</datastore>
       			</refList>
       		</bounded>
       	</contentItem>

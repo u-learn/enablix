@@ -43,10 +43,10 @@
 				<contentItem id="expertUserName" label="Name" type="bounded">
 					<bounded>
 						<refList>
-							<datastore>
-								<storeId>user</storeId>
+							<datastore location="TENANT_DB">
+								<storeId>ebx_user_profile</storeId>
 								<dataId>identity</dataId>
-								<dataLabel>userName</dataLabel>
+								<dataLabel>name</dataLabel>
 							</datastore>
 						</refList>
 					</bounded>
@@ -92,10 +92,10 @@
 				<contentItem id="author" label="Author" type="bounded">
 					<bounded multivalued="true">
 						<refList>
-							<datastore>
-								<storeId>user</storeId>
+							<datastore location="TENANT_DB">
+								<storeId>ebx_user_profile</storeId>
 								<dataId>identity</dataId>
-								<dataLabel>userName</dataLabel>
+								<dataLabel>name</dataLabel>
 							</datastore>
 						</refList>
 					</bounded>
@@ -130,10 +130,10 @@
 				<contentItem id="author" label="Author" type="bounded">
 					<bounded multivalued="true">
 						<refList>
-							<datastore>
-								<storeId>user</storeId>
+							<datastore location="TENANT_DB">
+								<storeId>ebx_user_profile</storeId>
 								<dataId>identity</dataId>
-								<dataLabel>userName</dataLabel>
+								<dataLabel>name</dataLabel>
 							</datastore>
 						</refList>
 					</bounded>
@@ -190,10 +190,10 @@
 				<contentItem id="author" label="Author" type="bounded">
 					<bounded multivalued="true">
 						<refList>
-							<datastore>
-								<storeId>user</storeId>
+							<datastore location="TENANT_DB">
+								<storeId>ebx_user_profile</storeId>
 								<dataId>identity</dataId>
-								<dataLabel>userName</dataLabel>
+								<dataLabel>name</dataLabel>
 							</datastore>
 						</refList>
 					</bounded>
@@ -228,10 +228,10 @@
 				<contentItem id="author" label="Author" type="bounded">
 					<bounded multivalued="true">
 						<refList>
-							<datastore>
-								<storeId>user</storeId>
+							<datastore location="TENANT_DB">
+								<storeId>ebx_user_profile</storeId>
 								<dataId>identity</dataId>
-								<dataLabel>userName</dataLabel>
+								<dataLabel>name</dataLabel>
 							</datastore>
 						</refList>
 					</bounded>
@@ -266,10 +266,10 @@
 				<contentItem id="author" label="Author" type="bounded">
 					<bounded multivalued="true">
 						<refList>
-							<datastore>
-								<storeId>user</storeId>
+							<datastore location="TENANT_DB">
+								<storeId>ebx_user_profile</storeId>
 								<dataId>identity</dataId>
-								<dataLabel>userName</dataLabel>
+								<dataLabel>name</dataLabel>
 							</datastore>
 						</refList>
 					</bounded>
@@ -293,10 +293,10 @@
 				<contentItem id="author" label="Author" type="bounded">
 					<bounded multivalued="true">
 						<refList>
-							<datastore>
-								<storeId>user</storeId>
+							<datastore location="TENANT_DB">
+								<storeId>ebx_user_profile</storeId>
 								<dataId>identity</dataId>
-								<dataLabel>userName</dataLabel>
+								<dataLabel>name</dataLabel>
 							</datastore>
 						</refList>
 					</bounded>
@@ -377,10 +377,10 @@
 				<contentItem id="author" label="Author" type="bounded">
 					<bounded multivalued="true">
 						<refList>
-							<datastore>
-								<storeId>user</storeId>
+							<datastore location="TENANT_DB">
+								<storeId>ebx_user_profile</storeId>
 								<dataId>identity</dataId>
-								<dataLabel>userName</dataLabel>
+								<dataLabel>name</dataLabel>
 							</datastore>
 						</refList>
 					</bounded>
@@ -458,10 +458,10 @@
 				<contentItem id="author" label="Author" type="bounded">
 					<bounded multivalued="true">
 						<refList>
-							<datastore>
-								<storeId>user</storeId>
+							<datastore location="TENANT_DB">
+								<storeId>ebx_user_profile</storeId>
 								<dataId>identity</dataId>
-								<dataLabel>userName</dataLabel>
+								<dataLabel>name</dataLabel>
 							</datastore>
 						</refList>
 					</bounded>
@@ -519,10 +519,10 @@
 				<contentItem id="author" label="Author" type="bounded">
 					<bounded multivalued="true">
 						<refList>
-							<datastore>
-								<storeId>user</storeId>
+							<datastore location="TENANT_DB">
+								<storeId>ebx_user_profile</storeId>
 								<dataId>identity</dataId>
-								<dataLabel>userName</dataLabel>
+								<dataLabel>name</dataLabel>
 							</datastore>
 						</refList>
 					</bounded>
@@ -546,10 +546,10 @@
 				<contentItem id="expert" label="Reference Experts" type="bounded">
 					<bounded multivalued="true">
 						<refList>
-							<datastore>
-								<storeId>user</storeId>
+							<datastore location="TENANT_DB">
+								<storeId>ebx_user_profile</storeId>
 								<dataId>identity</dataId>
-								<dataLabel>userName</dataLabel>
+								<dataLabel>name</dataLabel>
 							</datastore>
 						</refList>
 					</bounded>
@@ -682,10 +682,10 @@
 				<contentItem id="author" label="Author" type="bounded">
 					<bounded multivalued="true">
 						<refList>
-							<datastore>
-								<storeId>user</storeId>
+							<datastore location="TENANT_DB">
+								<storeId>ebx_user_profile</storeId>
 								<dataId>identity</dataId>
-								<dataLabel>userName</dataLabel>
+								<dataLabel>name</dataLabel>
 							</datastore>
 						</refList>
 					</bounded>
@@ -725,10 +725,10 @@
 				<contentItem id="expertUserName" label="Name" type="bounded">
 					<bounded>
 						<refList>
-							<datastore>
-								<storeId>user</storeId>
+							<datastore location="TENANT_DB">
+								<storeId>ebx_user_profile</storeId>
 								<dataId>identity</dataId>
-								<dataLabel>userName</dataLabel>
+								<dataLabel>name</dataLabel>
 							</datastore>
 						</refList>
 					</bounded>
@@ -774,10 +774,10 @@
 				<contentItem id="author" label="Author" type="bounded">
 					<bounded multivalued="true">
 						<refList>
-							<datastore>
-								<storeId>user</storeId>
+							<datastore location="TENANT_DB">
+								<storeId>ebx_user_profile</storeId>
 								<dataId>identity</dataId>
-								<dataLabel>userName</dataLabel>
+								<dataLabel>name</dataLabel>
 							</datastore>
 						</refList>
 					</bounded>
@@ -812,10 +812,10 @@
 				<contentItem id="author" label="Author" type="bounded">
 					<bounded multivalued="true">
 						<refList>
-							<datastore>
-								<storeId>user</storeId>
+							<datastore location="TENANT_DB">
+								<storeId>ebx_user_profile</storeId>
 								<dataId>identity</dataId>
-								<dataLabel>userName</dataLabel>
+								<dataLabel>name</dataLabel>
 							</datastore>
 						</refList>
 					</bounded>
@@ -865,10 +865,10 @@
 			<contentItem id="expert" label="Experts" type="bounded">
 				<bounded multivalued="true">
 					<refList>
-						<datastore>
-							<storeId>user</storeId>
+						<datastore location="TENANT_DB">
+							<storeId>ebx_user_profile</storeId>
 							<dataId>identity</dataId>
-							<dataLabel>userName</dataLabel>
+							<dataLabel>name</dataLabel>
 						</datastore>
 					</refList>
 				</bounded>
@@ -924,10 +924,10 @@
 				<contentItem id="author" label="Author" type="bounded">
 					<bounded multivalued="true">
 						<refList>
-							<datastore>
-								<storeId>user</storeId>
+							<datastore location="TENANT_DB">
+								<storeId>ebx_user_profile</storeId>
 								<dataId>identity</dataId>
-								<dataLabel>userName</dataLabel>
+								<dataLabel>name</dataLabel>
 							</datastore>
 						</refList>
 					</bounded>
@@ -1086,10 +1086,10 @@
 			<contentItem id="creator" label="Creator" type="bounded">
 				<bounded multivalued="true">
 					<refList>
-						<datastore>
-							<storeId>user</storeId>
+						<datastore location="TENANT_DB">
+							<storeId>ebx_user_profile</storeId>
 							<dataId>identity</dataId>
-							<dataLabel>userName</dataLabel>
+							<dataLabel>name</dataLabel>
 						</datastore>
 					</refList>
 				</bounded>
@@ -1146,10 +1146,10 @@
 			<contentItem id="author" label="Author" type="bounded">
 				<bounded multivalued="true">
 					<refList>
-						<datastore>
-							<storeId>user</storeId>
+						<datastore location="TENANT_DB">
+							<storeId>ebx_user_profile</storeId>
 							<dataId>identity</dataId>
-							<dataLabel>userName</dataLabel>
+							<dataLabel>name</dataLabel>
 						</datastore>
 					</refList>
 				</bounded>
@@ -1230,10 +1230,10 @@
 			<contentItem id="contact" label="Contact" type="bounded">
 				<bounded multivalued="true">
 					<refList>
-						<datastore>
-							<storeId>user</storeId>
+						<datastore location="TENANT_DB">
+							<storeId>ebx_user_profile</storeId>
 							<dataId>identity</dataId>
-							<dataLabel>userName</dataLabel>
+							<dataLabel>name</dataLabel>
 						</datastore>
 					</refList>
 				</bounded>
@@ -1292,10 +1292,10 @@
 			<contentItem id="author" label="Author" type="bounded">
 				<bounded multivalued="true">
 					<refList>
-						<datastore>
-							<storeId>user</storeId>
+						<datastore location="TENANT_DB">
+							<storeId>ebx_user_profile</storeId>
 							<dataId>identity</dataId>
-							<dataLabel>userName</dataLabel>
+							<dataLabel>name</dataLabel>
 						</datastore>
 					</refList>
 				</bounded>
@@ -1365,10 +1365,10 @@
 			<contentItem id="author" label="Author" type="bounded">
 				<bounded multivalued="true">
 					<refList>
-						<datastore>
-							<storeId>user</storeId>
+						<datastore location="TENANT_DB">
+							<storeId>ebx_user_profile</storeId>
 							<dataId>identity</dataId>
-							<dataLabel>userName</dataLabel>
+							<dataLabel>name</dataLabel>
 						</datastore>
 					</refList>
 				</bounded>
@@ -1428,10 +1428,10 @@
 			<contentItem id="author" label="Author" type="bounded">
 				<bounded multivalued="true">
 					<refList>
-						<datastore>
-							<storeId>user</storeId>
+						<datastore location="TENANT_DB">
+							<storeId>ebx_user_profile</storeId>
 							<dataId>identity</dataId>
-							<dataLabel>userName</dataLabel>
+							<dataLabel>name</dataLabel>
 						</datastore>
 					</refList>
 				</bounded>
@@ -1490,10 +1490,10 @@
 			<contentItem id="author" label="Author" type="bounded">
 				<bounded multivalued="true">
 					<refList>
-						<datastore>
-							<storeId>user</storeId>
+						<datastore location="TENANT_DB">
+							<storeId>ebx_user_profile</storeId>
 							<dataId>identity</dataId>
-							<dataLabel>userName</dataLabel>
+							<dataLabel>name</dataLabel>
 						</datastore>
 					</refList>
 				</bounded>
@@ -1575,10 +1575,10 @@
 			<contentItem id="presenter" label="Presenter" type="bounded">
 				<bounded multivalued="true">
 					<refList>
-						<datastore>
-							<storeId>user</storeId>
+						<datastore location="TENANT_DB">
+							<storeId>ebx_user_profile</storeId>
 							<dataId>identity</dataId>
-							<dataLabel>userName</dataLabel>
+							<dataLabel>name</dataLabel>
 						</datastore>
 					</refList>
 				</bounded>
@@ -1659,10 +1659,10 @@
 			<contentItem id="author" label="Author" type="bounded">
 				<bounded multivalued="true">
 					<refList>
-						<datastore>
-							<storeId>user</storeId>
+						<datastore location="TENANT_DB">
+							<storeId>ebx_user_profile</storeId>
 							<dataId>identity</dataId>
-							<dataLabel>userName</dataLabel>
+							<dataLabel>name</dataLabel>
 						</datastore>
 					</refList>
 				</bounded>
@@ -1743,10 +1743,10 @@
 			<contentItem id="author" label="Author" type="bounded">
 				<bounded multivalued="true">
 					<refList>
-						<datastore>
-							<storeId>user</storeId>
+						<datastore location="TENANT_DB">
+							<storeId>ebx_user_profile</storeId>
 							<dataId>identity</dataId>
-							<dataLabel>userName</dataLabel>
+							<dataLabel>name</dataLabel>
 						</datastore>
 					</refList>
 				</bounded>
@@ -1827,10 +1827,10 @@
 			<contentItem id="author" label="Author" type="bounded">
 				<bounded multivalued="true">
 					<refList>
-						<datastore>
-							<storeId>user</storeId>
+						<datastore location="TENANT_DB">
+							<storeId>ebx_user_profile</storeId>
 							<dataId>identity</dataId>
-							<dataLabel>userName</dataLabel>
+							<dataLabel>name</dataLabel>
 						</datastore>
 					</refList>
 				</bounded>
@@ -1923,10 +1923,10 @@
 			<contentItem id="author" label="Author" type="bounded">
 				<bounded multivalued="true">
 					<refList>
-						<datastore>
-							<storeId>user</storeId>
+						<datastore location="TENANT_DB">
+							<storeId>ebx_user_profile</storeId>
 							<dataId>identity</dataId>
-							<dataLabel>userName</dataLabel>
+							<dataLabel>name</dataLabel>
 						</datastore>
 					</refList>
 				</bounded>
@@ -2197,10 +2197,10 @@
 				<contentItem id="author" label="Author" type="bounded">
 					<bounded multivalued="true">
 						<refList>
-							<datastore>
-								<storeId>user</storeId>
+							<datastore location="TENANT_DB">
+								<storeId>ebx_user_profile</storeId>
 								<dataId>identity</dataId>
-								<dataLabel>userName</dataLabel>
+								<dataLabel>name</dataLabel>
 							</datastore>
 						</refList>
 					</bounded>
@@ -2282,10 +2282,10 @@
 				<contentItem id="author" label="Author" type="bounded">
 					<bounded multivalued="true">
 						<refList>
-							<datastore>
-								<storeId>user</storeId>
+							<datastore location="TENANT_DB">
+								<storeId>ebx_user_profile</storeId>
 								<dataId>identity</dataId>
-								<dataLabel>userName</dataLabel>
+								<dataLabel>name</dataLabel>
 							</datastore>
 						</refList>
 					</bounded>
@@ -2321,10 +2321,10 @@
 				<contentItem id="expert" label="Reference Experts" type="bounded">
 					<bounded multivalued="true">
 						<refList>
-							<datastore>
-								<storeId>user</storeId>
+							<datastore location="TENANT_DB">
+								<storeId>ebx_user_profile</storeId>
 								<dataId>identity</dataId>
-								<dataLabel>userName</dataLabel>
+								<dataLabel>name</dataLabel>
 							</datastore>
 						</refList>
 					</bounded>
@@ -2449,10 +2449,10 @@
 			<contentItem id="contact" label="Contacts" type="bounded">
 				<bounded multivalued="true">
 					<refList>
-						<datastore>
-							<storeId>user</storeId>
+						<datastore location="TENANT_DB">
+							<storeId>ebx_user_profile</storeId>
 							<dataId>identity</dataId>
-							<dataLabel>userName</dataLabel>
+							<dataLabel>name</dataLabel>
 						</datastore>
 					</refList>
 				</bounded>
@@ -2488,10 +2488,10 @@
 			<contentItem id="contact" label="Contacts" type="bounded">
 				<bounded multivalued="true">
 					<refList>
-						<datastore>
-							<storeId>user</storeId>
+						<datastore location="TENANT_DB">
+							<storeId>ebx_user_profile</storeId>
 							<dataId>identity</dataId>
-							<dataLabel>userName</dataLabel>
+							<dataLabel>name</dataLabel>
 						</datastore>
 					</refList>
 				</bounded>
@@ -2527,10 +2527,10 @@
 			<contentItem id="contact" label="Contacts" type="bounded">
 				<bounded multivalued="true">
 					<refList>
-						<datastore>
-							<storeId>user</storeId>
+						<datastore location="TENANT_DB">
+							<storeId>ebx_user_profile</storeId>
 							<dataId>identity</dataId>
-							<dataLabel>userName</dataLabel>
+							<dataLabel>name</dataLabel>
 						</datastore>
 					</refList>
 				</bounded>
@@ -2566,10 +2566,10 @@
 			<contentItem id="contact" label="Contacts" type="bounded">
 				<bounded multivalued="true">
 					<refList>
-						<datastore>
-							<storeId>user</storeId>
+						<datastore location="TENANT_DB">
+							<storeId>ebx_user_profile</storeId>
 							<dataId>identity</dataId>
-							<dataLabel>userName</dataLabel>
+							<dataLabel>name</dataLabel>
 						</datastore>
 					</refList>
 				</bounded>
@@ -2605,10 +2605,10 @@
 			<contentItem id="contact" label="Contacts" type="bounded">
 				<bounded multivalued="true">
 					<refList>
-						<datastore>
-							<storeId>user</storeId>
+						<datastore location="TENANT_DB">
+							<storeId>ebx_user_profile</storeId>
 							<dataId>identity</dataId>
-							<dataLabel>userName</dataLabel>
+							<dataLabel>name</dataLabel>
 						</datastore>
 					</refList>
 				</bounded>
@@ -2644,10 +2644,10 @@
 			<contentItem id="contact" label="Contacts" type="bounded">
 				<bounded multivalued="true">
 					<refList>
-						<datastore>
-							<storeId>user</storeId>
+						<datastore location="TENANT_DB">
+							<storeId>ebx_user_profile</storeId>
 							<dataId>identity</dataId>
-							<dataLabel>userName</dataLabel>
+							<dataLabel>name</dataLabel>
 						</datastore>
 					</refList>
 				</bounded>
@@ -2683,10 +2683,10 @@
 			<contentItem id="contact" label="Contacts" type="bounded">
 				<bounded multivalued="true">
 					<refList>
-						<datastore>
-							<storeId>user</storeId>
+						<datastore location="TENANT_DB">
+							<storeId>ebx_user_profile</storeId>
 							<dataId>identity</dataId>
-							<dataLabel>userName</dataLabel>
+							<dataLabel>name</dataLabel>
 						</datastore>
 					</refList>
 				</bounded>
@@ -2726,10 +2726,10 @@
 			<contentItem id="contact" label="Contacts" type="bounded">
 				<bounded multivalued="true">
 					<refList>
-						<datastore>
-							<storeId>user</storeId>
+						<datastore location="TENANT_DB">
+							<storeId>ebx_user_profile</storeId>
 							<dataId>identity</dataId>
-							<dataLabel>userName</dataLabel>
+							<dataLabel>name</dataLabel>
 						</datastore>
 					</refList>
 				</bounded>
@@ -2766,10 +2766,10 @@
 			<contentItem id="contact" label="Contacts" type="bounded">
 				<bounded multivalued="true">
 					<refList>
-						<datastore>
-							<storeId>user</storeId>
+						<datastore location="TENANT_DB">
+							<storeId>ebx_user_profile</storeId>
 							<dataId>identity</dataId>
-							<dataLabel>userName</dataLabel>
+							<dataLabel>name</dataLabel>
 						</datastore>
 					</refList>
 				</bounded>
