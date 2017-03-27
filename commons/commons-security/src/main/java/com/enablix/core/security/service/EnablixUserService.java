@@ -214,7 +214,7 @@ public class EnablixUserService implements UserService, UserDetailsService {
 	
 	@Override
 	public List<UserProfile> getAllUsers(String tenantId) {
-		return userProfileRepo.findAll();
+		return userProfileRepo.findAllByOrderByNameAsc();
 	}
 	
 	@Override

@@ -3,7 +3,7 @@ enablix.studioApp.controller('ReportsMainController',
 	function( $scope,   $state,   $stateParams,   $rootScope,   ReportService,   Notification,   StateUpdateService) {
 		
 		$scope.breadcrumbList = [
-			{ label: "Reports" }
+			{ label: "Insights" }
 		];
 		
 		$scope.$state = $state;

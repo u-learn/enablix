@@ -9,4 +9,5 @@ import com.enablix.core.mongo.repository.BaseMongoRepository;
 public interface UserProfileRepository extends BaseMongoRepository<UserProfile>{
 	UserProfile findByEmail(String email);
 	List<UserProfile> findBySystemProfile_RolesIn(List<Role> roles);
+	List<UserProfile> findAllByOrderByNameAsc();
 }
