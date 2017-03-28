@@ -72,7 +72,7 @@ public class EnablixUserService implements UserService, UserDetailsService {
 			//Setting the name also as the user id
 			ProcessContext.initialize(user.getUserId(), user.getUserId(), user.getTenantId(), templateId);
 
-			userProfile = userProfileRepo.findByUserIdentity(user.getUserId());
+			userProfile = userProfileRepo.findByUserIdentity(user.getIdentity());
 
 		} finally {
 			ProcessContext.clear();

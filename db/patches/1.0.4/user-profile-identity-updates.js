@@ -46,14 +46,15 @@ dbs.forEach(function(database) {
         var tenantId = database.name.substring(0, database.name.indexOf("_enablix"));
 
         db = db.getSiblingDB(database.name);
+        systemDb = db.getSiblingDB("system_enablix");
         
-        // set the user identity = current identity
-        db.ebx_user_profile.find({}).snapshot().forEach(
+        // set the user identity = identity from ebxUser table
+        systemDb.ebxUser.find({tenantId: tenantId}).snapshot().forEach(
     		function(elem) {
     			print("setting user identity: " + elem._id);
     			db.ebx_user_profile.update(
     					{ 
-    						"_id": elem._id
+    						"email": elem.userId
     					},
     					{
     						$set: {
@@ -62,7 +63,7 @@ dbs.forEach(function(database) {
     					}
     				);
     		});
-        
+                
         var templateRecords = db.templateDocument.find({});
         var template = templateRecords[0].template;
 
