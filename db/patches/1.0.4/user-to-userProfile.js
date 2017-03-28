@@ -78,8 +78,11 @@ dbs.forEach(function(database) {
 
                 var roles = getRoles(usr.identity, db);
                 var referenceData = getReferenceData(usr.userId, db, template._id);
-                if (usr.profile.sendWeeklyDigest == null || usr.profile.sendWeeklyDigest == undefined)
+                
+                if (usr.profile.sendWeeklyDigest == null || usr.profile.sendWeeklyDigest == undefined) {
                     usr.profile.sendWeeklyDigest = false;
+                }
+                
                 db.ebx_user_profile.insert({
                     "_id": usr._id,
                     "_class": "com.enablix.core.domain.user.UserProfile",
