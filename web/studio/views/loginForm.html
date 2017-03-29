@@ -14,19 +14,19 @@
 						<label class="form-label error">Invalid username or password</label>
 					</div>
 					<label class="form-label">Login</label>
-					<input type="text" name="username" ng-model="credentials.username" autofocus class="form-control">					 
+					<input type="text" name="username" ng-model="credentials.username" autofocus tabindex="1" class="form-control">					 
 					  <span class="form-label" style="color:#e74c3c;" ng-show="loginForm.username.$error.pattern && loginForm.username.$touched">
 						Not valid email !</span>
 		
 					<label class="form-label">Password</label>
-					<input type="password" name="password" ng-model="credentials.password" class="form-control" >
+					<input type="password" name="password" ng-model="credentials.password" tabindex="2" class="form-control" >
 					<br>
-					<input type="checkbox" name="rememberMe" ng-model="credentials.rememberMe" style="display:inline; margin:0 0 0 4px;">
+					<input type="checkbox" name="rememberMe" ng-model="credentials.rememberMe" tabindex="3" style="display:inline; margin:0 0 0 4px;">
 						<label class="form-label" style="display:inline;">Remain logged in on this device</label>
-					<div><a ng-click="forgotpassword()" class="form-forgot">forgot password?</a></div>
+					<div><a ng-click="forgotpassword()" tabindex="5" class="form-forgot">forgot password?</a></div>
 				</div>
 				<div class="foot clearfix">
-					<button class="button button-add" type="submit">Login</button>
+					<button class="button button-add" tabindex="4" type="submit">Login</button>
 				</div>
 			</form>
 			<!--/ login -->
