@@ -12,6 +12,7 @@
 			<container id="solDiscQuestions" label="Discovery Questions" linkContainerQId="discoveryquestion" linkContentItemId="solutions"/>
 			<container id="solEvent" label="Events" linkContainerQId="event" linkContentItemId="solutions"/>							
 			<container id="solFeatureSheet" label="Feature Sheets" linkContainerQId="featuresheet" linkContentItemId="solutions"/>										
+			<container id="solImpSlide" label="Important Slides" linkContainerQId="importantslide" linkContentItemId="solutions"/>											
 			<container id="solPresentation" label="Presentations" linkContainerQId="presentation" linkContentItemId="solutions"/>			
 			<container id="solPress" label="Press" linkContainerQId="press" linkContentItemId="solutions"/>									
 			<container id="solResearch" label="Research" linkContainerQId="research" linkContentItemId="solutions"/>						
@@ -32,6 +33,7 @@
 			<container id="indDiscQuestions" label="Discovery Questions" linkContainerQId="discoveryquestion" linkContentItemId="industries"/>
 			<container id="indEvent" label="Events" linkContainerQId="event" linkContentItemId="industries"/>							
 			<container id="indFeatureSheet" label="Feature Sheets" linkContainerQId="featuresheet" linkContentItemId="industries"/>													
+			<container id="indImpSlide" label="Important Slides" linkContainerQId="importantslide" linkContentItemId="industries"/>											
 			<container id="indPresentation" label="Presentations" linkContainerQId="presentation" linkContentItemId="industries"/>			
 			<container id="indPress" label="Press" linkContainerQId="press" linkContentItemId="industries"/>									
 			<container id="indResearch" label="Research" linkContainerQId="research" linkContentItemId="industries"/>						
@@ -78,9 +80,11 @@
 			<container id="partnerBattleCard" label="Battle Cards" linkContainerQId="battlecard" linkContentItemId="partners"/>			
 			<container id="partnerBlog" label="Blogs" linkContainerQId="blog" linkContentItemId="partners"/>																		
 			<container id="partnerCaseStudy" label="Case Studies" linkContainerQId="casestudy" linkContentItemId="partners"/>
+			<container id="partnerDataSheet" label="Data Sheet" linkContainerQId="datasheet" linkContentItemId="partners"/>									
 			<container id="partnerDiscQuestions" label="Discovery Questions" linkContainerQId="discoveryquestion" linkContentItemId="partners"/>
 			<container id="partnerEvent" label="Events" linkContainerQId="event" linkContentItemId="partners"/>
 			<container id="partnerFeatureSheet" label="Feature Sheets" linkContainerQId="featuresheet" linkContentItemId="partners"/>				
+			<container id="partnerImpSlide" label="Important Slides" linkContainerQId="importantslide" linkContentItemId="partners"/>											
 			<container id="partnerPresentation" label="Presentations" linkContainerQId="presentation" linkContentItemId="partners"/>						
 			<container id="partnerPress" label="Press" linkContainerQId="press" linkContentItemId="partners"/>									
 			<container id="partnerResearch" label="Research" linkContainerQId="research" linkContentItemId="partners"/>									
@@ -166,6 +170,7 @@
 			<container id="topicCaseStudy" label="Case Studies" linkContainerQId="casestudy" linkContentItemId="topics"/>		
 			<container id="topicEvent" label="Events" linkContainerQId="event" linkContentItemId="topics"/>	
 			<container id="topicFeatureSheet" label="Feature Sheets" linkContainerQId="featuresheet" linkContentItemId="topics"/>				
+			<container id="topicImpSlide" label="Important Slides" linkContainerQId="importantslide" linkContentItemId="topics"/>											
 			<container id="topicPresentation" label="Presentations" linkContainerQId="presentation" linkContentItemId="topics"/>						
 			<container id="topicPress" label="Press" linkContainerQId="press" linkContentItemId="topics"/>						
 			<container id="topicResearch" label="Research" linkContainerQId="research" linkContentItemId="topics"/>									
@@ -376,6 +381,7 @@
 		<container id="casestudy" label="Case Studies" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="file" label="File" type="doc"/>
+			<contentItem id="url" label="URL" type="text"/>			
 			<contentItem id="highlights" label="Case Highlights" type="text"/>
 			<contentItem id="type" label="Type" type="bounded">
 				<bounded multivalued="true">
@@ -448,7 +454,7 @@
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="file" label="File" type="doc"/>
 			<contentItem id="url" label="URL" type="text"/>			
-			<contentItem id="solutions" label="Solutions" type="bounded" searchBoost="6">
+			<contentItem id="solutions" label="Solutions" type="bounded">
 				<bounded multivalued="true">
 					<refList>
 						<datastore hyperlink="true">
@@ -469,7 +475,18 @@
 						</datastore>
 					</refList>
 				</bounded>
-			</contentItem>			
+			</contentItem>	
+			<contentItem id="partners" label="Partners" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>partner</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>					
 		</container>									
 		<container id="discoveryquestion" label="Discovery Questions" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="question" label="Question" type="text" searchBoost="6"/>
@@ -671,6 +688,66 @@
 				</bounded>
 			</contentItem>			
 		</container>		
+		<container id="importantslide" label="Important Slides">
+			<contentItem id="title" label="Title" type="text"/>
+			<contentItem id="file" label="File" type="doc"/>
+			<contentItem id="desc" label="Description" type="richText"/>
+			<contentItem id="slideType" label="Slide Type" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore>
+							<storeId>slideType</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>typeName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="solutions" label="Solutions" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>solution</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="industries" label="Industries" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>industry</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>				
+			<contentItem id="partners" label="Partners" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>partner</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="topics" label="Topics" type="bounded">
+				<bounded>
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>topic</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>			
+		</container>				
 		<container id="press" label="Press" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text" searchBoost="7"/>
 			<contentItem id="file" label="File" type="doc"/>			
@@ -1063,7 +1140,7 @@
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="file" label="File" type="doc"/>
 			<contentItem id="url" label="URL" type="text"/>
-			<contentItem id="summary" label="Summary" type="text"/>
+			<contentItem id="summary" label="Description" type="richText"/>
 			<contentItem id="wpSource" label="Source" type="bounded">
 				<bounded>
 					<fixedList>
@@ -1246,7 +1323,8 @@
 					<childContainer id="casestudy"/>
 					<childContainer id="datasheet"/>					
 					<childContainer id="discoveryquestion"/>
-					<childContainer id="featuresheet"/>					
+					<childContainer id="featuresheet"/>	
+					<childContainer id="importantslide"/>										
 					<childContainer id="press"/>																				
 					<childContainer id="presentation"/>	
 					<childContainer id="research"/>					
@@ -1329,7 +1407,26 @@
 		</contentUIDef>		
 		<contentUIDef qualifiedId="featuresheet.desc">
 			<text type="long"/>
-		</contentUIDef>		
+		</contentUIDef>	
+		<contentUIDef qualifiedId="importantslide">
+			<container labelQualifiedId="importantslide.title">
+				<listViewConfig>
+					<hideContentItem id="file"/>
+					<hideContentItem id="desc"/>
+					<hideContentItem id="slideType"/>
+					<hideContentItem id="solutions"/>
+					<hideContentItem id="industries"/>															
+					<hideContentItem id="partners"/>
+					<hideContentItem id="topics"/>										
+				</listViewConfig>
+				<portalConfig>
+					<headingContentItem id="title"/>
+				</portalConfig>
+			</container>
+		</contentUIDef>
+		<contentUIDef qualifiedId="importantslide.desc">
+			<text type="long"/>
+		</contentUIDef>				
 		<contentUIDef qualifiedId="topic">
 			<container labelQualifiedId="topic.name">
 				<listViewConfig>
@@ -1472,7 +1569,7 @@
 			<container labelQualifiedId="whitepaper.title">
 				<listViewConfig>
 					<hideContentItem id="file"/>
-					<hideContentItem id="summary"/>
+					<hideContentItem id="desc"/>
 					<hideContentItem id="wpSource"/>					
 					<hideContentItem id="solutions"/>
 					<hideContentItem id="industries"/>										
@@ -1486,7 +1583,7 @@
 				</portalConfig>
 			</container>
 		</contentUIDef>
-		<contentUIDef qualifiedId="whitepaper.summary">
+		<contentUIDef qualifiedId="whitepaper.desc">
 			<text type="long"/>
 		</contentUIDef>
 		<contentUIDef qualifiedId="presentation">
@@ -1607,12 +1704,14 @@
 					<childContainer id="casestudy"/>
 					<childContainer id="datasheet"/>					
 					<childContainer id="discoveryquestion"/>
+					<childContainer id="event"/>										
 					<childContainer id="featuresheet"/>					
-					<childContainer id="event"/>
+					<childContainer id="importantslide"/>					
 					<childContainer id="presentation"/>		
 					<childContainer id="press"/>										
 					<childContainer id="research"/>									
 					<childContainer id="template"/>
+					<childContainer id="topic"/>					
 					<childContainer id="saleskit"/>					
 					<childContainer id="video"/>					
 					<childContainer id="whitepaper"/>
