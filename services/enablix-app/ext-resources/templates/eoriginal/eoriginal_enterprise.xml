@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<contentTemplate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="eoriginal_enterprise" version="1.01" xsi:noNamespaceSchemaLocation="../xsd/content-template.xsd">
+<contentTemplate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="eoriginal_enterprise" version="1.02" xsi:noNamespaceSchemaLocation="../xsd/content-template.xsd">
 	<dataDefinition>
 		<container id="solution" label="Solutions" businessCategory="BUSINESS_DIMENSION">
 			<contentItem id="name" label="Name" type="text" searchBoost="7"/>
@@ -386,7 +386,7 @@
 			<contentItem id="type" label="Type" type="bounded">
 				<bounded multivalued="true">
 					<refList>
-						<datastore>
+						<datastore hyperlink="true">
 							<storeId>caseStudyType</storeId>
 							<dataId>identity</dataId>
 							<dataLabel>typeName</dataLabel>
@@ -1278,24 +1278,8 @@
 				</bounded>
 			</contentItem>
 		</container>
-		<container id="caseStudyType" label="Case Study Types" refData="true">
-			<contentItem id="typeName" label="Type" type="text"/>
-			<contentItem id="desc" label="Description" type="text"/>
-		</container>
 		<container id="analystType" label="Analyst Types" refData="true">
 			<contentItem id="typeName" label="Type" type="text"/>
-			<contentItem id="desc" label="Description" type="text"/>
-		</container>
-		<container id="videoCategory" label="Video Category" refData="true">
-			<contentItem id="categoryName" label="Category" type="text"/>
-			<contentItem id="desc" label="Description" type="text"/>
-		</container>
-		<container id="partnerType" label="Partner Types" refData="true">
-			<contentItem id="typeName" label="Type" type="text"/>
-			<contentItem id="desc" label="Description" type="text"/>
-		</container>
-		<container id="presentationType" label="Presentation Types" refData="true">
-			<contentItem id="presentationType" label="Type" type="text"/>
 			<contentItem id="desc" label="Description" type="text"/>
 		</container>		
 		<container id="eventType" label="Event Types" refData="true">
@@ -1304,6 +1288,27 @@
 		</container>
 		<container id="businessRole" label="Business Roles" refData="true">
 			<contentItem id="roleName" label="Role" type="text"/>
+			<contentItem id="desc" label="Description" type="text"/>
+		</container>
+		<container id="caseStudyType" label="Case Study Types" refData="true">
+			<contentItem id="typeName" label="Type" type="text"/>
+			<contentItem id="desc" label="Description" type="text"/>
+			<container id="caseStudyTypeCaseStudy" label="Case Studies" linkContainerQId="casestudy" linkContentItemId="type"/>			
+		</container>
+		<container id="partnerType" label="Partner Types" refData="true">
+			<contentItem id="typeName" label="Type" type="text"/>
+			<contentItem id="desc" label="Description" type="text"/>
+		</container>
+		<container id="presentationType" label="Presentation Types" refData="true">
+			<contentItem id="typeName" label="Type" type="text"/>
+			<contentItem id="desc" label="Description" type="text"/>
+		</container>				
+		<container id="slideType" label="Slide Types" refData="true">
+			<contentItem id="typeName" label="Type" type="text"/>
+			<contentItem id="desc" label="Description" type="text"/>
+		</container>						
+		<container id="videoCategory" label="Video Category" refData="true">
+			<contentItem id="categoryName" label="Category" type="text"/>
 			<contentItem id="desc" label="Description" type="text"/>
 		</container>
 		<container id="user" label="Users" refData="true">
