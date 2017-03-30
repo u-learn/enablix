@@ -2,6 +2,8 @@ package com.enablix.commons.util.web;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -34,6 +36,25 @@ public class WebUtils {
 	
 	public static String sanitizeURI(String uri) {
 		return uri.replace(" ", "%20");
+	}
+	
+	public static String encodeURI(String param) {
+		
+		String encStr = param;
+		
+		try {
+			encStr = URLEncoder.encode(param, "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			LOGGER.error("error in URL encoding", e);
+			
+		}
+		
+		return encStr;
+	}
+	
+	public static void main(String[] args) {
+		String url = "Marketplace: Lending-{White}-(Paper)-[FINAL].pdf";
+		System.out.println(encodeURI(url));
 	}
 	
 }

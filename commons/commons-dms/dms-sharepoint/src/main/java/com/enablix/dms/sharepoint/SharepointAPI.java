@@ -21,7 +21,7 @@ public class SharepointAPI {
 	}
 	
 	public String getCreateFolderJson(String folderUrl) {
-		return getFormattedString(spProperties.getCreateFolderJson(), false, folderUrl);
+		return getFormattedString(spProperties.getCreateFolderJson(), false, WebUtils.encodeURI(folderUrl));
 	}
 	
 	public String getCreateFolderUri(String siteUrl) {
@@ -29,19 +29,21 @@ public class SharepointAPI {
 	}
 	
 	public String getPostFileUri(String siteUrl, String folderPath, String filename) {
-		return getFormattedString(spProperties.getPostFileUri(), true, siteUrl, folderPath, filename);
+		return getFormattedString(spProperties.getPostFileUri(), true, siteUrl, 
+				WebUtils.encodeURI(folderPath), WebUtils.encodeURI(filename));
 	}
 	
 	public String getDownloadFileUri(String siteUrl, String fileLocation) {
-		return getFormattedString(spProperties.getDownloadFileUri(), true, siteUrl, fileLocation);
+		return getFormattedString(spProperties.getDownloadFileUri(), true, siteUrl, WebUtils.encodeURI(fileLocation));
 	}
 	
 	public String getMoveFileUri(String siteUrl, String currentFileLocation, String moveToFileLocation) {
-		return getFormattedString(spProperties.getMoveFileUri(), true, siteUrl, currentFileLocation, moveToFileLocation);
+		return getFormattedString(spProperties.getMoveFileUri(), true, siteUrl, 
+				WebUtils.encodeURI(currentFileLocation), WebUtils.encodeURI(moveToFileLocation));
 	}
 	
 	public String getDeleteFileUri(String siteUrl, String fileLocation) {
-		return getFormattedString(spProperties.getDeleteFileUri(), true, siteUrl, fileLocation);
+		return getFormattedString(spProperties.getDeleteFileUri(), true, siteUrl, WebUtils.encodeURI(fileLocation));
 	}
 	
 	private String getFormattedString(String value, boolean sanitize, final String... args) {
