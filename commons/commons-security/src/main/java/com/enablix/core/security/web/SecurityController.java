@@ -16,7 +16,6 @@ import com.enablix.core.domain.security.authorization.Role;
 import com.enablix.core.domain.security.authorization.UserProfile;
 import com.enablix.core.domain.user.User;
 import com.enablix.core.mail.service.MailService;
-import com.enablix.core.mail.utility.MailConstants;
 import com.enablix.core.security.auth.repo.RoleRepository;
 import com.enablix.core.security.service.UserService;
 

@@ -46,7 +46,7 @@ enablix.studioApp.factory('AuthorizationService',
 
 			    var headers = credentials ? 
 			    		{ 
-			    			"authorization" : "Basic " + btoa(credentials.username + ":" + credentials.password)//,
+			    			"authorization" : "Basic " + btoa(credentials.username.toLowerCase() + ":" + credentials.password)//,
 			    			//"remember-me" : "true",
 			    		} : {};
 			    		
