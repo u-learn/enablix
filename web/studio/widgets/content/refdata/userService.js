@@ -23,7 +23,7 @@ enablix.studioApp.factory('UserService',
 		
 		var addUserData= function(user, userProfile)
 		{
-			 userProfile.email =  userProfile.email;
+			 userProfile.email =  userProfile.email.toLowerCase();
 			if (isNullOrUndefined(user.isPasswordSet)) {
 				user.isPasswordSet=false;
 			}
@@ -46,7 +46,7 @@ enablix.studioApp.factory('UserService',
 		
 		var editUserData= function(user, userProfile)
 		{
-			userProfile.email =  userProfile.email;
+			userProfile.email =  userProfile.email.toLowerCase();
 			if (isNullOrUndefined(user.isPasswordSet)) {
 				user.isPasswordSet=false;
 			}
