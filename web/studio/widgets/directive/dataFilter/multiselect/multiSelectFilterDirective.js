@@ -26,7 +26,10 @@ function($compile,   Notification) {
 			}
 			
 			scope.onItemSelect = function() {
-				scope.selectedValues = scope.selected.values;
+				var newlyAdded = scope.selected.values[scope.selected.values.length-1];
+				if(scope.selectedValues.indexOf(newlyAdded) === -1){
+					scope.selectedValues.push(newlyAdded);
+				}
 			}
 			
 			scope.onItemRemove = function() {
