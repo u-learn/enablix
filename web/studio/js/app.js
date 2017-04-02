@@ -1,7 +1,7 @@
 var enablix = enablix || {};
 
 enablix.dateFormat = 'MM/dd/yyyy';
-enablix.dateTimeFormat = 'h:mm a Z MM/dd/yyyy';
+enablix.dateTimeFormat = 'MM/dd/yyyy h:mm a';
 enablix.errorMsgShowTime = 10000; // in milli-seconds 
 enablix.defaultPageSize = 10;
 enablix.subContainerItemLimit = 5;
