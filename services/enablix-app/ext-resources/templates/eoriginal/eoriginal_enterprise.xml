@@ -250,6 +250,17 @@
 					</refList>
 				</bounded>
 			</contentItem>
+			<contentItem id="tags" label="Business Tags" type="bounded" searchBoost="5">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>businessTag</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>tagName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>				
 		</container>			
 		<container id="battlecard" label="Battle Cards" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
@@ -298,7 +309,18 @@
 						</datastore>
 					</refList>
 				</bounded>
-			</contentItem>			
+			</contentItem>	
+			<contentItem id="tags" label="Business Tags" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>businessTag</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>tagName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>						
 		</container>		
 		<container id="blog" label="Blogs" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
@@ -377,12 +399,23 @@
 					</refList>
 				</bounded>
 			</contentItem>
+			<contentItem id="tags" label="Business Tags" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>businessTag</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>tagName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>				
 		</container>		
 		<container id="casestudy" label="Case Studies" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="file" label="File" type="doc"/>
 			<contentItem id="url" label="URL" type="text"/>			
-			<contentItem id="highlights" label="Case Highlights" type="text"/>
+			<contentItem id="highlights" label="Case Highlights" type="richText" searchBoost="2"/>
 			<contentItem id="type" label="Type" type="bounded">
 				<bounded multivalued="true">
 					<refList>
@@ -448,7 +481,18 @@
 						</datastore>
 					</refList>
 				</bounded>
-			</contentItem>			
+			</contentItem>
+			<contentItem id="tags" label="Business Tags" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>businessTag</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>tagName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>						
 		</container>
 		<container id="datasheet" label="Data Sheets" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
@@ -486,7 +530,18 @@
 						</datastore>
 					</refList>
 				</bounded>
-			</contentItem>					
+			</contentItem>	
+			<contentItem id="tags" label="Business Tags" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>businessTag</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>tagName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>								
 		</container>									
 		<container id="discoveryquestion" label="Discovery Questions" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="question" label="Question" type="text" searchBoost="6"/>
@@ -535,6 +590,17 @@
 					</refList>
 				</bounded>
 			</contentItem>
+			<contentItem id="tags" label="Business Tags" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>businessTag</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>tagName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>				
 		</container>		
 		<container id="event" label="Events" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Event Title" type="text" searchBoost="7"/>
@@ -619,6 +685,17 @@
 					</refList>
 				</bounded>
 			</contentItem>
+			<contentItem id="tags" label="Business Tags" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>businessTag</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>tagName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>				
 			<container id="eventPresentation" label="Presentations" linkContainerQId="presentation" linkContentItemId="events"/>						
 			<container id="eventVideo" label="Videos" linkContainerQId="video" linkContentItemId="events"/>									
 			<container id="eventcontent" label="Event Content">
@@ -686,13 +763,24 @@
 						</datastore>
 					</refList>
 				</bounded>
-			</contentItem>			
+			</contentItem>
+			<contentItem id="tags" label="Business Tags" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>businessTag</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>tagName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>							
 		</container>		
 		<container id="importantslide" label="Important Slides">
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="file" label="File" type="doc"/>
 			<contentItem id="desc" label="Description" type="richText"/>
-			<contentItem id="slideType" label="Slide Type" type="bounded">
+			<contentItem id="slideType" label="Slide Type" type="bounded" searchBoost="6">
 				<bounded multivalued="true">
 					<refList>
 						<datastore>
@@ -747,6 +835,17 @@
 					</refList>
 				</bounded>
 			</contentItem>			
+			<contentItem id="tags" label="Business Tags" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>businessTag</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>tagName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>				
 		</container>				
 		<container id="press" label="Press" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text" searchBoost="7"/>
@@ -818,7 +917,18 @@
 						</datastore>
 					</refList>
 				</bounded>
-			</contentItem>					
+			</contentItem>	
+			<contentItem id="tags" label="Business Tags" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>businessTag</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>tagName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>								
 		</container>			
 		<container id="presentation" label="Presentations" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text" searchBoost="7"/>
@@ -902,6 +1012,17 @@
 					</refList>
 				</bounded>
 			</contentItem>						
+			<contentItem id="tags" label="Business Tags" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>businessTag</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>tagName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>				
 		</container>
 		<container id="research" label="Research" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text" searchBoost="7"/>
@@ -982,6 +1103,17 @@
 					</refList>
 				</bounded>
 			</contentItem>									
+			<contentItem id="tags" label="Business Tags" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>businessTag</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>tagName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>				
 		</container>		
 		<container id="saleskit" label="Sales Kits" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="kitName" label="Name" type="text" searchBoost="7"/>
@@ -1041,13 +1173,24 @@
 					</refList>
 				</bounded>
 			</contentItem>						
+			<contentItem id="tags" label="Business Tags" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>businessTag</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>tagName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>				
 			<contentItem id="kitContent" label="Content Items" type="contentStack"/>
 		</container>		
 		<container id="video" label="Videos" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="url" label="URL" type="text"/>
 			<contentItem id="desc" label="Description" type="richText"/>
-			<contentItem id="category" label="Video Category" type="bounded">
+			<contentItem id="categories" label="Video Category" type="bounded" searchBoost="6">
 				<bounded multivalued="true">
 					<refList>
 						<datastore>
@@ -1135,12 +1278,23 @@
 					</refList>
 				</bounded>
 			</contentItem>									
+			<contentItem id="tags" label="Business Tags" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>businessTag</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>tagName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>				
 		</container>				
 		<container id="whitepaper" label="White Papers" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="file" label="File" type="doc"/>
 			<contentItem id="url" label="URL" type="text"/>
-			<contentItem id="summary" label="Description" type="richText"/>
+			<contentItem id="summary" label="Description" type="richText" searchBoost="2"/>
 			<contentItem id="wpSource" label="Source" type="bounded">
 				<bounded>
 					<fixedList>
@@ -1215,6 +1369,17 @@
 					</refList>
 				</bounded>
 			</contentItem>
+			<contentItem id="tags" label="Business Tags" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>businessTag</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>tagName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>				
 		</container>			
 		<container id="content" label="Other Content" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
@@ -1277,14 +1442,27 @@
 					</refList>
 				</bounded>
 			</contentItem>
+			<contentItem id="tags" label="Business Tags" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>businessTag</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>tagName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>				
 		</container>
 		<container id="analystType" label="Analyst Types" refData="true">
 			<contentItem id="typeName" label="Type" type="text"/>
 			<contentItem id="desc" label="Description" type="text"/>
+			<container id="analystTypeAnalysts" label="Analysts" linkContainerQId="analyst" linkContentItemId="type"/>				
 		</container>		
 		<container id="eventType" label="Event Types" refData="true">
 			<contentItem id="typeName" label="Type" type="text"/>
 			<contentItem id="desc" label="Description" type="text"/>
+			<container id="eventTypeEvent" label="Events" linkContainerQId="event" linkContentItemId="type"/>						
 		</container>
 		<container id="businessRole" label="Business Roles" refData="true">
 			<contentItem id="roleName" label="Role" type="text"/>
@@ -1295,21 +1473,45 @@
 			<contentItem id="desc" label="Description" type="text"/>
 			<container id="caseStudyTypeCaseStudy" label="Case Studies" linkContainerQId="casestudy" linkContentItemId="type"/>			
 		</container>
+		<container id="businessTag" label="Business Tags" refData="true">
+			<contentItem id="tagName" label="Tage Name" type="text"/>
+			<contentItem id="desc" label="Description" type="text"/>
+			<container id="tagArticle" label="Articles" linkContainerQId="article" linkContentItemId="tags"/>			
+			<container id="tagBattleCard" label="Battle Cards" linkContainerQId="battlecard" linkContentItemId="tags"/>			
+			<container id="tagBlog" label="Blogs" linkContainerQId="blog" linkContentItemId="tags"/>			
+			<container id="tagCaseStudy" label="Case Studies" linkContainerQId="casestudy" linkContentItemId="tags"/>			
+			<container id="tagDataSheet" label="Data Sheets" linkContainerQId="datasheet" linkContentItemId="tags"/>												
+			<container id="tagDiscQuestions" label="Discovery Questions" linkContainerQId="discoveryquestion" linkContentItemId="tags"/>			
+			<container id="tagEvent" label="Events" linkContainerQId="event" linkContentItemId="tags"/>			
+			<container id="tagFeatureSheet" label="Feature Sheets" linkContainerQId="featuresheet" linkContentItemId="tags"/>			
+			<container id="tagImpSlide" label="Important Slides" linkContainerQId="importantslide" linkContentItemId="tags"/>			
+			<container id="tagPress" label="Press" linkContainerQId="press" linkContentItemId="tags"/>												
+			<container id="tagPresentation" label="Presentations" linkContainerQId="presentation" linkContentItemId="tags"/>			
+			<container id="tagResearch" label="Research" linkContainerQId="research" linkContentItemId="tags"/>			
+			<container id="tagSalesKit" label="Sales Kits" linkContainerQId="saleskit" linkContentItemId="tags"/>			
+			<container id="tagVideo" label="Videos" linkContainerQId="video" linkContentItemId="tags"/>			
+			<container id="tagWhitePaper" label="White Papers" linkContainerQId="whitepaper" linkContentItemId="tags"/>												
+			<container id="tagContent" label="Other Content" linkContainerQId="content" linkContentItemId="tags"/>															
+		</container>		
 		<container id="partnerType" label="Partner Types" refData="true">
 			<contentItem id="typeName" label="Type" type="text"/>
 			<contentItem id="desc" label="Description" type="text"/>
+			<container id="partnerTypePartner" label="Partners" linkContainerQId="partner" linkContentItemId="type"/>
 		</container>
 		<container id="presentationType" label="Presentation Types" refData="true">
 			<contentItem id="typeName" label="Type" type="text"/>
 			<contentItem id="desc" label="Description" type="text"/>
+			<container id="presentationTypePresentation" label="Presentations" linkContainerQId="presentation" linkContentItemId="type"/>				
 		</container>				
 		<container id="slideType" label="Slide Types" refData="true">
 			<contentItem id="typeName" label="Type" type="text"/>
 			<contentItem id="desc" label="Description" type="text"/>
+			<container id="slideTypeImpSlide" label="Important Slides" linkContainerQId="importantslide" linkContentItemId="slideType"/>				
 		</container>						
 		<container id="videoCategory" label="Video Category" refData="true">
 			<contentItem id="categoryName" label="Category" type="text"/>
 			<contentItem id="desc" label="Description" type="text"/>
+			<container id="videoCategoryVideos" label="Videos" linkContainerQId="video" linkContentItemId="categories"/>			
 		</container>
 		<container id="user" label="Users" refData="true">
 		</container>
@@ -1691,6 +1893,16 @@
 		</contentUIDef>
 		<contentUIDef qualifiedId="saleskit.kitDesc">
 			<text type="long"/>
+		</contentUIDef>		
+		<contentUIDef qualifiedId="businessTag">
+			<container labelQualifiedId="businessTag.tagName">
+				<listViewConfig>
+					<hideContentItem id="desc"/>
+				</listViewConfig>			
+				<portalConfig>
+					<headingContentItem id="tagName"/>
+				</portalConfig>
+			</container>
 		</contentUIDef>		
 	</uiDefinition>
 	<portalUIDefinition>
