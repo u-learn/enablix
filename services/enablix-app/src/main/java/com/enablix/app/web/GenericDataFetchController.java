@@ -10,15 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.enablix.app.template.service.TemplateManager;
 import com.enablix.commons.util.process.ProcessContext;
-import com.enablix.core.api.TemplateFacade;
 import com.enablix.core.mongo.dao.GenericDao;
 import com.enablix.core.mongo.search.service.SearchRequest;
-import com.enablix.core.mongo.view.MongoDataView;
-import com.enablix.data.segment.DataSegmentService;
-import com.enablix.data.view.DataView;
-import com.enablix.services.util.DataViewUtil;
 import com.enablix.services.util.DatastoreUtil;
 
 @RestController
@@ -28,52 +22,29 @@ public class GenericDataFetchController {
 	@Autowired
 	private GenericDao dao;
 	
-	@Autowired
-	private DataSegmentService dataSegmentService;
-	
-	@Autowired
-	private TemplateManager templateManager;
-	
 	@RequestMapping(method = RequestMethod.POST, value="/c/{collectionName}/t/{className}",
 			consumes = "application/json", produces = "application/json")
 	public Page<?> filterData(@RequestBody SearchRequest searchRequest,
 			@PathVariable String collectionName, @PathVariable String className) throws ClassNotFoundException {
-		
 		Class<?> findType = Class.forName(className);
-		
-		DataView userView = dataSegmentService.getDataViewForUserId(ProcessContext.get().getUserId());
-		MongoDataView view = DataViewUtil.getMongoDataView(userView);
-		
-		return dao.findByQuery(searchRequest, collectionName, findType, view);
+		return dao.findByQuery(searchRequest, collectionName, findType);
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, value="/t/{className}",
 			consumes = "application/json", produces = "application/json")
 	public Page<?> filterData(@RequestBody SearchRequest searchRequest,
 			@PathVariable String className) throws ClassNotFoundException {
-		
 		Class<?> findType = Class.forName(className);
-		
-		DataView userView = dataSegmentService.getDataViewForUserId(ProcessContext.get().getUserId());
-		MongoDataView view = DataViewUtil.getMongoDataView(userView);
-		
-		return dao.findByQuery(searchRequest, findType, view);
+		return dao.findByQuery(searchRequest, findType);
 	}
 	
-	@RequestMapping(method = RequestMethod.POST, value="/cq/{containerQId}/",
+	@RequestMapping(method = RequestMethod.POST, value="/cq/{containerQId}",
 			consumes = "application/json", produces = "application/json")
 	public Page<?> filterContainerData(@RequestBody SearchRequest searchRequest,
 			@PathVariable String containerQId) throws ClassNotFoundException {
-		
 		String templateId = ProcessContext.get().getTemplateId();
-		TemplateFacade template = templateManager.getTemplateFacade(templateId);
-		String collectionName = template.getCollectionName(containerQId);
-		//String collectionName = DatastoreUtil.getCollectionName(templateId, containerQId);
-		
-		DataView userView = dataSegmentService.getDataViewForUserId(ProcessContext.get().getUserId());
-		MongoDataView view = DataViewUtil.getMongoDataView(userView);
-		
-		return dao.findByQuery(searchRequest, collectionName, Map.class, view);
+		String collectionName = DatastoreUtil.getCollectionName(templateId, containerQId);
+		return dao.findByQuery(searchRequest, collectionName, Map.class);
 	}
 	
 }
