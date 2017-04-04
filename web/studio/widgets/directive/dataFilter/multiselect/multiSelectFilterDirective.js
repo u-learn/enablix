@@ -27,7 +27,7 @@ function($compile,   Notification) {
 			
 			scope.onItemSelect = function() {
 				var newlyAdded = scope.selected.values[scope.selected.values.length-1];
-				if(scope.selectedValues.indexOf(newlyAdded) === -1){
+				if(scope.selectedValues!=null && scope.selectedValues!=undefined && scope.selectedValues.indexOf(newlyAdded) === -1){
 					scope.selectedValues.push(newlyAdded);
 				}
 			}
