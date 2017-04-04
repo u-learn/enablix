@@ -71,7 +71,7 @@ enablix.serviceURL = {
 	"getContentSuggestion": enablix.domainName + "/contentwf/r/:refObjectIdentity/",
 	"getContentWFStateActionMap": enablix.domainName + "/contentwf/actionmap/",
 	"dataSearchRequest": enablix.domainName + "/data/search/t/:domainType/",
-	"containerDataSearchRequest": enablix.domainName + "/data/search/cq/:containerQId",
+	"containerDataSearchRequest": enablix.domainName + "/data/search/cq/:containerQId/",
 	"saveContentConnection": enablix.domainName + "/contentconn/save",
 	"getContentConnection": enablix.domainName + "/contentconn/r/:connIdentity/",
 	"delContentConnection": enablix.domainName + "/contentconn/del/:connIdentity/",

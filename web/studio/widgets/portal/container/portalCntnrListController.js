@@ -4,7 +4,7 @@ enablix.studioApp.controller('PortalCntnrListCtrl',
 
 		$scope.$stateParams = $stateParams;
 		
-		var containerDef = ContentTemplateService.getContainerDefinition(
+		var containerDef = ContentTemplateService.getConcreteContainerDefinition(
 									enablix.template, $stateParams.containerQId);
 		
 		 $scope.pagination = {
