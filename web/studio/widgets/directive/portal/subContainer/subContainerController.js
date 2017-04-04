@@ -35,6 +35,8 @@ enablix.studioApp.controller('PortalSubContainerCtrl',
 		
 		var setUpMultiRecordData = function(_contentRecords) {
 	
+			$scope.parentIdentity = $stateParams.elementIdentity;
+			
 			var data = _contentRecords;
 			if (_contentRecords.content) {
 				data = _contentRecords.content;
@@ -80,6 +82,11 @@ enablix.studioApp.controller('PortalSubContainerCtrl',
 				if ($scope.parentList && $scope.index) {
 					$scope.parentList[$scope.index] = "null" + $scope.index; // hack to remove div in portal-container.html
 				}
+			}
+			
+			if ($stateParams.containerQId != $scope.subContainerQId 
+					&& isNullOrUndefined($scope.elementIdentity)) {
+				$scope.parentIdentity = $stateParams.elementIdentity;
 			}
 		};
 		
