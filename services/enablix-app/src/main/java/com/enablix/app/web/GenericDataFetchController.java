@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.enablix.app.template.service.TemplateManager;
 import com.enablix.commons.util.process.ProcessContext;
+import com.enablix.services.util.template.TemplateWrapper;
 import com.enablix.core.mongo.dao.GenericDao;
 import com.enablix.core.mongo.search.service.SearchRequest;
 import com.enablix.services.util.DatastoreUtil;
@@ -21,6 +23,9 @@ public class GenericDataFetchController {
 
 	@Autowired
 	private GenericDao dao;
+	
+	@Autowired
+	private TemplateManager templateManager;
 	
 	@RequestMapping(method = RequestMethod.POST, value="/c/{collectionName}/t/{className}",
 			consumes = "application/json", produces = "application/json")
@@ -38,12 +43,14 @@ public class GenericDataFetchController {
 		return dao.findByQuery(searchRequest, findType);
 	}
 	
-	@RequestMapping(method = RequestMethod.POST, value="/cq/{containerQId}",
+	@RequestMapping(method = RequestMethod.POST, value="/cq/{containerQId}/",
 			consumes = "application/json", produces = "application/json")
 	public Page<?> filterContainerData(@RequestBody SearchRequest searchRequest,
 			@PathVariable String containerQId) throws ClassNotFoundException {
 		String templateId = ProcessContext.get().getTemplateId();
-		String collectionName = DatastoreUtil.getCollectionName(templateId, containerQId);
+		TemplateWrapper template = templateManager.getTemplateWrapper(templateId);
+		String collectionName = template.getCollectionName(containerQId);
+		//String collectionName = DatastoreUtil.getCollectionName(templateId, containerQId);
 		return dao.findByQuery(searchRequest, collectionName, Map.class);
 	}
 	
