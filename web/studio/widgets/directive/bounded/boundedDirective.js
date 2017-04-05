@@ -27,6 +27,7 @@ function(ContentTemplateService, Notification) {
 			ContentTemplateService.getBoundedValueList(enablix.templateId, _dataDef, null, 
 					function(data) {
 						scope.options = data;
+						scope.options.sort(sortByLabelProp);
 						
 						angular.forEach(scope.selectValue, function(selVal) {
 							if (isNullOrUndefined(selVal.label)) {
