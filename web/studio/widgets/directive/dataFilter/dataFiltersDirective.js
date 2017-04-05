@@ -58,6 +58,9 @@ function($compile) {
 			
 			scope.onResetAction = function() {
 				angular.copy(filterValuesCopy, scope.filterValues);
+				if (scope.onReset){
+					scope.onReset();
+				}
 			}
 			
 		},
