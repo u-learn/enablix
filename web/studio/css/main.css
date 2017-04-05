@@ -555,6 +555,7 @@ form .row .form-label:first-child {
 .page-content {
 	border-bottom: 44px solid transparent;
 	padding-bottom: 2em;
+	background-color: #f3f5f9;
 }
 .page-footer {
 	margin-top: -44px;
