@@ -15,14 +15,16 @@ import com.enablix.core.api.ContentDataRef;
 import com.enablix.core.domain.activity.ActivityChannel.Channel;
 import com.enablix.core.domain.activity.ContentShareActivity.ShareMedium;
 import com.enablix.core.domain.security.authorization.UserProfile;
-import com.enablix.core.domain.user.User;
+import com.enablix.core.domain.tenant.Tenant;
 import com.enablix.core.mail.service.MailService;
 import com.enablix.core.mail.utility.MailConstants;
 import com.enablix.core.mail.velocity.WeeklyDigestScenarioInputBuilder;
 import com.enablix.core.mail.velocity.input.WeeklyDigestVelocityInput;
+import com.enablix.core.mongo.util.MultiTenantExecutor;
+import com.enablix.core.mongo.util.MultiTenantExecutor.TenantTask;
 import com.enablix.core.security.auth.repo.UserProfileRepository;
 import com.enablix.core.system.repo.TenantRepository;
-import com.enablix.core.system.repo.UserRepository;
+import com.enablix.data.segment.DataSegmentService;
 import com.enablix.services.util.ActivityLogger;
 
 @Component
@@ -37,9 +39,6 @@ public class MailScheduler {
 	private WeeklyDigestScenarioInputBuilder weeklyDigestScenarioInputBuilder;
 
 	@Autowired
-	private UserRepository userRepo;
-	
-	@Autowired
 	private TenantRepository tenantRepo;
 
 	@Autowired
@@ -48,41 +47,62 @@ public class MailScheduler {
 	@Scheduled(cron = "${weekly.digest.timing}")
 	public void scheduleWeeklyDigest() {
 
+
+		List<Tenant> tenants = tenantRepo.findAll();
 		
-		List<UserProfile> users = userProfileRepo.findAll();
-		
-		for (UserProfile userProfile : users) {
-		
-			if (userProfile.getSystemProfile().isSendWeeklyDigest()) {
+		try {
 			
-				try {
-					/*
-					 * Authentication authenticate =
-					 * authenticationManager.authenticate( new
-					 * UsernamePasswordAuthenticationToken(user.getUserId(),user
-					 * .getPassword())); if (authenticate.isAuthenticated())
-					 * SecurityContextHolder.getContext().setAuthentication(
-					 * authenticate);
-					 */
-					User user = userRepo.findByIdentity(userProfile.getIdentity());
-					String templateId = tenantRepo.findByTenantId(user.getTenantId()).getDefaultTemplateId();
-					ProcessContext.initialize(user.getUserId(), userProfile.getName(), user.getTenantId(), templateId);
+			MultiTenantExecutor.executeForEachTenant(tenants, new TenantTask() {
+	
+				@Override
+				public void execute() {
 					
-					WeeklyDigestVelocityInput input = weeklyDigestScenarioInputBuilder.build();
-					if (!input.getRecentList().get("RecentlyUpdated").isEmpty()) {
-						mailService.sendHtmlEmail(input, user.getUserId(), MailConstants.SCENARIO_WEEKLY_DIGEST);
-						auditContentShare(templateId, input, user.getUserId());
+					try {
+						
+						List<UserProfile> users = userProfileRepo.findAll();
+						
+						for (UserProfile userProfile : users) {
+						
+							if (userProfile.getSystemProfile().isSendWeeklyDigest()) {
+							
+								try {
+									/*
+									 * Authentication authenticate =
+									 * authenticationManager.authenticate( new
+									 * UsernamePasswordAuthenticationToken(user.getUserId(),user
+									 * .getPassword())); if (authenticate.isAuthenticated())
+									 * SecurityContextHolder.getContext().setAuthentication(
+									 * authenticate);
+									 */
+									String templateId = ProcessContext.get().getTemplateId();
+									
+									WeeklyDigestVelocityInput input = weeklyDigestScenarioInputBuilder.build();
+									input.setRecipientUser(userProfile);
+									
+									if (!input.getRecentList().get("RecentlyUpdated").isEmpty()) {
+										String userEmail = userProfile.getEmail();
+										mailService.sendHtmlEmail(input, userEmail, MailConstants.SCENARIO_WEEKLY_DIGEST);
+										auditContentShare(templateId, input, userEmail);
+									}
+									
+								} catch (Throwable e) {
+									
+									LOGGER.error("Error sending weekly digest for user: {}", userProfile.getIdentity());
+									LOGGER.error("Exception: ", e);
+									
+								}
+							}
+						}
+						
+					} catch (Throwable e) {
+						LOGGER.error("Error sending email for tenant: " + ProcessContext.get().getTenantId(), e);
 					}
-					
-				} catch (Throwable e) {
-					
-					LOGGER.error("Error sending weekly digest for user: {}", userProfile.getIdentity());
-					LOGGER.error("Exception: ", e);
-					
-				} finally {
-					ProcessContext.clear();
 				}
-			}
+				
+			});
+			
+		} catch (Throwable e) {
+			LOGGER.error("Error sending weekly digest: ", e);
 		}
 		
 	}
