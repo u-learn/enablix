@@ -24,6 +24,8 @@ import com.enablix.core.mongo.util.MultiTenantExecutor;
 import com.enablix.core.mongo.util.MultiTenantExecutor.TenantTask;
 import com.enablix.core.security.auth.repo.UserProfileRepository;
 import com.enablix.core.system.repo.TenantRepository;
+import com.enablix.data.segment.DataSegmentService;
+import com.enablix.data.view.DataView;
 import com.enablix.services.util.ActivityLogger;
 
 @Component
@@ -42,6 +44,9 @@ public class MailScheduler {
 
 	@Autowired
 	private UserProfileRepository userProfileRepo;
+	
+	@Autowired
+	private DataSegmentService dataSegmentService;
 	
 	@Scheduled(cron = "${weekly.digest.timing}")
 	public void scheduleWeeklyDigest() {
@@ -75,7 +80,9 @@ public class MailScheduler {
 									 */
 									String templateId = ProcessContext.get().getTemplateId();
 									
-									WeeklyDigestVelocityInput input = weeklyDigestScenarioInputBuilder.build();
+									DataView userView = dataSegmentService.getDataViewForUserProfileIdentity(userProfile.getIdentity());
+									
+									WeeklyDigestVelocityInput input = weeklyDigestScenarioInputBuilder.build(userView);
 									input.setRecipientUser(userProfile);
 									
 									if (!input.getRecentList().get("RecentlyUpdated").isEmpty()) {
