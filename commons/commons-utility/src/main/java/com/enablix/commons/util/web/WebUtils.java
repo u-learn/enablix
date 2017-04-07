@@ -49,6 +49,7 @@ public class WebUtils {
 			
 		}
 		
+		encStr = encStr.replaceAll("%2F", "/").replaceAll("\\+", "%20");
 		return encStr;
 	}
 	
