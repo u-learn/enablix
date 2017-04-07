@@ -2,7 +2,7 @@ package com.enablix.app.content.update;
 
 import java.util.Map;
 
-import com.enablix.services.util.template.TemplateWrapper;
+import com.enablix.core.api.TemplateFacade;
 
 
 public interface ContentUpdateHandler {
@@ -21,7 +21,7 @@ public interface ContentUpdateHandler {
 	 * 
 	 * @return Existing record before update
 	 */
-	Map<String, Object> updateContent(TemplateWrapper template, String recordId, 
+	Map<String, Object> updateContent(TemplateFacade template, String recordId, 
 			String contentQId, Map<String, Object> contentDataMap);
 	
 }

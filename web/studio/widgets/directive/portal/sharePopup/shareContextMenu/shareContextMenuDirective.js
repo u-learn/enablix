@@ -1,4 +1,4 @@
-enablix.studioApp.directive('ebxContextMenu',['RESTService','Notification',
+enablix.studioApp.directive('ebxShareContextMenu',['RESTService','Notification',
 	'shareContentModalWindow','$window','$location','$state','StateUpdateService',
 	function(RESTService,Notification,shareContentModalWindow,$window,$location,$state,StateUpdateService) {
 	return {

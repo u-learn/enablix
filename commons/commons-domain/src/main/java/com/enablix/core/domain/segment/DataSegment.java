@@ -29,4 +29,16 @@ public class DataSegment extends BaseDocumentEntity {
 		this.attributes = attributes;
 	}
 	
+	public DataSegmentAttribute findAttribute(String attrId) {
+		
+		for (DataSegmentAttribute attr : attributes) {
+		
+			if (attr.getId().equals(attrId)) {
+				return attr;
+			}
+		}
+		
+		return null;
+	}
+	
 }

@@ -10,12 +10,13 @@ import org.springframework.stereotype.Component;
 
 import com.enablix.analytics.correlation.data.dao.ItemUserCorrelationDao;
 import com.enablix.core.api.ContentDataRef;
+import com.enablix.core.api.TemplateFacade;
 import com.enablix.core.commons.xsdtopojo.BaseEmailRecipientType;
 import com.enablix.core.commons.xsdtopojo.EmailCorrelatedUsersType;
 import com.enablix.core.commons.xsdtopojo.EmailUsersType;
 import com.enablix.core.commons.xsdtopojo.FilterTagsType;
 import com.enablix.core.correlation.ItemUserCorrelation;
-import com.enablix.services.util.template.TemplateWrapper;
+import com.enablix.core.mongo.view.MongoDataView;
 
 @Component
 public class CorrelatedUsersEmailRecepientResolver implements EmailRecipientResolver<EmailCorrelatedUsersType> {
@@ -25,7 +26,7 @@ public class CorrelatedUsersEmailRecepientResolver implements EmailRecipientReso
 	
 	@Override
 	public Set<String> resolveRecepientUsers(ContentDataRef triggerEntity, 
-			TemplateWrapper template, EmailCorrelatedUsersType emailCorrUsersDef) {
+			TemplateFacade template, EmailCorrelatedUsersType emailCorrUsersDef) {
 		
 		Set<String> users = new HashSet<>();
 		
@@ -39,7 +40,7 @@ public class CorrelatedUsersEmailRecepientResolver implements EmailRecipientReso
 			} 
 			
 			List<ItemUserCorrelation> itemUserCorrs = 
-					itemUserCorrelationDao.findByItemAndContainingTags(triggerEntity, tags);
+					itemUserCorrelationDao.findByItemAndContainingTags(triggerEntity, tags, MongoDataView.ALL_DATA);
 			
 			if (itemUserCorrs != null) {
 				for (ItemUserCorrelation itemUserCorr : itemUserCorrs) {

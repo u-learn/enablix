@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.enablix.commons.util.collection.CollectionUtil;
+import com.enablix.core.api.TemplateFacade;
 import com.enablix.core.commons.xsdtopojo.ActionType;
 import com.enablix.core.commons.xsdtopojo.CheckpointType;
 import com.enablix.core.commons.xsdtopojo.DisableExecutionOnType;
@@ -16,7 +17,6 @@ import com.enablix.core.commons.xsdtopojo.ResetExecutionOnType;
 import com.enablix.core.domain.trigger.ContentChange;
 import com.enablix.core.domain.trigger.LifecycleCheckpoint;
 import com.enablix.core.domain.trigger.LifecycleCheckpoint.ExecutionStatus;
-import com.enablix.services.util.template.TemplateWrapper;
 import com.enablix.trigger.lifecycle.CheckpointExecTimeInterpreterFactory;
 import com.enablix.trigger.lifecycle.CheckpointExecutionTimeInterpreter;
 import com.enablix.trigger.lifecycle.action.CheckpointAction;
@@ -35,7 +35,7 @@ public class ReevaluateCheckpointAction implements CheckpointAction<ContentChang
 	private CheckpointExecTimeInterpreterFactory execTimeInterpreterFactory;
 	
 	@Override
-	public void run(LifecycleCheckpoint<ContentChange> checkpoint, TemplateWrapper template,
+	public void run(LifecycleCheckpoint<ContentChange> checkpoint, TemplateFacade template,
 			ReevaluatePendingCheckpointType actionType) {
 
 		ContentChange currentTrigger = checkpoint.getTrigger();
@@ -72,7 +72,7 @@ public class ReevaluateCheckpointAction implements CheckpointAction<ContentChang
 
 
 	private LifecycleCheckpoint<?> checkAndReset(LifecycleCheckpoint<?> pendingCheckpt, 
-			ContentChange trigger, ResetExecutionOnType resetOn, TemplateWrapper template) {
+			ContentChange trigger, ResetExecutionOnType resetOn, TemplateFacade template) {
 		
 		if (resetOn != null) {
 			
@@ -97,7 +97,7 @@ public class ReevaluateCheckpointAction implements CheckpointAction<ContentChang
 
 
 	private LifecycleCheckpoint<?> checkAndDisable(LifecycleCheckpoint<?> checkpoint, 
-			ContentChange trigger, DisableExecutionOnType disableOn, TemplateWrapper template) {
+			ContentChange trigger, DisableExecutionOnType disableOn, TemplateFacade template) {
 		
 		if (disableOn != null) {
 			

@@ -9,7 +9,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
@@ -17,15 +16,11 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.enablix.commons.constants.AppConstants;
 import com.enablix.commons.util.process.ProcessContext;
-import com.enablix.core.security.auth.repo.UserProfileRepository;
 import com.enablix.core.security.service.EnablixUserService.LoggedInUser;
 
 public class ProcessContextInitFilter extends OncePerRequestFilter {
 
 	private List<AntPathRequestMatcher> systemUserRequestMatchers;
-	
-	@Autowired
-	private UserProfileRepository userProfileRepo;
 	
 	public ProcessContextInitFilter(String... systemUserRequestPatterns) {
 		this.systemUserRequestMatchers = new ArrayList<>();

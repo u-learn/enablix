@@ -7,6 +7,8 @@ enablix.studioApp.controller('PortalSubContainerCtrl',
 			if ($event.target.nodeName != 'A' && $event.target.nodeName != 'SPAN') {
 				$(elem).toggleClass('active');
 				$(elem).next().slideToggle('fast');
+				
+				$scope.expanded = elem.className.indexOf('active') > 0;
 			}
 		};
 		
@@ -193,7 +195,7 @@ enablix.studioApp.controller('PortalSubContainerCtrl',
 				
 			});
 			
-			$scope.expanded = $scope.expanded || false;
+			$scope.expanded = $scope.expanded || true;
 			
 			$scope.showSubContainerList = function() {
 				

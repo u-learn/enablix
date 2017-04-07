@@ -4,12 +4,15 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.enablix.commons.constants.AppConstants;
 import com.enablix.core.domain.BaseDocumentEntity;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 @Document(collection = AppConstants.SYSTEM_USER_COLL_NAME)
 public class User extends BaseDocumentEntity {
 
 	private String userId;
 	
+	@JsonProperty(access = Access.WRITE_ONLY)
 	private String password;
 	
 	private String tenantId;

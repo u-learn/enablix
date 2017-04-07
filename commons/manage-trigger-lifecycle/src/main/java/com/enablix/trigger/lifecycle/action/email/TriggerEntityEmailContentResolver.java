@@ -10,9 +10,10 @@ import org.springframework.stereotype.Component;
 import com.enablix.app.content.ContentDataManager;
 import com.enablix.core.api.ContentDataRecord;
 import com.enablix.core.api.ContentDataRef;
+import com.enablix.core.api.TemplateFacade;
 import com.enablix.core.commons.xsdtopojo.BaseEmailContentType;
 import com.enablix.core.commons.xsdtopojo.EmailContentTriggerEntityType;
-import com.enablix.services.util.template.TemplateWrapper;
+import com.enablix.data.view.DataView;
 
 @Component
 public class TriggerEntityEmailContentResolver implements EmailContentResolver<EmailContentTriggerEntityType> {
@@ -22,9 +23,9 @@ public class TriggerEntityEmailContentResolver implements EmailContentResolver<E
 	
 	@Override
 	public List<ContentDataRecord> getEmailContent(EmailContentTriggerEntityType emailContentDef,
-			TemplateWrapper template, ContentDataRef triggerItem) {
+			TemplateFacade template, ContentDataRef triggerItem, DataView view) {
 		
-		Map<String, Object> triggerRecord = contentDataMgr.getContentRecord(triggerItem, template);
+		Map<String, Object> triggerRecord = contentDataMgr.getContentRecord(triggerItem, template, view);
 		
 		List<ContentDataRecord> emailContent = new ArrayList<>();
 		if (triggerRecord != null && !triggerRecord.isEmpty()) {

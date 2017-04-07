@@ -16,6 +16,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
 import com.enablix.commons.constants.AppConstants;
+import com.enablix.core.mongo.CustomMongoTemplate;
 import com.enablix.core.mongo.MultiTenantMongoDbFactory;
 import com.enablix.core.mongo.template.SystemMongoTemplateHolder;
 import com.mongodb.MongoClient;
@@ -63,13 +64,13 @@ public class MongoConfig {
 	
 	@Bean 
 	public MongoTemplate mongoTemplate() throws UnknownHostException {
-		return new MongoTemplate(multiTenantMongoDbFactory());
+		return new CustomMongoTemplate(multiTenantMongoDbFactory());
 	}
 	
 	@Bean(name="systemMongoTemplate")
 	public MongoTemplate systemMongoTemplate() throws UnknownHostException {
 		MongoTemplate systemMongoTemplate = 
-				new MongoTemplate(mongo(), AppConstants.SYSTEM_DB_NAME);
+				new CustomMongoTemplate(mongo(), AppConstants.SYSTEM_DB_NAME);
 		SystemMongoTemplateHolder.registerSystemMongoTemplate(systemMongoTemplate);
 		return systemMongoTemplate;
 	}

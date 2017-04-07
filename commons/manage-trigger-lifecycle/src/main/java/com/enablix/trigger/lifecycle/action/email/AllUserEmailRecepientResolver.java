@@ -10,11 +10,11 @@ import com.enablix.commons.util.collection.CollectionUtil;
 import com.enablix.commons.util.collection.CollectionUtil.CollectionCreator;
 import com.enablix.commons.util.collection.CollectionUtil.ITransformer;
 import com.enablix.core.api.ContentDataRef;
+import com.enablix.core.api.TemplateFacade;
 import com.enablix.core.commons.xsdtopojo.BaseEmailRecipientType;
 import com.enablix.core.commons.xsdtopojo.EmailAllUsersType;
 import com.enablix.core.domain.security.authorization.UserProfile;
 import com.enablix.core.security.auth.repo.UserProfileRepository;
-import com.enablix.services.util.template.TemplateWrapper;
 
 @Component
 public class AllUserEmailRecepientResolver implements EmailRecipientResolver<EmailAllUsersType> {
@@ -24,7 +24,7 @@ public class AllUserEmailRecepientResolver implements EmailRecipientResolver<Ema
 	
 	@Override
 	public Set<String> resolveRecepientUsers(ContentDataRef triggerEntity, 
-			TemplateWrapper template, EmailAllUsersType allEmailUserDef) {
+			TemplateFacade template, EmailAllUsersType allEmailUserDef) {
 		
 		Set<String> userIdentities = CollectionUtil.transform(userProfileRepo.findAll(), 
 			new CollectionCreator<Set<String>, String>() {

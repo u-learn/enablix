@@ -12,31 +12,32 @@ import com.enablix.core.api.ContentDataRecord;
 import com.enablix.core.api.ContentDataRef;
 import com.enablix.core.api.ContentRecordGroup;
 import com.enablix.core.api.ContentStackItem;
-import com.enablix.services.util.template.TemplateWrapper;
+import com.enablix.core.api.TemplateFacade;
+import com.enablix.data.view.DataView;
 
 public interface ContentDataManager {
 
 	Map<String, Object> saveData(UpdateContentRequest request);
 	
-	Object fetchDataJson(FetchContentRequest request);
+	Object fetchDataJson(FetchContentRequest request, DataView view);
 	
 	void deleteData(DeleteContentRequest request);
 
-	List<Map<String, Object>> fetchPeers(FetchContentRequest request);
+	List<Map<String, Object>> fetchPeers(FetchContentRequest request, DataView view);
 
-	Map<String, Object> fetchParentRecord(TemplateWrapper template, 
-			String recordQId, Map<String, Object> record);
+	Map<String, Object> fetchParentRecord(TemplateFacade template, 
+			String recordQId, Map<String, Object> record, DataView view);
 	
-	Map<String, Object> getContentRecord(ContentDataRef dataRef, TemplateWrapper template);
+	Map<String, Object> getContentRecord(ContentDataRef dataRef, TemplateFacade template, DataView view);
 	
-	List<Map<String, Object>> getContentRecords(String containerQId, List<String> recordIdentities, TemplateWrapper template);
+	List<Map<String, Object>> getContentRecords(String containerQId, List<String> recordIdentities, TemplateFacade template, DataView view);
 
-	List<ContentDataRecord> getContentStackRecords(List<ContentStackItem> contentStackItems);
+	List<ContentDataRecord> getContentStackRecords(List<ContentStackItem> contentStackItems, DataView view);
 
-	List<ContentDataRecord> getContentStackForContentRecord(String containerQId, String instanceIdentity);
+	List<ContentDataRecord> getContentStackForContentRecord(String containerQId, String instanceIdentity, DataView view);
 
-	List<ContentRecordGroup> fetchAllChildrenData(String parentQId, String parentIdentity, Pageable pageable);
+	List<ContentRecordGroup> fetchAllChildrenData(String parentQId, String parentIdentity, Pageable pageable, DataView view);
 
-	List<ContentRecordGroup> fetchRecordAndChildData(String contentQId, String contentIdentity, Pageable childPagination);
+	List<ContentRecordGroup> fetchRecordAndChildData(String contentQId, String contentIdentity, Pageable childPagination, DataView view);
 	
 }

@@ -4,12 +4,12 @@ import java.util.Collection;
 import java.util.Map;
 
 import com.enablix.app.content.update.ContentUpdateContext;
+import com.enablix.core.api.TemplateFacade;
 import com.enablix.core.domain.content.ContentAssociation;
-import com.enablix.services.util.template.TemplateWrapper;
 
 public interface ContentAssociationBuilder {
 
-	Collection<ContentAssociation> buildAssociations(TemplateWrapper template, ContentUpdateContext updateCtx,
+	Collection<ContentAssociation> buildAssociations(TemplateFacade template, ContentUpdateContext updateCtx,
 			Map<String, Object> dataAsMap);
 	
 	boolean replaceExisting();

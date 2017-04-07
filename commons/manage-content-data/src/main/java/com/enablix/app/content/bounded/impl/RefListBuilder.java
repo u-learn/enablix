@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 import com.enablix.app.content.bounded.BoundedListBuilder;
 import com.enablix.app.content.bounded.DataItem;
 import com.enablix.commons.util.StringUtil;
+import com.enablix.core.api.TemplateFacade;
 import com.enablix.core.commons.xsdtopojo.BoundedListDatastoreType;
 import com.enablix.core.commons.xsdtopojo.BoundedRefListType;
 import com.enablix.core.commons.xsdtopojo.BoundedType;
@@ -22,7 +23,9 @@ import com.enablix.core.mongo.content.ContentCrudService;
 import com.enablix.core.mongo.dao.BaseDao;
 import com.enablix.core.mongo.dao.GenericDao;
 import com.enablix.core.mongo.dao.GenericSystemDao;
-import com.enablix.services.util.template.TemplateWrapper;
+import com.enablix.core.mongo.view.MongoDataView;
+import com.enablix.data.view.DataView;
+import com.enablix.services.util.DataViewUtil;
 
 @Component
 public class RefListBuilder implements BoundedListBuilder {
@@ -38,7 +41,8 @@ public class RefListBuilder implements BoundedListBuilder {
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public Collection<DataItem> buildBoundedList(TemplateWrapper template, BoundedType boundedTypeDef) {
+	public Collection<DataItem> buildBoundedList(TemplateFacade template, 
+				BoundedType boundedTypeDef, DataView dataView) {
 		
 		Set<DataItem> itemList = new HashSet<>();
 		
@@ -48,21 +52,23 @@ public class RefListBuilder implements BoundedListBuilder {
 		
 		DatastoreLocationType dsLocation = boundedListDS.getLocation();
 		
+		MongoDataView view = DataViewUtil.getMongoDataView(dataView);
+		
 		List<Map<String, Object>> records = null;
 		
 		switch(dsLocation) {
 
 			case TENANT_DB:
-				records = getDBCollectionRecords(storeId, tenantDao);
+				records = getDBCollectionRecords(storeId, tenantDao, view);
 				break;
 				
 			case SYSTEM_DB:
-				records = getDBCollectionRecords(storeId, systemDao);
+				records = getDBCollectionRecords(storeId, systemDao, view);
 				break;
 				
 			default:
 				String collectionName = template.getCollectionName(boundedListDS.getStoreId());
-				records = contentCrudService.findAllRecord(collectionName);
+				records = contentCrudService.findAllRecord(collectionName, view);
 		}
 		
 		if (records != null) {
@@ -84,8 +90,8 @@ public class RefListBuilder implements BoundedListBuilder {
 
 
 	@SuppressWarnings({ "rawtypes" })
-	private List getDBCollectionRecords(String storeId, BaseDao dao) {
-		return dao.findByCriteria(new Criteria(), storeId, HashMap.class);
+	private List getDBCollectionRecords(String storeId, BaseDao dao, MongoDataView view) {
+		return dao.findByCriteria(new Criteria(), storeId, HashMap.class, view);
 	}
 	
 	

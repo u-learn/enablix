@@ -1087,7 +1087,18 @@
 						</datastore>
 					</refList>
 				</bounded>
-			</contentItem>			
+			</contentItem>
+			<contentItem id="csAccess" label="Access" type="bounded">
+	      		<bounded multivalued="true">
+	      			<refList>
+	      				<datastore>
+	      					<storeId>contentAccessType</storeId>
+	      					<dataId>identity</dataId>
+	      					<dataLabel>accessTypeName</dataLabel>
+	      				</datastore>
+	      			</refList>
+	      		</bounded>
+      		</contentItem>			
 		</container>
 		<container id="demoenvironment" label="Demo Environments" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
@@ -1188,7 +1199,18 @@
 					</refList>
 				</bounded>
 			</contentItem>
-			<contentItem id="relatedContent" label="Supporting Content" type="contentStack"/>			
+			<contentItem id="relatedContent" label="Supporting Content" type="contentStack"/>
+			<contentItem id="dsAccess" label="Access" type="bounded">
+	      		<bounded multivalued="true">
+	      			<refList>
+	      				<datastore>
+	      					<storeId>contentAccessType</storeId>
+	      					<dataId>identity</dataId>
+	      					<dataLabel>accessTypeName</dataLabel>
+	      				</datastore>
+	      			</refList>
+	      		</bounded>
+      		</contentItem>			
 		</container>			
 		<container id="discoveryQuestion" label="Discovery Questions" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="question" label="Question" type="text" searchBoost="6"/>
@@ -1248,6 +1270,17 @@
 					</refList>
 				</bounded>
 			</contentItem>
+			<contentItem id="dqAccess" label="Access" type="bounded">
+	      		<bounded multivalued="true">
+	      			<refList>
+	      				<datastore>
+	      					<storeId>contentAccessType</storeId>
+	      					<dataId>identity</dataId>
+	      					<dataLabel>accessTypeName</dataLabel>
+	      				</datastore>
+	      			</refList>
+	      		</bounded>
+      		</contentItem>
 		</container>		
 		<container id="featureSheet" label="Feature Sheets" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
@@ -1296,6 +1329,17 @@
 					</refList>
 				</bounded>
 			</contentItem>
+			<contentItem id="fsAccess" label="Access" type="bounded">
+	      		<bounded multivalued="true">
+	      			<refList>
+	      				<datastore>
+	      					<storeId>contentAccessType</storeId>
+	      					<dataId>identity</dataId>
+	      					<dataLabel>accessTypeName</dataLabel>
+	      				</datastore>
+	      			</refList>
+	      		</bounded>
+      		</contentItem>
 		</container>
 		<container id="winloss" label="Win Loss Analysis" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
@@ -1364,6 +1408,17 @@
 					</refList>
 				</bounded>
 			</contentItem>
+			<contentItem id="wlAccess" label="Access" type="bounded">
+	      		<bounded multivalued="true">
+	      			<refList>
+	      				<datastore>
+	      					<storeId>contentAccessType</storeId>
+	      					<dataId>identity</dataId>
+	      					<dataLabel>accessTypeName</dataLabel>
+	      				</datastore>
+	      			</refList>
+	      		</bounded>
+      		</contentItem>
 		</container>
 		<container id="blog" label="Blogs" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
@@ -1453,6 +1508,17 @@
 					</refList>
 				</bounded>
 			</contentItem>
+			<contentItem id="blogAccess" label="Access" type="bounded">
+	      		<bounded multivalued="true">
+	      			<refList>
+	      				<datastore>
+	      					<storeId>contentAccessType</storeId>
+	      					<dataId>identity</dataId>
+	      					<dataLabel>accessTypeName</dataLabel>
+	      				</datastore>
+	      			</refList>
+	      		</bounded>
+      		</contentItem>
 		</container>
 		<container id="bom" label="Bill of Materials" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
@@ -1559,6 +1625,17 @@
 					</refList>
 				</bounded>
 			</contentItem>
+			<contentItem id="wpAccess" label="Access" type="bounded">
+	      		<bounded multivalued="true">
+	      			<refList>
+	      				<datastore>
+	      					<storeId>contentAccessType</storeId>
+	      					<dataId>identity</dataId>
+	      					<dataLabel>accessTypeName</dataLabel>
+	      				</datastore>
+	      			</refList>
+	      		</bounded>
+      		</contentItem>
 		</container>
 		<container id="multimedia" label="Multimedia" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
@@ -1664,6 +1741,17 @@
 					</refList>
 				</bounded>
 			</contentItem>
+			<contentItem id="mmAccess" label="Access" type="bounded">
+	      		<bounded multivalued="true">
+	      			<refList>
+	      				<datastore>
+	      					<storeId>contentAccessType</storeId>
+	      					<dataId>identity</dataId>
+	      					<dataLabel>accessTypeName</dataLabel>
+	      				</datastore>
+	      			</refList>
+	      		</bounded>
+      		</contentItem>
 		</container>
 		<container id="salesDeck" label="Sales Decks" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
@@ -2455,6 +2543,10 @@
 		</container>		
 		<container id="businessRole" label="Business Roles" refData="true">
 			<contentItem id="roleName" label="Role" type="text"/>
+			<contentItem id="desc" label="Description" type="text"/>
+		</container>
+		<container id="contentAccessType" label="Access Type" refData="true">
+			<contentItem id="accessTypeName" label="Access Type" type="text"/>
 			<contentItem id="desc" label="Description" type="text"/>
 		</container>
 		<container id="user" label="Users" refData="true">
@@ -3323,4 +3415,28 @@
 			<containerDataContext qualifiedId="marketTier"/>
 		</contextConfig>
 	</contentTypeMappingConfig>
+	<dataSegmentDefinition>
+		<segmentAttr id="accessType" label="Content Access Type" type="bounded">
+      		<bounded multivalued="true">
+      			<refList>
+      				<datastore>
+      					<storeId>contentAccessType</storeId>
+      					<dataId>identity</dataId>
+      					<dataLabel>accessTypeName</dataLabel>
+      				</datastore>
+      			</refList>
+      		</bounded>
+    	</segmentAttr>
+    	<segmentAttr id="partners" label="Partner" type="bounded">
+      		<bounded multivalued="true">
+      			<refList>
+      				<datastore>
+      					<storeId>partner</storeId>
+      					<dataId>identity</dataId>
+      					<dataLabel>partnerName</dataLabel>
+      				</datastore>
+      			</refList>
+      		</bounded>
+      	</segmentAttr>
+	</dataSegmentDefinition>
 </contentTemplate>

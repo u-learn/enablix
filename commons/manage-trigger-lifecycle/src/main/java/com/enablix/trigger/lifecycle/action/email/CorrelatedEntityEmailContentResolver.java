@@ -12,13 +12,16 @@ import com.enablix.analytics.correlation.data.dao.ItemItemCorrelationDao;
 import com.enablix.app.content.ContentDataManager;
 import com.enablix.core.api.ContentDataRecord;
 import com.enablix.core.api.ContentDataRef;
+import com.enablix.core.api.TemplateFacade;
 import com.enablix.core.commons.xsdtopojo.BaseEmailContentType;
 import com.enablix.core.commons.xsdtopojo.CandidateContainersType;
 import com.enablix.core.commons.xsdtopojo.CorrelatedEntitiesType;
 import com.enablix.core.commons.xsdtopojo.EntityContentType;
 import com.enablix.core.commons.xsdtopojo.FilterTagsType;
 import com.enablix.core.correlation.ItemItemCorrelation;
-import com.enablix.services.util.template.TemplateWrapper;
+import com.enablix.core.mongo.view.MongoDataView;
+import com.enablix.data.view.DataView;
+import com.enablix.services.util.DataViewUtil;
 
 @Component
 public class CorrelatedEntityEmailContentResolver implements EmailContentResolver<CorrelatedEntitiesType> {
@@ -31,8 +34,9 @@ public class CorrelatedEntityEmailContentResolver implements EmailContentResolve
 	
 	@Override
 	public List<ContentDataRecord> getEmailContent(CorrelatedEntitiesType corrEntitiesDef,
-			TemplateWrapper template, ContentDataRef triggerItem) {
+			TemplateFacade template, ContentDataRef triggerItem, DataView dataView) {
 
+		MongoDataView view = DataViewUtil.getMongoDataView(dataView);
 		List<ItemItemCorrelation> itemCorrs = new ArrayList<>();
 		
 		List<EntityContentType> corrEntityDef = corrEntitiesDef.getEntity();
@@ -50,21 +54,24 @@ public class CorrelatedEntityEmailContentResolver implements EmailContentResolve
 				List<String> filterTagNames = filterTags != null ? filterTags.getTag() : new ArrayList<String>();
 				
 				itemCorrs.addAll(dao.findByItemAndRelatedItemQIdAndContainingTags(
-						triggerItem, relatedContQIds, filterTagNames));
+						triggerItem, relatedContQIds, filterTagNames, view));
 			}
 			
 		} else {
-			itemCorrs.addAll(dao.findByItemAndContainingTags(triggerItem, new ArrayList<String>()));
+			itemCorrs.addAll(dao.findByItemAndContainingTags(triggerItem, new ArrayList<String>(), view));
 		}
 		
 		Map<String, List<String>> contentIdentitiesMap = new HashMap<String, List<String>>();
 		for (ItemItemCorrelation corr: itemCorrs) {
+			
 			String relatedItemQId = corr.getRelatedItem().getContainerQId();
 			List<String> identities = contentIdentitiesMap.get(relatedItemQId);
+			
 			if (identities == null) {
 				identities = new ArrayList<>();
 				contentIdentitiesMap.put(relatedItemQId, identities);
 			}
+			
 			identities.add(corr.getRelatedItem().getInstanceIdentity());
 		}
 		
@@ -73,7 +80,7 @@ public class CorrelatedEntityEmailContentResolver implements EmailContentResolve
 			
 			String relatedItemQId = contentIdentities.getKey();
 			List<Map<String, Object>> contentRecords = contentDataMgr.getContentRecords(
-					relatedItemQId, contentIdentities.getValue(), template);
+					relatedItemQId, contentIdentities.getValue(), template, dataView);
 			
 			for (Map<String, Object> contentRecord : contentRecords) {
 				ContentDataRecord record = new ContentDataRecord(template.getId(), 

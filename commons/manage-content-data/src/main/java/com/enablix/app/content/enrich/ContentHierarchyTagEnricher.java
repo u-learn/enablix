@@ -21,12 +21,14 @@ import com.enablix.commons.util.QIdUtil;
 import com.enablix.commons.util.StringUtil;
 import com.enablix.commons.util.concurrent.Events;
 import com.enablix.core.api.Tag;
+import com.enablix.core.api.TemplateFacade;
 import com.enablix.core.commons.xsdtopojo.ContainerType;
 import com.enablix.core.mongo.content.ContentCrudService;
+import com.enablix.core.mongo.view.MongoDataView;
 import com.enablix.core.mq.EventSubscription;
 import com.enablix.services.util.ContentDataUtil;
+import com.enablix.services.util.DataViewUtil;
 import com.enablix.services.util.TemplateUtil;
-import com.enablix.services.util.template.TemplateWrapper;
 
 @Component
 public class ContentHierarchyTagEnricher implements ContentEnricher {
@@ -49,7 +51,7 @@ public class ContentHierarchyTagEnricher implements ContentEnricher {
 	private DefaultContentLabelResolver labelResolver = new DefaultContentLabelResolver();
 	
 	@Override
-	public void enrich(ContentUpdateContext updateCtx, Map<String, Object> content, TemplateWrapper contentTemplate) {
+	public void enrich(ContentUpdateContext updateCtx, Map<String, Object> content, TemplateFacade contentTemplate) {
 		
 		List<Tag> tags = new ArrayList<>();
 		
@@ -70,20 +72,20 @@ public class ContentHierarchyTagEnricher implements ContentEnricher {
 	}
 
 	private void addParentLabelAsTag(ContentUpdateContext updateCtx, String parentIdentity, 
-			TemplateWrapper contentTemplate, List<Tag> tags) {
+			TemplateFacade contentTemplate, List<Tag> tags) {
 		
 		String parentQId = QIdUtil.getParentQId(updateCtx.contentQId());
 		String parentCollection = contentTemplate.getCollectionName(parentQId);
 		
 		if (parentCollection != null) {
 		
-			Map<String, Object> parent = crudService.findRecord(parentCollection, parentIdentity);
+			Map<String, Object> parent = crudService.findRecord(parentCollection, parentIdentity, MongoDataView.ALL_DATA);
 			
 			resolveAndAddParentLabelAsTag(parentQId, contentTemplate, tags, parent);
 		}
 	}
 
-	private void resolveAndAddParentLabelAsTag(String parentQId, TemplateWrapper contentTemplate,
+	private void resolveAndAddParentLabelAsTag(String parentQId, TemplateFacade contentTemplate,
 			List<Tag> tags, Map<String, Object> parent) {
 		
 		String parentLabel = labelResolver.findContentLabel(parent, contentTemplate, parentQId);
@@ -94,10 +96,11 @@ public class ContentHierarchyTagEnricher implements ContentEnricher {
 		findAndAddNextParentLabelAsTag(contentTemplate, parentQId, parent, tags);
 	}
 	
-	private void findAndAddNextParentLabelAsTag(TemplateWrapper template, 
+	private void findAndAddNextParentLabelAsTag(TemplateFacade template, 
 			String recordQId, Map<String, Object> record, List<Tag> tags) {
 		
-		Map<String, Object> parentRecord = contentDataManager.fetchParentRecord(template, recordQId, record);
+		Map<String, Object> parentRecord = contentDataManager.fetchParentRecord(
+								template, recordQId, record, DataViewUtil.allDataView());
 		
 		if (parentRecord != null) {
 			String parentQId = QIdUtil.getParentQId(recordQId);
@@ -110,7 +113,7 @@ public class ContentHierarchyTagEnricher implements ContentEnricher {
 		
 		if (!event.isNewRecord()) {
 		
-			TemplateWrapper template = templateMgr.getTemplateWrapper(event.getTemplateId());
+			TemplateFacade template = templateMgr.getTemplateFacade(event.getTemplateId());
 			
 			String containerQId = event.getContainerType().getQualifiedId();
 			
@@ -124,7 +127,7 @@ public class ContentHierarchyTagEnricher implements ContentEnricher {
 	}
 
 	private void updateHierarchyTagOfChildren(
-			Map<String, Object> parentRecord, TemplateWrapper template, String containerQId) {
+			Map<String, Object> parentRecord, TemplateFacade template, String containerQId) {
 		
 		String recordIdentity = (String) parentRecord.get(ContentDataConstants.IDENTITY_KEY);
 		ContainerType container = template.getContainerDefinition(containerQId);
@@ -148,7 +151,7 @@ public class ContentHierarchyTagEnricher implements ContentEnricher {
 					
 					Pageable pageRequest = new PageRequest(page, size);
 					Page<Map<String, Object>> childrenPage = 
-							crud.findAllRecordWithParentId(collName, recordIdentity, pageRequest);
+							crud.findAllRecordWithParentId(collName, recordIdentity, pageRequest, MongoDataView.ALL_DATA);
 					
 					if (childrenPage.hasContent()) {
 						

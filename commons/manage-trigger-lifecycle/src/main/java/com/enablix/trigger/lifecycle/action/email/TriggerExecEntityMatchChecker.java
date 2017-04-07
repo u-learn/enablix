@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.commons.util.collection.CollectionUtil;
+import com.enablix.core.api.TemplateFacade;
 import com.enablix.core.commons.xsdtopojo.FilterCriteriaType;
 import com.enablix.core.commons.xsdtopojo.FilterType;
 import com.enablix.core.domain.trigger.ContentChange;
@@ -16,7 +17,7 @@ import com.enablix.core.mongo.content.ContentCrudService;
 import com.enablix.core.mongo.search.ConditionOperator;
 import com.enablix.core.mongo.search.SearchFilter;
 import com.enablix.core.mongo.search.StringFilter;
-import com.enablix.services.util.template.TemplateWrapper;
+import com.enablix.core.mongo.view.MongoDataView;
 
 @Component
 public class TriggerExecEntityMatchChecker {
@@ -24,7 +25,7 @@ public class TriggerExecEntityMatchChecker {
 	@Autowired
 	private ContentCrudService crudService;
 	
-	public Boolean evaluateCondition(ContentChange contentChange, FilterCriteriaType entityMatchCond, TemplateWrapper template) {
+	public Boolean evaluateCondition(ContentChange contentChange, FilterCriteriaType entityMatchCond, TemplateFacade template) {
 		
 		Boolean result = null;
 		
@@ -47,7 +48,7 @@ public class TriggerExecEntityMatchChecker {
 				String collectionName = template.getCollectionName(contentChange.getTriggerItem().getContainerQId());
 				
 				List<Map<String, Object>> matchedRecords = crudService.findAllRecordForCriteria(
-						collectionName, filter.toPredicate(new Criteria()));
+						collectionName, filter.toPredicate(new Criteria()), MongoDataView.ALL_DATA);
 				
 				result = CollectionUtil.isNotEmpty(matchedRecords);
 				

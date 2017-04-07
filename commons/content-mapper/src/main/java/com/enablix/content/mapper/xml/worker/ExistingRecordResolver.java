@@ -20,6 +20,7 @@ import com.enablix.core.mongo.content.ContentCrudService;
 import com.enablix.core.mongo.search.ConditionOperator;
 import com.enablix.core.mongo.search.SearchFilter;
 import com.enablix.core.mongo.search.StringFilter;
+import com.enablix.core.mongo.view.MongoDataView;
 import com.enablix.services.util.TemplateUtil;
 
 @Component
@@ -46,7 +47,8 @@ public class ExistingRecordResolver implements MappingWorker {
 			String collectionName = TemplateUtil.resolveCollectionName(template, extContent.getContentQId());
 			
 			Map<String, Object> ebxData = ebxContent.getData();
-			List<Map<String, Object>> existingRecords = crudService.findAllRecordForCriteria(collectionName, extIdFilter.toPredicate(new Criteria()));
+			List<Map<String, Object>> existingRecords = crudService.findAllRecordForCriteria(
+					collectionName, extIdFilter.toPredicate(new Criteria()), MongoDataView.ALL_DATA);
 			
 			if (CollectionUtil.isNotEmpty(existingRecords)) {
 				Map<String, Object> existRecord = existingRecords.get(0);

@@ -19,6 +19,7 @@ import com.enablix.core.mongo.search.Or;
 import com.enablix.core.mongo.search.SearchFilter;
 import com.enablix.core.mongo.search.StringFilter;
 import com.enablix.core.mongo.search.StringListFilter;
+import com.enablix.core.mongo.view.MongoDataView;
 
 @Component
 public class ItemItemCorrelationDao extends BaseTenantDao {
@@ -29,7 +30,8 @@ public class ItemItemCorrelationDao extends BaseTenantDao {
 	private static final String RELATED_ITEM_CONTAINER_QID_PROP_NAME = "relatedItem.containerQId";
 	private static final String RECORD_ID_FIELD = "_id";
 	
-	public List<ItemItemCorrelation> findByItemAndContainingTags(ContentDataRef item, List<String> tags) {
+	public List<ItemItemCorrelation> findByItemAndContainingTags(
+			ContentDataRef item, List<String> tags, MongoDataView view) {
 		
 		SearchFilter searchFilter = new StringFilter(ITEM_CONTAINER_QID_PROP_NAME, 
 				item.getContainerQId(), ConditionOperator.EQ);
@@ -52,11 +54,11 @@ public class ItemItemCorrelationDao extends BaseTenantDao {
 		
 		Criteria criteria = searchFilter != null ? searchFilter.toPredicate(new Criteria()) : new Criteria();
 		
-		return findByCriteria(criteria, ItemItemCorrelation.class);
+		return findByCriteria(criteria, ItemItemCorrelation.class, view);
 	}
 	
 	public List<ItemItemCorrelation> findByItemAndRelatedItemQIdAndContainingTags(
-			ContentDataRef item, List<String> relatedItemContainerQId, List<String> tags) {
+			ContentDataRef item, List<String> relatedItemContainerQId, List<String> tags, MongoDataView view) {
 		
 		SearchFilter searchFilter = new StringFilter(ITEM_CONTAINER_QID_PROP_NAME, 
 				item.getContainerQId(), ConditionOperator.EQ);
@@ -77,7 +79,7 @@ public class ItemItemCorrelationDao extends BaseTenantDao {
 			SearchFilter tagsFilter = getOrFilter(TAG_NAME_FILTER_PROP_NAME, tags);
 			searchFilter = searchFilter.and(tagsFilter);
 			
-			filteredRecords = findByCriteria(searchFilter.toPredicate(new Criteria()), ItemItemCorrelation.class);
+			filteredRecords = findByCriteria(searchFilter.toPredicate(new Criteria()), ItemItemCorrelation.class, view);
 		}
 		
 		// now filter on the related Item container qualified id
@@ -110,7 +112,7 @@ public class ItemItemCorrelationDao extends BaseTenantDao {
 				searchFilter = searchFilter.and(relatedItemsFilter);
 				
 				Criteria criteria = searchFilter.toPredicate(new Criteria());
-				filteredRecords = findByCriteria(criteria, ItemItemCorrelation.class);
+				filteredRecords = findByCriteria(criteria, ItemItemCorrelation.class, view);
 				
 			} else if (CollectionUtil.isEmpty(tags)) {
 				
@@ -120,7 +122,7 @@ public class ItemItemCorrelationDao extends BaseTenantDao {
 				searchFilter.and(relatedItemsFilter);
 				
 				Criteria criteria = searchFilter.toPredicate(new Criteria());
-				filteredRecords = findByCriteria(criteria, ItemItemCorrelation.class);
+				filteredRecords = findByCriteria(criteria, ItemItemCorrelation.class, view);
 			}
 			
 			// if tags filter was present and did not match any record, then we do not need to run any more query
@@ -129,7 +131,7 @@ public class ItemItemCorrelationDao extends BaseTenantDao {
 		
 		// if both are empty, then execute with tag or related item filter
 		if (CollectionUtil.isEmpty(tags) && CollectionUtil.isEmpty(relatedItemContainerQId)) {
-			filteredRecords = findByCriteria(searchFilter.toPredicate(new Criteria()), ItemItemCorrelation.class);
+			filteredRecords = findByCriteria(searchFilter.toPredicate(new Criteria()), ItemItemCorrelation.class, view);
 		}
 		
 		return filteredRecords == null ? new ArrayList<ItemItemCorrelation>() : filteredRecords;

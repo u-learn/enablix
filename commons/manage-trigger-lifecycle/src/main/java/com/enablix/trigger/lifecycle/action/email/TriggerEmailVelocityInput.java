@@ -6,7 +6,6 @@ import java.util.Collection;
 import com.enablix.commons.util.id.IdentityUtil;
 import com.enablix.core.domain.security.authorization.UserProfile;
 import com.enablix.core.domain.trigger.ContentChange.TriggerType;
-import com.enablix.core.domain.user.User;
 import com.enablix.core.mail.velocity.input.BaseVelocityInput;
 import com.enablix.core.mail.velocity.input.EnvPropertiesAware;
 import com.enablix.core.mail.velocity.input.LoggedInUserAware;

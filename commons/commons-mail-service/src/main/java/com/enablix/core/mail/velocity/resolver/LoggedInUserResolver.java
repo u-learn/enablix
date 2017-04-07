@@ -8,6 +8,7 @@ import com.enablix.core.domain.security.authorization.UserProfile;
 import com.enablix.core.mail.velocity.VelocityTemplateInputResolver;
 import com.enablix.core.mail.velocity.input.LoggedInUserAware;
 import com.enablix.core.security.auth.repo.UserProfileRepository;
+import com.enablix.data.view.DataView;
 
 @Component
 public class LoggedInUserResolver implements VelocityTemplateInputResolver<LoggedInUserAware> {
@@ -16,7 +17,7 @@ public class LoggedInUserResolver implements VelocityTemplateInputResolver<Logge
 	private UserProfileRepository userProfileRepo;
 	
 	@Override
-	public void work(LoggedInUserAware velocityTemplateInput) {
+	public void work(LoggedInUserAware velocityTemplateInput, DataView view) {
 		String userId = ProcessContext.get().getUserId();
 		
 		UserProfile loggedInUserProfile = userProfileRepo.findByEmail(userId.toLowerCase());

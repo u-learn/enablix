@@ -16,6 +16,7 @@ import com.enablix.app.content.label.ContentLabelResolver;
 import com.enablix.app.content.label.PortalContentLabelResolver;
 import com.enablix.app.content.ui.NavigableContent;
 import com.enablix.app.content.ui.NavigableContentBuilder;
+import com.enablix.data.view.DataView;
 
 @Component
 public class PeerContentServiceImpl implements PeerContentService {
@@ -32,14 +33,14 @@ public class PeerContentServiceImpl implements PeerContentService {
 	private ContentLabelResolver labelResolver = new PortalContentLabelResolver();
 	
 	@Override
-	public List<NavigableContent> getPeers(WebContentRequest request) {
+	public List<NavigableContent> getPeers(WebContentRequest request, DataView view) {
 		
 		RequestContext reqCtx = requestCtxBuilder.build(request);
 		
 		FetchContentRequest fetchRequest = new FetchContentRequest(reqCtx.templateId(), 
 				reqCtx.containerQId(), null, reqCtx.contentIdentity());
 		
-		List<Map<String, Object>> peers = dataMgr.fetchPeers(fetchRequest);
+		List<Map<String, Object>> peers = dataMgr.fetchPeers(fetchRequest, view);
 		
 		List<NavigableContent> navContent = new ArrayList<>();
 		

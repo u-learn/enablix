@@ -9,10 +9,11 @@ import org.springframework.stereotype.Component;
 import com.enablix.app.template.service.TemplateManager;
 import com.enablix.commons.util.QIdUtil;
 import com.enablix.commons.util.process.ProcessContext;
+import com.enablix.core.api.TemplateFacade;
 import com.enablix.core.commons.xsdtopojo.BoundedType;
 import com.enablix.core.commons.xsdtopojo.ContainerType;
 import com.enablix.core.commons.xsdtopojo.ContentItemType;
-import com.enablix.services.util.template.TemplateWrapper;
+import com.enablix.data.view.DataView;
 
 @Component
 public class BoundedListManagerImpl implements BoundedListManager {
@@ -24,9 +25,9 @@ public class BoundedListManagerImpl implements BoundedListManager {
 	private TemplateManager templateMgr;
 	
 	@Override
-	public Collection<DataItem> getBoundedList(String templateId, String contentQId) {
+	public Collection<DataItem> getBoundedList(String templateId, String contentQId, DataView view) {
 		
-		TemplateWrapper template = templateMgr.getTemplateWrapper(templateId);
+		TemplateFacade template = templateMgr.getTemplateFacade(templateId);
 		
 		ContainerType container = template.getContainerDefinition(QIdUtil.getParentQId(contentQId));
 		
@@ -39,24 +40,25 @@ public class BoundedListManagerImpl implements BoundedListManager {
 			}
 		}
 
-		return fetchBoundedListDataItems(template, boundedType);
+		return fetchBoundedListDataItems(template, boundedType, view);
 	}
 
-	private Collection<DataItem> fetchBoundedListDataItems(TemplateWrapper template, BoundedType boundedType) {
+	private Collection<DataItem> fetchBoundedListDataItems(
+			TemplateFacade template, BoundedType boundedType, DataView view) {
 		
 		Collection<DataItem> items = null;
 		
 		if (boundedType != null) {
-			items = builderFactory.getBuilder(boundedType).buildBoundedList(template, boundedType);
+			items = builderFactory.getBuilder(boundedType).buildBoundedList(template, boundedType, view);
 		}
 		
 		return items == null ? new ArrayList<DataItem>() : items;
 	}
 	
 	@Override
-	public Collection<DataItem> getBoundedList(BoundedType boundedType) {
-		TemplateWrapper template = templateMgr.getTemplateWrapper(ProcessContext.get().getTemplateId());
-		return fetchBoundedListDataItems(template, boundedType);
+	public Collection<DataItem> getBoundedList(BoundedType boundedType, DataView view) {
+		TemplateFacade template = templateMgr.getTemplateFacade(ProcessContext.get().getTemplateId());
+		return fetchBoundedListDataItems(template, boundedType, view);
 	}
 
 }

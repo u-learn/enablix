@@ -22,6 +22,8 @@ import com.enablix.commons.util.QIdUtil;
 import com.enablix.commons.util.StringUtil;
 import com.enablix.commons.util.json.JsonUtil;
 import com.enablix.core.mongo.search.SearchFilter;
+import com.enablix.core.mongo.view.MongoDataView;
+import com.enablix.core.mongo.view.MongoDataViewOperations;
 import com.mongodb.BasicDBObject;
 
 @Component
@@ -41,12 +43,14 @@ public class ContentCrudServiceImpl implements ContentCrudService {
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public Map<String, Object> findRecord(final String collectionName, 
-			String elementQId, final String elementIdentity) {
+			String elementQId, final String elementIdentity, MongoDataView view) {
 
-		Query query = createIdentityQuery(elementQId, elementIdentity);
+		MongoDataViewOperations viewTemplate = new MongoDataViewOperations(mongoTemplate, view);
+		
+		Query query = createIdentityQuery(elementQId, elementIdentity, viewTemplate, collectionName);
 		setProjectedField(query, elementQId);
 		
-		Map<String, Object> result = mongoTemplate.findOne(query, HashMap.class, collectionName);
+		Map<String, Object> result = viewTemplate.findOne(query, HashMap.class, collectionName);
 		
 		if (result != null && !StringUtil.isEmpty(elementQId)) {
 		
@@ -93,6 +97,13 @@ public class ContentCrudServiceImpl implements ContentCrudService {
 		mongoTemplate.insert(data, collectionName);
 	}
 
+	private Query createIdentityQuery(String elementQId, String identity, 
+			MongoDataViewOperations viewTemplate, String collName) {
+		
+		return viewTemplate.getViewScopedQuery(
+				createIdentityCriteria(elementQId, identity), collName);
+	}
+	
 	private Query createIdentityQuery(String elementQId, String identity) {
 		return Query.query(createIdentityCriteria(elementQId, identity));
 	}
@@ -147,19 +158,20 @@ public class ContentCrudServiceImpl implements ContentCrudService {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public Map<String, Object> findRecord(String collectionName, String elementIdentity) {
-		Query query = createIdentityQuery(null, elementIdentity);
-		return mongoTemplate.findOne(query, HashMap.class, collectionName);
+	public Map<String, Object> findRecord(String collectionName, String elementIdentity, MongoDataView view) {
+		MongoDataViewOperations viewTemplate = new MongoDataViewOperations(mongoTemplate, view);
+		Query query = createIdentityQuery(null, elementIdentity, viewTemplate, collectionName);
+		return viewTemplate.findOne(query, HashMap.class, collectionName);
 	}
 	
 	@Override
-	public List<Map<String, Object>> findRecords(String collectionName, List<String> elementIdentities) {
-		return findAllRecordForCriteria(collectionName, createIdentityInCriteria(null, elementIdentities));
+	public List<Map<String, Object>> findRecords(String collectionName, List<String> elementIdentities, MongoDataView view) {
+		return findAllRecordForCriteria(collectionName, createIdentityInCriteria(null, elementIdentities), view);
 	}
 
 	@Override
-	public List<Map<String, Object>> findAllRecord(String collectionName) {
-		return findAllRecord(collectionName, null).getContent();
+	public List<Map<String, Object>> findAllRecord(String collectionName, MongoDataView view) {
+		return findAllRecord(collectionName, null, view).getContent();
 	}
 
 	private Criteria createParentCriteria(String parentIdentity) {
@@ -169,16 +181,16 @@ public class ContentCrudServiceImpl implements ContentCrudService {
 	}
 	
 	@Override
-	public List<Map<String, Object>> findAllRecordWithParentId(String collectionName, String parentIdentity) {
-		return findAllRecordWithParentId(collectionName, parentIdentity, null).getContent();
+	public List<Map<String, Object>> findAllRecordWithParentId(String collectionName, String parentIdentity, MongoDataView view) {
+		return findAllRecordWithParentId(collectionName, parentIdentity, null, view).getContent();
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public List<Map<String, Object>> findChildElements(String collectionName, 
-			String childFieldId, String recordIdentity) {
+			String childFieldId, String recordIdentity, MongoDataView view) {
 		
-		Map<String, Object> parentRecord = findRecord(collectionName, recordIdentity);
+		Map<String, Object> parentRecord = findRecord(collectionName, recordIdentity, view);
 		
 		Object childRecords = null;
 		if (parentRecord != null) {
@@ -214,7 +226,7 @@ public class ContentCrudServiceImpl implements ContentCrudService {
 	@Override
 	public List<String> deleteAllChild(String collectionName, String recordIdentity, String childQId) {
 		
-		List<Map<String, Object>> children = findChildElements(collectionName, childQId, recordIdentity);
+		List<Map<String, Object>> children = findChildElements(collectionName, childQId, recordIdentity, MongoDataView.ALL_DATA);
 		
 		List<String> childIds = new ArrayList<>();
 		
@@ -265,63 +277,77 @@ public class ContentCrudServiceImpl implements ContentCrudService {
 	@SuppressWarnings("unchecked")
 	@Override
 	public Map<String, Object> findContainingRecord(String collectionName, 
-			String childRelativeQId, String childIdentity) {
-		Query query = createIdentityQuery(childRelativeQId, childIdentity);
-		return mongoTemplate.findOne(query, HashMap.class, collectionName);
+			String childRelativeQId, String childIdentity, MongoDataView view) {
+		
+		MongoDataViewOperations viewTemplate = new MongoDataViewOperations(mongoTemplate, view);
+		Query query = createIdentityQuery(childRelativeQId, childIdentity, viewTemplate, collectionName);
+		
+		return viewTemplate.findOne(query, HashMap.class, collectionName);
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public List<Map<String, Object>> findAllRecordWithLinkContainerId(String collectionName, String linkContentItemId,
-			String linkContainerIdentity) {
-
-		Query query = Query.query(Criteria.where(linkContentItemId + ".id").is(linkContainerIdentity));
+			String linkContainerIdentity, MongoDataView view) {
 		
-		List<Map<String, Object>> result = (List) mongoTemplate.find(query, HashMap.class, collectionName);
+		MongoDataViewOperations viewTemplate = new MongoDataViewOperations(mongoTemplate, view);
+		
+		Criteria criteria = Criteria.where(linkContentItemId + ".id").is(linkContainerIdentity);
+		Query query = viewTemplate.getViewScopedQuery(criteria, collectionName);
+
+		List<Map<String, Object>> result = (List) viewTemplate.find(query, HashMap.class, collectionName);
 
 		return result;
 	}
 
 	@Override
-	public Page<Map<String, Object>> findAllRecord(String collectionName, Pageable pageable) {
-		Query query = new Query();
-		return findRecords(query, collectionName, pageable);
+	public Page<Map<String, Object>> findAllRecord(String collectionName, Pageable pageable, MongoDataView view) {
+		return findRecords(new Criteria(), collectionName, pageable, view);
 	}
 
 	@Override
 	public Page<Map<String, Object>> findAllRecordWithParentId(String collectionName, String parentIdentity,
-			Pageable pageable) {
+			Pageable pageable, MongoDataView view) {
 		
-		Query query = Query.query(createParentCriteria(parentIdentity));
-		return findRecords(query, collectionName, pageable);
+		return findRecords(createParentCriteria(parentIdentity), collectionName, pageable, view);
 	}
 
 	@Override
 	public Page<Map<String, Object>> findAllRecordWithLinkContainerId(String collectionName, String linkContentItemId,
-			String linkContainerIdentity, Pageable pageable) {
+			String linkContainerIdentity, Pageable pageable, MongoDataView view) {
 
-		Query query = Query.query(Criteria.where(linkContentItemId + ".id").is(linkContainerIdentity));
-		return findRecords(query, collectionName, pageable);
+		Criteria criteria = Criteria.where(linkContentItemId + ".id").is(linkContainerIdentity);
+		return findRecords(criteria, collectionName, pageable, view);
 	}
 
 	@Override
-	public long findRecordCountWithLinkContainerId(String collectionName, String linkContentItemId, String linkContainerIdentity) {
-		Query query = Query.query(Criteria.where(linkContentItemId + ".id").is(linkContainerIdentity));
-		return mongoTemplate.count(query, collectionName);
+	public long findRecordCountWithLinkContainerId(String collectionName, String linkContentItemId, 
+			String linkContainerIdentity, MongoDataView view) {
+		
+		MongoDataViewOperations viewOperations = new MongoDataViewOperations(mongoTemplate, view);
+		
+		Criteria criteria = Criteria.where(linkContentItemId + ".id").is(linkContainerIdentity);
+		Query query = viewOperations.getViewScopedQuery(criteria, collectionName);
+
+		return viewOperations.count(query, collectionName);
 	}
 	
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	private Page<Map<String, Object>> findRecords(Query query, String collectionName, Pageable pageable) {
+	private Page<Map<String, Object>> findRecords(Criteria criteria, 
+			String collectionName, Pageable pageable, MongoDataView view) {
+		
+		MongoDataViewOperations viewOperations = new MongoDataViewOperations(mongoTemplate, view);
+		Query query = viewOperations.getViewScopedQuery(criteria, collectionName);
 		
 		long count = 0;
 		
 		if (pageable != null) {
-			count = mongoTemplate.count(query, collectionName);
+			count = viewOperations.count(query, collectionName);
 			query = query.with(pageable);
 		}
 		
-		List<Map<String, Object>> list =  (List) mongoTemplate.find(query, HashMap.class, collectionName);
+		List<Map<String, Object>> list =  (List) viewOperations.find(query, HashMap.class, collectionName);
 		
 		return new PageImpl<Map<String, Object>>(list, pageable, count);
 	}
@@ -366,21 +392,24 @@ public class ContentCrudServiceImpl implements ContentCrudService {
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
-	public List<Map<String, Object>> findAllRecordForCriteria(String collectionName, Criteria criteria) {
-		Query query = Query.query(criteria);
-		return (List) mongoTemplate.find(query, HashMap.class, collectionName);
+	public List<Map<String, Object>> findAllRecordForCriteria(String collectionName, Criteria criteria, MongoDataView view) {
+		
+		MongoDataViewOperations viewOperations = new MongoDataViewOperations(mongoTemplate, view);
+		Query query = viewOperations.getViewScopedQuery(criteria, collectionName);
+
+		return (List) viewOperations.find(query, HashMap.class, collectionName);
 	}
 
 	@Override
-	public List<Map<String, Object>> findRecords(String collectionName, SearchFilter filter) {
-		return findAllRecordForCriteria(collectionName, filter.toPredicate(new Criteria()));
+	public List<Map<String, Object>> findRecords(String collectionName, SearchFilter filter, MongoDataView view) {
+		return findAllRecordForCriteria(collectionName, filter.toPredicate(new Criteria()), view);
 	}
 
 	@Override
 	public Page<Map<String, Object>> findChildElements(String collName, String qIdRelativeToParent,
-			String parentRecordIdentity, Pageable pageable) {
+			String parentRecordIdentity, Pageable pageable, MongoDataView view) {
 		
-		List<Map<String, Object>> childElements = findChildElements(collName, qIdRelativeToParent, parentRecordIdentity);
+		List<Map<String, Object>> childElements = findChildElements(collName, qIdRelativeToParent, parentRecordIdentity, view);
 		
 		int startFrom = pageable.getPageNumber() * pageable.getPageSize();
 		int endAt = startFrom + pageable.getPageSize();
@@ -402,14 +431,15 @@ public class ContentCrudServiceImpl implements ContentCrudService {
 	}
 
 	@Override
-	public long findRecordCountWithParentId(String collName, String recordIdentity) {
-		Query query = Query.query(createParentCriteria(recordIdentity));
-		return mongoTemplate.count(query, collName);
+	public long findRecordCountWithParentId(String collName, String recordIdentity, MongoDataView view) {
+		MongoDataViewOperations viewOperations = new MongoDataViewOperations(mongoTemplate, view);
+		Query query = viewOperations.getViewScopedQuery(createParentCriteria(recordIdentity), collName);
+		return viewOperations.count(query, collName);
 	}
 
 	@Override
-	public long findChildElementsCount(String collName, String qIdRelativeToParent, String parentIdentity) {
-		return findChildElements(collName, qIdRelativeToParent, parentIdentity).size();
+	public long findChildElementsCount(String collName, String qIdRelativeToParent, String parentIdentity, MongoDataView view) {
+		return findChildElements(collName, qIdRelativeToParent, parentIdentity, view).size();
 	}
 	
 }

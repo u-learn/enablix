@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.enablix.commons.caching.api.CachingService;
-import com.enablix.services.util.template.TemplateWrapper;
+import com.enablix.core.api.TemplateFacade;
 
 @Component
 public class TemplateCache {
@@ -18,11 +18,11 @@ public class TemplateCache {
 		super();
 	}
 	
-	public TemplateWrapper getTemplate(String tenantId, String templateId) {
-		return (TemplateWrapper) cache.get(tenantId, getCacheKey(templateId));
+	public TemplateFacade getTemplate(String tenantId, String templateId) {
+		return (TemplateFacade) cache.get(tenantId, getCacheKey(templateId));
 	}
 	
-	public void put(String tenantId, TemplateWrapper template) {
+	public void put(String tenantId, TemplateFacade template) {
 		cache.put(tenantId, getCacheKey(template.getTemplate().getId()), template);
 	}
 	

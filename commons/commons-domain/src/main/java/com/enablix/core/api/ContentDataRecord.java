@@ -4,7 +4,7 @@ import java.util.Map;
 
 import org.springframework.util.Assert;
 
-public class ContentDataRecord {
+public class ContentDataRecord implements ContentRecord {
 
 	private String templateId;
 
@@ -47,6 +47,11 @@ public class ContentDataRecord {
 
 	public void setRecord(Map<String, Object> record) {
 		this.record = record;
+	}
+
+	@Override
+	public String getContentQId() {
+		return getContainerQId();
 	}
 
 }

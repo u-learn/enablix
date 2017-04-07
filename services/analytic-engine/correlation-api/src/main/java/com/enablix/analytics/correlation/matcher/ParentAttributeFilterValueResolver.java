@@ -7,8 +7,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.enablix.commons.util.StringUtil;
+import com.enablix.core.api.TemplateFacade;
 import com.enablix.core.commons.xsdtopojo.FilterType;
-import com.enablix.services.util.template.TemplateWrapper;
 
 @Component
 public class ParentAttributeFilterValueResolver implements FilterValueResolver {
@@ -16,7 +16,7 @@ public class ParentAttributeFilterValueResolver implements FilterValueResolver {
 	private static final Logger LOGGER = LoggerFactory.getLogger(ParentAttributeFilterValueResolver.class);
 	
 	@Override
-	public Object resolve(FilterType filter, MatchInputRecord matchInput, TemplateWrapper template) {
+	public Object resolve(FilterType filter, MatchInputRecord matchInput, TemplateFacade template) {
 		
 		Map<String, Object> parentRecord = matchInput.getRecord();
 		String filterAttrId = filter.getParentAttribute().getValue();

@@ -7,11 +7,11 @@ import com.enablix.analytics.correlation.ItemCorrelationService;
 import com.enablix.analytics.correlation.ItemUserCorrelationService;
 import com.enablix.analytics.correlation.context.CorrelationContext;
 import com.enablix.analytics.correlation.context.CorrelationContextBuilder;
+import com.enablix.core.api.TemplateFacade;
 import com.enablix.core.commons.xsdtopojo.ActionType;
 import com.enablix.core.commons.xsdtopojo.CorrelationActionType;
 import com.enablix.core.domain.trigger.ContentChange;
 import com.enablix.core.domain.trigger.LifecycleCheckpoint;
-import com.enablix.services.util.template.TemplateWrapper;
 
 @Component
 public class CorrelationAction implements CheckpointAction<ContentChange, CorrelationActionType> {
@@ -27,7 +27,7 @@ public class CorrelationAction implements CheckpointAction<ContentChange, Correl
 	
 	@Override
 	public void run(LifecycleCheckpoint<ContentChange> checkpoint, 
-			TemplateWrapper template, CorrelationActionType actionDef) {
+			TemplateFacade template, CorrelationActionType actionDef) {
 		
 		ContentChange trigger = checkpoint.getTrigger();
 		

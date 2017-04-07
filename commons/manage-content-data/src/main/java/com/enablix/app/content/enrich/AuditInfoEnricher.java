@@ -12,9 +12,9 @@ import org.springframework.stereotype.Component;
 import com.enablix.app.content.update.ContentUpdateContext;
 import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.commons.util.process.ProcessContext;
+import com.enablix.core.api.TemplateFacade;
 import com.enablix.core.commons.xsdtopojo.ContainerType;
 import com.enablix.core.domain.BaseDocumentEntity;
-import com.enablix.services.util.template.TemplateWrapper;
 import com.mongodb.DBObject;
 
 @Component
@@ -22,7 +22,7 @@ public class AuditInfoEnricher extends AbstractMongoEventListener<BaseDocumentEn
 
 	@Override
 	public void enrich(ContentUpdateContext updateCtx, 
-			Map<String, Object> content, TemplateWrapper contentTemplate) {
+			Map<String, Object> content, TemplateFacade contentTemplate) {
 		
 		ContainerType containerDef = contentTemplate.getContainerDefinition(updateCtx.contentQId());
 		

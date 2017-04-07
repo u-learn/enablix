@@ -133,16 +133,45 @@ label, h4 {
 
 ul.dropdown-menu {
 	background-color: #FFFFFF;
+	font-size: 0.875em;
 }
 
-.dropdown-menu>li>a:focus, .dropdown-menu>li>a:hover {
+.dropdown-menu li:focus, .dropdown-menu li:hover {
+	background-color: #2680BE;	
+}
+
+.dropdown-menu>li>a:focus, .dropdown-menu>li>a:hover,
+.dropdown-menu>li .menuItem>a:focus, .dropdown-menu>li .menuItem>a:hover {
 	color: rgb(250,250,250);
 	text-decoration: none;
 	background-color: #2680BE;
 }
 
+.dropdown-menu>li>a,
+.dropdown-menu>li .menuItem>a {
+	padding: 3px 15px;
+	color: #1d6aad;
+}
+
+.dropdown-menu .menuItem {
+	width: 100%;
+	line-height: 25px;
+}
+
+.menuItem .action-label {
+	padding-left: 6px;
+	font-family: Montserrat;
+}
+
+.dropdown-menu .divider {
+	margin: 5px 12px;
+}
+
+.dropdown-menu .fa {
+	padding-right: 4px;
+}
+
 .contextAnchor {
-	opacity: 0.75;
 	position: static !important;
 	color: #000000;
 }

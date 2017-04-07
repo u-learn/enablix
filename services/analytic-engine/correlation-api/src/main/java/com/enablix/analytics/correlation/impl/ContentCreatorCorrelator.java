@@ -13,9 +13,10 @@ import com.enablix.analytics.correlation.context.CorrelationContext;
 import com.enablix.app.content.ContentDataManager;
 import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.core.api.ContentDataRef;
+import com.enablix.core.api.TemplateFacade;
 import com.enablix.core.domain.security.authorization.UserProfile;
 import com.enablix.core.security.auth.repo.UserProfileRepository;
-import com.enablix.services.util.template.TemplateWrapper;
+import com.enablix.services.util.DataViewUtil;
 
 @Component
 public class ContentCreatorCorrelator implements ItemUserCorrelator {
@@ -32,9 +33,9 @@ public class ContentCreatorCorrelator implements ItemUserCorrelator {
 	@Override
 	public void correlateUsers(ContentDataRef item, CorrelationContext context) {
 		
-		TemplateWrapper template = context.getTemplate();
+		TemplateFacade template = context.getTemplate();
 		
-		Map<String, Object> contentRecord = contentDataMgr.getContentRecord(item, template);
+		Map<String, Object> contentRecord = contentDataMgr.getContentRecord(item, template, DataViewUtil.allDataView());
 		String creatorEmail = (String) contentRecord.get(ContentDataConstants.CREATED_BY_KEY);
 		
 		UserProfile creator = userProfileRepo.findByEmail(creatorEmail);

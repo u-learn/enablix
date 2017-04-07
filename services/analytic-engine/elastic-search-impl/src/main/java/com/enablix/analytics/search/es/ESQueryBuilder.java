@@ -1,5 +1,6 @@
 package com.enablix.analytics.search.es;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,39 +10,45 @@ import org.elasticsearch.action.search.SearchType;
 import org.elasticsearch.client.Requests;
 import org.elasticsearch.common.unit.Fuzziness;
 import org.elasticsearch.index.query.MultiMatchQueryBuilder;
+import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.enablix.commons.constants.ContentDataConstants;
+import com.enablix.core.api.TemplateFacade;
 import com.enablix.core.commons.xsdtopojo.ContainerType;
 import com.enablix.core.commons.xsdtopojo.ContentItemClassType;
 import com.enablix.core.commons.xsdtopojo.ContentItemType;
 import com.enablix.core.commons.xsdtopojo.ContentTemplate;
+import com.enablix.es.view.ESDataView;
+import com.enablix.es.view.ESDataViewOperation;
 import com.enablix.services.util.ElasticSearchUtil;
 import com.enablix.services.util.TemplateUtil;
 
 
 public class ESQueryBuilder {
 	
+	private static final Logger LOGGER = LoggerFactory.getLogger(ESQueryBuilder.class);
+
 	private static final String BOOST_OPERATOR = "^";
 	private static final int CONTAINER_NAME_FLD_BOOST = 5;
 	private static final int TAGS_FLD_BOOST = 5;
-
-	private static final Logger LOGGER = LoggerFactory.getLogger(ESQueryBuilder.class);
-
+	
 	private String searchText;
-	private ContentTemplate template;
+	private TemplateFacade template;
 	private int pageSize = 10;
 	private int pageNum = 0;
 	
-	private ESQueryBuilder(String searchText, ContentTemplate template) {
+	private ESDataView view;
+	
+	private ESQueryBuilder(String searchText, TemplateFacade template) {
 		this.searchText = searchText;
 		this.template = template;
 	}
 	
-	public static ESQueryBuilder builder(String searchText, ContentTemplate template) {
+	public static ESQueryBuilder builder(String searchText, TemplateFacade template) {
 		ESQueryBuilder builder = new ESQueryBuilder(searchText, template);
 		return builder;
 	}
@@ -52,18 +59,26 @@ public class ESQueryBuilder {
 		return this;
 	}
 	
+	public ESQueryBuilder withViewScope(ESDataView view) {
+		this.view = view;
+		return this;
+	}
+	
 	public SearchRequest build() {
 		
 		String indexName = getIndexName();
-		List<String> types = getTypes();
+		Collection<String> types = getTypes();
 		
 		SearchRequest searchRequest = Requests.searchRequest(indexName)
 					.searchType(SearchType.DFS_QUERY_THEN_FETCH)
 					.types(types.toArray(new String[0]));
 		
 		Map<String, Integer> fieldBoostIndex = new HashMap<>();
-		getFieldNames(fieldBoostIndex, 
-				template.getDataDefinition().getContainer());
+		
+		ContentTemplate contentTemplate = template.getTemplate();
+		
+		getFieldNames(fieldBoostIndex, contentTemplate.getDataDefinition().getContainer());
+		
 		MultiMatchQueryBuilder multiMatchQuery = QueryBuilders.multiMatchQuery(
 				searchText, convertToMultiMatchBoostedFields(fieldBoostIndex));
 		
@@ -72,8 +87,14 @@ public class ESQueryBuilder {
 			multiMatchQuery.fuzziness(Fuzziness.AUTO);
 		}
 		
+		QueryBuilder searchQuery = multiMatchQuery;
+		if (view != null) {
+			ESDataViewOperation viewOperation = new ESDataViewOperation(view);
+			searchQuery = viewOperation.createViewScopedQuery(multiMatchQuery, types);
+		}
+		
 		//MatchQueryBuilder matchQuery = QueryBuilders.matchQuery("_all", searchText);
-		SearchSourceBuilder searchSource = SearchSourceBuilder.searchSource().query(multiMatchQuery);
+		SearchSourceBuilder searchSource = SearchSourceBuilder.searchSource().query(searchQuery);
 		searchSource.size(pageSize);
 		searchSource.from(pageNum * pageSize);
 		
@@ -153,7 +174,7 @@ public class ESQueryBuilder {
 		ContainerType holdingContainer = container;
 		if (!container.isReferenceable()) {
 			holdingContainer = TemplateUtil.findReferenceableParentContainer(
-					template.getDataDefinition(), container.getQualifiedId());
+					template.getTemplate().getDataDefinition(), container.getQualifiedId());
 		}
 		
 		String containerQId = holdingContainer.getQualifiedId();
@@ -182,8 +203,15 @@ public class ESQueryBuilder {
 		return ElasticSearchUtil.getIndexName();
 	}
 	
-	private List<String> getTypes() {
-		return TemplateUtil.findContentCollectionNames(template);
+	private Collection<String> getTypes() {
+		
+		Collection<String> allTypes = template.getAllCollectionNames();
+		
+		if (view != null) {
+			allTypes = view.checkAndReturnVisibleTypes(allTypes);
+		}
+		
+		return allTypes;
 	}
 	
 }

@@ -15,7 +15,10 @@ import com.enablix.analytics.search.SearchClient;
 import com.enablix.core.api.ContentDataRecord;
 import com.enablix.core.api.ContentDataRef;
 import com.enablix.core.api.SearchResult;
-import com.enablix.services.util.template.TemplateWrapper;
+import com.enablix.core.api.TemplateFacade;
+import com.enablix.data.view.DataView;
+import com.enablix.es.view.ESDataView;
+import com.enablix.services.util.DataViewUtil;
 
 public class ElasticSearchClient implements SearchClient {
 
@@ -26,22 +29,25 @@ public class ElasticSearchClient implements SearchClient {
 	private SearchHitTransformer searchHitTx;
 	
 	@Override
-	public SearchResult<ContentDataRef> search(String text, TemplateWrapper template, int pageSize, int pageNum) {
+	public SearchResult<ContentDataRef> search(String text, 
+			TemplateFacade template, int pageSize, int pageNum, DataView dataView) {
 
-		return searchAndGetTransformedResult(text, template, pageSize, pageNum, new ResultTx<ContentDataRef>() {
+		return searchAndGetTransformedResult(text, template, pageSize, pageNum, dataView, 
+				
+			new ResultTx<ContentDataRef>() {
 
-			@Override
-			public ContentDataRef transform(SearchHit hit, TemplateWrapper template) {
-				return searchHitTx.toContentDataRef(hit, template);
-			}
-			
-		});
+				@Override
+				public ContentDataRef transform(SearchHit hit, TemplateFacade template) {
+					return searchHitTx.toContentDataRef(hit, template);
+				}
+				
+			});
 	}
 
-	private <T> SearchResult<T> searchAndGetTransformedResult(String text, TemplateWrapper template,
-			int pageSize, int pageNum, ResultTx<T> resultTx) {
+	private <T> SearchResult<T> searchAndGetTransformedResult(String text, TemplateFacade template,
+			int pageSize, int pageNum, DataView dataView, ResultTx<T> resultTx) {
 		
-		SearchResponse searchResponse = searchAndGetResponse(text, template, pageSize, pageNum);
+		SearchResponse searchResponse = searchAndGetResponse(text, template, pageSize, pageNum, dataView);
 		
 		List<T> result = new ArrayList<>();
 		
@@ -69,30 +75,36 @@ public class ElasticSearchClient implements SearchClient {
 		return searchResult;
 	}
 
-	private SearchResponse searchAndGetResponse(String text, TemplateWrapper template, int pageSize, int pageNum) {
+	private SearchResponse searchAndGetResponse(String text, 
+			TemplateFacade template, int pageSize, int pageNum, DataView dataView) {
 		
-		SearchRequest searchRequest = ESQueryBuilder.builder(text, template.getTemplate())
-													.withPagination(pageSize, pageNum).build();
+		ESDataView esDataView = DataViewUtil.getElasticSearchDataView(dataView);
+		SearchRequest searchRequest = ESQueryBuilder.builder(text, template)
+													.withPagination(pageSize, pageNum)
+													.withViewScope(esDataView).build();
 		
 		ActionFuture<SearchResponse> searchResponseFuture = esClient.search(searchRequest);
 		return searchResponseFuture.actionGet();
 	}
 	
 	@Override
-	public SearchResult<ContentDataRecord> searchAndGetRecords(String text, TemplateWrapper template, int pageSize, int pageNum) {
+	public SearchResult<ContentDataRecord> searchAndGetRecords(
+			String text, TemplateFacade template, int pageSize, int pageNum, DataView dataView) {
 		
-		return searchAndGetTransformedResult(text, template, pageSize, pageNum, new ResultTx<ContentDataRecord>() {
+		return searchAndGetTransformedResult(text, template, pageSize, pageNum, dataView, 
 
-			@Override
-			public ContentDataRecord transform(SearchHit hit, TemplateWrapper template) {
-				return searchHitTx.toContentDataRecord(hit, template);
-			}
-			
-		});
+			new ResultTx<ContentDataRecord>() {
+	
+				@Override
+				public ContentDataRecord transform(SearchHit hit, TemplateFacade template) {
+					return searchHitTx.toContentDataRecord(hit, template);
+				}
+				
+			});
 	}
 	
 	private static interface ResultTx<T> {
-		T transform(SearchHit hit, TemplateWrapper template);
+		T transform(SearchHit hit, TemplateFacade template);
 	}
 
 }

@@ -25,9 +25,14 @@ import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.commons.util.StringUtil;
 import com.enablix.commons.util.collection.CollectionUtil;
 import com.enablix.core.domain.recent.RecentData;
+import com.enablix.core.mongo.MongoUtil;
+import com.enablix.core.mongo.MongoUtil.DataViewOperation;
 import com.enablix.core.mongo.dao.GenericDao;
 import com.enablix.core.mongo.search.SearchCriteria;
 import com.enablix.core.mongo.search.service.SearchRequest;
+import com.enablix.core.mongo.view.MongoDataView;
+import com.enablix.data.view.DataView;
+import com.enablix.services.util.DataViewUtil;
 
 @Component
 public class RecentContentServiceImpl implements RecentContentService {
@@ -53,33 +58,61 @@ public class RecentContentServiceImpl implements RecentContentService {
 	private ContentLabelResolver labelResolver = new PortalContentLabelResolver();
 	
 	@Override
-	public List<NavigableContent> getRecentContent(WebContentRequest request) {
+	public List<NavigableContent> getRecentContent(WebContentRequest request, DataView view) {
 		RecentContentContext context = requestBuilder.build(request);
 		
 		Page<RecentData> recentDataList = null;
 		
-		String templateId = context.getRequestContext().templateId();
+		final String templateId = context.getRequestContext().templateId();
 		
-		String containerQId = context.getRequestContext().containerQId();
-		String contentIdentity = context.getRequestContext().contentIdentity();
+		final String containerQId = context.getRequestContext().containerQId();
+		final String contentIdentity = context.getRequestContext().contentIdentity();
 		
-		Pageable pageable = createDefaultPageable();
+		MongoDataView mongoDataView = DataViewUtil.getMongoDataView(view);
+		final Pageable pageable = createDefaultPageable();
 		
 		if (!StringUtil.isEmpty(containerQId) && !StringUtil.isEmpty(contentIdentity)) {
-			recentDataList = repo.findByTemplateIdAndContainerQIdAndContentIdentity(
-					templateId, containerQId, contentIdentity, pageable);
+			
+			recentDataList = MongoUtil.executeWithDataViewScope(mongoDataView, 
+				new DataViewOperation<Page<RecentData>>() {
+					
+					@Override
+					public Page<RecentData> execute() {
+						return repo.findByTemplateIdAndContainerQIdAndContentIdentity(
+								templateId, containerQId, contentIdentity, pageable);
+					}
+				});
+			
 			
 		} 
 		
 		if (CollectionUtil.isEmpty(recentDataList) && 
 				!StringUtil.isEmpty(containerQId) && StringUtil.isEmpty(contentIdentity)) {
-			recentDataList = repo.findByTemplateIdAndContainerQId(
-					templateId, containerQId, pageable);
+			
+			recentDataList = MongoUtil.executeWithDataViewScope(mongoDataView, 
+				new DataViewOperation<Page<RecentData>>() {
+				
+					@Override
+					public Page<RecentData> execute() {
+						return repo.findByTemplateIdAndContainerQId(
+								templateId, containerQId, pageable);
+					}
+				}); 
+					
+					
 			
 		} 
 		
 		if (CollectionUtil.isEmpty(recentDataList)) {
-			recentDataList = repo.findByTemplateId(templateId, pageable);
+			recentDataList = MongoUtil.executeWithDataViewScope(mongoDataView, 
+				new DataViewOperation<Page<RecentData>>() {
+					
+					@Override
+					public Page<RecentData> execute() {
+						return repo.findByTemplateId(templateId, pageable);
+					}
+				});
+			
 		}
 
 		return buildNavagableContent(recentDataList);
@@ -123,21 +156,26 @@ public class RecentContentServiceImpl implements RecentContentService {
 	}
 	
 	@Override
-	public List<NavigableContent> getRecentContentByCriteria(SearchCriteria criteria) {
-		return getRecentContentByCriteriaAndPageable(criteria, createDefaultPageable());
+	public List<NavigableContent> getRecentContentByCriteria(SearchCriteria criteria, DataView view) {
+		return getRecentContentByCriteriaAndPageable(criteria, createDefaultPageable(), view);
 	}
 	
-	private List<NavigableContent> getRecentContentByCriteriaAndPageable(SearchCriteria criteria, Pageable pageable) {
+	private List<NavigableContent> getRecentContentByCriteriaAndPageable(
+			SearchCriteria criteria, Pageable pageable, DataView dataView) {
+		
+		MongoDataView view = DataViewUtil.getMongoDataView(dataView);
 		Page<RecentData> contentPage = dao.findByCriteria(
-				criteria.toPredicate(new Criteria()), RecentData.class, pageable);
+				criteria.toPredicate(new Criteria()), RecentData.class, pageable, view);
 		return buildNavagableContent(contentPage);
 	}
 
 	@Override
-	public Page<RecentUpdateVO> getRecentContentByRequest(SearchRequest request) {
+	public Page<RecentUpdateVO> getRecentContentByRequest(SearchRequest request, DataView dataView) {
 	
 		List<RecentUpdateVO> recentList = new ArrayList<>();
-		Page<RecentData> contentPage = dao.findByQuery(request, RecentData.class);
+		
+		MongoDataView view = DataViewUtil.getMongoDataView(dataView);
+		Page<RecentData> contentPage = dao.findByQuery(request, RecentData.class, view);
 		
 		for (RecentData recentData : contentPage) {
 			recentList.add(new RecentUpdateVO(recentData, createNavigableContent(recentData)));

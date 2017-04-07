@@ -21,6 +21,7 @@ import com.enablix.app.template.service.TemplateManager;
 import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.commons.util.process.ProcessContext;
 import com.enablix.core.api.ContentDataRecord;
+import com.enablix.core.api.TemplateFacade;
 import com.enablix.core.commons.xsdtopojo.ContainerType;
 import com.enablix.core.commons.xsdtopojo.ContentItemType;
 import com.enablix.core.domain.content.summary.ContentCoverage;
@@ -28,8 +29,8 @@ import com.enablix.core.mongo.content.ContentCrudService;
 import com.enablix.core.mongo.dao.GenericDao;
 import com.enablix.core.mongo.search.BoolFilter;
 import com.enablix.core.mongo.search.ConditionOperator;
+import com.enablix.core.mongo.view.MongoDataView;
 import com.enablix.services.util.TemplateUtil;
-import com.enablix.services.util.template.TemplateWrapper;
 import com.enablix.services.util.template.walker.ContainerFilter;
 import com.enablix.services.util.template.walker.ContainerVisitor;
 import com.enablix.services.util.template.walker.TemplateContainerWalker;
@@ -72,7 +73,7 @@ public class ContentCoverageCalculator implements Task {
 		LOGGER.info("Running content coverage task at [{}]", currentDate);
 		
 		final String templateId = ProcessContext.get().getTemplateId();
-		final TemplateWrapper template = templateManager.getTemplateWrapper(templateId);
+		final TemplateFacade template = templateManager.getTemplateFacade(templateId);
 
 		updateLastestFlagOfOldRecords();
 		
@@ -94,7 +95,7 @@ public class ContentCoverageCalculator implements Task {
 				String containerQId = container.getQualifiedId();
 				String collectionName = template.getCollectionName(containerQId);
 				
-				List<Map<String, Object>> allRecords = crud.findAllRecord(collectionName);
+				List<Map<String, Object>> allRecords = crud.findAllRecord(collectionName, MongoDataView.ALL_DATA);
 				
 				for (Map<String, Object> record : allRecords) {
 					

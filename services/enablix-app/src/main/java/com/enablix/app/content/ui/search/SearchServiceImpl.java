@@ -19,8 +19,9 @@ import com.enablix.commons.util.process.ProcessContext;
 import com.enablix.core.api.ContentDataRecord;
 import com.enablix.core.api.ContentDataRef;
 import com.enablix.core.api.SearchResult;
+import com.enablix.core.api.TemplateFacade;
 import com.enablix.core.ui.DisplayableContent;
-import com.enablix.services.util.template.TemplateWrapper;
+import com.enablix.data.view.DataView;
 
 @Component
 public class SearchServiceImpl implements SearchService {
@@ -43,11 +44,12 @@ public class SearchServiceImpl implements SearchService {
 	private ContentLabelResolver labelResolver = new PortalContentLabelResolver();
 	
 	@Override
-	public SearchResult<NavigableContent> search(String searchText, int pageSize, int pageNum) {
+	public SearchResult<NavigableContent> search(
+			String searchText, int pageSize, int pageNum, DataView dataView) {
 		
 		String templateId = ProcessContext.get().getTemplateId();
-		SearchResult<ContentDataRef> searchResult = searchClient.search(
-				searchText, templateMgr.getTemplateWrapper(templateId), pageSize, pageNum);
+		SearchResult<ContentDataRef> searchResult = searchClient.search(searchText, 
+				templateMgr.getTemplateFacade(templateId), pageSize, pageNum, dataView);
 		
 		List<NavigableContent> content = new ArrayList<>();
 		
@@ -71,13 +73,14 @@ public class SearchServiceImpl implements SearchService {
 	}
 	
 	@Override
-	public SearchResult<DisplayableContent> searchAndGetResultAsDisplayContent(String searchText, int pageSize, int pageNum) {
+	public SearchResult<DisplayableContent> searchAndGetResultAsDisplayContent(
+			String searchText, int pageSize, int pageNum, DataView dataView) {
 		
 		String templateId = ProcessContext.get().getTemplateId();
-		TemplateWrapper template = templateMgr.getTemplateWrapper(templateId);
+		TemplateFacade template = templateMgr.getTemplateFacade(templateId);
 		
 		SearchResult<ContentDataRecord> searchResult = searchClient.searchAndGetRecords(
-				searchText, template, pageSize, pageNum);
+				searchText, template, pageSize, pageNum, dataView);
 		
 		List<DisplayableContent> content = new ArrayList<>();
 		

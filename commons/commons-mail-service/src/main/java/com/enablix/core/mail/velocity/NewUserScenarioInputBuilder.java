@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.enablix.core.mail.velocity.input.UserWelcomeVelocityInput;
+import com.enablix.services.util.DataViewUtil;
 
 @Component
 public class NewUserScenarioInputBuilder {
@@ -14,7 +15,7 @@ public class NewUserScenarioInputBuilder {
 	private VelocityTemplateInputResolverFactory factory;
 
 	@SuppressWarnings({ "rawtypes", "unchecked"})
-	public UserWelcomeVelocityInput build(String newUserId,String password) {
+	public UserWelcomeVelocityInput build(String newUserId, String password) {
 
 		UserWelcomeVelocityInput input = new UserWelcomeVelocityInput(newUserId,password);
 
@@ -22,7 +23,7 @@ public class NewUserScenarioInputBuilder {
 				factory.getResolvers(input);
 
 		for (VelocityTemplateInputResolver resolver : resolvers) {
-			resolver.work(input);
+			resolver.work(input, DataViewUtil.allDataView());
 		}
 
 		return input;
@@ -37,7 +38,7 @@ public class NewUserScenarioInputBuilder {
 				factory.getResolvers(input);
 
 		for (VelocityTemplateInputResolver resolver : resolvers) {
-			resolver.work(input);
+			resolver.work(input, DataViewUtil.allDataView());
 		}
 
 		return input;

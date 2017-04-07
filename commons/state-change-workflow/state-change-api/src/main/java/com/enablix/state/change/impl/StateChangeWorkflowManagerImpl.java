@@ -12,6 +12,11 @@ import org.springframework.stereotype.Component;
 import com.enablix.commons.util.StringUtil;
 import com.enablix.commons.util.id.IdentityUtil;
 import com.enablix.commons.util.process.ProcessContext;
+import com.enablix.core.api.ContentRecord;
+import com.enablix.core.api.ContentRecordRef;
+import com.enablix.core.domain.segment.DataSegmentAware;
+import com.enablix.core.domain.segment.DataSegmentInfo;
+import com.enablix.data.segment.view.DataSegmentInfoBuilder;
 import com.enablix.state.change.ActionException;
 import com.enablix.state.change.ActionInterceptor;
 import com.enablix.state.change.NextStateBuilder;
@@ -39,6 +44,9 @@ public class StateChangeWorkflowManagerImpl implements StateChangeWorkflowManage
 	
 	@Autowired
 	private ActionInterceptorRegistry actionInterceptorRegistry;
+	
+	@Autowired
+	private DataSegmentInfoBuilder dsInfoBuilder;
 	
 	@SuppressWarnings({ "rawtypes" })
 	@Override
@@ -112,6 +120,8 @@ public class StateChangeWorkflowManagerImpl implements StateChangeWorkflowManage
 					new ActionData(action.getActionName(), currentState.getStateName(), nextState.getStateName(), 
 									actionInput, actionResult.returnValue(), userId, userName, new Date()));
 			
+			checkAndSetDataSegmentInfo(recording, actionInput);
+			
 			recording = (StateChangeRecording) repo.save(recording);
 			
 			// execute action completed interceptors
@@ -124,6 +134,25 @@ public class StateChangeWorkflowManagerImpl implements StateChangeWorkflowManage
 		
 	}
 	
+	private void checkAndSetDataSegmentInfo(StateChangeRecording<?> recording, ActionInput actionInput) {
+		
+		if (recording instanceof DataSegmentAware) {
+		
+			DataSegmentAware dsAware = (DataSegmentAware) recording;
+			
+			if (actionInput instanceof ContentRecord) {
+				
+				DataSegmentInfo dsInfo = dsInfoBuilder.build((ContentRecord) actionInput);
+				dsAware.setDataSegmentInfo(dsInfo);
+				
+			} else if (actionInput instanceof ContentRecordRef) {
+				
+				DataSegmentInfo dsInfo = dsInfoBuilder.build((ContentRecordRef) actionInput);
+				dsAware.setDataSegmentInfo(dsInfo);
+			}
+		}
+	}
+
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private void executeErrorInterceptors(List<ActionInterceptor> interceptors, 
 			String actionName, ActionInput in, StateChangeRecording<?> recording, Throwable error) {

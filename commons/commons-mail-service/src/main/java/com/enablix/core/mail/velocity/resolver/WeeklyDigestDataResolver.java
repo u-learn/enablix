@@ -23,6 +23,7 @@ import com.enablix.core.mongo.search.BoolFilter;
 import com.enablix.core.mongo.search.ConditionOperator;
 import com.enablix.core.mongo.search.DateFilter;
 import com.enablix.core.mongo.search.SearchCriteria;
+import com.enablix.data.view.DataView;
 
 @Component
 public class WeeklyDigestDataResolver implements VelocityTemplateInputResolver<WeeklyDigestVelocityInput> {
@@ -40,12 +41,12 @@ public class WeeklyDigestDataResolver implements VelocityTemplateInputResolver<W
 	private int recentDataLookbackDays;
 	
 	@Override
-	public void work(WeeklyDigestVelocityInput weeklyDigestVelocityInput) {
+	public void work(WeeklyDigestVelocityInput weeklyDigestVelocityInput, DataView view) {
 
 		String templateId = weeklyDigestVelocityInput.getTenant().getDefaultTemplateId();
 		
 		SearchCriteria recentDataCriteria = createRecentDataCriteria();
-		List<NavigableContent> recentData = recentService.getRecentContentByCriteria(recentDataCriteria);
+		List<NavigableContent> recentData = recentService.getRecentContentByCriteria(recentDataCriteria, view);
 		weeklyDigestVelocityInput.setRecentList("RecentlyUpdated", recentData);
 		
 		ContentTemplate template = templateMgr.getTemplate(templateId);

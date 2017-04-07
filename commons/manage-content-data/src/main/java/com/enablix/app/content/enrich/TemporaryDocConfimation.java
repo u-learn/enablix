@@ -12,10 +12,10 @@ import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.commons.dms.api.DocumentMetadata;
 import com.enablix.commons.util.StringUtil;
 import com.enablix.commons.util.beans.BeanUtil;
+import com.enablix.core.api.TemplateFacade;
 import com.enablix.core.commons.xsdtopojo.ContainerType;
 import com.enablix.core.commons.xsdtopojo.ContentItemClassType;
 import com.enablix.core.commons.xsdtopojo.ContentItemType;
-import com.enablix.services.util.template.TemplateWrapper;
 
 @Component
 public class TemporaryDocConfimation implements ContentEnricher {
@@ -24,7 +24,7 @@ public class TemporaryDocConfimation implements ContentEnricher {
 	private DocumentManager docManager;
 	
 	@Override
-	public void enrich(ContentUpdateContext updateCtx, Map<String, Object> content, TemplateWrapper contentTemplate) {
+	public void enrich(ContentUpdateContext updateCtx, Map<String, Object> content, TemplateFacade contentTemplate) {
 		
 		String parentIdentity = updateCtx.parentIdentity();
 		String contentQId = updateCtx.contentQId();

@@ -14,6 +14,8 @@ import com.enablix.app.content.ui.NavigableContentBuilder;
 import com.enablix.commons.util.process.ProcessContext;
 import com.enablix.core.domain.reco.Recommendation;
 import com.enablix.core.domain.reco.RecommendationScope;
+import com.enablix.core.domain.segment.DataSegmentInfo;
+import com.enablix.data.segment.view.DataSegmentInfoBuilder;
 
 @Component
 public class RecommendationManagerImpl implements RecommendationManager {
@@ -23,6 +25,9 @@ public class RecommendationManagerImpl implements RecommendationManager {
 	
 	@Autowired
 	private NavigableContentBuilder navContentBuilder;
+	
+	@Autowired
+	private DataSegmentInfoBuilder dsInfoBuilder;
 	
 	private ContentLabelResolver labelResolver = new PortalContentLabelResolver();
 	
@@ -41,6 +46,10 @@ public class RecommendationManagerImpl implements RecommendationManager {
 							reco.getRecommendedData().getData().getInstanceIdentity());
 
 		if (existingReco == null || existingReco.isEmpty()) {
+			
+			DataSegmentInfo dsInfo = dsInfoBuilder.build(reco.getRecommendedData().getData());
+			reco.setDataSegmentInfo(dsInfo);
+			
 			repo.save(reco);
 		}
 		

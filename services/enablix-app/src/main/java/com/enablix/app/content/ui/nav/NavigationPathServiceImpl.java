@@ -12,6 +12,7 @@ import com.enablix.app.content.label.PortalContentLabelResolver;
 import com.enablix.app.content.ui.NavigableContent;
 import com.enablix.app.content.ui.NavigableContentBuilder;
 import com.enablix.commons.util.process.ProcessContext;
+import com.enablix.services.util.DataViewUtil;
 
 @Component
 public class NavigationPathServiceImpl implements NavigationPathService {
@@ -31,7 +32,7 @@ public class NavigationPathServiceImpl implements NavigationPathService {
 		
 		String templateId = ProcessContext.get().getTemplateId();
 		Object record = dataMgr.fetchDataJson(new FetchContentRequest(templateId, 
-				containerQId, null, contentIdentity));
+				containerQId, null, contentIdentity), DataViewUtil.allDataView());
 		
 		if (record instanceof Map) {
 			@SuppressWarnings("unchecked")

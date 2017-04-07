@@ -12,12 +12,12 @@ import com.enablix.analytics.correlation.matcher.FilterValueResolver;
 import com.enablix.analytics.correlation.matcher.FilterValueResolverFactory;
 import com.enablix.analytics.correlation.matcher.MatchInputRecord;
 import com.enablix.commons.constants.ContentDataConstants;
+import com.enablix.core.api.TemplateFacade;
 import com.enablix.core.commons.xsdtopojo.FilterType;
 import com.enablix.core.mongo.search.ConditionOperator;
 import com.enablix.core.mongo.search.SearchFilter;
 import com.enablix.core.mongo.search.StringFilter;
 import com.enablix.core.mongo.search.StringListFilter;
-import com.enablix.services.util.template.TemplateWrapper;
 
 @Component
 public class FilterToMongoFilter {
@@ -26,7 +26,7 @@ public class FilterToMongoFilter {
 	private FilterValueResolverFactory resolverFactory;
 	
 	public SearchFilter createMongoFilter(FilterType filter, String targetItemQId, 
-			MatchInputRecord matchInput, TemplateWrapper template, FilterAttributIdResolver filterIdResolver) {
+			MatchInputRecord matchInput, TemplateFacade template, FilterAttributIdResolver filterIdResolver) {
 		
 		FilterValueResolver resolver = resolverFactory.getResolver(filter);
 		Object value = resolver.resolve(filter, matchInput, template);

@@ -20,6 +20,7 @@ import com.enablix.core.mongo.search.ConditionOperator;
 import com.enablix.core.mongo.search.SearchCondition;
 import com.enablix.core.mongo.search.StringFilter;
 import com.enablix.core.mongo.search.StringListFilter;
+import com.enablix.core.mongo.view.MongoDataView;
 import com.enablix.services.util.DatastoreUtil;
 
 @Component
@@ -30,11 +31,11 @@ public class ContentSetResolver implements ContentGroupSubsetResolver {
 	
 	@Override
 	public List<ContentDataRecord> fetchContentGroupRecords(List<ContentDataRecord> execFocus,
-			ContentGroupType contentGroupDef) {
+			ContentGroupType contentGroupDef, MongoDataView view) {
 
 		ContentSetType contentSetDef = contentGroupDef.getContentSet();
 		if (contentSetDef != null) {
-			return findContentSetRecords(contentSetDef);
+			return findContentSetRecords(contentSetDef, view);
 		}
 		
 		return new ArrayList<>();
@@ -43,7 +44,7 @@ public class ContentSetResolver implements ContentGroupSubsetResolver {
 	
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	private List<ContentDataRecord> findContentSetRecords(ContentSetType contentSet) {
+	private List<ContentDataRecord> findContentSetRecords(ContentSetType contentSet, MongoDataView view) {
 
 		List<ContentDataRecord> contentRecords = new ArrayList<>();
 		String templateId = ProcessContext.get().getTemplateId();
@@ -57,7 +58,7 @@ public class ContentSetResolver implements ContentGroupSubsetResolver {
 			
 			String collectionName = DatastoreUtil.getCollectionName(templateId, groupKey.contentQId);
 			
-			List<Map> records = genericDao.findByCriteria(queryCriteria, collectionName, Map.class);
+			List<Map> records = genericDao.findByCriteria(queryCriteria, collectionName, Map.class, view);
 			for (Map<String, Object> rec : records) {
 				contentRecords.add(new ContentDataRecord(templateId, groupKey.contentQId, rec));
 			}

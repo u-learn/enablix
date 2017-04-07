@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.springframework.data.mongodb.core.mapping.DBRef;
 
-import com.enablix.core.domain.security.authorization.Role;
+import com.enablix.core.domain.segment.DataSegment;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -15,6 +15,9 @@ public class UserSystemProfile {
 	private List<Role> roles = new ArrayList<Role>();
 	
 	private boolean sendWeeklyDigest;
+	
+	@DBRef
+	private DataSegment dataSegment;
 	
 	public List<Role> getRoles() {
 		return roles;
@@ -30,5 +33,13 @@ public class UserSystemProfile {
 	
 	public void setSendWeeklyDigest(boolean sendWeeklyDigest) {
 		this.sendWeeklyDigest = sendWeeklyDigest;
+	}
+
+	public DataSegment getDataSegment() {
+		return dataSegment;
+	}
+
+	public void setDataSegment(DataSegment accessibleDataSegment) {
+		this.dataSegment = accessibleDataSegment;
 	}
 }

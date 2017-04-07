@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import com.enablix.commons.util.id.IdentityUtil;
 import com.enablix.core.mail.velocity.input.WeeklyDigestVelocityInput;
+import com.enablix.data.view.DataView;
 
 @Component
 public class WeeklyDigestScenarioInputBuilder {
@@ -15,7 +16,7 @@ public class WeeklyDigestScenarioInputBuilder {
 	private VelocityTemplateInputResolverFactory factory;
 	
 	@SuppressWarnings({ "rawtypes", "unchecked"})
-	public WeeklyDigestVelocityInput build() {
+	public WeeklyDigestVelocityInput build(DataView view) {
 		
 		WeeklyDigestVelocityInput input = new WeeklyDigestVelocityInput();
 		String inputIdentity = IdentityUtil.generateIdentity(input);
@@ -25,7 +26,7 @@ public class WeeklyDigestScenarioInputBuilder {
 				factory.getResolvers(input);
 		
 		for (VelocityTemplateInputResolver resolver : resolvers) {
-			resolver.work(input);
+			resolver.work(input, view);
 		}
 		
 		return input;

@@ -10,8 +10,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.enablix.commons.util.process.ProcessContext;
 import com.enablix.core.api.ContentDataRecord;
 import com.enablix.core.commons.xsdtopojo.ContentSetType;
+import com.enablix.data.segment.DataSegmentService;
+import com.enablix.data.view.DataView;
 import com.enablix.play.exec.PlayExecutor;
 
 @RestController
@@ -23,10 +26,16 @@ public class PlayDataController {
 	@Autowired
 	private PlayExecutor playExecutor;
 	
+	@Autowired
+	private DataSegmentService dataSegmentService;
+	
 	@RequestMapping(method = RequestMethod.POST, value="/contentsetrecords", produces = "application/json")
 	public List<ContentDataRecord> getContentSetRecords(@RequestBody ContentSetType contentSet) {
+		
 		LOGGER.debug("Fetching content set records");
-		return playExecutor.findContentSetRecords(contentSet);
+		
+		DataView userView = dataSegmentService.getDataViewForUserId(ProcessContext.get().getUserId());
+		return playExecutor.findContentSetRecords(contentSet, userView);
 	}
 	
 }

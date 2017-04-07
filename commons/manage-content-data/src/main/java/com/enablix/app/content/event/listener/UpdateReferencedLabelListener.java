@@ -10,6 +10,7 @@ import com.enablix.app.content.event.ContentDataEventListener;
 import com.enablix.app.content.event.ContentDataSaveEvent;
 import com.enablix.app.template.service.TemplateManager;
 import com.enablix.commons.constants.ContentDataConstants;
+import com.enablix.core.api.TemplateFacade;
 import com.enablix.core.commons.xsdtopojo.BoundedRefListType;
 import com.enablix.core.commons.xsdtopojo.BoundedType;
 import com.enablix.core.commons.xsdtopojo.ContainerType;
@@ -18,7 +19,6 @@ import com.enablix.core.commons.xsdtopojo.ContentItemType;
 import com.enablix.core.mongo.content.ContentCrudService;
 import com.enablix.services.util.DatastoreUtil;
 import com.enablix.services.util.TemplateUtil;
-import com.enablix.services.util.template.TemplateWrapper;
 import com.enablix.services.util.template.walker.ContainerFilter;
 import com.enablix.services.util.template.walker.ContainerVisitor;
 import com.enablix.services.util.template.walker.TemplateContainerWalker;
@@ -46,7 +46,7 @@ public class UpdateReferencedLabelListener implements ContentDataEventListener {
 		
 		if (!event.isNewRecord()) {
 			
-			TemplateWrapper template = templateMgr.getTemplateWrapper(event.getTemplateId());
+			TemplateFacade template = templateMgr.getTemplateFacade(event.getTemplateId());
 			
 			final ContainerType eventContainer = event.getContainerType();
 			final String labelAttr = template.getStudioLabelAttributeId(eventContainer.getQualifiedId());
@@ -63,7 +63,7 @@ public class UpdateReferencedLabelListener implements ContentDataEventListener {
 					
 					@Override
 					public void execute(ContainerType containerToUpdate,
-							ContentItemType itemOfUpdateContainer, TemplateWrapper template) {
+							ContentItemType itemOfUpdateContainer, TemplateFacade template) {
 						String collectionName = template.getCollectionName(containerToUpdate.getQualifiedId());
 						crudService.updateContentStackLabel(collectionName, itemOfUpdateContainer.getId(), recordIdentity, labelValueStr);
 					}
@@ -74,7 +74,7 @@ public class UpdateReferencedLabelListener implements ContentDataEventListener {
 		
 	}
 
-	private void updateContentStack(final TemplateWrapper template, final ContentStackAction action) {
+	private void updateContentStack(final TemplateFacade template, final ContentStackAction action) {
 		
 		TemplateContainerWalker walker = new TemplateContainerWalker(template.getTemplate(), 
 				new ContainerFilter() {
@@ -99,7 +99,7 @@ public class UpdateReferencedLabelListener implements ContentDataEventListener {
 		});
 	}
 
-	private void updateLabelInBoundedItems(ContentDataSaveEvent event, TemplateWrapper template) {
+	private void updateLabelInBoundedItems(ContentDataSaveEvent event, TemplateFacade template) {
 		
 		// get containers where the updated record is used as a dropdown value
 		List<ContainerType> assocContainers = 
@@ -150,7 +150,7 @@ public class UpdateReferencedLabelListener implements ContentDataEventListener {
 	@Override
 	public void onContentDataDelete(final ContentDataDelEvent event) {
 			
-		TemplateWrapper template = templateMgr.getTemplateWrapper(event.getTemplateId());
+		TemplateFacade template = templateMgr.getTemplateFacade(event.getTemplateId());
 		
 		final String recordIdentity = event.getContentIdentity();
 		
@@ -160,7 +160,7 @@ public class UpdateReferencedLabelListener implements ContentDataEventListener {
 			
 			@Override
 			public void execute(ContainerType containerToUpdate,
-					ContentItemType itemOfUpdateContainer, TemplateWrapper template) {
+					ContentItemType itemOfUpdateContainer, TemplateFacade template) {
 				
 				String collectionName = template.getCollectionName(containerToUpdate.getQualifiedId());
 				crudService.deleteContentStackItem(collectionName, itemOfUpdateContainer.getId(), recordIdentity);
@@ -169,7 +169,7 @@ public class UpdateReferencedLabelListener implements ContentDataEventListener {
 		});
 	}
 
-	private void removeFromBoundedItems(ContentDataDelEvent event, TemplateWrapper template) {
+	private void removeFromBoundedItems(ContentDataDelEvent event, TemplateFacade template) {
 		ContainerType delContainerType = event.getContainerType();
 		
 		// get containers where the delete record is used as a dropdown value
@@ -209,7 +209,7 @@ public class UpdateReferencedLabelListener implements ContentDataEventListener {
 	private static interface ContentStackAction {
 		
 		void execute(ContainerType containerToUpdate, 
-				ContentItemType itemOfUpdateContainer, TemplateWrapper template);
+				ContentItemType itemOfUpdateContainer, TemplateFacade template);
 	}
 	
 }

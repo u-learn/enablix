@@ -8,15 +8,17 @@ import org.springframework.stereotype.Component;
 
 import com.enablix.app.content.bounded.BoundedListBuilder;
 import com.enablix.app.content.bounded.DataItem;
+import com.enablix.core.api.TemplateFacade;
 import com.enablix.core.commons.xsdtopojo.BoundedType;
 import com.enablix.core.commons.xsdtopojo.FixedListDataType;
-import com.enablix.services.util.template.TemplateWrapper;
+import com.enablix.data.view.DataView;
 
 @Component
 public class FixedListBuilder implements BoundedListBuilder {
 
 	@Override
-	public Collection<DataItem> buildBoundedList(TemplateWrapper template, BoundedType boundedTypeDef) {
+	public Collection<DataItem> buildBoundedList(
+			TemplateFacade template, BoundedType boundedTypeDef, DataView view) {
 		
 		Set<DataItem> itemList = new HashSet<>();
 		

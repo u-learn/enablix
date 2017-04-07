@@ -25,13 +25,17 @@ import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.commons.util.process.ProcessContext;
 import com.enablix.core.api.ContentDataRecord;
 import com.enablix.core.api.ContentDataRef;
+import com.enablix.core.api.TemplateFacade;
 import com.enablix.core.commons.xsdtopojo.ContentCorrelatedItemType;
 import com.enablix.core.mongo.content.ContentCrudService;
 import com.enablix.core.mongo.search.ConditionOperator;
 import com.enablix.core.mongo.search.StringFilter;
+import com.enablix.core.mongo.view.MongoDataView;
 import com.enablix.core.ui.DisplayableContent;
+import com.enablix.data.segment.DataSegmentService;
+import com.enablix.data.view.DataView;
 import com.enablix.services.util.ContentDataUtil;
-import com.enablix.services.util.template.TemplateWrapper;
+import com.enablix.services.util.DataViewUtil;
 
 @RestController
 @RequestMapping("corr")
@@ -58,6 +62,9 @@ public class CorrelatedEntitiesController {
 	@Autowired
 	private ItemCorrelationRuleManager corrRuleManager;
 	
+	@Autowired
+	private DataSegmentService dataSegmentService;
+	
 	@RequestMapping(method = RequestMethod.GET, 
 			value="/te/{contentQId}/{attrId}/{attrVal}", 
 			produces = "application/json")
@@ -67,7 +74,7 @@ public class CorrelatedEntitiesController {
 			@PathVariable String attrVal) {
 		
 		String templateId = ProcessContext.get().getTemplateId();
-		TemplateWrapper template = templateMgr.getTemplateWrapper(templateId);
+		TemplateFacade template = templateMgr.getTemplateFacade(templateId);
 		
 		String instanceIdentity = null;
 		String contentTitle = null;
@@ -75,7 +82,10 @@ public class CorrelatedEntitiesController {
 		String collectionName = template.getCollectionName(contentQId);
 		StringFilter filter = new StringFilter(attrId, attrVal, ConditionOperator.EQ);
 		
-		List<Map<String, Object>> findRecords = contentCrud.findRecords(collectionName, filter);
+		DataView userDataView = dataSegmentService.getDataViewForUserId(ProcessContext.get().getUserId());
+		MongoDataView mdbView = DataViewUtil.getMongoDataView(userDataView);
+		
+		List<Map<String, Object>> findRecords = contentCrud.findRecords(collectionName, filter, mdbView);
 		
 		for (Map<String, Object> rec : findRecords) {
 			instanceIdentity = (String) rec.get(ContentDataConstants.IDENTITY_KEY);
@@ -90,7 +100,7 @@ public class CorrelatedEntitiesController {
 		
 		ContentDataRef triggerItem = ContentDataRef.createContentRef(templateId, contentQId, instanceIdentity, contentTitle);
 		List<ContentDataRecord> correlatedEntities = itemCorrService.fetchCorrelatedEntityRecords(
-				template, triggerItem, new ArrayList<String>(), filterTags);
+				template, triggerItem, new ArrayList<String>(), filterTags, userDataView);
 		
 		DisplayContext ctx = new DisplayContext();
 		

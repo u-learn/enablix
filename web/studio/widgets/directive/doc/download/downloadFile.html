@@ -1,1 +1,1 @@
-<a class="fa fa-download" ng-click="downloadFile($event)" tooltip="Download"></a>
+<a class="fa fa-download" ng-click="downloadFile($event)" tooltip="Download" tooltip-enable="!actionLabel"><span ng-if="actionLabel" class="action-label">{{::actionLabel}}</span></a>

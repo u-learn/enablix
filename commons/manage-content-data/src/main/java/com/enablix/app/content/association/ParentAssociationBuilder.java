@@ -10,10 +10,11 @@ import org.springframework.stereotype.Component;
 import com.enablix.app.content.update.ContentUpdateContext;
 import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.commons.util.StringUtil;
+import com.enablix.core.api.TemplateFacade;
 import com.enablix.core.domain.content.ContentAssociation;
 import com.enablix.core.mongo.content.ContentCrudService;
+import com.enablix.core.mongo.view.MongoDataView;
 import com.enablix.services.util.TemplateUtil;
-import com.enablix.services.util.template.TemplateWrapper;
 
 @Component
 public class ParentAssociationBuilder implements ContentAssociationBuilder {
@@ -23,7 +24,7 @@ public class ParentAssociationBuilder implements ContentAssociationBuilder {
 	
 	@Override
 	public Collection<ContentAssociation> buildAssociations(
-			TemplateWrapper template, ContentUpdateContext request, Map<String, Object> dataAsMap) {
+			TemplateFacade template, ContentUpdateContext request, Map<String, Object> dataAsMap) {
 		
 		Collection<ContentAssociation> associations = new ArrayList<ContentAssociation>();
 		
@@ -35,7 +36,8 @@ public class ParentAssociationBuilder implements ContentAssociationBuilder {
 			
 			String parentCollection = TemplateUtil.findParentCollectionName(template, request.contentQId());
 			
-			Map<String, Object> parent = crudService.findRecord(parentCollection, request.parentIdentity());
+			Map<String, Object> parent = crudService.findRecord(
+					parentCollection, request.parentIdentity(), MongoDataView.ALL_DATA);
 			
 			String parentIdentity = (String) parent.get(ContentDataConstants.IDENTITY_KEY);
 			String parentId = String.valueOf(parent.get(ContentDataConstants.RECORD_ID_KEY));

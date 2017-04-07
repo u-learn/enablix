@@ -9,9 +9,10 @@ import org.springframework.stereotype.Component;
 
 import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.commons.util.StringUtil;
+import com.enablix.core.api.TemplateFacade;
 import com.enablix.core.mongo.content.ContentCrudService;
+import com.enablix.core.mongo.view.MongoDataView;
 import com.enablix.services.util.TemplateUtil;
-import com.enablix.services.util.template.TemplateWrapper;
 
 @Component
 public class UpdateContentAttributeHandler implements ContentUpdateHandler {
@@ -22,7 +23,7 @@ public class UpdateContentAttributeHandler implements ContentUpdateHandler {
 	private ContentCrudService crudService;
 	
 	@Override
-	public Map<String, Object> updateContent(TemplateWrapper template, String recordId, String contentQId,
+	public Map<String, Object> updateContent(TemplateFacade template, String recordId, String contentQId,
 			Map<String, Object> contentDataMap) {
 		
 		LOGGER.debug("Updating content attributes for templateId: {}, recordId: {}, "
@@ -37,7 +38,7 @@ public class UpdateContentAttributeHandler implements ContentUpdateHandler {
 			throw new IllegalArgumentException("Content identity is null or empty");
 		}
 		
-		Map<String, Object> existRecord = crudService.findRecord(collectionName, contentIdentity);
+		Map<String, Object> existRecord = crudService.findRecord(collectionName, contentIdentity, MongoDataView.ALL_DATA);
 		
 		crudService.updateAttributes(collectionName, relativeContentQId, 
 				contentIdentity, contentDataMap);

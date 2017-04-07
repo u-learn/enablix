@@ -75,7 +75,7 @@ public class EncryptionUtil {
 	}
 
 	public static void main(String args[]) {
-		String encString = "NEqgulHOnymnivruZfNIlw==";
+		String encString = "YU8D4nGPXRiYg13eVmljIw==";
 		DefaultAESParameterProvider params = new DefaultAESParameterProvider();
 		String hashed = getAesDecryptedString(encString, params);
 		

@@ -16,13 +16,13 @@ import org.springframework.stereotype.Component;
 
 import com.enablix.analytics.correlation.matcher.MatchInputRecord;
 import com.enablix.commons.util.collection.CollectionUtil;
+import com.enablix.core.api.TemplateFacade;
 import com.enablix.core.commons.xsdtopojo.FilterCriteriaType;
 import com.enablix.core.commons.xsdtopojo.FilterOperatorType;
 import com.enablix.core.commons.xsdtopojo.FilterType;
 import com.enablix.core.commons.xsdtopojo.MatchCriteriaType;
 import com.enablix.core.commons.xsdtopojo.MatchType;
 import com.enablix.services.util.ElasticSearchUtil;
-import com.enablix.services.util.template.TemplateWrapper;
 
 @Component
 public class ESCorrelationQueryBuilder {
@@ -32,12 +32,12 @@ public class ESCorrelationQueryBuilder {
 	@Autowired
 	private FilterToESQueryTx filterESQueryTx;
 	
-	public SearchRequest build(TemplateWrapper template, String targetItemQId, 
+	public SearchRequest build(TemplateFacade template, String targetItemQId, 
 			FilterCriteriaType filterCriteria, MatchCriteriaType matchCriteria, MatchInputRecord matchInput) {
 		return build(template, ElasticSearchUtil.getIndexName(), targetItemQId, filterCriteria, matchCriteria, matchInput);
 	}
 	
-	public SearchRequest build(TemplateWrapper template, String indexName, String targetItemQId,
+	public SearchRequest build(TemplateFacade template, String indexName, String targetItemQId,
 			FilterCriteriaType filterCriteria, MatchCriteriaType matchCriteria, MatchInputRecord matchInput) {
 		
 		String searchType = template.getCollectionName(targetItemQId);
@@ -73,7 +73,7 @@ public class ESCorrelationQueryBuilder {
 		return searchRequest;
 	}
 
-	private void addFilterToQuer(TemplateWrapper template, String targetItemQId, 
+	private void addFilterToQuer(TemplateFacade template, String targetItemQId, 
 			MatchInputRecord matchInput, BoolQueryBuilder qb, FilterType filter) {
 		
 		List<QueryBuilder> filterQbs = filterESQueryTx.createESQuery(

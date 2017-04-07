@@ -8,14 +8,15 @@ import com.enablix.analytics.web.request.WebContentRequest;
 import com.enablix.app.content.ui.NavigableContent;
 import com.enablix.core.mongo.search.SearchCriteria;
 import com.enablix.core.mongo.search.service.SearchRequest;
+import com.enablix.data.view.DataView;
 
 public interface RecentContentService {
 
 	//@PreAuthorize("hasAuthority('VIEW_RECENT_CONTENT')")
-	List<NavigableContent> getRecentContent(WebContentRequest request);
+	List<NavigableContent> getRecentContent(WebContentRequest request, DataView view);
 
-	List<NavigableContent> getRecentContentByCriteria(SearchCriteria criteria);
+	List<NavigableContent> getRecentContentByCriteria(SearchCriteria criteria, DataView view);
 
-	Page<RecentUpdateVO> getRecentContentByRequest(SearchRequest request);
+	Page<RecentUpdateVO> getRecentContentByRequest(SearchRequest request, DataView userDataView);
 	
 }

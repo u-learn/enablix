@@ -6,15 +6,15 @@ import org.springframework.stereotype.Component;
 
 import com.enablix.app.content.update.ContentUpdateContext;
 import com.enablix.commons.constants.ContentDataConstants;
+import com.enablix.core.api.TemplateFacade;
 import com.enablix.core.commons.xsdtopojo.ContainerType;
-import com.enablix.services.util.template.TemplateWrapper;
 
 @Component
 public class ContainerMetadataEnricher implements ContentEnricher {
 
 	@Override
 	public void enrich(ContentUpdateContext updateCtx, 
-			Map<String, Object> content, TemplateWrapper contentTemplate) {
+			Map<String, Object> content, TemplateFacade contentTemplate) {
 		
 		// add container name as a metadata in content
 		ContainerType containerType = contentTemplate.getContainerDefinition(updateCtx.contentQId());

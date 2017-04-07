@@ -5,9 +5,10 @@ import org.springframework.stereotype.Component;
 
 import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.core.api.ContentDataRecord;
+import com.enablix.core.api.TemplateFacade;
 import com.enablix.core.commons.xsdtopojo.ContainerType;
 import com.enablix.core.mongo.content.ContentCrudService;
-import com.enablix.services.util.template.TemplateWrapper;
+import com.enablix.core.mongo.view.MongoDataView;
 
 @Component
 public class LinkedContainerCoverageResolver {
@@ -15,14 +16,15 @@ public class LinkedContainerCoverageResolver {
 	@Autowired
 	private ContentCrudService crud;
 	
-	public long getCount(ContainerType linkedContainer, ContentDataRecord record, TemplateWrapper template) {
+	public long getCount(ContainerType linkedContainer, ContentDataRecord record, TemplateFacade template) {
 		
 		String linkContainerQId = linkedContainer.getLinkContainerQId();
 		String recordIdentity = (String) record.getRecord().get(ContentDataConstants.IDENTITY_KEY);
 		
 		String collectionName = template.getCollectionName(linkContainerQId);
 		
-		return crud.findRecordCountWithLinkContainerId(collectionName, linkedContainer.getLinkContentItemId(), recordIdentity);
+		return crud.findRecordCountWithLinkContainerId(collectionName, 
+				linkedContainer.getLinkContentItemId(), recordIdentity, MongoDataView.ALL_DATA);
 	}
 	
 }

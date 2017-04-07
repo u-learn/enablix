@@ -15,13 +15,13 @@ import com.enablix.analytics.correlation.matcher.MatchInputRecord;
 import com.enablix.analytics.correlation.matcher.UserMatcher;
 import com.enablix.analytics.correlation.rule.ItemCorrelationRuleManager;
 import com.enablix.core.api.ContentDataRef;
+import com.enablix.core.api.TemplateFacade;
 import com.enablix.core.commons.xsdtopojo.ItemUserCorrelationRuleType;
 import com.enablix.core.commons.xsdtopojo.PathItemType;
 import com.enablix.core.commons.xsdtopojo.RelatedUserPathType;
 import com.enablix.core.commons.xsdtopojo.RelatedUserType;
 import com.enablix.core.domain.security.authorization.UserProfile;
 import com.enablix.services.util.TemplateUtil;
-import com.enablix.services.util.template.TemplateWrapper;
 
 @Component
 public class ItemUserCorrelatorImpl implements ItemUserCorrelator {
@@ -64,7 +64,7 @@ public class ItemUserCorrelatorImpl implements ItemUserCorrelator {
 		
 		itemUserCorrRecorder.removeItemUserCorrelationByRule(triggerItem, corrRule);
 		
-		TemplateWrapper template = context.getTemplate();
+		TemplateFacade template = context.getTemplate();
 		
 		MatchInputRecord matchInput = matchInputBuilder.buildTriggerMatchInput(template, corrRule.getTriggerItem(), triggerItem);
 
@@ -76,7 +76,7 @@ public class ItemUserCorrelatorImpl implements ItemUserCorrelator {
 		
 	}
 
-	private void processRelatedUserRule(ItemUserCorrelationRuleType corrRule, TemplateWrapper template,
+	private void processRelatedUserRule(ItemUserCorrelationRuleType corrRule, TemplateFacade template,
 			ContentDataRef item, MatchInputRecord matchInput, RelatedUserPathType relatedUserPath) {
 		
 		PathItemType pathItem = relatedUserPath.getPathItem();
@@ -91,7 +91,7 @@ public class ItemUserCorrelatorImpl implements ItemUserCorrelator {
 		
 	}
 
-	private void processRelatedPathItemRule(TemplateWrapper template, ContentDataRef triggerItem, 
+	private void processRelatedPathItemRule(TemplateFacade template, ContentDataRef triggerItem, 
 			MatchInputRecord matchInput, PathItemType pathItem, ItemUserCorrelationRuleType rule) {
 		
 		List<Map<String, Object>> matchedRecords = 
@@ -128,7 +128,7 @@ public class ItemUserCorrelatorImpl implements ItemUserCorrelator {
 		}
 	}
 
-	private void processRelatedUserPath(TemplateWrapper template, ContentDataRef item, ItemUserCorrelationRuleType rule,
+	private void processRelatedUserPath(TemplateFacade template, ContentDataRef item, ItemUserCorrelationRuleType rule,
 			RelatedUserType relatedUserDef, MatchInputRecord nextMatchInput) {
 		
 		String userContainerQId = TemplateUtil.getUserContainerQId(template.getTemplate());

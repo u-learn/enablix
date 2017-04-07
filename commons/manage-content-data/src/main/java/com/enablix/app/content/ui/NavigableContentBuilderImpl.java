@@ -11,11 +11,12 @@ import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.commons.util.QIdUtil;
 import com.enablix.commons.util.StringUtil;
 import com.enablix.core.api.ContentDataRef;
+import com.enablix.core.api.TemplateFacade;
 import com.enablix.core.commons.xsdtopojo.ContainerType;
 import com.enablix.core.mongo.content.ContentCrudService;
+import com.enablix.core.mongo.view.MongoDataView;
 import com.enablix.services.util.ContentDataUtil;
 import com.enablix.services.util.TemplateUtil;
-import com.enablix.services.util.template.TemplateWrapper;
 
 @Component
 public class NavigableContentBuilderImpl implements NavigableContentBuilder {
@@ -28,11 +29,11 @@ public class NavigableContentBuilderImpl implements NavigableContentBuilder {
 	
 	@Override
 	public NavigableContent build(ContentDataRef data, ContentLabelResolver labelResolver) {
-		TemplateWrapper template = templateMgr.getTemplateWrapper(data.getTemplateId());
+		TemplateFacade template = templateMgr.getTemplateFacade(data.getTemplateId());
 		return buildNavigableContent(template, data.getContainerQId(), data.getInstanceIdentity(), null);
 	}
 	
-	private NavigableContent buildNavigableContent(TemplateWrapper template, 
+	private NavigableContent buildNavigableContent(TemplateFacade template, 
 			String qId, String identity, NavigableContent child) {
 
 		NavigableContent navigableContent = null;
@@ -46,10 +47,10 @@ public class NavigableContentBuilderImpl implements NavigableContentBuilder {
 			Map<String, Object> record = null;
 			
 			if (TemplateUtil.hasOwnCollection(container)) {
-				record = crudService.findRecord(collName, identity);
+				record = crudService.findRecord(collName, identity, MongoDataView.ALL_DATA);
 				
 			} else {
-				record = crudService.findRecord(collName, QIdUtil.getElementId(qId), identity);
+				record = crudService.findRecord(collName, QIdUtil.getElementId(qId), identity, MongoDataView.ALL_DATA);
 			}
 			
 			navigableContent = buildNavigableContent(template, container, child, record);
@@ -59,7 +60,7 @@ public class NavigableContentBuilderImpl implements NavigableContentBuilder {
 	}
 
 	private NavigableContent buildNavigableContent(
-			TemplateWrapper template, ContainerType container, NavigableContent child,
+			TemplateFacade template, ContainerType container, NavigableContent child,
 			Map<String, Object> record) {
 		
 		NavigableContent navigableContent = null;
@@ -81,7 +82,7 @@ public class NavigableContentBuilderImpl implements NavigableContentBuilder {
 	}
 	
 	private NavigableContent createNavigableContent(Map<String, Object> record, 
-			ContainerType container, TemplateWrapper template, NavigableContent child) {
+			ContainerType container, TemplateFacade template, NavigableContent child) {
 		
 		String containerQId = container.getQualifiedId();
 		String label = ContentDataUtil.findPortalLabelValue(record, template, containerQId);
@@ -104,7 +105,7 @@ public class NavigableContentBuilderImpl implements NavigableContentBuilder {
 	@Override
 	public NavigableContent build(Map<String, Object> record, String templateId, 
 			String qId, ContentLabelResolver labelResolver) {
-		TemplateWrapper template = templateMgr.getTemplateWrapper(templateId);
+		TemplateFacade template = templateMgr.getTemplateFacade(templateId);
 		return buildNavigableContent(template, template.getContainerDefinition(qId), null, record);
 	}
 	

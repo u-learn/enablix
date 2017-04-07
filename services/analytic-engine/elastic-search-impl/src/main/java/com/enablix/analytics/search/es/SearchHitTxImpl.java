@@ -8,16 +8,16 @@ import org.springframework.stereotype.Component;
 import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.core.api.ContentDataRecord;
 import com.enablix.core.api.ContentDataRef;
+import com.enablix.core.api.TemplateFacade;
 import com.enablix.core.commons.xsdtopojo.ContainerType;
 import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 import com.enablix.services.util.ContentDataUtil;
-import com.enablix.services.util.template.TemplateWrapper;
 
 @Component
 public class SearchHitTxImpl implements SearchHitTransformer {
 
 	@Override
-	public ContentDataRef toContentDataRef(SearchHit searchHit, TemplateWrapper templateWrapper) {
+	public ContentDataRef toContentDataRef(SearchHit searchHit, TemplateFacade templateWrapper) {
 		
 		ContentTemplate template = templateWrapper.getTemplate();
 		ContainerType container = templateWrapper.getContainerForCollection(searchHit.getType());
@@ -42,7 +42,7 @@ public class SearchHitTxImpl implements SearchHitTransformer {
 	}
 
 	@Override
-	public ContentDataRecord toContentDataRecord(SearchHit searchHit, TemplateWrapper templateWrapper) {
+	public ContentDataRecord toContentDataRecord(SearchHit searchHit, TemplateFacade templateWrapper) {
 		
 		ContentTemplate template = templateWrapper.getTemplate();
 		ContainerType container = templateWrapper.getContainerForCollection(searchHit.getType());

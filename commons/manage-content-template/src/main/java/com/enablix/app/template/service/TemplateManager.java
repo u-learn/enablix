@@ -5,11 +5,11 @@ import java.util.List;
 
 import javax.xml.bind.JAXBException;
 
+import com.enablix.core.api.TemplateFacade;
 import com.enablix.core.commons.xsdtopojo.ContainerType;
 import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 import com.enablix.core.commons.xsdtopojo.DataDefinitionType;
 import com.enablix.core.commons.xsdtopojo.UiDefinitionType;
-import com.enablix.services.util.template.TemplateWrapper;
 
 public interface TemplateManager {
 
@@ -25,6 +25,6 @@ public interface TemplateManager {
 	
 	List<ContainerType> getChildContainers(String templateId, String parentQId);
 
-	TemplateWrapper getTemplateWrapper(String templateId);
+	TemplateFacade getTemplateFacade(String templateId);
 	
 }

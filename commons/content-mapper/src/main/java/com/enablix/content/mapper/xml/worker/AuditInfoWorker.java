@@ -19,6 +19,7 @@ import com.enablix.core.domain.user.User;
 import com.enablix.core.mongo.dao.GenericSystemDao;
 import com.enablix.core.mongo.search.ConditionOperator;
 import com.enablix.core.mongo.search.StringFilter;
+import com.enablix.core.mongo.view.MongoDataView;
 
 @Component
 public class AuditInfoWorker implements MappingWorker {
@@ -50,7 +51,7 @@ public class AuditInfoWorker implements MappingWorker {
 			StringFilter userFilter = new StringFilter(
 					userMapping.getAttribute(), String.valueOf(creator), ConditionOperator.EQ);
 			
-			List<User> users = dao.findByCriteria(userFilter.toPredicate(new Criteria()), User.class);
+			List<User> users = dao.findByCriteria(userFilter.toPredicate(new Criteria()), User.class, MongoDataView.ALL_DATA);
 			
 			if (CollectionUtil.isNotEmpty(users)) {
 				User createdByUser = users.get(0);

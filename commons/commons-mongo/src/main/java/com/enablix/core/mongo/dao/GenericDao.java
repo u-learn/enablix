@@ -13,6 +13,7 @@ import org.springframework.util.Assert;
 import com.enablix.core.mongo.search.service.SearchRequest;
 import com.enablix.core.mongo.search.service.SearchRequest.Pagination;
 import com.enablix.core.mongo.search.service.SearchRequestTransformer;
+import com.enablix.core.mongo.view.MongoDataView;
 
 @Component
 public class GenericDao extends BaseTenantDao {
@@ -20,7 +21,8 @@ public class GenericDao extends BaseTenantDao {
 	@Autowired
 	private SearchRequestTransformer requestTx;
 
-	public <T> Page<T> findByQuery(SearchRequest searchRequest, String collectionName, Class<T> findType) {
+	public <T> Page<T> findByQuery(SearchRequest searchRequest, 
+			String collectionName, Class<T> findType, MongoDataView view) {
 		
 		Assert.notNull(findType, "findType is null");
 		
@@ -35,18 +37,18 @@ public class GenericDao extends BaseTenantDao {
 		if (pagination != null) {
 			
 			pageable = pagination.toPageableObject();
-			page = findByCriteria(criteria, collectionName, findType, pageable, projectedFields);
+			page = findByCriteria(criteria, collectionName, findType, pageable, projectedFields, view);
 			
 		} else {
-			List<T> content = findByCriteria(criteria, collectionName, findType, projectedFields);
+			List<T> content = findByCriteria(criteria, collectionName, findType, projectedFields, view);
 			page = new PageImpl<T>(content, pageable, content.size());
 		}
 		
 		return page;
 	}
 	
-	public <T> Page<T> findByQuery(SearchRequest searchRequest, Class<T> findType) {
-		return findByQuery(searchRequest, null, findType);
+	public <T> Page<T> findByQuery(SearchRequest searchRequest, Class<T> findType, MongoDataView view) {
+		return findByQuery(searchRequest, null, findType, view);
 	}
 	
 }

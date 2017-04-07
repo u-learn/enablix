@@ -7,11 +7,11 @@ import org.springframework.stereotype.Component;
 
 import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.commons.util.StringUtil;
+import com.enablix.core.api.TemplateFacade;
 import com.enablix.core.commons.xsdtopojo.ContentItemClassType;
 import com.enablix.core.commons.xsdtopojo.ContentItemType;
 import com.enablix.core.ui.DisplayField;
 import com.enablix.core.ui.FieldValue;
-import com.enablix.services.util.template.TemplateWrapper;
 
 @Component
 public class DisplayFieldBuilderImpl implements DisplayFieldBuilder {
@@ -21,7 +21,7 @@ public class DisplayFieldBuilderImpl implements DisplayFieldBuilder {
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
-	public DisplayField<?> build(ContentItemType fieldDef, TemplateWrapper template, 
+	public DisplayField<?> build(ContentItemType fieldDef, TemplateFacade template, 
 			Map<String, Object> contentRec, DisplayContext ctx) {
 		
 		FieldValueBuilder builder = fvBuilderFactory.getBuilder(fieldDef);

@@ -11,19 +11,20 @@ import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.commons.util.beans.SpringBackedAbstractFactory;
 import com.enablix.core.api.ContentDataRecord;
 import com.enablix.core.commons.xsdtopojo.ContentGroupType;
+import com.enablix.core.mongo.view.MongoDataView;
 
 @Component
 public class DefaultContentGroupResolver extends SpringBackedAbstractFactory<ContentGroupSubsetResolver> implements ContentGroupResolver {
 
 	@Override
 	public Collection<ContentDataRecord> fetchContentGroupRecords(List<ContentDataRecord> execFocus,
-			ContentGroupType contentGroupDef) {
+			ContentGroupType contentGroupDef, MongoDataView view) {
 		
 		Map<Object, ContentDataRecord> contentRecords = new HashMap<>();
 		
 		for (ContentGroupSubsetResolver resolver : registeredInstances()) {
 			
-			List<ContentDataRecord> records = resolver.fetchContentGroupRecords(execFocus, contentGroupDef);
+			List<ContentDataRecord> records = resolver.fetchContentGroupRecords(execFocus, contentGroupDef, view);
 			
 			for (ContentDataRecord record : records) {
 				contentRecords.put(record.getRecord().get(ContentDataConstants.IDENTITY_KEY), record);

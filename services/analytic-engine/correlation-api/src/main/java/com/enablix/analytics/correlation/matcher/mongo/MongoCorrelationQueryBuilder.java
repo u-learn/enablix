@@ -8,13 +8,13 @@ import org.springframework.stereotype.Component;
 
 import com.enablix.analytics.correlation.matcher.MatchInputRecord;
 import com.enablix.commons.util.collection.CollectionUtil;
+import com.enablix.core.api.TemplateFacade;
 import com.enablix.core.commons.xsdtopojo.FilterCriteriaType;
 import com.enablix.core.commons.xsdtopojo.FilterType;
 import com.enablix.core.commons.xsdtopojo.MatchCriteriaType;
 import com.enablix.core.commons.xsdtopojo.MatchType;
 import com.enablix.core.mongo.search.SearchCriteria;
 import com.enablix.core.mongo.search.SearchFilter;
-import com.enablix.services.util.template.TemplateWrapper;
 
 @Component
 public class MongoCorrelationQueryBuilder {
@@ -24,7 +24,7 @@ public class MongoCorrelationQueryBuilder {
 	@Autowired
 	private FilterToMongoFilter filterMongoTx;
 	
-	public Criteria build(TemplateWrapper template, String targetItemQId, FilterAttributIdResolver attrIdResolver,
+	public Criteria build(TemplateFacade template, String targetItemQId, FilterAttributIdResolver attrIdResolver,
 			FilterCriteriaType filterCriteria, MatchCriteriaType matchCriteria, MatchInputRecord matchInput) {
 		
 		SearchCriteria sc = null;
@@ -52,7 +52,7 @@ public class MongoCorrelationQueryBuilder {
 		return queryCriteria;
 	}
 
-	private SearchCriteria addFilterToCriteria(TemplateWrapper template, String targetItemQId, 
+	private SearchCriteria addFilterToCriteria(TemplateFacade template, String targetItemQId, 
 			MatchInputRecord matchInput, SearchCriteria criteria, FilterType filter, FilterAttributIdResolver attrIdResolver) {
 		
 		SearchFilter searchFilter = filterMongoTx.createMongoFilter(

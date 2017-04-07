@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.core.query.Criteria;
 
 import com.enablix.core.mongo.search.SearchFilter;
+import com.enablix.core.mongo.view.MongoDataView;
 
 public interface ContentCrudService {
 
@@ -16,27 +17,27 @@ public interface ContentCrudService {
 	
 	void insert(String collectionName, Map<String, Object> data);
 	
-	Map<String, Object> findRecord(String collectionName, String elementIdentity);
+	Map<String, Object> findRecord(String collectionName, String elementIdentity, MongoDataView view);
 	
-	Map<String, Object> findRecord(String collectionName, String elementQId, String elementIdentity);
+	Map<String, Object> findRecord(String collectionName, String elementQId, String elementIdentity, MongoDataView view);
 	
-	List<Map<String, Object>> findChildElements(String collectionName, String childFieldId, String recordIdentity);
+	List<Map<String, Object>> findChildElements(String collectionName, String childFieldId, String recordIdentity, MongoDataView view);
 	
-	List<Map<String, Object>> findAllRecord(String collectionName);
+	List<Map<String, Object>> findAllRecord(String collectionName, MongoDataView view);
 	
-	Page<Map<String, Object>> findAllRecord(String collectionName, Pageable pageable);
+	Page<Map<String, Object>> findAllRecord(String collectionName, Pageable pageable, MongoDataView view);
 	
-	List<Map<String, Object>> findAllRecordWithParentId(String collectionName, String parentIdentity);
+	List<Map<String, Object>> findAllRecordWithParentId(String collectionName, String parentIdentity, MongoDataView view);
 	
-	Page<Map<String, Object>> findAllRecordWithParentId(String collectionName, String parentIdentity, Pageable pageable);
+	Page<Map<String, Object>> findAllRecordWithParentId(String collectionName, String parentIdentity, Pageable pageable, MongoDataView view);
 	
 	List<Map<String, Object>> findAllRecordWithLinkContainerId(String collectionName, 
-			String linkContentItemId, String linkContainerIdentity);
+			String linkContentItemId, String linkContainerIdentity, MongoDataView view);
 	
 	Page<Map<String, Object>> findAllRecordWithLinkContainerId(String collectionName, 
-			String linkContentItemId, String linkContainerIdentity, Pageable pageable);
+			String linkContentItemId, String linkContainerIdentity, Pageable pageable, MongoDataView view);
 	
-	List<Map<String, Object>> findAllRecordForCriteria(String collectionName, Criteria criteria);
+	List<Map<String, Object>> findAllRecordForCriteria(String collectionName, Criteria criteria, MongoDataView view);
 
 	void updateAttributes(String collectionName, String elementQId, String elementIdentity, Map<String, Object> data);
 	
@@ -58,21 +59,21 @@ public interface ContentCrudService {
 
 	void upsert(String collectionName, String elementIdentity, Map<String, Object> data);
 
-	Map<String, Object> findContainingRecord(String collectionName, String childQId, String childIdentity);
+	Map<String, Object> findContainingRecord(String collectionName, String childQId, String childIdentity, MongoDataView view);
 
-	List<Map<String, Object>> findRecords(String collectionName, List<String> elementIdentities);
+	List<Map<String, Object>> findRecords(String collectionName, List<String> elementIdentities, MongoDataView view);
 	
-	List<Map<String, Object>> findRecords(String collectionName, SearchFilter filter);
+	List<Map<String, Object>> findRecords(String collectionName, SearchFilter filter, MongoDataView view);
 
 	Page<Map<String, Object>> findChildElements(String collName, String qIdRelativeToParent,
-			String parentRecordIdentity, Pageable pageable);
+			String parentRecordIdentity, Pageable pageable, MongoDataView view);
 
 	long findRecordCountWithLinkContainerId(String collectionName, String linkContentItemId,
-			String linkContainerIdentity);
+			String linkContainerIdentity, MongoDataView view);
 
-	long findRecordCountWithParentId(String collName, String recordIdentity);
+	long findRecordCountWithParentId(String collName, String recordIdentity, MongoDataView view);
 
-	long findChildElementsCount(String collName, String qIdRelativeToParent, String recordIdentity);
+	long findChildElementsCount(String collName, String qIdRelativeToParent, String recordIdentity, MongoDataView view);
 
 	void updateContentStackLabel(String collectionName, String contentStackAttrId, String contentIdentity,
 			String newContentLabel);

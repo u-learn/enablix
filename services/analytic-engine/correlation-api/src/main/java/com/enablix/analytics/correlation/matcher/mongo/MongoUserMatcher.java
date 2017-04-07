@@ -8,11 +8,12 @@ import org.springframework.stereotype.Component;
 
 import com.enablix.analytics.correlation.matcher.MatchInputRecord;
 import com.enablix.analytics.correlation.matcher.UserMatcher;
+import com.enablix.core.api.TemplateFacade;
 import com.enablix.core.commons.xsdtopojo.FilterCriteriaType;
 import com.enablix.core.commons.xsdtopojo.RelatedUserType;
 import com.enablix.core.domain.security.authorization.UserProfile;
 import com.enablix.core.mongo.dao.GenericDao;
-import com.enablix.services.util.template.TemplateWrapper;
+import com.enablix.core.mongo.view.MongoDataView;
 
 @Component
 public class MongoUserMatcher implements UserMatcher {
@@ -26,7 +27,7 @@ public class MongoUserMatcher implements UserMatcher {
 	private UserFilterAttributeIdResolver attributeIdResolver = new UserFilterAttributeIdResolver();
 	
 	@Override
-	public List<UserProfile> findMatchingUsers(TemplateWrapper template, String userQualifiedId, 
+	public List<UserProfile> findMatchingUsers(TemplateFacade template, String userQualifiedId, 
 			RelatedUserType relatedUserDef, MatchInputRecord matchInput) {
 		
 		FilterCriteriaType userFilterCriteria = relatedUserDef.getFilterCriteria();
@@ -36,7 +37,7 @@ public class MongoUserMatcher implements UserMatcher {
 		Criteria searchRequest = mongoCorrQueryBuilder.build(template, 
 				userQualifiedId, attributeIdResolver, userFilterCriteria, null, matchInput);
 		
-		List<UserProfile> matchedUsers = genericDao.findByCriteria(searchRequest, UserProfile.class);
+		List<UserProfile> matchedUsers = genericDao.findByCriteria(searchRequest, UserProfile.class, MongoDataView.ALL_DATA);
 		
 		return matchedUsers;
 	}

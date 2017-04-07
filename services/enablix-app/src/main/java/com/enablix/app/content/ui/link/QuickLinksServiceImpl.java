@@ -17,6 +17,8 @@ import com.enablix.commons.util.process.ProcessContext;
 import com.enablix.core.api.ContentDataRef;
 import com.enablix.core.domain.links.QuickLinkCategory;
 import com.enablix.core.domain.links.QuickLinkContent;
+import com.enablix.core.domain.segment.DataSegmentInfo;
+import com.enablix.data.segment.view.DataSegmentInfoBuilder;
 
 @Component
 public class QuickLinksServiceImpl implements QuickLinksService {
@@ -32,6 +34,9 @@ public class QuickLinksServiceImpl implements QuickLinksService {
 	
 	@Autowired
 	private NavigableContentBuilder navContentBuilder;
+	
+	@Autowired
+	private DataSegmentInfoBuilder dsInfoBuilder;
 	
 	private ContentLabelResolver labelResolver = new PortalContentLabelResolver();
 	
@@ -94,6 +99,10 @@ public class QuickLinksServiceImpl implements QuickLinksService {
 		QuickLinkContent linkContent = new QuickLinkContent();
 		linkContent.setCategory(category);
 		linkContent.setData(linkData);
+		
+		// set data segment info
+		DataSegmentInfo dsInfo = dsInfoBuilder.build(linkData);
+		linkContent.setDataSegmentInfo(dsInfo);
 		
 		return linkRepo.save(linkContent);
 		

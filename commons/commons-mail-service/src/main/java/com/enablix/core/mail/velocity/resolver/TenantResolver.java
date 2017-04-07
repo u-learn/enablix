@@ -8,6 +8,7 @@ import com.enablix.core.domain.tenant.Tenant;
 import com.enablix.core.mail.velocity.VelocityTemplateInputResolver;
 import com.enablix.core.mail.velocity.input.TenantAware;
 import com.enablix.core.system.repo.TenantRepository;
+import com.enablix.data.view.DataView;
 
 @Component
 public class TenantResolver implements VelocityTemplateInputResolver<TenantAware> {
@@ -16,7 +17,7 @@ public class TenantResolver implements VelocityTemplateInputResolver<TenantAware
 	private TenantRepository tenantRepo;
 	
 	@Override
-	public void work(TenantAware velocityTemplateInput) {
+	public void work(TenantAware velocityTemplateInput, DataView view) {
 		Tenant tenant = tenantRepo.findByTenantId(ProcessContext.get().getTenantId());
 		if (tenant != null) {
 			velocityTemplateInput.setTenant(tenant);

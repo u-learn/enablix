@@ -1,6 +1,6 @@
 package com.enablix.core.api;
 
-public class ContentDataRef {
+public class ContentDataRef implements ContentRecordRef {
 
 	public enum DataType {
 		CONTENT
@@ -116,6 +116,16 @@ public class ContentDataRef {
 	
 	public static ContentDataRef createContentRef(String templateId, String containerQId, String instanceIdentity, String title) {
 		return new ContentDataRef(templateId, containerQId, instanceIdentity, title);
+	}
+
+	@Override
+	public String getContentQId() {
+		return getContainerQId();
+	}
+
+	@Override
+	public String getRecordIdentity() {
+		return getInstanceIdentity();
 	}
 	
 }

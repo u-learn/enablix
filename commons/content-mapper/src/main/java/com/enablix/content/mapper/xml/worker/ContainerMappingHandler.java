@@ -22,6 +22,7 @@ import com.enablix.core.mongo.content.ContentCrudService;
 import com.enablix.core.mongo.search.ConditionOperator;
 import com.enablix.core.mongo.search.SearchFilter;
 import com.enablix.core.mongo.search.StringFilter;
+import com.enablix.core.mongo.view.MongoDataView;
 import com.enablix.services.util.TemplateUtil;
 
 @Component
@@ -59,7 +60,7 @@ public class ContainerMappingHandler {
 			SearchFilter itemIdFilter = createFilter(extItemValue, containerItemId);
 			
 			List<Map<String, Object>> records = crudService.findAllRecordForCriteria(
-								collectionName, itemIdFilter.toPredicate(new Criteria()));
+								collectionName, itemIdFilter.toPredicate(new Criteria()), MongoDataView.ALL_DATA);
 			
 			if (CollectionUtil.isNotEmpty(records)) {
 				Map<String, Object> recordData = records.get(0);

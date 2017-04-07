@@ -13,8 +13,8 @@ import com.enablix.app.content.association.ContentAssociationBuilderRegistry;
 import com.enablix.app.content.update.ContentUpdateContext;
 import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.commons.util.collection.CollectionUtil;
+import com.enablix.core.api.TemplateFacade;
 import com.enablix.core.domain.content.ContentAssociation;
-import com.enablix.services.util.template.TemplateWrapper;
 
 @Component
 public class ContentAssociator implements ContentEnricher {
@@ -24,7 +24,7 @@ public class ContentAssociator implements ContentEnricher {
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
-	public void enrich(ContentUpdateContext updateCtx, Map<String, Object> content, TemplateWrapper contentTemplate) {
+	public void enrich(ContentUpdateContext updateCtx, Map<String, Object> content, TemplateFacade contentTemplate) {
 		
 		Collection<ContentAssociation> associations = new ArrayList<ContentAssociation>();
 		

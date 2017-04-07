@@ -36,15 +36,18 @@ import com.enablix.core.api.ContentDataRecord;
 import com.enablix.core.api.ContentDataRef;
 import com.enablix.core.api.ContentRecordGroup;
 import com.enablix.core.api.ContentStackItem;
+import com.enablix.core.api.TemplateFacade;
 import com.enablix.core.commons.xsdtopojo.ContainerType;
 import com.enablix.core.commons.xsdtopojo.ContentItemClassType;
 import com.enablix.core.commons.xsdtopojo.ContentItemType;
 import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 import com.enablix.core.domain.content.ContentChangeDelta;
 import com.enablix.core.mongo.content.ContentCrudService;
+import com.enablix.core.mongo.view.MongoDataView;
+import com.enablix.data.view.DataView;
 import com.enablix.services.util.ContentDataUtil;
+import com.enablix.services.util.DataViewUtil;
 import com.enablix.services.util.TemplateUtil;
-import com.enablix.services.util.template.TemplateWrapper;
 
 @Component
 public class ContentDataManagerImpl implements ContentDataManager {
@@ -88,7 +91,7 @@ public class ContentDataManagerImpl implements ContentDataManager {
 			throw new IllegalArgumentException("Update request validation error: " + errors);
 		}
 		
-		TemplateWrapper templateWrapper = templateMgr.getTemplateWrapper(request.getTemplateId());
+		TemplateFacade templateWrapper = templateMgr.getTemplateFacade(request.getTemplateId());
 		
 		// check for linked container
 		ContainerType container = templateWrapper.getContainerDefinition(request.getContentQId()); 
@@ -137,7 +140,7 @@ public class ContentDataManagerImpl implements ContentDataManager {
 		
 		String contentQId = request.getContentQId();
 		
-		TemplateWrapper templateWrapper = templateMgr.getTemplateWrapper(request.getTemplateId());
+		TemplateFacade templateWrapper = templateMgr.getTemplateFacade(request.getTemplateId());
 		
 		String collName = templateWrapper.getCollectionName(contentQId);
 		
@@ -168,7 +171,7 @@ public class ContentDataManagerImpl implements ContentDataManager {
 	}
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	private void deleteChildContainerData(TemplateWrapper templateWrapper, String containerQId, String recordIdentity) {
+	private void deleteChildContainerData(TemplateFacade templateWrapper, String containerQId, String recordIdentity) {
 		
 		ContentTemplate template = templateWrapper.getTemplate();
 		
@@ -200,13 +203,14 @@ public class ContentDataManagerImpl implements ContentDataManager {
 	}
 
 	@Override
-	public Object fetchDataJson(FetchContentRequest request) {
+	public Object fetchDataJson(FetchContentRequest request, DataView dataView) {
 		
 		Object data = null;
 		
+		MongoDataView view = DataViewUtil.getMongoDataView(dataView);
 		String contentQId = request.getContentQId();
 		
-		TemplateWrapper templateWrapper = templateMgr.getTemplateWrapper(request.getTemplateId());
+		TemplateFacade templateWrapper = templateMgr.getTemplateFacade(request.getTemplateId());
 		ContentTemplate template = templateWrapper.getTemplate();
 		
 		// check for linked container
@@ -225,13 +229,14 @@ public class ContentDataManagerImpl implements ContentDataManager {
 			if (!StringUtil.isEmpty(request.getParentRecordIdentity())) {
 				
 				data = request.getPageable() == null ? crud.findAllRecordWithLinkContainerId(collName, 
-							container.getLinkContentItemId(), request.getParentRecordIdentity())
+							container.getLinkContentItemId(), request.getParentRecordIdentity(), view)
 						: crud.findAllRecordWithLinkContainerId(collName, 
-								container.getLinkContentItemId(), request.getParentRecordIdentity(), request.getPageable());
+								container.getLinkContentItemId(), request.getParentRecordIdentity(), 
+								request.getPageable(), view);
 				
 			} else if (!StringUtil.isEmpty(request.getRecordIdentity())) {
 				// Fetch one record
-				data = crud.findRecord(collName, qIdRelativeToParent, request.getRecordIdentity());
+				data = crud.findRecord(collName, qIdRelativeToParent, request.getRecordIdentity(), view);
 			} 				
 			
 			
@@ -239,39 +244,40 @@ public class ContentDataManagerImpl implements ContentDataManager {
 				&& StringUtil.isEmpty(request.getRecordIdentity())) {
 			
 			// Fetch all root elements for the template
-			data = request.getPageable() == null ? crud.findAllRecord(collName) : 
-						crud.findAllRecord(collName, request.getPageable());
+			data = request.getPageable() == null ? crud.findAllRecord(collName, view) : 
+						crud.findAllRecord(collName, request.getPageable(), view);
 			
 		} else if (!StringUtil.isEmpty(request.getParentRecordIdentity())) {
 			
 			// Fetch all child containers
 			if (TemplateUtil.hasOwnCollection(templateWrapper.getContainerDefinition(contentQId))) {
 				// content is in its own collection, hence query with parent id
-				data = request.getPageable() == null ? crud.findAllRecordWithParentId(collName, request.getParentRecordIdentity())
-						: crud.findAllRecordWithParentId(collName, request.getParentRecordIdentity(), request.getPageable());
+				data = request.getPageable() == null ? crud.findAllRecordWithParentId(collName, request.getParentRecordIdentity(), view)
+						: crud.findAllRecordWithParentId(collName, request.getParentRecordIdentity(), request.getPageable(), view);
 				
 			} else {
 				// content is a child array in parents collection, hence retrieve child elements
 				data = request.getPageable() == null ? crud.findChildElements(collName, 
-														qIdRelativeToParent, request.getParentRecordIdentity())
-						: crud.findChildElements(collName, 
-								qIdRelativeToParent, request.getParentRecordIdentity(), request.getPageable());
+										qIdRelativeToParent, request.getParentRecordIdentity(), view)
+						: crud.findChildElements(collName, qIdRelativeToParent, request.getParentRecordIdentity(), 
+										request.getPageable(), view);
 			}
 			
 		} else if (!StringUtil.isEmpty(request.getRecordIdentity())) {
 			// Fetch one record
-			data = crud.findRecord(collName, qIdRelativeToParent, request.getRecordIdentity());
+			data = crud.findRecord(collName, qIdRelativeToParent, request.getRecordIdentity(), view);
 		} 
 		
 		return data;
 	}
 
 	@Override
-	public List<Map<String, Object>> fetchPeers(FetchContentRequest request) {
+	public List<Map<String, Object>> fetchPeers(FetchContentRequest request, DataView dataView) {
 		
+		MongoDataView view = DataViewUtil.getMongoDataView(dataView);
 		String contentQId = request.getContentQId();
 		
-		TemplateWrapper templateWrapper = templateMgr.getTemplateWrapper(request.getTemplateId());
+		TemplateFacade templateWrapper = templateMgr.getTemplateFacade(request.getTemplateId());
 		ContentTemplate template = templateWrapper.getTemplate();
 		
 		String collName = templateWrapper.getCollectionName(contentQId);
@@ -281,7 +287,7 @@ public class ContentDataManagerImpl implements ContentDataManager {
 		
 		// Fetch one record
 		Map<String, Object> recordData = 
-				crud.findRecord(collName, qIdRelativeToParent, request.getRecordIdentity());
+				crud.findRecord(collName, qIdRelativeToParent, request.getRecordIdentity(), view);
 		
 		if (recordData != null) {
 			// Fetch all child containers
@@ -291,7 +297,7 @@ public class ContentDataManagerImpl implements ContentDataManager {
 				
 				// content is in its own collection, hence query with parent id
 				List<Map<String, Object>> allPeers = crud.findAllRecordWithParentId(
-											collName, parentIdentity);
+											collName, parentIdentity, view);
 				
 				// remove current
 				for (Map<String, Object> item : allPeers) {
@@ -310,10 +316,12 @@ public class ContentDataManagerImpl implements ContentDataManager {
 	}
 	
 	@Override
-	public Map<String, Object> fetchParentRecord(TemplateWrapper template, String recordQId, Map<String, Object> record) {
+	public Map<String, Object> fetchParentRecord(TemplateFacade template, 
+			String recordQId, Map<String, Object> record, DataView dataView) {
 		
 		Map<String, Object> parentRecord = null;
 		
+		MongoDataView view = DataViewUtil.getMongoDataView(dataView);
 		String parentQId = QIdUtil.getParentQId(recordQId);
 		
 		String parentIdentity = ContentDataUtil.findParentIdentityFromAssociation(record);
@@ -325,10 +333,10 @@ public class ContentDataManagerImpl implements ContentDataManager {
 			ContainerType parentContainer = template.getContainerDefinition(parentQId);
 			
 			if (TemplateUtil.hasOwnCollection(parentContainer)) {
-				parentRecord = crud.findRecord(collName, parentIdentity);
+				parentRecord = crud.findRecord(collName, parentIdentity, view);
 				
 			} else {
-				record = crud.findRecord(collName, QIdUtil.getElementId(parentQId), parentIdentity);
+				record = crud.findRecord(collName, QIdUtil.getElementId(parentQId), parentIdentity, view);
 			}
 		}
 		
@@ -337,10 +345,11 @@ public class ContentDataManagerImpl implements ContentDataManager {
 
 
 	@Override
-	public Map<String, Object> getContentRecord(ContentDataRef dataRef, TemplateWrapper template) {
+	public Map<String, Object> getContentRecord(ContentDataRef dataRef, TemplateFacade template, DataView dataView) {
 		
+		MongoDataView view = DataViewUtil.getMongoDataView(dataView);
 		String collName = template.getCollectionName(dataRef.getContainerQId());
-		Map<String, Object> triggerItemRecord = crud.findRecord(collName, dataRef.getInstanceIdentity());
+		Map<String, Object> triggerItemRecord = crud.findRecord(collName, dataRef.getInstanceIdentity(), view);
 
 		return triggerItemRecord;
 	}
@@ -348,27 +357,32 @@ public class ContentDataManagerImpl implements ContentDataManager {
 
 	@Override
 	public List<Map<String, Object>> getContentRecords(String containerQId, List<String> recordIdentities,
-			TemplateWrapper template) {
+			TemplateFacade template, DataView dataView) {
+		
+		MongoDataView view = DataViewUtil.getMongoDataView(dataView);
+		
 		String collName = template.getCollectionName(containerQId);
-		return crud.findRecords(collName, recordIdentities);
+		return crud.findRecords(collName, recordIdentities, view);
 	}
 	
 	@Override
-	public List<ContentDataRecord> getContentStackRecords(List<ContentStackItem> contentStackItems) {
+	public List<ContentDataRecord> getContentStackRecords(List<ContentStackItem> contentStackItems, DataView view) {
 
 		// group by containerQId so that we can reduce the number of DB queries
 		Map<String, List<String>> containerIdentities = groupContentIdentitiesByContainerQId(contentStackItems);
 
-		return fetchContentStackRecords(containerIdentities);
+		return fetchContentStackRecords(containerIdentities, view);
 	}
 
 
-	private List<ContentDataRecord> fetchContentStackRecords(Map<String, List<String>> containerIdentities) {
+	private List<ContentDataRecord> fetchContentStackRecords(Map<String, List<String>> containerIdentities, DataView dataView) {
 		
 		List<ContentDataRecord> records = new ArrayList<>();
 		
+		MongoDataView view = DataViewUtil.getMongoDataView(dataView);
+		
 		String templateId = ProcessContext.get().getTemplateId();
-		TemplateWrapper templateWrapper = templateMgr.getTemplateWrapper(templateId);
+		TemplateFacade templateWrapper = templateMgr.getTemplateFacade(templateId);
 		
 		// iterate for each container type and fetch corresponding records
 		for (Map.Entry<String, List<String>> entry : containerIdentities.entrySet()) {
@@ -378,7 +392,7 @@ public class ContentDataManagerImpl implements ContentDataManager {
 			
 			if (!StringUtil.isEmpty(collectionName)) {
 				
-				List<Map<String, Object>> dataRecords = crud.findRecords(collectionName, entry.getValue());
+				List<Map<String, Object>> dataRecords = crud.findRecords(collectionName, entry.getValue(), view);
 				
 				for (Map<String, Object> dataRec : dataRecords) {
 					records.add(new ContentDataRecord(templateId, containerQId, dataRec));
@@ -418,14 +432,17 @@ public class ContentDataManagerImpl implements ContentDataManager {
 
 
 	@Override
-	public List<ContentDataRecord> getContentStackForContentRecord(String containerQId, String instanceIdentity) {
+	public List<ContentDataRecord> getContentStackForContentRecord(
+			String containerQId, String instanceIdentity, DataView dataView) {
 		
-		TemplateWrapper template = templateMgr.getTemplateWrapper(ProcessContext.get().getTemplateId());
+		MongoDataView view = DataViewUtil.getMongoDataView(dataView);
+		
+		TemplateFacade template = templateMgr.getTemplateFacade(ProcessContext.get().getTemplateId());
 		String collectionName = template.getCollectionName(containerQId);
 		
 		List<ContentDataRecord> stackRecords = null;
 		
-		Map<String, Object> contentRecord = crud.findRecord(collectionName, instanceIdentity);
+		Map<String, Object> contentRecord = crud.findRecord(collectionName, instanceIdentity, view);
 		
 		if (CollectionUtil.isNotEmpty(contentRecord)) {
 			
@@ -440,19 +457,22 @@ public class ContentDataManagerImpl implements ContentDataManager {
 					List<Map<String, String>> contentStackAttrVal = 
 							(List<Map<String, String>>) contentRecord.get(itemType.getId());
 					
-					for (Map<String, String> contentStackEntry : contentStackAttrVal) {
+					if (CollectionUtil.isNotEmpty(contentStackAttrVal)) {
 						
-						String qualifiedId = contentStackEntry.get(ContentDataConstants.QUALIFIED_ID_KEY);
-						String identity = contentStackEntry.get(ContentDataConstants.IDENTITY_KEY);
-						
-						checkAndAddIdentityForContainer(containerIdentities, qualifiedId, identity);
+						for (Map<String, String> contentStackEntry : contentStackAttrVal) {
+							
+							String qualifiedId = contentStackEntry.get(ContentDataConstants.QUALIFIED_ID_KEY);
+							String identity = contentStackEntry.get(ContentDataConstants.IDENTITY_KEY);
+							
+							checkAndAddIdentityForContainer(containerIdentities, qualifiedId, identity);
+						}
 					}
 					
 				}
 			}
 			
 			// fetch content data records
-			stackRecords = fetchContentStackRecords(containerIdentities);
+			stackRecords = fetchContentStackRecords(containerIdentities, dataView);
 		}
 		
 		return stackRecords == null ? new ArrayList<ContentDataRecord>() : stackRecords;
@@ -461,12 +481,13 @@ public class ContentDataManagerImpl implements ContentDataManager {
 
 	@SuppressWarnings({"rawtypes", "unchecked"})
 	@Override
-	public List<ContentRecordGroup> fetchAllChildrenData(String parentQId, String parentIdentity, Pageable pageable) {
+	public List<ContentRecordGroup> fetchAllChildrenData(String parentQId, 
+			String parentIdentity, Pageable pageable, DataView view) {
 		
 		List<ContentRecordGroup> contentGroups = new ArrayList<>();
 		
 		String templateId = ProcessContext.get().getTemplateId();
-		TemplateWrapper template = templateMgr.getTemplateWrapper(templateId);
+		TemplateFacade template = templateMgr.getTemplateFacade(templateId);
 		
 		ContainerType parentContainer = template.getContainerDefinition(parentQId);
 		if (parentContainer != null) {
@@ -477,7 +498,7 @@ public class ContentDataManagerImpl implements ContentDataManager {
 				FetchContentRequest request = new FetchContentRequest(
 						templateId, childQId, parentIdentity, null, pageable);
 				
-				Object data = fetchDataJson(request);
+				Object data = fetchDataJson(request, view);
 				
 				ContentRecordGroup contentGroup = new ContentRecordGroup();
 				contentGroup.setContentQId(childQId);
@@ -508,16 +529,17 @@ public class ContentDataManagerImpl implements ContentDataManager {
 	}
 	
 	@Override
-	public List<ContentRecordGroup> fetchRecordAndChildData(String contentQId, String contentIdentity, Pageable childPagination) {
+	public List<ContentRecordGroup> fetchRecordAndChildData(String contentQId, 
+			String contentIdentity, Pageable childPagination, DataView view) {
 		
 		List<ContentRecordGroup> contentGroups = new ArrayList<>();
 		
 		String templateId = ProcessContext.get().getTemplateId();
-		TemplateWrapper template = templateMgr.getTemplateWrapper(templateId);
+		TemplateFacade template = templateMgr.getTemplateFacade(templateId);
 		
 		ContentDataRef dataRef = ContentDataRef.createContentRef(templateId, contentQId, contentIdentity, null);
 		
-		Map<String, Object> contentRecord = getContentRecord(dataRef, template);
+		Map<String, Object> contentRecord = getContentRecord(dataRef, template, view);
 		
 		if (CollectionUtil.isNotEmpty(contentRecord)) {
 		
@@ -529,7 +551,7 @@ public class ContentDataManagerImpl implements ContentDataManager {
 			contentGroups.add(contentGroup);
 			
 			// add child data
-			contentGroups.addAll(fetchAllChildrenData(contentQId, contentIdentity, childPagination));
+			contentGroups.addAll(fetchAllChildrenData(contentQId, contentIdentity, childPagination, view));
 		}
 		
 		return contentGroups;

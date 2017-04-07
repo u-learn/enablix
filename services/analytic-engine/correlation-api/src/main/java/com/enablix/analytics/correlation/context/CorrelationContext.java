@@ -3,9 +3,9 @@ package com.enablix.analytics.correlation.context;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.enablix.core.api.TemplateFacade;
 import com.enablix.core.commons.xsdtopojo.ContainerBusinessCategoryType;
 import com.enablix.services.util.TemplateUtil;
-import com.enablix.services.util.template.TemplateWrapper;
 
 public class CorrelationContext {
 
@@ -15,7 +15,7 @@ public class CorrelationContext {
 	
 	private Set<ContainerBusinessCategoryType> filteredContainerCategories;
 	
-	private TemplateWrapper template;
+	private TemplateFacade template;
 	
 	public CorrelationContext() {
 		this.containersInScope = new HashSet<>();
@@ -38,11 +38,11 @@ public class CorrelationContext {
 		this.filteredContainerCategories = filteredContainerCategories;
 	}
 
-	public TemplateWrapper getTemplate() {
+	public TemplateFacade getTemplate() {
 		return template;
 	}
 
-	public void setTemplate(TemplateWrapper template) {
+	public void setTemplate(TemplateFacade template) {
 		this.template = template;
 	}
 

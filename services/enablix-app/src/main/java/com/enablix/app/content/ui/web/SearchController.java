@@ -11,9 +11,12 @@ import com.enablix.app.content.ui.NavigableContent;
 import com.enablix.app.content.ui.search.SearchService;
 import com.enablix.commons.constants.AppConstants;
 import com.enablix.commons.util.StringUtil;
+import com.enablix.commons.util.process.ProcessContext;
 import com.enablix.core.api.SearchResult;
 import com.enablix.core.domain.activity.SearchActivity;
 import com.enablix.core.ui.DisplayableContent;
+import com.enablix.data.segment.DataSegmentService;
+import com.enablix.data.view.DataView;
 import com.enablix.services.util.ActivityLogger;
 
 @RestController
@@ -22,6 +25,9 @@ public class SearchController {
 
 	@Autowired
 	private SearchService searchService;
+	
+	@Autowired
+	private DataSegmentService dataSegmentService;
 	
 	@RequestMapping(method = RequestMethod.GET, value="/t/{searchText}/")
 	public SearchResult<NavigableContent> searchResults(@PathVariable String searchText,
@@ -36,7 +42,8 @@ public class SearchController {
 			sizeInt = StringUtil.isEmpty(size) ? AppConstants.DEFAULT_PAGE_SIZE : Integer.parseInt(size);
 		}
 		
-		SearchResult<NavigableContent> searchResult = searchService.search(searchText, sizeInt, pageInt);
+		DataView dataView = dataSegmentService.getDataViewForUserId(ProcessContext.get().getUserId());
+		SearchResult<NavigableContent> searchResult = searchService.search(searchText, sizeInt, pageInt, dataView);
 		
 		ActivityLogger.auditActivity(new SearchActivity(searchText));
 		return searchResult;
@@ -55,7 +62,9 @@ public class SearchController {
 			sizeInt = StringUtil.isEmpty(size) ? AppConstants.DEFAULT_PAGE_SIZE : Integer.parseInt(size);
 		}
 		
-		SearchResult<DisplayableContent> searchResult = searchService.searchAndGetResultAsDisplayContent(searchText, sizeInt, pageInt);
+		DataView dataView = dataSegmentService.getDataViewForUserId(ProcessContext.get().getUserId());
+		SearchResult<DisplayableContent> searchResult = 
+				searchService.searchAndGetResultAsDisplayContent(searchText, sizeInt, pageInt, dataView);
 		
 		ActivityLogger.auditActivity(new SearchActivity(searchText));
 		return searchResult;

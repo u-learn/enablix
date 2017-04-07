@@ -2,10 +2,11 @@ package com.enablix.content.approval.model;
 
 import java.util.Map;
 
+import com.enablix.core.api.ContentRecord;
 import com.enablix.state.change.model.ActionInput;
 import com.enablix.state.change.model.RefObject;
 
-public class ContentDetail extends RefObject implements ActionInput {
+public class ContentDetail extends RefObject implements ActionInput, ContentRecord {
 
 	private String contentQId;
 	
@@ -65,6 +66,11 @@ public class ContentDetail extends RefObject implements ActionInput {
 
 	public void setAddRequest(boolean addRequest) {
 		this.addRequest = addRequest;
+	}
+
+	@Override
+	public Map<String, Object> getRecord() {
+		return getData();
 	}
 	
 }

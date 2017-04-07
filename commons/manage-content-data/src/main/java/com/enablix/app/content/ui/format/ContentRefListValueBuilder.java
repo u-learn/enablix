@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.stereotype.Component;
 
 import com.enablix.commons.constants.ContentDataConstants;
+import com.enablix.core.api.TemplateFacade;
 import com.enablix.core.commons.xsdtopojo.BoundedFixedListType;
 import com.enablix.core.commons.xsdtopojo.BoundedRefListType;
 import com.enablix.core.commons.xsdtopojo.ContainerType;
@@ -14,14 +15,13 @@ import com.enablix.core.commons.xsdtopojo.ContentItemType;
 import com.enablix.core.ui.ContentRef;
 import com.enablix.core.ui.ListValue;
 import com.enablix.core.ui.TextValue;
-import com.enablix.services.util.template.TemplateWrapper;
 
 @Component
 public class ContentRefListValueBuilder implements FieldValueBuilder<ListValue, Collection<Map<String, Object>>> {
 
 	@Override
 	public ListValue build(ContentItemType fieldDef, Collection<Map<String, Object>> fieldValue, 
-			TemplateWrapper template, DisplayContext ctx) {
+			TemplateFacade template, DisplayContext ctx) {
 		
 		ListValue listVal = new ListValue();
 		

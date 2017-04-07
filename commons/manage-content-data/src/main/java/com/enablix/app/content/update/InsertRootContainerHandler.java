@@ -7,8 +7,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.enablix.core.api.TemplateFacade;
 import com.enablix.core.mongo.content.ContentCrudService;
-import com.enablix.services.util.template.TemplateWrapper;
 
 @Component
 public class InsertRootContainerHandler implements ContentUpdateHandler {
@@ -19,7 +19,7 @@ public class InsertRootContainerHandler implements ContentUpdateHandler {
 	private ContentCrudService crudService;
 	
 	@Override
-	public Map<String, Object> updateContent(TemplateWrapper template, String recordId, String contentQId,
+	public Map<String, Object> updateContent(TemplateFacade template, String recordId, String contentQId,
 			Map<String, Object> contentDataMap) {
 		
 		String collectionName = template.getCollectionName(contentQId);

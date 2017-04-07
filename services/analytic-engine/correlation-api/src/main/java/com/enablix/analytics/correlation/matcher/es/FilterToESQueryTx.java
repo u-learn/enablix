@@ -14,11 +14,12 @@ import com.enablix.analytics.correlation.matcher.FilterValueResolver;
 import com.enablix.analytics.correlation.matcher.FilterValueResolverFactory;
 import com.enablix.analytics.correlation.matcher.MatchInputRecord;
 import com.enablix.commons.constants.ContentDataConstants;
+import com.enablix.commons.util.collection.CollectionUtil;
+import com.enablix.core.api.TemplateFacade;
 import com.enablix.core.commons.xsdtopojo.ContainerType;
 import com.enablix.core.commons.xsdtopojo.ContentItemClassType;
 import com.enablix.core.commons.xsdtopojo.ContentItemType;
 import com.enablix.core.commons.xsdtopojo.FilterType;
-import com.enablix.services.util.template.TemplateWrapper;
 
 @Component
 public class FilterToESQueryTx {
@@ -27,7 +28,7 @@ public class FilterToESQueryTx {
 	private FilterValueResolverFactory resolverFactory;
 	
 	public List<QueryBuilder> createESQuery(FilterType filter, String targetItemQId, 
-			MatchInputRecord matchInput, TemplateWrapper template) {
+			MatchInputRecord matchInput, TemplateFacade template) {
 		
 		FilterValueResolver resolver = resolverFactory.getResolver(filter);
 		Object value = resolver.resolve(filter, matchInput, template);
@@ -77,7 +78,7 @@ public class FilterToESQueryTx {
 			
 		} else {
 			
-			if (value == null) {
+			if (value == null || CollectionUtil.isCollectionAndEmpty(value)) {
 				value = "~~!@#4567dsfdf"; // random value so that it does not match
 			}
 			qbs.add(QueryBuilders.matchQuery(filterAttrId, value));
@@ -86,7 +87,7 @@ public class FilterToESQueryTx {
 		return qbs;
 	}
 
-	private String extractFilterAttributeId(FilterType filter, String targetItemQId, TemplateWrapper template) {
+	private String extractFilterAttributeId(FilterType filter, String targetItemQId, TemplateFacade template) {
 		
 		ContainerType targetContainer = template.getContainerDefinition(targetItemQId);
 		ContentItemType filterContentItem = null;

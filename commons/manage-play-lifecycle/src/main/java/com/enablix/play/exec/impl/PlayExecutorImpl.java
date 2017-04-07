@@ -19,7 +19,10 @@ import com.enablix.core.mongo.search.ConditionOperator;
 import com.enablix.core.mongo.search.SearchCondition;
 import com.enablix.core.mongo.search.StringFilter;
 import com.enablix.core.mongo.search.StringListFilter;
+import com.enablix.core.mongo.view.MongoDataView;
+import com.enablix.data.view.DataView;
 import com.enablix.play.exec.PlayExecutor;
+import com.enablix.services.util.DataViewUtil;
 import com.enablix.services.util.DatastoreUtil;
 
 @Component
@@ -30,10 +33,12 @@ public class PlayExecutorImpl implements PlayExecutor {
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
-	public List<ContentDataRecord> findContentSetRecords(ContentSetType contentSet) {
+	public List<ContentDataRecord> findContentSetRecords(ContentSetType contentSet, DataView dataView) {
 
 		List<ContentDataRecord> contentRecords = new ArrayList<>();
 		String templateId = ProcessContext.get().getTemplateId();
+		
+		MongoDataView view = DataViewUtil.getMongoDataView(dataView);
 		
 		Map<ContentRecordQueryGroupKey, List<CondValueType>> groupedRecords = groupContentRecord(contentSet);
 		
@@ -44,7 +49,7 @@ public class PlayExecutorImpl implements PlayExecutor {
 			
 			String collectionName = DatastoreUtil.getCollectionName(templateId, groupKey.contentQId);
 			
-			List<Map> records = genericDao.findByCriteria(queryCriteria, collectionName, Map.class);
+			List<Map> records = genericDao.findByCriteria(queryCriteria, collectionName, Map.class, view);
 			for (Map<String, Object> rec : records) {
 				contentRecords.add(new ContentDataRecord(templateId, groupKey.contentQId, rec));
 			}

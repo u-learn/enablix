@@ -3,9 +3,9 @@ package com.enablix.trigger.lifecycle.action.email;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.enablix.core.api.TemplateFacade;
 import com.enablix.core.commons.xsdtopojo.TriggerEntityUpdateCondType;
 import com.enablix.core.domain.trigger.ContentChange;
-import com.enablix.services.util.template.TemplateWrapper;
 
 @Component
 public class TriggerExecChangeOnEntityUpdateEvaluator {
@@ -17,7 +17,7 @@ public class TriggerExecChangeOnEntityUpdateEvaluator {
 	private TriggerExecEntityMatchChecker entityMatchChecker;
 	
 	public boolean evaluateChangeCondition(ContentChange contentChange, 
-			TriggerEntityUpdateCondType condition, TemplateWrapper template) {
+			TriggerEntityUpdateCondType condition, TemplateFacade template) {
 		
 		Boolean updtAttrResult = attrUpdateChecker.evaluateCondition(
 				contentChange, condition.getAttributeUpdate(), template);

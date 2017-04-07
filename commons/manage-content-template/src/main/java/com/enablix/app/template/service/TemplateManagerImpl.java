@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import com.enablix.commons.util.StringUtil;
 import com.enablix.commons.util.concurrent.Events;
 import com.enablix.commons.util.process.ProcessContext;
+import com.enablix.core.api.TemplateFacade;
 import com.enablix.core.commons.xsd.parser.XMLParser;
 import com.enablix.core.commons.xsd.parser.XMLParserRegistry;
 import com.enablix.core.commons.xsdtopojo.ContainerType;
@@ -62,32 +63,32 @@ public class TemplateManagerImpl implements TemplateManager {
 		updateTemplateInCache(new TemplateWrapper(template));
 	}
 	
-	private void updateTemplateInCache(TemplateWrapper templateWrapper) {
+	private void updateTemplateInCache(TemplateFacade templateWrapper) {
 		templateCache.put(ProcessContext.get().getTenantId(), templateWrapper);
 	}
 	
 	@Override
 	public ContentTemplate getTemplate(String templateId) {
-		TemplateWrapper templateWrapper = getTemplateWrapper(templateId);
+		TemplateFacade templateWrapper = getTemplateFacade(templateId);
 		return templateWrapper == null ? null : templateWrapper.getTemplate();
 	}
 	
 	@Override
-	public TemplateWrapper getTemplateWrapper(String templateId) {
+	public TemplateFacade getTemplateFacade(String templateId) {
 		
-		TemplateWrapper templateWrapper = templateCache.getTemplate(ProcessContext.get().getTenantId(), templateId);
+		TemplateFacade templateFacade = templateCache.getTemplate(ProcessContext.get().getTenantId(), templateId);
 		
-		if (templateWrapper == null) {
+		if (templateFacade == null) {
 		
 			TemplateDocument templateDoc = crudService.findByIdentity(templateId);
 			if (templateDoc != null) {
-				templateWrapper = new TemplateWrapper(templateDoc.getTemplate());
-				updateTemplateInCache(templateWrapper);
+				templateFacade = new TemplateWrapper(templateDoc.getTemplate());
+				updateTemplateInCache(templateFacade);
 			}
 			
 		} 
 		
-		return templateWrapper;
+		return templateFacade;
 	}
 
 	@Override

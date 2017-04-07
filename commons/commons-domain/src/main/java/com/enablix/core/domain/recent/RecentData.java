@@ -3,10 +3,10 @@ package com.enablix.core.domain.recent;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.enablix.core.api.ContentDataRef;
-import com.enablix.core.domain.BaseDocumentEntity;
+import com.enablix.core.domain.DataSegmentAwareEntity;
 
 @Document(collection = "ebx_recent_update")
-public class RecentData extends BaseDocumentEntity {
+public class RecentData extends DataSegmentAwareEntity {
 
 	public enum UpdateType { 
 		NEW, UPDATED

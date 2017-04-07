@@ -1,17 +1,18 @@
 package com.enablix.services.util;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.core.api.ContentDataRef;
+import com.enablix.core.api.TemplateFacade;
 import com.enablix.core.commons.xsdtopojo.ContainerType;
 import com.enablix.core.commons.xsdtopojo.ContentItemClassType;
 import com.enablix.core.commons.xsdtopojo.ContentItemType;
-import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 import com.enablix.core.domain.content.ContentAssociation;
-import com.enablix.services.util.template.TemplateWrapper;
 
 public class ContentDataUtil {
 
@@ -51,32 +52,16 @@ public class ContentDataUtil {
 	}
 
 
-	/**
-	 * @deprecated use {@link #findPortalLabelValue(Map, TemplateWrapper, String)} instead
-	 */
 	public static String findPortalLabelValue(
-			Map<String, Object> record, ContentTemplate template, String qId) {
-		return findPortalLabelValue(record, new TemplateWrapper(template), qId);
-	}
-	
-	public static String findPortalLabelValue(
-			Map<String, Object> record, TemplateWrapper template, String qId) {
+			Map<String, Object> record, TemplateFacade template, String qId) {
 		
 		String portalLabelAttributeId = template.getPortalLabelAttributeId(qId);
 		
 		return findLabelAttributeValue(record, template, qId, portalLabelAttributeId);
 	}
 	
-	/**
-	 * @deprecated use {@link #findStudioLabelValue(Map, TemplateWrapper, String)} instead
-	 */
 	public static String findStudioLabelValue(
-			Map<String, Object> record, ContentTemplate template, String qId) {
-		return findStudioLabelValue(record, new TemplateWrapper(template), qId);
-	}
-	
-	public static String findStudioLabelValue(
-			Map<String, Object> record, TemplateWrapper template, String qId) {
+			Map<String, Object> record, TemplateFacade template, String qId) {
 		
 		String studioLabelAttributeId = template.getStudioLabelAttributeId(qId);
 		
@@ -84,7 +69,7 @@ public class ContentDataUtil {
 	}
 	
 	public static String findLabelAttributeValue(Map<String, Object> record, 
-			TemplateWrapper template, String qId, String labelAttrId) {
+			TemplateFacade template, String qId, String labelAttrId) {
 		
 		String labelAttributeValue = null;
 		ContainerType containerDef = template.getContainerDefinition(qId);
@@ -161,7 +146,7 @@ public class ContentDataUtil {
 	
 	
 	public static ContentDataRef contentDataToRef(
-			Map<String, Object> contentData, TemplateWrapper template, String containerQId) {
+			Map<String, Object> contentData, TemplateFacade template, String containerQId) {
 		
 		Object identity = contentData.get(ContentDataConstants.IDENTITY_KEY);
 		
@@ -185,6 +170,49 @@ public class ContentDataUtil {
 	
 	public static Date getContentModifiedAt(Map<String, Object> contentData) {
 		return (Date) contentData.get(ContentDataConstants.MODIFIED_AT_KEY);
+	}
+	
+	public static String getRecordIdentity(Map<String, Object> contentData) {
+		return (String) contentData.get(ContentDataConstants.IDENTITY_KEY);
+	}
+	
+	public static List<String> checkAndConvertToIdOrIdentityCollection(Object value) {
+		
+		List<String> listValue = null;
+		
+		if (value instanceof Collection) {
+			
+			Collection<?> collValue = (Collection<?>) value;
+			
+			listValue = new ArrayList<>();
+			
+			for (Object collItem : collValue) {
+			
+				if (collItem instanceof String) {
+					
+					listValue.add((String) collItem);
+					
+				} else if (collItem instanceof Map<?, ?>) {
+					
+					Map<?, ?> mapCollItem = (Map<?, ?>) collItem;
+					Object itemId = mapCollItem.get(ContentDataConstants.ID_FLD_KEY);
+					
+					if (itemId != null) {
+					
+						listValue.add(String.valueOf(itemId));
+						
+					} else {
+						
+						Object itemIdentity = mapCollItem.get(ContentDataConstants.IDENTITY_KEY);
+						if (itemIdentity != null) {
+							listValue.add(String.valueOf(itemIdentity));
+						}
+					}
+				}
+			}
+		}
+		
+		return listValue;
 	}
 	
 }

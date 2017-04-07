@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import org.slf4j.Logger;
@@ -22,6 +23,7 @@ import com.enablix.commons.util.StringUtil;
 import com.enablix.commons.util.collection.CollectionUtil;
 import com.enablix.core.api.ContentDataRecord;
 import com.enablix.core.api.ContentDataRef;
+import com.enablix.core.api.TemplateFacade;
 import com.enablix.core.commons.xsdtopojo.ActionType;
 import com.enablix.core.commons.xsdtopojo.BaseEmailContentType;
 import com.enablix.core.commons.xsdtopojo.CorrelatedEntitiesType;
@@ -37,11 +39,14 @@ import com.enablix.core.domain.trigger.LifecycleCheckpoint;
 import com.enablix.core.mail.service.MailService;
 import com.enablix.core.mail.velocity.VelocityTemplateInputResolver;
 import com.enablix.core.mail.velocity.VelocityTemplateInputResolverFactory;
+import com.enablix.core.mongo.view.MongoDataView;
 import com.enablix.core.security.auth.repo.UserProfileRepository;
 import com.enablix.core.ui.DisplayableContent;
+import com.enablix.data.segment.DataSegmentService;
+import com.enablix.data.view.DataView;
 import com.enablix.services.util.ActivityLogger;
 import com.enablix.services.util.ContentDataUtil;
-import com.enablix.services.util.template.TemplateWrapper;
+import com.enablix.services.util.DataViewUtil;
 import com.enablix.trigger.lifecycle.action.CheckpointAction;
 
 @Component
@@ -76,13 +81,16 @@ public class EmailAction implements CheckpointAction<ContentChange, EmailActionT
 	@Autowired
 	private TextLinkProcessor textLinkProcessor;
 	
+	@Autowired
+	private DataSegmentService dataSegmentService;
+	
 	@Override
 	public boolean canHandle(ActionType action) {
 		return action instanceof EmailActionType;
 	}
 
 	@Override
-	public void run(LifecycleCheckpoint<ContentChange> checkpoint, TemplateWrapper template, EmailActionType actionType) {
+	public void run(LifecycleCheckpoint<ContentChange> checkpoint, TemplateFacade template, EmailActionType actionType) {
 		
 		// map of content identity to content record, keeping a map helps in removing the duplicates
 		// of the same record returned from different content resolvers
@@ -118,7 +126,7 @@ public class EmailAction implements CheckpointAction<ContentChange, EmailActionT
 		}
 	}
 
-	private void sendEmails(TemplateWrapper template, EmailActionType actionType, TriggerType triggerType,
+	private void sendEmails(TemplateFacade template, EmailActionType actionType, TriggerType triggerType,
 			Map<String, ContentDataRecord> emailContent, ContentDataRef triggerItemRef, List<UserProfile> recepients) {
 		
 		TriggerEmailVelocityInput velocityIn = new TriggerEmailVelocityInput();
@@ -127,7 +135,7 @@ public class EmailAction implements CheckpointAction<ContentChange, EmailActionT
 		ContentDataRecord entityDataRec = emailContent.get(triggerItemRef.getInstanceIdentity());
 		
 		if (entityDataRec == null) {
-			Map<String, Object> entityRec = contentDataMgr.getContentRecord(triggerItemRef, template);
+			Map<String, Object> entityRec = contentDataMgr.getContentRecord(triggerItemRef, template, DataViewUtil.allDataView());
 			entityDataRec = new ContentDataRecord(triggerItemRef.getTemplateId(), triggerItemRef.getContainerQId(), entityRec);
 		}
 		
@@ -141,11 +149,10 @@ public class EmailAction implements CheckpointAction<ContentChange, EmailActionT
 		// send email
 		
 		
-		List<DisplayableContent> displayableEmailContent = createDisplayableContent(template, emailContent.values(), ctx);
+		Map<String, DisplayableContent> displayableEmailContent = createDisplayableContent(template, emailContent, ctx);
 		
 		LOGGER.debug("Email content: {}", displayableEmailContent);
 		
-		velocityIn.setEmailContent(displayableEmailContent);
 		velocityIn.setTriggerType(triggerType);
 		
 		String triggerEntityLabel = "";
@@ -161,7 +168,7 @@ public class EmailAction implements CheckpointAction<ContentChange, EmailActionT
 				velocityInputFactory.getResolvers(velocityIn);
 		
 		for (VelocityTemplateInputResolver<TriggerEmailVelocityInput> resolver : resolvers) {
-			resolver.work(velocityIn);
+			resolver.work(velocityIn, DataViewUtil.allDataView());
 		}
 		
 		for (UserProfile recepient : recepients) {
@@ -170,25 +177,57 @@ public class EmailAction implements CheckpointAction<ContentChange, EmailActionT
 			
 			if (StringUtil.hasText(emailId)) {
 				
+				DataView userDataView = dataSegmentService.getDataViewForUserProfileIdentity(recepient.getIdentity());
+				MongoDataView mdbView = DataViewUtil.getMongoDataView(userDataView);
+				
+				String triggerCollName = template.getCollectionName(entityDataRec.getContainerQId());
+				
+				if (!mdbView.isRecordVisible(triggerCollName, entityDataRec.getRecord())) {
+				
+					LOGGER.info("Trigger entity [{} - {}] is not visible to user [{}]", 
+							triggerItemRef.getContainerQId(), triggerItemRef.getInstanceIdentity(), emailId);
+					continue;
+				}
+				
 				LOGGER.debug("Sending mail to: {}", emailId);
 				
 				try {
 					
-					for (DisplayableContent displayableContent : velocityIn.getEmailContent()) {
-						docUrlPopulator.populateUnsecureUrl(displayableContent, emailId);
-						textLinkProcessor.process(displayableContent, template, emailId);
+					List<DisplayableContent> userEmailContent = new ArrayList<>();
+					
+					for (Entry<String, DisplayableContent> dcEntry : displayableEmailContent.entrySet()) {
+						
+						ContentDataRecord contentDataRecord = emailContent.get(dcEntry.getKey());
+						String recCollectionName = template.getCollectionName(contentDataRecord.getContainerQId());
+						
+						if (mdbView.isRecordVisible(recCollectionName, contentDataRecord.getRecord())) {
+							
+							DisplayableContent displayableContent = dcEntry.getValue();
+							
+							docUrlPopulator.populateUnsecureUrl(displayableContent, emailId);
+							textLinkProcessor.process(displayableContent, template, emailId);
+							
+							userEmailContent.add(displayableContent);
+						}
+						
 					}
 					
-					velocityIn.setRecipientUserId(emailId);
-					
-					UserProfile recipientUser = userProfileRepo.findByEmail(emailId.toLowerCase());
-					velocityIn.setRecipientUser(recipientUser);
-					
-					mailService.sendHtmlEmail(velocityIn, emailId, "TRIGGER_CHECKPOINT", 
-							actionType.getEmailTemplate().getBody().getTemplateName(), 
-							actionType.getEmailTemplate().getSubject().getTemplateName());
-					
-					auditContentShare(template.getTemplate().getId(), velocityIn, emailId);
+					if (!userEmailContent.isEmpty()) {
+						
+						velocityIn.setEmailContent(userEmailContent);
+						velocityIn.setRecipientUserId(emailId);
+						velocityIn.setRecipientUser(recepient);
+						
+						mailService.sendHtmlEmail(velocityIn, emailId, "TRIGGER_CHECKPOINT", 
+								actionType.getEmailTemplate().getBody().getTemplateName(), 
+								actionType.getEmailTemplate().getSubject().getTemplateName());
+						
+						auditContentShare(template.getTemplate().getId(), velocityIn, emailId);
+						
+					} else {
+						LOGGER.info("Email content list for trigger entity [{} - {}], is empty for user [{}]", 
+								triggerItemRef.getContainerQId(), triggerItemRef.getInstanceIdentity(), emailId);
+					}
 					
 				} catch (Exception e) {
 					LOGGER.error("Error sending email to [" + emailId + "]", e);
@@ -197,27 +236,27 @@ public class EmailAction implements CheckpointAction<ContentChange, EmailActionT
 		}
 	}
 	
-	private List<DisplayableContent> createDisplayableContent(TemplateWrapper template, 
-			Collection<ContentDataRecord> collection, DisplayContext ctx) {
+	private Map<String, DisplayableContent> createDisplayableContent(TemplateFacade template, 
+			Map<String, ContentDataRecord> emailContent, DisplayContext ctx) {
 		
-		List<DisplayableContent> displayableContentList = new ArrayList<>();
+		Map<String, DisplayableContent> displayableContents = new HashMap<>();
 		
-		for (ContentDataRecord rec : collection) {
-			DisplayableContent displayContent = displayableContentBuilder.build(template, rec, ctx);
-			displayableContentList.add(displayContent);
+		for (Map.Entry<String, ContentDataRecord> recEntry : emailContent.entrySet()) {
+			DisplayableContent displayContent = displayableContentBuilder.build(template, recEntry.getValue(), ctx);
+			displayableContents.put(recEntry.getKey(), displayContent);
 		}
 		
-		return displayableContentList;
+		return displayableContents;
 	}
 	
-	private void fetchEmailContent(LifecycleCheckpoint<ContentChange> checkpoint, TemplateWrapper template,
+	private void fetchEmailContent(LifecycleCheckpoint<ContentChange> checkpoint, TemplateFacade template,
 			Map<String, ContentDataRecord> emailContent, BaseEmailContentType triggerEntityContent) {
 		
 		EmailContentResolver<BaseEmailContentType> resolver = 
 				contentResolverFactory.getResolver(triggerEntityContent);
 		
 		List<ContentDataRecord> triggerEntity = resolver.getEmailContent(
-				triggerEntityContent, template, checkpoint.getTrigger().getTriggerItem());
+				triggerEntityContent, template, checkpoint.getTrigger().getTriggerItem(), DataViewUtil.allDataView());
 		
 		addContentRecordsToMap(triggerEntity, emailContent);
 	}

@@ -177,5 +177,20 @@
 			<artifactId>dms-sharepoint</artifactId>
 			<version>1.0-SNAPSHOT</version>
 		</dependency>
+		<dependency>
+			<groupId>com.enablix.commons</groupId>
+			<artifactId>manage-data-segment</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.enablix.commons</groupId>
+			<artifactId>mongo-data-view-builder</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.enablix.commons</groupId>
+			<artifactId>elasticsearch-data-view-builder</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 </project>

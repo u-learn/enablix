@@ -16,8 +16,11 @@ import com.enablix.analytics.correlation.data.dao.ItemItemCorrelationDao;
 import com.enablix.app.content.ContentDataManager;
 import com.enablix.core.api.ContentDataRecord;
 import com.enablix.core.api.ContentDataRef;
+import com.enablix.core.api.TemplateFacade;
 import com.enablix.core.correlation.ItemItemCorrelation;
-import com.enablix.services.util.template.TemplateWrapper;
+import com.enablix.core.mongo.view.MongoDataView;
+import com.enablix.data.view.DataView;
+import com.enablix.services.util.DataViewUtil;
 
 @Component
 public class ItemCorrelationServiceImpl implements ItemCorrelationService {
@@ -39,11 +42,13 @@ public class ItemCorrelationServiceImpl implements ItemCorrelationService {
 	}
 
 	@Override
-	public List<ContentDataRecord> fetchCorrelatedEntityRecords(TemplateWrapper template, 
-			ContentDataRef item, List<String> relatedItemQIds, List<String> tags) {
+	public List<ContentDataRecord> fetchCorrelatedEntityRecords(TemplateFacade template, 
+			ContentDataRef item, List<String> relatedItemQIds, List<String> tags, DataView view) {
+		
+		MongoDataView mdbView = DataViewUtil.getMongoDataView(view);
 		
 		List<ItemItemCorrelation> itemCorrs = 
-				dao.findByItemAndRelatedItemQIdAndContainingTags(item, relatedItemQIds, tags);
+				dao.findByItemAndRelatedItemQIdAndContainingTags(item, relatedItemQIds, tags, mdbView);
 		
 		Map<String, List<String>> contentIdentitiesMap = new HashMap<String, List<String>>();
 		for (ItemItemCorrelation corr: itemCorrs) {
@@ -61,7 +66,7 @@ public class ItemCorrelationServiceImpl implements ItemCorrelationService {
 			
 			String relatedItemQId = contentIdentities.getKey();
 			List<Map<String, Object>> contentRecords = contentDataMgr.getContentRecords(
-					relatedItemQId, contentIdentities.getValue(), template);
+					relatedItemQId, contentIdentities.getValue(), template, DataViewUtil.allDataView());
 			
 			for (Map<String, Object> contentRecord : contentRecords) {
 				ContentDataRecord record = new ContentDataRecord(template.getId(), 

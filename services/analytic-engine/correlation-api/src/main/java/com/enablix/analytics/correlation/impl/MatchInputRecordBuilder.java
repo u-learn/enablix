@@ -16,11 +16,12 @@ import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.commons.util.QIdUtil;
 import com.enablix.commons.util.collection.CollectionUtil;
 import com.enablix.core.api.ContentDataRef;
+import com.enablix.core.api.TemplateFacade;
 import com.enablix.core.commons.xsdtopojo.FilterConstantType;
 import com.enablix.core.commons.xsdtopojo.FilterCriteriaType;
 import com.enablix.core.commons.xsdtopojo.FilterType;
 import com.enablix.core.commons.xsdtopojo.TriggerItemType;
-import com.enablix.services.util.template.TemplateWrapper;
+import com.enablix.services.util.DataViewUtil;
 
 @Component
 public class MatchInputRecordBuilder {
@@ -33,7 +34,7 @@ public class MatchInputRecordBuilder {
 	@Autowired
 	private DataMatcher dataMatcher;
 
-	public MatchInputRecord buildTriggerMatchInput(TemplateWrapper template, 
+	public MatchInputRecord buildTriggerMatchInput(TemplateFacade template, 
 			TriggerItemType triggerItemType, ContentDataRef triggerItem) {
 		
 		FilterCriteriaType filterCriteria = triggerItemType.getFilterCriteria();
@@ -43,7 +44,7 @@ public class MatchInputRecordBuilder {
 			}
 		}
 		
-		Map<String, Object> triggerItemRecord = contentDataMgr.getContentRecord(triggerItem, template);
+		Map<String, Object> triggerItemRecord = contentDataMgr.getContentRecord(triggerItem, template, DataViewUtil.allDataView());
 		
 		MatchInputRecord matchInput = new MatchInputRecord(triggerItem.getContainerQId(), 
 											triggerItem.getContainerQId(), triggerItemRecord);
@@ -53,7 +54,7 @@ public class MatchInputRecordBuilder {
 		return matchInput;
 	}
 	
-	private boolean triggerRecordMatchesFilter(FilterCriteriaType filterCriteria, TemplateWrapper template,
+	private boolean triggerRecordMatchesFilter(FilterCriteriaType filterCriteria, TemplateFacade template,
 			ContentDataRef triggerItem) {
 		
 		MatchInputRecord emptyMatchInput = new MatchInputRecord(triggerItem.getContainerQId(), 
@@ -90,10 +91,10 @@ public class MatchInputRecordBuilder {
 		return CollectionUtil.isNotEmpty(matchedRecords);
 	}
 
-	private void populateParent(MatchInputRecord matchInput, TemplateWrapper template) {
+	private void populateParent(MatchInputRecord matchInput, TemplateFacade template) {
 		
 		Map<String, Object> parentRecord = contentDataMgr.fetchParentRecord(
-				template, matchInput.getContentQId(), matchInput.getRecord());
+				template, matchInput.getContentQId(), matchInput.getRecord(), DataViewUtil.allDataView());
 		
 		if (parentRecord != null) {
 			MatchInputRecord parentMI = new MatchInputRecord(matchInput.getTriggerItemQId(), 

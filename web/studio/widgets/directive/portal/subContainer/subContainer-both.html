@@ -1,8 +1,7 @@
 <div ng-if="::singleItemCard">
 <div class="block" ng-if="showSubContainer">
 	<div ng-class="{'active': expanded}" class="head head-toggle active" ng-click="toggleContainer($event)">
-		<i class="expandable"></i>
-		<em class="fa fa-square-o"></em>		
+		<em ng-class="expanded ? 'fa fa-caret-down': 'fa fa-caret-up'"></em>
 		<h2 ng-if="!navigableHeader">{{::subContainerLabel}} <a ng-if="bodyData.hasSubContainers" ng-click="navToItemDetail(bodyData.containerQId, bodyData.identity)" class="detail fa fa-external-link"></a></h2>
 		<h2><eb-nav-link hide-hierarchy="false" hide-doc-link="true" nav-link="navContentData" ng-if="navigableHeader"></eb-nav-link></h2>
 			<div class="dropdown">
@@ -12,10 +11,10 @@
 					<eb-doc-download doc-value="bodyData.downloadDocIdentity"></eb-doc-download>
 					<eb-doc-preview-action doc-identity="bodyData.downloadDocIdentity" doc-metadata="bodyData.docMetadata"></eb-doc-preview-action>
 				</span>
-				<ebx-context-menu context-data="bodyData" content-q-id="subContainerQId"></ebx-context-menu>
+				<ebx-share-context-menu context-data="bodyData" content-q-id="subContainerQId"></ebx-share-context-menu>
 			</div>
 			</div>
-	</div> 
+	</div>
 	<div ng-class="{'active': !expanded}" class="cont clearfix" ng-if="!(bodyData == null || bodyData == undefined || bodyData.length == 0)">	
 	
 		<table class="infotable" >		
@@ -35,26 +34,26 @@
 <div ng-if="::!singleItemCard">
 <div class="block" ng-if="showSubContainer">
 	<div class="head head-toggle active" ng-click="toggleContainer($event)">
-		<i class="expandable"></i>
-		<em class="fa fa-clone"></em>
+		<em ng-class="expanded ? 'fa fa-caret-down': 'fa fa-caret-up'"></em>
 		<h2>{{::subContainerLabel}}</h2>
 		<div class="action-icons bar-action-icons">
 			<ebx-suggest-content content-q-id="subContainerQId" parent-identity="parentIdentity"></ebx-suggest-content>
 		</div>
 	</div> 
 	<div class="cont" ng-if="bodyData.length != 0">
-		<div ng-repeat="dataItem in bodyData track by dataItem.identity" class = "dataItem">
-			<h4><a ng-click="toggleContainerItem($event, dataItem.containerId + $index, dataItem)" class="toggle">{{::dataItem.headingLabel}}</a>
-			    <a ng-if="dataItem.hasSubContainers" ng-click="navToItemDetail(dataItem.containerQId, dataItem.identity)" class="detail fa fa-external-link"></a>
-			    <div class="action-icons">
-			    <div class="dropdown">
-			    	<ebx-suggest-content content-q-id="subContainerQId" parent-identity="parentIdentity" content-identity="dataItem.identity"></ebx-suggest-content>
-			    	<span ng-if="dataItem.downloadDocIdentity">
-			    		<eb-doc-download doc-value="dataItem.downloadDocIdentity"></eb-doc-download>
-			    		<eb-doc-preview-action doc-identity="dataItem.downloadDocIdentity" doc-metadata="dataItem.docMetadata"></eb-doc-preview-action>
-			    	</span>
-			    	
-						<ebx-context-menu context-data="dataItem" content-q-id="subContainerQId" ></ebx-context-menu>
+		<div ng-repeat="dataItem in bodyData track by dataItem.identity" class="dataItem">
+			<h4 layout="row">
+				<span class="dropdown dataItemBullet" flex="5">
+					<ebx-record-context-menu content-record="dataItem" content-q-id="subContainerQId" ></ebx-record-context-menu>
+				</span>
+				<span flex="85">
+					<a ng-click="toggleContainerItem($event, dataItem.containerId + $index, dataItem)" class="toggle" >{{::dataItem.headingLabel}}</a>
+			    	<a ng-if="dataItem.hasSubContainers" ng-click="navToItemDetail(dataItem.containerQId, dataItem.identity)" class="detail fa fa-external-link"></a>
+			    </span>
+			    <div class="action-icons" flex="10">
+			    	<div class="dropdown">
+			    		<ebx-suggest-content content-q-id="subContainerQId" parent-identity="parentIdentity" content-identity="dataItem.identity"></ebx-suggest-content>
+						<ebx-share-context-menu context-data="dataItem" content-q-id="subContainerQId" ></ebx-share-context-menu>
 					</div>
 			    </div>
 			</h4>
@@ -66,9 +65,13 @@
 					</tr>
 			  	</table>
 			</div>
+			<div ng-if="!$last" class="line-separator"></div>
 		</div>
-		<div ng-if="pageData && pageData.numberOfElements < pageData.totalElements" class="dataItem sub-container-more-link">
-			<h4><a ng-click="showSubContainerList()">...more</a></h4>
+		<div ng-if="pageData && pageData.numberOfElements < pageData.totalElements">
+			<div class="line-separator"></div>
+			<div class="dataItem sub-container-more-link">
+				<h4><a ng-click="showSubContainerList()">View All<i class="fa fa-arrow-circle-right"></i></a></h4>
+			</div>
 		</div>
 	</div>
 	<div ng-if="bodyData.length == 0" class="cont cont-empty">

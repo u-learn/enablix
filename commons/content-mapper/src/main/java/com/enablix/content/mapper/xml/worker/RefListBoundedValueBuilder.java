@@ -19,6 +19,7 @@ import com.enablix.core.commons.xsdtopojo.ContentItemType;
 import com.enablix.core.mongo.content.ContentCrudService;
 import com.enablix.core.mongo.search.ConditionOperator;
 import com.enablix.core.mongo.search.StringFilter;
+import com.enablix.core.mongo.view.MongoDataView;
 import com.enablix.services.util.DatastoreUtil;
 
 @Component
@@ -50,7 +51,7 @@ public class RefListBoundedValueBuilder extends BoundedItemValueBuilder {
 		
 		StringFilter refDataFilter = new StringFilter(propName, extValue, ConditionOperator.EQ);
 		List<Map<String, Object>> matchedRecords = contentCrudService.findAllRecordForCriteria(
-				collectionName, refDataFilter.toPredicate(new Criteria()));
+				collectionName, refDataFilter.toPredicate(new Criteria()), MongoDataView.ALL_DATA);
 		
 		if (CollectionUtil.isNotEmpty(matchedRecords)) {
 			

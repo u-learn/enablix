@@ -1,27 +1,28 @@
 package com.enablix.content.approval.email;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.enablix.commons.util.collection.CollectionUtil;
-import com.enablix.commons.util.collection.CollectionUtil.CollectionCreator;
-import com.enablix.commons.util.collection.CollectionUtil.ITransformer;
+import com.enablix.app.template.service.TemplateManager;
 import com.enablix.commons.util.concurrent.Events;
 import com.enablix.commons.util.process.ProcessContext;
 import com.enablix.content.approval.ContentApprovalConstants;
 import com.enablix.content.approval.model.ContentApproval;
 import com.enablix.content.approval.model.ContentDetail;
+import com.enablix.core.api.TemplateFacade;
 import com.enablix.core.domain.security.authorization.Role;
 import com.enablix.core.domain.security.authorization.UserProfile;
-import com.enablix.core.domain.user.User;
 import com.enablix.core.mail.service.MailService;
+import com.enablix.core.mongo.view.MongoDataView;
 import com.enablix.core.mq.EventSubscription;
 import com.enablix.core.security.auth.repo.RoleRepository;
 import com.enablix.core.security.auth.repo.UserProfileRepository;
-import com.enablix.core.system.repo.UserRepository;
+import com.enablix.data.segment.DataSegmentService;
+import com.enablix.data.view.DataView;
+import com.enablix.services.util.DataViewUtil;
 import com.enablix.state.change.model.SimpleActionInput;
 
 @Component
@@ -37,10 +38,13 @@ public class NotificationManagerImpl implements NotificationManager {
 	private UserProfileRepository userProfileRepo;
 	
 	@Autowired
-	private UserRepository userRepo;
+	private MailService mailService;
 	
 	@Autowired
-	private MailService mailService;
+	private DataSegmentService dataSegmentService;
+	
+	@Autowired
+	private TemplateManager templateManager;
 	
 	@Override
 	@EventSubscription(eventName = Events.NOTIFY_NEW_CONTENT_REQUEST)
@@ -48,6 +52,9 @@ public class NotificationManagerImpl implements NotificationManager {
 		
 		ContentDetail actionInput = (ContentDetail) payload.getActionInput();
 		ContentApproval contentRequest = payload.getContentRequest();
+		
+		TemplateFacade template = templateManager.getTemplateFacade(ProcessContext.get().getTemplateId());
+		String contentCollection = template.getCollectionName(contentRequest.getObjectRef().getContentQId());
 		
 		// need to notify admins with permission to approve requests
 		// find roles with the permission
@@ -79,27 +86,30 @@ public class NotificationManagerImpl implements NotificationManager {
 			for (UserProfile userProfile : userprofiles) {
 				
 				// exclude the user who has submitted the request.
-				if (!userProfile.getIdentity().equals(contentRequest.getCreatedBy())) {
+				if (!userProfile.getEmail().equals(contentRequest.getCreatedBy())) {
 					
-					// find the user details
+					DataView userView = dataSegmentService.getDataViewForUserProfileIdentity(userProfile.getIdentity());
+					MongoDataView view = DataViewUtil.getMongoDataView(userView);
 					
-					//User recipient = userRepo.findByIdentityAndTenantId(
-						//	userProfile.getIdentity(), ProcessContext.get().getTenantId());
+					Map<String, Object> record = contentRequest.getObjectRef().getData();
 					
+					if (view.isRecordVisible(contentCollection, record)) { 
 					
-					if (emailInput == null) {
-						emailInput = inputBuilder.build(
-								ContentApprovalConstants.ACTION_APPROVE, actionInput, contentRequest);
+						if (emailInput == null) {
+							emailInput = inputBuilder.build(
+									ContentApprovalConstants.ACTION_APPROVE, actionInput, contentRequest, userView);
+						}
+						
+						emailInput.setRecipientUser(userProfile);
+						emailInput.setRecipientUserId(userProfile.getEmail());
+						
+						inputBuilder.prepareContentForEmailToUser(emailInput, userProfile.getEmail());
+						
+						mailService.sendHtmlEmail(emailInput, userProfile.getEmail(), 
+								ContentApprovalConstants.TEMPLATE_PORTAL_REQ_ADMIN_NOTIF);
+
 					}
 					
-					emailInput.setRecipientUser(userProfile);
-					emailInput.setRecipientUserId(userProfile.getEmail());
-					
-					inputBuilder.prepareContentForEmailToUser(emailInput, userProfile.getEmail());
-					
-					mailService.sendHtmlEmail(emailInput, userProfile.getEmail(), 
-							ContentApprovalConstants.TEMPLATE_PORTAL_REQ_ADMIN_NOTIF);
-				
 				}
 			}
 		}
@@ -116,7 +126,7 @@ public class NotificationManagerImpl implements NotificationManager {
 		
 		ContentApprovalEmailVelocityInput<SimpleActionInput> emailInput = 
 				inputBuilder.build(ContentApprovalConstants.ACTION_APPROVE, actionInput, 
-						contentRequest, recipientUserId, recipientUserId);
+						contentRequest, recipientUserId, recipientUserId, DataViewUtil.allDataView());
 		
 		mailService.sendHtmlEmail(emailInput, recipientUserId, 
 				ContentApprovalConstants.TEMPLATE_PORTAL_REQ_APPROVED_NOTIF);
@@ -134,7 +144,7 @@ public class NotificationManagerImpl implements NotificationManager {
 		
 		ContentApprovalEmailVelocityInput<SimpleActionInput> emailInput = 
 				inputBuilder.build(ContentApprovalConstants.ACTION_APPROVE, actionInput, 
-						contentRequest, recipientUserId, recipientUserId);
+						contentRequest, recipientUserId, recipientUserId, DataViewUtil.allDataView());
 		
 		mailService.sendHtmlEmail(emailInput, recipientUserId, 
 				ContentApprovalConstants.TEMPLATE_PORTAL_REQ_REJECT_NOTIF);

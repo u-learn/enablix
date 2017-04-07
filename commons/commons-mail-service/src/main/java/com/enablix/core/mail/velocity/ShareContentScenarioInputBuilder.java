@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import com.enablix.core.mail.velocity.input.ShareContentVelocityInput;
 import com.enablix.core.ui.DisplayableContent;
+import com.enablix.data.view.DataView;
 
 @Component
 public class ShareContentScenarioInputBuilder {
@@ -15,7 +16,8 @@ public class ShareContentScenarioInputBuilder {
 	private VelocityTemplateInputResolverFactory factory;
 	
 	@SuppressWarnings({ "rawtypes", "unchecked"})
-	public ShareContentVelocityInput build(String newUserId, DisplayableContent sharedContent,String emailCustomContent) {
+	public ShareContentVelocityInput build(String newUserId, 
+			DisplayableContent sharedContent, String emailCustomContent, DataView view) {
 		
 		ShareContentVelocityInput input = new ShareContentVelocityInput(newUserId, sharedContent,emailCustomContent);
 		
@@ -23,7 +25,7 @@ public class ShareContentScenarioInputBuilder {
 				factory.getResolvers(input);
 		
 		for (VelocityTemplateInputResolver resolver : resolvers) {
-			resolver.work(input);
+			resolver.work(input, view);
 		}
 		
 		return input;

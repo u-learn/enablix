@@ -14,10 +14,11 @@ import com.enablix.commons.util.StringUtil;
 import com.enablix.commons.util.process.ProcessContext;
 import com.enablix.content.approval.model.ContentApproval;
 import com.enablix.core.api.ContentDataRecord;
+import com.enablix.core.api.TemplateFacade;
 import com.enablix.core.mail.velocity.VelocityTemplateInputResolver;
 import com.enablix.core.mail.velocity.VelocityTemplateInputResolverFactory;
 import com.enablix.core.ui.DisplayableContent;
-import com.enablix.services.util.template.TemplateWrapper;
+import com.enablix.data.view.DataView;
 import com.enablix.state.change.model.ActionInput;
 
 @Component
@@ -39,21 +40,21 @@ public class NotificationTemplateInputBuilder {
 	private TextLinkProcessor textLinkProcessor;
 	
 	public <I extends ActionInput> ContentApprovalEmailVelocityInput<I> 
-			build(String actionName, I in, ContentApproval contentRequest) {
-		return build(actionName, in, contentRequest, null);
+			build(String actionName, I in, ContentApproval contentRequest, DataView view) {
+		return build(actionName, in, contentRequest, null, view);
 	}
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public <I extends ActionInput> ContentApprovalEmailVelocityInput<I> 
 			build(String actionName, I in, ContentApproval contentRequest, String recipientUserId,
-					String recipientEmailId) {
+					String recipientEmailId, DataView view) {
 		
 		ContentApprovalEmailVelocityInput input = new ContentApprovalEmailVelocityInput<I>(actionName, in, contentRequest);
 		input.setRecipientUserId(recipientUserId);
 		input.setContentRequest(contentRequest);
 		
 		String templateId = ProcessContext.get().getTemplateId();
-		TemplateWrapper template = templateManager.getTemplateWrapper(templateId);
+		TemplateFacade template = templateManager.getTemplateFacade(templateId);
 		ContentDataRecord dataRecord = new ContentDataRecord(templateId, 
 				contentRequest.getObjectRef().getContentQId(), contentRequest.getObjectRef().getData());
 		
@@ -66,7 +67,7 @@ public class NotificationTemplateInputBuilder {
 				resolverFactory.getResolvers(input);
 		
 		for (VelocityTemplateInputResolver<ContentApprovalEmailVelocityInput> resolver : resolvers) {
-			resolver.work(input);
+			resolver.work(input, view);
 		}
 		
 		if (!StringUtil.isEmpty(recipientEmailId)) {
@@ -79,13 +80,13 @@ public class NotificationTemplateInputBuilder {
 	}
 	
 	public <I extends ActionInput> ContentApprovalEmailVelocityInput<I> 
-			build(String actionName, I in, ContentApproval contentRequest, String recipientUserId) {
-		return build(actionName, in, contentRequest, recipientUserId, null);
+			build(String actionName, I in, ContentApproval contentRequest, String recipientUserId, DataView view) {
+		return build(actionName, in, contentRequest, recipientUserId, null, view);
 	}
 	
 	public void prepareContentForEmailToUser(ContentApprovalEmailVelocityInput<?> velocityInput, String emailTo) {
 		
-		TemplateWrapper template = templateManager.getTemplateWrapper(ProcessContext.get().getTemplateId());
+		TemplateFacade template = templateManager.getTemplateFacade(ProcessContext.get().getTemplateId());
 		
 		docUrlPopulator.populateUnsecureUrl(velocityInput.getContentData(), emailTo);
 		textLinkProcessor.process(velocityInput.getContentData(), template, emailTo);

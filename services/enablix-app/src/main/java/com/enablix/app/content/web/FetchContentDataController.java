@@ -33,6 +33,8 @@ import com.enablix.core.api.ContentRecordGroup;
 import com.enablix.core.api.ContentStackItem;
 import com.enablix.core.domain.activity.ActivityChannel.Channel;
 import com.enablix.core.domain.activity.ContentActivity.ContainerType;
+import com.enablix.data.segment.DataSegmentService;
+import com.enablix.data.view.DataView;
 import com.enablix.services.util.ActivityLogger;
 import com.enablix.services.util.ContentDataUtil;
 
@@ -48,6 +50,9 @@ public class FetchContentDataController {
 	@Autowired
 	private TemplateManager templateMgr;
 	
+	@Autowired
+	private DataSegmentService dataSegmentService;
+	
 	@RequestMapping(method = RequestMethod.GET, 
 			value="/t/{templateId}/c/{contentQId}", 
 			produces = "application/json")
@@ -60,7 +65,8 @@ public class FetchContentDataController {
 		LOGGER.debug("Fetch root content data");
 		
 		Pageable pageable = createPaginationInfo(page, size, sortProp, sortDir);
-		return fetchData(new FetchContentRequest(templateId, contentQId, null, null, pageable));
+		DataView userDataView = dataSegmentService.getDataViewForUserId(ProcessContext.get().getUserId());
+		return fetchData(new FetchContentRequest(templateId, contentQId, null, null, pageable), userDataView);
 	}
 	
 	private Pageable createPaginationInfo(String page, String size) {
@@ -88,7 +94,8 @@ public class FetchContentDataController {
 
 	@RequestMapping(method = RequestMethod.POST, value="/fetchcs", produces = "application/json")
 	public List<ContentDataRecord> getContentStack(List<ContentStackItem> contentStackItems) {
-		return dataMgr.getContentStackRecords(contentStackItems);
+		DataView userDataView = dataSegmentService.getDataViewForUserId(ProcessContext.get().getUserId());
+		return dataMgr.getContentStackRecords(contentStackItems, userDataView);
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, 
@@ -98,7 +105,8 @@ public class FetchContentDataController {
 			@PathVariable String instanceIdentity) {
 		
 		LOGGER.debug("Fetch child content data");
-		return dataMgr.getContentStackForContentRecord(containerQId, instanceIdentity);
+		DataView userDataView = dataSegmentService.getDataViewForUserId(ProcessContext.get().getUserId());
+		return dataMgr.getContentStackForContentRecord(containerQId, instanceIdentity, userDataView);
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, 
@@ -114,7 +122,8 @@ public class FetchContentDataController {
 		
 		LOGGER.debug("Fetch child content data");
 		Pageable pageable = createPaginationInfo(page, size, sortProp, sortDir);
-		return fetchData(new FetchContentRequest(templateId, contentQId, parentIdentity, null, pageable));
+		DataView userDataView = dataSegmentService.getDataViewForUserId(ProcessContext.get().getUserId());
+		return fetchData(new FetchContentRequest(templateId, contentQId, parentIdentity, null, pageable), userDataView);
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, 
@@ -132,7 +141,9 @@ public class FetchContentDataController {
 			pageable = createPaginationInfo("0", size);
 		}
 		
-		List<ContentRecordGroup> recordAndChildren = dataMgr.fetchRecordAndChildData(contentQId, contentIdentity, pageable);
+		DataView userDataView = dataSegmentService.getDataViewForUserId(ProcessContext.get().getUserId());
+		List<ContentRecordGroup> recordAndChildren = dataMgr.fetchRecordAndChildData(
+										contentQId, contentIdentity, pageable, userDataView);
 		
 		// Audit Access activity
 		if (CollectionUtil.isNotEmpty(recordAndChildren)) {
@@ -184,7 +195,8 @@ public class FetchContentDataController {
 		
 		LOGGER.debug("Fetch record content data");
 		
-		Object data =  fetchData(new FetchContentRequest(templateId, contentQId, null, dataIdentity));
+		DataView userDataView = dataSegmentService.getDataViewForUserId(ProcessContext.get().getUserId());
+		Object data =  fetchData(new FetchContentRequest(templateId, contentQId, null, dataIdentity), userDataView);
 		
 		// Audit access activity
 		Channel channel = Channel.parse(atChannel);
@@ -195,7 +207,7 @@ public class FetchContentDataController {
 				// single result 
 				Map record = (Map) data;
 				contentTitle = ContentDataUtil.findPortalLabelValue(record, 
-						templateMgr.getTemplateWrapper(templateId), contentQId);
+						templateMgr.getTemplateFacade(templateId), contentQId);
 				
 			}
 			ActivityLogger.auditContentAccess(
@@ -206,8 +218,8 @@ public class FetchContentDataController {
 		return data;
 	}
 	
-	private Object fetchData(FetchContentRequest request) {
-		return dataMgr.fetchDataJson(request);
+	private Object fetchData(FetchContentRequest request, DataView view) {
+		return dataMgr.fetchDataJson(request, view);
 	}
 
 }

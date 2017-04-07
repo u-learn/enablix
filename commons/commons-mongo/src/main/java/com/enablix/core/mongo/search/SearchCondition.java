@@ -13,6 +13,8 @@ public abstract class SearchCondition<T> extends AbstractFilter {
 	
 	private ConditionOperator operator;
 	
+	private Boolean existsCheck;
+	
 	protected SearchCondition() { }
 	
 	public SearchCondition(String propName, T propValue, ConditionOperator operator) {
@@ -52,6 +54,14 @@ public abstract class SearchCondition<T> extends AbstractFilter {
 		this.operator = operator;
 	}
 	
+	public Boolean getExistsCheck() {
+		return existsCheck;
+	}
+
+	public void setExistsCheck(Boolean existsCheck) {
+		this.existsCheck = existsCheck;
+	}
+
 	@Override
 	public Criteria toPredicate(Criteria root) {
 		
@@ -88,11 +98,19 @@ public abstract class SearchCondition<T> extends AbstractFilter {
 			
 		case NOT_IN:
 			criteria.nin((Collection<?>) getPropertyValue());
-			break;	
+			break;
+			
+		case EXISTS:
+			criteria = new Criteria().orOperator(Criteria.where(propertyName).exists((Boolean) getPropertyValue()), criteria);
 			
 		default:
 			criteria.is(getPropertyValue());
 			break;
+		}
+		
+		if (existsCheck != null) {
+			criteria = new Criteria().orOperator(Criteria.where(propertyName).exists(existsCheck), criteria);
+			//criteria.orOperator(Criteria.where(propertyName).exists(existsCheck));
 		}
 		
 		return criteria;

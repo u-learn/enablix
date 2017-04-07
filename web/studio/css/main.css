@@ -64,7 +64,7 @@ h2 {
 	font-size: 0.875em;
 	line-height: 20px;
 	font-weight: 400;
-	text-transform: uppercase;
+	/*text-transform: uppercase;*/
 	color: #222;
 }
 h3 {
@@ -74,13 +74,13 @@ h3 {
 	line-height: 20px;
 	font-weight: 400;
 	text-transform: uppercase;
-	color: #222;
+	color: #4a5463;
 }
 h4 {
 	font-family: Montserrat;
 	font-weight: 400;
 	line-height: 1.25;
-	color: #222;	
+	color: #4a5463;	
 }
 .section-heading {
 	margin: 1.5em 0 0.5em;
@@ -361,6 +361,10 @@ form .row .form-label:first-child {
 }
 
 
+form.block .head {
+	border-width: 0px;
+}
+
 /**/
 /* block */
 /**/
@@ -369,23 +373,30 @@ form .row .form-label:first-child {
 	background: #fff;
 	/*box-shadow: 0 0 15px rgba(0,0,0,.2);
     border-radius: 4px;*/
+    
 }
 .block .head {
 	position: relative;
-	padding: 0.75em 1.25em;
+	padding: 0.6em 1em;
+	border-width: 1px 1px 0px 1px;
+	border-color: #dce1e5;
+	border-style: solid;
+	background-color: #ffffff;
 }
 .block .head em {
 	float: left;
 	font-size: 14px;
 	margin: 4px 8px 0 0;
-	/* color: #aaa; */
-	opacity: 0.75;
-    color: #fff;
+	color: #A2A9B1;
 }
 
 .block .cont .detail {
 	font-size: 14px;
-	color: #aaa;
+	color: #A1C1DD;
+}
+
+.block .cont .detail:hover {
+	color: #1d6aad;
 }
 
 .block .head .add {
@@ -438,13 +449,14 @@ form .row .form-label:first-child {
 .block .head-toggle {
 	cursor: pointer;
 	-webkit-user-select: none;
-	background: #2980b9;
+	background: #DEE0E5;
+	/*background: #fafafa;*/
 	/*border-radius: 4px 4px 0 0;*/
 }
 
 .block .head-toggle h2{
-	opacity: 0.75;
-    color: #fff;
+	/*opacity: 0.75;*/
+    color: #4a5463;
 }
 
 .block .head-toggle h2:hover{
@@ -489,9 +501,18 @@ form .row .form-label:first-child {
 .block .head-toggle.active i.expandable:before {
 	display: none;
 }
+
+form.block .cont {
+	border-width: 1px 0px 0px 0px;
+}
+
 .block .cont {
 	border-top: 1px solid #ecf0f1;
-	padding: 1em 1.25em 1.25em;
+	padding: 0.8em 1em 1em;
+	border-width: 1px;
+	border-color: #dce1e5;
+	border-style: solid;
+	background-color: #ffffff;
 }
 .block .cont-empty {
 	text-align: center;
@@ -507,7 +528,13 @@ form .row .form-label:first-child {
 .block .foot {
 	position: relative;
 	padding: 0.75em 1.25em;
-	border-top: 1px solid #ecf0f1;
+	border-width: 0px 1px 1px 1px;
+	border-color: #dce1e5;
+	border-style: solid;
+	background-color: #ffffff;
+}
+form.block .foot {
+	border-width: 1px 0px 0px 0px;
 }
 .block .goto {
 	text-align: right;
@@ -527,8 +554,8 @@ form .row .form-label:first-child {
 	padding-top: 0px;
 }
 
-.cont .dataItem{
-	padding-top: 15px;
+.cont .dataItem {
+	padding-top: 0px;
 }
 
 /**/
@@ -854,10 +881,12 @@ form .row .form-label:first-child {
 	width: 1%;
 	padding-right: 0.75em;
 	white-space: nowrap;
+	color: #596679;
 }
 .infotable td {
 	display: table-cell;
 	padding-top: 0.5em;
+	color: #000000;
 }
 .infotable .download {
 	position: relative;
@@ -957,35 +986,12 @@ form .row .form-label:first-child {
 /**/
 .toggle {
 	position: relative;
-	padding-left: 22px;
-	color: #3498db;
+	/*padding-left: 6px;*/
+	color: #596679;
 }
 .toggle:hover,
 .toggle:focus {
-	color: #2980b9;
-}
-.toggle::after {
-	content: '';
-	position: absolute;
-	top: 10px;
-	left: 6px;
-	width: 12px;
-	height: 2px;
-	margin: -2px 0 0 -6px;
-	background: #3498db;
-}
-.toggle::before {
-	content: '';
-	position: absolute;
-	top: 10px;
-	left: 6px;
-	width: 2px;
-	height: 12px;
-	margin: -7px 0 0 -1px;
-	background: #3498db;	
-}
-.toggle.active::before {
-	display: none;
+	color: #000000;
 }
 .toggle:hover::after,
 .toggle:hover::before,
@@ -1000,8 +1006,7 @@ form .row .form-label:first-child {
 
 .dataItem .toggle-cont {
 	margin: 1em 0 1.25em;
-	padding: 0 0 1.25em 22px;
-	border-bottom: 1px solid #ecf0f1;
+	padding: 0 0 0 22px;
 }
  
 .dataItem:last-child .toggle-cont {
@@ -1010,6 +1015,23 @@ form .row .form-label:first-child {
 	border-bottom: 0;
 }
 
+.dataItem a.fa-paperclip {
+	transform: rotate(90deg)
+}
+
+ebx-record-context-menu a.active {
+	color: #A1C1DD;
+}
+
+ebx-record-context-menu a.active:hover,
+ebx-record-context-menu a.active:focus {
+	color: #1D6AAD;
+}
+
+ebx-record-context-menu a.inactive {
+	color: #EFF0F2;
+	cursor: default;
+}
 
 
 /**/
@@ -1173,6 +1195,14 @@ form .row .form-label:first-child {
 	color:#fff !important;
 }
 
+
+.line-separator {
+	background-color: #e9eef3;
+	width: 100%;
+	height: 1px;
+	margin: 0.75em 0 0.75em 0;	
+}
+
 /**/
 /* recomended content */
 /**/
@@ -1198,7 +1228,7 @@ eb-nav-link:first-child li {
 .recomended-content a, .content-data a {
 	position: relative;
 	text-decoration: none;
-	color: #3498db;
+	color: #1D6AAD;
 }
 
 .search-result a{
@@ -1312,7 +1342,7 @@ eb-nav-link:first-child li {
 }
 .quick-links a {
 	text-decoration: underline;
-	color: #3498db;
+	color: #1D6AAD;
 }
 .quick-links a:hover {
 	text-decoration: none;
@@ -1511,20 +1541,19 @@ eb-doc-preview-action .doc-preview {
 
 .action-icons {
 	float: right;
+	text-align: right;
 }
 
 .action-icons a {
-	color:#43a6e6;
+	color: #A1C1DD;
 }
 
 .action-icons a:hover{
-	color: #2980b9;
+	color: #1D6AAD;
 } 
 
 .bar-action-icons {
 	margin-top: -20px;
-	margin-right: 15px;
-	padding-right: 10px;
 }
 
 .search-result .block .bar-action-icons {
@@ -1532,25 +1561,37 @@ eb-doc-preview-action .doc-preview {
 }
 
 .bar-action-icons a {
-	opacity: 0.75;
-	color: #fff;
+	color: #A2A9B1;
 }
 
 .dataItem h4 {
 	font-size: 0.875em;
 }
 
+.dataItemBullet {
+	margin-right: 5px;
+}
+
 .modal-title {
 	font-weight: 400;
 }
 
+.sub-container-more-link {
+	margin-top: 0.75em;
+}
+
 .sub-container-more-link a {
-	color: #3498db;
+	color: #1D6AAD;
+	padding-left: 22px;
 }
 
 .sub-container-more-link a:hover,
 .sub-container-more-link a:focus {
-	color: #2980b9;
+	color: #1D6AAD;
+}
+
+.sub-container-more-link a i {
+	padding-left: 4px;
 }
 
 tbody tr td.action-cell:first-child {
@@ -1765,7 +1806,15 @@ td eb-nav-link span a {
 }
 
 .data-filter-cont {
-    padding: 0em 1.25em;
+    padding: 0em 1em 1em 1em;
+    border-width: 0px 1px 0px 1px;
+	border-color: #dce1e5;
+	border-style: solid;
+	background-color: #ffffff;
+}
+
+.data-filter-cont .panel {
+	margin-bottom: 0px;
 }
 
 .panel-title .fa {
@@ -1802,3 +1851,4 @@ td eb-nav-link span a {
 .hm-square {
 	cursor: pointer;
 }
+

@@ -18,6 +18,7 @@ import com.enablix.core.mongo.search.ConditionOperator;
 import com.enablix.core.mongo.search.SearchCondition;
 import com.enablix.core.mongo.search.StringFilter;
 import com.enablix.core.mongo.search.StringListFilter;
+import com.enablix.core.mongo.view.MongoDataView;
 
 @Component
 public class DBConditionEvaluator {
@@ -26,7 +27,8 @@ public class DBConditionEvaluator {
 	private GenericDao genericDao;
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public List<ContentDataRecord> findMatchingRecords(ConditionEvalContext context, List<BasicConditionType> condition) {
+	public List<ContentDataRecord> findMatchingRecords(ConditionEvalContext context, 
+			List<BasicConditionType> condition, MongoDataView view) {
 
 		List<ContentDataRecord> contentRecords = new ArrayList<>();
 		String templateId = ProcessContext.get().getTemplateId();
@@ -40,7 +42,7 @@ public class DBConditionEvaluator {
 			
 			String collectionName = context.getCollectionName(groupKey.contentQId);
 			
-			List<Map> records = genericDao.findByCriteria(queryCriteria, collectionName, Map.class);
+			List<Map> records = genericDao.findByCriteria(queryCriteria, collectionName, Map.class, view);
 			for (Map<String, Object> rec : records) {
 				contentRecords.add(new ContentDataRecord(templateId, groupKey.contentQId, rec));
 			}

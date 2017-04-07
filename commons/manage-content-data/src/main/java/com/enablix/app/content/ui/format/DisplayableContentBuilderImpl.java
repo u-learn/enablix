@@ -12,6 +12,7 @@ import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.commons.util.EnvPropertiesUtil;
 import com.enablix.commons.util.StringUtil;
 import com.enablix.core.api.ContentDataRecord;
+import com.enablix.core.api.TemplateFacade;
 import com.enablix.core.commons.xsdtopojo.ContainerType;
 import com.enablix.core.commons.xsdtopojo.ContentItemType;
 import com.enablix.core.ui.DisplayField;
@@ -20,7 +21,6 @@ import com.enablix.core.ui.DocRef;
 import com.enablix.core.ui.FieldValue;
 import com.enablix.services.util.ContentDataUtil;
 import com.enablix.services.util.TemplateUtil;
-import com.enablix.services.util.template.TemplateWrapper;
 
 @Component
 public class DisplayableContentBuilderImpl implements DisplayableContentBuilder {
@@ -34,7 +34,7 @@ public class DisplayableContentBuilderImpl implements DisplayableContentBuilder 
 	private DisplayFieldBuilder fieldBuilder;
 	
 	@Override
-	public DisplayableContent build(TemplateWrapper template, ContentDataRecord record, DisplayContext ctx) {
+	public DisplayableContent build(TemplateFacade template, ContentDataRecord record, DisplayContext ctx) {
 		
 		String containerQId = record.getContainerQId();
 		Map<String, Object> contentRecord = record.getRecord();

@@ -10,6 +10,8 @@ import org.springframework.util.Assert;
 import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.commons.util.QIdUtil;
 import com.enablix.commons.util.StringUtil;
+import com.enablix.core.api.TemplateFacade;
+import com.enablix.core.commons.xsdtopojo.BoundedListDatastoreType;
 import com.enablix.core.commons.xsdtopojo.BoundedRefListType;
 import com.enablix.core.commons.xsdtopojo.BoundedType;
 import com.enablix.core.commons.xsdtopojo.ContainerBusinessCategoryType;
@@ -24,7 +26,6 @@ import com.enablix.core.commons.xsdtopojo.ContentUIDefType;
 import com.enablix.core.commons.xsdtopojo.DataDefinitionType;
 import com.enablix.core.commons.xsdtopojo.UiDefinitionType;
 import com.enablix.core.commons.xsdtopojo.UserProfileRefType;
-import com.enablix.services.util.template.TemplateWrapper;
 
 public class TemplateUtil {
 
@@ -56,23 +57,6 @@ public class TemplateUtil {
 		return container;
 	}
 	
-	/**
-	 * @deprecated use {@link TemplateUtil#getChildContainerIds(ContainerType)} after fetching 
-	 * the container type from {@link TemplateWrapper#getContainerDefinition(String)}
-	 */
-	public static List<String> getChildContainerIds(ContentTemplate template, String parentContainerQId) {
-		
-		ContainerType container = findContainer(template.getDataDefinition(), parentContainerQId);
-		
-		if (container == null) {
-			LOGGER.error("Invalid containerQId [{}] for template [{}]", parentContainerQId, template.getId());
-			throw new IllegalArgumentException("Invalid containerQId [" + parentContainerQId + "] for template ["
-					+ template.getId() + "]");
-		}
-		
-		return getChildContainerIds(container);
-	}
-
 
 	public static List<String> getChildContainerIds(ContainerType container) {
 		List<String> childContainerIds = new ArrayList<>();
@@ -169,7 +153,7 @@ public class TemplateUtil {
 		return container.isReferenceable();
 	}
 	
-	public static String findParentCollectionName(TemplateWrapper template, String containerQId) {
+	public static String findParentCollectionName(TemplateFacade template, String containerQId) {
 		String parentQId = QIdUtil.getParentQId(containerQId);
 		return template.getCollectionName(parentQId);
 	}
@@ -276,40 +260,6 @@ public class TemplateUtil {
 					return QIdUtil.getElementId(labelQualifiedId);
 				}
 				
-			}
-		}
-		
-		return null;
-	}
-	
-	/**
-	 * @deprecated use {@link TemplateWrapper#getContainerForCollection(String)} instead
-	 */
-	public static ContainerType findContainerForCollection(String collectionName, ContentTemplate template) {
-		return findContainerForCollectionName(collectionName, 
-				template.getDataDefinition().getContainer(), template.getId());
-	}
-
-
-	private static ContainerType findContainerForCollectionName(String collectionName, 
-			List<ContainerType> containers, String templateId) {
-		
-		for (ContainerType container : containers) {
-			
-			String cntnrCollName = DatastoreUtil.getCollectionName(templateId, container);
-			
-			if (cntnrCollName.equals(collectionName)) {
-				return container;
-			}
-		}
-		
-		for (ContainerType container : containers) {
-			
-			ContainerType matchedContainer = findContainerForCollectionName(
-					collectionName, container.getContainer(), templateId);
-			
-			if (matchedContainer != null) {
-				return matchedContainer;
 			}
 		}
 		
@@ -454,6 +404,56 @@ public class TemplateUtil {
 			}
 		}
 		return contentStackItems;
+	}
+
+
+	public static ContentItemType findMatchingContentItem(ContainerType containerDef, ContentItemType dsAttr) {
+		
+		ContentItemType matchedContentItem = null;
+		
+		if (containerDef != null) {
+			
+			BoundedListDatastoreType segmentAttrDS = checkAndGetBoundedRefListDatastore(dsAttr);
+			
+			for (ContentItemType contentItem : containerDef.getContentItem()) {
+
+				if (segmentAttrDS != null) {
+					
+					BoundedListDatastoreType ciDatastore = checkAndGetBoundedRefListDatastore(contentItem);
+					
+					if (ciDatastore != null && segmentAttrDS.getStoreId().equals(ciDatastore.getStoreId())
+							&& segmentAttrDS.getLocation() == ciDatastore.getLocation()) {
+						
+						matchedContentItem = contentItem;
+					}
+					
+				}
+
+				if (matchedContentItem == null && contentItem.getId().equals(dsAttr.getId())) {
+					matchedContentItem = contentItem;
+				}
+			}
+		}
+		
+		return matchedContentItem;
+		
+	}
+
+
+	private static BoundedListDatastoreType checkAndGetBoundedRefListDatastore(ContentItemType contentItem) {
+		
+		if (contentItem.getType() == ContentItemClassType.BOUNDED) {
+		
+			BoundedType bounded = contentItem.getBounded();
+			
+			if (bounded.getRefList() != null) {
+			
+				return bounded.getRefList().getDatastore();
+				
+			}
+		}
+		
+		return null;
 	}
 	
 }

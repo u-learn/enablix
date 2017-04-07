@@ -38,4 +38,9 @@ public class AppConstants {
 	public static final String SLACK_REQUEST_CODE = "code";
 	public static final String SLACK_REQUEST_CLIENT_SEC = "client_secret";
 	public static final String SLACK_REQUEST_CLIENT_ID = "client_id";
+	
+	// Data view constants
+	public static final String MONGO_DATASTORE = "MONGO";
+	public static final String ELASTICSEARCH_DATASTORE = "ELASTICSEARCH";
+	
 }

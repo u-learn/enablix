@@ -18,7 +18,10 @@ import com.enablix.app.content.ui.NavigableContent;
 import com.enablix.app.content.ui.nav.NavigationPathService;
 import com.enablix.app.content.ui.peers.PeerContentService;
 import com.enablix.app.content.ui.reco.RecommendedContentService;
+import com.enablix.commons.util.process.ProcessContext;
 import com.enablix.core.mongo.search.service.SearchRequest;
+import com.enablix.data.segment.DataSegmentService;
+import com.enablix.data.view.DataView;
 
 @RestController
 @RequestMapping("navcontent")
@@ -35,6 +38,9 @@ public class NavigableContentController {
 	
 	@Autowired
 	private NavigationPathService navPathService;
+
+	@Autowired
+	private DataSegmentService dataSegmentService;
 	
 	@RequestMapping(method = RequestMethod.GET, value="/reco/{containerQId}/")
 	public List<NavigableContent> containerRecommendedContent(@PathVariable String containerQId) {
@@ -58,13 +64,15 @@ public class NavigableContentController {
 	@RequestMapping(method = RequestMethod.GET, value="/recent/{containerQId}/")
 	public List<NavigableContent> containerRecentContent(@PathVariable String containerQId) {
 		WebContentRequest request = new WebContentRequest(containerQId);
-		return recentService.getRecentContent(request);
+		DataView userDataView = dataSegmentService.getDataViewForUserId(ProcessContext.get().getUserId());
+		return recentService.getRecentContent(request, userDataView);
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value="/recent/")
 	public List<NavigableContent> generalRecentContent() {
 		WebContentRequest request = new WebContentRequest();
-		return recentService.getRecentContent(request);
+		DataView userDataView = dataSegmentService.getDataViewForUserId(ProcessContext.get().getUserId());
+		return recentService.getRecentContent(request, userDataView);
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value="/recent/{containerQId}/{contentIdentity}/")
@@ -73,12 +81,14 @@ public class NavigableContentController {
 			@PathVariable String contentIdentity) {
 		
 		WebContentRequest request = new WebContentRequest(containerQId, contentIdentity);
-		return recentService.getRecentContent(request);
+		DataView userDataView = dataSegmentService.getDataViewForUserId(ProcessContext.get().getUserId());
+		return recentService.getRecentContent(request, userDataView);
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, value="/recentlist")
 	public Page<RecentUpdateVO> fetchRecentUpdateList(@RequestBody SearchRequest searchRequest) {
-		return recentService.getRecentContentByRequest(searchRequest);
+		DataView userDataView = dataSegmentService.getDataViewForUserId(ProcessContext.get().getUserId());
+		return recentService.getRecentContentByRequest(searchRequest, userDataView);
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value="/peers/{containerQId}/{contentIdentity}/")
@@ -87,7 +97,8 @@ public class NavigableContentController {
 			@PathVariable String contentIdentity) {
 		
 		WebContentRequest request = new WebContentRequest(containerQId, contentIdentity);
-		return peerService.getPeers(request);
+		DataView userDataView = dataSegmentService.getDataViewForUserId(ProcessContext.get().getUserId());
+		return peerService.getPeers(request, userDataView);
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value="/navpath/{containerQId}/{contentIdentity}/")

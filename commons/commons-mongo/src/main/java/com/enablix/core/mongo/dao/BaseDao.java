@@ -14,37 +14,46 @@ import org.springframework.util.Assert;
 
 import com.enablix.commons.util.StringUtil;
 import com.enablix.commons.util.collection.CollectionUtil;
+import com.enablix.core.mongo.view.MongoDataView;
+import com.enablix.core.mongo.view.MongoDataViewOperations;
 
 public abstract class BaseDao {
 
 	protected abstract MongoTemplate getMongoTemplate();
 	
-	public <T> List<T> findByCriteria(Criteria queryCriteria, Class<T> findType) {
-		return findByCriteria(queryCriteria, null, findType);
+	public <T> List<T> findByCriteria(Criteria queryCriteria, Class<T> findType, MongoDataView view) {
+		return findByCriteria(queryCriteria, null, findType, view);
 	}
 	
-	public <T> List<T> findByCriteria(Criteria queryCriteria, Class<T> findType, List<String> projectionFields) {
-		return findByCriteria(queryCriteria, null, findType, projectionFields);
-	}
-	
-	public <T> List<T> findByCriteria(
-			Criteria queryCriteria, String collectionName, Class<T> findType) {
-		
-		Query query = Query.query(queryCriteria);
-		
-		return StringUtil.isEmpty(collectionName) ? getMongoTemplate().find(query, findType) 
-				: getMongoTemplate().find(query, findType, collectionName);
+	public <T> List<T> findByCriteria(Criteria queryCriteria, Class<T> findType, 
+			List<String> projectionFields, MongoDataView view) {
+		return findByCriteria(queryCriteria, null, findType, projectionFields, view);
 	}
 	
 	public <T> List<T> findByCriteria(
-			Criteria queryCriteria, String collectionName, Class<T> findType, List<String> projectionFields) {
+			Criteria queryCriteria, String collectionName, Class<T> findType, MongoDataView view) {
 		
-		Query query = Query.query(queryCriteria);
+		MongoDataViewOperations viewOperations = new MongoDataViewOperations(getMongoTemplate(), view);
+		Query query = viewOperations.getViewScopedQuery(queryCriteria, collectionName);
+		
+		return StringUtil.isEmpty(collectionName) ? viewOperations.find(query, findType) 
+				: viewOperations.find(query, findType, collectionName);
+	}
+	
+	public <T> List<T> findByCriteria(Criteria queryCriteria, String collectionName, 
+			Class<T> findType, List<String> projectionFields, MongoDataView view) {
+		
+		MongoDataViewOperations viewOperations = new MongoDataViewOperations(getMongoTemplate(), view);
+		
+		boolean collNameMissing = StringUtil.isEmpty(collectionName);
+		
+		Query query = collNameMissing ? viewOperations.getViewScopedQuery(queryCriteria, findType)
+				: viewOperations.getViewScopedQuery(queryCriteria, collectionName); 
 		
 		addProjectionFields(query, projectionFields);
 		
-		return StringUtil.isEmpty(collectionName) ? getMongoTemplate().find(query, findType) 
-				: getMongoTemplate().find(query, findType, collectionName);
+		return collNameMissing ? viewOperations.find(query, findType) 
+				: viewOperations.find(query, findType, collectionName);
 	}
 
 	private void addProjectionFields(Query query, List<String> projectionFields) {
@@ -58,33 +67,35 @@ public abstract class BaseDao {
 	}
 
 	public <T> Page<T> findByCriteria(
-			Criteria queryCriteria, Class<T> findType, Pageable pageable) {
-		return findByCriteria(queryCriteria, null, findType, pageable, null);
+			Criteria queryCriteria, Class<T> findType, Pageable pageable, MongoDataView view) {
+		return findByCriteria(queryCriteria, null, findType, pageable, null, view);
 	}
 
 	public <T> Page<T> findByCriteria(Criteria queryCriteria, 
-			String collectionName, Class<T> findType, Pageable pageable) {
-		return findByCriteria(queryCriteria, collectionName, findType, pageable, null);
+			String collectionName, Class<T> findType, Pageable pageable, MongoDataView view) {
+		return findByCriteria(queryCriteria, collectionName, findType, pageable, null, view);
 	}
 	
-	public <T> Page<T> findByCriteria(Criteria queryCriteria, 
-			String collectionName, Class<T> findType, Pageable pageable, List<String> projectionFields) {
+	public <T> Page<T> findByCriteria(Criteria queryCriteria, String collectionName, 
+			Class<T> findType, Pageable pageable, List<String> projectionFields, MongoDataView view) {
 		
-		Assert.notNull(pageable, "Pageable is be null");
+		Assert.notNull(pageable, "Pageable cannot be null");
 		
-		Query query = Query.query(queryCriteria);
+		boolean collNameMissing = StringUtil.isEmpty(collectionName);
+		
+		MongoDataViewOperations viewOperations = new MongoDataViewOperations(getMongoTemplate(), view);
+		Query query = collNameMissing ? viewOperations.getViewScopedQuery(queryCriteria, findType)
+				: viewOperations.getViewScopedQuery(queryCriteria, collectionName);
 		
 		addProjectionFields(query, projectionFields);
 		
-		MongoTemplate mongoTemplate = getMongoTemplate();
-		
-		long count = StringUtil.hasText(collectionName) ? mongoTemplate.count(query, collectionName) 
-										: mongoTemplate.count(query, findType);
+		long count = StringUtil.hasText(collectionName) ? viewOperations.count(query, collectionName) 
+										: viewOperations.count(query, findType);
 				
 		query.with(pageable);
 		
-		List<T> content = StringUtil.isEmpty(collectionName) ? mongoTemplate.find(query, findType) 
-				: mongoTemplate.find(query, findType, collectionName);
+		List<T> content = collNameMissing ? viewOperations.find(query, findType) 
+				: viewOperations.find(query, findType, collectionName);
 
 		return new PageImpl<>(content, pageable, count);
 	}

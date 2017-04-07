@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.enablix.app.content.ui.NavigableContent;
 import com.enablix.core.domain.security.authorization.UserProfile;
-import com.enablix.core.domain.user.User;
 
 public class WeeklyDigestVelocityInput extends BaseVelocityInput implements  LoggedInUserAware, EnvPropertiesAware{
 
