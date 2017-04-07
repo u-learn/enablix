@@ -2696,7 +2696,7 @@
 			<contentItem id="summary" label="Summary" type="text"/>
 			<contentItem id="file" label="File" type="doc"/>
 		</container>
-		<container id="ppttemplate" label="Corporate PPT Template">
+		<container id="ppttemplate" label="Corporate Templates">
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="summary" label="Summary" type="text"/>
 			<contentItem id="file" label="File" type="doc"/>
