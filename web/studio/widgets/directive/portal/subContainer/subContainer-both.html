@@ -43,14 +43,14 @@
 	<div class="cont" ng-if="bodyData.length != 0">
 		<div ng-repeat="dataItem in bodyData track by dataItem.identity" class="dataItem">
 			<h4 layout="row">
-				<span class="dropdown dataItemBullet" flex="5">
+				<span class="dropdown dataItemBullet" flex="none">
 					<ebx-record-context-menu content-record="dataItem" content-q-id="subContainerQId" ></ebx-record-context-menu>
 				</span>
-				<span flex="85">
+				<span flex>
 					<a ng-click="toggleContainerItem($event, dataItem.containerId + $index, dataItem)" class="toggle" >{{::dataItem.headingLabel}}</a>
 			    	<a ng-if="dataItem.hasSubContainers" ng-click="navToItemDetail(dataItem.containerQId, dataItem.identity)" class="detail fa fa-external-link"></a>
 			    </span>
-			    <div class="action-icons" flex="10">
+			    <div class="action-icons" flex="none">
 			    	<div class="dropdown">
 			    		<ebx-suggest-content content-q-id="subContainerQId" parent-identity="parentIdentity" content-identity="dataItem.identity"></ebx-suggest-content>
 						<ebx-share-context-menu context-data="dataItem" content-q-id="subContainerQId" ></ebx-share-context-menu>

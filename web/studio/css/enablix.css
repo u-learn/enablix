@@ -136,7 +136,8 @@ ul.dropdown-menu {
 	font-size: 0.875em;
 }
 
-.dropdown-menu li:focus, .dropdown-menu li:hover {
+.dataItem .dropdown-menu li:focus, 
+.dataItem .dropdown-menu li:hover {
 	background-color: #2680BE;	
 }
 

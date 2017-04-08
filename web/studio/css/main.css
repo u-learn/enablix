@@ -1548,6 +1548,11 @@ eb-doc-preview-action .doc-preview {
 	color: #A1C1DD;
 }
 
+.more-link::after,
+.action-icon::after {
+	border: 0px !important;
+}
+
 .action-icons a:hover{
 	color: #1D6AAD;
 } 
@@ -1569,7 +1574,11 @@ eb-doc-preview-action .doc-preview {
 }
 
 .dataItemBullet {
-	margin-right: 5px;
+	margin-right: 10px;
+}
+
+.dataItem .action-icons {
+	margin-left: 10px;
 }
 
 .modal-title {
@@ -1590,6 +1599,7 @@ eb-doc-preview-action .doc-preview {
 	color: #1D6AAD;
 }
 
+.more-link i,
 .sub-container-more-link a i {
 	padding-left: 4px;
 }

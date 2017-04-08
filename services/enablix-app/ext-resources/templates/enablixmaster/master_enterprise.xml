@@ -1215,17 +1215,6 @@
 		<container id="discoveryQuestion" label="Discovery Questions" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="question" label="Question" type="text" searchBoost="6"/>
 			<contentItem id="significance" label="Significance" type="richText" searchBoost="2"/>
-			<contentItem id="buyer" label="Buyer Role" type="bounded" searchBoost="6">
-				<bounded multivalued="true">
-					<refList>
-						<datastore>
-							<storeId>buyerRole</storeId>
-							<dataId>identity</dataId>
-							<dataLabel>shortName</dataLabel>
-						</datastore>
-					</refList>
-				</bounded>
-			</contentItem>			
 			<contentItem id="products" label="Products" type="bounded">
 				<bounded multivalued="true">
 					<refList>
