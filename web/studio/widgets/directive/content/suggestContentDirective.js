@@ -24,7 +24,7 @@ enablix.studioApp.directive('ebxSuggestContent', [
 						if (!isNullOrUndefined(scope.icon)) {
 							scope.iconClass = scope.icon;
 						} else {
-							scope.iconClass = scope.editOper ? "fa fa-pencil" : "fa fa-plus-square";
+							scope.iconClass = scope.editOper ? "fa fa-pencil suggest-edit" : "fa fa-plus-square suggest-add";
 						}
 					}
 

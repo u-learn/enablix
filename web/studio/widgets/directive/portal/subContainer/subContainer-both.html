@@ -1,10 +1,10 @@
 <div ng-if="::singleItemCard">
 <div class="block" ng-if="showSubContainer">
-	<div ng-class="{'active': expanded}" class="head head-toggle active" ng-click="toggleContainer($event)">
+	<div ng-class="expanded ? 'active' : 'inactive' " class="head head-toggle" ng-click="toggleContainer($event)">
 		<em ng-class="expanded ? 'fa fa-caret-down': 'fa fa-caret-up'"></em>
 		<h2 ng-if="!navigableHeader">{{::subContainerLabel}} <a ng-if="bodyData.hasSubContainers" ng-click="navToItemDetail(bodyData.containerQId, bodyData.identity)" class="detail fa fa-external-link"></a></h2>
 		<h2><eb-nav-link hide-hierarchy="false" hide-doc-link="true" nav-link="navContentData" ng-if="navigableHeader"></eb-nav-link></h2>
-			<div class="dropdown">
+		<div class="dropdown">
 			<div class="action-icons bar-action-icons">
 				<ebx-suggest-content content-q-id="subContainerQId" parent-identity="parentIdentity" content-identity="bodyData.identity"></ebx-suggest-content>
 				<span ng-if="bodyData.downloadDocIdentity">
@@ -13,7 +13,7 @@
 				</span>
 				<ebx-share-context-menu context-data="bodyData" content-q-id="subContainerQId"></ebx-share-context-menu>
 			</div>
-			</div>
+		</div>
 	</div>
 	<div ng-class="{'active': !expanded}" class="cont clearfix" ng-if="!(bodyData == null || bodyData == undefined || bodyData.length == 0)">	
 	
@@ -33,7 +33,7 @@
 <!-- multi item card -->
 <div ng-if="::!singleItemCard">
 <div class="block" ng-if="showSubContainer">
-	<div class="head head-toggle active" ng-click="toggleContainer($event)">
+	<div ng-class="expanded ? 'active' : 'inactive' " class="head head-toggle" ng-click="toggleContainer($event)">
 		<em ng-class="expanded ? 'fa fa-caret-down': 'fa fa-caret-up'"></em>
 		<h2>{{::subContainerLabel}}</h2>
 		<div class="action-icons bar-action-icons">
@@ -42,7 +42,7 @@
 	</div> 
 	<div class="cont" ng-if="bodyData.length != 0">
 		<div ng-repeat="dataItem in bodyData track by dataItem.identity" class="dataItem">
-			<h4 layout="row">
+			<h4 layout="row" ng-mouseover="::showDataItemActionIcons($event)" ng-mouseout="::hideDataItemActionIcons($event)">
 				<span class="dropdown dataItemBullet" flex="none">
 					<ebx-record-context-menu content-record="dataItem" content-q-id="subContainerQId" ></ebx-record-context-menu>
 				</span>
@@ -50,7 +50,7 @@
 					<a ng-click="toggleContainerItem($event, dataItem.containerId + $index, dataItem)" class="toggle" >{{::dataItem.headingLabel}}</a>
 			    	<a ng-if="dataItem.hasSubContainers" ng-click="navToItemDetail(dataItem.containerQId, dataItem.identity)" class="detail fa fa-external-link"></a>
 			    </span>
-			    <div class="action-icons" flex="none">
+			    <div class="action-icons" flex="none" style='display: none;'>
 			    	<div class="dropdown">
 			    		<ebx-suggest-content content-q-id="subContainerQId" parent-identity="parentIdentity" content-identity="dataItem.identity"></ebx-suggest-content>
 						<ebx-share-context-menu context-data="dataItem" content-q-id="subContainerQId" ></ebx-share-context-menu>

@@ -35,6 +35,18 @@ enablix.studioApp.controller('PortalSubContainerCtrl',
 			return false;
 		};	
 		
+		$scope.showDataItemActionIcons = function($event) {
+			var elem = $event.currentTarget;
+			$(elem).children('.action-icons').css('display', 'block');
+		}
+		
+		$scope.hideDataItemActionIcons = function($event) {
+			var elem = $event.currentTarget;
+			if (!$(elem).find('a.toggle').hasClass("active")) {
+				$(elem).children('.action-icons').css('display', 'none');
+			}
+		}
+		
 		var setUpMultiRecordData = function(_contentRecords) {
 	
 			$scope.parentIdentity = $stateParams.elementIdentity;
