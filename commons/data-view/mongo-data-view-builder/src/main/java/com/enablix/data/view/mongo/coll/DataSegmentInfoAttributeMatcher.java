@@ -5,12 +5,15 @@ import java.util.Map;
 
 import org.springframework.stereotype.Component;
 
+import com.enablix.core.domain.segment.DataSegmentAttribute;
+import com.enablix.core.domain.segment.DataSegmentAttribute.Matching;
 import com.enablix.core.domain.segment.DataSegmentAware;
 import com.enablix.core.domain.segment.DataSegmentInfo;
 import com.enablix.core.mongo.search.ConditionOperator;
 import com.enablix.core.mongo.search.ObjectFilter;
 import com.enablix.core.mongo.search.SearchCondition;
 import com.enablix.core.mongo.search.SearchFilter;
+import com.enablix.core.mongo.search.StringFilter;
 import com.enablix.data.view.DataSegmentAttrFilter;
 import com.enablix.data.view.mongo.AttributeMatcher;
 
@@ -52,17 +55,27 @@ public class DataSegmentInfoAttributeMatcher extends AbstractAttributeMatcher im
 		
 		for (DataSegmentAttrFilter filter : filters) {
 			
-			SearchCondition<?> attrCond = attributeFilter(
-					filter.getDataSegmentAttribute(), filter.getRecordAttributeId());
+			DataSegmentAttribute dsAttr = filter.getDataSegmentAttribute();
+			
+			SearchCondition<?> attrCond = attributeFilter(dsAttr, 
+					"dataSegmentInfo.attributes." + filter.getRecordAttributeId());
 			
 			if (attrCond != null) {
 				
-				attrCond.setExistsCheck(false);
+				attrCond.setExistsCheck(null);
+				
+				SearchFilter attrFilter = attrCond;
+				
+				if (dsAttr.getMatching() == Matching.LENIENT) {
+					attrFilter = attrCond.or(new StringFilter(
+							"dataSegmentInfo.attributes." + dsAttr.getId(), 
+							null, ConditionOperator.EQ));
+				}
 				
 				if (searchFilter == null) {
-					searchFilter = attrCond;
+					searchFilter = attrFilter;
 				} else {
-					searchFilter = searchFilter.and(attrCond);
+					searchFilter = searchFilter.and(attrFilter);
 				}
 			}
 		}

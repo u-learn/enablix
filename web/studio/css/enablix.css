@@ -136,6 +136,8 @@ ul.dropdown-menu {
 	font-size: 0.875em;
 }
 
+.action-icons .dropdown-menu li:focus, 
+.action-icons .dropdown-menu li:hover,
 .dataItem .dropdown-menu li:focus, 
 .dataItem .dropdown-menu li:hover {
 	background-color: #2680BE;	
@@ -143,7 +145,7 @@ ul.dropdown-menu {
 
 .dropdown-menu>li>a:focus, .dropdown-menu>li>a:hover,
 .dropdown-menu>li .menuItem>a:focus, .dropdown-menu>li .menuItem>a:hover {
-	color: rgb(250,250,250);
+	color: #FAFAFA;
 	text-decoration: none;
 	background-color: #2680BE;
 }

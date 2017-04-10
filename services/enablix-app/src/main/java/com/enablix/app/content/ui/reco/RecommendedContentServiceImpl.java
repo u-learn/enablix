@@ -15,6 +15,7 @@ import com.enablix.app.content.label.PortalContentLabelResolver;
 import com.enablix.app.content.ui.NavigableContent;
 import com.enablix.app.content.ui.NavigableContentBuilder;
 import com.enablix.core.api.ContentDataRef;
+import com.enablix.data.view.DataView;
 
 @Component
 public class RecommendedContentServiceImpl implements RecommendedContentService {
@@ -31,11 +32,11 @@ public class RecommendedContentServiceImpl implements RecommendedContentService 
 	private ContentLabelResolver labelResolver = new PortalContentLabelResolver();
 	
 	@Override
-	public List<NavigableContent> getRecommendedContent(WebRecommendationRequest request) {
+	public List<NavigableContent> getRecommendedContent(WebRecommendationRequest request, DataView dataView) {
 		
 		RecommendationContext recoCtx = recoCtxBuilder.build(request);
 		
-		List<ContentDataRef> recommendations = recoEngine.getRecommendations(recoCtx);
+		List<ContentDataRef> recommendations = recoEngine.getRecommendations(recoCtx, dataView);
 		
 		List<NavigableContent> navRecos = new ArrayList<>();
 		

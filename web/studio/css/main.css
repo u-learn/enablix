@@ -451,9 +451,6 @@ form.block .head {
 	text-decoration: none;
 	color: #2ecc71;
 }*/
-.block .head .fa-download:hover {
-	color: #27ae60;
-}
 .block .head-toggle {
 	cursor: pointer;
 	-webkit-user-select: none;
@@ -1025,6 +1022,7 @@ form.block .foot {
 	border-bottom: 0;
 }
 
+.action-icons .fa-paperclip,
 .dataItem a.fa-paperclip {
 	transform: rotate(90deg)
 }
@@ -1270,7 +1268,7 @@ eb-nav-link:first-child li {
 }
 
 .search-result div.head a.fa-download {
-	padding-top: 20px;
+	/* padding-top: 20px; */
 }
 
 .infotable a::after,
@@ -1576,21 +1574,23 @@ eb-doc-preview-action .doc-preview {
 }
 
 a.suggest-edit {
-	color: #eda260 !important;
+	color: #A1C1DD !important;
 }
 
 a.suggest-edit:hover, a.suggest-edit:focus {
-	color: #d35400 !important;
+	color: #1D6AAD !important;
 }
 
 a.suggest-add {
-	color: #2ecc71 !important;
+	color: #A1C1DD !important;
 }
 
 a.suggest-add:hover, a.suggest-add:focus {
-	color: #27ae60 !important;
+	color: #1D6AAD !important;
 }
 
+a.fa-paperclip::after,
+a.content-suggest::after,
 .more-link::after,
 .action-icon::after {
 	border: 0px !important;

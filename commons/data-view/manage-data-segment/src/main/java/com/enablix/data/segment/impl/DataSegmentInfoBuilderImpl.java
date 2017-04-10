@@ -63,11 +63,18 @@ public class DataSegmentInfoBuilderImpl implements DataSegmentInfoBuilder {
 		String templateId = ProcessContext.get().getTemplateId();
 		TemplateFacade template = templateManager.getTemplateFacade(templateId);
 		
+		DataSegmentInfo dsInfo = null;
+		
 		String collectionName = template.getCollectionName(contentQId);
-		Map<String, Object> record = contentCrud.findRecord(
+		
+		if (collectionName != null) {
+			Map<String, Object> record = contentCrud.findRecord(
 				collectionName, recordIdentity, MongoDataView.ALL_DATA);
 		
-		return buildDataSegmentInfo(record, contentQId, template);
+			dsInfo = buildDataSegmentInfo(record, contentQId, template);
+		}
+		
+		return dsInfo;
 	}
 
 }

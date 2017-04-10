@@ -13,6 +13,11 @@ import com.enablix.commons.util.StringUtil;
 import com.enablix.commons.util.collection.CollectionUtil;
 import com.enablix.core.api.ContentDataRef;
 import com.enablix.core.domain.reco.Recommendation;
+import com.enablix.core.mongo.MongoUtil;
+import com.enablix.core.mongo.MongoUtil.DataViewOperation;
+import com.enablix.core.mongo.view.MongoDataView;
+import com.enablix.data.view.DataView;
+import com.enablix.services.util.DataViewUtil;
 
 public class PreRecordedRecommendationEngine implements RecommendationEngine {
 
@@ -20,29 +25,57 @@ public class PreRecordedRecommendationEngine implements RecommendationEngine {
 	private RecommendationRepository repo;
 	
 	@Override
-	public List<ContentDataRef> getRecommendations(RecommendationContext request) {
+	public List<ContentDataRef> getRecommendations(RecommendationContext request, DataView dataView) {
 		
 		List<ContentDataRef> recoContent = new ArrayList<>();
 		Collection<Recommendation> recommendations = null;
 		
-		String userId = request.getUserContext().userId();
-		String templateId = request.getRequestContext().templateId();
+		MongoDataView mongoDataView = DataViewUtil.getMongoDataView(dataView);
 		
-		String containerQId = request.getRequestContext().containerQId();
-		String contentIdentity = request.getRequestContext().contentIdentity();
+		final String userId = request.getUserContext().userId();
+		final String templateId = request.getRequestContext().templateId();
+		
+		final String containerQId = request.getRequestContext().containerQId();
+		final String contentIdentity = request.getRequestContext().contentIdentity();
 		
 		if (!StringUtil.isEmpty(containerQId) && !StringUtil.isEmpty(contentIdentity)) {
-			recommendations = contentSpecificRecommendations(
-					userId, templateId, containerQId, contentIdentity);
+			
+			recommendations = MongoUtil.executeWithDataViewScope(mongoDataView, 
+					new DataViewOperation<Collection<Recommendation>>() {
+						
+						@Override
+						public Collection<Recommendation> execute() {
+							return contentSpecificRecommendations(
+									userId, templateId, containerQId, contentIdentity);
+						}
+					});
 		} 
 		
 		if (CollectionUtil.isEmpty(recommendations) && 
 				!StringUtil.isEmpty(containerQId) && StringUtil.isEmpty(contentIdentity)) {
-			recommendations = containerSpecificRecommendation(userId, templateId, containerQId);
+			
+			recommendations = MongoUtil.executeWithDataViewScope(mongoDataView, 
+					new DataViewOperation<Collection<Recommendation>>() {
+						
+						@Override
+						public Collection<Recommendation> execute() {
+							return containerSpecificRecommendation(userId, templateId, containerQId);
+						}
+					});
+
 		} 
 		
 		if (CollectionUtil.isEmpty(recommendations)) {
-			recommendations = generalRecommendations(userId, templateId);
+			
+			recommendations = MongoUtil.executeWithDataViewScope(mongoDataView, 
+					new DataViewOperation<Collection<Recommendation>>() {
+						
+						@Override
+						public Collection<Recommendation> execute() {
+							return generalRecommendations(userId, templateId);
+						}
+					});
+
 		}
 
 		if (recommendations != null) {

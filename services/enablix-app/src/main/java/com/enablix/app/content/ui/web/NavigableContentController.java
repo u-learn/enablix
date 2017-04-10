@@ -45,20 +45,23 @@ public class NavigableContentController {
 	@RequestMapping(method = RequestMethod.GET, value="/reco/{containerQId}/")
 	public List<NavigableContent> containerRecommendedContent(@PathVariable String containerQId) {
 		WebRecommendationRequest request = new WebRecommendationRequest(containerQId);
-		return recoService.getRecommendedContent(request);
+		DataView userDataView = dataSegmentService.getDataViewForUserId(ProcessContext.get().getUserId());
+		return recoService.getRecommendedContent(request, userDataView);
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value="/reco")
 	public List<NavigableContent> generalRecommendedContent() {
 		WebRecommendationRequest request = new WebRecommendationRequest();
-		return recoService.getRecommendedContent(request);
+		DataView userDataView = dataSegmentService.getDataViewForUserId(ProcessContext.get().getUserId());
+		return recoService.getRecommendedContent(request, userDataView);
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value="/reco/{containerQId}/{contentIdentity}/")
 	public List<NavigableContent> contentSpecificRecommendedContent(@PathVariable String containerQId, 
 			@PathVariable String contentIdentity) {
 		WebRecommendationRequest request = new WebRecommendationRequest(containerQId, contentIdentity);
-		return recoService.getRecommendedContent(request);
+		DataView userDataView = dataSegmentService.getDataViewForUserId(ProcessContext.get().getUserId());
+		return recoService.getRecommendedContent(request, userDataView);
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value="/recent/{containerQId}/")
