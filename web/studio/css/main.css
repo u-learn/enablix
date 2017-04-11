@@ -1341,8 +1341,12 @@ eb-nav-link:first-child li {
 /**/
 /* quick links */
 /**/
+.quick-links .cont {
+	padding-top: 0px;
+}
 .quick-links h4 {
 	margin-bottom: 0.75em;
+	margin-top: 0.875em;
 }
 .quick-links ul {
 	font-size: 0.875em;
