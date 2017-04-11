@@ -1,6 +1,6 @@
 enablix.studioApp.directive('ebxDataFilters', [
-        '$compile',
-function($compile) {
+        '$compile', '$timeout', 
+function($compile,   $timeout) {
 
 	return {
 		restrict: 'E',
@@ -62,6 +62,15 @@ function($compile) {
 					scope.onReset();
 				}
 			}
+			
+			// the angular multi-select dropdown does not work if it is initially hidden
+			// in select.js, calculateContainerWidth() function return value 0, if it is hidden.
+			// As a result, the text box in the directive is only 10px and is hard to select.
+			// HACK: keep the data filter panel open initially and close it after a delay. This
+			// lets the angular select to render and text input has proper width.
+			$timeout(function() {
+				$(element).find("#dataFilterContainer").removeClass("in");
+			}, 100);
 			
 		},
 		templateUrl: "widgets/directive/dataFilter/dataFilters.html"
