@@ -50,8 +50,6 @@ public class DataSegmentInfoAttributeMatcher extends AbstractAttributeMatcher im
 	@Override
 	public SearchFilter attributeFilters(List<DataSegmentAttrFilter> filters) {
 		
-		SearchFilter dsInfoFilter = new ObjectFilter("dataSegmentInfo", false, ConditionOperator.EXISTS);
-		
 		SearchFilter searchFilter = null;
 		
 		for (DataSegmentAttrFilter filter : filters) {
@@ -114,11 +112,7 @@ public class DataSegmentInfoAttributeMatcher extends AbstractAttributeMatcher im
 			}
 		}
 
-		if (searchFilter != null) {
-			dsInfoFilter = dsInfoFilter.or(searchFilter);
-		}
-		
-		return dsInfoFilter;
+		return searchFilter;
 	}
 
 }

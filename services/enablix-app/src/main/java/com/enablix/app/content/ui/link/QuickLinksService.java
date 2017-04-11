@@ -5,10 +5,11 @@ import java.util.List;
 import com.enablix.core.api.ContentDataRef;
 import com.enablix.core.domain.links.QuickLinkCategory;
 import com.enablix.core.domain.links.QuickLinkContent;
+import com.enablix.data.view.DataView;
 
 public interface QuickLinksService {
 
-	QuickLinks getQuickLinks();
+	QuickLinks getQuickLinks(DataView dataView);
 	
 	void saveQuickLinkCategory(QuickLinkCategory category);
 	

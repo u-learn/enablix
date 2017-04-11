@@ -18,7 +18,12 @@ import com.enablix.core.api.ContentDataRef;
 import com.enablix.core.domain.links.QuickLinkCategory;
 import com.enablix.core.domain.links.QuickLinkContent;
 import com.enablix.core.domain.segment.DataSegmentInfo;
+import com.enablix.core.mongo.MongoUtil;
+import com.enablix.core.mongo.MongoUtil.DataViewOperation;
+import com.enablix.core.mongo.view.MongoDataView;
 import com.enablix.data.segment.view.DataSegmentInfoBuilder;
+import com.enablix.data.view.DataView;
+import com.enablix.services.util.DataViewUtil;
 
 @Component
 public class QuickLinksServiceImpl implements QuickLinksService {
@@ -41,7 +46,7 @@ public class QuickLinksServiceImpl implements QuickLinksService {
 	private ContentLabelResolver labelResolver = new PortalContentLabelResolver();
 	
 	@Override
-	public QuickLinks getQuickLinks() {
+	public QuickLinks getQuickLinks(DataView dataView) {
 		
 		QuickLinks quickLinks = new QuickLinks();
 		
@@ -51,7 +56,17 @@ public class QuickLinksServiceImpl implements QuickLinksService {
 			quickLinks.addQuickLinkSection(category);
 		}
 		
-		List<QuickLinkContent> allContent = linkRepo.findAll();
+		MongoDataView mongoDataView = DataViewUtil.getMongoDataView(dataView);
+		
+		List<QuickLinkContent> allContent = MongoUtil.executeWithDataViewScope(mongoDataView, 
+				new DataViewOperation<List<QuickLinkContent>>() {
+			
+					@Override
+					public List<QuickLinkContent> execute() {
+						return linkRepo.findAll();
+					}
+				}); 
+				
 		
 		for (QuickLinkContent linkContent : allContent) {
 			

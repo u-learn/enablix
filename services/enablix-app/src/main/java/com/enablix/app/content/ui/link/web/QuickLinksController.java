@@ -12,9 +12,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.enablix.app.content.ui.link.QuickLinkAssociationVO;
 import com.enablix.app.content.ui.link.QuickLinks;
 import com.enablix.app.content.ui.link.QuickLinksService;
+import com.enablix.commons.util.process.ProcessContext;
 import com.enablix.core.api.ContentDataRef;
 import com.enablix.core.domain.links.QuickLinkCategory;
 import com.enablix.core.domain.links.QuickLinkContent;
+import com.enablix.data.segment.DataSegmentService;
+import com.enablix.data.view.DataView;
 
 @RestController
 @RequestMapping("quicklink")
@@ -23,9 +26,13 @@ public class QuickLinksController {
 	@Autowired
 	private QuickLinksService quickLinksService;
 	
+	@Autowired
+	private DataSegmentService dsService;
+	
 	@RequestMapping(method = RequestMethod.GET, value="/content")
 	public QuickLinks quickLinks() {
-		return quickLinksService.getQuickLinks();
+		DataView dataView = dsService.getDataViewForUserId(ProcessContext.get().getUserId());
+		return quickLinksService.getQuickLinks(dataView);
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value="/categories/{contentIdentity}/")
