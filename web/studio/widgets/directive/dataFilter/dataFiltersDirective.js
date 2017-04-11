@@ -70,7 +70,7 @@ function($compile,   $timeout) {
 			// lets the angular select to render and text input has proper width.
 			$timeout(function() {
 				$(element).find("#dataFilterContainer").removeClass("in");
-			}, 200);
+			}, 300);
 			
 		},
 		templateUrl: "widgets/directive/dataFilter/dataFilters.html"
