@@ -13,7 +13,6 @@ import com.enablix.commons.dms.api.Document;
 import com.enablix.commons.dms.api.DocumentMetadata;
 import com.enablix.commons.dms.api.DocumentStore;
 import com.enablix.commons.dms.repository.DocumentMetadataRepository;
-import com.enablix.commons.util.QIdUtil;
 import com.enablix.commons.util.process.ProcessContext;
 import com.enablix.core.domain.config.Configuration;
 
@@ -43,14 +42,8 @@ public class DocumentManagerImpl implements DocumentManager {
 	private String createContentPathUsingParentInfo(String docContainerQId, 
 			String docContainerParentInstanceIdentity, boolean temporaryDoc) {
 		
-		String contentDataPath = pathResolver.resolveContentDataPath(
-				ProcessContext.get().getTemplateId(), 
-				QIdUtil.getParentQId(docContainerQId), 
-				docContainerParentInstanceIdentity, null);
-		
-		contentDataPath = pathResolver.addContainerLabelToPath(
-				ProcessContext.get().getTemplateId(), 
-				docContainerQId, contentDataPath);
+		String templateId = ProcessContext.get().getTemplateId();
+		String contentDataPath = pathResolver.resolveContainerPath(templateId, docContainerQId);
 		
 		if (temporaryDoc) {
 			contentDataPath = pathResolver.appendPath(contentDataPath, TEMP_SUB_FOLDER);
@@ -70,13 +63,9 @@ public class DocumentManagerImpl implements DocumentManager {
 
 	private String createContentPathUsingContainerInfo(String docContainerQId, 
 			String docContainerInstanceIdentity, boolean temporaryDoc) {
-		String contentDataPath = pathResolver.resolveContentParentDataPath(
-				ProcessContext.get().getTemplateId(), 
-				docContainerQId, docContainerInstanceIdentity, null);
 		
-		contentDataPath = pathResolver.addContainerLabelToPath(
-				ProcessContext.get().getTemplateId(), 
-				docContainerQId, contentDataPath);
+		String templateId = ProcessContext.get().getTemplateId();
+		String contentDataPath = pathResolver.resolveContainerPath(templateId, docContainerQId);
 		
 		if (temporaryDoc) {
 			contentDataPath = pathResolver.appendPath(contentDataPath, TEMP_SUB_FOLDER);
