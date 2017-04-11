@@ -384,6 +384,10 @@ form.block .head {
 	background-color: #ffffff;
 }
 
+.head.bottom-border {
+    border-bottom-width: 1px;
+}
+
 .head.head-toggle.inactive {
     border-width: 1px;
 }

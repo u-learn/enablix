@@ -19,7 +19,7 @@
 				placeholder="Enter Email Id " class="form-control"
 				ng-model="userProfile.email" ng-blur="checkUserName()" type="text"
 				size="80" required
-				ng-pattern="/^[_a-zA-Z0-9]+(\.[_a-zA-Z0-9]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*(\.[a-zA-Z]{2,5})$/">
+				ng-pattern="/^[_a-zA-Z0-9\+]+(\.[_a-zA-Z0-9\+]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*(\.[a-zA-Z]{2,5})$/">
 		</div>
 		<div ng-messages="userForm.userId.$error"
 			ng-if='userForm.userId.$touched' role="alert">
