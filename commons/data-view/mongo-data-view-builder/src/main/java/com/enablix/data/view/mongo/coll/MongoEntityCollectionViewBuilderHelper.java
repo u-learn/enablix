@@ -67,7 +67,9 @@ public class MongoEntityCollectionViewBuilderHelper implements CollectionViewBui
 				String recordFilterId = filterIdResolver.resolveFilterAttributeId(dsAttrContentItem, template);
 				
 				DataSegmentAttribute dataSegmentAttr = dataSegment.findAttribute(dsAttrId);
-				filters.add(new DataSegmentAttrFilter(dataSegmentAttr, recordFilterId));
+				if (dataSegmentAttr != null) {
+					filters.add(new DataSegmentAttrFilter(dataSegmentAttr, recordFilterId));
+				}
 			}
 		}
 		
