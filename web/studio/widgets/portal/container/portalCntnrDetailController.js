@@ -129,29 +129,33 @@ enablix.studioApp.controller('PortalCntnrDetailCtrl',
 		// check and push content stack cards
 		if ($scope.containerQId && $scope.instanceIdentity && $scope.hasContentStack) {
 			
-			ContentDataService.getContentStackForRecord($scope.containerQId, $scope.instanceIdentity, 
+			var pageData = {
+				page: 0,
+				size: enablix.subContainerItemLimit
+			};
+			
+			ContentDataService.getContentStackForRecord($scope.containerQId, $scope.instanceIdentity, pageData,
 					function(data) {
 				
-						var contentGroupsMap = {};
-						ContentUtil.groupContentRecordsByQId(data, contentGroupsMap);
-						
-						angular.forEach(contentGroupsMap, function(value, key) {
+						angular.forEach(data, function(contentGroup, $index) {
 							
-							if (value.records.length > 0) {
-								
-								var subCntnrItem = {
-										"id" : value.qualifiedId,
-										"qualifiedId" : value.qualifiedId,
-										"label" : value.label,
-										"containerDef": value.containerDef,
-										"type": value.records.length == 1 ? "single" : "multi",
-										"records": value.records,
-										"category": "content-stack"
-									};
-								
-								$scope.subContainerList.push(subCntnrItem);
-							}
+							var containerDef = ContentTemplateService.getContainerDefinition(
+													enablix.template, contentGroup.contentQId);
+							
+							var subCntnrItem = {
+									"id" : containerDef.id,
+									"qualifiedId" : containerDef.qualifiedId,
+									"label" : containerDef.label,
+									"containerDef": containerDef,
+									"type": "multi",
+									"records": contentGroup.records,
+									"category": "sub-container",
+									"parentQId": $scope.containerQId
+								};
+							
+							$scope.subContainerList.push(subCntnrItem);
 						});
+						
 					}, 
 					function(errorData) {
 						Notification.error({message: "Error retrieving content records", delay: enablix.errorMsgShowTime});

@@ -1,5 +1,7 @@
 package com.enablix.app.content.ui.link;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -32,8 +34,13 @@ public class QuickLinksDataConnector extends ContentRecordRefDataSegmentConnecto
 	}
 
 	@Override
-	protected void saveUpdatedPage(Page<QuickLinkContent> page) {
+	protected void saveUpdatedPage(Iterable<QuickLinkContent> page) {
 		repo.save(page);
+	}
+
+	@Override
+	protected List<QuickLinkContent> getRecordsForIdentity(String contentIdentity) {
+		return repo.findByDataInstanceIdentity(contentIdentity);
 	}
 
 }

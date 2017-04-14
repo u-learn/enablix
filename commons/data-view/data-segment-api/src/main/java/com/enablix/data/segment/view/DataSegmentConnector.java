@@ -1,5 +1,6 @@
 package com.enablix.data.segment.view;
 
+import com.enablix.core.api.ContentRecord;
 import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 import com.enablix.core.commons.xsdtopojo.DataSegmentDefinitionType;
 import com.enablix.core.domain.segment.DataSegmentAware;
@@ -12,5 +13,7 @@ public interface DataSegmentConnector<T extends DataSegmentAware> {
 	Class<T> connectorFor();
 
 	void updateAllRecords(ContentTemplate template, DataSegmentDefinitionType dataSegmentDef);
+	
+	void updateRecord(ContentRecord record, DataSegmentInfo dataSegmentInfo);
 	
 }

@@ -8,13 +8,13 @@ import org.springframework.stereotype.Component;
 
 import com.enablix.analytics.correlation.ItemCorrelationService;
 import com.enablix.analytics.correlation.ItemUserCorrelationService;
-import com.enablix.app.content.event.ContentDataDelEvent;
 import com.enablix.app.content.event.ContentDataEventListener;
-import com.enablix.app.content.event.ContentDataSaveEvent;
 import com.enablix.app.template.service.TemplateManager;
 import com.enablix.commons.util.concurrent.Events;
 import com.enablix.core.api.ContentDataRef;
 import com.enablix.core.api.TemplateFacade;
+import com.enablix.core.content.event.ContentDataDelEvent;
+import com.enablix.core.content.event.ContentDataSaveEvent;
 import com.enablix.core.domain.trigger.ContentChange;
 import com.enablix.core.domain.trigger.ContentChange.TriggerType;
 import com.enablix.core.mq.EventSubscription;

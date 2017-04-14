@@ -1,6 +1,7 @@
 package com.enablix.analytics.recommendation.repository;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.data.mongodb.repository.Query;
 
@@ -54,5 +55,7 @@ public interface RecommendationRepository extends BaseMongoRepository<Recommenda
 	Collection<Recommendation> findByRecommendationScopeAndRecommendationData(
 			String userId, String templateId, String containerQId, 
 			String contentIdentity, String recoContainerQId, String recoContentIdentity);
+
+	List<Recommendation> findByRecommendedDataDataInstanceIdentity(String contentIdentity);
 
 }

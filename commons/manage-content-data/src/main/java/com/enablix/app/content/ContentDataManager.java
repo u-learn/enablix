@@ -34,10 +34,13 @@ public interface ContentDataManager {
 
 	List<ContentDataRecord> getContentStackRecords(List<ContentStackItem> contentStackItems, DataView view);
 
-	List<ContentDataRecord> getContentStackForContentRecord(String containerQId, String instanceIdentity, DataView view);
+	List<ContentRecordGroup> getContentStackForContentRecord(String containerQId, String instanceIdentity, Pageable pageable, DataView view);
 
 	List<ContentRecordGroup> fetchAllChildrenData(String parentQId, String parentIdentity, Pageable pageable, DataView view);
 
 	List<ContentRecordGroup> fetchRecordAndChildData(String contentQId, String contentIdentity, Pageable childPagination, DataView view);
+
+	List<ContentRecordGroup> getContentStackItemForContentRecord(String containerQId, String instanceIdentity,
+			String itemQId, Pageable pageable, DataView userDataView);
 	
 }

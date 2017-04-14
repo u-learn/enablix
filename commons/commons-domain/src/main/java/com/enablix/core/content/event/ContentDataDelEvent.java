@@ -1,4 +1,4 @@
-package com.enablix.app.content.event;
+package com.enablix.core.content.event;
 
 import com.enablix.core.commons.xsdtopojo.ContainerType;
 

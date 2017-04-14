@@ -9,6 +9,7 @@ enablix.serviceURL = {
 	"fetchRecordData": enablix.domainName + "/data/t/:templateId/c/:contentQId/d/:recordIdentity",
 	"fetchContentStack": enablix.domainName + "/data/fetchcs",
 	"fetchContentStackForRecord": enablix.domainName + "/data/fetchcs/c/:containerQId/r/:instanceIdentity",
+	"fetchContentStackItemForRecord": enablix.domainName + "/data/fetchcs/c/:containerQId/r/:instanceIdentity/:itemQId/",
 	"insertRootContainerData": enablix.domainName + "/content/update/t/:templateId/c/:contentQId/",
 	"updateContainerData": enablix.domainName + "/content/update/t/:templateId/c/:contentQId/",
 	"insertChildContainerData": enablix.domainName + "/content/update/t/:templateId/c/:contentQId/r/:parentIdentity",

@@ -1,5 +1,7 @@
 package com.enablix.app.content.recent.repo;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.Query;
@@ -30,5 +32,7 @@ public interface RecentDataRepository extends BaseMongoRepository<RecentData> {
 	Long deleteByDataInstanceIdentity(String identity);
 	
 	RecentData findByDataInstanceIdentityAndUpdateType(String identity, UpdateType updateType);
+	
+	List<RecentData> findByDataInstanceIdentity(String identity);
 	
 }

@@ -168,6 +168,12 @@ public class ContentCrudServiceImpl implements ContentCrudService {
 	public List<Map<String, Object>> findRecords(String collectionName, List<String> elementIdentities, MongoDataView view) {
 		return findAllRecordForCriteria(collectionName, createIdentityInCriteria(null, elementIdentities), view);
 	}
+	
+	@Override
+	public Page<Map<String, Object>> findRecords(String collectionName, 
+			List<String> elementIdentities, Pageable pageable, MongoDataView view) {
+		return findRecordsForCriteria(collectionName, createIdentityInCriteria(null, elementIdentities), pageable, view);
+	}
 
 	@Override
 	public List<Map<String, Object>> findAllRecord(String collectionName, MongoDataView view) {
@@ -398,6 +404,12 @@ public class ContentCrudServiceImpl implements ContentCrudService {
 		Query query = viewOperations.getViewScopedQuery(criteria, collectionName);
 
 		return (List) viewOperations.find(query, HashMap.class, collectionName);
+	}
+	
+	@Override
+	public Page<Map<String, Object>> findRecordsForCriteria(
+			String collectionName, Criteria criteria, Pageable pageable, MongoDataView view) {
+		return findRecords(criteria, collectionName, pageable, view);
 	}
 
 	@Override

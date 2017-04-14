@@ -38,6 +38,8 @@ public interface ContentCrudService {
 			String linkContentItemId, String linkContainerIdentity, Pageable pageable, MongoDataView view);
 	
 	List<Map<String, Object>> findAllRecordForCriteria(String collectionName, Criteria criteria, MongoDataView view);
+	
+	Page<Map<String, Object>> findRecordsForCriteria(String collectionName, Criteria criteria, Pageable pageable, MongoDataView view);
 
 	void updateAttributes(String collectionName, String elementQId, String elementIdentity, Map<String, Object> data);
 	
@@ -62,6 +64,8 @@ public interface ContentCrudService {
 	Map<String, Object> findContainingRecord(String collectionName, String childQId, String childIdentity, MongoDataView view);
 
 	List<Map<String, Object>> findRecords(String collectionName, List<String> elementIdentities, MongoDataView view);
+	
+	Page<Map<String, Object>> findRecords(String collectionName, List<String> elementIdentities, Pageable pageable, MongoDataView view);
 	
 	List<Map<String, Object>> findRecords(String collectionName, SearchFilter filter, MongoDataView view);
 

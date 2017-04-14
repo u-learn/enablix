@@ -17,10 +17,8 @@ import org.springframework.stereotype.Component;
 import com.enablix.app.content.delete.DeleteContentRequest;
 import com.enablix.app.content.enrich.ContentEnricher;
 import com.enablix.app.content.enrich.ContentEnricherRegistry;
-import com.enablix.app.content.event.ContentDataDelEvent;
 import com.enablix.app.content.event.ContentDataEventListener;
 import com.enablix.app.content.event.ContentDataEventListenerRegistry;
-import com.enablix.app.content.event.ContentDataSaveEvent;
 import com.enablix.app.content.fetch.FetchContentRequest;
 import com.enablix.app.content.update.ContentUpdateHandler;
 import com.enablix.app.content.update.ContentUpdateHandlerFactory;
@@ -41,6 +39,8 @@ import com.enablix.core.commons.xsdtopojo.ContainerType;
 import com.enablix.core.commons.xsdtopojo.ContentItemClassType;
 import com.enablix.core.commons.xsdtopojo.ContentItemType;
 import com.enablix.core.commons.xsdtopojo.ContentTemplate;
+import com.enablix.core.content.event.ContentDataDelEvent;
+import com.enablix.core.content.event.ContentDataSaveEvent;
 import com.enablix.core.domain.content.ContentChangeDelta;
 import com.enablix.core.mongo.content.ContentCrudService;
 import com.enablix.core.mongo.view.MongoDataView;
@@ -368,16 +368,29 @@ public class ContentDataManagerImpl implements ContentDataManager {
 	@Override
 	public List<ContentDataRecord> getContentStackRecords(List<ContentStackItem> contentStackItems, DataView view) {
 
+		String templateId = ProcessContext.get().getTemplateId();
+		
 		// group by containerQId so that we can reduce the number of DB queries
 		Map<String, List<String>> containerIdentities = groupContentIdentitiesByContainerQId(contentStackItems);
 
-		return fetchContentStackRecords(containerIdentities, view);
+		List<ContentRecordGroup> contentStackGroup = fetchContentStackRecords(containerIdentities, null, view);
+		List<ContentDataRecord> stackRecords = new ArrayList<>();
+		
+		for (ContentRecordGroup recGrp : contentStackGroup) {
+			
+			for (Map<String, Object> rec : recGrp.getRecords()) {
+				stackRecords.add(new ContentDataRecord(templateId, recGrp.getContentQId(), rec));
+			}
+		}
+		
+		return stackRecords;
 	}
 
 
-	private List<ContentDataRecord> fetchContentStackRecords(Map<String, List<String>> containerIdentities, DataView dataView) {
+	private List<ContentRecordGroup> fetchContentStackRecords(
+			Map<String, List<String>> containerIdentities, Pageable pageable, DataView dataView) {
 		
-		List<ContentDataRecord> records = new ArrayList<>();
+		List<ContentRecordGroup> contentGroups = new ArrayList<>();
 		
 		MongoDataView view = DataViewUtil.getMongoDataView(dataView);
 		
@@ -392,10 +405,15 @@ public class ContentDataManagerImpl implements ContentDataManager {
 			
 			if (!StringUtil.isEmpty(collectionName)) {
 				
-				List<Map<String, Object>> dataRecords = crud.findRecords(collectionName, entry.getValue(), view);
+				Page<Map<String, Object>> dataRecords = crud.findRecords(collectionName, entry.getValue(), pageable, view);
 				
-				for (Map<String, Object> dataRec : dataRecords) {
-					records.add(new ContentDataRecord(templateId, containerQId, dataRec));
+				if (CollectionUtil.isNotEmpty(dataRecords.getContent())) {
+					
+					ContentRecordGroup recGrp = new ContentRecordGroup();
+					recGrp.setContentQId(containerQId);
+					recGrp.setRecords(dataRecords);
+					
+					contentGroups.add(recGrp);
 				}
 				
 			} else {
@@ -403,7 +421,7 @@ public class ContentDataManagerImpl implements ContentDataManager {
 			}
 		}
 			
-		return records;
+		return contentGroups;
 	}
 	
 	private Map<String, List<String>> groupContentIdentitiesByContainerQId(List<ContentStackItem> contentStackItems) {
@@ -418,7 +436,8 @@ public class ContentDataManagerImpl implements ContentDataManager {
 	}
 
 
-	private void checkAndAddIdentityForContainer(Map<String, List<String>> containerIdentities, String qualifiedId, String identity) {
+	private void checkAndAddIdentityForContainer(
+			Map<String, List<String>> containerIdentities, String qualifiedId, String identity) {
 		
 		List<String> identities = containerIdentities.get(qualifiedId);
 		
@@ -432,15 +451,21 @@ public class ContentDataManagerImpl implements ContentDataManager {
 
 
 	@Override
-	public List<ContentDataRecord> getContentStackForContentRecord(
-			String containerQId, String instanceIdentity, DataView dataView) {
+	public List<ContentRecordGroup> getContentStackForContentRecord(
+			String containerQId, String instanceIdentity, Pageable pageable, DataView dataView) {
 		
+		return fetchContentStackData(containerQId, instanceIdentity, null, pageable, dataView);
+	}
+
+
+	private List<ContentRecordGroup> fetchContentStackData(String containerQId, String instanceIdentity,
+			List<String> filterItemQId, Pageable pageable, DataView dataView) {
 		MongoDataView view = DataViewUtil.getMongoDataView(dataView);
 		
 		TemplateFacade template = templateMgr.getTemplateFacade(ProcessContext.get().getTemplateId());
 		String collectionName = template.getCollectionName(containerQId);
 		
-		List<ContentDataRecord> stackRecords = null;
+		List<ContentRecordGroup> stackRecords = null;
 		
 		Map<String, Object> contentRecord = crud.findRecord(collectionName, instanceIdentity, view);
 		
@@ -462,9 +487,12 @@ public class ContentDataManagerImpl implements ContentDataManager {
 						for (Map<String, String> contentStackEntry : contentStackAttrVal) {
 							
 							String qualifiedId = contentStackEntry.get(ContentDataConstants.QUALIFIED_ID_KEY);
-							String identity = contentStackEntry.get(ContentDataConstants.IDENTITY_KEY);
 							
-							checkAndAddIdentityForContainer(containerIdentities, qualifiedId, identity);
+							if (CollectionUtil.isEmpty(filterItemQId) || filterItemQId.contains(qualifiedId)) {
+								String identity = contentStackEntry.get(ContentDataConstants.IDENTITY_KEY);
+								checkAndAddIdentityForContainer(containerIdentities, qualifiedId, identity);
+							}
+							
 						}
 					}
 					
@@ -472,10 +500,10 @@ public class ContentDataManagerImpl implements ContentDataManager {
 			}
 			
 			// fetch content data records
-			stackRecords = fetchContentStackRecords(containerIdentities, dataView);
+			stackRecords = fetchContentStackRecords(containerIdentities, pageable, dataView);
 		}
 		
-		return stackRecords == null ? new ArrayList<ContentDataRecord>() : stackRecords;
+		return stackRecords == null ? new ArrayList<ContentRecordGroup>() : stackRecords;
 	}
 
 
@@ -555,6 +583,17 @@ public class ContentDataManagerImpl implements ContentDataManager {
 		}
 		
 		return contentGroups;
+	}
+
+
+	@Override
+	public List<ContentRecordGroup> getContentStackItemForContentRecord(String containerQId, String instanceIdentity,
+			String itemQId, Pageable pageable, DataView userDataView) {
+		
+		List<String> filterItemQId = new ArrayList<>();
+		filterItemQId.add(itemQId);
+		
+		return fetchContentStackData(containerQId, instanceIdentity, filterItemQId, pageable, userDataView);
 	}
 	
 }

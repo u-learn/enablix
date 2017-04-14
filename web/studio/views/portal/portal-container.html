@@ -4,11 +4,12 @@
 		<eb-portal-breadcrumb></eb-portal-breadcrumb>
 		<div class="row">							
 			<main ng-class="subContainerList.length > 1 ? 'col-md-4' : 'col-md-8'">
+				<div class="cont-empty record-detail" ng-if="subContainerList.length == 0">No data found.</div>
 				<div ng-repeat="subContainer in subContainerList track by $index" 
 						ng-if ="subContainer.id != ('null' + $index) && ($index % 2 == 0) ">					
 					<eb-portal-sub-container type="{{::subContainer.type}}" sub-container-label="subContainer.label" info="subContainer.records"
 						sub-container-q-id="subContainer.qualifiedId" index="$index" parent-list="subContainerList" multi-list-limit="{{::subCntnrMultiListLimit}}"
-						category="subContainer.category"></eb-portal-sub-container>
+						category="subContainer.category" parent-container-q-id="subContainer.parentQId"></eb-portal-sub-container>
 				</div>
 				<eb-content-stack-display ng-if="hasContentStack" container-q-id="containerQId" content-identity="instanceIdentity" container-list="subContainerList"></eb-content-stack-display>
 			</main>
@@ -18,7 +19,7 @@
 						ng-if ="subContainer.id != ('null' + $index) && ($index % 2 == 1)">				
 					<eb-portal-sub-container type="{{::subContainer.type}}" sub-container-label="subContainer.label" info="subContainer.records"
 						sub-container-q-id="subContainer.qualifiedId" index="$index" parent-list="subContainerList" multi-list-limit="{{::subCntnrMultiListLimit}}"
-						category="subContainer.category"></eb-portal-sub-container>
+						category="subContainer.category" parent-container-q-id="subContainer.parentQId"></eb-portal-sub-container>
 				</div>
 				<eb-content-stack-display ng-if="hasContentStack" container-q-id="containerQId" content-identity="instanceIdentity" container-list="subContainerList"></eb-content-stack-display>
 			</aside>

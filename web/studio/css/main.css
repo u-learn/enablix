@@ -523,9 +523,11 @@ form.block .cont {
 	border-style: solid;
 	background-color: #ffffff;
 }
+main .cont-empty,
 .block .cont-empty {
-	text-align: center;
-	color: #e74c3c;
+	text-align: left;
+	color: #777777;
+	font-size: 0.875em;
 }
 .block .cont-hidden {
 	display: none;
@@ -565,6 +567,10 @@ form.block .foot {
 
 .cont .dataItem {
 	padding-top: 0px;
+}
+
+.cont-empty.record-detail {
+	margin-top: 2em;
 }
 
 /**/
@@ -891,7 +897,7 @@ form.block .foot {
 	width: 1%;
 	padding-right: 0.75em;
 	white-space: nowrap;
-	color: #596679;
+	color: #5a6779;
 }
 .infotable td {
 	display: table-cell;
@@ -1229,7 +1235,7 @@ ebx-record-context-menu a.inactive {
 /* recomended content */
 /**/
 
-.block.recomended-content, .block.quick-links {
+.block.peers .block.recomended-content, .block.quick-links {
     font-family: Montserrat;
 }
 
@@ -1238,9 +1244,11 @@ ebx-record-context-menu a.inactive {
 	line-height: 1.25;
 	color: #666;
 }
+
 .recomended-content li {
 	margin-top: 0.75em;
 }
+
 .recomended-content li:first-child{
 	margin-top: 0;
 }
@@ -1348,16 +1356,19 @@ eb-nav-link:first-child li {
 	margin-bottom: 0.75em;
 	margin-top: 0.875em;
 }
+.peers li,
 .quick-links ul {
 	font-size: 0.875em;
 	line-height: 1.5;
 	color: #666;
 }
+.peers li,
 .quick-links li {
 	position: relative;
 	margin-top: 0.5em;
 	padding-left: 1em;
 }
+.peers li:before,
 .quick-links li:before {
 	content: '';
 	position: absolute;
@@ -1367,15 +1378,18 @@ eb-nav-link:first-child li {
 	height: 4px;
 	margin-top: -2px;
 	border-radius: 50%;
-	background: #666;
+	background: #949292;
 }
+.peers li:first-child,
 .quick-links li:first-child {
 	margin-top: 0;
 }
+.peers a,
 .quick-links a {
 	text-decoration: underline;
 	color: #1D6AAD;
 }
+.peers a:hover,
 .quick-links a:hover {
 	text-decoration: none;
 }

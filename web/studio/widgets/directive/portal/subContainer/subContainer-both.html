@@ -18,7 +18,7 @@
 	
 		<table class="infotable" >		
 			<tr ng-repeat="header in headers track by header.id" ng-switch="header.dataType" ng-if="::isRenderable(header, bodyData[header.key])">
-				<th>{{::header.label}}:</th>
+				<th>{{::header.label}}</th>
 				<td><eb-render-data content-value="bodyData[header.key]" content-def="header" content-record="bodyData" show-doc-link="false"/></td>
 			</tr>
 	  	</table>
@@ -59,7 +59,7 @@
 			<div id="{{::dataItem.containerId}}{{::$index}}" class="toggle-cont">
 				<table class="infotable" ng-if="dataItem.showDetails">
 					<tr ng-repeat="header in headers track by header.id" ng-switch="header.dataType" ng-if="::isRenderable(header, dataItem[header.key])">
-						<th>{{::header.label}}:</th>
+						<th>{{::header.label}}</th>
 						<td><eb-render-data content-value="dataItem[header.key]" content-def="header" content-record="dataItem" show-doc-link="false"/></td>
 					</tr>
 			  	</table>

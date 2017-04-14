@@ -571,6 +571,24 @@ enablix.studioApp.factory('ContentTemplateService',
 				});
 			};
 			
+			var hasChildContainer = function(_containerDef, _childQId) {
+				
+				if (!isNullOrUndefined(_containerDef)) {
+					
+					var childCntnrs = _containerDef.container;
+					
+					if (!isNullOrUndefined(childCntnrs)) {
+						for (var i = 0; i < childCntnrs.length; i++) {
+							if (_childQId == childCntnrs[i].qualifiedId) {
+								return true;
+							}
+						}
+					}
+				}
+				
+				return false;
+			}
+			
 			return {
 				getTemplate : getTemplate,
 				getDefaultTemplate : getDefaultTemplate,
@@ -607,6 +625,7 @@ enablix.studioApp.factory('ContentTemplateService',
 				getStudioConfig: getStudioConfig,
 				hasContentStackConfigItem: hasContentStackConfigItem,
 				getFilteredListOfContainers: getFilteredListOfContainers,
+				hasChildContainer: hasChildContainer,
 				walkContainers: walkContainers
 			};
 		

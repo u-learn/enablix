@@ -1,5 +1,7 @@
 package com.enablix.app.content.ui.reco;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -31,8 +33,13 @@ public class RecoDataSegmentConnector extends ContentRecordRefDataSegmentConnect
 	}
 
 	@Override
-	protected void saveUpdatedPage(Page<Recommendation> page) {
+	protected void saveUpdatedPage(Iterable<Recommendation> page) {
 		repo.save(page);
+	}
+
+	@Override
+	protected List<Recommendation> getRecordsForIdentity(String contentIdentity) {
+		return repo.findByRecommendedDataDataInstanceIdentity(contentIdentity);
 	}
 	
 }

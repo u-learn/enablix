@@ -5,6 +5,7 @@ enablix.studioApp.directive('ebPortalSubContainer', [
 			restrict : 'E',
 			scope : {
 				type: "@",
+				parentContainerQId: "=?",
 				subContainerQId: "=",
 				subContainerLabel: "=",
 				elementIdentity: "=",

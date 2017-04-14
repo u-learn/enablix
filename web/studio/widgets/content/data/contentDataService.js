@@ -144,14 +144,29 @@ enablix.studioApp.factory('ContentDataService',
 	 			RESTService.postForData("fetchContentStack", null, _contentStackItems, null, _onSuccess, _onError, null);
 	 		};
 	 		
-	 		var getContentStackForRecord = function(_containerQId, _instanceIdentity, _onSuccess, _onError) {
+	 		var getContentStackForRecord = function(_containerQId, _instanceIdentity, _pageData, _onSuccess, _onError) {
 	 			
 	 			var params = {
 	 					containerQId: _containerQId,
 	 					instanceIdentity: _instanceIdentity
 	 			};
 	 			
+	 			angular.forEach(_pageData, function(val, key) {
+	 				params[key] = val;
+	 			});
+	 			
 	 			RESTService.getForData("fetchContentStackForRecord", params, null, _onSuccess, _onError);
+	 		};
+	 		
+	 		var getContentStackItemForRecord = function(_containerQId, _instanceIdentity, _itemQId, _onSuccess, _onError) {
+	 			
+	 			var params = {
+	 					containerQId: _containerQId,
+	 					instanceIdentity: _instanceIdentity,
+	 					itemQId: _itemQId
+	 			};
+	 			
+	 			RESTService.getForData("fetchContentStackItemForRecord", params, null, _onSuccess, _onError);
 	 		};
 	 		
 	 		return {
@@ -163,6 +178,7 @@ enablix.studioApp.factory('ContentDataService',
 	 			contentChangeEventId: contentChangeEventId,
 	 			getContentStack: getContentStack,
 	 			getContentStackForRecord: getContentStackForRecord,
+	 			getContentStackItemForRecord: getContentStackItemForRecord,
 	 			getRecordAndChildData: getRecordAndChildData
 	 		};
 	 	}

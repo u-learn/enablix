@@ -217,9 +217,9 @@ enablix.studioApp.controller('PortalSubContainerCtrl',
 					
 				} else {
 					
+					var parentQId = $scope.parentContainerQId || QIdUtil.getParentQId($scope.subContainerQId); 
 					StateUpdateService.goToPortalSubContainerList(
-						QIdUtil.getParentQId($scope.subContainerQId), 
-						$scope.subContainerQId, $stateParams.elementIdentity);
+						parentQId, $scope.subContainerQId, $stateParams.elementIdentity);
 				}
 			}
 		};

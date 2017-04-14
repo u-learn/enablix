@@ -99,14 +99,35 @@ public class FetchContentDataController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, 
+			value="/fetchcs/c/{containerQId}/r/{instanceIdentity}/{itemQId}/", 
+			produces = "application/json")
+	public List<ContentRecordGroup> fetchRecordContentStackItem(@PathVariable String containerQId, 
+			@PathVariable String instanceIdentity, @PathVariable String itemQId,
+			@RequestParam(required=false) String page, 
+			@RequestParam(required=false) String size,
+			@RequestParam(required=false) String sortProp,
+			@RequestParam(required=false) Sort.Direction sortDir) {
+		
+		LOGGER.debug("Fetch content stack data");
+		Pageable pageable = createPaginationInfo(page, size, sortProp, sortDir);
+		DataView userDataView = dataSegmentService.getDataViewForUserId(ProcessContext.get().getUserId());
+		return dataMgr.getContentStackItemForContentRecord(containerQId, instanceIdentity, itemQId, pageable, userDataView);
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, 
 			value="/fetchcs/c/{containerQId}/r/{instanceIdentity}", 
 			produces = "application/json")
-	public List<ContentDataRecord> fetchRecordContentStack(@PathVariable String containerQId, 
-			@PathVariable String instanceIdentity) {
+	public List<ContentRecordGroup> fetchRecordContentStack(@PathVariable String containerQId, 
+			@PathVariable String instanceIdentity,
+			@RequestParam(required=false) String page, 
+			@RequestParam(required=false) String size,
+			@RequestParam(required=false) String sortProp,
+			@RequestParam(required=false) Sort.Direction sortDir) {
 		
-		LOGGER.debug("Fetch child content data");
+		LOGGER.debug("Fetch content stack data");
+		Pageable pageable = createPaginationInfo(page, size, sortProp, sortDir);
 		DataView userDataView = dataSegmentService.getDataViewForUserId(ProcessContext.get().getUserId());
-		return dataMgr.getContentStackForContentRecord(containerQId, instanceIdentity, userDataView);
+		return dataMgr.getContentStackForContentRecord(containerQId, instanceIdentity, pageable, userDataView);
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, 

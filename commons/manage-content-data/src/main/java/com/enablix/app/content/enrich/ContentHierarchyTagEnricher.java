@@ -11,7 +11,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import com.enablix.app.content.ContentDataManager;
-import com.enablix.app.content.event.ContentDataSaveEvent;
 import com.enablix.app.content.label.DefaultContentLabelResolver;
 import com.enablix.app.content.update.ContentUpdateContext;
 import com.enablix.app.content.update.UpdateContentAttributeHandler;
@@ -23,6 +22,7 @@ import com.enablix.commons.util.concurrent.Events;
 import com.enablix.core.api.Tag;
 import com.enablix.core.api.TemplateFacade;
 import com.enablix.core.commons.xsdtopojo.ContainerType;
+import com.enablix.core.content.event.ContentDataSaveEvent;
 import com.enablix.core.mongo.content.ContentCrudService;
 import com.enablix.core.mongo.view.MongoDataView;
 import com.enablix.core.mq.EventSubscription;

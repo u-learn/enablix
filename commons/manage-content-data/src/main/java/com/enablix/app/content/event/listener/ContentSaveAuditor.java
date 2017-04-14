@@ -3,12 +3,12 @@ package com.enablix.app.content.event.listener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.enablix.app.content.event.ContentDataDelEvent;
 import com.enablix.app.content.event.ContentDataEventListener;
-import com.enablix.app.content.event.ContentDataSaveEvent;
 import com.enablix.app.template.service.TemplateManager;
 import com.enablix.core.api.ContentDataRef;
 import com.enablix.core.api.TemplateFacade;
+import com.enablix.core.content.event.ContentDataDelEvent;
+import com.enablix.core.content.event.ContentDataSaveEvent;
 import com.enablix.core.domain.activity.ContentActivity.ContainerType;
 import com.enablix.core.domain.activity.ContentActivity.ContentActivityType;
 import com.enablix.services.util.ActivityLogger;

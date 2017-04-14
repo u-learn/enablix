@@ -3,15 +3,15 @@ package com.enablix.app.content.recent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.enablix.app.content.event.ContentDataDelEvent;
 import com.enablix.app.content.event.ContentDataEventListener;
-import com.enablix.app.content.event.ContentDataSaveEvent;
 import com.enablix.app.content.recent.repo.RecentDataRepository;
 import com.enablix.app.template.service.TemplateManager;
 import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.core.api.ContentDataRecord;
 import com.enablix.core.api.ContentDataRef;
 import com.enablix.core.api.TemplateFacade;
+import com.enablix.core.content.event.ContentDataDelEvent;
+import com.enablix.core.content.event.ContentDataSaveEvent;
 import com.enablix.core.domain.recent.RecentData;
 import com.enablix.core.domain.recent.RecentData.UpdateType;
 import com.enablix.data.segment.view.DataSegmentInfoBuilder;

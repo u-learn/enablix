@@ -55,8 +55,10 @@ enablix.studioApp.controller('AuditController', ['$scope', '$stateParams', '$fil
             iconClass: "fa fa-eye",
             tableCellClass: "details",
             actionCallbackFn: $scope.navToContent,
-            checkApplicable: function(record) {
-                return true;
+            checkApplicable: function(action, record) {
+            	return record.activity && !(
+                        record.activity.activityType === 'DOC_PREVIEW' || record.activity.activityType === "DOC_DOWNLOAD" 
+                        || record.activity.activityType === 'DOC_UPLOAD');
             }
         }];
 
