@@ -3540,7 +3540,7 @@
 		<contentUIDef qualifiedId="customer">
 			<container labelQualifiedId="customer.shortName">
 				<listViewConfig>
-					<hideContentItem id="visbility"/>					
+					<hideContentItem id="visibility"/>					
 				</listViewConfig>
 				<portalConfig>
 					<headingContentItem id="shortName"/>
@@ -3565,7 +3565,7 @@
 			<container labelQualifiedId="solution.shortName">
 				<listViewConfig>
 					<hideContentItem id="solArea"/>
-					<hideContentItem id="visbility"/>					
+					<hideContentItem id="visibility"/>					
 				</listViewConfig>
 				<portalConfig>
 					<headingContentItem id="shortName"/>
@@ -3575,7 +3575,7 @@
 		<contentUIDef qualifiedId="product">
 			<container labelQualifiedId="product.shortName">
 				<listViewConfig>
-					<hideContentItem id="visbility"/>
+					<hideContentItem id="visibility"/>
 				</listViewConfig>
 				<portalConfig>
 					<headingContentItem id="shortName"/>
@@ -3585,7 +3585,7 @@
 		<contentUIDef qualifiedId="app">
 			<container labelQualifiedId="app.shortName">
 				<listViewConfig>
-					<hideContentItem id="visbility"/>
+					<hideContentItem id="visibility"/>
 				</listViewConfig>
 				<portalConfig>
 					<headingContentItem id="shortName"/>
@@ -3595,7 +3595,7 @@
 		<contentUIDef qualifiedId="competitor">
 			<container labelQualifiedId="competitor.shortName">
 				<listViewConfig>
-					<hideContentItem id="visbility"/>
+					<hideContentItem id="visibility"/>
 				</listViewConfig>
 				<portalConfig>
 					<headingContentItem id="shortName"/>
@@ -3605,7 +3605,7 @@
 		<contentUIDef qualifiedId="partner">
 			<container labelQualifiedId="partner.shortName">
 				<listViewConfig>
-					<hideContentItem id="visbility"/>
+					<hideContentItem id="visibility"/>
 				</listViewConfig>
 				<portalConfig>
 					<headingContentItem id="shortName"/>
@@ -3615,7 +3615,7 @@
 		<contentUIDef qualifiedId="analyst">
 			<container labelQualifiedId="analyst.shortName">
 				<listViewConfig>
-					<hideContentItem id="visbility"/>
+					<hideContentItem id="visibility"/>
 				</listViewConfig>
 				<portalConfig>
 					<headingContentItem id="shortName"/>
@@ -3665,7 +3665,7 @@
 					<hideContentItem id="partners"/>
 					<hideContentItem id="analysts"/>
 					<hideContentItem id="topics"/>
-					<hideContentItem id="visbility"/>										
+					<hideContentItem id="visibility"/>										
 				</listViewConfig>
 				<portalConfig>
 					<headingContentItem id="title"/>
@@ -3829,7 +3829,7 @@
 					<hideContentItem id="competitors"/>
 					<hideContentItem id="partners"/>
 					<hideContentItem id="topics"/>
-					<hideContentItem id="visbility"/>					
+					<hideContentItem id="visibility"/>					
 				</listViewConfig>
 				<portalConfig>
 					<headingContentItem id="question"/>
@@ -3924,7 +3924,7 @@
 					<hideContentItem id="opportunities"/>					
 					<hideContentItem id="partners"/>
 					<hideContentItem id="topics"/>
-					<hideContentItem id="visbility"/>						
+					<hideContentItem id="visibility"/>						
 				</listViewConfig>
 				<portalConfig>
 					<headingContentItem id="title"/>
