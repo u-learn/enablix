@@ -26,6 +26,12 @@ enablix.studioApp.config(['digestHudProvider', function(digestHudProvider) {
 	}]);
 */
 
+enablix.studioApp.config(['$tooltipProvider', function ($tooltipProvider) {
+		$tooltipProvider.options({
+		    popupDelay: 1000
+		});
+	}]);
+
 // default configuration for quill-editor [rich text editor]
 enablix.studioApp.config(['ngQuillConfigProvider', function (ngQuillConfigProvider) {
     ngQuillConfigProvider.set({

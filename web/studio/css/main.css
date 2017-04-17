@@ -895,7 +895,7 @@ form.block .foot {
 
 .infotable th {
 	width: 1%;
-	padding-right: 0.75em;
+	padding: 0.5em 0.75em 0 0;
 	white-space: nowrap;
 	color: #5a6779;
 }

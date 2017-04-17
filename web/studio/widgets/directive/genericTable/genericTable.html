@@ -24,7 +24,7 @@
 			<td ng-repeat="action in rowActions" class="action-cell" ng-class="getActionCellClass(action, tableRecord)">
 				<a ng-if="!action.checkApplicable || action.checkApplicable(action, tableRecord)" 
 					ng-class="getActionIconClass(action, tableRecord)" ng-click="callRowAction(action, tableRecord, $event, $parent.$parent.$index)" 
-					tooltip="{{getActionTooltip(action, tableRecord)}}" tooltip-popup-delay="500"></a>
+					tooltip="{{getActionTooltip(action, tableRecord)}}"></a>
 			</td>
 			<td ng-if="selectAction">
 				<a ng-class="tableRecord._selected ? 'fa fa-check-square-o' : 'fa fa-square-o'"
