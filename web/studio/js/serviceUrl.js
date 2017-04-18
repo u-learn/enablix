@@ -49,6 +49,7 @@ enablix.serviceURL = {
 	"deleteemailconfiguration" : enablix.domainName + "/deleteemailconfiguration",
 	"getAuditConfiguration" : enablix.domainName + "/data/search/c/ebx_activity_audit/t/com.enablix.core.domain.activity.ActivityAudit/",
 	"getAuditActivityTypes" : enablix.domainName + "/getAuditConfiguration/getAuditActivityTypes",
+	"getActivityMetric" : enablix.domainName + "/activitymetric",
 	"getsmtpconfig" : enablix.domainName + "/getsmtpconfig/:domainName",
 	"checkusername" : enablix.domainName + "/checkusername",
 	"fetchAllRoles" : enablix.domainName + "/roles",

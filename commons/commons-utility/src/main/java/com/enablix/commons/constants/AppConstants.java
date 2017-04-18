@@ -42,5 +42,7 @@ public class AppConstants {
 	// Data view constants
 	public static final String MONGO_DATASTORE = "MONGO";
 	public static final String ELASTICSEARCH_DATASTORE = "ELASTICSEARCH";
-	
+	public static final String EVAL = "eval";
+	public static final String ACTIVITY_METRIC_CONFIG = "ebx_activity_metric_config";
+	public static final String ACTIVITY_METRIC = "ebx_activity_metric";
 }

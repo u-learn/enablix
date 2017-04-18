@@ -1,7 +1,33 @@
 enablix.studioApp.factory('ReportService', 
-	[	        '$q', '$filter', 'RESTService', 'Notification', 'StateUpdateService', 'DataSearchService', 'ContentTemplateService', 
-	 	function($q,   $filter,   RESTService,   Notification,   StateUpdateService,   DataSearchService,   ContentTemplateService) {
+	[	        '$q', '$filter', 'RESTService', 'Notification', 'StateUpdateService', 'DataSearchService', 'ContentTemplateService', 'ActivityMetricService',
+	 	function($q,   $filter,   RESTService,   Notification,   StateUpdateService,   DataSearchService,   ContentTemplateService, ActivityMetricService) {
+		  var getEventDate = function(eventOccurence) {
+	            var m_names = new Array("Jan", "Feb", "Mar",
+	                "Apr", "May", "Jun", "Jul", "Aug", "Sep",
+	                "Oct", "Nov", "Dec");
 
+	            var d = new Date();
+	            var curr_month;
+	            var curr_date = d.getDate() - eventOccurence;
+
+	            if (curr_date < 0) {
+
+	                curr_date = 30 + curr_date;
+	                curr_month = d.getMonth() - 1;
+
+	            } else if (curr_date == 0) {
+
+	                curr_date = curr_date + 1;
+	                curr_month = d.getMonth();
+
+	            } else {
+	                curr_date = d.getDate() - eventOccurence;
+	                curr_month = d.getMonth();
+	            }
+
+	            var curr_year = d.getFullYear().toString().substr(2, 2);
+	            return curr_date + "-" + m_names[curr_month] + "-" + curr_year;
+	        }
 			/** ----------------------------------------- Report Definitions start -----------------------------------------**/
 		
 			/** ========================================= Content Coverage Report ======================================= **/
@@ -204,11 +230,103 @@ enablix.studioApp.factory('ReportService',
 					} 
 			};
 			
+			
 			enablix.reports.push(contentCoverageReport);
 			
 			/** =========================================== Content coverage report end ================================= **/
-			
-			
+			var eventOccurenceLst = [{
+                label: 'Last 1 day',
+                id: '1'
+            },
+            {
+                label: 'Last 3 days',
+                id: '3'
+            },
+            {
+                label: 'Last 1 Week',
+                id: '7'
+            },
+            {
+                label: 'Last Month',
+                id: '30'
+            }
+        ];
+			var activityMetricReport = {
+					id: "activity-metric-calculator",
+					name: "Activity Summary",
+					heading: "Activity Summary",
+					type: "TABULAR",
+					options: {
+								margin: { top: 150, right: 0, bottom: 70, left: 170 },
+								colors: [/*"#f7fbff", */"#deebf7", "#c6dbef", /*"#9ecae1", */"#6baed6", "#4292c6", /*"#2171b5", "#08519c", "#08306b"*/],
+								customColors : { "0": "#f58080"},
+								buckets: 4,
+								valueText: true,
+								categorize: true
+							 },
+					init: function($scope) {
+						
+					},
+					filterMetadata: {
+		                "activityMetricTime": {
+		                    "field": "asOfDate",
+		                    "operator": "GTE",
+		                    "dataType": "DATE"
+		                }
+		            },
+					filters: 
+						[
+							 {
+				                    id: "activityMetricTime",
+				                    type: "multi-select",
+				                    name: "Time",
+				                    masterList: function() { // This must return a promise
+				                        
+
+				                        var deferred = $q.defer();
+				                        deferred.resolve(eventOccurenceLst);
+
+				                        return deferred.promise;
+				                    },
+				                    validateBeforeSubmit: function(_selectedValues) {
+				                        return true;
+				                    },
+				                    defaultValue: function() {
+				                    	 var returnVal = [];
+				                    	 // By Default setting it to Last One Day
+				                    	 returnVal.push(eventOccurenceLst[0]);
+				                    	 return returnVal;
+									},
+				                    filterValueTransformer: function(_selectedValues) {
+				                        if (_selectedValues && _selectedValues.length > 0) {
+				                            var returnVal = [];
+
+				                            angular.forEach(_selectedValues, function(val) {
+				                                returnVal.push(getEventDate(val.id));
+				                            });
+
+				                            orderedDates = returnVal.sort(function(a, b) {
+				                                return Date.parse(a) > Date.parse(b);
+				                            });
+
+				                            return orderedDates[0];
+				                        } else
+				                            return null;
+				                    }
+							 }
+						],
+					dataTransformer: function(_data, _filterValues) {
+						return _data;
+					},
+					fetchData: function(_dataFilters, _onSuccess, _onError) {
+						var ACTIVITY_METRIC = "getActivityMetric";
+						
+						var searchFilters = _dataFilters || {};
+						ActivityMetricService.getActivityMetric(ACTIVITY_METRIC, searchFilters, _onSuccess, _onError)
+									
+					} 
+			};
+			enablix.reports.push(activityMetricReport);
 		
 			/** ------------------------------------------ Report Definitions end here ------------------------------------------**/
 			

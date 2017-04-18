@@ -17,6 +17,7 @@ import com.enablix.app.content.summary.repo.ContentCoverageRepository;
 import com.enablix.app.content.task.coverage.ContentItemCoverageResolver;
 import com.enablix.app.content.task.coverage.LinkedContainerCoverageResolver;
 import com.enablix.app.content.task.coverage.SubContainerCoverageResolver;
+import com.enablix.app.report.util.ReportUtil;
 import com.enablix.app.template.service.TemplateManager;
 import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.commons.util.process.ProcessContext;
@@ -63,7 +64,7 @@ public class ContentCoverageCalculator implements Task {
 	private ContentCoverageRepository contentCoverageRepo;
 	
 	@Autowired
-	private GenericDao genericDao;
+	private ReportUtil reportUtil;
 	
 	@Override
 	public void run(TaskContext context) {
@@ -75,7 +76,7 @@ public class ContentCoverageCalculator implements Task {
 		final String templateId = ProcessContext.get().getTemplateId();
 		final TemplateFacade template = templateManager.getTemplateFacade(templateId);
 
-		updateLastestFlagOfOldRecords();
+		reportUtil.updateLastestFlagOfOldRecords(ContentCoverage.class);
 		
 		TemplateContainerWalker walker = new TemplateContainerWalker(template.getTemplate(),
 				new ContainerFilter() {
@@ -133,18 +134,6 @@ public class ContentCoverageCalculator implements Task {
 				}
 			}
 		});
-		
-	}
-
-	private void updateLastestFlagOfOldRecords() {
-		
-		BoolFilter latestTrue = new BoolFilter("latest", Boolean.TRUE, ConditionOperator.EQ);
-		Query query = new Query(latestTrue.toPredicate(new Criteria()));
-		
-		Update update = new Update();
-		update.set("latest", Boolean.FALSE);
-		
-		genericDao.updateMulti(query, update, ContentCoverage.class);
 		
 	}
 
