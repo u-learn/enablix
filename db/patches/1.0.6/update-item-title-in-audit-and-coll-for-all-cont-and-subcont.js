@@ -100,35 +100,39 @@ dbs.forEach(function(database) {
 	    	    		
 	    	    		print("title attribute:" + labelAttrId);
 	    	    		
-	    	    		db[collName].find({}).snapshot().forEach(function(record) {
-	    	    			
-	    	    			var title = record[labelAttrId];
-	    	    			
-	    	    			if (title != undefined && title != null) {
-	    	    				
-	    	    				// update all audit records which do not have the title for this record
-	    	    				db.ebx_activity_audit.update(
-	        						{ 
-	        							"activity.category": "CONTENT",
-	        							"activity.itemIdentity": record.identity,
-	        							"activity.itemTitle": { $not: { $exists: true } }
-	        						},
-	        						{
-	        							$set: {
-	        								"activity.itemTitle": title
-	        							}
-	        						},
-	        						{
-	        							multi: true
-	        						}
-	        					);
-	    	    				
-	    	    				// set the title in record as well
-	    	    				record.__title = title;
-	    	    				db[collName].save(record);
-	    	    				
-	    	    			}
-	    	    		});
+	    	    		if (labelAttrId != null && labelAttrId != undefined) {
+		    	    		
+	    	    			db[collName].find({}).snapshot().forEach(function(record) {
+		    	    			
+		    	    			var title = record[labelAttrId];
+		    	    			
+		    	    			if (title != undefined && title != null) {
+		    	    				
+		    	    				// update all audit records which do not have the title for this record
+		    	    				db.ebx_activity_audit.update(
+		        						{ 
+		        							"activity.category": "CONTENT",
+		        							"activity.itemIdentity": record.identity,
+		        							"activity.itemTitle": { $not: { $exists: true } }
+		        						},
+		        						{
+		        							$set: {
+		        								"activity.itemTitle": title
+		        							}
+		        						},
+		        						{
+		        							multi: true
+		        						}
+		        					);
+		    	    				
+		    	    				// set the title in record as well
+		    	    				record.__title = title;
+		    	    				db[collName].save(record);
+		    	    				
+		    	    			}
+		    	    		});
+		    	    		
+	    	    		}
 	    	    		
 	    	    		updateLabelForContainers(cntnr.container);
 	    	    	}

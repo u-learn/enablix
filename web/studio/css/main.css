@@ -1329,6 +1329,7 @@ eb-nav-link:first-child li {
 .recomended-content .updated {
 	background: #e67e22;
 }
+.quick-links .fa-download,
 .recomended-content .fa-download {
 	position: relative;
 	top: 2px;
@@ -1593,6 +1594,10 @@ eb-doc-preview-action .doc-preview {
 .action-icons a {
 	color: #A1C1DD;
 	margin-left: 2px;
+}
+
+a.action-icon {
+    text-decoration: none !important;
 }
 
 a.suggest-edit {
