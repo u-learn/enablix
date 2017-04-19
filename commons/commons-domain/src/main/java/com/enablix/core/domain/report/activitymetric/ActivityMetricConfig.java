@@ -16,7 +16,7 @@ public class ActivityMetricConfig extends BaseDocumentEntity {
 
 	private String metricQueryFn;
 
-	protected Date startDate;
+	private Date startDate;
 
 	private Date runDate;
 	

@@ -233,22 +233,24 @@ enablix.studioApp.factory('ReportService',
 			
 			enablix.reports.push(contentCoverageReport);
 			
+			
 			/** =========================================== Content coverage report end ================================= **/
-			var eventOccurenceLst = [{
-                label: 'Last 1 day',
-                id: '1'
-            },
-            {
-                label: 'Last 3 days',
-                id: '3'
-            },
-            {
-                label: 'Last 1 Week',
+			var eventOccurenceLst = [
+			{
+				label: 'Last 1 Day',
+	            id: '1'
+	        },	
+			{
+                label: 'Last Week',
                 id: '7'
             },
             {
                 label: 'Last Month',
                 id: '30'
+            },
+            {
+                label: 'Last 60 Days',
+                id: '60'
             }
         ];
 			var activityMetricReport = {
@@ -256,14 +258,6 @@ enablix.studioApp.factory('ReportService',
 					name: "Activity Summary",
 					heading: "Activity Summary",
 					type: "TABULAR",
-					options: {
-								margin: { top: 150, right: 0, bottom: 70, left: 170 },
-								colors: [/*"#f7fbff", */"#deebf7", "#c6dbef", /*"#9ecae1", */"#6baed6", "#4292c6", /*"#2171b5", "#08519c", "#08306b"*/],
-								customColors : { "0": "#f58080"},
-								buckets: 4,
-								valueText: true,
-								categorize: true
-							 },
 					init: function($scope) {
 						
 					},

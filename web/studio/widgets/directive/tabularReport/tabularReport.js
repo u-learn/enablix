@@ -14,8 +14,8 @@ enablix.studioApp.directive('ebxTabularReport', [
 			link: function(scope, element, attrs) {
 				// column definitions
 				var columns = [
-				    { head: 'Metric', cl: 'reportName', html: d3.f('reportName') },
-				    { head: 'Value', cl: 'reportValue', html: d3.f('reportValue') }
+				    { head: 'Metric', cl: 'metricName', html: d3.f('metricName') },
+				    { head: 'Value', cl: 'metricValue', html: d3.f('metricValue') }
 				];
 				
 				

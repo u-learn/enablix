@@ -14,7 +14,7 @@ import com.enablix.app.report.activity.metric.ActivityMetricService;
 import com.enablix.app.report.util.ReportUtil;
 import com.enablix.core.domain.report.activitymetric.ActivityMetric;
 import com.enablix.core.domain.report.activitymetric.ActivityMetricConfig;
-import com.enablix.core.domain.report.activitymetric.ReportStats;
+import com.enablix.core.domain.report.activitymetric.MetricStats;
 import com.enablix.task.PerTenantTask;
 import com.enablix.task.Task;
 import com.enablix.task.TaskContext;
@@ -24,16 +24,13 @@ import com.enablix.task.TaskContext;
 public class ActivityMetricCalculator implements Task {
 
 	@Autowired
-	ActivityMetricService activityMetric;
+	private ActivityMetricService activityMetric;
 
 	@Autowired
-	ActivityMetricRepository activityMetricRepo;
+	private ActivityMetricRepository activityMetricRepo;
 
 	@Autowired
-	ActivityMetricConfigRepository activityMetricConfigRepo;
-
-	@Autowired
-	ReportUtil reportUtil;
+	private ActivityMetricConfigRepository activityMetricConfigRepo;
 
 	@Override
 	public void run(TaskContext context) {
@@ -42,19 +39,19 @@ public class ActivityMetricCalculator implements Task {
 
 		final Date currentDate = Calendar.getInstance().getTime();
 		ActivityMetric activityMetricBean = new ActivityMetric();
-		List<ReportStats> reportStats = new ArrayList<ReportStats>();
+		List<MetricStats> metricStats = new ArrayList<MetricStats>();
 
 		for (ActivityMetricConfig activityMetricConfig : activityMetrics) {
 
-			ReportStats reportStat = activityMetric.executeActivityMetrices(activityMetricConfig);
+			MetricStats metricStat = activityMetric.executeActivityMetrices(activityMetricConfig);
 
 			activityMetricConfig.setRunDate(currentDate);
 			activityMetricConfigRepo.save(activityMetricConfig);
 
-			reportStats.add(reportStat);
+			metricStats.add(metricStat);
 		}
 
-		activityMetricBean.setReportStats(reportStats);
+		activityMetricBean.setMetricStats(metricStats);
 		activityMetricBean.setAsOfDate(currentDate);
 		activityMetricRepo.save(activityMetricBean);
 	}

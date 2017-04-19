@@ -19,16 +19,17 @@ import org.springframework.stereotype.Component;
 
 import com.enablix.core.domain.report.activitymetric.ActivityMetric;
 import com.enablix.core.domain.report.activitymetric.ActivityMetricConfig;
-import com.enablix.core.domain.report.activitymetric.ReportStats;
-import com.enablix.core.mongo.dao.BaseTenantDao;
+import com.enablix.core.domain.report.activitymetric.MetricStats;
 
 @Component
-public class ActivityMetricServiceImpl extends BaseTenantDao implements ActivityMetricService {
-
+public class ActivityMetricServiceImpl  implements ActivityMetricService {
 
 	@Autowired
-	ActivityMetricConfigRepository activityMetricRepo;
+	private ActivityMetricConfigRepository activityMetricRepo;
 
+	@Autowired
+	private MongoTemplate mongoTemplate;
+	
 	@Override
 	public List<ActivityMetricConfig> getActivityMetricConfig() {
 		List<ActivityMetricConfig> activityMetrices = activityMetricRepo.findAll();
@@ -36,31 +37,27 @@ public class ActivityMetricServiceImpl extends BaseTenantDao implements Activity
 	}
 
 	@Override
-	public ReportStats executeActivityMetrices(ActivityMetricConfig activityMetric) {
-		MongoTemplate mongoTemplate = getMongoTemplate();
-		ReportStats reportStat;
+	public MetricStats executeActivityMetrices(ActivityMetricConfig activityMetric) {
+		MetricStats reportStat;
 
 		ScriptOperations scriptOps = mongoTemplate.scriptOps();
 		ExecutableMongoScript echoScript = new ExecutableMongoScript(activityMetric.getMetricQueryFn());
-		Integer value =  ((Double)scriptOps.execute(echoScript, "directly execute script")).intValue();;
-		reportStat =  new ReportStats(activityMetric.getMetricName(),value);
+		Integer value = ((Double) scriptOps.execute(echoScript)).intValue();
+		
+		reportStat = new MetricStats(activityMetric.getMetricName(), value);
 		return reportStat;
 	}
 
 	@Override
-	public List<ReportStats> getAggregatedValues(Date date) {
-		
-		MongoTemplate mongoTemplate = getMongoTemplate();
-		Aggregation aggregation = newAggregation(
-				match(Criteria.where("asOfDate").gte(date)),
-				unwind("reportStats"),
-				group("reportStats._id").sum("reportStats.reportValue").as("reportValue")
-				);
+	public List<MetricStats> getAggregatedValues(Date date) {
 
-		AggregationResults<ReportStats> groupResults = mongoTemplate.aggregate(aggregation, ActivityMetric.class
-				, ReportStats.class);
+		Aggregation aggregation = newAggregation(match(Criteria.where("asOfDate").gte(date)), unwind("metricStats"),
+				group("metricStats._id").sum("metricStats.metricValue").as("metricValue"));
 
-		List<ReportStats> activityReport = groupResults.getMappedResults();
+		AggregationResults<MetricStats> groupResults = mongoTemplate.aggregate(aggregation, ActivityMetric.class,
+				MetricStats.class);
+
+		List<MetricStats> activityReport = groupResults.getMappedResults();
 
 		return activityReport;
 	}

@@ -14,7 +14,7 @@ import com.enablix.core.mongo.search.ConditionOperator;
 public class ReportUtil {
 	
 	@Autowired
-	GenericDao genericDao ;
+	private GenericDao genericDao ;
 	
 	public void updateLastestFlagOfOldRecords(Class<?> className) {
 		

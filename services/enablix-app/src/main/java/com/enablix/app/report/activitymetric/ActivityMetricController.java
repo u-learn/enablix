@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.enablix.app.report.activity.metric.ActivityMetricService;
-import com.enablix.core.domain.report.activitymetric.ReportStats;
+import com.enablix.core.domain.report.activitymetric.MetricStats;
 
 @RestController
 @RequestMapping("activitymetric")
@@ -25,7 +25,7 @@ public class ActivityMetricController {
 	ActivityMetricService activityMetric;
 
 	@RequestMapping(method = RequestMethod.GET)
-	public List<ReportStats> getAggregatedActivityMetrices(@RequestParam("activityMetricTime") String date) {
+	public List<MetricStats> getAggregatedActivityMetrices(@RequestParam("activityMetricTime") String date) {
 		try{
 			Date activityMetricDate = new SimpleDateFormat("dd-MMM-yy").parse(date);
 			return activityMetric.getAggregatedValues(activityMetricDate);

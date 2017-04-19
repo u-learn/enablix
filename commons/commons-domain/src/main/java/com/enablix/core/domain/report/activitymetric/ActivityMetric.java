@@ -16,10 +16,10 @@ public class ActivityMetric extends BaseDocumentEntity{
 	
 	private boolean latest;
 
-	List<ReportStats> reportStats ;
+	private List<MetricStats> metricStats ;
 	
 	public ActivityMetric() {
-		reportStats = new ArrayList<ReportStats>();
+		metricStats = new ArrayList<MetricStats>();
 	}
 	
 	public Date getAsOfDate() {
@@ -37,12 +37,12 @@ public class ActivityMetric extends BaseDocumentEntity{
 	public void setLatest(boolean latest) {
 		this.latest = latest;
 	}
-	
-	public List<ReportStats> getReportStats() {
-		return reportStats;
+
+	public List<MetricStats> getMetricStats() {
+		return metricStats;
 	}
 
-	public void setReportStats(List<ReportStats> reportStats) {
-		this.reportStats = reportStats;
+	public void setMetricStats(List<MetricStats> metricStats) {
+		this.metricStats = metricStats;
 	}
 }
