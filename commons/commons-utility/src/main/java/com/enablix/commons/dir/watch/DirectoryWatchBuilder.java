@@ -113,18 +113,15 @@ public class DirectoryWatchBuilder {
 			                
 			                boolean isReset = watchKey.reset();
 
-			                if(!isReset){
+			                if(!isReset) {
 			                    break;
 			                }
 			                
 			            }
 			            
-			        } catch (IOException ioe) {
-			            ioe.printStackTrace();
-			            
-			        } catch (InterruptedException ie) {
-			            ie.printStackTrace();
-			        }
+			        } catch (IOException | InterruptedException e) {
+			        	LOGGER.error("Error in directory watcher", e);
+			        } 
 					
 				}
 				
