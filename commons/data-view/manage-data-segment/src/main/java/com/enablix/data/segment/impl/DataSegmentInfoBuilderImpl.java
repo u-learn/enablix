@@ -37,15 +37,20 @@ public class DataSegmentInfoBuilderImpl implements DataSegmentInfoBuilder {
 	private DataSegmentInfo buildDataSegmentInfo(
 			Map<String, Object> record, String contentQId, TemplateFacade template) {
 		
-		DataSegmentInfo dsInfo = new DataSegmentInfo();
+		DataSegmentInfo dsInfo = null;
 		
-		for (String dsAttrId : template.getDataSegmentAttrIds()) {
+		if (record != null) {
 			
-			ContentItemType contentItem = 
-					template.getContainerContentItemForDataSegmentAttr(contentQId, dsAttrId);
+			dsInfo = new DataSegmentInfo();
 			
-			if (contentItem != null) {
-				dsInfo.addAttribute(dsAttrId, record.get(contentItem.getId()));
+			for (String dsAttrId : template.getDataSegmentAttrIds()) {
+				
+				ContentItemType contentItem = 
+						template.getContainerContentItemForDataSegmentAttr(contentQId, dsAttrId);
+				
+				if (contentItem != null) {
+					dsInfo.addAttribute(dsAttrId, record.get(contentItem.getId()));
+				}
 			}
 		}
 		
