@@ -23,8 +23,8 @@ public class ActionRegistry<T extends RefObject, S extends StateChangeRecording<
 		nextActions = new HashMap<>();
 	}
 	
-	public <I extends ActionInput, V, R extends ActionResult<T, V>> 
-	void addAllowedActionForState(String stateName, ActionConfiguration<T, S, I, V, R> action) {
+	public <R extends ActionResult<T, ?>> 
+	void addAllowedActionForState(String stateName, ActionConfiguration<T, S, ? extends ActionInput, ?, R> action) {
 		
 		Map<String, ActionConfiguration<T, S, ? extends ActionInput, ?, ? extends ActionResult<T, ?>>> 
 					actions = registry.get(stateName);
