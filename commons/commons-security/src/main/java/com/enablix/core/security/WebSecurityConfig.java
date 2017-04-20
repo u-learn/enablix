@@ -92,6 +92,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		return new MongoPersistentTokenRepository();
 	}
 	
+	@Bean
 	public CustomLogoutSuccessHandler logoutSuccessHandler() {
 		CustomLogoutSuccessHandler handler = new CustomLogoutSuccessHandler();
 		handler.setDefaultTargetUrl("/login.html#/login");
