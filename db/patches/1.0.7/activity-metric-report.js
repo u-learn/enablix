@@ -125,7 +125,7 @@ var metricDocs = [{
     "_class" : "com.enablix.core.domain.report.activitymetric.ActivityMetricConfig",
     "metricCode" : "ACTMETRIC10",
     "metricName" : "Content Access via Weekly Digest",
-    "metricQueryFn" : " function() { var start = new Date(); start.setHours(0,0,0,0); var end = new Date(); end.setHours(23,59,59,999); return db.getCollection('ebx_activity_audit').count({'channel.channel':'EMAIL','activity.sharedFrom':'WEEKLY_DIGEST', 'createdAt': {$gte: ISODate(start.toISOString()) , $lt: ISODate(end.toISOString())}}) } ",
+    "metricQueryFn" : " function() { var start = new Date(); start.setHours(0,0,0,0); var end = new Date(); end.setHours(23,59,59,999); return db.getCollection('ebx_activity_audit').count({'channel.channel':'EMAIL','activity.contextName':'WEEKLY_DIGEST', 'createdAt': {$gte: ISODate(start.toISOString()) , $lt: ISODate(end.toISOString())}}) } ",
     "startDate" : ISODate("2017-04-12T10:44:59.644Z"),
     "runDate" : ISODate("2017-04-18T14:42:00.006Z"),
     "createdAt" : ISODate("2017-04-14T08:12:40.483Z"),
