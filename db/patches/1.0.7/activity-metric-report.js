@@ -23,6 +23,6 @@ dbs.forEach(function(database) {
     if (database.name.endsWith("_enablix") &&
         database.name != "system_enablix") {
         db = db.getSiblingDB(database.name);    
-        db.ebx_activity_metrictestt.insert(metricDocs);
+        db.ebx_activity_metric.insert(metricDocs);
     }
 });
