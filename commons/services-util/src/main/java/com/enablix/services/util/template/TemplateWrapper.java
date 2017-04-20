@@ -93,7 +93,9 @@ public class TemplateWrapper implements TemplateFacade {
 				containerStudioLabelAttrIdMap.put(containerQId, 
 						TemplateUtil.getStudioLabelAttributeId(template, containerQId));
 				
-				collectionNameContainerMap.put(collectionName, container);
+				if (!TemplateUtil.isLinkedContainer(container)) {
+					collectionNameContainerMap.put(collectionName, container);
+				}
 				
 				for (Entry<String, ContentItemType> segmentAttr : dataSegmentAttrIdMap.entrySet()) {
 					
