@@ -10,6 +10,6 @@
 		<heatmap class="hm-chart" data="data" dispatch="$parent.dispatch" options="reportDef.options"></heatmap>
 	</div>
 	<div class="cont" ng-if="reportDef.type == 'TABULAR'">
-		<ebx-tabular-report data="data" dispatch="$parent.dispatch" options="reportDef.options"></ebx-tabular-report>
+		<ebx-tabular-report data="data" dispatch="$parent.dispatch" columndetails="reportDef.columndetails"></ebx-tabular-report>
 	</div>
 </div>

@@ -261,6 +261,10 @@ enablix.studioApp.factory('ReportService',
 					init: function($scope) {
 						
 					},
+					columndetails : [
+					    { head: 'Metric', cl: 'metricName', html: d3.f('metricName') },
+					    { head: 'Value', cl: 'metricValue', html: d3.f('metricValue') }
+					],
 					filterMetadata: {
 		                "activityMetricTime": {
 		                    "field": "asOfDate",

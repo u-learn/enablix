@@ -7,21 +7,14 @@ enablix.studioApp.directive('ebxTabularReport', [
 			replace: true,
 			scope: {
 				data: "=",
-				options: "=?",
+				columndetails: "=?",
 				dispatch: "=?"
 			},
 			transclude: false,
 			link: function(scope, element, attrs) {
-				// column definitions
-				var columns = [
-				    { head: 'Metric', cl: 'metricName', html: d3.f('metricName') },
-				    { head: 'Value', cl: 'metricValue', html: d3.f('metricValue') }
-				];
-				
-				
 
 				function td_data(row, i) {
-				  	return columns.map(function(c) {
+				  	return scope.columndetails.map(function(c) {
 				        // compute cell values for this specific row
 				        var cell = {};
 				        d3.keys(c).forEach(function(k) {
@@ -43,7 +36,7 @@ enablix.studioApp.directive('ebxTabularReport', [
 					
 					table.append('thead').append('tr')
 					    .selectAll('th')
-					    .data(columns).enter()
+					    .data(scope.columndetails).enter()
 					    .append('th')
 					    .text(d3.f('head'))
 					     .attr('class', 'tabReportth');
