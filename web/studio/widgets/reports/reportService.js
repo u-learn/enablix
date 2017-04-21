@@ -283,8 +283,15 @@ enablix.studioApp.factory('ReportService',
 				                        return deferred.promise;
 				                    },
 				                    validateBeforeSubmit: function(_selectedValues) {
-				                        return true;
-				                    },
+										
+										if (_selectedValues.length == 0) {
+											this.errorMessage = "Please select one or more Values";
+											return false;
+										}
+										
+										this.errorMessage = null;
+										return true;
+									},
 				                    defaultValue: function() {
 				                    	 var returnVal = [];
 				                    	 // By Default setting it to Last One Day
