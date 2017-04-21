@@ -2,16 +2,15 @@ package com.enablix.app.report.activity.metric.task;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.enablix.app.report.activity.metric.ActivityMetricConfigRepository;
 import com.enablix.app.report.activity.metric.ActivityMetricRepository;
 import com.enablix.app.report.activity.metric.ActivityMetricService;
-import com.enablix.app.report.util.ReportUtil;
 import com.enablix.core.domain.report.activitymetric.ActivityMetric;
 import com.enablix.core.domain.report.activitymetric.ActivityMetricConfig;
 import com.enablix.core.domain.report.activitymetric.MetricStats;
@@ -37,23 +36,41 @@ public class ActivityMetricCalculator implements Task {
 
 		List<ActivityMetricConfig> activityMetrics = activityMetric.getActivityMetricConfig();
 
-		final Date currentDate = Calendar.getInstance().getTime();
-		ActivityMetric activityMetricBean = new ActivityMetric();
-		List<MetricStats> metricStats = new ArrayList<MetricStats>();
+		Calendar backRunCalendar = getCalendar();
+		final Calendar currentDayCalendar = getCalendar();
 
+		ActivityMetric activityMetricBean;
+		List<MetricStats> metricStats;
 		for (ActivityMetricConfig activityMetricConfig : activityMetrics) {
-
-			MetricStats metricStat = activityMetric.executeActivityMetrices(activityMetricConfig);
-
-			activityMetricConfig.setRunDate(currentDate);
+			backRunCalendar.setTime(activityMetricConfig.getNextRunDate());
+			while(!DateUtils.isSameDay(backRunCalendar,currentDayCalendar)){
+				
+				MetricStats metricStat = activityMetric.executeActivityMetrices(activityMetricConfig,backRunCalendar.getTime());
+				activityMetricBean  = activityMetricRepo.findByAsOfDate(backRunCalendar.getTime());
+			
+				if(activityMetricBean == null){
+					activityMetricBean = new ActivityMetric();
+					metricStats = new ArrayList<MetricStats>();
+					activityMetricBean.setAsOfDate(backRunCalendar.getTime());
+				}
+				else{
+					metricStats = activityMetricBean.getMetricStats();
+				}
+				metricStats.add(metricStat);
+				
+				activityMetricBean.setMetricStats(metricStats);
+				activityMetricRepo.save(activityMetricBean);
+				
+				backRunCalendar.add(Calendar.DATE, 1);
+			}
+			activityMetricConfig.setNextRunDate(backRunCalendar.getTime());
 			activityMetricConfigRepo.save(activityMetricConfig);
-
-			metricStats.add(metricStat);
 		}
+	}
 
-		activityMetricBean.setMetricStats(metricStats);
-		activityMetricBean.setAsOfDate(currentDate);
-		activityMetricRepo.save(activityMetricBean);
+	private Calendar getCalendar() {
+		Calendar instance =  DateUtils.truncate(Calendar.getInstance(), java.util.Calendar.DAY_OF_MONTH);
+		return instance;
 	}
 
 	@Override

@@ -37,12 +37,12 @@ public class ActivityMetricServiceImpl  implements ActivityMetricService {
 	}
 
 	@Override
-	public MetricStats executeActivityMetrices(ActivityMetricConfig activityMetric) {
+	public MetricStats executeActivityMetrices(ActivityMetricConfig activityMetric, Date executionDate) {
 		MetricStats reportStat;
 
 		ScriptOperations scriptOps = mongoTemplate.scriptOps();
 		ExecutableMongoScript echoScript = new ExecutableMongoScript(activityMetric.getMetricQueryFn());
-		Integer value = ((Double) scriptOps.execute(echoScript)).intValue();
+		Integer value = ((Double) scriptOps.execute(echoScript,executionDate)).intValue();
 		
 		reportStat = new MetricStats(activityMetric.getMetricName(), value);
 		return reportStat;

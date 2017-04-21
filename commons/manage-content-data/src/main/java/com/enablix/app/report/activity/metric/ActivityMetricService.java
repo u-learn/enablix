@@ -12,6 +12,6 @@ public interface ActivityMetricService {
 
 	List<MetricStats> getAggregatedValues(Date date);
 	
-	MetricStats executeActivityMetrices(ActivityMetricConfig activityMetrices);
+	MetricStats executeActivityMetrices(ActivityMetricConfig activityMetrices, Date executionDate);
 	
 }

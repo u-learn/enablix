@@ -18,7 +18,7 @@ public class ActivityMetricConfig extends BaseDocumentEntity {
 
 	private Date startDate;
 
-	private Date runDate;
+	private Date nextRunDate;
 	
 	public String getMetricCode() {
 		return metricCode;
@@ -51,12 +51,12 @@ public class ActivityMetricConfig extends BaseDocumentEntity {
 	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
 	}
-
-	public Date getRunDate() {
-		return runDate;
+	
+	public Date getNextRunDate() {
+		return nextRunDate;
 	}
 
-	public void setRunDate(Date runDate) {
-		this.runDate = runDate;
+	public void setNextRunDate(Date nextRunDate) {
+		this.nextRunDate = nextRunDate;
 	}
 }
