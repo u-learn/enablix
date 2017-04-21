@@ -4455,6 +4455,16 @@
 		</contentUIDef>
 		<contentUIDef qualifiedId="salesKit.kitDesc">
 			<text type="long"/>
+		</contentUIDef>	
+		<contentUIDef qualifiedId="partnerType">
+			<container labelQualifiedId="partnerType.typeName">		
+				<portalConfig>
+					<headingContentItem id="typeName"/>
+				</portalConfig>
+			</container>
+		</contentUIDef>
+		<contentUIDef qualifiedId="salesKit.kitDesc">
+			<text type="long"/>
 		</contentUIDef>		
 	</uiDefinition>
 	<portalUIDefinition>
