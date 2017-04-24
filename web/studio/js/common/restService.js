@@ -22,8 +22,8 @@ var genereateRequestConfig = function(_resourceKey, _params) {
 };
 
 enablix.studioApp.factory('RESTService', [
-		'$http', '$rootScope', '$window', 'InfoModalWindow', 'StateUpdateService', 'ResourceVersionHolder',
-		function($http, $rootScope, $window, InfoModalWindow, StateUpdateService, ResourceVersionHolder) {	
+		        '$http', '$rootScope', '$window', 'TenantInfoService', 'InfoModalWindow', 'StateUpdateService', 'ResourceVersionHolder',
+		function($http,   $rootScope,   $window,   TenantInfoService,   InfoModalWindow,   StateUpdateService,   ResourceVersionHolder) {	
 			
 			var postForFile = function(_resourceKey, _params, files, _data, _success, _error, _headers) {
 				
@@ -50,6 +50,26 @@ enablix.studioApp.factory('RESTService', [
 		            });
 			}
 			
+			var addTenantHeaders = function(_headers) {
+				
+				var callHeaders = {};
+				if (!isNullOrUndefined(_headers)) {
+					callHeaders = _headers;
+				}
+				
+				var tenantInfo = TenantInfoService.getTenantInfo();
+				
+				if (!isNullOrUndefined(tenantInfo)) {
+					
+					angular.forEach(tenantInfo, function(value, key) {
+						if (!isNullOrUndefined(value)) {
+							callHeaders[key] = value;
+						}
+					});
+				}
+				
+				return callHeaders;
+			};
 			
 			var addResourceVersionHeaders = function(_headers) {
 				
@@ -74,6 +94,7 @@ enablix.studioApp.factory('RESTService', [
 				var requestConfig = genereateRequestConfig(_resourceKey, _params);
 				
 				var callHeaders = addResourceVersionHeaders(_headers);
+				callHeaders = addTenantHeaders(callHeaders);
 				
 				return $http({
 							method : 'GET',
@@ -104,6 +125,7 @@ enablix.studioApp.factory('RESTService', [
 				var requestConfig = genereateRequestConfig(_resourceKey, _params);
 				
 				var callHeaders = addResourceVersionHeaders(_headers);
+				callHeaders = addTenantHeaders(callHeaders);
 				
 				
 				return $.ajax({
@@ -181,6 +203,7 @@ enablix.studioApp.factory('RESTService', [
 				}
 				
 				var callHeaders = addResourceVersionHeaders(_headers);
+				callHeaders = addTenantHeaders(callHeaders);
 				
 				var requestConfig = genereateRequestConfig(_resourceKey, _params);
 				

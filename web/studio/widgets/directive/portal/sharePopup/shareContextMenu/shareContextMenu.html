@@ -3,7 +3,7 @@
 <ul id={{contextData.identity}}
 	class="dropdown-menu dropdown-menu-right" role="menu"
 	aria-labelledby="shareBttn">
-	<li role="presentation"><a class="contextAnchor" role="menuitem"
+	<li role="presentation" requires-permission="SHARE_VIA_EMAIL"><a class="contextAnchor" role="menuitem"
 		tabindex="-1" href="#"
 		ng-click="openShareContentModal(contextData.identity,$event)">
 			<span class='fa fa-envelope'></span>
@@ -14,7 +14,7 @@
 		tabindex="-1" href="#"
 		ng-click="openMailClient(contextData.downloadDocIdentity,contextData.identity,contextData.title)">Share
 			By Email Client</a></li>  -->
-	<li role="presentation" class="divider"></li>
+	<li role="presentation" class="divider" requires-permission="SHARE_VIA_EMAIL"></li>
 	<li role="presentation">
 		<a class="contextAnchor" role="menuitem" tabindex="-1" href="#"	
 			ng-click="copyPortalURL(contextData.identity,contextData.title,contextData.name)">
@@ -28,10 +28,9 @@
 		class="contextAnchor" role="menuitem" tabindex="-1" href="#"
 		ng-click="copyDownloadURL(contextData.downloadDocIdentity,contextData.identity,contextData.title)">Copy
 			Download URL</a></li> -->
-	<li role="presentation"
-		class="divider"></li>
-	<li role="presentation">
-	<a class="contextAnchor" role="menuitem"
+	<li role="presentation" class="divider" requires-permission="SHARE_VIA_SLACK"></li>
+	<li role="presentation" requires-permission="SHARE_VIA_SLACK">
+	<a class="contextAnchor" role="menuitem" 
 		tabindex="-1" ng-click="shareToSlack(contextData.identity,$event)">
 		    <span class='fa fa-slack'></span>
    			<span class="my-text">Share On Slack</span>

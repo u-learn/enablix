@@ -1,26 +1,101 @@
 enablix.studioApp.factory('AuthorizationService', 
 	[
-	 			'$state', '$rootScope', '$stateParams', 'StateUpdateService', 'RESTService',
-	 	function($state,   $rootScope,   $stateParams,   StateUpdateService,   RESTService) {
+	 			'$state', '$rootScope', '$stateParams', 'StateUpdateService', 'RESTService', 'TenantInfoService',
+	 	function($state,   $rootScope,   $stateParams,   StateUpdateService,   RESTService,   TenantInfoService) {
 	 		
-	 		var currentUser = {};		
+	 		var currentUser = {};	
 	 		
-	 		var userHasPermission = function(checkPerm) {
+	 		var OR_PERM_SEPARATOR = "|";
+	 		var AND_PERM_SEPARATOR = "+";
+	 		
+	 		class SimplePermissionCheck {
 	 			
-	 			if (enablix.loggedInUser && enablix.loggedInUser.authorities) {
+	 			constructor(perm) {
+	 				this.perm = perm;
+	 			}
+	 			
+	 			check() {
 	 				
-	 				var permissions = enablix.loggedInUser.authorities;
+	 				if (enablix.loggedInUser && enablix.loggedInUser.authorities) {
+		 				
+		 				var permissions = enablix.loggedInUser.authorities;
+		 				
+		 				for (var k = 0; k < permissions.length; k++) {
+		 					
+		 					var userPerm = permissions[k].authority;
+		 					if (userPerm === this.perm) {
+		 						return true;
+		 					}
+		 				}
+		 			}
+		 			
+		 			return false;
+	 			}
+	 		};
+	 		
+	 		class OrPermissionCheck {
+
+	 			constructor(_perms) {
 	 				
-	 				for (var k = 0; k < permissions.length; k++) {
-	 					
-	 					var perm = permissions[k].authority;
-	 					if (perm === checkPerm) {
-	 						return true;
-	 					}
+	 				this.permChecks = [];
+	 				
+	 				for (var i = 0; i < _perms.length; i++) {
+	 					this.permChecks[i] = new SimplePermissionCheck(_perms[i]);
 	 				}
 	 			}
 	 			
-	 			return false;
+	 			check() {
+	 				
+	 				for (var i = 0; i < this.permChecks.length; i++) {
+	 					if (this.permChecks[i].check()) {
+	 						return true;
+	 					}
+	 				}
+	 				
+	 				return false;
+	 			}
+	 		}
+	 		
+	 		class AndPermissionCheck {
+
+	 			constructor(_perms) {
+	 				
+	 				this.permChecks = [];
+	 				
+	 				for (var i = 0; i < _perms.length; i++) {
+	 					this.permChecks[i] = new SimplePermissionCheck(_perms[i]);
+	 				}
+	 			}
+	 			
+	 			check() {
+	 				
+	 				for (var i = 0; i < this.permChecks.length; i++) {
+	 					if (!this.permChecks[i].check()) {
+	 						return false;
+	 					}
+	 				}
+	 				
+	 				return true;
+	 			}
+	 		}
+	 		
+	 		var userHasPermission = function(checkPerm) {
+	 			
+	 			var permCheck = new SimplePermissionCheck(checkPerm);
+	 			
+	 			// currently we will only support all OR expression or all AND expression
+	 			if (checkPerm.indexOf(OR_PERM_SEPARATOR) > 0) {
+	 			
+	 				var permArray = checkPerm.split(OR_PERM_SEPARATOR);
+	 				permCheck = new OrPermissionCheck(permArray);
+	 				
+	 			} else if (checkPerm.indexOf(AND_PERM_SEPARATOR) > 0) {
+	 				
+	 				var permArray = checkPerm.split(AND_PERM_SEPARATOR);
+	 				permCheck = new AndPermissionCheck(permArray);
+	 			}
+	 			
+	 			return permCheck.check();
 	 		}
 	 		
 	 		var userHasAllPermissions = function(permissions) {
@@ -59,7 +134,8 @@ enablix.studioApp.factory('AuthorizationService',
 			    		if (data.name) {
 				    		
 			    			enablix.loggedInUser = data.principal;
-				    		
+				    		TenantInfoService.initFromLoggedInUser(enablix.loggedInUser);
+			    			
 				    		currentUser = data.principal.user;
 				    		window.localStorage.setItem("userData", JSON.stringify(data.principal.user));
 				    	

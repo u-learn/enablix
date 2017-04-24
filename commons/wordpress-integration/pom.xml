@@ -1,0 +1,29 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.enablix.commons</groupId>
+    <artifactId>commons-parent</artifactId>
+    <relativePath>../commons-parent</relativePath>
+    <version>1.0-SNAPSHOT</version>
+  </parent>
+  <artifactId>wordpress-integration</artifactId>
+  <dependencies>
+	<!-- https://mvnrepository.com/artifact/com.afrozaar.wordpress/wp-api-v2-client-java -->
+	<dependency>
+	    <groupId>com.afrozaar.wordpress</groupId>
+	    <artifactId>wp-api-v2-client-java</artifactId>
+	    <version>2.0-beta15</version>
+	    <exclusions>
+		    <exclusion>
+	            <groupId>ch.qos.logback</groupId>
+	            <artifactId>logback-classic</artifactId>
+		    </exclusion>
+		</exclusions>
+	</dependency>
+	<dependency>
+		<groupId>com.enablix.services</groupId>
+		<artifactId>info-detection-api</artifactId>
+		<version>1.0-SNAPSHOT</version>
+	</dependency>
+  </dependencies>
+</project>

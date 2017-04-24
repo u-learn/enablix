@@ -15,7 +15,10 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.enablix.commons.constants.AppConstants;
+import com.enablix.commons.util.StringUtil;
 import com.enablix.commons.util.process.ProcessContext;
+import com.enablix.commons.util.process.RequestContext;
+import com.enablix.core.domain.security.authorization.UserProfile;
 import com.enablix.core.security.service.EnablixUserService.LoggedInUser;
 
 public class ProcessContextInitFilter extends OncePerRequestFilter {
@@ -49,8 +52,10 @@ public class ProcessContextInitFilter extends OncePerRequestFilter {
 				
 				LoggedInUser user = (LoggedInUser) principal;
 				
+				String clientId = resolveClientId(user.getUserProfile());
+				
 				ProcessContext.initialize(user.getUsername(), user.getDisplayName(),
-						user.getUser().getTenantId(), user.getTemplateId());
+						user.getUser().getTenantId(), user.getTemplateId(), clientId);
 
 				
 				processCtxInitialized = true;
@@ -64,7 +69,7 @@ public class ProcessContextInitFilter extends OncePerRequestFilter {
 				
 				if (matcher.matches(request)) {
 					ProcessContext.initialize(AppConstants.SYSTEM_USER_ID, 
-							AppConstants.SYSTEM_USER_NAME, null, null);
+							AppConstants.SYSTEM_USER_NAME, null, null, null);
 					break;
 				}
 			}
@@ -77,6 +82,22 @@ public class ProcessContextInitFilter extends OncePerRequestFilter {
 			ProcessContext.clear();
 		}
 		
+	}
+	
+	private String resolveClientId(UserProfile userProfile) {
+		
+		String clientId = userProfile.getSystemProfile().getDefaultClientId();
+		
+		if (StringUtil.isEmpty(clientId)) {
+			
+			RequestContext reqCtx = RequestContext.get();
+			
+			if (reqCtx != null) {
+				clientId = reqCtx.getClientId();
+			}
+		}
+		
+		return clientId;
 	}
 
 }

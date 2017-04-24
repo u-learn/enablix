@@ -1,7 +1,7 @@
 enablix.studioApp.factory('StateUpdateService', 
 	[
-	 			'$state', '$stateParams', '$rootScope', '$location', '$window', 'NavigationTracker',
-	 	function($state,   $stateParams,   $rootScope,   $location,   $window,   NavigationTracker) {
+	 			'$state', '$stateParams', '$rootScope', '$location', '$window', 'NavigationTracker', 'TenantInfoService',
+	 	function($state,   $stateParams,   $rootScope,   $location,   $window,   NavigationTracker,   TenantInfoService) {
 	 		
 	 		var goToStudioList = function(_containerQId, _parentIdentity) {
 				$state.go('studio.list', {'containerQId' : _containerQId, 
@@ -53,13 +53,14 @@ enablix.studioApp.factory('StateUpdateService',
 	 		};
 	 		
 	 		var goToLogin = function(previousUrl) {
-				if(previousUrl.lastIndexOf("#")>0 && previousUrl.substring(previousUrl.lastIndexOf("#") + 1, previousUrl.length).length > 7)
+				if(previousUrl.lastIndexOf("#") > 0 && previousUrl.substring(previousUrl.lastIndexOf("#") + 1, previousUrl.length).length > 7)
 					//if previous URL is other than logout
 					$window.location.href = $location.protocol() + "://" + $location.host() 
- 											+ ":" + $location.port() + "/login.html#/login#" +"redirect#" + encodeURIComponent(previousUrl);
+ 											+ ":" + $location.port() + TenantInfoService.getTenantContextUrl() 
+ 											+ "/login.html#/login#" +"redirect#" + encodeURIComponent(previousUrl);
 				else
 					$window.location.href = $location.protocol() + "://" + $location.host() 
- 											+ ":" + $location.port() + "/login.html#/login";
+ 											+ ":" + $location.port() + TenantInfoService.getTenantContextUrl() + "/login.html#/login";
 											
 	 		};
 	 		
@@ -70,8 +71,8 @@ enablix.studioApp.factory('StateUpdateService',
 	 		};
 	 		
 	 		var goToApp = function() {
-	 			$window.location.href = $location.protocol() + "://" + $location.host() 
- 						+ ":" + $location.port() + "/app.html#/portal/home";
+	 			$window.location.href = $location.protocol() + "://" + $location.host() + ":" + $location.port() 
+	 									 + "/app.html#/portal/home";
 	 		};
 	 		
 			var goToForgotPasswordPage = function(){
@@ -79,8 +80,8 @@ enablix.studioApp.factory('StateUpdateService',
 	 		};
 
 	 		var goToAppSetPassword = function(identity) {
-	 			$window.location.href = $location.protocol() + "://" + $location.host() 
-					+ ":" + $location.port() + "/app.html#/setpassword/"+identity;
+	 			$window.location.href = $location.protocol() + "://" + $location.host() + ":" + $location.port() 
+	 									 + "/app.html#/setpassword/"+identity;
 	 			//$state.go("setpassword", {
 	 			//	"identity": identity
 	 			//});

@@ -192,5 +192,15 @@
 			<artifactId>elasticsearch-data-view-builder</artifactId>
 			<version>1.0-SNAPSHOT</version>
 		</dependency>
+		<dependency>
+			<groupId>com.enablix.commons</groupId>
+			<artifactId>wordpress-integration</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.enablix.services</groupId>
+			<artifactId>info-detection-impl</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 </project>

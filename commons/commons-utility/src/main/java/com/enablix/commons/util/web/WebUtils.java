@@ -13,6 +13,72 @@ import org.slf4j.LoggerFactory;
 public class WebUtils {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(WebUtils.class);
+	
+	private static final String TENANT_ID_URL_PREFIX = "t/";
+	private static final int TENANT_ID_URL_PREFIX_OFFSET = TENANT_ID_URL_PREFIX.length();
+	
+	private static final String CLIENT_ID_URL_PREFIX = "c/";
+	private static final int CLIENT_ID_URL_PREFIX_OFFSET = CLIENT_ID_URL_PREFIX.length();
+	
+	public static String removeTenantInfo(String resourcePath) {
+		
+		if (resourcePath.startsWith(TENANT_ID_URL_PREFIX)) {
+			
+			resourcePath = resourcePath.substring(resourcePath.indexOf("/", TENANT_ID_URL_PREFIX_OFFSET) + 1);
+			
+			if (resourcePath.startsWith(CLIENT_ID_URL_PREFIX)) {
+				resourcePath = resourcePath.substring(resourcePath.indexOf("/", CLIENT_ID_URL_PREFIX_OFFSET) + 1);
+			}
+		}
+		
+		return resourcePath;
+	}
+	
+	public static TenantInfo getTenantInfoFromUrl(HttpServletRequest request) {
+		
+		TenantInfo tenantInfo = null;
+		
+		String requestURI = request.getRequestURI();
+		requestURI = removeLeadingSlash(requestURI);
+
+		if (requestURI.startsWith(TENANT_ID_URL_PREFIX)) {
+		
+			tenantInfo = new TenantInfo();
+			
+			int indexOfNextSlash = requestURI.indexOf("/", TENANT_ID_URL_PREFIX_OFFSET);
+			String tenantId = requestURI.substring(TENANT_ID_URL_PREFIX_OFFSET, indexOfNextSlash);
+			tenantInfo.setTenantId(tenantId);
+			
+			requestURI = requestURI.substring(indexOfNextSlash + 1);
+			
+			if (requestURI.startsWith(CLIENT_ID_URL_PREFIX)) {
+				
+				indexOfNextSlash = requestURI.indexOf("/", CLIENT_ID_URL_PREFIX_OFFSET);
+				String clientId = requestURI.substring(TENANT_ID_URL_PREFIX_OFFSET, indexOfNextSlash);
+				tenantInfo.setClientId(clientId);
+			}
+		}
+
+		return tenantInfo;
+	}
+	
+	private static String removeLeadingSlash(String path) {
+		
+		int slashCnt = 0;
+		
+		for (int i = 0; i < path.length(); i++) {
+			if (path.charAt(i) != '/') {
+				break;
+			}
+			slashCnt++;
+		}
+		
+		if (slashCnt > 0) {
+			path = path.substring(slashCnt);
+		}
+		
+		return path;
+	}
 
 	public static String getPostData(HttpServletRequest request) {
 

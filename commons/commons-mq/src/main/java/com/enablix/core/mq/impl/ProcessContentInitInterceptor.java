@@ -22,8 +22,9 @@ public class ProcessContentInitInterceptor extends EventInterceptorSupport {
 		String userName = (String) event.getHeaders().get(EventHeaders.USER_NAME);
 		String tenantId = (String) event.getHeaders().get(EventHeaders.TENANT_ID);
 		String templateId = (String) event.getHeaders().get(EventHeaders.TEMPLATE_ID);
+		String clientId = (String) event.getHeaders().get(EventHeaders.CLIENT_ID);
 		
-		ProcessContext.initialize(userId, userName, tenantId, templateId);
+		ProcessContext.initialize(userId, userName, tenantId, templateId, clientId);
 	}
 	
 }

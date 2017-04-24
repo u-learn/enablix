@@ -16,6 +16,7 @@ public class AppConstants {
 	public static final int DEFAULT_PAGE_SIZE = 10;
 	
 	public static final String TENANT_ID_REQ_PARAM = "tenantId";
+	public static final String CLIENT_ID_REQ_PARAM = "clientId";
 	
 	public static final String USER_PROFILE_COLL_NAME = "ebx_user_profile";
 	

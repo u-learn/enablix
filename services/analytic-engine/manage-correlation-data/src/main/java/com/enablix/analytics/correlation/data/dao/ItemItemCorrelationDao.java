@@ -7,8 +7,6 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.stereotype.Component;
 
 import com.enablix.commons.util.collection.CollectionUtil;
-import com.enablix.commons.util.collection.CollectionUtil.CollectionCreator;
-import com.enablix.commons.util.collection.CollectionUtil.ITransformer;
 import com.enablix.core.api.ContentDataRef;
 import com.enablix.core.correlation.ItemItemCorrelation;
 import com.enablix.core.mongo.dao.BaseTenantDao;
@@ -90,21 +88,7 @@ public class ItemItemCorrelationDao extends BaseTenantDao {
 				// if tag filter was present and records matched the tag filter, then apply 
 				
 				ArrayList<String> recordIds = CollectionUtil.transform(filteredRecords, 
-						new CollectionCreator<ArrayList<String>, String>() {
-
-							@Override
-							public ArrayList<String> create() {
-								return new ArrayList<String>();
-							}
-							
-						}, new ITransformer<ItemItemCorrelation, String>() {
-			
-							@Override
-							public String transform(ItemItemCorrelation in) {
-								return in.getId();
-							}
-							
-						});
+												() -> new ArrayList<String>(), (in) -> in.getId());
 			
 				searchFilter = new StringListFilter(RECORD_ID_FIELD, recordIds, ConditionOperator.IN);
 				

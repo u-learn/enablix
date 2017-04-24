@@ -12,8 +12,8 @@ public class MultiTenantExecutor {
 		
 		for (Tenant tenant : tenants) {
 			
-			ProcessContext.initialize(AppConstants.SYSTEM_USER_ID, 
-					AppConstants.SYSTEM_USER_NAME, tenant.getTenantId(), tenant.getDefaultTemplateId());
+			ProcessContext.initialize(AppConstants.SYSTEM_USER_ID, AppConstants.SYSTEM_USER_NAME, 
+					tenant.getTenantId(), tenant.getDefaultTemplateId(), null);
 			
 			try {
 				

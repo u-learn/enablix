@@ -32,7 +32,7 @@ public class TenantSpecificFileBasedDataLoader extends FileBasedDataLoader {
 		String templateId = tenant.getDefaultTemplateId();
 		
 		ProcessContext.initialize(AppConstants.SYSTEM_USER_ID, 
-				AppConstants.SYSTEM_USER_NAME, tenantId, templateId);
+				AppConstants.SYSTEM_USER_NAME, tenantId, templateId, null);
 		
 		try {
 			

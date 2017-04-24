@@ -14,7 +14,6 @@ import com.enablix.commons.util.collection.CollectionUtil;
 import com.enablix.core.api.ContentDataRef;
 import com.enablix.core.domain.reco.Recommendation;
 import com.enablix.core.mongo.MongoUtil;
-import com.enablix.core.mongo.MongoUtil.DataViewOperation;
 import com.enablix.core.mongo.view.MongoDataView;
 import com.enablix.data.view.DataView;
 import com.enablix.services.util.DataViewUtil;
@@ -41,41 +40,21 @@ public class PreRecordedRecommendationEngine implements RecommendationEngine {
 		if (!StringUtil.isEmpty(containerQId) && !StringUtil.isEmpty(contentIdentity)) {
 			
 			recommendations = MongoUtil.executeWithDataViewScope(mongoDataView, 
-					new DataViewOperation<Collection<Recommendation>>() {
-						
-						@Override
-						public Collection<Recommendation> execute() {
-							return contentSpecificRecommendations(
-									userId, templateId, containerQId, contentIdentity);
-						}
-					});
+					() -> contentSpecificRecommendations(
+									userId, templateId, containerQId, contentIdentity));
 		} 
 		
 		if (CollectionUtil.isEmpty(recommendations) && 
 				!StringUtil.isEmpty(containerQId) && StringUtil.isEmpty(contentIdentity)) {
 			
 			recommendations = MongoUtil.executeWithDataViewScope(mongoDataView, 
-					new DataViewOperation<Collection<Recommendation>>() {
-						
-						@Override
-						public Collection<Recommendation> execute() {
-							return containerSpecificRecommendation(userId, templateId, containerQId);
-						}
-					});
-
+					() -> containerSpecificRecommendation(userId, templateId, containerQId));
 		} 
 		
 		if (CollectionUtil.isEmpty(recommendations)) {
 			
 			recommendations = MongoUtil.executeWithDataViewScope(mongoDataView, 
-					new DataViewOperation<Collection<Recommendation>>() {
-						
-						@Override
-						public Collection<Recommendation> execute() {
-							return generalRecommendations(userId, templateId);
-						}
-					});
-
+					() -> generalRecommendations(userId, templateId));
 		}
 
 		if (recommendations != null) {

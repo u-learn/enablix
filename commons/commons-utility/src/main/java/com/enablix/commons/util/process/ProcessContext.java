@@ -15,11 +15,11 @@ public class ProcessContext {
 	
 	public static final ThreadLocal<ProcessContext> THREAD_LOCAL_PROCESS_CONTEXT = new ThreadLocal<ProcessContext>();
 
-	public static void initialize(String userId, String userDisplayName, String tenantId, String templateId) {
+	public static void initialize(String userId, String userDisplayName, String tenantId, String templateId, String clientId) {
 		
 		if (get() == null) {
 		
-			ProcessContext ctx = new ProcessContext(userId, userDisplayName, tenantId, templateId);
+			ProcessContext ctx = new ProcessContext(userId, userDisplayName, tenantId, templateId, clientId);
 			THREAD_LOCAL_PROCESS_CONTEXT.set(ctx);
 			
 			LOGGER.trace("Initialized " + ctx);
@@ -65,14 +65,16 @@ public class ProcessContext {
 	private String tenantId;
 	private String templateId;
 	private String processId;
+	private String clientId;
 
-	private ProcessContext(String userId, String userDisplayName, String tenantId, String templateId) {
+	private ProcessContext(String userId, String userDisplayName, String tenantId, String templateId, String clientId) {
 		super();
 		this.userId = userId;
 		this.userDisplayName = userDisplayName;
 		this.tenantId = tenantId;
 		this.templateId = templateId;
-		this.processId = UUID.randomUUID().toString(); 
+		this.clientId = clientId;
+		this.processId = UUID.randomUUID().toString();
 	}
 
 	public String getUserId() {
@@ -91,10 +93,14 @@ public class ProcessContext {
 		return templateId;
 	}
 
+	public String getClientId() {
+		return clientId;
+	}
+
 	@Override
 	public String toString() {
 		return "ProcessContext [userId=" + userId + ", tenantId=" + tenantId + ", templateId=" + templateId
-				+ ", processId=" + processId + "]";
+				+ ", processId=" + processId + ", clientId=" + clientId + "]";
 	}
 	
 }

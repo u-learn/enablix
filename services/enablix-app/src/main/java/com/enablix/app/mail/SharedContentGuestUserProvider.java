@@ -38,12 +38,9 @@ public class SharedContentGuestUserProvider implements GuestUserProvider {
 		SharedSiteUrl shareDetails = getSharedUrlDetails(request);
 		
 		if (shareDetails != null) {
-			
-			
 			user.setIdentity(AppConstants.GUEST_USER_IDENTITY);
 			user.setUserId(shareDetails.getSharedWith());
 			user.setTenantId(shareDetails.getTenantId());
-			
 		}
 		
 		return user;
@@ -54,14 +51,11 @@ public class SharedContentGuestUserProvider implements GuestUserProvider {
 		
 		UserProfile usrProfile = new UserProfile();
 		
-		
 		if (user != null) {
-			
 			usrProfile.setIdentity(AppConstants.GUEST_USER_IDENTITY);
 			usrProfile.setUserIdentity(AppConstants.GUEST_USER_IDENTITY);
 			usrProfile.setEmail(user.getUserId());
 			usrProfile.setName(user.getUserId());
-			
 		}
 		
 		return usrProfile;

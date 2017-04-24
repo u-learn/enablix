@@ -14,11 +14,13 @@
 		<aside class="col-sm-4 col-md-3">
 			<nav id="side-nav" class="side-nav">
 				<ul>
-					<li ng-class="{active: $state.includes('myaccount.contentrequestlist') || $state.includes('myaccount.contentrequestedit') || $state.includes('myaccount.contentrequestview')}">
+					<li ng-class="{active: $state.includes('myaccount.contentrequestlist') || $state.includes('myaccount.contentrequestedit') || $state.includes('myaccount.contentrequestview')}"
+							requires-permission="SUGGEST_CONTENT">
 						<i class="fa fa-angle-right"></i>
 						<a href="#" ui-sref-active="active" ui-sref="myaccount.contentrequestlist">My Content Requests</a>
 					</li>
-					<li ng-class="{active: $state.includes('myaccount.slackauthorization') || $state.includes('myaccount.slackdtls') }">
+					<li ng-class="{active: $state.includes('myaccount.slackauthorization') || $state.includes('myaccount.slackdtls') }"
+							requires-permission="SHARE_VIA_SLACK">
 						<i class="fa fa-angle-right"></i>
 						<a href="#" ui-sref-active="active" ui-sref="myaccount.slackauthorization">Slack Integration</a>
 					</li>

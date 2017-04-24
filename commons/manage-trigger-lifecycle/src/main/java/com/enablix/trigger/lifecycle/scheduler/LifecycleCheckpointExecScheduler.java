@@ -51,7 +51,7 @@ public class LifecycleCheckpointExecScheduler {
 			try {
 				
 				ProcessContext.initialize(AppConstants.SYSTEM_USER_ID, 
-						AppConstants.SYSTEM_USER_NAME, tenant.getTenantId(), tenant.getDefaultTemplateId());
+						AppConstants.SYSTEM_USER_NAME, tenant.getTenantId(), tenant.getDefaultTemplateId(), null);
 				
 				List<LifecycleCheckpoint> checkpoints = 
 						checkpointRepo.findByStatusAndScheduledExecDateBefore(ExecutionStatus.PENDING, now);

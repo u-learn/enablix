@@ -45,7 +45,7 @@ public class PerTenantTaskExecutor extends SimpleTaskExecutor {
 					try {
 						
 						ProcessContext.initialize(AppConstants.SYSTEM_USER_ID, 
-								AppConstants.SYSTEM_USER_NAME, tenantId, tenant.getDefaultTemplateId());
+								AppConstants.SYSTEM_USER_NAME, tenantId, tenant.getDefaultTemplateId(), null);
 						
 						run(task);
 						

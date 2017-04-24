@@ -22,7 +22,6 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
-import org.springframework.web.servlet.resource.PathResourceResolver;
 
 import com.enablix.commons.util.StringUtil;
 
@@ -113,8 +112,8 @@ public class ApplicationInit extends WebMvcAutoConfigurationAdapter {
 				.addResourceLocations(resourcesPaths.toArray(new String[resourcesPaths.size()]))
 				.setCachePeriod(cachePeriod)
 				.resourceChain(false)
-				.addResolver(tenantBasedCustomResourceResolver())
-				.addResolver(new PathResourceResolver());
+				.addResolver(customResourceResolver())
+				.addResolver(new EnablixPathResourceResolver());
 	}
 
 	// see https://stackoverflow.com/questions/27381781/java-spring-boot-how-to-map-my-my-app-root-to-index-html
@@ -125,8 +124,13 @@ public class ApplicationInit extends WebMvcAutoConfigurationAdapter {
 	
 	
 	@Bean
-	public TenantBasedCustomResourceResolver tenantBasedCustomResourceResolver() {
-		return new TenantBasedCustomResourceResolver();
+	public CustomResourceResolver customResourceResolver() {
+		
+		List<CustomResourcePathBuilder> pathBuilders = new ArrayList<>();
+		pathBuilders.add(new ClientBasedResourcePathBuilder());
+		pathBuilders.add(new TenantBasedResourcePathBuilder());
+		
+		return new CustomResourceResolver(pathBuilders);
 	}
 }
 

@@ -26,7 +26,6 @@ import com.enablix.commons.util.StringUtil;
 import com.enablix.commons.util.collection.CollectionUtil;
 import com.enablix.core.domain.recent.RecentData;
 import com.enablix.core.mongo.MongoUtil;
-import com.enablix.core.mongo.MongoUtil.DataViewOperation;
 import com.enablix.core.mongo.dao.GenericDao;
 import com.enablix.core.mongo.search.SearchCriteria;
 import com.enablix.core.mongo.search.service.SearchRequest;
@@ -74,45 +73,22 @@ public class RecentContentServiceImpl implements RecentContentService {
 		if (!StringUtil.isEmpty(containerQId) && !StringUtil.isEmpty(contentIdentity)) {
 			
 			recentDataList = MongoUtil.executeWithDataViewScope(mongoDataView, 
-				new DataViewOperation<Page<RecentData>>() {
-					
-					@Override
-					public Page<RecentData> execute() {
-						return repo.findByTemplateIdAndContainerQIdAndContentIdentity(
-								templateId, containerQId, contentIdentity, pageable);
-					}
-				});
-			
-			
+						() -> repo.findByTemplateIdAndContainerQIdAndContentIdentity(
+								templateId, containerQId, contentIdentity, pageable));
 		} 
 		
 		if (CollectionUtil.isEmpty(recentDataList) && 
 				!StringUtil.isEmpty(containerQId) && StringUtil.isEmpty(contentIdentity)) {
 			
 			recentDataList = MongoUtil.executeWithDataViewScope(mongoDataView, 
-				new DataViewOperation<Page<RecentData>>() {
-				
-					@Override
-					public Page<RecentData> execute() {
-						return repo.findByTemplateIdAndContainerQId(
-								templateId, containerQId, pageable);
-					}
-				}); 
-					
-					
-			
+						() -> repo.findByTemplateIdAndContainerQId(
+								templateId, containerQId, pageable)); 
 		} 
 		
 		if (CollectionUtil.isEmpty(recentDataList)) {
+
 			recentDataList = MongoUtil.executeWithDataViewScope(mongoDataView, 
-				new DataViewOperation<Page<RecentData>>() {
-					
-					@Override
-					public Page<RecentData> execute() {
-						return repo.findByTemplateId(templateId, pageable);
-					}
-				});
-			
+						() -> repo.findByTemplateId(templateId, pageable));
 		}
 
 		return buildNavagableContent(recentDataList);

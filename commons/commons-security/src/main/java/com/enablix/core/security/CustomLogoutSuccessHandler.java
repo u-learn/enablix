@@ -58,11 +58,11 @@ public class CustomLogoutSuccessHandler extends SimpleUrlLogoutSuccessHandler {
 				try {
 					User user = ((LoggedInUser) ud).getUser();
 
-					ProcessContext.initialize(user.getUserId(), user.getUserId(), user.getTenantId(), null);
+					ProcessContext.initialize(user.getUserId(), user.getUserId(), user.getTenantId(), null, null);
 					UserProfile userProfile = userProfileRepo.findByEmail(user.getUserId());
 
 					ProcessContext.clear();
-					ProcessContext.initialize(user.getUserId(), userProfile.getName(), user.getTenantId(), null);
+					ProcessContext.initialize(user.getUserId(), userProfile.getName(), user.getTenantId(), null, null);
 
 					RegisteredActor actor = new RegisteredActor(ud.getUsername(), userProfile.getName());
 					userLogout.setActor(actor);

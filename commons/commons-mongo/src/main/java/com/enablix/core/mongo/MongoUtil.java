@@ -10,7 +10,8 @@ public class MongoUtil {
 		return mongoDbFactory instanceof MultiTenantMongoDbFactory;
 	}
 	
-	public static <T> T executeWithDataViewScope(MongoDataView dataView, DataViewOperation<T> operation) {
+	public static <T> T executeWithDataViewScope(
+			MongoDataView dataView, DataViewOperation<T> operation) {
 		
 		T result = null;
 		

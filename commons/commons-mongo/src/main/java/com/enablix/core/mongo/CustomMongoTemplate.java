@@ -9,8 +9,6 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.convert.MongoConverter;
 import org.springframework.data.mongodb.core.query.Query;
 
-import com.enablix.core.mongo.view.CollectionView;
-import com.enablix.core.mongo.view.MongoDataView;
 import com.enablix.core.mongo.view.MongoDataViewOperations;
 import com.mongodb.Mongo;
 
@@ -34,16 +32,20 @@ public class CustomMongoTemplate extends MongoTemplate {
 	
 	public void executeQuery(Query query, String collectionName, DocumentCallbackHandler dch) {
 		
-		CollectionView<?> collectionView = MongoDataView.ALL_DATA.getCollectionView(collectionName);
-		query = query.addCriteria(collectionView.viewFilter());
+		Query queryToExecute = checkAndCreateDataViewQuery(query, collectionName);	
 		
-		System.out.println("Custom query: " + query);
-		
-		super.executeQuery(query, collectionName, dch);
+		super.executeQuery(queryToExecute, collectionName, dch);
 	}
 	
 	public <T> List<T> find(final Query query, Class<T> entityClass, String collectionName) {
 		
+		Query queryToExecute = checkAndCreateDataViewQuery(query, collectionName);
+		
+		return super.find(queryToExecute, entityClass, collectionName);
+	}
+
+	private Query checkAndCreateDataViewQuery(final Query query, String collectionName) {
+		
 		Query queryToExecute = query;
 		
 		MongoDataViewContext dataViewCtx = MongoDataViewContext.get();
@@ -53,19 +55,12 @@ public class CustomMongoTemplate extends MongoTemplate {
 			queryToExecute = dataViewOp.getViewScopedQuery(query, collectionName);
 		}
 		
-		return super.find(queryToExecute, entityClass, collectionName);
+		return queryToExecute;
 	}
 	
 	public long count(Query query, Class<?> entityClass, String collectionName) {
 		
-		Query queryToExecute = query;
-		
-		MongoDataViewContext dataViewCtx = MongoDataViewContext.get();
-		
-		if (dataViewCtx != null) {
-			MongoDataViewOperations dataViewOp = new MongoDataViewOperations(this, dataViewCtx.getView());
-			queryToExecute = dataViewOp.getViewScopedQuery(query, collectionName);
-		}
+		Query queryToExecute = checkAndCreateDataViewQuery(query, collectionName);
 		
 		return super.count(queryToExecute, entityClass, collectionName);
 	}

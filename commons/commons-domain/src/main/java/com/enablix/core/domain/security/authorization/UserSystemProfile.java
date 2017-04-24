@@ -16,6 +16,8 @@ public class UserSystemProfile {
 	
 	private boolean sendWeeklyDigest;
 	
+	private String defaultClientId;
+	
 	@DBRef
 	private DataSegment dataSegment;
 	
@@ -42,4 +44,13 @@ public class UserSystemProfile {
 	public void setDataSegment(DataSegment accessibleDataSegment) {
 		this.dataSegment = accessibleDataSegment;
 	}
+
+	public String getDefaultClientId() {
+		return defaultClientId;
+	}
+
+	public void setDefaultClientId(String defaultClientId) {
+		this.defaultClientId = defaultClientId;
+	}
+	
 }

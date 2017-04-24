@@ -67,10 +67,11 @@ public class EnablixUserService implements UserService, UserDetailsService {
 		Tenant tenant = tenantRepo.findByTenantId(user.getTenantId());
 
 		String templateId = tenant == null ? "" : tenant.getDefaultTemplateId();
+		
 		try {
 			// set up process context to fetch user roles from tenant specific database
 			//Setting the name also as the user id
-			ProcessContext.initialize(user.getUserId(), user.getUserId(), user.getTenantId(), templateId);
+			ProcessContext.initialize(user.getUserId(), user.getUserId(), user.getTenantId(), templateId, null);
 
 			userProfile = userProfileRepo.findByUserIdentity(user.getIdentity());
 
@@ -78,7 +79,7 @@ public class EnablixUserService implements UserService, UserDetailsService {
 			ProcessContext.clear();
 		}
 
-		return new LoggedInUser(user, templateId, userProfile.getSystemProfile().getRoles(),userProfile);
+		return new LoggedInUser(user, templateId, userProfile.getSystemProfile().getRoles(), userProfile);
 	}
 
 	@Override
@@ -95,13 +96,15 @@ public class EnablixUserService implements UserService, UserDetailsService {
 		String password =UUID.randomUUID().toString().substring(0,8);//system generated default password
 		user.setPassword(password);
 		user.setIsPasswordSet(false);
-		try{
+		
+		try {
+			
 			ProcessContext.clear();
-			ProcessContext.initialize(userid.toLowerCase(), userid.toLowerCase(), user.getTenantId(), null);
+			ProcessContext.initialize(userid.toLowerCase(), userid.toLowerCase(), user.getTenantId(), null, null);
 			userRepo.save(user);
 			mailService.sendHtmlEmail(user, userid, MailConstants.SCENARIO_RESET_PASSWORD);
-		}
-		finally{
+			
+		} finally{
 			ProcessContext.clear();
 		}
 	}	
@@ -113,17 +116,20 @@ public class EnablixUserService implements UserService, UserDetailsService {
 
 		modUser.setPassword(user.getPassword());
 		modUser.setIsPasswordSet(true);
-		try{
+		
+		try {
+			
 			//Setting the name also as the user id
 			ProcessContext.clear();
-			ProcessContext.initialize(modUser.getUserId(), modUser.getUserId(), modUser.getTenantId(), null);
+			ProcessContext.initialize(modUser.getUserId(), modUser.getUserId(), modUser.getTenantId(), null, null);
 			userRepo.save(modUser);		
 
 			mailService.sendHtmlEmail(modUser,modUser.getUserId(),"passwordconfirmation");
-		}
-		finally{
+			
+		} finally{
 			ProcessContext.clear();
 		}
+		
 		return modUser;
 	}	
 
@@ -172,9 +178,10 @@ public class EnablixUserService implements UserService, UserDetailsService {
 		UserBusinessProfile usrBusinessProfile = getBusinessProfile(userData.get("userProfile").get("businessProfile"));
 
 		if (user.getPassword() == null) {
-			String password =UUID.randomUUID().toString().substring(0,8);//system generated default password
+			String password = UUID.randomUUID().toString().substring(0,8);//system generated default password
 			user.setPassword(password);
 		}
+		
 		User modUser  = userRepo.findByUserId(user.getUserId());
 		modUser.setUserId(user.getUserId());
 		userRepo.save(modUser);
@@ -190,14 +197,19 @@ public class EnablixUserService implements UserService, UserDetailsService {
 	}
 
 	private UserBusinessProfile getBusinessProfile(JsonNode jsonNode) {
+		
 		UserBusinessProfile usrBusinessProfile = new UserBusinessProfile();
+		
 		Map<String, Object> userBusinessProfileMap = JsonUtil.jsonToMap(jsonNode.toString());
 		usrBusinessProfile.setAttributes(userBusinessProfileMap);
+		
 		return usrBusinessProfile;
 	}
 
 	private UserSystemProfile getSystemProfile(JsonNode systemProfile) {
+		
 		JsonNode roleArr = systemProfile.get("systemRoles");
+		
 		List<String> roleArrLst = new ArrayList<String>();
 		if (roleArr.isArray()) {
 			for (final JsonNode objNode : roleArr) {
@@ -212,6 +224,7 @@ public class EnablixUserService implements UserService, UserDetailsService {
 		if (!CollectionUtil.isEmpty(roles)) {
 			userSystemProfile.setRoles(roles);
 		}
+		
 		return userSystemProfile;
 	}
 
@@ -222,11 +235,15 @@ public class EnablixUserService implements UserService, UserDetailsService {
 
 	@Override
 	public Boolean deleteUser(String identity) {
+		
 		try {
+			
 			UserProfile usrProfile = userProfileRepo.findByIdentity(identity);
 			userProfileRepo.deleteByIdentity(usrProfile.getIdentity());
-			userRepo.deleteByUserId(usrProfile.getUserIdentity());
+			userRepo.deleteByIdentity(usrProfile.getUserIdentity());
+			
 			return true;
+			
 		} catch (Exception e) {
 			return false;
 		}
@@ -235,15 +252,15 @@ public class EnablixUserService implements UserService, UserDetailsService {
 	public static class LoggedInUser implements UserDetails {
 
 		private static final long serialVersionUID = 1L;
-		private UserProfile usrProfile;
+		private UserProfile userProfile;
 		private User user;
 		private String templateId;
-		Collection<GrantedAuthority> auths;
+		private Collection<GrantedAuthority> auths;
 
-		private LoggedInUser(User user, String templateId, List<Role> roles, UserProfile usrProfile) {
+		private LoggedInUser(User user, String templateId, List<Role> roles, UserProfile userProfile) {
 			this.user = user;
 			this.templateId = templateId;
-			this.usrProfile=usrProfile;
+			this.userProfile = userProfile;
 			initAuthorities(roles);
 		}
 
@@ -270,7 +287,7 @@ public class EnablixUserService implements UserService, UserDetailsService {
 		}
 
 		public String getDisplayName() {
-			return usrProfile.getName();
+			return userProfile.getName();
 		}
 
 		public String getTemplateId() {
@@ -310,6 +327,10 @@ public class EnablixUserService implements UserService, UserDetailsService {
 		@Override
 		public boolean isEnabled() {
 			return true;
+		}
+
+		public UserProfile getUserProfile() {
+			return userProfile;
 		}
 
 	}

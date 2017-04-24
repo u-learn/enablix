@@ -75,7 +75,9 @@ var insertUsers = function() {
 		        "MANAGE_CONTENT_REQUEST", 
 		        "MANAGE_PLAYS", 
 		        "VIEW_REPORTS", 
-		        "UPLOAD_CONFIG_FILES"
+		        "UPLOAD_CONFIG_FILES",
+		        "SHARE_VIA_EMAIL", 
+		        "SHARE_VIA_SLACK"
 		    ]
 		},
 		{ 
@@ -86,7 +88,9 @@ var insertUsers = function() {
 		    "permissions" : [
 		        "VIEW_PORTAL", 
 		        "VIEW_RECENT_CONTENT", 
-		        "SUGGEST_CONTENT"
+		        "SUGGEST_CONTENT",
+		        "SHARE_VIA_EMAIL", 
+		        "SHARE_VIA_SLACK"
 		    ]
 		}];
 	

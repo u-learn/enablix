@@ -22,6 +22,7 @@ public class PrePublishProcessCtxInfoEnricher extends EventInterceptorSupport {
 		event.addHeader(EventHeaders.USER_NAME, processCtx.getUserDisplayName());
 		event.addHeader(EventHeaders.TEMPLATE_ID, processCtx.getTemplateId());
 		event.addHeader(EventHeaders.TENANT_ID, processCtx.getTenantId());
+		event.addHeader(EventHeaders.CLIENT_ID, processCtx.getClientId());
 	}
 	
 }

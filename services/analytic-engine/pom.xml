@@ -17,5 +17,6 @@
   	<module>elastic-search-impl</module>
   	<module>correlation-api</module>
   	<module>manage-correlation-data</module>
+  	<module>info-detection</module>
   </modules>
 </project>

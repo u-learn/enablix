@@ -601,7 +601,10 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvi
 			controller: 'ContentRequestListCtrl',
 			resolve: {
 				setupData: appSetup,
-				contentWFInit: contentWFInit
+				contentWFInit: contentWFInit,
+				checkPageAccess: ['setupData', 'AuthorizationService', function(setupData, AuthorizationService) {
+					return AuthorizationService.userHasPageAccess('SUGGEST_CONTENT')
+				}]
 			}
 		})
 		.state('myaccount.contentrequestedit', {
@@ -610,7 +613,10 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvi
 			controller: 'ContentSuggestEditCtrl',
 			resolve: {
 				setupData: appSetup,
-				contentWFInit: contentWFInit
+				contentWFInit: contentWFInit,
+				checkPageAccess: ['setupData', 'AuthorizationService', function(setupData, AuthorizationService) {
+					return AuthorizationService.userHasPageAccess('SUGGEST_CONTENT')
+				}]
 			}
 		})
 		.state('myaccount.contentrequestview', {
@@ -619,7 +625,10 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvi
 			controller: 'ContentSuggestDetailCtrl',
 			resolve: {
 				setupData: appSetup,
-				contentWFInit: contentWFInit
+				contentWFInit: contentWFInit,
+				checkPageAccess: ['setupData', 'AuthorizationService', function(setupData, AuthorizationService) {
+					return AuthorizationService.userHasPageAccess('SUGGEST_CONTENT')
+				}]
 			}
 		})
 		.state('myaccount.slackauthorization', {
