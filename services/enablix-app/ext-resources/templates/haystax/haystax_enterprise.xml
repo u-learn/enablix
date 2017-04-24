@@ -1858,6 +1858,14 @@
 	      		</bounded>
       		</contentItem>					
 		</container>	
+		<container id="partercontactinfo" label="Haystax Partner Contact">
+			<contentItem id="name" label="Name" type="text"/>
+			<contentItem id="email" label="Email" type="text"/>
+			<contentItem id="phone" label="Phone" type="text"/>			
+			<contentItem id="website" label="Website" type="text"/>
+			<contentItem id="blogsite" label="Blog" type="text"/>
+			<contentItem id="newsroomsite" label="Newsroom" type="text"/>						
+		</container>			
 		<container id="pov" label="Point of Views" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="file" label="File" type="doc"/>
@@ -2044,88 +2052,6 @@
 	      		</bounded>
       		</contentItem>			
 		</container>	
-		<container id="swot" label="SWOT" businessCategory="BUSINESS_CONTENT">
-			<contentItem id="title" label="Title" type="text" searchBoost="7"/>
-			<contentItem id="file" label="File" type="doc"/>
-			<contentItem id="desc" label="Description" type="richText" searchBoost="2"/>				
-			<contentItem id="competitors" label="Competitors" type="bounded" searchBoost="6">
-				<bounded multivalued="true">
-					<refList>
-						<datastore hyperlink="true">
-							<storeId>competitor</storeId>
-							<dataId>identity</dataId>
-							<dataLabel>shortName</dataLabel>
-						</datastore>
-					</refList>
-				</bounded>
-			</contentItem>					
-			<contentItem id="products" label="Product" type="bounded" searchBoost="6">
-				<bounded>
-					<refList>
-						<datastore hyperlink="true">
-							<storeId>product</storeId>
-							<dataId>identity</dataId>
-							<dataLabel>shortName</dataLabel>
-						</datastore>
-					</refList>
-				</bounded>
-			</contentItem>
-			<contentItem id="solutions" label="Solutions" type="bounded" searchBoost="6">
-				<bounded>
-					<refList>
-						<datastore hyperlink="true">
-							<storeId>solution</storeId>
-							<dataId>identity</dataId>
-							<dataLabel>shortName</dataLabel>
-						</datastore>
-					</refList>
-				</bounded>
-			</contentItem>
-			<contentItem id="apps" label="Apps" type="bounded" searchBoost="6">
-				<bounded>
-					<refList>
-						<datastore hyperlink="true">
-							<storeId>app</storeId>
-							<dataId>identity</dataId>
-							<dataLabel>shortName</dataLabel>
-						</datastore>
-					</refList>
-				</bounded>
-			</contentItem>			
-			<contentItem id="partners" label="Partners" type="bounded" searchBoost="6">
-				<bounded multivalued="true">
-					<refList>
-						<datastore hyperlink="true">
-							<storeId>partner</storeId>
-							<dataId>identity</dataId>
-							<dataLabel>shortName</dataLabel>
-						</datastore>
-					</refList>
-				</bounded>
-			</contentItem>	
-			<contentItem id="topics" label="Topics" type="bounded" searchBoost="6">
-				<bounded multivalued="true">
-					<refList>
-						<datastore hyperlink="true">
-							<storeId>topic</storeId>
-							<dataId>identity</dataId>
-							<dataLabel>shortName</dataLabel>
-						</datastore>
-					</refList>
-				</bounded>
-			</contentItem>	
-			<contentItem id="visibility" label="Visibility" type="bounded">
-	      		<bounded multivalued="true">
-	      			<refList>
-	      				<datastore>
-	      					<storeId>contentVisibilityType</storeId>
-	      					<dataId>identity</dataId>
-	      					<dataLabel>visibilityType</dataLabel>
-	      				</datastore>
-	      			</refList>
-	      		</bounded>
-      		</contentItem>							
-		</container>		
 		<container id="press" label="Press" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text" searchBoost="7"/>
 			<contentItem id="file" label="File" type="doc"/>			
@@ -2668,6 +2594,88 @@
       		</contentItem>				 						
 			<contentItem id="kitContent" label="Content Items" type="contentStack"/>
 		</container>		
+		<container id="swot" label="SWOT" businessCategory="BUSINESS_CONTENT">
+			<contentItem id="title" label="Title" type="text" searchBoost="7"/>
+			<contentItem id="file" label="File" type="doc"/>
+			<contentItem id="desc" label="Description" type="richText" searchBoost="2"/>				
+			<contentItem id="competitors" label="Competitors" type="bounded" searchBoost="6">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>competitor</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>					
+			<contentItem id="products" label="Product" type="bounded" searchBoost="6">
+				<bounded>
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>product</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="solutions" label="Solutions" type="bounded" searchBoost="6">
+				<bounded>
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>solution</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="apps" label="Apps" type="bounded" searchBoost="6">
+				<bounded>
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>app</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>			
+			<contentItem id="partners" label="Partners" type="bounded" searchBoost="6">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>partner</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>	
+			<contentItem id="topics" label="Topics" type="bounded" searchBoost="6">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>topic</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>	
+			<contentItem id="visibility" label="Visibility" type="bounded">
+	      		<bounded multivalued="true">
+	      			<refList>
+	      				<datastore>
+	      					<storeId>contentVisibilityType</storeId>
+	      					<dataId>identity</dataId>
+	      					<dataLabel>visibilityType</dataLabel>
+	      				</datastore>
+	      			</refList>
+	      		</bounded>
+      		</contentItem>							
+		</container>				
 		<container id="template" label="Templates" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="file" label="File" type="doc"/>
@@ -3417,6 +3425,7 @@
 		<container id="faqCategory" label="FAQ Category" refData="true">
 			<contentItem id="categoryName" label="Category" type="text"/>
 			<contentItem id="desc" label="Description" type="text"/>
+			<container id="faqCategoryFAQ" label="FAQ" linkContainerQId="faq" linkContentItemId="type"/>			
 		</container>
 		<container id="mmformat" label="Multi Media Formats" refData="true">
 			<contentItem id="format" label="Format" type="text"/>
@@ -3528,7 +3537,8 @@
 					<childContainer id="mla"/>	
 					<childContainer id="msa"/>	
 					<childContainer id="nda"/>	
-					<childContainer id="partneragreement"/>									
+					<childContainer id="partneragreement"/>	
+					<childContainer id="partercontactinfo"/>														
 					<childContainer id="ppttemplate"/>														
 					<childContainer id="pricingtemplate"/>
 					<childContainer id="sow"/>
@@ -3612,6 +3622,16 @@
 				</portalConfig>
 			</container>			
 		</contentUIDef>
+		<contentUIDef qualifiedId="partnerType">
+			<container labelQualifiedId="partnerType.typeName">
+				<listViewConfig>
+					<hideContentItem id="desc"/>
+				</listViewConfig>
+				<portalConfig>
+					<headingContentItem id="typeName"/>
+				</portalConfig>
+			</container>			
+		</contentUIDef>		
 		<contentUIDef qualifiedId="analyst">
 			<container labelQualifiedId="analyst.shortName">
 				<listViewConfig>
@@ -3622,6 +3642,16 @@
 				</portalConfig>
 			</container>			
 		</contentUIDef>
+		<contentUIDef qualifiedId="analystType">
+			<container labelQualifiedId="analystType.typeName">
+				<listViewConfig>
+					<hideContentItem id="desc"/>
+				</listViewConfig>
+				<portalConfig>
+					<headingContentItem id="typeName"/>
+				</portalConfig>
+			</container>			
+		</contentUIDef>		
 		<contentUIDef qualifiedId="research">
 			<container labelQualifiedId="research.title">
 				<listViewConfig>
@@ -3678,6 +3708,16 @@
 		<contentUIDef qualifiedId="event.highlights">
 			<text type="long"/>
 		</contentUIDef>
+		<contentUIDef qualifiedId="eventType">
+			<container labelQualifiedId="eventType.typeName">
+				<listViewConfig>
+					<hideContentItem id="desc"/>
+				</listViewConfig>
+				<portalConfig>
+					<headingContentItem id="typeName"/>
+				</portalConfig>
+			</container>
+		</contentUIDef>		
 		<contentUIDef qualifiedId="topic">
 			<container labelQualifiedId="topic.name">
 				<listViewConfig>
@@ -3738,6 +3778,16 @@
 		<contentUIDef qualifiedId="caseStudy.highlights">
 			<text type="long"/>
 		</contentUIDef>
+		<contentUIDef qualifiedId="caseStudyType">
+			<container labelQualifiedId="caseStudyType.typeName">
+				<listViewConfig>
+					<hideContentItem id="desc"/>
+				</listViewConfig>
+				<portalConfig>
+					<headingContentItem id="typeName"/>
+				</portalConfig>
+			</container>
+		</contentUIDef>		
 		<contentUIDef qualifiedId="demoenvironment">
 			<container labelQualifiedId="demoenvironment.title">
 				<listViewConfig>
@@ -3856,7 +3906,21 @@
 		</contentUIDef>	
 		<contentUIDef qualifiedId="onepager.comment">
 			<text type="long"/>
-		</contentUIDef>			
+		</contentUIDef>	
+		<contentUIDef qualifiedId="partnercontactinfo">
+			<container labelQualifiedId="partnercontactinfo.name">
+				<listViewConfig>
+					<hideContentItem id="email"/>
+					<hideContentItem id="phone"/>					
+					<hideContentItem id="website"/>
+					<hideContentItem id="emailsite"/>
+					<hideContentItem id="newsroomsite"/>															
+				</listViewConfig>
+				<portalConfig>
+					<headingContentItem id="name"/>
+				</portalConfig>
+			</container>			
+		</contentUIDef>				
 		<contentUIDef qualifiedId="poc">
 			<container labelQualifiedId="poc.title">
 				<listViewConfig>
@@ -3998,6 +4062,26 @@
 		<contentUIDef qualifiedId="proposal.proposalcontent.summary">
 			<text type="long"/>
 		</contentUIDef>		
+		<contentUIDef qualifiedId="proposalTypes">
+			<container labelQualifiedId="proposalTypes.proposalType">
+				<listViewConfig>
+					<hideContentItem id="desc"/>											
+				</listViewConfig>
+				<portalConfig>
+					<headingContentItem id="proposalType"/>
+				</portalConfig>
+			</container>
+		</contentUIDef>		
+		<contentUIDef qualifiedId="proposalContentType">
+			<container labelQualifiedId="proposalContentType.typeName">
+				<listViewConfig>
+					<hideContentItem id="desc"/>											
+				</listViewConfig>
+				<portalConfig>
+					<headingContentItem id="typeName"/>
+				</portalConfig>
+			</container>
+		</contentUIDef>				
 		<contentUIDef qualifiedId="swot">
 			<container labelQualifiedId="swot.title">
 				<listViewConfig>
@@ -4212,6 +4296,16 @@
 		<contentUIDef qualifiedId="importantslide.summary">
 			<text type="long"/>
 		</contentUIDef>			
+		<contentUIDef qualifiedId="slideType">
+			<container labelQualifiedId="slideType.typeName">
+				<listViewConfig>
+					<hideContentItem id="desc"/>					
+				</listViewConfig>
+				<portalConfig>
+					<headingContentItem id="typeName"/>
+				</portalConfig>
+			</container>
+		</contentUIDef>		
 		<contentUIDef qualifiedId="image.summary">
 			<text type="long"/>
 		</contentUIDef>
@@ -4515,7 +4609,8 @@
 					<childContainer id="mla"/>	
 					<childContainer id="msa"/>	
 					<childContainer id="nda"/>	
-					<childContainer id="partneragreement"/>									
+					<childContainer id="partneragreement"/>	
+					<childContainer id="partnercontactinfo"/>														
 					<childContainer id="ppttemplate"/>														
 					<childContainer id="pricingtemplate"/>
 					<childContainer id="sow"/>
