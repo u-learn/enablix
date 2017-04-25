@@ -1858,7 +1858,7 @@
 	      		</bounded>
       		</contentItem>					
 		</container>	
-		<container id="partercontactinfo" label="Haystax Partner Contact">
+		<container id="partnercontactinfo" label="Haystax Partner Contact">
 			<contentItem id="name" label="Name" type="text"/>
 			<contentItem id="email" label="Email" type="text"/>
 			<contentItem id="phone" label="Phone" type="text"/>			
