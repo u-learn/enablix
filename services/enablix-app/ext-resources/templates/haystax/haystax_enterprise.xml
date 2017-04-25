@@ -3538,7 +3538,7 @@
 					<childContainer id="msa"/>	
 					<childContainer id="nda"/>	
 					<childContainer id="partneragreement"/>	
-					<childContainer id="partercontactinfo"/>														
+					<childContainer id="partnercontactinfo"/>														
 					<childContainer id="ppttemplate"/>														
 					<childContainer id="pricingtemplate"/>
 					<childContainer id="sow"/>
