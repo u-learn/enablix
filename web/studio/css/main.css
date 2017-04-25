@@ -1593,6 +1593,7 @@ eb-doc-preview-action .doc-preview {
 .action-icons {
 	float: right;
 	text-align: right;
+	font-family: Montserrat;
 }
 
 .action-icons a {
