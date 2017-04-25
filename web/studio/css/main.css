@@ -1004,7 +1004,7 @@ form.block .foot {
 .toggle {
 	position: relative;
 	/*padding-left: 6px;*/
-	color: #596679;
+	color: #5a6779;
 }
 .toggle.active,
 .toggle:hover,
@@ -1236,10 +1236,10 @@ ebx-record-context-menu a.inactive {
 /* recomended content */
 /**/
 
-.block.peers .block.recomended-content, .block.quick-links {
+/* .block.peers, .block.recomended-content, .block.quick-links {
     font-family: Montserrat;
 }
-
+ */
 .recomended-content ul {
 	font-size: 0.875em;
 	line-height: 1.25;
@@ -1952,4 +1952,8 @@ td eb-nav-link span a {
 .reco-client,
 .quicklink-client {
 	font-style: italic;
+}
+
+.homepage .infotable {
+    font-family: "Helvetica Neue", Helvetica;
 }
