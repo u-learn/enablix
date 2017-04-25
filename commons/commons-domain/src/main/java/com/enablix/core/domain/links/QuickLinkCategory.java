@@ -8,6 +8,16 @@ import com.enablix.core.domain.BaseDocumentEntity;
 public class QuickLinkCategory extends BaseDocumentEntity {
 
 	private String name;
+	
+	private String clientId;
+
+	public String getClientId() {
+		return clientId;
+	}
+
+	public void setClientId(String clientId) {
+		this.clientId = clientId;
+	}
 
 	public String getName() {
 		return name;

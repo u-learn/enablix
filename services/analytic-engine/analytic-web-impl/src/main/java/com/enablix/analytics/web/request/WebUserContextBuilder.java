@@ -8,21 +8,29 @@ public class WebUserContextBuilder<T extends WebContentRequest> implements UserC
 
 	@Override
 	public UserContext build(T request) {
-		return new WebUserContext(ProcessContext.get().getUserId());
+		return new WebUserContext(ProcessContext.get().getUserId(), ProcessContext.get().getClientId());
 	}
 	
 	private static class WebUserContext implements UserContext {
 
 		private String userId;
 		
-		public WebUserContext(String userId) {
+		private String clientId;
+		
+		public WebUserContext(String userId, String clientId) {
 			super();
 			this.userId = userId;
+			this.clientId = clientId;
 		}
 
 		@Override
 		public String userId() {
 			return userId;
+		}
+
+		@Override
+		public String clientId() {
+			return clientId;
 		}
 		
 	}

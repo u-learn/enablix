@@ -1,5 +1,5 @@
 <div layout="row" layout-wrap>
-	<div ng-repeat="quickLinkSec in quickLinks.sections" flex="25">
+	<div ng-repeat="quickLinkSec in quickLinks.sections" flex="{{::sectionWidth}}">
 		<h4>{{quickLinkSec.sectionName}}</h4>
 		<ul>
 			<li ng-repeat="link in quickLinkSec.links">

@@ -10,7 +10,7 @@
 		<a ng-if="quickLinkSec.editing" ng-click="cancelAddOrEdit(quickLinkSec)" class="button button-edit">Cancel</a>
 		<a ng-if="!quickLinkSec.editing" ng-click="deleteQuickLinkSection(quickLinkSec)" class="button button-delete">Delete</a>
 		<a ng-if="!quickLinkSec.editing" ng-click="quickLinkSec.editing=true" class="button button-edit">Edit</a>
-		<span class="section-heading" ng-if="!quickLinkSec.editing">{{quickLinkSec.sectionName}}</span>
+		<span class="section-heading" ng-if="!quickLinkSec.editing">{{quickLinkSec.sectionName}}<span class="quicklink-client" ng-if="::quickLinkSec.clientName"> ({{::quickLinkSec.clientName}})</span></span>
 		<input focus="true" name="sectionName[$index]" placeholder="Enter Section Heading" ng-model="quickLinksData.sections[$index].sectionName" 
 			class="form-control form-control-inlined" size="80" required ng-if="quickLinkSec.editing" >
 	</div>

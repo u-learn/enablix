@@ -32,31 +32,41 @@ public class PreRecordedRecommendationEngine implements RecommendationEngine {
 		MongoDataView mongoDataView = DataViewUtil.getMongoDataView(dataView);
 		
 		final String userId = request.getUserContext().userId();
+		final String clientId = request.getUserContext().clientId();
 		final String templateId = request.getRequestContext().templateId();
 		
 		final String containerQId = request.getRequestContext().containerQId();
 		final String contentIdentity = request.getRequestContext().contentIdentity();
 		
-		if (!StringUtil.isEmpty(containerQId) && !StringUtil.isEmpty(contentIdentity)) {
+		if (!StringUtil.isEmpty(clientId)) {
 			
 			recommendations = MongoUtil.executeWithDataViewScope(mongoDataView, 
-					() -> contentSpecificRecommendations(
-									userId, templateId, containerQId, contentIdentity));
-		} 
-		
-		if (CollectionUtil.isEmpty(recommendations) && 
-				!StringUtil.isEmpty(containerQId) && StringUtil.isEmpty(contentIdentity)) {
+					() -> repo.findByRecommendationScopeClientId(clientId));
 			
-			recommendations = MongoUtil.executeWithDataViewScope(mongoDataView, 
-					() -> containerSpecificRecommendation(userId, templateId, containerQId));
-		} 
-		
-		if (CollectionUtil.isEmpty(recommendations)) {
+		} else {
 			
-			recommendations = MongoUtil.executeWithDataViewScope(mongoDataView, 
-					() -> generalRecommendations(userId, templateId));
+			if (!StringUtil.isEmpty(containerQId) && !StringUtil.isEmpty(contentIdentity)) {
+				
+				recommendations = MongoUtil.executeWithDataViewScope(mongoDataView, 
+						() -> contentSpecificRecommendations(
+										userId, templateId, containerQId, contentIdentity));
+			} 
+			
+			if (CollectionUtil.isEmpty(recommendations) && 
+					!StringUtil.isEmpty(containerQId) && StringUtil.isEmpty(contentIdentity)) {
+				
+				recommendations = MongoUtil.executeWithDataViewScope(mongoDataView, 
+						() -> containerSpecificRecommendation(userId, templateId, containerQId));
+			} 
+			
+			if (CollectionUtil.isEmpty(recommendations)) {
+				
+				recommendations = MongoUtil.executeWithDataViewScope(mongoDataView, 
+						() -> generalRecommendations(userId, templateId));
+			}
+	
 		}
-
+		
 		if (recommendations != null) {
 			for (Recommendation reco : recommendations) {
 				recoContent.add(reco.getRecommendedData().getData());

@@ -29,7 +29,7 @@ public class RecommendationController {
 	
 	@RequestMapping(method = RequestMethod.GET, value="/list")
 	public Collection<RecommendationWrapper> getRecommendations() {
-		return recoManager.getAllGenericRecommendations();
+		return recoManager.getAllRecommendations();
 	}
 	
 }

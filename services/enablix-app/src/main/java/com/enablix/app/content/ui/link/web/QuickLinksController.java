@@ -29,8 +29,15 @@ public class QuickLinksController {
 	@Autowired
 	private DataSegmentService dsService;
 	
-	@RequestMapping(method = RequestMethod.GET, value="/content")
+	@RequestMapping(method = RequestMethod.GET, value="/usercontent")
 	public QuickLinks quickLinks() {
+		DataView dataView = dsService.getDataViewForUserId(ProcessContext.get().getUserId());
+		String clientId = ProcessContext.get().getClientId();
+		return quickLinksService.getQuickLinks(dataView, clientId);
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, value="/allcontent")
+	public QuickLinks allQuickLinks() {
 		DataView dataView = dsService.getDataViewForUserId(ProcessContext.get().getUserId());
 		return quickLinksService.getQuickLinks(dataView);
 	}

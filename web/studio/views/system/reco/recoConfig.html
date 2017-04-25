@@ -1,5 +1,5 @@
 <div class="block">
-	<div class="head">
+	<div class="head bottom-border">
 		<h2>Recommendations</h2>
 	</div>
 </div>
@@ -12,6 +12,7 @@
 					<td class="remove no-border"><a ng-click="deleteRecommendation($index)" class="fa fa-times"></a></td>
 					<td class="no-border">
 						<eb-nav-link hide-hierarchy="false" nav-link="reco.navContent"></eb-nav-link>
+						<span class="reco-client" ng-if="reco.clientName"> ({{reco.clientName}})</span>
 					</td>
 				</tr>
 			</tbody>

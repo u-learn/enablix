@@ -13,10 +13,12 @@ public interface RecommendationRepository extends BaseMongoRepository<Recommenda
 	@Query("{ $and : [{'recommendationScope.userId' : ?0 }, "
 			   + "{'recommendationScope.templateId' : ?1 }, "
 			   + "{'recommendationScope.containerQId' : null }, "
+			   + "{'recommendationScope.clientId' : null }, "
 			   + "{'recommendationScope.contentIdentity' : null } ]}")
 	Collection<Recommendation> findByUserIdAndTemplateId(String userId, String templateId);
 
 	@Query("{ $and : [{'recommendationScope.userId' : ?0 }, "
+			       + "{'recommendationScope.clientId' : null }, "
 				   + "{'recommendationScope.templateId' : ?1 }, "
 				   + "{'recommendationScope.containerQId' : ?2 }, "
 				   + "{'recommendationScope.contentIdentity' : null } ]}")
@@ -24,6 +26,7 @@ public interface RecommendationRepository extends BaseMongoRepository<Recommenda
 			String userId, String templateId, String containerQId);
 	
 	@Query("{ $and : [{'recommendationScope.userId' : ?0 }, "
+			   + "{'recommendationScope.clientId' : null }, "
 			   + "{'recommendationScope.templateId' : ?1 }, "
 			   + "{'recommendationScope.containerQId' : ?2 }, "
 			   + "{'recommendationScope.contentIdentity' : ?3 } ]}")
@@ -31,12 +34,14 @@ public interface RecommendationRepository extends BaseMongoRepository<Recommenda
 		String userId, String templateId, String containerQId, String contentIdentity);
 
 	@Query("{ $and : [{'recommendationScope.templateId' : ?0 }, "
+			   + "{'recommendationScope.clientId' : null }, "
 			   + "{'recommendationScope.containerQId' : ?1 }, "
 			   + "{'recommendationScope.contentIdentity' : ?2 } ]}")
 	Collection<Recommendation> findByTemplateIdAndContainerQIdAndContentIdentity(
 		String templateId, String containerQId, String contentIdentity);
 
 	@Query("{ $and : [{'recommendationScope.templateId' : ?0 }, "
+			   + "{'recommendationScope.clientId' : null }, "
 			   + "{'recommendationScope.containerQId' : null }, "
 			   + "{'recommendationScope.contentIdentity' : null } ]}")
 	Collection<Recommendation> findByTemplateId(String templateId);
@@ -55,6 +60,8 @@ public interface RecommendationRepository extends BaseMongoRepository<Recommenda
 	Collection<Recommendation> findByRecommendationScopeAndRecommendationData(
 			String userId, String templateId, String containerQId, 
 			String contentIdentity, String recoContainerQId, String recoContentIdentity);
+	
+	Collection<Recommendation> findByRecommendationScopeClientId(String clientId);
 
 	List<Recommendation> findByRecommendedDataDataInstanceIdentity(String contentIdentity);
 

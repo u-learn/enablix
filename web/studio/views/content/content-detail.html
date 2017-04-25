@@ -1,7 +1,9 @@
 <div class="block">
 	<div class="head">
-		<span class="header-link edit"><a ng-if="$state.includes('studio')" class="fa fa-link" ng-click="manageQuickLinks()"></a></span>
-		<span class="header-link details"><a ng-if="$state.includes('studio')" class="fa fa-thumbs-up" ng-click="addToRecommendation()"></a></span>
+		<div class="header-link">
+			<span class="edit"><a ng-if="$state.includes('studio')" class="fa fa-link" ng-click="manageQuickLinks()"></a></span>
+			<span class="details"><a ng-if="$state.includes('studio')" class="fa fa-thumbs-up" ng-click="addToRecommendation()"></a></span>
+		</div>
 		<h2>{{pageHeading}}</h2>
 	</div>
 	<div class="cont">

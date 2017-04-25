@@ -2,6 +2,9 @@ package com.enablix.app.content.ui.reco;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -11,10 +14,12 @@ import com.enablix.app.content.label.ContentLabelResolver;
 import com.enablix.app.content.label.PortalContentLabelResolver;
 import com.enablix.app.content.ui.NavigableContent;
 import com.enablix.app.content.ui.NavigableContentBuilder;
-import com.enablix.commons.util.process.ProcessContext;
+import com.enablix.commons.util.collection.CollectionUtil;
 import com.enablix.core.domain.reco.Recommendation;
 import com.enablix.core.domain.reco.RecommendationScope;
 import com.enablix.core.domain.segment.DataSegmentInfo;
+import com.enablix.core.domain.tenant.TenantClient;
+import com.enablix.core.security.auth.repo.ClientRepository;
 import com.enablix.data.segment.view.DataSegmentInfoBuilder;
 
 @Component
@@ -28,6 +33,9 @@ public class RecommendationManagerImpl implements RecommendationManager {
 	
 	@Autowired
 	private DataSegmentInfoBuilder dsInfoBuilder;
+	
+	@Autowired
+	private ClientRepository clientRepo;
 	
 	private ContentLabelResolver labelResolver = new PortalContentLabelResolver();
 	
@@ -61,9 +69,18 @@ public class RecommendationManagerImpl implements RecommendationManager {
 	}
 
 	@Override
-	public Collection<RecommendationWrapper> getAllGenericRecommendations() {
+	public Collection<RecommendationWrapper> getAllRecommendations() {
 		
-		Collection<Recommendation> recos = repo.findByTemplateId(ProcessContext.get().getTemplateId());
+		Collection<Recommendation> recos = repo.findAll();
+		
+		List<TenantClient> clients = clientRepo.findAll();
+		
+		Map<String, TenantClient> clientIdMap = new HashMap<>();
+		if (CollectionUtil.isNotEmpty(clients)) {
+			for (TenantClient client : clients) {
+				clientIdMap.put(client.getClientId(), client);
+			}
+		}
 		
 		Collection<RecommendationWrapper> recoWrappers = new ArrayList<>();
 		
@@ -78,7 +95,12 @@ public class RecommendationManagerImpl implements RecommendationManager {
 					RecommendationWrapper wrapper = new RecommendationWrapper();
 					wrapper.setRecommendation(reco);
 					wrapper.setNavContent(navReco);
-					
+
+					TenantClient client = clientIdMap.get(reco.getRecommendationScope().getClientId());
+					if (client != null) {
+						wrapper.setClientName(client.getClientName());
+					}
+
 					recoWrappers.add(wrapper);
 				}
 			}

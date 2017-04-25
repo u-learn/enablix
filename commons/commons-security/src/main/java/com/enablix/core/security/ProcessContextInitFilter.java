@@ -15,9 +15,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.enablix.commons.constants.AppConstants;
-import com.enablix.commons.util.StringUtil;
 import com.enablix.commons.util.process.ProcessContext;
-import com.enablix.commons.util.process.RequestContext;
 import com.enablix.core.domain.security.authorization.UserProfile;
 import com.enablix.core.security.service.EnablixUserService.LoggedInUser;
 
@@ -85,18 +83,7 @@ public class ProcessContextInitFilter extends OncePerRequestFilter {
 	}
 	
 	private String resolveClientId(UserProfile userProfile) {
-		
 		String clientId = userProfile.getSystemProfile().getDefaultClientId();
-		
-		if (StringUtil.isEmpty(clientId)) {
-			
-			RequestContext reqCtx = RequestContext.get();
-			
-			if (reqCtx != null) {
-				clientId = reqCtx.getClientId();
-			}
-		}
-		
 		return clientId;
 	}
 

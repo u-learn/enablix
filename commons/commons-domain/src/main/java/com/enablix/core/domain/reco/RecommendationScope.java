@@ -9,6 +9,8 @@ public class RecommendationScope {
 	private String containerQId;
 	
 	private String contentIdentity;
+	
+	private String clientId;
 
 	public String getUserId() {
 		return userId;
@@ -40,6 +42,14 @@ public class RecommendationScope {
 
 	public void setContentIdentity(String contentIdentity) {
 		this.contentIdentity = contentIdentity;
+	}
+
+	public String getClientId() {
+		return clientId;
+	}
+
+	public void setClientId(String clientId) {
+		this.clientId = clientId;
 	}
 	
 }

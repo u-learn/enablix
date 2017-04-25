@@ -1566,6 +1566,9 @@ input[type=checkbox] {
 	margin: 3px 0 -3px 1em;
 }
 
+.header-link a {
+    margin-left: 5px;
+}
 
 .subcontainer {    
 	width: 100%;
@@ -1933,3 +1936,20 @@ td eb-nav-link span a {
 	cursor: pointer;
 }
 
+.ro-subcontainer .head.head-toggle.active {
+    background: #FFFFFF;
+}
+
+.ro-subcontainer .head .action-icons,
+.ro-subcontainer .head em {
+    display: none;
+}
+
+.ro.subcontainer .head-toggle h2 {
+	color: #222;
+}
+
+.reco-client,
+.quicklink-client {
+	font-style: italic;
+}

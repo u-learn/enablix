@@ -26,5 +26,9 @@ public interface QuickLinksService {
 	List<QuickLinkCategory> getAssociatedCategories(String contentIdentity);
 	
 	List<QuickLinkAssociationVO> getAllCategoryAssociation(String contentIdentity);
+
+	boolean updateCategoryClientId(String qlCategoryName, String clientId);
+
+	QuickLinks getQuickLinks(DataView dataView, String clientId);
 	
 }

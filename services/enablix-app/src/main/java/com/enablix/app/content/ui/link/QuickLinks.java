@@ -36,10 +36,18 @@ public class QuickLinks {
 		return null;
 	}
 	
-	public void addQuickLinkSection(QuickLinkCategory category) {
+	public void addQuickLinkSection(QuickLinkCategory category, String clientName) {
+		
 		QuickLinkSection linkSection = findQuickLinkSection(category.getIdentity());
+		
 		if (linkSection == null) {
-			sections.add(new QuickLinkSection(category.getName(), category.getIdentity()));
+			
+			QuickLinkSection qlSection = 
+					new QuickLinkSection(category.getName(), category.getIdentity());
+			qlSection.setClientId(category.getClientId());
+			qlSection.setClientName(clientName);
+		
+			sections.add(qlSection);
 		}
 	}
 	

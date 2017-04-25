@@ -10,6 +10,6 @@ public interface RecommendationManager {
 	
 	public void deleteRecommendation(String recommendationIdentity);
 	
-	public Collection<RecommendationWrapper> getAllGenericRecommendations();
+	public Collection<RecommendationWrapper> getAllRecommendations();
 	
 }

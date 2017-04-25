@@ -2,13 +2,21 @@ enablix.studioApp.factory('QuickLinksService',
 	[			'RESTService', 'Notification',
 	 	function(RESTService,   Notification) {
 		
-			var getQuickLinks = function(_onSuccess) {
+			var getQuickLinks = function(_urlKey, _onSuccess) {
 				var params = {};
-				return RESTService.getForData("quickLinks", params, null, _onSuccess,
+				return RESTService.getForData(_urlKey, params, null, _onSuccess,
 					function(resp, status) {
 						Notification.error({message: "Error loading quick links", delay: enablix.errorMsgShowTime});
 					});
 			};
+			
+			var getUserQuickLinks = function(_onSuccess) {
+				return getQuickLinks("userQuickLinks", _onSuccess);
+			};
+			
+			var getAllQuickLinks = function(_onSuccess) {
+				return getQuickLinks("allQuickLinks", _onSuccess);
+			}
 			
 			var saveQuickLinkCategory = function(_quickLinkSection, _onSuccess, _onError) {
 				
@@ -55,7 +63,8 @@ enablix.studioApp.factory('QuickLinksService',
 			}
 	
 			return {
-				getQuickLinks : getQuickLinks,
+				getUserQuickLinks : getUserQuickLinks,
+				getAllQuickLinks : getAllQuickLinks,
 				saveQuickLinkCategory: saveQuickLinkCategory,
 				getContentQuickLinkAssociation: getContentQuickLinkAssociation,
 				addQuickLink: addQuickLink,

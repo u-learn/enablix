@@ -1,0 +1,55 @@
+<!-- page content -->
+<main class="page-content">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-6">
+				<!-- recomended content -->
+				<div class="block recomended-content">
+					<div class="head"><h2>Recommended Content</h2></div>
+					<div class="cont">
+						<eb-portal-reco></eb-portal-reco>
+					</div>
+				</div>
+				<!--/ recomended content -->
+			</div>
+			
+			
+			<div class="col-md-6">
+				<!-- recently updated -->
+				<div class="block recomended-content">
+					<div class="head"><h2>Recently Updated Content</h2></div>
+					<div class="cont">
+						<eb-portal-recent></eb-portal-recent>
+					</div>
+				</div>
+				<!--/ recently updated -->
+			</div>
+		</div>
+		
+		
+		<div class="row">
+		
+			<div class="col-sm-6">
+				<!-- quick links -->
+				<div class="block quick-links">
+					<div class="head"><h2>Quick Links</h2></div>
+					<div class="cont">
+						<eb-portal-quick-links section-width="50"></eb-portal-quick-links>
+					</div>
+				</div>
+				<!--/ quick links -->
+			</div>
+			
+			<div class="col-sm-6">
+				<!-- quick links -->
+				<div class="block ro-subcontainer" ng-init="contactInfoQId = 'partnercontactinfo'; contactInfoLabel = 'Contact Info'">
+					<eb-portal-sub-container type="single" sub-container-label="contactInfoLabel" sub-container-q-id="contactInfoQId"></eb-portal-sub-container>
+				</div>
+				<!--/ quick links -->
+			</div>
+								
+		</div>
+		
+	</div>
+</main>
+<!--/ page content -->

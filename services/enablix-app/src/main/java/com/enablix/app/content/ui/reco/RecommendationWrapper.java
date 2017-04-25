@@ -9,6 +9,8 @@ public class RecommendationWrapper {
 	
 	private NavigableContent navContent;
 	
+	private String clientName;
+	
 	public Recommendation getRecommendation() {
 		return recommendation;
 	}
@@ -23,6 +25,14 @@ public class RecommendationWrapper {
 
 	public void setNavContent(NavigableContent navContent) {
 		this.navContent = navContent;
+	}
+
+	public String getClientName() {
+		return clientName;
+	}
+
+	public void setClientName(String clientName) {
+		this.clientName = clientName;
 	}
 	
 }

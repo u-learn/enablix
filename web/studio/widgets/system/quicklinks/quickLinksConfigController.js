@@ -4,7 +4,7 @@ enablix.studioApp.controller('QuickLinksConfigController',
 	
 		$scope.quickLinksData = {"sections": []};
 		
-		QuickLinksService.getQuickLinks(function(quickLinks) {
+		QuickLinksService.getAllQuickLinks(function(quickLinks) {
 			if (!isNullOrUndefined(quickLinks)) {
 				$scope.quickLinksData = quickLinks;
 			}

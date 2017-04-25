@@ -4,4 +4,6 @@ public interface UserContext {
 
 	String userId();
 	
+	String clientId();
+	
 }
