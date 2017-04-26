@@ -26,7 +26,6 @@ import com.enablix.core.domain.content.summary.ContentCoverage;
 import com.enablix.core.mongo.content.ContentCrudService;
 import com.enablix.core.mongo.view.MongoDataView;
 import com.enablix.services.util.TemplateUtil;
-import com.enablix.services.util.template.walker.ContainerFilter;
 import com.enablix.services.util.template.walker.ContainerVisitor;
 import com.enablix.services.util.template.walker.TemplateContainerWalker;
 import com.enablix.task.PerTenantTask;
@@ -73,14 +72,7 @@ public class ContentCoverageCalculator implements Task {
 		reportUtil.updateLastestFlagOfOldRecords(ContentCoverage.class);
 		
 		TemplateContainerWalker walker = new TemplateContainerWalker(template.getTemplate(),
-				new ContainerFilter() {
-					
-					@Override
-					public boolean accept(ContainerType container) {
-						return !container.isRefData() && !TemplateUtil.isLinkedContainer(container);
-					}
-					
-				});
+				(container) -> !container.isRefData() && !TemplateUtil.isLinkedContainer(container));
 		
 		walker.walk(new ContainerVisitor() {
 			

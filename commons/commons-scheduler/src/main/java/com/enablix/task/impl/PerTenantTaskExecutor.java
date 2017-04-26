@@ -51,7 +51,7 @@ public class PerTenantTaskExecutor extends SimpleTaskExecutor {
 						
 					} catch (Throwable t) {
 						
-						LOGGER.error("Error executing checkpoint job for tenant [" + tenantId + "]", t);
+						LOGGER.error("Error executing scheduled task for tenant [" + tenantId + "]", t);
 						
 					} finally {
 						ProcessContext.clear();

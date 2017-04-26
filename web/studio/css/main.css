@@ -660,6 +660,7 @@ form.block .foot {
 	line-height: 1.5;
 	text-transform: uppercase;
 	color: #626262;
+	font-weight: 400;
 }
 .main-nav a:hover {
 	color: #2980b9;
