@@ -22,6 +22,6 @@ db.ebx_scheduler_config.insert({
     "name" : "Daily 1 AM GMT Scheduler", 
     "cronExpression" : "0 0 1 1/1 * ?", 
     "tasksToExecute" : [
-        "activity-metric-calculator"
+        "activity-metric-calculator-identity"
     ]
 });
