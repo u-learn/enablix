@@ -1956,6 +1956,10 @@ td eb-nav-link span a {
 	font-style: italic;
 }
 
+.quicklinks-sec {
+	padding-right: 5px;
+}
+
 .homepage .infotable {
     font-family: "Helvetica Neue", Helvetica;
 }
