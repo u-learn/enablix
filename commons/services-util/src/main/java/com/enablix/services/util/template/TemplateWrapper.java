@@ -173,6 +173,13 @@ public class TemplateWrapper implements TemplateFacade {
 	
 	@Override
 	public ContentItemType getContainerContentItemForDataSegmentAttr(String containerQId, String dataSegmentAttrId) {
+		
+		ContainerType containerDef = getContainerDefinition(containerQId);
+		
+		if (TemplateUtil.isLinkedContainer(containerDef)) {
+			containerQId = containerDef.getLinkContainerQId();
+		}
+		
 		return containerDataSegmentAttrMap.get(containerDataSegmentAttrKey(containerQId, dataSegmentAttrId));
 	}
 
