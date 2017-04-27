@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<contentTemplate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.02" id="haystax_enterprise" xsi:noNamespaceSchemaLocation="../xsd/content-template.xsd">
+<contentTemplate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.03" id="haystax_enterprise" xsi:noNamespaceSchemaLocation="../xsd/content-template.xsd">
 	<dataDefinition>
 		<container id="product" label="Products" businessCategory="BUSINESS_DIMENSION">
 			<contentItem id="name" label="Name" type="text" searchBoost="7"/>
@@ -1864,7 +1864,18 @@
 			<contentItem id="phone" label="Phone" type="text"/>			
 			<contentItem id="website" label="Website" type="text"/>
 			<contentItem id="blogsite" label="Blog" type="text"/>
-			<contentItem id="newsroomsite" label="Newsroom" type="text"/>						
+			<contentItem id="newsroomsite" label="Newsroom" type="text"/>	
+			<contentItem id="visibility" label="Visibility" type="bounded">
+	      		<bounded multivalued="true">
+	      			<refList>
+	      				<datastore>
+	      					<storeId>contentVisibilityType</storeId>
+	      					<dataId>identity</dataId>
+	      					<dataLabel>visibilityType</dataLabel>
+	      				</datastore>
+	      			</refList>
+	      		</bounded>
+      		</contentItem>											
 		</container>			
 		<container id="pov" label="Point of Views" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
