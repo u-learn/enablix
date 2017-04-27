@@ -111,9 +111,14 @@ public class ContentDataUtil {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public static Map<String, Object> findDocRecord(Map<String, Object> record, ContainerType containerDef) {
+	public static Map<String, Object> findDocRecord(Map<String, Object> record, 
+			ContainerType containerDef, TemplateFacade template) {
 		
 		Map<String, Object> docDetails = null;
+		
+		if (TemplateUtil.isLinkedContainer(containerDef)) {
+			containerDef = template.getContainerDefinition(containerDef.getLinkContainerQId());
+		}
 		
 		for (ContentItemType itemType : containerDef.getContentItem()) {
 			
