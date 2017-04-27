@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<contentTemplate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.01" id="haystax_enterprise" xsi:noNamespaceSchemaLocation="../xsd/content-template.xsd">
+<contentTemplate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.03" id="haystax_enterprise" xsi:noNamespaceSchemaLocation="../xsd/content-template.xsd">
 	<dataDefinition>
 		<container id="product" label="Products" businessCategory="BUSINESS_DIMENSION">
 			<contentItem id="name" label="Name" type="text" searchBoost="7"/>
@@ -1864,7 +1864,18 @@
 			<contentItem id="phone" label="Phone" type="text"/>			
 			<contentItem id="website" label="Website" type="text"/>
 			<contentItem id="blogsite" label="Blog" type="text"/>
-			<contentItem id="newsroomsite" label="Newsroom" type="text"/>						
+			<contentItem id="newsroomsite" label="Newsroom" type="text"/>	
+			<contentItem id="visibility" label="Visibility" type="bounded">
+	      		<bounded multivalued="true">
+	      			<refList>
+	      				<datastore>
+	      					<storeId>contentVisibilityType</storeId>
+	      					<dataId>identity</dataId>
+	      					<dataLabel>visibilityType</dataLabel>
+	      				</datastore>
+	      			</refList>
+	      		</bounded>
+      		</contentItem>											
 		</container>			
 		<container id="pov" label="Point of Views" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
@@ -2413,6 +2424,17 @@
 			<contentItem id="title" label="Title" type="text" searchBoost="7"/>
 			<contentItem id="file" label="File" type="doc"/>
 			<contentItem id="url" label="URL" type="text"/>
+			<contentItem id="type" label="Research Type" type="bounded">
+				<bounded>
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>researchType</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>typeName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>			
 			<contentItem id="distributionrights" label="Distribution Rights" type="bounded">
 				<bounded>
 					<fixedList>
@@ -3450,6 +3472,11 @@
 			<contentItem id="desc" label="Description" type="text"/>
 			<container id="proposalContentTypeProposalContent" label="Proposal Content" linkContainerQId="proposal.proposalcontent" linkContentItemId="type"/>			
 		</container>
+		<container id="researchType" label="Research Type" refData="true">
+			<contentItem id="typeName" label="Type" type="text"/>
+			<contentItem id="desc" label="Description" type="text"/>
+			<container id="researchTypeResearch" label="Research" linkContainerQId="research" linkContentItemId="type"/>			
+		</container>
 		<container id="productRelease" label="Product Releases" refData="true">
 			<contentItem id="release" label="Release Number" type="text"/>
 			<contentItem id="desc" label="Description" type="text"/>
@@ -4071,7 +4098,7 @@
 					<headingContentItem id="proposalType"/>
 				</portalConfig>
 			</container>
-		</contentUIDef>		
+		</contentUIDef>	
 		<contentUIDef qualifiedId="proposalContentType">
 			<container labelQualifiedId="proposalContentType.typeName">
 				<listViewConfig>
@@ -4082,6 +4109,16 @@
 				</portalConfig>
 			</container>
 		</contentUIDef>				
+		<contentUIDef qualifiedId="researchType">
+			<container labelQualifiedId="researchType.typeName">
+				<listViewConfig>
+					<hideContentItem id="desc"/>											
+				</listViewConfig>
+				<portalConfig>
+					<headingContentItem id="typeName"/>
+				</portalConfig>
+			</container>
+		</contentUIDef>		
 		<contentUIDef qualifiedId="swot">
 			<container labelQualifiedId="swot.title">
 				<listViewConfig>
