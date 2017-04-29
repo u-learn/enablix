@@ -48,7 +48,7 @@ public abstract class SimpleMetric implements MetricStatsCalculator {
 		criteria = Criteria.where("createdAt").gte(startDate).lte(endDate);
 		
 		for(Entry<String, String> field : fieldValue.entrySet()){
-			criteria.and(field.getKey()).is(field.getValue());
+			criteria = criteria.and(field.getKey()).is(field.getValue());
 		}
 		
 		query = Query.query(criteria);

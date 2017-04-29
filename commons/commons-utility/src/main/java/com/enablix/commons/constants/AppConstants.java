@@ -55,8 +55,8 @@ public class AppConstants {
 		CONTENT_ACCESS("Content Access","ACTMETRIC6"),
 		CONTENT_PREVIEW("Content Preview","ACTMETRIC7"),
 		CONTENT_DOWNLOAD("Content Download","ACTMETRIC8"),
-		CONTENT_ACC_WEEKLY_DIGEST("Content Access via Weekly Digest","ACTMETRIC10");
-
+		CONTENT_ACC_WEEKLY_DIGEST("Content Access via Weekly Digest","ACTMETRIC10"),
+		DISTINCT_LOGIN("Number of Distinct Logins","ACTMETRIC3");
 		String value;
 		String code;
 		MetricTypes(String value, String code){

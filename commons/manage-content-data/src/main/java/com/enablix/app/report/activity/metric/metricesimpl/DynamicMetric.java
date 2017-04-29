@@ -7,23 +7,13 @@ import org.springframework.data.mongodb.core.query.Query;
 
 import com.enablix.app.report.activity.metric.MetricStatsCalculator;
 
-public abstract class DynamicMetric implements MetricStatsCalculator{
+public abstract class DynamicMetric implements MetricStatsCalculator {
+	
 	@Autowired
-	private MongoTemplate mongoTemplate;
+	protected MongoTemplate mongoTemplate;
 
-	private Criteria criteria = new Criteria();;
+	protected Criteria criteria = new Criteria();;
 
-	private Query query;
+	protected Query query;
 	
-	public MongoTemplate getMongoTemplate() {
-		return mongoTemplate;
-	}
-	
-	public Criteria getCriteria() {
-		return criteria;
-	}
-	
-	public Query getQuery() {
-		return query;
-	}
 }
