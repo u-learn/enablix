@@ -116,8 +116,8 @@ enablix.studioApp.controller('AuditController', ['$scope', '$stateParams', '$fil
         }
 
         $scope.auditSearch = {
-            id: "content-coverage-report",
-            name: "Content Coverage",
+            id: "audit-search",
+            name: "Audit Search Panel",
             filterMetadata: {
                 "activitycat": {
                     "field": "activity.category",

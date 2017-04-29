@@ -41,13 +41,17 @@ public class ActivityMetricCalculator implements Task {
 
 		ActivityMetric activityMetricBean;
 		List<MetricStats> metricStats;
-		for (ActivityMetricConfig activityMetricConfig : activityMetrics) {
+		activityMetricConfigLoop : for (ActivityMetricConfig activityMetricConfig : activityMetrics) {
 			backRunCalendar.setTime(activityMetricConfig.getNextRunDate());
 			while(!DateUtils.isSameDay(backRunCalendar,currentDayCalendar)){
-				
+
 				MetricStats metricStat = activityMetric.executeActivityMetrices(activityMetricConfig,backRunCalendar.getTime());
+				if(metricStat == null) {
+					continue activityMetricConfigLoop;
+				}
+
 				activityMetricBean  = activityMetricRepo.findByAsOfDate(backRunCalendar.getTime());
-			
+
 				if(activityMetricBean == null){
 					activityMetricBean = new ActivityMetric();
 					metricStats = new ArrayList<MetricStats>();
@@ -57,10 +61,10 @@ public class ActivityMetricCalculator implements Task {
 					metricStats = activityMetricBean.getMetricStats();
 				}
 				metricStats.add(metricStat);
-				
+
 				activityMetricBean.setMetricStats(metricStats);
 				activityMetricRepo.save(activityMetricBean);
-				
+
 				backRunCalendar.add(Calendar.DATE, 1);
 			}
 			activityMetricConfig.setNextRunDate(backRunCalendar.getTime());

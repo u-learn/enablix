@@ -1,5 +1,6 @@
 package com.enablix.app.report.activity.metric;
 
+import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 
@@ -10,8 +11,8 @@ public interface ActivityMetricService {
 	
 	List<ActivityMetricConfig> getActivityMetricConfig();
 
-	List<MetricStats> getAggregatedValues(Date date);
-	
-	MetricStats executeActivityMetrices(ActivityMetricConfig activityMetrices, Date executionDate);
+	MetricStats executeActivityMetrices(ActivityMetricConfig activityMetric, Date executionDate);
+
+	List<MetricStats> getAggregatedValues(Date date) throws ParseException;
 	
 }

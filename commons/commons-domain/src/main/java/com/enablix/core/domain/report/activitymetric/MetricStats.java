@@ -1,29 +1,45 @@
 package com.enablix.core.domain.report.activitymetric;
 
-public class MetricStats {
+public class MetricStats implements Comparable<MetricStats>{
 	
-	private String _id;
+	private String metricCode;
 	
-	private Integer metricValue;
+	private String metricName;
 	
-	public MetricStats(String _id, Integer metricValue) {
-		this._id = _id;
+	private Long metricValue;
+	
+	public MetricStats(String metricCode, String metricName, Long metricValue) {
+		this.metricCode = metricCode;
+		this.metricName = metricName;
 		this.metricValue = metricValue;
 	}
 	
-	public String getMetricName() {
-		return _id;
-	}
-	
-	public void setMetricName(String metricName) {
-		this._id = metricName;
-	}
-	
-	public Integer getMetricValue() {
+	public Long getMetricValue() {
 		return metricValue;
 	}
 	
-	public void setMetricValue(Integer metricValue) {
+	public void setMetricValue(Long metricValue) {
 		this.metricValue = metricValue;
+	}
+
+	@Override
+	public int compareTo(MetricStats metricStat) {
+		return this.getMetricName().compareTo(metricStat.getMetricName());
+	}
+
+	public String getMetricName() {
+		return metricName;
+	}
+
+	public void setMetricName(String metricName) {
+		this.metricName = metricName;
+	}
+	
+	public String getMetricCode() {
+		return metricCode;
+	}
+
+	public void setMetricCode(String metricCode) {
+		this.metricCode = metricCode;
 	}
 }

@@ -46,4 +46,30 @@ public class AppConstants {
 	public static final String EVAL = "eval";
 	public static final String ACTIVITY_METRIC_CONFIG = "ebx_activity_metric_config";
 	public static final String ACTIVITY_METRIC = "ebx_activity_metric";
+	public static final String ACTIVITY_TREND_KEY = "Time";
+	
+	public enum MetricTypes{
+		NO_OF_LOGINS("No Of Logins","ACTMETRIC2"),
+		CONTENT_ADD("Content Add","ACTMETRIC4"),
+		CONTENT_UPDATES("Content Updates","ACTMETRIC5"),
+		CONTENT_ACCESS("Content Access","ACTMETRIC6"),
+		CONTENT_PREVIEW("Content Preview","ACTMETRIC7"),
+		CONTENT_DOWNLOAD("Content Download","ACTMETRIC8"),
+		CONTENT_ACC_WEEKLY_DIGEST("Content Access via Weekly Digest","ACTMETRIC10");
+
+		String value;
+		String code;
+		MetricTypes(String value, String code){
+			this.value=value;
+			this.code=code;
+		}
+		
+		public String getValue(){
+			return this.value;
+		}
+		
+		public String getCode() {
+			return code;
+		}
+	}
 }

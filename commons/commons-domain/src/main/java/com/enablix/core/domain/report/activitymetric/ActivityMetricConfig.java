@@ -14,8 +14,6 @@ public class ActivityMetricConfig extends BaseDocumentEntity {
 
 	private String metricName;
 
-	private String metricQueryFn;
-
 	private Date startDate;
 
 	private Date nextRunDate;
@@ -36,14 +34,6 @@ public class ActivityMetricConfig extends BaseDocumentEntity {
 		this.metricName = metricName;
 	}
 
-	public String getMetricQueryFn() {
-		return metricQueryFn;
-	}
-
-	public void setMetricQueryFn(String metricQueryFn) {
-		this.metricQueryFn = metricQueryFn;
-	}
-
 	public Date getStartDate() {
 		return startDate;
 	}
@@ -59,4 +49,11 @@ public class ActivityMetricConfig extends BaseDocumentEntity {
 	public void setNextRunDate(Date nextRunDate) {
 		this.nextRunDate = nextRunDate;
 	}
+
+	@Override
+	public String toString() {
+		return "ActivityMetricConfig [metricCode=" + metricCode + ", metricName=" + metricName + ", "
+				+ "startDate=" + startDate + ", nextRunDate=" + nextRunDate + "]";
+	}
+	
 }
