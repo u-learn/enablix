@@ -11,10 +11,10 @@ import com.enablix.commons.constants.AppConstants.MetricTypes;
 import com.enablix.core.domain.report.activitymetric.MetricStats;
 
 @Component
-public class ContentUpdateMetricImpl extends SimpleMetric{
+public class ContentUpdateMetricImpl extends SimpleMetric {
 	
 	@Autowired
-	MetricAggService metricAggService;
+	private MetricAggService metricAggService;
 
 	private final MetricTypes activityCode = MetricTypes.CONTENT_UPDATES;
 

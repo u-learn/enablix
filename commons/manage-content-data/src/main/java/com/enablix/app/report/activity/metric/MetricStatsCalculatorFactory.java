@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 import com.enablix.commons.util.beans.SpringBackedAbstractFactory;
 
 @Component
-public class MetricStatsCalculatorFactory extends SpringBackedAbstractFactory<MetricStatsCalculator>{
+public class MetricStatsCalculatorFactory extends SpringBackedAbstractFactory<MetricStatsCalculator> {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(MetricStatsCalculatorFactory.class);
 	

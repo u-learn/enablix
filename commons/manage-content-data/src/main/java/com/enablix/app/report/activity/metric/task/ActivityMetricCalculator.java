@@ -41,13 +41,13 @@ public class ActivityMetricCalculator implements Task {
 
 		ActivityMetric activityMetricBean;
 		List<MetricStats> metricStats;
-		activityMetricConfigLoop : for (ActivityMetricConfig activityMetricConfig : activityMetrics) {
+		for (ActivityMetricConfig activityMetricConfig : activityMetrics) {
 			backRunCalendar.setTime(activityMetricConfig.getNextRunDate());
 			while(!DateUtils.isSameDay(backRunCalendar,currentDayCalendar)){
 
 				MetricStats metricStat = activityMetric.executeActivityMetrices(activityMetricConfig,backRunCalendar.getTime());
 				if(metricStat == null) {
-					continue activityMetricConfigLoop;
+					break;
 				}
 
 				activityMetricBean  = activityMetricRepo.findByAsOfDate(backRunCalendar.getTime());

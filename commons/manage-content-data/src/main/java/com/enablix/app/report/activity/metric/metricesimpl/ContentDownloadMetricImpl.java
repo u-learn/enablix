@@ -12,8 +12,9 @@ import com.enablix.core.domain.report.activitymetric.MetricStats;
 
 @Component
 public class ContentDownloadMetricImpl extends SimpleMetric {
+	
 	@Autowired
-	MetricAggService metricAggService;
+	private MetricAggService metricAggService;
 
 	private final MetricTypes activityCode = MetricTypes.CONTENT_DOWNLOAD;
 
