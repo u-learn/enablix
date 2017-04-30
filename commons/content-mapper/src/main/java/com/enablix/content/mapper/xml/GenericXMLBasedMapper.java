@@ -14,9 +14,9 @@ import com.enablix.content.mapper.ContentSource;
 import com.enablix.content.mapper.EnablixContent;
 import com.enablix.content.mapper.ExternalContent;
 import com.enablix.content.mapping.ContentMappingManager;
+import com.enablix.core.api.TemplateFacade;
 import com.enablix.core.commons.xsdtopojo.ContentContainerMappingType;
 import com.enablix.core.commons.xsdtopojo.ContentMapping;
-import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 
 @Component
 public class GenericXMLBasedMapper implements ContentMapper {
@@ -32,7 +32,7 @@ public class GenericXMLBasedMapper implements ContentMapper {
 	private MappingWorkerRegistry workerRegistry;
 	
 	@Override
-	public EnablixContent transformToEnablixContent(ExternalContent content, ContentTemplate template) {
+	public EnablixContent transformToEnablixContent(ExternalContent content, TemplateFacade template) {
 		
 		ContentContainerMappingType contentMapping = mappingManager.getContentMapping(content.getContentSource(), content.getContentQId());
 		

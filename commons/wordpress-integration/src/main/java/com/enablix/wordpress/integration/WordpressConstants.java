@@ -8,4 +8,5 @@ public class WordpressConstants {
 	
 	public static final String WP_POST_TYPE_ANALYSER = "WP Post Type Analyser";
 	
+	public static final String WP_POST_ANALYSER_TYPE_MAPPING = "wp.post.analyser.type.mapping";
 }

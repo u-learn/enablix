@@ -1,5 +1,6 @@
 package com.enablix.analytics.info.detection;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,16 +25,15 @@ public class DefaultInfoDetector implements InfoDetector {
 		
 		for (InfoAnalyser analyser : registry.allAnalysers()) {
 			
-			List<Opinion> opinions = analyser.analyse(info, ctx);
+			Collection<Opinion> opinions = analyser.analyse(info, ctx);
 
 			if (CollectionUtil.isNotEmpty(opinions)) {
 				assessment.addOpinions(opinions);
 			}
+			
 		}
 
 		return suggestionBuilder.build(assessment);
 	}
 
-	
-	
 }

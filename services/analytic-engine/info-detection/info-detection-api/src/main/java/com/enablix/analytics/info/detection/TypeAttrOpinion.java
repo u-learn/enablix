@@ -29,5 +29,11 @@ public class TypeAttrOpinion extends Opinion {
 	public Object getValue() {
 		return value;
 	}
+
+	@Override
+	public String toString() {
+		return "TypeAttrOpinion [containerQId=" + containerQId + ", attributeId=" + attributeId + ", value=" + value
+				+ "]";
+	}
 	
 }

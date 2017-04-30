@@ -1,11 +1,11 @@
 package com.enablix.analytics.info.detection;
 
-import java.util.List;
+import java.util.Collection;
 
 public abstract class TaggedInfoAnalyser implements InfoAnalyser {
 
 	@Override
-	public List<Opinion> analyse(Information info, InfoDetectionContext ctx) {
+	public Collection<Opinion> analyse(Information info, InfoDetectionContext ctx) {
 		
 		if (info instanceof TaggedInfo) {
 			return analyseTaggedInfo((TaggedInfo) info, ctx);
@@ -14,6 +14,6 @@ public abstract class TaggedInfoAnalyser implements InfoAnalyser {
 		return null;
 	}
 	
-	protected abstract List<Opinion> analyseTaggedInfo(TaggedInfo info, InfoDetectionContext ctx);
+	protected abstract Collection<Opinion> analyseTaggedInfo(TaggedInfo info, InfoDetectionContext ctx);
 
 }

@@ -6,9 +6,9 @@ import org.springframework.stereotype.Component;
 import com.enablix.content.mapper.EnablixContent;
 import com.enablix.content.mapper.ExternalContent;
 import com.enablix.content.mapper.xml.MappingWorker;
+import com.enablix.core.api.TemplateFacade;
 import com.enablix.core.commons.xsdtopojo.ContentContainerMappingType;
 import com.enablix.core.commons.xsdtopojo.ContentItemMappingType;
-import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 
 @Component
 public class ContentItemWorker implements MappingWorker {
@@ -23,7 +23,7 @@ public class ContentItemWorker implements MappingWorker {
 
 	@Override
 	public void execute(ContentContainerMappingType containerMapping, ExternalContent extContent,
-			EnablixContent ebxContent, ContentTemplate template) {
+			EnablixContent ebxContent, TemplateFacade template) {
 		
 		for (ContentItemMappingType itemMapping : containerMapping.getContentItemMappings().getItemMapping()) {
 			itemMappingHandler.setEnablixItemValue(itemMapping, extContent, ebxContent, template);

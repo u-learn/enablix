@@ -2,6 +2,7 @@ package com.enablix.wordpress.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import com.afrozaar.wordpress.wpapi.v2.model.Post;
 import com.afrozaar.wordpress.wpapi.v2.model.Term;
@@ -11,6 +12,7 @@ import com.enablix.analytics.info.detection.InfoTag;
 import com.enablix.analytics.info.detection.Information;
 import com.enablix.analytics.info.detection.LinkAwareInfo;
 import com.enablix.analytics.info.detection.TaggedInfo;
+import com.enablix.commons.util.beans.BeanUtil;
 import com.enablix.commons.util.collection.CollectionUtil;
 import com.enablix.wordpress.integration.WordpressConstants;
 
@@ -46,6 +48,10 @@ public class WordpressInfo implements Information, TaggedInfo, IdentifiableInfo,
 		return postTags;
 	}
 
+	public List<InfoTag> getInfoTags() {
+		return infoTags;
+	}
+
 	@Override
 	public String source() {
 		return WordpressConstants.INFO_SRC_WP;
@@ -74,6 +80,12 @@ public class WordpressInfo implements Information, TaggedInfo, IdentifiableInfo,
 	@Override
 	public String infoLink() {
 		return post.getLink();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public Map<String, Object> infoData() {
+		return (Map<String, Object>) BeanUtil.beanToMap(this);
 	}
 	
 }

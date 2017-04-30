@@ -276,6 +276,19 @@ public final class CollectionUtil {
 	public static boolean isNotEmpty(Map<?, ?> contentRecord) {
 		return contentRecord != null && !contentRecord.isEmpty();
 	}
+
+	public static <K, V, T extends Collection<V>> boolean addToMappedListValue(
+			K key, V value, Map<K, T> map, CollectionCreator<T, V> creator) {
+		
+		T collection = map.get(key);
+		
+		if (collection == null) {
+			collection = creator.create();
+			map.put(key, collection);
+		}
+		
+		return collection.add(value);
+	}
 	
 	/**
 	 * Prevent instantiation.

@@ -9,11 +9,10 @@ import com.enablix.commons.content.ContentParser;
 import com.enablix.commons.util.collection.CollectionUtil;
 import com.enablix.content.mapper.EnablixContent;
 import com.enablix.content.mapper.ExternalContent;
+import com.enablix.core.api.TemplateFacade;
 import com.enablix.core.commons.xsdtopojo.ContainerType;
 import com.enablix.core.commons.xsdtopojo.ContentItemMappingType;
 import com.enablix.core.commons.xsdtopojo.ContentItemType;
-import com.enablix.core.commons.xsdtopojo.ContentTemplate;
-import com.enablix.services.util.TemplateUtil;
 
 @Component
 public class ItemMappingHandler {
@@ -22,10 +21,9 @@ public class ItemMappingHandler {
 	private ContentItemValueBuilderFactory builderFactory;
 	
 	public void setEnablixItemValue(ContentItemMappingType itemMapping, 
-			ExternalContent extContent, EnablixContent ebxContent, ContentTemplate template) {
+			ExternalContent extContent, EnablixContent ebxContent, TemplateFacade template) {
 	
-		ContainerType containerDef = TemplateUtil.findContainer(
-				template.getDataDefinition(), extContent.getContentQId());
+		ContainerType containerDef = template.getContainerDefinition(extContent.getContentQId());
 		
 		for (ContentItemType contentItem : containerDef.getContentItem()) {
 		

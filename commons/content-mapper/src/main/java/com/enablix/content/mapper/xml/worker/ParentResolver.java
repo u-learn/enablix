@@ -8,8 +8,8 @@ import com.enablix.content.mapper.EnablixContent;
 import com.enablix.content.mapper.ExternalContent;
 import com.enablix.content.mapper.xml.MappingWorker;
 import com.enablix.core.api.ContentDataRecord;
+import com.enablix.core.api.TemplateFacade;
 import com.enablix.core.commons.xsdtopojo.ContentContainerMappingType;
-import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 import com.enablix.core.commons.xsdtopojo.ParentContainerMappingType;
 
 @Component
@@ -25,7 +25,7 @@ public class ParentResolver implements MappingWorker {
 
 	@Override
 	public void execute(ContentContainerMappingType containerMapping, ExternalContent extContent,
-			EnablixContent ebxContent, ContentTemplate template) {
+			EnablixContent ebxContent, TemplateFacade template) {
 		
 		ParentContainerMappingType parent = containerMapping.getParent();
 		

@@ -440,7 +440,7 @@ public class TemplateUtil {
 	}
 
 
-	private static BoundedListDatastoreType checkAndGetBoundedRefListDatastore(ContentItemType contentItem) {
+	public static BoundedListDatastoreType checkAndGetBoundedRefListDatastore(ContentItemType contentItem) {
 		
 		if (contentItem.getType() == ContentItemClassType.BOUNDED) {
 		

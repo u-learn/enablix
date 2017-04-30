@@ -19,4 +19,9 @@ public class ContentSuggestion extends Opinion {
 		return content;
 	}
 
+	@Override
+	public String toString() {
+		return "ContentSuggestion [content=" + content + "]";
+	}
+
 }

@@ -1,10 +1,10 @@
 package com.enablix.analytics.info.detection;
 
-import java.util.List;
+import java.util.Collection;
 
 public interface InfoAnalyser {
 
-	List<Opinion> analyse(Information info, InfoDetectionContext ctx);
+	Collection<Opinion> analyse(Information info, InfoDetectionContext ctx);
 	
 	String name();
 	

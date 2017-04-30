@@ -14,14 +14,13 @@ import com.enablix.commons.util.collection.CollectionUtil;
 import com.enablix.content.mapper.EnablixContent;
 import com.enablix.content.mapper.ExternalContent;
 import com.enablix.content.mapper.xml.MappingWorker;
+import com.enablix.core.api.TemplateFacade;
 import com.enablix.core.commons.xsdtopojo.ContentContainerMappingType;
-import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 import com.enablix.core.mongo.content.ContentCrudService;
 import com.enablix.core.mongo.search.ConditionOperator;
 import com.enablix.core.mongo.search.SearchFilter;
 import com.enablix.core.mongo.search.StringFilter;
 import com.enablix.core.mongo.view.MongoDataView;
-import com.enablix.services.util.TemplateUtil;
 
 @Component
 public class ExistingRecordResolver implements MappingWorker {
@@ -36,7 +35,7 @@ public class ExistingRecordResolver implements MappingWorker {
 
 	@Override
 	public void execute(ContentContainerMappingType containerMapping, 
-			ExternalContent extContent, EnablixContent ebxContent, ContentTemplate template) {
+			ExternalContent extContent, EnablixContent ebxContent, TemplateFacade template) {
 		
 		Object externalId = ContentParser.getSingleValue(
 					extContent.getData(), containerMapping.getSourceId().getValue());
@@ -44,7 +43,7 @@ public class ExistingRecordResolver implements MappingWorker {
 		if (externalId != null) {
 			
 			SearchFilter extIdFilter = createSourceIdFilter(externalId);
-			String collectionName = TemplateUtil.resolveCollectionName(template, extContent.getContentQId());
+			String collectionName = template.getCollectionName(extContent.getContentQId());
 			
 			Map<String, Object> ebxData = ebxContent.getData();
 			List<Map<String, Object>> existingRecords = crudService.findAllRecordForCriteria(

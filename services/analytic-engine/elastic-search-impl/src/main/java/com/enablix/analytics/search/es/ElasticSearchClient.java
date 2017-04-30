@@ -28,26 +28,30 @@ public class ElasticSearchClient implements SearchClient {
 	@Autowired
 	private SearchHitTransformer searchHitTx;
 	
+	@Autowired
+	private SearchFieldBuilder fieldBuilder;
+	
 	@Override
 	public SearchResult<ContentDataRef> search(String text, 
 			TemplateFacade template, int pageSize, int pageNum, DataView dataView) {
 
 		return searchAndGetTransformedResult(text, template, pageSize, pageNum, dataView, 
-				
-			new ResultTx<ContentDataRef>() {
-
-				@Override
-				public ContentDataRef transform(SearchHit hit, TemplateFacade template) {
-					return searchHitTx.toContentDataRef(hit, template);
-				}
-				
-			});
+						(hit, templt) -> searchHitTx.toContentDataRef(hit, templt));
 	}
 
 	private <T> SearchResult<T> searchAndGetTransformedResult(String text, TemplateFacade template,
 			int pageSize, int pageNum, DataView dataView, ResultTx<T> resultTx) {
 		
-		SearchResponse searchResponse = searchAndGetResponse(text, template, pageSize, pageNum, dataView);
+		SearchRequest searchRequest = buildSearchRequest(text, template, pageSize, pageNum, dataView);
+		
+		return executeSearchAndCreateResult(template, pageSize, pageNum, resultTx, searchRequest);
+	}
+
+	private <T> SearchResult<T> executeSearchAndCreateResult(TemplateFacade template, int pageSize, int pageNum,
+			ResultTx<T> resultTx, SearchRequest searchRequest) {
+
+		ActionFuture<SearchResponse> searchResponseFuture = esClient.search(searchRequest);
+		SearchResponse searchResponse = searchResponseFuture.actionGet();
 		
 		List<T> result = new ArrayList<>();
 		
@@ -75,16 +79,14 @@ public class ElasticSearchClient implements SearchClient {
 		return searchResult;
 	}
 
-	private SearchResponse searchAndGetResponse(String text, 
+	private SearchRequest buildSearchRequest(String text, 
 			TemplateFacade template, int pageSize, int pageNum, DataView dataView) {
 		
 		ESDataView esDataView = DataViewUtil.getElasticSearchDataView(dataView);
-		SearchRequest searchRequest = ESQueryBuilder.builder(text, template)
+		
+		return ESQueryBuilder.builder(text, template, fieldBuilder)
 													.withPagination(pageSize, pageNum)
 													.withViewScope(esDataView).build();
-		
-		ActionFuture<SearchResponse> searchResponseFuture = esClient.search(searchRequest);
-		return searchResponseFuture.actionGet();
 	}
 	
 	@Override
@@ -92,18 +94,15 @@ public class ElasticSearchClient implements SearchClient {
 			String text, TemplateFacade template, int pageSize, int pageNum, DataView dataView) {
 		
 		return searchAndGetTransformedResult(text, template, pageSize, pageNum, dataView, 
-
-			new ResultTx<ContentDataRecord>() {
-	
-				@Override
-				public ContentDataRecord transform(SearchHit hit, TemplateFacade template) {
-					return searchHitTx.toContentDataRecord(hit, template);
-				}
-				
-			});
+						(hit, templt) -> searchHitTx.toContentDataRecord(hit, templt));
 	}
 	
-	private static interface ResultTx<T> {
+	public SearchHits searchContent(SearchRequest request) {
+		ActionFuture<SearchResponse> search = esClient.search(request);
+		return search.actionGet().getHits();
+	}
+	
+	public static interface ResultTx<T> {
 		T transform(SearchHit hit, TemplateFacade template);
 	}
 

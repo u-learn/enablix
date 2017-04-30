@@ -111,9 +111,9 @@ public class ContentDataRef implements ContentRecordRef {
 	@Override
 	public String toString() {
 		return "ContentDataRef [templateId=" + templateId + ", containerQId=" + containerQId + ", instanceIdentity="
-				+ instanceIdentity + "]";
+				+ instanceIdentity + ", title=" + title + "]";
 	}
-	
+
 	public static ContentDataRef createContentRef(String templateId, String containerQId, String instanceIdentity, String title) {
 		return new ContentDataRef(templateId, containerQId, instanceIdentity, title);
 	}

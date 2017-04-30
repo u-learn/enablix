@@ -13,11 +13,11 @@ import com.enablix.commons.util.StringUtil;
 import com.enablix.commons.util.collection.CollectionUtil;
 import com.enablix.content.mapper.ExternalContent;
 import com.enablix.core.api.ContentDataRecord;
+import com.enablix.core.api.TemplateFacade;
 import com.enablix.core.commons.xsdtopojo.ContainerMappingType;
 import com.enablix.core.commons.xsdtopojo.ContainerType;
 import com.enablix.core.commons.xsdtopojo.ContentContainerMappingType;
 import com.enablix.core.commons.xsdtopojo.ContentItemMappingType;
-import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 import com.enablix.core.mongo.content.ContentCrudService;
 import com.enablix.core.mongo.search.ConditionOperator;
 import com.enablix.core.mongo.search.SearchFilter;
@@ -32,7 +32,7 @@ public class ContainerMappingHandler {
 	private ContentCrudService crudService;
 
 	public ContentDataRecord getContainerRecord(ContentContainerMappingType contentMapping, 
-			ContainerMappingType containerMapping, ExternalContent extContent, ContentTemplate template) {
+			ContainerMappingType containerMapping, ExternalContent extContent, TemplateFacade template) {
 		
 		ContentDataRecord record = null;
 		
@@ -49,12 +49,12 @@ public class ContainerMappingHandler {
 				containerQId = QIdUtil.createQualifiedId(parentContainerQId, containerId);
 			}
 			
-			ContainerType container = TemplateUtil.findContainer(template.getDataDefinition(), containerQId);
+			ContainerType container = template.getContainerDefinition(containerQId);
 			if (TemplateUtil.isLinkedContainer(container)) {
-				container = TemplateUtil.findContainer(template.getDataDefinition(), container.getLinkContainerQId());
+				container = template.getContainerDefinition(container.getLinkContainerQId());
 			}
 			
-			String collectionName = TemplateUtil.resolveCollectionName(template, container.getQualifiedId());
+			String collectionName = template.getCollectionName(container.getQualifiedId());
 			
 			String containerItemId = itemMapping.getItemId();
 			SearchFilter itemIdFilter = createFilter(extItemValue, containerItemId);

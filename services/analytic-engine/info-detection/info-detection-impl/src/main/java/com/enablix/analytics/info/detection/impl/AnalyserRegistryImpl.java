@@ -1,7 +1,9 @@
 package com.enablix.analytics.info.detection.impl;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.TreeSet;
+import java.util.Collections;
+import java.util.List;
 
 import org.springframework.stereotype.Component;
 
@@ -12,8 +14,7 @@ import com.enablix.commons.util.beans.SpringBackedBeanRegistry;
 @Component
 public class AnalyserRegistryImpl extends SpringBackedBeanRegistry<InfoAnalyser> implements AnalyserRegistry {
 
-	private TreeSet<InfoAnalyser> orderedAnalysers = 
-			new TreeSet<>( (a1, a2) -> a1.level().compareTo(a2.level() ));
+	private List<InfoAnalyser> orderedAnalysers = new ArrayList<>();
 	
 	@Override
 	public Collection<InfoAnalyser> allAnalysers() {
@@ -28,6 +29,7 @@ public class AnalyserRegistryImpl extends SpringBackedBeanRegistry<InfoAnalyser>
 	@Override
 	protected void registerBean(InfoAnalyser bean) {
 		orderedAnalysers.add(bean);
+		Collections.sort(orderedAnalysers, (a1, a2) -> a1.level().compareTo(a2.level()) );
 	}
 
 }

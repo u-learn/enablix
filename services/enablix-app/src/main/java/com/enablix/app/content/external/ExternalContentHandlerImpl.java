@@ -16,7 +16,7 @@ import com.enablix.content.mapper.ContentMapper;
 import com.enablix.content.mapper.ContentMapperRegistry;
 import com.enablix.content.mapper.EnablixContent;
 import com.enablix.content.mapper.ExternalContent;
-import com.enablix.core.commons.xsdtopojo.ContentTemplate;
+import com.enablix.core.api.TemplateFacade;
 
 @Component
 public class ExternalContentHandlerImpl implements ExternalContentHandler {
@@ -42,7 +42,7 @@ public class ExternalContentHandlerImpl implements ExternalContentHandler {
 			throw new UnsupportedOperationException("No mapper found");
 		}
 		
-		ContentTemplate template = templateManager.getTemplate(ProcessContext.get().getTemplateId());
+		TemplateFacade template = templateManager.getTemplateFacade(ProcessContext.get().getTemplateId());
 		
 		EnablixContent ebxContent = mapper.transformToEnablixContent(content, template);
 		
