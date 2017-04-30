@@ -14,7 +14,7 @@ import com.enablix.core.domain.report.activitymetric.MetricStats;
 public class ContentAccessWeeklyDigestMetricImpl extends SimpleMetric {
 
 	@Autowired
-	MetricAggService metricAggService;
+	private MetricAggService metricAggService;
 
 	private final MetricTypes activityCode = MetricTypes.CONTENT_ACC_WEEKLY_DIGEST;
 

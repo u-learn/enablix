@@ -20,7 +20,7 @@ public class ActivityTrendController {
 	private static final Logger LOGGER = LoggerFactory.getLogger(ActivityTrendController.class);
 
 	@Autowired
-	ActivityTrendService activityTrend;
+	private ActivityTrendService activityTrend;
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public List<Map<String, Integer>> getAggregatedActivityMetrices(@RequestParam("activityMetricTime") String date, 

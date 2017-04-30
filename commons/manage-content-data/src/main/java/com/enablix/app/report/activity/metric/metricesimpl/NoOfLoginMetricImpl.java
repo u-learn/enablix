@@ -14,7 +14,7 @@ import com.enablix.core.domain.report.activitymetric.MetricStats;
 public class NoOfLoginMetricImpl extends SimpleMetric {
 
 	@Autowired
-	MetricAggService metricAggService;
+	private MetricAggService metricAggService;
 
 	private final MetricTypes activityCode = MetricTypes.NO_OF_LOGINS;
 

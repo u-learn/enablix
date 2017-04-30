@@ -57,9 +57,11 @@ public class AppConstants {
 		CONTENT_DOWNLOAD("Content Download","ACTMETRIC8"),
 		CONTENT_ACC_WEEKLY_DIGEST("Content Access via Weekly Digest","ACTMETRIC10"),
 		DISTINCT_LOGIN("Number of Distinct Logins","ACTMETRIC3");
-		String value;
-		String code;
-		MetricTypes(String value, String code){
+		
+		private String value;
+		private String code;
+		
+		private MetricTypes(String value, String code){
 			this.value=value;
 			this.code=code;
 		}

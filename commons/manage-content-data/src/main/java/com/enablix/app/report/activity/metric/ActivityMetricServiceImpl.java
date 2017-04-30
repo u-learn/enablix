@@ -22,7 +22,7 @@ public class ActivityMetricServiceImpl  implements ActivityMetricService {
 	private ActivityMetricConfigRepository activityMetricRepo;
 
 	@Autowired
-	MetricStatsCalculatorFactory metricCalcFactory;
+	private MetricStatsCalculatorFactory metricCalcFactory;
 	
 	@Override
 	public List<ActivityMetricConfig> getActivityMetricConfig() {

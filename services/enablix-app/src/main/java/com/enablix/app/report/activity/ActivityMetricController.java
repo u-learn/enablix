@@ -21,13 +21,12 @@ import com.enablix.core.domain.report.activitymetric.MetricStats;
 @RequestMapping("activitymetric")
 public class ActivityMetricController {
 	private static final Logger LOGGER = LoggerFactory.getLogger(ActivityMetricController.class);
-	
 
 	@Autowired
-	ActivityMetricService activityMetric;
+	private ActivityMetricService activityMetric;
 
 	@Autowired
-	ActivityMetricConfigRepository activityMetricConfRepo;
+	private ActivityMetricConfigRepository activityMetricConfRepo;
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public List<MetricStats> getAggregatedActivityMetrices(@RequestParam("activityMetricTime") String date) {
