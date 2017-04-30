@@ -2,6 +2,7 @@ package com.enablix.app.report.activity.metric.task;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang.time.DateUtils;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Component;
 import com.enablix.app.report.activity.metric.ActivityMetricConfigRepository;
 import com.enablix.app.report.activity.metric.ActivityMetricRepository;
 import com.enablix.app.report.activity.metric.ActivityMetricService;
+import com.enablix.commons.util.date.DateUtil;
 import com.enablix.core.domain.report.activitymetric.ActivityMetric;
 import com.enablix.core.domain.report.activitymetric.ActivityMetricConfig;
 import com.enablix.core.domain.report.activitymetric.MetricStats;
@@ -41,13 +43,18 @@ public class ActivityMetricCalculator implements Task {
 
 		ActivityMetric activityMetricBean;
 		List<MetricStats> metricStats;
-		for (ActivityMetricConfig activityMetricConfig : activityMetrics) {
+		activityMetricConfigLoop: for (ActivityMetricConfig activityMetricConfig : activityMetrics) {
 			backRunCalendar.setTime(activityMetricConfig.getNextRunDate());
 			while(!DateUtils.isSameDay(backRunCalendar,currentDayCalendar)){
 
-				MetricStats metricStat = activityMetric.executeActivityMetrices(activityMetricConfig,backRunCalendar.getTime());
+				Date startDate = DateUtil.getStartOfDay(backRunCalendar.getTime());
+				Date endDate = DateUtil.getEndOfDay(backRunCalendar.getTime());
+				
+				MetricStats metricStat = activityMetric.executeActivityMetrices(activityMetricConfig,
+						startDate, endDate);
+				
 				if(metricStat == null) {
-					break;
+					continue activityMetricConfigLoop;
 				}
 
 				activityMetricBean  = activityMetricRepo.findByAsOfDate(backRunCalendar.getTime());
@@ -81,5 +88,4 @@ public class ActivityMetricCalculator implements Task {
 	public String taskId() {
 		return "activity-metric-calculator";
 	}
-
 }

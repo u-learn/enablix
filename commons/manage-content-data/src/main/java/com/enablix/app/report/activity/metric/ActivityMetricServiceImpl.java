@@ -31,18 +31,18 @@ public class ActivityMetricServiceImpl  implements ActivityMetricService {
 	}
 
 	@Override
-	public MetricStats executeActivityMetrices(ActivityMetricConfig activityMetric, Date executionDate) {
+	public MetricStats executeActivityMetrices(ActivityMetricConfig activityMetric, Date startDate, Date endDate) {
 		MetricStats reportStat=null;
 		MetricStatsCalculator metricStatCalc = metricCalcFactory.getMetricCalculator(activityMetric.getMetricCode());
 		if(metricStatCalc == null ){
 			return null;
 		}
-		reportStat = metricStatCalc.calculate(executionDate);
+		reportStat = metricStatCalc.calculate(startDate, endDate);
 		return reportStat;
 	}
 
 	@Override
-	public List<MetricStats> getAggregatedValues(Date date) throws ParseException {
+	public List<MetricStats> getAggregatedValues(Date startDate, Date endDate) throws ParseException {
 		List<MetricStats> metricStats = new ArrayList<MetricStats>();
 		List<ActivityMetricConfig> activityMetrics = getActivityMetricConfig();
 		
@@ -52,7 +52,7 @@ public class ActivityMetricServiceImpl  implements ActivityMetricService {
 				LOGGER.debug(" No Implementation Found for the Activity "+activityMetricConfig);
 				continue;
 			}
-			MetricStats metricStat = metricStatCalc.getAggStats(date);
+			MetricStats metricStat = metricStatCalc.getAggStats(startDate, endDate);
 			metricStats.add(metricStat);
 		}
 		

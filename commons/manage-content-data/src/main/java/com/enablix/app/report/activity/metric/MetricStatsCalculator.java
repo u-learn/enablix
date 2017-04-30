@@ -9,7 +9,7 @@ public interface MetricStatsCalculator {
 	
 	MetricTypes getActivityCode();
 	
-	MetricStats calculate(Date executionDate);
+	MetricStats calculate(Date startDate, Date endDate);
 
-	MetricStats getAggStats(Date startDate);
+	MetricStats getAggStats(Date startDate, Date endDate);
 }

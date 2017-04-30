@@ -27,15 +27,16 @@ public class MetricAggService {
 	@Autowired
 	private MongoTemplate mongoTemplate;
 
-	public MetricStats getSimpleAggStats(Date startDate, MetricTypes activityCode) {
+	public MetricStats getSimpleAggStats(Date startDate, Date endDate, MetricTypes activityCode) {
 		
 		startDate = DateUtil.getStartOfDay(startDate);
-		//endDate = DateUtil.getEndOfDay(endDate);
+		endDate = DateUtil.getEndOfDay(endDate);
 
 		Aggregation aggregation = newAggregation(
 				unwind("metricStats"),
 				match(Criteria.where("metricStats.metricName").is(activityCode.getValue())),
 				match(Criteria.where("asOfDate").gte(startDate)), 
+				match(Criteria.where("asOfDate").lte(endDate)), 
 				group("$metricStats.metricName").sum("$metricStats.metricValue").as("sum"),
 				Aggregation.project(Fields.from(
 						Fields.field("metricName", "$_id"),

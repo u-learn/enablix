@@ -31,8 +31,9 @@ public class ActivityMetricController {
 	@RequestMapping(method = RequestMethod.GET)
 	public List<MetricStats> getAggregatedActivityMetrices(@RequestParam("activityMetricTime") String date) {
 		try{
-			Date activityMetricDate = new SimpleDateFormat("dd-MMM-yy").parse(date);
-			return activityMetric.getAggregatedValues(activityMetricDate);
+			Date startDate = new SimpleDateFormat("dd-MMM-yy").parse(date);
+			Date endDate = new Date();
+			return activityMetric.getAggregatedValues(startDate, endDate);
 		}
 		catch(Exception e){
 			LOGGER.error(" Error Retrieving the Metric Data",e);
@@ -50,5 +51,4 @@ public class ActivityMetricController {
 			return null;
 		}
 	}
-	
 }
