@@ -2,14 +2,15 @@ package com.enablix.analytics.search.es;
 
 public interface TypeFilter {
 
-	boolean searchIn(String contentQId);
+	boolean searchInType(String esType);
 	
 	TypeFilter ALL_TYPES = new TypeFilter() {
 		
 		@Override
-		public boolean searchIn(String contentQId) {
+		public boolean searchInType(String esType) {
 			return true;
 		}
+		
 	};
 	
 }

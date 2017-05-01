@@ -132,7 +132,7 @@ public class ESQueryBuilder {
 			List<String> filteredList = new ArrayList<>();
 			
 			for (String type : allTypes) {
-				if (typeFilter.searchIn(type)) {
+				if (typeFilter.searchInType(type)) {
 					filteredList.add(type);
 				}
 			}
