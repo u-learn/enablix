@@ -13,42 +13,42 @@ enablix.studioApp.directive('ebxTabularReport', [
 			transclude: false,
 			link: function(scope, element, attrs) {
 
-				function td_data(row, i) {
-				  	return scope.columndetails.map(function(c) {
-				        // compute cell values for this specific row
-				        var cell = {};
-				        d3.keys(c).forEach(function(k) {
-				          	cell[k] = typeof c[k] == 'function' ? c[k](row,i) : c[k];
-				        });
-				        return cell;
-				 	  });
-				}
+				
+				 function render(data) {
+						d3.selectAll("table").remove();
+						var table = d3.select(element[0]).append('table').attr("class","tabReporttable");
+						var thead = table.append('thead');
+						var	tbody = table.append('tbody');
 
-				function length() {
-				  var fmt = d3.format('02d');
-				  return function(l) { return Math.floor(l / 60) + ':' + fmt(l % 60) + ''; };
-				}
-				function render(){
-					d3.selectAll("table").remove();
-					
-					var table = d3.select(element[0])
-							.append('table').attr("class","tabReporttable");
-					
-					table.append('thead').append('tr')
-					    .selectAll('th')
-					    .data(scope.columndetails).enter()
-					    .append('th')
-					    .text(d3.f('head'))
-					     .attr('class', 'tabReportth');
-					
-					table.append('tbody')
-					.appendMany(scope.data, 'tr')
-					.appendMany(td_data, 'td')
-					.html(d3.f('html'))
-					 .attr('class', 'tabReporttd');
-				}
+						// append the header row
+						thead.append('tr')
+						  .selectAll('th')
+						  .data(scope.columndetails).enter()
+						  .append('th').attr('class', 'tabReportth')
+						    .text(function (column) { return column.head; });
+
+						// create a row for each object in the data
+						var rows = tbody.selectAll('tr')
+						  .data(data)
+						  .enter()
+						  .append('tr');
+
+						// create a cell in each row for each column
+						var cells = rows.selectAll('td')
+						  .data(function (row) {
+						    return scope.columndetails.map(function (column) {
+						      return {column: column.head, value: row[column.column]};
+						    });
+						  })
+						  .enter()
+						  .append('td').attr('class', 'tabReporttd')
+						    .text(function (d) { return d.value; });
+
+					}
+
+				
 				scope.$watch("data", function() {
-					render();
+					render(scope.data);
 				}, true);
 			},
 			templateUrl: "widgets/directive/tabularReport/tabularReport.html"

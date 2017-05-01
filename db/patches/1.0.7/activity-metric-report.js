@@ -13,7 +13,6 @@ var metricDocs = [{
     "_class" : "com.enablix.core.domain.report.activitymetric.ActivityMetricConfig",
     "metricCode" : "ACTMETRIC2",
     "metricName" : "Number of Logins",
-    "metricQueryFn" : "function(executionDate) { var start = new Date(executionDate); start.setHours(0,0,0,0); var end = new Date(executionDate); end.setHours(23,59,59,999); return db.ebx_activity_audit.count({'activity.accountActivityType':'LOGIN',createdAt: {$gte: ISODate(start.toISOString()) , $lt: ISODate(end.toISOString())}}) } ",
     "startDate" : ISODate("2017-04-12T10:44:59.644Z"),
     "nextRunDate" : ISODate("2017-04-18T14:42:00.006Z"),
     "createdAt" : ISODate("2017-04-14T08:12:40.483Z"),
@@ -29,7 +28,6 @@ var metricDocs = [{
     "_class" : "com.enablix.core.domain.report.activitymetric.ActivityMetricConfig",
     "metricCode" : "ACTMETRIC3",
     "metricName" : "Number of Distinct Logins",
-    "metricQueryFn" : "function(executionDate) { var start = new Date(executionDate); start.setHours(0,0,0,0); var end = new Date(executionDate); end.setHours(23,59,59,999); return db.ebx_activity_audit.distinct('actor.userId',{'activity.accountActivityType':'LOGIN', 'createdAt': {$gte: ISODate(start.toISOString()) , $lt: ISODate(end.toISOString())}}).length } ",
     "startDate" : ISODate("2017-04-12T10:44:59.644Z"),
     "nextRunDate" : ISODate("2017-04-18T14:42:00.006Z"),
     "createdAt" : ISODate("2017-04-14T08:12:40.483Z"),
@@ -45,7 +43,6 @@ var metricDocs = [{
     "_class" : "com.enablix.core.domain.report.activitymetric.ActivityMetricConfig",
     "metricCode" : "ACTMETRIC4",
     "metricName" : "Content Add",
-    "metricQueryFn" : "function(executionDate) { var start = new Date(executionDate); start.setHours(0,0,0,0); var end = new Date(executionDate); end.setHours(23,59,59,999); return db.ebx_activity_audit.count({'activity.activityType':'CONTENT_ADD','createdAt': {$gte: ISODate(start.toISOString()) , $lt: ISODate(end.toISOString())}}) } ",
     "startDate" : ISODate("2017-04-12T10:44:59.644Z"),
     "nextRunDate" : ISODate("2017-04-18T14:42:00.006Z"),
     "createdAt" : ISODate("2017-04-14T08:12:40.483Z"),
@@ -61,7 +58,6 @@ var metricDocs = [{
     "_class" : "com.enablix.core.domain.report.activitymetric.ActivityMetricConfig",
     "metricCode" : "ACTMETRIC5",
     "metricName" : "Content Updates",
-    "metricQueryFn" : "function(executionDate) { var start = new Date(executionDate); start.setHours(0,0,0,0); var end = new Date(executionDate); end.setHours(23,59,59,999); return db.ebx_activity_audit.count({'activity.activityType':'CONTENT_UPDATE','createdAt': {$gte: ISODate(start.toISOString()) , $lt: ISODate(end.toISOString())}}) }",
     "startDate" : ISODate("2017-04-12T10:44:59.644Z"),
     "nextRunDate" : ISODate("2017-04-18T14:42:00.006Z"),
     "createdAt" : ISODate("2017-04-14T08:12:40.483Z"),
@@ -77,7 +73,6 @@ var metricDocs = [{
     "_class" : "com.enablix.core.domain.report.activitymetric.ActivityMetricConfig",
     "metricCode" : "ACTMETRIC6",
     "metricName" : "Content Access",
-    "metricQueryFn" : "function(executionDate) { var start = new Date(executionDate); start.setHours(0,0,0,0); var end = new Date(executionDate); end.setHours(23,59,59,999); return db.ebx_activity_audit.count({'activity.activityType':'CONTENT_ACCESS','createdAt': {$gte: ISODate(start.toISOString()) , $lt: ISODate(end.toISOString())}}) } ",
     "startDate" : ISODate("2017-04-12T10:44:59.644Z"),
     "nextRunDate" : ISODate("2017-04-18T14:42:00.006Z"),
     "createdAt" : ISODate("2017-04-14T08:12:40.483Z"),
@@ -93,7 +88,6 @@ var metricDocs = [{
     "_class" : "com.enablix.core.domain.report.activitymetric.ActivityMetricConfig",
     "metricCode" : "ACTMETRIC7",
     "metricName" : "Content Preview",
-    "metricQueryFn" : "function(executionDate) { var start = new Date(executionDate); start.setHours(0,0,0,0); var end = new Date(executionDate); end.setHours(23,59,59,999); return db.ebx_activity_audit.count({'activity.activityType':'DOC_PREVIEW','createdAt': {$gte: ISODate(start.toISOString()) , $lt: ISODate(end.toISOString())}}) } ",
     "startDate" : ISODate("2017-04-12T10:44:59.644Z"),
     "nextRunDate" : ISODate("2017-04-18T14:42:00.006Z"),
     "createdAt" : ISODate("2017-04-14T08:12:40.483Z"),
@@ -109,7 +103,6 @@ var metricDocs = [{
     "_class" : "com.enablix.core.domain.report.activitymetric.ActivityMetricConfig",
     "metricCode" : "ACTMETRIC8",
     "metricName" : "Content Download",
-    "metricQueryFn" : "function(executionDate) { var start = new Date(executionDate); start.setHours(0,0,0,0); var end = new Date(executionDate); end.setHours(23,59,59,999); return db.ebx_activity_audit.count({'activity.activityType':'DOC_DOWNLOAD','createdAt': {$gte: ISODate(start.toISOString()) , $lt: ISODate(end.toISOString())}}) } ",
     "startDate" : ISODate("2017-04-12T10:44:59.644Z"),
     "nextRunDate" : ISODate("2017-04-18T14:42:00.006Z"),
     "createdAt" : ISODate("2017-04-14T08:12:40.483Z"),
@@ -125,7 +118,6 @@ var metricDocs = [{
     "_class" : "com.enablix.core.domain.report.activitymetric.ActivityMetricConfig",
     "metricCode" : "ACTMETRIC10",
     "metricName" : "Content Access via Weekly Digest",
-    "metricQueryFn" : " function(executionDate) { var start = new Date(executionDate); start.setHours(0,0,0,0); var end = new Date(executionDate); end.setHours(23,59,59,999); return db.getCollection('ebx_activity_audit').count({'channel.channel':'EMAIL','activity.contextName':'WEEKLY_DIGEST', 'createdAt': {$gte: ISODate(start.toISOString()) , $lt: ISODate(end.toISOString())}}) } ",
     "startDate" : ISODate("2017-04-12T10:44:59.644Z"),
     "nextRunDate" : ISODate("2017-04-18T14:42:00.006Z"),
     "createdAt" : ISODate("2017-04-14T08:12:40.483Z"),
@@ -151,6 +143,7 @@ dbs.forEach(function(database) {
     if (database.name.endsWith("_enablix") &&
         database.name != "system_enablix") {
         db = db.getSiblingDB(database.name);    
+        db.ebx_activity_metric_config.remove({});
         db.ebx_activity_metric_config.insert(metricDocs);
     }
 });

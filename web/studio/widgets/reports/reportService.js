@@ -262,8 +262,8 @@ enablix.studioApp.factory('ReportService',
 						
 					},
 					columndetails : [
-					    { head: 'Metric', cl: 'metricName', html: d3.f('metricName') },
-					    { head: 'Value', cl: 'metricValue', html: d3.f('metricValue') }
+					    { head: 'Metric', column: 'metricName' },
+					    { head: 'Value', column: 'metricValue' }
 					],
 					filterMetadata: {
 		                "activityMetricTime": {
