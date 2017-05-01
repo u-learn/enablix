@@ -127,6 +127,12 @@ enablix.studioApp.controller('PortalSubContainerCtrl',
 				$scope.containerDef = ContentTemplateService.getContainerDefinition(
 						enablix.template, $scope.containerDef.linkContainerQId);
 			}
+
+			if (!$scope.showLabel) {
+				// do not populate when we have to show label so that it does not match attr id
+				$scope.containerLabelAttrId = ContentTemplateService.getContainerLabelAttrId(
+					enablix.template, $scope.containerDef.qualifiedId);
+			}
 			
 			$scope.showSubContainer = false;
 			$scope.$stateParams = $stateParams;
@@ -195,15 +201,19 @@ enablix.studioApp.controller('PortalSubContainerCtrl',
 			
 			angular.forEach($scope.containerDef.contentItem, function(containerAttr) {
 				
-				var header = {
-					"id": containerAttr.qualifiedId,
-					"key" : containerAttr.id,
-					"label" : containerAttr.label,
-					"dataType" : containerAttr.type,
-					"typeDef" : containerAttr
-				};
-				
-				$scope.headers.push(header);
+				if (containerAttr.id != $scope.containerLabelAttrId
+						&& containerAttr.type != 'CONTENT_STACK') {
+					
+					var header = {
+						"id": containerAttr.qualifiedId,
+						"key" : containerAttr.id,
+						"label" : containerAttr.label,
+						"dataType" : containerAttr.type,
+						"typeDef" : containerAttr
+					};
+					
+					$scope.headers.push(header);
+				}
 				
 			});
 			
@@ -233,7 +243,7 @@ enablix.studioApp.controller('PortalSubContainerCtrl',
 		}
 		
 		$scope.isRenderable = function(_contentDef, _data) {
-			return _contentDef.dataType !== 'CONTENT_STACK' && $scope.hasData(_data);
+			return $scope.hasData(_data);
 		}
 		
 		$scope.render();
