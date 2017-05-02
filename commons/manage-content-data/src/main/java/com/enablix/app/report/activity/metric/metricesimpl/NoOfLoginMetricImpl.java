@@ -23,7 +23,7 @@ public class NoOfLoginMetricImpl extends SimpleMetric {
 		endDate = DateUtil.getEndOfDay(endDate);
 		
 		Criteria criteria = Criteria.where("createdAt").gte(startDate).lte(endDate);
-		criteria = criteria.and("activity.activityType").is("LOGIN");
+		criteria = criteria.and("activity.accountActivityType").is("LOGIN");
 		return calculateSimpleMetric(startDate, endDate, 
 				collectionName, activityCode, criteria);
 	}
