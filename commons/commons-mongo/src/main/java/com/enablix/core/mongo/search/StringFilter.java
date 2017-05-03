@@ -6,7 +6,8 @@ public class StringFilter extends SearchCondition<String> {
 	private static final ConditionOperator[] SUPPORTED_OP = {
 		ConditionOperator.EQ, ConditionOperator.NOT_EQ,
 		ConditionOperator.GT, ConditionOperator.GTE,
-		ConditionOperator.LT, ConditionOperator.LTE};
+		ConditionOperator.LT, ConditionOperator.LTE,
+		ConditionOperator.REGEX};
 	
 	protected StringFilter() { }
 	

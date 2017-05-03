@@ -503,6 +503,46 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvi
 				setupData: appSetup 
 			}
 		})
+		.state('system.integration', {
+			url: '/int',
+			template: '<div ui-view></div>',
+			controller: 'ThirdPartyIntBaseController',
+			resolve: {
+				setupData: appSetup 
+			}
+		})
+		.state('system.integration.list', {
+			url: '/list',
+			templateUrl: 'views/system/integration/integration-list.html',
+			controller: 'ThirdPartyIntegrationListController',
+			resolve: {
+				setupData: appSetup 
+			}
+		})
+		.state('system.integration.add', {
+			url: '/add',
+			templateUrl: 'views/system/integration/integration-config.html',
+			controller: 'ThirdPartyIntegrationController',
+			resolve: {
+				setupData: appSetup 
+			}
+		})
+		.state('system.integration.edit', {
+			url: '/edit/{intConfigKey}',
+			templateUrl: 'views/system/integration/integration-config.html',
+			controller: 'ThirdPartyIntegrationController',
+			resolve: {
+				setupData: appSetup 
+			}
+		})
+		.state('system.integration.detail', {
+			url: '/detail/{intConfigKey}',
+			templateUrl: 'views/system/integration/integration-config.html',
+			controller: 'ThirdPartyIntegrationController',
+			resolve: {
+				setupData: appSetup 
+			}
+		})
 		.state('system.quicklinks', {
 			url: '/quicklinks',
 			templateUrl: 'views/system/quicklinks/quickLinksConfig.html',

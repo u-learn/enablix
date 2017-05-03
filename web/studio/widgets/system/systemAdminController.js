@@ -51,6 +51,15 @@ enablix.studioApp.controller('SystemAdminController',
 			         { label: "Email Configuration" }
 				];
 				
+			} else if ($state.includes("system.integration")) {
+				
+				$scope.breadcrumbList = 
+				[
+			         { label: "Setup" },
+			         { label: "System" },
+			         { label: "Integrations" }
+				];
+				
 			} else if ($state.includes("system.recommendations")) {
 				
 				$scope.breadcrumbList = 

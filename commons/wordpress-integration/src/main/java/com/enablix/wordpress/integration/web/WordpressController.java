@@ -15,6 +15,9 @@ import com.afrozaar.wordpress.wpapi.v2.Wordpress;
 import com.afrozaar.wordpress.wpapi.v2.exception.PostNotFoundException;
 import com.afrozaar.wordpress.wpapi.v2.model.Post;
 import com.enablix.analytics.info.detection.ContentSuggestion;
+import com.enablix.commons.config.ConfigurationUtil;
+import com.enablix.commons.util.StringUtil;
+import com.enablix.core.domain.config.Configuration;
 import com.enablix.wordpress.integration.WordpressService;
 
 @RestController
@@ -38,12 +41,41 @@ public class WordpressController {
 	
 	@RequestMapping(method = RequestMethod.POST, value="/cs/post/{id}/", produces = "application/json")
 	public List<ContentSuggestion> getWPPostContentSuggestions(
-			@RequestBody WPSite wp, @PathVariable Long id) {
+			@RequestBody WPSite wp, @PathVariable Long id) throws PostNotFoundException {
 		
 		LOGGER.debug("Getting Content suggestion for Wordpress post: {}", id);
 		
 		Wordpress client = wpClient.createClient(wp.baseUrl);
 		return wpClient.getContentSuggestion(client, id);
+	}
+	
+	@RequestMapping(method = RequestMethod.POST, value="/cs/postslug/{postSlug}/", produces = "application/json")
+	public List<ContentSuggestion> getWPPostContentSuggestions(
+			@RequestBody WPSite wp, @PathVariable String postSlug) throws PostNotFoundException {
+		
+		LOGGER.debug("Getting Content suggestion for Wordpress post: {}", postSlug);
+		
+		Wordpress client = wpClient.createClient(wp.baseUrl);
+		return wpClient.getContentSuggestion(client, postSlug);
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, value="/cs/postslug/{postSlug}/", produces = "application/json")
+	public List<ContentSuggestion> getWPPostslugContentSuggestions(@PathVariable String postSlug) throws Exception {
+		
+		LOGGER.debug("Getting Content suggestion for Wordpress post: {}", postSlug);
+		
+		Configuration wpConfig = ConfigurationUtil.getConfig("integration.wordpress");
+		if (wpConfig == null) {
+			throw new Exception("Wordpress configuration not found");
+		}
+		
+		String baseUrl = wpConfig.getStringValue("BASE_URL");
+		if (StringUtil.isEmpty(baseUrl)) {
+			throw new Exception("Base URL not found in wordpress configuration");
+		}
+		
+		Wordpress client = wpClient.createClient(baseUrl);
+		return wpClient.getContentSuggestion(client, postSlug);
 	}
 	
 	public static class WPSite {

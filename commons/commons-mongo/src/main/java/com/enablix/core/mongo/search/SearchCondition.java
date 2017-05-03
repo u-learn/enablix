@@ -100,8 +100,13 @@ public abstract class SearchCondition<T> extends AbstractFilter {
 			criteria.nin((Collection<?>) getPropertyValue());
 			break;
 			
+		case REGEX:
+			criteria.regex(String.valueOf(getPropertyValue()));
+			break;
+			
 		case EXISTS:
 			criteria = new Criteria().orOperator(Criteria.where(propertyName).exists((Boolean) getPropertyValue()), criteria);
+			break;
 			
 		default:
 			criteria.is(getPropertyValue());
@@ -110,7 +115,6 @@ public abstract class SearchCondition<T> extends AbstractFilter {
 		
 		if (existsCheck != null) {
 			criteria = new Criteria().orOperator(Criteria.where(propertyName).exists(existsCheck), criteria);
-			//criteria.orOperator(Criteria.where(propertyName).exists(existsCheck));
 		}
 		
 		return criteria;

@@ -1,0 +1,47 @@
+<div class="block">
+<div class="head">
+	<h2>Third Party Integration</h2>
+	<ebx-back></ebx-back>
+</div>
+<div class="cont" ng-if="!addOrEditAction">
+	<table class="infotable">
+		<tbody>
+			<tr>
+				<th>Integration Type:</th>
+				<td>{{selectIntTypeMd.tpName}}</td>
+			</tr>
+			<tr ng-repeat="param in selectIntTypeMd.params" ng-if="!param.paramKey.endsWith('_ENC')">
+				<th>{{param.paramName}}:</th>
+				<td>{{intConfigData.config[param.paramKey]}}</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+<form name="intForm" novalidate="novalidate" ng-if="addOrEditAction">
+<div class="cont">
+	<div>
+		<label class="form-label">Integration Type </label>
+		<select class="form-control" ng-change="changeIntegrationType(intConfigData.key)"
+			ng-options="item.tpKey as item.tpName for item in configMetadata" 
+			ng-model="intConfigData.key"></select>
+	</div>
+</div>
+<div class="cont" ng-repeat="param in selectIntTypeMd.params">
+	<div>
+		<label class="form-label">{{param.paramName}}</label>
+		<input focus="{{$first}}" ng-if="param.paramKey.endsWith('_ENC')" name="intConfigData.config[param.paramKey]" placeholder="Enter {{param.paramName}}" 
+			ng-model="intConfigData.config[param.paramKey]" class="form-control" type="password" size="80" required >
+		<input focus="{{$first}}" ng-if="!param.paramKey.endsWith('_ENC')" name="intConfigData.config[param.paramKey]" placeholder="Enter {{param.paramName}}" 
+			ng-model="intConfigData.config[param.paramKey]" class="form-control" type="text" size="80" required >
+	</div>
+</div>
+<div class="foot clearfix">
+	<a ng-if="!addOrEditAction" ng-click="updateAddOrEditAction(true)" class="button button-edit">Edit</a>
+	<button ng-click="intForm.$valid && saveIntegrationConfig()" class="button button-add">Save</button>
+	<a ng-click="cancelOperation()" class="button button-delete">Cancel</a>
+</div>
+</form>
+<div class="foot clearfix" ng-if="!addOrEditAction">
+	<a ng-if="!addOrEditAction" ng-click="updateAddOrEditAction(true)" class="button button-edit">Edit</a>
+</div>
+</div>

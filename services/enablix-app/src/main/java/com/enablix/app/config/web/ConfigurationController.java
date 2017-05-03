@@ -31,4 +31,9 @@ public class ConfigurationController {
 		configManager.saveOrUpdate(config);
 	}
 	
+	@RequestMapping(method = RequestMethod.POST, value="/delete/{configIdentity}/")
+	public void deleteConfiguration(@PathVariable String configIdentity) {
+		configManager.getRepository().deleteByIdentity(configIdentity);
+	}
+	
 }

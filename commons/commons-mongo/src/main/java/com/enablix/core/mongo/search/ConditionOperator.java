@@ -6,7 +6,7 @@ import com.enablix.commons.util.collection.CollectionUtil;
 
 public enum ConditionOperator {
 
-	EQ, NOT_EQ, LT, GT, LTE, GTE, IN, NOT_IN, EXISTS;
+	EQ, NOT_EQ, LT, GT, LTE, GTE, IN, NOT_IN, EXISTS, REGEX;
 	
 	public static ConditionOperator parse(String operator) {
 		return ConditionOperator.valueOf(operator);

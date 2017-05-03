@@ -16,6 +16,10 @@ public interface WordpressService {
 
 	List<Term> getPostTags(Wordpress wp, Post post);
 	
-	List<ContentSuggestion> getContentSuggestion(Wordpress wp, Long postId);
+	List<ContentSuggestion> getContentSuggestion(Wordpress wp, Long postId) throws PostNotFoundException;
+	
+	List<ContentSuggestion> getContentSuggestion(Wordpress wp, String postSlug) throws PostNotFoundException;
+
+	Post getPostBySlug(Wordpress wp, String postSlug);
 	
 }

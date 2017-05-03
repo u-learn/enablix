@@ -13,14 +13,22 @@ enablix.studioApp.factory('ConfigurationService',
 			};
 			
 			var saveConfiguration = function(_configData, _onSuccess, _onError) {
-				
 				RESTService.postForData("saveConfig", null, _configData, null, _onSuccess, _onError);
-				
 			};
+			
+			var deleteByIdentity = function(_configIdentity, _onSuccess, _onError) {
+				
+				var params = {
+						configIdentity: _configIdentity
+				};
+				
+				RESTService.postForData("deleteConfig", params, null, null, _onSuccess, _onError);
+			}
 			
 			return {
 				getConfigByKey: getConfigByKey,
-				saveConfiguration: saveConfiguration
+				saveConfiguration: saveConfiguration,
+				deleteByIdentity: deleteByIdentity
 			};
 		
 		}

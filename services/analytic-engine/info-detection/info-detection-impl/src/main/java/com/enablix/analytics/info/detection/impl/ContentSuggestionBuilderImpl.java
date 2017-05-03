@@ -59,7 +59,7 @@ public class ContentSuggestionBuilderImpl implements ContentSuggestionBuilder {
 				// determine simple attributes
 				for (Entry<String, List<TypeAttrOpinion>> attrOp : typeOp.getAttributes().entrySet()) {
 					
-					Object attrVal = determineAttributeValue(attrOp.getKey(), attrOp.getValue());
+					Object attrVal = determineAttrValue(attrOp.getKey(), attrOp.getValue());
 					
 					if (attrVal != null) {
 						data.put(attrOp.getKey(), attrVal);
@@ -74,7 +74,7 @@ public class ContentSuggestionBuilderImpl implements ContentSuggestionBuilder {
 					
 					if (refListDs != null && refListDs.getLocation() == DatastoreLocationType.CONTENT) {
 						
-						Object attrVal = findLinkedOpinionAttrValue(assessment.getLinkOpinions(refListDs.getStoreId()));
+						Object attrVal = createLinkedOpinionAttrValue(assessment.getLinkOpinions(refListDs.getStoreId()));
 						
 						if (attrVal != null) {
 							data.put(contentItem.getId(), attrVal);
@@ -94,7 +94,7 @@ public class ContentSuggestionBuilderImpl implements ContentSuggestionBuilder {
 		return contentSuggestions;
 	}
 	
-	private Object findLinkedOpinionAttrValue(List<LinkOpinion> linkOpinions) {
+	private Object createLinkedOpinionAttrValue(List<LinkOpinion> linkOpinions) {
 		
 		List<Map<String, Object>> attrValue = null;
 		
@@ -117,7 +117,7 @@ public class ContentSuggestionBuilderImpl implements ContentSuggestionBuilder {
 		return attrValue;
 	}
 
-	protected Object determineAttributeValue(String attributeId, List<TypeAttrOpinion> attrOps) {
+	protected Object determineAttrValue(String attributeId, List<TypeAttrOpinion> attrOps) {
 		
 		TypeAttrOpinion bestAttr = null;
 		

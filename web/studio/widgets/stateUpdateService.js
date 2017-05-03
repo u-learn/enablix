@@ -324,7 +324,27 @@ enablix.studioApp.factory('StateUpdateService',
 	 			$state.go("reports.detail", {
 	 				reportId: _reportId
 	 			});
-	 		}
+	 		};
+	 		
+	 		var goToTPIntConfigDetail = function(_intConfigKey) {
+	 			$state.go("system.integration.detail", {
+	 				intConfigKey: _intConfigKey
+	 			});
+	 		};
+	 		
+	 		var goToEditTPIntConfig = function(_intConfigKey) {
+	 			$state.go("system.integration.edit", {
+	 				intConfigKey: _intConfigKey
+	 			});
+	 		};
+	 		
+	 		var goToAddTPIntConfig = function() {
+	 			$state.go("system.integration.add");
+	 		};
+	 		
+	 		var goToTPIntConfigList = function() {
+	 			$state.go("system.integration.list");
+	 		};
 	 		
 	 		return {
 	 			goToApp: goToApp,
@@ -380,7 +400,11 @@ enablix.studioApp.factory('StateUpdateService',
 	 			goToSlackAuth : goToSlackAuth,
 	 			goToReports : goToReports,
 	 			goToReportDetail : goToReportDetail,
-				goToPasswordReset : goToPasswordReset
+				goToPasswordReset : goToPasswordReset,
+				goToTPIntConfigDetail: goToTPIntConfigDetail,
+				goToEditTPIntConfig: goToEditTPIntConfig,
+				goToAddTPIntConfig: goToAddTPIntConfig,
+				goToTPIntConfigList: goToTPIntConfigList
 	 		};
 	 	}
 	 ]);
