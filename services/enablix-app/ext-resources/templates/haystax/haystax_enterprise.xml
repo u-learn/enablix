@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<contentTemplate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.03" id="haystax_enterprise" xsi:noNamespaceSchemaLocation="../xsd/content-template.xsd">
+<contentTemplate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.04" id="haystax_enterprise" xsi:noNamespaceSchemaLocation="../xsd/content-template.xsd">
 	<dataDefinition>
 		<container id="product" label="Products" businessCategory="BUSINESS_DIMENSION">
 			<contentItem id="name" label="Name" type="text" searchBoost="7"/>
@@ -40,7 +40,8 @@
 			<container id="prodPress" label="Press" linkContainerQId="press" linkContentItemId="products"/>	
 			<container id="prodPOC" label="Proof of Concepts" linkContainerQId="poc" linkContentItemId="products"/>
 			<container id="prodProposal" label="Proposals" linkContainerQId="proposal" linkContentItemId="products"/>
-			<container id="prodResearch" label="Research" linkContainerQId="research" linkContentItemId="products"/>			
+			<container id="prodResearch" label="Research" linkContainerQId="research" linkContentItemId="products"/>
+			<container id="prodRFXQA" label="RFX Q&amp;A" linkContainerQId="rfxqa" linkContentItemId="rfxproducts"/>						
 			<container id="prodTopic" label="Topics" linkContainerQId="topic" linkContentItemId="products"/>							
 			<container id="prodWhitePaper" label="White Papers" linkContainerQId="whitepaper" linkContentItemId="products"/>			
 			<container id="prodWinLoss" label="Win Loss Analysis" linkContainerQId="winloss" linkContentItemId="products"/>			
@@ -107,7 +108,8 @@
 			<container id="solPress" label="Press" linkContainerQId="press" linkContentItemId="solutions"/>						
 			<container id="solPOC" label="Proof of Concepts" linkContainerQId="poc" linkContentItemId="solutions"/>
 			<container id="solProposal" label="Proposals" linkContainerQId="proposal" linkContentItemId="solutions"/>			
-			<container id="solResearch" label="Research" linkContainerQId="research" linkContentItemId="solutions"/>			
+			<container id="solResearch" label="Research" linkContainerQId="research" linkContentItemId="solutions"/>
+			<container id="solRFXQA" label="RFX Q&amp;A" linkContainerQId="rfxqa" linkContentItemId="rfxsolutions"/>									
 			<container id="solOverview" label="Solution Overview" single="true">
 				<contentItem id="file" label="File" type="doc"/>
 				<contentItem id="summary" label="Summary" type="text"/>
@@ -173,6 +175,7 @@
 			<container id="appProposal" label="Proposals" linkContainerQId="proposal" linkContentItemId="apps"/>			
 			<container id="appPOC" label="Proof of Concepts" linkContainerQId="poc" linkContentItemId="apps"/>
 			<container id="appResearch" label="Research" linkContainerQId="research" linkContentItemId="apps"/>						
+			<container id="appRFXQA" label="RFX Q&amp;A" linkContainerQId="rfxqa" linkContentItemId="rfxapps"/>									
 			<container id="appTopic" label="Topics" linkContainerQId="topic" linkContentItemId="apps"/>				
 			<container id="appWinLoss" label="Win Loss Analysis" linkContainerQId="winloss" linkContentItemId="apps"/>
 			<container id="appWhitePaper" label="White Papers" linkContainerQId="whitepaper" linkContentItemId="apps"/>
@@ -207,7 +210,8 @@
 			<container id="compPress" label="Press" linkContainerQId="press" linkContentItemId="competitors"/>											
 			<container id="compPOC" label="Proof of Concepts" linkContainerQId="poc" linkContentItemId="competitors"/>
 			<container id="compProposal" label="Proposals" linkContainerQId="proposal" linkContentItemId="competitors"/>
-			<container id="compResearch" label="Research" linkContainerQId="research" linkContentItemId="competitors"/>						
+			<container id="compResearch" label="Research" linkContainerQId="research" linkContentItemId="competitors"/>
+			<container id="compRFXQA" label="RFX Q&amp;A" linkContainerQId="rfxqa" linkContentItemId="rfxcompetitors"/>			
 			<container id="compSalesKits" label="Sales Kits" linkContainerQId="salesKit" linkContentItemId="competitors"/>										
 			<container id="compSWOT" label="SWOT" linkContainerQId="swot" linkContentItemId="competitors"/>									
 			<container id="compTopic" label="Topics" linkContainerQId="topic" linkContentItemId="competitors"/>				
@@ -394,7 +398,8 @@
 			<container id="partnerPress" label="Press" linkContainerQId="press" linkContentItemId="partners"/>									
 			<container id="partnerPOC" label="Proof of Concepts" linkContainerQId="poc" linkContentItemId="partners"/>
 			<container id="partnerProposal" label="Proposals" linkContainerQId="proposal" linkContentItemId="partners"/>
-			<container id="partnerResearch" label="Research" linkContainerQId="research" linkContentItemId="partners"/>									
+			<container id="partnerResearch" label="Research" linkContainerQId="research" linkContentItemId="partners"/>
+			<container id="partnerRFXQA" label="RFX Q&amp;A" linkContainerQId="rfxqa" linkContentItemId="rfxpartners"/>			
 			<container id="partnerTopic" label="Topics" linkContainerQId="topic" linkContentItemId="partners"/>				
 			<container id="partnerWinLoss" label="Win Loss Analysis" linkContainerQId="winloss" linkContentItemId="partners"/>
 			<container id="partnerWhitePaper" label="White Papers" linkContainerQId="whitepaper" linkContentItemId="partners"/>
@@ -432,7 +437,8 @@
 			<container id="analystMultimedia" label="Multimedia" linkContainerQId="multimedia" linkContentItemId="analysts"/>
 			<container id="analystPresentation" label="Presentations" linkContainerQId="salesDeck" linkContentItemId="analysts"/>			
 			<container id="analystPress" label="Press" linkContainerQId="press" linkContentItemId="analysts"/>																	
-			<container id="analystResearch" label="Research" linkContainerQId="research" linkContentItemId="analysts"/>												
+			<container id="analystResearch" label="Research" linkContainerQId="research" linkContentItemId="analysts"/>
+			<container id="analystRFXQA" label="RFX Q&amp;A" linkContainerQId="rfxqa" linkContentItemId="rfxanalysts"/>						
 			<container id="analystTopic" label="Topics" linkContainerQId="topic" linkContentItemId="analysts"/>	
 			<container id="analystWhitePaper" label="White Papers" linkContainerQId="whitepaper" linkContentItemId="analysts"/>
 			<container id="analystContent" label="Other Content" linkContainerQId="content" linkContentItemId="analysts"/>			
@@ -2545,6 +2551,109 @@
 	      		</bounded>
       		</contentItem>				
 		</container>
+		<container id="rfxqa" label="RFX Q&amp;A" businessCategory="BUSINESS_CONTENT">
+			<contentItem id="question" label="Question" type="text" searchBoost="6"/>
+			<contentItem id="type" label="Category" type="bounded">
+				<bounded>
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>rfxqCategory</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>categoryName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>			
+			<contentItem id="answer" label="Answer" type="richText" searchBoost="3"/>
+			<contentItem id="rfxproducts" label="Products" type="bounded" searchBoost="4">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>product</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>			
+			<contentItem id="rfxsolutions" label="Solutions" type="bounded" searchBoost="4">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>solution</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="rfxapps" label="Apps" type="bounded" searchBoost="4">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>app</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>									
+			<contentItem id="rfxcompetitors" label="Competitors" type="bounded" searchBoost="4">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>competitor</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>					
+			<contentItem id="rfxpartners" label="Partners" type="bounded" searchBoost="4">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>partner</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="rfxanalysts" label="Analysts" type="bounded" searchBoost="4">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>analyst</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>	
+			<contentItem id="rfxtopics" label="Topics" type="bounded" searchBoost="4">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>topic</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>			
+			<contentItem id="visibility" label="Visibility" type="bounded">
+	      		<bounded multivalued="true">
+	      			<refList>
+	      				<datastore>
+	      					<storeId>contentVisibilityType</storeId>
+	      					<dataId>identity</dataId>
+	      					<dataLabel>visibilityType</dataLabel>
+	      				</datastore>
+	      			</refList>
+	      		</bounded>
+      		</contentItem>				
+		</container>		
 		<container id="salesKit" label="Sales Kits" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="kitName" label="Name" type="text" searchBoost="7"/>
 			<contentItem id="kitDesc" label="Description" type="richText" searchBoost="2"/>	
@@ -2814,7 +2923,8 @@
 			<container id="topicPress" label="Press" linkContainerQId="press" linkContentItemId="topics"/>													
 			<container id="topicPOC" label="Proof of Concepts" linkContainerQId="poc" linkContentItemId="topics"/>
 			<container id="topicProposal" label="Proposals" linkContainerQId="proposal" linkContentItemId="topics"/>
-			<container id="topicResearch" label="Research" linkContainerQId="research" linkContentItemId="topics"/>												
+			<container id="topicResearch" label="Research" linkContainerQId="research" linkContentItemId="topics"/>
+			<container id="topicRFXQA" label="RFX Q&amp;A" linkContainerQId="rfxqa" linkContentItemId="rfxtopics"/>						
 			<container id="topicSalesKits" label="Sales Kits" linkContainerQId="salesKit" linkContentItemId="topics"/>															
 			<container id="topicSWOT" label="SWOT" linkContainerQId="swot" linkContentItemId="topics"/>									
 			<container id="topicWhitePaper" label="White Papers" linkContainerQId="whitepaper" linkContentItemId="topics"/>
@@ -3477,6 +3587,11 @@
 			<contentItem id="desc" label="Description" type="text"/>
 			<container id="researchTypeResearch" label="Research" linkContainerQId="research" linkContentItemId="type"/>			
 		</container>
+		<container id="rfxqCategory" label="RFX Question Category" refData="true">
+			<contentItem id="categoryName" label="Category" type="text"/>
+			<contentItem id="desc" label="Description" type="text"/>
+			<container id="rfxqCategoryRFXQA" label="RFX Q&amp;A" linkContainerQId="rfxqa" linkContentItemId="type"/>			
+		</container>		
 		<container id="productRelease" label="Product Releases" refData="true">
 			<contentItem id="release" label="Release Number" type="text"/>
 			<contentItem id="desc" label="Description" type="text"/>
@@ -3550,7 +3665,8 @@
 					<childContainer id="press"/>															
 					<childContainer id="poc"/>
 					<childContainer id="proposal"/>
-					<childContainer id="research"/>					
+					<childContainer id="research"/>
+					<childContainer id="rfxqa"/>										
 					<childContainer id="swot"/>																				
 					<childContainer id="template"/>
 					<childContainer id="topic"/>					
@@ -3708,6 +3824,27 @@
 		<contentUIDef qualifiedId="research.highlights">
 			<text type="long"/>
 		</contentUIDef>
+		<contentUIDef qualifiedId="rfxqa">
+			<container labelQualifiedId="rfxqa.question">
+				<listViewConfig>
+					<hideContentItem id="answer"/>
+					<hideContentItem id="rfxproducts"/>					
+					<hideContentItem id="rfxsolutions"/>
+					<hideContentItem id="rfxapps"/>
+					<hideContentItem id="rfxcompetitors"/>
+					<hideContentItem id="rfxpartners"/>	
+					<hideContentItem id="rfxanalysts"/>																													
+					<hideContentItem id="rfxtopics"/>					
+					<hideContentItem id="visibility"/>										
+				</listViewConfig>
+				<portalConfig>
+					<headingContentItem id="question"/>
+				</portalConfig>
+			</container>
+		</contentUIDef>
+		<contentUIDef qualifiedId="rfxqa.answer">
+			<text type="long"/>
+		</contentUIDef>		
 		<contentUIDef qualifiedId="event">
 			<container labelQualifiedId="event.title">
 				<listViewConfig>
@@ -4111,14 +4248,18 @@
 		</contentUIDef>				
 		<contentUIDef qualifiedId="researchType">
 			<container labelQualifiedId="researchType.typeName">
-				<listViewConfig>
-					<hideContentItem id="desc"/>											
-				</listViewConfig>
 				<portalConfig>
 					<headingContentItem id="typeName"/>
 				</portalConfig>
 			</container>
-		</contentUIDef>		
+		</contentUIDef>	
+		<contentUIDef qualifiedId="rfxqCategory">
+			<container labelQualifiedId="rfxqCategory.categoryName">
+				<portalConfig>
+					<headingContentItem id="categoryName"/>
+				</portalConfig>
+			</container>
+		</contentUIDef>				
 		<contentUIDef qualifiedId="swot">
 			<container labelQualifiedId="swot.title">
 				<listViewConfig>
@@ -4633,6 +4774,7 @@
 					<childContainer id="poc"/>
 					<childContainer id="proposal"/>
 					<childContainer id="research"/>
+					<childContainer id="rfxqa"/>					
 					<childContainer id="SWOT"/>															
 					<childContainer id="template"/>
 					<childContainer id="topic"/>
