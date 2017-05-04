@@ -2,6 +2,8 @@ package com.enablix.app.content.ui.link.repo;
 
 import java.util.List;
 
+import org.springframework.data.domain.Sort;
+
 import com.enablix.core.domain.links.QuickLinkCategory;
 import com.enablix.core.mongo.repository.BaseMongoRepository;
 
@@ -11,6 +13,6 @@ public interface QuickLinkCategoryRepository extends BaseMongoRepository<QuickLi
 	
 	List<QuickLinkCategory> findByClientIdNull();
 	
-	List<QuickLinkCategory> findByClientId(String clientId);
+	List<QuickLinkCategory> findByClientId(String clientId, Sort sort);
 	
 }

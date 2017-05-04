@@ -15,6 +15,7 @@ import com.enablix.app.content.label.PortalContentLabelResolver;
 import com.enablix.app.content.ui.NavigableContent;
 import com.enablix.app.content.ui.NavigableContentBuilder;
 import com.enablix.commons.util.collection.CollectionUtil;
+import com.enablix.core.api.OrderAware;
 import com.enablix.core.domain.reco.Recommendation;
 import com.enablix.core.domain.reco.RecommendationScope;
 import com.enablix.core.domain.segment.DataSegmentInfo;
@@ -71,7 +72,7 @@ public class RecommendationManagerImpl implements RecommendationManager {
 	@Override
 	public Collection<RecommendationWrapper> getAllRecommendations() {
 		
-		Collection<Recommendation> recos = repo.findAll();
+		Collection<Recommendation> recos = repo.findAll(OrderAware.SORT_BY_ORDER);
 		
 		List<TenantClient> clients = clientRepo.findAll();
 		
@@ -100,6 +101,9 @@ public class RecommendationManagerImpl implements RecommendationManager {
 					if (client != null) {
 						wrapper.setClientName(client.getClientName());
 					}
+					
+					wrapper.setIdentity(reco.getIdentity());
+					wrapper.setOrder(reco.getOrder());
 
 					recoWrappers.add(wrapper);
 				}

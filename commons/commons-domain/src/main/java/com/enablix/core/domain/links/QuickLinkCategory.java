@@ -2,10 +2,10 @@ package com.enablix.core.domain.links;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import com.enablix.core.domain.BaseDocumentEntity;
+import com.enablix.core.domain.OrderedDocumentEntity;
 
 @Document(collection = "ebx_quick_link_category")
-public class QuickLinkCategory extends BaseDocumentEntity {
+public class QuickLinkCategory extends OrderedDocumentEntity {
 
 	private String name;
 	

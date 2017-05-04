@@ -122,3 +122,28 @@ var generateUIDRandom = function() {
 function generateUID() {
 	return generateUIDRandom() + "" + new Date().getTime();
 }
+
+function transformArrayToDoubleLinkedList(arr) {
+
+	for (var i = 0; i < arr.length; i++) {
+	
+		var arrItem = arr[i];
+
+		if (i != 0) {
+			// if not first node, set previous node
+			arrItem.previousNode = arr[i-1];
+			
+		} else {
+			arrItem.previousNode = null;
+		}
+		
+		if (i < arr.length - 1) {
+			// if not last node, set next node
+			arrItem.nextNode = arr[i+1];
+			
+		} else {
+			arrItem.nextNode = null;
+		}
+		
+	}
+}

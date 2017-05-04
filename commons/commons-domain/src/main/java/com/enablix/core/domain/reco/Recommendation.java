@@ -2,10 +2,10 @@ package com.enablix.core.domain.reco;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import com.enablix.core.domain.DataSegmentAwareEntity;
+import com.enablix.core.domain.OrderAndDataSegmentAwareEntity;
 
 @Document(collection = "ebx_recommendation")
-public class Recommendation extends DataSegmentAwareEntity {
+public class Recommendation extends OrderAndDataSegmentAwareEntity {
 
 	private RecommendationScope recommendationScope;
 	

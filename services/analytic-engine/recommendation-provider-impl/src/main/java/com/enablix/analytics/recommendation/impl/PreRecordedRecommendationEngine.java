@@ -12,6 +12,7 @@ import com.enablix.analytics.recommendation.repository.RecommendationRepository;
 import com.enablix.commons.util.StringUtil;
 import com.enablix.commons.util.collection.CollectionUtil;
 import com.enablix.core.api.ContentDataRef;
+import com.enablix.core.api.OrderAware;
 import com.enablix.core.domain.reco.Recommendation;
 import com.enablix.core.mongo.MongoUtil;
 import com.enablix.core.mongo.view.MongoDataView;
@@ -41,7 +42,7 @@ public class PreRecordedRecommendationEngine implements RecommendationEngine {
 		if (!StringUtil.isEmpty(clientId)) {
 			
 			recommendations = MongoUtil.executeWithDataViewScope(mongoDataView, 
-					() -> repo.findByRecommendationScopeClientId(clientId));
+					() -> repo.findByRecommendationScopeClientId(clientId, OrderAware.SORT_BY_ORDER));
 			
 		} else {
 			
@@ -81,12 +82,12 @@ public class PreRecordedRecommendationEngine implements RecommendationEngine {
 		
 		// user and content specific recommendation
 		Collection<Recommendation> recommendations = repo.findByUserIdAndTemplateIdAndContainerQIdAndContentIdentity(
-				userId, templateId, containerQId, contentIdentity);
+				userId, templateId, containerQId, contentIdentity, OrderAware.SORT_BY_ORDER);
 		
 		if (CollectionUtil.isEmpty(recommendations)) {
 			// ignore user
 			recommendations = repo.findByTemplateIdAndContainerQIdAndContentIdentity(
-					templateId, containerQId, contentIdentity);
+					templateId, containerQId, contentIdentity, OrderAware.SORT_BY_ORDER);
 			
 		}
 		
@@ -95,10 +96,10 @@ public class PreRecordedRecommendationEngine implements RecommendationEngine {
 
 	private Collection<Recommendation> generalRecommendations(String userId, String templateId) {
 		
-		Collection<Recommendation> recommendations = repo.findByUserIdAndTemplateId(userId, templateId);
+		Collection<Recommendation> recommendations = repo.findByUserIdAndTemplateId(userId, templateId, OrderAware.SORT_BY_ORDER);
 		
 		if (CollectionUtil.isEmpty(recommendations)) {
-			recommendations = repo.findByTemplateId(templateId);
+			recommendations = repo.findByTemplateId(templateId, OrderAware.SORT_BY_ORDER);
 		}
 		
 		return recommendations;
@@ -109,11 +110,11 @@ public class PreRecordedRecommendationEngine implements RecommendationEngine {
 
 		// user and container specific
 		Collection<Recommendation> recommendations = repo.findByUserIdAndTemplateIdAndContainerQId(
-				userId, templateId, containerQId);
+				userId, templateId, containerQId, OrderAware.SORT_BY_ORDER);
 		
 		if (CollectionUtil.isEmpty(recommendations)) {
 			recommendations = repo.findByTemplateIdAndContainerQId(
-					templateId, containerQId);
+					templateId, containerQId, OrderAware.SORT_BY_ORDER);
 		}
 		
 		return recommendations;

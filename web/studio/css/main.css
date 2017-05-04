@@ -1963,3 +1963,26 @@ td eb-nav-link span a {
 .homepage .infotable {
     font-family: "Helvetica Neue", Helvetica;
 }
+
+ebx-reorder a {
+	margin-right: 3px;
+	color: #3498db;
+}
+
+ebx-reorder a:hover {
+	color: #2980b9;
+}
+
+ebx-reorder .fa:first-child {
+	position: relative;
+	float: left;
+	margin-top: 2px;
+}
+
+.reorder {
+	width: 50px;
+}
+
+.datatable .reorder ebx-reorder .fa:first-child {
+    margin-top: -1px;
+}

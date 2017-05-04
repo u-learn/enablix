@@ -46,6 +46,7 @@ public class QuickLinks {
 					new QuickLinkSection(category.getName(), category.getIdentity());
 			qlSection.setClientId(category.getClientId());
 			qlSection.setClientName(clientName);
+			qlSection.setOrder(category.getOrder());
 		
 			sections.add(qlSection);
 		}
@@ -55,6 +56,7 @@ public class QuickLinks {
 		
 		private String categoryIdentity;
 		private String quickLinkIdentity;
+		private int order;
 		private NavigableContent data;
 		
 		public String getCategoryIdentity() {
@@ -79,6 +81,14 @@ public class QuickLinks {
 
 		public void setQuickLinkIdentity(String quickLinkIdentity) {
 			this.quickLinkIdentity = quickLinkIdentity;
+		}
+
+		public int getOrder() {
+			return order;
+		}
+
+		public void setOrder(int order) {
+			this.order = order;
 		}
 	}
 	

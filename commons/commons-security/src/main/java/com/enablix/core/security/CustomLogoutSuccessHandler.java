@@ -67,10 +67,6 @@ public class CustomLogoutSuccessHandler extends SimpleUrlLogoutSuccessHandler {
 					RegisteredActor actor = new RegisteredActor(ud.getUsername(), userProfile.getName());
 					userLogout.setActor(actor);
 
-					// set up process context to fetch user roles from tenant specific database
-
-
-
 					ActivityLogger.auditActivity(userLogout);
 
 				} finally {

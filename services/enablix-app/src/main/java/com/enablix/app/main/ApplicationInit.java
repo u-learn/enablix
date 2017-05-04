@@ -58,7 +58,8 @@ import com.enablix.commons.util.StringUtil;
 				"com.enablix.play.definition.repo",
 				"com.enablix.app.content.summary.repo",
 				"com.enablix.data.segment.repo",
-				"com.enablix.app.report"})
+				"com.enablix.app.report",
+				"com.enablix.core.mongo.counter.repo"})
 @EnableScheduling
 public class ApplicationInit extends WebMvcAutoConfigurationAdapter {
 

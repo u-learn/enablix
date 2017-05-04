@@ -16,11 +16,14 @@ public class QuickLinkSection {
 	private String clientName;
 	
 	private Collection<Link> links;
+	
+	private int order;
 
 	public QuickLinkSection(String sectionName, String sectionIdentity) {
 		this.sectionName = sectionName;
 		this.sectionIdentity = sectionIdentity;
 		this.links = new ArrayList<>();
+		this.order = 0;
 	}
 	
 	public String getSectionName() {
@@ -49,6 +52,14 @@ public class QuickLinkSection {
 
 	public void setClientName(String clientName) {
 		this.clientName = clientName;
+	}
+
+	public int getOrder() {
+		return order;
+	}
+
+	public void setOrder(int order) {
+		this.order = order;
 	}
 
 }

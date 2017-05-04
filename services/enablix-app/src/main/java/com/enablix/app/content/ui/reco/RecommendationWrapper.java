@@ -11,6 +11,10 @@ public class RecommendationWrapper {
 	
 	private String clientName;
 	
+	private int order;
+	
+	private String identity;
+	
 	public Recommendation getRecommendation() {
 		return recommendation;
 	}
@@ -33,6 +37,22 @@ public class RecommendationWrapper {
 
 	public void setClientName(String clientName) {
 		this.clientName = clientName;
+	}
+
+	public int getOrder() {
+		return order;
+	}
+
+	public void setOrder(int order) {
+		this.order = order;
+	}
+
+	public String getIdentity() {
+		return identity;
+	}
+
+	public void setIdentity(String identity) {
+		this.identity = identity;
 	}
 	
 }

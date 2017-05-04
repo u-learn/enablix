@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
 import com.enablix.app.content.label.ContentLabelResolver;
@@ -18,6 +19,7 @@ import com.enablix.commons.util.StringUtil;
 import com.enablix.commons.util.collection.CollectionUtil;
 import com.enablix.commons.util.process.ProcessContext;
 import com.enablix.core.api.ContentDataRef;
+import com.enablix.core.api.OrderAware;
 import com.enablix.core.domain.links.QuickLinkCategory;
 import com.enablix.core.domain.links.QuickLinkContent;
 import com.enablix.core.domain.segment.DataSegmentInfo;
@@ -52,21 +54,21 @@ public class QuickLinksServiceImpl implements QuickLinksService {
 	
 	private ContentLabelResolver labelResolver = new PortalContentLabelResolver();
 	
+	private Sort sortByOrder = OrderAware.SORT_BY_ORDER;
 	
 	@Override
 	public QuickLinks getQuickLinks(DataView dataView, String clientId) {
-		List<QuickLinkCategory> linkCategories = categoryRepo.findByClientId(clientId);
+		List<QuickLinkCategory> linkCategories = categoryRepo.findByClientId(clientId, sortByOrder);
 		return buildQuickLinks(dataView, linkCategories);
 	}
 	
 	@Override
 	public QuickLinks getQuickLinks(DataView dataView) {
-		List<QuickLinkCategory> linkCategories = categoryRepo.findAll();
+		List<QuickLinkCategory> linkCategories = categoryRepo.findAll(sortByOrder);
 		return buildQuickLinks(dataView, linkCategories);
 	}
 
 	private QuickLinks buildQuickLinks(DataView dataView, List<QuickLinkCategory> linkCategories) {
-		
 		
 		QuickLinks quickLinks = new QuickLinks();
 		
@@ -88,7 +90,7 @@ public class QuickLinksServiceImpl implements QuickLinksService {
 		MongoDataView mongoDataView = DataViewUtil.getMongoDataView(dataView);
 		
 		List<QuickLinkContent> allContent = MongoUtil.executeWithDataViewScope(
-				mongoDataView, () -> linkRepo.findAll());
+				mongoDataView, () -> linkRepo.findAll(sortByOrder));
 				
 		
 		for (QuickLinkContent linkContent : allContent) {
@@ -101,6 +103,7 @@ public class QuickLinksServiceImpl implements QuickLinksService {
 				link.setCategoryIdentity(linkContent.getCategory().getIdentity());
 				link.setData(navContent);
 				link.setQuickLinkIdentity(linkContent.getIdentity());
+				link.setOrder(linkContent.getOrder());
 				
 				quickLinks.addLink(link);
 			}

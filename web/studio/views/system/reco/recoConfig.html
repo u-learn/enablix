@@ -10,6 +10,7 @@
 				<tr ng-repeat="reco in recoList" class="ng-scope">
 					<td class="remove no-border"></td>
 					<td class="remove no-border"><a ng-click="deleteRecommendation($index)" class="fa fa-times"></a></td>
+					<td class="reorder no-border"><ebx-reorder collection-name="ebx_recommendation" current-record="reco" ordered-data-list="recoList"></ebx-reorder></td>
 					<td class="no-border">
 						<eb-nav-link hide-hierarchy="false" nav-link="reco.navContent"></eb-nav-link>
 						<span class="reco-client" ng-if="reco.clientName"> ({{reco.clientName}})</span>

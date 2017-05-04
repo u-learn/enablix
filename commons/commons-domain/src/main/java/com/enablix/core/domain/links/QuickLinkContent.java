@@ -4,10 +4,10 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.enablix.core.api.ContentDataRef;
-import com.enablix.core.domain.DataSegmentAwareEntity;
+import com.enablix.core.domain.OrderAndDataSegmentAwareEntity;
 
 @Document(collection = "ebx_quick_links")
-public class QuickLinkContent extends DataSegmentAwareEntity {
+public class QuickLinkContent extends OrderAndDataSegmentAwareEntity {
 
 	@DBRef
 	private QuickLinkCategory category;

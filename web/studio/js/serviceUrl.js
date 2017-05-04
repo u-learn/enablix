@@ -95,6 +95,6 @@ enablix.serviceURL = {
 	"getSlackStoredAuthAccessToken" : enablix.domainName +"/slack/getStoredSlackToken",
 	"unauthSlackAcc" : enablix.domainName +"/slack/unauthSlack",
 	"getSlackChannels": enablix.domainName +"/slack/getChannelsLst",
-	"sendMessageToSlack": enablix.domainName +"/slack/sendMessage"
-
+	"sendMessageToSlack": enablix.domainName +"/slack/sendMessage",
+	"swapRecordOrder" : enablix.domainName + "/record/order/swap"
 };
