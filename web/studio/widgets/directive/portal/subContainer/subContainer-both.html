@@ -34,7 +34,7 @@
 <div class="block" ng-if="showSubContainer">
 	<div ng-class="expanded ? 'active' : 'inactive' " class="head head-toggle" ng-click="toggleContainer($event)">
 		<em ng-class="expanded ? 'fa fa-caret-down': 'fa fa-caret-up'"></em>
-		<h2>{{::subContainerLabel}}</h2>
+		<h2>{{::subContainerLabel}}<span ng-if="::pageData"> ({{pageData.totalElements}})</span></h2>
 		<div class="action-icons bar-action-icons">
 			<ebx-suggest-content content-q-id="subContainerQId" parent-identity="parentIdentity"></ebx-suggest-content>
 		</div>
