@@ -12,6 +12,8 @@
 			<div class="foot clearfix">
 				<button ng-click="onSearchAction()" class="button button-add">{{::searchLabel}}</button>
 				<button ng-click="onResetAction()" class="button button-delete">{{::resetLabel}}</button>
+				<button ng-if="showSaveAsDefault" ng-click="saveAsUserDefault()" class="button button-edit">Save As My Default</button>
+				<button ng-if="showSaveAsDefault" ng-click="saveAsSystemDefault()" class="button button-edit">Save As System Default</button>
 			</div>
 		</div>
 	</div>

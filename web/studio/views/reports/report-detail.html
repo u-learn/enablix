@@ -4,7 +4,7 @@
 	</div>
 	<div class="data-filter-cont" ng-if="reportDef.filters">
 		<ebx-data-filters heading="Filter" filters="reportDef.filters" filter-values="reportFilterValues" 
-			search-label="Go" on-search="onReportSearch"/>
+			search-label="Go" on-search="onReportSearch" pref-values-key="reportDefaultFiltersPrefKey"/>
 	</div>
 	<div class="cont" ng-if="reportDef.type == 'HEATMAP'">
 		<heatmap class="hm-chart" data="data" dispatch="$parent.dispatch" options="reportDef.options"></heatmap>

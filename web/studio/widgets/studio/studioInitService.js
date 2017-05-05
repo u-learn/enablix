@@ -1,7 +1,7 @@
 enablix.studioApp.factory('StudioSetupService', 
 	[
-	 	         '$rootScope', '$q', '$location', 'ContentTemplateService', 'ResourceVersionService', 'TenantInfoService',
-	 	function ($rootScope,   $q,   $location,   ContentTemplateService,   ResourceVersionService,   TenantInfoService) {
+	 	         '$rootScope', '$q', '$location', 'ContentTemplateService', 'ResourceVersionService', 'TenantInfoService', 'UserPreferenceService',
+	 	function ($rootScope,   $q,   $location,   ContentTemplateService,   ResourceVersionService,   TenantInfoService,   UserPreferenceService) {
 	 		
 	 		var setupStudio = function() {
 	 			
@@ -14,6 +14,7 @@ enablix.studioApp.factory('StudioSetupService',
 	 			var promises = [
 	 			    ResourceVersionService.loadResourceVersions(),
 	 			    ContentTemplateService.loadTemplate(),
+	 			    UserPreferenceService.loadApplicablePreferences()
 	 			];
 	 			
 	 			return $q.all(promises);

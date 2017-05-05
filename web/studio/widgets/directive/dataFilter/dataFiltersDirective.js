@@ -1,6 +1,6 @@
 enablix.studioApp.directive('ebxDataFilters', [
-        '$compile', '$timeout', 
-function($compile,   $timeout) {
+        '$compile', '$timeout', 'UserPreferenceService', 'Notification',
+function($compile,   $timeout,   UserPreferenceService,   Notification) {
 
 	return {
 		restrict: 'E',
@@ -11,7 +11,8 @@ function($compile,   $timeout) {
 			searchLabel: '@',
 			resetLabel: '@',
 			onSearch:'=?',
-			onReset: '=?'
+			onReset: '=?',
+			prefValuesKey: "=?"
 		},
 		link: function(scope, element, attrs) {
 			
@@ -21,6 +22,8 @@ function($compile,   $timeout) {
 			scope.searchLabel = scope.searchLabel || "Search";
 			scope.filterValues = scope.filterValues || {};
 
+			scope.showSaveAsDefault = !isNullOrUndefined(scope.prefValuesKey);
+			
 			angular.copy(scope.filterValues, filterValuesCopy);
 			
 			scope.onSearchAction = function() {
@@ -61,6 +64,37 @@ function($compile,   $timeout) {
 				if (scope.onReset){
 					scope.onReset();
 				}
+			}
+			
+			var getCurrentFilterValues = function() {
+				
+				var filterVals = {};
+				
+				angular.forEach(scope.filters, function(filter) {
+					filterVals[filter.id] = scope.filterValues[filter.id];
+				});
+				
+				return filterVals;
+			}
+			
+			var saveAsDefault = function(_saveFn) {
+				
+				if (scope.prefValuesKey) {
+					
+					_saveFn(scope.prefValuesKey, getCurrentFilterValues(), function(data) {
+							Notification.primary("Updated default values!");
+						}, function (errorData) {
+							Notification.error({message: "Unable to update default values", delay: enablix.errorMsgShowTime});
+						});
+				}
+			}
+			
+			scope.saveAsUserDefault = function() {
+				saveAsDefault(UserPreferenceService.saveAsUserPref);
+			}
+			
+			scope.saveAsSystemDefault = function() {
+				saveAsDefault(UserPreferenceService.saveAsSystemPref);
 			}
 			
 			// the angular multi-select dropdown does not work if it is initially hidden

@@ -36,5 +36,6 @@
 	<module>commons-scheduler</module>
 	<module>data-view</module>
 	<module>wordpress-integration</module>
+	<module>user-mgmt</module>
   </modules>
 </project>
