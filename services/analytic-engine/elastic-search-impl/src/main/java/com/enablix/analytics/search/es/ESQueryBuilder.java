@@ -34,6 +34,7 @@ public class ESQueryBuilder {
 	private SearchFieldFilter fieldFilter = SearchFieldFilter.ALL_FIELD_FILTER;
 	private TypeFilter typeFilter = TypeFilter.ALL_TYPES;
 	private FuzzyMatchOption fuzzyMatchOption = FuzzyMatchOption.DEFAULT_FUZZY_MATCH;
+	private MultiMatchQueryOptimizer queryOptimizer;
 
 	private SearchFieldBuilder fieldBuilder;
 	
@@ -74,6 +75,11 @@ public class ESQueryBuilder {
 		return this;
 	}
 	
+	public ESQueryBuilder withOptimizer(MultiMatchQueryOptimizer optimizer) {
+		this.queryOptimizer = optimizer;
+		return this;
+	}
+	
 	public SearchRequest build() {
 		
 		String indexName = getIndexName();
@@ -86,6 +92,10 @@ public class ESQueryBuilder {
 		String[] searchFields = fieldBuilder.getContentSearchFields(fieldFilter, template);
 		MultiMatchQueryBuilder multiMatchQuery = QueryBuilders.multiMatchQuery(
 				searchText, searchFields);
+		
+		if (queryOptimizer != null) {
+			queryOptimizer.optimize(multiMatchQuery);
+		}
 		
 		Fuzziness fuzziness = fuzzyMatchOption.fuzziness(searchText);
 		if (fuzziness != null) {

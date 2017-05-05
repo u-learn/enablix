@@ -24,12 +24,11 @@ import com.enablix.analytics.info.detection.Opinion;
 import com.enablix.analytics.info.detection.TaggedInfo;
 import com.enablix.analytics.info.detection.TaggedInfoAnalyser;
 import com.enablix.analytics.info.detection.TypeOpinion;
+import com.enablix.analytics.search.es.DefaultSearchFieldBuilder;
 import com.enablix.analytics.search.es.ESQueryBuilder;
 import com.enablix.analytics.search.es.ElasticSearchClient;
-import com.enablix.analytics.search.es.SearchFieldBuilder;
 import com.enablix.analytics.search.es.SearchHitTransformer;
 import com.enablix.app.template.service.TemplateManager;
-import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.commons.util.StringUtil;
 import com.enablix.commons.util.collection.CollectionUtil;
 import com.enablix.commons.util.process.ProcessContext;
@@ -52,6 +51,9 @@ public class ESBasedLinkAnalyser extends TaggedInfoAnalyser {
 	
 	@Autowired
 	private TemplateManager templateMgr;
+	
+	@Autowired
+	private DefaultSearchFieldBuilder searchFieldBuilder;
 	
 	@Override
 	public String name() {
@@ -78,10 +80,8 @@ public class ESBasedLinkAnalyser extends TaggedInfoAnalyser {
 			TemplateFacade templateFacade = templateMgr.getTemplateFacade(ProcessContext.get().getTemplateId());
 			LinkContentCollector collector = new LinkContentCollector();
 			
-			String[] searchFields = { ContentDataConstants.CONTENT_TITLE_KEY };
-			SearchFieldBuilder fieldBuilder = (filter, template) -> searchFields; 
-				
-			Set<String> searchInTypes = getLinkedESTypesToLookup(ctx.getAssessment(), templateFacade);
+			LookupTypesAndContainers searchInTypes = getLinkedESTypesToLookup(ctx.getAssessment(), templateFacade);
+			LinkAnalyserSearchFieldFilter fieldFilter = new LinkAnalyserSearchFieldFilter(searchInTypes.containerQIds);
 			
 			for (InfoTag tag : tags) {
 				
@@ -90,10 +90,12 @@ public class ESBasedLinkAnalyser extends TaggedInfoAnalyser {
 				
 				do {
 				
-					SearchRequest request = ESQueryBuilder.builder(tag.tag(), templateFacade, fieldBuilder)
+					SearchRequest request = ESQueryBuilder.builder(tag.tag(), templateFacade, searchFieldBuilder)
 															.withPagination(pageSize, pageNum)
 															.withFuzziness((searchTerm) -> Fuzziness.AUTO)
-															.withTypeFilter((searchType) -> searchInTypes.contains(searchType))
+															.withTypeFilter((searchType) -> searchInTypes.types.contains(searchType))
+															.withFieldFilter(fieldFilter)
+															.withOptimizer((mmQueryBuilder) -> mmQueryBuilder.minimumShouldMatch("100%"))
 															.build();
 					
 					result = esClient.searchContent(request);
@@ -162,9 +164,9 @@ public class ESBasedLinkAnalyser extends TaggedInfoAnalyser {
 
 	}
 
-	private Set<String> getLinkedESTypesToLookup(Assessment assessment, TemplateFacade templateFacade) {
+	private LookupTypesAndContainers getLinkedESTypesToLookup(Assessment assessment, TemplateFacade templateFacade) {
 		
-		Set<String> lookupTypes = new HashSet<>();
+		LookupTypesAndContainers lookups = new LookupTypesAndContainers();
 		
 		for (TypeOpinion typeOp : assessment.getTypeOpinions()) {
 			
@@ -180,14 +182,20 @@ public class ESBasedLinkAnalyser extends TaggedInfoAnalyser {
 					
 						String collectionName = templateFacade.getCollectionName(refListDS.getStoreId());
 						if (StringUtil.hasText(collectionName)) {
-							lookupTypes.add(collectionName);
+							lookups.types.add(collectionName);
+							lookups.containerQIds.add(refListDS.getStoreId());
 						}
 					}
 				}
 			}
 		}
 		
-		return lookupTypes;
+		return lookups;
+	}
+	
+	private static class LookupTypesAndContainers {
+		private Set<String> types = new HashSet<>();
+		private Set<String> containerQIds = new HashSet<>();
 	}
 
 	private float calculateHitConfidence(float hitScore, float maxScore) {

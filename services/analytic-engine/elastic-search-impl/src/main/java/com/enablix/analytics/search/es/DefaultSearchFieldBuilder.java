@@ -31,18 +31,36 @@ public class DefaultSearchFieldBuilder implements SearchFieldBuilder {
 		Map<String, Integer> fieldBoostIndex = new HashMap<>();
 		ContentTemplate contentTemplate = template.getTemplate();
 		
-		getFieldNames(fieldBoostIndex, contentTemplate.getDataDefinition().getContainer(), template);
+		addContainerFields(fieldBoostIndex, contentTemplate.getDataDefinition().getContainer(), filter, template);
+		addSystemIntroducedFields(filter, fieldBoostIndex);
+		
 		return convertToMultiMatchBoostedFields(fieldBoostIndex);
 	}
 	
-	private void getFieldNames(Map<String, Integer> fieldSearchBoost, List<ContainerType> containers, TemplateFacade template) {
+	private void addSystemIntroducedFields(SearchFieldFilter filter, Map<String, Integer> fieldBoostIndex) {
+		
+		// add field for search on container metadata
+		if (filter.searchIn(ContentDataConstants.CONTAINER_NAME_METADATA_FLD)) {
+			fieldBoostIndex.put(ContentDataConstants.CONTAINER_NAME_METADATA_FLD, CONTAINER_NAME_FLD_BOOST);
+		}
+		
+		// add field for tags search
+		if (filter.searchIn(ContentDataConstants.RECORD_TAGS_ATTR)) {
+			fieldBoostIndex.put(ContentDataConstants.RECORD_TAGS_ATTR, TAGS_FLD_BOOST);
+		}
+		
+	}
+	
+	private void addContainerFields(Map<String, Integer> fieldSearchBoost, 
+			List<ContainerType> containers, SearchFieldFilter filter, TemplateFacade template) {
 		
 		for (ContainerType container : containers) {
 			
 			for (ContentItemType contentItem : container.getContentItem()) {
 				
 				if (contentItem.getType() == ContentItemClassType.DATE_TIME
-						|| contentItem.getType() == ContentItemClassType.NUMERIC) {
+						|| contentItem.getType() == ContentItemClassType.NUMERIC
+						|| !filter.searchIn(container.getQualifiedId(), contentItem)) {
 					// do not search on Date and numeric fields
 					continue;
 				}
@@ -67,7 +85,7 @@ public class DefaultSearchFieldBuilder implements SearchFieldBuilder {
 				}
 			}
 		
-			getFieldNames(fieldSearchBoost, container.getContainer(), template);
+			addContainerFields(fieldSearchBoost, container.getContainer(), filter, template);
 		}
 	}
 	
@@ -105,21 +123,12 @@ public class DefaultSearchFieldBuilder implements SearchFieldBuilder {
 	
 	private String[] convertToMultiMatchBoostedFields(Map<String, Integer> fieldBoostIndex) {
 		
-		String[] boostedFieldSearch = new String[fieldBoostIndex.size() + 2]; // +2 for container name and tags
+		String[] boostedFieldSearch = new String[fieldBoostIndex.size()];
 		
 		int indx = 0;
 		for (Map.Entry<String, Integer> entry : fieldBoostIndex.entrySet()) {
 			boostedFieldSearch[indx++] = entry.getKey() + BOOST_OPERATOR + entry.getValue();
 		}
-		
-		// add field for search on container metadata
-		boostedFieldSearch[indx++] = ContentDataConstants.CONTAINER_NAME_METADATA_FLD 
-										+ BOOST_OPERATOR + CONTAINER_NAME_FLD_BOOST;
-		
-		// add field for tags search
-		boostedFieldSearch[indx++] = ContentDataConstants.RECORD_TAGS_ATTR + "." + ContentDataConstants.TAG_NAME_ATTR
-										+ BOOST_OPERATOR + TAGS_FLD_BOOST;
-
 		
 		return boostedFieldSearch;
 	}
