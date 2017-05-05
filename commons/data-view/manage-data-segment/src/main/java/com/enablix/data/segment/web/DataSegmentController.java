@@ -25,7 +25,7 @@ public class DataSegmentController {
 	private DataSegmentService dsService;
 	
 	@RequestMapping(method = RequestMethod.POST, value="/save", consumes = "application/json")
-	public String importTemplate(@RequestBody DataSegment ds) throws IOException, JAXBException {
+	public String saveDataSegment(@RequestBody DataSegment ds) throws IOException, JAXBException {
 		LOGGER.debug("Saving data segment");
 		dsService.save(ds);
 		return "success";
