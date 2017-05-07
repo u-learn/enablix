@@ -81,8 +81,13 @@ function($compile,   $timeout,   UserPreferenceService,   Notification) {
 				
 				if (scope.prefValuesKey) {
 					
-					_saveFn(scope.prefValuesKey, getCurrentFilterValues(), function(data) {
+					var filterVals = getCurrentFilterValues();
+					
+					_saveFn(scope.prefValuesKey, filterVals, function(data) {
+					
 							Notification.primary("Updated default values!");
+							angular.copy(filterVals, filterValuesCopy);
+							
 						}, function (errorData) {
 							Notification.error({message: "Unable to update default values", delay: enablix.errorMsgShowTime});
 						});
