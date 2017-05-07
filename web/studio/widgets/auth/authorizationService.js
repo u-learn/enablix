@@ -8,13 +8,11 @@ enablix.studioApp.factory('AuthorizationService',
 	 		var OR_PERM_SEPARATOR = "|";
 	 		var AND_PERM_SEPARATOR = "+";
 	 		
-	 		class SimplePermissionCheck {
+	 		function SimplePermissionCheck(perm) {
 	 			
-	 			constructor(perm) {
-	 				this.perm = perm;
-	 			}
+	 			this.perm = perm;
 	 			
-	 			check() {
+	 			this.check = function() {
 	 				
 	 				if (enablix.loggedInUser && enablix.loggedInUser.authorities) {
 		 				
@@ -31,20 +29,18 @@ enablix.studioApp.factory('AuthorizationService',
 		 			
 		 			return false;
 	 			}
+	 			
 	 		};
 	 		
-	 		class OrPermissionCheck {
+	 		function OrPermissionCheck(_perms) {
 
-	 			constructor(_perms) {
+	 			this.permChecks = [];
 	 				
-	 				this.permChecks = [];
-	 				
-	 				for (var i = 0; i < _perms.length; i++) {
-	 					this.permChecks[i] = new SimplePermissionCheck(_perms[i]);
-	 				}
+	 			for (var i = 0; i < _perms.length; i++) {
+	 				this.permChecks[i] = new SimplePermissionCheck(_perms[i]);
 	 			}
 	 			
-	 			check() {
+	 			this.check = function() {
 	 				
 	 				for (var i = 0; i < this.permChecks.length; i++) {
 	 					if (this.permChecks[i].check()) {
@@ -56,18 +52,15 @@ enablix.studioApp.factory('AuthorizationService',
 	 			}
 	 		}
 	 		
-	 		class AndPermissionCheck {
+	 		function AndPermissionCheck(_perms) {
 
-	 			constructor(_perms) {
+	 			this.permChecks = [];
 	 				
-	 				this.permChecks = [];
-	 				
-	 				for (var i = 0; i < _perms.length; i++) {
-	 					this.permChecks[i] = new SimplePermissionCheck(_perms[i]);
-	 				}
-	 			}
+ 				for (var i = 0; i < _perms.length; i++) {
+ 					this.permChecks[i] = new SimplePermissionCheck(_perms[i]);
+ 				}
 	 			
-	 			check() {
+	 			this.check = function() {
 	 				
 	 				for (var i = 0; i < this.permChecks.length; i++) {
 	 					if (!this.permChecks[i].check()) {
