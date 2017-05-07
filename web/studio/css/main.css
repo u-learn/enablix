@@ -792,9 +792,10 @@ form.block .foot {
 	background: #fff;
 	font-style: italic;
 	font-size: 0.875em;
-	line-height: 2;
+	line-height: 2em;
 	font-weight: 300;
 	color: #222;
+	height: 2em;
 }
 @media screen and (max-width: 1259px) { /* laptop */
 	.secondary-nav li {
