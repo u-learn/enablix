@@ -1040,16 +1040,16 @@ form.block .foot {
 	transform: rotate(90deg)
 }
 
-ebx-record-context-menu a.active {
+ebx-doc-context-menu a.active {
 	color: #A1C1DD;
 }
 
-ebx-record-context-menu a.active:hover,
-ebx-record-context-menu a.active:focus {
+ebx-doc-context-menu a.active:hover,
+ebx-doc-context-menu a.active:focus {
 	color: #1D6AAD;
 }
 
-ebx-record-context-menu a.inactive {
+ebx-doc-context-menu a.inactive {
 	color: #EFF0F2;
 	cursor: default;
 }
@@ -1986,4 +1986,10 @@ ebx-reorder .fa:first-child {
 
 .datatable .reorder ebx-reorder .fa:first-child {
     margin-top: -1px;
+}
+
+.single-line {
+	overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }

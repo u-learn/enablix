@@ -17,6 +17,7 @@ enablix.studioApp.controller('PortalSubContainerCtrl',
 			_dataRecord.showDetails = true;
 			
 			var elem = $event.currentTarget;
+			$(elem).parent().toggleClass('single-line');
 			$(elem).toggleClass('active');
 			$('#' + itemId).slideToggle('fast');
 			

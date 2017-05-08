@@ -7,7 +7,7 @@
 		<div class="dropdown">
 			<div class="action-icons bar-action-icons">
 				<span ng-if="bodyData.downloadDocIdentity" class="dropdown">
-					<ebx-record-context-menu content-record="bodyData" content-q-id="subContainerQId" ></ebx-record-context-menu>
+					<ebx-doc-context-menu content-record="bodyData" content-q-id="subContainerQId" ></ebx-doc-context-menu>
 				</span>
 				<ebx-suggest-content content-q-id="subContainerQId" parent-identity="parentIdentity" content-identity="bodyData.identity"></ebx-suggest-content>
 				<ebx-share-context-menu context-data="bodyData" content-q-id="subContainerQId"></ebx-share-context-menu>
@@ -43,9 +43,9 @@
 		<div ng-repeat="dataItem in bodyData track by dataItem.identity" class="dataItem">
 			<h4 layout="row" ng-mouseover="::showDataItemActionIcons($event)" ng-mouseout="::hideDataItemActionIcons($event)">
 				<span class="dropdown dataItemBullet" flex="none">
-					<ebx-record-context-menu content-record="dataItem" content-q-id="subContainerQId" ></ebx-record-context-menu>
+					<ebx-doc-context-menu content-record="dataItem" content-q-id="subContainerQId" ></ebx-doc-context-menu>
 				</span>
-				<span flex>
+				<span class="single-line" flex>
 					<a ng-click="toggleContainerItem($event, dataItem.containerId + $index, dataItem)" class="toggle" >{{::dataItem.headingLabel}}</a>
 			    	<a ng-if="dataItem.hasSubContainers" ng-click="navToItemDetail(dataItem.containerQId, dataItem.identity)" class="detail fa fa-external-link"></a>
 			    </span>

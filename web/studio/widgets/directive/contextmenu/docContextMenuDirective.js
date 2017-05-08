@@ -1,4 +1,4 @@
-enablix.studioApp.directive('ebxRecordContextMenu',
+enablix.studioApp.directive('ebxDocContextMenu',
 			['RESTService', 'Notification', '$state', 'StateUpdateService', 'DocPreviewService',
 	function (RESTService,   Notification,   $state,   StateUpdateService,   DocPreviewService) {
 	return {
@@ -12,6 +12,6 @@ enablix.studioApp.directive('ebxRecordContextMenu',
 				scope.hasPreviewOption = DocPreviewService.getPreviewHandler(scope.contentRecord.docMetadata) != null;
 			}
 		},
-		templateUrl: "widgets/directive/contextmenu/recordContextMenu.html"
+		templateUrl: "widgets/directive/contextmenu/docContextMenu.html"
 	};
 }]);
