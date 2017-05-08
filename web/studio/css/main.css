@@ -1993,3 +1993,11 @@ ebx-reorder .fa:first-child {
     text-overflow: ellipsis;
     white-space: nowrap;
 }
+
+.quick-links li.ql-view-more:before {
+    background: #FFFFFF;
+}
+
+.ql-view-more a {
+	text-decoration: none;
+}

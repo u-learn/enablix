@@ -3,6 +3,7 @@ enablix.studioApp.controller('PortalQuickLinksCtrl',
     function ($scope,   StateUpdateService,   $stateParams,   QuickLinksService,   ContentTemplateService) {
 
 		$scope.sectionWidth = $scope.sectionWidth || "25";
+		$scope.secRecLimit = 4;
 				
 		QuickLinksService.getUserQuickLinks( 
 			function(quickLinks) {

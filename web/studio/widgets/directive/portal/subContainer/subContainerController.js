@@ -76,8 +76,13 @@ enablix.studioApp.controller('PortalSubContainerCtrl',
 			}
 			
 			if (!$scope.showSubContainer) {
-				if ($scope.parentList && $scope.index) {
-					$scope.parentList[$scope.index].id = "null" + $scope.index; // hack to remove div in portal-container.html. Setting it to null cause duplicate entry error in ng-repeat
+				if ($scope.parentList && !isNullOrUndefined($scope.index)) {
+					for (var i = 0; i < $scope.parentList.length; i++) {
+						if ($scope.parentList[i].qualifiedId == $scope.subContainerQId) {
+							$scope.parentList.splice(i, 1); // remove this element
+						}
+					}
+					//$scope.parentList[$scope.index].id = "null" + $scope.index; // hack to remove div in portal-container.html. Setting it to null cause duplicate entry error in ng-repeat
 				}
 			}
 		}

@@ -2,8 +2,11 @@
 	<div ng-repeat="quickLinkSec in quickLinks.sections" class="quicklinks-sec" flex="{{::sectionWidth}}">
 		<h4>{{quickLinkSec.sectionName}}</h4>
 		<ul>
-			<li ng-repeat="link in quickLinkSec.links">
+			<li ng-repeat="link in quickLinkSec.links" ng-if="$index < secRecLimit || quickLinkSec.showAll">
 				<eb-nav-link hide-hierarchy="true" nav-link="link.data" hide-doc-link="false"></eb-nav-link>
+			</li>
+			<li class="ql-view-more" ng-if="quickLinkSec.links.length > secRecLimit && !quickLinkSec.showAll">
+				<a ng-click="quickLinkSec.showAll = true;" class="more-link">View More<i class="fa fa-arrow-circle-right"></i></a>
 			</li>
 		</ul>
 	</div>
