@@ -6,15 +6,29 @@ function($compile,   Notification) {
 		restrict: 'E',
 		scope : {
 			filterDef: '=',
-			selectedValues: '='
+			selectedValues: '=',
+			singleSelect: '='
 		},
 		link: function(scope, element, attrs) {
+			
+			
+			scope.selectMultiple = !scope.singleSelect;
 			
 			scope.selectedValues = scope.selectedValues || [];
 			
 			scope.selected = {
-					values: scope.selectedValues
+					values: null
 			};
+			
+			var checkAndUpdateModelValue = function() {
+				if (!scope.singleSelect) {
+					scope.selected.values = scope.selectedValues;
+				} else if (scope.singleSelect && isArray(scope.selectedValues)) {
+					scope.selected.values = scope.selectedValues.length > 0 ? scope.selectedValues[0] : null;
+				}
+			}
+			
+			checkAndUpdateModelValue();
 			
 			if (scope.filterDef.masterList) {
 				
@@ -26,9 +40,19 @@ function($compile,   Notification) {
 			}
 			
 			scope.onItemSelect = function() {
-				var newlyAdded = scope.selected.values[scope.selected.values.length-1];
-				if(scope.selectedValues!=null && scope.selectedValues!=undefined && scope.selectedValues.indexOf(newlyAdded) === -1){
-					scope.selectedValues.push(newlyAdded);
+				
+				if (scope.singleSelect) {
+				
+					scope.selectedValues = [];
+					scope.selectedValues.push(scope.selected.values);
+					
+				} else {
+					
+					var newlyAdded = scope.selected.values[scope.selected.values.length - 1];
+					if (scope.selectedValues!=null && scope.selectedValues != undefined 
+							&& scope.selectedValues.indexOf(newlyAdded) === -1) {
+						scope.selectedValues.push(newlyAdded);
+					}
 				}
 			}
 			
@@ -38,7 +62,7 @@ function($compile,   Notification) {
 			
 			scope.$watch('selectedValues', function(newValue, oldValue) {
 				if (newValue !== oldValue) {
-					scope.selected.values = newValue;
+					checkAndUpdateModelValue();
 				}
 			}, true);
 			

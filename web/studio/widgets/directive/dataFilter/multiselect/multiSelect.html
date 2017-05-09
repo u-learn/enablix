@@ -1,6 +1,13 @@
-<ui-select multiple ng-model="selected.values" theme="bootstrap" sortable="true" close-on-select="false" 
+<ui-select ng-if="selectMultiple" multiple ng-model="selected.values" theme="bootstrap" sortable="true" close-on-select="false" 
 	remove-selected="false" on-select="onItemSelect($item, $model)" on-remove="onItemRemove($item, $model)">
   <ui-select-match>{{$item.label}}</ui-select-match>
+  <ui-select-choices repeat="opt in options | filter: {label: $select.search}">
+    {{opt.label}}
+  </ui-select-choices>
+</ui-select>
+<ui-select ng-if="!selectMultiple" ng-model="selected.values" theme="bootstrap" sortable="true" close-on-select="true" 
+	remove-selected="false" on-select="onItemSelect($item, $model)" on-remove="onItemRemove($item, $model)">
+  <ui-select-match>{{$select.selected.label}}</ui-select-match>
   <ui-select-choices repeat="opt in options | filter: {label: $select.search}">
     {{opt.label}}
   </ui-select-choices>

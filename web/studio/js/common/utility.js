@@ -25,7 +25,7 @@ var isNotNullOrUndefined = function(obj) {
 
 
 var isArray = function(obj) {
-	return obj.constructor === Array;
+	return !isNullOrUndefined(obj) && obj.constructor === Array;
 };
 
 var isArrayAndEmpty = function(obj) {

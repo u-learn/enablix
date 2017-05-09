@@ -72,6 +72,9 @@ enablix.studioApp.factory('ReportService',
 							 {
 				                    id: "activityMetricTime",
 				                    type: "multi-select",
+				                    options: {
+				                    	singleSelect: true
+				                    },
 				                    name: "Time",
 				                    masterList: function() { // This must return a promise
 				                        
@@ -84,7 +87,7 @@ enablix.studioApp.factory('ReportService',
 				                    validateBeforeSubmit: function(_selectedValues) {
 										
 										if (_selectedValues.length == 0) {
-											this.errorMessage = "Please select one or more Values";
+											this.errorMessage = "Please select a value";
 											return false;
 										}
 										

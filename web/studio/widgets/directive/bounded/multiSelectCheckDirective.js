@@ -12,7 +12,7 @@ enablix.studioApp.directive('multiSelectChecker', function($compile) {
 				pre : function preLink(scope, iElement, iAttrs, controller) {
 				},
 				post : function postLink(scope, iElement, iAttrs, controller) {
-					if (scope.selectMultiple == true) {
+					if (!scope.singleSelect) {
 						iElement[0].setAttribute('multiple', ''); //set the multiple directive, doing it the JS way, not jqLite way.
 					}
 					$compile(iElement)(scope);
