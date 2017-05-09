@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<contentTemplate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.05" id="haystax_enterprise" xsi:noNamespaceSchemaLocation="../xsd/content-template.xsd">
+<contentTemplate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.06" id="haystax_enterprise" xsi:noNamespaceSchemaLocation="../xsd/content-template.xsd">
 	<dataDefinition>
 		<container id="product" label="Products" businessCategory="BUSINESS_DIMENSION">
 			<contentItem id="name" label="Name" type="text" searchBoost="7"/>
@@ -168,7 +168,8 @@
 			<container id="appLunchLearn" label="Lunch and Learn" linkContainerQId="lunchandlearn" linkContentItemId="apps"/>	
 			<container id="appEvent" label="Apps" linkContainerQId="event" linkContentItemId="apps"/>											
 			<container id="appMultimedia" label="Multimedia" linkContainerQId="multimedia" linkContentItemId="apps"/>			
-			<container id="appArticle" label="News Article" linkContainerQId="article" linkContentItemId="apps"/>			
+			<container id="appArticle" label="News Article" linkContainerQId="article" linkContentItemId="apps"/>
+			<container id="appOnePager" label="One Pagers" linkContainerQId="onepager" linkContentItemId="apps"/>			
 			<container id="appSalesDeck" label="Presentations" linkContainerQId="salesDeck" linkContentItemId="apps"/>		
 			<container id="appSWOT" label="SWOT" linkContainerQId="swot" linkContentItemId="apps"/>									
 			<container id="appPress" label="Press" linkContainerQId="press" linkContentItemId="apps"/>				
@@ -528,6 +529,8 @@
 		<container id="blog" label="Blogs" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="url" label="URL" type="text"/>
+			<contentItem id="blogdate" label="Publish Date" type="dateTime"/>
+			<contentItem id="desc" label="Description" type="richText"/>
 			<contentItem id="blogSource" label="Source" type="bounded" searchBoost="2">
 				<bounded>
 					<fixedList>
@@ -1852,6 +1855,17 @@
 					</refList>
 				</bounded>
 			</contentItem>	
+			<contentItem id="apps" label="Apps" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>app</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>			
 			<contentItem id="visibility" label="Visibility" type="bounded">
 	      		<bounded multivalued="true">
 	      			<refList>
@@ -2934,7 +2948,8 @@
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="file" label="File" type="doc"/>
 			<contentItem id="url" label="URL" type="text"/>
-			<contentItem id="summary" label="Descriptions" type="richText"/>
+			<contentItem id="wpdate" label="Publish Date" type="dateTime"/>			
+			<contentItem id="summary" label="Description" type="richText"/>
 			<contentItem id="wpSource" label="Source" type="bounded" searchBoost="5">
 				<bounded>
 					<fixedList>
@@ -4061,6 +4076,7 @@
 					<hideContentItem id="url"/>
 					<hideContentItem id="products"/>
 					<hideContentItem id="solutions"/>
+					<hideContentItem id="apps"/>					
 					<hideContentItem id="visibility"/>															
 				</listViewConfig>
 				<portalConfig>
@@ -4323,7 +4339,9 @@
 		<contentUIDef qualifiedId="blog">
 			<container labelQualifiedId="blog.title">
 				<listViewConfig>
-					<hideContentItem id="blogSource"/>				
+					<hideContentItem id="blogdate"/>
+					<hideContentItem id="desc"/>													
+					<hideContentItem id="blogSource"/>
 					<hideContentItem id="products"/>				
 					<hideContentItem id="solutions"/>
 					<hideContentItem id="apps"/>
@@ -4339,6 +4357,9 @@
 				</portalConfig>
 			</container>
 		</contentUIDef>
+		<contentUIDef qualifiedId="blog.desc">
+			<text type="long"/>
+		</contentUIDef>		
 		<contentUIDef qualifiedId="blurb">
 			<container labelQualifiedId="blurb.title">
 				<listViewConfig>
@@ -4365,7 +4386,8 @@
 				<listViewConfig>
 					<hideContentItem id="file"/>
 					<hideContentItem id="summary"/>
-					<hideContentItem id="wpSource"/>				
+					<hideContentItem id="wpSource"/>
+					<hideContentItem id="wpdate"/>				
 					<hideContentItem id="products"/>				
 					<hideContentItem id="solutions"/>
 					<hideContentItem id="apps"/>
