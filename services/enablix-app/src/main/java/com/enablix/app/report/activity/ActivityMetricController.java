@@ -2,6 +2,7 @@ package com.enablix.app.report.activity;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -14,8 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.enablix.app.report.activity.metric.ActivityMetricConfigRepository;
 import com.enablix.app.report.activity.metric.ActivityMetricService;
+import com.enablix.commons.util.date.DateUtil;
 import com.enablix.core.domain.report.activitymetric.ActivityMetricConfig;
-import com.enablix.core.domain.report.activitymetric.MetricStats;
 
 @RestController
 @RequestMapping("activitymetric")
@@ -29,11 +30,14 @@ public class ActivityMetricController {
 	private ActivityMetricConfigRepository activityMetricConfRepo;
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public List<MetricStats> getAggregatedActivityMetrices(@RequestParam("activityMetricTime") String date) {
+	public HashMap<String, Object> getAggregatedActivityMetrices(@RequestParam("activityMetricTime") String date) {
 		try{
 			Date startDate = new SimpleDateFormat("dd-MMM-yy").parse(date);
-			Date endDate = new Date();
-			return activityMetric.getAggregatedValues(startDate, endDate);
+			Date endDate = DateUtil.getPreviousDate();
+			HashMap<String, Object> response = new HashMap<String, Object>();
+			response.put("metricData", activityMetric.getAggregatedValues(startDate, endDate));
+			response.put("asOfDate", endDate);
+			return response;
 		}
 		catch(Exception e){
 			LOGGER.error(" Error Retrieving the Metric Data",e);

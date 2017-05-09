@@ -31,23 +31,56 @@ enablix.studioApp.factory('ReportService',
 			/** ----------------------------------------- Report Definitions start -----------------------------------------**/
 		
 			var eventOccurenceLst = [
-			{
-				label: 'Last 1 Day',
-	            id: '1'
-	        },	
-			{
-                label: 'Last Week',
-                id: '7'
-            },
-            {
-                label: 'Last Month',
-                id: '30'
-            },
-            {
-                label: 'Last 60 Days',
-                id: '60'
-            }
-        ];
+				{
+					label: 'Last Day',
+		            id: '1'
+		        },	
+				{
+	                label: 'Last 7 Days',
+	                id: '7'
+	            },
+	            {
+	                label: 'Last 30 Days',
+	                id: '30'
+	            },
+	            {
+	                label: 'Last 90 Days',
+	                id: '90'
+	            }
+            ];
+			var eventTrend = [
+				{
+					label: 'Last 7 Days',
+					id: '7'
+				},	
+				{
+					label: 'Last 30 Days',
+					id: '30'
+				},
+				{
+					label: 'Last 90 Days',
+					id: '90'
+				}
+				];
+			var activityTrend = [
+				{
+					label: 'Daily',
+					id: 'daily'
+				},
+				{
+					label: 'Weekly',
+					id: 'weekly'
+				},	
+				{
+					label: 'Monthly',
+					id: 'monthly'
+				},
+				
+				{
+					label: 'Yearly',
+					id: 'yearly'
+				}
+				];
 			var activityMetricReport = {
 					id: "activity-metric-calculator",
 					name: "Activity Summary",
@@ -119,18 +152,208 @@ enablix.studioApp.factory('ReportService',
 							 }
 						],
 					dataTransformer: function(_data, _filterValues) {
-						return _data;
+						// change heading
+						this.heading = this.name + " ( As of " + $filter('ebDateTime')(_data.asOfDate) + ")";
+						return _data.metricData;
 					},
 					fetchData: function(_dataFilters, _onSuccess, _onError) {
 						var ACTIVITY_METRIC = "getActivityMetric";
-						
 						var searchFilters = _dataFilters || {};
 						ActivityMetricService.getActivityMetric(ACTIVITY_METRIC, searchFilters, _onSuccess, _onError)
 									
 					} 
 			};
 			enablix.reports.push(activityMetricReport);
-		
+			
+			
+			var activityTrendReport = {
+					id: "activity-trend-calculator",
+					name: "Activity Trend",
+					heading: "Activity Trend",
+					type: "MULTILINE",
+					init: function($scope) {
+
+					},
+					columndetails :
+					{				
+						'Number of Logins': {column: 'ACTMETRIC2'},
+						'Number of Distinct Logins': {column: 'ACTMETRIC3'},
+						'Content Add': {column: 'ACTMETRIC4'},
+						'Content Updates': {column: 'ACTMETRIC5'},
+				        'Content Access': {column: 'ACTMETRIC6'},
+				        'Content Preview': {column: 'ACTMETRIC7'},
+				        'Content Download': {column: 'ACTMETRIC8'},
+				        'Searches': {column: 'ACTMETRIC9'}
+				    },
+					filterMetadata: {
+						
+					},
+					filters: 
+						[
+							{
+								id: "activityMetricTrend",
+								type: "multi-select",
+								options: {
+			                    	singleSelect: true
+			                    },
+								name: "Trend",
+								masterList: function() { // This must return a promise
+
+									var deferred = $q.defer();
+									deferred.resolve(activityTrend);
+
+									return deferred.promise;
+								},
+								validateBeforeSubmit: function(_selectedValues) {
+
+									if (_selectedValues.length == 0) {
+										this.errorMessage = "Please select one or more Trend values";
+										return false;
+									}
+
+									this.errorMessage = null;
+									return true;
+								},
+								defaultValue: function() {
+									var returnVal = [];
+									// By Default setting it to Last One Day
+									returnVal.push(activityTrend[0]);
+									return returnVal;
+								},
+								filterValueTransformer: function(_selectedValues) {
+									if (_selectedValues && _selectedValues.length > 0) {
+										var returnVal = [];
+
+										angular.forEach(_selectedValues, function(val) {
+											returnVal.push(val.id);
+										});
+
+										return returnVal;
+									} else
+										return null;
+								}
+							},
+							{
+								id: "activityMetricTime",
+								type: "multi-select",
+								options: {
+			                    	singleSelect: true
+			                    },
+								name: "Time",
+								masterList: function() { // This must return a promise
+
+
+									var deferred = $q.defer();
+									deferred.resolve(eventTrend);
+
+									return deferred.promise;
+								},
+								validateBeforeSubmit: function(_selectedValues) {
+
+									if (_selectedValues.length == 0) {
+										this.errorMessage = "Please select one or more Time values";
+										return false;
+									}
+
+									this.errorMessage = null;
+									return true;
+								},
+								defaultValue: function() {
+									var returnVal = [];
+									// By Default setting it to Last One Day
+									returnVal.push(eventTrend[0]);
+									return returnVal;
+								},
+								filterValueTransformer: function(_selectedValues) {
+									if (_selectedValues && _selectedValues.length > 0) {
+										var returnVal = [];
+
+										angular.forEach(_selectedValues, function(val) {
+											returnVal.push(getEventDate(val.id));
+										});
+
+										orderedDates = returnVal.sort(function(a, b) {
+											return Date.parse(a) > Date.parse(b);
+										});
+
+										return orderedDates[0];
+									} else
+										return null;
+								}
+							},
+							{
+								id: "activityMetric",
+								type: "multi-select",
+								name: "Activity Metric",
+								masterList: function() { // This must return a promise
+									var activityMetricTypeLst = [];
+									RESTService.getForData('getActivityMetricesTypes', null, null, function(data) {
+										angular.forEach(data, function (activityMetric) {
+											var metricObj = {
+													label: activityMetric.metricName,
+													id: activityMetric.metricCode
+											};
+
+											activityMetricTypeLst.push(metricObj);
+
+											activityMetricTypeLst.sort(function(a, b) {
+												return a.label === b.label ? 0 : (a.label < b.label ? -1 : 1);
+											});
+										});
+
+									}, function() {
+										Notification.error({
+											message: "Error loading Activity Metric data",
+											delay: enablix.errorMsgShowTime
+										});
+									});
+
+									var deferred = $q.defer();
+									deferred.resolve(activityMetricTypeLst);
+
+									return deferred.promise;
+								},
+								validateBeforeSubmit: function(_selectedValues) {
+									if (_selectedValues.length == 0) {
+										this.errorMessage = "Please select one or more Activity Metric values";
+										return false;
+									}
+
+									this.errorMessage = null;
+									return true;
+								},
+								//FIXME Cannot hardcode the default value. Need to think about this.
+								defaultValue: function() {
+									var returnVal = [{label:'Content Access',id:'ACTMETRIC6'}];
+									return returnVal;
+								},
+								filterValueTransformer: function(_selectedValues) {
+
+									if (_selectedValues && _selectedValues.length > 0) {
+										var returnVal = [];
+
+										angular.forEach(_selectedValues, function(val) {
+											returnVal.push(val.id);
+										});
+
+										return returnVal;
+									} else
+										return null;
+								}
+							}
+							],
+							dataTransformer: function(_data, _filterValues) {
+								this.heading = this.name + " ( As of " + $filter('ebDateTime')(_data.asOfDate) + ")";
+								return _data.trendData;
+							},
+							fetchData: function(_dataFilters, _onSuccess, _onError) {
+								var ACTIVITY_TREND = "getActivityTrend";
+
+								var searchFilters = _dataFilters || {};
+								ActivityMetricService.getActivityMetric(ACTIVITY_TREND, searchFilters, _onSuccess, _onError)
+							} 
+			};
+			enablix.reports.push(activityTrendReport);
 			/** ------------------------------------------ Report Definitions end here ------------------------------------------**/
 			
 			

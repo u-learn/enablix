@@ -68,7 +68,7 @@ public class ActivityMetricCalculator implements Task {
 					metricStats = activityMetricBean.getMetricStats();
 				}
 				metricStats.add(metricStat);
-
+				activityMetricBean.setDateDimension(DateUtil.getDateDimension(backRunCalendar.getTime()));
 				activityMetricBean.setMetricStats(metricStats);
 				activityMetricRepo.save(activityMetricBean);
 

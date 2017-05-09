@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.enablix.commons.constants.AppConstants;
+import com.enablix.commons.util.date.DateDimension;
 import com.enablix.core.domain.BaseDocumentEntity;
 
 @Document(collection = AppConstants.ACTIVITY_METRIC)
@@ -17,6 +18,8 @@ public class ActivityMetric extends BaseDocumentEntity{
 	private boolean latest;
 
 	private List<MetricStats> metricStats ;
+	
+	private DateDimension dateDimension;
 	
 	public ActivityMetric() {
 		metricStats = new ArrayList<MetricStats>();
@@ -44,5 +47,13 @@ public class ActivityMetric extends BaseDocumentEntity{
 
 	public void setMetricStats(List<MetricStats> metricStats) {
 		this.metricStats = metricStats;
+	}
+	
+	public DateDimension getDateDimension() {
+		return dateDimension;
+	}
+
+	public void setDateDimension(DateDimension dateDimension) {
+		this.dateDimension = dateDimension;
 	}
 }

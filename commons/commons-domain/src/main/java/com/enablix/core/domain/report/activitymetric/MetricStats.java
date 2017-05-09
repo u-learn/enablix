@@ -1,6 +1,6 @@
 package com.enablix.core.domain.report.activitymetric;
 
-public class MetricStats implements Comparable<MetricStats>{
+public class MetricStats implements Comparable<MetricStats> {
 	
 	private String metricCode;
 	

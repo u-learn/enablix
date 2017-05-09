@@ -10,29 +10,26 @@ import com.enablix.commons.util.date.DateUtil;
 import com.enablix.core.domain.report.activitymetric.MetricStats;
 
 @Component
-public class ContentAccessWeeklyDigestMetricImpl extends SimpleMetric {
+public class SearchMetricImpl extends SimpleMetric {
 
-	private final MetricTypes activityCode = MetricTypes.CONTENT_ACC_WEEKLY_DIGEST;
+	private final MetricTypes activityCode = MetricTypes.SEARCH;
 
 	private final String collectionName = "ebx_activity_audit";
-
-	@Override
-	public MetricStats calculate(Date startDate, Date endDate) {
-
-		startDate = DateUtil.getStartOfDay(startDate);
-		endDate = DateUtil.getEndOfDay(endDate);
-		
-		Criteria criteria = Criteria.where("createdAt").gte(startDate).lte(endDate);
-		criteria = criteria.and("channel.channel").is("EMAIL");
-		criteria = criteria.and("activity.contextName").is("WEEKLY_DIGEST");
-		return calculateSimpleMetric(startDate, endDate, 
-				collectionName, activityCode, criteria);
-
-	}
 
 	@Override
 	public MetricTypes getActivityCode() {
 		return activityCode;
 	}
 
+	@Override
+	public MetricStats calculate(Date startDate, Date endDate) {
+		startDate = DateUtil.getStartOfDay(startDate);
+		endDate = DateUtil.getEndOfDay(endDate);
+		
+		Criteria criteria = Criteria.where("createdAt").gte(startDate).lte(endDate);
+		criteria = criteria.and("activity.category").is("SEARCH");
+		return calculateSimpleMetric(startDate, endDate, 
+				collectionName, activityCode, criteria);
+	}
+	
 }
