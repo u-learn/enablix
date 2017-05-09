@@ -16,7 +16,7 @@ enablix.studioApp.directive('ebxTabularReport', [
 				
 				 function render(data) {
 						d3.selectAll("table").remove();
-						var table = d3.select(element[0]).append('table').attr("class","tabReporttable");
+						var table = d3.select(element[0]).append('table').attr("class", "tabReporttable datatable");
 						var thead = table.append('thead');
 						var	tbody = table.append('tbody');
 
