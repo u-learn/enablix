@@ -1,7 +1,7 @@
 <div class="block">
 	<div class="head">
 		<a ng-click="addUser()" class="button button-add">Add new</a>
-		<h2 class="ng-binding">Users</h2>
+		<h2 class="ng-binding">Users <span ng-if="userData">({{userData.length}})</span></h2>
 	</div>
 	<div class="cont">
 		<!-- <label>Search:</label><input class="form-control" ng-model="searchText"><br> -->
