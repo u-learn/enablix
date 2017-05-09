@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<contentTemplate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="simplecrm_enterprise" xsi:noNamespaceSchemaLocation="../xsd/content-template.xsd">
+<contentTemplate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.01" id="simplecrm_enterprise" xsi:noNamespaceSchemaLocation="../xsd/content-template.xsd">
 	<dataDefinition>
-		<container id="customer" label="Customers">
+		<container id="customer" label="Customers" businessCategory="BUSINESS_DIMENSION">
 			<contentItem id="name" label="Account Name" type="text" searchBoost="7"/>
 			<contentItem id="shortName" label="Account Short Name" type="text" searchBoost="7"/>
 			<container id="project" label="Projects">
@@ -111,7 +111,7 @@
 			<container id="custOtherContent" label="Other Content" 
 				linkContainerQId="othercontent" linkContentItemId="customers"/>																							
 		</container>
-		<container id="product" label="Products">
+		<container id="product" label="Products" businessCategory="BUSINESS_DIMENSION">
 			<contentItem id="name" label="Name" type="text"/>
 			<contentItem id="shortName" label="Short Name" type="text"/>
 			<container id="prodBattleCard" label="Battle Cards" 
@@ -127,7 +127,9 @@
 			<container id="prodReference" label="Reference Material" 
 				linkContainerQId="reference" linkContentItemId="products"/>											
 			<container id="prodSalesDeck" label="Presentations" 
-				linkContainerQId="salesDeck" linkContentItemId="products"/>				
+				linkContainerQId="salesDeck" linkContentItemId="products"/>
+			<container id="prodSalesKit" label="Sales Kits" 
+				linkContainerQId="salesKit" linkContentItemId="products"/>								
 			<container id="prodWinLoss" label="Win Loss Analysis" 
 				linkContainerQId="winloss" linkContentItemId="products"/>
 			<container id="prodProposal" label="Proposals" 
@@ -145,7 +147,7 @@
 			<container id="prodOtherContent" label="Other Content" 
 				linkContainerQId="othercontent" linkContentItemId="products"/>																		
 		</container>
-		<container id="solution" label="Industry Solutions">
+		<container id="solution" label="Industry Solutions" businessCategory="BUSINESS_DIMENSION">
 			<contentItem id="name" label="Name" type="text"/>
 			<contentItem id="shortName" label="Short Name" type="text"/>
 			<container id="solBattleCard" label="Battle Cards" 
@@ -161,7 +163,9 @@
 			<container id="solReference" label="Reference Material" 
 				linkContainerQId="reference" linkContentItemId="solutions"/>									
 			<container id="solSalesDeck" label="Presentations" 
-				linkContainerQId="salesDeck" linkContentItemId="solutions"/>	
+				linkContainerQId="salesDeck" linkContentItemId="solutions"/>
+			<container id="solSalesKit" label="Sales Kits" 
+				linkContainerQId="salesKit" linkContentItemId="solutions"/>													
 			<container id="solProposal" label="Proposals" 
 				linkContainerQId="proposal" linkContentItemId="solutions"/>																
 			<container id="solWinLoss" label="Win Loss Analysis" 
@@ -179,7 +183,7 @@
 			<container id="solOtherContent" label="Other Content" 
 				linkContainerQId="othercontent" linkContentItemId="solutions"/>							
 		</container>	
-		<container id="competitor" label="Competitors">
+		<container id="competitor" label="Competitors" businessCategory="BUSINESS_DIMENSION">
 			<contentItem id="name" label="Competitor Name" type="text"/>
 			<contentItem id="shortName" label="Short Name" type="text"/>
 			<container id="compFeatureSheet" label="Feature Sheets" 
@@ -189,7 +193,9 @@
 			<container id="compMedia" label="Media" 
 				linkContainerQId="media" linkContentItemId="competitors"/>		
 			<container id="compReference" label="Reference Material" 
-				linkContainerQId="reference" linkContentItemId="competitors"/>							
+				linkContainerQId="reference" linkContentItemId="competitors"/>	
+			<container id="compSalesKit" label="Sales Kits" 
+				linkContainerQId="salesKit" linkContentItemId="competitors"/>																		
 			<container id="compWinLoss" label="Win Loss Analysis" 
 				linkContainerQId="winloss" linkContentItemId="competitors"/>	
 			<container id="compBlog" label="Blogs" 
@@ -203,7 +209,7 @@
 			<container id="compOtherContent" label="Other Content" 
 				linkContainerQId="othercontent" linkContentItemId="competitors"/>																							
 		</container>
-		<container id="partner" label="Partners">
+		<container id="partner" label="Partners" businessCategory="BUSINESS_DIMENSION">
 			<contentItem id="name" label="Partner Name" type="text"/>
 			<contentItem id="shortName" label="Short Name" type="text"/>
 			<contentItem id="type" label="Partner Type" type="bounded" searchBoost="6">
@@ -226,7 +232,9 @@
 			<container id="partnerMedia" label="Media" 
 				linkContainerQId="media" linkContentItemId="partners"/>				
 			<container id="partnerSalesDeck" label="Presentations" 
-				linkContainerQId="salesDeck" linkContentItemId="partners"/>									
+				linkContainerQId="salesDeck" linkContentItemId="partners"/>	
+			<container id="partnerSalesKit" label="Sales Kits" 
+				linkContainerQId="salesKit" linkContentItemId="partners"/>																				
 			<container id="partnerProposal" label="Proposals" 
 				linkContainerQId="proposal" linkContentItemId="partners"/>					
 			<container id="partnerWinLoss" label="Win Loss Analysis" 
@@ -244,7 +252,7 @@
 			<container id="partnerOtherContent" label="Other Content" 
 				linkContainerQId="othercontent" linkContentItemId="partners"/>																							
 		</container>	
-		<container id="article" label="Articles">
+		<container id="article" label="Articles" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text" searchBoost="7"/>
 			<contentItem id="url" label="URL" type="text"/>
 			<contentItem id="file" label="File" type="doc"/>
@@ -305,7 +313,7 @@
 				</bounded>
 			</contentItem>				
 		</container>							
-		<container id="battlecard" label="Battle Cards">
+		<container id="battlecard" label="Battle Cards" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>		
 			<contentItem id="file" label="File" type="doc"/>
 			<contentItem id="summary" label="Summary" type="text" searchBoost="2"/>
@@ -332,7 +340,7 @@
 				</bounded>
 			</contentItem>
 		</container>
-		<container id="blog" label="Blogs">
+		<container id="blog" label="Blogs" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>		
 			<contentItem id="url" label="URL" type="text"/>
 			<contentItem id="blogSource" label="Source" type="bounded">
@@ -399,7 +407,7 @@
 				</bounded>
 			</contentItem>	
 		</container>			
-		<container id="caseStudy" label="Case Studies">
+		<container id="caseStudy" label="Case Studies" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>		
 			<contentItem id="file" label="File" type="doc"/>
 			<contentItem id="highlights" label="Case Highlights" type="text" searchBoost="2"/>
@@ -481,7 +489,7 @@
 				</bounded>
 			</contentItem>						
 		</container>				
-		<container id="featureSheet" label="Feature Sheets">
+		<container id="featureSheet" label="Feature Sheets" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>		
 			<contentItem id="file" label="File" type="doc"/>				
 			<contentItem id="products" label="Products" type="bounded">
@@ -529,7 +537,7 @@
 				</bounded>
 			</contentItem>			
 		</container>	
-		<container id="flyer" label="Flyers">
+		<container id="flyer" label="Flyers" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>		
 			<contentItem id="file" label="File" type="doc"/>
 			<contentItem id="summary" label="Summary" type="text"/>
@@ -556,7 +564,7 @@
 				</bounded>
 			</contentItem>
 		</container>		
-		<container id="infographic" label="Infographics">
+		<container id="infographic" label="Infographics" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="url" label="URL" type="text"/>		
 			<contentItem id="file" label="File" type="doc"/>
@@ -616,7 +624,7 @@
 				</bounded>
 			</contentItem>				
 		</container>
-		<container id="importantslides" label="Important Slides">
+		<container id="importantslides" label="Important Slides" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>			
 			<contentItem id="file" label="File" type="doc"/>
 			<contentItem id="summary" label="Summary" type="text"/>
@@ -654,7 +662,7 @@
 				</bounded>
 			</contentItem>		
 		</container>										
-		<container id="reference" label="Reference Material">
+		<container id="reference" label="Reference Material" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text" searchBoost="7"/>	
 			<contentItem id="url" label="URL" type="text"/>					
 			<contentItem id="file" label="File" type="doc"/>
@@ -704,7 +712,7 @@
 				</bounded>
 			</contentItem>			
 		</container>				
-		<container id="salesDeck" label="Presentations">
+		<container id="salesDeck" label="Presentations" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>			
 			<contentItem id="file" label="File" type="doc"/>
 			<contentItem id="summary" label="Summary" type="text"/>
@@ -753,7 +761,56 @@
 				</bounded>
 			</contentItem>
 		</container>
-		<container id="media" label="Media">
+		<container id="salesKit" label="Sales Kits" businessCategory="BUSINESS_CONTENT">
+			<contentItem id="kitName" label="Name" type="text" searchBoost="7"/>
+			<contentItem id="kitDesc" label="Description" type="richText" searchBoost="2"/>	
+			<contentItem id="products" label="Products" type="bounded" searchBoost="7">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>product</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="solutions" label="Industry Solutions" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>solution</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="competitors" label="Competitors" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>competitor</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="partners" label="Partners" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>partner</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="kitContent" label="Content Items" type="contentStack"/>
+		</container>				
+		<container id="media" label="Media" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text" searchBoost="7"/>	
 			<contentItem id="url" label="URL" type="text"/>					
 			<contentItem id="file" label="File" type="doc"/>
@@ -825,7 +882,7 @@
 				</bounded>
 			</contentItem>
 		</container>		
-		<container id="whitepaper" label="White Papers">
+		<container id="whitepaper" label="White Papers" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="file" label="File" type="doc"/>
 			<contentItem id="url" label="URL" type="text"/>
@@ -894,7 +951,7 @@
 				</bounded>
 			</contentItem>	
 		</container>		
-		<container id="winloss" label="Win Loss Analysis">
+		<container id="winloss" label="Win Loss Analysis" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="winorloss" label="Result" type="bounded" searchBoost="6">
 				<bounded>
@@ -973,7 +1030,7 @@
 				</bounded>
 			</contentItem>	
 		</container>	
-		<container id="projectplan" label="Project Plan">
+		<container id="projectplan" label="Project Plan" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="file" label="File" type="doc"/>
 			<contentItem id="summary" label="Summary" type="text"/>			
@@ -1044,7 +1101,7 @@
 				</bounded>
 			</contentItem>								
 		</container>
-		<container id="proposal" label="RFP Response">
+		<container id="proposal" label="RFP Response" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>	
 			<contentItem id="file" label="File" type="doc"/>
 			<contentItem id="summary" label="Summary" type="text"/>				
@@ -1115,7 +1172,7 @@
 				</bounded>
 			</contentItem>					
 		</container>
-		<container id="commerical" label="Commercials">
+		<container id="commerical" label="Commercials" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="file" label="File" type="doc"/>
 			<contentItem id="summary" label="Summary" type="text"/>			
@@ -1186,7 +1243,7 @@
 				</bounded>
 			</contentItem>							
 		</container>		
-		<container id="designandscope" label="Design and Scope">
+		<container id="designandscope" label="Design and Scope" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="file" label="File" type="doc"/>
 			<contentItem id="summary" label="Summary" type="text"/>		
@@ -1257,7 +1314,7 @@
 				</bounded>
 			</contentItem>				
 		</container>
-		<container id="testcase" label="Test Cases">
+		<container id="testcase" label="Test Cases" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="file" label="File" type="doc"/>
 			<contentItem id="summary" label="Summary" type="text"/>			
@@ -1328,7 +1385,7 @@
 				</bounded>
 			</contentItem>			
 		</container>		
-		<container id="technicaldoc" label="Technical Documents">
+		<container id="technicaldoc" label="Technical Documents" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="file" label="File" type="doc"/>
 			<contentItem id="summary" label="Summary" type="text"/>
@@ -1399,7 +1456,7 @@
 				</bounded>
 			</contentItem>					
 		</container>	
-		<container id="discoverydoc" label="Discovery Document">
+		<container id="discoverydoc" label="Discovery Document" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="file" label="File" type="doc"/>
 			<contentItem id="summary" label="Summary" type="text"/>
@@ -1470,7 +1527,7 @@
 				</bounded>
 			</contentItem>					
 		</container>			
-		<container id="crlist" label="CR Lists">
+		<container id="crlist" label="CR Lists" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="file" label="File" type="doc"/>
 			<contentItem id="summary" label="Summary" type="text"/>
@@ -1541,7 +1598,7 @@
 				</bounded>
 			</contentItem>					
 		</container>					
-		<container id="milestonepymt" label="Milestone Payments">
+		<container id="milestonepymt" label="Milestone Payments" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="file" label="File" type="doc"/>
 			<contentItem id="summary" label="Summary" type="text"/>
@@ -1612,7 +1669,7 @@
 				</bounded>
 			</contentItem>					
 		</container>					
-		<container id="releasenote" label="Release Notes">
+		<container id="releasenote" label="Release Notes" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="file" label="File" type="doc"/>
 			<contentItem id="summary" label="Summary" type="text"/>
@@ -1683,12 +1740,12 @@
 				</bounded>
 			</contentItem>					
 		</container>		
-		<container id="supportpolicy" label="Support Policy">
+		<container id="supportpolicy" label="Support Policy" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="summary" label="Summary" type="text"/>
 			<contentItem id="file" label="File" type="doc"/>			
 		</container>
-		<container id="nda" label="Non Discolusre Agreement (NDA)">
+		<container id="nda" label="Non Discolusre Agreement (NDA)" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="summary" label="Summary" type="text"/>
 			<contentItem id="file" label="File" type="doc"/>
@@ -1726,7 +1783,7 @@
 				</bounded>
 			</contentItem>						
 		</container>
-		<container id="partneragreement" label="Partner Agreement">
+		<container id="partneragreement" label="Partner Agreement" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="summary" label="Summary" type="text"/>
 			<contentItem id="file" label="File" type="doc"/>
@@ -1753,7 +1810,7 @@
 				</bounded>
 			</contentItem>						
 		</container>
-		<container id="licenseAgreement" label="License Agreement">
+		<container id="licenseAgreement" label="License Agreement" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="summary" label="Summary" type="text"/>
 			<contentItem id="file" label="File" type="doc"/>
@@ -1769,7 +1826,7 @@
 				</bounded>
 			</contentItem>			
 		</container>
-		<container id="servicesAgreement" label="Services Agreement">
+		<container id="servicesAgreement" label="Services Agreement" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="summary" label="Summary" type="text"/>
 			<contentItem id="file" label="File" type="doc"/>
@@ -1785,7 +1842,7 @@
 				</bounded>
 			</contentItem>			
 		</container>
-		<container id="orderingdoc" label="Ordering Document">
+		<container id="orderingdoc" label="Ordering Document" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="summary" label="Summary" type="text"/>
 			<contentItem id="file" label="File" type="doc"/>
@@ -1801,12 +1858,12 @@
 				</bounded>
 			</contentItem>			
 		</container>
-		<container id="ppttemplate" label="Powerpoint Templates">
+		<container id="ppttemplate" label="Powerpoint Templates" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="summary" label="Summary" type="text"/>
 			<contentItem id="file" label="File" type="doc"/>
 		</container>
-		<container id="template" label="Templates">
+		<container id="template" label="Templates" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="templateType" label="Type" type="bounded" searchBoost="6">
 				<bounded multivalued="true">
@@ -1822,7 +1879,7 @@
 			<contentItem id="summary" label="Summary" type="text"/>
 			<contentItem id="file" label="File" type="doc"/>
 		</container>		
-		<container id="othercontent" label="Other Content">
+		<container id="othercontent" label="Other Content" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="documentType" label="Type" type="text"/>
 			<contentItem id="summary" label="Summary" type="text"/>
@@ -1955,7 +2012,8 @@
 					<childContainer id="importantslides"/>	
 					<childContainer id="media"/>
 					<childContainer id="reference"/>																			
-					<childContainer id="salesDeck"/>					
+					<childContainer id="salesDeck"/>
+					<childContainer id="salesKit"/>										
 					<childContainer id="whitepaper"/>
 					<childContainer id="winloss"/>
 					<childContainer id="projectplan"/>
@@ -2127,6 +2185,24 @@
 		<contentUIDef qualifiedId="salesDeck.summary">
 			<text type="long"/>
 		</contentUIDef>	
+		<contentUIDef qualifiedId="salesKit">
+			<container labelQualifiedId="salesKit.kitName">
+				<listViewConfig>
+					<hideContentItem id="kitDesc"/>
+					<hideContentItem id="products"/>
+					<hideContentItem id="solutions"/>
+					<hideContentItem id="competitors"/>
+					<hideContentItem id="partners"/>
+					<hideContentItem id="kitContent"/>					
+				</listViewConfig>
+				<portalConfig>
+					<headingContentItem id="kitName"/>
+				</portalConfig>					
+			</container>
+		</contentUIDef>
+		<contentUIDef qualifiedId="salesKit.kitDesc">
+			<text type="long"/>
+		</contentUIDef>
 		<contentUIDef qualifiedId="article">
 			<container labelQualifiedId="article.title">
 				<listViewConfig>
@@ -2438,7 +2514,8 @@
 					<childContainer id="media"/>					
 					<childContainer id="partner"/>
 					<childContainer id="reference"/>						
-					<childContainer id="salesDeck"/>					
+					<childContainer id="salesDeck"/>
+					<childContainer id="salesKit"/>										
 					<childContainer id="whitepaper"/>
 					<childContainer id="winloss"/>
 					<childContainer id="othercontent"/>
