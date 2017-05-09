@@ -5,7 +5,7 @@ enablix.studioApp.directive('ebxDocContextMenu',
 		restrict: 'E',
 		scope : {
 			contentRecord : "=",
-			contentQId : "="
+			label: "="
 		},
 		link: function(scope, element, attrs) {
 			if (scope.contentRecord.docMetadata) {

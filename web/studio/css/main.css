@@ -892,7 +892,7 @@ form.block .foot {
 	margin-top: -0.5em;
 	font-size: 0.875em;
 	line-height: 1.5;
-	overflow: hidden;
+	/*overflow: hidden;*/
 	font-family: Montserrat;
 }
 
@@ -917,7 +917,6 @@ form.block .foot {
 .infotable .download:hover {
 	color: #27ae60;
 }
-
 
 /**/
 /* datatable */
@@ -2000,4 +1999,35 @@ ebx-reorder .fa:first-child {
 
 .ql-view-more a {
 	text-decoration: none;
+}
+
+a.doc-label::after {
+    border-top: 0px !important;
+}
+
+a.doc-label {
+	color: #1d6aad;
+    font-weight: 400;
+    text-decoration: underline;
+}
+
+a.doc-label:hover {
+    text-decoration: none;
+}
+
+.dropdown-menu-cont {
+	position: relative;
+	float: left;
+}
+
+td .dropdown-menu-cont {
+	margin-top: 1.5em;
+}
+
+.action-icons .dropdown-menu-cont {
+    margin-top: 1.2em;
+}
+
+.open>span>.dropdown-menu {
+	display: block;
 }

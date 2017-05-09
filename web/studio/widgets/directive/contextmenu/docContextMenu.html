@@ -1,4 +1,6 @@
-<a id="recActionBtn" data-toggle="dropdown" class="fa fa-paperclip dropdown-toggle" tooltip="File Options" ng-class="contentRecord.downloadDocIdentity ? 'active' : 'inactive'"></a>
+<a ng-if="::!label" id="recActionBtn" data-toggle="dropdown" class="fa fa-paperclip dropdown-toggle" tooltip="File Options" ng-class="contentRecord.downloadDocIdentity ? 'active' : 'inactive'"></a>
+<a ng-if="::label" id="recActionBtn" data-toggle="dropdown" class="dropdown-toggle doc-label" tooltip="File Options">{{::label}}</a>
+<span class="dropdown-menu-cont">
 <ul ng-if="contentRecord.downloadDocIdentity" id="{{contentRecord.identity}}" class="dropdown-menu dropdown-menu-left" role="menu" aria-labelledby="recActionBtn">
 	<li role="presentation">
 		<eb-doc-download class="menuItem" doc-value="contentRecord.downloadDocIdentity" action-label="Download"></eb-doc-download>
@@ -9,3 +11,4 @@
 			action-label="Preview" doc-metadata="contentRecord.docMetadata"></eb-doc-preview-action>
 	</li>
 </ul>
+</span>

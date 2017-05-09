@@ -16,8 +16,7 @@ function(ContentTemplateService,   StateUpdateService,   $filter,   $compile) {
 				
 			var contentDataType = scope.contentDef.dataType;
 			
-			if (contentDataType === 'DOC' 
-				|| contentDataType === 'TEXT' 
+			if (contentDataType === 'TEXT' 
 				|| contentDataType === 'DATE_TIME' 
 				|| contentDataType === 'NUMERIC' 
 				|| contentDataType === 'RICH_TEXT') {
@@ -48,9 +47,15 @@ function(ContentTemplateService,   StateUpdateService,   $filter,   $compile) {
 				template += '</span>';
 			}
 			
-			if (contentDataType == 'DOC' && scope.showDocLink && scope.contentValue.name) {
-				template += '<eb-doc-download doc-value="contentValue.identity"></eb-doc-download>';
-				template += '<eb-doc-preview-action doc-identity="contentValue.identity" doc-metadata="contentValue"></eb-doc-preview-action>';
+			if (contentDataType == 'DOC' && scope.contentValue.name) {
+				
+				if (scope.showDocLink) {
+					template += '<span class="content-data">' + scope.contentValue.name + '</span>'
+					template += '<eb-doc-download doc-value="contentValue.identity"></eb-doc-download>';
+					template += '<eb-doc-preview-action doc-identity="contentValue.identity" doc-metadata="contentValue"></eb-doc-preview-action>';
+				} else {
+					template += '<span class="dataItem"><ebx-doc-context-menu content-record="contentRecord" label="contentValue.name"></ebx-doc-context-menu></span>'
+				}
 			}
 			
 			scope.navToItemDetail = function(_containerQId, _contentIdentity) {
