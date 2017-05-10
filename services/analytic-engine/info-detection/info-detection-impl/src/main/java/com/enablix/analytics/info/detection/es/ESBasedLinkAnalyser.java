@@ -13,34 +13,27 @@ import org.elasticsearch.common.unit.Fuzziness;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import com.enablix.analytics.info.detection.AnalysisLevel;
-import com.enablix.analytics.info.detection.Assessment;
 import com.enablix.analytics.info.detection.InfoDetectionContext;
+import com.enablix.analytics.info.detection.InfoDetectorHelper;
+import com.enablix.analytics.info.detection.InfoDetectorHelper.LookupCollectionAndContainers;
 import com.enablix.analytics.info.detection.InfoTag;
 import com.enablix.analytics.info.detection.LinkOpinion;
 import com.enablix.analytics.info.detection.Opinion;
 import com.enablix.analytics.info.detection.TaggedInfo;
 import com.enablix.analytics.info.detection.TaggedInfoAnalyser;
-import com.enablix.analytics.info.detection.TypeOpinion;
 import com.enablix.analytics.search.es.DefaultSearchFieldBuilder;
 import com.enablix.analytics.search.es.ESQueryBuilder;
 import com.enablix.analytics.search.es.ElasticSearchClient;
 import com.enablix.analytics.search.es.SearchHitTransformer;
 import com.enablix.app.template.service.TemplateManager;
-import com.enablix.commons.util.StringUtil;
 import com.enablix.commons.util.collection.CollectionUtil;
 import com.enablix.commons.util.process.ProcessContext;
 import com.enablix.core.api.ContentDataRef;
 import com.enablix.core.api.TemplateFacade;
-import com.enablix.core.commons.xsdtopojo.BoundedListDatastoreType;
-import com.enablix.core.commons.xsdtopojo.ContainerType;
-import com.enablix.core.commons.xsdtopojo.ContentItemType;
-import com.enablix.core.commons.xsdtopojo.DatastoreLocationType;
-import com.enablix.services.util.TemplateUtil;
 
-@Component
+//@Component
 public class ESBasedLinkAnalyser extends TaggedInfoAnalyser {
 
 	@Autowired
@@ -68,7 +61,7 @@ public class ESBasedLinkAnalyser extends TaggedInfoAnalyser {
 	@Override
 	protected Collection<Opinion> analyseTaggedInfo(TaggedInfo info, InfoDetectionContext ctx) {
 		
-		int pageSize = 10; // consider top 20 matches only
+		int pageSize = 10;
 		int pageNum = 0;
 		
 		Set<Opinion> opinions = new HashSet<>();
@@ -80,8 +73,12 @@ public class ESBasedLinkAnalyser extends TaggedInfoAnalyser {
 			TemplateFacade templateFacade = templateMgr.getTemplateFacade(ProcessContext.get().getTemplateId());
 			LinkContentCollector collector = new LinkContentCollector();
 			
-			LookupTypesAndContainers searchInTypes = getLinkedESTypesToLookup(ctx.getAssessment(), templateFacade);
-			LinkAnalyserSearchFieldFilter fieldFilter = new LinkAnalyserSearchFieldFilter(searchInTypes.containerQIds);
+			LookupCollectionAndContainers searchInTypes = InfoDetectorHelper.getLinkedContentCollections(ctx.getAssessment(), templateFacade);
+			
+			HashSet<String> searchTypes = CollectionUtil.transform(searchInTypes.getEntries(), 
+											() -> new HashSet<String>(), (entry) -> entry.getCollection());
+			
+			LinkAnalyserSearchFieldFilter fieldFilter = new LinkAnalyserSearchFieldFilter(searchTypes);
 			
 			for (InfoTag tag : tags) {
 				
@@ -93,7 +90,7 @@ public class ESBasedLinkAnalyser extends TaggedInfoAnalyser {
 					SearchRequest request = ESQueryBuilder.builder(tag.tag(), templateFacade, searchFieldBuilder)
 															.withPagination(pageSize, pageNum)
 															.withFuzziness((searchTerm) -> Fuzziness.AUTO)
-															.withTypeFilter((searchType) -> searchInTypes.types.contains(searchType))
+															.withTypeFilter((searchType) -> searchTypes.contains(searchType))
 															.withFieldFilter(fieldFilter)
 															.withOptimizer((mmQueryBuilder) -> mmQueryBuilder.minimumShouldMatch("100%"))
 															.build();
@@ -164,46 +161,12 @@ public class ESBasedLinkAnalyser extends TaggedInfoAnalyser {
 
 	}
 
-	private LookupTypesAndContainers getLinkedESTypesToLookup(Assessment assessment, TemplateFacade templateFacade) {
-		
-		LookupTypesAndContainers lookups = new LookupTypesAndContainers();
-		
-		for (TypeOpinion typeOp : assessment.getTypeOpinions()) {
-			
-			ContainerType container = templateFacade.getContainerDefinition(typeOp.getContainerQId());
-			
-			if (container != null) {
-			
-				for (ContentItemType contentItem : container.getContentItem()) {
-				
-					BoundedListDatastoreType refListDS = TemplateUtil.checkAndGetBoundedRefListDatastore(contentItem);
-					
-					if (refListDS != null && refListDS.getLocation() == DatastoreLocationType.CONTENT) {
-					
-						String collectionName = templateFacade.getCollectionName(refListDS.getStoreId());
-						if (StringUtil.hasText(collectionName)) {
-							lookups.types.add(collectionName);
-							lookups.containerQIds.add(refListDS.getStoreId());
-						}
-					}
-				}
-			}
-		}
-		
-		return lookups;
-	}
-	
-	private static class LookupTypesAndContainers {
-		private Set<String> types = new HashSet<>();
-		private Set<String> containerQIds = new HashSet<>();
-	}
-
 	private float calculateHitConfidence(float hitScore, float maxScore) {
 		return maxScore == 0 ? 0 : (hitScore/maxScore) * analyserConfidence();
 	}
 	
 	private float analyserConfidence() {
-		return 1;
+		return 0.8f;
 	}
 
 }
