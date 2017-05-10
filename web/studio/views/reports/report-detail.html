@@ -12,7 +12,7 @@
 	<div class="cont" ng-if="reportDef.type == 'TABULAR'">
 		<ebx-tabular-report data="data" dispatch="$parent.dispatch" columndetails="reportDef.columndetails"></ebx-tabular-report>
 	</div>
-	<div ng-if="reportDef.type == 'MULTILINE'" id="multilinechart">
+	<div class="cont" ng-if="reportDef.type == 'MULTILINE'" id="multilinechart">
 		<ebx-multi-line-chart data="data" columndetails="reportDef.columndetails" ></ebx-multi-line-chart>
 	</div>
 </div>
