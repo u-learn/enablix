@@ -266,6 +266,24 @@ public class SharepointOnlineTest {
 		  return responseEntity.getBody();
 	}
 	
+	public String getFileDetail(String filepath) throws Exception {
+		String uri = "https://enablix.sharepoint.com/_api/Web/GetFileByServerRelativeUrl('" + filepath + "')";
+		String securityToken = receiveSecurityToken();
+		  List<String> cookies = getSignInCookies(securityToken);
+		  String formDigestValue = getFormDigestValue(cookies);
+		  MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
+		  headers.add("Cookie", Joiner.on(';').join(cookies));
+		  headers.add("Content-type", "application/json;odata=verbose");
+		  headers.add("X-RequestDigest", formDigestValue);
+		  
+		  headers.add("Accept", "application/json;odata=verbose");
+		  
+		  // https://enablix.sharepoint.com/sites/enablix-team/_api/Web/GetFolderByServerRelativeUrl('/sites/enablix-team/Shared%20Documents/Dikshit%20Local%20Env')/Files
+		  RequestEntity<String> request = new RequestEntity<>(headers, HttpMethod.GET, new URI(uri));
+		  ResponseEntity<String> response = restTemplate.exchange(request, String.class);
+		  return response.getBody();
+	}
+	
 	public static void main(String[] args) throws Exception {
 		try {
 		SharepointOnlineTest auth = new SharepointOnlineTest();
@@ -294,10 +312,12 @@ public class SharepointOnlineTest {
 		/** Delete file end **/
 		
 		/** Create folder **/
+		/*
 		String uri = "https://enablix.sharepoint.com/_api/web/folders";
 		//String folderPath = "/Shared Documents/Dikshit Test/New Folder";
 		String folderPath = "/Shared Documents/Dikshit Local Env/Customer 1 Case study";
 		String returnVal = auth.createFolder(uri, folderPath);
+		*/
 		/** Create folder end **/
 		
 		/** Download file **/
@@ -319,6 +339,11 @@ public class SharepointOnlineTest {
 		String returnVal = auth.moveFile(currentFileLocation, moveToFileLocation);
 		*/
 		/** Move file end **/
+		
+		/** Get File detail **/
+		String filepath = "/Shared%20Documents/eOriginal%20Test%20Env/Presentations/Sample%20PPT.pptx";
+		String returnVal = auth.getFileDetail(filepath);
+		/** Get File detail end **/
 		
 		System.out.println(returnVal);
 		} catch (HttpClientErrorException | HttpServerErrorException e) {
