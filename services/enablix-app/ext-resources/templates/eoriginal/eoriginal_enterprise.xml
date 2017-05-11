@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<contentTemplate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="eoriginal_enterprise" version="1.04" xsi:noNamespaceSchemaLocation="../xsd/content-template.xsd">
+<contentTemplate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="eoriginal_enterprise" version="1.05" xsi:noNamespaceSchemaLocation="../xsd/content-template.xsd">
 	<dataDefinition>
 		<container id="solution" label="Solutions" businessCategory="BUSINESS_DIMENSION">
 			<contentItem id="name" label="Name" type="text" searchBoost="7"/>
@@ -18,8 +18,9 @@
 			<container id="solResearch" label="Research" linkContainerQId="research" linkContentItemId="solutions"/>			
 			<container id="solSlideshare" label="Slideshares" linkContainerQId="slideshare" linkContentItemId="solutions"/>									
 			<container id="solSalesKit" label="Sales Kits" linkContainerQId="saleskit" linkContentItemId="solutions"/>			
-			<container id="solWhitePaper" label="White Papers" linkContainerQId="whitepaper" linkContentItemId="solutions"/>
 			<container id="solVideo" label="Videos" linkContainerQId="video" linkContentItemId="solutions"/>
+			<container id="solWebinar" label="Webinars" linkContainerQId="webinar" linkContentItemId="solutions"/>
+			<container id="solWhitePaper" label="White Papers" linkContainerQId="whitepaper" linkContentItemId="solutions"/>
 			<container id="solTopic" label="Topics" linkContainerQId="topic" linkContentItemId="solutions"/>	
 			<container id="solContent" label="Other Content" linkContainerQId="content" linkContentItemId="solutions"/>
 		</container>
@@ -40,8 +41,9 @@
 			<container id="indResearch" label="Research" linkContainerQId="research" linkContentItemId="industries"/>						
 			<container id="indSalesKit" label="Sales Kits" linkContainerQId="saleskit" linkContentItemId="industries"/>			
 			<container id="indSlideshare" label="Slideshares" linkContainerQId="slideshare" linkContentItemId="industries"/>												
-			<container id="indWhitePaper" label="White Papers" linkContainerQId="whitepaper" linkContentItemId="industries"/>
 			<container id="indVideo" label="Videos" linkContainerQId="video" linkContentItemId="industries"/>
+			<container id="indWebinar" label="Webinars" linkContainerQId="webinar" linkContentItemId="industries"/>			
+			<container id="indWhitePaper" label="White Papers" linkContainerQId="whitepaper" linkContentItemId="industries"/>			
 			<container id="indTopic" label="Topics" linkContainerQId="topic" linkContentItemId="industries"/>	
 			<container id="indContent" label="Other Content" linkContainerQId="content" linkContentItemId="industries"/>
 		</container>
@@ -60,8 +62,9 @@
 			<container id="compResearch" label="Research" linkContainerQId="research" linkContentItemId="competitors"/>									
 			<container id="compSalesKit" label="Sales Kits" linkContainerQId="saleskit" linkContentItemId="competitors"/>
 			<container id="compSlideshare" label="Slideshares" linkContainerQId="slideshare" linkContentItemId="competitors"/>			
-			<container id="compWhitePaper" label="White Papers" linkContainerQId="whitepaper" linkContentItemId="competitors"/>
 			<container id="compVideo" label="Videos" linkContainerQId="video" linkContentItemId="competitors"/>
+			<container id="compWebinar" label="Webinars" linkContainerQId="webinar" linkContentItemId="competitors"/>					
+			<container id="compWhitePaper" label="White Papers" linkContainerQId="whitepaper" linkContentItemId="competitors"/>				
 			<container id="compTopic" label="Topics" linkContainerQId="topic" linkContentItemId="competitors"/>	
 			<container id="compContent" label="Other Content" linkContainerQId="content" linkContentItemId="competitors"/>
 		</container>
@@ -93,7 +96,8 @@
 			<container id="partnerResearch" label="Research" linkContainerQId="research" linkContentItemId="partners"/>									
 			<container id="partnerSalesKit" label="Sales Kits" linkContainerQId="saleskit" linkContentItemId="partners"/>												
 			<container id="partnerSlideshare" label="Slideshares" linkContainerQId="slideshare" linkContentItemId="partners"/>			
-			<container id="partnerVideo" label="Videos" linkContainerQId="video" linkContentItemId="partners"/>			
+			<container id="partnerVideo" label="Videos" linkContainerQId="video" linkContentItemId="partners"/>
+			<container id="partnerWebinar" label="Webinars" linkContainerQId="webinar" linkContentItemId="partners"/>			
 			<container id="partnerWhitePaper" label="White Papers" linkContainerQId="whitepaper" linkContentItemId="partners"/>
 			<container id="partnerTopic" label="Topics" linkContainerQId="topic" linkContentItemId="partners"/>	
 			<container id="partnerContent" label="Other Content" linkContainerQId="content" linkContentItemId="partners"/>
@@ -119,7 +123,8 @@
 			<container id="analystPress" label="Press" linkContainerQId="press" linkContentItemId="analysts"/>									
 			<container id="analystResearch" label="Research" linkContainerQId="research" linkContentItemId="analysts"/>									
 			<container id="analystSlideshare" label="Slideshares" linkContainerQId="slideshare" linkContentItemId="analysts"/>			
-			<container id="analystVideo" label="Videos" linkContainerQId="video" linkContentItemId="analysts"/>			
+			<container id="analystVideo" label="Videos" linkContainerQId="video" linkContentItemId="analysts"/>
+			<container id="analystWebinar" label="Webinars" linkContainerQId="webinar" linkContentItemId="analysts"/>			
 			<container id="analystWhitePaper" label="White Papers" linkContainerQId="whitepaper" linkContentItemId="analysts"/>			
 		</container>
 		<container id="topic" label="Topics" businessCategory="BUSINESS_DIMENSION">
@@ -182,7 +187,8 @@
 			<container id="topicResearch" label="Research" linkContainerQId="research" linkContentItemId="topics"/>									
 			<container id="topicSalesKit" label="Sales Kits" linkContainerQId="saleskit" linkContentItemId="topics"/>
 			<container id="topicSlideshare" label="Slideshares" linkContainerQId="slideshare" linkContentItemId="topics"/>			
-			<container id="topicVideo" label="Videos" linkContainerQId="video" linkContentItemId="topics"/>			
+			<container id="topicVideo" label="Videos" linkContainerQId="video" linkContentItemId="topics"/>
+			<container id="topicWebinar" label="Webinars" linkContainerQId="webinar" linkContentItemId="topics"/>			
 			<container id="topicWhitePaper" label="White Papers" linkContainerQId="whitepaper" linkContentItemId="topics"/>			
 			<container id="topicContent" label="Other Content" linkContainerQId="content" linkContentItemId="topics"/>
 		</container>
@@ -1412,6 +1418,106 @@
 				</bounded>
 			</contentItem>				
 		</container>				
+		<container id="webinar" label="Webinars" businessCategory="BUSINESS_CONTENT">
+			<contentItem id="title" label="Title" type="text"/>
+			<contentItem id="url" label="URL" type="text"/>
+			<contentItem id="recordedon" label="Recorded Date" type="dateTime"/>			
+			<contentItem id="desc" label="Description" type="richText"/>
+			<contentItem id="solutions" label="Solutions" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>solution</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="industries" label="Industries" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>industry</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>			
+			<contentItem id="competitors" label="Competitors" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>competitor</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="partners" label="Partners" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>partner</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="analysts" label="Analysts" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore>
+							<storeId>analyst</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="topics" label="Topics" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>topic</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="events" label="Events" type="bounded" searchBoost="6">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>event</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>									
+			<contentItem id="tags" label="Business Tags" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>businessTag</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>tagName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>	
+			<container id="supportingcontent" label="Supporting Content">
+				<contentItem id="title" label="Title" type="text" searchBoost="6"/>
+				<contentItem id="file" label="File" type="doc"/>
+				<contentItem id="url" label="URL" type="text"/>
+				<contentItem id="desc" label="Description" type="richText" searchBoost="2"/>
+			</container>						
+		</container>					
 		<container id="whitepaper" label="White Papers" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="file" label="File" type="doc"/>
@@ -1590,11 +1696,6 @@
 			<contentItem id="roleName" label="Role" type="text"/>
 			<contentItem id="desc" label="Description" type="text"/>
 		</container>
-		<container id="caseStudyType" label="Case Study Types" refData="true">
-			<contentItem id="typeName" label="Type" type="text"/>
-			<contentItem id="desc" label="Description" type="text"/>
-			<container id="caseStudyTypeCaseStudy" label="Case Studies" linkContainerQId="casestudy" linkContentItemId="type"/>			
-		</container>
 		<container id="businessTag" label="Business Tags" refData="true">
 			<contentItem id="tagName" label="Tag Name" type="text"/>
 			<contentItem id="desc" label="Description" type="text"/>
@@ -1613,9 +1714,15 @@
 			<container id="tagSalesKit" label="Sales Kits" linkContainerQId="saleskit" linkContentItemId="tags"/>			
 			<container id="tagSlideshare" label="Slideshares" linkContainerQId="slideshare" linkContentItemId="tags"/>			
 			<container id="tagVideo" label="Videos" linkContainerQId="video" linkContentItemId="tags"/>			
+			<container id="tagWebinar" label="Webinars" linkContainerQId="webinar" linkContentItemId="tags"/>			
 			<container id="tagWhitePaper" label="White Papers" linkContainerQId="whitepaper" linkContentItemId="tags"/>												
 			<container id="tagContent" label="Other Content" linkContainerQId="content" linkContentItemId="tags"/>															
-		</container>		
+		</container>				
+		<container id="caseStudyType" label="Case Study Types" refData="true">
+			<contentItem id="typeName" label="Type" type="text"/>
+			<contentItem id="desc" label="Description" type="text"/>
+			<container id="caseStudyTypeCaseStudy" label="Case Studies" linkContainerQId="casestudy" linkContentItemId="type"/>			
+		</container>
 		<container id="partnerType" label="Partner Types" refData="true">
 			<contentItem id="typeName" label="Type" type="text"/>
 			<contentItem id="desc" label="Description" type="text"/>
@@ -1673,7 +1780,8 @@
 					<childContainer id="research"/>					
 					<childContainer id="saleskit"/>	
 					<childContainer id="slideshare"/>										
-					<childContainer id="video"/>					
+					<childContainer id="video"/>
+					<childContainer id="webinar"/>										
 					<childContainer id="whitepaper"/>
 					<childContainer id="content"/>
 				</enclosure>
@@ -1919,6 +2027,42 @@
 		<contentUIDef qualifiedId="video.desc">
 			<text type="long"/>
 		</contentUIDef>		
+		<contentUIDef qualifiedId="webinar">
+			<container labelQualifiedId="webinar.title">
+				<listViewConfig>
+					<hideContentItem id="desc"/>
+					<hideContentItem id="recordedon"/>					
+					<hideContentItem id="solutions"/>
+					<hideContentItem id="industries"/>										
+					<hideContentItem id="competitors"/>					
+					<hideContentItem id="partners"/>					
+					<hideContentItem id="analysts"/>					
+					<hideContentItem id="topics"/>
+					<hideContentItem id="events"/>							
+					<hideContentItem id="tags"/>								
+				</listViewConfig>
+				<portalConfig>
+					<headingContentItem id="title"/>
+				</portalConfig>
+			</container>
+		</contentUIDef>
+		<contentUIDef qualifiedId="webinar.desc">
+			<text type="long"/>
+		</contentUIDef>
+		<contentUIDef qualifiedId="webinar.supportingcontent">
+			<container labelQualifiedId="webinar.supportingcontent.title">
+				<listViewConfig>
+					<hideContentItem id="file"/>
+					<hideContentItem id="desc"/>
+				</listViewConfig>
+				<portalConfig>
+					<headingContentItem id="title"/>
+				</portalConfig>
+			</container>
+		</contentUIDef>
+		<contentUIDef qualifiedId="webinar.supportingcontent.desc">
+			<text type="long"/>
+		</contentUIDef>		
 		<contentUIDef qualifiedId="whitepaper">
 			<container labelQualifiedId="whitepaper.title">
 				<listViewConfig>
@@ -2106,7 +2250,8 @@
 					<childContainer id="topic"/>					
 					<childContainer id="saleskit"/>
 					<childContainer id="slideshare"/>										
-					<childContainer id="video"/>					
+					<childContainer id="video"/>
+					<childContainer id="webinar"/>										
 					<childContainer id="whitepaper"/>
 					<childContainer id="content"/>
 				</enclosure>
