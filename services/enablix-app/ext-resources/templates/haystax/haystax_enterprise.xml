@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<contentTemplate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.06" id="haystax_enterprise" xsi:noNamespaceSchemaLocation="../xsd/content-template.xsd">
+<contentTemplate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.07" id="haystax_enterprise" xsi:noNamespaceSchemaLocation="../xsd/content-template.xsd">
 	<dataDefinition>
 		<container id="product" label="Products" businessCategory="BUSINESS_DIMENSION">
 			<contentItem id="name" label="Name" type="text" searchBoost="7"/>
@@ -3414,6 +3414,23 @@
 	      		</bounded>
       		</contentItem>				
 		</container>
+		<container id="securitycontent" label="Security" businessCategory="BUSINESS_CONTENT">
+			<contentItem id="title" label="Title" type="text"/>
+			<contentItem id="desc" label="Description" type="richText"/>
+			<contentItem id="url" label="URL" type="text"/>
+			<contentItem id="file" label="File" type="doc"/>
+			<contentItem id="visibility" label="Visibility" type="bounded">
+	      		<bounded multivalued="true">
+	      			<refList>
+	      				<datastore>
+	      					<storeId>contentVisibilityType</storeId>
+	      					<dataId>identity</dataId>
+	      					<dataLabel>visibilityType</dataLabel>
+	      				</datastore>
+	      			</refList>
+	      		</bounded>
+      		</contentItem>				
+		</container>		
 		<container id="content" label="Other Content" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="Document Type" label="Document Type" type="text"/>
@@ -3700,6 +3717,7 @@
 					<childContainer id="ppttemplate"/>														
 					<childContainer id="pricingtemplate"/>
 					<childContainer id="sow"/>
+					<childContainer id="securitycontent"/>					
 					<childContainer id="resume"/>										
 					<childContainer id="corporatecontent"/>
 				</enclosure>				
@@ -4706,7 +4724,23 @@
 		</contentUIDef>
 		<contentUIDef qualifiedId="corporatecontent.summary">
 			<text type="long"/>
-		</contentUIDef>										
+		</contentUIDef>	
+		<contentUIDef qualifiedId="securitycontent">
+			<container labelQualifiedId="securitycontent.title">
+				<listViewConfig>
+					<hideContentItem id="file"/>
+					<hideContentItem id="url"/>					
+					<hideContentItem id="desc"/>
+					<hideContentItem id="visibility"/>	
+				</listViewConfig>
+				<portalConfig>
+					<headingContentItem id="title"/>
+				</portalConfig>
+			</container>
+		</contentUIDef>
+		<contentUIDef qualifiedId="securitycontent.desc">
+			<text type="long"/>
+		</contentUIDef>												
 		<contentUIDef qualifiedId="content">
 			<container>
 				<listViewConfig>
@@ -4814,8 +4848,9 @@
 					<childContainer id="partnercontactinfo"/>														
 					<childContainer id="ppttemplate"/>														
 					<childContainer id="pricingtemplate"/>
+					<childContainer id="resume"/>								
 					<childContainer id="sow"/>
-					<childContainer id="resume"/>					
+					<childContainer id="securitycontent"/>																	
 					<childContainer id="corporatecontent"/>
 				</enclosure>				
 			</enclosures>
