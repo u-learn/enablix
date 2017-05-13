@@ -91,9 +91,13 @@ enablix.studioApp.directive('ebxMultiLineChart', [
 					chartObj.formatAsYear = d3.format("");
 
 					//Create axis
-					chartObj.xAxis = d3.svg.axis().scale(chartObj.xScale).orient("bottom").tickFormat(d3.format("d"))
-					.ticks(chartObj.data.length - 1) //< Can be overridden in definition
-
+					if(chartObj.data.length<8) {
+						chartObj.xAxis = d3.svg.axis().scale(chartObj.xScale).orient("bottom").tickFormat(d3.format("d"))
+						.ticks(chartObj.data.length - 1) //< Can be overridden in definition
+					}
+					else {
+						chartObj.xAxis = d3.svg.axis().scale(chartObj.xScale).orient("bottom").tickFormat(d3.format("d"));
+					}
 					chartObj.yAxis = d3.svg.axis().scale(chartObj.yScale).orient("left").tickFormat(chartObj.yFormatter); //< Can be overridden in definition
 
 
@@ -104,7 +108,7 @@ enablix.studioApp.directive('ebxMultiLineChart', [
 						};
 					}
 					for (var yObj in yObjs) {
-						yObjs[yObj].line = d3.svg.line().interpolate("cardinal").x(function (d) {
+						yObjs[yObj].line = d3.svg.line().interpolate("linear").x(function (d) {
 							return chartObj.xScale(chartObj.xFunct(d));
 						}).y(getYScaleFn(yObj));
 					}
@@ -135,9 +139,8 @@ enablix.studioApp.directive('ebxMultiLineChart', [
 
 						/* Force D3 to recalculate and update the line */
 						for (var y  in yObjs) {
-							yObjs[y].path.attr("d", yObjs[y].line);
+								yObjs[y].path.attr("d", yObjs[y].line);
 						}
-
 
 						d3.selectAll(".focus.line").attr("y2", chartObj.height);
 
@@ -146,7 +149,6 @@ enablix.studioApp.directive('ebxMultiLineChart', [
 						chartObj.svg.select(".overlay").attr("width", chartObj.width).attr("height", chartObj.height);
 						return chartObj;
 					};
-
 					chartObj.bind = function (selector) {
 						chartObj.mainDiv = d3.select(selector);
 						// Add all the divs to make it centered and responsive
