@@ -30,7 +30,7 @@ public class ActivityTrendController {
 			@RequestParam("activityMetric") List<String> activityMetrices, @RequestParam("activityMetricTrend") String activityMetricTrend) {
 		try{
 			Date startDate = new SimpleDateFormat("dd-MMM-yy").parse(date);
-			Date endDate = new Date();
+			Date endDate = DateUtil.getPreviousDate();
 			
 			HashMap<String, Object> response = new HashMap<String, Object>();
 			response.put("trendData", activityTrend.getActivityTrends(startDate, endDate ,activityMetrices, activityMetricTrend));

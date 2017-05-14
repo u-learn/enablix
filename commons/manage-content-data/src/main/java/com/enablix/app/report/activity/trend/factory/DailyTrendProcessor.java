@@ -34,19 +34,19 @@ public class DailyTrendProcessor implements ActivityTrendProcessor {
 				match(Criteria.where("asOfDate").gte(startDate)), 
 				match(Criteria.where("asOfDate").lte(endDate)), 
 				match(Criteria.where("metricStats.metricCode").in(filteredMetric)), 
-				group("dateDimension.dayOfWeek", "dateDimension.weekOfMonth","metricStats.metricName","metricStats.metricCode",
+				group("dateDimension.dayOfYear", "dateDimension.weekOfMonth","metricStats.metricName","metricStats.metricCode",
 					  "dateDimension.monthOfYear", "dateDimension.year"
 						).sum("$metricStats.metricValue").as("sum"),
 				Aggregation.project(Fields.from(
 						Fields.field("metricName", "$_id.metricName"),
-						Fields.field("dayOfWeek", "$_id.dayOfWeek"),
+						Fields.field("dayOfYear", "$_id.dayOfYear"),
 						Fields.field("weekOfMonth", "$_id.weekOfMonth"),
 						Fields.field("monthOfYear", "$_id.monthOfYear"),
 						Fields.field("year", "$_id.year"),
 						Fields.field("metricCode", "$_id.metricCode"),
 						Fields.field("metricValue", "$sum"))
 						),
-				sort(Direction.ASC , "year", "monthOfYear", "weekOfMonth", "dayOfWeek", "metricName"));
+				sort(Direction.ASC , "year", "monthOfYear", "weekOfMonth", "dayOfYear", "metricName"));
 
 		AggregationResults<MetricStats> groupResults = mongoTemplate.aggregate(aggregation, 
 				ActivityMetric.class, MetricStats.class);

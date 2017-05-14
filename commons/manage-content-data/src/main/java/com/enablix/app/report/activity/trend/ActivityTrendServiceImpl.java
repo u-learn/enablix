@@ -26,7 +26,7 @@ public class ActivityTrendServiceImpl implements ActivityTrendService {
 	public List<Map<String, Long>> getActivityTrends(Date startDate, Date endDate, List<String> filterActivityMetrices, String trendType) throws ParseException {
 
 		startDate = DateUtil.getStartOfDay(startDate);
-		endDate = DateUtil.getStartOfDay(endDate);
+		endDate = DateUtil.getEndOfDay(endDate);
 
 		ActivityTrendProcessor trendProc = activityTrendFactory.getTrendProcessor(trendType);
 		List<MetricStats> metricStats = trendProc.getTrendData(startDate, endDate, filterActivityMetrices);
