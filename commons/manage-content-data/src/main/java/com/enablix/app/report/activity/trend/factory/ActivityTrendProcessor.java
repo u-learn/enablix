@@ -7,6 +7,6 @@ import com.enablix.core.domain.report.activitymetric.MetricStats;
 
 public interface ActivityTrendProcessor {
 
-	List<MetricStats> getTrendData(Date startDate, Date endDate);
+	List<MetricStats> getTrendData(Date startDate, Date endDate, List<String> filteredMetric);
 
 }

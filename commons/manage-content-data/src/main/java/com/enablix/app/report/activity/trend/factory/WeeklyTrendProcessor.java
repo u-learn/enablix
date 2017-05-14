@@ -28,11 +28,12 @@ public class WeeklyTrendProcessor implements ActivityTrendProcessor {
 	MongoTemplate mongoTemplate;
 
 	@Override
-	public List<MetricStats> getTrendData(Date startDate, Date endDate) {
+	public List<MetricStats> getTrendData(Date startDate, Date endDate, List<String> filteredMetric) {
 		Aggregation aggregation = newAggregation(
 				unwind("metricStats"),
 				match(Criteria.where("asOfDate").gte(startDate)), 
 				match(Criteria.where("asOfDate").lte(endDate)), 
+				match(Criteria.where("metricStats.metricCode").in(filteredMetric)), 
 				group("dateDimension.weekOfMonth", "dateDimension.weekOfYear","metricStats.metricName","metricStats.metricCode",
 					  "dateDimension.monthOfYear", "dateDimension.year"
 						).sum("$metricStats.metricValue").as("sum"),

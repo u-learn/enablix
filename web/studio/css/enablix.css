@@ -250,11 +250,11 @@ chart-wrapper {
 
 .chart-wrapper .legend  {
     min-width: 200px;
-    display: flex;
     justify-content: flex-start;
     flex-wrap: wrap;
     font-size: 16px;
-    padding: 10px 40px;
+    padding: 20px 80px 20px 0px;
+    float: right;
 }
 .chart-wrapper .legend > div {
     margin: 0px 25px 10px 0px;
@@ -269,7 +269,7 @@ chart-wrapper {
 .chart-wrapper .legend .series-marker {
     height: 1em;
     width: 1em;
-    border-radius: 35%;
+    border-radius: 15%;
     background-color: crimson;
     display: inline-block;
     margin-right: 4px;

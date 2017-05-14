@@ -39,7 +39,7 @@ enablix.studioApp.directive('ebxMultiLineChart', [
 					 */
 
 					chartObj.data = dataset;
-					chartObj.margin = {top: 15, right: 60, bottom: 30, left: 50};
+					chartObj.margin = {top: 15, right: 370, bottom: 100, left: 50};
 					chartObj.width = 650 - chartObj.margin.left - chartObj.margin.right;
 					chartObj.height = 480 - chartObj.margin.top - chartObj.margin.bottom;
 
@@ -144,7 +144,7 @@ enablix.studioApp.directive('ebxMultiLineChart', [
 
 						d3.selectAll(".focus.line").attr("y2", chartObj.height);
 
-						chartObj.chartDiv.select('svg').attr("width", chartObj.width + (chartObj.margin.left + chartObj.margin.right)).attr("height", chartObj.height + (chartObj.margin.top + chartObj.margin.bottom));
+						chartObj.chartDiv.select('svg').attr("width", chartObj.width + (100)).attr("height", chartObj.height + (50));
 
 						chartObj.svg.select(".overlay").attr("width", chartObj.width).attr("height", chartObj.height);
 						return chartObj;
@@ -164,7 +164,9 @@ enablix.studioApp.directive('ebxMultiLineChart', [
 					chartObj.render = function () {
 
 						//Create SVG element
-						chartObj.svg = chartObj.chartDiv.append("svg").attr("class", "chart-area").attr("width", chartObj.width + (chartObj.margin.left + chartObj.margin.right)).attr("height", chartObj.height + (chartObj.margin.top + chartObj.margin.bottom)).append("g").attr("transform", "translate(" + chartObj.margin.left + "," + chartObj.margin.top + ")");
+						chartObj.svg = chartObj.chartDiv.append("svg").attr("class", "chart-area")
+						.attr("width", chartObj.width + ((100)))
+						.attr("height", chartObj.height + (50)).append("g").attr("transform", "translate(" + chartObj.margin.left + "," + chartObj.margin.top + ")");
 
 						// Draw Lines
 						for (var y  in yObjs) {
@@ -192,7 +194,7 @@ enablix.studioApp.directive('ebxMultiLineChart', [
 						for (var y  in yObjs) {
 							yObjs[y].tooltip = focus.append("g");
 							yObjs[y].tooltip.append("circle").attr("r", 5);
-							yObjs[y].tooltip.append("rect").attr("x", 8).attr("y","-5").attr("width",22).attr("height",'0.75em');
+							//yObjs[y].tooltip.append("rect").attr("x", 8).attr("y","-5").attr("width",22).attr("height",'0.75em');
 							yObjs[y].tooltip.append("text").attr("x", 9).attr("dy", ".35em");
 						}
 
@@ -202,7 +204,8 @@ enablix.studioApp.directive('ebxMultiLineChart', [
 						focus.append("line").attr("class", "focus line").attr("y1", 0).attr("y2", chartObj.height);
 
 						//Draw legend
-						var legend = chartObj.mainDiv.append('div').attr("class", "legend").attr("id","legendDiv");
+						//var legend = chartObj.mainDiv.append('div').attr("class", "legend").attr("id","legendDiv");
+						var legend = chartObj.chartDiv.append('div').attr("class", "legend").attr("id","legendDiv");
 						for (var y  in yObjs) {
 							series = legend.append('div');
 							series.append('div').attr("class", "series-marker").style("background-color", color(y));
