@@ -13,6 +13,7 @@
 					<th class="remove"></th>
 					<th><span>Name</span></th>
 					<th><span>Email</span></th>
+					<th><span>Roles</span></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -22,6 +23,11 @@
 					<td class="remove"><a class="fa fa-times" ng-click="deleteUserRecord(user.identity)"></a></td>
 					<td><span ng-bind="user.name"></span></td>
 					<td><span ng-bind="user.email"></span></td>
+					<td>
+						<span ng-repeat="role in user.systemProfile.roles">
+				            {{role.roleName}} {{$last ? '' : ($index==user.systemProfile.roles.length-2) ? ' and ' : ', '}}
+			        	</span>
+			        </td>
 				</tr>
 			</tbody>
 		</table>
