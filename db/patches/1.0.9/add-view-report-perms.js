@@ -1,5 +1,5 @@
 /**************************************************************
-Script to add "VIEW_REPORT-activity-metric-calculator" and "VIEW_REPORT-content-coverage-report" 
+Script to add "VIEW_REPORTS", "VIEW_REPORT-activity-metric-calculator" and "VIEW_REPORT-content-coverage-report" 
 permission to admin user roles for all tenants.
 
 Execute: use mongo utility to run the script
@@ -26,7 +26,7 @@ dbs.forEach(function(database) {
         
         db.ebx_role.update(
     		{ _id: 'contentAdmin' },
-    		{ $addToSet: { permissions: { $each: ["VIEW_REPORT-activity-metric-calculator", "VIEW_REPORT-content-coverage-report"] } } }
+    		{ $addToSet: { permissions: { $each: ["VIEW_REPORTS", "VIEW_REPORT-activity-metric-calculator", "VIEW_REPORT-content-coverage-report"] } } }
         );
     }
 });
