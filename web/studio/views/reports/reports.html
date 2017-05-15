@@ -14,7 +14,7 @@
 		<aside class="col-sm-4 col-md-3">
 			<nav id="side-nav" class="side-nav">
 				<ul>
-					<li ng-repeat="reportDef in reportDefinitions" ng-class="{active: $stateParams.reportId == reportDef.id}">
+					<li ng-repeat="reportDef in reportDefinitions" ng-class="{active: $stateParams.reportId == reportDef.id}" requires-permission="VIEW_REPORT-{{reportDef.id}}">
 						<i class="fa fa-angle-right"></i>
 						<a ng-click="navToReport(reportDef)">{{reportDef.name}}</a>
 					</li>
