@@ -464,9 +464,14 @@ form.block .head {
 	/*border-radius: 4px 4px 0 0;*/
 }
 
-.block .head-toggle h2{
+.block .head-toggle h2 {
 	/*opacity: 0.75;*/
-    color: #4a5463;
+    color: #5a6779;
+    font-weight: 600;
+}
+
+.block .head-toggle h2 .count {
+	font-weight: 400;	
 }
 
 .block .head-toggle h2:hover{
