@@ -52,7 +52,7 @@ enablix.studioApp.controller('PortalTopNavCtrl',
 			});*/
 			
 		});
-		
+
 		var addNavSublistItem = function(navItem, container, subItemData) {
 			
 			var label = ContentUtil.resolveContainerInstanceLabel(container, subItemData);

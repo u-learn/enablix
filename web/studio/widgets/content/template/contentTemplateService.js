@@ -1,11 +1,15 @@
 enablix.studioApp.factory('ContentTemplateService', 
-	[			'RESTService', 'Notification', 'AuthorizationService', 'CacheService',
-	 	function(RESTService,   Notification,   AuthorizationService,   CacheService) {
+	[			'RESTService', 'Notification', 'AuthorizationService', 'CacheService',"$q",
+	 	function(RESTService,   Notification,   AuthorizationService,   CacheService,$q) {
 		
 			var CACHE_KEY_REF_DATA_CONTAINERS = "content.template.refdata.containers";
 			var CACHE_KEY_BUS_CAT_CONTAINERS_PREFIX = "content.template.business.category.";
 			var CACHE_KEY_CONTENT_CONN_CONTEXT_CONTAINER = "content.template.conn.context.containers";
 			var CACHE_KEY_CONTAINER_DEF_PREFIX = "content.template.containerdef.";
+
+			var deferredTemplate = $q.defer();
+			enablix = enablix || {};
+			enablix.pTemplate = deferredTemplate.promise;
 		
 			var loadTemplate = function() {
 				
@@ -16,11 +20,13 @@ enablix.studioApp.factory('ContentTemplateService',
 							// No template, user should be logout?
 							AuthorizationService.logoutUser();
 						} else {
+							deferredTemplate.resolve(data);
 							enablix.template = data;
 							enablix.templateId = data.id;
 						}
 					}, 
 					function(resp, status) {
+						deferredTemplate.reject({response:response,status:status});
 						//alert("Error loading content template");
 						Notification.error({message: "Error loading content template", delay: enablix.errorMsgShowTime});
 					});

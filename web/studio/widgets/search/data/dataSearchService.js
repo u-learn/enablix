@@ -1,12 +1,12 @@
-enablix.studioApp.factory('DataSearchService', 
-	[	        'RESTService', 'Notification', 'StateUpdateService', '$location', '$filter',
-	 	function(RESTService,   Notification,   StateUpdateService,   $location,   $filter) {
-		
+enablix.studioApp.factory('DataSearchService',
+	['RESTService', 'Notification', 'StateUpdateService', '$location', '$filter', "$q",
+		function (RESTService, Notification, StateUpdateService, $location, $filter, $q) {
+
 			var URL_SEARCH_FIELD_PREFIX = "sf_";
-			
+
 			var DATE_FILTER_TYPE_GO_BACK_DAYS = "GO_BACK_DAYS";
 			var FILTER_DATE_FORMAT = "dd-MMM-yy";
-			
+
 			/**
 			 * Sample inputs:
 			 * 
@@ -32,62 +32,80 @@ enablix.studioApp.factory('DataSearchService',
     		 *  }
     		 *  
 			 */
-		
-			var getSearchResult = function(_domainType, _searchFilters, _pagination, 
-									_filterMetadata, _onSuccess, _onError, _projectedFields) {
-				
-				var params = {
-					domainType : _domainType
-				};
-				
-				return getDataSearchResult("dataSearchRequest", params, _searchFilters, _pagination, 
-						_filterMetadata, _onSuccess, _onError, _projectedFields);
-			};
-			
-			var getDataSearchResult = function(urlKey, params, _searchFilters, _pagination, 
-					_filterMetadata, _onSuccess, _onError, _projectedFields) {
-				
-				var data = {
-						filters : _searchFilters,
-						filterMetadata : _filterMetadata,
-						pagination : _pagination,
-						projectedFields: _projectedFields
-					};
-					
-				return RESTService.postForData(urlKey, params, data, null, _onSuccess, _onError);
-			}
-			
-			var getContainerDataSearchResult = function(_containerQId, _searchFilters, _pagination, 
-					_filterMetadata, _onSuccess, _onError, _projectedFields) {
+
+			var getSearchResult = function (_domainType, _searchFilters, _pagination,
+				_filterMetadata, _onSuccess, _onError, _projectedFields) {
 
 				var params = {
-					containerQId : _containerQId
+					domainType: _domainType
 				};
-				
-				return getDataSearchResult("containerDataSearchRequest", params, _searchFilters, _pagination, 
+
+				return getDataSearchResult("dataSearchRequest", params, _searchFilters, _pagination,
 					_filterMetadata, _onSuccess, _onError, _projectedFields);
-				
 			};
-			
-			var readUrlSearchFilters = function() {
-				
+
+			var getDataSearchResult = function (urlKey, params, _searchFilters, _pagination,
+				_filterMetadata, _onSuccess, _onError, _projectedFields) {
+
+				var data = {
+					filters: _searchFilters,
+					filterMetadata: _filterMetadata,
+					pagination: _pagination,
+					projectedFields: _projectedFields
+				};
+
+				return RESTService.postForData(urlKey, params, data, null, _onSuccess, _onError);
+			}
+
+			var getContainerDataSearchResult = function (_containerQId, _searchFilters, _pagination,
+				_filterMetadata, _onSuccess, _onError, _projectedFields) {
+
+				var params = {
+					containerQId: _containerQId
+				};
+
+				return getDataSearchResult("containerDataSearchRequest", params, _searchFilters, _pagination,
+					_filterMetadata, _onSuccess, _onError, _projectedFields);
+
+			};
+
+			var readUrlSearchFilters = function () {
+
 				var filters = {};
 				var urlParams = $location.search();
-				
-				angular.forEach(urlParams, function(value, key) {
+
+				angular.forEach(urlParams, function (value, key) {
 					if (key.startsWith("sf_")) {
 						var filterKey = key.substring(3, key.length);
 						filters[filterKey] = value;
 					}
 				});
-				
+
 				return filters;
 			};
-		
+
+			var BIG_REQUEST = { pageNum: "0", pageSize: 500, sort: { direction: "ASC", field: "createdAt" } };
+
+			function promiseContainerDataSearchResult(containerQId, dataFilters, pagination, filterMetadata) {
+				dataFilters = dataFilters || {};
+				pagination = pagination || BIG_REQUEST;
+				filterMetadata = filterMetadata || {};
+				return $q(function(resolve, reject){
+					function onSuccess(data) {
+						resolve({ containerQId:containerQId, data:data });
+					}
+					function onError(errorData) {
+						reject({ containerQId:containerQId, errorData:errorData });
+					}
+					getContainerDataSearchResult(containerQId, dataFilters, pagination, filterMetadata, onSuccess, onError);
+				});
+			}
+
 			return {
 				getSearchResult: getSearchResult,
 				getContainerDataSearchResult: getContainerDataSearchResult,
-				readUrlSearchFilters: readUrlSearchFilters
+				readUrlSearchFilters: readUrlSearchFilters,
+				promiseContainerDataSearchResult:promiseContainerDataSearchResult
 			};
-	 	}
+		}
 	]);
