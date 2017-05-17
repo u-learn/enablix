@@ -148,6 +148,7 @@ form .row .form-label:first-child {
 	border-color: #bdc3c7;
 	box-sizing: border-box;
 	color: #222;
+	z-index: 100 !important;
 }
 .form-control:focus {
 	border-color: #3498db;
