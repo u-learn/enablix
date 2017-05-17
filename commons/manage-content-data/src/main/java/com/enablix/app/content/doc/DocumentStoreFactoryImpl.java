@@ -4,10 +4,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import com.enablix.commons.config.ConfigurationUtil;
+import com.enablix.commons.dms.DocumentStoreConstants;
 import com.enablix.commons.dms.api.Document;
 import com.enablix.commons.dms.api.DocumentMetadata;
 import com.enablix.commons.dms.api.DocumentStore;
 import com.enablix.commons.util.beans.SpringBackedAbstractFactory;
+import com.enablix.core.domain.config.Configuration;
 
 @SuppressWarnings("rawtypes")
 @Component
@@ -71,6 +74,19 @@ public class DocumentStoreFactoryImpl extends SpringBackedAbstractFactory<Docume
 	@Override
 	public String defaultStoreType() {
 		return "DISK";
+	}
+
+	@Override
+	public String getStoreType(String storagePurpose) {
+		
+		Configuration docStoreConfig = ConfigurationUtil.getConfig(DocumentStoreConstants.DOC_STORE_CONFIG_KEY);
+		
+		String storeType = null;
+		if (docStoreConfig != null) {
+			storeType = docStoreConfig.getStringValue(storagePurpose);
+		}
+		
+		return storeType == null ? defaultStoreType() : storeType;
 	}
 
 }

@@ -37,5 +37,9 @@
 	<module>data-view</module>
 	<module>wordpress-integration</module>
 	<module>user-mgmt</module>
+	<module>doc-converter</module>
+	<module>preview-generator</module>
+	<module>manage-content-data-api</module>
+	<module>mq-impl</module>
   </modules>
 </project>

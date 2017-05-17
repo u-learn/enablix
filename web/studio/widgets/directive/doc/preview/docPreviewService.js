@@ -1,7 +1,7 @@
 enablix.studioApp.factory('DocPreviewService', 
 	[
-	 			'RESTService',
-	 	function(RESTService) {
+	 			'RESTService', '$q',
+	 	function(RESTService,   $q) {
 	 			
 	 		var handlers = [];
 	 		
@@ -52,8 +52,26 @@ enablix.studioApp.factory('DocPreviewService',
 	 			return null;
 	 		}
 	 		
+	 		var getPreviewData = function(_docIdentity, _onSuccess, _onError) {
+	 			
+	 			var params = {
+	 				"docIdentity": _docIdentity
+	 			};
+	 			
+	 			RESTService.getForData("getDocPreviewData", params, null, _onSuccess, _onError, null);
+	 			
+	 		};
+	 		
+	 		var checkPreviewAvailable = function(_docMd) {
+	 			var deferred = $q.defer();
+	 			deferred.resolve(_docMd.previewStatus == 'AVAILABLE');
+	 			return deferred.promise;
+	 		}
+	 		
 	 		return {
-	 			getPreviewHandler : getPreviewHandler
+	 			getPreviewHandler : getPreviewHandler,
+	 			getPreviewData : getPreviewData,
+	 			checkPreviewAvailable: checkPreviewAvailable
 	 		};
 	 	}
 	 ]);

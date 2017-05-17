@@ -101,6 +101,7 @@ enablix.serviceURL = {
 	"swapRecordOrder" : enablix.domainName + "/record/order/swap",
 	"fetchApplicableUserPrefs" : enablix.domainName + "/userpref/applicable",
 	"saveAsUserPref" : enablix.domainName + "/userpref/saveasuserpref",
-	"saveAsSystemPref" : enablix.domainName + "/userpref/saveasyspref"
+	"saveAsSystemPref" : enablix.domainName + "/userpref/saveasyspref",
+	"getDocPreviewData": enablix.domainName + "/doc/pd/:docIdentity"
 	
 };

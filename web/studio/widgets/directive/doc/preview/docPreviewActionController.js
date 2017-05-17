@@ -6,8 +6,10 @@ enablix.studioApp.controller('DocPreviewActionCtrl',
 		$scope.docMd = $scope.docMetadata || {};
 		
 		var checkPreviewSupported = function() {
-			var previewHandler = DocPreviewService.getPreviewHandler($scope.docMd);
-			$scope.previewSupported = !isNullOrUndefined(previewHandler);
+			var promise = DocPreviewService.checkPreviewAvailable($scope.docMd);
+			promise.then(function(data) {
+				$scope.previewSupported = data; //!isNullOrUndefined(previewHandler);
+			});
 		}
 		
 		if (!$scope.docMd.identity) {

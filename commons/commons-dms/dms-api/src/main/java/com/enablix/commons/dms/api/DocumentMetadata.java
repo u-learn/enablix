@@ -2,11 +2,18 @@ package com.enablix.commons.dms.api;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.enablix.core.api.DocInfo;
 import com.enablix.core.domain.BaseDocumentEntity;
 
 @Document(collection = "disk_document_metadata_ebx")
-public abstract class DocumentMetadata extends BaseDocumentEntity {
+public abstract class DocumentMetadata extends BaseDocumentEntity implements DocInfo {
 
+	public static final String PREVIEW_STATUS_FLD_ID = "previewStatus";
+	
+	public enum PreviewStatus {
+		PENDING, AVAILABLE, NOT_SUPPORTED
+	}
+	
 	private String name;
 	
 	private String contentType;
@@ -16,6 +23,8 @@ public abstract class DocumentMetadata extends BaseDocumentEntity {
 	private boolean deleted;
 	
 	private boolean temporary;
+	
+	private PreviewStatus previewStatus;
 	
 	protected DocumentMetadata(String docName, String contentType, 
 			String contentQId) {
@@ -30,6 +39,7 @@ public abstract class DocumentMetadata extends BaseDocumentEntity {
 		this.contentType = contentType;
 		this.contentQId = contentQId;
 		this.deleted = false;
+		this.previewStatus = PreviewStatus.PENDING;
 	}
 	
 	public String getName() {
@@ -66,6 +76,14 @@ public abstract class DocumentMetadata extends BaseDocumentEntity {
 
 	public void setTemporary(boolean temporary) {
 		this.temporary = temporary;
+	}
+
+	public PreviewStatus getPreviewStatus() {
+		return previewStatus;
+	}
+
+	public void setPreviewStatus(PreviewStatus previewStatus) {
+		this.previewStatus = previewStatus;
 	}
 
 }

@@ -6,7 +6,7 @@ public interface EventInterceptor {
 	
 	void beforeProcessing(Event<?> event);
 	void afterProcessing(Event<?> event);
-	void onProcessingError(Event<?> event, Throwable error);
+	void onProcessingError(Event<?> event, Throwable error, EventListener listener);
 	void onProcessingComplete(Event<?> event);
 	
 	void beforePublishing(Event<?> event);

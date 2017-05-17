@@ -42,10 +42,10 @@ public class DocStoreConfigController {
 		
 		Configuration docStoreConfig = null;
 		
-		Configuration defaultDocStoreConfig = configProvider.getConfiguration(DocumentStoreConstants.DEFUALT_DOC_STORE_CONFIG_KEY);
+		Configuration defaultDocStoreConfig = configProvider.getConfiguration(DocumentStoreConstants.DOC_STORE_CONFIG_KEY);
 		if (defaultDocStoreConfig != null) {
 			docStoreConfig = configProvider.getConfiguration(DMSUtil.getDocStoreConfigKey(
-				defaultDocStoreConfig.getStringValue(DocumentStoreConstants.DEFUALT_DOC_STORE_CONFIG_PROP)));
+				defaultDocStoreConfig.getStringValue(DocumentStoreConstants.DEFAULT_DOC_STORE_CONFIG_PROP)));
 		}
 
 		return docStoreConfig;
@@ -56,8 +56,8 @@ public class DocStoreConfigController {
 		
 		// create or update config for default document store
 		Configuration defaultDocStoreConfig = new Configuration();
-		defaultDocStoreConfig.setKey(DocumentStoreConstants.DEFUALT_DOC_STORE_CONFIG_KEY);
-		defaultDocStoreConfig.addConfigProperty(DocumentStoreConstants.DEFUALT_DOC_STORE_CONFIG_PROP, 
+		defaultDocStoreConfig.setKey(DocumentStoreConstants.DOC_STORE_CONFIG_KEY);
+		defaultDocStoreConfig.addConfigProperty(DocumentStoreConstants.DEFAULT_DOC_STORE_CONFIG_PROP, 
 								config.getStringValue(DocumentStoreConstants.DOC_STORE_TYPE_PROP));
 
 		configManager.saveOrUpdate(defaultDocStoreConfig);

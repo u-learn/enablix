@@ -16,10 +16,13 @@ import com.dropbox.core.DbxException;
 import com.dropbox.core.DbxRequestConfig;
 import com.dropbox.core.DbxWriteMode;
 import com.enablix.commons.dms.api.AbstractDocumentStore;
+import com.enablix.commons.dms.api.BasicDocument;
 import com.enablix.commons.dms.api.Document;
 import com.enablix.commons.dms.api.DocumentBuilder;
 import com.enablix.commons.dms.api.DocumentMetadata;
 import com.enablix.commons.util.StringUtil;
+import com.enablix.core.api.DocInfo;
+import com.enablix.core.api.IDocument;
 import com.enablix.core.domain.config.Configuration;
 
 @Component
@@ -43,7 +46,14 @@ public class DropboxDocumentStore extends AbstractDocumentStore<DropboxDocumentM
 	@Override
 	public DropboxDocumentMetadata save(DropboxDocument document, String contentPath) throws IOException {
 
-        DbxClient client = createDbxClient();
+        saveAndUpdateDocInfo(document, contentPath);
+        
+		return document.getMetadata();
+	}
+	
+	protected void saveAndUpdateDocInfo(IDocument document, String contentPath) throws IOException {
+		
+		DbxClient client = createDbxClient();
         
         try {
 			
@@ -53,14 +63,14 @@ public class DropboxDocumentStore extends AbstractDocumentStore<DropboxDocumentM
 			
 	        try {
 	        	
-	        	String fileLocation = createDropboxFilepath(document.getMetadata(), contentPath);
+	        	String fileLocation = createDropboxFilepath(document.getDocInfo(), contentPath);
 	        	
 				DbxEntry.File uploadedFile = client.uploadFile(
 	        			fileLocation, determineWriteMode(client, fileLocation), 
-	        			document.getContentLength(), inputStream);
+	        			document.getDocInfo().getContentLength(), inputStream);
 	        	
 				fileLocation = uploadedFile.path;
-				document.getMetadata().setLocation(fileLocation);
+				document.getDocInfo().setLocation(fileLocation);
 				
 	        	LOGGER.debug("Uploaded: {}", uploadedFile.toString());
 	        	
@@ -73,7 +83,6 @@ public class DropboxDocumentStore extends AbstractDocumentStore<DropboxDocumentM
 			throw new IOException(e);
 		}
         
-		return document.getMetadata();
 	}
 	
 	private DbxWriteMode determineWriteMode(DbxClient client, String docLocation) throws DbxException {
@@ -94,7 +103,7 @@ public class DropboxDocumentStore extends AbstractDocumentStore<DropboxDocumentM
 		return mode;
 	}
 
-	private String createDropboxFilepath(DropboxDocumentMetadata md, String contentPath) {
+	private String createDropboxFilepath(DocInfo md, String contentPath) {
 		return "/" + contentPath + "/" + md.getName();
 	}
 
@@ -276,6 +285,17 @@ public class DropboxDocumentStore extends AbstractDocumentStore<DropboxDocumentM
 			throw new IOException(e);
 		}
         
+	}
+
+	@Override
+	public DocInfo save(IDocument document, String path) throws IOException {
+		saveAndUpdateDocInfo(document, path);
+		return document.getDocInfo();
+	}
+
+	@Override
+	public BasicDocument load(DocInfo docInfo) throws IOException {
+		return new BasicDocument(docInfo, getDocReader(docInfo.getLocation()));
 	}
 
 }

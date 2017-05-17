@@ -412,6 +412,9 @@
 		<xerces.xercesImpl.version>2.9.1</xerces.xercesImpl.version>
 		<elastic.search.version>2.1.0</elastic.search.version>
 		<mongo.java.driver.version>3.0.1</mongo.java.driver.version>
+		<apache.poi.version>3.16</apache.poi.version>
+		<apache.poi.ooxml-schemas.version>1.3</apache.poi.ooxml-schemas.version>
+		<apache.pdfbox.version>2.0.5</apache.pdfbox.version>
 	</properties>
 
 </project>

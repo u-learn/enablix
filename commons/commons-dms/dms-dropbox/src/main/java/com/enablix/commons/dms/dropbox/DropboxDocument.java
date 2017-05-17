@@ -2,8 +2,8 @@ package com.enablix.commons.dms.dropbox;
 
 import java.io.InputStream;
 
-import com.enablix.commons.dms.api.ContentLengthAwareDocument;
 import com.enablix.commons.dms.api.Document;
+import com.enablix.core.api.ContentLengthAwareDocument;
 
 public class DropboxDocument extends Document<DropboxDocumentMetadata> implements ContentLengthAwareDocument {
 	

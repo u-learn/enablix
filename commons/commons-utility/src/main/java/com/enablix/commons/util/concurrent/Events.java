@@ -13,5 +13,6 @@ public final class Events {
 	
 	// Content template events
 	public static final String CONTENT_TEMPLATE_UPDATED = "CONTENT_TEMPLATE_UPDATED";
+	public static final String DOCUMENT_UPLOADED = "DOCUMENT_UPLOADED";
 	
 }

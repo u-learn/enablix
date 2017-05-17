@@ -467,7 +467,7 @@ form.block .head {
 .block .head-toggle h2 {
 	/*opacity: 0.75;*/
     color: #5a6779;
-    font-weight: 600;
+    font-weight: 500;
 }
 
 .block .head-toggle h2 .count {

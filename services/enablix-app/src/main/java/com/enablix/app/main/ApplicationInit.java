@@ -36,7 +36,8 @@ import com.enablix.commons.util.StringUtil;
 		@PropertySource("file:${baseDir}/config/properties/mail.properties"),
 		@PropertySource("file:${baseDir}/config/properties/log4j.properties"),
 		@PropertySource("file:${baseDir}/config/properties/slack.properties"),
-		@PropertySource("file:${baseDir}/config/properties/sharepoint.properties")})
+		@PropertySource("file:${baseDir}/config/properties/sharepoint.properties"),
+		@PropertySource("file:${baseDir}/config/properties/doc-format.properties")})
 @ComponentScan(basePackages = { "com.enablix" })
 @EnableMongoRepositories(
 		basePackages = {"com.enablix.app.mongo.repository", 
@@ -60,7 +61,8 @@ import com.enablix.commons.util.StringUtil;
 				"com.enablix.data.segment.repo",
 				"com.enablix.app.report",
 				"com.enablix.core.mongo.counter.repo",
-				"com.enablix.user.pref.repo"})
+				"com.enablix.user.pref.repo",
+				"com.enablix.core.mq.repo"})
 @EnableScheduling
 public class ApplicationInit extends WebMvcAutoConfigurationAdapter {
 

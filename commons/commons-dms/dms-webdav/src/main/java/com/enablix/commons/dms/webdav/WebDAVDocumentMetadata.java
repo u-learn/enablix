@@ -1,8 +1,8 @@
 package com.enablix.commons.dms.webdav;
 
-import com.enablix.commons.dms.api.ContentLengthAwareDocument;
 import com.enablix.commons.dms.api.DocumentMetadata;
 import com.enablix.commons.util.id.IdentityUtil;
+import com.enablix.core.api.ContentLengthAwareDocument;
 
 public class WebDAVDocumentMetadata extends DocumentMetadata implements ContentLengthAwareDocument {
 	
@@ -39,6 +39,16 @@ public class WebDAVDocumentMetadata extends DocumentMetadata implements ContentL
 	@Override
 	public long getContentLength() {
 		return contentLength;
+	}
+
+	@Override
+	public String getLocation() {
+		return getFileLocation();
+	}
+
+	@Override
+	public void setLocation(String location) {
+		setFileLocation(location);
 	}
 
 }
