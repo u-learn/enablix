@@ -23,34 +23,36 @@ public class PDFtoImageConverter implements DocConverter {
 	public void convertAndWrite(InputStream is, DocumentFormat inFormat, DocumentStream os, DocumentFormat outFormat)
 			throws IOException {
 		
-		PDDocument document = PDDocument.load(is);
+		try (PDDocument document = PDDocument.load(is)) {
 
-        PDFRenderer pdfRenderer = new PDFRenderer(document);
-        
-        os.startDocumentWriting();
-        
-        for (int page = 0; page < document.getNumberOfPages(); ++page) {
-
-            BufferedImage bim = pdfRenderer.renderImageWithDPI(page, 300, ImageType.RGB);
-
-            OutputStream out = os.nextPageOutputStream();
-			
-			try {
+	        PDFRenderer pdfRenderer = new PDFRenderer(document);
+	        
+	        os.startDocumentWriting();
+	        
+	        for (int page = 0; page < document.getNumberOfPages(); ++page) {
+	
+	            BufferedImage bim = pdfRenderer.renderImageWithDPI(page, 300, ImageType.RGB);
+	
+	            OutputStream out = os.nextPageOutputStream();
 				
-				os.startPageWriting();
+				try {
+					
+					os.startPageWriting();
+					
+					ImageIO.write(bim, "png", out);
+					
+					os.endPageWriting();
+					
+				} catch (Exception e) {
+					os.writingError(e);
+					throw e;
+				}
 				
-				ImageIO.write(bim, "png", out);
-				
-				os.endPageWriting();
-				
-			} catch (Exception e) {
-				os.writingError(e);
-				throw e;
-			}
-			
-        }
-
-        os.endDocumentWriting();
+	        }
+	
+	        os.endDocumentWriting();
+		}
+		
 	}
 
 	@Override

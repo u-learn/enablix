@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 import com.enablix.commons.dms.api.DocNameStrategy;
+import com.enablix.commons.util.IOUtil;
 import com.enablix.dms.impl.StreamManager.LengthAwareInputStream;
 import com.enablix.doc.converter.DocumentStream;
 
@@ -49,21 +50,26 @@ public class PerPageDocumentStream<OS extends OutputStream, IS extends InputStre
 	@Override
 	public void endPageWriting() throws IOException {
 		
-		currentOS.close();
+		IOUtil.closeStream(currentOS);
 		
 		LengthAwareInputStream<IS> is = outStreamCreator.convertToInputStream(currentOS);
-		docWriter.saveDocument(is.getInputStream(), is.getContentLength(), 
-				docNameStrategy.nextPageDocName(pageNum));
+		IS inputStream = is.getInputStream();
+		
+		try {
+			docWriter.saveDocument(inputStream, is.getContentLength(), docNameStrategy.nextPageDocName(pageNum));
+		} finally {
+			IOUtil.closeStream(inputStream);
+		}
 	}
 
 	@Override
 	public void writingError(Exception e) {
-		// empty implementation
+		IOUtil.closeStream(currentOS);
 	}
-
+	
 	@Override
 	public void endDocumentWriting() {
-		// empty implementation
+		IOUtil.closeStream(currentOS);
 	}
 
 }

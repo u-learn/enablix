@@ -86,10 +86,10 @@ public class XLSRefdataProcessor implements DataFileProcessor {
 				}
 			}
 			
-		} catch (InvalidFormatException e) {
-			LOGGER.error("Error reading refdata file [" + dataFile.getAbsolutePath() +"]", e);
-
 		} catch (IOException e) {
+			LOGGER.error("Error reading refdata file [" + dataFile.getAbsolutePath() +"]", e);
+			
+		} catch (InvalidFormatException e) {
 			LOGGER.error("Error reading refdata file [" + dataFile.getAbsolutePath() +"]", e);
 			
 		} finally {
@@ -122,6 +122,7 @@ public class XLSRefdataProcessor implements DataFileProcessor {
 		return DatastoreUtil.getCollectionName(getTemplateIdFromFile(dataFile), getRefdataContainerId(sheet));
 	}
 	
+	@SuppressWarnings("deprecation")
 	private String getCellValueAsString(Cell cell) {
 		
 		String cellValue = "";

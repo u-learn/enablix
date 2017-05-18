@@ -11,8 +11,7 @@ public class ByteArrayStreamManager implements StreamManager<ByteArrayOutputStre
 	}
 
 	@Override
-	public com.enablix.dms.impl.StreamManager.LengthAwareInputStream<ByteArrayInputStream> convertToInputStream(
-			ByteArrayOutputStream outputStream) {
+	public LengthAwareInputStream<ByteArrayInputStream> convertToInputStream(ByteArrayOutputStream outputStream) {
 		
 		byte[] bytes = outputStream.toByteArray();
 		

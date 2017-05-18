@@ -5,6 +5,7 @@
 	left: 0px;
 	width: 600px;
 	height: 450px;
+	max-height: 600px;
 	overflow: hidden;
 	visibility: hidden;
 }
@@ -24,6 +25,7 @@
 	left: 0px;
 	width: 600px;
 	height: 450px;
+	max-height: 600px;
 	overflow: hidden;
 }
 

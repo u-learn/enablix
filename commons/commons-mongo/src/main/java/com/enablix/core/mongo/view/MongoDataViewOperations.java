@@ -141,5 +141,5 @@ public class MongoDataViewOperations {
 		String collectionName = mongoOperations.getCollectionName(entityClass);
 		return isCollectionVisible(collectionName);
 	}
-	
+
 }

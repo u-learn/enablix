@@ -234,12 +234,12 @@
 		</dependency>
 		<dependency>
 			<groupId>com.enablix.commons</groupId>
-			<artifactId>word-image-converter</artifactId>
+			<artifactId>doc-converter-impl</artifactId>
 			<version>1.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>com.enablix.commons</groupId>
-			<artifactId>doc-converter-impl</artifactId>
+			<artifactId>word-pdf-converter</artifactId>
 			<version>1.0-SNAPSHOT</version>
 		</dependency>
 	</dependencies>

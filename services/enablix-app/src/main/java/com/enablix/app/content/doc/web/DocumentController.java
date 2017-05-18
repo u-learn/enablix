@@ -26,7 +26,6 @@ import com.enablix.commons.util.QIdUtil;
 import com.enablix.commons.util.StringUtil;
 import com.enablix.commons.util.process.ProcessContext;
 import com.enablix.core.api.ContentLengthAwareDocument;
-import com.enablix.core.api.DocInfo;
 import com.enablix.core.api.IDocument;
 import com.enablix.core.domain.activity.ActivityChannel.Channel;
 import com.enablix.core.domain.activity.Actor;
@@ -219,7 +218,6 @@ public class DocumentController {
             // set to binary type if MIME mapping not found
             mimeType = "application/octet-stream";
         }
-        System.out.println("MIME type: " + mimeType);
  
         // set content attributes for the response
         response.setContentType(mimeType);
@@ -229,10 +227,10 @@ public class DocumentController {
         }
  
         // set headers for the response
-        /*String headerKey = "Content-Disposition";
+        String headerKey = "Content-Disposition";
         String headerValue = String.format("attachment; filename=\"%s\"",
                 doc.getDocInfo().getName());
-        response.setHeader(headerKey, headerValue);*/
+        response.setHeader(headerKey, headerValue);
  
         // get output stream of the response
         OutputStream outStream = response.getOutputStream();

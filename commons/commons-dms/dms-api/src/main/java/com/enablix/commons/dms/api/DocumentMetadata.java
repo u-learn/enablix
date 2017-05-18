@@ -11,7 +11,7 @@ public abstract class DocumentMetadata extends BaseDocumentEntity implements Doc
 	public static final String PREVIEW_STATUS_FLD_ID = "previewStatus";
 	
 	public enum PreviewStatus {
-		PENDING, AVAILABLE, NOT_SUPPORTED
+		PENDING, AVAILABLE, NOT_SUPPORTED, FAILED
 	}
 	
 	private String name;

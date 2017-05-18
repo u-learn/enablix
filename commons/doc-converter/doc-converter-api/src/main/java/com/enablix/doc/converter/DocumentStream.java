@@ -5,7 +5,7 @@ import java.io.OutputStream;
 
 public interface DocumentStream {
 	
-	OutputStream nextPageOutputStream();
+	OutputStream nextPageOutputStream() throws IOException;
 	
 	void startDocumentWriting();
 	

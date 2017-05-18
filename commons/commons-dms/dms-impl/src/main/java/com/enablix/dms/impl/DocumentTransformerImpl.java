@@ -14,6 +14,7 @@ import com.enablix.commons.dms.api.DocumentMetadata;
 import com.enablix.commons.dms.api.DocumentStore;
 import com.enablix.commons.dms.api.DocumentTransformer;
 import com.enablix.commons.dms.api.DocumentTxStrategy;
+import com.enablix.commons.util.IOUtil;
 import com.enablix.core.api.DocInfo;
 import com.enablix.core.api.DocumentFormat;
 import com.enablix.core.api.IDocument;
@@ -53,11 +54,20 @@ public class DocumentTransformerImpl implements DocumentTransformer {
 			
 			IDocument sourceDoc = sourceDocStore.load(docInfo);
 			
-			DocStoreWriter docWriter = new DocStoreWriter(targetDocStore, storeBaseLocation, toContentType);
-			DocumentStream docStream = DocStreamBuilder.perPageDocStream(new ByteArrayStreamManager(), docWriter, docNameStrategy);
-			
-			converter.convertAndWrite(sourceDoc.getDataStream(), docFormat, docStream, toFormat);
-			docInfos = docWriter.getDocPages();
+			if (sourceDoc != null) {
+				
+				try {
+				
+					DocStoreWriter docWriter = new DocStoreWriter(targetDocStore, storeBaseLocation, toContentType);
+					DocumentStream docStream = DocStreamBuilder.perPageDocStream(new ByteArrayStreamManager(), docWriter, docNameStrategy);
+					
+					converter.convertAndWrite(sourceDoc.getDataStream(), docFormat, docStream, toFormat);
+					docInfos = docWriter.getDocPages();
+				
+				} finally {
+					IOUtil.closeStream(sourceDoc.getDataStream());
+				}
+			}
 		}
 		
 		return docInfos;

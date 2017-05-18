@@ -6,12 +6,13 @@ import java.io.IOException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import com.enablix.commons.dir.watch.SystemTempFolderResolver;
 import com.enablix.commons.dms.disk.DiskStoreLocationResolver;
 import com.enablix.commons.util.tenant.TenantUtil;
 import com.enablix.core.api.DocInfo;
 
 @Component
-public class DefaultDiskStoreLocationResolver implements DiskStoreLocationResolver {
+public class DefaultDiskStoreLocationResolver implements DiskStoreLocationResolver, SystemTempFolderResolver {
 
 	@Value("${doc.disk.storage.location:/usr/local/applications/enablix/docstore}")
 	private String storeBaseLocation;
@@ -33,7 +34,12 @@ public class DefaultDiskStoreLocationResolver implements DiskStoreLocationResolv
 			}
 		}
 		
-		return docFolderPath + File.separator + metadata.getName();
+		return docFolderPath + "/" + metadata.getName();
 	}
 
+	@Override
+	public String getSystemTempFolder() {
+		return storeBaseLocation + "/tmp";
+	}
+	
 }

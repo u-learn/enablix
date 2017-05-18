@@ -50,5 +50,5 @@ public class GenericDao extends BaseTenantDao {
 	public <T> Page<T> findByQuery(SearchRequest searchRequest, Class<T> findType, MongoDataView view) {
 		return findByQuery(searchRequest, null, findType, view);
 	}
-	
+
 }

@@ -4,7 +4,7 @@
 </div>
 <div class="modal-body">
 <div class="cont">
-	<!-- <p ng-bind-html="previewHtml"></p> -->
-	<ebx-image-slider slides="slides"></ebx-image-slider>
+	<p ng-if="htmlType == 'html'" ng-bind-html="previewHtml"></p>
+	<p ng-if="htmlType == 'angular-html'" bind-html-compile="previewHtml"></p>
 </div>
 </div>

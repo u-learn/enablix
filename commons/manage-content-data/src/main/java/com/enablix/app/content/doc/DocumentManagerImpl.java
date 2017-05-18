@@ -2,6 +2,7 @@ package com.enablix.app.content.doc;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -19,6 +20,7 @@ import com.enablix.commons.dms.api.DocumentMetadata.PreviewStatus;
 import com.enablix.commons.dms.api.DocumentStore;
 import com.enablix.commons.dms.repository.DocumentMetadataRepository;
 import com.enablix.commons.util.QIdUtil;
+import com.enablix.commons.util.StringUtil;
 import com.enablix.commons.util.concurrent.Events;
 import com.enablix.commons.util.process.ProcessContext;
 import com.enablix.core.api.DocInfo;
@@ -27,6 +29,7 @@ import com.enablix.core.api.TemplateFacade;
 import com.enablix.core.mongo.dao.GenericDao;
 import com.enablix.core.mongo.search.ConditionOperator;
 import com.enablix.core.mongo.search.StringFilter;
+import com.enablix.core.mongo.view.MongoDataView;
 import com.enablix.core.mq.Event;
 import com.enablix.core.mq.util.EventUtil;
 
@@ -221,18 +224,49 @@ public class DocumentManagerImpl implements DocumentManager {
 			String parentQId = QIdUtil.getParentQId(docQId);
 			String parentCollName = template.getCollectionName(parentQId);
 			
+			if (StringUtil.hasText(parentCollName)) {
+			
+				String docAttrId = QIdUtil.getElementId(docQId);
+				String docIdentityAttr = docAttrId + "." + ContentDataConstants.IDENTITY_KEY;
+				String previewStatusAttr = docAttrId + "." + DocumentMetadata.PREVIEW_STATUS_FLD_ID;
+				
+				StringFilter docIdentitFilter = new StringFilter(docIdentityAttr , docIdentity, ConditionOperator.EQ);
+				Query query = new Query(docIdentitFilter.toPredicate(new Criteria()));
+	
+				Update update = new Update();
+				update.set(previewStatusAttr, status);
+	
+				genericDao.updateMulti(query, update, parentCollName);
+			}
+		}
+	}
+	
+	@Override
+	public boolean checkReferenceRecordExists(DocumentMetadata docMetadata) {
+
+		boolean exists = false;
+		
+		TemplateFacade template = templateMgr.getTemplateFacade(ProcessContext.get().getTemplateId());
+
+		String docIdentity = docMetadata.getIdentity();
+		String docQId = docMetadata.getContentQId();
+		String parentQId = QIdUtil.getParentQId(docQId);
+		String parentCollName = template.getCollectionName(parentQId);
+		
+		if (StringUtil.hasText(parentCollName)) {
+		
 			String docAttrId = QIdUtil.getElementId(docQId);
 			String docIdentityAttr = docAttrId + "." + ContentDataConstants.IDENTITY_KEY;
-			String previewStatusAttr = docAttrId + "." + DocumentMetadata.PREVIEW_STATUS_FLD_ID;
 			
 			StringFilter docIdentitFilter = new StringFilter(docIdentityAttr , docIdentity, ConditionOperator.EQ);
-			Query query = new Query(docIdentitFilter.toPredicate(new Criteria()));
+			Criteria criteria = docIdentitFilter.toPredicate(new Criteria());
 
-			Update update = new Update();
-			update.set(previewStatusAttr, status);
+			Long recordCnt = genericDao.countByCriteria(criteria, parentCollName, Map.class, MongoDataView.ALL_DATA);
 
-			genericDao.updateMulti(query, update, parentCollName);
+			exists = recordCnt > 0;
 		}
+		
+		return exists;
 	}
 
 }

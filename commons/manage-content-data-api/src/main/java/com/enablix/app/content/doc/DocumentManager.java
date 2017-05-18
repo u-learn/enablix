@@ -39,5 +39,7 @@ public interface DocumentManager {
 	DocumentMetadata getDocumentMetadata(String docIdentity);
 	
 	void updatePreviewStatus(String docIdentity, PreviewStatus status);
+
+	boolean checkReferenceRecordExists(DocumentMetadata docMetadata);
 	
 }
