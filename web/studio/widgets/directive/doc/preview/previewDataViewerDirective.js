@@ -26,7 +26,16 @@ enablix.studioApp.controller('PreviewDataViewerCtrl',
 					var images = [];
 					
 					angular.forEach(data.parts, function(image, indx) {
-						images.push({url: "/doc/pdp/" + docMetadata.identity + "/" + indx + "/"});
+						
+						var w = image.properties ? image.properties.width : null;
+						var h = image.properties ? image.properties.height : null;
+						
+						images.push({
+							url: "/doc/pdp/" + docMetadata.identity + "/" + indx + "/",
+							width: w,
+							height: h
+						});
+						
 					});
 					
 					$scope.slides = images;

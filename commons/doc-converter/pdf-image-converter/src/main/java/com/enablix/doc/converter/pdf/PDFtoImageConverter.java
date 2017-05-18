@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.HashMap;
 
 import javax.imageio.ImageIO;
 
@@ -12,6 +13,7 @@ import org.apache.pdfbox.rendering.ImageType;
 import org.apache.pdfbox.rendering.PDFRenderer;
 import org.springframework.stereotype.Component;
 
+import com.enablix.commons.util.IOUtil;
 import com.enablix.core.api.DocumentFormat;
 import com.enablix.doc.converter.DocConverter;
 import com.enablix.doc.converter.DocumentStream;
@@ -41,7 +43,7 @@ public class PDFtoImageConverter implements DocConverter {
 					
 					ImageIO.write(bim, "png", out);
 					
-					os.endPageWriting();
+					os.endPageWriting(IOUtil.getImageProperties(bim));
 					
 				} catch (Exception e) {
 					os.writingError(e);
@@ -50,7 +52,7 @@ public class PDFtoImageConverter implements DocConverter {
 				
 	        }
 	
-	        os.endDocumentWriting();
+	        os.endDocumentWriting(new HashMap<String, Object>());
 		}
 		
 	}

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import com.enablix.commons.dms.api.BasicDocInfo;
 import com.enablix.commons.dms.api.BasicDocument;
@@ -32,13 +33,15 @@ public class DocStoreWriter implements DocWriter {
 	}
 
 	@Override
-	public void saveDocument(InputStream inputStream, long contentLength, String docName) throws IOException {
+	public void saveDocument(InputStream inputStream, long contentLength, 
+			String docName, Map<String, Object> docProps) throws IOException {
 		
 		BasicDocInfo docInfo = new BasicDocInfo();
 		docInfo.setContentLength(contentLength);
 		docInfo.setName(docName);
 		docInfo.setLocation(basePath + "/" + docName);
 		docInfo.setContentType(contentType);
+		docInfo.addProperties(docProps);
 		
 		BasicDocument doc = new BasicDocument(docInfo, inputStream);
 		

@@ -7,6 +7,7 @@ enablix.studioApp.directive('ebxImageSlider', function() {
 		},
 
 		link: function(scope, element, attrs) {
+			scope.element = element;
 		},
 
 		controller: 'ImageSliderCtrl',
@@ -21,6 +22,24 @@ enablix.studioApp.controller('ImageSliderCtrl',
 	
 		$scope.jssor_1_slider_init = function() {
 	
+			if ($scope.slides && $scope.slides.length > 0) {
+				
+				var firstSlide = $scope.slides[0];
+				
+				if (firstSlide.width && firstSlide.height) {
+					
+					var w = firstSlide.width;
+					var h = firstSlide.height;
+
+					var adjustedHeight = (h/w)*500;
+
+					$($scope.element).find(".jssor-cont").height(adjustedHeight);
+					$($scope.element).find(".jssor-slides").height(adjustedHeight);
+					
+				}
+				
+			}
+			
 			var jssor_1_options = {
 				$AutoPlay : 0,
 				$ArrowNavigatorOptions : {

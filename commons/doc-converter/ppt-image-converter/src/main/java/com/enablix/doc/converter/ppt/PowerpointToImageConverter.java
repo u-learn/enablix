@@ -10,6 +10,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.imageio.ImageIO;
@@ -19,6 +20,7 @@ import org.apache.poi.sl.usermodel.Slide;
 import org.apache.poi.sl.usermodel.SlideShow;
 import org.apache.poi.sl.usermodel.TextParagraph;
 
+import com.enablix.commons.util.IOUtil;
 import com.enablix.core.api.DocumentFormat;
 import com.enablix.doc.converter.DocumentStream;
 
@@ -69,7 +71,7 @@ public class PowerpointToImageConverter {
 					
 					ImageIO.write(img, imageFormatName, out);
 					
-					os.endPageWriting();
+					os.endPageWriting(IOUtil.getImageProperties(img));
 					
 				} catch (Exception e) {
 					os.writingError(e);
@@ -78,7 +80,7 @@ public class PowerpointToImageConverter {
 				
 			}
 			
-			os.endDocumentWriting();
+			os.endDocumentWriting(new HashMap<String, Object>());
 		}
 	}
 	

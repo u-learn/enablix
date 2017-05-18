@@ -3,6 +3,7 @@ package com.enablix.dms.impl;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Map;
 
 import com.enablix.commons.dms.api.DocNameStrategy;
 import com.enablix.commons.util.IOUtil;
@@ -48,7 +49,7 @@ public class PerPageDocumentStream<OS extends OutputStream, IS extends InputStre
 	}
 
 	@Override
-	public void endPageWriting() throws IOException {
+	public void endPageWriting(Map<String, Object> pageProps) throws IOException {
 		
 		IOUtil.closeStream(currentOS);
 		
@@ -56,7 +57,8 @@ public class PerPageDocumentStream<OS extends OutputStream, IS extends InputStre
 		IS inputStream = is.getInputStream();
 		
 		try {
-			docWriter.saveDocument(inputStream, is.getContentLength(), docNameStrategy.nextPageDocName(pageNum));
+			docWriter.saveDocument(inputStream, is.getContentLength(), 
+					docNameStrategy.nextPageDocName(pageNum), pageProps);
 		} finally {
 			IOUtil.closeStream(inputStream);
 		}
@@ -68,7 +70,7 @@ public class PerPageDocumentStream<OS extends OutputStream, IS extends InputStre
 	}
 	
 	@Override
-	public void endDocumentWriting() {
+	public void endDocumentWriting(Map<String, Object> docProps) {
 		IOUtil.closeStream(currentOS);
 	}
 

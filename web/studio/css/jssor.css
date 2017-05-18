@@ -3,9 +3,8 @@
 	margin: 0 auto;
 	top: 0px;
 	left: 0px;
-	width: 600px;
-	height: 450px;
-	max-height: 600px;
+	width: 500px;
+	height: 400px;
 	overflow: hidden;
 	visibility: hidden;
 }
@@ -23,9 +22,8 @@
 	position: relative;
 	top: 0px;
 	left: 0px;
-	width: 600px;
-	height: 450px;
-	max-height: 600px;
+	width: 500px;
+	height: 400px;
 	overflow: hidden;
 }
 

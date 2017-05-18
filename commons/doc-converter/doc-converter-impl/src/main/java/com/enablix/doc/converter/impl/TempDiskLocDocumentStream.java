@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Calendar;
+import java.util.Map;
 
 import com.enablix.commons.util.IOUtil;
 import com.enablix.doc.converter.DocumentStream;
@@ -52,7 +53,7 @@ public class TempDiskLocDocumentStream implements DocumentStream {
 	}
 
 	@Override
-	public void endPageWriting() throws IOException {
+	public void endPageWriting(Map<String, Object> pageProps) throws IOException {
 		// TODO Auto-generated method stub
 		
 	}
@@ -66,7 +67,7 @@ public class TempDiskLocDocumentStream implements DocumentStream {
 	}
 
 	@Override
-	public void endDocumentWriting() {
+	public void endDocumentWriting(Map<String, Object> docProps) {
 		IOUtil.closeStream(fos);
 	}
 

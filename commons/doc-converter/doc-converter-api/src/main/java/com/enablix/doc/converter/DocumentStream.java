@@ -2,6 +2,7 @@ package com.enablix.doc.converter;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Map;
 
 public interface DocumentStream {
 	
@@ -11,10 +12,10 @@ public interface DocumentStream {
 	
 	void startPageWriting() throws IOException;
 	
-	void endPageWriting() throws IOException;
+	void endPageWriting(Map<String, Object> imageProp) throws IOException;
 
 	void writingError(Exception e);
 	
-	void endDocumentWriting();
+	void endDocumentWriting(Map<String, Object> hashMap);
 	
 }

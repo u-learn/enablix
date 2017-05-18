@@ -1,5 +1,8 @@
 package com.enablix.commons.dms.api;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.enablix.core.api.DocInfo;
 
 public class BasicDocInfo implements DocInfo {
@@ -11,6 +14,8 @@ public class BasicDocInfo implements DocInfo {
 	private long contentLength;
 	
 	private String contentType;
+	
+	private Map<String, Object> properties = new HashMap<>();
 
 	public String getName() {
 		return name;
@@ -42,6 +47,14 @@ public class BasicDocInfo implements DocInfo {
 
 	public void setContentType(String contentType) {
 		this.contentType = contentType;
+	}
+
+	public void addProperties(Map<String, Object> docProps) {
+		properties.putAll(docProps);
+	}
+
+	public Map<String, Object> getProperties() {
+		return properties;
 	}
 	
 }

@@ -11,5 +11,5 @@ public interface DocInfo extends ContentLengthAwareDocument {
 	void setContentLength(long contentLength);
 	
 	String getContentType();
-	
+
 }
