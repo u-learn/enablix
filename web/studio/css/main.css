@@ -372,8 +372,9 @@ form.block .head {
 .block {
 	margin-top: 2em;
 	background: #fff;
-	/*box-shadow: 0 0 15px rgba(0,0,0,.2);
-    border-radius: 4px;*/
+	-webkit-box-shadow: 0 6px 12px rgba(0,0,0,.075);
+    box-shadow: 0 6px 12px rgba(0,0,0,.075);
+    /*border-radius: 4px;*/
     
 }
 .block .head {
@@ -2053,4 +2054,9 @@ td .dropdown-menu-cont {
 .tt-cursor {
     background-color:#2980b9;
     color:white;
+}
+
+.block {
+	-webkit-box-shadow: 0 6px 12px rgba(0,0,0,.075);
+    box-shadow: 0 6px 12px rgba(0,0,0,.075);
 }
