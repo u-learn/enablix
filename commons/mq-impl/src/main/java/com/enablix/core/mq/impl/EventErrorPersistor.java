@@ -1,5 +1,7 @@
 package com.enablix.core.mq.impl;
 
+import java.lang.reflect.InvocationTargetException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -17,6 +19,10 @@ public class EventErrorPersistor extends EventInterceptorSupport {
 	
 	@Override
 	public void onProcessingError(Event<?> event, Throwable error, EventListener listener) {
+		
+		if (error instanceof InvocationTargetException) {
+			error = ((InvocationTargetException) error).getTargetException();
+		}
 		
 		FailedEvent failedEvent = new FailedEvent();
 		
