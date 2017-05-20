@@ -16,6 +16,7 @@ enablix.studioApp.directive('ebxMultiLineChart', [
 					flushChartArea();
 					var chart = makeLineChart(scope.data, 'Time', scope.columndetails
 							, {xAxis: '', yAxis: ''});
+
 					chart.bind("#multi-chart");
 					chart.render();
 				}, true);
@@ -27,7 +28,8 @@ enablix.studioApp.directive('ebxMultiLineChart', [
 					d3.select("#multi-chart").select("#outerBoxDiv").remove();
 					d3.select("#multi-chart").select("#innerWrapperDiv").remove();
 				}
-
+					
+			
 				function makeLineChart(dataset, xName, yObjs, axisLables) {
 					var chartObj = {};
 					var color = d3.scale.category10();

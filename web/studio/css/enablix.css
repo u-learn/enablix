@@ -302,3 +302,8 @@ chart-wrapper {
     .chart-wrapper .line {stroke-width: 3px;}
     .chart-wrapper .legend {font-size: 14px;}
 }
+.downloadReport {
+	float: right;
+    padding-top: 10px;
+    padding-right: 10px;
+}

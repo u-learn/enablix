@@ -6,6 +6,11 @@ enablix.studioApp.controller('ReportDetailCtrl',
 		$scope.data = [];
 		$scope.reportFilterValues = {};
 		
+		$scope.writeDownloadLink = function(){
+			$scope.reportDef.downloadReport();
+		};
+
+	    
 		var fetchReportData = function(_filterValues) {
 			
 			// remove search keys with null values as those get treated as null value on back end
