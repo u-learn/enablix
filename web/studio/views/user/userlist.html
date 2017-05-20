@@ -25,7 +25,7 @@
 					<td><span ng-bind="user.email"></span></td>
 					<td>
 						<span ng-repeat="role in user.systemProfile.roles">
-				            {{role.roleName}} {{$last ? '' : ($index==user.systemProfile.roles.length-2) ? ' and ' : ', '}}
+				            {{role.roleName}}{{$last ? '' : ($index==user.systemProfile.roles.length-2) ? ' and ' : ','}}
 			        	</span>
 			        </td>
 				</tr>
