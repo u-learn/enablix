@@ -468,11 +468,12 @@ form.block .head {
 .block .head-toggle h2 {
 	/*opacity: 0.75;*/
     color: #5a6779;
-    font-weight: 500;
+    font-weight: 400;
 }
 
 .block .head-toggle h2 .count {
 	font-weight: 400;	
+	color: #bdbdbd;
 }
 
 .block .head-toggle h2:hover{
@@ -957,6 +958,7 @@ form.block .foot {
 .datatable .details a, .head .details a {
 	transition: color 0.3s;	
 }
+
 .datatable .details a:hover, .head .details a:hover {
 	color: #2980b9;
 }
@@ -2059,4 +2061,27 @@ td .dropdown-menu-cont {
 .block {
 	-webkit-box-shadow: 0 6px 12px rgba(0,0,0,.075);
     box-shadow: 0 6px 12px rgba(0,0,0,.075);
+}
+
+.fa-stack {
+    width: 1em;
+    margin-left: .5em;
+}
+
+.check-all {
+	color: #3498db;
+}
+
+.check-all:hover {
+	color: #2980b9;
+	cursor: pointer;
+}
+
+.uncheck-all {
+	color: #e74c3c;
+}
+
+.uncheck-all:hover {
+	color: #c0392b;
+	cursor: pointer;
 }
