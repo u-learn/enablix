@@ -19,6 +19,6 @@
 		<ebx-tabular-report data="data" dispatch="$parent.dispatch" options="reportDef.options" columndetails="reportDef.columndetails"></ebx-tabular-report>
 	</div>
 	<div class="cont" ng-if="reportDef.type == 'MULTILINE'" id="multilinechart">
-		<ebx-multi-line-chart data="data" columndetails="reportDef.columndetails" ></ebx-multi-line-chart>
+		<ebx-multi-line-chart data="data" columndetails="reportDef.columndetails"  filter-values="reportFilterValues" ></ebx-multi-line-chart>
 	</div>
 </div>

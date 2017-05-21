@@ -16,6 +16,7 @@ enablix.studioApp.factory('ActivityTrendReport',
 					id: '90'
 				}
 				];
+			
 			var activityTrend = [
 				{
 					label: 'Daily',
@@ -28,15 +29,10 @@ enablix.studioApp.factory('ActivityTrendReport',
 				{
 					label: 'Monthly',
 					id: 'monthly'
-				},
-
-				{
-					label: 'Yearly',
-					id: 'yearly'
 				}
 				];
+			
 			function applyStylesheets(svgEl) {
-
 				// use an empty svg to compute the browser applied stylesheets
 				var emptySvg = window.document.createElementNS("http://www.w3.org/2000/svg", 'svg');
 				window.document.body.appendChild(emptySvg);

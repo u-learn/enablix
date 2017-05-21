@@ -7,15 +7,12 @@ enablix.studioApp.factory('ReportService',
 			};
 			
 			var getReportDef = function(_reportId) {
-				
 				var reportDefs = getReportDefinitions();
-				
 				for (var i in reportDefs) {
 					if (reportDefs[i].id == _reportId) {
 						return reportDefs[i];
 					}
 				}
-				
 				return null;
 			}
 		
