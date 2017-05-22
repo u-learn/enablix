@@ -372,8 +372,8 @@ form.block .head {
 .block {
 	margin-top: 2em;
 	background: #fff;
-	-webkit-box-shadow: 0 6px 12px rgba(0,0,0,.075);
-    box-shadow: 0 6px 12px rgba(0,0,0,.075);
+	-webkit-box-shadow: 0 6px 12px rgba(0,0,0,.03);
+    box-shadow: 0 6px 12px rgba(0,0,0,.03);
     /*border-radius: 4px;*/
     
 }
@@ -2067,11 +2067,6 @@ td .dropdown-menu-cont {
 	padding-right:5px;
 	padding-top:5px;
 	text-align: right;
-}
-
-.block {
-	-webkit-box-shadow: 0 6px 12px rgba(0,0,0,.075);
-    box-shadow: 0 6px 12px rgba(0,0,0,.075);
 }
 
 .fa-stack {
