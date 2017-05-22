@@ -6,32 +6,40 @@ import java.io.IOException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import com.enablix.commons.dms.disk.DiskDocumentMetadata;
+import com.enablix.commons.dir.watch.SystemTempFolderResolver;
 import com.enablix.commons.dms.disk.DiskStoreLocationResolver;
 import com.enablix.commons.util.tenant.TenantUtil;
+import com.enablix.core.api.DocInfo;
 
 @Component
-public class DefaultDiskStoreLocationResolver implements DiskStoreLocationResolver {
+public class DefaultDiskStoreLocationResolver implements DiskStoreLocationResolver, SystemTempFolderResolver {
 
 	@Value("${doc.disk.storage.location:/usr/local/applications/enablix/docstore}")
 	private String storeBaseLocation;
 	
 	@Override
-	public String getDocumentStoragePath(DiskDocumentMetadata metadata, String contentPath) throws IOException {
+	public String getDocumentStoragePath(DocInfo metadata, String contentPath) throws IOException {
 		
-		String docFolderPath = storeBaseLocation + File.separator 
-				+ TenantUtil.getTenantId() + File.separator + contentPath;
+		String tenantFolderPath = storeBaseLocation + "/" + TenantUtil.getTenantId();
+		
+		String docFolderPath = !contentPath.startsWith(tenantFolderPath) ? 
+				(tenantFolderPath + "/" + contentPath) : contentPath;
 		
 		File docFolder = new File(docFolderPath);
 		
 		if (!docFolder.exists()) {
 			boolean dirCreated = docFolder.mkdirs();
 			if (!dirCreated) {
-				throw new IOException("Unable to create folder structure");
+				throw new IOException("Unable to create folder structure: " + docFolderPath);
 			}
 		}
 		
-		return docFolderPath + File.separator + metadata.getName();
+		return docFolderPath + "/" + metadata.getName();
 	}
 
+	@Override
+	public String getSystemTempFolder() {
+		return storeBaseLocation + "/tmp";
+	}
+	
 }

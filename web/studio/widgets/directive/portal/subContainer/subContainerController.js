@@ -53,9 +53,16 @@ enablix.studioApp.controller('PortalSubContainerCtrl',
 			$scope.parentIdentity = $stateParams.elementIdentity;
 			
 			var data = _contentRecords;
+			
 			if (_contentRecords.content) {
+			
 				data = _contentRecords.content;
 				$scope.pageData = _contentRecords;
+				
+				$scope.recCnt = $scope.pageData.totalElements;
+				
+			} else {
+				$scope.recCnt = data.length;
 			}
 			
 			if ($scope.type == 'single' && data && data.length > 0) {

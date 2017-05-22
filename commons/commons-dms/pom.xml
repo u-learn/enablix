@@ -8,6 +8,7 @@
   	<module>dms-dropbox</module>
   	<module>dms-webdav</module>
   	<module>dms-sharepoint</module>
+  	<module>dms-impl</module>
   </modules>
   <parent>
   	<groupId>com.enablix.commons</groupId>

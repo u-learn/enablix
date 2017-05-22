@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Function;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -36,11 +37,14 @@ import org.springframework.stereotype.Component;
 
 import com.enablix.commons.dms.DMSConstants;
 import com.enablix.commons.dms.api.AbstractDocumentStore;
+import com.enablix.commons.dms.api.BasicDocument;
 import com.enablix.commons.dms.api.Document;
 import com.enablix.commons.dms.api.DocumentBuilder;
 import com.enablix.commons.dms.api.DocumentMetadata;
 import com.enablix.commons.util.StringUtil;
 import com.enablix.commons.util.web.WebUtils;
+import com.enablix.core.api.DocInfo;
+import com.enablix.core.api.IDocument;
 import com.enablix.core.domain.config.Configuration;
 
 @Component
@@ -61,6 +65,11 @@ public class WebDAVDocumentStore extends AbstractDocumentStore<WebDAVDocumentMet
 
 	@Override
 	public WebDAVDocumentMetadata save(WebDAVDocument document, String contentPath) throws IOException {
+		saveAndUpdateDocInfo(document, contentPath);
+		return document.getMetadata();
+	}
+	
+	protected void saveAndUpdateDocInfo(IDocument document, String contentPath) throws IOException {
 		
 		try {
 			
@@ -71,7 +80,7 @@ public class WebDAVDocumentStore extends AbstractDocumentStore<WebDAVDocumentMet
 			String baseWebDAVPath = config.getStringValue(BASE_DOC_PATH_KEY);
 
 			String host = config.getStringValue(HOST_KEY);
-		    String fileLocation = createFilepath(baseWebDAVPath, document.getMetadata(), contentPath);
+		    String fileLocation = createFilepath(baseWebDAVPath, document.getDocInfo(), contentPath);
 			
 			createFolder(host, baseWebDAVPath, contentPath, client);
 			
@@ -80,7 +89,7 @@ public class WebDAVDocumentStore extends AbstractDocumentStore<WebDAVDocumentMet
 		    method.setRequestEntity(requestEntity);
 		    client.executeMethod(method);
 		    
-		    document.getMetadata().setFileLocation(fileLocation);
+		    document.getDocInfo().setLocation(fileLocation);
 		    
 		    LOGGER.debug(method.getStatusCode() + " " + method.getStatusText());
 		    
@@ -95,8 +104,6 @@ public class WebDAVDocumentStore extends AbstractDocumentStore<WebDAVDocumentMet
 		    throw ex;
 		    
 		}
-		
-		return document.getMetadata();
 	}
 
 	private String getResourceURI(String host, String fileLocation) {
@@ -215,8 +222,12 @@ public class WebDAVDocumentStore extends AbstractDocumentStore<WebDAVDocumentMet
 
 	@Override
 	public WebDAVDocument load(WebDAVDocumentMetadata docMetadata) throws IOException {
+		return load(docMetadata, (is) -> new WebDAVDocument(is, docMetadata));
+	}
+	
+	protected <R> R load(DocInfo docMetadata, Function<InputStream, R> func) throws IOException {
 		
-		WebDAVDocument document = null;
+		R document = null;
 		
 		try {
 			
@@ -225,7 +236,7 @@ public class WebDAVDocumentStore extends AbstractDocumentStore<WebDAVDocumentMet
 			String host = config.getStringValue(HOST_KEY);			
 		    HttpClient client = createHttpClient(config);
 
-		    String fileLocation = docMetadata.getFileLocation();
+		    String fileLocation = docMetadata.getLocation();
 			
 		    GetMethod method = new GetMethod(getResourceURI(host, fileLocation));
 		    client.executeMethod(method);
@@ -236,7 +247,7 @@ public class WebDAVDocumentStore extends AbstractDocumentStore<WebDAVDocumentMet
 		    if (method.getStatusCode() == 200) {
 		    	
 		    	InputStream docStream = method.getResponseBodyAsStream();
-		    	document = new WebDAVDocument(docStream, docMetadata);
+		    	document = func.apply(docStream);
 		    	
 		    } else {
 		    	throw new IOException("Unable to read file content. Status - " 
@@ -256,7 +267,7 @@ public class WebDAVDocumentStore extends AbstractDocumentStore<WebDAVDocumentMet
 	}
 
 	private String createFilepath(String baseWebDAVPath, 
-			WebDAVDocumentMetadata md, String contentPath) {
+			DocInfo md, String contentPath) {
 		String fileLocation = baseWebDAVPath + "/" + contentPath + "/" + md.getName();
 		return WebUtils.sanitizeURI(fileLocation);
 	}
@@ -347,6 +358,17 @@ public class WebDAVDocumentStore extends AbstractDocumentStore<WebDAVDocumentMet
 		    
 		}
 
+	}
+
+	@Override
+	public DocInfo save(IDocument document, String path) throws IOException {
+		saveAndUpdateDocInfo(document, path);
+		return document.getDocInfo();
+	}
+
+	@Override
+	public BasicDocument load(DocInfo docInfo) throws IOException {
+		return load(docInfo, (is) -> new BasicDocument(docInfo, is));
 	}
 
 }

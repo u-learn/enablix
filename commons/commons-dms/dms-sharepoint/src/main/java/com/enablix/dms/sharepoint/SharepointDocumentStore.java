@@ -2,6 +2,7 @@ package com.enablix.dms.sharepoint;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.function.Function;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,9 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.enablix.commons.dms.api.AbstractDocumentStore;
+import com.enablix.commons.dms.api.BasicDocument;
 import com.enablix.commons.dms.api.Document;
 import com.enablix.commons.dms.api.DocumentBuilder;
 import com.enablix.commons.dms.api.DocumentMetadata;
+import com.enablix.core.api.DocInfo;
+import com.enablix.core.api.IDocument;
 import com.enablix.core.domain.config.Configuration;
 import com.enablix.dms.sharepoint.service.SharepointService;
 import com.enablix.dms.sharepoint.service.SharepointSession;
@@ -29,6 +33,11 @@ public class SharepointDocumentStore extends AbstractDocumentStore<SharepointDoc
 
 	@Override
 	public SharepointDocumentMetadata save(SharepointDocument document, String contentPath) throws IOException {
+		saveAndUpdateDocInfo(document, contentPath);
+		return document.getMetadata();
+	}
+	
+	protected void saveAndUpdateDocInfo(IDocument doc, String contentPath) throws IOException {
 		
 		Configuration config = getDocStoreConfiguration();
 		
@@ -37,22 +46,20 @@ public class SharepointDocumentStore extends AbstractDocumentStore<SharepointDoc
 		SharepointSession spSession = login(config);
 		
 		String filePath = createFilepath(baseFolder, contentPath);
-		String filename = document.getMetadata().getName();
+		String filename = doc.getDocInfo().getName();
 	    String fileLocation;
 	    
 		try {
 		
-			fileLocation = spService.uploadFile(spSession, filePath, filename, document.getDataStream());
+			fileLocation = spService.uploadFile(spSession, filePath, filename, doc.getDataStream());
 			
 		} catch (SharepointException e) {
 			LOGGER.error("Failed to upload file on sharepoint", e);
 			throw new IOException("Failed to uploade file on sharepoint", e);
 		}
 
-	    document.getMetadata().setFileLocation(
+	    doc.getDocInfo().setLocation(
 	    		SharepointUtil.getFileLocationRelativeToBaseFolder(fileLocation, baseFolder));
-		
-		return document.getMetadata();
 	}
 
 	private SharepointSession login(Configuration config) throws IOException {
@@ -73,8 +80,12 @@ public class SharepointDocumentStore extends AbstractDocumentStore<SharepointDoc
 
 	@Override
 	public SharepointDocument load(SharepointDocumentMetadata docMetadata) throws IOException {
+		return load(docMetadata, (is) -> new SharepointDocument(is, docMetadata));
+	}
+	
+	public <R> R load(DocInfo docMetadata, Function<InputStream, R> func) throws IOException {
 		
-		SharepointDocument document = null;
+		R document = null;
 		
 		try {
 			
@@ -83,9 +94,9 @@ public class SharepointDocumentStore extends AbstractDocumentStore<SharepointDoc
 			SharepointSession spSession = login(config);
 			InputStream fileStream = spService.getFileStream(spSession, 
 					SharepointUtil.createFileLocationWithBaseFolder(
-							docMetadata.getFileLocation(), spSession.getBaseFolder()));
+							docMetadata.getLocation(), spSession.getBaseFolder()));
 		    
-		    document = new SharepointDocument(fileStream, docMetadata);
+		    document = func.apply(fileStream);
 		    
 		} catch(SharepointException ex){
 
@@ -172,6 +183,17 @@ public class SharepointDocumentStore extends AbstractDocumentStore<SharepointDoc
 	@Override
 	public DocumentBuilder<SharepointDocumentMetadata, SharepointDocument> getDocumentBuilder() {
 		return docBuilder;
+	}
+
+	@Override
+	public DocInfo save(IDocument document, String path) throws IOException {
+		saveAndUpdateDocInfo(document, path);
+		return document.getDocInfo();
+	}
+
+	@Override
+	public IDocument load(DocInfo docInfo) throws IOException {
+		return load(docInfo, (is) -> new BasicDocument(docInfo, is));
 	}
 
 	

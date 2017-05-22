@@ -40,6 +40,15 @@ public abstract class BaseDao {
 				: viewOperations.find(query, findType, collectionName);
 	}
 	
+	public <T> Long countByCriteria(Criteria queryCriteria, String collectionName, Class<T> findType, MongoDataView view) {
+		
+		MongoDataViewOperations viewOperations = new MongoDataViewOperations(getMongoTemplate(), view);
+		Query query = viewOperations.getViewScopedQuery(queryCriteria, collectionName);
+		
+		return StringUtil.isEmpty(collectionName) ? viewOperations.count(query, findType) 
+				: viewOperations.count(query, collectionName);
+	}
+	
 	public <T> List<T> findByCriteria(Criteria queryCriteria, String collectionName, 
 			Class<T> findType, List<String> projectionFields, MongoDataView view) {
 		

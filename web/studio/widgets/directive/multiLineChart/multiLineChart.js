@@ -8,18 +8,31 @@ enablix.studioApp.directive('ebxMultiLineChart', [
 			scope: {
 				data: "=",
 				columndetails: "=?",
+				filterValues: '=',
 			},
 			transclude: false,
 			link: function(scope, element, attrs) {
 
 				scope.$watch("data", function() {
+					var filterDtls = filterColumnDetails();
 					flushChartArea();
-					var chart = makeLineChart(scope.data, 'Time', scope.columndetails
-							, {xAxis: '', yAxis: ''});
+					var chart = makeLineChart(scope.data, 'Time', filterDtls
+							, {xAxis: scope.filterValues.activityMetricTrend[0].label, yAxis: 'Activity Count'});
+
 					chart.bind("#multi-chart");
 					chart.render();
 				}, true);
 
+				function filterColumnDetails(){
+					var filterColDtls = {};
+					angular.forEach(scope.filterValues.activityMetric, function(value, key) {
+							var column = {};
+							column['column'] = scope.filterValues.activityMetric[key].id;
+							filterColDtls[scope.filterValues.activityMetric[key].label] = column;
+					});
+					return filterColDtls;
+				}
+				
 				function flushChartArea() {
 					d3.select("#multi-chart").select("svg").remove();
 					d3.select("#multi-chart").select("#legendDiv").remove();
@@ -27,7 +40,8 @@ enablix.studioApp.directive('ebxMultiLineChart', [
 					d3.select("#multi-chart").select("#outerBoxDiv").remove();
 					d3.select("#multi-chart").select("#innerWrapperDiv").remove();
 				}
-
+					
+			
 				function makeLineChart(dataset, xName, yObjs, axisLables) {
 					var chartObj = {};
 					var color = d3.scale.category10();

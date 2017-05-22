@@ -1,4 +1,4 @@
-<div class="block">
+<div class="block" id="reports" >
 	<div class="head">
 		<h2>{{reportDef.heading}}</h2>
 	</div>
@@ -6,13 +6,19 @@
 		<ebx-data-filters heading="Filter" filters="reportDef.filters" filter-values="reportFilterValues" 
 			search-label="Go" on-search="onReportSearch" pref-values-key="reportDefaultFiltersPrefKey"/>
 	</div>
+	
+	<a class="contextAnchor" 
+		tabindex="-1" ng-click="writeDownloadLink()">
+		    <span class='fa fa-file-image-o downloadReport'></span>
+   	</a>
+   	
 	<div class="cont" ng-if="reportDef.type == 'HEATMAP'">
 		<heatmap class="hm-chart" data="data" dispatch="$parent.dispatch" options="reportDef.options"></heatmap>
 	</div>
-	<div class="cont" ng-if="reportDef.type == 'TABULAR'">
-		<ebx-tabular-report data="data" dispatch="$parent.dispatch" columndetails="reportDef.columndetails"></ebx-tabular-report>
+	<div class="cont" id="tabularReport" ng-if="reportDef.type == 'TABULAR'">
+		<ebx-tabular-report data="data" dispatch="$parent.dispatch" options="reportDef.options" columndetails="reportDef.columndetails"></ebx-tabular-report>
 	</div>
 	<div class="cont" ng-if="reportDef.type == 'MULTILINE'" id="multilinechart">
-		<ebx-multi-line-chart data="data" columndetails="reportDef.columndetails" ></ebx-multi-line-chart>
+		<ebx-multi-line-chart data="data" columndetails="reportDef.columndetails"  filter-values="reportFilterValues" ></ebx-multi-line-chart>
 	</div>
 </div>

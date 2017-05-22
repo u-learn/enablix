@@ -267,13 +267,15 @@ chart-wrapper {
     font-weight: 600;
 }
 .chart-wrapper .legend .series-marker {
-    height: 1em;
-    width: 1em;
+    height: 0.15em;
+    width: 2em;
     border-radius: 15%;
     background-color: crimson;
     display: inline-block;
     margin-right: 4px;
-    margin-bottom: -0.16rem;
+    /* margin-bottom: -0.16rem; */
+    margin-top: 1em;
+    padding-top: 4px;
 }
 
 .chart-wrapper .overlay {
@@ -301,4 +303,9 @@ chart-wrapper {
 @media (max-width:500px){
     .chart-wrapper .line {stroke-width: 3px;}
     .chart-wrapper .legend {font-size: 14px;}
+}
+.downloadReport {
+	float: right;
+    padding-top: 10px;
+    padding-right: 10px;
 }

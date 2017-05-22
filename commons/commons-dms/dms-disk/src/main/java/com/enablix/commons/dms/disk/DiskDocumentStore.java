@@ -14,11 +14,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
 
+import com.enablix.commons.dms.api.BasicDocument;
 import com.enablix.commons.dms.api.Document;
 import com.enablix.commons.dms.api.DocumentBuilder;
 import com.enablix.commons.dms.api.DocumentMetadata;
 import com.enablix.commons.dms.api.DocumentStore;
-import com.enablix.commons.util.StringUtil;
+import com.enablix.core.api.DocInfo;
+import com.enablix.core.api.IDocument;
 
 @Service
 public class DiskDocumentStore implements DocumentStore<DiskDocumentMetadata, DiskDocument> {
@@ -35,22 +37,22 @@ public class DiskDocumentStore implements DocumentStore<DiskDocumentMetadata, Di
 	
 	@Override
 	public DiskDocumentMetadata save(DiskDocument document, String contentPath) throws IOException {
-		
-		DiskDocumentMetadata docMetadata = document.getMetadata();
-		
-		if (StringUtil.isEmpty(docMetadata.getLocation())) {
-			docMetadata.setLocation(locationResolver.getDocumentStoragePath(docMetadata, contentPath));
-		}
-		
-		LOGGER.debug("Saving document {} to: {}", docMetadata.getName(), docMetadata.getLocation());
-		saveToStorage(document);
-		
+		saveDocument(document, contentPath);
 		return document.getMetadata();
 	}
 
-	private void saveToStorage(DiskDocument doc) throws IOException {
+	protected void saveDocument(IDocument doc, String contentPath) throws IOException {
+
+		DocInfo docMetadata = doc.getDocInfo();
+		docMetadata.setLocation(locationResolver.getDocumentStoragePath(docMetadata, contentPath));
 		
-		DiskDocumentMetadata docMetadata = doc.getMetadata();
+		LOGGER.debug("Saving document {} to: {}", docMetadata.getName(), docMetadata.getLocation());
+		saveToStorage(doc);
+	}
+	
+	private void saveToStorage(IDocument doc) throws IOException {
+		
+		DocInfo docMetadata = doc.getDocInfo();
 		
 		File file = new File(docMetadata.getLocation());
 		
@@ -132,6 +134,17 @@ public class DiskDocumentStore implements DocumentStore<DiskDocumentMetadata, Di
 	@Override
 	public void delete(DiskDocumentMetadata docMetadata) throws IOException {
 		archiveService.archiveDocument(docMetadata);
+	}
+
+	@Override
+	public DocInfo save(IDocument document, String path) throws IOException {
+		saveDocument(document, path);
+		return document.getDocInfo();
+	}
+
+	@Override
+	public BasicDocument load(DocInfo docInfo) throws IOException {
+		return new BasicDocument(docInfo, FileStreamHelper.getFileInputStream(docInfo));
 	}
 
 }

@@ -19,18 +19,21 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.enablix.app.content.doc.DocumentManager;
-import com.enablix.commons.dms.api.ContentLengthAwareDocument;
+import com.enablix.commons.dms.api.DocPreviewData;
 import com.enablix.commons.dms.api.Document;
 import com.enablix.commons.dms.api.DocumentMetadata;
 import com.enablix.commons.util.QIdUtil;
 import com.enablix.commons.util.StringUtil;
 import com.enablix.commons.util.process.ProcessContext;
+import com.enablix.core.api.ContentLengthAwareDocument;
+import com.enablix.core.api.IDocument;
 import com.enablix.core.domain.activity.ActivityChannel.Channel;
 import com.enablix.core.domain.activity.Actor;
 import com.enablix.core.domain.activity.ContentActivity.ContentActivityType;
 import com.enablix.core.domain.activity.NonRegisteredActor;
 import com.enablix.core.domain.activity.RegisteredActor;
 import com.enablix.core.security.SecurityUtil;
+import com.enablix.doc.preview.DocPreviewService;
 import com.enablix.services.util.ActivityLogger;
 
 @RestController
@@ -46,6 +49,9 @@ public class DocumentController {
 	
 	@Autowired
 	private DocumentManager docManager;
+	
+	@Autowired
+	private DocPreviewService previewService;
 	
 	@RequestMapping(value = "/upload", method = RequestMethod.POST)
     public @ResponseBody DocumentMetadata handleFileUpload(
@@ -138,7 +144,28 @@ public class DocumentController {
     public DocumentMetadata getDocMetadata(@PathVariable String docIdentity) {
     	return docManager.loadDocMetadata(docIdentity);
     }
+    
+    @RequestMapping(value = "/pd/{docIdentity}", method = {RequestMethod.GET},
+			produces="application/json")
+	public DocPreviewData getDocPreviewData(@PathVariable String docIdentity) {
+    	return previewService.getPreviewData(docIdentity);
+	}
    
+    @RequestMapping(value = "/pdp/{docIdentity}/{elementIndx}/", method = {RequestMethod.GET})
+	public void getDocPreviewPart(HttpServletRequest request,
+            HttpServletResponse response, 
+            @PathVariable String docIdentity, @PathVariable int elementIndx) throws IOException {
+    	
+    	IDocument part = previewService.getPreviewDataPart(docIdentity, elementIndx);
+    	
+    	if (part != null) {
+            sendDownloadResponse(response, part);
+    	} else {
+    		response.sendError(HttpServletResponse.SC_NOT_FOUND);
+    	}
+    	
+	}    
+    
     
 	/**
      * Method for handling file download request from client
@@ -173,13 +200,24 @@ public class DocumentController {
  
     	Document<DocumentMetadata> doc = docManager.load(docIdentity);
     	
-        // get MIME type of the file
-        String mimeType = doc.getMetadata().getContentType(); //context.getMimeType(fullPath);
+        sendDownloadResponse(response, doc);
+        
+        if (!request.getMethod().equals(RequestMethod.HEAD.toString())) {
+        	// Audit download activity
+        	auditActivity(activityType, docIdentity, doc, 
+        		atChannel, atContext, atContextId, atContextTerm);
+        }
+ 
+    }
+
+	private void sendDownloadResponse(HttpServletResponse response, IDocument doc) throws IOException {
+		
+		// get MIME type of the file
+        String mimeType = doc.getDocInfo().getContentType(); //context.getMimeType(fullPath);
         if (mimeType == null) {
             // set to binary type if MIME mapping not found
             mimeType = "application/octet-stream";
         }
-        System.out.println("MIME type: " + mimeType);
  
         // set content attributes for the response
         response.setContentType(mimeType);
@@ -191,7 +229,7 @@ public class DocumentController {
         // set headers for the response
         String headerKey = "Content-Disposition";
         String headerValue = String.format("attachment; filename=\"%s\"",
-                doc.getMetadata().getName());
+                doc.getDocInfo().getName());
         response.setHeader(headerKey, headerValue);
  
         // get output stream of the response
@@ -209,14 +247,7 @@ public class DocumentController {
  
         inputStream.close();
         outStream.close();
-        
-        if (!request.getMethod().equals(RequestMethod.HEAD.toString())) {
-        	// Audit download activity
-        	auditActivity(activityType, docIdentity, doc, 
-        		atChannel, atContext, atContextId, atContextTerm);
-        }
- 
-    }
+	}
 
 	private void auditActivity(ContentActivityType activityType, String docIdentity, 
 			Document<DocumentMetadata> doc, String atChannel, String contextName, 

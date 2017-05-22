@@ -1,9 +1,12 @@
 enablix.studioApp.factory('DocPreviewService', 
 	[
-	 			'RESTService',
-	 	function(RESTService) {
+	 			'RESTService', '$q',
+	 	function(RESTService,   $q) {
 	 			
 	 		var handlers = [];
+	 		
+	 		var TYPE_HTML = "html";
+	 		var TYPE_ANGULAR_HTML = "angular-html";
 	 		
 	 		function PdfPreviewHandler() {
 	 			
@@ -14,6 +17,10 @@ enablix.studioApp.factory('DocPreviewService',
 	 				} else {
 	 					return '<p>Document preview not supported</p>';
 	 				}
+	 			};
+	 			
+	 			this.htmlType = function() {
+	 				return TYPE_HTML;
 	 			};
 	 			
 	 			this.canHandleDoc = function(_docMd) {
@@ -32,13 +39,37 @@ enablix.studioApp.factory('DocPreviewService',
 	 				}
 	 			};
 	 			
+	 			this.htmlType = function() {
+	 				return TYPE_HTML;
+	 			};
+	 			
 	 			this.canHandleDoc = function(_docMd) {
 	 				return _docMd.contentType && _docMd.contentType.indexOf("image") >= 0;
 	 			};
 	 		};
 	 		
-	 		handlers.push(new PdfPreviewHandler());
+	 		function PreviewDataBasedHandler() {
+	 			
+	 			this.previewHtml = function(_docMd) {
+	 				if (this.canHandleDoc(_docMd)) {
+	 					return '<ebx-preview-data-viewer doc-metadata="docMetadata"></ebx-preview-data-viewer>'; 
+	 				} else {
+	 					return '<p>Document preview not supported</p>';
+	 				}
+	 			};
+	 			
+	 			this.htmlType = function() {
+	 				return TYPE_ANGULAR_HTML;
+	 			};
+	 			
+	 			this.canHandleDoc = function(_docMd) {
+	 				return _docMd.previewStatus == 'AVAILABLE';
+	 			};
+	 		};
+	 		
+	 		//handlers.push(new PdfPreviewHandler());
 	 		handlers.push(new ImagePreviewHandler());
+	 		handlers.push(new PreviewDataBasedHandler());
 	 		
 	 		var getPreviewHandler = function(_docMd) {
 	 			
@@ -52,8 +83,26 @@ enablix.studioApp.factory('DocPreviewService',
 	 			return null;
 	 		}
 	 		
+	 		var getPreviewData = function(_docIdentity, _onSuccess, _onError) {
+	 			
+	 			var params = {
+	 				"docIdentity": _docIdentity
+	 			};
+	 			
+	 			RESTService.getForData("getDocPreviewData", params, null, _onSuccess, _onError, null);
+	 			
+	 		};
+	 		
+	 		var checkPreviewAvailable = function(_docMd) {
+	 			var deferred = $q.defer();
+	 			deferred.resolve(getPreviewHandler(_docMd) != null);
+	 			return deferred.promise;
+	 		}
+	 		
 	 		return {
-	 			getPreviewHandler : getPreviewHandler
+	 			getPreviewHandler : getPreviewHandler,
+	 			getPreviewData : getPreviewData,
+	 			checkPreviewAvailable: checkPreviewAvailable
 	 		};
 	 	}
 	 ]);

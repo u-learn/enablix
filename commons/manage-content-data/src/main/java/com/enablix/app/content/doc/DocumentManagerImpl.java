@@ -2,19 +2,36 @@ package com.enablix.app.content.doc;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Component;
 
 import com.enablix.app.content.ContentDataPathResolver;
-import com.enablix.commons.config.ConfigurationUtil;
+import com.enablix.app.template.service.TemplateManager;
+import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.commons.dms.DocumentStoreConstants;
 import com.enablix.commons.dms.api.Document;
 import com.enablix.commons.dms.api.DocumentMetadata;
+import com.enablix.commons.dms.api.DocumentMetadata.PreviewStatus;
 import com.enablix.commons.dms.api.DocumentStore;
 import com.enablix.commons.dms.repository.DocumentMetadataRepository;
+import com.enablix.commons.util.QIdUtil;
+import com.enablix.commons.util.StringUtil;
+import com.enablix.commons.util.concurrent.Events;
 import com.enablix.commons.util.process.ProcessContext;
-import com.enablix.core.domain.config.Configuration;
+import com.enablix.core.api.DocInfo;
+import com.enablix.core.api.IDocument;
+import com.enablix.core.api.TemplateFacade;
+import com.enablix.core.mongo.dao.GenericDao;
+import com.enablix.core.mongo.search.ConditionOperator;
+import com.enablix.core.mongo.search.StringFilter;
+import com.enablix.core.mongo.view.MongoDataView;
+import com.enablix.core.mq.Event;
+import com.enablix.core.mq.util.EventUtil;
 
 @Component
 public class DocumentManagerImpl implements DocumentManager {
@@ -29,6 +46,12 @@ public class DocumentManagerImpl implements DocumentManager {
 	
 	@Autowired
 	private ContentDataPathResolver pathResolver;
+	
+	@Autowired
+	private TemplateManager templateMgr;
+	
+	@Autowired
+	private GenericDao genericDao;
 	
 	@Override
 	public DocumentMetadata saveUsingParentInfo(Document<?> doc, String docContainerQId, 
@@ -106,6 +129,8 @@ public class DocumentManagerImpl implements DocumentManager {
 		
 		docMD = docRepo.save(docMD);
 		
+		EventUtil.publishEvent(new Event<DocumentMetadata>(Events.DOCUMENT_UPLOADED, docMD));
+		
 		return docMD;
 	}
 
@@ -114,14 +139,7 @@ public class DocumentManagerImpl implements DocumentManager {
 	public Document<DocumentMetadata> buildDocument(InputStream dataStream, String name, 
 			String contentType, String contentQId, long contentLength, String docIdentity, boolean tmpDoc) {
 		
-		Configuration docStoreConfig = ConfigurationUtil.getConfig(DocumentStoreConstants.DEFUALT_DOC_STORE_CONFIG_KEY);
-		
-		String storeType = null;
-		if (docStoreConfig != null) {
-			storeType = docStoreConfig.getStringValue(DocumentStoreConstants.DEFUALT_DOC_STORE_CONFIG_PROP);
-		} else {
-			storeType = storeFactory.defaultStoreType();
-		}
+		String storeType = storeFactory.getStoreType(DocumentStoreConstants.DEFAULT_DOC_STORE_CONFIG_PROP);
 		
 		DocumentStore ds = storeFactory.getDocumentStore(storeType);
 		return ds.getDocumentBuilder().build(dataStream, name, contentType, contentQId, contentLength, docIdentity, tmpDoc);
@@ -180,6 +198,75 @@ public class DocumentManagerImpl implements DocumentManager {
 	@Override
 	public DocumentMetadata getDocumentMetadata(String docIdentity) {
 		return docRepo.findByIdentity(docIdentity);
+	}
+
+	@SuppressWarnings("rawtypes")
+	@Override
+	public IDocument load(DocInfo docInfo, String storeType) throws IOException {
+		DocumentStore docStore = storeFactory.getDocumentStore(storeType);
+		return docStore.load(docInfo);
+	}
+
+	@Override
+	public void updatePreviewStatus(String docIdentity, PreviewStatus status) {
+		
+		DocumentMetadata docMetadata = getDocumentMetadata(docIdentity);
+		
+		if (docMetadata != null) {
+			
+			docMetadata.setPreviewStatus(status);
+			docMetadata = docRepo.save(docMetadata);
+			
+			TemplateFacade template = templateMgr.getTemplateFacade(ProcessContext.get().getTemplateId());
+			
+			// update in content collection as well
+			String docQId = docMetadata.getContentQId();
+			String parentQId = QIdUtil.getParentQId(docQId);
+			String parentCollName = template.getCollectionName(parentQId);
+			
+			if (StringUtil.hasText(parentCollName)) {
+			
+				String docAttrId = QIdUtil.getElementId(docQId);
+				String docIdentityAttr = docAttrId + "." + ContentDataConstants.IDENTITY_KEY;
+				String previewStatusAttr = docAttrId + "." + DocumentMetadata.PREVIEW_STATUS_FLD_ID;
+				
+				StringFilter docIdentitFilter = new StringFilter(docIdentityAttr , docIdentity, ConditionOperator.EQ);
+				Query query = new Query(docIdentitFilter.toPredicate(new Criteria()));
+	
+				Update update = new Update();
+				update.set(previewStatusAttr, status);
+	
+				genericDao.updateMulti(query, update, parentCollName);
+			}
+		}
+	}
+	
+	@Override
+	public boolean checkReferenceRecordExists(DocumentMetadata docMetadata) {
+
+		boolean exists = false;
+		
+		TemplateFacade template = templateMgr.getTemplateFacade(ProcessContext.get().getTemplateId());
+
+		String docIdentity = docMetadata.getIdentity();
+		String docQId = docMetadata.getContentQId();
+		String parentQId = QIdUtil.getParentQId(docQId);
+		String parentCollName = template.getCollectionName(parentQId);
+		
+		if (StringUtil.hasText(parentCollName)) {
+		
+			String docAttrId = QIdUtil.getElementId(docQId);
+			String docIdentityAttr = docAttrId + "." + ContentDataConstants.IDENTITY_KEY;
+			
+			StringFilter docIdentitFilter = new StringFilter(docIdentityAttr , docIdentity, ConditionOperator.EQ);
+			Criteria criteria = docIdentitFilter.toPredicate(new Criteria());
+
+			Long recordCnt = genericDao.countByCriteria(criteria, parentCollName, Map.class, MongoDataView.ALL_DATA);
+
+			exists = recordCnt > 0;
+		}
+		
+		return exists;
 	}
 
 }

@@ -2,24 +2,30 @@ package com.enablix.commons.dms.dropbox;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Locale;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.dropbox.core.DbxClient;
-import com.dropbox.core.DbxClient.Downloader;
-import com.dropbox.core.DbxEntry;
+import com.dropbox.core.DbxApiException;
+import com.dropbox.core.DbxDownloader;
 import com.dropbox.core.DbxException;
 import com.dropbox.core.DbxRequestConfig;
-import com.dropbox.core.DbxWriteMode;
+import com.dropbox.core.v2.DbxClientV2;
+import com.dropbox.core.v2.files.FileMetadata;
+import com.dropbox.core.v2.files.GetMetadataErrorException;
+import com.dropbox.core.v2.files.LookupError;
+import com.dropbox.core.v2.files.Metadata;
+import com.dropbox.core.v2.files.WriteMode;
 import com.enablix.commons.dms.api.AbstractDocumentStore;
+import com.enablix.commons.dms.api.BasicDocument;
 import com.enablix.commons.dms.api.Document;
 import com.enablix.commons.dms.api.DocumentBuilder;
 import com.enablix.commons.dms.api.DocumentMetadata;
 import com.enablix.commons.util.StringUtil;
+import com.enablix.core.api.DocInfo;
+import com.enablix.core.api.IDocument;
 import com.enablix.core.domain.config.Configuration;
 
 @Component
@@ -43,24 +49,32 @@ public class DropboxDocumentStore extends AbstractDocumentStore<DropboxDocumentM
 	@Override
 	public DropboxDocumentMetadata save(DropboxDocument document, String contentPath) throws IOException {
 
-        DbxClient client = createDbxClient();
+        saveAndUpdateDocInfo(document, contentPath);
+        
+		return document.getMetadata();
+	}
+	
+	protected void saveAndUpdateDocInfo(IDocument document, String contentPath) throws IOException {
+		
+		DbxClientV2 client = createDbxClient();
         
         try {
 			
-        	LOGGER.debug("Linked account: {}", client.getAccountInfo().displayName);
+        	logLinkedAccountName(client);
 			
         	InputStream inputStream = document.getDataStream();
 			
 	        try {
 	        	
-	        	String fileLocation = createDropboxFilepath(document.getMetadata(), contentPath);
+	        	String fileLocation = createDropboxFilepath(document.getDocInfo(), contentPath);
 	        	
-				DbxEntry.File uploadedFile = client.uploadFile(
-	        			fileLocation, determineWriteMode(client, fileLocation), 
-	        			document.getContentLength(), inputStream);
+				FileMetadata uploadedFile = 
+						client.files().uploadBuilder(fileLocation)
+									  .withMode(determineWriteMode(client, fileLocation))
+									  .uploadAndFinish(inputStream);
 	        	
-				fileLocation = uploadedFile.path;
-				document.getMetadata().setLocation(fileLocation);
+				fileLocation = uploadedFile.getPathLower();
+				document.getDocInfo().setLocation(fileLocation);
 				
 	        	LOGGER.debug("Uploaded: {}", uploadedFile.toString());
 	        	
@@ -73,20 +87,33 @@ public class DropboxDocumentStore extends AbstractDocumentStore<DropboxDocumentM
 			throw new IOException(e);
 		}
         
-		return document.getMetadata();
 	}
 	
-	private DbxWriteMode determineWriteMode(DbxClient client, String docLocation) throws DbxException {
+	private WriteMode determineWriteMode(DbxClientV2 client, String docLocation) throws DbxException {
 		
-		DbxWriteMode mode = DbxWriteMode.add();
+		WriteMode mode = WriteMode.ADD;
 		
 		if (!StringUtil.isEmpty(docLocation)) {
 			
-			DbxEntry entry = client.getMetadata(docLocation);
+			Metadata entry = null;
 			
-			if (entry != null && entry instanceof DbxEntry.File) {
-				DbxEntry.File file = (DbxEntry.File) entry;
-				mode = DbxWriteMode.update(file.rev);
+			try {
+				
+				entry = client.files().getMetadata(docLocation);
+				
+			} catch (GetMetadataErrorException e) {
+				
+				if (e.errorValue.getPathValue() == LookupError.NOT_FOUND) {
+					//ignore, if not found, then the write mode is to ADD
+				} else {
+					throw e;
+				}
+			}
+			
+			
+			if (entry != null && entry instanceof FileMetadata) {
+				FileMetadata file = (FileMetadata) entry;
+				mode = WriteMode.update(file.getRev());
 			}
 			
 		}
@@ -94,18 +121,17 @@ public class DropboxDocumentStore extends AbstractDocumentStore<DropboxDocumentM
 		return mode;
 	}
 
-	private String createDropboxFilepath(DropboxDocumentMetadata md, String contentPath) {
-		return "/" + contentPath + "/" + md.getName();
+	private String createDropboxFilepath(DocInfo md, String contentPath) {
+		return (contentPath.charAt(0) == '/' ? "" : "/") + contentPath + "/" + md.getName();
 	}
 
-	private DbxClient createDbxClient() {
+	private DbxClientV2 createDbxClient() {
 		
 		Configuration configuration = getDocStoreConfiguration();
 		
-		DbxRequestConfig config = new DbxRequestConfig(
-				getAppName(configuration), Locale.getDefault().toString());
+		DbxRequestConfig config = DbxRequestConfig.newBuilder(getAppName(configuration)).build();
         
-        DbxClient client = new DbxClient(config, getAccessToken(configuration));
+        DbxClientV2 client = new DbxClientV2(config, getAccessToken(configuration));
 		return client;
 	}
 	
@@ -122,18 +148,18 @@ public class DropboxDocumentStore extends AbstractDocumentStore<DropboxDocumentM
 		return new DropboxDocument(getDocReader(docMetadata.getLocation()), docMetadata);
 	}
 	
-	private DropboxReader getDocReader(String docLocation) throws IOException {
+	private InputStream getDocReader(String docLocation) throws IOException {
 		
-		DbxClient client = createDbxClient();
+		DbxClientV2 client = createDbxClient();
 		
-		DropboxReader reader = null;
+		InputStream reader = null;
 		
         try {
         	
-        	Downloader downloader = client.startGetFile(docLocation, null);
-			reader = new DropboxReader(downloader);
+        	DbxDownloader<FileMetadata> downloader = client.files().download(docLocation);
+			reader = downloader.getInputStream();
 			
-            LOGGER.debug("Metadata: {}", downloader.metadata);
+            LOGGER.debug("Metadata: {}", downloader.getResult());
             
         } catch (DbxException e) {
 			LOGGER.error("Error loading file from dropbox", e);
@@ -164,37 +190,23 @@ public class DropboxDocumentStore extends AbstractDocumentStore<DropboxDocumentM
 		return docBuilder ;
 	}
 	
-	private static class DropboxReader extends InputStream {
-
-		private Downloader downloader;
-		
-		private DropboxReader(Downloader downloader) {
-			this.downloader = downloader;
-		}
-		
-		@Override
-		public int read() throws IOException {
-			return downloader.body.read();
-		}
-		
-	}
 
 	@Override
 	public DropboxDocumentMetadata move(DropboxDocumentMetadata docMetadata, 
 			String newContentPath) throws IOException {
 		
-		DbxClient client = createDbxClient();
+		DbxClientV2 client = createDbxClient();
         
         try {
 			
-        	LOGGER.debug("Linked account: {}", client.getAccountInfo().displayName);
+        	logLinkedAccountName(client);
         	
         	String newFileLoc = createDropboxFilepath(docMetadata, newContentPath);
         	
         	String oldLoc = docMetadata.getLocation();
         	
         	LOGGER.debug("Moving file from: {}, to: {}", oldLoc, newFileLoc);
-			DbxEntry dbxFileEntry = client.move(oldLoc, newFileLoc);
+			Metadata dbxFileEntry = client.files().move(oldLoc, newFileLoc);
         	
 			if (dbxFileEntry == null) {
 				// move command may have failed because of existing file with same name
@@ -207,9 +219,9 @@ public class DropboxDocumentStore extends AbstractDocumentStore<DropboxDocumentM
 				throw new IOException("Unable to move file");
 			}
 			
-			docMetadata.setLocation(dbxFileEntry.path);
+			docMetadata.setLocation(dbxFileEntry.getPathLower());
 			
-        	LOGGER.debug("File move from: {}, to: {}", oldLoc, dbxFileEntry.path);
+        	LOGGER.debug("File move from: {}, to: {}", oldLoc, dbxFileEntry.getPathLower());
 	        	
 	        
 		} catch (DbxException e) {
@@ -220,19 +232,25 @@ public class DropboxDocumentStore extends AbstractDocumentStore<DropboxDocumentM
 		return docMetadata;
 	}
 
-	private DbxEntry tryDeleteAndMove(DbxClient client, String oldLoc, String newFileLoc) throws DbxException, IOException {
+	private void logLinkedAccountName(DbxClientV2 client) throws DbxApiException, DbxException {
+		if (LOGGER.isDebugEnabled()) {
+			LOGGER.debug("Linked account: {}", client.users().getCurrentAccount().getName().getDisplayName());
+		}
+	}
+
+	private Metadata tryDeleteAndMove(DbxClientV2 client, String oldLoc, String newFileLoc) throws DbxException, IOException {
 		
 		LOGGER.debug("Trying delete and move as a file already exists in the new location: {}", newFileLoc);
 		
-		DbxEntry newLocFile = null;
+		Metadata newLocFile = null;
 		
 		String archiveFileLoc = newFileLoc + "." + System.currentTimeMillis();
-		DbxEntry archivedFile = client.move(newFileLoc, archiveFileLoc);
+		Metadata archivedFile = client.files().move(newFileLoc, archiveFileLoc);
 		
 		if (archivedFile != null) {
 			
-			newLocFile = client.move(oldLoc, newFileLoc);
-			client.delete(archiveFileLoc);
+			newLocFile = client.files().move(oldLoc, newFileLoc);
+			client.files().delete(archiveFileLoc);
 			
 		} else {
 			throw new IOException("Unable to archive existing file: " + newFileLoc);
@@ -261,13 +279,13 @@ public class DropboxDocumentStore extends AbstractDocumentStore<DropboxDocumentM
 	@Override
 	public void delete(DropboxDocumentMetadata docMetadata) throws IOException {
 		
-		DbxClient client = createDbxClient();
+		DbxClientV2 client = createDbxClient();
         
         try {
 			
-        	LOGGER.debug("Linked account: {}", client.getAccountInfo().displayName);
+        	logLinkedAccountName(client);
         	
-        	client.delete(docMetadata.getLocation());
+        	client.files().delete(docMetadata.getLocation());
         	
         	LOGGER.debug("File [{}] deleted from dropbox", docMetadata.getLocation());
 	        
@@ -276,6 +294,17 @@ public class DropboxDocumentStore extends AbstractDocumentStore<DropboxDocumentM
 			throw new IOException(e);
 		}
         
+	}
+
+	@Override
+	public DocInfo save(IDocument document, String path) throws IOException {
+		saveAndUpdateDocInfo(document, path);
+		return document.getDocInfo();
+	}
+
+	@Override
+	public BasicDocument load(DocInfo docInfo) throws IOException {
+		return new BasicDocument(docInfo, getDocReader(docInfo.getLocation()));
 	}
 
 }

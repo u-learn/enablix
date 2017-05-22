@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.enablix.commons.dms.disk.ArchiveDocumentService;
-import com.enablix.commons.dms.disk.DiskDocumentMetadata;
+import com.enablix.core.api.DocInfo;
 
 
 /**
@@ -24,7 +24,7 @@ public class ArchiveDocumentServiceImpl implements ArchiveDocumentService {
 	private static final Logger LOGGER = LoggerFactory.getLogger(ArchiveDocumentServiceImpl.class);
 	
 	@Override
-	public String archiveDocument(DiskDocumentMetadata docMetadata) {
+	public String archiveDocument(DocInfo docMetadata) {
 		
 		File file = new File(docMetadata.getLocation());
 		
@@ -41,7 +41,7 @@ public class ArchiveDocumentServiceImpl implements ArchiveDocumentService {
 		return file.getAbsolutePath();
 	}
 	
-	private File getArchiveFile(DiskDocumentMetadata dm) {
+	private File getArchiveFile(DocInfo dm) {
 		
 		long currentTime = Calendar.getInstance().getTimeInMillis();
 		File archiveFile = new File(dm.getLocation() + "." + currentTime);

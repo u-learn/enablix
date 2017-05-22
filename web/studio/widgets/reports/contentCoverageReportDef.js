@@ -31,6 +31,38 @@ enablix.studioApp.factory('ContentCoverageReportDef',
 						})
 						
 					},
+					downloadReport : function(){
+						var w = 100, h = 100;
+						var blankCanvas = document.createElement('canvas');
+						blankCanvas.id = "canvas";
+						blankCanvas.width = w * 50;
+						blankCanvas.height = h * 50;
+						
+						document.getElementById("reports").appendChild(blankCanvas);
+
+						var html = new XMLSerializer().serializeToString(document.getElementById("reports").querySelector('svg'));
+						var imgsrc = 'data:image/svg+xml;base64,' + btoa(html);
+						var canvas = document.getElementById("canvas");
+						var context = canvas.getContext("2d");
+						context.fillStyle = 'white';
+						context.fillRect(0, 0, canvas.width, canvas.height);			
+						var canvasdata;
+						var image = new Image;
+						image.src = imgsrc;
+						
+						image.onload = function() {
+						  context.drawImage(image, 0, 0, canvas.width, canvas.height);
+						  canvasdata = canvas.toDataURL("image/png");
+						  var a = document.createElement("a");
+						  a.id = "imagepng"
+						  a.download = "content-coverage-report.png";
+						  a.href = canvasdata;
+						  document.getElementById("reports").appendChild(a);
+						  a.click();
+						  document.getElementById("reports").removeChild(a);
+						  document.getElementById("reports").removeChild(blankCanvas);
+						}
+					},
 					filterMetadata: {
 						"latest" : {
 		 					"field" : "latest",

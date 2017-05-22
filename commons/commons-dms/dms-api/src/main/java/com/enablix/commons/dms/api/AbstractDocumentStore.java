@@ -20,4 +20,5 @@ public abstract class AbstractDocumentStore<DM extends DocumentMetadata, D exten
 		return config;
 	}
 
+	
 }

@@ -1,8 +1,8 @@
 package com.enablix.dms.sharepoint;
 
-import com.enablix.commons.dms.api.ContentLengthAwareDocument;
 import com.enablix.commons.dms.api.DocumentMetadata;
 import com.enablix.commons.util.id.IdentityUtil;
+import com.enablix.core.api.ContentLengthAwareDocument;
 
 public class SharepointDocumentMetadata extends DocumentMetadata implements ContentLengthAwareDocument {
 
@@ -38,6 +38,16 @@ public class SharepointDocumentMetadata extends DocumentMetadata implements Cont
 
 	public void setContentLength(long contentLength) {
 		this.contentLength = contentLength;
+	}
+
+	@Override
+	public String getLocation() {
+		return getFileLocation();
+	}
+
+	@Override
+	public void setLocation(String location) {
+		setFileLocation(location);
 	}
 
 }

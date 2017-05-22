@@ -154,7 +154,11 @@ $a_siteUrl/app.html#/portal/container/$a_containerQId/$a_contentIdentity/c/singl
 <div class="hide-for-mobile">#spacer_row($a_secondRowHeight)</div>
 #end
 
-
+#macro( generic_link $a_linkUrl $a_linkText )
+<a href="${a_linkUrl}">
+<span class="link-u" style="color:#004ba1; text-decoration:underline">${a_linkText}</span>
+</a>
+#end
 
 #macro( portal_home_link $a_linkText )
 <a href="${obj.url}/app.html#/portal/home">

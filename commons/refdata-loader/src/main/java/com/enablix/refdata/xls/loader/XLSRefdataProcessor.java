@@ -10,7 +10,7 @@ import java.util.Map;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,7 +42,7 @@ public class XLSRefdataProcessor implements DataFileProcessor {
 			
 			workbook = new XSSFWorkbook(dataFile);
 			
-			for (XSSFSheet sheet : workbook) {
+			for (Sheet sheet : workbook) {
 				
 				String collectionName = getCollectionName(dataFile, sheet);
 				System.out.println("Collection name: " + collectionName);
@@ -86,10 +86,10 @@ public class XLSRefdataProcessor implements DataFileProcessor {
 				}
 			}
 			
-		} catch (InvalidFormatException e) {
-			LOGGER.error("Error reading refdata file [" + dataFile.getAbsolutePath() +"]", e);
-
 		} catch (IOException e) {
+			LOGGER.error("Error reading refdata file [" + dataFile.getAbsolutePath() +"]", e);
+			
+		} catch (InvalidFormatException e) {
 			LOGGER.error("Error reading refdata file [" + dataFile.getAbsolutePath() +"]", e);
 			
 		} finally {
@@ -114,29 +114,30 @@ public class XLSRefdataProcessor implements DataFileProcessor {
 		return fileName.substring(0, indxOfDot);
 	}
 	
-	private String getRefdataContainerId(XSSFSheet sheet) {
+	private String getRefdataContainerId(Sheet sheet) {
 		return sheet.getSheetName();
 	}
 	
-	private String getCollectionName(File dataFile, XSSFSheet sheet) {
+	private String getCollectionName(File dataFile, Sheet sheet) {
 		return DatastoreUtil.getCollectionName(getTemplateIdFromFile(dataFile), getRefdataContainerId(sheet));
 	}
 	
+	@SuppressWarnings("deprecation")
 	private String getCellValueAsString(Cell cell) {
 		
 		String cellValue = "";
 
-		switch (cell.getCellType()) {
+		switch (cell.getCellTypeEnum()) {
 	        
-			case Cell.CELL_TYPE_STRING:
+			case STRING:
 	            cellValue = cell.getStringCellValue();
 	            break;
 	            
-	        case Cell.CELL_TYPE_NUMERIC:
+	        case NUMERIC:
 	            cellValue = String.valueOf(cell.getNumericCellValue());
 	            break;
 	            
-	        case Cell.CELL_TYPE_BOOLEAN:
+	        case BOOLEAN:
 	            cellValue = String.valueOf(cell.getBooleanCellValue());
 	            break;
 	            
