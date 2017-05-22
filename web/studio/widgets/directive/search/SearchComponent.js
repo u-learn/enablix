@@ -83,13 +83,19 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var createContainerNode = function createContainerNode(subContainer) {
-    var depth = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
-    return new ContainerNode(subContainer, depth);
-};
-
 var ALL_NODES = [];
 var BUSINESS_DIMENSION = "BUSINESS_DIMENSION";
+
+/**
+ * Calles the Container node constructor if it has a proper business category
+ * @param {*} subContainer 
+ * @param {*} depth 
+ */
+function createContainerNode(subContainer) {
+    var depth = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+
+    return new ContainerNode(subContainer, depth);
+}
 
 var ContainerNode = function ContainerNode(_ref) {
     var _this = this;
@@ -113,7 +119,9 @@ var ContainerNode = function ContainerNode(_ref) {
     function addDepth(subContainer) {
         return createContainerNode(subContainer, newDepth);
     }
-    container.map(addDepth).forEach(function (node) {
+    container.map(addDepth).filter(function (node) {
+        return node !== null;
+    }).forEach(function (node) {
         if (_this.nodes[node.label]) {
             console.warn("ContainerNode::The node with label " + label + " already exists, skipping");
             return;
@@ -169,6 +177,17 @@ var BizDimEntSubNode = function BizDimEntSubNode(_ref3) {
     this.label = this.bizDimEnt.label + " (" + suffix + ")";
 };
 
+/**
+ * First level nodes require a business category
+ * @param {*} container 
+ */
+
+
+function createBizCategoryNodes(container) {
+    if (!container.businessCategory) return null;
+    return createContainerNode(container);
+}
+
 var ContainerGraph = function () {
     function ContainerGraph(ebTemplate) {
         var _this2 = this;
@@ -178,7 +197,9 @@ var ContainerGraph = function () {
         var container = ebTemplate.dataDefinition.container;
 
         this.rootNodes = {};
-        container.map(createContainerNode).forEach(function (node) {
+        container.map(createBizCategoryNodes).filter(function (node) {
+            return node !== null;
+        }).forEach(function (node) {
             if (_this2.rootNodes[node.label]) {
                 console.warn("ContainerGraph::The node with label " + node.label + " already exists, skipping");
                 return;
@@ -257,6 +278,20 @@ var SearchComponent = exports.SearchComponent = function () {
         this.enteredQuery = "";
         this.selectedTs = new Date();
 
+        this.suggestionTemplate = function (node) {
+            var label = node.label,
+                id = node.id;
+
+            var innerContent = label;
+            if (node instanceof BizDimensionEntity) {
+                var bizDimensionNode = node.bizDimensionNode;
+
+                var dimension = bizDimensionNode.label;
+                innerContent = "<span>" + label + "</span><span class=\"pull-right eb-tt-biz-dimension\">" + dimension + "</span>";
+            }
+            return "\n        <div data-id=\"" + id + "\" class=\"container-fluid\">\n            " + innerContent + "\n        </div>\n        ";
+        };
+
         this.updateBizEntity = function (content, key) {
             var idx = processBizDimEnts(content, key).map(_this3._createBizDimEntity);
             console.log({ idx: idx });
@@ -320,25 +355,32 @@ var SearchComponent = exports.SearchComponent = function () {
             }
         });
         this.$e = $(mountPoint);
-        this.$e.typeahead({ hint: true, highlight: true, minLength: 1 }, { name: 'entities', source: this.hound, limit: 10, display: LABEL })
+        this.$e.typeahead({
+            hint: true,
+            highlight: true,
+            minLength: 1
+        }, {
+            name: 'entities',
+            source: this.hound,
+            limit: 10,
+            display: LABEL,
+            templates: {
+                suggestion: this.suggestionTemplate
+            }
+        }).bind("typeahead:select", this.onSelect)
         //.bind("typeahead:change",this.onChange)
-        .bind("typeahead:select", this.onSelect).keydown(this.onEnter);
+        .keydown(this.onEnter);
         //Kick off async processing
         asyncData.template.then(function (ebTemplate) {
             _this3.updateTemplate(ebTemplate);
-            _.entries(asyncData).map(function (_ref6) {
+            _(asyncData).omit(["template"]).entries().forEach(function (_ref6) {
                 var _ref7 = _slicedToArray(_ref6, 2),
                     key = _ref7[0],
                     promise = _ref7[1];
 
-                if (key === "template") {
-                    //skip
-                    return;
-                } else {
-                    promise.then(function (content) {
-                        return _this3.updateBizEntity(content, key);
-                    });
-                }
+                promise.then(function (content) {
+                    return _this3.updateBizEntity(content, key);
+                });
             });
         });
     }

@@ -2038,11 +2038,15 @@ td .dropdown-menu-cont {
 }
 
 .tt-selectable {
-  cursor: pointer;
-  border: 1px solid grey;
-  min-width: 200px;
-  background-color:white;
-  color:black;
+	cursor: pointer;
+	border-left: 1px solid grey;
+	border-right: 1px solid grey;
+	border-bottom:1px solid grey;
+	width: 20vw;
+	background-color:white;
+	color:black;
+	padding-right: 0px;
+	padding-left: 0px;
 }
 
 .tt-selectable:hover {
@@ -2053,4 +2057,11 @@ td .dropdown-menu-cont {
 .tt-cursor {
     background-color:#2980b9;
     color:white;
+}
+
+.eb-tt-biz-dimension {
+	font-size:0.875em;
+	padding-right:5px;
+	padding-top:5px;
+	text-align: right;
 }
