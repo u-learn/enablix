@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<contentTemplate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.08" id="haystax_enterprise" xsi:noNamespaceSchemaLocation="../xsd/content-template.xsd">
+<contentTemplate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.09" id="haystax_enterprise" xsi:noNamespaceSchemaLocation="../xsd/content-template.xsd">
 	<dataDefinition>
 		<container id="product" label="Products" businessCategory="BUSINESS_DIMENSION">
 			<contentItem id="name" label="Name" type="text" searchBoost="7"/>
@@ -31,7 +31,6 @@
 			<container id="prodLunchLearn" label="Lunch and Learn" linkContainerQId="lunchandlearn" linkContentItemId="products"/>						
 			<container id="prodEvent" label="Events" linkContainerQId="event" linkContentItemId="products"/>			
 			<container id="prodMessageTree" label="Message Trees" linkContainerQId="messageTree" linkContentItemId="products"/>
-			<container id="prodMultimedia" label="Multimedia" linkContainerQId="multimedia" linkContentItemId="products"/>			
 			<container id="prodArticle" label="News Article" linkContainerQId="article" linkContentItemId="products"/>			
 			<container id="prodOnePager" label="One Pagers" linkContainerQId="onepager" linkContentItemId="products"/>
 			<container id="prodSalesDeck" label="Presentations" linkContainerQId="salesDeck" linkContentItemId="products"/>						
@@ -42,7 +41,8 @@
 			<container id="prodProposal" label="Proposals" linkContainerQId="proposal" linkContentItemId="products"/>
 			<container id="prodResearch" label="Research" linkContainerQId="research" linkContentItemId="products"/>
 			<container id="prodRFXQA" label="RFX Q&amp;A" linkContainerQId="rfxqa" linkContentItemId="rfxproducts"/>						
-			<container id="prodTopic" label="Topics" linkContainerQId="topic" linkContentItemId="products"/>							
+			<container id="prodTopic" label="Topics" linkContainerQId="topic" linkContentItemId="products"/>				
+			<container id="prodVideo" label="Videos" linkContainerQId="video" linkContentItemId="products"/>						
 			<container id="prodWhitePaper" label="White Papers" linkContainerQId="whitepaper" linkContentItemId="products"/>			
 			<container id="prodWinLoss" label="Win Loss Analysis" linkContainerQId="winloss" linkContentItemId="products"/>			
 			<container id="prodContent" label="Other Content" linkContainerQId="content" linkContentItemId="products"/>
@@ -99,7 +99,6 @@
 			<container id="solLunchLearn" label="Lunch and Learn" linkContainerQId="lunchandlearn" linkContentItemId="solutions"/>									
 			<container id="solEvent" label="Events" linkContainerQId="event" linkContentItemId="solutions"/>			
 			<container id="solMessageTree" label="Message Trees" linkContainerQId="messageTree" linkContentItemId="solutions"/>
-			<container id="solMultimedia" label="Multimedia" linkContainerQId="multimedia" linkContentItemId="solutions"/>
 			<container id="solArticle" label="News Article" linkContainerQId="article" linkContentItemId="solutions"/>
 			<container id="solOnePager" label="One Pagers" linkContainerQId="onepager" linkContentItemId="solutions"/>						
 			<container id="solSalesDeck" label="Presentations" linkContainerQId="salesDeck" linkContentItemId="solutions"/>			
@@ -114,7 +113,8 @@
 				<contentItem id="file" label="File" type="doc"/>
 				<contentItem id="summary" label="Summary" type="text"/>
 			</container>			
-			<container id="solTopic" label="Topics" linkContainerQId="topic" linkContentItemId="solutions"/>				
+			<container id="solTopic" label="Topics" linkContainerQId="topic" linkContentItemId="solutions"/>
+			<container id="solVideo" label="Videos" linkContainerQId="video" linkContentItemId="solutions"/>			
 			<container id="solWhitePaper" label="White Papers" linkContainerQId="whitepaper" linkContentItemId="solutions"/>			
 			<container id="solWinLoss" label="Win Loss Analysis" linkContainerQId="winloss" linkContentItemId="solutions"/>
 			<container id="solContent" label="Other Content" linkContainerQId="content" linkContentItemId="solutions"/>
@@ -167,7 +167,6 @@
 			<container id="appImages" label="Images" linkContainerQId="image" linkContentItemId="apps"/>			
 			<container id="appLunchLearn" label="Lunch and Learn" linkContainerQId="lunchandlearn" linkContentItemId="apps"/>	
 			<container id="appEvent" label="Apps" linkContainerQId="event" linkContentItemId="apps"/>											
-			<container id="appMultimedia" label="Multimedia" linkContainerQId="multimedia" linkContentItemId="apps"/>			
 			<container id="appArticle" label="News Article" linkContainerQId="article" linkContentItemId="apps"/>
 			<container id="appOnePager" label="One Pagers" linkContainerQId="onepager" linkContentItemId="apps"/>			
 			<container id="appSalesDeck" label="Presentations" linkContainerQId="salesDeck" linkContentItemId="apps"/>		
@@ -178,6 +177,7 @@
 			<container id="appResearch" label="Research" linkContainerQId="research" linkContentItemId="apps"/>						
 			<container id="appRFXQA" label="RFX Q&amp;A" linkContainerQId="rfxqa" linkContentItemId="rfxapps"/>									
 			<container id="appTopic" label="Topics" linkContainerQId="topic" linkContentItemId="apps"/>				
+			<container id="appVideo" label="Videos" linkContainerQId="video" linkContentItemId="apps"/>			
 			<container id="appWinLoss" label="Win Loss Analysis" linkContainerQId="winloss" linkContentItemId="apps"/>
 			<container id="appWhitePaper" label="White Papers" linkContainerQId="whitepaper" linkContentItemId="apps"/>
 			<container id="appContent" label="Other Content" linkContainerQId="content" linkContentItemId="apps"/>
@@ -206,7 +206,6 @@
 			<container id="compImpSlide" label="Important Slides" linkContainerQId="importantslide" linkContentItemId="competitors"/>
 			<container id="compLunchLearn" label="Lunch and Learn" linkContainerQId="lunchandlearn" linkContentItemId="competitors"/>									
 			<container id="compEvent" label="Events" linkContainerQId="event" linkContentItemId="competitors"/>			
-			<container id="compMultimedia" label="Multimedia" linkContainerQId="multimedia" linkContentItemId="competitors"/>						
 			<container id="compArticle" label="News Article" linkContainerQId="article" linkContentItemId="competitors"/>
 			<container id="compPress" label="Press" linkContainerQId="press" linkContentItemId="competitors"/>											
 			<container id="compPOC" label="Proof of Concepts" linkContainerQId="poc" linkContentItemId="competitors"/>
@@ -215,7 +214,8 @@
 			<container id="compRFXQA" label="RFX Q&amp;A" linkContainerQId="rfxqa" linkContentItemId="rfxcompetitors"/>			
 			<container id="compSalesKits" label="Sales Kits" linkContainerQId="salesKit" linkContentItemId="competitors"/>										
 			<container id="compSWOT" label="SWOT" linkContainerQId="swot" linkContentItemId="competitors"/>									
-			<container id="compTopic" label="Topics" linkContainerQId="topic" linkContentItemId="competitors"/>				
+			<container id="compTopic" label="Topics" linkContainerQId="topic" linkContentItemId="competitors"/>	
+			<container id="compVideo" label="Videos" linkContainerQId="video" linkContentItemId="competitors"/>						
 			<container id="compWhitePaper" label="White Papers" linkContainerQId="whitepaper" linkContentItemId="competitors"/>			
 			<container id="compWinLoss" label="Win Loss Analysis" linkContainerQId="winloss" linkContentItemId="competitors"/>
 			<container id="compContent" label="Other Content" linkContainerQId="content" linkContentItemId="competitors"/>
@@ -237,7 +237,6 @@
 			<container id="custBlog" label="Blogs" linkContainerQId="blog" linkContentItemId="customers"/>			
 			<container id="custCaseStudy" label="Case Studies" linkContainerQId="caseStudy" linkContentItemId="customers"/>
 			<container id="custLunchLearn" label="Lunch and Learn" linkContainerQId="lunchandlearn" linkContentItemId="customers"/>									
-			<container id="custMultimedia" label="Multimedia" linkContainerQId="multimedia" linkContentItemId="customers"/>
 			<container id="custArticle" label="News Article" linkContainerQId="article" linkContentItemId="customers"/>						
 			<container id="custSalesDeck" label="Presentations" linkContainerQId="salesDeck" linkContentItemId="customers"/>
 			<container id="custPress" label="Press" linkContainerQId="press" linkContentItemId="customers"/>									
@@ -350,6 +349,7 @@
 				<container id="oppWinLoss" label="Win Loss Analysis" linkContainerQId="winloss" linkContentItemId="opportunities"/>
 				<container id="oppContent" label="Other Content" linkContainerQId="content" linkContentItemId="opportunities"/>
 			</container>			
+			<container id="custVideo" label="Videos" linkContainerQId="video" linkContentItemId="customers"/>			
 			<container id="custWhitePaper" label="White Papers" linkContainerQId="whitepaper" linkContentItemId="customers"/>			
 			<container id="custContent" label="Other Content" linkContainerQId="content" linkContentItemId="customers"/>			
 		</container>
@@ -391,7 +391,6 @@
 			<container id="partnerLunchLearn" label="Lunch and Learn" linkContainerQId="lunchandlearn" linkContentItemId="partners"/>												
 			<container id="partnerEvent" label="Events" linkContainerQId="event" linkContentItemId="partners"/>			
 			<container id="partnerImage" label="Images" linkContainerQId="image" linkContentItemId="partners"/>						
-			<container id="partnerMultimedia" label="Multimedia" linkContainerQId="multimedia" linkContentItemId="partners"/>
 			<container id="partnerArticle" label="News Article" linkContainerQId="article" linkContentItemId="partners"/>
 			<container id="partnerSalesDeck" label="Presentations" linkContainerQId="salesDeck" linkContentItemId="partners"/>
 			<container id="partnerSalesKits" label="Sales Kits" linkContainerQId="salesKit" linkContentItemId="partners"/>												
@@ -401,7 +400,8 @@
 			<container id="partnerProposal" label="Proposals" linkContainerQId="proposal" linkContentItemId="partners"/>
 			<container id="partnerResearch" label="Research" linkContainerQId="research" linkContentItemId="partners"/>
 			<container id="partnerRFXQA" label="RFX Q&amp;A" linkContainerQId="rfxqa" linkContentItemId="rfxpartners"/>			
-			<container id="partnerTopic" label="Topics" linkContainerQId="topic" linkContentItemId="partners"/>				
+			<container id="partnerTopic" label="Topics" linkContainerQId="topic" linkContentItemId="partners"/>	
+			<container id="partnerVideo" label="Videos" linkContainerQId="video" linkContentItemId="partners"/>						
 			<container id="partnerWinLoss" label="Win Loss Analysis" linkContainerQId="winloss" linkContentItemId="partners"/>
 			<container id="partnerWhitePaper" label="White Papers" linkContainerQId="whitepaper" linkContentItemId="partners"/>
 			<container id="partnerContent" label="Other Content" linkContainerQId="content" linkContentItemId="partners"/>
@@ -435,12 +435,12 @@
 			<container id="analystBlurb" label="Blurbs" linkContainerQId="blurb" linkContentItemId="analysts"/>												
 			<container id="analystArticle" label="News Articles" linkContainerQId="article" linkContentItemId="analysts"/>
 			<container id="analystEvent" label="Events" linkContainerQId="event" linkContentItemId="analysts"/>			
-			<container id="analystMultimedia" label="Multimedia" linkContainerQId="multimedia" linkContentItemId="analysts"/>
 			<container id="analystPresentation" label="Presentations" linkContainerQId="salesDeck" linkContentItemId="analysts"/>			
 			<container id="analystPress" label="Press" linkContainerQId="press" linkContentItemId="analysts"/>																	
 			<container id="analystResearch" label="Research" linkContainerQId="research" linkContentItemId="analysts"/>
 			<container id="analystRFXQA" label="RFX Q&amp;A" linkContainerQId="rfxqa" linkContentItemId="rfxanalysts"/>						
 			<container id="analystTopic" label="Topics" linkContainerQId="topic" linkContentItemId="analysts"/>	
+			<container id="analystVideo" label="Videos" linkContainerQId="video" linkContentItemId="analysts"/>			
 			<container id="analystWhitePaper" label="White Papers" linkContainerQId="whitepaper" linkContentItemId="analysts"/>
 			<container id="analystContent" label="Other Content" linkContainerQId="content" linkContentItemId="analysts"/>			
 		</container>
@@ -1596,133 +1596,6 @@
 	      		</bounded>
       		</contentItem>					
 		</container>			
-		<container id="multimedia" label="Multimedia" businessCategory="BUSINESS_CONTENT">
-			<contentItem id="title" label="Title" type="text"/>
-			<contentItem id="url" label="URL" type="text"/>
-			<contentItem id="file" label="File" type="doc"/>
-			<contentItem id="summary" label="Description" type="richText"/>
-			<contentItem id="format" label="Format" type="bounded" searchBoost="6">
-				<bounded>
-					<refList>
-						<datastore>
-							<storeId>mmformat</storeId>
-							<dataId>identity</dataId>
-							<dataLabel>format</dataLabel>
-						</datastore>
-					</refList>
-				</bounded>
-			</contentItem>
-			<contentItem id="type" label="Multimedia Type" type="bounded" searchBoost="6">
-				<bounded multivalued="true">
-					<refList>
-						<datastore hyperlink="true">
-							<storeId>mmtype</storeId>
-							<dataId>identity</dataId>
-							<dataLabel>typeName</dataLabel>
-						</datastore>
-					</refList>
-				</bounded>
-			</contentItem>
-			<contentItem id="solutions" label="Solutions" type="bounded">
-				<bounded multivalued="true">
-					<refList>
-						<datastore hyperlink="true">
-							<storeId>solution</storeId>
-							<dataId>identity</dataId>
-							<dataLabel>shortName</dataLabel>
-						</datastore>
-					</refList>
-				</bounded>
-			</contentItem>
-			<contentItem id="products" label="Products" type="bounded">
-				<bounded multivalued="true">
-					<refList>
-						<datastore hyperlink="true">
-							<storeId>product</storeId>
-							<dataId>identity</dataId>
-							<dataLabel>shortName</dataLabel>
-						</datastore>
-					</refList>
-				</bounded>
-			</contentItem>
-			<contentItem id="apps" label="Apps" type="bounded">
-				<bounded multivalued="true">
-					<refList>
-						<datastore hyperlink="true">
-							<storeId>app</storeId>
-							<dataId>identity</dataId>
-							<dataLabel>shortName</dataLabel>
-						</datastore>
-					</refList>
-				</bounded>
-			</contentItem>						
-			<contentItem id="competitors" label="Competitors" type="bounded">
-				<bounded multivalued="true">
-					<refList>
-						<datastore hyperlink="true">
-							<storeId>competitor</storeId>
-							<dataId>identity</dataId>
-							<dataLabel>shortName</dataLabel>
-						</datastore>
-					</refList>
-				</bounded>
-			</contentItem>
-			<contentItem id="partners" label="Partners" type="bounded">
-				<bounded multivalued="true">
-					<refList>
-						<datastore hyperlink="true">
-							<storeId>partner</storeId>
-							<dataId>identity</dataId>
-							<dataLabel>shortName</dataLabel>
-						</datastore>
-					</refList>
-				</bounded>
-			</contentItem>
-			<contentItem id="analysts" label="Analysts" type="bounded">
-				<bounded multivalued="true">
-					<refList>
-						<datastore hyperlink="true">
-							<storeId>analyst</storeId>
-							<dataId>identity</dataId>
-							<dataLabel>shortName</dataLabel>
-						</datastore>
-					</refList>
-				</bounded>
-			</contentItem>
-			<contentItem id="customers" label="Customers" type="bounded">
-				<bounded multivalued="true">
-					<refList>
-						<datastore hyperlink="true">
-							<storeId>customer</storeId>
-							<dataId>identity</dataId>
-							<dataLabel>shortName</dataLabel>
-						</datastore>
-					</refList>
-				</bounded>
-			</contentItem>
-			<contentItem id="topics" label="Topics" type="bounded">
-				<bounded multivalued="true">
-					<refList>
-						<datastore hyperlink="true">
-							<storeId>topic</storeId>
-							<dataId>identity</dataId>
-							<dataLabel>shortName</dataLabel>
-						</datastore>
-					</refList>
-				</bounded>
-			</contentItem>
-			<contentItem id="visibility" label="Visibility" type="bounded">
-	      		<bounded multivalued="true">
-	      			<refList>
-	      				<datastore>
-	      					<storeId>contentVisibilityType</storeId>
-	      					<dataId>identity</dataId>
-	      					<dataLabel>visibilityType</dataLabel>
-	      				</datastore>
-	      			</refList>
-	      		</bounded>
-      		</contentItem>			
-		</container>	
 		<container id="article" label="News Article" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="url" label="URL" type="text"/>
@@ -2931,7 +2804,6 @@
 			<container id="topicImage" label="Images" linkContainerQId="image" linkContentItemId="topics"/>			
 			<container id="topicLunchLearn" label="Lunch and Learn" linkContainerQId="lunchandlearn" linkContentItemId="topics"/>									
 			<container id="topicEvent" label="Events" linkContainerQId="event" linkContentItemId="topics"/>			
-			<container id="topicMultimedia" label="Multimedia" linkContainerQId="multimedia" linkContentItemId="topics"/>								
 			<container id="topicArticle" label="News Articles" linkContainerQId="article" linkContentItemId="topics"/>				
 			<container id="topicPOV" label="Point of Views" linkContainerQId="pov" linkContentItemId="topics"/>		
 			<container id="topicSalesDeck" label="Presentations" linkContainerQId="salesDeck" linkContentItemId="topics"/>			
@@ -2941,10 +2813,126 @@
 			<container id="topicResearch" label="Research" linkContainerQId="research" linkContentItemId="topics"/>
 			<container id="topicRFXQA" label="RFX Q&amp;A" linkContainerQId="rfxqa" linkContentItemId="rfxtopics"/>						
 			<container id="topicSalesKits" label="Sales Kits" linkContainerQId="salesKit" linkContentItemId="topics"/>															
-			<container id="topicSWOT" label="SWOT" linkContainerQId="swot" linkContentItemId="topics"/>									
+			<container id="topicSWOT" label="SWOT" linkContainerQId="swot" linkContentItemId="topics"/>						
+			<container id="topicsVideo" label="Videos" linkContainerQId="video" linkContentItemId="topics"/>						
 			<container id="topicWhitePaper" label="White Papers" linkContainerQId="whitepaper" linkContentItemId="topics"/>
 			<container id="topicContent" label="Other Content" linkContainerQId="content" linkContentItemId="topics"/>
 		</container>		
+		<container id="video" label="Videos" businessCategory="BUSINESS_CONTENT">
+			<contentItem id="title" label="Title" type="text"/>
+			<contentItem id="url" label="URL" type="text"/>
+			<contentItem id="category" label="Category" type="bounded" searchBoost="5">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>videoCategory</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>categoryName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>			
+			<contentItem id="desc" label="Description" type="richText"/>
+			<contentItem id="products" label="Products" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>product</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>			
+			<contentItem id="solutions" label="Solutions" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>solution</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="apps" label="Apps" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>app</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>						
+			<contentItem id="competitors" label="Competitors" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>competitor</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="partners" label="Partners" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>partner</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="analysts" label="Analysts" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>analyst</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>			
+			<contentItem id="customers" label="Customers" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>customer</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="topics" label="Topics" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>topic</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="visibility" label="Visibility" type="bounded">
+	      		<bounded multivalued="true">
+	      			<refList>
+	      				<datastore>
+	      					<storeId>contentVisibilityType</storeId>
+	      					<dataId>identity</dataId>
+	      					<dataLabel>visibilityType</dataLabel>
+	      				</datastore>
+	      			</refList>
+	      		</bounded>
+      		</contentItem>				
+		</container>
 		<container id="whitepaper" label="White Papers" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="file" label="File" type="doc"/>
@@ -3592,12 +3580,8 @@
 			<contentItem id="desc" label="Description" type="text"/>
 			<container id="faqCategoryFAQ" label="FAQ" linkContainerQId="faq" linkContentItemId="type"/>			
 		</container>
-		<container id="mmformat" label="Multi Media Formats" refData="true">
-			<contentItem id="format" label="Format" type="text"/>
-			<contentItem id="desc" label="Description" type="text"/>
-		</container>
-		<container id="mmtype" label="Multi Media Types" refData="true">
-			<contentItem id="typeName" label="Type" type="text"/>
+		<container id="videoCategory" label="Video Category" refData="true">
+			<contentItem id="categoryName" label="Name" type="text"/>
 			<contentItem id="desc" label="Description" type="text"/>
 		</container>
 		<container id="partnerType" label="Partner Types" refData="true">
@@ -3690,7 +3674,6 @@
 					<childContainer id="image"/>					
 					<childContainer id="importantslide"/>
 					<childContainer id="messageTree"/>														
-					<childContainer id="multimedia"/>
 					<childContainer id="article"/>										
 					<childContainer id="onepager"/>										
 					<childContainer id="pov"/>
@@ -3702,7 +3685,8 @@
 					<childContainer id="rfxqa"/>										
 					<childContainer id="swot"/>																				
 					<childContainer id="template"/>
-					<childContainer id="topic"/>					
+					<childContainer id="topic"/>
+					<childContainer id="video"/>										
 					<childContainer id="whitepaper"/>
 					<childContainer id="winloss"/>
 					<childContainer id="content"/>
@@ -4316,7 +4300,30 @@
 		</contentUIDef>	
 		<contentUIDef qualifiedId="swot.desc">
 			<text type="long"/>
-		</contentUIDef>			
+		</contentUIDef>
+		<contentUIDef qualifiedId="video">
+			<container labelQualifiedId="video.title">
+				<listViewConfig>
+					<hideContentItem id="category"/>					
+					<hideContentItem id="desc"/>					
+					<hideContentItem id="products"/>				
+					<hideContentItem id="solutions"/>
+					<hideContentItem id="apps"/>
+					<hideContentItem id="competitors"/>
+					<hideContentItem id="partners"/>
+					<hideContentItem id="analysts"/>
+					<hideContentItem id="customers"/>
+					<hideContentItem id="topics"/>															
+					<hideContentItem id="visibility"/>					
+				</listViewConfig>
+				<portalConfig>
+					<headingContentItem id="title"/>
+				</portalConfig>
+			</container>
+		</contentUIDef>
+		<contentUIDef qualifiedId="video.desc">
+			<text type="long"/>
+		</contentUIDef>						
 		<contentUIDef qualifiedId="winloss">
 			<container labelQualifiedId="winloss.title">
 				<listViewConfig>
@@ -4424,28 +4431,6 @@
 			</container>
 		</contentUIDef>
 		<contentUIDef qualifiedId="whitepaper.summary">
-			<text type="long"/>
-		</contentUIDef>
-		<contentUIDef qualifiedId="multimedia">
-			<container labelQualifiedId="multimedia.title">
-				<listViewConfig>
-					<hideContentItem id="summary"/>
-					<hideContentItem id="url"/>
-					<hideContentItem id="file"/>
-					<hideContentItem id="format"/>
-					<hideContentItem id="solutions"/>
-					<hideContentItem id="products"/>
-					<hideContentItem id="apps"/>
-					<hideContentItem id="competitors"/>
-					<hideContentItem id="partners"/>
-					<hideContentItem id="analysts"/>
-					<hideContentItem id="customers"/>
-					<hideContentItem id="topics"/>
-					<hideContentItem id="visibility"/>
-				</listViewConfig>
-			</container>
-		</contentUIDef>
-		<contentUIDef qualifiedId="multimedia.summary">
 			<text type="long"/>
 		</contentUIDef>
 		<contentUIDef qualifiedId="salesDeck">
@@ -4821,7 +4806,6 @@
 					<childContainer id="image"/>					
 					<childContainer id="importantslide"/>
 					<childContainer id="messageTree"/>					
-					<childContainer id="multimedia"/>
 					<childContainer id="article"/>						
 					<childContainer id="onepager"/>										
 					<childContainer id="pov"/>
@@ -4834,6 +4818,7 @@
 					<childContainer id="SWOT"/>															
 					<childContainer id="template"/>
 					<childContainer id="topic"/>
+					<childContainer id="video"/>					
 					<childContainer id="whitepaper"/>
 					<childContainer id="winloss"/>
 					<childContainer id="content"/>
