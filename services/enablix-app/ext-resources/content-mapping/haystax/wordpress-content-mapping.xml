@@ -6,6 +6,21 @@
 		<contentItemMappings>
 			<itemMapping itemId="title">post.title.rendered</itemMapping>
 			<itemMapping itemId="url">post.link</itemMapping>
+			<itemMapping itemId="blogdate">post.date_gmt</itemMapping>
+			<!-- default visibility = Everyone -->
+			<itemMapping itemId="visibility" listAttribute="ID" 
+						 default="597c02aa-0b62-429b-9826-a52bfccfb2f6"></itemMapping>
+		</contentItemMappings>
+	</container>
+	
+	<container qualifiedId="article">
+		<sourceId>post.id</sourceId>
+		<contentItemMappings>
+			<itemMapping itemId="title">post.title.rendered</itemMapping>
+			<itemMapping itemId="url">post.link</itemMapping>
+			<!-- default visibility = Everyone -->
+			<itemMapping itemId="visibility" listAttribute="ID" 
+			   			 default="597c02aa-0b62-429b-9826-a52bfccfb2f6"></itemMapping>
 		</contentItemMappings>
 	</container>
 

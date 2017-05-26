@@ -37,7 +37,7 @@ public class DistinctLoginMetricImpl extends DynamicMetric {
 
 		query = Query.query(criteria);
 
-		List distinctUserLst = mongoTemplate.getCollection(collectionName).distinct("actor.userId",
+		List<?> distinctUserLst = mongoTemplate.getCollection(collectionName).distinct("actor.userId",
 				query.getQueryObject());
 
 		Long count;

@@ -157,6 +157,11 @@ enablix.studioApp.controller('AuditController', ['$scope', '$stateParams', '$fil
                                 };
                                 userList.push(UserObj);
                             }
+                            
+                            userList.push({
+                            	label: "System",
+                            	id: "System"
+                            });
 
                         }, function() {
                             Notification.error({

@@ -14,13 +14,12 @@ function(ContentTemplateService, Notification) {
 			
 			var _dataDef = scope.contentDef;
 			
-			scope.selectedVals = [];
-			
 			scope.name = _dataDef.id;
 			scope.label = _dataDef.label;
 			scope.id = _dataDef.qualifiedId;
 			scope.options = [];
 			scope.selectMultiple = _dataDef.bounded.multivalued;
+			scope.bounded = {selected: scope.selectValue};
 			
 			var _uiDef = ContentTemplateService.getUIDefinition(enablix.template, _dataDef.qualifiedId);
 			
@@ -50,6 +49,7 @@ function(ContentTemplateService, Notification) {
 				
 				if (isNullOrUndefined(scope.selectValue)) {
 					scope.selectValue = [];
+					scope.bounded.selected = scope.selectValue;
 				}
 				
 				var existIndex = null;
@@ -89,6 +89,27 @@ function(ContentTemplateService, Notification) {
           		}
           		
 			};
+			
+			
+			scope.onSelectAll = function() {
+				angular.forEach(scope.options, function(opt) {
+					scope.onItemSelect(opt, scope.selectValue);
+				});
+			};
+			
+			scope.onDeselectAll = function() {
+				var copyOfValues = [];
+				angular.copy(scope.selectValue, copyOfValues);
+				angular.forEach(copyOfValues, function(item) {
+					scope.onItemRemove(item, scope.selectValue);
+				});
+			};
+			
+			scope.$watchCollection('selectValue', function(newValue, oldValue) {
+				if (newValue != oldValue) {
+					scope.bounded.selected = scope.selectValue;
+				}
+			})
 			
 		},
 		templateUrl: "widgets/directive/bounded/bounded.html"

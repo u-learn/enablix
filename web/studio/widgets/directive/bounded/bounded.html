@@ -1,7 +1,7 @@
 <label class="form-label">{{label}}</label>
 <div layout="row">
 <div flex>
-<ui-select multiple ng-model="selectValue" theme="bootstrap" ng-disabled="disabled" sortable="true" 
+<ui-select multiple ng-model="bounded.selected" theme="bootstrap" ng-disabled="disabled" sortable="true" 
 	close-on-select="false" remove-selected="false" on-select="onItemSelect($item, $model)" 
 	on-remove="onItemRemove($item, $model)">
   <ui-select-match>{{$item.label}}</ui-select-match>
@@ -10,11 +10,11 @@
   </ui-select-choices>
 </ui-select>
 </div>
-<span class="fa-stack check-all" flex="none" tooltip="Select All">
+<span class="fa-stack check-all" ng-click="onSelectAll()" flex="none">
   <i class="fa fa-clone fa-stack-1x"></i>
   <i class="fa fa-check fa-stack-1x" style="padding: 1px 0px 0px 3px;"></i>
 </span>
-<span class="fa-stack uncheck-all" flex="none" tooltip="Deselect All">
+<span class="fa-stack uncheck-all" ng-click="onDeselectAll()" flex="none">
   <i class="fa fa-clone fa-stack-1x"></i>
   <i class="fa fa-times fa-stack-1x" style="padding: 1px 0px 0px 3px;"></i>
 </span>

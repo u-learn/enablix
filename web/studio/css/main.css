@@ -2091,3 +2091,7 @@ td .dropdown-menu-cont {
 	color: #c0392b;
 	cursor: pointer;
 }
+
+eb-date-picker thead th {
+    vertical-align: bottom;
+}

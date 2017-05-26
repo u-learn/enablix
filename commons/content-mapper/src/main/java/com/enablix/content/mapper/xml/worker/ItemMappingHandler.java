@@ -1,11 +1,13 @@
 package com.enablix.content.mapper.xml.worker;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.enablix.commons.content.ContentParser;
+import com.enablix.commons.util.StringUtil;
 import com.enablix.commons.util.collection.CollectionUtil;
 import com.enablix.content.mapper.EnablixContent;
 import com.enablix.content.mapper.ExternalContent;
@@ -29,7 +31,22 @@ public class ItemMappingHandler {
 		
 			if (itemMapping.getItemId().equals(contentItem.getId())) {
 			
-				List<Object> extItemValue = ContentParser.getValue(extContent.getData(), itemMapping.getValue());
+				List<Object> extItemValue = null;
+				
+				String extValueExpr = itemMapping.getValue();
+				
+				if (!StringUtil.hasText(extValueExpr)) {
+				
+					extItemValue = getItemDefaultValue(itemMapping);
+					
+				} else {
+					
+					extItemValue = ContentParser.getValue(extContent.getData(), extValueExpr);
+					
+					if (CollectionUtil.isEmpty(extItemValue)) {
+						extItemValue = getItemDefaultValue(itemMapping);
+					}
+				}
 				
 				if (CollectionUtil.isNotEmpty(extItemValue)) {
 					
@@ -40,6 +57,20 @@ public class ItemMappingHandler {
 				}
 			}
 		}
+	}
+
+	private List<Object> getItemDefaultValue(ContentItemMappingType itemMapping) {
+		
+		List<Object> extItemValue = null;
+		
+		String defaultValue = itemMapping.getDefault();
+		
+		if (StringUtil.hasText(defaultValue)) {
+			extItemValue = new ArrayList<>();
+			extItemValue.add(defaultValue);
+		}
+		
+		return extItemValue;
 	}
 	
 }
