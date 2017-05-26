@@ -16,6 +16,7 @@ import org.springframework.boot.autoconfigure.web.WebMvcAutoConfiguration.WebMvc
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.ImportResource;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.PropertySources;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
@@ -38,6 +39,7 @@ import com.enablix.commons.util.StringUtil;
 		@PropertySource("file:${baseDir}/config/properties/slack.properties"),
 		@PropertySource("file:${baseDir}/config/properties/sharepoint.properties"),
 		@PropertySource("file:${baseDir}/config/properties/doc-format.properties")})
+@ImportResource(locations={"file:${baseDir}/config/integration/*.xml"})
 @ComponentScan(basePackages = { "com.enablix" })
 @EnableMongoRepositories(
 		basePackages = {"com.enablix.app.mongo.repository", 

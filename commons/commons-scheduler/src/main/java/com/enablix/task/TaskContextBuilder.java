@@ -12,6 +12,8 @@ import com.enablix.scheduler.repo.TaskConfigRepository;
 @Component
 public class TaskContextBuilder {
 
+	private static final String TENANTID_SEP = "|";
+	
 	@Autowired
 	private TaskConfigRepository taskRepo;
 	
@@ -70,6 +72,30 @@ public class TaskContextBuilder {
 			parameters.put(paramName, value);
 			
 			taskRepo.save(taskConfig);
+		}
+
+		@Override
+		public TaskConfig getTaskConfig() {
+			return taskConfig;
+		}
+
+		@Override
+		public Object getTaskParameter(String tenantId, String paramName) {
+			return getTaskParameter(tenantSpecificParamName(tenantId, paramName));
+		}
+		
+		private String tenantSpecificParamName(String tenantId, String paramName) {
+			return tenantId + TENANTID_SEP + paramName;
+		}
+
+		@Override
+		public <T> T getTaskParameter(String tenantId, String paramName, Class<T> valueType) {
+			return getTaskParameter(tenantSpecificParamName(tenantId, paramName), valueType);
+		}
+
+		@Override
+		public void updateTaskParameter(String tenantId, String paramName, Object value) {
+			updateTaskParameter(tenantSpecificParamName(tenantId, paramName), value);
 		}
 		
 	}

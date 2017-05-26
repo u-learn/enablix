@@ -6,11 +6,14 @@ import com.afrozaar.wordpress.wpapi.v2.Wordpress;
 import com.afrozaar.wordpress.wpapi.v2.exception.PostNotFoundException;
 import com.afrozaar.wordpress.wpapi.v2.model.Post;
 import com.afrozaar.wordpress.wpapi.v2.model.Term;
+import com.afrozaar.wordpress.wpapi.v2.request.SearchRequest;
 import com.enablix.analytics.info.detection.ContentSuggestion;
 
 public interface WordpressService {
 
 	Wordpress createClient(String baseUrl);
+	
+	Wordpress createClient() throws WPConfigNotFoundException; // lookup wordpress integration and create client based on that
 
 	Post getPost(Wordpress wp, Long postId) throws PostNotFoundException;
 
@@ -21,5 +24,7 @@ public interface WordpressService {
 	List<ContentSuggestion> getContentSuggestion(Wordpress wp, String postSlug) throws PostNotFoundException;
 
 	Post getPostBySlug(Wordpress wp, String postSlug);
+	
+	void processPosts(Wordpress wp, WPPostProcessor postProcessor, SearchRequest<Post> postSearch);
 	
 }

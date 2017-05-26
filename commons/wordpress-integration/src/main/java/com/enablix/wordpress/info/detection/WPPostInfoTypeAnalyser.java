@@ -1,70 +1,110 @@
 package com.enablix.wordpress.info.detection;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import com.enablix.analytics.info.detection.AnalysisLevel;
-import com.enablix.analytics.info.detection.InfoAnalyser;
+import com.enablix.analytics.info.detection.BaseInfoAnalyser;
 import com.enablix.analytics.info.detection.InfoDetectionContext;
 import com.enablix.analytics.info.detection.Information;
 import com.enablix.analytics.info.detection.Opinion;
 import com.enablix.analytics.info.detection.TypeOpinion;
 import com.enablix.app.template.service.TemplateManager;
-import com.enablix.commons.config.ConfigurationUtil;
 import com.enablix.commons.util.StringUtil;
+import com.enablix.commons.util.collection.CollectionUtil;
 import com.enablix.commons.util.process.ProcessContext;
 import com.enablix.core.api.TemplateFacade;
 import com.enablix.core.commons.xsdtopojo.ContainerType;
-import com.enablix.core.domain.config.Configuration;
+import com.enablix.wordpress.integration.WPIntegrationProperties;
 import com.enablix.wordpress.integration.WordpressConstants;
+import com.enablix.wordpress.model.WordpressInfo;
 
-@Component
-public class WPPostInfoTypeAnalyser implements InfoAnalyser {
+public class WPPostInfoTypeAnalyser extends BaseInfoAnalyser {
 
-	private static final String BLOG_CONTAINER_Q_ID = "blog_containerQId";
-	
 	@Autowired
 	private TemplateManager templateManager;
 
 	@Override
-	public List<Opinion> analyse(Information info, InfoDetectionContext ctx) {
+	protected List<Opinion> analyseInfo(InfoDetectionContext ctx) {
 		
 		List<Opinion> opinions = null;
+		Information information = ctx.getInformation();
 		
-		Configuration config = ConfigurationUtil.getConfig(WordpressConstants.WP_POST_ANALYSER_TYPE_MAPPING);
-		
-		if (config != null) {
-		
-			String blogContainerQId = config.getStringValue(BLOG_CONTAINER_Q_ID);
+		if (information instanceof WordpressInfo) {
 			
-			if (StringUtil.hasText(blogContainerQId)) {
+			WordpressInfo wpInfo = (WordpressInfo) information;
 			
-				TemplateFacade template = templateManager.getTemplateFacade(ProcessContext.get().getTemplateId());
-				ContainerType containerDef = template.getContainerDefinition(blogContainerQId);
+			WPIntegrationProperties wpIntProps = WPIntegrationProperties.getFromConfiguration();
+			
+			if (wpIntProps != null) {
+			
+				String typeQId = wpIntProps.getDefaultContentTypeQId();
+				float confidence = 0.5f;
+
+				Map<String, String> wpCatToContQId = wpIntProps.getWpCatToContQId();
 				
-				if (containerDef != null) {
-					opinions = new ArrayList<>();
-					TypeOpinion typeOpinion = new TypeOpinion(blogContainerQId, name(), confidence());
-					opinions.add(typeOpinion);
+				if (CollectionUtil.isNotEmpty(wpCatToContQId)) {
+					
+					List<Long> categoryIds = wpInfo.getPost().getCategoryIds();
+					Map<String, Integer> typeQIdCategoryCnt = new HashMap<>();
+					
+					String maxCntQId = null;
+					Integer maxCnt = 0;
+					int totalMatchCnt = 0;
+
+					for (Long catId : categoryIds) {
+						
+						String contQId = wpCatToContQId.get(String.valueOf(catId));
+					
+						if (StringUtil.hasText(contQId)) {
+						
+							Integer cnt = typeQIdCategoryCnt.get(contQId);
+							if (cnt == null) {
+								cnt = 0;
+							}
+							typeQIdCategoryCnt.put(contQId, ++cnt);
+							++totalMatchCnt;
+							
+							if (cnt > maxCnt) {
+								maxCnt = cnt;
+								maxCntQId = contQId;
+							}
+						}
+					}
+					
+					if (StringUtil.hasText(maxCntQId)) {
+						typeQId = maxCntQId;
+						confidence = ((float) maxCnt) / totalMatchCnt;
+					}
+					
+				}
+				
+				if (StringUtil.hasText(typeQId)) {
+				
+					TemplateFacade template = templateManager.getTemplateFacade(ProcessContext.get().getTemplateId());
+					ContainerType containerDef = template.getContainerDefinition(typeQId);
+					
+					if (containerDef != null) {
+						opinions = new ArrayList<>();
+						TypeOpinion typeOpinion = new TypeOpinion(typeQId, name(), confidence);
+						opinions.add(typeOpinion);
+					}
 				}
 			}
 		}
 		
 		return opinions;
 	}
-
+	
 	@Override
 	public String name() {
 		return WordpressConstants.WP_POST_TYPE_ANALYSER;
 	}
 	
-	private float confidence() {
-		return 1;
-	}
-
 	@Override
 	public AnalysisLevel level() {
 		return AnalysisLevel.L0;

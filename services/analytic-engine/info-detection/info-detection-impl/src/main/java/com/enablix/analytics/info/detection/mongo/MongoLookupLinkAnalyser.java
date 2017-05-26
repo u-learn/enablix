@@ -11,7 +11,6 @@ import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.stereotype.Component;
 
 import com.enablix.analytics.info.detection.AnalysisLevel;
 import com.enablix.analytics.info.detection.InfoDetectionContext;
@@ -35,7 +34,6 @@ import com.enablix.core.mongo.dao.GenericDao;
 import com.enablix.core.mongo.view.MongoDataView;
 import com.enablix.services.util.ContentDataUtil;
 
-@Component
 public class MongoLookupLinkAnalyser extends TaggedInfoAnalyser {
 
 	@Autowired

@@ -8,10 +8,9 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import com.enablix.analytics.info.detection.AnalysisLevel;
-import com.enablix.analytics.info.detection.InfoAnalyser;
+import com.enablix.analytics.info.detection.BaseInfoAnalyser;
 import com.enablix.analytics.info.detection.InfoDetectionContext;
 import com.enablix.analytics.info.detection.Information;
 import com.enablix.analytics.info.detection.Opinion;
@@ -26,8 +25,7 @@ import com.enablix.content.mapper.EnablixContent;
 import com.enablix.content.mapper.ExternalContent;
 import com.enablix.core.api.TemplateFacade;
 
-@Component
-public class ContentMappingBasedAttrAnalyser implements InfoAnalyser {
+public class ContentMappingBasedAttrAnalyser extends BaseInfoAnalyser {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(ContentMappingBasedAttrAnalyser.class);
 	
@@ -38,8 +36,9 @@ public class ContentMappingBasedAttrAnalyser implements InfoAnalyser {
 	private TemplateManager templateMgr;
 	
 	@Override
-	public List<Opinion> analyse(Information info, InfoDetectionContext ctx) {
+	protected List<Opinion> analyseInfo(InfoDetectionContext ctx) {
 		
+		Information info = ctx.getInformation();
 		List<Opinion> opinions = new ArrayList<>();
 		
 		String tenantId = ProcessContext.get().getTenantId();
@@ -75,6 +74,10 @@ public class ContentMappingBasedAttrAnalyser implements InfoAnalyser {
 				}
 			}
 		}
+		
+		/*if (true) {
+			throw new NullPointerException();
+		}*/
 		
 		return opinions;
 	}

@@ -2,11 +2,12 @@ package com.enablix.analytics.info.detection;
 
 import java.util.Collection;
 
-public abstract class TaggedInfoAnalyser implements InfoAnalyser {
+public abstract class TaggedInfoAnalyser extends BaseInfoAnalyser {
 
 	@Override
-	public Collection<Opinion> analyse(Information info, InfoDetectionContext ctx) {
+	protected Collection<Opinion> analyseInfo(InfoDetectionContext ctx) {
 		
+		Information info = ctx.getInformation();
 		if (info instanceof TaggedInfo) {
 			return analyseTaggedInfo((TaggedInfo) info, ctx);
 		}

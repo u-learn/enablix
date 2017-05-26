@@ -12,10 +12,10 @@ import com.enablix.core.domain.scheduler.SchedulerConfig;
 import com.enablix.core.domain.scheduler.TaskConfig;
 import com.enablix.scheduler.repo.SchedulerConfigRepository;
 import com.enablix.scheduler.repo.TaskConfigRepository;
-import com.enablix.task.PerTenantTask;
 import com.enablix.task.RunnableTask;
 import com.enablix.task.Task;
 import com.enablix.task.TaskFactory;
+import com.enablix.task.TaskUtil;
 import com.enablix.task.impl.PerTenantTaskExecutor;
 import com.enablix.task.impl.SimpleTaskExecutor;
 
@@ -53,7 +53,7 @@ public class ScheduledTaskExecutor {
 		
 		for (RunnableTask task : tasks) {
 			
-			if (isPerTenantTask(task.getTaskBean())) {
+			if (TaskUtil.isPerTenantTask(task.getTaskBean())) {
 				perTenantTasks.add(task);
 			} else {
 				simpleTasks.add(task);
@@ -92,11 +92,6 @@ public class ScheduledTaskExecutor {
 		return tasks;
 	}
 	
-	private boolean isPerTenantTask(Object taskBean) {
-		PerTenantTask perTenantTaskAnnot = taskBean.getClass().getAnnotation(PerTenantTask.class);
-		return perTenantTaskAnnot != null;
-	}
-
 	private Object getBean(TaskConfig taskConfig) {
 		
 		String taskId = taskConfig.getTaskId();

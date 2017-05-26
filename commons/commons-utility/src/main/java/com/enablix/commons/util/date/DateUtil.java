@@ -1,15 +1,29 @@
 package com.enablix.commons.util.date;
 
+import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.temporal.TemporalField;
 import java.time.temporal.WeekFields;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.TimeZone;
 
 public class DateUtil {
+	
+	private static final String ISO8601_DATETIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ss'Z'";
+	
+	private static final ThreadLocal<SimpleDateFormat> ISO8601DateTimeFormat = 
+		new ThreadLocal<SimpleDateFormat>() {
+			protected SimpleDateFormat initialValue() {
+				SimpleDateFormat df = new SimpleDateFormat(ISO8601_DATETIME_FORMAT);
+				df.setTimeZone(TimeZone.getTimeZone("UTC"));
+				return df;
+			}
+		};
 	
 	public static Date getEndOfDay(Date date) {
 		LocalDateTime localDateTime = dateToLocalDateTime(date);
@@ -55,6 +69,16 @@ public class DateUtil {
 
 	private static LocalDateTime dateToLocalDateTime(Date date) {
 		return LocalDateTime.ofInstant(Instant.ofEpochMilli(date.getTime()), ZoneId.systemDefault());
+	}
+	
+	public static String dateToUTCiso8601String(Date date) {
+		SimpleDateFormat dateFormat = ISO8601DateTimeFormat.get();
+		return dateFormat.format(date);
+	}
+	
+	public static void main(String[] args) {
+		Date today = Calendar.getInstance().getTime();
+		System.out.println(dateToUTCiso8601String(today));
 	}
 	
 }

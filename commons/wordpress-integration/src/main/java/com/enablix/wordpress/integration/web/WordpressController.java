@@ -15,9 +15,6 @@ import com.afrozaar.wordpress.wpapi.v2.Wordpress;
 import com.afrozaar.wordpress.wpapi.v2.exception.PostNotFoundException;
 import com.afrozaar.wordpress.wpapi.v2.model.Post;
 import com.enablix.analytics.info.detection.ContentSuggestion;
-import com.enablix.commons.config.ConfigurationUtil;
-import com.enablix.commons.util.StringUtil;
-import com.enablix.core.domain.config.Configuration;
 import com.enablix.wordpress.integration.WordpressService;
 
 @RestController
@@ -46,7 +43,9 @@ public class WordpressController {
 		LOGGER.debug("Getting Content suggestion for Wordpress post: {}", id);
 		
 		Wordpress client = wpClient.createClient(wp.baseUrl);
-		return wpClient.getContentSuggestion(client, id);
+		List<ContentSuggestion> contentSuggestion = wpClient.getContentSuggestion(client, id);
+		LOGGER.debug("content suggestion: " + contentSuggestion);
+		return contentSuggestion;
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, value="/cs/postslug/{postSlug}/", produces = "application/json")
@@ -64,17 +63,7 @@ public class WordpressController {
 		
 		LOGGER.debug("Getting Content suggestion for Wordpress post: {}", postSlug);
 		
-		Configuration wpConfig = ConfigurationUtil.getConfig("integration.wordpress");
-		if (wpConfig == null) {
-			throw new Exception("Wordpress configuration not found");
-		}
-		
-		String baseUrl = wpConfig.getStringValue("BASE_URL");
-		if (StringUtil.isEmpty(baseUrl)) {
-			throw new Exception("Base URL not found in wordpress configuration");
-		}
-		
-		Wordpress client = wpClient.createClient(baseUrl);
+		Wordpress client = wpClient.createClient();
 		return wpClient.getContentSuggestion(client, postSlug);
 	}
 	

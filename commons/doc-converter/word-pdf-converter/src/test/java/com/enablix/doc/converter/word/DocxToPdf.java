@@ -15,8 +15,10 @@ public class DocxToPdf {
 
 	public static void main(String args[]) throws IOException, XDocConverterException {
 
-		String outFile = "C:\\Users\\dluthra\\Downloads\\preview\\doc\\Doc2.pdf";
-		String filePath = "C:\\Users\\dluthra\\Downloads\\Doc2.docx";
+		/*String outFile = "C:\\Users\\dluthra\\Downloads\\preview\\doc\\Doc2.pdf";
+		String filePath = "C:\\Users\\dluthra\\Downloads\\Doc2.docx";*/
+		String outFile = "C:\\Users\\dluthra\\Downloads\\20160329_SolutionBrief_Page_1-pr.pdf";
+		String filePath = "C:\\Users\\dluthra\\Downloads\\20160329_SolutionBrief_Page_1.docx";
 		//String imageFilePrefix = "Resume";
 		FileInputStream is = new FileInputStream(filePath);
 

@@ -20,7 +20,13 @@ import com.afrozaar.wordpress.wpapi.v2.util.ClientConfig;
 import com.afrozaar.wordpress.wpapi.v2.util.ClientFactory;
 import com.enablix.analytics.info.detection.ContentSuggestion;
 import com.enablix.analytics.info.detection.InfoDetector;
+import com.enablix.commons.config.ConfigurationUtil;
+import com.enablix.commons.util.StringUtil;
 import com.enablix.commons.util.collection.CollectionUtil;
+import com.enablix.core.domain.config.Configuration;
+import com.enablix.wordpress.integration.WPConfigNotFoundException;
+import com.enablix.wordpress.integration.WPPostProcessor;
+import com.enablix.wordpress.integration.WordpressConstants;
 import com.enablix.wordpress.integration.WordpressService;
 import com.enablix.wordpress.model.WordpressInfo;
 
@@ -43,11 +49,12 @@ public class WordpressServiceImpl implements WordpressService {
 		
 		Post post = null;
 		
-		SearchRequest<Post> searchRequest = SearchRequest.Builder.aSearchRequest(Post.class)
-																 .withContext(Contexts.VIEW)
-																 .withParam("slug", postSlug)
-																 .build();
-		
+		SearchRequest<Post> searchRequest = 
+				SearchRequest.Builder.aSearchRequest(Post.class)
+									 .withContext(Contexts.VIEW)
+									 .withParam(WordpressConstants.WP_API_PARAM_SLUG, postSlug)
+									 .build();
+
 		PagedResponse<Post> posts = wp.search(searchRequest);
 		
 		if (posts != null) {
@@ -115,6 +122,43 @@ public class WordpressServiceImpl implements WordpressService {
 		}
 		
 		return buildContentSuggestion(wp, post);
+	}
+
+	@Override
+	public Wordpress createClient() throws WPConfigNotFoundException {
+		
+		Configuration wpConfig = ConfigurationUtil.getConfig(WordpressConstants.INTEGRATION_WORDPRESS_CONFIG_KEY);
+		if (wpConfig == null) {
+			throw new WPConfigNotFoundException("Wordpress configuration not found");
+		}
+		
+		String baseUrl = wpConfig.getStringValue("BASE_URL");
+		if (StringUtil.isEmpty(baseUrl)) {
+			throw new WPConfigNotFoundException("Base URL not found in wordpress configuration");
+		}
+
+		return createClient(baseUrl);
+	}
+
+	@Override
+	public void processPosts(Wordpress wp, WPPostProcessor postProcessor, SearchRequest<Post> postSearch) {
+		
+		PagedResponse<Post> response = null;
+
+		do {
+			
+			if (response == null) {
+				response = wp.search(postSearch);
+			} else {
+				response = wp.traverse(response, PagedResponse.NEXT);
+			}
+			
+			for (Post post : response.getList()) {
+				postProcessor.process(post);
+			}
+			
+		} while (response.hasNext());
+		
 	}
 	
 }

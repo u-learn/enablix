@@ -1,39 +1,28 @@
 package com.enablix.analytics.info.detection;
 
-import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.enablix.commons.util.collection.CollectionUtil;
-
 @Component
 public class DefaultInfoDetector implements InfoDetector {
 
 	@Autowired
-	private AnalyserRegistry registry;
-	
-	@Autowired
-	private ContentSuggestionBuilder suggestionBuilder;
+	private InfoDetectorSIGateway siGateway;
 	
 	@Override
 	public List<ContentSuggestion> analyse(Information info) {
-		
-		Assessment assessment = new Assessment();
-		InfoDetectionContext ctx = new InfoDetectionContext(assessment);
-		
-		for (InfoAnalyser analyser : registry.allAnalysers()) {
-			
-			Collection<Opinion> opinions = analyser.analyse(info, ctx);
+		InfoDetectionContext ctx = new InfoDetectionContext(info, new Assessment());
+		ctx.setSaveContentRecord(false);
+		return siGateway.analyse(ctx);
+	}
 
-			if (CollectionUtil.isNotEmpty(opinions)) {
-				assessment.addOpinions(opinions);
-			}
-			
-		}
-
-		return suggestionBuilder.build(assessment);
+	@Override
+	public void analyseAndSaveContentRecord(Information info) {
+		InfoDetectionContext ctx = new InfoDetectionContext(info, new Assessment());
+		ctx.setSaveContentRecord(true);
+		siGateway.analyse(ctx);
 	}
 
 }

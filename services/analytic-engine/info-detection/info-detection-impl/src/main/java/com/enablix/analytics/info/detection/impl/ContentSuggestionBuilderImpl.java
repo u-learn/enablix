@@ -9,7 +9,6 @@ import java.util.Map.Entry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import com.enablix.analytics.info.detection.Assessment;
 import com.enablix.analytics.info.detection.ContentSuggestion;
@@ -29,7 +28,6 @@ import com.enablix.core.commons.xsdtopojo.ContentItemType;
 import com.enablix.core.commons.xsdtopojo.DatastoreLocationType;
 import com.enablix.services.util.TemplateUtil;
 
-@Component
 public class ContentSuggestionBuilderImpl implements ContentSuggestionBuilder {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(ContentSuggestionBuilderImpl.class);
