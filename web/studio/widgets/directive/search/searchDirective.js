@@ -16,9 +16,17 @@ enablix.studioApp.directive('ebxSearchBox', [
 						asyncData[qualifiedId] = value;
 					});
 					var mountPoint = "#enablix-search";
-					function onTrueEnter(searchText){
-						if(!isNullOrUndefined(searchText)  && searchText.length > 0){
+					function onTrueEnter(payload){
+						var node = payload.node;
+						var searchText = payload.query;
+						if(node && node.type === "BizDimEntSubNode"){
+							var uri = node.asUri();
+							StateUpdateService.goToPortalSubContainerList(uri.containerQId,uri.subContainerQId,uri.parentIdentity);
+							return;
+						}else if(!isNullOrUndefined(searchText)  && searchText.length > 0){
 							StateUpdateService.goToPortalSearch(searchText);
+						}else{
+							
 						}
 					}
 					enablix.searchComponent = new enablix.SearchComponent({mountPoint:mountPoint,asyncData:asyncData});
