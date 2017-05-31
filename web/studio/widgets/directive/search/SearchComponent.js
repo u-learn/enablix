@@ -1,9 +1,2763 @@
-!function(t){function n(r){if(e[r])return e[r].exports;var i=e[r]={i:r,l:!1,exports:{}};return t[r].call(i.exports,i,i.exports,n),i.l=!0,i.exports}var e={};n.m=t,n.c=e,n.i=function(t){return t},n.d=function(t,e,r){n.o(t,e)||Object.defineProperty(t,e,{configurable:!1,enumerable:!0,get:r})},n.n=function(t){var e=t&&t.__esModule?function(){return t.default}:function(){return t};return n.d(e,"a",e),e},n.o=function(t,n){return Object.prototype.hasOwnProperty.call(t,n)},n.p="",n(n.s=4)}([function(t,n,e){"use strict";function r(t,n){if(!t)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!n||"object"!=typeof n&&"function"!=typeof n?t:n}function i(t,n){if("function"!=typeof n&&null!==n)throw new TypeError("Super expression must either be null or a function, not "+typeof n);t.prototype=Object.create(n&&n.prototype,{constructor:{value:t,enumerable:!1,writable:!0,configurable:!0}}),n&&(Object.setPrototypeOf?Object.setPrototypeOf(t,n):t.__proto__=n)}function o(t,n){if(!(t instanceof n))throw new TypeError("Cannot call a class as a function")}function s(t){var n=arguments.length>1&&void 0!==arguments[1]?arguments[1]:0;switch(t.businessCategory){case"BUSINESS_DIMENSION":return new h(t,n);case"BUSINESS_CONTENT":return new d(t,n);default:return new f(t,n)}}function a(t){return t.businessCategory?s(t):null}Object.defineProperty(n,"__esModule",{value:!0}),n.ContainerGraph=n.BizDimEntSubNode=n.BizDimensionEntity=n.BizDimensionNode=n.BizContentNode=n.ContainerNode=void 0;var u=function(){function t(t,n){for(var e=0;e<n.length;e++){var r=n[e];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(t,r.key,r)}}return function(n,e,r){return e&&t(n.prototype,e),r&&t(n,r),n}}(),c=e(1),l=[],f=n.ContainerNode=function(){function t(n){function e(t){return s(t,p)}var r=this,i=n.businessCategory,a=n.id,u=n.label,c=n.qualifiedId,f=n.searchBoost,d=n.container,h=arguments.length>1&&void 0!==arguments[1]?arguments[1]:0;if(o(this,t),this.type="ContainerNode",_.assign(this,{businessCategory:i,id:a,label:u,qualifiedId:c,searchBoost:f,depth:h}),d&&0!==d.length){this.nodes={};var p=h++;d.map(e).filter(function(t){return null!==t}).forEach(function(t){if(r.nodes[t.label])return void console.warn("ContainerNode::The node with label "+u+" already exists, skipping");r.nodes[t.label]=t,l.push(t)})}}return u(t,[{key:"asUri",value:function(){return{containerQId:this.id}}}]),t}(),d=n.BizContentNode=function(t){function n(){var t,e,i,s;o(this,n);for(var a=arguments.length,u=Array(a),c=0;c<a;c++)u[c]=arguments[c];return e=i=r(this,(t=n.__proto__||Object.getPrototypeOf(n)).call.apply(t,[this].concat(u))),i.type="BizContentNode",s=e,r(i,s)}return i(n,t),n}(f),h=n.BizDimensionNode=function(t){function n(){var t,e,i,s;o(this,n);for(var a=arguments.length,u=Array(a),c=0;c<a;c++)u[c]=arguments[c];return e=i=r(this,(t=n.__proto__||Object.getPrototypeOf(n)).call.apply(t,[this].concat(u))),i.type="BizDimensionNode",i.entNodes=[],s=e,r(i,s)}return i(n,t),u(n,[{key:"createBizContentIndex",value:function(t){return t.label in this.nodes?this.entNodes.map(function(n){return n.createBizContentDatum(t)}):[]}}]),n}(f),p=n.BizDimensionEntity=function(){function t(n){o(this,t),this.type="BizDimensionEntity",this.hasAddedLazyEntries=!1,_.assign(this,n),this.bizDimensionNode.entNodes.push(this)}return u(t,[{key:"createIndex",value:function(){if(this.hasAddedLazyEntries||!this.bizDimensionNode||!this.bizDimensionNode.nodes)return[];var t=this,n=_.values(this.bizDimensionNode.nodes).map(function(n){return new v({bizDimEnt:t,bizContentNode:n})});return this.hasAddedLazyEntries=!0,n}},{key:"createBizContentDatum",value:function(t){if(t.label in this.bizDimensionNode.nodes){var n=this,e=this.bizDimensionNode.nodes[t.label];return new v({bizDimEnt:n,bizContentNode:e})}return null}},{key:"asUri",value:function(){return{containerQId:this.bizDimensionNode.asUri().containerQId,identity:this.identity}}}]),t}(),v=n.BizDimEntSubNode=function(){function t(n){o(this,t),this.type="BizDimEntSubNode",_.assign(this,n),this.label=this.bizContentNode.label+" for "+this.bizDimEnt.label}return u(t,[{key:"asUri",value:function(){var t=this.bizDimEnt.asUri(),n=t.containerQId,e=t.identity;return{containerQId:n,subContainerQId:this.bizContentNode.asUri().containerQId,parentIdentity:e}}}]),t}();n.ContainerGraph=function(){function t(n){var e=this;o(this,t);var r=n.dataDefinition.container;this.rootNodes={},r.map(a).filter(function(t){return null!==t}).forEach(function(t){if(e.rootNodes[t.label])return void console.warn("ContainerGraph::The node with label "+t.label+" already exists, skipping");e.rootNodes[t.label]=t,l.push(t)}),this.ALL_NODES=l,this.bizDimensionNodes={},l.filter(function(t){return t.businessCategory===c.BUSINESS_DIMENSION}).forEach(function(t){if(e.bizDimensionNodes[t.id])return void console.warn("ContainerGraph::A business dimension node with label "+t.label+" already exists, skipping");e.bizDimensionNodes[t.id]=t})}return u(t,[{key:"createBizDimEntity",value:function(t){var n=t.label,e=t.businessDimensionType,r=t.identity,i=this.bizDimensionNodes[e];return new p({label:n,bizDimensionNode:i,identity:r})}},{key:"createIndex",value:function(){return _.values(this.rootNodes)}},{key:"createBizContentIndex",value:function(t){if(t instanceof d)return _(this.bizDimensionNodes).values().map(function(n){return n.createBizContentIndex(t)}).flatten().value();throw new Error("#createBizContentIndex requires a BizContentNode")}}]),t}()},function(t,n,e){"use strict";Object.defineProperty(n,"__esModule",{value:!0}),e(3);n.BUSINESS_DIMENSION="BUSINESS_DIMENSION",n.LABEL="label",n.SELECT_ENTER_DISP=100,n.RESULTS_LIMIT=10,n.GROW_LENGTH=1,n.TYPEAHEAD_OPTIONS={hint:!0,highlight:!0,minLength:1},n.SHRUNK="SHRUNK",n.GROWING="GROWING",n.SHRINKING="SHRINKING",n.asyncNoop=new Promise(function(t){return t(null)})},function(t,n,e){"use strict";function r(t,n){if(!(t instanceof n))throw new TypeError("Cannot call a class as a function")}function i(t){return String(t).replace(/[&<>"'`=\/]/g,function(t){return f[t]})}function o(t){var n=t.label,e=t.id,r=n;if(t instanceof u.BizDimensionEntity){r="<span>"+n+'</span><span class="pull-right eb-tt-biz-dimension">'+t.bizDimensionNode.label+"</span>"}else if(t instanceof u.BizDimEntSubNode){var i=t.bizDimEnt,o=i.bizDimensionNode,s=o.label;r="<span>"+n+'</span><span class="pull-right eb-tt-biz-dimension">'+s+"</span>"}return'\n        <div data-id="'+e+'" class="container-fluid">\n            '+r+"\n        </div>\n    "}function s(t){return'\n    <div class="tt-selectable container-fluid eb-search-for">\n        Search for <strong>"'+i(t.query)+'"</strong>\n    </div>\n    '}Object.defineProperty(n,"__esModule",{value:!0}),n.SearchComponent=void 0;var a=e(1),u=e(0),c=e(5),l=function(t){return t&&t.__esModule?t:{default:t}}(c);e(3),e(10);var f={"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;","/":"&#x2F;","`":"&#x60;","=":"&#x3D;"},d={suggestion:o,notFound:s};n.SearchComponent=function t(n){var e=this,i=n.mountPoint,o=n.asyncData;r(this,t),this.lastSelected="",this.enteredQuery="",this.selectedTs=new Date,this.onTrueEnter=function(t){console.warn("onTrueEnter not set",t)},this.onEnter=function(t){t.preventDefault();var n=t.target.value;n=n.trim(),e.enteredQuery=n;var r=new Date,i=r-e.selectedTs;if(a.SELECT_ENTER_DISP<i){console.debug("onTrueEnter time difference",i);var o=e.enteredQuery,s=e.indexer.getOne(o);e.onTrueEnter({query:o,node:s})}return!1},this.updateValue=function(t){if(13===(t.keyCode||t.which))return e.onEnter(t);var n=t.target.value;n=n.trim(),e.selectedTs=new Date,e.lastSelected=n;var r=e.indexer.getOne(n);if(!r)return void e.bouncedShrinkOrExpand(n);e.indexer.isGrowableNode(r)&&e.indexer.growFromNode(r)},this.indexer=new l.default(o),this.$e=$(i),this.$e.typeahead(a.TYPEAHEAD_OPTIONS,{name:"entities",source:this.indexer.hound,limit:a.RESULTS_LIMIT,display:a.LABEL,templates:d}).bind("typeahead:select",this.updateValue).keyup(this.updateValue),this.bouncedShrinkOrExpand=_.debounce(this.indexer.shrinkOrExpand,100)}},function(t,n,e){"use strict";t.exports=e(8).polyfill()},function(t,n,e){"use strict";var r=e(2),i=e(0);window.enablix=window.enablix||{},_.assign(window.enablix,{ContainerGraph:i.ContainerGraph,ContainerNode:i.ContainerNode,BizDimensionEntity:i.BizDimensionEntity,BizDimEntSubNode:i.BizDimEntSubNode,SearchComponent:r.SearchComponent})},function(t,n,e){"use strict";function r(t,n){if(!(t instanceof n))throw new TypeError("Cannot call a class as a function")}function i(t,n){var e=[];return t.forEach(function(t){var r=t.name,i=t.shortName,o=t.identity;r&&(r=r.trim(),i=String(i||r).trim(),r&&e.push({label:r,businessDimensionType:n,identity:o}),i!==r&&e.push({label:i,businessDimensionType:n,identity:o}))}),e}Object.defineProperty(n,"__esModule",{value:!0});var o=function(){function t(t,n){var e=[],r=!0,i=!1,o=void 0;try{for(var s,a=t[Symbol.iterator]();!(r=(s=a.next()).done)&&(e.push(s.value),!n||e.length!==n);r=!0);}catch(t){i=!0,o=t}finally{try{!r&&a.return&&a.return()}finally{if(i)throw o}}return e}return function(n,e){if(Array.isArray(n))return n;if(Symbol.iterator in Object(n))return t(n,e);throw new TypeError("Invalid attempt to destructure non-iterable instance")}}(),s=function(){function t(t,n){for(var e=0;e<n.length;e++){var r=n[e];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(t,r.key,r)}}return function(n,e,r){return e&&t(n.prototype,e),r&&t(n,r),n}}(),a=e(0),u=e(1),c=function(){function t(n){r(this,t),l.call(this),this.ids=[],this.hound=new Bloodhound({datumTokenizer:Bloodhound.tokenizers.obj.whitespace(u.LABEL),queryTokenizer:Bloodhound.tokenizers.whitespace,local:[],identify:function(t){return t.label}}),this.asyncTemplate=n.template,this.asyncData=n,this.asyncReady=this._processAsyncData()}return s(t,[{key:"isGrowableNode",value:function(t){return t instanceof a.BizDimensionEntity||t instanceof a.BizContentNode}},{key:"growFromNode",value:function(t){t instanceof a.BizDimensionEntity?this.add(t.createIndex()):t instanceof a.BizContentNode&&this.add(this.containerGraph.createBizContentIndex(t))}},{key:"add",value:function(t){var n=this,e=t.filter(function(t){return!~n.ids.indexOf(t[u.LABEL])});this.hound.add(e),this.ids=this.ids.concat(e.map(function(t){return t[u.LABEL]}))}},{key:"clear",value:function(){this.ids=[],this.hound.clear()}},{key:"_updateTemplate",value:function(t){this.containerGraph=this.containerGraph||new a.ContainerGraph(t);var n=this.containerGraph.createIndex();this.add(n)}},{key:"getOne",value:function(t){return this.hound.get([t])[0]}},{key:"restart",value:function(){var t=this;return this.expansionState===u.SHRINKING?u.asyncNoop:(this.expansionState=u.SHRINKING,this.asyncReady.then(function(){return t.clear(),t.hound.initialize(!0).then(t._processAsyncData).then(function(){t.expansionState=u.SHRUNK})}))}}]),t}(),l=function(){var t=this;this.expansionState=u.SHRUNK,this._updateBizEntity=function(n,e){var r=i(n,e).map(t._createBizDimEntity);t.add(r)},this._createBizDimEntity=function(n){return t.containerGraph.createBizDimEntity(n)},this._processAsyncData=function(){return t.asyncTemplate.then(function(n){return t._updateTemplate(n),_(asyncData).omit(["template"]).entries().map(function(n){var e=o(n,2),r=e[0];return e[1].then(function(n){return t._updateBizEntity(n,r)})}).value()})},this.search=function(n){return new Promise(function(e,r){setTimeout(function(){t.hound.search(n,function(t){e(t)})})})},this.shrinkOrExpand=function(n){return n.length<u.GROW_LENGTH?t.expansionState!==u.SHRUNK?t.restart():u.asyncNoop:t.search(n).then(function(n){if(n.length<u.RESULTS_LIMIT){for(var e=void 0,r=0;r<n.length&&(e=n[r],!t.isGrowableNode(e));++r);e&&t.growFromNode(e),t.expansionState=u.GROWING}return null})}};n.default=c},function(t,n,e){n=t.exports=e(7)(void 0),n.push([t.i,".tt-selectable {\r\n  cursor: pointer;\r\n  border-left: 1px solid grey;\r\n  border-right: 1px solid grey;\r\n  border-bottom:1px solid grey;\r\n  width: 20vw;\r\n  padding-left: 0px;\r\n  padding-right: 0px;\r\n}\r\n\r\n.tt-selectable:hover {\r\n    background-color:#2980b9;\r\n    color:white;\r\n}\r\n\r\n.tt-cursor {\r\n    background-color:#2980b9;\r\n    color:white !important;\r\n}\r\n\r\n.eb-tt-biz-dimension {\r\n    font-size:0.875em;\r\n    padding-right:5px;\r\n    padding-top:5px;\r\n    text-align: right;\r\n}\r\n\r\n.eb-search-for {\r\n    color:#626262;\r\n    font-style:italic;\r\n    font-weight:500;\r\n}\r\n\r\n.eb-search-for:hover {\r\n    color:white;\r\n}",""])},function(t,n){function e(t,n){var e=t[1]||"",i=t[3];if(!i)return e;if(n&&"function"==typeof btoa){var o=r(i);return[e].concat(i.sources.map(function(t){return"/*# sourceURL="+i.sourceRoot+t+" */"})).concat([o]).join("\n")}return[e].join("\n")}function r(t){return"/*# sourceMappingURL=data:application/json;charset=utf-8;base64,"+btoa(unescape(encodeURIComponent(JSON.stringify(t))))+" */"}t.exports=function(t){var n=[];return n.toString=function(){return this.map(function(n){var r=e(n,t);return n[2]?"@media "+n[2]+"{"+r+"}":r}).join("")},n.i=function(t,e){"string"==typeof t&&(t=[[null,t,""]]);for(var r={},i=0;i<this.length;i++){var o=this[i][0];"number"==typeof o&&(r[o]=!0)}for(i=0;i<t.length;i++){var s=t[i];"number"==typeof s[0]&&r[s[0]]||(e&&!s[2]?s[2]=e:e&&(s[2]="("+s[2]+") and ("+e+")"),n.push(s))}},n}},function(t,n,e){(function(n,r){/*!
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// identity function for calling harmony imports with the correct context
+/******/ 	__webpack_require__.i = function(value) { return value; };
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, {
+/******/ 				configurable: false,
+/******/ 				enumerable: true,
+/******/ 				get: getter
+/******/ 			});
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = 4);
+/******/ })
+/************************************************************************/
+/******/ ([
+/* 0 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.ContainerGraph = exports.BizDimEntSubNode = exports.BizDimensionEntity = exports.BizDimensionNode = exports.BizContentNode = exports.ContainerNode = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _constants = __webpack_require__(1);
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var ALL_NODES = [];
+/**
+ * Calles the Container node constructor if it has a proper business category
+ * @param {*} subContainer 
+ * @param {*} depth 
+ */
+function createContainerNode(subContainer) {
+    var depth = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+
+    switch (subContainer.businessCategory) {
+        case "BUSINESS_DIMENSION":
+            return new BizDimensionNode(subContainer, depth);
+        case "BUSINESS_CONTENT":
+            return new BizContentNode(subContainer, depth);
+        default:
+            return new ContainerNode(subContainer, depth);
+    }
+}
+
+var ContainerNode = exports.ContainerNode = function () {
+    function ContainerNode(_ref) {
+        var _this = this;
+
+        var businessCategory = _ref.businessCategory,
+            id = _ref.id,
+            label = _ref.label,
+            qualifiedId = _ref.qualifiedId,
+            searchBoost = _ref.searchBoost,
+            container = _ref.container;
+        var depth = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+
+        _classCallCheck(this, ContainerNode);
+
+        this.type = "ContainerNode";
+
+        _.assign(this, { businessCategory: businessCategory, id: id, label: label, qualifiedId: qualifiedId, searchBoost: searchBoost, depth: depth });
+        if (!container || container.length === 0) return;
+        this.nodes = {};
+        var newDepth = depth++;
+        function addDepth(subContainer) {
+            return createContainerNode(subContainer, newDepth);
+        }
+        container.map(addDepth).filter(function (node) {
+            return node !== null;
+        }).forEach(function (node) {
+            if (_this.nodes[node.label]) {
+                console.warn("ContainerNode::The node with label " + label + " already exists, skipping");
+                return;
+            };
+            _this.nodes[node.label] = node;
+            ALL_NODES.push(node);
+        });
+    }
+    /**
+     * Not necessarily the URI, but the information required to find the URI
+     */
+
+
+    _createClass(ContainerNode, [{
+        key: "asUri",
+        value: function asUri() {
+            return { containerQId: this.id };
+        }
+    }]);
+
+    return ContainerNode;
+}();
+
+;
+
+var BizContentNode = exports.BizContentNode = function (_ContainerNode) {
+    _inherits(BizContentNode, _ContainerNode);
+
+    function BizContentNode() {
+        var _ref2;
+
+        var _temp, _this2, _ret;
+
+        _classCallCheck(this, BizContentNode);
+
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+            args[_key] = arguments[_key];
+        }
+
+        return _ret = (_temp = (_this2 = _possibleConstructorReturn(this, (_ref2 = BizContentNode.__proto__ || Object.getPrototypeOf(BizContentNode)).call.apply(_ref2, [this].concat(args))), _this2), _this2.type = "BizContentNode", _temp), _possibleConstructorReturn(_this2, _ret);
+    }
+
+    return BizContentNode;
+}(ContainerNode);
+
+;
+
+var BizDimensionNode = exports.BizDimensionNode = function (_ContainerNode2) {
+    _inherits(BizDimensionNode, _ContainerNode2);
+
+    function BizDimensionNode() {
+        var _ref3;
+
+        var _temp2, _this3, _ret2;
+
+        _classCallCheck(this, BizDimensionNode);
+
+        for (var _len2 = arguments.length, args = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+            args[_key2] = arguments[_key2];
+        }
+
+        return _ret2 = (_temp2 = (_this3 = _possibleConstructorReturn(this, (_ref3 = BizDimensionNode.__proto__ || Object.getPrototypeOf(BizDimensionNode)).call.apply(_ref3, [this].concat(args))), _this3), _this3.type = "BizDimensionNode", _this3.entNodes = [], _temp2), _possibleConstructorReturn(_this3, _ret2);
+    }
+
+    _createClass(BizDimensionNode, [{
+        key: "createBizContentIndex",
+        value: function createBizContentIndex(bizContentNode) {
+            if (bizContentNode.label in this.nodes) {
+                return this.entNodes.map(function (node) {
+                    return node.createBizContentDatum(bizContentNode);
+                });
+            } else {
+                return [];
+            }
+        }
+    }]);
+
+    return BizDimensionNode;
+}(ContainerNode);
+
+var BizDimensionEntity = exports.BizDimensionEntity = function () {
+    function BizDimensionEntity(payload) {
+        _classCallCheck(this, BizDimensionEntity);
+
+        this.type = "BizDimensionEntity";
+        this.hasAddedLazyEntries = false;
+
+        _.assign(this, payload);
+        this.bizDimensionNode.entNodes.push(this);
+    }
+
+    _createClass(BizDimensionEntity, [{
+        key: "createIndex",
+        value: function createIndex() {
+            if (this.hasAddedLazyEntries || !this.bizDimensionNode || !this.bizDimensionNode.nodes) return [];
+            var bizDimEnt = this;
+            var index = _.values(this.bizDimensionNode.nodes).map(function (bizContentNode) {
+                return new BizDimEntSubNode({ bizDimEnt: bizDimEnt, bizContentNode: bizContentNode });
+            });
+            this.hasAddedLazyEntries = true;
+            return index;
+        }
+    }, {
+        key: "createBizContentDatum",
+        value: function createBizContentDatum(superBizContentNode) {
+            if (superBizContentNode.label in this.bizDimensionNode.nodes) {
+                var bizDimEnt = this;
+                var bizContentNode = this.bizDimensionNode.nodes[superBizContentNode.label];
+                return new BizDimEntSubNode({ bizDimEnt: bizDimEnt, bizContentNode: bizContentNode });
+            } else {
+                return null;
+            }
+        }
+        /**
+         * Not necessarily the URI, but the information required to find the URI
+         */
+
+    }, {
+        key: "asUri",
+        value: function asUri() {
+            var _bizDimensionNode$asU = this.bizDimensionNode.asUri(),
+                containerQId = _bizDimensionNode$asU.containerQId;
+
+            var identity = this.identity;
+
+            return { containerQId: containerQId, identity: identity };
+        }
+    }]);
+
+    return BizDimensionEntity;
+}();
+
+;
+
+var BizDimEntSubNode = exports.BizDimEntSubNode = function () {
+    function BizDimEntSubNode(payload) {
+        _classCallCheck(this, BizDimEntSubNode);
+
+        this.type = "BizDimEntSubNode";
+
+        _.assign(this, payload);
+        //TODO: i18n
+        this.label = this.bizContentNode.label + " for " + this.bizDimEnt.label;
+    }
+    /**
+     * Not necessarily the URI, but the information required to find the URI
+     */
+
+
+    _createClass(BizDimEntSubNode, [{
+        key: "asUri",
+        value: function asUri() {
+            var _bizDimEnt$asUri = this.bizDimEnt.asUri(),
+                containerQId = _bizDimEnt$asUri.containerQId,
+                identity = _bizDimEnt$asUri.identity;
+
+            var content = this.bizContentNode.asUri();
+            return { containerQId: containerQId, subContainerQId: content.containerQId, parentIdentity: identity };
+        }
+    }]);
+
+    return BizDimEntSubNode;
+}();
+
+/**
+ * First level nodes require a business category
+ * @param {*} container 
+ */
+
+
+function createBizCategoryNodes(container) {
+    if (!container.businessCategory) return null;
+    return createContainerNode(container);
+}
+
+var ContainerGraph = exports.ContainerGraph = function () {
+    function ContainerGraph(ebTemplate) {
+        var _this4 = this;
+
+        _classCallCheck(this, ContainerGraph);
+
+        var container = ebTemplate.dataDefinition.container;
+
+        this.rootNodes = {};
+        container.map(createBizCategoryNodes).filter(function (node) {
+            return node !== null;
+        }).forEach(function (node) {
+            if (_this4.rootNodes[node.label]) {
+                console.warn("ContainerGraph::The node with label " + node.label + " already exists, skipping");
+                return;
+            };
+            _this4.rootNodes[node.label] = node;
+            ALL_NODES.push(node);
+        });
+        this.ALL_NODES = ALL_NODES;
+        this.bizDimensionNodes = {};
+        ALL_NODES.filter(function (node) {
+            return node.businessCategory === _constants.BUSINESS_DIMENSION;
+        }).forEach(function (node) {
+            if (_this4.bizDimensionNodes[node.id]) {
+                console.warn("ContainerGraph::A business dimension node with label " + node.label + " already exists, skipping");
+                return;
+            }
+            _this4.bizDimensionNodes[node.id] = node;
+        });
+    }
+
+    _createClass(ContainerGraph, [{
+        key: "createBizDimEntity",
+        value: function createBizDimEntity(_ref4) {
+            var label = _ref4.label,
+                businessDimensionType = _ref4.businessDimensionType,
+                identity = _ref4.identity;
+
+            var bizDimensionNode = this.bizDimensionNodes[businessDimensionType];
+            return new BizDimensionEntity({ label: label, bizDimensionNode: bizDimensionNode, identity: identity });
+        }
+        //Only two deep
+
+    }, {
+        key: "createIndex",
+        value: function createIndex() {
+            return _.values(this.rootNodes);
+        }
+    }, {
+        key: "createBizContentIndex",
+        value: function createBizContentIndex(bizContentNode) {
+            if (bizContentNode instanceof BizContentNode) {
+                return _(this.bizDimensionNodes).values().map(function (node) {
+                    return node.createBizContentIndex(bizContentNode);
+                }).flatten().value();
+            } else {
+                throw new Error("#createBizContentIndex requires a BizContentNode");
+            }
+        }
+    }]);
+
+    return ContainerGraph;
+}();
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+__webpack_require__(3);
+
+var BUSINESS_DIMENSION = exports.BUSINESS_DIMENSION = "BUSINESS_DIMENSION";
+var LABEL = exports.LABEL = "label";
+/**
+ * If select and enter fall within this timediff (in ms), do not fire the onSearch event 
+*/
+var SELECT_ENTER_DISP = exports.SELECT_ENTER_DISP = 100;
+
+/**
+ * If the number of search results is less than this limit and the growth threshold is met, than grow the number of results
+ */
+var RESULTS_LIMIT = exports.RESULTS_LIMIT = 10;
+
+/**
+ * When the number of characters enter is greater than this number and the number of results is less than RESULTS_LIMIT, then pick the first two results and expand their indexes
+ * When less than this number, restart the index
+ */
+var GROW_LENGTH = exports.GROW_LENGTH = 1;
+
+var TYPEAHEAD_OPTIONS = exports.TYPEAHEAD_OPTIONS = { hint: true, highlight: true, minLength: 1 };
+
+/**
+ * Expansion states
+ */
+var SHRUNK = exports.SHRUNK = "SHRUNK";
+var GROWING = exports.GROWING = "GROWING";
+var SHRINKING = exports.SHRINKING = "SHRINKING";
+
+/**
+ * Empty promise
+ */
+var asyncNoop = exports.asyncNoop = new Promise(function (resolve) {
+  return resolve(null);
+});
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.SearchComponent = undefined;
+
+var _constants = __webpack_require__(1);
+
+var _graph = __webpack_require__(0);
+
+var _Indexer = __webpack_require__(5);
+
+var _Indexer2 = _interopRequireDefault(_Indexer);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+__webpack_require__(3);
+
+__webpack_require__(10);
+
+var entityMap = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;',
+    '/': '&#x2F;',
+    '`': '&#x60;',
+    '=': '&#x3D;'
+};
+
+function escapeHtml(string) {
+    return String(string).replace(/[&<>"'`=\/]/g, function (s) {
+        return entityMap[s];
+    });
+}
+
+//TODO: XSS escaping!!!
+
+function suggestionTemplate(node) {
+    var label = node.label,
+        id = node.id;
+
+    var innerContent = label;
+    if (node instanceof _graph.BizDimensionEntity) {
+        var bizDimensionNode = node.bizDimensionNode;
+
+        var dimension = bizDimensionNode.label;
+        innerContent = "<span>" + label + "</span><span class=\"pull-right eb-tt-biz-dimension\">" + dimension + "</span>";
+    } else if (node instanceof _graph.BizDimEntSubNode) {
+        var bizDimEnt = node.bizDimEnt;
+        var _bizDimensionNode = bizDimEnt.bizDimensionNode;
+
+        var _dimension = _bizDimensionNode.label;
+        innerContent = "<span>" + label + "</span><span class=\"pull-right eb-tt-biz-dimension\">" + _dimension + "</span>";
+    }
+    return "\n        <div data-id=\"" + id + "\" class=\"container-fluid\">\n            " + innerContent + "\n        </div>\n    ";
+}
+
+function notFoundTemplate(_ref) {
+    var query = _ref.query;
+
+    return "\n    <div class=\"tt-selectable container-fluid eb-search-for\">\n        Search for <strong>\"" + escapeHtml(query) + "\"</strong>\n    </div>\n    ";
+}
+
+var templates = {
+    suggestion: suggestionTemplate,
+    notFound: notFoundTemplate
+};
+
+var SearchComponent = exports.SearchComponent = function SearchComponent(_ref2) {
+    var _this = this;
+
+    var mountPoint = _ref2.mountPoint,
+        asyncData = _ref2.asyncData;
+
+    _classCallCheck(this, SearchComponent);
+
+    this.lastSelected = "";
+    this.enteredQuery = "";
+    this.selectedTs = new Date();
+
+    this.onTrueEnter = function (payload) {
+        console.warn("onTrueEnter not set", payload);
+    };
+
+    this.onEnter = function (e) {
+        e.preventDefault();
+        var value = e.target.value;
+
+        value = value.trim();
+        _this.enteredQuery = value;
+        var enterTs = new Date();
+        var timeDiff = enterTs - _this.selectedTs;
+        if (_constants.SELECT_ENTER_DISP < timeDiff) {
+            console.debug("onTrueEnter time difference", timeDiff);
+            var query = _this.enteredQuery;
+            var node = _this.indexer.getOne(query);
+            _this.onTrueEnter({ query: query, node: node });
+        }
+        return false;
+    };
+
+    this.updateValue = function (e) {
+        var keyCode = e.keyCode || e.which;
+        if (keyCode === 13) {
+            return _this.onEnter(e);
+        }
+        var value = e.target.value;
+
+        value = value.trim();
+        _this.selectedTs = new Date();
+        _this.lastSelected = value;
+        var node = _this.indexer.getOne(value);
+        if (!node) {
+            _this.bouncedShrinkOrExpand(value);
+            return;
+        };
+        if (_this.indexer.isGrowableNode(node)) {
+            //Add lazy entries now
+            _this.indexer.growFromNode(node);
+        }
+    };
+
+    this.indexer = new _Indexer2.default(asyncData);
+    this.$e = $(mountPoint);
+    this.$e.typeahead(_constants.TYPEAHEAD_OPTIONS, {
+        name: 'entities',
+        source: this.indexer.hound,
+        limit: _constants.RESULTS_LIMIT,
+        display: _constants.LABEL,
+        templates: templates
+    }).bind("typeahead:select", this.updateValue)
+    //.bind("typeahead:change",this.onChange)
+    //.keydown(this.onKeyDown)
+    .keyup(this.updateValue);
+    this.bouncedShrinkOrExpand = _.debounce(this.indexer.shrinkOrExpand, 100);
+}
+/**
+ * This fires when an enter is enter independent of a select
+ */
+;
+
+;
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+// This file can be required in Browserify and Node.js for automatic polyfill
+// To use it:  require('es6-promise/auto');
+
+module.exports = __webpack_require__(8).polyfill();
+
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _2 = __webpack_require__(2);
+
+var _graph = __webpack_require__(0);
+
+window.enablix = window.enablix || {};
+
+_.assign(window.enablix, { ContainerGraph: _graph.ContainerGraph, ContainerNode: _graph.ContainerNode, BizDimensionEntity: _graph.BizDimensionEntity, BizDimEntSubNode: _graph.BizDimEntSubNode, SearchComponent: _2.SearchComponent });
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _graph = __webpack_require__(0);
+
+var _constants = __webpack_require__(1);
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function processBizDimEnts(value, businessDimensionType) {
+    var index = [];
+    value.forEach(function (entity) {
+        var name = entity.name,
+            shortName = entity.shortName,
+            identity = entity.identity;
+
+        if (!name) return;
+        name = name.trim();
+        shortName = String(shortName || name).trim();
+        if (name) index.push({ label: name, businessDimensionType: businessDimensionType, identity: identity });
+        if (shortName !== name) index.push({ label: shortName, businessDimensionType: businessDimensionType, identity: identity });
+    });
+    return index;
+};
+
+var Indexer = function () {
+    function Indexer(asyncData) {
+        var _this = this;
+
+        _classCallCheck(this, Indexer);
+
+        this.expansionState = _constants.SHRUNK;
+
+        this._updateBizEntity = function (content, key) {
+            var idx = processBizDimEnts(content, key).map(_this._createBizDimEntity);
+            _this.add(idx);
+        };
+
+        this._createBizDimEntity = function (payload) {
+            return _this.containerGraph.createBizDimEntity(payload);
+        };
+
+        this._processAsyncData = function () {
+            return _this.asyncTemplate.then(function (ebTemplate) {
+                _this._updateTemplate(ebTemplate);
+                return _(_this.asyncData).omit(["template"]).entries().map(function (_ref) {
+                    var _ref2 = _slicedToArray(_ref, 2),
+                        key = _ref2[0],
+                        promise = _ref2[1];
+
+                    return promise.then(function (content) {
+                        return _this._updateBizEntity(content, key);
+                    });
+                }).value();
+            });
+        };
+
+        this.search = function (query) {
+            return new Promise(function (resolve, reject) {
+                setTimeout(function () {
+                    _this.hound.search(query, function (data) {
+                        resolve(data);
+                    });
+                });
+            });
+        };
+
+        this.shrinkOrExpand = function (query) {
+            //This is because the component will not rerender until the next character input
+            if (query.length < _constants.GROW_LENGTH) {
+                if (_this.expansionState !== _constants.SHRUNK) {
+                    return _this.restart();
+                }
+                return _constants.asyncNoop;
+            } else {
+                return _this.search(query).then(function (data) {
+                    if (data.length < _constants.RESULTS_LIMIT) {
+                        var node = void 0;
+                        for (var i = 0; i < data.length; ++i) {
+                            node = data[i];
+                            if (_this.isGrowableNode(node)) {
+                                break;
+                            }
+                        }
+                        if (node) {
+                            _this.growFromNode(node);
+                        }
+                        _this.expansionState = _constants.GROWING;
+                    }
+                    return null;
+                });
+            }
+        };
+
+        this.ids = [];
+        this.hound = new Bloodhound({
+            datumTokenizer: Bloodhound.tokenizers.obj.whitespace(_constants.LABEL),
+            queryTokenizer: Bloodhound.tokenizers.whitespace,
+            local: [],
+            identify: function identify(obj) {
+                return obj.label;
+            }
+        });
+        this.asyncTemplate = asyncData.template;
+        this.asyncData = asyncData;
+        //Kick off async processing
+        this.asyncReady = this._processAsyncData();
+    }
+
+    _createClass(Indexer, [{
+        key: "isGrowableNode",
+        value: function isGrowableNode(node) {
+            return node instanceof _graph.BizDimensionEntity || node instanceof _graph.BizContentNode;
+        }
+    }, {
+        key: "growFromNode",
+        value: function growFromNode(node) {
+            if (node instanceof _graph.BizDimensionEntity) {
+                this.add(node.createIndex());
+            } else if (node instanceof _graph.BizContentNode) {
+                this.add(this.containerGraph.createBizContentIndex(node));
+            }
+        }
+    }, {
+        key: "add",
+        value: function add(items) {
+            var _this2 = this;
+
+            var newItems = items.filter(function (item) {
+                return !~_this2.ids.indexOf(item[_constants.LABEL]);
+            });
+            this.hound.add(newItems);
+            this.ids = this.ids.concat(newItems.map(function (item) {
+                return item[_constants.LABEL];
+            }));
+        }
+    }, {
+        key: "clear",
+        value: function clear() {
+            this.ids = [];
+            this.hound.clear();
+        }
+    }, {
+        key: "_updateTemplate",
+        value: function _updateTemplate(ebTemplate) {
+            this.containerGraph = this.containerGraph || new _graph.ContainerGraph(ebTemplate);
+            var idx = this.containerGraph.createIndex();
+            this.add(idx);
+        }
+    }, {
+        key: "getOne",
+        value: function getOne(query) {
+            return this.hound.get([query])[0];
+        }
+        /**
+         * Called when the number of characters is less than the GROWTH_THRESHOLD
+        */
+
+    }, {
+        key: "restart",
+        value: function restart() {
+            var _this3 = this;
+
+            //avoid multiple calls
+            if (this.expansionState === _constants.SHRINKING) return _constants.asyncNoop;
+            this.expansionState = _constants.SHRINKING;
+            return this.asyncReady.then(function () {
+                _this3.clear();
+                return _this3.hound.initialize(true).then(_this3._processAsyncData).then(function () {
+                    _this3.expansionState = _constants.SHRUNK;
+                });
+            });
+        }
+    }]);
+
+    return Indexer;
+}();
+
+exports.default = Indexer;
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(7)(undefined);
+// imports
+
+
+// module
+exports.push([module.i, ".tt-selectable {\r\n  cursor: pointer;\r\n  border-left: 1px solid grey;\r\n  border-right: 1px solid grey;\r\n  border-bottom:1px solid grey;\r\n  width: 20vw;\r\n  padding-left: 0px;\r\n  padding-right: 0px;\r\n}\r\n\r\n.tt-selectable:hover {\r\n    background-color:#2980b9;\r\n    color:white;\r\n}\r\n\r\n.tt-cursor {\r\n    background-color:#2980b9;\r\n    color:white !important;\r\n}\r\n\r\n.eb-tt-biz-dimension {\r\n    font-size:0.875em;\r\n    padding-right:5px;\r\n    padding-top:5px;\r\n    text-align: right;\r\n}\r\n\r\n.eb-search-for {\r\n    color:#626262;\r\n    font-style:italic;\r\n    font-weight:500;\r\n}\r\n\r\n.eb-search-for:hover {\r\n    color:white;\r\n}", ""]);
+
+// exports
+
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports) {
+
+/*
+	MIT License http://www.opensource.org/licenses/mit-license.php
+	Author Tobias Koppers @sokra
+*/
+// css base code, injected by the css-loader
+module.exports = function(useSourceMap) {
+	var list = [];
+
+	// return the list of modules as css string
+	list.toString = function toString() {
+		return this.map(function (item) {
+			var content = cssWithMappingToString(item, useSourceMap);
+			if(item[2]) {
+				return "@media " + item[2] + "{" + content + "}";
+			} else {
+				return content;
+			}
+		}).join("");
+	};
+
+	// import a list of modules into the list
+	list.i = function(modules, mediaQuery) {
+		if(typeof modules === "string")
+			modules = [[null, modules, ""]];
+		var alreadyImportedModules = {};
+		for(var i = 0; i < this.length; i++) {
+			var id = this[i][0];
+			if(typeof id === "number")
+				alreadyImportedModules[id] = true;
+		}
+		for(i = 0; i < modules.length; i++) {
+			var item = modules[i];
+			// skip already imported module
+			// this implementation is not 100% perfect for weird media query combinations
+			//  when a module is imported multiple times with different media queries.
+			//  I hope this will never occur (Hey this way we have smaller bundles)
+			if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
+				if(mediaQuery && !item[2]) {
+					item[2] = mediaQuery;
+				} else if(mediaQuery) {
+					item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
+				}
+				list.push(item);
+			}
+		}
+	};
+	return list;
+};
+
+function cssWithMappingToString(item, useSourceMap) {
+	var content = item[1] || '';
+	var cssMapping = item[3];
+	if (!cssMapping) {
+		return content;
+	}
+
+	if (useSourceMap && typeof btoa === 'function') {
+		var sourceMapping = toComment(cssMapping);
+		var sourceURLs = cssMapping.sources.map(function (source) {
+			return '/*# sourceURL=' + cssMapping.sourceRoot + source + ' */'
+		});
+
+		return [content].concat(sourceURLs).concat([sourceMapping]).join('\n');
+	}
+
+	return [content].join('\n');
+}
+
+// Adapted from convert-source-map (MIT)
+function toComment(sourceMap) {
+	// eslint-disable-next-line no-undef
+	var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))));
+	var data = 'sourceMappingURL=data:application/json;charset=utf-8;base64,' + base64;
+
+	return '/*# ' + data + ' */';
+}
+
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(process, global) {var require;/*!
  * @overview es6-promise - a tiny implementation of Promises/A+.
  * @copyright Copyright (c) 2014 Yehuda Katz, Tom Dale, Stefan Penner and contributors (Conversion to ES6 API by Jake Archibald)
  * @license   Licensed under MIT license
  *            See https://raw.githubusercontent.com/stefanpenner/es6-promise/master/LICENSE
  * @version   4.1.0
  */
-!function(n,e){t.exports=e()}(0,function(){"use strict";function t(t){return"function"==typeof t||"object"==typeof t&&null!==t}function i(t){return"function"==typeof t}function o(t){q=t}function s(t){F=t}function a(){return void 0!==Q?function(){Q(c)}:u()}function u(){var t=setTimeout;return function(){return t(c,1)}}function c(){for(var t=0;t<K;t+=2){(0,X[t])(X[t+1]),X[t]=void 0,X[t+1]=void 0}K=0}function l(t,n){var e=arguments,r=this,i=new this.constructor(d);void 0===i[tt]&&O(i);var o=r._state;return o?function(){var t=e[o-1];F(function(){return D(o,i,t,r._result)})}():S(r,i,t,n),i}function f(t){var n=this;if(t&&"object"==typeof t&&t.constructor===n)return t;var e=new n(d);return w(e,t),e}function d(){}function h(){return new TypeError("You cannot resolve a promise with itself")}function p(){return new TypeError("A promises callback cannot return that same promise.")}function v(t){try{return t.then}catch(t){return it.error=t,it}}function y(t,n,e,r){try{t.call(n,e,r)}catch(t){return t}}function b(t,n,e){F(function(t){var r=!1,i=y(e,n,function(e){r||(r=!0,n!==e?w(t,e):E(t,e))},function(n){r||(r=!0,N(t,n))},"Settle: "+(t._label||" unknown promise"));!r&&i&&(r=!0,N(t,i))},t)}function m(t,n){n._state===et?E(t,n._result):n._state===rt?N(t,n._result):S(n,void 0,function(n){return w(t,n)},function(n){return N(t,n)})}function g(t,n,e){n.constructor===t.constructor&&e===l&&n.constructor.resolve===f?m(t,n):e===it?(N(t,it.error),it.error=null):void 0===e?E(t,n):i(e)?b(t,n,e):E(t,n)}function w(n,e){n===e?N(n,h()):t(e)?g(n,e,v(e)):E(n,e)}function _(t){t._onerror&&t._onerror(t._result),x(t)}function E(t,n){t._state===nt&&(t._result=n,t._state=et,0!==t._subscribers.length&&F(x,t))}function N(t,n){t._state===nt&&(t._state=rt,t._result=n,F(_,t))}function S(t,n,e,r){var i=t._subscribers,o=i.length;t._onerror=null,i[o]=n,i[o+et]=e,i[o+rt]=r,0===o&&t._state&&F(x,t)}function x(t){var n=t._subscribers,e=t._state;if(0!==n.length){for(var r=void 0,i=void 0,o=t._result,s=0;s<n.length;s+=3)r=n[s],i=n[s+e],r?D(e,r,i,o):i(o);t._subscribers.length=0}}function T(){this.error=null}function z(t,n){try{return t(n)}catch(t){return ot.error=t,ot}}function D(t,n,e,r){var o=i(e),s=void 0,a=void 0,u=void 0,c=void 0;if(o){if(s=z(e,r),s===ot?(c=!0,a=s.error,s.error=null):u=!0,n===s)return void N(n,p())}else s=r,u=!0;n._state!==nt||(o&&u?w(n,s):c?N(n,a):t===et?E(n,s):t===rt&&N(n,s))}function C(t,n){try{n(function(n){w(t,n)},function(n){N(t,n)})}catch(n){N(t,n)}}function I(){return st++}function O(t){t[tt]=st++,t._state=void 0,t._result=void 0,t._subscribers=[]}function B(t,n){this._instanceConstructor=t,this.promise=new t(d),this.promise[tt]||O(this.promise),H(n)?(this._input=n,this.length=n.length,this._remaining=n.length,this._result=new Array(this.length),0===this.length?E(this.promise,this._result):(this.length=this.length||0,this._enumerate(),0===this._remaining&&E(this.promise,this._result))):N(this.promise,A())}function A(){return new Error("Array Methods must be provided an Array")}function L(t){return new B(this,t).promise}function k(t){var n=this;return new n(H(t)?function(e,r){for(var i=t.length,o=0;o<i;o++)n.resolve(t[o]).then(e,r)}:function(t,n){return n(new TypeError("You must pass an array to race."))})}function j(t){var n=this,e=new n(d);return N(e,t),e}function U(){throw new TypeError("You must pass a resolver function as the first argument to the promise constructor")}function R(){throw new TypeError("Failed to construct 'Promise': Please use the 'new' operator, this object constructor cannot be called as a function.")}function G(t){this[tt]=I(),this._result=this._state=void 0,this._subscribers=[],d!==t&&("function"!=typeof t&&U(),this instanceof G?C(this,t):R())}function M(){var t=void 0;if(void 0!==r)t=r;else if("undefined"!=typeof self)t=self;else try{t=Function("return this")()}catch(t){throw new Error("polyfill failed because global object is unavailable in this environment")}var n=t.Promise;if(n){var e=null;try{e=Object.prototype.toString.call(n.resolve())}catch(t){}if("[object Promise]"===e&&!n.cast)return}t.Promise=G}var P=void 0;P=Array.isArray?Array.isArray:function(t){return"[object Array]"===Object.prototype.toString.call(t)};var H=P,K=0,Q=void 0,q=void 0,F=function(t,n){X[K]=t,X[K+1]=n,2===(K+=2)&&(q?q(c):Z())},W="undefined"!=typeof window?window:void 0,$=W||{},Y=$.MutationObserver||$.WebKitMutationObserver,J="undefined"==typeof self&&void 0!==n&&"[object process]"==={}.toString.call(n),V="undefined"!=typeof Uint8ClampedArray&&"undefined"!=typeof importScripts&&"undefined"!=typeof MessageChannel,X=new Array(1e3),Z=void 0;Z=J?function(){return function(){return n.nextTick(c)}}():Y?function(){var t=0,n=new Y(c),e=document.createTextNode("");return n.observe(e,{characterData:!0}),function(){e.data=t=++t%2}}():V?function(){var t=new MessageChannel;return t.port1.onmessage=c,function(){return t.port2.postMessage(0)}}():void 0===W?function(){try{var t=e(14);return Q=t.runOnLoop||t.runOnContext,a()}catch(t){return u()}}():u();var tt=Math.random().toString(36).substring(16),nt=void 0,et=1,rt=2,it=new T,ot=new T,st=0;return B.prototype._enumerate=function(){for(var t=this.length,n=this._input,e=0;this._state===nt&&e<t;e++)this._eachEntry(n[e],e)},B.prototype._eachEntry=function(t,n){var e=this._instanceConstructor,r=e.resolve;if(r===f){var i=v(t);if(i===l&&t._state!==nt)this._settledAt(t._state,n,t._result);else if("function"!=typeof i)this._remaining--,this._result[n]=t;else if(e===G){var o=new e(d);g(o,t,i),this._willSettleAt(o,n)}else this._willSettleAt(new e(function(n){return n(t)}),n)}else this._willSettleAt(r(t),n)},B.prototype._settledAt=function(t,n,e){var r=this.promise;r._state===nt&&(this._remaining--,t===rt?N(r,e):this._result[n]=e),0===this._remaining&&E(r,this._result)},B.prototype._willSettleAt=function(t,n){var e=this;S(t,void 0,function(t){return e._settledAt(et,n,t)},function(t){return e._settledAt(rt,n,t)})},G.all=L,G.race=k,G.resolve=f,G.reject=j,G._setScheduler=o,G._setAsap=s,G._asap=F,G.prototype={constructor:G,then:l,catch:function(t){return this.then(null,t)}},G.polyfill=M,G.Promise=G,G})}).call(n,e(9),e(13))},function(t,n){function e(){throw new Error("setTimeout has not been defined")}function r(){throw new Error("clearTimeout has not been defined")}function i(t){if(l===setTimeout)return setTimeout(t,0);if((l===e||!l)&&setTimeout)return l=setTimeout,setTimeout(t,0);try{return l(t,0)}catch(n){try{return l.call(null,t,0)}catch(n){return l.call(this,t,0)}}}function o(t){if(f===clearTimeout)return clearTimeout(t);if((f===r||!f)&&clearTimeout)return f=clearTimeout,clearTimeout(t);try{return f(t)}catch(n){try{return f.call(null,t)}catch(n){return f.call(this,t)}}}function s(){v&&h&&(v=!1,h.length?p=h.concat(p):y=-1,p.length&&a())}function a(){if(!v){var t=i(s);v=!0;for(var n=p.length;n;){for(h=p,p=[];++y<n;)h&&h[y].run();y=-1,n=p.length}h=null,v=!1,o(t)}}function u(t,n){this.fun=t,this.array=n}function c(){}var l,f,d=t.exports={};!function(){try{l="function"==typeof setTimeout?setTimeout:e}catch(t){l=e}try{f="function"==typeof clearTimeout?clearTimeout:r}catch(t){f=r}}();var h,p=[],v=!1,y=-1;d.nextTick=function(t){var n=new Array(arguments.length-1);if(arguments.length>1)for(var e=1;e<arguments.length;e++)n[e-1]=arguments[e];p.push(new u(t,n)),1!==p.length||v||i(a)},u.prototype.run=function(){this.fun.apply(null,this.array)},d.title="browser",d.browser=!0,d.env={},d.argv=[],d.version="",d.versions={},d.on=c,d.addListener=c,d.once=c,d.off=c,d.removeListener=c,d.removeAllListeners=c,d.emit=c,d.prependListener=c,d.prependOnceListener=c,d.listeners=function(t){return[]},d.binding=function(t){throw new Error("process.binding is not supported")},d.cwd=function(){return"/"},d.chdir=function(t){throw new Error("process.chdir is not supported")},d.umask=function(){return 0}},function(t,n,e){var r=e(6);"string"==typeof r&&(r=[[t.i,r,""]]);var i={};i.transform=void 0;e(11)(r,i);r.locals&&(t.exports=r.locals)},function(t,n,e){function r(t,n){for(var e=0;e<t.length;e++){var r=t[e],i=p[r.id];if(i){i.refs++;for(var o=0;o<i.parts.length;o++)i.parts[o](r.parts[o]);for(;o<r.parts.length;o++)i.parts.push(l(r.parts[o],n))}else{for(var s=[],o=0;o<r.parts.length;o++)s.push(l(r.parts[o],n));p[r.id]={id:r.id,refs:1,parts:s}}}}function i(t,n){for(var e=[],r={},i=0;i<t.length;i++){var o=t[i],s=n.base?o[0]+n.base:o[0],a=o[1],u=o[2],c=o[3],l={css:a,media:u,sourceMap:c};r[s]?r[s].parts.push(l):e.push(r[s]={id:s,parts:[l]})}return e}function o(t,n){var e=y(t.insertInto);if(!e)throw new Error("Couldn't find a style target. This probably means that the value for the 'insertInto' parameter is invalid.");var r=g[g.length-1];if("top"===t.insertAt)r?r.nextSibling?e.insertBefore(n,r.nextSibling):e.appendChild(n):e.insertBefore(n,e.firstChild),g.push(n);else{if("bottom"!==t.insertAt)throw new Error("Invalid value for parameter 'insertAt'. Must be 'top' or 'bottom'.");e.appendChild(n)}}function s(t){t.parentNode.removeChild(t);var n=g.indexOf(t);n>=0&&g.splice(n,1)}function a(t){var n=document.createElement("style");return t.attrs.type="text/css",c(n,t.attrs),o(t,n),n}function u(t){var n=document.createElement("link");return t.attrs.type="text/css",t.attrs.rel="stylesheet",c(n,t.attrs),o(t,n),n}function c(t,n){Object.keys(n).forEach(function(e){t.setAttribute(e,n[e])})}function l(t,n){var e,r,i,o;if(n.transform&&t.css){if(!(o=n.transform(t.css)))return function(){};t.css=o}if(n.singleton){var c=m++;e=b||(b=a(n)),r=f.bind(null,e,c,!1),i=f.bind(null,e,c,!0)}else t.sourceMap&&"function"==typeof URL&&"function"==typeof URL.createObjectURL&&"function"==typeof URL.revokeObjectURL&&"function"==typeof Blob&&"function"==typeof btoa?(e=u(n),r=h.bind(null,e,n),i=function(){s(e),e.href&&URL.revokeObjectURL(e.href)}):(e=a(n),r=d.bind(null,e),i=function(){s(e)});return r(t),function(n){if(n){if(n.css===t.css&&n.media===t.media&&n.sourceMap===t.sourceMap)return;r(t=n)}else i()}}function f(t,n,e,r){var i=e?"":r.css;if(t.styleSheet)t.styleSheet.cssText=_(n,i);else{var o=document.createTextNode(i),s=t.childNodes;s[n]&&t.removeChild(s[n]),s.length?t.insertBefore(o,s[n]):t.appendChild(o)}}function d(t,n){var e=n.css,r=n.media;if(r&&t.setAttribute("media",r),t.styleSheet)t.styleSheet.cssText=e;else{for(;t.firstChild;)t.removeChild(t.firstChild);t.appendChild(document.createTextNode(e))}}function h(t,n,e){var r=e.css,i=e.sourceMap,o=void 0===n.convertToAbsoluteUrls&&i;(n.convertToAbsoluteUrls||o)&&(r=w(r)),i&&(r+="\n/*# sourceMappingURL=data:application/json;base64,"+btoa(unescape(encodeURIComponent(JSON.stringify(i))))+" */");var s=new Blob([r],{type:"text/css"}),a=t.href;t.href=URL.createObjectURL(s),a&&URL.revokeObjectURL(a)}var p={},v=function(t){var n;return function(){return void 0===n&&(n=t.apply(this,arguments)),n}}(function(){return window&&document&&document.all&&!window.atob}),y=function(t){var n={};return function(e){return void 0===n[e]&&(n[e]=t.call(this,e)),n[e]}}(function(t){return document.querySelector(t)}),b=null,m=0,g=[],w=e(12);t.exports=function(t,n){if("undefined"!=typeof DEBUG&&DEBUG&&"object"!=typeof document)throw new Error("The style-loader cannot be used in a non-browser environment");n=n||{},n.attrs="object"==typeof n.attrs?n.attrs:{},n.singleton||(n.singleton=v()),n.insertInto||(n.insertInto="head"),n.insertAt||(n.insertAt="bottom");var e=i(t,n);return r(e,n),function(t){for(var o=[],s=0;s<e.length;s++){var a=e[s],u=p[a.id];u.refs--,o.push(u)}if(t){r(i(t,n),n)}for(var s=0;s<o.length;s++){var u=o[s];if(0===u.refs){for(var c=0;c<u.parts.length;c++)u.parts[c]();delete p[u.id]}}}};var _=function(){var t=[];return function(n,e){return t[n]=e,t.filter(Boolean).join("\n")}}()},function(t,n){t.exports=function(t){var n="undefined"!=typeof window&&window.location;if(!n)throw new Error("fixUrls requires window.location");if(!t||"string"!=typeof t)return t;var e=n.protocol+"//"+n.host,r=e+n.pathname.replace(/\/[^\/]*$/,"/");return t.replace(/url\s*\(((?:[^)(]|\((?:[^)(]+|\([^)(]*\))*\))*)\)/gi,function(t,n){var i=n.trim().replace(/^"(.*)"$/,function(t,n){return n}).replace(/^'(.*)'$/,function(t,n){return n});if(/^(#|data:|http:\/\/|https:\/\/|file:\/\/\/)/i.test(i))return t;var o;return o=0===i.indexOf("//")?i:0===i.indexOf("/")?e+i:r+i.replace(/^\.\//,""),"url("+JSON.stringify(o)+")"})}},function(t,n){var e;e=function(){return this}();try{e=e||Function("return this")()||(0,eval)("this")}catch(t){"object"==typeof window&&(e=window)}t.exports=e},function(t,n){}]);
-//# sourceMappingURL=SearchComponent.js.map
+
+(function (global, factory) {
+     true ? module.exports = factory() :
+    typeof define === 'function' && define.amd ? define(factory) :
+    (global.ES6Promise = factory());
+}(this, (function () { 'use strict';
+
+function objectOrFunction(x) {
+  return typeof x === 'function' || typeof x === 'object' && x !== null;
+}
+
+function isFunction(x) {
+  return typeof x === 'function';
+}
+
+var _isArray = undefined;
+if (!Array.isArray) {
+  _isArray = function (x) {
+    return Object.prototype.toString.call(x) === '[object Array]';
+  };
+} else {
+  _isArray = Array.isArray;
+}
+
+var isArray = _isArray;
+
+var len = 0;
+var vertxNext = undefined;
+var customSchedulerFn = undefined;
+
+var asap = function asap(callback, arg) {
+  queue[len] = callback;
+  queue[len + 1] = arg;
+  len += 2;
+  if (len === 2) {
+    // If len is 2, that means that we need to schedule an async flush.
+    // If additional callbacks are queued before the queue is flushed, they
+    // will be processed by this flush that we are scheduling.
+    if (customSchedulerFn) {
+      customSchedulerFn(flush);
+    } else {
+      scheduleFlush();
+    }
+  }
+};
+
+function setScheduler(scheduleFn) {
+  customSchedulerFn = scheduleFn;
+}
+
+function setAsap(asapFn) {
+  asap = asapFn;
+}
+
+var browserWindow = typeof window !== 'undefined' ? window : undefined;
+var browserGlobal = browserWindow || {};
+var BrowserMutationObserver = browserGlobal.MutationObserver || browserGlobal.WebKitMutationObserver;
+var isNode = typeof self === 'undefined' && typeof process !== 'undefined' && ({}).toString.call(process) === '[object process]';
+
+// test for web worker but not in IE10
+var isWorker = typeof Uint8ClampedArray !== 'undefined' && typeof importScripts !== 'undefined' && typeof MessageChannel !== 'undefined';
+
+// node
+function useNextTick() {
+  // node version 0.10.x displays a deprecation warning when nextTick is used recursively
+  // see https://github.com/cujojs/when/issues/410 for details
+  return function () {
+    return process.nextTick(flush);
+  };
+}
+
+// vertx
+function useVertxTimer() {
+  if (typeof vertxNext !== 'undefined') {
+    return function () {
+      vertxNext(flush);
+    };
+  }
+
+  return useSetTimeout();
+}
+
+function useMutationObserver() {
+  var iterations = 0;
+  var observer = new BrowserMutationObserver(flush);
+  var node = document.createTextNode('');
+  observer.observe(node, { characterData: true });
+
+  return function () {
+    node.data = iterations = ++iterations % 2;
+  };
+}
+
+// web worker
+function useMessageChannel() {
+  var channel = new MessageChannel();
+  channel.port1.onmessage = flush;
+  return function () {
+    return channel.port2.postMessage(0);
+  };
+}
+
+function useSetTimeout() {
+  // Store setTimeout reference so es6-promise will be unaffected by
+  // other code modifying setTimeout (like sinon.useFakeTimers())
+  var globalSetTimeout = setTimeout;
+  return function () {
+    return globalSetTimeout(flush, 1);
+  };
+}
+
+var queue = new Array(1000);
+function flush() {
+  for (var i = 0; i < len; i += 2) {
+    var callback = queue[i];
+    var arg = queue[i + 1];
+
+    callback(arg);
+
+    queue[i] = undefined;
+    queue[i + 1] = undefined;
+  }
+
+  len = 0;
+}
+
+function attemptVertx() {
+  try {
+    var r = require;
+    var vertx = __webpack_require__(14);
+    vertxNext = vertx.runOnLoop || vertx.runOnContext;
+    return useVertxTimer();
+  } catch (e) {
+    return useSetTimeout();
+  }
+}
+
+var scheduleFlush = undefined;
+// Decide what async method to use to triggering processing of queued callbacks:
+if (isNode) {
+  scheduleFlush = useNextTick();
+} else if (BrowserMutationObserver) {
+  scheduleFlush = useMutationObserver();
+} else if (isWorker) {
+  scheduleFlush = useMessageChannel();
+} else if (browserWindow === undefined && "function" === 'function') {
+  scheduleFlush = attemptVertx();
+} else {
+  scheduleFlush = useSetTimeout();
+}
+
+function then(onFulfillment, onRejection) {
+  var _arguments = arguments;
+
+  var parent = this;
+
+  var child = new this.constructor(noop);
+
+  if (child[PROMISE_ID] === undefined) {
+    makePromise(child);
+  }
+
+  var _state = parent._state;
+
+  if (_state) {
+    (function () {
+      var callback = _arguments[_state - 1];
+      asap(function () {
+        return invokeCallback(_state, child, callback, parent._result);
+      });
+    })();
+  } else {
+    subscribe(parent, child, onFulfillment, onRejection);
+  }
+
+  return child;
+}
+
+/**
+  `Promise.resolve` returns a promise that will become resolved with the
+  passed `value`. It is shorthand for the following:
+
+  ```javascript
+  let promise = new Promise(function(resolve, reject){
+    resolve(1);
+  });
+
+  promise.then(function(value){
+    // value === 1
+  });
+  ```
+
+  Instead of writing the above, your code now simply becomes the following:
+
+  ```javascript
+  let promise = Promise.resolve(1);
+
+  promise.then(function(value){
+    // value === 1
+  });
+  ```
+
+  @method resolve
+  @static
+  @param {Any} value value that the returned promise will be resolved with
+  Useful for tooling.
+  @return {Promise} a promise that will become fulfilled with the given
+  `value`
+*/
+function resolve(object) {
+  /*jshint validthis:true */
+  var Constructor = this;
+
+  if (object && typeof object === 'object' && object.constructor === Constructor) {
+    return object;
+  }
+
+  var promise = new Constructor(noop);
+  _resolve(promise, object);
+  return promise;
+}
+
+var PROMISE_ID = Math.random().toString(36).substring(16);
+
+function noop() {}
+
+var PENDING = void 0;
+var FULFILLED = 1;
+var REJECTED = 2;
+
+var GET_THEN_ERROR = new ErrorObject();
+
+function selfFulfillment() {
+  return new TypeError("You cannot resolve a promise with itself");
+}
+
+function cannotReturnOwn() {
+  return new TypeError('A promises callback cannot return that same promise.');
+}
+
+function getThen(promise) {
+  try {
+    return promise.then;
+  } catch (error) {
+    GET_THEN_ERROR.error = error;
+    return GET_THEN_ERROR;
+  }
+}
+
+function tryThen(then, value, fulfillmentHandler, rejectionHandler) {
+  try {
+    then.call(value, fulfillmentHandler, rejectionHandler);
+  } catch (e) {
+    return e;
+  }
+}
+
+function handleForeignThenable(promise, thenable, then) {
+  asap(function (promise) {
+    var sealed = false;
+    var error = tryThen(then, thenable, function (value) {
+      if (sealed) {
+        return;
+      }
+      sealed = true;
+      if (thenable !== value) {
+        _resolve(promise, value);
+      } else {
+        fulfill(promise, value);
+      }
+    }, function (reason) {
+      if (sealed) {
+        return;
+      }
+      sealed = true;
+
+      _reject(promise, reason);
+    }, 'Settle: ' + (promise._label || ' unknown promise'));
+
+    if (!sealed && error) {
+      sealed = true;
+      _reject(promise, error);
+    }
+  }, promise);
+}
+
+function handleOwnThenable(promise, thenable) {
+  if (thenable._state === FULFILLED) {
+    fulfill(promise, thenable._result);
+  } else if (thenable._state === REJECTED) {
+    _reject(promise, thenable._result);
+  } else {
+    subscribe(thenable, undefined, function (value) {
+      return _resolve(promise, value);
+    }, function (reason) {
+      return _reject(promise, reason);
+    });
+  }
+}
+
+function handleMaybeThenable(promise, maybeThenable, then$$) {
+  if (maybeThenable.constructor === promise.constructor && then$$ === then && maybeThenable.constructor.resolve === resolve) {
+    handleOwnThenable(promise, maybeThenable);
+  } else {
+    if (then$$ === GET_THEN_ERROR) {
+      _reject(promise, GET_THEN_ERROR.error);
+      GET_THEN_ERROR.error = null;
+    } else if (then$$ === undefined) {
+      fulfill(promise, maybeThenable);
+    } else if (isFunction(then$$)) {
+      handleForeignThenable(promise, maybeThenable, then$$);
+    } else {
+      fulfill(promise, maybeThenable);
+    }
+  }
+}
+
+function _resolve(promise, value) {
+  if (promise === value) {
+    _reject(promise, selfFulfillment());
+  } else if (objectOrFunction(value)) {
+    handleMaybeThenable(promise, value, getThen(value));
+  } else {
+    fulfill(promise, value);
+  }
+}
+
+function publishRejection(promise) {
+  if (promise._onerror) {
+    promise._onerror(promise._result);
+  }
+
+  publish(promise);
+}
+
+function fulfill(promise, value) {
+  if (promise._state !== PENDING) {
+    return;
+  }
+
+  promise._result = value;
+  promise._state = FULFILLED;
+
+  if (promise._subscribers.length !== 0) {
+    asap(publish, promise);
+  }
+}
+
+function _reject(promise, reason) {
+  if (promise._state !== PENDING) {
+    return;
+  }
+  promise._state = REJECTED;
+  promise._result = reason;
+
+  asap(publishRejection, promise);
+}
+
+function subscribe(parent, child, onFulfillment, onRejection) {
+  var _subscribers = parent._subscribers;
+  var length = _subscribers.length;
+
+  parent._onerror = null;
+
+  _subscribers[length] = child;
+  _subscribers[length + FULFILLED] = onFulfillment;
+  _subscribers[length + REJECTED] = onRejection;
+
+  if (length === 0 && parent._state) {
+    asap(publish, parent);
+  }
+}
+
+function publish(promise) {
+  var subscribers = promise._subscribers;
+  var settled = promise._state;
+
+  if (subscribers.length === 0) {
+    return;
+  }
+
+  var child = undefined,
+      callback = undefined,
+      detail = promise._result;
+
+  for (var i = 0; i < subscribers.length; i += 3) {
+    child = subscribers[i];
+    callback = subscribers[i + settled];
+
+    if (child) {
+      invokeCallback(settled, child, callback, detail);
+    } else {
+      callback(detail);
+    }
+  }
+
+  promise._subscribers.length = 0;
+}
+
+function ErrorObject() {
+  this.error = null;
+}
+
+var TRY_CATCH_ERROR = new ErrorObject();
+
+function tryCatch(callback, detail) {
+  try {
+    return callback(detail);
+  } catch (e) {
+    TRY_CATCH_ERROR.error = e;
+    return TRY_CATCH_ERROR;
+  }
+}
+
+function invokeCallback(settled, promise, callback, detail) {
+  var hasCallback = isFunction(callback),
+      value = undefined,
+      error = undefined,
+      succeeded = undefined,
+      failed = undefined;
+
+  if (hasCallback) {
+    value = tryCatch(callback, detail);
+
+    if (value === TRY_CATCH_ERROR) {
+      failed = true;
+      error = value.error;
+      value.error = null;
+    } else {
+      succeeded = true;
+    }
+
+    if (promise === value) {
+      _reject(promise, cannotReturnOwn());
+      return;
+    }
+  } else {
+    value = detail;
+    succeeded = true;
+  }
+
+  if (promise._state !== PENDING) {
+    // noop
+  } else if (hasCallback && succeeded) {
+      _resolve(promise, value);
+    } else if (failed) {
+      _reject(promise, error);
+    } else if (settled === FULFILLED) {
+      fulfill(promise, value);
+    } else if (settled === REJECTED) {
+      _reject(promise, value);
+    }
+}
+
+function initializePromise(promise, resolver) {
+  try {
+    resolver(function resolvePromise(value) {
+      _resolve(promise, value);
+    }, function rejectPromise(reason) {
+      _reject(promise, reason);
+    });
+  } catch (e) {
+    _reject(promise, e);
+  }
+}
+
+var id = 0;
+function nextId() {
+  return id++;
+}
+
+function makePromise(promise) {
+  promise[PROMISE_ID] = id++;
+  promise._state = undefined;
+  promise._result = undefined;
+  promise._subscribers = [];
+}
+
+function Enumerator(Constructor, input) {
+  this._instanceConstructor = Constructor;
+  this.promise = new Constructor(noop);
+
+  if (!this.promise[PROMISE_ID]) {
+    makePromise(this.promise);
+  }
+
+  if (isArray(input)) {
+    this._input = input;
+    this.length = input.length;
+    this._remaining = input.length;
+
+    this._result = new Array(this.length);
+
+    if (this.length === 0) {
+      fulfill(this.promise, this._result);
+    } else {
+      this.length = this.length || 0;
+      this._enumerate();
+      if (this._remaining === 0) {
+        fulfill(this.promise, this._result);
+      }
+    }
+  } else {
+    _reject(this.promise, validationError());
+  }
+}
+
+function validationError() {
+  return new Error('Array Methods must be provided an Array');
+};
+
+Enumerator.prototype._enumerate = function () {
+  var length = this.length;
+  var _input = this._input;
+
+  for (var i = 0; this._state === PENDING && i < length; i++) {
+    this._eachEntry(_input[i], i);
+  }
+};
+
+Enumerator.prototype._eachEntry = function (entry, i) {
+  var c = this._instanceConstructor;
+  var resolve$$ = c.resolve;
+
+  if (resolve$$ === resolve) {
+    var _then = getThen(entry);
+
+    if (_then === then && entry._state !== PENDING) {
+      this._settledAt(entry._state, i, entry._result);
+    } else if (typeof _then !== 'function') {
+      this._remaining--;
+      this._result[i] = entry;
+    } else if (c === Promise) {
+      var promise = new c(noop);
+      handleMaybeThenable(promise, entry, _then);
+      this._willSettleAt(promise, i);
+    } else {
+      this._willSettleAt(new c(function (resolve$$) {
+        return resolve$$(entry);
+      }), i);
+    }
+  } else {
+    this._willSettleAt(resolve$$(entry), i);
+  }
+};
+
+Enumerator.prototype._settledAt = function (state, i, value) {
+  var promise = this.promise;
+
+  if (promise._state === PENDING) {
+    this._remaining--;
+
+    if (state === REJECTED) {
+      _reject(promise, value);
+    } else {
+      this._result[i] = value;
+    }
+  }
+
+  if (this._remaining === 0) {
+    fulfill(promise, this._result);
+  }
+};
+
+Enumerator.prototype._willSettleAt = function (promise, i) {
+  var enumerator = this;
+
+  subscribe(promise, undefined, function (value) {
+    return enumerator._settledAt(FULFILLED, i, value);
+  }, function (reason) {
+    return enumerator._settledAt(REJECTED, i, reason);
+  });
+};
+
+/**
+  `Promise.all` accepts an array of promises, and returns a new promise which
+  is fulfilled with an array of fulfillment values for the passed promises, or
+  rejected with the reason of the first passed promise to be rejected. It casts all
+  elements of the passed iterable to promises as it runs this algorithm.
+
+  Example:
+
+  ```javascript
+  let promise1 = resolve(1);
+  let promise2 = resolve(2);
+  let promise3 = resolve(3);
+  let promises = [ promise1, promise2, promise3 ];
+
+  Promise.all(promises).then(function(array){
+    // The array here would be [ 1, 2, 3 ];
+  });
+  ```
+
+  If any of the `promises` given to `all` are rejected, the first promise
+  that is rejected will be given as an argument to the returned promises's
+  rejection handler. For example:
+
+  Example:
+
+  ```javascript
+  let promise1 = resolve(1);
+  let promise2 = reject(new Error("2"));
+  let promise3 = reject(new Error("3"));
+  let promises = [ promise1, promise2, promise3 ];
+
+  Promise.all(promises).then(function(array){
+    // Code here never runs because there are rejected promises!
+  }, function(error) {
+    // error.message === "2"
+  });
+  ```
+
+  @method all
+  @static
+  @param {Array} entries array of promises
+  @param {String} label optional string for labeling the promise.
+  Useful for tooling.
+  @return {Promise} promise that is fulfilled when all `promises` have been
+  fulfilled, or rejected if any of them become rejected.
+  @static
+*/
+function all(entries) {
+  return new Enumerator(this, entries).promise;
+}
+
+/**
+  `Promise.race` returns a new promise which is settled in the same way as the
+  first passed promise to settle.
+
+  Example:
+
+  ```javascript
+  let promise1 = new Promise(function(resolve, reject){
+    setTimeout(function(){
+      resolve('promise 1');
+    }, 200);
+  });
+
+  let promise2 = new Promise(function(resolve, reject){
+    setTimeout(function(){
+      resolve('promise 2');
+    }, 100);
+  });
+
+  Promise.race([promise1, promise2]).then(function(result){
+    // result === 'promise 2' because it was resolved before promise1
+    // was resolved.
+  });
+  ```
+
+  `Promise.race` is deterministic in that only the state of the first
+  settled promise matters. For example, even if other promises given to the
+  `promises` array argument are resolved, but the first settled promise has
+  become rejected before the other promises became fulfilled, the returned
+  promise will become rejected:
+
+  ```javascript
+  let promise1 = new Promise(function(resolve, reject){
+    setTimeout(function(){
+      resolve('promise 1');
+    }, 200);
+  });
+
+  let promise2 = new Promise(function(resolve, reject){
+    setTimeout(function(){
+      reject(new Error('promise 2'));
+    }, 100);
+  });
+
+  Promise.race([promise1, promise2]).then(function(result){
+    // Code here never runs
+  }, function(reason){
+    // reason.message === 'promise 2' because promise 2 became rejected before
+    // promise 1 became fulfilled
+  });
+  ```
+
+  An example real-world use case is implementing timeouts:
+
+  ```javascript
+  Promise.race([ajax('foo.json'), timeout(5000)])
+  ```
+
+  @method race
+  @static
+  @param {Array} promises array of promises to observe
+  Useful for tooling.
+  @return {Promise} a promise which settles in the same way as the first passed
+  promise to settle.
+*/
+function race(entries) {
+  /*jshint validthis:true */
+  var Constructor = this;
+
+  if (!isArray(entries)) {
+    return new Constructor(function (_, reject) {
+      return reject(new TypeError('You must pass an array to race.'));
+    });
+  } else {
+    return new Constructor(function (resolve, reject) {
+      var length = entries.length;
+      for (var i = 0; i < length; i++) {
+        Constructor.resolve(entries[i]).then(resolve, reject);
+      }
+    });
+  }
+}
+
+/**
+  `Promise.reject` returns a promise rejected with the passed `reason`.
+  It is shorthand for the following:
+
+  ```javascript
+  let promise = new Promise(function(resolve, reject){
+    reject(new Error('WHOOPS'));
+  });
+
+  promise.then(function(value){
+    // Code here doesn't run because the promise is rejected!
+  }, function(reason){
+    // reason.message === 'WHOOPS'
+  });
+  ```
+
+  Instead of writing the above, your code now simply becomes the following:
+
+  ```javascript
+  let promise = Promise.reject(new Error('WHOOPS'));
+
+  promise.then(function(value){
+    // Code here doesn't run because the promise is rejected!
+  }, function(reason){
+    // reason.message === 'WHOOPS'
+  });
+  ```
+
+  @method reject
+  @static
+  @param {Any} reason value that the returned promise will be rejected with.
+  Useful for tooling.
+  @return {Promise} a promise rejected with the given `reason`.
+*/
+function reject(reason) {
+  /*jshint validthis:true */
+  var Constructor = this;
+  var promise = new Constructor(noop);
+  _reject(promise, reason);
+  return promise;
+}
+
+function needsResolver() {
+  throw new TypeError('You must pass a resolver function as the first argument to the promise constructor');
+}
+
+function needsNew() {
+  throw new TypeError("Failed to construct 'Promise': Please use the 'new' operator, this object constructor cannot be called as a function.");
+}
+
+/**
+  Promise objects represent the eventual result of an asynchronous operation. The
+  primary way of interacting with a promise is through its `then` method, which
+  registers callbacks to receive either a promise's eventual value or the reason
+  why the promise cannot be fulfilled.
+
+  Terminology
+  -----------
+
+  - `promise` is an object or function with a `then` method whose behavior conforms to this specification.
+  - `thenable` is an object or function that defines a `then` method.
+  - `value` is any legal JavaScript value (including undefined, a thenable, or a promise).
+  - `exception` is a value that is thrown using the throw statement.
+  - `reason` is a value that indicates why a promise was rejected.
+  - `settled` the final resting state of a promise, fulfilled or rejected.
+
+  A promise can be in one of three states: pending, fulfilled, or rejected.
+
+  Promises that are fulfilled have a fulfillment value and are in the fulfilled
+  state.  Promises that are rejected have a rejection reason and are in the
+  rejected state.  A fulfillment value is never a thenable.
+
+  Promises can also be said to *resolve* a value.  If this value is also a
+  promise, then the original promise's settled state will match the value's
+  settled state.  So a promise that *resolves* a promise that rejects will
+  itself reject, and a promise that *resolves* a promise that fulfills will
+  itself fulfill.
+
+
+  Basic Usage:
+  ------------
+
+  ```js
+  let promise = new Promise(function(resolve, reject) {
+    // on success
+    resolve(value);
+
+    // on failure
+    reject(reason);
+  });
+
+  promise.then(function(value) {
+    // on fulfillment
+  }, function(reason) {
+    // on rejection
+  });
+  ```
+
+  Advanced Usage:
+  ---------------
+
+  Promises shine when abstracting away asynchronous interactions such as
+  `XMLHttpRequest`s.
+
+  ```js
+  function getJSON(url) {
+    return new Promise(function(resolve, reject){
+      let xhr = new XMLHttpRequest();
+
+      xhr.open('GET', url);
+      xhr.onreadystatechange = handler;
+      xhr.responseType = 'json';
+      xhr.setRequestHeader('Accept', 'application/json');
+      xhr.send();
+
+      function handler() {
+        if (this.readyState === this.DONE) {
+          if (this.status === 200) {
+            resolve(this.response);
+          } else {
+            reject(new Error('getJSON: `' + url + '` failed with status: [' + this.status + ']'));
+          }
+        }
+      };
+    });
+  }
+
+  getJSON('/posts.json').then(function(json) {
+    // on fulfillment
+  }, function(reason) {
+    // on rejection
+  });
+  ```
+
+  Unlike callbacks, promises are great composable primitives.
+
+  ```js
+  Promise.all([
+    getJSON('/posts'),
+    getJSON('/comments')
+  ]).then(function(values){
+    values[0] // => postsJSON
+    values[1] // => commentsJSON
+
+    return values;
+  });
+  ```
+
+  @class Promise
+  @param {function} resolver
+  Useful for tooling.
+  @constructor
+*/
+function Promise(resolver) {
+  this[PROMISE_ID] = nextId();
+  this._result = this._state = undefined;
+  this._subscribers = [];
+
+  if (noop !== resolver) {
+    typeof resolver !== 'function' && needsResolver();
+    this instanceof Promise ? initializePromise(this, resolver) : needsNew();
+  }
+}
+
+Promise.all = all;
+Promise.race = race;
+Promise.resolve = resolve;
+Promise.reject = reject;
+Promise._setScheduler = setScheduler;
+Promise._setAsap = setAsap;
+Promise._asap = asap;
+
+Promise.prototype = {
+  constructor: Promise,
+
+  /**
+    The primary way of interacting with a promise is through its `then` method,
+    which registers callbacks to receive either a promise's eventual value or the
+    reason why the promise cannot be fulfilled.
+  
+    ```js
+    findUser().then(function(user){
+      // user is available
+    }, function(reason){
+      // user is unavailable, and you are given the reason why
+    });
+    ```
+  
+    Chaining
+    --------
+  
+    The return value of `then` is itself a promise.  This second, 'downstream'
+    promise is resolved with the return value of the first promise's fulfillment
+    or rejection handler, or rejected if the handler throws an exception.
+  
+    ```js
+    findUser().then(function (user) {
+      return user.name;
+    }, function (reason) {
+      return 'default name';
+    }).then(function (userName) {
+      // If `findUser` fulfilled, `userName` will be the user's name, otherwise it
+      // will be `'default name'`
+    });
+  
+    findUser().then(function (user) {
+      throw new Error('Found user, but still unhappy');
+    }, function (reason) {
+      throw new Error('`findUser` rejected and we're unhappy');
+    }).then(function (value) {
+      // never reached
+    }, function (reason) {
+      // if `findUser` fulfilled, `reason` will be 'Found user, but still unhappy'.
+      // If `findUser` rejected, `reason` will be '`findUser` rejected and we're unhappy'.
+    });
+    ```
+    If the downstream promise does not specify a rejection handler, rejection reasons will be propagated further downstream.
+  
+    ```js
+    findUser().then(function (user) {
+      throw new PedagogicalException('Upstream error');
+    }).then(function (value) {
+      // never reached
+    }).then(function (value) {
+      // never reached
+    }, function (reason) {
+      // The `PedgagocialException` is propagated all the way down to here
+    });
+    ```
+  
+    Assimilation
+    ------------
+  
+    Sometimes the value you want to propagate to a downstream promise can only be
+    retrieved asynchronously. This can be achieved by returning a promise in the
+    fulfillment or rejection handler. The downstream promise will then be pending
+    until the returned promise is settled. This is called *assimilation*.
+  
+    ```js
+    findUser().then(function (user) {
+      return findCommentsByAuthor(user);
+    }).then(function (comments) {
+      // The user's comments are now available
+    });
+    ```
+  
+    If the assimliated promise rejects, then the downstream promise will also reject.
+  
+    ```js
+    findUser().then(function (user) {
+      return findCommentsByAuthor(user);
+    }).then(function (comments) {
+      // If `findCommentsByAuthor` fulfills, we'll have the value here
+    }, function (reason) {
+      // If `findCommentsByAuthor` rejects, we'll have the reason here
+    });
+    ```
+  
+    Simple Example
+    --------------
+  
+    Synchronous Example
+  
+    ```javascript
+    let result;
+  
+    try {
+      result = findResult();
+      // success
+    } catch(reason) {
+      // failure
+    }
+    ```
+  
+    Errback Example
+  
+    ```js
+    findResult(function(result, err){
+      if (err) {
+        // failure
+      } else {
+        // success
+      }
+    });
+    ```
+  
+    Promise Example;
+  
+    ```javascript
+    findResult().then(function(result){
+      // success
+    }, function(reason){
+      // failure
+    });
+    ```
+  
+    Advanced Example
+    --------------
+  
+    Synchronous Example
+  
+    ```javascript
+    let author, books;
+  
+    try {
+      author = findAuthor();
+      books  = findBooksByAuthor(author);
+      // success
+    } catch(reason) {
+      // failure
+    }
+    ```
+  
+    Errback Example
+  
+    ```js
+  
+    function foundBooks(books) {
+  
+    }
+  
+    function failure(reason) {
+  
+    }
+  
+    findAuthor(function(author, err){
+      if (err) {
+        failure(err);
+        // failure
+      } else {
+        try {
+          findBoooksByAuthor(author, function(books, err) {
+            if (err) {
+              failure(err);
+            } else {
+              try {
+                foundBooks(books);
+              } catch(reason) {
+                failure(reason);
+              }
+            }
+          });
+        } catch(error) {
+          failure(err);
+        }
+        // success
+      }
+    });
+    ```
+  
+    Promise Example;
+  
+    ```javascript
+    findAuthor().
+      then(findBooksByAuthor).
+      then(function(books){
+        // found books
+    }).catch(function(reason){
+      // something went wrong
+    });
+    ```
+  
+    @method then
+    @param {Function} onFulfilled
+    @param {Function} onRejected
+    Useful for tooling.
+    @return {Promise}
+  */
+  then: then,
+
+  /**
+    `catch` is simply sugar for `then(undefined, onRejection)` which makes it the same
+    as the catch block of a try/catch statement.
+  
+    ```js
+    function findAuthor(){
+      throw new Error('couldn't find that author');
+    }
+  
+    // synchronous
+    try {
+      findAuthor();
+    } catch(reason) {
+      // something went wrong
+    }
+  
+    // async with promises
+    findAuthor().catch(function(reason){
+      // something went wrong
+    });
+    ```
+  
+    @method catch
+    @param {Function} onRejection
+    Useful for tooling.
+    @return {Promise}
+  */
+  'catch': function _catch(onRejection) {
+    return this.then(null, onRejection);
+  }
+};
+
+function polyfill() {
+    var local = undefined;
+
+    if (typeof global !== 'undefined') {
+        local = global;
+    } else if (typeof self !== 'undefined') {
+        local = self;
+    } else {
+        try {
+            local = Function('return this')();
+        } catch (e) {
+            throw new Error('polyfill failed because global object is unavailable in this environment');
+        }
+    }
+
+    var P = local.Promise;
+
+    if (P) {
+        var promiseToString = null;
+        try {
+            promiseToString = Object.prototype.toString.call(P.resolve());
+        } catch (e) {
+            // silently ignored
+        }
+
+        if (promiseToString === '[object Promise]' && !P.cast) {
+            return;
+        }
+    }
+
+    local.Promise = Promise;
+}
+
+// Strange compat..
+Promise.polyfill = polyfill;
+Promise.Promise = Promise;
+
+return Promise;
+
+})));
+//# sourceMappingURL=es6-promise.map
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(9), __webpack_require__(13)))
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports) {
+
+// shim for using process in browser
+var process = module.exports = {};
+
+// cached from whatever global is present so that test runners that stub it
+// don't break things.  But we need to wrap it in a try catch in case it is
+// wrapped in strict mode code which doesn't define any globals.  It's inside a
+// function because try/catches deoptimize in certain engines.
+
+var cachedSetTimeout;
+var cachedClearTimeout;
+
+function defaultSetTimout() {
+    throw new Error('setTimeout has not been defined');
+}
+function defaultClearTimeout () {
+    throw new Error('clearTimeout has not been defined');
+}
+(function () {
+    try {
+        if (typeof setTimeout === 'function') {
+            cachedSetTimeout = setTimeout;
+        } else {
+            cachedSetTimeout = defaultSetTimout;
+        }
+    } catch (e) {
+        cachedSetTimeout = defaultSetTimout;
+    }
+    try {
+        if (typeof clearTimeout === 'function') {
+            cachedClearTimeout = clearTimeout;
+        } else {
+            cachedClearTimeout = defaultClearTimeout;
+        }
+    } catch (e) {
+        cachedClearTimeout = defaultClearTimeout;
+    }
+} ())
+function runTimeout(fun) {
+    if (cachedSetTimeout === setTimeout) {
+        //normal enviroments in sane situations
+        return setTimeout(fun, 0);
+    }
+    // if setTimeout wasn't available but was latter defined
+    if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
+        cachedSetTimeout = setTimeout;
+        return setTimeout(fun, 0);
+    }
+    try {
+        // when when somebody has screwed with setTimeout but no I.E. maddness
+        return cachedSetTimeout(fun, 0);
+    } catch(e){
+        try {
+            // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
+            return cachedSetTimeout.call(null, fun, 0);
+        } catch(e){
+            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
+            return cachedSetTimeout.call(this, fun, 0);
+        }
+    }
+
+
+}
+function runClearTimeout(marker) {
+    if (cachedClearTimeout === clearTimeout) {
+        //normal enviroments in sane situations
+        return clearTimeout(marker);
+    }
+    // if clearTimeout wasn't available but was latter defined
+    if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
+        cachedClearTimeout = clearTimeout;
+        return clearTimeout(marker);
+    }
+    try {
+        // when when somebody has screwed with setTimeout but no I.E. maddness
+        return cachedClearTimeout(marker);
+    } catch (e){
+        try {
+            // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
+            return cachedClearTimeout.call(null, marker);
+        } catch (e){
+            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
+            // Some versions of I.E. have different rules for clearTimeout vs setTimeout
+            return cachedClearTimeout.call(this, marker);
+        }
+    }
+
+
+
+}
+var queue = [];
+var draining = false;
+var currentQueue;
+var queueIndex = -1;
+
+function cleanUpNextTick() {
+    if (!draining || !currentQueue) {
+        return;
+    }
+    draining = false;
+    if (currentQueue.length) {
+        queue = currentQueue.concat(queue);
+    } else {
+        queueIndex = -1;
+    }
+    if (queue.length) {
+        drainQueue();
+    }
+}
+
+function drainQueue() {
+    if (draining) {
+        return;
+    }
+    var timeout = runTimeout(cleanUpNextTick);
+    draining = true;
+
+    var len = queue.length;
+    while(len) {
+        currentQueue = queue;
+        queue = [];
+        while (++queueIndex < len) {
+            if (currentQueue) {
+                currentQueue[queueIndex].run();
+            }
+        }
+        queueIndex = -1;
+        len = queue.length;
+    }
+    currentQueue = null;
+    draining = false;
+    runClearTimeout(timeout);
+}
+
+process.nextTick = function (fun) {
+    var args = new Array(arguments.length - 1);
+    if (arguments.length > 1) {
+        for (var i = 1; i < arguments.length; i++) {
+            args[i - 1] = arguments[i];
+        }
+    }
+    queue.push(new Item(fun, args));
+    if (queue.length === 1 && !draining) {
+        runTimeout(drainQueue);
+    }
+};
+
+// v8 likes predictible objects
+function Item(fun, array) {
+    this.fun = fun;
+    this.array = array;
+}
+Item.prototype.run = function () {
+    this.fun.apply(null, this.array);
+};
+process.title = 'browser';
+process.browser = true;
+process.env = {};
+process.argv = [];
+process.version = ''; // empty string to avoid regexp issues
+process.versions = {};
+
+function noop() {}
+
+process.on = noop;
+process.addListener = noop;
+process.once = noop;
+process.off = noop;
+process.removeListener = noop;
+process.removeAllListeners = noop;
+process.emit = noop;
+process.prependListener = noop;
+process.prependOnceListener = noop;
+
+process.listeners = function (name) { return [] }
+
+process.binding = function (name) {
+    throw new Error('process.binding is not supported');
+};
+
+process.cwd = function () { return '/' };
+process.chdir = function (dir) {
+    throw new Error('process.chdir is not supported');
+};
+process.umask = function() { return 0; };
+
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(6);
+if(typeof content === 'string') content = [[module.i, content, '']];
+// Prepare cssTransformation
+var transform;
+
+var options = {}
+options.transform = transform
+// add the styles to the DOM
+var update = __webpack_require__(11)(content, options);
+if(content.locals) module.exports = content.locals;
+// Hot Module Replacement
+if(false) {
+	// When the styles change, update the <style> tags
+	if(!content.locals) {
+		module.hot.accept("!!../node_modules/css-loader/index.js!./style.css", function() {
+			var newContent = require("!!../node_modules/css-loader/index.js!./style.css");
+			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+			update(newContent);
+		});
+	}
+	// When the module is disposed, remove the <style> tags
+	module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/*
+	MIT License http://www.opensource.org/licenses/mit-license.php
+	Author Tobias Koppers @sokra
+*/
+
+var stylesInDom = {};
+
+var	memoize = function (fn) {
+	var memo;
+
+	return function () {
+		if (typeof memo === "undefined") memo = fn.apply(this, arguments);
+		return memo;
+	};
+};
+
+var isOldIE = memoize(function () {
+	// Test for IE <= 9 as proposed by Browserhacks
+	// @see http://browserhacks.com/#hack-e71d8692f65334173fee715c222cb805
+	// Tests for existence of standard globals is to allow style-loader
+	// to operate correctly into non-standard environments
+	// @see https://github.com/webpack-contrib/style-loader/issues/177
+	return window && document && document.all && !window.atob;
+});
+
+var getElement = (function (fn) {
+	var memo = {};
+
+	return function(selector) {
+		if (typeof memo[selector] === "undefined") {
+			memo[selector] = fn.call(this, selector);
+		}
+
+		return memo[selector]
+	};
+})(function (target) {
+	return document.querySelector(target)
+});
+
+var singleton = null;
+var	singletonCounter = 0;
+var	stylesInsertedAtTop = [];
+
+var	fixUrls = __webpack_require__(12);
+
+module.exports = function(list, options) {
+	if (typeof DEBUG !== "undefined" && DEBUG) {
+		if (typeof document !== "object") throw new Error("The style-loader cannot be used in a non-browser environment");
+	}
+
+	options = options || {};
+
+	options.attrs = typeof options.attrs === "object" ? options.attrs : {};
+
+	// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
+	// tags it will allow on a page
+	if (!options.singleton) options.singleton = isOldIE();
+
+	// By default, add <style> tags to the <head> element
+	if (!options.insertInto) options.insertInto = "head";
+
+	// By default, add <style> tags to the bottom of the target
+	if (!options.insertAt) options.insertAt = "bottom";
+
+	var styles = listToStyles(list, options);
+
+	addStylesToDom(styles, options);
+
+	return function update (newList) {
+		var mayRemove = [];
+
+		for (var i = 0; i < styles.length; i++) {
+			var item = styles[i];
+			var domStyle = stylesInDom[item.id];
+
+			domStyle.refs--;
+			mayRemove.push(domStyle);
+		}
+
+		if(newList) {
+			var newStyles = listToStyles(newList, options);
+			addStylesToDom(newStyles, options);
+		}
+
+		for (var i = 0; i < mayRemove.length; i++) {
+			var domStyle = mayRemove[i];
+
+			if(domStyle.refs === 0) {
+				for (var j = 0; j < domStyle.parts.length; j++) domStyle.parts[j]();
+
+				delete stylesInDom[domStyle.id];
+			}
+		}
+	};
+};
+
+function addStylesToDom (styles, options) {
+	for (var i = 0; i < styles.length; i++) {
+		var item = styles[i];
+		var domStyle = stylesInDom[item.id];
+
+		if(domStyle) {
+			domStyle.refs++;
+
+			for(var j = 0; j < domStyle.parts.length; j++) {
+				domStyle.parts[j](item.parts[j]);
+			}
+
+			for(; j < item.parts.length; j++) {
+				domStyle.parts.push(addStyle(item.parts[j], options));
+			}
+		} else {
+			var parts = [];
+
+			for(var j = 0; j < item.parts.length; j++) {
+				parts.push(addStyle(item.parts[j], options));
+			}
+
+			stylesInDom[item.id] = {id: item.id, refs: 1, parts: parts};
+		}
+	}
+}
+
+function listToStyles (list, options) {
+	var styles = [];
+	var newStyles = {};
+
+	for (var i = 0; i < list.length; i++) {
+		var item = list[i];
+		var id = options.base ? item[0] + options.base : item[0];
+		var css = item[1];
+		var media = item[2];
+		var sourceMap = item[3];
+		var part = {css: css, media: media, sourceMap: sourceMap};
+
+		if(!newStyles[id]) styles.push(newStyles[id] = {id: id, parts: [part]});
+		else newStyles[id].parts.push(part);
+	}
+
+	return styles;
+}
+
+function insertStyleElement (options, style) {
+	var target = getElement(options.insertInto)
+
+	if (!target) {
+		throw new Error("Couldn't find a style target. This probably means that the value for the 'insertInto' parameter is invalid.");
+	}
+
+	var lastStyleElementInsertedAtTop = stylesInsertedAtTop[stylesInsertedAtTop.length - 1];
+
+	if (options.insertAt === "top") {
+		if (!lastStyleElementInsertedAtTop) {
+			target.insertBefore(style, target.firstChild);
+		} else if (lastStyleElementInsertedAtTop.nextSibling) {
+			target.insertBefore(style, lastStyleElementInsertedAtTop.nextSibling);
+		} else {
+			target.appendChild(style);
+		}
+		stylesInsertedAtTop.push(style);
+	} else if (options.insertAt === "bottom") {
+		target.appendChild(style);
+	} else {
+		throw new Error("Invalid value for parameter 'insertAt'. Must be 'top' or 'bottom'.");
+	}
+}
+
+function removeStyleElement (style) {
+	style.parentNode.removeChild(style);
+
+	var idx = stylesInsertedAtTop.indexOf(style);
+
+	if(idx >= 0) {
+		stylesInsertedAtTop.splice(idx, 1);
+	}
+}
+
+function createStyleElement (options) {
+	var style = document.createElement("style");
+
+	options.attrs.type = "text/css";
+
+	addAttrs(style, options.attrs);
+	insertStyleElement(options, style);
+
+	return style;
+}
+
+function createLinkElement (options) {
+	var link = document.createElement("link");
+
+	options.attrs.type = "text/css";
+	options.attrs.rel = "stylesheet";
+
+	addAttrs(link, options.attrs);
+	insertStyleElement(options, link);
+
+	return link;
+}
+
+function addAttrs (el, attrs) {
+	Object.keys(attrs).forEach(function (key) {
+		el.setAttribute(key, attrs[key]);
+	});
+}
+
+function addStyle (obj, options) {
+	var style, update, remove, result;
+
+	// If a transform function was defined, run it on the css
+	if (options.transform && obj.css) {
+	    result = options.transform(obj.css);
+
+	    if (result) {
+	    	// If transform returns a value, use that instead of the original css.
+	    	// This allows running runtime transformations on the css.
+	    	obj.css = result;
+	    } else {
+	    	// If the transform function returns a falsy value, don't add this css.
+	    	// This allows conditional loading of css
+	    	return function() {
+	    		// noop
+	    	};
+	    }
+	}
+
+	if (options.singleton) {
+		var styleIndex = singletonCounter++;
+
+		style = singleton || (singleton = createStyleElement(options));
+
+		update = applyToSingletonTag.bind(null, style, styleIndex, false);
+		remove = applyToSingletonTag.bind(null, style, styleIndex, true);
+
+	} else if (
+		obj.sourceMap &&
+		typeof URL === "function" &&
+		typeof URL.createObjectURL === "function" &&
+		typeof URL.revokeObjectURL === "function" &&
+		typeof Blob === "function" &&
+		typeof btoa === "function"
+	) {
+		style = createLinkElement(options);
+		update = updateLink.bind(null, style, options);
+		remove = function () {
+			removeStyleElement(style);
+
+			if(style.href) URL.revokeObjectURL(style.href);
+		};
+	} else {
+		style = createStyleElement(options);
+		update = applyToTag.bind(null, style);
+		remove = function () {
+			removeStyleElement(style);
+		};
+	}
+
+	update(obj);
+
+	return function updateStyle (newObj) {
+		if (newObj) {
+			if (
+				newObj.css === obj.css &&
+				newObj.media === obj.media &&
+				newObj.sourceMap === obj.sourceMap
+			) {
+				return;
+			}
+
+			update(obj = newObj);
+		} else {
+			remove();
+		}
+	};
+}
+
+var replaceText = (function () {
+	var textStore = [];
+
+	return function (index, replacement) {
+		textStore[index] = replacement;
+
+		return textStore.filter(Boolean).join('\n');
+	};
+})();
+
+function applyToSingletonTag (style, index, remove, obj) {
+	var css = remove ? "" : obj.css;
+
+	if (style.styleSheet) {
+		style.styleSheet.cssText = replaceText(index, css);
+	} else {
+		var cssNode = document.createTextNode(css);
+		var childNodes = style.childNodes;
+
+		if (childNodes[index]) style.removeChild(childNodes[index]);
+
+		if (childNodes.length) {
+			style.insertBefore(cssNode, childNodes[index]);
+		} else {
+			style.appendChild(cssNode);
+		}
+	}
+}
+
+function applyToTag (style, obj) {
+	var css = obj.css;
+	var media = obj.media;
+
+	if(media) {
+		style.setAttribute("media", media)
+	}
+
+	if(style.styleSheet) {
+		style.styleSheet.cssText = css;
+	} else {
+		while(style.firstChild) {
+			style.removeChild(style.firstChild);
+		}
+
+		style.appendChild(document.createTextNode(css));
+	}
+}
+
+function updateLink (link, options, obj) {
+	var css = obj.css;
+	var sourceMap = obj.sourceMap;
+
+	/*
+		If convertToAbsoluteUrls isn't defined, but sourcemaps are enabled
+		and there is no publicPath defined then lets turn convertToAbsoluteUrls
+		on by default.  Otherwise default to the convertToAbsoluteUrls option
+		directly
+	*/
+	var autoFixUrls = options.convertToAbsoluteUrls === undefined && sourceMap;
+
+	if (options.convertToAbsoluteUrls || autoFixUrls) {
+		css = fixUrls(css);
+	}
+
+	if (sourceMap) {
+		// http://stackoverflow.com/a/26603875
+		css += "\n/*# sourceMappingURL=data:application/json;base64," + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + " */";
+	}
+
+	var blob = new Blob([css], { type: "text/css" });
+
+	var oldSrc = link.href;
+
+	link.href = URL.createObjectURL(blob);
+
+	if(oldSrc) URL.revokeObjectURL(oldSrc);
+}
+
+
+/***/ }),
+/* 12 */
+/***/ (function(module, exports) {
+
+
+/**
+ * When source maps are enabled, `style-loader` uses a link element with a data-uri to
+ * embed the css on the page. This breaks all relative urls because now they are relative to a
+ * bundle instead of the current page.
+ *
+ * One solution is to only use full urls, but that may be impossible.
+ *
+ * Instead, this function "fixes" the relative urls to be absolute according to the current page location.
+ *
+ * A rudimentary test suite is located at `test/fixUrls.js` and can be run via the `npm test` command.
+ *
+ */
+
+module.exports = function (css) {
+  // get current location
+  var location = typeof window !== "undefined" && window.location;
+
+  if (!location) {
+    throw new Error("fixUrls requires window.location");
+  }
+
+	// blank or null?
+	if (!css || typeof css !== "string") {
+	  return css;
+  }
+
+  var baseUrl = location.protocol + "//" + location.host;
+  var currentDir = baseUrl + location.pathname.replace(/\/[^\/]*$/, "/");
+
+	// convert each url(...)
+	/*
+	This regular expression is just a way to recursively match brackets within
+	a string.
+
+	 /url\s*\(  = Match on the word "url" with any whitespace after it and then a parens
+	   (  = Start a capturing group
+	     (?:  = Start a non-capturing group
+	         [^)(]  = Match anything that isn't a parentheses
+	         |  = OR
+	         \(  = Match a start parentheses
+	             (?:  = Start another non-capturing groups
+	                 [^)(]+  = Match anything that isn't a parentheses
+	                 |  = OR
+	                 \(  = Match a start parentheses
+	                     [^)(]*  = Match anything that isn't a parentheses
+	                 \)  = Match a end parentheses
+	             )  = End Group
+              *\) = Match anything and then a close parens
+          )  = Close non-capturing group
+          *  = Match anything
+       )  = Close capturing group
+	 \)  = Match a close parens
+
+	 /gi  = Get all matches, not the first.  Be case insensitive.
+	 */
+	var fixedCss = css.replace(/url\s*\(((?:[^)(]|\((?:[^)(]+|\([^)(]*\))*\))*)\)/gi, function(fullMatch, origUrl) {
+		// strip quotes (if they exist)
+		var unquotedOrigUrl = origUrl
+			.trim()
+			.replace(/^"(.*)"$/, function(o, $1){ return $1; })
+			.replace(/^'(.*)'$/, function(o, $1){ return $1; });
+
+		// already a full url? no change
+		if (/^(#|data:|http:\/\/|https:\/\/|file:\/\/\/)/i.test(unquotedOrigUrl)) {
+		  return fullMatch;
+		}
+
+		// convert the url to a full url
+		var newUrl;
+
+		if (unquotedOrigUrl.indexOf("//") === 0) {
+		  	//TODO: should we add protocol?
+			newUrl = unquotedOrigUrl;
+		} else if (unquotedOrigUrl.indexOf("/") === 0) {
+			// path should be relative to the base url
+			newUrl = baseUrl + unquotedOrigUrl; // already starts with '/'
+		} else {
+			// path should be relative to current directory
+			newUrl = currentDir + unquotedOrigUrl.replace(/^\.\//, ""); // Strip leading './'
+		}
+
+		// send back the fixed url(...)
+		return "url(" + JSON.stringify(newUrl) + ")";
+	});
+
+	// send back the fixed css
+	return fixedCss;
+};
+
+
+/***/ }),
+/* 13 */
+/***/ (function(module, exports) {
+
+var g;
+
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || Function("return this")() || (1,eval)("this");
+} catch(e) {
+	// This works if the window reference is available
+	if(typeof window === "object")
+		g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
+
+
+/***/ }),
+/* 14 */
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ })
+/******/ ]);
