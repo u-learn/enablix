@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<contentTemplate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="eoriginal_enterprise" version="1.06" xsi:noNamespaceSchemaLocation="../xsd/content-template.xsd">
+<contentTemplate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="eoriginal_enterprise" version="1.07" xsi:noNamespaceSchemaLocation="../xsd/content-template.xsd">
 	<dataDefinition>
 		<container id="solution" label="Solutions" businessCategory="BUSINESS_DIMENSION">
 			<contentItem id="name" label="Name" type="text" searchBoost="7"/>
@@ -2011,6 +2011,7 @@
 		<contentUIDef qualifiedId="blog">
 			<container labelQualifiedId="blog.title">
 				<listViewConfig>
+					<hideContentItem id="blogSource"/>
 					<hideContentItem id="solutions"/>
 					<hideContentItem id="industries"/>										
 					<hideContentItem id="competitors"/>
@@ -2049,6 +2050,7 @@
 				<listViewConfig>
 					<hideContentItem id="file"/>
 					<hideContentItem id="url"/>
+					<hideContentItem id="partners"/>					
 					<hideContentItem id="tags"/>										
 				</listViewConfig>
 				<portalConfig>
@@ -2157,7 +2159,7 @@
 			<container labelQualifiedId="whitepaper.title">
 				<listViewConfig>
 					<hideContentItem id="file"/>
-					<hideContentItem id="desc"/>
+					<hideContentItem id="summary"/>
 					<hideContentItem id="wpSource"/>					
 					<hideContentItem id="solutions"/>
 					<hideContentItem id="industries"/>										
@@ -2172,7 +2174,7 @@
 				</portalConfig>
 			</container>
 		</contentUIDef>
-		<contentUIDef qualifiedId="whitepaper.desc">
+		<contentUIDef qualifiedId="whitepaper.summary">
 			<text type="long"/>
 		</contentUIDef>
 		<contentUIDef qualifiedId="presentation">
@@ -2184,6 +2186,7 @@
 					<hideContentItem id="type"/>					
 					<hideContentItem id="solutions"/>
 					<hideContentItem id="industries"/>					
+					<hideContentItem id="competitors"/>					
 					<hideContentItem id="partners"/>
 					<hideContentItem id="analysts"/>					
 					<hideContentItem id="topics"/>
@@ -2246,6 +2249,7 @@
 		<contentUIDef qualifiedId="solutionoverview">
 			<container labelQualifiedId="solutionoverview.title">
 				<listViewConfig>
+					<hideContentItem id="file"/>				
 					<hideContentItem id="desc"/>
 					<hideContentItem id="solutions"/>
 					<hideContentItem id="industries"/>										
