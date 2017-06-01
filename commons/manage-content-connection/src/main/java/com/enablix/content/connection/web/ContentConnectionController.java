@@ -1,5 +1,7 @@
 package com.enablix.content.connection.web;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.enablix.app.service.CrudResponse;
+import com.enablix.commons.util.collection.CollectionUtil;
 import com.enablix.content.connection.ContentConnectionManager;
 import com.enablix.core.domain.content.connection.ContentTypeConnection;
 
@@ -39,6 +42,13 @@ public class ContentConnectionController {
 	public void deleteContentConnection(@PathVariable String connectionIdentity) {
 		LOGGER.debug("Delete content connection record: {}", connectionIdentity);
 		connMgr.deleteContentConnection(connectionIdentity);
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, value="/rf/{contentQId}/", produces = "application/json")
+	public ContentTypeLinkVO getContentFirstContentLinks(@PathVariable String contentQId) {
+		LOGGER.debug("Fetch content connections for type: {}", contentQId);
+		List<ContentTypeLinkVO> content = connMgr.getContentTypeLinkVO(contentQId);
+		return CollectionUtil.isNotEmpty(content) ? content.get(0) : null;
 	}
 	
 }

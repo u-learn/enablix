@@ -8,5 +8,7 @@ import com.enablix.core.mongo.repository.BaseMongoRepository;
 public interface ContentTypeConnectionRepository extends BaseMongoRepository<ContentTypeConnection> {
 
 	List<ContentTypeConnection> findByHoldingContainers(String containerQId);
+
+	List<ContentTypeConnection> findByContentQId(String contentQId);
 	
 }

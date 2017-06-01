@@ -39,6 +39,15 @@ enablix.studioApp.factory('ContentConnectionService',
 	 			RESTService.getForData("getContentConnection", params, null, _onSuccess, _onError);
 	 		};
 	 		
+	 		var getFirstContentConnVOByContentQId = function(_contentQId, _onSuccess, _onError) {
+	 			
+	 			var params = {
+ 					"contentQId": _contentQId
+	 			};
+	 			
+	 			RESTService.getForData("getFirstContentConnVOByContentQId", params, null, _onSuccess, _onError);
+	 		};
+	 		
 	 		var deleteContentConnection = function(_connectionIdentity, _onSuccess, _onError) {
 	 			
 	 			var params = {
@@ -67,7 +76,8 @@ enablix.studioApp.factory('ContentConnectionService',
 				deleteContentConnection: deleteContentConnection,
 				getBusinessCategory: getBusinessCategory,
 				getLabelForCategory: getLabelForCategory,
-				getCategoryTag: getCategoryTag
+				getCategoryTag: getCategoryTag,
+				getFirstContentConnVOByContentQId: getFirstContentConnVOByContentQId 
 			};
 		
 		}

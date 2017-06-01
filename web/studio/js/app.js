@@ -306,7 +306,27 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvi
 						setupData: appSetup 
 					}
 				}
-			}
+			},
+			pageName: "portal-container-detail"
+		})
+		.state('portal.container-gbv', {
+			url: '/container/{containerQId}/{elementIdentity}/gbv/{gbQId}',
+			views: {
+				// the main template
+				'': {
+					templateUrl: function($stateParams) {
+						return 'views/portal/portal-container-gbview.html';
+					},
+					controllerProvider: function($stateParams) {
+						var ctrlName = 'PortalCntnrDetailCtrl';
+						return ctrlName;
+					},
+					resolve: {
+						setupData: appSetup 
+					}
+				}
+			},
+			pageName: "portal-container-detail"
 		})
 		.state('portal.subContainerList', {
 			url: '/subcontainer/{containerQId}/{subContainerQId}/p/{elementIdentity}',

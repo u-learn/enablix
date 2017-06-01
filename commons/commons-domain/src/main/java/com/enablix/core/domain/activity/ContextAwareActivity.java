@@ -5,11 +5,8 @@ import com.enablix.core.activity.audit.ActivityContextAware;
 public abstract class ContextAwareActivity extends Activity implements ActivityContextAware {
 
 	private String activityOrigin;
-	
 	private String contextId;
-	
 	private String contextName;
-	
 	private String contextTerm;
 	
 	protected ContextAwareActivity(Category category) {

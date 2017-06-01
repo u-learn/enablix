@@ -46,8 +46,12 @@ public class CorrelationContextBuilderImpl implements CorrelationContextBuilder 
 		TemplateFacade template = templateMgr.getTemplateFacade(ProcessContext.get().getTemplateId());
 		context.setTemplate(template);
 		
-		// find the content connections applicable based on containerQId
+		
+		/* Commenting below code. We will revisit the use of content connections later.
+		 * 
+		 * // find the content connections applicable based on containerQId
 		Map<String, Object> contentRecord = contentDataMgr.getContentRecord(item, template, DataViewUtil.allDataView());
+		
 		ContainerType itemContainer = template.getContainerDefinition(item.getContainerQId());
 		
 		// find and match content type connections
@@ -60,7 +64,7 @@ public class CorrelationContextBuilderImpl implements CorrelationContextBuilder 
 				context.getContainersInScope().addAll(
 					findContainersInScope(contentConn, contentRecord, template, itemContainer));
 			}
-		}
+		}*/
 		
 		return context;
 	}

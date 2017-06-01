@@ -136,6 +136,20 @@ enablix.studioApp.controller('ContentConnAddEditController',
 		
 		$scope.contentItemIdentityMap = {};
 		
+		function checkIfConnectionExistsForValue(_contentValue) {
+			
+			for (var i = 0; i < $scope.contentConnection.connections.length; i++) {
+			
+				var existConn = $scope.contentConnection.connections[i];
+				
+				if (existConn.contentValue == _contentValue) {
+					return true;
+				}
+			}
+			
+			return false;
+		}
+		
 		function initContentItemData(_contentQId, _initNewConnections) {
 			
 			var _containerQId = _contentQId;
@@ -150,7 +164,7 @@ enablix.studioApp.controller('ContentConnAddEditController',
 				
 						angular.forEach(data, function(dataItem) {
 							
-							if (_initNewConnections) { 
+							if (_initNewConnections || !checkIfConnectionExistsForValue(dataItem.identity)) { 
 								$scope.contentConnection.connections.push(
 									{
 										contentValue: dataItem.identity,

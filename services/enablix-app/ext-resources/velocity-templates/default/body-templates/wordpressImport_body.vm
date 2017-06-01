@@ -1,0 +1,17 @@
+#@mail_template('Wordpress Content Added')
+
+	#spacer_row('15')
+											
+	#mail_opening(${obj.recipientUser.name})
+	
+	#spacer_row('15')
+	
+	The following website content items were added to #tenant_portal_link().
+	
+	#spacer_row('20')
+	
+	#nav_content_list($obj.importedContent $obj.url 'EMAIL' 'WP_IMPORT_MAILER' '')
+	
+	#mail_closing($obj.tenant.name)
+
+#end

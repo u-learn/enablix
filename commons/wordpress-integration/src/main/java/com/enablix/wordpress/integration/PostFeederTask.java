@@ -2,6 +2,8 @@ package com.enablix.wordpress.integration;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,7 +16,11 @@ import com.afrozaar.wordpress.wpapi.v2.model.Post;
 import com.afrozaar.wordpress.wpapi.v2.request.SearchRequest;
 import com.enablix.analytics.info.detection.InfoDetector;
 import com.enablix.commons.util.date.DateUtil;
+import com.enablix.commons.util.id.IdentityUtil;
 import com.enablix.commons.util.tenant.TenantUtil;
+import com.enablix.core.activity.audit.ActivityTrackingConstants;
+import com.enablix.core.activity.audit.ActivityTrackingContext;
+import com.enablix.core.domain.activity.ActivityChannel;
 import com.enablix.task.PerTenantTask;
 import com.enablix.task.Task;
 import com.enablix.task.TaskContext;
@@ -68,6 +74,8 @@ public class PostFeederTask implements Task {
 										 DateUtil.dateToUTCiso8601String(lastRunDate))
 								 .build();
 			
+			setActivityTrackingContext();
+			
 			WPInfoDetector wpInfoDetector = new WPInfoDetector(wp);
 			wpService.processPosts(wp, wpInfoDetector, searchRequest);
 			
@@ -77,9 +85,25 @@ public class PostFeederTask implements Task {
 					WordpressConstants.WP_POST_FEEDER_TASK_LAST_RUN_PARAM, currentRunDate);
 
 		} catch (WPConfigNotFoundException e) {
+			
 			LOGGER.info("Wordpress config missing for tenant [{}]: {}", tenantId, e.getMessage());
+			
+		} finally {
+			ActivityTrackingContext.clear();
 		}
 		
+	}
+
+	private void setActivityTrackingContext() {
+		
+		String taskExecId = IdentityUtil.generateIdentity(this);
+		
+		Map<String, String> ctxParams = new HashMap<>();
+		ctxParams.put(ActivityTrackingConstants.ACTIVITY_CHANNEL, ActivityChannel.Channel.SYSTEM.toString());
+		ctxParams.put(ActivityTrackingConstants.CONTEXT_NAME, WordpressConstants.WP_POST_IMPORT_ACTVY_CTX);
+		ctxParams.put(ActivityTrackingConstants.CONTEXT_ID, taskExecId);
+		
+		ActivityTrackingContext.initialize(ctxParams);
 	}
 
 	@Override

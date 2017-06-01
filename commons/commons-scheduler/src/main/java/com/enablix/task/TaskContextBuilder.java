@@ -24,21 +24,14 @@ public class TaskContextBuilder {
 	private class MapTaskContext implements TaskContext {
 		
 		private TaskConfig taskConfig;
-		private Map<String, Object> taskParams;
 		
 		MapTaskContext(TaskConfig taskConfig) {
-			
 			this.taskConfig = taskConfig;
-			this.taskParams = taskConfig.getParameters();
-			
-			if (taskParams == null) {
-				this.taskParams = new HashMap<>();
-			}
 		}
 
 		@Override
 		public Object getTaskParameter(String paramName) {
-			return taskParams.get(paramName);
+			return taskParams().get(paramName);
 		}
 
 		@Override
@@ -55,7 +48,11 @@ public class TaskContextBuilder {
 
 		@Override
 		public Iterable<String> getParameterNames() {
-			return taskParams.keySet();
+			return taskParams().keySet();
+		}
+		
+		private Map<String, Object> taskParams() {
+			return taskConfig.getParameters() == null ? new HashMap<>() : taskConfig.getParameters();
 		}
 
 		@Override
@@ -65,13 +62,12 @@ public class TaskContextBuilder {
 			
 			if (parameters == null) {
 				parameters = new HashMap<>();
-				taskConfig.setParameters(taskParams);
-				taskParams = parameters;
+				taskConfig.setParameters(parameters);
 			}
 			
 			parameters.put(paramName, value);
 			
-			taskRepo.save(taskConfig);
+			taskConfig = taskRepo.save(taskConfig);
 		}
 
 		@Override

@@ -24,7 +24,7 @@ public class ContentTypeConnection extends BaseDocumentEntity {
 	
 	private Set<Tag> tags;
 	
-	// The containers which encapsulate the content represented by contentQId
+	// The containers which have a content item which references contentQId
 	private List<String> holdingContainers;
 	
 	public String getConnectionName() {

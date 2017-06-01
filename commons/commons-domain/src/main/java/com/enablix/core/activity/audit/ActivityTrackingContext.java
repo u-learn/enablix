@@ -72,7 +72,7 @@ public class ActivityTrackingContext {
 	}
 
 	public String getActivityOrigin() {
-		return auditContextParams.get(ActivityTrackingConstants.REQ_CONTEXT_ACTIVITY_ORIGIN);
+		return auditContextParams.get(ActivityTrackingConstants.CONTEXT_ACTIVITY_ORIGIN);
 	}
 	
 	public String getActivityContextId() {

@@ -593,6 +593,18 @@ enablix.studioApp.factory('ContentTemplateService',
 				}
 				
 				return false;
+			};
+			
+			var getConcreteContainerQId = function(_containerQId) {
+				
+				var result = _containerQId;
+				
+				var concreteContDef = getConcreteContainerDefinition(enablix.template, _containerQId);
+				if (!isNullOrUndefined(concreteContDef)) {
+					result = concreteContDef.qualifiedId;
+				}
+				
+				return result;
 			}
 			
 			return {
@@ -603,6 +615,7 @@ enablix.studioApp.factory('ContentTemplateService',
 				getUIDefinition: getUIDefinition,
 				getContainerDefinition: getContainerDefinition,
 				getConcreteContainerDefinition: getConcreteContainerDefinition,
+				getConcreteContainerQId: getConcreteContainerQId,
 				getContentItem: getContentItem,
 				getBoundedRefListContainer: getBoundedRefListContainer,
 				isRootContainer: isRootContainer,

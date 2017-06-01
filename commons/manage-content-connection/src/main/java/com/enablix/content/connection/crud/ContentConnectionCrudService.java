@@ -6,7 +6,6 @@ import org.springframework.stereotype.Component;
 import com.enablix.app.service.MongoRepoCrudService;
 import com.enablix.content.connection.repo.ContentTypeConnectionRepository;
 import com.enablix.core.domain.content.connection.ContentTypeConnection;
-import com.enablix.core.mongo.repository.BaseMongoRepository;
 
 @Component
 public class ContentConnectionCrudService extends MongoRepoCrudService<ContentTypeConnection> {
@@ -15,7 +14,7 @@ public class ContentConnectionCrudService extends MongoRepoCrudService<ContentTy
 	private ContentTypeConnectionRepository repo;
 	
 	@Override
-	public BaseMongoRepository<ContentTypeConnection> getRepository() {
+	public ContentTypeConnectionRepository getRepository() {
 		return repo;
 	}
 

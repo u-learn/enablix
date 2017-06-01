@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.enablix.app.template.service.TemplateManager;
+import com.enablix.commons.util.PermissionConstants;
 import com.enablix.commons.util.concurrent.Events;
 import com.enablix.commons.util.process.ProcessContext;
 import com.enablix.content.approval.ContentApprovalConstants;
@@ -59,7 +60,7 @@ public class NotificationManagerImpl implements NotificationManager {
 		// need to notify admins with permission to approve requests
 		// find roles with the permission
 		List<Role> adminRoles = roleRepo.findByPermissions(
-				ContentApprovalConstants.PERMISSION_MNG_CONTENT_REQUEST);
+				PermissionConstants.PERMISSION_MNG_CONTENT_REQUEST);
 		
 		if (!adminRoles.isEmpty()) {
 			

@@ -1,6 +1,6 @@
 package com.enablix.core.domain.activity;
 
-public class ContentActivity extends Activity {
+public class ContentActivity extends ContextAwareActivity {
 
 	public enum ContainerType {
 		CONTENT, REF_DATA
@@ -36,8 +36,6 @@ public class ContentActivity extends Activity {
 	private ContainerType containerType;
 	
 	private ContentActivityType activityType;
-	
-	private String activityOrigin;
 	
 	protected ContentActivity() {
 		super(Category.CONTENT);
@@ -91,14 +89,6 @@ public class ContentActivity extends Activity {
 
 	public void setItemTitle(String itemTitle) {
 		this.itemTitle = itemTitle;
-	}
-
-	public String getActivityOrigin() {
-		return activityOrigin;
-	}
-
-	public void setActivityOrigin(String activityOrigin) {
-		this.activityOrigin = activityOrigin;
 	}
 
 }

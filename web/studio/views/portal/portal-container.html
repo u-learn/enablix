@@ -2,6 +2,7 @@
 <div class="page-content">
 	<div class="container-fluid">
 		<eb-portal-breadcrumb></eb-portal-breadcrumb>
+		<ebx-layout-switch container-q-id="containerQId"></ebx-layout-switch>
 		<div class="row">							
 			<main ng-class="subContainerList.length > 1 ? 'col-md-4' : 'col-md-8'">
 				<div class="cont-empty record-detail" ng-if="subContainerList.length == 0">No data found.</div>
@@ -11,7 +12,6 @@
 						sub-container-q-id="subContainer.qualifiedId" index="$index" parent-list="subContainerList" multi-list-limit="{{::subCntnrMultiListLimit}}"
 						category="subContainer.category" parent-container-q-id="subContainer.parentQId"></eb-portal-sub-container>
 				</div>
-				<eb-content-stack-display ng-if="hasContentStack" container-q-id="containerQId" content-identity="instanceIdentity" container-list="subContainerList"></eb-content-stack-display>
 			</main>
 			
 			<aside class="col-md-4" ng-if="subContainerList.length > 1">
@@ -21,7 +21,6 @@
 						sub-container-q-id="subContainer.qualifiedId" index="$index" parent-list="subContainerList" multi-list-limit="{{::subCntnrMultiListLimit}}"
 						category="subContainer.category" parent-container-q-id="subContainer.parentQId"></eb-portal-sub-container>
 				</div>
-				<eb-content-stack-display ng-if="hasContentStack" container-q-id="containerQId" content-identity="instanceIdentity" container-list="subContainerList"></eb-content-stack-display>
 			</aside>
 			
 			<aside class="col-md-4">

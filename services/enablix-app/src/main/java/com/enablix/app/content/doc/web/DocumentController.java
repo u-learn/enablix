@@ -69,7 +69,7 @@ public class DocumentController {
             
             DocumentMetadata docMd = saveDocument(contentQId, parentIdentity, containerIdentity, document);
 			
-            auditActivity(ContentActivityType.DOC_UPLOAD, docIdentity, document, 
+            auditActivity(ContentActivityType.DOC_UPLOAD, docIdentity, docMd, 
             				null, null, null, null);
             
             return docMd;
@@ -147,8 +147,21 @@ public class DocumentController {
     
     @RequestMapping(value = "/pd/{docIdentity}", method = {RequestMethod.GET},
 			produces="application/json")
-	public DocPreviewData getDocPreviewData(@PathVariable String docIdentity) {
-    	return previewService.getPreviewData(docIdentity);
+	public DocPreviewData getDocPreviewData(@PathVariable String docIdentity,
+			@RequestParam(required=false) String atChannel,
+            @RequestParam(required=false) String atContext,
+            @RequestParam(required=false) String atContextId,
+            @RequestParam(required=false) String atContextTerm) {
+    	
+    	DocPreviewData previewData = previewService.getPreviewData(docIdentity);
+    	
+    	if (previewData != null) {
+    		DocumentMetadata doc = docManager.getDocumentMetadata(docIdentity);
+    		auditActivity(ContentActivityType.DOC_PREVIEW, docIdentity, doc, 
+        		Channel.WEB.toString(), atContext, atContextId, atContextTerm);
+    	}
+    	
+		return previewData;
 	}
    
     @RequestMapping(value = "/pdp/{docIdentity}/{elementIndx}/", method = {RequestMethod.GET})
@@ -204,7 +217,7 @@ public class DocumentController {
         
         if (!request.getMethod().equals(RequestMethod.HEAD.toString())) {
         	// Audit download activity
-        	auditActivity(activityType, docIdentity, doc, 
+        	auditActivity(activityType, docIdentity, doc.getMetadata(), 
         		atChannel, atContext, atContextId, atContextTerm);
         }
  
@@ -250,7 +263,7 @@ public class DocumentController {
 	}
 
 	private void auditActivity(ContentActivityType activityType, String docIdentity, 
-			Document<DocumentMetadata> doc, String atChannel, String contextName, 
+			DocumentMetadata docMd, String atChannel, String contextName, 
 			String contextId, String contextTerm) {
 		
 		Channel channel = Channel.parse(atChannel);
@@ -267,9 +280,9 @@ public class DocumentController {
         		actor = new RegisteredActor(userId, pc.getUserDisplayName());
         	}
         	
-        	ActivityLogger.auditDocActivity(activityType, doc.getMetadata().getContentQId(), 
+        	ActivityLogger.auditDocActivity(activityType, docMd.getContentQId(), 
         			null, docIdentity, channel, actor, contextName, contextId, contextTerm, 
-        			doc.getMetadata().getName());
+        			docMd.getName());
         }
 	}
 	

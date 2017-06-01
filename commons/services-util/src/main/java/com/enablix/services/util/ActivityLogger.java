@@ -86,7 +86,12 @@ public class ActivityLogger {
 		ContentActivity contentActvy = new ContentActivity(dataRef.getInstanceIdentity(), 
 				dataRef.getContainerQId(), containerType, activityType, dataRef.getTitle());
 		
-		contentActvy.setActivityOrigin(ActivityTrackingContext.get().getActivityOrigin());
+		ActivityTrackingContext atCtx = ActivityTrackingContext.get();
+		
+		contentActvy.setActivityOrigin(atCtx.getActivityOrigin());
+		contentActvy.setContextId(atCtx.getActivityContextId());
+		contentActvy.setContextName(atCtx.getActivityContextName());
+		contentActvy.setContextTerm(atCtx.getActivityContextTerm());
 		
 		auditContentActivity(contentActvy, activityChannel);
 	}

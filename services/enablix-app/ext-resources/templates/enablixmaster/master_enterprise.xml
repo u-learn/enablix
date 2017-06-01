@@ -527,7 +527,7 @@
 					</refList>
 				</bounded>
 			</contentItem>
-			<container id="report" label="Reports">
+			<container id="report" label="Reports" businessCategory="BUSINESS_CONTENT">
 				<contentItem id="title" label="Report Title" type="text" searchBoost="7"/>
 				<contentItem id="file" label="File" type="doc"/>
 				<contentItem id="distributionrights" label="Distribution Rights" type="bounded">

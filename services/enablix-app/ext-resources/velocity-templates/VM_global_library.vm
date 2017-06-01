@@ -180,6 +180,53 @@ $a_tenantName Team
 #end
 
 
+#macro( nav_content_list $a_navContentList $a_siteUrl $a_atChannel $a_atContextId $a_atContextName)
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<td class="content-spacing2" style="font-size:0pt; line-height:0pt; text-align:left" width="30"></td>
+		<td>
+			#foreach($key1 in $a_navContentList)  
+				<table width="100%" border="0" cellspacing="0" cellpadding="0">
+					<tr>
+						<td>
+							<table width="100%" border="0" cellspacing="0" cellpadding="0">
+								<tr>
+									<td class="arrow" style="color:#9a9a9a; font-family:Arial,sans-serif, 'OS'; font-size:16px; line-height:20px; text-align:left" width="27">&rarr;</td>
+									<td class="text" style="color:#626262; font-family:Arial,sans-serif, 'OS'; font-size:16px; line-height:20px; text-align:left">
+										#set ($currentNode = $key1)
+										<a href="$a_siteUrl/app.html#/portal/containerlist/$currentNode.qualifiedId?atChannel=$a_atChannel&atContext=$a_atContextName&atContextId=$a_atContextId">
+											<span class="link-u" style="color:#004ba1; text-decoration:underline">$currentNode.containerLabel</span>
+										</a> &gt;
+										#foreach($number in [1..5])
+											#if ($currentNode)
+												#if ($number > 1) &gt; #end
+												<a href="$a_siteUrl/app.html#/portal/container/$currentNode.qualifiedId/$currentNode.identity/c/single/$currentNode.qualifiedId/?atChannel=$a_atChannel&atContext=$a_atContextName&atContextId=$a_atContextId">
+													<span class="link-u" style="color:#004ba1; text-decoration:underline">$currentNode.label</span>
+												</a>
+												#if (!$currentNode.next) 
+													#set ($currentNode = false)
+												#else
+													#set ($currentNode = $currentNode.next)
+												#end
+											#else
+												#break
+											#end
+										#end																				
+									</td>
+								</tr>
+							</table>
+							<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="7" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
+
+						</td>
+					</tr>
+				</table>
+			#end
+		</td>
+		<td class="content-spacing2" style="font-size:0pt; line-height:0pt; text-align:left" width="30"></td>
+	</tr>
+</table>
+#end
+
 
 #macro( mail_template $a_topHeaderTitle)
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">

@@ -1,0 +1,19 @@
+<!-- page content -->
+<div class="page-content">
+	<div class="container-fluid">
+		<eb-portal-breadcrumb></eb-portal-breadcrumb>
+		<ebx-layout-switch containerQId="containerQId"></ebx-layout-switch>
+		<div class="gbcont" layout="row">							
+			<div class="gbcol" ng-repeat="subCntnrGrp in groupedSubContainers" ng-if="subCntnrGrp.subContainerList.length > 0">
+				<div class="block">
+					<div class="head bottom-border"><h2>{{subCntnrGrp.recordTitle}}</h2></div>
+				</div>
+				<div ng-repeat="subContainer in subCntnrGrp.subContainerList">					
+					<eb-portal-sub-container id="{{::subContainer.id}}" type="{{::subContainer.type}}" sub-container-label="subContainer.label" info="subContainer.records"
+						sub-container-q-id="subContainer.qualifiedId" index="$index" parent-list="subContainerList" multi-list-limit="{{::subCntnrMultiListLimit}}"
+						category="subContainer.category" parent-container-q-id="subContainer.parentQId"></eb-portal-sub-container>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

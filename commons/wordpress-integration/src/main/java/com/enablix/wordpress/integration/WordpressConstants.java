@@ -15,9 +15,15 @@ public class WordpressConstants {
 	public static final String WP_POST_ANALYSER_TYPE_MAPPING = "wp.post.analyser.type.mapping";
 	
 	public static final String WP_POST_FEEDER_TASK_LAST_RUN_PARAM = "lastrun";
+	public static final String WP_IMPORT_POST_MAILER_TASK_LAST_RUN_PARAM = "lastrun";
 
 	public static final String WP_API_PARAM_SLUG = "slug";
 
 	public static final String WP_API_PARAM_PUBLISHED_AFTER = "after";
 	public static final String WP_API_PARAM_PUBLISHED_BEFORE = "before";
+
+	public static final String WP_POST_IMPORT_ACTVY_CTX = "WP_POST_IMPORT";
+
+	public static final String TEMPLATE_WP_IMPORT_MAILER = "wordpressImport";
+	
 }

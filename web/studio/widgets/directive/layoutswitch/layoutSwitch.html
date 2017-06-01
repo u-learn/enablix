@@ -1,0 +1,11 @@
+<div class="alt-view-cont" ng-if="layoutOptions.length > 1" requires-permission="VIEW_LAYOUT_OPTIONS">
+	<span ng-if="::currentLayoutName">View: {{currentLayoutName}}</span>
+	<span class="dropdown">
+		<a id="altViewActionBtn" data-toggle="dropdown" class="fa fa-th fa-lg dropdown-toggle"></a>
+		<ul id="altViewList" class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="altViewActionBtn">
+			<li ng-repeat="opt in layoutOptions" role="presentation">
+				<a ng-click="switchLayout(opt)">{{opt.name}}</a>
+			</li>
+		</ul>
+	</span>
+</div>

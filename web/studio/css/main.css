@@ -2066,3 +2066,29 @@ td .dropdown-menu-cont {
 eb-date-picker thead th {
     vertical-align: bottom;
 }
+
+.gbcont {
+	overflow-x: auto;
+	margin-left : -10px;
+	margin-right : -10px;
+	padding-bottom: 20px;
+}
+
+.gbcol {
+	padding-left : 10px;
+	padding-right : 10px;
+	width: 25%;
+	flex: 0 0 25%;
+}
+
+.alt-view-cont {
+    position: relative;
+    float: right;
+    margin: -0.5em 0 -0.5em;
+    font-size: 0.75em;
+    z-index: 10;
+}
+
+#altViewActionBtn {
+	margin-left: 4px;
+}

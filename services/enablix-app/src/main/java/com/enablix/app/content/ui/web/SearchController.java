@@ -45,7 +45,8 @@ public class SearchController {
 		DataView dataView = dataSegmentService.getDataViewForUserId(ProcessContext.get().getUserId());
 		SearchResult<NavigableContent> searchResult = searchService.search(searchText, sizeInt, pageInt, dataView);
 		
-		ActivityLogger.auditActivity(new SearchActivity(searchText));
+		ActivityLogger.auditActivity(new SearchActivity(searchText, 
+				searchResult.getCurrentPage(), searchResult.getNumberOfElements()));
 		return searchResult;
 	}
 	
@@ -66,7 +67,8 @@ public class SearchController {
 		SearchResult<DisplayableContent> searchResult = 
 				searchService.searchAndGetResultAsDisplayContent(searchText, sizeInt, pageInt, dataView);
 		
-		ActivityLogger.auditActivity(new SearchActivity(searchText));
+		ActivityLogger.auditActivity(new SearchActivity(searchText, 
+				searchResult.getCurrentPage(), searchResult.getNumberOfElements()));
 		return searchResult;
 	}
 	

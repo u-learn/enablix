@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.enablix.commons.constants.ContentDataConstants;
+import com.enablix.commons.util.StringUtil;
 import com.enablix.core.api.ContentDataRef;
 import com.enablix.core.api.TemplateFacade;
 import com.enablix.core.commons.xsdtopojo.ContainerType;
@@ -52,12 +53,27 @@ public class ContentDataUtil {
 	}
 
 
-	public static String findPortalLabelValue(
-			Map<String, Object> record, TemplateFacade template, String qId) {
+	public static String findPortalLabelValue(Map<String, Object> record, 
+			TemplateFacade template, String qId, boolean defaultToFirstItemIfNotDefined) {
 		
 		String portalLabelAttributeId = template.getPortalLabelAttributeId(qId);
 		
+		if (!StringUtil.hasText(portalLabelAttributeId) && defaultToFirstItemIfNotDefined) {
+			
+			ContainerType containerDef = template.getContainerDefinition(qId);
+			
+			if (containerDef != null) {
+				ContentItemType contentItem = containerDef.getContentItem().get(0);
+				portalLabelAttributeId = contentItem.getId();
+			}
+		}
+		
 		return findLabelAttributeValue(record, template, qId, portalLabelAttributeId);
+	}
+	
+	public static String findPortalLabelValue(
+			Map<String, Object> record, TemplateFacade template, String qId) {
+		return findPortalLabelValue(record, template, qId, false);
 	}
 	
 	public static String findStudioLabelValue(

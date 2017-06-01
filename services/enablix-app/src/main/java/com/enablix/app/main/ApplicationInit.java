@@ -53,7 +53,7 @@ import com.enablix.commons.util.StringUtil;
 				"com.enablix.analytics.correlation.data.repo",
 				"com.enablix.trigger.lifecycle.rule.repo",
 				"com.enablix.trigger.lifecycle.repo",
-				"com.enablix.app.audit.repo",
+				"com.enablix.core.mongo.audit.repo",
 				"com.enablix.content.mapping.repo",
 				"com.enablix.doc.state.change.repo",
 				"com.enablix.content.approval.repo",

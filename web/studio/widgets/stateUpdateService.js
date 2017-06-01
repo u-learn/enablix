@@ -91,11 +91,18 @@ enablix.studioApp.factory('StateUpdateService',
 				$state.go('studio');
 	 		};
 	 		
-	 		var goToPortalContainerDetail = function(_containerQId, _elemIdentity) {
-	 			$state.go("portal.container", {
-	 				"containerQId": _containerQId,
-	 				"elementIdentity": _elemIdentity
+	 		var goToPortalContainerDetail = function(_containerQId, _elemIdentity, _optionalStateParams) {
+	 			
+	 			var statePrms = {
+		 				"containerQId": _containerQId,
+		 				"elementIdentity": _elemIdentity
+		 			};
+	 			
+	 			angular.forEach(_optionalStateParams, function(value, key) {
+	 				statePrms[key] = value;
 	 			});
+	 			
+	 			$state.go("portal.container", statePrms);
 	 		};
 	 		
 	 		var goToPortalSubContainerList = function(_containerQId, _subContainerQId, _parentIdentity) {
@@ -346,6 +353,10 @@ enablix.studioApp.factory('StateUpdateService',
 	 			$state.go("system.integration.list");
 	 		};
 	 		
+	 		var goToState = function(_stateName, _stateParams) {
+	 			$state.go(_stateName, _stateParams);
+	 		}
+	 		
 	 		return {
 	 			goToApp: goToApp,
 	 			goToAppSetPassword: goToAppSetPassword,
@@ -404,7 +415,8 @@ enablix.studioApp.factory('StateUpdateService',
 				goToTPIntConfigDetail: goToTPIntConfigDetail,
 				goToEditTPIntConfig: goToEditTPIntConfig,
 				goToAddTPIntConfig: goToAddTPIntConfig,
-				goToTPIntConfigList: goToTPIntConfigList
+				goToTPIntConfigList: goToTPIntConfigList,
+				goToState: goToState
 	 		};
 	 	}
 	 ]);

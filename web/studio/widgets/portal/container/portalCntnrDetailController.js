@@ -1,6 +1,6 @@
 enablix.studioApp.controller('PortalCntnrDetailCtrl', 
-		   ['$scope', 'ContentTemplateService', '$stateParams', 'ContentUtil', 'ContentDataService', 'StudioSetupService', 'Notification',
-    function($scope,   ContentTemplateService,   $stateParams,   ContentUtil,   ContentDataService,   StudioSetupService,   Notification) {
+		   ['$scope', 'ContentTemplateService', '$stateParams', 'ContentUtil', 'ContentDataService', 'StudioSetupService', 'ContentConnectionService', 'Notification',
+    function($scope,   ContentTemplateService,   $stateParams,   ContentUtil,   ContentDataService,   StudioSetupService,   ContentConnectionService,   Notification) {
 
 		$scope.subContainerList = [];
 		$scope.$stateParams = $stateParams;
@@ -9,9 +9,146 @@ enablix.studioApp.controller('PortalCntnrDetailCtrl',
 		$scope.instanceIdentity = $stateParams.elementIdentity;
 		$scope.hasContentStack = false;
 		
+		$scope.groupByQId = $stateParams.gbQId;
+		$scope.subCntnrMultiListLimit = enablix.subContainerItemLimit;
+		
 		var enclosureId = $stateParams.enclosureId;
 		
 		var cntnrList = [];
+		
+		var fetchRecordDetails = function() {
+			
+			ContentDataService.getRecordAndChildData($stateParams.containerQId, $scope.instanceIdentity,
+				function(data) {
+				
+					angular.forEach(data, function(contentGroup, $index) {
+						
+						var containerDef = ContentTemplateService.getContainerDefinition(
+												enablix.template, contentGroup.contentQId);
+						
+						var concreteContQId = ContentTemplateService.isLinkedContainer(containerDef) ? 
+												containerDef.linkContainerQId : containerDef.qualifiedId;
+						
+						var subCntnrItem = {
+								"id" : containerDef.id,
+								"qualifiedId" : containerDef.qualifiedId,
+								"concreteQId" : concreteContQId,
+								"label" : containerDef.label,
+								"containerDef": containerDef,
+								"type": containerDef.single ? "single" : "multi",
+								"records": contentGroup.records,
+								"category": "sub-container"
+							};
+						
+						if ($stateParams.containerQId == containerDef.qualifiedId) {
+							subCntnrItem.label = "About";
+							subCntnrItem.type = 'single';
+							subCntnrItem.category = 'about';
+							$scope.aboutSubContainer = subCntnrItem;
+						}
+						
+						addSubContainerItem(subCntnrItem);
+						
+					});
+				},
+				function(errorData) {
+					Notification.error({message: "Error retrieving content records", delay: enablix.errorMsgShowTime});
+				}, $scope.subCntnrMultiListLimit, "PORTAL");
+			
+		}
+		
+		var fetchGroupedBySubContainers = function(_gbQId) {
+			
+			ContentConnectionService.getFirstContentConnVOByContentQId(_gbQId, 
+				function(data) {
+					
+					$scope.groupedSubContainers = data.valueLinks;
+					
+					angular.forEach($scope.groupedSubContainers, function(groupSubCntnr) {
+						groupSubCntnr.subContainerList = [];
+					});
+					
+					getRecordData();
+				}, 
+				function(errorData) {
+					Notification.error({message: "Error retrieving content grouping data", delay: enablix.errorMsgShowTime});
+				});
+		}
+		
+		var addSubContainerItem = function(_subCntnrItem) {
+			
+			if ($scope.groupByQId) { 
+				
+				if (_subCntnrItem.category != 'about') {
+					
+					// do not show the about sub container in group by view, else show
+					
+					angular.forEach($scope.groupedSubContainers, function(groupSubCntnr) {
+						
+						if (groupSubCntnr.connectedContainers.contains(_subCntnrItem.concreteQId)) {
+							
+							// sub container might exist under multiple groups, hence make a copy and add
+							var copy = angular.copy(_subCntnrItem);
+							copy.id = copy.id + groupSubCntnr.recordIdentity;
+							
+							groupSubCntnr.subContainerList.push(copy);
+						}
+					});
+				}
+				
+			} else {
+				$scope.subContainerList.push(_subCntnrItem);
+			}
+		}
+		
+		var checkAndFetchContentStack = function() {
+			
+			// check and push content stack cards
+			if ($scope.containerQId && $scope.instanceIdentity && $scope.hasContentStack) {
+				
+				var pageData = {
+					page: 0,
+					size: $scope.subCntnrMultiListLimit
+				};
+				
+				ContentDataService.getContentStackForRecord($scope.containerQId, $scope.instanceIdentity, pageData,
+						function(data) {
+					
+							angular.forEach(data, function(contentGroup, $index) {
+								
+								var containerDef = ContentTemplateService.getContainerDefinition(
+														enablix.template, contentGroup.contentQId);
+								
+								var concreteContQId = ContentTemplateService.isLinkedContainer(containerDef) ? 
+														containerDef.linkContainerQId : containerDef.qualifiedId;
+								
+								var subCntnrItem = {
+										"id" : containerDef.id,
+										"qualifiedId" : containerDef.qualifiedId,
+										"concreteQId" : concreteContQId,
+										"label" : containerDef.label,
+										"containerDef": containerDef,
+										"type": "multi",
+										"records": contentGroup.records,
+										"category": "sub-container",
+										"parentQId": $scope.containerQId
+									};
+								
+								addSubContainerItem(subCntnrItem);
+							});
+							
+						}, 
+						function(errorData) {
+							Notification.error({message: "Error retrieving content records", delay: enablix.errorMsgShowTime});
+						});
+			}
+			
+		}
+		
+		var getRecordData = function() {
+			fetchRecordDetails();
+			checkAndFetchContentStack();
+		}
 		
 		if (isNullOrUndefined(enclosureId)) {
 			
@@ -32,40 +169,13 @@ enablix.studioApp.controller('PortalCntnrDetailCtrl',
 			cntnrList = containerDef.container;
 			*/
 			
-			ContentDataService.getRecordAndChildData($stateParams.containerQId, $scope.instanceIdentity,
-				function(data) {
-				
-					angular.forEach(data, function(contentGroup, $index) {
-						
-						var containerDef = ContentTemplateService.getContainerDefinition(
-												enablix.template, contentGroup.contentQId);
-						
-						var subCntnrItem = {
-								"id" : containerDef.id,
-								"qualifiedId" : containerDef.qualifiedId,
-								"label" : containerDef.label,
-								"containerDef": containerDef,
-								"type": containerDef.single ? "single" : "multi",
-								"records": contentGroup.records,
-								"category": "sub-container"
-							};
-						
-						if ($stateParams.containerQId == containerDef.qualifiedId) {
-							subCntnrItem.label = "About";
-							subCntnrItem.type = 'single';
-							subCntnrItem.category = 'about';
-							$scope.aboutSubContainer = subCntnrItem;
-						}
-						
-						$scope.subContainerList.push(subCntnrItem);
-					});
-				},
-				function(errorData) {
-					Notification.error({message: "Error retrieving content records", delay: enablix.errorMsgShowTime});
-				}, enablix.subContainerItemLimit, "PORTAL");
-			
-			$scope.subCntnrMultiListLimit = enablix.subContainerItemLimit;
 			$scope.hasContentStack = ContentTemplateService.hasContentStackConfigItem(containerDef);
+			
+			if ($scope.groupByQId) {
+				fetchGroupedBySubContainers($scope.groupByQId);
+			} else {
+				getRecordData();
+			}
 			
 		} else {
 			
@@ -89,8 +199,6 @@ enablix.studioApp.controller('PortalCntnrDetailCtrl',
 					
 				});
 				
-				$scope.subCntnrMultiListLimit = enablix.subContainerItemLimit;
-				
 			} else {
 				
 				// child container of enclosure specified. We will display the detail
@@ -107,6 +215,9 @@ enablix.studioApp.controller('PortalCntnrDetailCtrl',
 						cntnrList.push(containerDef)
 						
 						$scope.hasContentStack = ContentTemplateService.hasContentStackConfigItem(containerDef);
+						
+						checkAndFetchContentStack();
+						
 					}
 				}
 			}
@@ -115,9 +226,13 @@ enablix.studioApp.controller('PortalCntnrDetailCtrl',
 		
 		angular.forEach(cntnrList, function(subCntnr) {
 			
+			var concreteContQId = ContentTemplateService.isLinkedContainer(subCntnr) ? 
+									subCntnr.linkContainerQId : subCntnr.qualifiedId;
+			
 			var subCntnrItem = {
 					"id" : subCntnr.id,
 					"qualifiedId" : subCntnr.qualifiedId,
+					"concreteQId" : concreteContQId,
 					"label" : subCntnr.label,
 					"containerDef": subCntnr,
 					"type": subCntnr.single ? "single" : "multi"
@@ -125,42 +240,6 @@ enablix.studioApp.controller('PortalCntnrDetailCtrl',
 			
 			$scope.subContainerList.push(subCntnrItem);
 		});
-		
-		// check and push content stack cards
-		if ($scope.containerQId && $scope.instanceIdentity && $scope.hasContentStack) {
-			
-			var pageData = {
-				page: 0,
-				size: enablix.subContainerItemLimit
-			};
-			
-			ContentDataService.getContentStackForRecord($scope.containerQId, $scope.instanceIdentity, pageData,
-					function(data) {
-				
-						angular.forEach(data, function(contentGroup, $index) {
-							
-							var containerDef = ContentTemplateService.getContainerDefinition(
-													enablix.template, contentGroup.contentQId);
-							
-							var subCntnrItem = {
-									"id" : containerDef.id,
-									"qualifiedId" : containerDef.qualifiedId,
-									"label" : containerDef.label,
-									"containerDef": containerDef,
-									"type": "multi",
-									"records": contentGroup.records,
-									"category": "sub-container",
-									"parentQId": $scope.containerQId
-								};
-							
-							$scope.subContainerList.push(subCntnrItem);
-						});
-						
-					}, 
-					function(errorData) {
-						Notification.error({message: "Error retrieving content records", delay: enablix.errorMsgShowTime});
-					});
-		}
 		
 	}                                          
 ]);
