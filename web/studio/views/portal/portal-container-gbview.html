@@ -2,7 +2,7 @@
 <div class="page-content">
 	<div class="container-fluid">
 		<eb-portal-breadcrumb></eb-portal-breadcrumb>
-		<ebx-layout-switch containerQId="containerQId"></ebx-layout-switch>
+		<ebx-layout-switch containerQId="containerQId" requires-permission="VIEW_LAYOUT_OPTIONS"></ebx-layout-switch>
 		<div class="gbcont" layout="row">							
 			<div class="gbcol" ng-repeat="subCntnrGrp in groupedSubContainers" ng-if="subCntnrGrp.subContainerList.length > 0">
 				<div class="block">

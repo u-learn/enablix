@@ -2,7 +2,7 @@
 <div class="page-content">
 	<div class="container-fluid">
 		<eb-portal-breadcrumb></eb-portal-breadcrumb>
-		<ebx-layout-switch container-q-id="containerQId"></ebx-layout-switch>
+		<ebx-layout-switch container-q-id="containerQId" requires-permission="VIEW_LAYOUT_OPTIONS"></ebx-layout-switch>
 		<div class="row">							
 			<main ng-class="subContainerList.length > 1 ? 'col-md-4' : 'col-md-8'">
 				<div class="cont-empty record-detail" ng-if="subContainerList.length == 0">No data found.</div>
