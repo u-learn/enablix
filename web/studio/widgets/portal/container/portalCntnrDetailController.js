@@ -10,7 +10,6 @@ enablix.studioApp.controller('PortalCntnrDetailCtrl',
 		$scope.hasContentStack = false;
 		
 		$scope.groupByQId = $stateParams.gbQId;
-		$scope.subCntnrMultiListLimit = enablix.subContainerItemLimit;
 		
 		var enclosureId = $stateParams.enclosureId;
 		
@@ -53,8 +52,9 @@ enablix.studioApp.controller('PortalCntnrDetailCtrl',
 				},
 				function(errorData) {
 					Notification.error({message: "Error retrieving content records", delay: enablix.errorMsgShowTime});
-				}, $scope.subCntnrMultiListLimit, "PORTAL");
+				}, enablix.subContainerItemLimit, "PORTAL");
 			
+			$scope.subCntnrMultiListLimit = enablix.subContainerItemLimit;
 		}
 		
 		var fetchGroupedBySubContainers = function(_gbQId) {
@@ -108,7 +108,7 @@ enablix.studioApp.controller('PortalCntnrDetailCtrl',
 				
 				var pageData = {
 					page: 0,
-					size: $scope.subCntnrMultiListLimit
+					size: enablix.subContainerItemLimit
 				};
 				
 				ContentDataService.getContentStackForRecord($scope.containerQId, $scope.instanceIdentity, pageData,
@@ -198,6 +198,8 @@ enablix.studioApp.controller('PortalCntnrDetailCtrl',
 					}
 					
 				});
+				
+				$scope.subCntnrMultiListLimit = enablix.subContainerItemLimit;
 				
 			} else {
 				
