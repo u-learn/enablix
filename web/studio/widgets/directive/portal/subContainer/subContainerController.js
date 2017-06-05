@@ -120,7 +120,7 @@ enablix.studioApp.controller('PortalSubContainerCtrl',
 		var decorateData = function(_containerDef, _dataRecord) {
 			_dataRecord.headingLabel = ContentUtil.resolveContainerInstancePortalLabel(
 									_containerDef, _dataRecord);
-			_dataRecord.containerId = $scope.id;
+			_dataRecord.containerId = $scope.id || _containerDef.qualifiedId;
 			_dataRecord.containerQId = _containerDef.qualifiedId;
 			_dataRecord.hasSubContainers =  _dataRecord.identity != $stateParams.elementIdentity && 
 							((!isNullOrUndefined(_containerDef.container) && _containerDef.container.length > 0)

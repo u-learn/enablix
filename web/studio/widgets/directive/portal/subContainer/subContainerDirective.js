@@ -23,7 +23,6 @@ enablix.studioApp.directive('ebPortalSubContainer', [
 			templateUrl : "widgets/directive/portal/subContainer/subContainer-both.html",
 			link: function(scope, element, attrs) {
 				scope.singleItemCard = scope.type === 'single';
-				scope.id = scope.id || scope.subContainerQId;
 			}
 			
 		};
