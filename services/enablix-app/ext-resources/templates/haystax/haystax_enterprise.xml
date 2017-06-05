@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<contentTemplate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.10" id="haystax_enterprise" xsi:noNamespaceSchemaLocation="../xsd/content-template.xsd">
+<contentTemplate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.11" id="haystax_enterprise" xsi:noNamespaceSchemaLocation="../xsd/content-template.xsd">
 	<dataDefinition>
 		<container id="product" label="Products" businessCategory="BUSINESS_DIMENSION">
 			<contentItem id="name" label="Name" type="text" searchBoost="7"/>
@@ -1394,7 +1394,79 @@
 	      			</refList>
 	      		</bounded>
       		</contentItem>			
-		</container>		
+		</container>	
+		<container id="onepager" label="Fact Sheets" businessCategory="BUSINESS_CONTENT">
+			<contentItem id="title" label="Title" type="text" searchBoost="7"/>
+			<contentItem id="file" label="File" type="doc"/>
+			<contentItem id="comment" label="Description" type="richText" searchBoost="2"/>			
+			<contentItem id="url" label="URL" type="text"/>
+			<contentItem id="products" label="Products" type="bounded" searchBoost="6">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>product</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>			
+			<contentItem id="solutions" label="Solutions" type="bounded" searchBoost="6">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>solution</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>	
+			<contentItem id="apps" label="Apps" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>app</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>			
+			<contentItem id="partners" label="Partners" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>partner</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="topics" label="Topics" type="bounded">
+				<bounded>
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>topic</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>			
+			<contentItem id="visibility" label="Visibility" type="bounded">
+	      		<bounded multivalued="true">
+	      			<refList>
+	      				<datastore>
+	      					<storeId>contentVisibilityType</storeId>
+	      					<dataId>identity</dataId>
+	      					<dataLabel>visibilityType</dataLabel>
+	      				</datastore>
+	      			</refList>
+	      		</bounded>
+      		</contentItem>					
+		</container>			
 		<container id="image" label="Images" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="file" label="File" type="doc"/>
@@ -1701,79 +1773,7 @@
 	      			</refList>
 	      		</bounded>
       		</contentItem>			
-		</container>			
-		<container id="onepager" label="Fact Sheets" businessCategory="BUSINESS_CONTENT">
-			<contentItem id="title" label="Title" type="text" searchBoost="7"/>
-			<contentItem id="file" label="File" type="doc"/>
-			<contentItem id="comment" label="Description" type="richText" searchBoost="2"/>			
-			<contentItem id="url" label="URL" type="text"/>
-			<contentItem id="products" label="Products" type="bounded" searchBoost="6">
-				<bounded multivalued="true">
-					<refList>
-						<datastore hyperlink="true">
-							<storeId>product</storeId>
-							<dataId>identity</dataId>
-							<dataLabel>shortName</dataLabel>
-						</datastore>
-					</refList>
-				</bounded>
-			</contentItem>			
-			<contentItem id="solutions" label="Solutions" type="bounded" searchBoost="6">
-				<bounded multivalued="true">
-					<refList>
-						<datastore hyperlink="true">
-							<storeId>solution</storeId>
-							<dataId>identity</dataId>
-							<dataLabel>shortName</dataLabel>
-						</datastore>
-					</refList>
-				</bounded>
-			</contentItem>	
-			<contentItem id="apps" label="Apps" type="bounded">
-				<bounded multivalued="true">
-					<refList>
-						<datastore hyperlink="true">
-							<storeId>app</storeId>
-							<dataId>identity</dataId>
-							<dataLabel>shortName</dataLabel>
-						</datastore>
-					</refList>
-				</bounded>
-			</contentItem>			
-			<contentItem id="partners" label="Partners" type="bounded">
-				<bounded multivalued="true">
-					<refList>
-						<datastore hyperlink="true">
-							<storeId>partner</storeId>
-							<dataId>identity</dataId>
-							<dataLabel>shortName</dataLabel>
-						</datastore>
-					</refList>
-				</bounded>
-			</contentItem>
-			<contentItem id="topics" label="Topics" type="bounded">
-				<bounded>
-					<refList>
-						<datastore hyperlink="true">
-							<storeId>topic</storeId>
-							<dataId>identity</dataId>
-							<dataLabel>shortName</dataLabel>
-						</datastore>
-					</refList>
-				</bounded>
-			</contentItem>			
-			<contentItem id="visibility" label="Visibility" type="bounded">
-	      		<bounded multivalued="true">
-	      			<refList>
-	      				<datastore>
-	      					<storeId>contentVisibilityType</storeId>
-	      					<dataId>identity</dataId>
-	      					<dataLabel>visibilityType</dataLabel>
-	      				</datastore>
-	      			</refList>
-	      		</bounded>
-      		</contentItem>					
-		</container>	
+		</container>				
 		<container id="partnercontactinfo" label="Haystax Partner Contact">
 			<contentItem id="name" label="Name" type="text"/>
 			<contentItem id="email" label="Email" type="text"/>
@@ -4706,6 +4706,13 @@
 				</portalConfig>
 			</container>
 		</contentUIDef>
+		<contentUIDef qualifiedId="contentVisibilityType">
+			<container labelQualifiedId="contentVisibilityType.visibilityType">		
+				<portalConfig>
+					<headingContentItem id="visibilityType"/>
+				</portalConfig>
+			</container>
+		</contentUIDef>		
 		<contentUIDef qualifiedId="salesKit.kitDesc">
 			<text type="long"/>
 		</contentUIDef>		
