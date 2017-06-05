@@ -60,7 +60,7 @@ public class MailUtility {
             msg.setSubject(subject);
             Multipart multipart = new MimeMultipart();
             MimeBodyPart htmlPart = new MimeBodyPart();
-            htmlPart.setContent(htmlBody, "text/html");
+            htmlPart.setContent(htmlBody, "text/html; charset=\"UTF-8\"");
             multipart.addBodyPart(htmlPart);
             logger.debug("To: " + msg.getAllRecipients()[0] + ", From: " +  msg.getFrom()[0]);
             msg.setContent(multipart);

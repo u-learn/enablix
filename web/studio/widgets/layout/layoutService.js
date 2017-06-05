@@ -66,7 +66,7 @@ enablix.studioApp.factory('PortalContainerDetailPageLayoutProvider', [
 				},
 				{
 					id: "groupByOppStage",
-					name: "Group By Opp Stage",
+					name: "Sales Funnel",
 					type: "gbv",
 					stateName: "portal.container-gbv",
 					stateParams: { gbQId: "oppStage"}
