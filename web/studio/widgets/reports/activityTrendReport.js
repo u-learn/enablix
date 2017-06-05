@@ -5,15 +5,15 @@ enablix.studioApp.factory('ActivityTrendReport',
 			var eventTrend = [
 				{
 					label: 'Last 7 Days',
-					id: '7'
+					id: '6'
 				},	
 				{
 					label: 'Last 30 Days',
-					id: '30'
+					id: '29'
 				},
 				{
 					label: 'Last 90 Days',
-					id: '90'
+					id: '89'
 				}
 				];
 			

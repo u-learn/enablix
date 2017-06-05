@@ -16,22 +16,23 @@ public class ContentAccessMetricImpl extends SimpleMetric {
 
 	private final String collectionName = "ebx_activity_audit";
 
-	@Override
-	public MetricStats calculate(Date startDate, Date endDate) {
-		
-		startDate = DateUtil.getStartOfDay(startDate);
-		endDate = DateUtil.getEndOfDay(endDate);
-		
-		Criteria criteria = Criteria.where("createdAt").gte(startDate).lte(endDate);
-		criteria = criteria.and("activity.activityType").is("CONTENT_ACCESS");
-		return calculateSimpleMetric(startDate, endDate, 
-				collectionName, activityCode, criteria);
-
-	}
-
+	private Criteria contentAccCriteria = Criteria.where("activity.activityType").is("CONTENT_ACCESS");
+	
 	@Override
 	public MetricTypes getActivityCode() {
 		return activityCode;
 	}
 
+	
+	@Override
+	public MetricStats calculateStats(Date startDate, Date endDate) {
+		startDate = DateUtil.getStartOfDay(startDate);
+		endDate = DateUtil.getEndOfDay(endDate);
+		
+		Criteria criteria = Criteria.where("createdAt").gte(startDate).lte(endDate);
+		criteria = criteria.andOperator(contentAccCriteria);
+		return calculateSimpleMetric(startDate, endDate, 
+				collectionName, activityCode, criteria);
+	}
+	
 }

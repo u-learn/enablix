@@ -15,21 +15,23 @@ public class NoOfLoginMetricImpl extends SimpleMetric {
 	private final MetricTypes activityCode = MetricTypes.NO_OF_LOGINS;
 
 	private final String collectionName = "ebx_activity_audit";
+	
+	private Criteria noOfLoginsCriteria = Criteria.where("activity.accountActivityType").is("LOGIN");
 
 	@Override
-	public MetricStats calculate(Date startDate, Date endDate) {
-		
+	public MetricStats calculateStats(Date startDate, Date endDate) {
 		startDate = DateUtil.getStartOfDay(startDate);
 		endDate = DateUtil.getEndOfDay(endDate);
 		
 		Criteria criteria = Criteria.where("createdAt").gte(startDate).lte(endDate);
-		criteria = criteria.and("activity.accountActivityType").is("LOGIN");
+		criteria = criteria.andOperator(noOfLoginsCriteria);
 		return calculateSimpleMetric(startDate, endDate, 
 				collectionName, activityCode, criteria);
 	}
-
+	
 	@Override
 	public MetricTypes getActivityCode() {
 		return activityCode;
 	}
+
 }

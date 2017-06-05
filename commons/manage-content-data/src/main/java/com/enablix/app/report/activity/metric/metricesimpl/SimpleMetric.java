@@ -8,17 +8,13 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 
 import com.enablix.app.report.activity.metric.MetricStatsCalculator;
-import com.enablix.app.report.activity.metric.utils.MetricAggService;
 import com.enablix.commons.constants.AppConstants.MetricTypes;
 import com.enablix.core.domain.report.activitymetric.MetricStats;
 
 public abstract class SimpleMetric implements MetricStatsCalculator {
 
 	@Autowired
-	private MetricAggService metricAggService;
-	
-	@Autowired
-	private MongoTemplate mongoTemplate;
+	protected MongoTemplate mongoTemplate;
 
 	private Query query;
 	
@@ -44,11 +40,5 @@ public abstract class SimpleMetric implements MetricStatsCalculator {
 
 		return metricStats;
 	}
-
-	@Override
-	public MetricStats getAggStats(Date startDate, Date endDate) {
-		return metricAggService.getSimpleAggStats(startDate, endDate, getActivityCode());
-	}
-
 	
 }

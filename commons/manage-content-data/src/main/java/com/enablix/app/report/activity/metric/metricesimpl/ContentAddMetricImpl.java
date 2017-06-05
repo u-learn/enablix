@@ -16,14 +16,16 @@ public class ContentAddMetricImpl extends SimpleMetric {
 
 	private final String collectionName = "ebx_activity_audit";
 
+	private Criteria contentAddCriteria = Criteria.where("activity.activityType").is("CONTENT_ADD");
+	
 	@Override
-	public MetricStats calculate(Date startDate, Date endDate) {
+	public MetricStats calculateStats(Date startDate, Date endDate) {
 
 		startDate = DateUtil.getStartOfDay(startDate);
 		endDate = DateUtil.getEndOfDay(endDate);
 		
 		Criteria criteria = Criteria.where("createdAt").gte(startDate).lte(endDate);
-		criteria = criteria.and("activity.activityType").is("CONTENT_ADD");
+		criteria = criteria.andOperator(contentAddCriteria);
 		return calculateSimpleMetric(startDate, endDate, 
 				collectionName, activityCode, criteria);
 	}

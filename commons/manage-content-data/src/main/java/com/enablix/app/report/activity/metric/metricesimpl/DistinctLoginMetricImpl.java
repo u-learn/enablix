@@ -12,7 +12,7 @@ import com.enablix.commons.util.date.DateUtil;
 import com.enablix.core.domain.report.activitymetric.MetricStats;
 
 @Component
-public class DistinctLoginMetricImpl extends DynamicMetric {
+public class DistinctLoginMetricImpl extends ComplexMetric {
 
 	private final MetricTypes activityCode = MetricTypes.DISTINCT_LOGIN;
 
@@ -24,7 +24,7 @@ public class DistinctLoginMetricImpl extends DynamicMetric {
 	}
 
 	@Override
-	public MetricStats calculate(Date startDate, Date endDate) {
+	public MetricStats calculateStats(Date startDate, Date endDate) {
 
 		MetricStats metricStats = null;
 
@@ -49,12 +49,6 @@ public class DistinctLoginMetricImpl extends DynamicMetric {
 		metricStats = new MetricStats(activityCode.getCode(), activityCode.getValue(), count);
 
 		return metricStats;
-	}
-
-	@Override
-	public MetricStats getAggStats(Date startDate, Date endDate) {
-
-		return calculate(startDate, endDate);
 
 	}
 

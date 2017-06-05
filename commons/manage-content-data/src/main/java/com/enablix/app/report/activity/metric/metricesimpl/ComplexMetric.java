@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.core.query.Query;
 
 import com.enablix.app.report.activity.metric.MetricStatsCalculator;
 
-public abstract class DynamicMetric implements MetricStatsCalculator {
+public abstract class ComplexMetric implements MetricStatsCalculator {
 	
 	@Autowired
 	protected MongoTemplate mongoTemplate;

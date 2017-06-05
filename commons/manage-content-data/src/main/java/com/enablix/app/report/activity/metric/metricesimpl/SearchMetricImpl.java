@@ -16,20 +16,24 @@ public class SearchMetricImpl extends SimpleMetric {
 
 	private final String collectionName = "ebx_activity_audit";
 
+
+	private Criteria searchCriteria = Criteria.where("activity.category").is("SEARCH");
+	
 	@Override
 	public MetricTypes getActivityCode() {
 		return activityCode;
 	}
 
 	@Override
-	public MetricStats calculate(Date startDate, Date endDate) {
+	public MetricStats calculateStats(Date startDate, Date endDate) {
 		startDate = DateUtil.getStartOfDay(startDate);
 		endDate = DateUtil.getEndOfDay(endDate);
 		
 		Criteria criteria = Criteria.where("createdAt").gte(startDate).lte(endDate);
-		criteria = criteria.and("activity.category").is("SEARCH");
+		criteria = criteria.andOperator(searchCriteria);
 		return calculateSimpleMetric(startDate, endDate, 
 				collectionName, activityCode, criteria);
 	}
+	
 	
 }

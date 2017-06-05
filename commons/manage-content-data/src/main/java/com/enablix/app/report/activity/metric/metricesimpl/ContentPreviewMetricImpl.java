@@ -16,14 +16,16 @@ public class ContentPreviewMetricImpl extends SimpleMetric {
 
 	private final String collectionName = "ebx_activity_audit";
 
+	private Criteria contentPreviewCriteria = Criteria.where("activity.activityType").is("DOC_PREVIEW");
+	
 	@Override
-	public MetricStats calculate(Date startDate, Date endDate) {
+	public MetricStats calculateStats(Date startDate, Date endDate) {
 
 		startDate = DateUtil.getStartOfDay(startDate);
 		endDate = DateUtil.getEndOfDay(endDate);
 		
 		Criteria criteria = Criteria.where("createdAt").gte(startDate).lte(endDate);
-		criteria = criteria.and("activity.activityType").is("DOC_PREVIEW");
+		criteria = criteria.andOperator(contentPreviewCriteria);
 		return calculateSimpleMetric(startDate, endDate, 
 				collectionName, activityCode, criteria);
 
@@ -33,5 +35,4 @@ public class ContentPreviewMetricImpl extends SimpleMetric {
 	public MetricTypes getActivityCode() {
 		return activityCode;
 	}
-
 }

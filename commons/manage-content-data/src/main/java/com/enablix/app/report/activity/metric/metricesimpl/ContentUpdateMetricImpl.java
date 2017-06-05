@@ -16,14 +16,17 @@ public class ContentUpdateMetricImpl extends SimpleMetric {
 
 	private final String collectionName = "ebx_activity_audit";
 
+	private Criteria contentUpdateCriteria = Criteria.where("activity.activityType").is("CONTENT_UPDATE");
+
+	
 	@Override
-	public MetricStats calculate(Date startDate, Date endDate) {
+	public MetricStats calculateStats(Date startDate, Date endDate) {
 
 		startDate = DateUtil.getStartOfDay(startDate);
 		endDate = DateUtil.getEndOfDay(endDate);
 		
 		Criteria criteria = Criteria.where("createdAt").gte(startDate).lte(endDate);
-		criteria = criteria.and("activity.activityType").is("CONTENT_UPDATE");
+		criteria = criteria.andOperator(contentUpdateCriteria);
 		return calculateSimpleMetric(startDate, endDate, 
 				collectionName, activityCode, criteria);
 	}

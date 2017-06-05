@@ -16,14 +16,17 @@ public class ContentDownloadMetricImpl extends SimpleMetric {
 
 	private final String collectionName = "ebx_activity_audit";
 
+	private Criteria docDownloadCriteria = Criteria.where("activity.activityType").is("DOC_DOWNLOAD");
+
+	
 	@Override
-	public MetricStats calculate(Date startDate, Date endDate) {
+	public MetricStats calculateStats(Date startDate, Date endDate) {
 		
 		startDate = DateUtil.getStartOfDay(startDate);
 		endDate = DateUtil.getEndOfDay(endDate);
 		
 		Criteria criteria = Criteria.where("createdAt").gte(startDate).lte(endDate);
-		criteria = criteria.and("activity.activityType").is("DOC_DOWNLOAD");
+		criteria = criteria.andOperator(docDownloadCriteria);
 		return calculateSimpleMetric(startDate, endDate, 
 				collectionName, activityCode, criteria);
 	
@@ -33,5 +36,5 @@ public class ContentDownloadMetricImpl extends SimpleMetric {
 	public MetricTypes getActivityCode() {
 		return activityCode;
 	}
-
+	
 }
