@@ -2092,3 +2092,13 @@ eb-date-picker thead th {
 #altViewActionBtn {
 	margin-left: 4px;
 }
+
+/* type ahead css */
+.tt-menu {
+    background: #ffffff;
+}
+
+.tt-suggestion {
+    line-height: 1.5em;
+    padding-left: 5px;
+}
