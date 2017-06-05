@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<contentTemplate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.09" id="haystax_enterprise" xsi:noNamespaceSchemaLocation="../xsd/content-template.xsd">
+<contentTemplate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.10" id="haystax_enterprise" xsi:noNamespaceSchemaLocation="../xsd/content-template.xsd">
 	<dataDefinition>
 		<container id="product" label="Products" businessCategory="BUSINESS_DIMENSION">
 			<contentItem id="name" label="Name" type="text" searchBoost="7"/>
@@ -26,13 +26,13 @@
 			<container id="prodDiscQuestions" label="Discovery Questions" linkContainerQId="discoveryQuestion" linkContentItemId="products"/>			
 			<container id="prodDocs" label="Product Documentation" linkContainerQId="docs" linkContentItemId="products"/>			
 			<container id="prodFAQ" label="FAQ" linkContainerQId="faq" linkContentItemId="products"/>
+			<container id="prodOnePager" label="Fact Sheets" linkContainerQId="onepager" linkContentItemId="products"/>			
 			<container id="prodImages" label="Images" linkContainerQId="image" linkContentItemId="products"/>			
 			<container id="prodImpSlide" label="Important Slides" linkContainerQId="importantslide" linkContentItemId="products"/>			
 			<container id="prodLunchLearn" label="Lunch and Learn" linkContainerQId="lunchandlearn" linkContentItemId="products"/>						
 			<container id="prodEvent" label="Events" linkContainerQId="event" linkContentItemId="products"/>			
 			<container id="prodMessageTree" label="Message Trees" linkContainerQId="messageTree" linkContentItemId="products"/>
 			<container id="prodArticle" label="News Article" linkContainerQId="article" linkContentItemId="products"/>			
-			<container id="prodOnePager" label="One Pagers" linkContainerQId="onepager" linkContentItemId="products"/>
 			<container id="prodSalesDeck" label="Presentations" linkContainerQId="salesDeck" linkContentItemId="products"/>						
 			<container id="prodSalesKits" label="Sales Kits" linkContainerQId="salesKit" linkContentItemId="products"/>
 			<container id="prodSWOT" label="SWOT" linkContainerQId="swot" linkContentItemId="products"/>						
@@ -94,13 +94,13 @@
 			<container id="solDocs" label="Solution Documentation" linkContainerQId="docs" linkContentItemId="solutions"/>						
 			<container id="solDiscQuestions" label="Discovery Questions" linkContainerQId="discoveryQuestion" linkContentItemId="solutions"/>
 			<container id="solFAQ" label="FAQ" linkContainerQId="faq" linkContentItemId="solutions"/>
+			<container id="solOnePager" label="Fact Sheets" linkContainerQId="onepager" linkContentItemId="solutions"/>									
 			<container id="solImages" label="Images" linkContainerQId="image" linkContentItemId="solutions"/>			
 			<container id="solImpSlide" label="Important Slides" linkContainerQId="importantslide" linkContentItemId="solutions"/>
 			<container id="solLunchLearn" label="Lunch and Learn" linkContainerQId="lunchandlearn" linkContentItemId="solutions"/>									
 			<container id="solEvent" label="Events" linkContainerQId="event" linkContentItemId="solutions"/>			
 			<container id="solMessageTree" label="Message Trees" linkContainerQId="messageTree" linkContentItemId="solutions"/>
 			<container id="solArticle" label="News Article" linkContainerQId="article" linkContentItemId="solutions"/>
-			<container id="solOnePager" label="One Pagers" linkContainerQId="onepager" linkContentItemId="solutions"/>						
 			<container id="solSalesDeck" label="Presentations" linkContainerQId="salesDeck" linkContentItemId="solutions"/>			
 			<container id="solSalesKits" label="Sales Kits" linkContainerQId="salesKit" linkContentItemId="solutions"/>						
 			<container id="solSWOT" label="SWOT" linkContainerQId="swot" linkContentItemId="solutions"/>									
@@ -163,12 +163,12 @@
 			<container id="appDemoScript" label="Demo Scripts" linkContainerQId="demoscript" linkContentItemId="apps"/>																		
 			<container id="appDiscQuestions" label="Discovery Questions" linkContainerQId="discoveryQuestion" linkContentItemId="apps"/>
 			<container id="appFAQ" label="FAQ" linkContainerQId="faq" linkContentItemId="apps"/>
+			<container id="appOnePager" label="Fact Sheets" linkContainerQId="onepager" linkContentItemId="apps"/>						
 			<container id="appImpSlide" label="Important Slides" linkContainerQId="importantslide" linkContentItemId="apps"/>
 			<container id="appImages" label="Images" linkContainerQId="image" linkContentItemId="apps"/>			
 			<container id="appLunchLearn" label="Lunch and Learn" linkContainerQId="lunchandlearn" linkContentItemId="apps"/>	
 			<container id="appEvent" label="Apps" linkContainerQId="event" linkContentItemId="apps"/>											
 			<container id="appArticle" label="News Article" linkContainerQId="article" linkContentItemId="apps"/>
-			<container id="appOnePager" label="One Pagers" linkContainerQId="onepager" linkContentItemId="apps"/>			
 			<container id="appSalesDeck" label="Presentations" linkContainerQId="salesDeck" linkContentItemId="apps"/>		
 			<container id="appSWOT" label="SWOT" linkContainerQId="swot" linkContentItemId="apps"/>									
 			<container id="appPress" label="Press" linkContainerQId="press" linkContentItemId="apps"/>				
@@ -387,6 +387,7 @@
 			<container id="partnerDemoScript" label="Demo Scripts" linkContainerQId="demoscript" linkContentItemId="partners"/>
 			<container id="partnerDiscQuestions" label="Discovery Questions" linkContainerQId="discoveryQuestion" linkContentItemId="partners"/>
 			<container id="partnerFAQ" label="FAQ" linkContainerQId="faq" linkContentItemId="partners"/>
+			<container id="partnerFactSheet" label="Fact Sheets" linkContainerQId="onepager" linkContentItemId="partners"/>						
 			<container id="partnerImpSlide" label="Important Slides" linkContainerQId="importantslide" linkContentItemId="partners"/>
 			<container id="partnerLunchLearn" label="Lunch and Learn" linkContainerQId="lunchandlearn" linkContentItemId="partners"/>												
 			<container id="partnerEvent" label="Events" linkContainerQId="event" linkContentItemId="partners"/>			
@@ -1701,7 +1702,7 @@
 	      		</bounded>
       		</contentItem>			
 		</container>			
-		<container id="onepager" label="One Pagers" businessCategory="BUSINESS_CONTENT">
+		<container id="onepager" label="Fact Sheets" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text" searchBoost="7"/>
 			<contentItem id="file" label="File" type="doc"/>
 			<contentItem id="comment" label="Description" type="richText" searchBoost="2"/>			
@@ -1733,6 +1734,28 @@
 					<refList>
 						<datastore hyperlink="true">
 							<storeId>app</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>			
+			<contentItem id="partners" label="Partners" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>partner</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="topics" label="Topics" type="bounded">
+				<bounded>
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>topic</storeId>
 							<dataId>identity</dataId>
 							<dataLabel>shortName</dataLabel>
 						</datastore>
@@ -2801,6 +2824,7 @@
 			<container id="topicDemoScript" label="Demo Scripts" linkContainerQId="demoscript" linkContentItemId="topics"/>
 			<container id="topicDiscQuestion" label="Discovery Questions" linkContainerQId="discoveryQuestion" linkContentItemId="topics"/>			
 			<container id="topicFAQ" label="FAQ" linkContainerQId="faq" linkContentItemId="topics"/>
+			<container id="topicFactSheet" label="Fact Sheets" linkContainerQId="onepager" linkContentItemId="topics"/>						
 			<container id="topicImage" label="Images" linkContainerQId="image" linkContentItemId="topics"/>			
 			<container id="topicLunchLearn" label="Lunch and Learn" linkContainerQId="lunchandlearn" linkContentItemId="topics"/>									
 			<container id="topicEvent" label="Events" linkContainerQId="event" linkContentItemId="topics"/>			
@@ -3231,23 +3255,7 @@
 	      			</refList>
 	      		</bounded>
       		</contentItem>					
-		</container>
-		<container id="sow" label="Statement of Work" businessCategory="BUSINESS_CONTENT">
-			<contentItem id="title" label="Title" type="text"/>
-			<contentItem id="summary" label="Description" type="richText"/>
-			<contentItem id="file" label="File" type="doc"/>
-			<contentItem id="visibility" label="Visibility" type="bounded">
-	      		<bounded multivalued="true">
-	      			<refList>
-	      				<datastore>
-	      					<storeId>contentVisibilityType</storeId>
-	      					<dataId>identity</dataId>
-	      					<dataLabel>visibilityType</dataLabel>
-	      				</datastore>
-	      			</refList>
-	      		</bounded>
-      		</contentItem>				
-		</container>		
+		</container>	
 		<container id="pricingtemplate" label="Pricing Template" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="summary" label="Description" type="richText"/>
@@ -3264,22 +3272,6 @@
 	      		</bounded>
       		</contentItem>				
 		</container>		
-		<container id="nda" label="Non Disclosure Agreement (NDA)" businessCategory="BUSINESS_CONTENT">
-			<contentItem id="title" label="Title" type="text"/>
-			<contentItem id="summary" label="Description" type="richText"/>
-			<contentItem id="file" label="File" type="doc"/>
-			<contentItem id="visibility" label="Visibility" type="bounded">
-	      		<bounded multivalued="true">
-	      			<refList>
-	      				<datastore>
-	      					<storeId>contentVisibilityType</storeId>
-	      					<dataId>identity</dataId>
-	      					<dataLabel>visibilityType</dataLabel>
-	      				</datastore>
-	      			</refList>
-	      		</bounded>
-      		</contentItem>				
-		</container>
 		<container id="partneragreement" label="Partnership Agreement" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="file" label="File" type="doc"/>			
@@ -3307,25 +3299,9 @@
 	      		</bounded>
       		</contentItem>						
 		</container>
-		<container id="mla" label="Master License Agreement" businessCategory="BUSINESS_CONTENT">
+		<container id="corporateagreement" label="Corporate Agreements" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
-			<contentItem id="summary" label="Description" type="richText"/>
-			<contentItem id="file" label="File" type="doc"/>
-			<contentItem id="visibility" label="Visibility" type="bounded">
-	      		<bounded multivalued="true">
-	      			<refList>
-	      				<datastore>
-	      					<storeId>contentVisibilityType</storeId>
-	      					<dataId>identity</dataId>
-	      					<dataLabel>visibilityType</dataLabel>
-	      				</datastore>
-	      			</refList>
-	      		</bounded>
-      		</contentItem>				
-		</container>
-		<container id="msa" label="Master Services Agreement" businessCategory="BUSINESS_CONTENT">
-			<contentItem id="title" label="Title" type="text"/>
-			<contentItem id="summary" label="Description" type="richText"/>
+			<contentItem id="desc" label="Description" type="richText"/>
 			<contentItem id="file" label="File" type="doc"/>
 			<contentItem id="visibility" label="Visibility" type="bounded">
 	      		<bounded multivalued="true">
@@ -3671,11 +3647,11 @@
 					<childContainer id="docs"/>
 					<childContainer id="event"/>						
 					<childContainer id="faq"/>
+					<childContainer id="onepager"/>					
 					<childContainer id="image"/>					
 					<childContainer id="importantslide"/>
 					<childContainer id="messageTree"/>														
-					<childContainer id="article"/>										
-					<childContainer id="onepager"/>										
+					<childContainer id="article"/>																				
 					<childContainer id="pov"/>
 					<childContainer id="salesDeck"/>
 					<childContainer id="press"/>															
@@ -3692,16 +3668,13 @@
 					<childContainer id="content"/>
 				</enclosure>
 				<enclosure id="corporate" label="Corporate">
+					<childContainer id="corporateagreement"/>					
 					<childContainer id="corporatelogo"/>
 					<childContainer id="lunchandlearn"/>					
-					<childContainer id="mla"/>	
-					<childContainer id="msa"/>	
-					<childContainer id="nda"/>	
 					<childContainer id="partneragreement"/>	
 					<childContainer id="partnercontactinfo"/>														
 					<childContainer id="ppttemplate"/>														
 					<childContainer id="pricingtemplate"/>
-					<childContainer id="sow"/>
 					<childContainer id="securitycontent"/>					
 					<childContainer id="resume"/>										
 					<childContainer id="corporatecontent"/>
@@ -4569,21 +4542,6 @@
 		<contentUIDef qualifiedId="lunchandlearn.summary">
 			<text type="long"/>
 		</contentUIDef>		
-		<contentUIDef qualifiedId="sow">
-			<container labelQualifiedId="sow.title">
-				<listViewConfig>
-					<hideContentItem id="file"/>
-					<hideContentItem id="summary"/>
-					<hideContentItem id="visibility"/>					
-				</listViewConfig>
-				<portalConfig>
-					<headingContentItem id="title"/>
-				</portalConfig>
-			</container>
-		</contentUIDef>
-		<contentUIDef qualifiedId="sow.summary">
-			<text type="long"/>
-		</contentUIDef>		
 		<contentUIDef qualifiedId="pricingtemplate">
 			<container labelQualifiedId="pricingtemplate.title">
 				<listViewConfig>
@@ -4597,21 +4555,6 @@
 			</container>
 		</contentUIDef>
 		<contentUIDef qualifiedId="pricingtemplate.summary">
-			<text type="long"/>
-		</contentUIDef>	
-		<contentUIDef qualifiedId="nda">
-			<container labelQualifiedId="nda.title">
-				<listViewConfig>
-					<hideContentItem id="file"/>
-					<hideContentItem id="summary"/>
-					<hideContentItem id="visibility"/>	
-				</listViewConfig>
-				<portalConfig>
-					<headingContentItem id="title"/>
-				</portalConfig>
-			</container>
-		</contentUIDef>
-		<contentUIDef qualifiedId="nda.summary">
 			<text type="long"/>
 		</contentUIDef>	
 		<contentUIDef qualifiedId="partneragreement">
@@ -4629,11 +4572,11 @@
 		<contentUIDef qualifiedId="partneragreement.summary">
 			<text type="long"/>
 		</contentUIDef>		
-		<contentUIDef qualifiedId="mla">
-			<container labelQualifiedId="mla.title">
+		<contentUIDef qualifiedId="corporateagreement">
+			<container labelQualifiedId="corporateagreement.title">
 				<listViewConfig>
 					<hideContentItem id="file"/>
-					<hideContentItem id="summary"/>
+					<hideContentItem id="desc"/>
 					<hideContentItem id="visibility"/>	
 				</listViewConfig>
 				<portalConfig>
@@ -4641,21 +4584,9 @@
 				</portalConfig>
 			</container>
 		</contentUIDef>
-		<contentUIDef qualifiedId="mla.summary">
+		<contentUIDef qualifiedId="corporateagreement.desc">
 			<text type="long"/>
 		</contentUIDef>		
-		<contentUIDef qualifiedId="msa">
-			<container labelQualifiedId="msa.title">
-				<listViewConfig>
-					<hideContentItem id="file"/>
-					<hideContentItem id="summary"/>
-					<hideContentItem id="visibility"/>	
-				</listViewConfig>
-				<portalConfig>
-					<headingContentItem id="title"/>
-				</portalConfig>
-			</container>
-		</contentUIDef>
 		<contentUIDef qualifiedId="resume">
 			<container labelQualifiedId="resume.name">
 				<portalConfig>
@@ -4663,9 +4594,6 @@
 				</portalConfig>
 			</container>
 		</contentUIDef>		
-		<contentUIDef qualifiedId="msa.summary">
-			<text type="long"/>
-		</contentUIDef>	
 		<contentUIDef qualifiedId="corporatelogo">
 			<container labelQualifiedId="corporatelogo.title">
 				<listViewConfig>
@@ -4803,11 +4731,11 @@
 					<childContainer id="docs"/>
 					<childContainer id="event"/>							
 					<childContainer id="faq"/>
+					<childContainer id="onepager"/>						
 					<childContainer id="image"/>					
 					<childContainer id="importantslide"/>
 					<childContainer id="messageTree"/>					
-					<childContainer id="article"/>						
-					<childContainer id="onepager"/>										
+					<childContainer id="article"/>															
 					<childContainer id="pov"/>
 					<childContainer id="salesDeck"/>
 					<childContainer id="press"/>										
@@ -4824,17 +4752,14 @@
 					<childContainer id="content"/>
 				</enclosure>
 				<enclosure id="corporate" label="Corporate">
-					<childContainer id="corporatelogo"/>
+					<childContainer id="corporateagreement"/>					
+					<childContainer id="corporatelogo"/>					
 					<childContainer id="lunchandlearn"/>
-					<childContainer id="mla"/>	
-					<childContainer id="msa"/>	
-					<childContainer id="nda"/>	
 					<childContainer id="partneragreement"/>	
 					<childContainer id="partnercontactinfo"/>														
 					<childContainer id="ppttemplate"/>														
 					<childContainer id="pricingtemplate"/>
 					<childContainer id="resume"/>								
-					<childContainer id="sow"/>
 					<childContainer id="securitycontent"/>																	
 					<childContainer id="corporatecontent"/>
 				</enclosure>				
