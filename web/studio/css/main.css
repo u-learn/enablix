@@ -2096,9 +2096,15 @@ eb-date-picker thead th {
 /* type ahead css */
 .tt-menu {
     background: #ffffff;
+    font-size: 0.875em;
+    -webkit-box-shadow: 0 6px 12px rgba(0,0,0,.175);
+    box-shadow: 0 6px 12px rgba(0,0,0,.175);
 }
 
-.tt-suggestion {
+.tt-suggestion, .tt-selectable {
     line-height: 1.5em;
-    padding-left: 5px;
+    padding-left: 5px !important;
+    border-left: 1px solid #dce1e5 !important;
+    border-right: 1px solid #dce1e5 !important;
+    border-bottom: 1px solid #dce1e5 !important;
 }

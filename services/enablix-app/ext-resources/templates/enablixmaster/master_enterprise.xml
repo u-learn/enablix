@@ -195,7 +195,7 @@
 			<container id="compArticle" label="News Article" linkContainerQId="article" linkContentItemId="competitors"/>
 			<container id="compContent" label="Other Content" linkContainerQId="content" linkContentItemId="competitors"/>
 		</container>
-		<container id="customer" label="Accounts">
+		<container id="customer" label="Accounts" businessCategory="BUSINESS_DIMENSION">
 			<contentItem id="name" label="Account Name" type="text" searchBoost="7"/>
 			<contentItem id="shortName" label="Account Short Name" type="text" searchBoost="7"/>
 			<contentItem id="custRegions" label="Regions" type="bounded" searchBoost="6">
