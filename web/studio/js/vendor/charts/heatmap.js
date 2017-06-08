@@ -216,6 +216,7 @@ angular.module("heatmap", []).directive("heatmap",
 						.attr("y", function (d, i) { return i * yGridSize; })
 						.style("text-anchor", "end")
 						.style("font-weight", function(d) { return typeof(categoryInfo[d]) == "undefined" ? "normal" : "bold"})
+						.style("font-size", "12px")
 						.attr("transform", "translate(-6," + yGridSize / 1.5 + ")")
 						.attr("class", function (d, i) { return ("hm-yLabel hm-axis"); });
 
@@ -226,6 +227,7 @@ angular.module("heatmap", []).directive("heatmap",
 						.attr("y", function(d, i) { return i * xGridSize; })
 						.attr("x", 0)
 						.style("text-anchor", "start")
+						.style("font-size", "12px")
 						.attr("transform", "rotate(-90) translate(10, " + xGridSize / 2 + ")")
 						.attr("class", function(d, i) { return ("hm-xLabel hm-axis"); });
 
@@ -271,6 +273,7 @@ angular.module("heatmap", []).directive("heatmap",
 							.attr("y", function(d) { var _y = d.yIndex * yGridSize + yGridSize/2 + 4; maxY = Math.max(maxY, _y); return _y; })
 							.attr("class", function (d, i) { return ("hm-yLabel"); })
 							.style("text-anchor", "middle")
+							.style("font-size", "12px")
 							.text(function(d) { return d.value; });
 					}
 					
@@ -320,6 +323,7 @@ angular.module("heatmap", []).directive("heatmap",
 							.attr("y", function(d, i) { var _y = d.yIndex * yGridSize + yGridSize/2 + 5; maxY = Math.max(maxY, _y); return _y; })
 							.attr("class", "hm-no-data-category")
 							.style("text-anchor", "left")
+							.style("font-size", "12px")
 							.text(function(d) { return "No data found for " + d.label; });
 						
 						noDataCatMessages.exit().remove();
@@ -347,7 +351,8 @@ angular.module("heatmap", []).directive("heatmap",
 							.text(function(d) { return Math.round(d); })
 							.attr("x", function(d, i) { return legendElementWidth * i; })
 							.attr("y", legendY + legendElementHeight + 15) //height * 1.15)
-							.style("text-anchor", "middle");
+							.style("text-anchor", "middle")
+							.style("font-size", "12px");
 
 						legend.exit().remove();
 						

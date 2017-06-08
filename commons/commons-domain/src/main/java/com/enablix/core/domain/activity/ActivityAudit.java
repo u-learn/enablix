@@ -4,6 +4,7 @@ import java.util.Date;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.enablix.commons.util.date.DateDimension;
 import com.enablix.core.domain.BaseDocumentEntity;
 
 @Document(collection = "ebx_activity_audit")
@@ -16,6 +17,8 @@ public class ActivityAudit extends BaseDocumentEntity {
 	private Date activityTime;
 	
 	private Actor actor;
+	
+	private DateDimension dateDimension;
 
 	public Activity getActivity() {
 		return activity;
@@ -47,6 +50,14 @@ public class ActivityAudit extends BaseDocumentEntity {
 
 	public void setActor(Actor actor) {
 		this.actor = actor;
+	}
+
+	public DateDimension getDateDimension() {
+		return dateDimension;
+	}
+
+	public void setDateDimension(DateDimension dateDimension) {
+		this.dateDimension = dateDimension;
 	}
 	
 }

@@ -47,14 +47,15 @@ dbs.forEach(function(database) {
     // only run the patch for client databases
     if (database.name.endsWith("_enablix") &&
         database.name != "system_enablix") {
+    	
         db = db.getSiblingDB(database.name);
-
 	
         db.ebx_activity_audit.find({}).snapshot().forEach(
-        		function(activityAudit) {
-				var date = new Date(activityAudit.createdAt);
-        			var dateDimension = {};
-
+        	function(activityAudit) {
+				
+        		var date = new Date(activityAudit.createdAt);
+	    		var dateDimension = {};
+	
 				dateDimension.dayOfWeek = NumberInt(date.getDayOfWeek());
 				dateDimension.dayOfMonth =  NumberInt(date.getDate());
 				dateDimension.dayOfYear =  NumberInt(date.getDayOfTheYear());
@@ -62,19 +63,19 @@ dbs.forEach(function(database) {
 				dateDimension.weekOfYear =  NumberInt(date.getWeekOfYear());
 				dateDimension.monthOfYear =  NumberInt(date.getMonth()+1);
 				dateDimension.year =  NumberInt(date.getFullYear());
-
-        			db.ebx_activity_audit.update(
-        					{ 
-        						"_id": activityAudit._id
-        					},
-        					{
-        						$set: {
-        							"dateDimension":dateDimension
-        						}
-        					}
-        			);
-        			
-        		}
+	
+    			db.ebx_activity_audit.update(
+    					{ 
+    						"_id": activityAudit._id
+    					},
+    					{
+    						$set: {
+    							"dateDimension" : dateDimension
+    						}
+    					}
+    			);
+    			
+    		}
         );
     }
 });

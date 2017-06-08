@@ -2,31 +2,24 @@ enablix.studioApp.factory('ActivityMetricReport',
 	[	    '$q', '$filter', 'RESTService', 'Notification', 'StateUpdateService', 'ActivityMetricService',
 	function($q,   $filter,   RESTService,   Notification,   StateUpdateService , ActivityMetricService) {
 		
-		var getEventDate = function(eventOccurence) {
-            var m_names = new Array("Jan", "Feb", "Mar",
+		var metricStartDate = null;
+		
+		var getEventDate = function(_offsetDays) {
+            
+			var m_names = new Array("Jan", "Feb", "Mar",
                 "Apr", "May", "Jun", "Jul", "Aug", "Sep",
                 "Oct", "Nov", "Dec");
 
             var d = new Date();
-            var curr_month;
-            var curr_date = d.getDate() - eventOccurence;
-
-            if (curr_date < 0) {
-
-                curr_date = 30 + curr_date;
-                curr_month = d.getMonth() - 1;
-
-            } else if (curr_date == 0) {
-
-                curr_date = curr_date + 1;
-                curr_month = d.getMonth();
-
-            } else {
-                curr_date = d.getDate() - eventOccurence;
-                curr_month = d.getMonth();
-            }
-
+            var offsetTime = (24 * 60 * 60 * 1000) * _offsetDays;
+            d.setTime(d.getTime() - offsetTime);
+            
+            var curr_month = d.getMonth();
+            var curr_date = d.getDate();
             var curr_year = d.getFullYear().toString().substr(2, 2);
+
+            metricStartDate = d;
+            
             return curr_date + "-" + m_names[curr_month] + "-" + curr_year;
         }
 		
@@ -126,11 +119,13 @@ enablix.studioApp.factory('ActivityMetricReport',
 				                    	 return returnVal;
 									},
 				                    filterValueTransformer: function(_selectedValues) {
+				                    	
 				                        if (_selectedValues && _selectedValues.length > 0) {
 				                            var returnVal = [];
 
 				                            angular.forEach(_selectedValues, function(val) {
-				                                returnVal.push(getEventDate(val.id));
+				                            	var startDate = getEventDate(val.id);
+				                                returnVal.push(startDate);
 				                            });
 
 				                            orderedDates = returnVal.sort(function(a, b) {
@@ -138,21 +133,19 @@ enablix.studioApp.factory('ActivityMetricReport',
 				                            });
 
 				                            return orderedDates[0];
-				                        } else
+				                        } else {
 				                            return null;
+				                        }
 				                    }
 							 }
 						],
 					dataTransformer: function(_data, _filterValues) {
-						// change heading
-						this.heading = this.name + " ( As of " + $filter('ebDateTime')(_data.asOfDate) + ")";
 						return _data.metricData;
 					},
 					fetchData: function(_dataFilters, _onSuccess, _onError) {
 						var ACTIVITY_METRIC = "getActivityMetric";
 						var searchFilters = _dataFilters || {};
 						ActivityMetricService.getActivityMetric(ACTIVITY_METRIC, searchFilters, _onSuccess, _onError)
-									
 					} 
 			};
 			enablix.reports.push(activityMetricReport);

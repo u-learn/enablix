@@ -31,16 +31,20 @@ enablix.studioApp.factory('ContentCoverageReportDef',
 						})
 						
 					},
-					downloadReport : function(){
-						var w = 100, h = 100;
+					downloadReport : function() {
+						
+						var svgElem = document.getElementById("reports").querySelector('svg')
+						
+						var w = svgElem.scrollWidth, h = svgElem.scrollHeight;
 						var blankCanvas = document.createElement('canvas');
 						blankCanvas.id = "canvas";
-						blankCanvas.width = w * 50;
-						blankCanvas.height = h * 50;
+
+						blankCanvas.width = w + 20;
+						blankCanvas.height = h + 20;
 						
 						document.getElementById("reports").appendChild(blankCanvas);
 
-						var html = new XMLSerializer().serializeToString(document.getElementById("reports").querySelector('svg'));
+						var html = new XMLSerializer().serializeToString(svgElem);
 						var imgsrc = 'data:image/svg+xml;base64,' + btoa(html);
 						var canvas = document.getElementById("canvas");
 						var context = canvas.getContext("2d");

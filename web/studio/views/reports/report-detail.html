@@ -7,12 +7,12 @@
 			search-label="Go" on-search="onReportSearch" pref-values-key="reportDefaultFiltersPrefKey"/>
 	</div>
 	
-	<a class="contextAnchor" 
+	<!--<a class="contextAnchor" 
 		tabindex="-1" ng-click="writeDownloadLink()">
 		    <span class='fa fa-file-image-o downloadReport'></span>
-   	</a>
+   	</a>-->
    	
-	<div class="cont" ng-if="reportDef.type == 'HEATMAP'">
+	<div class="cont" id="heatmap" ng-if="reportDef.type == 'HEATMAP'">
 		<heatmap class="hm-chart" data="data" dispatch="$parent.dispatch" options="reportDef.options"></heatmap>
 	</div>
 	<div class="cont" id="tabularReport" ng-if="reportDef.type == 'TABULAR'">

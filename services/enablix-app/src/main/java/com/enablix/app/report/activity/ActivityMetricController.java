@@ -1,6 +1,7 @@
 package com.enablix.app.report.activity;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -15,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.enablix.app.report.activity.metric.ActivityMetricConfigRepository;
 import com.enablix.app.report.activity.metric.ActivityMetricService;
-import com.enablix.commons.util.date.DateUtil;
 import com.enablix.core.domain.report.activitymetric.ActivityMetricConfig;
 
 @RestController
@@ -33,7 +33,7 @@ public class ActivityMetricController {
 	public HashMap<String, Object> getAggregatedActivityMetrices(@RequestParam("activityMetricTime") String date) {
 		try{
 			Date startDate = new SimpleDateFormat("dd-MMM-yy").parse(date);
-			Date endDate = DateUtil.getPreviousDate();
+			Date endDate = Calendar.getInstance().getTime();
 			HashMap<String, Object> response = new HashMap<String, Object>();
 			response.put("metricData", activityMetric.getAggregatedValues(startDate, endDate));
 			response.put("asOfDate", endDate);
