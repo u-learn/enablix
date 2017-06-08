@@ -19,3 +19,12 @@ db.ebx_task_config.insert({
     ]
 });
 
+db.ebx_scheduler_config.insert({ 
+    "identity" : "daily-1-am-est-scheduler", 
+    "name" : "Daily 1 AM EST Scheduler", 
+    "cronExpression" : "0 0 5 1/1 * ?", 
+    "tasksToExecute" : [
+        "wp-imported-post-mailer-task-identity"
+    ]
+});
+

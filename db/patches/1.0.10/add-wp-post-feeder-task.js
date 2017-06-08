@@ -19,3 +19,7 @@ db.ebx_task_config.insert({
     ]
 });
 
+db.ebx_scheduler_config.update(
+		{ _id: 'daily-11-pm-est-scheduler' },
+		{ $addToSet: { tasksToExecute: { $each: ["wp-post-feeder-task-identity"] } } }
+    );
