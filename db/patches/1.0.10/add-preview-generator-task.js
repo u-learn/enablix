@@ -13,7 +13,15 @@ db = db.getSiblingDB("system_enablix");
 db.ebx_task_config.insert({
 	"identity" : "preview-generator-task-identity", 
     "name" : "Doc Preview Generator Task", 
-    "taskId" : "preview-generator-task"
+    "taskId" : "preview-generator-task",
+    "tenantFilter" : [
+    	"haystax",
+    	"eoriginal",
+    	"simplecrm",
+    	"enablixmaster",
+    	"test",
+    	"tenant1"
+    ]
 });
 
 db.ebx_scheduler_config.insert({ 
