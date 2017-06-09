@@ -14,7 +14,7 @@ import com.enablix.core.commons.xsdtopojo.ContentItemType;
 import com.enablix.core.ui.TextValue;
 
 @Component
-public class DateToTextValueBuilder implements FieldValueBuilder<TextValue, String>{
+public class DateToTextValueBuilder implements FieldValueBuilder<TextValue, Object> {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(DateToTextValueBuilder.class);
 	
@@ -25,15 +25,22 @@ public class DateToTextValueBuilder implements FieldValueBuilder<TextValue, Stri
 	private SimpleDateFormat outDateFormatter = new SimpleDateFormat(OUT_DATE_FORMAT);
 	
 	@Override
-	public TextValue build(ContentItemType fieldDef, String fieldValue, TemplateFacade template, DisplayContext ctx) {
+	public TextValue build(ContentItemType fieldDef, Object fieldValue, TemplateFacade template, DisplayContext ctx) {
 		
 		Date date = null;
 		
-		try {
-			date = inDateFormatter.parse(fieldValue);
-		} catch (ParseException e) {
-			LOGGER.error("Error parsing date [{}]", fieldValue);
-			LOGGER.error("Error: ", e);
+		if (fieldValue instanceof Date) {
+			
+			date = (Date) fieldValue;
+			
+		} else if (fieldValue instanceof String) {
+			
+			try {
+				date = inDateFormatter.parse((String) fieldValue);
+			} catch (ParseException e) {
+				LOGGER.error("Error parsing date [{}]", fieldValue);
+				LOGGER.error("Error: ", e);
+			}
 		}
 		
 		return new TextValue(date == null ? "" : outDateFormatter.format(date));
