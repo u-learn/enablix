@@ -212,8 +212,8 @@ public class SlackServiceImpl implements SlackService {
 				String sharingId = IdentityUtil.generateIdentity(this);
 				ActivityLogger.auditContentShare(templateId, displayableContent, channelId,
 						ShareMedium.WEB, Channel.SLACK, sharingId, displayableContent.getTitle());
-			}
-			else{
+			} else {
+				LOGGER.error("Error sharing on slack: {}", objNode);
 				return false;
 			}
 		}
