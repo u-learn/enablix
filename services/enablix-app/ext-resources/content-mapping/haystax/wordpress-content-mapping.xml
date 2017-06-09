@@ -9,7 +9,7 @@
 			<itemMapping itemId="blogdate">post.date_gmt</itemMapping>
 			<!-- default visibility = Everyone -->
 			<itemMapping itemId="visibility" listAttribute="ID" 
-						 default="597c02aa-0b62-429b-9826-a52bfccfb2f6"></itemMapping>
+						 default="6714adcf-63bc-4ef8-8e27-babc9e9a15fb"></itemMapping>
 		</contentItemMappings>
 	</container>
 	
@@ -20,7 +20,7 @@
 			<itemMapping itemId="url">post.link</itemMapping>
 			<!-- default visibility = Everyone -->
 			<itemMapping itemId="visibility" listAttribute="ID" 
-			   			 default="597c02aa-0b62-429b-9826-a52bfccfb2f6"></itemMapping>
+			   			 default="6714adcf-63bc-4ef8-8e27-babc9e9a15fb"></itemMapping>
 		</contentItemMappings>
 	</container>
 
