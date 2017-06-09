@@ -7,7 +7,7 @@ enablix.studioApp.directive('ebxSearchBox', [
 				},
 				link : function(scope, element, attrs) {
 					
-					var suggestionOn = false;
+					var suggestionOn = true;
 					
 					if (!suggestionOn) {
 						
@@ -33,7 +33,7 @@ enablix.studioApp.directive('ebxSearchBox', [
 					
 					if (suggestionOn) {
 						
-						var itemContainerList = ContentTemplateService.getPortalTopNavItemContainers();
+						var itemContainerList = ContentTemplateService.getContainersByBusinessCategory("BUSINESS_DIMENSION");
 						
 						var asyncData = { template : enablix.pTemplate };
 						
