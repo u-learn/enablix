@@ -52,4 +52,19 @@ public class DistinctLoginMetricImpl extends ComplexMetric {
 
 	}
 
+	@Override
+	public List<MetricStats> calculateDailyTrend(Date startDate, Date endDate) {
+		return null;
+	}
+
+	@Override
+	public List<MetricStats> calculateWeeklyTrend(Date startDate, Date endDate) {
+		return null;
+	}
+	
+	@Override
+	public List<MetricStats> calculateMonthlyTrend(Date startDate, Date endDate) {
+		return null;
+	}
+	
 }

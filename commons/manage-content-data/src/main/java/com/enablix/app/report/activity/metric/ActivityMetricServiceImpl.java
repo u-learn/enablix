@@ -49,14 +49,4 @@ public class ActivityMetricServiceImpl  implements ActivityMetricService {
 		
 	}
 	
-	@Override
-	public MetricStats executeActivityMetrices(ActivityMetricConfig activityMetric, Date startDate, Date endDate) {
-		MetricStats reportStat=null;
-		MetricStatsCalculator metricStatCalc = metricCalcFactory.getMetricCalculator(activityMetric.getMetricCode());
-		if(metricStatCalc == null ){
-			return null;
-		}
-		reportStat = metricStatCalc.calculateStats(startDate, endDate);
-		return reportStat;
-	}
 }

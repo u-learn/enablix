@@ -1,6 +1,7 @@
 package com.enablix.app.report.activity.metric.metricesimpl;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.stereotype.Component;
@@ -25,7 +26,7 @@ public class NoOfLoginMetricImpl extends SimpleMetric {
 		
 		Criteria criteria = Criteria.where("createdAt").gte(startDate).lte(endDate);
 		criteria = criteria.andOperator(noOfLoginsCriteria);
-		return calculateSimpleMetric(startDate, endDate, 
+		return calculateSimpleMetricStats(startDate, endDate, 
 				collectionName, activityCode, criteria);
 	}
 	
@@ -34,4 +35,19 @@ public class NoOfLoginMetricImpl extends SimpleMetric {
 		return activityCode;
 	}
 
+	@Override
+	public List<MetricStats> calculateDailyTrend(Date startDate, Date endDate) {
+		return calculateSimpleMetricDailyTrend(noOfLoginsCriteria, activityCode, startDate, endDate);
+	}
+
+	@Override
+	public List<MetricStats> calculateWeeklyTrend(Date startDate, Date endDate) {
+		return calculateSimpleMetricWeeklyTrend(noOfLoginsCriteria, activityCode, startDate, endDate);
+	}
+
+	@Override
+	public List<MetricStats> calculateMonthlyTrend(Date startDate, Date endDate) {
+		return calculateSimpleMetricMonthlyTrend(noOfLoginsCriteria, activityCode, startDate, endDate);
+	}
+	
 }

@@ -1,6 +1,7 @@
 package com.enablix.app.report.activity;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -30,7 +31,7 @@ public class ActivityTrendController {
 			@RequestParam("activityMetric") List<String> activityMetrices, @RequestParam("activityMetricTrend") String activityMetricTrend) {
 		try{
 			Date startDate = new SimpleDateFormat("dd-MMM-yy").parse(date);
-			Date endDate = DateUtil.getPreviousDate();
+			Date endDate = Calendar.getInstance().getTime();
 			
 			HashMap<String, Object> response = new HashMap<String, Object>();
 			response.put("trendData", activityTrend.getActivityTrends(startDate, endDate ,activityMetrices, activityMetricTrend));

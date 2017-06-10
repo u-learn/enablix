@@ -1,7 +1,9 @@
 package com.enablix.commons.util.date;
 
 import java.text.SimpleDateFormat;
+import java.time.DayOfWeek;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
@@ -11,7 +13,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
-
+import static java.time.temporal.TemporalAdjusters.previousOrSame;
 public class DateUtil {
 	
 	private static final String ISO8601_DATETIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ss'Z'";
@@ -37,6 +39,28 @@ public class DateUtil {
 		return localDateTimeToDate(startOfDay);
 	}
 	
+	public static DateDimension getDateDimension(){
+		Date date = Calendar.getInstance().getTime();
+		DateDimension dateDimension = new DateDimension();
+		LocalDateTime localDateTime = dateToLocalDateTime(date);
+		dateDimension.setDayOfMonth(localDateTime.getDayOfMonth());
+		dateDimension.setDayOfWeek(localDateTime.getDayOfWeek().getValue());
+		dateDimension.setDayOfYear(localDateTime.getDayOfYear());
+		dateDimension.setMonthOfYear(localDateTime.getMonth().getValue());
+		
+		TemporalField woy = WeekFields.of(Locale.getDefault()).weekOfWeekBasedYear(); 
+		int weekNumberYear = localDateTime.get(woy);
+		dateDimension.setWeekOfYear(weekNumberYear);
+
+		
+		TemporalField wom = WeekFields.of(Locale.getDefault()).weekOfMonth(); 
+		int weekNumberMonth = localDateTime.get(wom);
+		dateDimension.setWeekOfMonth(weekNumberMonth);
+		
+		dateDimension.setYear(localDateTime.getYear());
+		return dateDimension;
+	}
+	
 	public static DateDimension getDateDimension(Date date){
 		DateDimension dateDimension = new DateDimension();
 		LocalDateTime localDateTime = dateToLocalDateTime(date);
@@ -58,16 +82,57 @@ public class DateUtil {
 		return dateDimension;
 	}
 
+	public static Date getNextDate(Date date){
+		LocalDateTime previousDate = dateToLocalDateTime(date).plusDays(1);
+		return getStartOfDay(localDateTimeToDate(previousDate));
+		
+	}
+	
+	public static Date shiftToFirstDayOfWeek(Date date){
+		LocalDateTime first = dateToLocalDateTime(date).with(previousOrSame(DayOfWeek.SUNDAY)); 
+		return localDateTimeToDate(first);
+	}
+
+	public static Date shiftToFirstDayOfMonth(Date date){
+		LocalDateTime monthBegin = dateToLocalDateTime(date).withDayOfMonth(1);
+		return localDateTimeToDate(monthBegin);
+	}
+	
+	public static Date getNextWeekDate(Date date){
+
+		LocalDateTime previousDate = dateToLocalDateTime(date).plusWeeks(1);
+		return getStartOfDay(localDateTimeToDate(previousDate));
+		
+	}
+	
+	public static Date getNextMonthDate(Date date){
+		LocalDateTime previousDate = dateToLocalDateTime(date).plusMonths(1);
+		return getStartOfDay(localDateTimeToDate(previousDate));
+		
+	}
+	
+	public static Date getNextDate(){
+		LocalDateTime previousDate = LocalDateTime.now().plusDays(1);
+		return getStartOfDay(localDateTimeToDate(previousDate));
+		
+	}
+	
 	public static Date getPreviousDate(){
 		LocalDateTime previousDate = LocalDateTime.now().minusDays(1);
 		return getEndOfDay(localDateTimeToDate(previousDate));
 		
 	}
+	public static Date getPreviousDate(Date date){
+		LocalDateTime previousDate = dateToLocalDateTime(date).minusDays(1);
+		return getStartOfDay(localDateTimeToDate(previousDate));
+		
+	}
+	
 	private static Date localDateTimeToDate(LocalDateTime startOfDay) {
 		return Date.from(startOfDay.atZone(ZoneId.systemDefault()).toInstant());
 	}
 
-	private static LocalDateTime dateToLocalDateTime(Date date) {
+	public static LocalDateTime dateToLocalDateTime(Date date) {
 		return LocalDateTime.ofInstant(Instant.ofEpochMilli(date.getTime()), ZoneId.systemDefault());
 	}
 	
@@ -80,5 +145,6 @@ public class DateUtil {
 		Date today = Calendar.getInstance().getTime();
 		System.out.println(dateToUTCiso8601String(today));
 	}
+
 	
 }

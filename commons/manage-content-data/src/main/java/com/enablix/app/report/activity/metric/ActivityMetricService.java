@@ -13,6 +13,4 @@ public interface ActivityMetricService {
 
 	List<MetricStats> getAggregatedValues(Date startDate, Date endDate) throws ParseException;
 	
-	public MetricStats executeActivityMetrices(ActivityMetricConfig activityMetric, Date startDate, Date endDate);
-	
 }

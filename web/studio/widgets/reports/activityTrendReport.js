@@ -328,7 +328,7 @@ enablix.studioApp.factory('ActivityTrendReport',
 								}
 								],
 								dataTransformer: function(_data, _filterValues) {
-									this.heading = this.name + " ( As of " + $filter('ebDateTime')(_data.asOfDate) + ")";
+									this.heading = this.name;
 									return _data.trendData;
 								},
 								fetchData: function(_dataFilters, _onSuccess, _onError) {

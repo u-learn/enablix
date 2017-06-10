@@ -1,6 +1,7 @@
 package com.enablix.app.report.activity.metric.metricesimpl;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.stereotype.Component;
@@ -23,7 +24,6 @@ public class ContentAccessMetricImpl extends SimpleMetric {
 		return activityCode;
 	}
 
-	
 	@Override
 	public MetricStats calculateStats(Date startDate, Date endDate) {
 		startDate = DateUtil.getStartOfDay(startDate);
@@ -31,8 +31,22 @@ public class ContentAccessMetricImpl extends SimpleMetric {
 		
 		Criteria criteria = Criteria.where("createdAt").gte(startDate).lte(endDate);
 		criteria = criteria.andOperator(contentAccCriteria);
-		return calculateSimpleMetric(startDate, endDate, 
+		return calculateSimpleMetricStats(startDate, endDate, 
 				collectionName, activityCode, criteria);
 	}
+
+	@Override
+	public List<MetricStats> calculateDailyTrend(Date startDate, Date endDate) {
+		return calculateSimpleMetricDailyTrend(contentAccCriteria, activityCode, startDate, endDate);
+	}
 	
+	@Override
+	public List<MetricStats> calculateWeeklyTrend(Date startDate, Date endDate) {
+		return calculateSimpleMetricWeeklyTrend(contentAccCriteria, activityCode, startDate, endDate);
+	}
+	
+	@Override
+	public List<MetricStats> calculateMonthlyTrend(Date startDate, Date endDate) {
+		return calculateSimpleMetricMonthlyTrend(contentAccCriteria, activityCode, startDate, endDate);
+	}
 }
