@@ -260,6 +260,9 @@
 	</xs:complexType>
 	
 	<xs:complexType name="textUIDefType">
+		<xs:sequence>
+			<xs:element name="autoPopulate" type="textAutoPopulateType" minOccurs="0"/>
+		</xs:sequence>
 		<xs:attribute name="type" type="textUIClassType"/>
 	</xs:complexType>
 	
@@ -269,6 +272,16 @@
 			<xs:enumeration value="long" />
 		</xs:restriction>
 	</xs:simpleType>
+	
+	<xs:complexType name="textAutoPopulateType">
+		<xs:choice>
+			<xs:element name="refContentItem" type="refContentItemType"/>
+		</xs:choice>
+	</xs:complexType>
+	
+	<xs:complexType name="refContentItemType">
+		<xs:attribute name="itemId" type="xs:string" use="required"/>
+	</xs:complexType>
 	
 	<xs:complexType name="boundedUIDefType">
 		<xs:choice>

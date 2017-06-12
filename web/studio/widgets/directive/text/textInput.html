@@ -1,4 +1,4 @@
 <label class="form-label">{{label}}</label>
 <!-- ng-if creates a child scope hence we need to use $parent to bind with the parent scope -->
-<input focus="{{focus}}" ng-if="textType == 'SHORT'" id="{{id}}" name="{{name}}" placeholder="{{placeholder}}" class="form-control" type="text" ng-model="$parent.textValue" size="80">
-<textarea ng-if="textType == 'LONG'" name="{{name}}" placeholder="{{placeholder}}" class="form-control" ng-model="$parent.textValue" rows="3"></textarea>
+<input ng-change="onChange()" focus="{{focus}}" ng-if="textType == 'SHORT'" id="{{id}}" name="{{name}}" placeholder="{{placeholder}}" class="form-control" type="text" ng-model="$parent.textValue" size="80">
+<textarea ng-change="onChange()" ng-if="textType == 'LONG'" name="{{name}}" placeholder="{{placeholder}}" class="form-control" ng-model="$parent.textValue" rows="3"></textarea>

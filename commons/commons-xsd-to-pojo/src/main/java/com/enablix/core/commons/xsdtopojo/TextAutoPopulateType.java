@@ -15,14 +15,17 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for dateTimeUIDefType complex type.
+ * <p>Java class for textAutoPopulateType complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="dateTimeUIDefType">
+ * &lt;complexType name="textAutoPopulateType">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+ *       &lt;choice>
+ *         &lt;element name="refContentItem" type="{}refContentItemType"/>
+ *       &lt;/choice>
  *     &lt;/restriction>
  *   &lt;/complexContent>
  * &lt;/complexType>
@@ -31,11 +34,38 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "dateTimeUIDefType")
-public class DateTimeUIDefType
+@XmlType(name = "textAutoPopulateType", propOrder = {
+    "refContentItem"
+})
+public class TextAutoPopulateType
     implements Serializable
 {
 
     private final static long serialVersionUID = 1L;
+    protected RefContentItemType refContentItem;
+
+    /**
+     * Gets the value of the refContentItem property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link RefContentItemType }
+     *     
+     */
+    public RefContentItemType getRefContentItem() {
+        return refContentItem;
+    }
+
+    /**
+     * Sets the value of the refContentItem property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link RefContentItemType }
+     *     
+     */
+    public void setRefContentItem(RefContentItemType value) {
+        this.refContentItem = value;
+    }
 
 }
