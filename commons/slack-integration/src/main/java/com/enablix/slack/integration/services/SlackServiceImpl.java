@@ -9,7 +9,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -190,21 +196,25 @@ public class SlackServiceImpl implements SlackService {
 		SlackAccessToken slackAccessToken = getStoredSlackTeamDtls(userID) ;
 
 		String redirectURI = getRedirectURI();
-		UriComponentsBuilder uriComponentBuildr= UriComponentsBuilder.fromUriString(BASE_URL)
-				.path(CHANNEL_POST_TEXTMSG)
-				.queryParam(AppConstants.SLACK_REQUEST_TOKEN,slackAccessToken.getAccessToken())
-				.queryParam(AppConstants.SLACK_REQUEST_TEXT, slackCustomContent)
-				.queryParam(AppConstants.SLACK_REQUEST_ATTACHMENT, slackAttachments)
-				.queryParam(AppConstants.SLACK_REQUEST_REDIRECT_URI,redirectURI);
+		String targetURI = BASE_URL + CHANNEL_POST_TEXTMSG;
+		
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
-		URI targetUrl;
+		MultiValueMap<String, String> map = new LinkedMultiValueMap<String, String>();
+		map.add(AppConstants.SLACK_REQUEST_TOKEN, slackAccessToken.getAccessToken());
+		map.add(AppConstants.SLACK_REQUEST_TEXT, slackCustomContent);
+		map.add(AppConstants.SLACK_REQUEST_ATTACHMENT, slackAttachments);
+		map.add(AppConstants.SLACK_REQUEST_REDIRECT_URI, redirectURI);
 
-		for(String channelId : channelIDs){
-			uriComponentBuildr.queryParam(AppConstants.SLACK_REQUEST_CHANNEL,channelId);
+		HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<MultiValueMap<String, String>>(map, headers);
 
-			targetUrl = uriComponentBuildr.build().toUri();
+		for(String channelId : channelIDs) {
+			
+			map.add(AppConstants.SLACK_REQUEST_CHANNEL, channelId);
 
-			ObjectNode objNode = restTemplate.getForObject(targetUrl, ObjectNode.class);
+			ResponseEntity<ObjectNode> response = restTemplate.postForEntity(targetURI, request , ObjectNode.class);
+			ObjectNode objNode = response.getBody();
 
 			resp = objNode.get(AppConstants.SLACK_RESPONSE_OK).asBoolean();
 
@@ -260,7 +270,7 @@ public class SlackServiceImpl implements SlackService {
 		URI targetUrl= UriComponentsBuilder.fromUriString(BASE_URL)
 				.path(OAUTH_REVOKE)
 				.queryParam(AppConstants.SLACK_REQUEST_TOKEN, slackAccessToken.getAccessToken())
-				.queryParam(AppConstants.SLACK_REQUEST_REDIRECT_URI,redirectURI)
+				.queryParam(AppConstants.SLACK_REQUEST_REDIRECT_URI, redirectURI)
 				.build()
 				.toUri();
 
