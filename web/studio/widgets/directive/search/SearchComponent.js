@@ -473,13 +473,13 @@ function suggestionTemplate(node) {
     var innerContent = label;
     if (node instanceof _graph.BizDimensionEntity) {
         var bizDimensionNode = node.bizDimensionNode;
-
+        id = bizDimensionNode.id;
         var dimension = bizDimensionNode.label;
         innerContent = "<span>" + label + "</span><span class=\"pull-right eb-tt-biz-dimension\">" + dimension + "</span>";
     } else if (node instanceof _graph.BizDimEntSubNode) {
         var bizDimEnt = node.bizDimEnt;
         var _bizDimensionNode = bizDimEnt.bizDimensionNode;
-
+        id = _bizDimensionNode.id;
         var _dimension = _bizDimensionNode.label;
         innerContent = "<span>" + label + "</span><span class=\"pull-right eb-tt-biz-dimension\">" + _dimension + "</span>";
     }
@@ -492,9 +492,14 @@ function notFoundTemplate(_ref) {
     return "\n    <div class=\"tt-selectable container-fluid eb-search-for\">\n        Search for <strong>\"" + escapeHtml(query) + "\"</strong>\n    </div>\n    ";
 }
 
+function freeSearchTemplate(_query) {
+    var query = _query;
+
+    return "\n    <div class=\"tt-selectable container-fluid eb-search-for\">\n        Search for <strong>\"" + escapeHtml(query) + "\"</strong>\n    </div>\n    ";
+}
+
 var templates = {
-    suggestion: suggestionTemplate,
-    notFound: notFoundTemplate
+    suggestion: suggestionTemplate
 };
 
 var SearchComponent = exports.SearchComponent = function SearchComponent(_ref2) {
@@ -531,10 +536,10 @@ var SearchComponent = exports.SearchComponent = function SearchComponent(_ref2) 
     };
 
     this.updateValue = function (e) {
-        var keyCode = e.keyCode || e.which;
+        /*var keyCode = e.keyCode || e.which;
         if (keyCode === 13) {
             return _this.onEnter(e);
-        }
+        }*/
         var value = e.target.value;
 
         value = value.trim();
@@ -550,16 +555,34 @@ var SearchComponent = exports.SearchComponent = function SearchComponent(_ref2) 
             _this.indexer.growFromNode(node);
         }
     };
+    
+    this.searchOnSelect = function(e, suggNd) {
+    	var value = e.target.value;
+        value = value.trim();
+    	_this.onTrueEnter({query: value, node: suggNd});
+    };
 
     this.indexer = new _Indexer2.default(asyncData);
     this.$e = $(mountPoint);
-    this.$e.typeahead(_constants.TYPEAHEAD_OPTIONS, {
-        name: 'entities',
-        source: this.indexer.hound,
-        limit: _constants.RESULTS_LIMIT,
-        display: _constants.LABEL,
-        templates: templates
-    }).bind("typeahead:select", this.updateValue)
+    this.$e.typeahead(_constants.TYPEAHEAD_OPTIONS, 
+    	{   // content data source
+	        name: 'entities',
+	        source: this.indexer.hound,
+	        limit: _constants.RESULTS_LIMIT,
+	        display: _constants.LABEL,
+	        templates: templates
+    	}, 
+    	{   // default data source for free-text search on input value
+	    	name: 'default-search',
+	    	source: function(query, syncCB) {
+	    		syncCB([query]);
+	    	},
+	    	limit: 1,
+	    	templates: {
+	    		suggestion: freeSearchTemplate
+	    	}
+    	}
+    ).bind("typeahead:select", this.searchOnSelect)
     //.bind("typeahead:change",this.onChange)
     //.keydown(this.onKeyDown)
     .keyup(this.updateValue);
