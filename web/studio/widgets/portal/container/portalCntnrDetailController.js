@@ -97,7 +97,13 @@ enablix.studioApp.controller('PortalCntnrDetailCtrl',
 				}
 				
 			} else {
-				$scope.subContainerList.push(_subCntnrItem);
+				
+				if (_subCntnrItem.category == 'about') {
+					// about container should always be the first, so add it to front
+					$scope.subContainerList.unshift(_subCntnrItem);
+				} else {
+					$scope.subContainerList.push(_subCntnrItem);
+				}
 			}
 		}
 		
@@ -130,7 +136,7 @@ enablix.studioApp.controller('PortalCntnrDetailCtrl',
 										"containerDef": containerDef,
 										"type": "multi",
 										"records": contentGroup.records,
-										"category": "sub-container",
+										"category": "content-stack",
 										"parentQId": $scope.containerQId
 									};
 								

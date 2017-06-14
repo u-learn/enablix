@@ -1,5 +1,5 @@
 <label ng-if="!readOnly" class="form-label">{{contentDef.label}} <ebx-system-content-browser pre-selected-records="contentList" selection-callback="contentSelected" icon-class="fa fa-plus"></ebx-system-content-browser></label>
-<div class="form-table">	
+<div class="form-table ebx-top-border">	
 	<ebx-generic-table table-headers="contentTableHeaders" table-data="contentList" 
 						row-actions="contentTableRecordActions" client-sort="true"></ebx-generic-table>
 </div>
