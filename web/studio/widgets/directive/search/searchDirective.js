@@ -55,8 +55,6 @@ enablix.studioApp.directive('ebxSearchBox', [
 							var node = payload.node;
 							var searchText = payload.query;
 						
-							console.log("Search term = " + payload.typedText);
-							
 							if (node && node.type) {
 								
 								var uri = node.asUri();

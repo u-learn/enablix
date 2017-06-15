@@ -599,8 +599,8 @@ var SearchComponent = exports.SearchComponent = function SearchComponent(_ref2) 
 	    	}
     	}
     ).bind("typeahead:select", this.searchOnSelect)
-    .bind("typeahead:change",this.printEvent)
-    .bind("typeahead:autocomplete",this.printEvent)
+    //.bind("typeahead:change",this.printEvent)
+    //.bind("typeahead:autocomplete",this.printEvent)
     //.keydown(this.onKeyDown)
     .keyup(this.updateValue);
     this.bouncedShrinkOrExpand = _.debounce(this.indexer.shrinkOrExpand, 100);
