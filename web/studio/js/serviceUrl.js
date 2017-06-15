@@ -69,6 +69,7 @@ enablix.serviceURL = {
 	"captchasitekey": enablix.domainName + "/site/captchasitekey",
 	"sharecontent": enablix.domainName + "/sharecontent",
 	"auditContentAccess": enablix.domainName + "/activity/content/access/",
+	"auditSuggestedSearch": enablix.domainName + "/activity/search/suggested/",
 	"submitContentSuggestion": enablix.domainName + "/contentwf/submit/",
 	"approveContentSuggestion": enablix.domainName + "/contentwf/approve/",
 	"rejectContentSuggestion": enablix.domainName + "/contentwf/reject/",

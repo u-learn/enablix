@@ -9,6 +9,7 @@ import com.enablix.commons.util.process.ProcessContext;
 import com.enablix.core.api.ContentDataRef;
 import com.enablix.core.domain.activity.ActivityChannel.Channel;
 import com.enablix.core.domain.activity.ContentActivity;
+import com.enablix.core.domain.activity.SuggestedSearchActivity;
 import com.enablix.services.util.ActivityLogger;
 
 @RestController
@@ -21,6 +22,11 @@ public class ActivityAuditController {
 		ContentDataRef dataRef = ContentDataRef.createContentRef(templateId, request.getContainerQId(), 
 				request.getInstanceIdentity(), request.getItemTitle());
 		ActivityLogger.auditContentAccess(dataRef, ContentActivity.ContainerType.CONTENT, Channel.WEB);
+	}
+	
+	@RequestMapping(method = RequestMethod.POST, value="/search/suggested/")
+	public void auditContentAccess(@RequestBody SuggestedSearchActivity activity) {
+		ActivityLogger.auditActivity(activity);
 	}
 	
 	public static class ContentAuditRequest {

@@ -14,8 +14,13 @@ enablix.studioApp.factory('ActivityAuditService',
 	 			RESTService.postForData("auditContentAccess", {}, _data, null, _onSuccess, _onError, null);
 	 		};
 	 		
+	 		var auditSearchSuggestion = function(_suggestedSearchActvy) {
+	 			RESTService.postForData("auditSuggestedSearch", {}, _suggestedSearchActvy, null, function() {}, function() {}, null);
+	 		}
+	 		
 	 		return {
-	 			auditContentAccess: auditContentAccess
+	 			auditContentAccess: auditContentAccess,
+	 			auditSearchSuggestion: auditSearchSuggestion
 	 		};
 	 	}
 	 ]);

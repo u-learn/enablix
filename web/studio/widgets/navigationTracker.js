@@ -36,3 +36,31 @@ enablix.studioApp.factory('NavigationTracker',
 	 		};
 	 	}
 	 ]);
+
+
+enablix.studioApp.factory('ActivityTrackerContext', 
+		[
+		 			'$rootScope',
+		 	function($rootScope) {
+		 		
+		 		var contextParams = {};
+		 		
+		 		var setContextParams = function(_ctxParams) {
+		 			contextParams = _ctxParams;
+		 		};
+		 		
+		 		var getContextParams = function() {
+		 			return contextParams;
+		 		};
+		 		
+		 		var clearContext = function() {
+		 			contextParams = {};
+		 		};
+		 		
+		 		return {
+		 			setContextParams : setContextParams,
+		 			getContextParams : getContextParams,
+		 			clear : clearContext
+		 		};
+		 	}
+		 ]);

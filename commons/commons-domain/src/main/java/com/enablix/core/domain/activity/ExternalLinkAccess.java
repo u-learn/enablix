@@ -1,6 +1,6 @@
 package com.enablix.core.domain.activity;
 
-public class ExternalLinkAccess extends Activity {
+public class ExternalLinkAccess extends NavigationActivity {
 
 	private String externalUrl;
 	
@@ -9,7 +9,7 @@ public class ExternalLinkAccess extends Activity {
 	private String contentItemQId; // QId of the attribute where the link was part of the data
 
 	public ExternalLinkAccess(String externalUrl, String contentIdentity, String contentItemQId) {
-		super(Category.NAVIGATION);
+		super("EXT_LINK");
 		this.externalUrl = externalUrl;
 		this.contentIdentity = contentIdentity;
 		this.contentItemQId = contentItemQId;

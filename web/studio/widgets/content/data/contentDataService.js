@@ -22,7 +22,6 @@ enablix.studioApp.factory('ContentDataService',
 	 				params.sortDir = "";
 	 			}
 	 			
-
 	 			var resourceKey = "fetchRootData";
 	 			if (!isNullOrUndefined(_parentIdentity) && _parentIdentity != "") {
 	 				resourceKey = "fetchChildrenData";
@@ -52,7 +51,6 @@ enablix.studioApp.factory('ContentDataService',
 
 	 		var setActivityTrackingParams = function(_reqParams, _accessFrom) {
 	 			
-	 			var reqParams = $location.search();
 	 			var previousState = NavigationTracker.getPreviousState();
 	 			
 	 			if (isNullOrUndefined(_reqParams.atChannel)

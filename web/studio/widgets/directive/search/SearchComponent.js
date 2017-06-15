@@ -149,7 +149,7 @@ var ContainerNode = exports.ContainerNode = function () {
     _createClass(ContainerNode, [{
         key: "asUri",
         value: function asUri() {
-            return { containerQId: this.id };
+            return { containerQId: this.qualifiedId };
         }
     }]);
 
@@ -276,6 +276,10 @@ var BizDimEntSubNode = exports.BizDimEntSubNode = function () {
         _.assign(this, payload);
         //TODO: i18n
         this.label = this.bizContentNode.label + " for " + this.bizDimEnt.label;
+        
+        if (this.bizDimEnt.altLabel) {
+        	this.altLabel = this.bizContentNode.label + " for " + this.bizDimEnt.altLabel
+        }
     }
     /**
      * Not necessarily the URI, but the information required to find the URI
@@ -344,11 +348,12 @@ var ContainerGraph = exports.ContainerGraph = function () {
         key: "createBizDimEntity",
         value: function createBizDimEntity(_ref4) {
             var label = _ref4.label,
+            	altLabel = _ref4.altLabel,
                 businessDimensionType = _ref4.businessDimensionType,
                 identity = _ref4.identity;
 
             var bizDimensionNode = this.bizDimensionNodes[businessDimensionType];
-            return new BizDimensionEntity({ label: label, bizDimensionNode: bizDimensionNode, identity: identity });
+            return new BizDimensionEntity({ label: label, altLabel: altLabel, bizDimensionNode: bizDimensionNode, identity: identity });
         }
         //Only two deep
 
@@ -387,6 +392,7 @@ __webpack_require__(3);
 
 var BUSINESS_DIMENSION = exports.BUSINESS_DIMENSION = "BUSINESS_DIMENSION";
 var LABEL = exports.LABEL = "label";
+var ALT_LABEL = exports.ALT_LABEL = "altLabel";
 /**
  * If select and enter fall within this timediff (in ms), do not fire the onSearch event 
 */
@@ -471,6 +477,9 @@ function suggestionTemplate(node) {
         id = node.id;
 
     var innerContent = label;
+    if (node instanceof _graph.BizDimensionNode || node instanceof _graph.BizContentNode) {
+    	innerContent = "<span class='tt-add-info'> All </span><span>" + label + "</span>";
+    }
     if (node instanceof _graph.BizDimensionEntity) {
         var bizDimensionNode = node.bizDimensionNode;
         id = bizDimensionNode.id;
@@ -512,6 +521,7 @@ var SearchComponent = exports.SearchComponent = function SearchComponent(_ref2) 
 
     this.lastSelected = "";
     this.enteredQuery = "";
+    this.typedText = "";
     this.selectedTs = new Date();
 
     this.onTrueEnter = function (payload) {
@@ -559,9 +569,14 @@ var SearchComponent = exports.SearchComponent = function SearchComponent(_ref2) 
     this.searchOnSelect = function(e, suggNd) {
     	var value = e.target.value;
         value = value.trim();
-    	_this.onTrueEnter({query: value, node: suggNd});
+    	_this.onTrueEnter({query: value, typedText: _this.typedText, node: suggNd});
     };
 
+    this.printEvent = function(e) {
+    	console.log("typeahead event::");
+    	console.log(e);
+    }
+    
     this.indexer = new _Indexer2.default(asyncData);
     this.$e = $(mountPoint);
     this.$e.typeahead(_constants.TYPEAHEAD_OPTIONS, 
@@ -575,6 +590,7 @@ var SearchComponent = exports.SearchComponent = function SearchComponent(_ref2) 
     	{   // default data source for free-text search on input value
 	    	name: 'default-search',
 	    	source: function(query, syncCB) {
+	    		_this.typedText = query;
 	    		syncCB([query]);
 	    	},
 	    	limit: 1,
@@ -583,7 +599,8 @@ var SearchComponent = exports.SearchComponent = function SearchComponent(_ref2) 
 	    	}
     	}
     ).bind("typeahead:select", this.searchOnSelect)
-    //.bind("typeahead:change",this.onChange)
+    .bind("typeahead:change",this.printEvent)
+    .bind("typeahead:autocomplete",this.printEvent)
     //.keydown(this.onKeyDown)
     .keyup(this.updateValue);
     this.bouncedShrinkOrExpand = _.debounce(this.indexer.shrinkOrExpand, 100);
@@ -652,9 +669,19 @@ function processBizDimEnts(value, businessDimensionType) {
         if (!name) return;
         name = name.trim();
         shortName = String(shortName || name).trim();
-        if (name) index.push({ label: name, businessDimensionType: businessDimensionType, identity: identity });
-        if (shortName !== name) index.push({ label: shortName, businessDimensionType: businessDimensionType, identity: identity });
+        
+        var indexItem = null;
+        if (name) {
+        	indexItem = { label: name, businessDimensionType: businessDimensionType, identity: identity };
+        }
+        if (shortName !== name) {
+        	indexItem.altLabel = shortName;
+        	// index.push({ label: shortName, businessDimensionType: businessDimensionType, identity: identity });
+        }
+        index.push(indexItem);
+        
     });
+    
     return index;
 };
 
@@ -729,7 +756,7 @@ var Indexer = function () {
 
         this.ids = [];
         this.hound = new Bloodhound({
-            datumTokenizer: Bloodhound.tokenizers.obj.whitespace(_constants.LABEL),
+            datumTokenizer: Bloodhound.tokenizers.obj.whitespace([_constants.LABEL, _constants.ALT_LABEL]),
             queryTokenizer: Bloodhound.tokenizers.whitespace,
             local: [],
             identify: function identify(obj) {

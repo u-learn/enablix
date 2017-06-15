@@ -22,8 +22,8 @@ var genereateRequestConfig = function(_resourceKey, _params) {
 };
 
 enablix.studioApp.factory('RESTService', [
-		        '$http', '$rootScope', '$window', 'TenantInfoService', 'InfoModalWindow', 'StateUpdateService', 'ResourceVersionHolder',
-		function($http,   $rootScope,   $window,   TenantInfoService,   InfoModalWindow,   StateUpdateService,   ResourceVersionHolder) {	
+		        '$http', '$rootScope', '$window', 'TenantInfoService', 'InfoModalWindow', 'StateUpdateService', 'ResourceVersionHolder', 'ActivityTrackerContext',
+		function($http,   $rootScope,   $window,   TenantInfoService,   InfoModalWindow,   StateUpdateService,   ResourceVersionHolder,   ActivityTrackerContext) {	
 			
 			var postForFile = function(_resourceKey, _params, files, _data, _success, _error, _headers) {
 				
@@ -89,12 +89,37 @@ enablix.studioApp.factory('RESTService', [
 				return callHeaders;
 			};
 			
+			var addActivityContextHeaders = function(_headers) {
+				
+				var callHeaders = _headers;
+				var ctxParams = ActivityTrackerContext.getContextParams();
+				
+				if (!isNullOrUndefined(ctxParams)) {
+					
+					if (isNullOrUndefined(_headers)) {
+						callHeaders = {};
+					}
+					
+					callHeaders = angular.extend(callHeaders, ctxParams);
+				}
+				
+				return callHeaders;
+			}
+			
+			var addCommonHeaders = function(_headers) {
+				
+				var callHeaders = addResourceVersionHeaders(_headers);
+				callHeaders = addTenantHeaders(callHeaders);
+				callHeaders = addActivityContextHeaders(callHeaders);
+				
+				return callHeaders;
+			}
+			
 			var getForData = function(_resourceKey, _params, transformer, _success, _error, _headers) {
 				
 				var requestConfig = genereateRequestConfig(_resourceKey, _params);
 				
-				var callHeaders = addResourceVersionHeaders(_headers);
-				callHeaders = addTenantHeaders(callHeaders);
+				var callHeaders = addCommonHeaders(_headers);
 				
 				return $http({
 							method : 'GET',
@@ -124,9 +149,7 @@ enablix.studioApp.factory('RESTService', [
 				
 				var requestConfig = genereateRequestConfig(_resourceKey, _params);
 				
-				var callHeaders = addResourceVersionHeaders(_headers);
-				callHeaders = addTenantHeaders(callHeaders);
-				
+				var callHeaders = addCommonHeaders(_headers);
 				
 				return $.ajax({
 					    type: 'GET',
@@ -202,8 +225,7 @@ enablix.studioApp.factory('RESTService', [
 					$http.defaults.headers.post['Content-Type'] = 'application/json; charset=utf-8';
 				}
 				
-				var callHeaders = addResourceVersionHeaders(_headers);
-				callHeaders = addTenantHeaders(callHeaders);
+				var callHeaders = addCommonHeaders(_headers);
 				
 				var requestConfig = genereateRequestConfig(_resourceKey, _params);
 				

@@ -1,6 +1,6 @@
 enablix.studioApp.directive('ebxSearchBox', [
-				 'StateUpdateService', '$q', 'DataSearchService', 'ContentTemplateService',
-		function (StateUpdateService,   $q,   DataSearchService,   ContentTemplateService) {
+				 'StateUpdateService', '$q', 'DataSearchService', 'ContentTemplateService', 'ActivityAuditService',
+		function (StateUpdateService,   $q,   DataSearchService,   ContentTemplateService,   ActivityAuditService) {
 			return {
 				restrict : 'E',
 				scope : {
@@ -55,15 +55,46 @@ enablix.studioApp.directive('ebxSearchBox', [
 							var node = payload.node;
 							var searchText = payload.query;
 						
-							if (node && node.type === "BizDimEntSubNode"){
+							console.log("Search term = " + payload.typedText);
+							
+							if (node && node.type) {
 								
 								var uri = node.asUri();
-								StateUpdateService.goToPortalSubContainerList(uri.containerQId, 
-										uri.containerQId + "." + uri.subContainerQId, uri.parentIdentity);
 								
+								var suggestedSearch = {
+										searchTerm: searchText,
+										typedText: payload.typedText,
+										suggestion: uri,
+										suggestionType: node.type
+								};
+								
+								StateUpdateService.setStateChangeActivityContext({
+									atChannel: "WEB",
+									atContext: "SEARCH",
+									atActivityOrigin: "TYPEAHEAD",
+									atContextTerm: searchText
+								});
+								
+								if (node.type === "BizDimensionNode" || node.type === 'BizContentNode') {
+									
+									StateUpdateService.goToPortalContainerList(uri.containerQId);
+									
+								} else if (node.type === "BizDimEntSubNode") {
+							
+									StateUpdateService.goToPortalSubContainerList(uri.containerQId, 
+															uri.subContainerQId, uri.parentIdentity);
+									
+								} else if (node.type === "BizDimensionEntity") {
+									
+									StateUpdateService.goToPortalContainerDetail(uri.containerQId, uri.identity);
+								}
+								
+								ActivityAuditService.auditSearchSuggestion(suggestedSearch);	
+									
 							} else if (!isNullOrUndefined(searchText) && searchText.length > 0) {
 								StateUpdateService.goToPortalSearch(searchText);
-							} 					
+							} 		
+							
 						}
 						
 						enablix.searchComponent = new enablix.SearchComponent({ mountPoint : mountPoint, asyncData : asyncData });

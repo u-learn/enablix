@@ -1,8 +1,22 @@
 enablix.studioApp.factory('StateUpdateService', 
 	[
-	 			'$state', '$stateParams', '$rootScope', '$location', '$window', 'NavigationTracker', 'TenantInfoService',
-	 	function($state,   $stateParams,   $rootScope,   $location,   $window,   NavigationTracker,   TenantInfoService) {
+	 			'$state', '$stateParams', '$rootScope', '$location', '$window', 'NavigationTracker', 'TenantInfoService', 'ActivityTrackerContext',
+	 	function($state,   $stateParams,   $rootScope,   $location,   $window,   NavigationTracker,   TenantInfoService,   ActivityTrackerContext) {
 	 		
+	 		var activityCtxSet = false;	
+	 		
+			$rootScope.$on('$stateChangeSuccess', function (ev, to, toParams, from, fromParams) {
+				
+				if (activityCtxSet) {
+					ActivityTrackerContext.clear();
+					activityCtxSet = false;
+				}
+			});
+			
+			var setStateChangeActivityContext = function(_contextParams) {
+				ActivityTrackerContext.setContextParams(_contextParams);
+			};
+	 				
 	 		var goToStudioList = function(_containerQId, _parentIdentity) {
 				$state.go('studio.list', {'containerQId' : _containerQId, 
 					"parentIdentity" : _parentIdentity});
@@ -355,7 +369,7 @@ enablix.studioApp.factory('StateUpdateService',
 	 		
 	 		var goToState = function(_stateName, _stateParams) {
 	 			$state.go(_stateName, _stateParams);
-	 		}
+	 		};
 	 		
 	 		return {
 	 			goToApp: goToApp,
@@ -416,7 +430,8 @@ enablix.studioApp.factory('StateUpdateService',
 				goToEditTPIntConfig: goToEditTPIntConfig,
 				goToAddTPIntConfig: goToAddTPIntConfig,
 				goToTPIntConfigList: goToTPIntConfigList,
-				goToState: goToState
+				goToState: goToState,
+				setStateChangeActivityContext: setStateChangeActivityContext
 	 		};
 	 	}
 	 ]);

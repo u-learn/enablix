@@ -2109,6 +2109,10 @@ eb-date-picker thead th {
     border-bottom: 1px solid #dce1e5 !important;
 }
 
+.tt-add-info {
+	font-style: italic;
+}
+
 .dd-action-icon {
 	padding: 3px 0 0 3px;
 }
