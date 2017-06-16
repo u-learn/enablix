@@ -5,6 +5,13 @@ enablix.filters.filter('ebDate', function($filter) {
     };
 });
 
+enablix.filters.filter('ebMonYear', function($filter) {
+    return function(input) {
+        if (input == null) { return ""; }
+        return $filter('date')(input, "MMM-yyyy");
+    };
+});
+
 enablix.filters.filter('ebDateTime', function($filter) {
     return function(input) {
         if (input == null) { return ""; }

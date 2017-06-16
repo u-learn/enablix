@@ -14,8 +14,7 @@ public class TrendAggMetric {
 
 	}
 	
-	public TrendAggMetric(DateDimension dateDimension, long value)
-	{
+	public TrendAggMetric(DateDimension dateDimension, long value) {
 		this.dayOfYear = dateDimension.getDayOfYear();
 		this.monthOfYear = dateDimension.getMonthOfYear();
 		this.weekOfYear = dateDimension.getWeekOfYear();

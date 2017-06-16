@@ -3,12 +3,12 @@ package com.enablix.app.report.activity.metric;
 import java.util.Date;
 import java.util.List;
 
-import com.enablix.commons.constants.AppConstants.MetricTypes;
+import com.enablix.commons.constants.AppConstants.MetricType;
 import com.enablix.core.domain.report.activitymetric.MetricStats;
 
 public interface MetricStatsCalculator {
 	
-	MetricTypes getActivityCode();
+	MetricType metricType();
 	
 	MetricStats calculateStats(Date startDate, Date endDate);
 	

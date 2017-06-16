@@ -50,21 +50,23 @@ public class AppConstants {
 	public static final String ACTIVITY_METRIC = "ebx_activity_metric";
 	public static final String ACTIVITY_TREND_KEY = "Time";
 	
-	public enum MetricTypes {
-		NO_OF_LOGINS("Number of Logins","ACTMETRIC2"),
-		CONTENT_ADD("Content Adds","ACTMETRIC4"),
-		CONTENT_UPDATES("Content Updates","ACTMETRIC5"),
-		CONTENT_ACCESS("Content Access","ACTMETRIC6"),
-		CONTENT_PREVIEW("Content Preview","ACTMETRIC7"),
-		CONTENT_DOWNLOAD("Content Download","ACTMETRIC8"),
-		DISTINCT_LOGIN("Number of Distinct Logins","ACTMETRIC3"),
-		SEARCH("Searches","ACTMETRIC9");
+	public enum MetricType {
+		
+		NO_OF_LOGINS("Number of Logins", "ACTMETRIC2"),
+		CONTENT_ADD("Content Adds", "ACTMETRIC4"),
+		CONTENT_UPDATES("Content Updates", "ACTMETRIC5"),
+		CONTENT_ACCESS("Content Access", "ACTMETRIC6"),
+		CONTENT_PREVIEW("Content Preview", "ACTMETRIC7"),
+		CONTENT_DOWNLOAD("Content Download", "ACTMETRIC8"),
+		DISTINCT_LOGIN("Number of Distinct Logins", "ACTMETRIC3"),
+		SEARCH("Searches", "ACTMETRIC9");
+		
 		private String value;
 		private String code;
 		
-		private MetricTypes(String value, String code){
-			this.value=value;
-			this.code=code;
+		private MetricType(String value, String code){
+			this.value = value;
+			this.code = code;
 		}
 		
 		public String getValue(){
@@ -77,14 +79,16 @@ public class AppConstants {
 	}
 	
 	public enum ActivityTrend {
+		
 		DAILY("Daily"),
 		WEEKLY("Weekly"),
 		MONTHLY("Monthly"),
 		YEARLY("Yearly");
+		
 		private String value;
 		
 		private ActivityTrend(String value){
-			this.value=value;
+			this.value = value;
 		}
 		
 		public String getValue(){

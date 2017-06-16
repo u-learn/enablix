@@ -2116,3 +2116,8 @@ eb-date-picker thead th {
 .dd-action-icon {
 	padding: 3px 0 0 3px;
 }
+
+
+.nvtooltip table {
+	width: 90%;
+}

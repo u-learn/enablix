@@ -1,5 +1,7 @@
 package com.enablix.core.domain.report.activitymetric;
 
+import java.util.Date;
+
 public class MetricStats implements Comparable<MetricStats> {
 	
 	private String metricCode;
@@ -8,10 +10,13 @@ public class MetricStats implements Comparable<MetricStats> {
 	
 	private Long metricValue;
 	
-	public MetricStats(String metricCode, String metricName, Long metricValue) {
+	private Date metricDate;
+	
+	public MetricStats(String metricCode, String metricName, Long metricValue, Date metricDate) {
 		this.metricCode = metricCode;
 		this.metricName = metricName;
 		this.metricValue = metricValue;
+		this.metricDate = metricDate;
 	}
 	
 	public Long getMetricValue() {
@@ -41,5 +46,13 @@ public class MetricStats implements Comparable<MetricStats> {
 
 	public void setMetricCode(String metricCode) {
 		this.metricCode = metricCode;
+	}
+
+	public Date getMetricDate() {
+		return metricDate;
+	}
+
+	public void setMetricDate(Date metricDate) {
+		this.metricDate = metricDate;
 	}
 }

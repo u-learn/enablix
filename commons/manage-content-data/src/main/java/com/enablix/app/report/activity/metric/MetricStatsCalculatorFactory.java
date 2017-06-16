@@ -29,14 +29,14 @@ public class MetricStatsCalculatorFactory extends SpringBackedBeanRegistry<Metri
 
 	@Override
 	protected void registerBean(MetricStatsCalculator bean) {
-		MetricStatsCalculator metric = metricStore.get(bean.getActivityCode().getCode());
+		MetricStatsCalculator metric = metricStore.get(bean.metricType().getCode());
 		
 		if (metric != null) {
-			LOGGER.error("More than one metric with code [{}]", bean.getActivityCode());
-			throw new IllegalStateException("Multiple metric with same code [" + bean.getActivityCode() + "]");
+			LOGGER.error("More than one metric with code [{}]", bean.metricType());
+			throw new IllegalStateException("Multiple metric with same code [" + bean.metricType() + "]");
 		}
 		
-		metricStore.put(bean.getActivityCode().getCode(), bean);
+		metricStore.put(bean.metricType().getCode(), bean);
 	}
 
 }
