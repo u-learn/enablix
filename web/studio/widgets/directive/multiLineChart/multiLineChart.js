@@ -35,7 +35,7 @@ enablix.studioApp.directive('ebxMultiLineChart', [
 		                    tooltipShow: function(e) { console.log("tooltipShow"); },
 		                    tooltipHide: function(e) { console.log("tooltipHide"); }
 		                },
-		                xScale: d3.time.scale(),
+		                xScale: d3.time.scale.utc(),
 		                xAxis: {
 		                    axisLabel: 'Time (ms)',
 		                    tickFormat: function(d) {
