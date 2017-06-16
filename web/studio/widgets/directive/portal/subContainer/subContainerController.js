@@ -19,7 +19,7 @@ enablix.studioApp.controller('PortalSubContainerCtrl',
 			var elem = $event.currentTarget;
 			$(elem).parent().toggleClass('single-line');
 			$(elem).toggleClass('active');
-			$('#' + itemId).slideToggle('fast');
+			$(document.getElementById(itemId)).slideToggle('fast'); // itemId might contain '.' which causes issues with jquery selector
 			
 			var expanded = elem.className.indexOf('active') > 0;
 			
