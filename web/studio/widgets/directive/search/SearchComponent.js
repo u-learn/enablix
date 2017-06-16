@@ -484,13 +484,13 @@ function suggestionTemplate(node) {
         var bizDimensionNode = node.bizDimensionNode;
         id = bizDimensionNode.id;
         var dimension = bizDimensionNode.label;
-        innerContent = "<span>" + label + "</span><span class=\"pull-right eb-tt-biz-dimension\">" + dimension + "</span>";
+        innerContent = "<span>" + label + "</span><span class=\"eb-tt-biz-dimension\"> (" + dimension + ")</span>";
     } else if (node instanceof _graph.BizDimEntSubNode) {
         var bizDimEnt = node.bizDimEnt;
         var _bizDimensionNode = bizDimEnt.bizDimensionNode;
         id = _bizDimensionNode.id;
         var _dimension = _bizDimensionNode.label;
-        innerContent = "<span>" + label + "</span><span class=\"pull-right eb-tt-biz-dimension\">" + _dimension + "</span>";
+        innerContent = "<span>" + label + "</span><span class=\"eb-tt-biz-dimension\"> (" + _dimension + ")</span>";
     }
     return "\n        <div data-id=\"" + id + "\" class=\"container-fluid\">\n            " + innerContent + "\n        </div>\n    ";
 }
@@ -849,7 +849,7 @@ exports = module.exports = __webpack_require__(7)(undefined);
 
 
 // module
-exports.push([module.i, ".tt-selectable {\r\n  cursor: pointer;\r\n  border-left: 1px solid grey;\r\n  border-right: 1px solid grey;\r\n  border-bottom:1px solid grey;\r\n  width: 20vw;\r\n  padding-left: 0px;\r\n  padding-right: 0px;\r\n}\r\n\r\n.tt-selectable:hover {\r\n    background-color:#2980b9;\r\n    color:white;\r\n}\r\n\r\n.tt-cursor {\r\n    background-color:#2980b9;\r\n    color:white !important;\r\n}\r\n\r\n.eb-tt-biz-dimension {\r\n    font-size:0.875em;\r\n    padding-right:5px;\r\n    padding-top:5px;\r\n    text-align: right;\r\n}\r\n\r\n.eb-search-for {\r\n    color:#626262;\r\n    font-style:italic;\r\n    font-weight:500;\r\n}\r\n\r\n.eb-search-for:hover {\r\n    color:white;\r\n}", ""]);
+exports.push([module.i, ".tt-selectable {\r\n  cursor: pointer;\r\n  border-left: 1px solid grey;\r\n  border-right: 1px solid grey;\r\n  border-bottom:1px solid grey;\r\n  width: 20vw;\r\n  padding-left: 0px;\r\n  padding-right: 0px;\r\n}\r\n\r\n.tt-selectable:hover {\r\n    background-color:#2980b9;\r\n    color:white;\r\n}\r\n\r\n.tt-cursor {\r\n    background-color:#2980b9;\r\n    color:white !important;\r\n}\r\n\r\n.eb-tt-biz-dimension {\r\n    font-size:0.875em;\r\n    padding-right:5px;\r\n    padding-top:5px;\r\n    text-align: right;\r\n  opacity: 0.5;\r\n}\r\n\r\n.eb-search-for {\r\n    color:#626262;\r\n    font-style:italic;\r\n    font-weight:500;\r\n}\r\n\r\n.eb-search-for:hover {\r\n    color:white;\r\n}", ""]);
 
 // exports
 
