@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<contentTemplate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="master_enterprise" version="3.01" xsi:noNamespaceSchemaLocation="../xsd/content-template.xsd">
+<contentTemplate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="master_enterprise" version="3.02" xsi:noNamespaceSchemaLocation="../xsd/content-template.xsd">
 	<dataDefinition>
 		<container id="product" label="Products" businessCategory="BUSINESS_DIMENSION">
 			<contentItem id="name" label="Name" type="text" searchBoost="7"/>
@@ -58,7 +58,7 @@
 			<container id="prodAnalystResearch" label="Analyst Research" linkContainerQId="analyst.research" linkContentItemId="products"/>
 			<container id="prodAnalystEngagement" label="Analyst Engagement" linkContainerQId="analyst.engagement" linkContentItemId="products"/>
 			<container id="prodTopic" label="Topics" linkContainerQId="topic" linkContentItemId="products"/>				
-			<container id="prodMarketingEvent" label="Marketing Events" linkContainerQId="marketingevent" linkContentItemId="products"/>
+			<container id="prodMarketingEvent" label="Events" linkContainerQId="marketingevent" linkContentItemId="products"/>
 			<container id="prodArticle" label="News Article" linkContainerQId="article" linkContentItemId="products"/>
 			<container id="prodContent" label="Other Content" linkContainerQId="content" linkContentItemId="products"/>
 		</container>
@@ -121,7 +121,7 @@
 			<container id="solAnalystResearch" label="Analyst Research" linkContainerQId="analyst.research" linkContentItemId="solutions"/>
 			<container id="solAnalystEngagement" label="Analyst Engagement" linkContainerQId="analyst.engagement" linkContentItemId="solutions"/>
 			<container id="solTopic" label="Topics" linkContainerQId="topic" linkContentItemId="solutions"/>	
-			<container id="solMarketingEvent" label="Marketing Events" linkContainerQId="marketingevent" linkContentItemId="solutions"/>
+			<container id="solMarketingEvent" label="Events" linkContainerQId="marketingevent" linkContentItemId="solutions"/>
 			<container id="solArticle" label="News Article" linkContainerQId="article" linkContentItemId="solutions"/>
 			<container id="solContent" label="Other Content" linkContainerQId="content" linkContentItemId="solutions"/>
 		</container>
@@ -205,7 +205,7 @@
 			<container id="compAnalystResearch" label="Analyst Research" linkContainerQId="analyst.research" linkContentItemId="competitors"/>
 			<container id="compAnalystEngagement" label="Analyst Engagement" linkContainerQId="analyst.engagement" linkContentItemId="competitors"/>
 			<container id="compTopic" label="Topics" linkContainerQId="topic" linkContentItemId="competitors"/>	
-			<container id="compMarketingEvent" label="Marketing Events" linkContainerQId="marketingevent" linkContentItemId="competitors"/>
+			<container id="compMarketingEvent" label="Events" linkContainerQId="marketingevent" linkContentItemId="competitors"/>
 			<container id="compArticle" label="News Article" linkContainerQId="article" linkContentItemId="competitors"/>
 			<container id="compContent" label="Other Content" linkContainerQId="content" linkContentItemId="competitors"/>
 		</container>
@@ -530,7 +530,7 @@
 			<container id="partnerAnalystResearch" label="Analyst Research" linkContainerQId="analyst.research" linkContentItemId="partners"/>
 			<container id="partnerAnalystEngagement" label="Analyst Engagement" linkContainerQId="analyst.engagement" linkContentItemId="partners"/>
 			<container id="partnerTopic" label="Topics" linkContainerQId="topic" linkContentItemId="partners"/>	
-			<container id="partnerMarketingEvent" label="Marketing Events" linkContainerQId="marketingevent" linkContentItemId="partners"/>
+			<container id="partnerMarketingEvent" label="Events" linkContainerQId="marketingevent" linkContentItemId="partners"/>
 			<container id="partnerArticle" label="News Article" linkContainerQId="article" linkContentItemId="partners"/>
 			<container id="partnerContent" label="Other Content" linkContainerQId="content" linkContentItemId="partners"/>
 		</container>
@@ -675,7 +675,7 @@
 					</bounded>
 				</contentItem>
 			</container>
-			<container id="analystMarketingEvent" label="Marketing Events" linkContainerQId="marketingevent" linkContentItemId="analysts"/>
+			<container id="analystMarketingEvent" label="Events" linkContainerQId="marketingevent" linkContentItemId="analysts"/>
 			<container id="engagement" label="Other Joint Engagements">
 				<contentItem id="title" label="Title" type="text" searchBoost="6"/>
 				<contentItem id="file" label="File" type="doc"/>
@@ -752,7 +752,7 @@
 			<container id="analystArticle" label="Articles" linkContainerQId="article" linkContentItemId="analysts"/>
 			<container id="analystMultimedia" label="Multimedia" linkContainerQId="multimedia" linkContentItemId="analysts"/>
 		</container>
-		<container id="marketingevent" label="Marketing Events" businessCategory="BUSINESS_CONTENT">
+		<container id="marketingevent" label="Events" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Event Title" type="text" searchBoost="7"/>
 			<contentItem id="type" label="Event Type" type="bounded" searchBoost="6">
 				<bounded>
@@ -835,12 +835,7 @@
 					</refList>
 				</bounded>
 			</contentItem>
-			<container id="eventcontent" label="Event Content">
-				<contentItem id="title" label="Title" type="text" searchBoost="7"/>
-				<contentItem id="file" label="File" type="doc"/>
-				<contentItem id="url" label="URL" type="text" searchBoost="5"/>
-				<contentItem id="details" label="Other Details" type="text" searchBoost="2"/>
-			</container>
+			<contentItem id="eventContent" label="Event Content" type="contentStack"/>	
 		</container>
 		<container id="topic" label="Topics" businessCategory="BUSINESS_DIMENSION">
 			<contentItem id="name" label="Topic Name" type="text"/>
@@ -908,7 +903,7 @@
 			<container id="topicDemoEnv" label="Demo Environments" linkContainerQId="demoenvironment" linkContentItemId="topics"/>												
 			<container id="topicDemoScript" label="Demo Scripts" linkContainerQId="demoscript" linkContentItemId="topics"/>																					
 			<container id="topicImpSlide" label="Important Slides" linkContainerQId="importantslide" linkContentItemId="topics"/>							
-			<container id="topicMarketingEvent" label="Marketing Events" linkContainerQId="marketingevent" linkContentItemId="topics"/>	
+			<container id="topicMarketingEvent" label="Events" linkContainerQId="marketingevent" linkContentItemId="topics"/>	
 			<container id="topicWhitePaper" label="White Papers" linkContainerQId="whitepaper" linkContentItemId="topics"/>
 			<container id="topicMultimedia" label="Multimedia" linkContainerQId="multimedia" linkContentItemId="topics"/>
 			<container id="topicPOC" label="Proof of Concepts" linkContainerQId="poc" linkContentItemId="topics"/>
@@ -1109,17 +1104,6 @@
 					</refList>
 				</bounded>
 			</contentItem>
-			<contentItem id="csAccess" label="Access" type="bounded">
-	      		<bounded multivalued="true">
-	      			<refList>
-	      				<datastore>
-	      					<storeId>contentAccessType</storeId>
-	      					<dataId>identity</dataId>
-	      					<dataLabel>accessTypeName</dataLabel>
-	      				</datastore>
-	      			</refList>
-	      		</bounded>
-      		</contentItem>			
 		</container>
 		<container id="demoenvironment" label="Demo Environments" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
@@ -1635,17 +1619,6 @@
 					</refList>
 				</bounded>
 			</contentItem>
-			<contentItem id="wpAccess" label="Access" type="bounded">
-	      		<bounded multivalued="true">
-	      			<refList>
-	      				<datastore>
-	      					<storeId>contentAccessType</storeId>
-	      					<dataId>identity</dataId>
-	      					<dataLabel>accessTypeName</dataLabel>
-	      				</datastore>
-	      			</refList>
-	      		</bounded>
-      		</contentItem>
 		</container>
 		<container id="multimedia" label="Multimedia" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
@@ -2730,6 +2703,10 @@
 			<contentItem id="typeName" label="Type" type="text"/>
 			<contentItem id="desc" label="Description" type="text"/>
 		</container>
+		<container id="buyerPersona" label="Buyer Persona" refData="true">
+			<contentItem id="personaName" label="Type" type="text"/>
+			<contentItem id="desc" label="Description" type="text"/>
+		</container>		
 		<container id="competitorType" label="Competitor Types" refData="true">
 			<contentItem id="typeName" label="Type" type="text"/>
 			<contentItem id="desc" label="Description" type="text"/>
@@ -2770,7 +2747,7 @@
 			<contentItem id="typeName" label="Type" type="text"/>
 			<contentItem id="desc" label="Description" type="text"/>
 		</container>
-		<container id="mktEventType" label="Marketing Event Types" refData="true">
+		<container id="mktEventType" label="Event Types" refData="true">
 			<contentItem id="typeName" label="Type" type="text"/>
 			<contentItem id="desc" label="Description" type="text"/>
 		</container>
@@ -2939,6 +2916,11 @@
 		<contentUIDef qualifiedId="customer">
 			<container labelQualifiedId="customer.shortName"/>
 		</contentUIDef>
+		<contentUIDef qualifiedId="customer.shortName">
+			<text type="short">
+				<autoPopulate><refContentItem itemId="name"/></autoPopulate>
+			</text>
+		</contentUIDef>		
 		<contentUIDef qualifiedId="customer.opportunity">
 			<container labelQualifiedId="customer.opportunity.title">
 				<listViewConfig>
@@ -2974,10 +2956,15 @@
 		</contentUIDef>
 		<contentUIDef qualifiedId="customer.implProject.highlights">
 			<text type="long"/>
-		</contentUIDef>		
+		</contentUIDef>				
 		<contentUIDef qualifiedId="solution">
 			<container labelQualifiedId="solution.shortName"/>
 		</contentUIDef>
+		<contentUIDef qualifiedId="solution.shortName">
+			<text type="short">
+				<autoPopulate><refContentItem itemId="name"/></autoPopulate>
+			</text>
+		</contentUIDef>		
 		<contentUIDef qualifiedId="solution.solOverview">
 			<container labelQualifiedId="solution.solOverview.title">
 				<listViewConfig>
@@ -3023,6 +3010,11 @@
 		<contentUIDef qualifiedId="competitor">
 			<container labelQualifiedId="competitor.shortName"/>
 		</contentUIDef>
+		<contentUIDef qualifiedId="competitor.shortName">
+			<text type="short">
+				<autoPopulate><refContentItem itemId="name"/></autoPopulate>
+			</text>
+		</contentUIDef>		
 		<contentUIDef qualifiedId="competitor.compswot">
 			<container labelQualifiedId="competitor.compswot.title">
 				<listViewConfig>
@@ -3036,9 +3028,19 @@
 		<contentUIDef qualifiedId="partner">
 			<container labelQualifiedId="partner.shortName"/>
 		</contentUIDef>
+		<contentUIDef qualifiedId="partner.shortName">
+			<text type="short">
+				<autoPopulate><refContentItem itemId="name"/></autoPopulate>
+			</text>
+		</contentUIDef>		
 		<contentUIDef qualifiedId="analyst">
 			<container labelQualifiedId="analyst.shortName"/>
 		</contentUIDef>
+		<contentUIDef qualifiedId="analyst.shortName">
+			<text type="short">
+				<autoPopulate><refContentItem itemId="name"/></autoPopulate>
+			</text>
+		</contentUIDef>		
 		<contentUIDef qualifiedId="analyst.report">
 			<container labelQualifiedId="analyst.report.title">
 				<listViewConfig>
@@ -3097,7 +3099,16 @@
 			<container labelQualifiedId="marketingevent.title">
 				<listViewConfig>
 					<hideContentItem id="desc"/>
+					<hideContentItem id="startdate"/>					
+					<hideContentItem id="enddate"/>					
 					<hideContentItem id="highlights"/>
+					<hideContentItem id="solutions"/>
+					<hideContentItem id="products"/>
+					<hideContentItem id="competitors"/>
+					<hideContentItem id="partners"/>
+					<hideContentItem id="analysts"/>
+					<hideContentItem id="topics"/>
+					<hideContentItem id="eventContent"/>										
 				</listViewConfig>
 				<portalConfig>
 					<headingContentItem id="title"/>
@@ -3108,20 +3119,6 @@
 			<text type="long"/>
 		</contentUIDef>
 		<contentUIDef qualifiedId="marketingevent.highlights">
-			<text type="long"/>
-		</contentUIDef>
-		<contentUIDef qualifiedId="marketingevent.eventcontent">
-			<container labelQualifiedId="marketingevent.eventcontent.title">
-				<listViewConfig>
-					<hideContentItem id="file"/>
-					<hideContentItem id="details"/>
-				</listViewConfig>
-				<portalConfig>
-					<headingContentItem id="title"/>
-				</portalConfig>
-			</container>
-		</contentUIDef>
-		<contentUIDef qualifiedId="marketingevent.eventcontent.details">
 			<text type="long"/>
 		</contentUIDef>
 		<contentUIDef qualifiedId="topic">
@@ -3135,6 +3132,11 @@
 				</portalConfig>
 			</container>
 		</contentUIDef>
+		<contentUIDef qualifiedId="topic.shortName">
+			<text type="short">
+				<autoPopulate><refContentItem itemId="name"/></autoPopulate>
+			</text>
+		</contentUIDef>		
 		<contentUIDef qualifiedId="topic.summary">
 			<text type="long"/>
 		</contentUIDef>		
@@ -3154,6 +3156,12 @@
 				<listViewConfig>
 					<hideContentItem id="highlights"/>
 					<hideContentItem id="file"/>
+					<hideContentItem id="solutions"/>
+					<hideContentItem id="products"/>
+					<hideContentItem id="competitors"/>
+					<hideContentItem id="partners"/>
+					<hideContentItem id="customers"/>
+					<hideContentItem id="topics"/>
 				</listViewConfig>
 				<portalConfig>
 					<headingContentItem id="title"/>
@@ -3214,6 +3222,12 @@
 			<container labelQualifiedId="faq.question">
 				<listViewConfig>
 					<hideContentItem id="answer"/>
+					<hideContentItem id="type"/>
+					<hideContentItem id="solutions"/>
+					<hideContentItem id="products"/>
+					<hideContentItem id="competitors"/>
+					<hideContentItem id="partners"/>
+					<hideContentItem id="topics"/>					
 				</listViewConfig>
 				<portalConfig>
 					<headingContentItem id="question"/>
@@ -3266,6 +3280,13 @@
 			<container labelQualifiedId="proposal.title">
 				<listViewConfig>
 					<hideContentItem id="significance"/>
+					<hideContentItem id="file"/>
+					<hideContentItem id="customers"/>
+					<hideContentItem id="opportunities"/>					
+					<hideContentItem id="products"/>
+					<hideContentItem id="competitors"/>
+					<hideContentItem id="partners"/>
+					<hideContentItem id="topics"/>					
 				</listViewConfig>
 				<portalConfig>
 					<headingContentItem id="title"/>
@@ -3324,6 +3345,14 @@
 				<listViewConfig>
 					<hideContentItem id="file"/>
 					<hideContentItem id="summary"/>
+					<hideContentItem id="wpSource"/>
+					<hideContentItem id="products"/>
+					<hideContentItem id="competitors"/>
+					<hideContentItem id="partners"/>
+					<hideContentItem id="topics"/>						
+					<hideContentItem id="solutions"/>
+					<hideContentItem id="analysts"/>
+					<hideContentItem id="customers"/>
 				</listViewConfig>
 				<portalConfig>
 					<headingContentItem id="title"/>
@@ -3363,6 +3392,12 @@
 				<listViewConfig>
 					<hideContentItem id="file"/>
 					<hideContentItem id="summary"/>
+					<hideContentItem id="solutions"/>					
+					<hideContentItem id="products"/>
+					<hideContentItem id="partners"/>
+					<hideContentItem id="customers"/>
+					<hideContentItem id="opportunities"/>										
+					<hideContentItem id="topics"/>						
 				</listViewConfig>
 				<portalConfig>
 					<headingContentItem id="title"/>
