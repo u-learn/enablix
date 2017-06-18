@@ -670,12 +670,9 @@ function processBizDimEnts(value, businessDimensionType) {
         name = name.trim();
         shortName = String(shortName || name).trim();
         
-        var indexItem = null;
-        if (name) {
-        	indexItem = { label: name, businessDimensionType: businessDimensionType, identity: identity };
-        }
+        var indexItem = { label: shortName, businessDimensionType: businessDimensionType, identity: identity };
         if (shortName !== name) {
-        	indexItem.altLabel = shortName;
+        	indexItem.altLabel = name;
         	// index.push({ label: shortName, businessDimensionType: businessDimensionType, identity: identity });
         }
         index.push(indexItem);
