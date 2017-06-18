@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<contentTemplate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.01" id="simplecrm_enterprise" xsi:noNamespaceSchemaLocation="../xsd/content-template.xsd">
+<contentTemplate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.02" id="simplecrm_enterprise" xsi:noNamespaceSchemaLocation="../xsd/content-template.xsd">
 	<dataDefinition>
 		<container id="customer" label="Customers" businessCategory="BUSINESS_DIMENSION">
 			<contentItem id="name" label="Account Name" type="text" searchBoost="7"/>
@@ -316,7 +316,7 @@
 		<container id="battlecard" label="Battle Cards" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>		
 			<contentItem id="file" label="File" type="doc"/>
-			<contentItem id="summary" label="Summary" type="text" searchBoost="2"/>
+			<contentItem id="summary" label="Description" type="richText" searchBoost="2"/>
 			<contentItem id="solutions" label="Industry Solutions" type="bounded">
 				<bounded multivalued="true">
 					<refList>
@@ -410,7 +410,7 @@
 		<container id="caseStudy" label="Case Studies" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>		
 			<contentItem id="file" label="File" type="doc"/>
-			<contentItem id="highlights" label="Case Highlights" type="text" searchBoost="2"/>
+			<contentItem id="highlights" label="Case Highlights" type="richText" searchBoost="2"/>
 			<contentItem id="type" label="Type" type="bounded" searchBoost="6">
 				<bounded multivalued="true">
 					<refList>
@@ -540,7 +540,7 @@
 		<container id="flyer" label="Flyers" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>		
 			<contentItem id="file" label="File" type="doc"/>
-			<contentItem id="summary" label="Summary" type="text"/>
+			<contentItem id="summary" label="Description" type="richText"/>
 			<contentItem id="solutions" label="Industry Solutions" type="bounded">
 				<bounded multivalued="true">
 					<refList>
@@ -627,7 +627,7 @@
 		<container id="importantslides" label="Important Slides" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>			
 			<contentItem id="file" label="File" type="doc"/>
-			<contentItem id="summary" label="Summary" type="text"/>
+			<contentItem id="summary" label="Description" type="richText"/>
 			<contentItem id="slideType" label="Slide Type" type="bounded" searchBoost="6">
 				<bounded multivalued="true">
 					<refList>
@@ -1785,7 +1785,7 @@
 		</container>
 		<container id="partneragreement" label="Partner Agreement" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
-			<contentItem id="summary" label="Summary" type="text"/>
+			<contentItem id="summary" label="Description" type="richText"/>
 			<contentItem id="file" label="File" type="doc"/>
 			<contentItem id="customerProjects" label="Customer Projects" type="bounded">
 				<bounded multivalued="true">
@@ -1876,13 +1876,13 @@
 					</refList>
 				</bounded>
 			</contentItem>			
-			<contentItem id="summary" label="Summary" type="text"/>
+			<contentItem id="summary" label="Description" type="richText"/>
 			<contentItem id="file" label="File" type="doc"/>
 		</container>		
 		<container id="othercontent" label="Other Content" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
-			<contentItem id="documentType" label="Type" type="text"/>
-			<contentItem id="summary" label="Summary" type="text"/>
+			<contentItem id="documentType" label="Type" type="text" searchBoost="6"/>
+			<contentItem id="summary" label="Description" type="richText"/>
 			<contentItem id="url" label="URL" type="text"/>
 			<contentItem id="file" label="File" type="doc"/>
 			<contentItem id="customers" label="Customer" type="bounded">
@@ -2041,26 +2041,53 @@
 		<contentUIDef qualifiedId="customer">
 			<container labelQualifiedId="customer.name"/>
 		</contentUIDef>
+		<contentUIDef qualifiedId="customer.shortName">
+			<text type="short">
+				<autoPopulate><refContentItem itemId="name"/></autoPopulate>
+			</text>
+		</contentUIDef>		
 		<contentUIDef qualifiedId="customer.project">
 			<container labelQualifiedId="customer.project.name"/>
 		</contentUIDef>		
 		<contentUIDef qualifiedId="solution">
 			<container labelQualifiedId="solution.name"/>
 		</contentUIDef>
+		<contentUIDef qualifiedId="solution.shortName">
+			<text type="short">
+				<autoPopulate><refContentItem itemId="name"/></autoPopulate>
+			</text>
+		</contentUIDef>		
 		<contentUIDef qualifiedId="product">
 			<container labelQualifiedId="product.name"/>
 		</contentUIDef>	
+		<contentUIDef qualifiedId="product.shortName">
+			<text type="short">
+				<autoPopulate><refContentItem itemId="name"/></autoPopulate>
+			</text>
+		</contentUIDef>		
 		<contentUIDef qualifiedId="competitor">
 			<container labelQualifiedId="competitor.name"/>
 		</contentUIDef>
+		<contentUIDef qualifiedId="competitor.shortName">
+			<text type="short">
+				<autoPopulate><refContentItem itemId="name"/></autoPopulate>
+			</text>
+		</contentUIDef>		
 		<contentUIDef qualifiedId="partner">
 			<container labelQualifiedId="partner.name"/>
 		</contentUIDef>
+		<contentUIDef qualifiedId="partner.shortName">
+			<text type="short">
+				<autoPopulate><refContentItem itemId="name"/></autoPopulate>
+			</text>
+		</contentUIDef>		
 		<contentUIDef qualifiedId="battlecard">
 			<container labelQualifiedId="battlecard.title">
 				<listViewConfig>
 					<hideContentItem id="summary"/>
-					<hideContentItem id="file"/>					
+					<hideContentItem id="file"/>
+					<hideContentItem id="solutions"/>
+					<hideContentItem id="products"/>															
 				</listViewConfig>
 				<portalConfig>
 					<headingContentItem id="title"/>
@@ -2071,7 +2098,9 @@
 			<container labelQualifiedId="flyer.title">
 				<listViewConfig>
 					<hideContentItem id="summary"/>
-					<hideContentItem id="file"/>					
+					<hideContentItem id="file"/>
+					<hideContentItem id="solutions"/>
+					<hideContentItem id="products"/>										
 				</listViewConfig>
 				<portalConfig>
 					<headingContentItem id="title"/>
@@ -2082,7 +2111,13 @@
 			<container labelQualifiedId="caseStudy.title">
 				<listViewConfig>
 					<hideContentItem id="highlights"/>
-					<hideContentItem id="file"/>					
+					<hideContentItem id="file"/>
+					<hideContentItem id="solutions"/>
+					<hideContentItem id="products"/>
+					<hideContentItem id="competitors"/>
+					<hideContentItem id="partners"/>
+					<hideContentItem id="customers"/>
+					<hideContentItem id="customerProjects"/>					
 				</listViewConfig>
 				<portalConfig>
 					<headingContentItem id="title"/>
@@ -2095,7 +2130,11 @@
 		<contentUIDef qualifiedId="featureSheet">
 			<container labelQualifiedId="featureSheet.title">
 				<listViewConfig>
-					<hideContentItem id="file"/>					
+					<hideContentItem id="file"/>
+					<hideContentItem id="solutions"/>
+					<hideContentItem id="products"/>
+					<hideContentItem id="competitors"/>
+					<hideContentItem id="customerProjects"/>										
 				</listViewConfig>
 				<portalConfig>
 					<headingContentItem id="title"/>
@@ -2227,13 +2266,18 @@
 			<container labelQualifiedId="importantslides.title">
 				<listViewConfig>
 					<hideContentItem id="file"/>
-					<hideContentItem id="summary"/>					
+					<hideContentItem id="summary"/>	
+					<hideContentItem id="solutions"/>
+					<hideContentItem id="products"/>
 				</listViewConfig>
 				<portalConfig>
 					<headingContentItem id="title"/>
 				</portalConfig>					
 			</container>
 		</contentUIDef>	
+		<contentUIDef qualifiedId="importantslides.summary">
+			<text type="long"/>
+		</contentUIDef>			
 		<contentUIDef qualifiedId="proposal">
 			<container labelQualifiedId="proposal.title">
 				<listViewConfig>
@@ -2395,7 +2439,9 @@
 			<container labelQualifiedId="partneragreement.title">
 				<listViewConfig>
 					<hideContentItem id="file"/>
-					<hideContentItem id="summary"/>									
+					<hideContentItem id="summary"/>	
+					<hideContentItem id="partners"/>
+					<hideContentItem id="customerProjects"/>													
 				</listViewConfig>
 				<portalConfig>
 					<headingContentItem id="title"/>
@@ -2480,7 +2526,13 @@
 				<listViewConfig>
 					<hideContentItem id="summary"/>
 					<hideContentItem id="url"/>
-					<hideContentItem id="file"/>					
+					<hideContentItem id="file"/>	
+					<hideContentItem id="solutions"/>
+					<hideContentItem id="products"/>
+					<hideContentItem id="competitors"/>
+					<hideContentItem id="partners"/>
+					<hideContentItem id="customers"/>
+					<hideContentItem id="customerProjects"/>									
 				</listViewConfig>
 				<portalConfig>
 					<headingContentItem id="title"/>

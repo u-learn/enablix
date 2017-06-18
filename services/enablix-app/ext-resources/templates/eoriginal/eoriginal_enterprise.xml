@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<contentTemplate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="eoriginal_enterprise" version="1.07" xsi:noNamespaceSchemaLocation="../xsd/content-template.xsd">
+<contentTemplate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="eoriginal_enterprise" version="1.08" xsi:noNamespaceSchemaLocation="../xsd/content-template.xsd">
 	<dataDefinition>
 		<container id="solution" label="Solutions" businessCategory="BUSINESS_DIMENSION">
 			<contentItem id="name" label="Name" type="text" searchBoost="7"/>
@@ -1843,7 +1843,29 @@
 						</datastore>
 					</refList>
 				</bounded>
-			</contentItem>					
+			</contentItem>	
+			<contentItem id="industryfocus" label="Industry Focus" type="bounded">
+				<bounded>
+					<refList>
+						<datastore>
+							<storeId>industry</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="solutionfocus" label="Solution Focus" type="bounded">
+				<bounded>
+					<refList>
+						<datastore>
+							<storeId>solution</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>										
 		</container>		
 		<userProfileRef>
 			
@@ -1880,18 +1902,43 @@
 		<contentUIDef qualifiedId="solution">
 			<container labelQualifiedId="solution.shortName"/>
 		</contentUIDef>
+		<contentUIDef qualifiedId="solution.shortName">
+			<text type="short">
+				<autoPopulate><refContentItem itemId="name"/></autoPopulate>
+			</text>
+		</contentUIDef>		
 		<contentUIDef qualifiedId="industry">
 			<container labelQualifiedId="industry.shortName"/>
-		</contentUIDef>		
+		</contentUIDef>	
+		<contentUIDef qualifiedId="industry.shortName">
+			<text type="short">
+				<autoPopulate><refContentItem itemId="name"/></autoPopulate>
+			</text>
+		</contentUIDef>			
 		<contentUIDef qualifiedId="competitor">
 			<container labelQualifiedId="competitor.shortName"/>
-		</contentUIDef>	
+		</contentUIDef>
+		<contentUIDef qualifiedId="competitor.shortName">
+			<text type="short">
+				<autoPopulate><refContentItem itemId="name"/></autoPopulate>
+			</text>
+		</contentUIDef>			
 		<contentUIDef qualifiedId="partner">
 			<container labelQualifiedId="partner.shortName"/>
 		</contentUIDef>
+		<contentUIDef qualifiedId="partner.shortName">
+			<text type="short">
+				<autoPopulate><refContentItem itemId="name"/></autoPopulate>
+			</text>
+		</contentUIDef>		
 		<contentUIDef qualifiedId="analyst">
 			<container labelQualifiedId="analyst.shortName"/>
 		</contentUIDef>
+		<contentUIDef qualifiedId="analyst.shortName">
+			<text type="short">
+				<autoPopulate><refContentItem itemId="name"/></autoPopulate>
+			</text>
+		</contentUIDef>		
 		<contentUIDef qualifiedId="event">
 			<container labelQualifiedId="event.title">
 				<listViewConfig>
@@ -1986,6 +2033,11 @@
 				</portalConfig>
 			</container>
 		</contentUIDef>
+		<contentUIDef qualifiedId="topic.shortName">
+			<text type="short">
+				<autoPopulate><refContentItem itemId="name"/></autoPopulate>
+			</text>
+		</contentUIDef>		
 		<contentUIDef qualifiedId="topic.desc">
 			<text type="long"/>
 		</contentUIDef>		
