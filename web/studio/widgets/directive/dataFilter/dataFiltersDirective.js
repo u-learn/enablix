@@ -6,13 +6,15 @@ function($compile,   $timeout,   UserPreferenceService,   Notification) {
 		restrict: 'E',
 		scope : {
 			filters: '=',
-			filterValues: '=',
+			filterValues: '=?',
 			heading: '@',
 			searchLabel: '@',
 			resetLabel: '@',
+			searchOnPageLoad: '@',
 			onSearch:'=?',
 			onReset: '=?',
-			prefValuesKey: "=?"
+			prefValuesKey: "=?",
+			layout: "@"
 		},
 		link: function(scope, element, attrs) {
 			
@@ -21,38 +23,46 @@ function($compile,   $timeout,   UserPreferenceService,   Notification) {
 			scope.resetLabel = scope.resetLabel || "Reset";
 			scope.searchLabel = scope.searchLabel || "Search";
 			scope.filterValues = scope.filterValues || {};
+			scope.layout = scope.layout || "panel";
 
 			scope.showSaveAsDefault = !isNullOrUndefined(scope.prefValuesKey);
 			
 			angular.copy(scope.filterValues, filterValuesCopy);
 			
+			function getSearchFilterValues() {
+				
+				var searchValues = {};
+				
+				var filterValuesValid = true;
+				angular.forEach(scope.filters, function(filter) {
+					
+					var valid = true;
+					if (filter.validateBeforeSubmit) {
+						
+						valid = filter.validateBeforeSubmit(scope.filterValues[filter.id]);
+						
+						if (!valid) {
+							filterValuesValid = false;
+						}
+					}
+					
+					if (valid) {
+						searchValues[filter.id] = filter.filterValueTransformer ? 
+							filter.filterValueTransformer(scope.filterValues[filter.id]) : scope.filterValues[filter.id];
+					}
+					
+				});
+				
+				return filterValuesValid ? searchValues : null;
+			}
+			
 			scope.onSearchAction = function() {
 				
 				if (scope.onSearch) {
 				
-					var searchValues = {};
+					var searchValues = getSearchFilterValues();
 					
-					var filterValuesValid = true;
-					angular.forEach(scope.filters, function(filter) {
-						
-						var valid = true;
-						if (filter.validateBeforeSubmit) {
-							
-							valid = filter.validateBeforeSubmit(scope.filterValues[filter.id]);
-							
-							if (!valid) {
-								filterValuesValid = false;
-							}
-						}
-						
-						if (valid) {
-							searchValues[filter.id] = filter.filterValueTransformer ? 
-								filter.filterValueTransformer(scope.filterValues[filter.id]) : scope.filterValues[filter.id];
-						}
-						
-					});
-					
-					if (filterValuesValid) {
+					if (searchValues) {
 						scope.onSearch(searchValues);
 					}
 					
@@ -102,6 +112,50 @@ function($compile,   $timeout,   UserPreferenceService,   Notification) {
 				saveAsDefault(UserPreferenceService.saveAsSystemPref);
 			}
 			
+			var fetchFilterDefaultValueFromUserPref = function(_filter, _defaultPrefFVs) {
+				
+				if (!isNullOrUndefined(_defaultPrefFVs)) {
+					return _defaultPrefFVs.config[_filter.id];
+				}
+				
+				return null;
+			}
+			
+			var initSearchFilters = function() {
+				
+				var defaultPrefFVs = scope.prefValuesKey ? 
+						UserPreferenceService.getPrefByKey(scope.prefValuesKey) : null;
+				
+				var searchFilters = {};
+				angular.forEach(scope.filters, function(filter) {
+					
+					if (!isNullOrUndefined(scope.filterValues)) {
+						
+						// check user preferences first
+						var defaultFV = fetchFilterDefaultValueFromUserPref(filter, defaultPrefFVs);
+						
+						if (isNullOrUndefined(defaultFV) && filter.defaultValue) {
+							// check report definition if not present in user pref
+							defaultFV = filter.defaultValue();
+						}
+		
+						if (!isNullOrUndefined(defaultFV)) {
+							
+							scope.filterValues[filter.id] = defaultFV;
+							
+							searchFilters[filter.id] = filter.filterValueTransformer ? 
+									filter.filterValueTransformer(defaultFV) : defaultFV;
+						}
+					}
+				});
+			}
+			
+			initSearchFilters();
+			
+			if (scope.searchOnPageLoad) {
+				scope.onSearchAction();
+			}
+			
 			// the angular multi-select dropdown does not work if it is initially hidden
 			// in select.js, calculateContainerWidth() function return value 0, if it is hidden.
 			// As a result, the text box in the directive is only 10px and is hard to select.
@@ -112,6 +166,9 @@ function($compile,   $timeout,   UserPreferenceService,   Notification) {
 			}, 300);
 			
 		},
-		templateUrl: "widgets/directive/dataFilter/dataFilters.html"
+		templateUrl: function(elem, attr) {
+			var layout = attr.layout || "panel";
+			return "widgets/directive/dataFilter/dataFilters-" + layout + ".html"
+		}
 	};
 }]);

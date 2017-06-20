@@ -1,13 +1,29 @@
 enablix.studioApp.controller('PortalCntnrListCtrl', 
-		   ['$scope', 'ContentTemplateService', '$state', '$stateParams', 'ContentDataService', 'StudioSetupService', 'ContentUtil', 'StateUpdateService', 'Notification', 'DataSearchService',
-    function($scope,   ContentTemplateService,   $state,   $stateParams,   ContentDataService,   StudioSetupService,   ContentUtil,   StateUpdateService,   Notification,   DataSearchService) {
+		   ['$scope', 'ContentTemplateService', '$state', '$stateParams', '$q', 'ContentDataService', 'StudioSetupService', 'ContentUtil', 'StateUpdateService', 'Notification', 'DataSearchService',
+    function($scope,   ContentTemplateService,   $state,   $stateParams,   $q,   ContentDataService,   StudioSetupService,   ContentUtil,   StateUpdateService,   Notification,   DataSearchService) {
 
 		$scope.$stateParams = $stateParams;
 		
 		var containerDef = ContentTemplateService.getConcreteContainerDefinition(
 									enablix.template, $stateParams.containerQId);
 		
-		 $scope.pagination = {
+		$scope.dataFilters = {};
+		$scope.filtersAvailable = true;
+		
+		var filterMetadata = {};
+		
+		$scope.onFilterSearch = function(_filterValues, _filterMd) {
+			
+			// remove search keys with null values as those get treated as null value on back end
+			removeNullOrEmptyProperties(_filterValues);
+			
+			$scope.dataFilters = _filterValues;
+			filterMetadata = _filterMd;
+			
+			$scope.fetchData();
+		}
+		
+		$scope.pagination = {
 				pageSize: enablix.defaultPageSize,
 				pageNum: $stateParams.page,
 				sort: {
@@ -17,11 +33,12 @@ enablix.studioApp.controller('PortalCntnrListCtrl',
 			};
 		
 		$scope.listHeaders = ContentUtil.getContentListHeaders(containerDef);
-		$scope.dataFilters = {};
+		
 
 		$scope.fetchData = function() {
 			
-			DataSearchService.getContainerDataSearchResult($stateParams.containerQId, $scope.dataFilters, $scope.pagination, {}, 
+			DataSearchService.getContainerDataSearchResult($stateParams.containerQId, 
+				$scope.dataFilters, $scope.pagination, filterMetadata, 
 				function(dataPage) {
 					$scope.listData = dataPage.content;
 					$scope.pageData = dataPage;
@@ -35,7 +52,13 @@ enablix.studioApp.controller('PortalCntnrListCtrl',
 		
 		}
 		
-		$scope.fetchData();
+		$scope.$on("cont-filter:filter-init-complete", function(event, _filterDefs) {
+			if (_filterDefs.length == 0) {
+				$scope.filtersAvailable = false;
+			}
+		});
+		
+		
 		
 		$scope.navToContentDetail = function(contentRecordIdentity) {
 			StateUpdateService.goToPortalContainerDetail($stateParams.containerQId, contentRecordIdentity);

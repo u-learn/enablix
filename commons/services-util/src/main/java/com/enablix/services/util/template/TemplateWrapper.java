@@ -93,7 +93,7 @@ public class TemplateWrapper implements TemplateFacade {
 				containerStudioLabelAttrIdMap.put(containerQId, 
 						TemplateUtil.getStudioLabelAttributeId(template, containerQId));
 				
-				if (!TemplateUtil.isLinkedContainer(container)) {
+				if (!TemplateUtil.isLinkedContainer(container) && container.isReferenceable()) {
 					collectionNameContainerMap.put(collectionName, container);
 				}
 				

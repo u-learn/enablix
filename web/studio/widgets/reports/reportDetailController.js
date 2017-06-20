@@ -34,47 +34,12 @@ enablix.studioApp.controller('ReportDetailCtrl',
 			});
 		}
 		
-		var fetchFilterDefaultValueFromUserPref = function(_filter, _defaultPrefFVs) {
-			
-			if (!isNullOrUndefined(_defaultPrefFVs)) {
-				return _defaultPrefFVs.config[_filter.id];
-			}
-			
-			return null;
-		}
-		
 		if ($scope.reportDef) {
 			
 			if ($scope.reportDef.init) {
 				$scope.reportDef.init($scope);
 			}
 
-			$scope.reportDefaultFiltersPrefKey = "report." + $scope.reportDef.id + ".defaultFilterValues";
-			var defaultPrefFVs = UserPreferenceService.getPrefByKey($scope.reportDefaultFiltersPrefKey);
-			
-			var searchFilters = {};
-			angular.forEach($scope.reportDef.filters, function(filter) {
-				
-				// check user preferences first
-				var defaultFV = fetchFilterDefaultValueFromUserPref(filter, defaultPrefFVs);
-				
-				if (isNullOrUndefined(defaultFV) && filter.defaultValue) {
-					// check report definition if not present in user pref
-					defaultFV = filter.defaultValue();
-				}
-
-				if (!isNullOrUndefined(defaultFV)) {
-					
-					$scope.reportFilterValues[filter.id] = defaultFV;
-					
-					searchFilters[filter.id] = filter.filterValueTransformer ? 
-							filter.filterValueTransformer(defaultFV) : defaultFV;
-				}
-					
-			});
-			
-			fetchReportData(searchFilters);
-			
 			$scope.onReportSearch = function(_filterValues) {
 				fetchReportData(_filterValues);
 			};

@@ -55,6 +55,7 @@
 	<script type="text/javascript" src="js/vendor/ng-quill-3.0.0/ng-quill.js"></script>
 	<script type="text/javascript" src="//d3js.org/d3.v3.js"></script>
 	<script type="text/javascript" src="js/vendor/charts/heatmap.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/angular-nvd3/1.0.9/angular-nvd3.min.js"></script>
     
     
     <!-- application scripts -->
@@ -115,7 +116,7 @@
                     </li>-->     
                     <li>
                         <a class="page-scroll" href="app.html#/portal/home">Customer Login</a>
-                    </li>                    
+                    </li>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -404,6 +405,9 @@
 	            gaProp = 'UA-90499107-1'; // production
 	            break;
 	        case '52.2.15.106':
+	        	gaProp = 'UA-90499107-2'; // test env
+	        	break;
+	        case 'test.enablix.com':
 	        	gaProp = 'UA-90499107-2'; // test env
 	        	break;
 	    }

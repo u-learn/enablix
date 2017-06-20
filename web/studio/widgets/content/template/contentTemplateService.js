@@ -414,6 +414,10 @@ enablix.studioApp.factory('ContentTemplateService',
 				return inheritableItems;
 			};
 			
+			var isBoundedListItem = function(_itemDef) {
+				return _itemDef.type == "BOUNDED";
+			}
+			
 			var isBoundedRefListItem = function(_itemDef) {
 				return _itemDef.type == "BOUNDED" && _itemDef.bounded.refList;
 			}
@@ -639,6 +643,7 @@ enablix.studioApp.factory('ContentTemplateService',
 				getContentConnectionContextContainers: getContentConnectionContextContainers,
 				getUserContainerQId: getUserContainerQId,
 				isBoundedRefListItem: isBoundedRefListItem,
+				isBoundedListItem: isBoundedListItem,
 				checkAndGetBoundedRefListContainerQId: checkAndGetBoundedRefListContainerQId,
 				getStudioContainers: getStudioContainers,
 				getStudioConfig: getStudioConfig,

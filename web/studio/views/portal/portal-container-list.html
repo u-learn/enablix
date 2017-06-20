@@ -1,18 +1,24 @@
-<!-- page content -->
-<div class="page-content">
-	<div class="container-fluid">
-		<eb-portal-breadcrumb></eb-portal-breadcrumb>
-		<div class="row">
-			<main class="col-md-8">							
-				<div class="block">
-					<eb-table table-headers="listHeaders" table-data="listData" row-click-fn="navToContentDetail" 
-								page-data="pageData" fetch-result-fn="fetchData" pagination-data="pagination"></eb-table>
-				</div>
-			</main>
-			
-			<aside class="col-md-4">
-				<div ui-view="rightSection"></div>
-			</aside>
+<div layout="row">
+	<div class="filter-pane" flex="20" ng-show="filtersAvailable">
+		<ebx-container-filters container-q-id="$stateParams.containerQId" on-search="onFilterSearch"/>
+	</div>
+	<!-- page content -->
+	<div class="page-content" flex>
+		<div class="container-fluid">
+			<eb-portal-breadcrumb></eb-portal-breadcrumb>
+			<div class="row">
+				<main class="col-md-8">							
+					<div class="block">
+						<eb-table table-headers="listHeaders" table-data="listData" row-click-fn="navToContentDetail" 
+									page-data="pageData" fetch-result-fn="fetchData" pagination-data="pagination"></eb-table>
+					</div>
+				</main>
+				
+				<aside class="col-md-4">
+					<div ui-view="rightSection"></div>
+				</aside>
+			</div>
 		</div>
 	</div>
+	
 </div>

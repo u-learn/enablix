@@ -1,0 +1,13 @@
+<div class="sidebar-filters">
+<div class="head"><h2>Filters</h2></div>
+<div class="filter-list">
+	<div class="cont" ng-repeat="filter in filters track by filter.id">
+		<label class="form-label">{{::filter.name}}</label> 
+		<ebx-multi-select-filter ng-if="filter.type == 'multi-select'" filter-def="filter" selected-values="filterValues[filter.id]" single-select="filter.options && filter.options.singleSelect"></ebx-multi-select-filter>
+		<label class="form-label error" ng-if="filter.errorMessage">{{filter.errorMessage}}</label>
+	</div>
+</div>
+<div class="foot clearfix">
+	<button ng-click="onSearchAction()" class="button button-add">{{::searchLabel}}</button>
+</div>
+</div>

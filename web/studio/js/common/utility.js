@@ -55,6 +55,21 @@ var removeNullProperties = function(obj) {
 	});
 }
 
+var removeNullOrEmptyProperties = function(obj) {
+	
+	var removeProps = [];
+	
+	angular.forEach(obj, function(value, key) {
+		if (isNullOrUndefined(value) || isArrayAndEmpty(value)) {
+			removeProps.push(key);
+		}
+	});
+	
+	angular.forEach(removeProps, function(prop) {
+		delete obj[prop];
+	});
+}
+
 function linkify(text) {
     var urlRegex =/(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
     return text.replace(urlRegex, function(url) {

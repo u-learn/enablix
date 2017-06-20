@@ -4,6 +4,7 @@ enablix.studioApp.controller('WebsiteMainCtrl',
 
 		RESTService.getForData("captchasitekey", null, null, function(data) {
 			enablix.captchaSiteKey = data.sitekey;
+			$scope.captchaSiteKey = enablix.captchaSiteKey;
 		}, function(resp) {
 			console.log(resp);
 		});
