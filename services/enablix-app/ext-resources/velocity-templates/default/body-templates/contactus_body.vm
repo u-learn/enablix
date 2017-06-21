@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
  <body>
-	<h3>Contact Us Request</h3>
+	<h3>Demo Request</h3>
 	<div style = "font: normal 14px/normal Arial, Helvetica, sans-serif;">
 		<table>
 			<tr>
@@ -9,16 +9,8 @@
 				<td>${obj.name}</td>
 			</tr>
 			<tr>
-				<td>Company Name:</td>
-				<td>${obj.companyName}</td>
-			</tr>
-			<tr>
 				<td>Email:</td>
 				<td>${obj.email}</td>
-			</tr>
-			<tr>
-				<td>Message:</td>
-				<td>${obj.message}</td>
 			</tr>
 		</table>
 	 </div>

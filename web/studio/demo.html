@@ -131,7 +131,7 @@
 		<aside class="col-md-4" ng-controller="ContactUsController">
 			<div class="block">
 				<div class="head bottom-border">
-					<h2>Request a demo</h2>
+					<h2>Request Demo</h2>
 				</div>
 				<div class="form-body">
 					<form name="modalForm">
@@ -144,14 +144,6 @@
 							</div>
 						</div>
 						<div class="cont">
-							<label class="form-label">Company Name</label>
-							<input type="text" name="companyName" ng-model="contactUsForm.companyName" class="form-control" ng-blur="modalForm.companyName.$valid" required>
-						
-							<div ng-messages="modalForm.companyName.$error" ng-if="modalForm.companyName.$touched" role="alert">
-								<div ng-message="required" class="error">Please enter company name</div>
-							</div>
-						</div>
-						<div class="cont">
 							<label class="form-label">Work Email</label>
 							<input type="text" name="email" ng-model="contactUsForm.email" class="form-control" ng-blur="modalForm.email.$valid" ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,5})$/" required>
 						
@@ -159,10 +151,6 @@
 								<div ng-message="required" class="error">Please enter email</div>
 								<div ng-message="pattern" class="error">Please enter a valid email</div>      
 							</div>
-						</div>
-						<div class="cont">
-							<label class="form-label">Message</label>
-							<textarea  name="message" ng-model="contactUsForm.message" class="form-control"></textarea>
 						</div>
 						<div class="cont" ng-if="captchaSiteKey">
 							<no-captcha g-recaptcha-response="$parent.captchaResponse" theme='light' 
@@ -176,7 +164,7 @@
 					</form>
 				</div>
 				<div class="foot clearfix">
-					<button class="button button-add" tabindex="4" type="submit" ng-disabled="!modalForm.$valid" ng-click="submitContactUs()">Submit Request</button>
+					<button class="button button-add" tabindex="4" type="submit" ng-disabled="!modalForm.$valid" ng-click="submitContactUs()">Request Demo</button>
 				</div>
 			</div>
 		</aside>
