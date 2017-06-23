@@ -9,7 +9,7 @@
 	</div>
 	<!--/ bread crumbs -->
 
-	<div ng-controller="refdataIndexCtrl">
+	<div class="row" ng-controller="refdataIndexCtrl">
 		<div ng-show="refdataIndexData.length == 0">
 			<label>No Reference data setup required.</label>
 		</div>
@@ -24,8 +24,8 @@
 				</ul>
 		    </nav>
 		</aside>
-		<div class="col-sm-9">
+		<main class="col-sm-9 page-content">
 			<div ui-view></div>
-		</div>
+		</main>
 	</div>
 </div>
