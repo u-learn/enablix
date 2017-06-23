@@ -11,8 +11,8 @@ public class RecordAwareNavActivity extends ContainerAwareNavActivity {
 		// for ORM
 	}
 	
-	public RecordAwareNavActivity(String pageName, String containerQId, String itemIdentity, String itemTitle) {
-		super(pageName, containerQId);
+	public RecordAwareNavActivity(ActivityType activityType, String pageName, String containerQId, String itemIdentity, String itemTitle) {
+		super(activityType, pageName, containerQId);
 		this.itemIdentity = itemIdentity;
 		this.itemTitle = itemTitle;
 	}

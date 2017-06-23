@@ -18,7 +18,7 @@ public class DocDownload extends DocumentActivity {
 	public DocDownload(String itemIdentity, String containerQId, ContainerType containerType, 
 			String docIdentity, String contextName, String contextId, String contextTerm, String contentTitle) {
 		
-		super(ContentActivityType.DOC_DOWNLOAD, itemIdentity, containerQId, 
+		super(ActivityType.DOC_DOWNLOAD, itemIdentity, containerQId, 
 				containerType, docIdentity, contextName, contextId, contextTerm, contentTitle);
 	}
 

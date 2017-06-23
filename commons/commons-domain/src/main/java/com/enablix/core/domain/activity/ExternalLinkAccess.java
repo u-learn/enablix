@@ -9,7 +9,7 @@ public class ExternalLinkAccess extends NavigationActivity {
 	private String contentItemQId; // QId of the attribute where the link was part of the data
 
 	public ExternalLinkAccess(String externalUrl, String contentIdentity, String contentItemQId) {
-		super("EXT_LINK");
+		super(ActivityType.NAV_EXTERNAL_LINK, "EXT_LINK");
 		this.externalUrl = externalUrl;
 		this.contentIdentity = contentIdentity;
 		this.contentItemQId = contentItemQId;

@@ -19,7 +19,7 @@ import com.enablix.content.connection.web.ContentTypeLinkVO;
 import com.enablix.content.connection.web.ContentValueLinkVO;
 import com.enablix.core.api.TemplateFacade;
 import com.enablix.core.commons.xsdtopojo.ContentTemplate;
-import com.enablix.core.domain.activity.ContentConnActivity.ContentConnActivityType;
+import com.enablix.core.domain.activity.Activity.ActivityType;
 import com.enablix.core.domain.content.connection.ContentTypeConnection;
 import com.enablix.core.domain.content.connection.ContentValueConnection;
 import com.enablix.core.mongo.content.ContentCrudService;
@@ -45,8 +45,8 @@ public class ContentConnectionManagerImpl implements ContentConnectionManager {
 	@Override
 	public CrudResponse<ContentTypeConnection> save(ContentTypeConnection contentConnection) {
 		
-		ContentConnActivityType activityType = StringUtil.isEmpty(contentConnection.getIdentity()) ? 
-								ContentConnActivityType.ADDED : ContentConnActivityType.UPDATED;
+		ActivityType activityType = StringUtil.isEmpty(contentConnection.getIdentity()) ? 
+								ActivityType.ADDED : ActivityType.UPDATED;
 		
 		populateHoldingContainers(contentConnection);
 		CrudResponse<ContentTypeConnection> response = crudService.saveOrUpdate(contentConnection);
@@ -93,7 +93,7 @@ public class ContentConnectionManagerImpl implements ContentConnectionManager {
 		
 		crudService.getRepository().deleteByIdentity(connectionIdentity);
 		
-		ActivityLogger.auditContentConnActivity(contentConn, ContentConnActivityType.DELETED);
+		ActivityLogger.auditContentConnActivity(contentConn, ActivityType.DELETED);
 	}
 
 	@Override

@@ -13,7 +13,7 @@ public class ContentAccessActivity extends ContentActivity {
 	public ContentAccessActivity(String itemIdentity, String containerQId, ContainerType containerType,
 			String contextName, String contextId, String contextTerm, String itemTitle) {
 
-		super(itemIdentity, containerQId, containerType, ContentActivityType.CONTENT_ACCESS, itemTitle);
+		super(itemIdentity, containerQId, containerType, ActivityType.CONTENT_ACCESS, itemTitle);
 		
 		setContextName(contextName);
 		setContextId(contextId);

@@ -1,6 +1,16 @@
 enablix.studioApp.factory('UserService', 
-	[	        'RESTService', 'Notification','StateUpdateService',
-	 	function(RESTService, Notification,StateUpdateService) {
+	[	        'RESTService', 'Notification', 'StateUpdateService', 'DataSearchService',
+	 	function(RESTService,   Notification,   StateUpdateService,   DataSearchService) {
+
+		var USER_PROFILE_DOMAIN = "com.enablix.core.domain.security.authorization.UserProfile";
+		
+		var filterMetadata = {
+			"userRoleIn" : {
+				"field" : "systemProfile.roles.$id",
+				"operator" : "IN",
+				"dataType" : "STRING"
+			}	
+		};
 		
 		var getAllUsers= function(_success){
 			RESTService.getForData('systemuser', null, null, function(data) {	    	
@@ -191,6 +201,12 @@ enablix.studioApp.factory('UserService',
 			});
 		};
 		
+		var searchTenantUsers = function(_dataFilters, _onSuccess, _onError) {
+
+			DataSearchService.getSearchResult(USER_PROFILE_DOMAIN, _dataFilters, null, 
+						filterMetadata, _onSuccess, _onError)
+		};
+		
 		return {
 			
 			getAllUsers: getAllUsers,
@@ -205,8 +221,8 @@ enablix.studioApp.factory('UserService',
 			deleteEmailData : deleteEmailData,
 			getAllRoles: getAllRoles,
 			sendMail:sendMail,
-			editUserData:editUserData
-			
+			editUserData:editUserData,
+			searchTenantUsers: searchTenantUsers 
 		};
 	}
 ]);	

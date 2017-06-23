@@ -7,10 +7,11 @@ function($compile,   Notification) {
 		scope : {
 			filterDef: '=',
 			selectedValues: '=',
-			singleSelect: '='
+			singleSelect: '=',
+			layout: "@",
+			onSelectionChange: '=?'
 		},
 		link: function(scope, element, attrs) {
-			
 			
 			scope.selectMultiple = !scope.singleSelect;
 			
@@ -34,9 +35,16 @@ function($compile,   Notification) {
 				
 				scope.filterDef.masterList().then(function(data) {
 					scope.options = data;
+					scope.$emit("msf:opt-init-complete", {filterDef: scope.filterDef, options: data});
 				}, function(error) {
 					Notification.error({message: "Error retrieving data for " + scope.filterDef.name, delay: enablix.errorMsgShowTime});
 				});
+			}
+			
+			function onSelectionChangeCallback() {
+				if (scope.onSelectionChange) {
+					scope.onSelectionChange();
+				}
 			}
 			
 			scope.onItemSelect = function() {
@@ -45,6 +53,7 @@ function($compile,   Notification) {
 				
 					scope.selectedValues = [];
 					scope.selectedValues.push(scope.selected.values);
+					onSelectionChangeCallback()
 					
 				} else {
 					
@@ -52,12 +61,38 @@ function($compile,   Notification) {
 					if (scope.selectedValues!=null && scope.selectedValues != undefined 
 							&& scope.selectedValues.indexOf(newlyAdded) === -1) {
 						scope.selectedValues.push(newlyAdded);
+						onSelectionChangeCallback();
 					}
 				}
 			}
 			
 			scope.onItemRemove = function() {
 				scope.selectedValues = scope.selected.values;
+				onSelectionChangeCallback();
+			}
+			
+			/* used for checkbox layout */
+			scope.optionExists = function(_selOpt) {
+				return scope.selectedValues.indexOf(_selOpt) > -1;
+			}
+			
+			scope.toggleSelection = function(_selOpt) {
+				
+				var idx = scope.selectedValues.indexOf(_selOpt);
+		        
+				if (idx > -1) {
+		        	scope.selectedValues.splice(idx, 1);
+		        } else {
+		        	scope.selectedValues.push(_selOpt);
+		        }
+		        
+		        onSelectionChangeCallback();
+			}
+			
+			scope.defaultOptLimit = 3;
+			scope.currentOptLimit = scope.defaultOptLimit;
+			scope.setOptLimit = function(_limit) {
+				scope.currentOptLimit = _limit;
 			}
 			
 			scope.$watch('selectedValues', function(newValue, oldValue) {
@@ -66,7 +101,12 @@ function($compile,   Notification) {
 				}
 			}, true);
 			
+			
+			
 		},
-		templateUrl: "widgets/directive/dataFilter/multiselect/multiSelect.html"
+		templateUrl: function(elem, attr) {
+			var layout = attr.layout || "dropdown";
+			return "widgets/directive/dataFilter/multiselect/multiSelect-" + layout + ".html"
+		}
 	};
 }]);

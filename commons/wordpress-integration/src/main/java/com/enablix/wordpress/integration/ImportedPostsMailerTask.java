@@ -15,6 +15,7 @@ import com.enablix.commons.util.collection.CollectionUtil;
 import com.enablix.commons.util.process.ProcessContext;
 import com.enablix.commons.util.tenant.TenantUtil;
 import com.enablix.core.api.ContentDataRef;
+import com.enablix.core.domain.activity.Activity.ActivityType;
 import com.enablix.core.domain.activity.ActivityAudit;
 import com.enablix.core.domain.activity.ContentActivity;
 import com.enablix.core.domain.security.authorization.Role;
@@ -78,7 +79,7 @@ public class ImportedPostsMailerTask implements Task {
 		
 		List<ActivityAudit> activities = activityRepo.findByActivityContextNameAndActivityTypeAndCreatedAtBetween(
 				WordpressConstants.WP_POST_IMPORT_ACTVY_CTX, 
-				ContentActivity.ContentActivityType.CONTENT_ADD.toString(),
+				ActivityType.CONTENT_ADD.toString(),
 				lastRunDate, currentRunDate);
 		
 		long importCnt = 0;

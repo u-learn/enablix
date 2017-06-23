@@ -12,7 +12,7 @@ public class ContentSuggestActivity extends ContentActivity {
 	}
 	
 	public ContentSuggestActivity(String itemIdentity, String containerQId, 
-			ContainerType containerType, String itemTitle, ContentActivityType actType,
+			ContainerType containerType, String itemTitle, ActivityType actType,
 			String contentApprovalIdentity, String contentDetailIdentity) {
 		
 		super(itemIdentity, containerQId, containerType, actType, itemTitle);

@@ -12,7 +12,7 @@ public class ContentDownldURLCopy extends ContentActivity {
 	public ContentDownldURLCopy(String itemIdentity, String containerQId, ContainerType containerType,
 			String contextName, String contextId, String contextTerm, String itemTitle) {
 		
-		super(itemIdentity, containerQId, containerType, ContentActivityType.CONTENT_DOWNLD_URL_COPIED, itemTitle);
+		super(itemIdentity, containerQId, containerType, ActivityType.CONTENT_DOWNLD_URL_COPIED, itemTitle);
 		
 		setContextName(contextName);
 		setContextId(contextId);

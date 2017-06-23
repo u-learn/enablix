@@ -1,26 +1,15 @@
 package com.enablix.core.domain.activity;
 
-public class SearchActivity extends Activity {
+public class SearchActivity extends BaseSearchActivity {
 
-	private String searchTerm;
-	
 	private long pageNum;
 	
 	private long resultCount;
 	
 	public SearchActivity(String searchTerm, long pageNum, long resultCount) {
-		super(Category.SEARCH);
-		this.searchTerm = searchTerm;
+		super(ActivityType.SEARCH_FREE_TEXT, searchTerm);
 		this.pageNum = pageNum;
 		this.resultCount = resultCount;
-	}
-
-	public String getSearchTerm() {
-		return searchTerm;
-	}
-
-	public void setSearchTerm(String searchTerm) {
-		this.searchTerm = searchTerm;
 	}
 
 	public long getPageNum() {

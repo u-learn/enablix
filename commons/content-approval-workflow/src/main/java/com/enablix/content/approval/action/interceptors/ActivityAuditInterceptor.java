@@ -16,8 +16,8 @@ import com.enablix.content.approval.ContentApprovalUtil;
 import com.enablix.content.approval.model.ContentApproval;
 import com.enablix.content.approval.model.ContentDetail;
 import com.enablix.core.activity.audit.ActivityTrackingContext;
+import com.enablix.core.domain.activity.Activity.ActivityType;
 import com.enablix.core.domain.activity.ActivityChannel.Channel;
-import com.enablix.core.domain.activity.ContentActivity.ContentActivityType;
 import com.enablix.core.domain.activity.ContentSuggestActivity;
 import com.enablix.services.util.ActivityLogger;
 import com.enablix.state.change.impl.ActionInterceptorAdapter;
@@ -26,13 +26,13 @@ import com.enablix.state.change.model.ActionInput;
 @Component
 public class ActivityAuditInterceptor extends ActionInterceptorAdapter<ContentDetail, ContentApproval> {
 
-	private static final Map<String, ContentActivityType> actionToActivityMap = new HashMap<>();
+	private static final Map<String, ActivityType> actionToActivityMap = new HashMap<>();
 	
 	static {
-		actionToActivityMap.put(ACTION_APPROVE, ContentActivityType.CONTENT_SUGGEST_APPROVED);
-		actionToActivityMap.put(ACTION_EDIT, ContentActivityType.CONTENT_SUGGEST_EDIT);
-		actionToActivityMap.put(ACTION_REJECT, ContentActivityType.CONTENT_SUGGEST_REJECT);
-		actionToActivityMap.put(ACTION_WITHDRAW, ContentActivityType.CONTENT_SUGGEST_WITHDRAW);
+		actionToActivityMap.put(ACTION_APPROVE, ActivityType.CONTENT_SUGGEST_APPROVED);
+		actionToActivityMap.put(ACTION_EDIT, ActivityType.CONTENT_SUGGEST_EDIT);
+		actionToActivityMap.put(ACTION_REJECT, ActivityType.CONTENT_SUGGEST_REJECT);
+		actionToActivityMap.put(ACTION_WITHDRAW, ActivityType.CONTENT_SUGGEST_WITHDRAW);
 	}
 	
 	
@@ -40,18 +40,18 @@ public class ActivityAuditInterceptor extends ActionInterceptorAdapter<ContentDe
 	public void onActionComplete(String actionName, ActionInput actionIn, ContentApproval recording) {
 		
 		ContentSuggestActivity activity = ContentApprovalUtil.createAuditActivityInstance(
-				recording, mapContentActivityType(actionName, recording));
+				recording, mapActivityType(actionName, recording));
 		
 		Channel channel = ActivityTrackingContext.get().getActivityChannel(Channel.WEB);
 		ActivityLogger.auditContentActivity(activity, channel);
 	}
 	
-	private ContentActivityType mapContentActivityType(String actionName, ContentApproval recording) {
+	private ActivityType mapActivityType(String actionName, ContentApproval recording) {
 		
 		switch (actionName) {
 			case ACTION_SUBMIT:
 				return recording.getObjectRef().isAddRequest() ? 
-						ContentActivityType.CONTENT_ADD_SUGGEST : ContentActivityType.CONTENT_UPDATE_SUGGEST;
+						ActivityType.CONTENT_ADD_SUGGEST : ActivityType.CONTENT_UPDATE_SUGGEST;
 			default:
 				return actionToActivityMap.get(actionName);
 		}

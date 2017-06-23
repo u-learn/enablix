@@ -3,26 +3,19 @@ package com.enablix.core.domain.activity;
 public class UserAccountActivity extends Activity {
 
 	public enum AccountActivityType {
-		LOGIN, LOGOUT,SLACK_AUTH,SLACK_UNAUTH
+		LOGIN, LOGOUT, SLACK_AUTH, SLACK_UNAUTH
 	}
 
-	private AccountActivityType accountActivityType;
-	
 	private String ipAddress;
 	
-	public UserAccountActivity(AccountActivityType accountActivityType) {
-		super(Category.USER_ACCOUNT);
-		this.accountActivityType = accountActivityType;
+	protected UserAccountActivity() {
+		// for ORM
 	}
 	
-	public AccountActivityType getAccountActivityType() {
-		return accountActivityType;
+	public UserAccountActivity(ActivityType accountActivityType) {
+		super(Category.USER_ACCOUNT, accountActivityType);
 	}
-
-	public void setAccountActivityType(AccountActivityType accountActivityType) {
-		this.accountActivityType = accountActivityType;
-	}
-
+	
 	public String getIpAddress() {
 		return ipAddress;
 	}

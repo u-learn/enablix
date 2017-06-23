@@ -3,13 +3,13 @@ package com.enablix.content.approval;
 import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.content.approval.model.ContentApproval;
 import com.enablix.content.approval.model.ContentDetail;
+import com.enablix.core.domain.activity.Activity.ActivityType;
 import com.enablix.core.domain.activity.ContentActivity.ContainerType;
-import com.enablix.core.domain.activity.ContentActivity.ContentActivityType;
 import com.enablix.core.domain.activity.ContentSuggestActivity;
 
 public class ContentApprovalUtil {
 
-	public static ContentSuggestActivity createAuditActivityInstance(ContentApproval content, ContentActivityType activityType) {
+	public static ContentSuggestActivity createAuditActivityInstance(ContentApproval content, ActivityType activityType) {
 		
 		ContentDetail objectRef = content.getObjectRef();
 

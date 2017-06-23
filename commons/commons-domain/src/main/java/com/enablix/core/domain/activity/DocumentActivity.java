@@ -8,12 +8,12 @@ public class DocumentActivity extends ContentAccessActivity {
 		// for ORM
 	}
 	
-	public DocumentActivity(ContentActivityType activityType, String itemIdentity, String containerQId, 
+	public DocumentActivity(ActivityType activityType, String itemIdentity, String containerQId, 
 			ContainerType containerType, String docIdentity, String itemTitle) {
 		this(activityType, itemIdentity, containerQId, containerType, docIdentity, null, null, null, itemTitle);
 	}
 
-	public DocumentActivity(ContentActivityType activityType, String itemIdentity, String containerQId, 
+	public DocumentActivity(ActivityType activityType, String itemIdentity, String containerQId, 
 			ContainerType containerType, String docIdentity, String contextName, String contextId, 
 			String contextTerm, String itemTitle) {
 		

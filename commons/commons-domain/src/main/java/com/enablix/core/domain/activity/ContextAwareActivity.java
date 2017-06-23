@@ -9,8 +9,12 @@ public abstract class ContextAwareActivity extends Activity implements ActivityC
 	private String contextName;
 	private String contextTerm;
 	
-	protected ContextAwareActivity(Category category) {
-		super(category);
+	protected ContextAwareActivity() {
+		// for ORM
+	}
+	
+	protected ContextAwareActivity(Category category, ActivityType activityType) {
+		super(category, activityType);
 	}
 
 	public String getActivityOrigin() {

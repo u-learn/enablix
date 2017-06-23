@@ -1,0 +1,20 @@
+<div class="filter-opt-cont">
+	<div class="filter-search" ng-show="options.length > 10">
+		<md-input-container md-no-float class="md-block md-icon-float">
+        	<input ng-model="searchText" placeholder="Search {{::filterDef.name}}">
+        	<md-icon md-font-icon="fa fa-search"></md-icon>
+      	</md-input-container>
+	</div>
+	<div class="filter-opts">
+		<div class="filter-opt" ng-repeat="opt in filtered = (options | filter: {label: searchText}) | limitTo: (currentOptLimit || filtered.length)">
+			<md-checkbox value="opt.id" ng-checked="optionExists(opt)" ng-click="toggleSelection(opt)">{{opt.label}}</md-checkbox>
+		</div>
+		<div class="more-opt" ng-if="currentOptLimit < filtered.length" ng-click="setOptLimit(undefined)">
+			<span>{{filtered.length - currentOptLimit}} More</span>
+		</div>
+		<div class="more-opt" ng-if="!currentOptLimit || (currentOptLimit > defaultOptLimit && currentOptLimit == filtered.length)" 
+				ng-click="setOptLimit(defaultOptLimit)">
+			<span>Show Less</span>
+		</div>
+	</div>
+</div>

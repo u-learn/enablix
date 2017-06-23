@@ -32,12 +32,12 @@ import com.enablix.commons.util.process.ProcessContext;
 import com.enablix.core.api.ContentDataRecord;
 import com.enablix.core.api.ContentDataRef;
 import com.enablix.core.api.TemplateFacade;
+import com.enablix.core.domain.activity.Activity.ActivityType;
 import com.enablix.core.domain.activity.ActivityAudit;
 import com.enablix.core.domain.activity.ActivityChannel;
 import com.enablix.core.domain.activity.ActivityChannel.Channel;
 import com.enablix.core.domain.activity.ContentShareActivity.ShareMedium;
 import com.enablix.core.domain.activity.UserAccountActivity;
-import com.enablix.core.domain.activity.UserAccountActivity.AccountActivityType;
 import com.enablix.core.domain.config.Configuration;
 import com.enablix.core.domain.slackdtls.SlackAccessToken;
 import com.enablix.core.system.repo.SlackAccessTokenRepository;
@@ -129,7 +129,7 @@ public class SlackServiceImpl implements SlackService {
 		if( slackTeamDtls!=null  && slackTeamDtls.getAccessToken() != null && !slackTeamDtls.getAccessToken().isEmpty()) {
 
 			SlackAccessToken slackAccessToken = saveUserSpecificToken(slackTeamDtls, userID);
-			auditUserActivity(AccountActivityType.SLACK_AUTH);
+			auditUserActivity(ActivityType.SLACK_AUTH);
 			return slackAccessToken;
 
 		} else {
@@ -141,7 +141,7 @@ public class SlackServiceImpl implements SlackService {
 		return EnvPropertiesUtil.getProperties().getServerUrl()+"/app.html#/account/slackdtls";
 	}
 
-	private void auditUserActivity(AccountActivityType activityType){
+	private void auditUserActivity(ActivityType activityType){
 
 		ActivityAudit slackActivity = new ActivityAudit();
 
@@ -294,7 +294,7 @@ public class SlackServiceImpl implements SlackService {
 	
 	private void deleteToken(SlackAccessToken slackAccessToken){
 		slackTokenRepo.delete(slackAccessToken);
-		auditUserActivity(AccountActivityType.SLACK_UNAUTH);
+		auditUserActivity(ActivityType.SLACK_UNAUTH);
 	}
 
 	@Override

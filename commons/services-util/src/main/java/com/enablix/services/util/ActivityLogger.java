@@ -10,6 +10,7 @@ import com.enablix.core.activity.audit.ActivityContextAware;
 import com.enablix.core.activity.audit.ActivityTrackingContext;
 import com.enablix.core.api.ContentDataRef;
 import com.enablix.core.domain.activity.Activity;
+import com.enablix.core.domain.activity.Activity.ActivityType;
 import com.enablix.core.domain.activity.ActivityAudit;
 import com.enablix.core.domain.activity.ActivityChannel;
 import com.enablix.core.domain.activity.ActivityChannel.Channel;
@@ -17,9 +18,7 @@ import com.enablix.core.domain.activity.Actor;
 import com.enablix.core.domain.activity.ContentAccessActivity;
 import com.enablix.core.domain.activity.ContentActivity;
 import com.enablix.core.domain.activity.ContentActivity.ContainerType;
-import com.enablix.core.domain.activity.ContentActivity.ContentActivityType;
 import com.enablix.core.domain.activity.ContentConnActivity;
-import com.enablix.core.domain.activity.ContentConnActivity.ContentConnActivityType;
 import com.enablix.core.domain.activity.ContentDownldURLCopy;
 import com.enablix.core.domain.activity.ContentPortalURLCopy;
 import com.enablix.core.domain.activity.ContentShareActivity;
@@ -73,13 +72,13 @@ public class ActivityLogger {
 		auditActivity(activityAudit);
 	}
 	
-	public static void auditContentActivity(ContentActivityType activityType,
+	public static void auditContentActivity(ActivityType activityType,
 			ContentDataRef dataRef, ContainerType containerType) {
 		Channel channel = ActivityTrackingContext.get().getActivityChannel(Channel.WEB);
 		auditContentActivity(activityType, dataRef, containerType, channel);
 	}
 	
-	public static void auditContentActivity(ContentActivityType activityType,
+	public static void auditContentActivity(ActivityType activityType,
 			ContentDataRef dataRef, ContainerType containerType, 
 			ActivityChannel.Channel activityChannel) {
 		
@@ -131,7 +130,7 @@ public class ActivityLogger {
 		auditActivity(activity);
 	}
 	
-	public static void auditDocDownload(ContentActivityType activityType, String contentQId,
+	public static void auditDocDownload(ActivityType activityType, String contentQId,
 			String contentIdentity, String docIdentity, Channel channel, 
 			String contextName, String contextId, String contextTerm, String contentTitle) {
 		
@@ -141,7 +140,7 @@ public class ActivityLogger {
 				contextId, contextTerm, contentTitle);
 	}
 	
-	public static void auditDocActivity(ContentActivityType activityType, String contentQId, 
+	public static void auditDocActivity(ActivityType activityType, String contentQId, 
 			String contentIdentity, String docIdentity, Channel channel, Actor actor,
 			String contextName, String contextId, String contextTerm, String contentTitle) {
 		
@@ -219,13 +218,12 @@ public class ActivityLogger {
 		
 	}
 	
-	public static void auditContentConnActivity(ContentTypeConnection contentConn, ContentConnActivityType activityType) {
+	public static void auditContentConnActivity(ContentTypeConnection contentConn, ActivityType activityType) {
 		
-		ContentConnActivity activity = new ContentConnActivity();
+		ContentConnActivity activity = new ContentConnActivity(activityType);
 		
 		activity.setItemIdentity(contentConn.getIdentity());
 		activity.setItemTitle(contentConn.getConnectionName());
-		activity.setActivityType(activityType);
 		
 		auditActivity(activity);
 	}

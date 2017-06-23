@@ -19,8 +19,8 @@ import com.enablix.content.approval.model.ContentApproval;
 import com.enablix.content.approval.model.ContentDetail;
 import com.enablix.content.approval.repo.ContentApprovalRepository;
 import com.enablix.core.activity.audit.ActivityTrackingContext;
+import com.enablix.core.domain.activity.Activity.ActivityType;
 import com.enablix.core.domain.activity.ActivityChannel.Channel;
-import com.enablix.core.domain.activity.ContentActivity.ContentActivityType;
 import com.enablix.services.util.ActivityLogger;
 import com.enablix.state.change.ActionException;
 import com.enablix.state.change.StateChangeWorkflowManager;
@@ -101,7 +101,7 @@ public class ContentApprovalController {
 		
 			ActivityLogger.auditContentActivity(
 					ContentApprovalUtil.createAuditActivityInstance(
-							content, ContentActivityType.CONTENT_SUGGEST_VIEW), 
+							content, ActivityType.CONTENT_SUGGEST_VIEW), 
 					channel);
 		}
 		

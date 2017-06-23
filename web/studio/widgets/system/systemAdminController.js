@@ -1,9 +1,11 @@
 enablix.studioApp.controller('SystemAdminController', 
-			['$scope', '$state', '$stateParams', '$rootScope', 'RESTService', 'StateUpdateService', 'ContentConnectionService',
-	function( $scope,   $state,   $stateParams,   $rootScope,   RESTService,   StateUpdateService,   ContentConnectionService) {
+			['$scope', '$state', '$stateParams', '$rootScope', 'RESTService', 'StateUpdateService', 'ContentConnectionService', 'AuditConfigService',
+	function( $scope,   $state,   $stateParams,   $rootScope,   RESTService,   StateUpdateService,   ContentConnectionService,   AuditConfigService) {
 		
 		$scope.$state = $state;
 		$scope.$stateParams = $state.params;
+		
+		AuditConfigService.init();
 		
 		$rootScope.$on('$stateChangeSuccess', 
 			function(event, toState, toParams, fromState, fromParams) {

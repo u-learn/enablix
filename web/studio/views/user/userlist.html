@@ -3,6 +3,9 @@
 		<a ng-click="addUser()" class="button button-add">Add new</a>
 		<h2 class="ng-binding">Users <span ng-if="userData">({{userData.length}})</span></h2>
 	</div>
+	<div class="data-filter-cont">
+		<ebx-data-filters heading="Filter" filters="filters" search-label="Go" on-search="onSearch" search-on-page-load="true"/>
+	</div>
 	<div class="cont">
 		<!-- <label>Search:</label><input class="form-control" ng-model="searchText"><br> -->
 		<table class="datatable">

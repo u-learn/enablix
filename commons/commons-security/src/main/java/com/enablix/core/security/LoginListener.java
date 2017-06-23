@@ -11,12 +11,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import com.enablix.commons.util.process.ProcessContext;
+import com.enablix.core.domain.activity.Activity.ActivityType;
 import com.enablix.core.domain.activity.ActivityAudit;
 import com.enablix.core.domain.activity.ActivityChannel;
 import com.enablix.core.domain.activity.ActivityChannel.Channel;
 import com.enablix.core.domain.activity.RegisteredActor;
 import com.enablix.core.domain.activity.UserAccountActivity;
-import com.enablix.core.domain.activity.UserAccountActivity.AccountActivityType;
 import com.enablix.core.domain.security.authorization.UserProfile;
 import com.enablix.core.domain.tenant.Tenant;
 import com.enablix.core.domain.user.User;
@@ -45,7 +45,7 @@ public class LoginListener implements ApplicationListener<AuthenticationSuccessE
 
 		ActivityAudit userLogin = new ActivityAudit();
 
-		UserAccountActivity userLoginActvy = new UserAccountActivity(AccountActivityType.LOGIN);
+		UserAccountActivity userLoginActvy = new UserAccountActivity(ActivityType.LOGIN);
 		userLogin.setActivity(userLoginActvy);
 
 		userLogin.setActivityTime(Calendar.getInstance().getTime());

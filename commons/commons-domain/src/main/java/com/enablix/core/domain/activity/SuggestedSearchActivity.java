@@ -2,18 +2,20 @@ package com.enablix.core.domain.activity;
 
 import java.util.Map;
 
-public class SuggestedSearchActivity extends ContextAwareActivity {
+public class SuggestedSearchActivity extends BaseSearchActivity {
 
 	private String suggestionType;
 	
 	private Map<String, String> suggestion;
 	
-	private String searchTerm;
-	
 	private String typedText;
 	
-	public SuggestedSearchActivity() {
-		super(Category.SEARCH);
+	protected SuggestedSearchActivity() {
+		super(ActivityType.SUGGESTED_SEARCH, null);
+	}
+	
+	public SuggestedSearchActivity(String searchTerm) {
+		super(ActivityType.SUGGESTED_SEARCH, searchTerm);
 	}
 
 	public String getSuggestionType() {
@@ -30,14 +32,6 @@ public class SuggestedSearchActivity extends ContextAwareActivity {
 
 	public void setSuggestion(Map<String, String> suggestion) {
 		this.suggestion = suggestion;
-	}
-
-	public String getSearchTerm() {
-		return searchTerm;
-	}
-
-	public void setSearchTerm(String searchTerm) {
-		this.searchTerm = searchTerm;
 	}
 
 	public String getTypedText() {

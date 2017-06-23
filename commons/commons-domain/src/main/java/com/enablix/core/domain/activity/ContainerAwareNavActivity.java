@@ -8,8 +8,8 @@ public class ContainerAwareNavActivity extends NavigationActivity {
 		// for ORM
 	}
 	
-	public ContainerAwareNavActivity(String pageName, String containerQId) {
-		super(pageName);
+	public ContainerAwareNavActivity(ActivityType activityType, String pageName, String containerQId) {
+		super(activityType, pageName);
 		this.containerQId = containerQId;
 	}
 

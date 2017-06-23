@@ -14,7 +14,8 @@ function($compile,   $timeout,   UserPreferenceService,   Notification) {
 			onSearch:'=?',
 			onReset: '=?',
 			prefValuesKey: "=?",
-			layout: "@"
+			layout: "@",
+			hideFiltersWithNoOptions: "@"
 		},
 		link: function(scope, element, attrs) {
 			
@@ -24,6 +25,7 @@ function($compile,   $timeout,   UserPreferenceService,   Notification) {
 			scope.searchLabel = scope.searchLabel || "Search";
 			scope.filterValues = scope.filterValues || {};
 			scope.layout = scope.layout || "panel";
+			scope.hideFiltersWithNoOptions = scope.hideFiltersWithNoOptions || false;
 
 			scope.showSaveAsDefault = !isNullOrUndefined(scope.prefValuesKey);
 			
@@ -154,6 +156,30 @@ function($compile,   $timeout,   UserPreferenceService,   Notification) {
 			
 			if (scope.searchOnPageLoad) {
 				scope.onSearchAction();
+			}
+			
+			scope.toggleFilterContainer = function($event) {
+				var elem = $event.currentTarget;
+				if ($event.target.nodeName != 'A' && $event.target.nodeName != 'SPAN') {
+					$(elem).toggleClass('closed');
+					$(elem).next().slideToggle('fast');
+				}
+			};
+			
+			if (scope.hideFiltersWithNoOptions) {
+				scope.$on("msf:opt-init-complete", function(event, _initData) {
+					
+					if (_initData.options.length == 0) {
+						
+						for (var i = 0; i < scope.filters.length; i++) {
+							if (scope.filters[i] === _initData.filterDef) {
+								scope.filters.splice(i, 1);
+								break;
+							}
+						}
+						
+					}
+				});
 			}
 			
 			// the angular multi-select dropdown does not work if it is initially hidden

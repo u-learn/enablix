@@ -28,7 +28,7 @@ enablix.studioApp.factory('ContentCoverageReportDef',
 									}
 								});
 							}
-						})
+						});
 						
 					},
 					downloadReport : function() {

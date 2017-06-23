@@ -36,10 +36,12 @@ enablix.studioApp.controller('ReportDetailCtrl',
 		
 		if ($scope.reportDef) {
 			
+			$scope.reportDefaultFiltersPrefKey = "report." + $scope.reportDef.id + ".defaultFilterValues";
+			
 			if ($scope.reportDef.init) {
 				$scope.reportDef.init($scope);
 			}
-
+			
 			$scope.onReportSearch = function(_filterValues) {
 				fetchReportData(_filterValues);
 			};

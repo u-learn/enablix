@@ -2,18 +2,17 @@ package com.enablix.core.domain.activity;
 
 public class ContentConnActivity extends Activity {
 
-	public enum ContentConnActivityType {
-		ADDED, UPDATED, DELETED
-	}
-
 	private String itemTitle;
 	
 	private String itemIdentity;
 	
-	private ContentConnActivityType activityType;
-
-	public ContentConnActivity() {
-		super(Category.CONTENT_CONNECTION);
+	@SuppressWarnings("unused")
+	private ContentConnActivity() {
+		// for ORM
+	}
+	
+	public ContentConnActivity(ActivityType activityType) {
+		super(Category.CONTENT_CONNECTION, activityType);
 	}
 	
 	public String getItemTitle() {
@@ -32,12 +31,4 @@ public class ContentConnActivity extends Activity {
 		this.itemIdentity = itemIdentity;
 	}
 
-	public ContentConnActivityType getActivityType() {
-		return activityType;
-	}
-
-	public void setActivityType(ContentConnActivityType activityType) {
-		this.activityType = activityType;
-	}
-	
 }

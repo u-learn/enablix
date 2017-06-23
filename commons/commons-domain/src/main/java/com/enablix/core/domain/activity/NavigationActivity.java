@@ -6,11 +6,10 @@ public class NavigationActivity extends ContextAwareActivity {
 	
 	protected NavigationActivity() {
 		// for ORM
-		super(Category.NAVIGATION);
 	}
 	
-	public NavigationActivity(String pageName) {
-		this();
+	public NavigationActivity(ActivityType activityType, String pageName) {
+		super(Category.NAVIGATION, activityType);
 		this.pageName = pageName;
 	}
 

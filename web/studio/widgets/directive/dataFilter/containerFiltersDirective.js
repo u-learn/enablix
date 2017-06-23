@@ -75,8 +75,13 @@ function(ContentTemplateService,   $q) {
 				});
 				
 				scope.filterDefs = filterDefs;
-				
 				scope.$emit("cont-filter:filter-init-complete", filterDefs);
+				
+				scope.$watchCollection('filterDefs', function(newValue, oldValue) {
+					if (newValue != oldValue) {
+						scope.$emit("cont-filter:filter-init-complete", filterDefs);
+					}
+				})
 				
 			}
 			

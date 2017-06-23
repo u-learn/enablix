@@ -15,12 +15,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuccessHandler;
 
 import com.enablix.commons.util.process.ProcessContext;
+import com.enablix.core.domain.activity.Activity.ActivityType;
 import com.enablix.core.domain.activity.ActivityAudit;
 import com.enablix.core.domain.activity.ActivityChannel;
 import com.enablix.core.domain.activity.ActivityChannel.Channel;
 import com.enablix.core.domain.activity.RegisteredActor;
 import com.enablix.core.domain.activity.UserAccountActivity;
-import com.enablix.core.domain.activity.UserAccountActivity.AccountActivityType;
 import com.enablix.core.domain.security.authorization.UserProfile;
 import com.enablix.core.domain.user.User;
 import com.enablix.core.security.auth.repo.UserProfileRepository;
@@ -47,7 +47,7 @@ public class CustomLogoutSuccessHandler extends SimpleUrlLogoutSuccessHandler {
 
 			ActivityAudit userLogout = new ActivityAudit();
 
-			UserAccountActivity userLoginActvy = new UserAccountActivity(AccountActivityType.LOGOUT);
+			UserAccountActivity userLoginActvy = new UserAccountActivity(ActivityType.LOGOUT);
 			userLogout.setActivity(userLoginActvy);
 
 			userLogout.setActivityTime(Calendar.getInstance().getTime());

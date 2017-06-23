@@ -16,7 +16,7 @@ public class ContentShareActivity extends ContentActivity {
 			ContainerType containerType, String sharingId, ShareMedium sharedFrom, 
 			String sharedWith, String itemTitle) {
 		
-		super(itemIdentity, containerQId, containerType, ContentActivityType.CONTENT_SHARE, itemTitle);
+		super(itemIdentity, containerQId, containerType, ActivityType.CONTENT_SHARE, itemTitle);
 		
 		this.sharingId = sharingId;
 		this.sharedFrom = sharedFrom;
