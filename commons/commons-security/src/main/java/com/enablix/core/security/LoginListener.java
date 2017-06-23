@@ -43,6 +43,11 @@ public class LoginListener implements ApplicationListener<AuthenticationSuccessE
 
 		LOGGER.info("User {} logged-in successfully", ud.getUsername());
 
+		auditUserLogin(ud);
+	}
+
+	public void auditUserLogin(UserDetails ud) {
+		
 		ActivityAudit userLogin = new ActivityAudit();
 
 		UserAccountActivity userLoginActvy = new UserAccountActivity(ActivityType.LOGIN);
@@ -80,5 +85,7 @@ public class LoginListener implements ApplicationListener<AuthenticationSuccessE
 
 		}
 	}
+	
+	
 
 }

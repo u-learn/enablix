@@ -22,6 +22,9 @@ public class BasicAuthPersistedRememberMeServices extends PersistentTokenBasedRe
 	@Autowired
 	private RememberMeTokenArchive tokenArchive;
 	
+	@Autowired
+	private LoginListener loginListener;
+	
 	public BasicAuthPersistedRememberMeServices(String key, UserDetailsService userDetailsService,
 			MongoPersistentTokenRepository tokenRepository) {
 		super(key, userDetailsService, tokenRepository);
@@ -134,7 +137,11 @@ public class BasicAuthPersistedRememberMeServices extends PersistentTokenBasedRe
 					"Autologin failed due to data access problem");
 		}
 
-		return getUserDetailsService().loadUserByUsername(token.getUsername());
+		UserDetails userDetails = getUserDetailsService().loadUserByUsername(token.getUsername());
+		
+		loginListener.auditUserLogin(userDetails);
+		
+		return userDetails;
 	}
 
 	private void addCookie(PersistentRememberMeToken token, HttpServletRequest request,
