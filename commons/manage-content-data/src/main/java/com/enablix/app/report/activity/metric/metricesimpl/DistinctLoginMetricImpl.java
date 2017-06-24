@@ -22,7 +22,7 @@ import com.enablix.core.domain.report.activitymetric.MetricStats;
 @Component
 public class DistinctLoginMetricImpl extends ActivityMetric {
 
-	private Criteria noOfLoginsCriteria = Criteria.where("activity.accountActivityType").is("LOGIN");
+	private Criteria noOfLoginsCriteria = Criteria.where("activity.activityType").is("LOGIN");
 
 	private final String collectionName = "ebx_activity_audit";
 
@@ -63,7 +63,7 @@ public class DistinctLoginMetricImpl extends ActivityMetric {
 		
 		Aggregation aggregation = newAggregation(
 				match(Criteria.where("createdAt").gte(startDate).lte(endDate)
-							  .and("activity.accountActivityType").is("LOGIN")),
+							  .and("activity.activityType").is("LOGIN")),
 				group("dateDimension.dayOfYear", "dateDimension.year", "actor.userId").count().as("sum"),
 				group("$_id.dayOfYear", "$_id.year").count().as("sum").count().as("sum"),
 				Aggregation.project(Fields.from(
@@ -79,7 +79,7 @@ public class DistinctLoginMetricImpl extends ActivityMetric {
 		
 		Aggregation aggregation = newAggregation(
 				match(Criteria.where("createdAt").gte(startDate).lte(endDate)
-						 	  .and("activity.accountActivityType").is("LOGIN")), 
+						 	  .and("activity.activityType").is("LOGIN")), 
 				group("dateDimension.weekOfYear", "dateDimension.year", "actor.userId").count().as("sum"),
 				group("$_id.weekOfYear", "$_id.year").count().as("sum").count().as("sum"),
 				Aggregation.project(Fields.from(
@@ -95,7 +95,7 @@ public class DistinctLoginMetricImpl extends ActivityMetric {
 		
 		Aggregation aggregation = newAggregation(
 				match(Criteria.where("createdAt").gte(startDate).lte(endDate)
-							  .and("activity.accountActivityType").is("LOGIN")), 
+							  .and("activity.activityType").is("LOGIN")), 
 				group("dateDimension.monthOfYear", "dateDimension.year", "actor.userId").count().as("sum"),
 				group("$_id.monthOfYear", "$_id.year").count().as("sum").count().as("sum"),
 				Aggregation.project(Fields.from(

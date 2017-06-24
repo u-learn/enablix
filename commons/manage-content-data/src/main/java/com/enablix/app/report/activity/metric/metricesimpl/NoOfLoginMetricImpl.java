@@ -8,7 +8,7 @@ import com.enablix.commons.constants.AppConstants.MetricType;
 @Component
 public class NoOfLoginMetricImpl extends ActivityMetric {
 
-	private Criteria noOfLoginsCriteria = Criteria.where("activity.accountActivityType").is("LOGIN");
+	private Criteria noOfLoginsCriteria = Criteria.where("activity.activityType").is("LOGIN");
 
 	@Override
 	public MetricType metricType() {
