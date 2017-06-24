@@ -23,9 +23,10 @@ dbs.forEach(function(database) {
         
     	db = db.getSiblingDB(database.name);
         
-        db.ebx_activity_audit.updateMany(
+        db.ebx_activity_audit.update(
     		{ },
-    		{ $rename: {"activity.accountActivityType" : "activity.activityType"} }
+    		{ $rename: {"activity.accountActivityType" : "activity.activityType"} },
+    		{ multi: true}
         );
         
         db.ebx_activity_audit.update(
