@@ -28,19 +28,22 @@ dbs.forEach(function(database) {
     		{ $rename: {"activity.accountActivityType" : "activity.activityType"} }
         );
         
-        db.ebx_activity_audit.updateMany(
+        db.ebx_activity_audit.update(
         	{ "activity.category" : "NAVIGATION" },
-        	{ $set: { "activity.activityType" : "NAV_EXTERNAL_LINK" }}
+        	{ $set: { "activity.activityType" : "NAV_EXTERNAL_LINK" }},
+        	{ multi: true}
         );
         
-        db.ebx_activity_audit.updateMany(
+        db.ebx_activity_audit.update(
         	{ "activity._class" : "com.enablix.core.domain.activity.SearchActivity" },
-        	{ $set: { "activity.activityType" : "SEARCH_FREE_TEXT" }}
+        	{ $set: { "activity.activityType" : "SEARCH_FREE_TEXT" }},
+        	{ multi: true}
         );
         
         db.ebx_activity_audit.updateMany(
         	{ "activity._class" : "com.enablix.core.domain.activity.SuggestedSearchActivity" },
-        	{ $set: { "activity.activityType" : "SUGGESTED_SEARCH" }}
+        	{ $set: { "activity.activityType" : "SUGGESTED_SEARCH" }},
+        	{ multi: true}
         );
     }
 });
