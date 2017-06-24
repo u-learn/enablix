@@ -24,16 +24,7 @@ enablix.studioApp.controller('DocPreviewActionCtrl',
 		}
 		
 		$scope.openPreviewWindow = function() {
-			var modalInstance = $modal.open({
-			      templateUrl: 'widgets/directive/doc/preview/docPreviewWindow.html',
-			      //size: 'sm', // 'sm', 'lg'
-			      controller: 'DocPreviewCtrl',
-			      resolve: {
-			    	  docMetadata: function() {
-			    		  return $scope.docMd;
-			    	  }
-			      }
-			    });
+			DocPreviewService.openPreviewWindow($scope.docMd);
 		};
 				
 	}]);

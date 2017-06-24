@@ -41,7 +41,7 @@ enablix.studioApp.controller('ContentSuggestCtrl',
 						function(data) {
 							//alert("Update successfully!");
 							Notification.primary("Updated successfully!");
-							PubSub.publish(ContentDataService.contentChangeEventId(containerQId), dataToSave);
+							PubSub.publish(ContentDataService.contentChangeEventId(containerQId), data);
 							$modalInstance.close();
 						}, 
 						function (data) {
@@ -56,7 +56,7 @@ enablix.studioApp.controller('ContentSuggestCtrl',
 						parentIdentity, dataToSave, 
 						function(data) {
 							Notification.primary("Saved successfully!");
-							PubSub.publish(ContentDataService.contentChangeEventId(containerQId), dataToSave);
+							PubSub.publish(ContentDataService.contentChangeEventId(containerQId), data);
 							$modalInstance.close();
 						}, 
 						function (data) {

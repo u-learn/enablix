@@ -1,7 +1,7 @@
 enablix.studioApp.factory('DocPreviewService', 
 	[
-	 			'RESTService', '$q',
-	 	function(RESTService,   $q) {
+	 			'RESTService', '$q', '$modal',
+	 	function(RESTService,   $q,   $modal) {
 	 			
 	 		var handlers = [];
 	 		
@@ -22,11 +22,16 @@ enablix.studioApp.factory('DocPreviewService',
 	 			this.htmlType = function() {
 	 				return TYPE_HTML;
 	 			};
+
+	 			this.smallThumbnailUrl = function(_docMd) {
+	 				return null;
+	 			}
 	 			
 	 			this.canHandleDoc = function(_docMd) {
 	 				return (_docMd.contentType && _docMd.contentType == 'application/pdf') 
 	 						|| (_docMd.name && _docMd.name.toLowerCase().endsWith(".pdf"));
 	 			};
+	 			
 	 		};
 	 		
 	 		function ImagePreviewHandler() {
@@ -42,6 +47,10 @@ enablix.studioApp.factory('DocPreviewService',
 	 			this.htmlType = function() {
 	 				return TYPE_HTML;
 	 			};
+	 			
+	 			this.smallThumbnailUrl = function(_docMd) {
+	 				return "/doc/preview/" + _docMd.identity;
+	 			}
 	 			
 	 			this.canHandleDoc = function(_docMd) {
 	 				return _docMd.contentType && _docMd.contentType.indexOf("image") >= 0;
@@ -61,6 +70,10 @@ enablix.studioApp.factory('DocPreviewService',
 	 			this.htmlType = function() {
 	 				return TYPE_ANGULAR_HTML;
 	 			};
+	 			
+	 			this.smallThumbnailUrl = function(_docMd) {
+	 				return "/doc/sthmbnl/" + _docMd.identity + "/";
+	 			}
 	 			
 	 			this.canHandleDoc = function(_docMd) {
 	 				return _docMd.previewStatus == 'AVAILABLE';
@@ -99,10 +112,24 @@ enablix.studioApp.factory('DocPreviewService',
 	 			return deferred.promise;
 	 		}
 	 		
+	 		var openPreviewWindow = function(_docMd) {
+				var modalInstance = $modal.open({
+				      templateUrl: 'widgets/directive/doc/preview/docPreviewWindow.html',
+				      //size: 'sm', // 'sm', 'lg'
+				      controller: 'DocPreviewCtrl',
+				      resolve: {
+				    	  docMetadata: function() {
+				    		  return _docMd;
+				    	  }
+				      }
+				    });
+			};
+	 		
 	 		return {
 	 			getPreviewHandler : getPreviewHandler,
 	 			getPreviewData : getPreviewData,
-	 			checkPreviewAvailable: checkPreviewAvailable
+	 			checkPreviewAvailable: checkPreviewAvailable,
+	 			openPreviewWindow: openPreviewWindow
 	 		};
 	 	}
 	 ]);

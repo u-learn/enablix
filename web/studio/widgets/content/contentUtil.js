@@ -1,7 +1,7 @@
 enablix.studioApp.factory('ContentUtil', 
 	[
-	 	'RESTService', 'ContentTemplateService',
-	 	function(RESTService, ContentTemplateService) {
+	 			'RESTService', 'ContentTemplateService', 'DocPreviewService',
+	 	function(RESTService,   ContentTemplateService,   DocPreviewService) {
 	 		
 			var resolveContainerInstanceLabel = function(_containerDef, _instanceData) {
 				
@@ -67,6 +67,11 @@ enablix.studioApp.factory('ContentUtil',
 						if (docInstance && docInstance.identity) {
 							_dataRecord.downloadDocIdentity = docInstance.identity;
 							_dataRecord.docMetadata = docInstance;
+							
+							var previewHandler = DocPreviewService.getPreviewHandler(docInstance);
+							if (previewHandler != null) {
+								_dataRecord.docThumbnailUrl = previewHandler.smallThumbnailUrl(docInstance);
+							}
 						}
 						
 					} else if (item.type == 'BOUNDED') {

@@ -14,7 +14,7 @@ function($compile,   $timeout,   UserPreferenceService,   Notification) {
 			onSearch:'=?',
 			onReset: '=?',
 			prefValuesKey: "=?",
-			layout: "@",
+			ebLayout: "@",
 			hideFiltersWithNoOptions: "@"
 		},
 		link: function(scope, element, attrs) {
@@ -193,7 +193,7 @@ function($compile,   $timeout,   UserPreferenceService,   Notification) {
 			
 		},
 		templateUrl: function(elem, attr) {
-			var layout = attr.layout || "panel";
+			var layout = attr.ebLayout || "panel";
 			return "widgets/directive/dataFilter/dataFilters-" + layout + ".html"
 		}
 	};

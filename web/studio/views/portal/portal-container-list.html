@@ -8,9 +8,10 @@
 			<eb-portal-breadcrumb></eb-portal-breadcrumb>
 			<div class="row">
 				<main class="col-md-8">							
-					<div class="block">
+					<div>
 						<eb-table table-headers="listHeaders" table-data="listData" row-click-fn="navToContentDetail" 
-									page-data="pageData" fetch-result-fn="fetchData" pagination-data="pagination"></eb-table>
+								eb-layout="{{$stateParams.layout}}" container-q-id="{{$stateParams.containerQId}}" 
+								page-data="pageData" fetch-result-fn="fetchData" pagination-data="pagination"></eb-table>
 					</div>
 				</main>
 				

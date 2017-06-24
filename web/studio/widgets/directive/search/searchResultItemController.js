@@ -6,6 +6,7 @@ enablix.studioApp.controller('SearchResultItemCtrl',
 			while (navItemPointer != null) {
 				$scope.resultItemQId = navItemPointer.qualifiedId;
 				$scope.resultItemIdentity = navItemPointer.identity;
+				$scope.containerLabel = navItemPointer.containerLabel;
 				navItemPointer = navItemPointer.next;
 			} 
 			

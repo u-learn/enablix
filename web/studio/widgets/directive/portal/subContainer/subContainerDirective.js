@@ -17,10 +17,14 @@ enablix.studioApp.directive('ebPortalSubContainer', [
 				multiListLimit: "@",
 				info: "=?",
 				category: "=?",
-				showLabel: "@"
+				showLabel: "@",
+				ebLayout: "@"
 			},
 			controller : 'PortalSubContainerCtrl',
-			templateUrl : "widgets/directive/portal/subContainer/subContainer-both.html",
+			templateUrl : function(elem, attr) {
+				var layout = attr.ebLayout || "default";
+				return "widgets/directive/portal/subContainer/subContainer-" + layout + ".html";
+			},
 			link: function(scope, element, attrs) {
 				scope.singleItemCard = scope.type === 'single';
 			}

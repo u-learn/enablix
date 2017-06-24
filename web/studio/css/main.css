@@ -1652,12 +1652,31 @@ a.content-suggest::after,
 	margin-top: -20px;
 }
 
+.search-result .block .flex .bar-action-icons {
+	margin-top: -1em;
+    float: none;
+    text-align: left;
+    margin-left: 0.6em;
+}
+
+eb-table .block .flex .bar-action-icons {
+	margin-top: 0.2em;
+    float: none;
+    text-align: left;
+    margin-left: 0.6em;
+}
+
 .search-result .block .bar-action-icons {
 	margin-top: -40px;
 }
 
 .bar-action-icons a {
 	/* color: #A2A9B1; */
+}
+
+.head .content-type {
+	font-size: 0.75em;
+	color: #1d6aad;
 }
 
 .dataItem h4 {
@@ -2244,4 +2263,34 @@ md-checkbox .md-label {
 
 md-checkbox .md-icon {
 	transform: scale(0.7); 
+}
+
+.record-tile {
+	border-width: 1px 1px 1px 0px;
+    border-color: #dce1e5;
+    border-style: solid;
+}
+
+.record-tile .doc-thumbnail, .record-tile .record-data {
+	border-width: 0px 0px 0px 1px;
+	border-color: #dce1e5;
+    border-style: solid;
+}
+
+.record-tile .record-data .head {
+    border-width: 0px 0px 1px 0px;
+}
+
+.record-tile .record-data .cont {
+    border-width: 0px;
+}
+
+.doc-thumbnail {
+	width: 120px;
+	text-align: center;
+}
+
+.doc-thumbnail img {
+	max-width: 120px;
+	max-height: 120px;
 }

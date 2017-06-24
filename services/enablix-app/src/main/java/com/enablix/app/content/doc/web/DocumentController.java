@@ -177,7 +177,37 @@ public class DocumentController {
     		response.sendError(HttpServletResponse.SC_NOT_FOUND);
     	}
     	
-	}    
+	}   
+    
+    @RequestMapping(value = "/sthmbnl/{docIdentity}/", method = {RequestMethod.GET})
+   	public void getPreviewDataSmallThumbnail(HttpServletRequest request,
+               HttpServletResponse response, 
+               @PathVariable String docIdentity ) throws IOException {
+       	
+       	IDocument part = previewService.getDocSmallThumbnail(docIdentity);
+       	
+       	if (part != null) {
+               sendDownloadResponse(response, part);
+       	} else {
+       		response.sendError(HttpServletResponse.SC_NOT_FOUND);
+       	}
+       	
+   	}
+    
+    @RequestMapping(value = "/lthmbnl/{docIdentity}/", method = {RequestMethod.GET})
+   	public void getPreviewDataLargeThumbnail(HttpServletRequest request,
+               HttpServletResponse response, 
+               @PathVariable String docIdentity) throws IOException {
+       	
+       	IDocument part = previewService.getDocLargeThumbnail(docIdentity);
+       	
+       	if (part != null) {
+               sendDownloadResponse(response, part);
+       	} else {
+       		response.sendError(HttpServletResponse.SC_NOT_FOUND);
+       	}
+       	
+   	}
     
     
 	/**

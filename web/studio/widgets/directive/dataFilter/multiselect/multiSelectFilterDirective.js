@@ -8,7 +8,7 @@ function($compile,   Notification) {
 			filterDef: '=',
 			selectedValues: '=',
 			singleSelect: '=',
-			layout: "@",
+			ebLayout: "@",
 			onSelectionChange: '=?'
 		},
 		link: function(scope, element, attrs) {
@@ -105,7 +105,7 @@ function($compile,   Notification) {
 			
 		},
 		templateUrl: function(elem, attr) {
-			var layout = attr.layout || "dropdown";
+			var layout = attr.ebLayout || "dropdown";
 			return "widgets/directive/dataFilter/multiselect/multiSelect-" + layout + ".html"
 		}
 	};

@@ -1,6 +1,10 @@
 enablix.studioApp.controller('PortalSubContainerCtrl',
-			['$scope', '$state', 'StateUpdateService', 'UserService', '$stateParams', 'PubSub', 'ContentTemplateService', 'ContentDataService', 'ContentUtil', 'Notification','shareContentModalWindow', 'ActivityAuditService', 'QIdUtil',
-    function ($scope,   $state,   StateUpdateService,   UserService,   $stateParams,   PubSub,   ContentTemplateService,   ContentDataService,   ContentUtil,   Notification,    shareContentModalWindow,   ActivityAuditService,   QIdUtil) {
+			['$scope', '$state', 'StateUpdateService', 'UserService', '$stateParams', 'PubSub', 'ContentTemplateService', 'ContentDataService', 'ContentUtil', 'Notification', 'shareContentModalWindow', 'ActivityAuditService', 'QIdUtil', 'DocPreviewService',
+    function ($scope,   $state,   StateUpdateService,   UserService,   $stateParams,   PubSub,   ContentTemplateService,   ContentDataService,   ContentUtil,   Notification,   shareContentModalWindow,   ActivityAuditService,   QIdUtil,   DocPreviewService) {
+		
+		$scope.openPreviewWindow = function(_docMd) {
+			DocPreviewService.openPreviewWindow(_docMd);
+		};		
 		
 		$scope.toggleContainer = function($event) {
 			var elem = $event.currentTarget;
@@ -165,7 +169,7 @@ enablix.studioApp.controller('PortalSubContainerCtrl',
 						dataRecord = dataRecord.content;
 					}
 					
-					var dataRecord = isArray(dataRecord) && dataRecord.length > 0 ? dataRecord[0] : null;
+					var dataRecord = isArray(dataRecord) && dataRecord.length > 0 ? dataRecord[0] : dataRecord;
 					setUpSingleRecordData(dataRecord);
 					
 				} else {
@@ -261,13 +265,18 @@ enablix.studioApp.controller('PortalSubContainerCtrl',
 		
 		$scope.render();
 		
-		PubSub.subscribe(ContentDataService.contentChangeEventId($scope.subContainerQId), function() {
+		PubSub.subscribe(ContentDataService.contentChangeEventId($scope.subContainerQId), function(data, topic) {
 			
 			if ($scope.category === 'content-stack') {
+				
 				StateUpdateService.reload();
+				
 			} else {
-				$scope.info = null; // setting it to null so that we pick up fresh data from database
-				$scope.render();
+				
+				if (!$scope.singleItemCard || $scope.bodyData.identity == data.identity) {
+					$scope.info = null; // setting it to null so that we pick up fresh data from database
+					$scope.render();
+				}
 			}
 		});
 		

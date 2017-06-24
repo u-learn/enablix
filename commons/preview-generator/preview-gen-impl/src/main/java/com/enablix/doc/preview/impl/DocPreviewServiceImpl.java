@@ -2,6 +2,7 @@ package com.enablix.doc.preview.impl;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.function.Function;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -104,6 +105,32 @@ public class DocPreviewServiceImpl implements DocPreviewService {
 		}
 		
 		return resultDoc;
+	}
+
+	@Override
+	public IDocument getDocSmallThumbnail(String docIdentity) throws IOException {
+		return getThumbnail(docIdentity, (docPD) -> docPD.getSmallThumbnail());
+	}
+
+	private IDocument getThumbnail(String docIdentity, Function<DocPreviewData, DocInfo> getThumbnailDoc) throws IOException {
+		
+		IDocument resultDoc = null;
+		DocPreviewData previewData = getPreviewData(docIdentity);
+		
+		if (previewData != null) {
+
+			DocInfo docInfo = getThumbnailDoc.apply(previewData);
+			if (docInfo != null) {
+				resultDoc = docManager.load(docInfo, previewStoreType());
+			}
+		}
+		
+		return resultDoc;
+	}
+
+	@Override
+	public IDocument getDocLargeThumbnail(String docIdentity) throws IOException {
+		return getThumbnail(docIdentity, (docPD) -> docPD.getLargeThumbnail());
 	}
 	
 }

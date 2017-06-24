@@ -73,9 +73,13 @@ enablix.studioApp.directive('ebxSearchBox', [
 									atContextTerm: searchText
 								});
 								
-								if (node.type === "BizDimensionNode" || node.type === 'BizContentNode') {
+								if (node.type === "BizDimensionNode") {
 									
 									StateUpdateService.goToPortalContainerList(uri.containerQId);
+									
+								} else if (node.type === 'BizContentNode') {
+									
+									StateUpdateService.goToPortalContainerList(uri.containerQId, "tile");
 									
 								} else if (node.type === "BizDimEntSubNode") {
 							

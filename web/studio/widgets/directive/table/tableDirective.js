@@ -36,7 +36,9 @@ function(StateUpdateService) {
 			 *		}
 			 *	};
 			 */
-			paginationData: "=?"
+			paginationData: "=?",
+			ebLayout: "@",
+			containerQId: "@"
 		},
 		link: function(scope, element, attrs) {
 			scope.navToRowDetail = function(elementIdentity) {
@@ -92,8 +94,11 @@ function(StateUpdateService) {
 		    	}
 		    }
 
+		    var layout = scope.ebLayout || "default";
+		    scope.contentUrl = "widgets/directive/table/" + layout + "Table.html";
+		    
 		},
 
-		templateUrl: "widgets/directive/table/defaultTable.html"
+		template: '<div ng-include="contentUrl"></div>'
 	};
 }]);

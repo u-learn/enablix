@@ -1,0 +1,26 @@
+<div class="block record-tile" ng-if="showSubContainer" layout="row">
+	<div class="doc-thumbnail" ng-if="bodyData.docThumbnailUrl" flex="none"><img ng-src="{{bodyData.docThumbnailUrl}}" ng-click="openPreviewWindow(bodyData.docMetadata)"></img></div>
+	<div class="record-data" flex>
+		<div class="head" layout="row">
+			<h2 flex="none">{{::bodyData.headingLabel}}</h2>
+			<div class="dropdown" flex>
+				<div class="action-icons bar-action-icons">
+					<span ng-if="bodyData.downloadDocIdentity" class="dropdown">
+						<ebx-doc-context-menu content-record="bodyData"></ebx-doc-context-menu>
+					</span>
+					<ebx-suggest-content content-q-id="subContainerQId" parent-identity="parentIdentity" content-identity="bodyData.identity"></ebx-suggest-content>
+					<ebx-share-context-menu context-data="bodyData" content-q-id="subContainerQId"></ebx-share-context-menu>
+				</div>
+			</div>
+			<h2 class="content-type" flex="none">{{::subContainerLabel}}</h2>
+		</div>
+		<div class="cont clearfix">	
+			<table class="infotable" >		
+				<tr ng-repeat="header in headers track by header.id" ng-switch="header.dataType" ng-if="::isRenderable(header, bodyData[header.key])">
+					<th>{{::header.label}}</th>
+					<td><eb-render-data content-value="bodyData[header.key]" content-def="header" content-record="bodyData" show-doc-link="false"/></td>
+				</tr>
+		  	</table>
+		</div>
+	</div>
+</div>

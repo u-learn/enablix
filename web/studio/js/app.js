@@ -254,10 +254,14 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvi
 			noBreadcrumbs: true
 		})
 		.state('portal.containerlist', {
-			url: '/containerlist/{containerQId}?page',
+			url: '/containerlist/{containerQId}?page&layout',
 			params: {
 				page: {
 					value: '0',
+					squash: true
+				},
+				layout: {
+					value: 'default',
 					squash: true
 				}
 			},

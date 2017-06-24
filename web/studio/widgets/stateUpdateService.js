@@ -127,9 +127,11 @@ enablix.studioApp.factory('StateUpdateService',
 	 			});
 	 		}
 	 		
-	 		var goToPortalContainerList = function(_containerQId) {
+	 		var goToPortalContainerList = function(_containerQId, _layout) {
+	 			var layout = _layout || "default";
 	 			$state.go("portal.containerlist", {
-	 				"containerQId": _containerQId
+	 				"containerQId": _containerQId,
+	 				"layout": layout
 	 			});
 	 		}
 	 		
