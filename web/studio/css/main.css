@@ -278,6 +278,11 @@ form .row .form-label:first-child {
 	
 }
 
+.curr-page {
+	padding: 10px 12px;
+    font-size: 0.875em;
+}
+
 
 /**/
 /* buttons */
@@ -1677,6 +1682,7 @@ eb-table .block .flex .bar-action-icons {
 .head .content-type {
 	font-size: 0.75em;
 	color: #1d6aad;
+	text-align: right;
 }
 
 .dataItem h4 {
@@ -2286,11 +2292,16 @@ md-checkbox .md-icon {
 }
 
 .doc-thumbnail {
-	width: 120px;
+	width: 160px;
 	text-align: center;
 }
 
 .doc-thumbnail img {
-	max-width: 120px;
-	max-height: 120px;
+	max-width: 140px;
+	max-height: 140px;
+	margin: 10px;
+	border-width: 2px 1px;
+	border-color: #dce1e5;
+    border-style: solid;
+    border-radius: 4px;
 }

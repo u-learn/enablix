@@ -3,7 +3,7 @@
 	<div class="record-data" flex>
 		<div class="head" layout="row">
 			<h2 flex="none">{{::bodyData.headingLabel}}</h2>
-			<div class="dropdown" flex>
+			<div class="dropdown" flex="none">
 				<div class="action-icons bar-action-icons">
 					<span ng-if="bodyData.downloadDocIdentity" class="dropdown">
 						<ebx-doc-context-menu content-record="bodyData"></ebx-doc-context-menu>
@@ -12,7 +12,7 @@
 					<ebx-share-context-menu context-data="bodyData" content-q-id="subContainerQId"></ebx-share-context-menu>
 				</div>
 			</div>
-			<h2 class="content-type" flex="none">{{::subContainerLabel}}</h2>
+			<h2 class="content-type" flex>{{::subContainerLabel}}</h2>
 		</div>
 		<div class="cont clearfix">	
 			<table class="infotable" >		
