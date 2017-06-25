@@ -1,7 +1,7 @@
-Array.prototype.contains = function(obj) {
+Array.prototype.contains = function(obj, predicate) {
     var i = this.length;
     while (i--) {
-        if (this[i] === obj) {
+        if (predicate ? predicate(this[i], obj) : this[i] === obj) {
             return true;
         }
     }

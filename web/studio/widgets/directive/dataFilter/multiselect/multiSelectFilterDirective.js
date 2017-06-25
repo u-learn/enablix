@@ -34,8 +34,20 @@ function($compile,   Notification) {
 			if (scope.filterDef.masterList) {
 				
 				scope.filterDef.masterList().then(function(data) {
+					
 					scope.options = data;
+					
+					angular.forEach(scope.selectedValues, function(val) {
+						for (var i = 0; i < data.length; i++) {
+							if (data[i].id === val.id) {
+								val.label = data[i].label;
+								break;
+							}
+						}
+					});
+					
 					scope.$emit("msf:opt-init-complete", {filterDef: scope.filterDef, options: data});
+					
 				}, function(error) {
 					Notification.error({message: "Error retrieving data for " + scope.filterDef.name, delay: enablix.errorMsgShowTime});
 				});
@@ -73,7 +85,7 @@ function($compile,   Notification) {
 			
 			/* used for checkbox layout */
 			scope.optionExists = function(_selOpt) {
-				return scope.selectedValues.indexOf(_selOpt) > -1;
+				return scope.selectedValues.contains(_selOpt, function(o1, o2) { return (o1.id === o2.id); });
 			}
 			
 			scope.toggleSelection = function(_selOpt) {
@@ -100,8 +112,6 @@ function($compile,   Notification) {
 					checkAndUpdateModelValue();
 				}
 			}, true);
-			
-			
 			
 		},
 		templateUrl: function(elem, attr) {

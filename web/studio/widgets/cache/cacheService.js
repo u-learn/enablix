@@ -1,9 +1,12 @@
 enablix.studioApp.factory('CacheService', 
-	[	        'RESTService',
-	 	function(RESTService) {
+	 	function() {
 		
 			var cache = {};
 		
+			var logCache = function() {
+				console.log("cache: "); console.log(cache);
+			}
+			
 			var get = function(_cacheKey) {
 				return cache[_cacheKey];
 			};
@@ -13,7 +16,7 @@ enablix.studioApp.factory('CacheService',
 			};
 			
 			var remove = function(_cacheKey) {
-				cache[_cacheKey] = undefined;
+				delete cache[_cacheKey];
 			};
 			
 			return {
@@ -22,4 +25,4 @@ enablix.studioApp.factory('CacheService',
 				remove: remove
 			};
 	 	}
-	]);
+);

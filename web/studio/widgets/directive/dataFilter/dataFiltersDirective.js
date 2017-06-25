@@ -1,6 +1,6 @@
 enablix.studioApp.directive('ebxDataFilters', [
-        '$compile', '$timeout', 'UserPreferenceService', 'Notification',
-function($compile,   $timeout,   UserPreferenceService,   Notification) {
+        '$compile', '$timeout', '$location', 'UserPreferenceService', 'Notification', 'DataSearchService',
+function($compile,   $timeout,   $location,   UserPreferenceService,   Notification,   DataSearchService) {
 
 	return {
 		restrict: 'E',
@@ -15,7 +15,8 @@ function($compile,   $timeout,   UserPreferenceService,   Notification) {
 			onReset: '=?',
 			prefValuesKey: "=?",
 			ebLayout: "@",
-			hideFiltersWithNoOptions: "@"
+			hideFiltersWithNoOptions: "@",
+			persistSelection: "@"
 		},
 		link: function(scope, element, attrs) {
 			
@@ -26,10 +27,37 @@ function($compile,   $timeout,   UserPreferenceService,   Notification) {
 			scope.filterValues = scope.filterValues || {};
 			scope.layout = scope.layout || "panel";
 			scope.hideFiltersWithNoOptions = scope.hideFiltersWithNoOptions || false;
+			scope.persistSelection = scope.persistSelection || false;
 
 			scope.showSaveAsDefault = !isNullOrUndefined(scope.prefValuesKey);
 			
 			angular.copy(scope.filterValues, filterValuesCopy);
+
+			var readFiltersFromUrl = function() {
+				
+				var filterVals = DataSearchService.readUrlSearchFilters();
+				
+				angular.forEach(scope.filters, function(filter) {
+				
+					var value = filterVals[filter.id];
+					
+					if (value) {
+						
+						var filterVal = [];
+						
+						if (isString(value)) {
+							filterVal.push({id: value});
+						} else {
+							angular.forEach(value, function (val) {
+								filterVal.push({id: val});
+							});
+						}
+						
+						scope.filterValues[filter.id] = filterVal;
+					}
+				});
+			}
+			
 			
 			function getSearchFilterValues() {
 				
@@ -58,6 +86,29 @@ function($compile,   $timeout,   UserPreferenceService,   Notification) {
 				return filterValuesValid ? searchValues : null;
 			}
 			
+			scope.selectedFilterItems = [];
+			
+			var updatedSelectedFilterItems = function() {
+				
+				var selFilterItems = [];
+				
+				angular.forEach(scope.filterValues, function(value, key) {
+					angular.forEach(value, function(val, indx) {
+						val.filterId = key;
+						val.indx = indx;
+						selFilterItems.push(val);
+					});
+				});
+				
+				scope.selectedFilterItems = selFilterItems;
+			}
+			
+			scope.selectedFilterItemRemoved = function($chip, $index) {
+				var filterVals = scope.filterValues[$chip.filterId];
+				filterVals.splice($chip.indx, 1);
+				scope.onSearchAction();
+			}
+			
 			scope.onSearchAction = function() {
 				
 				if (scope.onSearch) {
@@ -65,7 +116,14 @@ function($compile,   $timeout,   UserPreferenceService,   Notification) {
 					var searchValues = getSearchFilterValues();
 					
 					if (searchValues) {
+						
 						scope.onSearch(searchValues);
+						
+						updatedSelectedFilterItems();
+						
+						if (scope.persistSelection) {
+							DataSearchService.updateUrlSearchFilters(searchValues, true);
+						}
 					}
 					
 				}
@@ -153,6 +211,7 @@ function($compile,   $timeout,   UserPreferenceService,   Notification) {
 			}
 			
 			initSearchFilters();
+			readFiltersFromUrl();
 			
 			if (scope.searchOnPageLoad) {
 				scope.onSearchAction();

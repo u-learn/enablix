@@ -205,6 +205,20 @@ enablix.studioApp.factory('ContentTemplateService',
 				return null;
 			};
 			
+			var getContentItemByRefDatastore = function(_containerDef, _datastoreId) {
+				
+				var contentItems = _containerDef.contentItem;
+
+				for(var i = 0; i < contentItems.length; i++) {
+					var ci = contentItems[i];
+					if (checkAndGetBoundedRefListContainerQId(ci) === _datastoreId) {
+						return ci;
+					}
+				}
+
+				return null;
+			};
+			
 			var checkAndGetBoundedRefListContainerQId = function(_contentItemDef) {
 				if (isBoundedRefListItem(_contentItemDef)) {
 					return _contentItemDef.bounded.refList.datastore.storeId;
@@ -650,7 +664,8 @@ enablix.studioApp.factory('ContentTemplateService',
 				hasContentStackConfigItem: hasContentStackConfigItem,
 				getFilteredListOfContainers: getFilteredListOfContainers,
 				hasChildContainer: hasChildContainer,
-				walkContainers: walkContainers
+				walkContainers: walkContainers,
+				getContentItemByRefDatastore: getContentItemByRefDatastore
 			};
 		
 		}

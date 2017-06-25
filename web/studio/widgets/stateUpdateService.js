@@ -1,17 +1,8 @@
 enablix.studioApp.factory('StateUpdateService', 
 	[
-	 			'$state', '$stateParams', '$rootScope', '$location', '$window', 'NavigationTracker', 'TenantInfoService', 'ActivityTrackerContext',
-	 	function($state,   $stateParams,   $rootScope,   $location,   $window,   NavigationTracker,   TenantInfoService,   ActivityTrackerContext) {
+	 			'$state', '$stateParams', '$rootScope', '$location', '$window', '$transitions', 'NavigationTracker', 'TenantInfoService', 'ActivityTrackerContext', 'NextStateUrlParams',
+	 	function($state,   $stateParams,   $rootScope,   $location,   $window,   $transitions,   NavigationTracker,   TenantInfoService,   ActivityTrackerContext,   NextStateUrlParams) {
 	 		
-	 		var activityCtxSet = false;	
-	 		
-			$rootScope.$on('$stateChangeSuccess', function (ev, to, toParams, from, fromParams) {
-				
-				if (activityCtxSet) {
-					ActivityTrackerContext.clear();
-					activityCtxSet = false;
-				}
-			});
 			
 			var setStateChangeActivityContext = function(_contextParams) {
 				ActivityTrackerContext.setContextParams(_contextParams);
@@ -127,12 +118,18 @@ enablix.studioApp.factory('StateUpdateService',
 	 			});
 	 		}
 	 		
-	 		var goToPortalContainerList = function(_containerQId, _layout) {
+	 		var goToPortalContainerList = function(_containerQId, _layout, _urlParams) {
+	 			
+	 			if (_urlParams) {
+	 				NextStateUrlParams.set(_urlParams);
+	 			}
+	 			
 	 			var layout = _layout || "default";
 	 			$state.go("portal.containerlist", {
 	 				"containerQId": _containerQId,
 	 				"layout": layout
 	 			});
+	 			
 	 		}
 	 		
 	 		var goToPortalContainerBody = function(_containerQId, _containerInstanceIdentity, 

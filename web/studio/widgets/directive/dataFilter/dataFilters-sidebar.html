@@ -1,5 +1,16 @@
 <div class="sidebar-filters">
-<div class="head"><h3>Filters</h3></div>
+<div class="head">
+<h3>Filters</h3>
+<div class="cont sel-filter-chips" layout="row" ng-if="selectedFilterItems.length > 0">
+	<md-chips class="readonly-chips" ng-model="selectedFilterItems" readonly="true" 
+				md-removable="true" md-on-remove="selectedFilterItemRemoved($chip, $index)">
+		<md-chip-template>
+			<span>{{$chip.label}}</span>
+		</md-chip-template>
+	</md-chips>
+</div>
+</div>
+
 <div class="filter-list">
 	<!-- <div class="cont" ng-repeat="filter in filters track by filter.id">
 		<label class="form-label">{{::filter.name}}</label> 

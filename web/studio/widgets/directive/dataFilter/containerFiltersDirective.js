@@ -25,7 +25,7 @@ function(ContentTemplateService,   $q) {
 					
 					if (ContentTemplateService.isBoundedListItem(contentItemDef)) {
 						
-						var filterId = "df_" + contentItemDef.id;
+						var filterId = contentItemDef.id;
 						
 						var filterDef = {
 							id: filterId,

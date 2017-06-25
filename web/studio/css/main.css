@@ -2305,3 +2305,21 @@ md-checkbox .md-icon {
     border-style: solid;
     border-radius: 4px;
 }
+
+.sel-filter-chips .md-chips md-chip {
+    border-radius: 4px;
+    height: 1.5em;
+    line-height: 1.5em;
+}
+
+.sel-filter-chips .md-chips md-chip .md-chip-remove {
+    height: 1.5em;
+}
+
+.sel-filter-chips .md-chips {
+    padding: 0;
+}
+
+.sel-filter-chips md-chips md-chip {
+	background: #eeeff1;
+}
