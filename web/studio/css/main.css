@@ -2323,3 +2323,7 @@ md-checkbox .md-icon {
 .sel-filter-chips md-chips md-chip {
 	background: #eeeff1;
 }
+
+.block.table-default {
+    margin-top: 0;
+}

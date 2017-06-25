@@ -94,7 +94,7 @@ function(StateUpdateService) {
 		    	}
 		    }
 
-		    var layout = scope.ebLayout || "default";
+		    var layout = scope.ebLayout = scope.ebLayout || "default";
 		    scope.contentUrl = "widgets/directive/table/" + layout + "Table.html";
 		    
 		},
