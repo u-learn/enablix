@@ -104,6 +104,10 @@
 		    border-bottom: 1px solid #dce1e5;
 		}
 		
+		.form-body .foot {
+			border-top: 1px solid #dce1e5;
+		}
+		
     </style>
     
 </head>
@@ -145,11 +149,11 @@
 		<aside class="col-md-4" ng-controller="ContactUsController">
 			<p style="margin-left: 5px;">Out of content chaos. Into Simplicity.</p>
 			<div class="block" style="margin-top: 1em;">
-				<div class="head bottom-border">
-					<h2>Request Demo</h2>
-				</div>
-				<div class="form-body">
-					<form name="modalForm">
+				<form name="modalForm">
+					<div class="head bottom-border">
+						<h2>Request Demo</h2>
+					</div>
+					<div class="form-body">
 						<div class="cont">
 							<label class="form-label">Name</label>
 							<input type="text" name="name" ng-model="contactUsForm.name" class="form-control" ng-blur="modalForm.name.$valid" required>
@@ -176,11 +180,11 @@
 								<div class="error">Please complete Captcha verification</div>
 							</div>
 						</div>
-					</form>
-				</div>
-				<div class="foot clearfix">
-					<button class="button button-add" tabindex="4" type="submit" ng-disabled="!modalForm.$valid" ng-click="submitContactUs()">Request Demo</button>
-				</div>
+						<div class="foot clearfix">
+							<button class="button button-add" type="submit" ng-disabled="!modalForm.$valid" ng-click="submitContactUs()">Request Demo</button>
+						</div>
+					</div>
+				</form>
 			</div>
 		</aside>
 	</div>

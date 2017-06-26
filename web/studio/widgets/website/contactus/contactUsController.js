@@ -35,7 +35,7 @@ enablix.studioApp.controller('ContactUsController',
 			
 			RESTService.postForData("contactUs", null, contactUsRequest, null, function() {
 
-				InfoModalWindow.showInfoWindow("Thank you.", "Thank you for contacting us. We will get back to you soon!");
+				InfoModalWindow.showInfoWindow("Request Submitted", "Thank you for contacting us. We will get back to you soon!");
 				
 			}, function(data) {
 				
