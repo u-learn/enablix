@@ -125,12 +125,27 @@ enablix.studioApp.factory('DataSearchService',
 				});
 			}
 
+			var getContainerCountByRefListItems = function(_containerQId, _searchFilters, _filterMetadata, _onSuccess, _onError) {
+				
+				var params = {
+						containerQId: _containerQId
+				};
+				
+				var data = {
+						filters: _searchFilters,
+						filterMetadata: _filterMetadata
+					};
+
+				return RESTService.postForData("getContainerCountByRefListItems", params, data, null, _onSuccess, _onError);
+			}
+			
 			return {
 				getSearchResult: getSearchResult,
 				getContainerDataSearchResult: getContainerDataSearchResult,
 				readUrlSearchFilters: readUrlSearchFilters,
 				updateUrlSearchFilters: updateUrlSearchFilters,
-				promiseContainerDataSearchResult: promiseContainerDataSearchResult
+				promiseContainerDataSearchResult: promiseContainerDataSearchResult,
+				getContainerCountByRefListItems: getContainerCountByRefListItems 
 			};
 		}
 	]);

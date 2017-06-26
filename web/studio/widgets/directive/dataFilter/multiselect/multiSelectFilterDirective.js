@@ -84,13 +84,17 @@ function($compile,   Notification) {
 			}
 			
 			/* used for checkbox layout */
+			var matchWithId = function(o1, o2) { return (o1.id === o2.id); }
+			
 			scope.optionExists = function(_selOpt) {
-				return scope.selectedValues.contains(_selOpt, function(o1, o2) { return (o1.id === o2.id); });
+				return scope.selectedValues.contains(_selOpt, matchWithId);
 			}
+			
+			
 			
 			scope.toggleSelection = function(_selOpt) {
 				
-				var idx = scope.selectedValues.indexOf(_selOpt);
+				var idx = scope.selectedValues.indexOfMatchWith(_selOpt, matchWithId);
 		        
 				if (idx > -1) {
 		        	scope.selectedValues.splice(idx, 1);

@@ -1,5 +1,6 @@
 package com.enablix.app.web;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.enablix.app.content.ui.search.RefListItemCount;
+import com.enablix.app.content.ui.search.UIFilterService;
 import com.enablix.app.template.service.TemplateManager;
 import com.enablix.commons.util.process.ProcessContext;
 import com.enablix.core.api.TemplateFacade;
@@ -32,6 +35,9 @@ public class GenericDataFetchController {
 	
 	@Autowired
 	private TemplateManager templateManager;
+	
+	@Autowired
+	private UIFilterService uiFilterService;
 	
 	@RequestMapping(method = RequestMethod.POST, value="/c/{collectionName}/t/{className}",
 			consumes = "application/json", produces = "application/json")
@@ -73,5 +79,17 @@ public class GenericDataFetchController {
 		
 		return dao.findByQuery(searchRequest, collectionName, Map.class, view);
 	}
+	
+	@RequestMapping(method = RequestMethod.POST, value="/cfc/{containerQId}/",
+			consumes = "application/json", produces = "application/json")
+	public Map<String, List<RefListItemCount>> findContainerItemCountByRefListValue(
+			@RequestBody SearchRequest searchRequest,
+			@PathVariable String containerQId) throws ClassNotFoundException {
+		
+		DataView userView = dataSegmentService.getDataViewForUserId(ProcessContext.get().getUserId());
+		
+		return uiFilterService.findRecordCountByRefListItem(containerQId, searchRequest, userView);
+	}
+	
 	
 }

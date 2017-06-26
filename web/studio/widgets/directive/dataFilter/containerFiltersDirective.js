@@ -1,6 +1,6 @@
 enablix.studioApp.directive('ebxContainerFilters', [
-        'ContentTemplateService', '$q',
-function(ContentTemplateService,   $q) {
+        'ContentTemplateService', '$q', 'DataSearchService',
+function(ContentTemplateService,   $q,   DataSearchService) {
 
 	return {
 		restrict: 'E',
@@ -13,6 +13,9 @@ function(ContentTemplateService,   $q) {
 			var filterMetadata = {};
 			
 			scope.filterDefs = [];
+			
+			var filterOpts = {};
+			var filterOptItemCounts = {};
 			
 			var containerDef = ContentTemplateService.getConcreteContainerDefinition(
 					enablix.template, scope.containerQId);
@@ -37,7 +40,12 @@ function(ContentTemplateService,   $q) {
 								
 								ContentTemplateService.getBoundedValueList(enablix.templateId, contentItemDef, null, 
 										function(data) {
+											
 											data.sort(sortByLabelProp);
+											
+											filterOpts[filterId] = data;
+											updateFilterOptItemCnt(filterId, data);
+											
 											deferred.resolve(data);
 										},
 										function(data) {
@@ -85,9 +93,53 @@ function(ContentTemplateService,   $q) {
 				
 			}
 			
+			var updateFilterOptsItemCount = function() {
+
+				if (!angular.equals(filterOpts, {}) && !angular.equals(filterOptItemCounts, {})) {
+				
+					angular.forEach(filterOpts, function(optList, filterId) {
+						updateFilterOptItemCnt(filterId, optList);
+					});
+				}
+			}
+			
+			var updateFilterOptItemCnt = function(_filterId, _opts) {
+				
+				var filterItemCnts = filterOptItemCounts[_filterId];
+				
+				if (filterItemCnts) {
+				
+					angular.forEach(_opts, function(opt) {
+					
+						opt.count = 0;
+						var itemCnt = filterItemCnts.length;
+						
+						for (var i = 0; i < itemCnt; i++) {
+							var filterItemCnt = filterItemCnts[i];
+							if (filterItemCnt.id === opt.id) {
+								opt.count = filterItemCnt.count;
+								break;
+							}
+						}
+					});
+				}
+			} 
+			
+			var findAndUpdateFilterOptItemCount = function(_filterValues) {
+				
+				removeNullOrEmptyProperties(_filterValues);
+				
+				DataSearchService.getContainerCountByRefListItems(scope.containerQId, _filterValues, filterMetadata,
+					function(data) {
+						filterOptItemCounts = data;
+						updateFilterOptsItemCount();
+					});
+			}
+			
 			scope.onContainerSearch = function(_filterValues) {
 				if (scope.onSearch) {
 					scope.onSearch(_filterValues, filterMetadata);
+					findAndUpdateFilterOptItemCount(_filterValues);
 				}
 			}
 

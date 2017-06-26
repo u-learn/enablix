@@ -2331,3 +2331,7 @@ md-checkbox .md-icon {
 .block.table-default {
     margin-top: 0;
 }
+
+.filter-opt .count {
+    opacity: 0.5;
+}

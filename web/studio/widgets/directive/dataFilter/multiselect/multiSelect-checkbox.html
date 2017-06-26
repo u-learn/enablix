@@ -7,7 +7,7 @@
 	</div>
 	<div class="filter-opts">
 		<div class="filter-opt" ng-repeat="opt in filtered = (options | filter: {label: searchText}) | limitTo: (currentOptLimit || filtered.length)">
-			<md-checkbox value="opt.id" ng-checked="optionExists(opt)" ng-click="toggleSelection(opt)">{{opt.label}}</md-checkbox>
+			<md-checkbox value="opt.id" ng-checked="optionExists(opt)" ng-click="toggleSelection(opt)">{{opt.label}}<span class="count"> ({{opt.count}})</span></md-checkbox>
 		</div>
 		<div class="more-opt" ng-if="currentOptLimit < filtered.length" ng-click="setOptLimit(undefined)">
 			<span>{{filtered.length - currentOptLimit}} More</span>

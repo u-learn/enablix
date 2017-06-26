@@ -1,11 +1,21 @@
-Array.prototype.contains = function(obj, predicate) {
+Array.prototype.contains = function(obj, matchFn) {
     var i = this.length;
     while (i--) {
-        if (predicate ? predicate(this[i], obj) : this[i] === obj) {
+        if (matchFn ? matchFn(this[i], obj) : this[i] === obj) {
             return true;
         }
     }
     return false;
+};
+
+Array.prototype.indexOfMatchWith = function(obj, matchFn) {
+    var i = this.length;
+    while (i--) {
+        if (matchFn ? matchFn(this[i], obj) : this[i] === obj) {
+            return i;
+        }
+    }
+    return -1;
 };
 
 Array.prototype.remove = function(obj) {

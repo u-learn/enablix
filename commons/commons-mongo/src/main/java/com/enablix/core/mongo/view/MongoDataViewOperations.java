@@ -61,6 +61,37 @@ public class MongoDataViewOperations {
 		return query;
 	}
 	
+	public Criteria getViewScopedQueryCriteria(Criteria criteria, String collName) {
+		
+		boolean isQueryCriteriaEmpty = criteria.equals(EMPTY_CRITERIA);
+		
+		CollectionView<?> collView = mongoDataView.getCollectionView(collName);
+		
+		Criteria resultCriteria = criteria;
+		
+		if (collView != null) {
+			
+			Criteria baseCriteria = collView.viewFilter();
+			
+			if (baseCriteria != null) {
+			
+				boolean isBaseCriteriaEmpty = baseCriteria.equals(EMPTY_CRITERIA);
+				
+				if (!isBaseCriteriaEmpty) {
+					
+					if (isQueryCriteriaEmpty) {
+						resultCriteria = baseCriteria;
+					} else {
+						resultCriteria = new Criteria().andOperator(criteria, baseCriteria);
+					}
+				}
+			}
+			
+		}
+		
+		return resultCriteria;
+	}
+	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public Query getViewScopedQuery(Query query, String collName) {
 		
