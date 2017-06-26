@@ -1,6 +1,6 @@
 <div class="sidebar-filters">
 <div class="head">
-<h3>Filters</h3>
+<h3>Filters<span ng-show="selectedFilterItems.length > 0" class="more-opt" ng-click="clearAllFilters()">Clear All</span></h3>
 <div class="cont sel-filter-chips" layout="row" ng-if="selectedFilterItems.length > 0">
 	<md-chips class="readonly-chips" ng-model="selectedFilterItems" readonly="true" 
 				md-removable="true" md-on-remove="selectedFilterItemRemoved($chip, $index)">

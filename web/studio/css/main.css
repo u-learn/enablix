@@ -1240,7 +1240,7 @@ ebx-doc-context-menu a.inactive {
 	border-bottom: 0;
 }
 
-.bar-download a{
+.bar-download a {
 	opacity:0.75;
 	color:#fff !important;
 }
@@ -2167,7 +2167,7 @@ eb-date-picker thead th {
 	position: relative;
     padding: 0.6em 1em;
     border-width: 0px 0px 1px 0px;
-    border-color: #dce1e5;
+    border-color: #ecf0f1;
     border-style: solid;
 }
 
@@ -2178,7 +2178,7 @@ eb-date-picker thead th {
 .sidebar-filters .foot,
 .filter-list .cont {
 	padding: 1em;
-	border-bottom: 1px solid #dce1e5;
+	border-bottom: 1px solid #ecf0f1;
 }
 
 .sidebar-filters .head h3 {
@@ -2236,6 +2236,10 @@ eb-date-picker thead th {
 	font-size: 0.875em;
     color: #1D6AAD;
     cursor: pointer
+}
+
+.head .more-opt {
+    float: right;
 }
 
 .filter-search md-input-container {

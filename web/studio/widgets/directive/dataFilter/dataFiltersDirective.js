@@ -109,6 +109,13 @@ function($compile,   $timeout,   $location,   UserPreferenceService,   Notificat
 				scope.onSearchAction();
 			}
 			
+			scope.clearAllFilters = function() {
+				angular.forEach(scope.filterValues, function(value, key) {
+					scope.filterValues[key] = [];
+				});
+				scope.onSearchAction();
+			}
+			
 			scope.onSearchAction = function() {
 				
 				if (scope.onSearch) {
