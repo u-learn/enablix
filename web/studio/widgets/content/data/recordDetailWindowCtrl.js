@@ -5,7 +5,7 @@ enablix.studioApp.controller('RecordDetailWindowCtrl',
 		$scope.recordDetail = recordDetail;
 		$scope.containerQId = containerQId;
 		
-		$scope.containerDef = ContentTemplateService.getContainerDefinition(enablix.template, containerQId);
+		$scope.containerDef = ContentTemplateService.getConcreteContainerDefinition(enablix.template, containerQId);
 		$scope.headers = ContentUtil.getContentDetailHeaders($scope.containerDef, true, false); 
 
 		if (recordDetail.downloadDocIdentity) {

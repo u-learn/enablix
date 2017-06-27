@@ -1,6 +1,6 @@
 enablix.studioApp.directive('ebxSearchBox', [
-				 'StateUpdateService', '$q', 'DataSearchService', 'ContentTemplateService', 'ActivityAuditService',
-		function (StateUpdateService,   $q,   DataSearchService,   ContentTemplateService,   ActivityAuditService) {
+				 'StateUpdateService', '$q', 'DataSearchService', 'ContentTemplateService', 'ActivityAuditService', 'ContentUtil',
+		function (StateUpdateService,   $q,   DataSearchService,   ContentTemplateService,   ActivityAuditService,   ContentUtil) {
 			return {
 				restrict : 'E',
 				scope : {
@@ -83,7 +83,7 @@ enablix.studioApp.directive('ebxSearchBox', [
 									
 								} else if (node.type === "BizDimEntSubNode") {
 							
-									StateUpdateService.goToPortalSubContainerList(uri.containerQId, 
+									ContentUtil.navToTileBasedSubContainerList(uri.containerQId, 
 															uri.subContainerQId, uri.parentIdentity);
 									
 								} else if (node.type === "BizDimensionEntity") {

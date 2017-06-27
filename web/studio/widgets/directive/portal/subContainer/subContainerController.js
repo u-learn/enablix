@@ -226,13 +226,8 @@ enablix.studioApp.controller('PortalSubContainerCtrl',
 					//StateUpdateService.goToPortalSubContainerList(
 						// parentQId, $scope.subContainerQId, $stateParams.elementIdentity);
 					
-					var urlParams = {};
-					var refContentItem = ContentTemplateService.getContentItemByRefDatastore($scope.containerDef, parentQId);
-					if (refContentItem) {
-						urlParams["sf_" + refContentItem.id] = $stateParams.elementIdentity;
-					}
-					
-					StateUpdateService.goToPortalContainerList($scope.subContainerQId, "tile", urlParams);
+					ContentUtil.navToTileBasedSubContainerList(
+						parentQId, $scope.subContainerQId, $stateParams.elementIdentity, $scope.containerDef);
 				}
 			}
 		};

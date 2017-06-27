@@ -1,6 +1,6 @@
 enablix.studioApp.factory('ContentTemplateService', 
-	[			'RESTService', 'Notification', 'AuthorizationService', 'CacheService',"$q",
-	 	function(RESTService,   Notification,   AuthorizationService,   CacheService,$q) {
+	[			'RESTService', 'Notification', 'AuthorizationService', 'CacheService', '$q',
+	 	function(RESTService,   Notification,   AuthorizationService,   CacheService,   $q) {
 		
 			var CACHE_KEY_REF_DATA_CONTAINERS = "content.template.refdata.containers";
 			var CACHE_KEY_BUS_CAT_CONTAINERS_PREFIX = "content.template.business.category.";

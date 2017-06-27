@@ -1,3 +1,4 @@
+<div class="modal-close-btn circularButtonView" ng-click="close()">x</div>
 <div class="modal-body rec-detail-win">
 	<div class="record">
 		<div class="head head-toggle">
@@ -12,6 +13,10 @@
 				</div>
 			</div>
 		</div>
+		<div class="cont" ng-if="previewHtml">
+			<p ng-if="htmlType == 'html'" ng-bind-html="previewHtml"></p>
+			<p ng-if="htmlType == 'angular-html'" bind-html-compile="previewHtml"></p>
+		</div>
 		<div class="cont clearfix" ng-if="!(recordDetail == null || recordDetail == undefined)">	
 			<table class="infotable" >		
 				<tr ng-repeat="header in headers track by header.id" ng-switch="header.dataType" ng-if="::isRenderable(header, recordDetail[header.key])">
@@ -23,9 +28,5 @@
 		<div ng-if="recordDetail == null || recordDetail == undefined" class="cont cont-empty">
 			No data found.
 		</div>
-	</div>
-	<div class="cont">
-		<p ng-if="htmlType == 'html'" ng-bind-html="previewHtml"></p>
-		<p ng-if="htmlType == 'angular-html'" bind-html-compile="previewHtml"></p>
 	</div>
 </div>

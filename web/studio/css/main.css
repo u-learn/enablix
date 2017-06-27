@@ -597,6 +597,7 @@ form.block .foot {
 /* grid */
 /**/
 .container-fluid {
+	width: 100%;
 	padding-right: 2em;
 	padding-left: 2em;
 }
@@ -1682,9 +1683,10 @@ eb-table .block .flex .bar-action-icons {
 }
 
 .head .content-type {
-	font-size: 0.75em;
-	color: #1d6aad;
-	text-align: right;
+	font-size: 0.875em;
+	text-align: left;
+    padding-left: 0.5em;
+    opacity: 0.5;
 }
 
 .dataItem h4 {
@@ -2316,6 +2318,13 @@ md-checkbox .md-icon {
 
 .svgButton:hover {
 	opacity: 1;
+}
+
+.modal-close-btn {
+	position: absolute;
+    right: -14px;
+    top: -14px;
+    background: #ffffff !important;
 }
 
 .circularButtonView {

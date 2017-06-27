@@ -1,7 +1,7 @@
 enablix.studioApp.factory('ContentUtil', 
 	[
-	 			'RESTService', 'ContentTemplateService', 'DocPreviewService',
-	 	function(RESTService,   ContentTemplateService,   DocPreviewService) {
+	 			'RESTService', 'ContentTemplateService', 'DocPreviewService', 'StateUpdateService', 'ContentTemplateService',
+	 	function(RESTService,   ContentTemplateService,   DocPreviewService,   StateUpdateService,   ContentTemplateService) {
 	 		
 			var resolveContainerInstanceLabel = function(_containerDef, _instanceData) {
 				
@@ -245,6 +245,24 @@ enablix.studioApp.factory('ContentUtil',
 				return hasData(_data);
 			}
 			
+			var navToTileBasedSubContainerList = function(
+	 				_containerQId, _subContainerQId, _parentIdentity, _subContainerDef) {
+	 			
+	 			var urlParams = {};
+	 			
+	 			if (!_subContainerDef) {
+	 				_subContainerDef = ContentTemplateService.getConcreteContainerDefinition(enablix.template, _subContainerQId);
+	 			}
+	 			
+				var refContentItem = ContentTemplateService.getContentItemByRefDatastore(_subContainerDef, _containerQId);
+				if (refContentItem) {
+					urlParams["sf_" + refContentItem.id] = _parentIdentity;
+				}
+				
+				StateUpdateService.goToPortalContainerList(_subContainerQId, "tile", urlParams);
+				
+	 		}
+			
 	 		return {
 	 			resolveContainerInstanceLabel: resolveContainerInstanceLabel,
 	 			resolveContainerInstancePortalLabel: resolveContainerInstancePortalLabel,
@@ -254,7 +272,8 @@ enablix.studioApp.factory('ContentUtil',
 	 			resolveAndAddTitle: resolveAndAddTitle,
 	 			groupContentRecordsByQId: groupContentRecordsByQId,
 	 			getContentDetailHeaders: getContentDetailHeaders,
-	 			isContentFieldRenderable: isContentFieldRenderable
+	 			isContentFieldRenderable: isContentFieldRenderable,
+	 			navToTileBasedSubContainerList: navToTileBasedSubContainerList
 	 		};
 	 		
 	 		
