@@ -193,9 +193,10 @@ enablix.studioApp.factory('StateUpdateService',
 	 		}
 
 	 		var goToPortalEnclosureDetail = function(_enclosureId, _childContainerId) {
+	 			
 	 			$state.go("portal.enclosure", {
 	 				"enclosureId": _enclosureId,
-	 				"childContainerQId": _childContainerId
+	 				"childContainerQId": (_childContainerId ? _childContianerQId : null)
 	 			});
 	 		}
 	 		

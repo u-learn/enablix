@@ -199,6 +199,52 @@ enablix.studioApp.factory('ContentUtil',
 				return contentGroupMap;
 			}
 			
+			var getContentDetailHeaders = function(_containerDef, _excludeTitleAttr, _excludeRefListAttr) {
+				
+				var headers = [];
+				var containerLabelAttrId = null;
+				
+				if (_excludeTitleAttr) {
+					// do not populate when we have to show label so that it does not match attr id
+					// when matching to ignore including label attr in list of displayable attributes
+					containerLabelAttrId = ContentTemplateService.getContainerLabelAttrId(
+												enablix.template, _containerDef.qualifiedId);
+				}
+				
+				angular.forEach(_containerDef.contentItem, function(containerAttr) {
+					
+					if (containerAttr.id != containerLabelAttrId
+							&& containerAttr.type != 'CONTENT_STACK'
+							&& (!_excludeRefListAttr || containerAttr.type !== 'BOUNDED')) {
+						
+						var header = {
+							"id": containerAttr.qualifiedId,
+							"key" : containerAttr.id,
+							"label" : containerAttr.label,
+							"dataType" : containerAttr.type,
+							"typeDef" : containerAttr
+						};
+						
+						headers.push(header);
+					}
+					
+				});
+				
+				return headers;
+			}
+			
+			var hasData2 = function(_data) {
+				return !isNullOrUndefined(_data) && (_data.length != 0); //!isArrayAndEmpty(_data) && !isStringAndEmpty(_data);
+			}
+			
+			var hasData = function(_data) {
+				return !isNullOrUndefined(_data) && !isArrayAndEmpty(_data) && !isStringAndEmpty(_data);
+			}
+			
+			var isContentFieldRenderable = function(_contentDef, _data) {
+				return hasData(_data);
+			}
+			
 	 		return {
 	 			resolveContainerInstanceLabel: resolveContainerInstanceLabel,
 	 			resolveContainerInstancePortalLabel: resolveContainerInstancePortalLabel,
@@ -206,7 +252,9 @@ enablix.studioApp.factory('ContentUtil',
 	 			getContentListHeaders: getContentListHeaders,
 	 			getContentLabelValue: getContentLabelValue,
 	 			resolveAndAddTitle: resolveAndAddTitle,
-	 			groupContentRecordsByQId: groupContentRecordsByQId
+	 			groupContentRecordsByQId: groupContentRecordsByQId,
+	 			getContentDetailHeaders: getContentDetailHeaders,
+	 			isContentFieldRenderable: isContentFieldRenderable
 	 		};
 	 		
 	 		

@@ -145,12 +145,6 @@ enablix.studioApp.controller('PortalSubContainerCtrl',
 						enablix.template, $scope.containerDef.linkContainerQId);
 			}
 
-			if (!$scope.showLabel) {
-				// do not populate when we have to show label so that it does not match attr id
-				$scope.containerLabelAttrId = ContentTemplateService.getContainerLabelAttrId(
-					enablix.template, $scope.containerDef.qualifiedId);
-			}
-			
 			$scope.showSubContainer = false;
 			$scope.$stateParams = $stateParams;
 			
@@ -214,25 +208,8 @@ enablix.studioApp.controller('PortalSubContainerCtrl',
 				}
 			}
 			
-			$scope.headers = [];
-			
-			angular.forEach($scope.containerDef.contentItem, function(containerAttr) {
-				
-				if (containerAttr.id != $scope.containerLabelAttrId
-						&& containerAttr.type != 'CONTENT_STACK') {
-					
-					var header = {
-						"id": containerAttr.qualifiedId,
-						"key" : containerAttr.id,
-						"label" : containerAttr.label,
-						"dataType" : containerAttr.type,
-						"typeDef" : containerAttr
-					};
-					
-					$scope.headers.push(header);
-				}
-				
-			});
+			$scope.headers = ContentUtil.getContentDetailHeaders($scope.containerDef, 
+								!$scope.showLabel, ($scope.ebLayout === "tile"));
 			
 			$scope.expanded = $scope.expanded || true;
 			
@@ -260,16 +237,12 @@ enablix.studioApp.controller('PortalSubContainerCtrl',
 			}
 		};
 		
-		$scope.hasData2 = function(_data) {
-			return !isNullOrUndefined(_data) && (_data.length != 0); //!isArrayAndEmpty(_data) && !isStringAndEmpty(_data);
-		}
-		
-		$scope.hasData = function(_data) {
-			return !isNullOrUndefined(_data) && !isArrayAndEmpty(_data) && !isStringAndEmpty(_data);
-		}
-		
 		$scope.isRenderable = function(_contentDef, _data) {
-			return $scope.hasData(_data);
+			return ContentUtil.isContentFieldRenderable(_contentDef, _data);
+		}
+		
+		$scope.openRecordDetailWindow = function(_contentRecord) {
+			ContentDataService.openRecordDetailWindow($scope.subContainerQId, _contentRecord);
 		}
 		
 		$scope.render();

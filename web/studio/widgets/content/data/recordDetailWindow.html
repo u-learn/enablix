@@ -1,0 +1,31 @@
+<div class="modal-body rec-detail-win">
+	<div class="record">
+		<div class="head head-toggle">
+			<h2>{{::recordDetail.headingLabel}}</h2>
+			<div class="dropdown">
+				<div class="action-icons bar-action-icons">
+					<span ng-if="recordDetail.downloadDocIdentity" class="dropdown">
+						<eb-doc-download doc-value="recordDetail.downloadDocIdentity"></eb-doc-download>
+					</span>
+					<ebx-suggest-content content-q-id="containerQId" parent-identity="parentIdentity" content-identity="recordDetail.identity"></ebx-suggest-content>
+					<ebx-share-context-menu context-data="recordDetail" content-q-id="containerQId"></ebx-share-context-menu>
+				</div>
+			</div>
+		</div>
+		<div class="cont clearfix" ng-if="!(recordDetail == null || recordDetail == undefined)">	
+			<table class="infotable" >		
+				<tr ng-repeat="header in headers track by header.id" ng-switch="header.dataType" ng-if="::isRenderable(header, recordDetail[header.key])">
+					<th>{{::header.label}}</th>
+					<td><eb-render-data content-value="recordDetail[header.key]" content-def="header" content-record="recordDetail" show-doc-link="false"/></td>
+				</tr>
+		  	</table>
+		</div>
+		<div ng-if="recordDetail == null || recordDetail == undefined" class="cont cont-empty">
+			No data found.
+		</div>
+	</div>
+	<div class="cont">
+		<p ng-if="htmlType == 'html'" ng-bind-html="previewHtml"></p>
+		<p ng-if="htmlType == 'angular-html'" bind-html-compile="previewHtml"></p>
+	</div>
+</div>

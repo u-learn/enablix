@@ -1,7 +1,7 @@
 enablix.studioApp.factory('ContentDataService', 
 	[
-	 			'RESTService', 'ContentTemplateService', '$location', '$state', 'NavigationTracker',
-	 	function(RESTService,  ContentTemplateService,    $location,   $state,   NavigationTracker) {
+	 			'RESTService', 'ContentTemplateService', '$location', '$state', 'NavigationTracker', '$modal',
+	 	function(RESTService,  ContentTemplateService,    $location,   $state,   NavigationTracker,   $modal) {
 	 		
 	 		var getContentData = function(_templateId, _contentQId, _parentIdentity, _onSuccess, _onError, _pagination) {
 	 			
@@ -167,6 +167,22 @@ enablix.studioApp.factory('ContentDataService',
 	 			RESTService.getForData("fetchContentStackItemForRecord", params, null, _onSuccess, _onError);
 	 		};
 	 		
+	 		var openRecordDetailWindow = function(_containerQId, _contentRecord) {
+				var modalInstance = $modal.open({
+				      templateUrl: 'widgets/content/data/recordDetailWindow.html',
+				      //size: 'sm', // 'sm', 'lg'
+				      controller: 'RecordDetailWindowCtrl',
+				      resolve: {
+				    	  recordDetail: function() {
+				    		  return _contentRecord;
+				    	  },
+				    	  containerQId: function() {
+				    		  return _containerQId;
+				    	  }
+				      }
+				    });
+			};
+	 		
 	 		return {
 	 			getContentData: getContentData,
 	 			getContentRecordData: getContentRecordData,
@@ -177,7 +193,8 @@ enablix.studioApp.factory('ContentDataService',
 	 			getContentStack: getContentStack,
 	 			getContentStackForRecord: getContentStackForRecord,
 	 			getContentStackItemForRecord: getContentStackItemForRecord,
-	 			getRecordAndChildData: getRecordAndChildData
+	 			getRecordAndChildData: getRecordAndChildData,
+	 			openRecordDetailWindow: openRecordDetailWindow
 	 		};
 	 	}
 	 ]);
