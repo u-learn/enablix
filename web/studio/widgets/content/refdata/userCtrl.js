@@ -50,6 +50,7 @@ enablix.studioApp.controller('UserController',
 	                        var deferred = $q.defer();
 	                        
 	                        ContentTemplateService.getBoundedValueList(enablix.templateId, userRoleItemDef, null, function(data) {
+	                        	data.sort(sortByLabelProp);
 	                        	deferred.resolve(data);
 	        				}, function(errorData) {
 	        					Notification.error({message: "Error retrieving roles", delay: enablix.errorMsgShowTime});
