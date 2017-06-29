@@ -478,7 +478,7 @@ function suggestionTemplate(node) {
 
     var innerContent = label;
     if (node instanceof _graph.BizDimensionNode || node instanceof _graph.BizContentNode) {
-    	innerContent = "<span class='tt-add-info'> All </span><span>" + label + "</span>";
+    	innerContent = "<span class='tt-add-info'>" + label + " </span><span class=\"eb-tt-biz-dimension\">(All)</span>";
     }
     if (node instanceof _graph.BizDimensionEntity) {
         var bizDimensionNode = node.bizDimensionNode;
