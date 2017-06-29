@@ -14,13 +14,14 @@
 			</div>
 		</div>
 		<div class="cont clearfix">	
-			<div class="box-view">
+			<div class="data-box" ng-class="::boxViewCSSClass()">
 			<table class="infotable" >		
 				<tr ng-repeat="header in headers track by header.id" ng-switch="header.dataType" ng-if="::isRenderable(header, bodyData[header.key])">
 					<th>{{::header.label}}</th>
 					<td><eb-render-data content-value="bodyData[header.key]" content-def="header" content-record="bodyData" show-doc-link="false"/></td>
 				</tr>
 		  	</table>
+		  	<div class="box-view-read-more"><i class="fa fa-angle-down fa-lg" ng-click="expandBoxView($event)"></i></div>
 		  	</div>
 		</div>
 		<div class="record-detail-action svgButton" ng-click="openRecordDetailWindow(bodyData)">

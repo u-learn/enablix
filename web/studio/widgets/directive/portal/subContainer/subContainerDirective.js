@@ -27,6 +27,16 @@ enablix.studioApp.directive('ebPortalSubContainer', [
 			},
 			link: function(scope, element, attrs) {
 				scope.singleItemCard = scope.type === 'single';
+				
+				scope.boxViewCSSClass = function() {
+					return !element.expanded && $(element).find('.data-box').height() > 105 ? "box-view" : "" ;
+				}
+				
+				scope.expandBoxView = function($event) {
+					element.expanded = true;
+					var elem = $event.currentTarget;
+					$(elem).parent().parent().removeClass('box-view');
+				}
 			}
 			
 		};

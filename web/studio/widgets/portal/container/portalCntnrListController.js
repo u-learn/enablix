@@ -7,6 +7,8 @@ enablix.studioApp.controller('PortalCntnrListCtrl',
 		var containerDef = ContentTemplateService.getConcreteContainerDefinition(
 									enablix.template, $stateParams.containerQId);
 		
+		$scope.isBizDimension = containerDef.businessCategory === "BUSINESS_DIMENSION";
+		
 		$scope.dataFilters = {};
 		$scope.filtersAvailable = true;
 		

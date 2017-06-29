@@ -2301,10 +2301,15 @@ md-checkbox .md-icon {
 
 .record-tile .record-data .cont {
     border-width: 0px;
+    padding-bottom: 0.5em;
+}
+
+.data-box {
+	padding-bottom: 0.5em;
 }
 
 .record-detail-action {
-    bottom: 0.4em;
+    bottom: 0.2em;
     position: absolute;
     right: 1em;
 }
@@ -2434,4 +2439,37 @@ md-checkbox .md-icon {
 .rec-detail-win .record .cont {
     padding: 1em 0 1em 0;
     border-bottom: 1px solid #dce1e5;
+}
+
+.box-view {
+    max-height: 105px;
+    overflow: hidden;
+    position: relative;
+    -moz-transition: 1s;
+    -ms-transition: 1s;
+    -o-transition: 1s;
+    -webkit-transition: 1s;
+    transition: 1s;
+}
+
+.box-view .box-view-read-more {
+	display: block;	
+}
+
+.box-view-read-more .fa {
+	padding-bottom: 3px;
+}
+
+.box-view-read-more {
+	display: none;
+    font-size: 0.875em;
+    color: #1d6aad;
+    position: absolute;
+    text-align: center;
+    cursor: pointer;
+    bottom: 0;
+    width: 100%;
+    background-image: linear-gradient(to bottom, transparent, #fff);
+    padding-top: 2em;
+    transition: all .2s ease;
 }
