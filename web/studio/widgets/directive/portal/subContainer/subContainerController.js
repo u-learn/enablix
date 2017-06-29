@@ -240,6 +240,10 @@ enablix.studioApp.controller('PortalSubContainerCtrl',
 			ContentDataService.openRecordDetailWindow($scope.subContainerQId, _contentRecord);
 		}
 		
+		$scope.navToContentDetail = function(contentRecordIdentity) {
+			StateUpdateService.goToPortalContainerDetail($scope.subContainerQId, contentRecordIdentity);
+		}
+		
 		$scope.render();
 		
 		PubSub.subscribe(ContentDataService.contentChangeEventId($scope.subContainerQId), function(data, topic) {

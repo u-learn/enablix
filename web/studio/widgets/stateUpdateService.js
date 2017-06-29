@@ -118,7 +118,7 @@ enablix.studioApp.factory('StateUpdateService',
 	 			});
 	 		}
 	 		
-	 		var goToPortalContainerList = function(_containerQId, _layout, _urlParams) {
+	 		var goToPortalContainerList = function(_containerQId, _layout, _urlParams, _searchQuery) {
 	 			
 	 			if (_urlParams) {
 	 				NextStateUrlParams.set(_urlParams);
@@ -127,7 +127,8 @@ enablix.studioApp.factory('StateUpdateService',
 	 			var layout = _layout || "default";
 	 			$state.go("portal.containerlist", {
 	 				"containerQId": _containerQId,
-	 				"layout": layout
+	 				"layout": layout,
+	 				"sq": _searchQuery
 	 			});
 	 			
 	 		}
@@ -196,7 +197,7 @@ enablix.studioApp.factory('StateUpdateService',
 	 			
 	 			$state.go("portal.enclosure", {
 	 				"enclosureId": _enclosureId,
-	 				"childContainerQId": (_childContainerId ? _childContianerQId : null)
+	 				"childContainerQId": (_childContainerId ? _childContainerId : null)
 	 			});
 	 		}
 	 		

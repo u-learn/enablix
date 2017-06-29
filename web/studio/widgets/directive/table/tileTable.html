@@ -1,3 +1,14 @@
+<div class="tile-sort-cont" ng-if="pageData && pageData.sort" layout="row">
+	<div class="tile-sort" flex>Sort By</div>
+	<div ng-repeat="col in tableHeaders" ng-class="{'active': pageData.sort[0].property == col.sortProperty}" 
+			ng-if="col.sortProperty" class="tile-sort-opt" flex="none">
+		<span ng-switch on="col.dataType">
+			<span ng-switch-when="number"><span class="text-right">{{col.desc}}</span></span>
+			<span ng-switch-default>{{col.desc}}</span>
+		</span>
+		<eb-sort sort-property="col.sortProperty" table-sort-info="pageData.sort" sort-data-fn="sortData"></eb-sort>
+	</div>
+</div>
 <div class="tile-table" ng-repeat="tableRecord in tableData">
 	<eb-portal-sub-container type="single" info="tableRecord" eb-layout="tile" 
 			sub-container-q-id="containerQId" element-identity="tableRecord.identity" index="$index"></eb-portal-sub-container>

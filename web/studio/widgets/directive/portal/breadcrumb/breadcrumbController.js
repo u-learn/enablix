@@ -21,7 +21,12 @@ enablix.studioApp.controller('PortalBreadcrumbCtrl',
 				StateUpdateService.goToPortalHome();
 				
 			} else if (!isNullOrUndefined(_enclosureId)) {
-				StateUpdateService.goToPortalEnclosureDetail(_enclosureId, _containerQId);
+				
+				if (_containerQId) {
+					StateUpdateService.goToPortalContainerList(_containerQId);
+				} else {
+					StateUpdateService.goToPortalEnclosureDetail(_enclosureId, _containerQId);
+				}
 				
 			} else if (!isNullOrUndefined(_containerQId) && isNullOrUndefined(_contentIdentity)) {
 				StateUpdateService.goToPortalContainerList(_containerQId);

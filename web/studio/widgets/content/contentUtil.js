@@ -246,7 +246,7 @@ enablix.studioApp.factory('ContentUtil',
 			}
 			
 			var navToTileBasedSubContainerList = function(
-	 				_containerQId, _subContainerQId, _parentIdentity, _subContainerDef) {
+	 				_containerQId, _subContainerQId, _parentIdentity, _subContainerDef, _searchTerm) {
 	 			
 	 			var urlParams = {};
 	 			
@@ -259,7 +259,7 @@ enablix.studioApp.factory('ContentUtil',
 					urlParams["sf_" + refContentItem.id] = _parentIdentity;
 				}
 				
-				StateUpdateService.goToPortalContainerList(_subContainerQId, "tile", urlParams);
+				StateUpdateService.goToPortalContainerList(_subContainerQId, "tile", urlParams, _searchTerm);
 				
 	 		}
 			

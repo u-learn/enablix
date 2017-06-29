@@ -32,6 +32,7 @@ import com.enablix.core.mongo.search.service.SearchRequestTransformer;
 import com.enablix.core.mongo.view.MongoDataViewOperations;
 import com.enablix.data.view.DataView;
 import com.enablix.services.util.DataViewUtil;
+import com.enablix.services.util.TemplateUtil;
 
 @Component
 public class UIFilterServiceImpl implements UIFilterService {
@@ -53,6 +54,9 @@ public class UIFilterServiceImpl implements UIFilterService {
 		
 		TemplateFacade template = templateManager.getTemplateFacade(ProcessContext.get().getTemplateId());
 		ContainerType containerDef = template.getContainerDefinition(containerQId);
+		if (TemplateUtil.isLinkedContainer(containerDef)) {
+			containerDef = template.getContainerDefinition(containerDef.getLinkContainerQId());
+		}
 		
 		if (containerDef != null) {
 

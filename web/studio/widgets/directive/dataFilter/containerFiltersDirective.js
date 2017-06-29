@@ -15,7 +15,7 @@ function(ContentTemplateService,   $q,   DataSearchService) {
 			scope.filterDefs = [];
 			
 			var filterOpts = {};
-			var filterOptItemCounts = {};
+			var filterOptItemCounts = null;
 			
 			var containerDef = ContentTemplateService.getConcreteContainerDefinition(
 					enablix.template, scope.containerQId);
@@ -95,7 +95,7 @@ function(ContentTemplateService,   $q,   DataSearchService) {
 			
 			var updateFilterOptsItemCount = function() {
 
-				if (!angular.equals(filterOpts, {}) && !angular.equals(filterOptItemCounts, {})) {
+				if (!angular.equals(filterOpts, {}) && filterOptItemCounts) {
 				
 					angular.forEach(filterOpts, function(optList, filterId) {
 						updateFilterOptItemCnt(filterId, optList);
@@ -105,13 +105,14 @@ function(ContentTemplateService,   $q,   DataSearchService) {
 			
 			var updateFilterOptItemCnt = function(_filterId, _opts) {
 				
-				var filterItemCnts = filterOptItemCounts[_filterId];
+				var filterItemCnts = filterOptItemCounts ? filterOptItemCounts[_filterId] : null;
 				
-				if (filterItemCnts) {
+				angular.forEach(_opts, function(opt) {
 				
-					angular.forEach(_opts, function(opt) {
-					
-						opt.count = 0;
+					opt.count = 0;
+
+					if (filterItemCnts) {
+						
 						var itemCnt = filterItemCnts.length;
 						
 						for (var i = 0; i < itemCnt; i++) {
@@ -121,8 +122,8 @@ function(ContentTemplateService,   $q,   DataSearchService) {
 								break;
 							}
 						}
-					});
-				}
+					}
+				});
 			} 
 			
 			var findAndUpdateFilterOptItemCount = function(_filterValues) {

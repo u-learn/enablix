@@ -12,6 +12,8 @@ enablix.studioApp.controller('PortalCntnrListCtrl',
 		$scope.dataFilters = {};
 		$scope.filtersAvailable = true;
 		
+		$scope.layout = ($scope.isBizDimension ? "default" : "tile");
+		
 		var filterMetadata = {};
 		
 		$scope.onFilterSearch = function(_filterValues, _filterMd) {
