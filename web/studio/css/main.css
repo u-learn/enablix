@@ -2230,10 +2230,12 @@ eb-date-picker thead th {
 
 .filter-opt-cont {
 	width: 100%;
+	font-family: Montserrat;
 }
 
 .filter-opts {
 	padding-top: 0.75em;
+	font-weight: 400;
 }
 
 .more-opt {
@@ -2244,6 +2246,7 @@ eb-date-picker thead th {
 
 .head .more-opt {
     float: right;
+    text-transform: none;
 }
 
 .filter-search md-input-container {
@@ -2273,6 +2276,7 @@ md-checkbox {
 
 md-checkbox .md-label {
 	font-size: 0.875em;
+	vertical-align: text-bottom;
 }
 
 md-checkbox .md-icon {
@@ -2375,6 +2379,7 @@ md-checkbox .md-icon {
     -moz-transition: border 200ms,box-shadow 200ms,color 200ms;
     transition: border 200ms,box-shadow 200ms,color 200ms;
     width: 30px;
+    z-index: 100;
 }
 
 .circularButtonView-label {
@@ -2499,4 +2504,21 @@ md-checkbox .md-icon {
 .tile-sort-opt.active {
     color: #1D6AAD;
     font-weight: 500;
+}
+
+.page-heading {
+	margin: 2em 0 -1em 0;
+	font-family: Montserrat;
+	font-weight: 400;
+    color: #222;
+}
+
+.page-heading .heading-label {
+    font-size: 0.875em;
+}
+
+.page-heading .detail {
+	font-size: 0.75em;
+	padding-left: 0.75em;
+	opacity: 0.5;
 }

@@ -7,15 +7,15 @@
 		<div class="container-fluid">
 			<eb-portal-breadcrumb></eb-portal-breadcrumb>
 			<div class="row">
-				<main class="col-md-8">							
+				<main class="col-md-8">					
+					<div class="page-heading"><span class="heading-label">{{::containerLabel}}</span><span class="detail">{{listCountInfo}}</span></div>		
 					<div ng-class="{'block': layout == 'default'}">
 						<eb-table table-headers="listHeaders" table-data="listData" row-click-fn="navToContentDetail" 
 								eb-layout="{{layout}}" container-q-id="{{$stateParams.containerQId}}" 
 								page-data="pageData" fetch-result-fn="fetchData" pagination-data="pagination"></eb-table>
 					</div>
 					<div class="cont-empty record-detail" ng-if="listData.length == 0">
-						<div ng-show="::!$stateParams.sq">No data found.</div>
-						<div ng-show="::$stateParams.sq">There are no {{::$stateParams.sq}}.</div>
+						<div>There are no {{::containerLabel}} for selected filters.</div>
 					</div>
 				</main>
 				

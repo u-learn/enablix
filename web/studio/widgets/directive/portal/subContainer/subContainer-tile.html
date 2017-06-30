@@ -1,8 +1,10 @@
 <div class="block record-tile" ng-if="showSubContainer" layout="row">
-	<div class="doc-thumbnail" ng-if="bodyData.docThumbnailUrl" flex="none"><img ng-src="{{bodyData.docThumbnailUrl}}" ng-click="openPreviewWindow(bodyData.docMetadata)"></img></div>
+	<div class="doc-thumbnail" ng-if="bodyData.docThumbnailUrl" flex="none"><img ng-src="{{bodyData.docThumbnailUrl}}" ng-click="openRecordDetailWindow(bodyData)"></img></div>
 	<div class="record-data" flex>
 		<div class="head" layout="row">
-			<h2 flex><span class="content-label" ng-click="navToContentDetail(bodyData.identity)">{{::bodyData.headingLabel}}</span><span class="content-type" ng-show="::subContainerLabel"> ({{::subContainerLabel}})</span></h2>
+			<h2 flex><span ng-if="::!bodyData.hasSubContainers">{{::bodyData.headingLabel}}</span>
+					<span ng-if="::bodyData.hasSubContainers" class="content-label" ng-click="navToContentDetail(bodyData.identity)">{{::bodyData.headingLabel}}</span>
+					<span class="content-type" ng-show="::subContainerLabel"> ({{::subContainerLabel}})</span></h2>
 			<div class="dropdown" flex="none">
 				<div class="action-icons bar-action-icons">
 					<span ng-if="bodyData.downloadDocIdentity" class="dropdown">

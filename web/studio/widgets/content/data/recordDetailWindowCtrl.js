@@ -1,6 +1,6 @@
 enablix.studioApp.controller('RecordDetailWindowCtrl', 
-			['$scope', '$state', '$stateParams', 'containerQId', 'recordDetail', '$modalInstance', 'DocPreviewService', 'ContentTemplateService', 'ContentUtil',
-	function( $scope,   $state,   $stateParams,   containerQId,   recordDetail,   $modalInstance,   DocPreviewService,   ContentTemplateService,   ContentUtil) {
+			['$scope', '$state', '$stateParams', 'containerQId', 'recordDetail', '$modalInstance', 'DocPreviewService', 'ContentTemplateService', 'ContentUtil', 'StateUpdateService',
+	function( $scope,   $state,   $stateParams,   containerQId,   recordDetail,   $modalInstance,   DocPreviewService,   ContentTemplateService,   ContentUtil,   StateUpdateService) {
 		
 		$scope.recordDetail = recordDetail;
 		$scope.containerQId = containerQId;
@@ -31,6 +31,11 @@ enablix.studioApp.controller('RecordDetailWindowCtrl',
 		
 		$scope.isRenderable = function(_contentDef, _data) {
 			return ContentUtil.isContentFieldRenderable(_contentDef, _data);
+		}
+		
+		$scope.navToContentDetail = function(contentRecordIdentity) {
+			$scope.close();
+			StateUpdateService.goToPortalContainerDetail(containerQId, contentRecordIdentity);
 		}
 		
 		$scope.close = function() {

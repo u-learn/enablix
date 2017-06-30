@@ -2,7 +2,8 @@
 <div class="modal-body rec-detail-win">
 	<div class="record">
 		<div class="head head-toggle">
-			<h2>{{::recordDetail.headingLabel}}</h2>
+			<h2><span ng-if="::!recordDetail.hasSubContainers">{{::recordDetail.headingLabel}}</span>
+					<span ng-if="::recordDetail.hasSubContainers" class="content-label" ng-click="navToContentDetail(recordDetail.identity)">{{::recordDetail.headingLabel}}</span></h2>
 			<div class="dropdown">
 				<div class="action-icons bar-action-icons">
 					<span ng-if="recordDetail.downloadDocIdentity" class="dropdown">

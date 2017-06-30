@@ -7,6 +7,8 @@ enablix.studioApp.controller('PortalCntnrListCtrl',
 		var containerDef = ContentTemplateService.getConcreteContainerDefinition(
 									enablix.template, $stateParams.containerQId);
 		
+		$scope.containerLabel = containerDef.label;
+		$scope.listCountInfo = "";
 		$scope.isBizDimension = containerDef.businessCategory === "BUSINESS_DIMENSION";
 		
 		$scope.dataFilters = {};
@@ -15,18 +17,7 @@ enablix.studioApp.controller('PortalCntnrListCtrl',
 		$scope.layout = ($scope.isBizDimension ? "default" : "tile");
 		
 		var filterMetadata = {};
-		
-		$scope.onFilterSearch = function(_filterValues, _filterMd) {
-			
-			// remove search keys with null values as those get treated as null value on back end
-			removeNullOrEmptyProperties(_filterValues);
-			
-			$scope.dataFilters = _filterValues;
-			filterMetadata = _filterMd;
-			
-			$scope.fetchData();
-		}
-		
+
 		$scope.pagination = {
 				pageSize: enablix.defaultPageSize,
 				pageNum: $stateParams.page,
@@ -35,6 +26,19 @@ enablix.studioApp.controller('PortalCntnrListCtrl',
 					direction: "ASC"
 				}
 			};
+		
+		$scope.onFilterSearch = function(_filterValues, _filterMd) {
+			
+			// remove search keys with null values as those get treated as null value on back end
+			removeNullOrEmptyProperties(_filterValues);
+			
+			$scope.pagination.pageNum = 0;
+			
+			$scope.dataFilters = _filterValues;
+			filterMetadata = _filterMd;
+			
+			$scope.fetchData();
+		}
 		
 		$scope.listHeaders = ContentUtil.getContentListHeaders(containerDef);
 		
@@ -46,6 +50,11 @@ enablix.studioApp.controller('PortalCntnrListCtrl',
 				function(dataPage) {
 					$scope.listData = dataPage.content;
 					$scope.pageData = dataPage;
+					
+					var pageOffset = dataPage.number * dataPage.size;
+					$scope.listCountInfo = "(Showing " + (pageOffset + 1) + " - " 
+						+ (pageOffset + dataPage.numberOfElements) + " of " + dataPage.totalElements + ")";
+					
 					angular.forEach($scope.listData, function(item) {
 						ContentUtil.decorateData(containerDef, item, true);
 					});
