@@ -1031,8 +1031,10 @@ uis.directive('uiSelect',
               // Determine if the direction of the dropdown needs to be changed.
               if (offset.top + offset.height + offsetDropdown.height > $document[0].documentElement.scrollTop + $document[0].documentElement.clientHeight) {
                 dropdown[0].style.position = 'absolute';
-                dropdown[0].style.top = (offsetDropdown.height * -1) + 'px';
-                element.addClass(directionUpClassName);
+                if (offsetDropdown.height > 0) {
+                	dropdown[0].style.top = (offsetDropdown.height * -1) + 'px';
+                	element.addClass(directionUpClassName);
+                }
               }
 
               // Display the dropdown once it has been positioned.
