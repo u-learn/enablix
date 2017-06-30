@@ -1,4 +1,4 @@
-<div class="tile-sort-cont" ng-if="pageData && pageData.sort" layout="row">
+<div class="tile-sort-cont" ng-if="pageData && pageData.sort && pageData.numberOfElements > 0" layout="row">
 	<div class="tile-sort" flex>Sort By</div>
 	<div ng-repeat="col in tableHeaders" ng-class="{'active': pageData.sort[0].property == col.sortProperty}" 
 			ng-if="col.sortProperty" class="tile-sort-opt" flex="none">
