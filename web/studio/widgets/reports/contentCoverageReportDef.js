@@ -1,6 +1,6 @@
 enablix.studioApp.factory('ContentCoverageReportDef', 
-	[	    '$q', '$filter', 'RESTService', 'Notification', 'StateUpdateService', 'DataSearchService', 'ContentTemplateService',
-	function($q,   $filter,   RESTService,   Notification,   StateUpdateService,   DataSearchService,   ContentTemplateService) {
+	[	    '$q', '$filter', 'RESTService', 'Notification', 'StateUpdateService', 'DataSearchService', 'ContentTemplateService', 'ContentUtil',
+	function($q,   $filter,   RESTService,   Notification,   StateUpdateService,   DataSearchService,   ContentTemplateService,   ContentUtil) {
 
 		var init = function() {
 			/** ========================================= Content Coverage Report ======================================= **/
@@ -23,7 +23,7 @@ enablix.studioApp.factory('ContentCoverageReportDef',
 							if (newValue !== oldValue && !isNullOrUndefined(newValue)) {
 								$scope.dispatch.on("click", function(e) {
 									if (e.value != 0) { // if there are any records, then nav to list page
-										StateUpdateService.goToPortalSubContainerList(
+										ContentUtil.navToTileBasedSubContainerList(
 												e.data.contentQId, e.data.subContainerQId, e.data.recordIdentity);
 									}
 								});
