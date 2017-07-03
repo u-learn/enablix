@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<contentTemplate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.16" id="haystax_enterprise" xsi:noNamespaceSchemaLocation="../xsd/content-template.xsd">
+<contentTemplate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.17" id="haystax_enterprise" xsi:noNamespaceSchemaLocation="../xsd/content-template.xsd">
 	<dataDefinition>
 		<container id="product" label="Products" businessCategory="BUSINESS_DIMENSION">
 			<contentItem id="name" label="Name" type="text" searchBoost="7"/>
@@ -2845,7 +2845,23 @@
 	      		</bounded>
       		</contentItem>				 						
 			<contentItem id="kitContent" label="Content Items" type="contentStack"/>
-		</container>		
+		</container>	
+		<container id="salestemplate" label="Sales Templates" businessCategory="BUSINESS_CONTENT">
+			<contentItem id="title" label="Title" type="text" searchBoost="7"/>
+			<contentItem id="file" label="File" type="doc"/>			
+			<contentItem id="desc" label="Description" type="richText" searchBoost="2"/>	
+			<contentItem id="visibility" label="Visibility" type="bounded">
+	      		<bounded>
+	      			<refList>
+	      				<datastore>
+	      					<storeId>contentVisibilityType</storeId>
+	      					<dataId>identity</dataId>
+	      					<dataLabel>visibilityType</dataLabel>
+	      				</datastore>
+	      			</refList>
+	      		</bounded>
+      		</contentItem>				 						
+		</container>				
 		<container id="swot" label="SWOT" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text" searchBoost="7"/>
 			<contentItem id="file" label="File" type="doc"/>
@@ -3889,6 +3905,7 @@
 					<childContainer id="partnercontactinfo"/>														
 					<childContainer id="ppttemplate"/>														
 					<childContainer id="pricingtemplate"/>
+					<childContainer id="salestemplate"/>					
 					<childContainer id="securitycontent"/>					
 					<childContainer id="resume"/>										
 					<childContainer id="corporatecontent"/>
@@ -5000,6 +5017,21 @@
 		<contentUIDef qualifiedId="salesKit.kitDesc">
 			<text type="long"/>
 		</contentUIDef>	
+		<contentUIDef qualifiedId="salestemplate">
+			<container labelQualifiedId="salestemplate.title">
+				<listViewConfig>
+					<hideContentItem id="file"/>
+					<hideContentItem id="desc"/>					
+					<hideContentItem id="visibility"/>					
+				</listViewConfig>			
+				<portalConfig>
+					<headingContentItem id="title"/>
+				</portalConfig>
+			</container>
+		</contentUIDef>
+		<contentUIDef qualifiedId="salestemplate.desc">
+			<text type="long"/>
+		</contentUIDef>			
 		<contentUIDef qualifiedId="partnerType">
 			<container labelQualifiedId="partnerType.typeName">		
 				<portalConfig>
@@ -5013,10 +5045,7 @@
 					<headingContentItem id="visibilityType"/>
 				</portalConfig>
 			</container>
-		</contentUIDef>		
-		<contentUIDef qualifiedId="salesKit.kitDesc">
-			<text type="long"/>
-		</contentUIDef>		
+		</contentUIDef>			
 	</uiDefinition>
 	<portalUIDefinition>
 		<topNavigation>
@@ -5069,7 +5098,8 @@
 					<childContainer id="partnercontactinfo"/>														
 					<childContainer id="ppttemplate"/>														
 					<childContainer id="pricingtemplate"/>
-					<childContainer id="resume"/>								
+					<childContainer id="resume"/>	
+					<childContainer id="salestemplate"/>													
 					<childContainer id="securitycontent"/>																	
 					<childContainer id="corporatecontent"/>
 				</enclosure>				
