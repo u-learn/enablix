@@ -75,11 +75,11 @@ enablix.studioApp.directive('ebxSearchBox', [
 								
 								if (node.type === "BizDimensionNode") {
 									
-									StateUpdateService.goToPortalContainerList(uri.containerQId, null, null, searchText);
+									StateUpdateService.goToPortalContainerList(uri.containerQId, null, {}, searchText);
 									
 								} else if (node.type === 'BizContentNode') {
 									
-									StateUpdateService.goToPortalContainerList(uri.containerQId, "tile", null, searchText);
+									StateUpdateService.goToPortalContainerList(uri.containerQId, "tile", {}, searchText);
 									
 								} else if (node.type === "BizDimEntSubNode") {
 							

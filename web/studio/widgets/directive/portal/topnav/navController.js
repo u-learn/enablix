@@ -15,7 +15,7 @@ enablix.studioApp.controller('PortalTopNavCtrl',
 		};
 		
 		$scope.navToContainerList = function(cntnrNavItem) {
-			StateUpdateService.goToPortalContainerList(cntnrNavItem.qualifiedId);
+			StateUpdateService.goToPortalContainerList(cntnrNavItem.qualifiedId, null, {});
 		}
 		
 		var itemContainerList = ContentTemplateService.getPortalTopNavItemContainers();

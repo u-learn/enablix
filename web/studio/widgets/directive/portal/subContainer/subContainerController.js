@@ -216,7 +216,7 @@ enablix.studioApp.controller('PortalSubContainerCtrl',
 				if ($state.includes('portal.enclosure')) {
 				
 					//StateUpdateService.goToPortalEnclosureDetail($stateParams.enclosureId, $scope.subContainerQId);
-					StateUpdateService.goToPortalContainerList($scope.subContainerQId, "tile");
+					StateUpdateService.goToPortalContainerList($scope.subContainerQId, "tile", {});
 					
 				} else {
 					
