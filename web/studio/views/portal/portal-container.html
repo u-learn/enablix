@@ -1,32 +1,47 @@
-<!-- page content -->
-<div class="page-content">
-	<div class="container-fluid">
-		<eb-portal-breadcrumb></eb-portal-breadcrumb>
-		<ebx-layout-switch container-q-id="containerQId" requires-permission="VIEW_LAYOUT_OPTIONS"></ebx-layout-switch>
-		<div class="row">							
-			<main ng-class="subContainerList.length > 1 ? 'col-md-4' : 'col-md-8'">
-				<div class="cont-empty record-detail" ng-if="subContainerList.length == 0">No data found.</div>
-				<div ng-repeat="subContainer in subContainerList" 
-						ng-if ="$even">					
-					<eb-portal-sub-container type="{{::subContainer.type}}" sub-container-label="subContainer.label" info="subContainer.records"
-						sub-container-q-id="subContainer.qualifiedId" index="$index" parent-list="subContainerList" multi-list-limit="{{::subCntnrMultiListLimit}}"
-						category="subContainer.category" parent-container-q-id="subContainer.parentQId"></eb-portal-sub-container>
-				</div>
-			</main>
-			
-			<aside class="col-md-4" ng-if="subContainerList.length > 1">
-				<div ng-repeat="subContainer in subContainerList"
-						ng-if ="$odd">				
-					<eb-portal-sub-container type="{{::subContainer.type}}" sub-container-label="subContainer.label" info="subContainer.records"
-						sub-container-q-id="subContainer.qualifiedId" index="$index" parent-list="subContainerList" multi-list-limit="{{::subCntnrMultiListLimit}}"
-						category="subContainer.category" parent-container-q-id="subContainer.parentQId"></eb-portal-sub-container>
-				</div>
-			</aside>
-			
-			<aside class="col-md-4">
-				<div ui-view="rightSection">					
-				</div>
-			</aside>
+<div layout="row" flex>
+	<div class="filter-pane" flex="20" ng-if="subContainerList.length != 0">
+		<ebx-record-card-filters container-q-id="containerQId" enclosure-id="$stateParams.enclosureId" sub-container-list="subContainerList" on-selection-change="subContSelectChange"/>
+	</div>
+	<!-- page content -->
+	<div class="page-content" flex>
+		<div class="container-fluid">
+			<eb-portal-breadcrumb></eb-portal-breadcrumb>
+			<ebx-layout-switch container-q-id="containerQId" requires-permission="VIEW_LAYOUT_OPTIONS"></ebx-layout-switch>
+			<div class="row" ng-if="aboutSubContainer">
+				<main class="col-md-8">
+					<eb-portal-sub-container type="single" info="aboutSubContainer.records" eb-layout="tile" 
+							category="aboutSubContainer.category" sub-container-q-id="aboutSubContainer.qualifiedId" index="-1"></eb-portal-sub-container>
+				</main>
+			</div>
+			<div class="row" ng-if="subContainerList.length !== 0">							
+				<main ng-class="subContainerList.length > 1 ? 'col-md-4' : 'col-md-8'">
+					<div ng-repeat="subContainer in subContainerList | filter: filterSubContainers()" 
+							ng-if ="$even">
+						<eb-portal-sub-container type="{{::subContainer.type}}" sub-container-label="subContainer.label" info="subContainer.records"
+							sub-container-q-id="subContainer.qualifiedId" index="$index" parent-list="subContainerList" multi-list-limit="{{::subCntnrMultiListLimit}}"
+							category="subContainer.category" parent-container-q-id="subContainer.parentQId" record-count="subContainer.recordCount"></eb-portal-sub-container>
+					</div>
+				</main>
+				
+				<aside class="col-md-4" ng-if="subContainerList.length > 1">
+					<div ng-repeat="subContainer in subContainerList | filter: filterSubContainers()"
+							ng-if ="$odd">				
+						<eb-portal-sub-container type="{{::subContainer.type}}" sub-container-label="subContainer.label" info="subContainer.records"
+							sub-container-q-id="subContainer.qualifiedId" index="$index" parent-list="subContainerList" multi-list-limit="{{::subCntnrMultiListLimit}}"
+							category="subContainer.category" parent-container-q-id="subContainer.parentQId" record-count="subContainer.recordCount"></eb-portal-sub-container>
+					</div>
+				</aside>
+				
+				<!-- <aside class="col-md-4">
+					<div ui-view="rightSection">					
+					</div>
+				</aside> -->
+			</div>
+			<div class="row" ng-if="(!aboutSubContainer && subContainerList.length == 0)">
+				<main class="col-md-8">
+					<div class="cont-empty record-detail" >No data found.</div>
+				</main>
+			</div>
 		</div>
 	</div>
 </div>

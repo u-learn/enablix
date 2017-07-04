@@ -1,9 +1,6 @@
 enablix.studioApp.factory('DataSearchService',
-	['RESTService', 'Notification', 'StateUpdateService', '$location', '$filter', "$q",
-		function (RESTService, Notification, StateUpdateService, $location, $filter, $q) {
-
-			var URL_SEARCH_FIELD_PREFIX = "sf_";
-			var URL_SEARCH_FIELD_PREFIX_LEN = URL_SEARCH_FIELD_PREFIX.length;
+	[			 'RESTService', 'Notification', 'StateUpdateService', 'LocationUtil', '$filter', "$q",
+		function (RESTService,   Notification,   StateUpdateService,   LocationUtil,   $filter,   $q) {
 
 			var DATE_FILTER_TYPE_GO_BACK_DAYS = "GO_BACK_DAYS";
 			var FILTER_DATE_FORMAT = "dd-MMM-yy";
@@ -71,41 +68,11 @@ enablix.studioApp.factory('DataSearchService',
 			};
 
 			var readUrlSearchFilters = function () {
-
-				var filters = {};
-				var urlParams = $location.search();
-
-				angular.forEach(urlParams, function (value, key) {
-					if (isSearchFilterParam(key)) {
-						var filterKey = key.substring(URL_SEARCH_FIELD_PREFIX_LEN, key.length);
-						filters[filterKey] = value;
-					}
-				});
-
-				return filters;
+				return LocationUtil.readUrlSearchFilters();
 			};
 			
-			var isSearchFilterParam = function (_paramKey) {
-				return _paramKey.startsWith(URL_SEARCH_FIELD_PREFIX);
-			}
-			
 			var updateUrlSearchFilters = function(_searchFilters, _appendPrefix) {
-				
-				var urlParams = $location.search();
-				var newParams = {};
-				
-				angular.forEach(urlParams, function (value, key) {
-					if (!isSearchFilterParam(key)) {
-						newParams[key] = value;
-					}
-				});
-				
-				angular.forEach(_searchFilters, function (value, key) {
-					var filterKey = _appendPrefix ? (URL_SEARCH_FIELD_PREFIX + key) : key;
-					newParams[filterKey] = value;
-				});
-				
-				$location.search(newParams);
+				LocationUtil.updateUrlSearchFilters(_searchFilters, _appendPrefix);
 			}
 
 			var BIG_REQUEST = { pageNum: "0", pageSize: 500, sort: { direction: "ASC", field: "createdAt" } };

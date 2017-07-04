@@ -57,6 +57,9 @@ enablix.studioApp.factory('ContentUtil',
 					_dataRecord.parentIdentity = _dataRecord.__associations.parent.recordIdentity;
 				}
 				
+				_dataRecord.headingLabel = resolveContainerInstancePortalLabel(_containerDef, _dataRecord);
+				_dataRecord.containerQId = _containerDef.qualifiedId;
+				
 				for (var i = 0; i < _containerDef.contentItem.length; i++) {
 					
 					var item = _containerDef.contentItem[i];

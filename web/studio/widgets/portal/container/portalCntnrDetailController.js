@@ -36,7 +36,8 @@ enablix.studioApp.controller('PortalCntnrDetailCtrl',
 								"containerDef": containerDef,
 								"type": containerDef.single ? "single" : "multi",
 								"records": contentGroup.records,
-								"category": "sub-container"
+								"category": "sub-container",
+								"recordCount": contentGroup.records.totalElements
 							};
 						
 						if ($stateParams.containerQId == containerDef.qualifiedId) {
@@ -100,7 +101,7 @@ enablix.studioApp.controller('PortalCntnrDetailCtrl',
 				
 				if (_subCntnrItem.category == 'about') {
 					// about container should always be the first, so add it to front
-					$scope.subContainerList.unshift(_subCntnrItem);
+					//$scope.subContainerList.unshift(_subCntnrItem);
 				} else {
 					$scope.subContainerList.push(_subCntnrItem);
 				}
@@ -137,7 +138,8 @@ enablix.studioApp.controller('PortalCntnrDetailCtrl',
 										"type": "multi",
 										"records": contentGroup.records,
 										"category": "content-stack",
-										"parentQId": $scope.containerQId
+										"parentQId": $scope.containerQId,
+										"recordCount": contentGroup.records.totalElements
 									};
 								
 								addSubContainerItem(subCntnrItem);
@@ -161,20 +163,6 @@ enablix.studioApp.controller('PortalCntnrDetailCtrl',
 			var containerDef = ContentTemplateService.getContainerDefinition(
 									enablix.template, $stateParams.containerQId);
 		
-			/*
-			var abtSubCntnrItem = {
-					"id" : containerDef.id,
-					"qualifiedId" : containerDef.qualifiedId,
-					"label" : "About",
-					"containerDef": containerDef,
-					"type": "single"
-				};
-			
-			$scope.aboutSubContainer = abtSubCntnrItem;
-			$scope.subContainerList.push(abtSubCntnrItem);
-			cntnrList = containerDef.container;
-			*/
-			
 			$scope.hasContentStack = ContentTemplateService.hasContentStackConfigItem(containerDef);
 			
 			if ($scope.groupByQId) {
@@ -230,6 +218,19 @@ enablix.studioApp.controller('PortalCntnrDetailCtrl',
 				}
 			}
 			
+		}
+		
+		var selectedSubContainers = [];
+		$scope.subContSelectChange = function(_selectedContainers) {
+			selectedSubContainers = _selectedContainers;
+		}
+		
+		$scope.filterSubContainers = function() {
+			return function(item) {
+				return selectedSubContainers.length == 0 || selectedSubContainers.contains(item, function(o1, o2) {
+					return o1.id === o2.qualifiedId;
+				});
+			};
 		}
 		
 		angular.forEach(cntnrList, function(subCntnr) {

@@ -1,10 +1,12 @@
 enablix.studioApp.controller('PortalBreadcrumbCtrl',
-			['$scope', '$rootScope', '$state', '$stateParams', 'ContentTemplateService', 'ContentDataService', 'ContentUtil', 'Notification', 'StateUpdateService', 
-    function ($scope,   $rootScope,   $state,   $stateParams,   ContentTemplateService,   ContentDataService,   ContentUtil,   Notification,   StateUpdateService) {
+			['$scope', '$window', '$state', '$stateParams', 'ContentTemplateService', 'ContentDataService', 'ContentUtil', 'Notification', 'StateUpdateService', 'NavigationTracker', 
+    function ($scope,   $window,   $state,   $stateParams,   ContentTemplateService,   ContentDataService,   ContentUtil,   Notification,   StateUpdateService,  NavigationTracker) {
 		
 		var PORTAL_HOME_QID = "_portal_home";
 		var PORTAL_HOME_LABEL = "Home";
 				
+		var PORTAL_SEARCH_QID = "_portal_search";
+		var PORTAL_SEARCH_LABEL = "Search";
 		
 		$scope.$on('$stateChangeSuccess', 
 			function(event, toState, toParams, fromState, fromParams) {
@@ -19,6 +21,9 @@ enablix.studioApp.controller('PortalBreadcrumbCtrl',
 
 			if (_containerQId === PORTAL_HOME_QID) {
 				StateUpdateService.goToPortalHome();
+				
+			} else if (_containerQId === PORTAL_SEARCH_QID) {
+				StateUpdateService.windowBack();
 				
 			} else if (!isNullOrUndefined(_enclosureId)) {
 				
@@ -49,10 +54,19 @@ enablix.studioApp.controller('PortalBreadcrumbCtrl',
 			
 			var breadCrumbs = [];
 			
+			
 			breadCrumbs.push({
 				label: PORTAL_HOME_LABEL,
 				qualifiedId: PORTAL_HOME_QID
 			});
+			
+			var searchToDetail = NavigationTracker.isNavFromSearch() && !isNullOrUndefined(elemIdentity);
+			if (searchToDetail) {
+				breadCrumbs.push({
+					label: PORTAL_SEARCH_LABEL,
+					qualifiedId: PORTAL_SEARCH_QID
+				});
+			}
 			
 			if (isNullOrUndefined(enclosureId)) {
 	
@@ -65,32 +79,35 @@ enablix.studioApp.controller('PortalBreadcrumbCtrl',
 							
 							var navContentPointer = navPath;
 							
-							var containerDef = ContentTemplateService.getContainerDefinition(enablix.template, navContentPointer.qualifiedId);
-							
-							// check if it is part of enclosure. this happens when enclosure item is navigated
-							// via link from other sections e.g. recent updates
-							var enclDef = ContentTemplateService.getParentEnclosureDefinition(navContentPointer.qualifiedId);
-							
-							if (!isNullOrUndefined(enclDef)) {
-								// add breadcrumb item for enclosure container name
-								breadCrumbs.push({
-									label: enclDef.label,
-									enclosureId: enclDef.id
-								});
+							if (!searchToDetail) {
 								
-								// add breadcrumb for container name
-								breadCrumbs.push({
-									label: containerDef.label,
-									enclosureId: enclDef.id,
-									qualifiedId: navContentPointer.qualifiedId
-								})
+								var containerDef = ContentTemplateService.getContainerDefinition(enablix.template, navContentPointer.qualifiedId);
 								
-							} else {
-								// first breadcrumb item, container name
-								breadCrumbs.push({
-									label: containerDef.label,
-									qualifiedId: navContentPointer.qualifiedId
-								});
+								// check if it is part of enclosure. this happens when enclosure item is navigated
+								// via link from other sections e.g. recent updates
+								var enclDef = ContentTemplateService.getParentEnclosureDefinition(navContentPointer.qualifiedId);
+								
+								if (!isNullOrUndefined(enclDef)) {
+									// add breadcrumb item for enclosure container name
+									breadCrumbs.push({
+										label: enclDef.label,
+										enclosureId: enclDef.id
+									});
+									
+									// add breadcrumb for container name
+									breadCrumbs.push({
+										label: containerDef.label,
+										enclosureId: enclDef.id,
+										qualifiedId: navContentPointer.qualifiedId
+									})
+									
+								} else {
+									// first breadcrumb item, container name
+									breadCrumbs.push({
+										label: containerDef.label,
+										qualifiedId: navContentPointer.qualifiedId
+									});
+								}
 							}
 							
 							while (!isNullOrUndefined(navContentPointer)) {

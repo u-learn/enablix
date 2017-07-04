@@ -167,7 +167,7 @@ enablix.studioApp.factory('ContentDataService',
 	 			RESTService.getForData("fetchContentStackItemForRecord", params, null, _onSuccess, _onError);
 	 		};
 	 		
-	 		var openRecordDetailWindow = function(_containerQId, _contentRecord) {
+	 		var openRecordDetailWindow = function(_containerQId, _contentRecord, _recordIdentity) {
 				var modalInstance = $modal.open({
 				      templateUrl: 'widgets/content/data/recordDetailWindow.html',
 				      //size: 'sm', // 'sm', 'lg'
@@ -175,6 +175,9 @@ enablix.studioApp.factory('ContentDataService',
 				      resolve: {
 				    	  recordDetail: function() {
 				    		  return _contentRecord;
+				    	  },
+				    	  recordIdentity: function() {
+				    		  return _recordIdentity;
 				    	  },
 				    	  containerQId: function() {
 				    		  return _containerQId;

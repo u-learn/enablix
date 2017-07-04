@@ -7,8 +7,9 @@
 	</li>
 	<li ng-if="hasPreviewOption" role="presentation" class="divider"></li>
 	<li role="presentation">
-		<eb-doc-preview-action class="menuItem" doc-identity="contentRecord.downloadDocIdentity" 
-			action-label="Preview" doc-metadata="contentRecord.docMetadata"></eb-doc-preview-action>
+		<eb-record-preview-action class="menuItem" doc-identity="contentRecord.downloadDocIdentity" action-label="Preview" 
+		doc-metadata="contentRecord.docMetadata" record-detail="contentRecord" record-identity="contentRecord.identity"
+		container-q-id="contentRecord.containerQId"></eb-record-preview-action>
 	</li>
 </ul>
 </span>

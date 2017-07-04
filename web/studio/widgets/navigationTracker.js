@@ -1,15 +1,15 @@
 enablix.studioApp.factory('NavigationTracker', 
 	[
-	 			'$rootScope',
-	 	function($rootScope) {
+	 			'$transitions',
+	 	function($transitions) {
 	 		
 	 		var navHistory = [];
 	 		var recordingOn = true;
 	 		
-			$rootScope.$on('$stateChangeSuccess', function (ev, to, toParams, from, fromParams) {
+	 		$transitions.onSuccess({}, function (transition, state, ev, to, toParams, from, fromParams) {
 				
 				if (recordingOn) {
-					navHistory.push({route: from, routeParams: fromParams});
+					navHistory.push({route: transition.from(), routeParams: transition.params('from')});
 				} else {
 					recordingOn = true;
 				}
@@ -30,9 +30,22 @@ enablix.studioApp.factory('NavigationTracker',
 	 			recordingOn = false;
 	 		};
 	 		
+	 		var isNavFromSearch = function() {
+	 			
+	 			var prevState = getPreviousState();
+	 			
+	 			if (prevState && (prevState.route.name === 'portal.search' 
+	 								|| !isNullOrUndefined(prevState.routeParams.sq))) {
+	 				return true;
+	 			}
+	 			
+	 			return false;
+	 		};
+	 		
 	 		return {
 	 			getPreviousState: getPreviousState,
-	 			stopRecording: stopRecording
+	 			stopRecording: stopRecording,
+	 			isNavFromSearch: isNavFromSearch
 	 		};
 	 	}
 	 ]);
@@ -158,6 +171,60 @@ enablix.studioApp.factory('NextStateUrlParams',
 	 		
 	 		return {
 	 			set : set
+	 		};
+	 	}
+	 ]);
+
+
+enablix.studioApp.factory('LocationUtil', 
+	[
+	 			'$location', '$transitions',
+	 	function($location,   $transitions) {
+	 		
+			var URL_SEARCH_FIELD_PREFIX = "sf_";
+			var URL_SEARCH_FIELD_PREFIX_LEN = URL_SEARCH_FIELD_PREFIX.length;
+			
+			var readUrlSearchFilters = function (retainSearchFieldPrefix) {
+
+				var filters = {};
+				var urlParams = $location.search();
+
+				angular.forEach(urlParams, function (value, key) {
+					if (isSearchFilterParam(key)) {
+						var filterKey = retainSearchFieldPrefix ? key : key.substring(URL_SEARCH_FIELD_PREFIX_LEN, key.length);
+						filters[filterKey] = value;
+					}
+				});
+
+				return filters;
+			};
+			
+			var isSearchFilterParam = function (_paramKey) {
+				return _paramKey.startsWith(URL_SEARCH_FIELD_PREFIX);
+			}
+			
+			var updateUrlSearchFilters = function(_searchFilters, _appendPrefix) {
+				
+				var urlParams = $location.search();
+				var newParams = {};
+				
+				angular.forEach(urlParams, function (value, key) {
+					if (!isSearchFilterParam(key)) {
+						newParams[key] = value;
+					}
+				});
+				
+				angular.forEach(_searchFilters, function (value, key) {
+					var filterKey = _appendPrefix ? (URL_SEARCH_FIELD_PREFIX + key) : key;
+					newParams[filterKey] = value;
+				});
+				
+				$location.search(newParams);
+			}
+	 		
+	 		return {
+	 			readUrlSearchFilters: readUrlSearchFilters,
+				updateUrlSearchFilters: updateUrlSearchFilters
 	 		};
 	 	}
 	 ]);

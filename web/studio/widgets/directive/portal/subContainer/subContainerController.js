@@ -63,10 +63,10 @@ enablix.studioApp.controller('PortalSubContainerCtrl',
 				data = _contentRecords.content;
 				$scope.pageData = _contentRecords;
 				
-				$scope.recCnt = $scope.pageData.totalElements;
+				$scope.recordCount = $scope.pageData.totalElements;
 				
 			} else {
-				$scope.recCnt = data.length;
+				$scope.recordCount = data.length;
 			}
 			
 			if ($scope.type == 'single' && data && data.length > 0) {
@@ -122,10 +122,8 @@ enablix.studioApp.controller('PortalSubContainerCtrl',
 		};
 		
 		var decorateData = function(_containerDef, _dataRecord) {
-			_dataRecord.headingLabel = ContentUtil.resolveContainerInstancePortalLabel(
-									_containerDef, _dataRecord);
+			
 			_dataRecord.containerId = $scope.id || _containerDef.qualifiedId;
-			_dataRecord.containerQId = _containerDef.qualifiedId;
 			_dataRecord.hasSubContainers =  _dataRecord.identity != $stateParams.elementIdentity && 
 							((!isNullOrUndefined(_containerDef.container) && _containerDef.container.length > 0)
 											|| (ContentTemplateService.hasContentStackConfigItem(_containerDef)));
@@ -209,7 +207,7 @@ enablix.studioApp.controller('PortalSubContainerCtrl',
 			}
 			
 			$scope.headers = ContentUtil.getContentDetailHeaders($scope.containerDef, 
-								!$scope.showLabel, ($scope.ebLayout === "tile"));
+								!$scope.showLabel, $scope.summaryView);
 			
 			$scope.expanded = $scope.expanded || true;
 			

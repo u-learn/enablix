@@ -1,9 +1,17 @@
 enablix.studioApp.factory('StateUpdateService', 
 	[
-	 			'$state', '$stateParams', '$rootScope', '$location', '$window', '$transitions', 'NavigationTracker', 'TenantInfoService', 'ActivityTrackerContext', 'NextStateUrlParams',
-	 	function($state,   $stateParams,   $rootScope,   $location,   $window,   $transitions,   NavigationTracker,   TenantInfoService,   ActivityTrackerContext,   NextStateUrlParams) {
+	 			'$state', '$stateParams', 'LocationUtil', '$location', '$window', '$transitions', 'NavigationTracker', 'TenantInfoService', 'ActivityTrackerContext', 'NextStateUrlParams', 'CacheService',
+	 	function($state,   $stateParams,   LocationUtil,   $location,   $window,   $transitions,   NavigationTracker,   TenantInfoService,   ActivityTrackerContext,   NextStateUrlParams,   CacheService) {
 	 		
-			
+	 		var CONT_LIST_FILTER_CACHE_KEY = "cont-list-filters";
+	 		
+	 		$transitions.onStart({from: 'portal.containerlist'}, function(transition) {
+	 			var fromParams = transition.params('from');
+	 			var searchFilters = LocationUtil.readUrlSearchFilters(true);
+	 			CacheService.put(CONT_LIST_FILTER_CACHE_KEY, { containerQId: fromParams.containerQId, filters: searchFilters});
+	 		});
+	 				
+	 				
 			var setStateChangeActivityContext = function(_contextParams) {
 				ActivityTrackerContext.setContextParams(_contextParams);
 			};
@@ -122,6 +130,11 @@ enablix.studioApp.factory('StateUpdateService',
 	 			
 	 			if (_urlParams) {
 	 				NextStateUrlParams.set(_urlParams);
+	 			} else {
+	 				var cachedFilters = CacheService.get(CONT_LIST_FILTER_CACHE_KEY);
+	 				if (cachedFilters && cachedFilters.containerQId === _containerQId) {
+	 					NextStateUrlParams.set(cachedFilters.filters);
+	 				}
 	 			}
 	 			
 	 			var layout = _layout || "default";
@@ -263,6 +276,10 @@ enablix.studioApp.factory('StateUpdateService',
 	 			if (!isNullOrUndefined(prevState)) {
 	 				$state.go(prevState.route, prevState.routeParams);
 	 			}
+	 		}
+	 		
+	 		var windowBack = function() {
+	 			$window.history.back();
 	 		}
 	 		
 	 		var goToContentConnList = function(_category) {
@@ -432,7 +449,8 @@ enablix.studioApp.factory('StateUpdateService',
 				goToAddTPIntConfig: goToAddTPIntConfig,
 				goToTPIntConfigList: goToTPIntConfigList,
 				goToState: goToState,
-				setStateChangeActivityContext: setStateChangeActivityContext
+				setStateChangeActivityContext: setStateChangeActivityContext,
+				windowBack: windowBack
 	 		};
 	 	}
 	 ]);

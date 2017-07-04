@@ -15,3 +15,24 @@ enablix.studioApp.directive('ebDocPreviewAction', function() {
 		templateUrl: "widgets/directive/doc/preview/docPreviewAction.html"
 	}
 });
+
+enablix.studioApp.directive('ebRecordPreviewAction', function() {
+
+	return {
+		restrict: 'E',
+		scope : {
+			docIdentity : "=",
+			docMetadata : "=?",
+			containerQId : "=",
+			recordIdentity : "=?",
+			recordDetail : "=?",
+			actionLabel : "@"
+		},
+
+		link: function(scope, element, attrs) {
+		},
+
+		controller: 'RecordPreviewActionCtrl',
+		templateUrl: "widgets/directive/doc/preview/docPreviewAction.html"
+	}
+});

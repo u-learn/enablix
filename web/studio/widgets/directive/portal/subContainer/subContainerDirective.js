@@ -18,7 +18,9 @@ enablix.studioApp.directive('ebPortalSubContainer', [
 				info: "=?",
 				category: "=?",
 				showLabel: "@",
-				ebLayout: "@"
+				ebLayout: "@",
+				summaryView: "=",
+				recordCount: "="
 			},
 			controller : 'PortalSubContainerCtrl',
 			templateUrl : function(elem, attr) {
@@ -29,7 +31,7 @@ enablix.studioApp.directive('ebPortalSubContainer', [
 				scope.singleItemCard = scope.type === 'single';
 				
 				scope.boxViewCSSClass = function() {
-					return !element.expanded && $(element).find('.data-box').height() > 105 ? "box-view" : "" ;
+					return scope.summaryView && !element.expanded && $(element).find('.data-box').height() > 105 ? "box-view" : "" ;
 				}
 				
 				scope.expandBoxView = function($event) {

@@ -10,7 +10,7 @@
 	</div>
 </div> -->
 <div class="tile-table" ng-repeat="tableRecord in tableData">
-	<eb-portal-sub-container type="single" info="tableRecord" eb-layout="tile" 
+	<eb-portal-sub-container type="single" info="tableRecord" eb-layout="tile" summary-view="true"
 			sub-container-q-id="containerQId" element-identity="tableRecord.identity" index="$index"></eb-portal-sub-container>
 </div><br>
 <div class="foot text-center" ng-if="pageData && tableData.length > 0">

@@ -1602,15 +1602,23 @@ input[type=checkbox] {
     float: left;
 }
 
+td eb-record-preview-action .doc-preview,
 td eb-doc-preview-action .doc-preview {
 	position: relative;
 	top: 2px;	
 }
 
+eb-record-preview-action .doc-preview,
 eb-doc-preview-action .doc-preview {
 	color: #2ecc71;
 	border: 0px;
 }
+
+eb-record-preview-action .doc-preview:hover,
+eb-doc-preview-action .doc-preview:hover {
+	color: #27ae60;
+}
+	
 
 .action-icons {
 	float: right;
@@ -1618,7 +1626,7 @@ eb-doc-preview-action .doc-preview {
 	font-family: Montserrat;
 }
 
-.action-icons.bar-action-icons .action-icon,
+.record .action-icons.bar-action-icons .action-icon,
 .action-icons a {
 	color: #A1C1DD;
 	margin-left: 2px;
@@ -1640,7 +1648,7 @@ a.suggest-add {
 	color: #A1C1DD !important;
 }
 
-.action-icons.bar-action-icons .action-icon:hover,
+.record .action-icons.bar-action-icons .action-icon:hover,
 a.suggest-add:hover, a.suggest-add:focus {
 	color: #1D6AAD !important;
 }
@@ -2187,6 +2195,7 @@ eb-date-picker thead th {
 
 .sidebar-filters .head h3 {
 	margin-left: 2em;
+	text-transform: none;
 }
 
 .sidebar-collapse {
@@ -2235,18 +2244,20 @@ eb-date-picker thead th {
 
 .filter-opts {
 	padding-top: 0.75em;
-	font-weight: 400;
 }
 
 .more-opt {
-	font-size: 0.875em;
+	font-size: 0.75em;
     color: #1D6AAD;
-    cursor: pointer
+    cursor: pointer;
 }
 
-.head .more-opt {
+.head .clear-all {
     float: right;
     text-transform: none;
+    font-size: 0.875em;
+    color: #1D6AAD;
+    cursor: pointer;
 }
 
 .filter-search md-input-container {
@@ -2275,7 +2286,7 @@ md-checkbox {
 }
 
 md-checkbox .md-label {
-	font-size: 0.875em;
+	font-size: 0.75em;
 	vertical-align: text-bottom;
 }
 
@@ -2284,15 +2295,7 @@ md-checkbox .md-icon {
 }
 
 .record-tile {
-	border-width: 1px 1px 1px 0px;
-    border-color: #dce1e5;
-    border-style: solid;
-}
-
-.record-tile .doc-thumbnail, .record-tile .record-data {
-	border-width: 0px 0px 0px 1px;
-	border-color: #dce1e5;
-    border-style: solid;
+	border: 1px solid #dce1e5;
 }
 
 .record-data {
@@ -2521,4 +2524,8 @@ md-checkbox .md-icon {
 	font-size: 0.75em;
 	padding-left: 0.75em;
 	opacity: 0.5;
+}
+
+.head.layout-row .bar-action-icons {
+    margin-top: 0;
 }

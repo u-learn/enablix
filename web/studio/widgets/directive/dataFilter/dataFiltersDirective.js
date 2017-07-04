@@ -10,13 +10,13 @@ function($compile,   $timeout,   $location,   UserPreferenceService,   Notificat
 			heading: '@',
 			searchLabel: '@',
 			resetLabel: '@',
-			searchOnPageLoad: '@',
+			searchOnPageLoad: '=',
 			onSearch:'=?',
 			onReset: '=?',
 			prefValuesKey: "=?",
 			ebLayout: "@",
-			hideFiltersWithNoOptions: "@",
-			persistSelection: "@"
+			hideFiltersWithNoOptions: "=",
+			persistSelection: "="
 		},
 		link: function(scope, element, attrs) {
 			

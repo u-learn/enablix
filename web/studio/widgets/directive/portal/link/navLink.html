@@ -3,6 +3,7 @@
 	<i ng-if="!$last" class="fa fa-angle-right nav-separator"></i>
 	<span ng-if="$last && showDocLink && navItem.docIdentity && navItem.docIdentity != null">
 		<eb-doc-download doc-value="navItem.docIdentity"></eb-doc-download>
-		<eb-doc-preview-action doc-identity="navItem.docIdentity" doc-metadata="navItem.docDetails"></eb-doc-preview-action>
+		<eb-record-preview-action doc-identity="navItem.docIdentity" doc-metadata="navItem.docDetails"
+				record-identity="navItem.identity" container-q-id="navItem.qualifiedId"></eb-record-preview-action>
 	</span>
 </span>
