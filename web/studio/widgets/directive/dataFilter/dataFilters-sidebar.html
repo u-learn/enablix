@@ -24,7 +24,8 @@
 			</div>
 			<label class="form-label error" ng-if="filter.errorMessage">{{filter.errorMessage}}</label>
 			<ebx-multi-select-filter ng-if="filter.type == 'multi-select'" filter-def="filter" selected-values="filterValues[filter.id]" 
-				single-select="filter.options && filter.options.singleSelect" eb-layout="checkbox" on-selection-change="onSearchAction"></ebx-multi-select-filter>
+				single-select="filter.options && filter.options.singleSelect" eb-layout="checkbox" on-selection-change="onSearchAction"
+				chck-box-limit="{{chckBoxLimit}}"></ebx-multi-select-filter>
 		</section>
 	</div>
 </div>

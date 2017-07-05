@@ -99,10 +99,13 @@ function(ContentTemplateService,   $q,   DataSearchService) {
 				
 				var filterItemCnts = scope.subContainerList;
 				
-				angular.forEach(subContOptList, function(opt) {
+				var j = subContOptList.length;
 				
+				while (j--) {
+					
+					var opt = subContOptList[j];
 					opt.count = 0;
-
+					
 					if (filterItemCnts) {
 						
 						var itemCnt = filterItemCnts.length;
@@ -114,8 +117,12 @@ function(ContentTemplateService,   $q,   DataSearchService) {
 								break;
 							}
 						}
+						
+						if (opt.count === 0) {
+							subContOptList.splice(j, 1);
+						}
 					}
-				});
+				}
 				
 			}
 			

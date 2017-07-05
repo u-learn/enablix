@@ -16,6 +16,7 @@ function($compile,   $timeout,   $location,   UserPreferenceService,   Notificat
 			prefValuesKey: "=?",
 			ebLayout: "@",
 			hideFiltersWithNoOptions: "=",
+			chckBoxLimit: "@",
 			persistSelection: "="
 		},
 		link: function(scope, element, attrs) {

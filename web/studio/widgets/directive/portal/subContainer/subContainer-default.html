@@ -53,17 +53,18 @@
 			    	<div class="dropdown">
 			    		<ebx-suggest-content requires-permission="SUGGEST_CONTENT" content-q-id="subContainerQId" parent-identity="parentIdentity" content-identity="dataItem.identity"></ebx-suggest-content>
 						<ebx-share-context-menu context-data="dataItem" content-q-id="subContainerQId" ></ebx-share-context-menu>
+						<ebx-content-detail-btn content-q-id="subContainerQId" content-identity="dataItem.identity"></ebx-content-detail-btn>
 					</div>
 			    </div>
 			</h4>
-			<div id="{{::dataItem.containerId}}{{::$index}}" class="toggle-cont">
+			<!-- <div id="{{::dataItem.containerId}}{{::$index}}" class="toggle-cont">
 				<table class="infotable" ng-if="dataItem.showDetails">
 					<tr ng-repeat="header in headers track by header.id" ng-switch="header.dataType" ng-if="::isRenderable(header, dataItem[header.key])">
 						<th>{{::header.label}}</th>
 						<td><eb-render-data content-value="dataItem[header.key]" content-def="header" content-record="dataItem" show-doc-link="false"/></td>
 					</tr>
 			  	</table>
-			</div>
+			</div> -->
 			<div ng-if="!$last" class="line-separator"></div>
 		</div>
 		<div ng-if="pageData && pageData.numberOfElements < pageData.totalElements">

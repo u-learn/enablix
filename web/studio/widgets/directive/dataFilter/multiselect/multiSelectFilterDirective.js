@@ -9,7 +9,8 @@ function($compile,   Notification) {
 			selectedValues: '=',
 			singleSelect: '=',
 			ebLayout: "@",
-			onSelectionChange: '=?'
+			onSelectionChange: '=?',
+			chckBoxLimit: "@"
 		},
 		link: function(scope, element, attrs) {
 			
@@ -105,7 +106,7 @@ function($compile,   Notification) {
 		        onSelectionChangeCallback();
 			}
 			
-			scope.defaultOptLimit = 3;
+			scope.defaultOptLimit = scope.chckBoxLimit ? parseInt(scope.chckBoxLimit) : 3;
 			scope.currentOptLimit = scope.defaultOptLimit;
 			scope.setOptLimit = function(_limit) {
 				scope.currentOptLimit = _limit;
