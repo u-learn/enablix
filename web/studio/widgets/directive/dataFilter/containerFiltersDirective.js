@@ -8,17 +8,17 @@ function(ContentTemplateService,   $q,   DataSearchService) {
 		    containerQId: '=',
 			onSearch: '=?'
 		},
-		link: function(scope, element, attrs) {
+		controller: function($scope) {
 			
 			var filterMetadata = {};
 			
-			scope.filterDefs = [];
+			$scope.filterDefs = [];
 			
 			var filterOpts = {};
 			var filterOptItemCounts = null;
 			
 			var containerDef = ContentTemplateService.getConcreteContainerDefinition(
-					enablix.template, scope.containerQId);
+					enablix.template, $scope.containerQId);
 			
 			var setContainerFilters = function(_containerDef) {
 				
@@ -82,12 +82,12 @@ function(ContentTemplateService,   $q,   DataSearchService) {
 					
 				});
 				
-				scope.filterDefs = filterDefs;
-				scope.$emit("cont-filter:filter-init-complete", filterDefs);
+				$scope.filterDefs = filterDefs;
+				$scope.$emit("cont-filter:filter-init-complete", filterDefs);
 				
-				scope.$watchCollection('filterDefs', function(newValue, oldValue) {
+				$scope.$watchCollection('filterDefs', function(newValue, oldValue) {
 					if (newValue != oldValue) {
-						scope.$emit("cont-filter:filter-init-complete", filterDefs);
+						$scope.$emit("cont-filter:filter-init-complete", filterDefs);
 					}
 				})
 				
@@ -130,28 +130,28 @@ function(ContentTemplateService,   $q,   DataSearchService) {
 				
 				removeNullOrEmptyProperties(_filterValues);
 				
-				DataSearchService.getContainerCountByRefListItems(scope.containerQId, _filterValues, filterMetadata,
+				DataSearchService.getContainerCountByRefListItems($scope.containerQId, _filterValues, filterMetadata,
 					function(data) {
 						filterOptItemCounts = data;
 						updateFilterOptsItemCount();
 					});
 			}
 			
-			scope.onContainerSearch = function(_filterValues) {
-				if (scope.onSearch) {
-					scope.onSearch(_filterValues, filterMetadata);
+			$scope.onContainerSearch = function(_filterValues) {
+				if ($scope.onSearch) {
+					$scope.onSearch(_filterValues, filterMetadata);
 					findAndUpdateFilterOptItemCount(_filterValues);
 				}
 			}
 
 			if (containerDef) {
 				setContainerFilters(containerDef);
-				if (scope.filterDefs.length == 0) {
-					scope.onContainerSearch({});
+				if ($scope.filterDefs.length == 0) {
+					$scope.onContainerSearch({});
 				}
 			}
 			
-			scope.toggleSidebar = function($event) {
+			$scope.toggleSidebar = function($event) {
 				var elem = $event.currentTarget;
 				$(elem).parent().parent().parent().toggleClass('closed');
 			}

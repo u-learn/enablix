@@ -20,24 +20,36 @@ function($compile,   $timeout,   $location,   UserPreferenceService,   Notificat
 		},
 		link: function(scope, element, attrs) {
 			
+			// the angular multi-select dropdown does not work if it is initially hidden
+			// in select.js, calculateContainerWidth() function return value 0, if it is hidden.
+			// As a result, the text box in the directive is only 10px and is hard to select.
+			// HACK: keep the data filter panel open initially and close it after a delay. This
+			// lets the angular select to render and text input has proper width.
+			$timeout(function() {
+				$(element).find("#dataFilterContainer").removeClass("in");
+			}, 300);
+			
+		},
+		controller: function($scope) {
+			
 			var filterValuesCopy = {};
 			
-			scope.resetLabel = scope.resetLabel || "Reset";
-			scope.searchLabel = scope.searchLabel || "Search";
-			scope.filterValues = scope.filterValues || {};
-			scope.layout = scope.layout || "panel";
-			scope.hideFiltersWithNoOptions = scope.hideFiltersWithNoOptions || false;
-			scope.persistSelection = scope.persistSelection || false;
+			$scope.resetLabel = $scope.resetLabel || "Reset";
+			$scope.searchLabel = $scope.searchLabel || "Search";
+			$scope.filterValues = $scope.filterValues || {};
+			$scope.layout = $scope.layout || "panel";
+			$scope.hideFiltersWithNoOptions = $scope.hideFiltersWithNoOptions || false;
+			$scope.persistSelection = $scope.persistSelection || false;
 
-			scope.showSaveAsDefault = !isNullOrUndefined(scope.prefValuesKey);
+			$scope.showSaveAsDefault = !isNullOrUndefined($scope.prefValuesKey);
 			
-			angular.copy(scope.filterValues, filterValuesCopy);
+			angular.copy($scope.filterValues, filterValuesCopy);
 
 			var readFiltersFromUrl = function() {
 				
 				var filterVals = DataSearchService.readUrlSearchFilters();
 				
-				angular.forEach(scope.filters, function(filter) {
+				angular.forEach($scope.filters, function(filter) {
 				
 					var value = filterVals[filter.id];
 					
@@ -53,7 +65,7 @@ function($compile,   $timeout,   $location,   UserPreferenceService,   Notificat
 							});
 						}
 						
-						scope.filterValues[filter.id] = filterVal;
+						$scope.filterValues[filter.id] = filterVal;
 					}
 				});
 			}
@@ -64,12 +76,12 @@ function($compile,   $timeout,   $location,   UserPreferenceService,   Notificat
 				var searchValues = {};
 				
 				var filterValuesValid = true;
-				angular.forEach(scope.filters, function(filter) {
+				angular.forEach($scope.filters, function(filter) {
 					
 					var valid = true;
 					if (filter.validateBeforeSubmit) {
 						
-						valid = filter.validateBeforeSubmit(scope.filterValues[filter.id]);
+						valid = filter.validateBeforeSubmit($scope.filterValues[filter.id]);
 						
 						if (!valid) {
 							filterValuesValid = false;
@@ -78,7 +90,7 @@ function($compile,   $timeout,   $location,   UserPreferenceService,   Notificat
 					
 					if (valid) {
 						searchValues[filter.id] = filter.filterValueTransformer ? 
-							filter.filterValueTransformer(scope.filterValues[filter.id]) : scope.filterValues[filter.id];
+							filter.filterValueTransformer($scope.filterValues[filter.id]) : $scope.filterValues[filter.id];
 					}
 					
 				});
@@ -86,13 +98,13 @@ function($compile,   $timeout,   $location,   UserPreferenceService,   Notificat
 				return filterValuesValid ? searchValues : null;
 			}
 			
-			scope.selectedFilterItems = [];
+			$scope.selectedFilterItems = [];
 			
 			var updatedSelectedFilterItems = function() {
 				
 				var selFilterItems = [];
 				
-				angular.forEach(scope.filterValues, function(value, key) {
+				angular.forEach($scope.filterValues, function(value, key) {
 					angular.forEach(value, function(val, indx) {
 						val.filterId = key;
 						val.indx = indx;
@@ -100,35 +112,35 @@ function($compile,   $timeout,   $location,   UserPreferenceService,   Notificat
 					});
 				});
 				
-				scope.selectedFilterItems = selFilterItems;
+				$scope.selectedFilterItems = selFilterItems;
 			}
 			
-			scope.selectedFilterItemRemoved = function($chip, $index) {
-				var filterVals = scope.filterValues[$chip.filterId];
+			$scope.selectedFilterItemRemoved = function($chip, $index) {
+				var filterVals = $scope.filterValues[$chip.filterId];
 				filterVals.splice($chip.indx, 1);
-				scope.onSearchAction();
+				$scope.onSearchAction();
 			}
 			
-			scope.clearAllFilters = function() {
-				angular.forEach(scope.filterValues, function(value, key) {
-					scope.filterValues[key] = [];
+			$scope.clearAllFilters = function() {
+				angular.forEach($scope.filterValues, function(value, key) {
+					$scope.filterValues[key] = [];
 				});
-				scope.onSearchAction();
+				$scope.onSearchAction();
 			}
 			
-			scope.onSearchAction = function() {
+			$scope.onSearchAction = function() {
 				
-				if (scope.onSearch) {
+				if ($scope.onSearch) {
 				
 					var searchValues = getSearchFilterValues();
 					
 					if (searchValues) {
 						
-						scope.onSearch(searchValues);
+						$scope.onSearch(searchValues);
 						
 						updatedSelectedFilterItems();
 						
-						if (scope.persistSelection) {
+						if ($scope.persistSelection) {
 							DataSearchService.updateUrlSearchFilters(searchValues, true);
 						}
 					}
@@ -136,10 +148,10 @@ function($compile,   $timeout,   $location,   UserPreferenceService,   Notificat
 				}
 			};
 			
-			scope.onResetAction = function() {
-				angular.copy(filterValuesCopy, scope.filterValues);
-				if (scope.onReset){
-					scope.onReset();
+			$scope.onResetAction = function() {
+				angular.copy(filterValuesCopy, $scope.filterValues);
+				if ($scope.onReset){
+					$scope.onReset();
 				}
 			}
 			
@@ -147,8 +159,8 @@ function($compile,   $timeout,   $location,   UserPreferenceService,   Notificat
 				
 				var filterVals = {};
 				
-				angular.forEach(scope.filters, function(filter) {
-					filterVals[filter.id] = scope.filterValues[filter.id];
+				angular.forEach($scope.filters, function(filter) {
+					filterVals[filter.id] = $scope.filterValues[filter.id];
 				});
 				
 				return filterVals;
@@ -156,11 +168,11 @@ function($compile,   $timeout,   $location,   UserPreferenceService,   Notificat
 			
 			var saveAsDefault = function(_saveFn) {
 				
-				if (scope.prefValuesKey) {
+				if ($scope.prefValuesKey) {
 					
 					var filterVals = getCurrentFilterValues();
 					
-					_saveFn(scope.prefValuesKey, filterVals, function(data) {
+					_saveFn($scope.prefValuesKey, filterVals, function(data) {
 					
 							Notification.primary("Updated default values!");
 							angular.copy(filterVals, filterValuesCopy);
@@ -171,11 +183,11 @@ function($compile,   $timeout,   $location,   UserPreferenceService,   Notificat
 				}
 			}
 			
-			scope.saveAsUserDefault = function() {
+			$scope.saveAsUserDefault = function() {
 				saveAsDefault(UserPreferenceService.saveAsUserPref);
 			}
 			
-			scope.saveAsSystemDefault = function() {
+			$scope.saveAsSystemDefault = function() {
 				saveAsDefault(UserPreferenceService.saveAsSystemPref);
 			}
 			
@@ -190,13 +202,13 @@ function($compile,   $timeout,   $location,   UserPreferenceService,   Notificat
 			
 			var initSearchFilters = function() {
 				
-				var defaultPrefFVs = scope.prefValuesKey ? 
-						UserPreferenceService.getPrefByKey(scope.prefValuesKey) : null;
+				var defaultPrefFVs = $scope.prefValuesKey ? 
+						UserPreferenceService.getPrefByKey($scope.prefValuesKey) : null;
 				
 				var searchFilters = {};
-				angular.forEach(scope.filters, function(filter) {
+				angular.forEach($scope.filters, function(filter) {
 					
-					if (!isNullOrUndefined(scope.filterValues)) {
+					if (!isNullOrUndefined($scope.filterValues)) {
 						
 						// check user preferences first
 						var defaultFV = fetchFilterDefaultValueFromUserPref(filter, defaultPrefFVs);
@@ -208,7 +220,7 @@ function($compile,   $timeout,   $location,   UserPreferenceService,   Notificat
 		
 						if (!isNullOrUndefined(defaultFV)) {
 							
-							scope.filterValues[filter.id] = defaultFV;
+							$scope.filterValues[filter.id] = defaultFV;
 							
 							searchFilters[filter.id] = filter.filterValueTransformer ? 
 									filter.filterValueTransformer(defaultFV) : defaultFV;
@@ -220,11 +232,11 @@ function($compile,   $timeout,   $location,   UserPreferenceService,   Notificat
 			initSearchFilters();
 			readFiltersFromUrl();
 			
-			if (scope.searchOnPageLoad) {
-				scope.onSearchAction();
+			if ($scope.searchOnPageLoad) {
+				$scope.onSearchAction();
 			}
 			
-			scope.toggleFilterContainer = function($event) {
+			$scope.toggleFilterContainer = function($event) {
 				var elem = $event.currentTarget;
 				if ($event.target.nodeName != 'A' && $event.target.nodeName != 'SPAN') {
 					$(elem).toggleClass('closed');
@@ -232,14 +244,14 @@ function($compile,   $timeout,   $location,   UserPreferenceService,   Notificat
 				}
 			};
 			
-			if (scope.hideFiltersWithNoOptions) {
-				scope.$on("msf:opt-init-complete", function(event, _initData) {
+			if ($scope.hideFiltersWithNoOptions) {
+				$scope.$on("msf:opt-init-complete", function(event, _initData) {
 					
 					if (_initData.options.length == 0) {
 						
-						for (var i = 0; i < scope.filters.length; i++) {
-							if (scope.filters[i] === _initData.filterDef) {
-								scope.filters.splice(i, 1);
+						for (var i = 0; i < $scope.filters.length; i++) {
+							if ($scope.filters[i] === _initData.filterDef) {
+								$scope.filters.splice(i, 1);
 								break;
 							}
 						}
@@ -247,15 +259,6 @@ function($compile,   $timeout,   $location,   UserPreferenceService,   Notificat
 					}
 				});
 			}
-			
-			// the angular multi-select dropdown does not work if it is initially hidden
-			// in select.js, calculateContainerWidth() function return value 0, if it is hidden.
-			// As a result, the text box in the directive is only 10px and is hard to select.
-			// HACK: keep the data filter panel open initially and close it after a delay. This
-			// lets the angular select to render and text input has proper width.
-			$timeout(function() {
-				$(element).find("#dataFilterContainer").removeClass("in");
-			}, 300);
 			
 		},
 		templateUrl: function(elem, attr) {
