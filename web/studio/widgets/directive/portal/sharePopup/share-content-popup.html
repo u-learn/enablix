@@ -5,12 +5,13 @@
 	<div class="modal-body">
 		<div class="cont">
 			<div>
-				<md-autocomplete required md-input-name="emailid"
+				<label class="form-label">Email Address</label>
+				<md-autocomplete class="form-control" required md-input-name="emailid"
 					md-selected-item="selectedItem" md-search-text="searchText"
 					md-items="item in querySearch(searchText)"
 					ng-blur="shareForm.emailid.$valid"
 					md-search-text-change="validate(searchText)"
-					md-item-text="item.display" md-floating-label="Email Address">
+					md-item-text="item.display">
 				<md-item-template> <span
 					md-highlight-text="searchText">{{item.display}}</span> </md-item-template>
 				</md-autocomplete>
@@ -27,5 +28,5 @@
 </form>
 <div class="modal-footer">
 	<button ng-click="shareContent()" class="button button-add">Share</button>
-	<a href="#" ng-click="close()" class="button button-delete">Cancel</a>
+	<a ng-click="close()" class="button button-delete">Cancel</a>
 </div>

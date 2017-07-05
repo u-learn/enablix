@@ -2529,3 +2529,12 @@ md-checkbox .md-icon {
 .head.layout-row .bar-action-icons {
     margin-top: 0;
 }
+
+md-autocomplete .md-whiteframe-z1 {
+	box-shadow: none;
+}
+
+md-autocomplete.form-control {
+	padding: 0px;
+    height: 40px;
+}

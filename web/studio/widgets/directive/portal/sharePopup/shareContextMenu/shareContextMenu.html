@@ -4,19 +4,17 @@
 	class="dropdown-menu dropdown-menu-right" role="menu"
 	aria-labelledby="shareBttn">
 	<li role="presentation" requires-permission="SHARE_VIA_EMAIL"><a class="contextAnchor" role="menuitem"
-		tabindex="-1" href="#"
-		ng-click="openShareContentModal(contextData.identity,$event)">
+		tabindex="-1" ng-click="openShareContentModal(contextData.identity,$event)">
 			<span class='fa fa-envelope'></span>
    			<span class="my-text">Share By Email</span>
 		</a></li>
 	<!-- <li role="presentation" class="divider"></li>
 	<li role="presentation"><a class="contextAnchor" role="menuitem"
-		tabindex="-1" href="#"
-		ng-click="openMailClient(contextData.downloadDocIdentity,contextData.identity,contextData.title)">Share
+		tabindex="-1" ng-click="openMailClient(contextData.downloadDocIdentity,contextData.identity,contextData.title)">Share
 			By Email Client</a></li>  -->
 	<li role="presentation" class="divider" requires-permission="SHARE_VIA_EMAIL"></li>
 	<li role="presentation">
-		<a class="contextAnchor" role="menuitem" tabindex="-1" href="#"	
+		<a class="contextAnchor" role="menuitem" tabindex="-1"	
 			ng-click="copyPortalURL(contextData.identity,contextData.title,contextData.name)">
 			<span class='fa fa-clipboard'></span>
    			<span class="my-text">Copy Portal URL</span>
@@ -25,7 +23,7 @@
 	<!--  <li ng-if="contextData.downloadDocIdentity" role="presentation"
 		class="divider"></li>
 	<li ng-if="contextData.downloadDocIdentity" role="presentation"><a
-		class="contextAnchor" role="menuitem" tabindex="-1" href="#"
+		class="contextAnchor" role="menuitem" tabindex="-1"
 		ng-click="copyDownloadURL(contextData.downloadDocIdentity,contextData.identity,contextData.title)">Copy
 			Download URL</a></li> -->
 	<li role="presentation" class="divider" requires-permission="SHARE_VIA_SLACK"></li>
