@@ -82,5 +82,9 @@ enablix.studioApp.controller('PortalCntnrListCtrl',
 					_containerQId, _contentIdentity, 'single', _containerQId);
 		}
 		
+		if ($scope.isBizDimension) {
+			$scope.fetchData();
+		}
+		
 	}                                          
 ]);

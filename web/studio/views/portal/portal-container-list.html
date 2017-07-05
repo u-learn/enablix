@@ -1,5 +1,5 @@
 <div layout="row" flex>
-	<div class="filter-pane" flex="20" ng-show="filtersAvailable && !isBizDimension">
+	<div class="filter-pane" flex="20" ng-if="filtersAvailable && !isBizDimension">
 		<ebx-container-filters container-q-id="$stateParams.containerQId" on-search="onFilterSearch"/>
 	</div>
 	<!-- page content -->
