@@ -2304,6 +2304,7 @@ md-checkbox .md-icon {
 
 .record-tile .record-data .head {
     border-width: 0px 0px 1px 0px;
+    border-color: #f4f6f7;
 }
 
 .record-tile .record-data .cont {
