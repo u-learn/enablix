@@ -7,4 +7,9 @@ enablix.studioApp.controller('PortalRecoCtrl',
 				$scope.recoList = recommendations;
 			});
 		
+		$scope.recoShowLimit = 5;
+		$scope.clearShowLimit = function() {
+			$scope.recoShowLimit = $scope.recoList.length;
+		}
+		
 	}]);
