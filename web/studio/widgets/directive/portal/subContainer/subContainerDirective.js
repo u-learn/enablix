@@ -19,8 +19,8 @@ enablix.studioApp.directive('ebPortalSubContainer', [
 				category: "=?",
 				showLabel: "@",
 				ebLayout: "@",
-				summaryView: "=",
-				recordCount: "="
+				summaryView: "=?",
+				recordCount: "=?"
 			},
 			controller : 'PortalSubContainerCtrl',
 			templateUrl : function(elem, attr) {
