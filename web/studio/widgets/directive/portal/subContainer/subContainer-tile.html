@@ -2,7 +2,8 @@
 	<div class="doc-thumbnail" ng-if="bodyData.docThumbnailUrl" flex="none"><img ng-src="{{bodyData.docThumbnailUrl}}" ng-click="openRecordDetailWindow(bodyData)"></img></div>
 	<div class="record-data" flex>
 		<div class="head" layout="row">
-			<h2 flex><span>{{::bodyData.headingLabel}}</span>
+			<h2 flex><span ng-if="::!summaryView">{{::bodyData.headingLabel}}</span>
+					<span ng-if="::summaryView" class="content-label" ng-click="navToContentDetail(bodyData.identity)">{{::bodyData.headingLabel}}</span>
 					<span class="content-type" ng-show="::subContainerLabel"> ({{::subContainerLabel}})</span></h2>
 			<div class="dropdown" flex="none">
 				<div class="action-icons bar-action-icons">
@@ -24,9 +25,6 @@
 		  	</table>
 		  	<div class="box-view-read-more"><i class="fa fa-angle-down fa-lg" ng-click="expandBoxView($event)"></i></div>
 		  	</div>
-		</div>
-		<div ng-if="::summaryView" class="record-detail-action svgButton" ng-click="navToContentDetail(bodyData.identity)">
-			<i class="fa fa-ellipsis-h"></i>
 		</div>
 	</div>
 </div>

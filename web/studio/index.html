@@ -28,6 +28,7 @@
     
 	<link rel="stylesheet" type="text/css" href="css/website.css"/>
 	    
+	<!-- build:js js/index-vendor-bundle.js -->
    	<script type="text/javascript" src="js/vendor/angular/angular.js"></script>
    	<script type="text/javascript" src="js/vendor/angular/angular-animate.min.js"></script>
 	<script type="text/javascript" src="js/vendor/angular/angular-aria.min.js"></script>
@@ -51,14 +52,15 @@
     <script type="text/javascript" src="js/vendor/spin/spin.min.js"></script>
 	<script type="text/javascript" src="js/vendor/angular/angular-spinner.min.js"></script>
 	<script type="text/javascript" src="js/vendor/angular/angular-loading-spinner.js"></script>
-	<script type="text/javascript" src="//cdn.quilljs.com/1.1.5/quill.js"></script>
+	<script type="text/javascript" src="js/vendor/quill/1.1.5/quill.js"></script>
 	<script type="text/javascript" src="js/vendor/ng-quill-3.0.0/ng-quill.js"></script>
-	<script type="text/javascript" src="//d3js.org/d3.v3.js"></script>
+	<script type="text/javascript" src="js/vendor/d3/d3.v3.js"></script>
 	<script type="text/javascript" src="js/vendor/charts/heatmap.js"></script>
-	<script src="//cdnjs.cloudflare.com/ajax/libs/angular-nvd3/1.0.9/angular-nvd3.min.js"></script>
-    
+	<script type="text/javascript" src="js/vendor/d3/angular-nvd3-1.0.9.min.js"></script>
+    <!-- endbuild -->
     
     <!-- application scripts -->
+    <!-- build:js js/index-bundle.js -->
 	<script type="text/javascript" src="js/common/utility.js"></script>
 	<script type="text/javascript" src="js/app.js"></script>
 	<script type="text/javascript" src="js/serverDomain.js"></script>
@@ -82,6 +84,7 @@
     <script type="text/javascript" src="widgets/modal/infoModal.js"></script>
     <script type="text/javascript" src="widgets/modal/infoModalController.js"></script>
     <script type="text/javascript" src="widgets/navigationTracker.js"></script>
+    <!-- endbuild -->
     
   </head>
   <body id="page-top" ng-app="studio" ng-controller="WebsiteMainCtrl">

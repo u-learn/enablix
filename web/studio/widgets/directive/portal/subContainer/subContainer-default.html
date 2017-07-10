@@ -46,14 +46,13 @@
 					<ebx-doc-context-menu content-record="dataItem"></ebx-doc-context-menu>
 				</span>
 				<span class="single-line" flex>
-					<a ng-click="toggleContainerItem($event, dataItem.containerId + $index, dataItem)" class="toggle" >{{::dataItem.headingLabel}}</a>
+					<a ng-click="navToContentDetail(dataItem.identity)" class="toggle" >{{::dataItem.headingLabel}}</a>
 			    	<a ng-if="dataItem.hasSubContainers" ng-click="navToItemDetail(dataItem.containerQId, dataItem.identity)" class="detail fa fa-external-link"></a>
 			    </span>
 			    <div class="action-icons" flex="none" style='display: none;'>
 			    	<div class="dropdown">
 			    		<ebx-suggest-content requires-permission="SUGGEST_CONTENT" content-q-id="subContainerQId" parent-identity="parentIdentity" content-identity="dataItem.identity"></ebx-suggest-content>
 						<ebx-share-context-menu context-data="dataItem" content-q-id="subContainerQId" ></ebx-share-context-menu>
-						<ebx-content-detail-btn content-q-id="subContainerQId" content-identity="dataItem.identity"></ebx-content-detail-btn>
 					</div>
 			    </div>
 			</h4>

@@ -7,6 +7,7 @@
     <!-- <meta name="viewport" content="width=1024"> -->
     <link rel="icon" type="image/png" href="/favicon.png">
 	
+	<!-- build:css css/style-bundle.css -->
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 	<!-- <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css"> -->
 	<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"> -->
@@ -21,16 +22,18 @@
 	<link rel="stylesheet" type="text/css" href="css/angular-ui-notification.min.css">
 	<link rel="stylesheet" type="text/css" href="css/select.css">
 	<link rel="stylesheet" type="text/css" href="css/main.css">
+	<!-- endbuild -->
 	
 	<!--script type="text/javascript" src="js/vendor/jquery/jquery-1.11.2.min.js"></script-->
 	<!-- <script type="text/javascript" src="js/vendor/bootstrap/bootstrap.min.js"></script> -->
 	
-	<!-- angular scripts -->
+	<!-- vendor scripts -->
+	<!-- build:js js/login-vendor-bundle.js -->
 	<script type="text/javascript" src="js/vendor/angular/angular.min.js"></script>
 	<script type="text/javascript" src="js/vendor/angular/angular-animate.min.js"></script>
 	<script type="text/javascript" src="js/vendor/angular/angular-aria.min.js"></script>
 	<script type="text/javascript" src="js/vendor/angular/angular-resource.min.js"></script>
-	<script type="text/javascript" src="js/vendor/angular/angular-ui-router.js"></script>
+	<script type="text/javascript" src="js/vendor/angular/angular-ui-router.min.js"></script>
 	<script type="text/javascript" src="js/vendor/angular/angular-sanitize.min.js"></script>
 	<script type="text/javascript" src="js/common/widgets/tree/angular.treeview.js"></script>
 	<script type="text/javascript" src="js/common/widgets/tree/listGroupTree.js"></script>
@@ -49,14 +52,18 @@
 	<script type="text/javascript" src="js/vendor/spin/spin.min.js"></script>
 	<script type="text/javascript" src="js/vendor/angular/angular-spinner.min.js"></script>
 	<script type="text/javascript" src="js/vendor/angular/angular-loading-spinner.js"></script>
-	<script type="text/javascript" src="//cdn.quilljs.com/1.1.5/quill.js"></script>
+	<script type="text/javascript" src="js/vendor/quill/1.1.5/quill.js"></script>
 	<script type="text/javascript" src="js/vendor/ng-quill-3.0.0/ng-quill.js"></script>
 	<script type="text/javascript" src="js/vendor/angular/digest-hud.js"></script>
-	<script type="text/javascript" src="//d3js.org/d3.v3.js"></script>
+	<script type="text/javascript" src="js/vendor/d3/d3.v3.js"></script>
 	<script type="text/javascript" src="js/vendor/charts/heatmap.js"></script>
-	<script src="//cdnjs.cloudflare.com/ajax/libs/angular-nvd3/1.0.9/angular-nvd3.min.js"></script>
+	<script type="text/javascript" src="js/vendor/d3/angular-nvd3-1.0.9.min.js"></script>
+	<!-- endbuild -->
 	
 	<!-- application scripts -->
+	
+	<!-- below is the gulp-useref tags - build and endbuild. DO NOT REMOVE -->
+	<!-- build:js js/login-bundle.js -->
 	<script type="text/javascript" src="js/common/utility.js"></script>
 	<script type="text/javascript" src="js/app.js"></script>
 	<script type="text/javascript" src="js/serverDomain.js"></script>
@@ -83,7 +90,7 @@
 	<script type="text/javascript" src="widgets/modal/infoModal.js"></script>
 	
 	<script type="text/javascript" src="js/mainController.js"></script>
-
+	<!-- endbuild -->
 </head>
 
 <body ng-app="studio">

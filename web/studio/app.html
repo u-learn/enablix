@@ -27,11 +27,11 @@
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/nvd3/1.8.1/nv.d3.min.css"/>  
 	<link rel="stylesheet" type="text/css" href="css/main.css">
 	
+	<!-- vendor scripts -->
 	<script type="text/javascript" src="js/vendor/jquery/jquery-1.11.2.min.js"></script>
 	<script type="text/javascript" src="js/vendor/typeahead/typeahead.bundle.min.js"></script>
 	<script type="text/javascript" src="js/vendor/bootstrap/bootstrap.min.js"></script>
 	<script type="text/javascript" src="js/vendor/lodash/lodash.min.js"></script>
-	<!-- angular scripts -->
 	<script type="text/javascript" src="js/vendor/angular/angular.min.js"></script>
 	<script type="text/javascript" src="js/vendor/angular/angular-animate.min.js"></script>
 	<script type="text/javascript" src="js/vendor/angular/angular-aria.min.js"></script>
@@ -55,23 +55,25 @@
 	<script type="text/javascript" src="js/vendor/spin/spin.min.js"></script>
 	<script type="text/javascript" src="js/vendor/angular/angular-spinner.min.js"></script>
 	<script type="text/javascript" src="js/vendor/angular/angular-loading-spinner.js"></script>
-	<script type="text/javascript" src="//cdn.quilljs.com/1.1.5/quill.js"></script>
+	<script type="text/javascript" src="js/vendor/quill/1.1.5/quill.js"></script>
 	<script type="text/javascript" src="js/vendor/ng-quill-3.0.0/ng-quill.js"></script>
 	<script type="text/javascript" src="js/vendor/angular/digest-hud.js"></script>
-	<script type="text/javascript" src="//d3js.org/d3.v3.js"></script>
+	<script type="text/javascript" src="js/vendor/d3/d3.v3.js"></script>
 	<script type="text/javascript" src="js/vendor/charts/heatmap.js"></script>
 	<script type="text/javascript" src="js/vendor/jssor/jssor.slider-23.1.6.min.js"></script>
 	<script type="text/javascript" src="js/vendor/html2canvas/html2canvas.js"></script>
-	<script src="//cdnjs.cloudflare.com/ajax/libs/nvd3/1.8.1/nv.d3.min.js"></script>
-	<script src="//cdnjs.cloudflare.com/ajax/libs/angular-nvd3/1.0.9/angular-nvd3.min.js"></script>
-	
+	<script src="js/vendor/d3/nv.d3.1.8.1.min.js"></script>
+	<script type="text/javascript" src="js/vendor/d3/angular-nvd3-1.0.9.min.js"></script>
 	
 	<!-- application scripts -->
+	<!-- below is the gulp-useref tags - build and endbuild. DO NOT REMOVE -->
+	
 	<script type="text/javascript" src="js/common/utility.js"></script>
 	<script type="text/javascript" src="js/app.js"></script>
 	<script type="text/javascript" src="js/serverDomain.js"></script>
 	<script type="text/javascript" src="js/serviceUrl.js"></script>
 	<script type="text/javascript" src="js/common/restService.js"></script>
+	<!-- build:js js/app-bundle.js -->
 	<script type="text/javascript" src="js/common/lang-translate.js"></script>
 	<script type="text/javascript" src="js/common/login/loginCtrl.js"></script>
 	<script type="text/javascript" src="js/common/login/setPasswordController.js"></script>
@@ -256,7 +258,8 @@
 	<script type="text/javascript" src="widgets/reports/contentCoverageReportDef.js"></script>
 	<script type="text/javascript" src="widgets/reports/activityMetricReport.js"></script>
 	<script type="text/javascript" src="widgets/reports/activityTrendReport.js"></script>
-
+	<!-- endbuild -->
+	
 </head>
 
 <body ng-app="studio" style="display: none;">
