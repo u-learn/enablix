@@ -8,7 +8,7 @@ function(ContentTemplateService,   $q,   DataSearchService) {
 		    containerQId: '=',
 			onSearch: '=?'
 		},
-		controller: function($scope) {
+		controller: ['$scope', function($scope) {
 			
 			var filterMetadata = {};
 			
@@ -156,7 +156,7 @@ function(ContentTemplateService,   $q,   DataSearchService) {
 				$(elem).parent().parent().parent().toggleClass('closed');
 			}
 			
-		},
+		}],
 		templateUrl: "widgets/directive/dataFilter/containerFilters.html",
 	};
 }]);

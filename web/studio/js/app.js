@@ -63,7 +63,7 @@ enablix.studioApp.config(['ngQuillConfigProvider', function (ngQuillConfigProvid
 }]);
 
 //material design default theme
-enablix.studioApp.config(function($mdThemingProvider) {
+enablix.studioApp.config(['$mdThemingProvider', function($mdThemingProvider) {
 	$mdThemingProvider.theme('default')
 		.primaryPalette('blue-grey', {
 			'default': '900'
@@ -71,7 +71,7 @@ enablix.studioApp.config(function($mdThemingProvider) {
 	    .accentPalette('blue', {
 	    	'default': '800'
 	    });	
-});
+}]);
 
 var appSetup = function(StudioSetupService) {
 	return StudioSetupService.setupStudio();
@@ -81,7 +81,9 @@ var contentWFInit = function(ContentApprovalService) {
 	return ContentApprovalService.init();
 }
 
-enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
+enablix.studioApp.config(
+[		'$stateProvider', '$urlRouterProvider', '$httpProvider',
+function($stateProvider,   $urlRouterProvider,   $httpProvider) {
 	
 	//$urlRouterProvider.otherwise("/login");
 	
@@ -783,5 +785,5 @@ enablix.studioApp.config(function($stateProvider, $urlRouterProvider, $httpProvi
 	
 	$httpProvider.defaults.withCredentials = true;
 	
-});
+}]);
 

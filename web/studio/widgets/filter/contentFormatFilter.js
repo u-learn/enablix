@@ -1,4 +1,6 @@
-enablix.filters.filter('ebxFormatData', function($filter, $compile) {
+enablix.filters.filter('ebxFormatData', 
+[		'$filter', '$compile',		
+function($filter,   $compile) {
 	
 	return function(input, inputTypeDef, contentRecord, scope) {
 		
@@ -84,7 +86,7 @@ enablix.filters.filter('ebxFormatData', function($filter, $compile) {
 		return text;
 	};
 	
-});
+}]);
 
 enablix.filters.filter('ebxLinky', ['$sanitize', '$location', '$state',
 	function($sanitize, $location, $state) {

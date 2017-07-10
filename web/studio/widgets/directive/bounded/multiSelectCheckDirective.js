@@ -1,4 +1,4 @@
-enablix.studioApp.directive('multiSelectChecker', function($compile) {
+enablix.studioApp.directive('multiSelectChecker', ['$compile', function($compile) {
 	return {
 		restrict : 'A',
 		replace : false,
@@ -20,4 +20,4 @@ enablix.studioApp.directive('multiSelectChecker', function($compile) {
 			};
 		}
 	};
-});
+}]);

@@ -1,4 +1,4 @@
-enablix.studioApp.config(function ($translateProvider) {
+enablix.studioApp.config(['$translateProvider', function ($translateProvider) {
 
 	$translateProvider.preferredLanguage('enUS');
 
@@ -6,4 +6,4 @@ enablix.studioApp.config(function ($translateProvider) {
 		  prefix: '/widgets/messages/',
 		  suffix: '.json'
 		});
-});
+}]);

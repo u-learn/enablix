@@ -31,7 +31,7 @@ function($compile,   $timeout,   $location,   UserPreferenceService,   Notificat
 			}, 300);
 			
 		},
-		controller: function($scope) {
+		controller: ['$scope', function($scope) {
 			
 			var filterValuesCopy = {};
 			
@@ -261,7 +261,7 @@ function($compile,   $timeout,   $location,   UserPreferenceService,   Notificat
 				});
 			}
 			
-		},
+		}],
 		templateUrl: function(elem, attr) {
 			var layout = attr.ebLayout || "panel";
 			return "widgets/directive/dataFilter/dataFilters-" + layout + ".html"

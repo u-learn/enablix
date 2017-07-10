@@ -1,4 +1,5 @@
 enablix.studioApp.directive('focus',
+['$timeout',
 function($timeout) {
  return {
  scope : {
@@ -14,7 +15,7 @@ function($timeout) {
  });
  }
 };
-}); 
+}]); 
 
 enablix.studioApp.directive('back', ['$window', function($window) {
         return {
