@@ -1,0 +1,17 @@
+{
+  "name": "enablix-web",
+  "version": "1.0.0",
+  "devDependencies": {
+    "gulp": "*",
+    "gulp-clean": "*",
+    "gulp-util": "*",
+    "gulp-if": "*",
+    "gulp-rename": "*",
+    "gulp-concat": "*",
+    "gulp-uglify": "*",
+    "gulp-watch": "*",
+    "gulp-useref": "*",
+    "gulp-clean-css": "*",
+    "gulp-minify": "*"
+  }
+}
