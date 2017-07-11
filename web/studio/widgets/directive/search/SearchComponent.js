@@ -116,6 +116,7 @@ var ContainerNode = exports.ContainerNode = function () {
             label = _ref.label,
             qualifiedId = _ref.qualifiedId,
             searchBoost = _ref.searchBoost,
+            isLinkContainer = !isNullOrUndefined(_ref.linkContainerQId),
             container = _ref.container;
         var depth = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
 
@@ -123,10 +124,10 @@ var ContainerNode = exports.ContainerNode = function () {
 
         this.type = "ContainerNode";
 
-        _.assign(this, { businessCategory: businessCategory, id: id, label: label, qualifiedId: qualifiedId, searchBoost: searchBoost, depth: depth });
+        _.assign(this, { businessCategory: businessCategory, id: id, label: label, qualifiedId: qualifiedId, searchBoost: searchBoost, depth: depth, isLinkContainer: isLinkContainer });
         if (!container || container.length === 0) return;
         this.nodes = {};
-        var newDepth = depth++;
+        var newDepth = ++depth;
         function addDepth(subContainer) {
             return createContainerNode(subContainer, newDepth);
         }
@@ -321,15 +322,28 @@ var ContainerGraph = exports.ContainerGraph = function () {
         var container = ebTemplate.dataDefinition.container;
 
         this.rootNodes = {};
-        container.map(createBizCategoryNodes).filter(function (node) {
-            return node !== null;
-        }).forEach(function (node) {
-            if (_this4.rootNodes[node.label]) {
+        
+        var addNodeToGraph = function(node) {
+        	if (_this4.rootNodes[node.label]) {
                 console.warn("ContainerGraph::The node with label " + node.label + " already exists, skipping");
                 return;
             };
             _this4.rootNodes[node.label] = node;
             ALL_NODES.push(node);
+            
+            if (node.nodes) {
+            	_.each(node.nodes, function(cNode, nodeLabel) {
+            		if (!cNode.isLinkContainer) {
+            			addNodeToGraph(cNode);
+            		}
+            	});
+            }
+        }
+        
+        container.map(createBizCategoryNodes).filter(function (node) {
+            return node !== null;
+        }).forEach(function (node) {
+            addNodeToGraph(node);
         });
         this.ALL_NODES = ALL_NODES;
         this.bizDimensionNodes = {};
@@ -725,7 +739,7 @@ var Indexer = function () {
         };
 
         this.shrinkOrExpand = function (query) {
-            //This is because the component will not rerender until the next character input
+        	//This is because the component will not rerender until the next character input
             if (query.length < _constants.GROW_LENGTH) {
                 if (_this.expansionState !== _constants.SHRUNK) {
                     return _this.restart();
@@ -783,7 +797,7 @@ var Indexer = function () {
     }, {
         key: "add",
         value: function add(items) {
-            var _this2 = this;
+        	var _this2 = this;
 
             var newItems = items.filter(function (item) {
                 return !~_this2.ids.indexOf(item[_constants.LABEL]);
