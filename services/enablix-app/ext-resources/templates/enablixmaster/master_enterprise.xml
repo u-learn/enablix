@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<contentTemplate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="master_enterprise" version="3.03" xsi:noNamespaceSchemaLocation="../xsd/content-template.xsd">
+<contentTemplate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="master_enterprise" version="3.04" xsi:noNamespaceSchemaLocation="../xsd/content-template.xsd">
 	<dataDefinition>
 		<container id="product" label="Products" businessCategory="BUSINESS_DIMENSION">
 			<contentItem id="name" label="Name" type="text" searchBoost="7"/>
@@ -3667,8 +3667,6 @@
 				<itemContainer qualifiedId="product"/>
 				<itemContainer qualifiedId="competitor"/>
 				<itemContainer qualifiedId="partner"/>
-				<itemContainer qualifiedId="customer"/>
-				<itemContainer qualifiedId="salesKit"/>				
 			</itemContainers>
 			<enclosures>
 				<enclosure id="collateral" label="Collateral">
