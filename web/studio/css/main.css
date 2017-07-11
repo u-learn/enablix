@@ -2547,3 +2547,8 @@ md-autocomplete.form-control {
 .single-line a.toggle {
     color: #1D6AAD;
 }
+
+.page-heading ebx-suggest-content {
+	font-size: 0.875em;
+	padding-left: 0.5em;
+}

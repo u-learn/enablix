@@ -8,7 +8,9 @@
 			<eb-portal-breadcrumb></eb-portal-breadcrumb>
 			<div class="row">
 				<main class="col-md-8">					
-					<div class="page-heading"><span class="heading-label">{{::containerLabel}}</span><span class="detail">{{listCountInfo}}</span></div>		
+					<div class="page-heading"><span class="heading-label">{{::containerLabel}}</span><span class="detail">{{listCountInfo}}</span>
+						<ebx-suggest-content requires-permission="SUGGEST_CONTENT" content-q-id="$stateParams.containerQId"></ebx-suggest-content>
+					</div>		
 					<div ng-class="{'block': layout == 'default'}">
 						<eb-table table-headers="listHeaders" table-data="listData" row-click-fn="navToContentDetail" 
 								eb-layout="{{layout}}" container-q-id="{{$stateParams.containerQId}}" 
