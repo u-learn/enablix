@@ -1,6 +1,6 @@
 enablix.studioApp.controller('RecordDetailWindowCtrl', 
-			['$scope', 'containerQId', 'recordDetail', 'recordIdentity', '$modalInstance', 'ContentDataService', 'DocPreviewService', 'ContentTemplateService', 'ContentUtil', 'StateUpdateService',
-	function( $scope,   containerQId,   recordDetail,   recordIdentity,   $modalInstance,   ContentDataService,   DocPreviewService,   ContentTemplateService,   ContentUtil,   StateUpdateService) {
+			['$scope', '$sce', 'containerQId', 'recordDetail', 'recordIdentity', '$modalInstance', 'ContentDataService', 'DocPreviewService', 'ContentTemplateService', 'ContentUtil', 'StateUpdateService',
+	function( $scope,   $sce,   containerQId,   recordDetail,   recordIdentity,   $modalInstance,   ContentDataService,   DocPreviewService,   ContentTemplateService,   ContentUtil,   StateUpdateService) {
 		
 		$scope.containerQId = containerQId;
 		$scope.recordIdentity = recordIdentity;

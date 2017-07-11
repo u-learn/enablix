@@ -2539,3 +2539,11 @@ md-autocomplete.form-control {
 	padding: 0px;
     height: 40px;
 }
+
+.single-line:hover {
+	white-space: normal;
+}
+
+.single-line a.toggle {
+    color: #1D6AAD;
+}
