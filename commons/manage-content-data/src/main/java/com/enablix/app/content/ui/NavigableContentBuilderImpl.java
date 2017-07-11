@@ -72,9 +72,14 @@ public class NavigableContentBuilderImpl implements NavigableContentBuilder {
 			String parentIdentity = ContentDataUtil.findParentIdentityFromAssociation(record);
 			
 			if (parentIdentity != null) {
-				navigableContent = buildNavigableContent(template, 
+				
+				NavigableContent pNavContent = buildNavigableContent(template, 
 						QIdUtil.getParentQId(container.getQualifiedId()), 
 						parentIdentity, navigableContent);
+				
+				if (pNavContent != null) {
+					navigableContent = pNavContent;
+				}
 			}
 		}
 		
