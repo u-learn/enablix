@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<contentTemplate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="master_enterprise" version="3.04" xsi:noNamespaceSchemaLocation="../xsd/content-template.xsd">
+<contentTemplate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="master_enterprise" version="3.05" xsi:noNamespaceSchemaLocation="../xsd/content-template.xsd">
 	<dataDefinition>
 		<container id="product" label="Products" businessCategory="BUSINESS_DIMENSION">
 			<contentItem id="name" label="Name" type="text" searchBoost="7"/>
@@ -3669,31 +3669,6 @@
 				<itemContainer qualifiedId="partner"/>
 			</itemContainers>
 			<enclosures>
-				<enclosure id="collateral" label="Collateral">
-					<childContainer id="article"/>
-					<childContainer id="battlecard"/>
-					<childContainer id="blog"/>
-					<childContainer id="bom"/>					
-					<childContainer id="caseStudy"/>
-					<childContainer id="demoenvironment"/>	
-					<childContainer id="demoscript"/>																												
-					<childContainer id="discoveryQuestion"/>
-					<childContainer id="execSummary"/>
-					<childContainer id="faq"/>
-					<childContainer id="featureSheet"/>
-					<childContainer id="importantslide"/>
-					<childContainer id="marketingevent"/>					
-					<childContainer id="poc"/>
-					<childContainer id="pov"/>
-					<childContainer id="proposals"/>
-					<childContainer id="template"/>
-					<childContainer id="salesDeck"/>
-					<childContainer id="salesPlay"/>										
-					<childContainer id="whitepaper"/>
-					<childContainer id="multimedia"/>
-					<childContainer id="winloss"/>
-					<childContainer id="content"/>
-				</enclosure>
 				<enclosure id="corporate" label="Corporate">
 					<childContainer id="corporatelogo"/>
 					<childContainer id="mla"/>	
