@@ -1,6 +1,6 @@
 enablix.studioApp.controller('PortalCntnrListCtrl', 
-		   ['$scope', 'ContentTemplateService', '$state', '$stateParams', '$q', 'ContentDataService', 'StudioSetupService', 'ContentUtil', 'StateUpdateService', 'Notification', 'DataSearchService',
-    function($scope,   ContentTemplateService,   $state,   $stateParams,   $q,   ContentDataService,   StudioSetupService,   ContentUtil,   StateUpdateService,   Notification,   DataSearchService) {
+		   ['$scope', 'ContentTemplateService', '$state', '$stateParams', '$q', 'PubSub', 'ContentDataService', 'StudioSetupService', 'ContentUtil', 'StateUpdateService', 'Notification', 'DataSearchService',
+    function($scope,   ContentTemplateService,   $state,   $stateParams,   $q,   PubSub,   ContentDataService,   StudioSetupService,   ContentUtil,   StateUpdateService,   Notification,   DataSearchService) {
 
 		$scope.$stateParams = $stateParams;
 		
@@ -85,6 +85,11 @@ enablix.studioApp.controller('PortalCntnrListCtrl',
 		if ($scope.isBizDimension) {
 			$scope.fetchData();
 		}
+		
+		PubSub.subscribe(ContentDataService.contentChangeEventId($stateParams.containerQId), function(data, topic) {
+			$scope.pagination.pageNum = 0;
+			$scope.fetchData();
+		});
 		
 	}                                          
 ]);
