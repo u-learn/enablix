@@ -15,6 +15,8 @@ import org.springframework.security.web.authentication.rememberme.PersistentReme
 import org.springframework.security.web.authentication.rememberme.PersistentTokenBasedRememberMeServices;
 import org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationException;
 
+import com.enablix.commons.util.date.DateUtil;
+
 public class BasicAuthPersistedRememberMeServices extends PersistentTokenBasedRememberMeServices {
 	
 	private MongoPersistentTokenRepository tokenRepository;
@@ -107,6 +109,10 @@ public class BasicAuthPersistedRememberMeServices extends PersistentTokenBasedRe
 								"Invalid remember-me token (Series/token) mismatch. Implies previous cookie theft attack."));
 			} else {
 				token = archivedToken;
+				
+				// if token matched from the archive service, then it mean this is part of simultaneous 
+				// REST calls from UI. DO NOT audit it as a login
+				// auditLogin = false;
 			}
 			
 		}
@@ -138,8 +144,11 @@ public class BasicAuthPersistedRememberMeServices extends PersistentTokenBasedRe
 		}
 
 		UserDetails userDetails = getUserDetailsService().loadUserByUsername(token.getUsername());
-		
-		loginListener.auditUserLogin(userDetails);
+
+		if (DateUtil.getDayOfYear(token.getDate()) != DateUtil.getDayOfYear(newToken.getDate())) {
+			// audit user login via remember-me token only once a day
+			loginListener.auditUserLogin(userDetails);
+		}
 		
 		return userDetails;
 	}

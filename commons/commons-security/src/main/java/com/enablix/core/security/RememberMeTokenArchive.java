@@ -26,12 +26,16 @@ public class RememberMeTokenArchive {
 	}
 	
 	public void putToken(PersistentRememberMeToken archivedToken) {
-		LOGGER.trace("Adding remember-me token to archive: {}", archivedToken.getTokenValue());
+		if (LOGGER.isTraceEnabled()) {
+			LOGGER.trace("Adding remember-me token to archive: {}", archivedToken.getTokenValue());
+		}
 		cache.put(archivedToken.getTokenValue(), archivedToken);
 	}
 	
 	public PersistentRememberMeToken getToken(String tokenId) {
-		LOGGER.trace("Fetching remember-me token from archive: {}", tokenId);
+		if (LOGGER.isTraceEnabled()) {
+			LOGGER.trace("Fetching remember-me token from archive: {}", tokenId);
+		}
 		return cache.getIfPresent(tokenId);
 	}
 	

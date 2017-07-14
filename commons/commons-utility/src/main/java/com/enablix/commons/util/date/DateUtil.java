@@ -1,9 +1,10 @@
 package com.enablix.commons.util.date;
 
+import static java.time.temporal.TemporalAdjusters.previousOrSame;
+
 import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
 import java.time.Instant;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
@@ -13,7 +14,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
-import static java.time.temporal.TemporalAdjusters.previousOrSame;
 public class DateUtil {
 	
 	private static final String ISO8601_DATETIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ss'Z'";
@@ -86,6 +86,12 @@ public class DateUtil {
 		LocalDateTime previousDate = dateToLocalDateTime(date).plusDays(1);
 		return getStartOfDay(localDateTimeToDate(previousDate));
 		
+	}
+	
+	public static int getDayOfYear(Date date) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		return cal.get(Calendar.DAY_OF_YEAR);
 	}
 	
 	public static Date shiftToFirstDayOfWeek(Date date){
