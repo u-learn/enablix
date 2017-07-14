@@ -22,8 +22,8 @@ public class PptxToImage {
    public static void main(String args[]) throws IOException{
       
 	   String outFolder = "C:\\Users\\dluthra\\Downloads\\preview\\";
-	   String filePath = "C:\\Users\\dluthra\\Downloads\\TATA PEARL.pptx";
-	   String imageFilePrefix = "TATA PEARL";
+	   String filePath = "C:\\Users\\dluthra\\Downloads\\Haystax Presentation Template.pptx";
+	   String imageFilePrefix = "Haystax";
 	   FileInputStream is = new FileInputStream(filePath);
 	   
        try (XMLSlideShow ppt = new XMLSlideShow(is)) {

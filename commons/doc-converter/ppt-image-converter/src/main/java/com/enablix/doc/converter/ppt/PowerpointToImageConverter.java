@@ -74,10 +74,14 @@ public class PowerpointToImageConverter {
 					os.endPageWriting(IOUtil.getImageProperties(img));
 					
 				} catch (Exception e) {
+					
 					os.writingError(e);
 					throw e;
+					
+				} finally {
+					graphics.dispose();
+					img.flush();	
 				}
-				
 			}
 			
 			os.endDocumentWriting(new HashMap<String, Object>());
