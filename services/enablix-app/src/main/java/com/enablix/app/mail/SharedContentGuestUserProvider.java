@@ -11,7 +11,9 @@ import org.springframework.stereotype.Component;
 
 import com.enablix.app.content.share.ShareContentConstants;
 import com.enablix.commons.constants.AppConstants;
+import com.enablix.core.domain.security.authorization.UserBusinessProfile;
 import com.enablix.core.domain.security.authorization.UserProfile;
+import com.enablix.core.domain.security.authorization.UserSystemProfile;
 import com.enablix.core.domain.share.SharedSiteUrl;
 import com.enablix.core.domain.user.User;
 import com.enablix.core.security.service.GuestUserProvider;
@@ -56,6 +58,8 @@ public class SharedContentGuestUserProvider implements GuestUserProvider {
 			usrProfile.setUserIdentity(AppConstants.GUEST_USER_IDENTITY);
 			usrProfile.setEmail(user.getUserId());
 			usrProfile.setName(user.getUserId());
+			usrProfile.setBusinessProfile(new UserBusinessProfile());
+			usrProfile.setSystemProfile(new UserSystemProfile());
 		}
 		
 		return usrProfile;

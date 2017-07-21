@@ -49,8 +49,11 @@ public class GuestUserLoginFilter extends OncePerRequestFilter {
 			throws ServletException, IOException {
 		
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		if (auth == null || isAnonymousUser(auth)) {
+		
+		if (auth == null || SecurityUtil.isAnonymousUser(auth)) {
+		
 			for (AntPathRequestMatcher matcher : guestUserAccessUrlMatchers) {
+			
 				if (matcher.matches(request)) {
 					loginGuestUser(request);
 					break;
@@ -59,21 +62,6 @@ public class GuestUserLoginFilter extends OncePerRequestFilter {
 		}
 		
 		filterChain.doFilter(request, response);
-	}
-
-	private boolean isAnonymousUser(Authentication auth) {
-		
-		Object principal = auth.getPrincipal();
-	    
-		if (principal == null) {
-	        return true;
-	    }
-	    
-		if (principal instanceof String) {
-	        return "anonymousUser".equals((String) principal);
-		}
-	    
-		return false;
 	}
 
 	private void loginGuestUser(HttpServletRequest request) {

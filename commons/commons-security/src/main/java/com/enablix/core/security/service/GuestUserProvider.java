@@ -11,7 +11,8 @@ public interface GuestUserProvider {
 
 	User getGuestUser(HttpServletRequest request);
 	
-	public UserProfile getGuestUserProfile(User user);
+	UserProfile getGuestUserProfile(User user);
+	
 	/**
 	 * List of Ant patterns for urls supported i.e. the urls for which
 	 * this instance provides guest url details
