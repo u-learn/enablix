@@ -13,6 +13,7 @@ import com.enablix.data.segment.DataSegmentService;
 import com.enablix.data.segment.repo.DataSegmentRepository;
 import com.enablix.data.segment.view.DataViewBuilder;
 import com.enablix.data.view.DataView;
+import com.enablix.services.util.DataViewUtil;
 
 @Component
 public class DataSegmentServiceImpl implements DataSegmentService {
@@ -32,6 +33,9 @@ public class DataSegmentServiceImpl implements DataSegmentService {
 	@Override
 	public DataView getDataViewForUserId(String userId) {
 		UserProfile userProfile = userProfileRepo.findByEmail(userId);
+		if (userProfile == null) {
+			return DataViewUtil.allDataView();
+		}
 		return createDataViewForUser(userProfile);
 	}
 

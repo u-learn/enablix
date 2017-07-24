@@ -264,6 +264,10 @@ public class EnablixUserService implements UserService, UserDetailsService {
 		private String templateId;
 		private Collection<GrantedAuthority> auths;
 
+		private LoggedInUser() {
+			// for ORM
+		}
+		
 		private LoggedInUser(User user, String templateId, List<Role> roles, UserProfile userProfile) {
 			this.user = user;
 			this.templateId = templateId;

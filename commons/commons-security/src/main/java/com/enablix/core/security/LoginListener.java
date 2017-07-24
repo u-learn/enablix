@@ -20,7 +20,6 @@ import com.enablix.core.domain.activity.UserAccountActivity;
 import com.enablix.core.domain.security.authorization.UserProfile;
 import com.enablix.core.domain.tenant.Tenant;
 import com.enablix.core.domain.user.User;
-import com.enablix.core.security.auth.repo.UserProfileRepository;
 import com.enablix.core.security.service.EnablixUserService.LoggedInUser;
 import com.enablix.core.system.repo.TenantRepository;
 import com.enablix.services.util.ActivityLogger;
@@ -32,9 +31,6 @@ public class LoginListener implements ApplicationListener<AuthenticationSuccessE
 
 	@Autowired
 	private TenantRepository tenantRepo;
-
-	@Autowired
-	private UserProfileRepository userProfileRepo;
 
 	@Override
 	public void onApplicationEvent(AuthenticationSuccessEvent event) {
@@ -59,6 +55,7 @@ public class LoginListener implements ApplicationListener<AuthenticationSuccessE
 
 		if (ud instanceof LoggedInUser) {
 
+			LoggedInUser loggedInUser = (LoggedInUser) ud;
 			User user = ((LoggedInUser) ud).getUser();
 			Tenant tenant = tenantRepo.findByTenantId(user.getTenantId());
 
@@ -68,7 +65,7 @@ public class LoginListener implements ApplicationListener<AuthenticationSuccessE
 				
 				ProcessContext.initialize(user.getUserId(), user.getUserId(), user.getTenantId(), templateId, null);
 
-				UserProfile userProfile = userProfileRepo.findByEmail(user.getUserId());
+				UserProfile userProfile = loggedInUser.getUserProfile();
 				RegisteredActor actor = new RegisteredActor(ud.getUsername(), userProfile.getName());
 				userLogin.setActor(actor);
 
