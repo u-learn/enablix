@@ -52,7 +52,7 @@ enablix.studioApp.controller('PortalCntnrListCtrl',
 					$scope.pageData = dataPage;
 					
 					var pageOffset = dataPage.number * dataPage.size;
-					$scope.listCountInfo = "(Showing " + (pageOffset + 1) + " - " 
+					$scope.listCountInfo = "(Showing " + (dataPage.totalElements > 0 ? pageOffset + 1 : 0) + " - " 
 						+ (pageOffset + dataPage.numberOfElements) + " of " + dataPage.totalElements + ")";
 					
 					angular.forEach($scope.listData, function(item) {

@@ -16,7 +16,7 @@
 								eb-layout="{{layout}}" container-q-id="{{$stateParams.containerQId}}" 
 								page-data="pageData" fetch-result-fn="fetchData" pagination-data="pagination"></eb-table>
 					</div>
-					<div class="cont-empty record-detail" ng-if="listData.length == 0">
+					<div class="cont-empty record-detail" ng-if="filtersAvailable && !isBizDimension && listData.length == 0">
 						<div>There are no {{::containerLabel}} for selected filters.</div>
 					</div>
 				</main>
