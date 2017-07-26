@@ -109,51 +109,52 @@ public class LinkedContentController {
 				instanceIdentity = (String) rec.get(ContentDataConstants.IDENTITY_KEY);
 			}
 			
-			// find the linked containers for this content type
-			LookupConfig lookupConfig = new LookupConfig();
-			
-			if (containerDef.getContainer() != null) {
+			if (instanceIdentity != null) {
+				// find the linked containers for this content type
+				LookupConfig lookupConfig = new LookupConfig();
 				
-				containerDef.getContainer().forEach((linkedContainer) -> {
-				
-					if (TemplateUtil.isLinkedContainer(linkedContainer)) {
-						String linkContainerQId = linkedContainer.getLinkContainerQId();
-						String linkedCollName = template.getCollectionName(linkContainerQId);
-						lookupConfig.addLookupConfig(linkContainerQId, linkedCollName, linkedContainer.getLinkContentItemId());
-					}
+				if (containerDef.getContainer() != null) {
 					
-				});
-			}
-			
-			SearchRequest searchRequest = ESQueryBuilder.builder(instanceIdentity, template, lookupConfig)
-					.withPagination(pageSize, pageNum)
-					.withFuzziness((searchTerm) -> null)
-					.withTypeFilter(lookupConfig)
-					.withFieldFilter(lookupConfig)
-					.withOptimizer((mmQueryBuilder) -> mmQueryBuilder.minimumShouldMatch("100%"))
-					.build();
-	
-			SearchHits result = esClient.searchContent(searchRequest);
-			
-			List<ContentDataRecord> linkedContent = new ArrayList<>();
-			for (SearchHit hit : result) {
-				ContentDataRecord linkedRecord = searchHitTx.toContentDataRecord(hit, template);
-				linkedContent.add(linkedRecord);
-			}
-			
-			
-			DisplayContext ctx = new DisplayContext();
-			
-			for (ContentDataRecord record : linkedContent) {
+					containerDef.getContainer().forEach((linkedContainer) -> {
+					
+						if (TemplateUtil.isLinkedContainer(linkedContainer)) {
+							String linkContainerQId = linkedContainer.getLinkContainerQId();
+							String linkedCollName = template.getCollectionName(linkContainerQId);
+							lookupConfig.addLookupConfig(linkContainerQId, linkedCollName, linkedContainer.getLinkContentItemId());
+						}
+						
+					});
+				}
 				
-				DisplayableContent dispRecord = contentBuilder.build(template, record, ctx);
+				SearchRequest searchRequest = ESQueryBuilder.builder(instanceIdentity, template, lookupConfig)
+						.withPagination(pageSize, pageNum)
+						.withFuzziness((searchTerm) -> null)
+						.withTypeFilter(lookupConfig)
+						.withFieldFilter(lookupConfig)
+						.withOptimizer((mmQueryBuilder) -> mmQueryBuilder.minimumShouldMatch("100%"))
+						.build();
+		
+				SearchHits result = esClient.searchContent(searchRequest);
 				
-				// TODO: correct the usage of email address below
-				docUrlPopulator.populateUnsecureUrl(dispRecord, "support@enablix.com");
-				textLinkProcessor.process(dispRecord, template, "support@enablix.com");
-				displayRecords.add(dispRecord);
+				List<ContentDataRecord> linkedContent = new ArrayList<>();
+				for (SearchHit hit : result) {
+					ContentDataRecord linkedRecord = searchHitTx.toContentDataRecord(hit, template);
+					linkedContent.add(linkedRecord);
+				}
+				
+				
+				DisplayContext ctx = new DisplayContext();
+				
+				for (ContentDataRecord record : linkedContent) {
+					
+					DisplayableContent dispRecord = contentBuilder.build(template, record, ctx);
+					
+					// TODO: correct the usage of email address below
+					docUrlPopulator.populateUnsecureUrl(dispRecord, "support@enablix.com");
+					textLinkProcessor.process(dispRecord, template, "support@enablix.com");
+					displayRecords.add(dispRecord);
+				}
 			}
-
 		}
 		
 		return displayRecords;
@@ -188,7 +189,7 @@ public class LinkedContentController {
 
 		@Override
 		public String[] getContentSearchFields(SearchFieldFilter filter, TemplateFacade template) {
-			List<String> searchFields = new ArrayList<>();
+			Set<String> searchFields = new HashSet<>();
 			containerQIdToFieldId.values().forEach((fieldId) -> searchFields.add(fieldId + ".id"));
 			return searchFields.toArray(new String[0]);
 		}
