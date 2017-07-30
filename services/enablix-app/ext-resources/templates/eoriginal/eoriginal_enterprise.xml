@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<contentTemplate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="eoriginal_enterprise" version="1.08" xsi:noNamespaceSchemaLocation="../xsd/content-template.xsd">
+<contentTemplate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="eoriginal_enterprise" version="1.09" xsi:noNamespaceSchemaLocation="../xsd/content-template.xsd">
 	<dataDefinition>
 		<container id="solution" label="Solutions" businessCategory="BUSINESS_DIMENSION">
 			<contentItem id="name" label="Name" type="text" searchBoost="7"/>
@@ -105,7 +105,7 @@
 			<container id="partnerWhitePaper" label="White Papers" linkContainerQId="whitepaper" linkContentItemId="partners"/>
 			<container id="partnerTopic" label="Topics" linkContainerQId="topic" linkContentItemId="partners"/>	
 			<container id="partnerContent" label="Other Content" linkContainerQId="content" linkContentItemId="partners"/>
-		</container>
+		</container>		
 		<container id="analyst" label="Analysts" businessCategory="BUSINESS_DIMENSION">
 			<contentItem id="name" label="Analyst Name" type="text" searchBoost="7"/>
 			<contentItem id="shortName" label="Short Name" type="text" searchBoost="7"/>
@@ -132,6 +132,79 @@
 			<container id="analystWebinar" label="Webinars" linkContainerQId="webinar" linkContentItemId="analysts"/>			
 			<container id="analystWhitePaper" label="White Papers" linkContainerQId="whitepaper" linkContentItemId="analysts"/>			
 		</container>
+		<container id="account" label="Accounts" businessCategory="BUSINESS_DIMENSION">
+			<contentItem id="name" label="Name" type="text" searchBoost="7"/>
+			<contentItem id="accountOwner" label="Owner" type="bounded" searchBoost="5">
+				<bounded multivalued="false">
+					<refList>
+						<datastore location="TENANT_DB">
+							<storeId>ebx_user_profile</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>name</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>			
+			<contentItem id="accountIndustry" label="Industry" type="bounded">
+				<bounded multivalued="false">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>industry</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>											
+		</container>	
+		<container id="opportunity" label="Opportunities" businessCategory="BUSINESS_DIMENSION">
+			<contentItem id="title" label="Name" type="text" searchBoost="7"/>
+			<contentItem id="id" label="Opportunity ID" type="text" searchBoost="7"/>
+			<contentItem id="stage" label="Stage" type="bounded">
+				<bounded multivalued="false">
+					<refList>
+						<datastore>
+							<storeId>opportunityStage</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>stageName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>				
+			<contentItem id="opportunityOwner" label="Owner" type="bounded" searchBoost="5">
+				<bounded multivalued="false">
+					<refList>
+						<datastore location="TENANT_DB">
+							<storeId>ebx_user_profile</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>name</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>				
+			<contentItem id="opportunityTeam" label="Team" type="bounded" searchBoost="5">
+				<bounded multivalued="true">
+					<refList>
+						<datastore location="TENANT_DB">
+							<storeId>ebx_user_profile</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>name</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>			
+			<contentItem id="opportunityAccount" label="Account" type="bounded" searchBoost="5">
+				<bounded multivalued="false">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>account</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>name</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>			
+		</container>						
 		<container id="topic" label="Topics" businessCategory="BUSINESS_DIMENSION">
 			<contentItem id="name" label="Topic Name" type="text"/>
 			<contentItem id="shortName" label="Short Name" type="text"/>
@@ -1812,6 +1885,9 @@
 			<contentItem id="desc" label="Description" type="text"/>
 			<container id="caseStudyTypeCaseStudy" label="Case Studies" linkContainerQId="casestudy" linkContentItemId="type"/>			
 		</container>
+		<container id="opportunityStage" label="Opportunity Stages" refData="true">
+			<contentItem id="stageName" label="Stage" type="text"/>
+		</container>		
 		<container id="partnerType" label="Partner Types" refData="true">
 			<contentItem id="typeName" label="Type" type="text"/>
 			<contentItem id="desc" label="Description" type="text"/>
@@ -1938,7 +2014,13 @@
 			<text type="short">
 				<autoPopulate><refContentItem itemId="name"/></autoPopulate>
 			</text>
-		</contentUIDef>		
+		</contentUIDef>	
+		<contentUIDef qualifiedId="opportunity">
+			<container labelQualifiedId="opportunity.title"/>
+		</contentUIDef>
+		<contentUIDef qualifiedId="account">
+			<container labelQualifiedId="account.name"/>
+		</contentUIDef>				
 		<contentUIDef qualifiedId="event">
 			<container labelQualifiedId="event.title">
 				<listViewConfig>
