@@ -102,6 +102,10 @@ public class ElasticSearchClient implements SearchClient {
 		return search.actionGet().getHits();
 	}
 	
+	public ActionFuture<SearchResponse> executeSearch(SearchRequest request) {
+		return esClient.search(request);
+	}
+	
 	public static interface ResultTx<T> {
 		T transform(SearchHit hit, TemplateFacade template);
 	}

@@ -11,6 +11,7 @@ import org.elasticsearch.common.unit.Fuzziness;
 import org.elasticsearch.index.query.MultiMatchQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.search.aggregations.AbstractAggregationBuilder;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,6 +38,8 @@ public class ESQueryBuilder {
 	private MultiMatchQueryOptimizer queryOptimizer;
 
 	private SearchFieldBuilder fieldBuilder;
+
+	private AbstractAggregationBuilder aggregation;
 	
 	private ESQueryBuilder(String searchText, TemplateFacade template, SearchFieldBuilder fieldBuilder) {
 		this.searchText = searchText;
@@ -80,6 +83,11 @@ public class ESQueryBuilder {
 		return this;
 	}
 	
+	public ESQueryBuilder withAggregation(AbstractAggregationBuilder agg) {
+		this.aggregation = agg;
+		return this;
+	}
+	
 	public SearchRequest build() {
 		
 		String indexName = getIndexName();
@@ -112,6 +120,10 @@ public class ESQueryBuilder {
 		SearchSourceBuilder searchSource = SearchSourceBuilder.searchSource().query(searchQuery);
 		searchSource.size(pageSize);
 		searchSource.from(pageNum * pageSize);
+
+		if (aggregation != null) {
+			searchSource.aggregation(aggregation);
+		}
 		
 		searchRequest.source(searchSource);
 		

@@ -73,6 +73,10 @@ public class DataSegmentServiceImpl implements DataSegmentService {
 		dsRepo.save(ds);
 	}
 
-	
-	
+	@Override
+	public DataView buildDataView(DataSegment ds) {
+		TemplateFacade template = templateManager.getTemplateFacade(ProcessContext.get().getTemplateId());
+		return dataViewBuilder.createDataView(ds, template);
+	}
+
 }
