@@ -207,9 +207,10 @@ public class LinkedContentController {
 			MongoDataView mdbView = DataViewUtil.getMongoDataView(userDataView);
 			
 			Map<String, Object> refRecord = findContentRecord(contentQId, attrId, attrVal, template, mdbView);
-			String instanceIdentity = ContentDataUtil.getRecordIdentity(refRecord);
 			
-			if (instanceIdentity != null) {
+			if (refRecord != null) {
+			
+				String instanceIdentity = ContentDataUtil.getRecordIdentity(refRecord);
 				
 				LookupConfig lookupConfig = createLinkedContainerLookupConfig(template, containerDef);
 				
