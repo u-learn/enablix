@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<contentTemplate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="eoriginal_enterprise" version="1.09" xsi:noNamespaceSchemaLocation="../xsd/content-template.xsd">
+<contentTemplate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="eoriginal_enterprise" version="1.10" xsi:noNamespaceSchemaLocation="../xsd/content-template.xsd">
 	<dataDefinition>
 		<container id="solution" label="Solutions" businessCategory="BUSINESS_DIMENSION">
 			<contentItem id="name" label="Name" type="text" searchBoost="7"/>
@@ -28,6 +28,17 @@
 		<container id="industry" label="Industries" businessCategory="BUSINESS_DIMENSION">
 			<contentItem id="name" label="Name" type="text" searchBoost="7"/>
 			<contentItem id="shortName" label="Short Name" type="text" searchBoost="7"/>
+			<contentItem id="alias" label="Aliases" type="bounded" searchBoost="6">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>industryAlias</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>aliasName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>			
 			<container id="indArticle" label="News Article" linkContainerQId="article" linkContentItemId="industries"/>
 			<container id="indBattleCard" label="Battle Cards" linkContainerQId="battlecard" linkContentItemId="industries"/>
 			<container id="indBlog" label="Blogs" linkContainerQId="blog" linkContentItemId="industries"/>			
@@ -1885,6 +1896,9 @@
 			<contentItem id="desc" label="Description" type="text"/>
 			<container id="caseStudyTypeCaseStudy" label="Case Studies" linkContainerQId="casestudy" linkContentItemId="type"/>			
 		</container>
+		<container id="industryAlias" label="Industry Aliases" refData="true">
+			<contentItem id="aliasName" label="Alias Name" type="text"/>
+		</container>		
 		<container id="opportunityStage" label="Opportunity Stages" refData="true">
 			<contentItem id="stageName" label="Stage" type="text"/>
 		</container>		
