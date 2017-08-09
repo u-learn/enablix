@@ -7,10 +7,7 @@ import java.util.List;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchType;
 import org.elasticsearch.client.Requests;
-import org.elasticsearch.common.unit.Fuzziness;
-import org.elasticsearch.index.query.MultiMatchQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
-import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.aggregations.AbstractAggregationBuilder;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.slf4j.Logger;
@@ -26,7 +23,6 @@ public class ESQueryBuilder {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(ESQueryBuilder.class);
 
-	private String searchText;
 	private TemplateFacade template;
 	private int pageSize = 10;
 	private int pageNum = 0;
@@ -41,16 +37,22 @@ public class ESQueryBuilder {
 
 	private AbstractAggregationBuilder aggregation;
 	
-	private ESQueryBuilder(String searchText, TemplateFacade template, SearchFieldBuilder fieldBuilder) {
-		this.searchText = searchText;
+	private MatchQueryBuilder matchQueryBuilder;
+	
+	private ESQueryBuilder(MatchQueryBuilder matchQueryBuilder, TemplateFacade template, SearchFieldBuilder fieldBuilder) {
 		this.template = template;
 		this.fieldBuilder = fieldBuilder;
+		this.matchQueryBuilder = matchQueryBuilder;
 	}
 	
 	public static ESQueryBuilder builder(String searchText, TemplateFacade template, SearchFieldBuilder fieldBuilder) {
-		ESQueryBuilder builder = new ESQueryBuilder(searchText, template, fieldBuilder);
-		return builder;
+		return builder(new StringMultiMatchQueryBuilder(searchText), template, fieldBuilder);
 	}
+
+	public static ESQueryBuilder builder(MatchQueryBuilder matchQueryBuilder, TemplateFacade template, SearchFieldBuilder fieldBuilder) {
+		return new ESQueryBuilder(matchQueryBuilder, template, fieldBuilder);
+	}
+
 	
 	public ESQueryBuilder withPagination(int pageSize, int pageNum) {
 		this.pageNum = pageNum;
@@ -98,17 +100,7 @@ public class ESQueryBuilder {
 					.types(types.toArray(new String[0]));
 		
 		String[] searchFields = fieldBuilder.getContentSearchFields(fieldFilter, template);
-		MultiMatchQueryBuilder multiMatchQuery = QueryBuilders.multiMatchQuery(
-				searchText, searchFields);
-		
-		if (queryOptimizer != null) {
-			queryOptimizer.optimize(multiMatchQuery);
-		}
-		
-		Fuzziness fuzziness = fuzzyMatchOption.fuzziness(searchText);
-		if (fuzziness != null) {
-			multiMatchQuery.fuzziness(fuzziness);
-		}
+		QueryBuilder multiMatchQuery = matchQueryBuilder.buildQuery(searchFields, queryOptimizer, fuzzyMatchOption);
 		
 		QueryBuilder searchQuery = multiMatchQuery;
 		if (view != null) {

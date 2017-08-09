@@ -24,12 +24,14 @@ import org.elasticsearch.search.aggregations.bucket.terms.Terms.Bucket;
 import org.elasticsearch.search.aggregations.bucket.terms.TermsBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.enablix.analytics.search.es.ESQueryBuilder;
 import com.enablix.analytics.search.es.ElasticSearchClient;
+import com.enablix.analytics.search.es.OrMatchQueryBuilder;
 import com.enablix.analytics.search.es.SearchFieldBuilder;
 import com.enablix.analytics.search.es.SearchFieldFilter;
 import com.enablix.analytics.search.es.SearchHitTransformer;
@@ -101,8 +103,9 @@ public class LinkedContentController {
 	public List<LinkedContent> getSpecificLinkedContent(
 			HttpServletRequest request, HttpServletResponse response,
 			@PathVariable String contentQId, @PathVariable String attrId, 
-			@PathVariable String attrVal, @PathVariable String lookupContentQId) {
-		return fetchLinkedContent(contentQId, attrId, attrVal, lookupContentQId);
+			@PathVariable String attrVal, @PathVariable String lookupContentQId,
+			@RequestHeader(value="requestorId", required=false) String userEmailId) {
+		return fetchLinkedContent(contentQId, attrId, attrVal, lookupContentQId, userEmailId);
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, 
@@ -111,9 +114,10 @@ public class LinkedContentController {
 	public List<LinkedContent> getLinkedContent(
 			HttpServletRequest request, HttpServletResponse response,
 			@PathVariable String contentQId, @PathVariable String attrId, 
-			@PathVariable String attrVal) {
+			@PathVariable String attrVal,
+			@RequestHeader(value="requestorId", required=false) String userEmailId) {
 		
-		return fetchLinkedContent(contentQId, attrId, attrVal, null);
+		return fetchLinkedContent(contentQId, attrId, attrVal, null, userEmailId);
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, 
@@ -123,7 +127,8 @@ public class LinkedContentController {
 			HttpServletRequest request, HttpServletResponse response,
 			@PathVariable String contentQId, @PathVariable String attrId, 
 			@PathVariable String attrVal, @PathVariable String mContentQId, 
-			@PathVariable String mAttrId, @PathVariable String mAttrVal) {
+			@PathVariable String mAttrId, @PathVariable String mAttrVal,
+			@RequestHeader(value="requestorId", required=false) String userEmailId) {
 		
 		List<DisplayableContent> mappedContent = null;
 		
@@ -137,11 +142,12 @@ public class LinkedContentController {
 			DataView userDataView = dataSegmentService.getDataViewForUserId(ProcessContext.get().getUserId());
 			MongoDataView mdbView = DataViewUtil.getMongoDataView(userDataView);
 			
-			Map<String, Object> cRecord = findContentRecord(contentQId, attrId, attrVal, template, mdbView);
+			List<Map<String, Object>> cRecords = findContentRecord(contentQId, attrId, attrVal, template, mdbView);
 			
-			if (cRecord != null) {
+			if (CollectionUtil.isNotEmpty(cRecords)) {
 				
-				String cRecordIdentity = ContentDataUtil.getRecordIdentity(cRecord);
+				List<String> cRecordIdentities =  CollectionUtil.transform(cRecords, 
+						() -> new ArrayList<String>(), (refRec) -> ContentDataUtil.getRecordIdentity(refRec));
 				
 				List<String> restrictedContentTypes = findMappedContentTypes(
 						mContentQId, mAttrId, mAttrVal, template, mdbView);
@@ -159,7 +165,7 @@ public class LinkedContentController {
 							lcLookupConfig.containerQIdToFieldId.get(restrictedContQId));
 					}
 					
-					mappedContent = findLinkedContent(template, cRecordIdentity, containerLC);
+					mappedContent = findLinkedContent(template, cRecordIdentities, containerLC, userEmailId);
 				}
 				
 			}
@@ -179,9 +185,10 @@ public class LinkedContentController {
 			// get the first content mapping
 			ContentTypeConnection contentTypeConn = contentMapping.get(0);
 			
-			Map<String, Object> mRecord = findContentRecord(mContentQId, mAttrId, mAttrVal, template, mdbView);
-			if (mRecord != null) {
+			List<Map<String, Object>> mRecords = findContentRecord(mContentQId, mAttrId, mAttrVal, template, mdbView);
+			if (CollectionUtil.isNotEmpty(mRecords)) {
 				
+				Map<String, Object> mRecord = mRecords.get(0);
 				String mRecIdentity = ContentDataUtil.getRecordIdentity(mRecord);
 				
 				for (ContentValueConnection valConn : contentTypeConn.getConnections()) {
@@ -196,7 +203,8 @@ public class LinkedContentController {
 		return restrictedContentTypes;
 	}
 		
-	private List<LinkedContent> fetchLinkedContent(String contentQId, String attrId, String attrVal, String lookupContentQId) {
+	private List<LinkedContent> fetchLinkedContent(String contentQId, 
+			String attrId, String attrVal, String lookupContentQId, String userEmailId) {
 		
 		List<LinkedContent> linkedContents = new ArrayList<>();
 		
@@ -210,15 +218,16 @@ public class LinkedContentController {
 			DataView userDataView = dataSegmentService.getDataViewForUserId(ProcessContext.get().getUserId());
 			MongoDataView mdbView = DataViewUtil.getMongoDataView(userDataView);
 			
-			Map<String, Object> refRecord = findContentRecord(contentQId, attrId, attrVal, template, mdbView);
+			List<Map<String, Object>> refRecords = findContentRecord(contentQId, attrId, attrVal, template, mdbView);
 			
-			if (refRecord != null) {
+			if (CollectionUtil.isNotEmpty(refRecords)) {
 			
-				String instanceIdentity = ContentDataUtil.getRecordIdentity(refRecord);
+				List<String> instanceIdentities =  CollectionUtil.transform(refRecords, 
+						() -> new ArrayList<String>(), (refRec) -> ContentDataUtil.getRecordIdentity(refRec));
 				
 				LookupConfig lookupConfig = createLinkedContainerLookupConfig(template, containerDef);
 				
-				Map<String, Long> collRecordCnt = findLinkedContentCount(template, instanceIdentity, lookupConfig);
+				Map<String, Long> collRecordCnt = findLinkedContentCount(template, instanceIdentities, lookupConfig);
 				
 				String lookupColl = null;
 				
@@ -276,7 +285,7 @@ public class LinkedContentController {
 							lookupConfig.containerQIdToFieldId.get(lookupContentQId));
 					
 					List<DisplayableContent> displayRecords = 
-							findLinkedContent(template, instanceIdentity, containerLC);
+							findLinkedContent(template, instanceIdentities, containerLC, userEmailId);
 					
 					if (selectedLinkedContent != null) {
 						selectedLinkedContent.setRecords(displayRecords);
@@ -309,7 +318,7 @@ public class LinkedContentController {
 		return lookupConfig;
 	}
 
-	private Map<String, Object> findContentRecord(String contentQId, String attrId, String attrVal,
+	private List<Map<String, Object>> findContentRecord(String contentQId, String attrId, String attrVal,
 			TemplateFacade template, MongoDataView mdbView) {
 		
 		SearchFilter filter = null;
@@ -336,14 +345,15 @@ public class LinkedContentController {
 		String collectionName = template.getCollectionName(contentQId);
 		
 		// find the content record matching the attribute input
-		List<Map<String, Object>> findRecords = contentCrud.findRecords(collectionName, filter, mdbView);
-		return CollectionUtil.isNotEmpty(findRecords) ? findRecords.get(0) : null;
+		return contentCrud.findRecords(collectionName, filter, mdbView);
 	}
 
-	private List<DisplayableContent> findLinkedContent(TemplateFacade template, String instanceIdentity,
-			LookupConfig containerLC) {
+	private List<DisplayableContent> findLinkedContent(TemplateFacade template, List<String> instanceIdentities,
+			LookupConfig containerLC, String userEmailId) {
 		
-		SearchRequest recSearchRequest = ESQueryBuilder.builder(instanceIdentity, template, containerLC)
+		OrMatchQueryBuilder orMatch = new OrMatchQueryBuilder(instanceIdentities);
+		
+		SearchRequest recSearchRequest = ESQueryBuilder.builder(orMatch, template, containerLC)
 				.withPagination(20, 0)
 				.withFuzziness((searchTerm) -> null)
 				.withTypeFilter(containerLC)
@@ -366,9 +376,8 @@ public class LinkedContentController {
 			
 			DisplayableContent dispRecord = contentBuilder.build(template, record, ctx);
 			
-			// TODO: correct the usage of email address below
-			docUrlPopulator.populateUnsecureUrl(dispRecord, "support@enablix.com");
-			textLinkProcessor.process(dispRecord, template, "support@enablix.com");
+			docUrlPopulator.populateUnsecureUrl(dispRecord, userEmailId);
+			textLinkProcessor.process(dispRecord, template, userEmailId);
 			displayRecords.add(dispRecord);
 		}
 		
@@ -376,13 +385,15 @@ public class LinkedContentController {
 	}
 
 	private Map<String, Long> findLinkedContentCount(TemplateFacade template, 
-			String referenceRecIdentity, LookupConfig lookupConfig) {
+			List<String> referenceRecIdentity, LookupConfig lookupConfig) {
 		
 		TermsBuilder recordCountAgg = AggregationBuilders.terms("record_count");
 		recordCountAgg.field("_type");
 		recordCountAgg.size(50);
 		
-		SearchRequest searchRequest = ESQueryBuilder.builder(referenceRecIdentity, template, lookupConfig)
+		OrMatchQueryBuilder orMatch = new OrMatchQueryBuilder(referenceRecIdentity);
+		
+		SearchRequest searchRequest = ESQueryBuilder.builder(orMatch, template, lookupConfig)
 				.withPagination(0, 0) // set 0 for aggregation
 				.withFuzziness((searchTerm) -> null)
 				.withTypeFilter(lookupConfig)
