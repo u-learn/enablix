@@ -1,5 +1,6 @@
 package com.enablix.content.approval.config;
 
+import static com.enablix.content.approval.ContentApprovalConstants.STATE_DRAFT;
 import static com.enablix.content.approval.ContentApprovalConstants.STATE_APPROVED;
 import static com.enablix.content.approval.ContentApprovalConstants.STATE_PENDING_APPROVAL;
 import static com.enablix.content.approval.ContentApprovalConstants.STATE_REJECTED;
@@ -14,6 +15,7 @@ import com.enablix.commons.util.PermissionConstants;
 import com.enablix.content.approval.action.ApproveAction;
 import com.enablix.content.approval.action.EditAction;
 import com.enablix.content.approval.action.RejectAction;
+import com.enablix.content.approval.action.SaveDraftAction;
 import com.enablix.content.approval.action.SubmitAction;
 import com.enablix.content.approval.action.WithdrawAction;
 import com.enablix.content.approval.model.ContentApproval;
@@ -58,8 +60,13 @@ public class ContentWorkflowConfiguration {
 				new StateChangeWorkflowDefinitionImpl<>(WORKFLOW_NAME, repo, 
 						new ContentApprovalInstantiator(), contentActionRegistry());
 		
+		def.registerAction(ObjectState.START_STATE, saveDraftContentActionConfig());
 		def.registerAction(ObjectState.START_STATE, contentApproveActionConfig());
 		def.registerAction(ObjectState.START_STATE, contentSubmitActionConfig());
+		
+		def.registerAction(STATE_DRAFT, contentEditActionConfig());
+		def.registerAction(STATE_DRAFT, contentSubmitActionConfig());
+		def.registerAction(STATE_DRAFT, contentApproveActionConfig());
 		
 		def.registerAction(STATE_PENDING_APPROVAL, contentEditActionConfig());
 		def.registerAction(STATE_PENDING_APPROVAL, contentApproveActionConfig());
@@ -69,6 +76,28 @@ public class ContentWorkflowConfiguration {
 		return def;
 	}
 
+	@Bean
+	public SaveDraftAction saveDraftContentAction() {
+		return new SaveDraftAction();
+	}
+	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@Bean
+	public ActionConfigurationImpl<ContentDetail, ContentApproval, ContentDetail, Boolean, GenericActionResult<ContentDetail, Boolean>> 
+			saveDraftContentActionConfig() {
+		
+		SaveDraftAction action = saveDraftContentAction();
+		ActionDefinition actionDef = new ActionDefinition(action.getActionName());
+		
+		SimpleNextStateBuilder<Object, ActionInput> nextStateBuilder = simpleContentNextStateBuilder();
+		nextStateBuilder.addNextStateConfig(ObjectState.START_STATE, action.getActionName(), STATE_DRAFT);
+		
+		ActionConfigurationImpl<ContentDetail, ContentApproval, ContentDetail, Boolean, GenericActionResult<ContentDetail, Boolean>> 
+			saveDraftActionConfig = new ActionConfigurationImpl(actionDef, action, nextStateBuilder, permissionAuth);
+		
+		return saveDraftActionConfig;
+	}
+	
 	@Bean
 	public SubmitAction contentSubmitAction() {
 		return new SubmitAction();
@@ -84,6 +113,7 @@ public class ContentWorkflowConfiguration {
 		
 		SimpleNextStateBuilder<Object, ActionInput> nextStateBuilder = simpleContentNextStateBuilder();
 		nextStateBuilder.addNextStateConfig(ObjectState.START_STATE, action.getActionName(), STATE_PENDING_APPROVAL);
+		nextStateBuilder.addNextStateConfig(STATE_DRAFT, action.getActionName(), STATE_PENDING_APPROVAL);
 		
 		ActionConfigurationImpl<ContentDetail, ContentApproval, ContentDetail, Boolean, GenericActionResult<ContentDetail, Boolean>> 
 			submitActionConfig = new ActionConfigurationImpl(actionDef, action, nextStateBuilder, permissionAuth);
@@ -128,7 +158,9 @@ public class ContentWorkflowConfiguration {
 		
 		SimpleNextStateBuilder<Object, ActionInput> nextStateBuilder = simpleContentNextStateBuilder();
 		nextStateBuilder.addNextStateConfig(ObjectState.START_STATE, action.getActionName(), STATE_APPROVED);
+		nextStateBuilder.addNextStateConfig(STATE_DRAFT, action.getActionName(), STATE_APPROVED);
 		nextStateBuilder.addNextStateConfig(STATE_PENDING_APPROVAL, action.getActionName(), STATE_APPROVED);
+		
 		
 		ActionConfigurationImpl<ContentDetail, ContentApproval, ContentDetail, Boolean, GenericActionResult<ContentDetail, Boolean>> 
 			pubActionConfig = new ActionConfigurationImpl(actionDef, action, nextStateBuilder, permissionAuth);

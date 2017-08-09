@@ -53,6 +53,15 @@ public class ContentApprovalController {
 				ContentApprovalConstants.ACTION_SUBMIT, contentDetails);
 	}
 	
+	@RequestMapping(method = RequestMethod.POST, value="/savedraft/", consumes = "application/json")
+	public void saveDraft(@RequestBody ContentDetail contentDetails) throws ActionException {
+		
+		LOGGER.debug("Content workfow save draft request");
+		
+		wfManager.start(ContentApprovalConstants.WORKFLOW_NAME, 
+				ContentApprovalConstants.ACTION_SAVE_DRAFT, contentDetails);
+	}
+	
 	@RequestMapping(method = RequestMethod.POST, value="/approve/", consumes = "application/json")
 	public void approveContent(@RequestBody SimpleActionInput actionInput) throws ActionException {
 		

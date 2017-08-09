@@ -70,6 +70,7 @@ enablix.serviceURL = {
 	"sharecontent": enablix.domainName + "/sharecontent",
 	"auditContentAccess": enablix.domainName + "/activity/content/access/",
 	"auditSuggestedSearch": enablix.domainName + "/activity/search/suggested/",
+	"saveContentDraft": enablix.domainName + "/contentwf/savedraft/",
 	"submitContentSuggestion": enablix.domainName + "/contentwf/submit/",
 	"approveContentSuggestion": enablix.domainName + "/contentwf/approve/",
 	"rejectContentSuggestion": enablix.domainName + "/contentwf/reject/",

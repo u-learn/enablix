@@ -51,6 +51,7 @@ import com.enablix.core.domain.content.connection.ContentTypeConnection;
 import com.enablix.core.domain.content.connection.ContentValueConnection;
 import com.enablix.core.mongo.content.ContentCrudService;
 import com.enablix.core.mongo.search.ConditionOperator;
+import com.enablix.core.mongo.search.SearchFilter;
 import com.enablix.core.mongo.search.StringFilter;
 import com.enablix.core.mongo.view.MongoDataView;
 import com.enablix.core.ui.DisplayableContent;
@@ -64,6 +65,9 @@ import com.enablix.services.util.TemplateUtil;
 @RequestMapping("content")
 public class LinkedContentController {
 
+	private static final String ATTR_ID_OR_SEP = "|";
+	private static final String SPLIT_ATTR_ID_REGEX = "\\|";
+	
 	@Autowired
 	private TemplateManager templateMgr;
 	
@@ -232,12 +236,14 @@ public class LinkedContentController {
 						String linkContQId = linkedCont.getLinkContainerQId();
 						String linkCollName = template.getCollectionName(linkContQId);
 						
-						if (collRecordCnt.containsKey(linkCollName)) {
+						Long recCnt = collRecordCnt.get(linkCollName);
+						if (recCnt != null) {
 						
 							LinkedContent linkContent = new LinkedContent();
 							
 							linkContent.setContentQId(linkContQId);
 							linkContent.setContentLabel(linkedCont.getLabel());
+							linkContent.setContentCount(recCnt.intValue());
 							
 							if (linkContQId.equals(lookupContentQId)) {
 								linkContent.setSelected(true);
@@ -306,8 +312,28 @@ public class LinkedContentController {
 	private Map<String, Object> findContentRecord(String contentQId, String attrId, String attrVal,
 			TemplateFacade template, MongoDataView mdbView) {
 		
+		SearchFilter filter = null;
+		
+		if (attrId.contains(ATTR_ID_OR_SEP)) {
+		
+			String[] attrs = attrId.split(SPLIT_ATTR_ID_REGEX);
+			
+			for (String attr : attrs) {
+				
+				StringFilter attrFilter = new StringFilter(attr, attrVal, ConditionOperator.EQ);
+				
+				if (filter == null) {
+					filter = attrFilter;
+				} else {
+					filter = filter.or(attrFilter);
+				}
+			}
+			
+		} else {
+			filter = new StringFilter(attrId, attrVal, ConditionOperator.EQ);
+		}
+		
 		String collectionName = template.getCollectionName(contentQId);
-		StringFilter filter = new StringFilter(attrId, attrVal, ConditionOperator.EQ);
 		
 		// find the content record matching the attribute input
 		List<Map<String, Object>> findRecords = contentCrud.findRecords(collectionName, filter, mdbView);
@@ -392,6 +418,7 @@ public class LinkedContentController {
 		private String contentQId;
 		private String contentLabel;
 		private boolean selected;
+		private int contentCount;
 		private List<DisplayableContent> records;
 		
 		public String getContentQId() {
@@ -418,6 +445,14 @@ public class LinkedContentController {
 			this.selected = selected;
 		}
 		
+		public int getContentCount() {
+			return contentCount;
+		}
+
+		public void setContentCount(int contentCount) {
+			this.contentCount = contentCount;
+		}
+
 		public List<DisplayableContent> getRecords() {
 			return records;
 		}
