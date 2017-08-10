@@ -46,8 +46,8 @@ enablix.studioApp.controller('PortalNavLinkCtrl',
 			var _containerQId = navItem.qualifiedId;
 			var _contentIdentity = navItem.identity;
 			
-			StateUpdateService.goToPortalContainerBody(
-					_containerQId, _contentIdentity, 'single', _containerQId);
+			StateUpdateService.goToPortalContainerDetail(
+					_containerQId, _contentIdentity);
 				
 		}
 		

@@ -47,6 +47,7 @@ import com.enablix.commons.util.process.ProcessContext;
 import com.enablix.content.connection.repo.ContentTypeConnectionRepository;
 import com.enablix.core.api.ContentDataRecord;
 import com.enablix.core.api.TemplateFacade;
+import com.enablix.core.commons.xsdtopojo.ContainerBusinessCategoryType;
 import com.enablix.core.commons.xsdtopojo.ContainerType;
 import com.enablix.core.commons.xsdtopojo.ContentItemType;
 import com.enablix.core.domain.content.connection.ContentTypeConnection;
@@ -98,37 +99,41 @@ public class LinkedContentController {
 	private ContentTypeConnectionRepository contentTypeConnRepo;
 	
 	@RequestMapping(method = RequestMethod.GET, 
-			value="/le/{contentQId}/{attrId}/{attrVal}/lt/{lookupContentQId}/", 
+			value="/le/{contentQId}/{attrId}/{attrVal}/lt/{lookupContentQId}/cat/{businessCategory}/", 
 			produces = "application/json")
 	public List<LinkedContent> getSpecificLinkedContent(
 			HttpServletRequest request, HttpServletResponse response,
 			@PathVariable String contentQId, @PathVariable String attrId, 
 			@PathVariable String attrVal, @PathVariable String lookupContentQId,
+			@PathVariable String businessCategory,
 			@RequestHeader(value="requestorId", required=false) String userEmailId) {
-		return fetchLinkedContent(contentQId, attrId, attrVal, lookupContentQId, userEmailId);
+		return fetchLinkedContent(contentQId, attrId, attrVal, lookupContentQId, businessCategory, userEmailId);
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, 
-			value="/le/{contentQId}/{attrId}/{attrVal}", 
+			value="/le/{contentQId}/{attrId}/{attrVal}/cat/{businessCategory}/", 
 			produces = "application/json")
 	public List<LinkedContent> getLinkedContent(
 			HttpServletRequest request, HttpServletResponse response,
 			@PathVariable String contentQId, @PathVariable String attrId, 
-			@PathVariable String attrVal,
+			@PathVariable String attrVal, @PathVariable String businessCategory,
 			@RequestHeader(value="requestorId", required=false) String userEmailId) {
 		
-		return fetchLinkedContent(contentQId, attrId, attrVal, null, userEmailId);
+		return fetchLinkedContent(contentQId, attrId, attrVal, null, businessCategory, userEmailId);
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, 
-			value="/le/{contentQId}/{attrId}/{attrVal}/mc/{mContentQId}/{mAttrId}/{mAttrVal}/", 
+			value="/le/{contentQId}/{attrId}/{attrVal}/mc/{mContentQId}/{mAttrId}/{mAttrVal}/cat/{businessCategory}/", 
 			produces = "application/json")
 	public List<DisplayableContent> getMappedContent(
 			HttpServletRequest request, HttpServletResponse response,
 			@PathVariable String contentQId, @PathVariable String attrId, 
 			@PathVariable String attrVal, @PathVariable String mContentQId, 
 			@PathVariable String mAttrId, @PathVariable String mAttrVal,
+			@PathVariable String businessCategory,
 			@RequestHeader(value="requestorId", required=false) String userEmailId) {
+		
+		ContainerBusinessCategoryType bizCategory = getBusinessCategoryEnumValue(businessCategory);
 		
 		List<DisplayableContent> mappedContent = null;
 		
@@ -152,7 +157,7 @@ public class LinkedContentController {
 				List<String> restrictedContentTypes = findMappedContentTypes(
 						mContentQId, mAttrId, mAttrVal, template, mdbView);
 				
-				LookupConfig lcLookupConfig = createLinkedContainerLookupConfig(template, containerDef);
+				LookupConfig lcLookupConfig = createLinkedContainerLookupConfig(template, containerDef, bizCategory);
 				
 				LookupConfig containerLC = new LookupConfig();
 				
@@ -203,10 +208,12 @@ public class LinkedContentController {
 		return restrictedContentTypes;
 	}
 		
-	private List<LinkedContent> fetchLinkedContent(String contentQId, 
-			String attrId, String attrVal, String lookupContentQId, String userEmailId) {
+	private List<LinkedContent> fetchLinkedContent(String contentQId, String attrId, 
+			String attrVal, String lookupContentQId, String businessCategory, String userEmailId) {
 		
 		List<LinkedContent> linkedContents = new ArrayList<>();
+		
+		ContainerBusinessCategoryType bizCategory = getBusinessCategoryEnumValue(businessCategory);
 		
 		String templateId = ProcessContext.get().getTemplateId();
 		TemplateFacade template = templateMgr.getTemplateFacade(templateId);
@@ -225,7 +232,7 @@ public class LinkedContentController {
 				List<String> instanceIdentities =  CollectionUtil.transform(refRecords, 
 						() -> new ArrayList<String>(), (refRec) -> ContentDataUtil.getRecordIdentity(refRec));
 				
-				LookupConfig lookupConfig = createLinkedContainerLookupConfig(template, containerDef);
+				LookupConfig lookupConfig = createLinkedContainerLookupConfig(template, containerDef, bizCategory);
 				
 				Map<String, Long> collRecordCnt = findLinkedContentCount(template, instanceIdentities, lookupConfig);
 				
@@ -299,7 +306,22 @@ public class LinkedContentController {
 		return linkedContents;
 	}
 
-	private LookupConfig createLinkedContainerLookupConfig(TemplateFacade template, ContainerType containerDef) {
+	private ContainerBusinessCategoryType getBusinessCategoryEnumValue(String businessCategory) {
+		
+		ContainerBusinessCategoryType bizCategory = null;
+		
+		try {
+			bizCategory = ContainerBusinessCategoryType.fromValue(businessCategory);
+		} catch (Throwable t) {
+			// ignore invalid value
+		}
+		
+		return bizCategory;
+	}
+
+	private LookupConfig createLinkedContainerLookupConfig(TemplateFacade template, 
+			ContainerType containerDef, ContainerBusinessCategoryType businessCategory) {
+		
 		// find the linked containers for this content type
 		LookupConfig lookupConfig = new LookupConfig();
 		
@@ -308,9 +330,15 @@ public class LinkedContentController {
 			containerDef.getContainer().forEach((linkedContainer) -> {
 			
 				if (TemplateUtil.isLinkedContainer(linkedContainer)) {
+					
 					String linkContainerQId = linkedContainer.getLinkContainerQId();
 					String linkedCollName = template.getCollectionName(linkContainerQId);
-					lookupConfig.addLookupConfig(linkContainerQId, linkedCollName, linkedContainer.getLinkContentItemId());
+					
+					ContainerType linkContDef = template.getContainerDefinition(linkContainerQId);
+					
+					if (businessCategory == null || linkContDef.getBusinessCategory() == businessCategory) {
+						lookupConfig.addLookupConfig(linkContainerQId, linkedCollName, linkedContainer.getLinkContentItemId());
+					}
 				}
 				
 			});
