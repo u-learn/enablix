@@ -57,29 +57,33 @@ public class LoginListener implements ApplicationListener<AuthenticationSuccessE
 
 			LoggedInUser loggedInUser = (LoggedInUser) ud;
 			User user = ((LoggedInUser) ud).getUser();
-			Tenant tenant = tenantRepo.findByTenantId(user.getTenantId());
-
-			String templateId = tenant == null ? "" : tenant.getDefaultTemplateId();
 			
-			try {
+			if (!user.isSystem()) { // audit only if it is not a system user
 				
-				ProcessContext.initialize(user.getUserId(), user.getUserId(), user.getTenantId(), templateId, null);
-
-				UserProfile userProfile = loggedInUser.getUserProfile();
-				RegisteredActor actor = new RegisteredActor(ud.getUsername(), userProfile.getName());
-				userLogin.setActor(actor);
-
-				ProcessContext.clear();
-
-				// set up process context to fetch user roles from tenant specific database
-				ProcessContext.initialize(user.getUserId(), userProfile.getName(), user.getTenantId(), templateId, null);
-
-				ActivityLogger.auditActivity(userLogin);
-
-			} finally {
-				ProcessContext.clear();
+				Tenant tenant = tenantRepo.findByTenantId(user.getTenantId());
+	
+				String templateId = tenant == null ? "" : tenant.getDefaultTemplateId();
+				
+				try {
+					
+					ProcessContext.initialize(user.getUserId(), user.getUserId(), user.getTenantId(), templateId, null);
+	
+					UserProfile userProfile = loggedInUser.getUserProfile();
+					RegisteredActor actor = new RegisteredActor(ud.getUsername(), userProfile.getName());
+					userLogin.setActor(actor);
+	
+					ProcessContext.clear();
+	
+					// set up process context for audit
+					ProcessContext.initialize(user.getUserId(), userProfile.getName(), user.getTenantId(), templateId, null);
+	
+					ActivityLogger.auditActivity(userLogin);
+	
+				} finally {
+					ProcessContext.clear();
+				}
+				
 			}
-
 		}
 	}
 	

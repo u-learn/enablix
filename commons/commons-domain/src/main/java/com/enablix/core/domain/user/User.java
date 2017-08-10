@@ -19,6 +19,8 @@ public class User extends BaseDocumentEntity {
 	
 	private Boolean isPasswordSet;
 	
+	private boolean system; // if this is an external system 
+	
 	public Boolean getIsPasswordSet() {
 		return isPasswordSet;
 	}
@@ -49,6 +51,14 @@ public class User extends BaseDocumentEntity {
 
 	public void setTenantId(String tenantId) {
 		this.tenantId = tenantId;
+	}
+
+	public boolean isSystem() {
+		return system;
+	}
+
+	public void setSystem(boolean system) {
+		this.system = system;
 	}
 
 }
