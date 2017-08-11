@@ -23,7 +23,7 @@ import org.elasticsearch.search.aggregations.bucket.terms.StringTerms;
 import org.elasticsearch.search.aggregations.bucket.terms.Terms.Bucket;
 import org.elasticsearch.search.aggregations.bucket.terms.TermsBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -98,40 +98,34 @@ public class LinkedContentController {
 	@Autowired
 	private ContentTypeConnectionRepository contentTypeConnRepo;
 	
-	@RequestMapping(method = RequestMethod.GET, 
-			value="/le/{contentQId}/{attrId}/{attrVal}/lt/{lookupContentQId}/cat/{businessCategory}/", 
+	@RequestMapping(method = RequestMethod.POST, 
+			value="/linked/", consumes = "application/json",
 			produces = "application/json")
 	public List<LinkedContent> getSpecificLinkedContent(
 			HttpServletRequest request, HttpServletResponse response,
-			@PathVariable String contentQId, @PathVariable String attrId, 
-			@PathVariable String attrVal, @PathVariable String lookupContentQId,
-			@PathVariable String businessCategory,
-			@RequestHeader(value="requestorId", required=false) String userEmailId) {
-		return fetchLinkedContent(contentQId, attrId, attrVal, lookupContentQId, businessCategory, userEmailId);
-	}
-	
-	@RequestMapping(method = RequestMethod.GET, 
-			value="/le/{contentQId}/{attrId}/{attrVal}/cat/{businessCategory}/", 
-			produces = "application/json")
-	public List<LinkedContent> getLinkedContent(
-			HttpServletRequest request, HttpServletResponse response,
-			@PathVariable String contentQId, @PathVariable String attrId, 
-			@PathVariable String attrVal, @PathVariable String businessCategory,
+			@RequestBody LinkedContentRequest contentRequest,
 			@RequestHeader(value="requestorId", required=false) String userEmailId) {
 		
-		return fetchLinkedContent(contentQId, attrId, attrVal, null, businessCategory, userEmailId);
+		return fetchLinkedContent(contentRequest.getRefContentQId(), contentRequest.getRefMatchAttrId(), 
+				contentRequest.getRefMatchAttrValue(), contentRequest.getLookupContentQId(), 
+				contentRequest.getContentBusinessCategory(), userEmailId);
 	}
 	
-	@RequestMapping(method = RequestMethod.GET, 
-			value="/le/{contentQId}/{attrId}/{attrVal}/mc/{mContentQId}/{mAttrId}/{mAttrVal}/cat/{businessCategory}/", 
+	@RequestMapping(method = RequestMethod.POST, 
+			value="/linked/mapped/", consumes = "application/json", 
 			produces = "application/json")
-	public List<DisplayableContent> getMappedContent(
+	public List<DisplayableContent> getCategoryMappedContent(
 			HttpServletRequest request, HttpServletResponse response,
-			@PathVariable String contentQId, @PathVariable String attrId, 
-			@PathVariable String attrVal, @PathVariable String mContentQId, 
-			@PathVariable String mAttrId, @PathVariable String mAttrVal,
-			@PathVariable String businessCategory,
+			@RequestBody LinkedContentRequest contentRequest,
 			@RequestHeader(value="requestorId", required=false) String userEmailId) {
+
+		String contentQId = contentRequest.getRefContentQId();
+		String attrId = contentRequest.getRefMatchAttrId(); 
+		String attrVal = contentRequest.getRefMatchAttrValue();
+		String mContentQId = contentRequest.getMapContentQId(); 
+		String mAttrId = contentRequest.getMapMatchAttrId();
+		String mAttrVal = contentRequest.getMapMatchAttrValue();
+		String businessCategory = contentRequest.getContentBusinessCategory();
 		
 		ContainerBusinessCategoryType bizCategory = getBusinessCategoryEnumValue(businessCategory);
 		
@@ -310,10 +304,13 @@ public class LinkedContentController {
 		
 		ContainerBusinessCategoryType bizCategory = null;
 		
-		try {
-			bizCategory = ContainerBusinessCategoryType.fromValue(businessCategory);
-		} catch (Throwable t) {
-			// ignore invalid value
+		if (businessCategory != null) {
+			
+			try {
+				bizCategory = ContainerBusinessCategoryType.fromValue(businessCategory);
+			} catch (Throwable t) {
+				// ignore invalid value
+			}
 		}
 		
 		return bizCategory;
@@ -450,7 +447,85 @@ public class LinkedContentController {
 		return collRecordCnt;
 	}
 	
-	
+	public static class LinkedContentRequest {
+		
+		private String refContentQId;
+		private String refMatchAttrId;
+		private String refMatchAttrValue;
+		
+		private String mapContentQId;
+		private String mapMatchAttrId;
+		private String mapMatchAttrValue;
+		
+		private String lookupContentQId;
+		
+		private String contentBusinessCategory;
+
+		public String getRefContentQId() {
+			return refContentQId;
+		}
+
+		public void setRefContentQId(String refContentQId) {
+			this.refContentQId = refContentQId;
+		}
+
+		public String getRefMatchAttrId() {
+			return refMatchAttrId;
+		}
+
+		public void setRefMatchAttrId(String refMatchAttrId) {
+			this.refMatchAttrId = refMatchAttrId;
+		}
+
+		public String getRefMatchAttrValue() {
+			return refMatchAttrValue;
+		}
+
+		public void setRefMatchAttrValue(String refMatchAttrValue) {
+			this.refMatchAttrValue = refMatchAttrValue;
+		}
+
+		public String getMapContentQId() {
+			return mapContentQId;
+		}
+
+		public void setMapContentQId(String mapContentQId) {
+			this.mapContentQId = mapContentQId;
+		}
+
+		public String getMapMatchAttrId() {
+			return mapMatchAttrId;
+		}
+
+		public void setMapMatchAttrId(String mapMatchAttrId) {
+			this.mapMatchAttrId = mapMatchAttrId;
+		}
+
+		public String getMapMatchAttrValue() {
+			return mapMatchAttrValue;
+		}
+
+		public void setMapMatchAttrValue(String mapMatchAttrValue) {
+			this.mapMatchAttrValue = mapMatchAttrValue;
+		}
+
+		public String getLookupContentQId() {
+			return lookupContentQId;
+		}
+
+		public void setLookupContentQId(String lookupContentQId) {
+			this.lookupContentQId = lookupContentQId;
+		}
+
+		public String getContentBusinessCategory() {
+			return contentBusinessCategory;
+		}
+
+		public void setContentBusinessCategory(String contentBusinessCategory) {
+			this.contentBusinessCategory = contentBusinessCategory;
+		}
+		
+	}
 	
 	public static class LinkedContent implements Comparable<LinkedContent> {
 		
