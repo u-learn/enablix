@@ -155,7 +155,7 @@ public class LinkedContentController {
 				
 				LookupConfig containerLC = new LookupConfig();
 				
-				if (restrictedContentTypes != null) {
+				if (CollectionUtil.isNotEmpty(restrictedContentTypes)) {
 					
 					for (String restrictedContQId : restrictedContentTypes) {
 				
