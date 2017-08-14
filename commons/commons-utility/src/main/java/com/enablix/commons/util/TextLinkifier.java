@@ -96,7 +96,7 @@ public class TextLinkifier {
 				links = new ArrayList<>();
 			}
 			
-			links.add(new Link(href, linkTitle, text));
+			links.add(new Link(href, text, linkTitle));
 		}
 
 		public void setLinkifiedText(String linkifiedText) {
