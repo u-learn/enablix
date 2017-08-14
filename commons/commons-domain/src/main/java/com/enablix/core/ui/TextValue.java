@@ -1,10 +1,14 @@
 package com.enablix.core.ui;
 
+import java.util.List;
+
 public class TextValue extends AbstractFieldValue {
 
 	private String value;
 	
 	private String rawValue;
+	
+	private List<Hyperlink> links;
 
 	public TextValue(String value) {
 		this(value, value);
@@ -26,6 +30,14 @@ public class TextValue extends AbstractFieldValue {
 
 	public String getRawValue() {
 		return rawValue;
+	}
+
+	public List<Hyperlink> getLinks() {
+		return links;
+	}
+
+	public void setLinks(List<Hyperlink> links) {
+		this.links = links;
 	}
 
 	@Override

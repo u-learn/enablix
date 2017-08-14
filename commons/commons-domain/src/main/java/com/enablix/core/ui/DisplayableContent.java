@@ -14,7 +14,9 @@ public class DisplayableContent {
 	private String recordIdentity;
 	private String title;
 	private DocRef doc;
+	private Hyperlink hyperlink;
 	private String portalUrl;
+
 	public DisplayableContent() {
 		this.fields = new ArrayList<>();
 	}
@@ -72,6 +74,14 @@ public class DisplayableContent {
 		this.title = title;
 	}
 
+	public Hyperlink getHyperlink() {
+		return hyperlink;
+	}
+
+	public void setHyperlink(Hyperlink hyperlink) {
+		this.hyperlink = hyperlink;
+	}
+
 	public String getPortalUrl() {
 		return portalUrl;
 	}
@@ -82,7 +92,11 @@ public class DisplayableContent {
 
 	@Override
 	public String toString() {
-		return "DisplayableContent [fields=" + fields + ", title=" + title + ", doc=" + doc + "]";
+		return "DisplayableContent [fields=" + fields + ", containerQId=" + containerQId + ", containerLabel="
+				+ containerLabel + ", recordIdentity=" + recordIdentity + ", title=" + title + ", doc=" + doc
+				+ ", hyperlink=" + hyperlink + ", portalUrl=" + portalUrl + "]";
 	}
+
+	
 	
 }
