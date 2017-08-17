@@ -8,4 +8,6 @@ public interface RecipientUserAware {
 
 	void setRecipientUser(UserProfile recipientUser);
 	
+	UserProfile getRecipientUser();
+	
 }

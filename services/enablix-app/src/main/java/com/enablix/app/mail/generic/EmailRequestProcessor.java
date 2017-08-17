@@ -7,7 +7,9 @@ import org.springframework.stereotype.Component;
 
 import com.enablix.app.mail.web.EmailRequest;
 import com.enablix.app.mail.web.EmailRequest.Recipient;
+import com.enablix.core.domain.security.authorization.UserProfile;
 import com.enablix.core.mail.service.MailService;
+import com.enablix.core.mail.velocity.input.RecipientUserAware;
 import com.enablix.data.view.DataView;
 import com.enablix.services.util.DataViewUtil;
 
@@ -35,7 +37,23 @@ public class EmailRequestProcessor {
 		Object velocityInput = builder.build(request, dataView);
 		
 		for (Recipient recipient : request.getRecipients()) {
+			
 			builder.processInputForRecipient(recipient, velocityInput, dataView);
+			
+			if (velocityInput instanceof RecipientUserAware) {
+				
+				RecipientUserAware rua = (RecipientUserAware) velocityInput;
+				
+				if (rua.getRecipientUser() == null) {
+					
+					UserProfile tmpUser = new UserProfile();
+					tmpUser.setEmail(recipient.getEmailId());
+					tmpUser.setName(recipient.getName());
+					
+					rua.setRecipientUser(tmpUser);
+				}
+			}
+			
 			mailService.sendHtmlEmail(velocityInput, recipient.getEmailId(), request.getMailTemplateId());
 		}
 		
