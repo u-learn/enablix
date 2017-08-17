@@ -19,8 +19,9 @@ import com.enablix.app.report.activity.metric.ActivityMetricService;
 import com.enablix.core.domain.report.activitymetric.ActivityMetricConfig;
 
 @RestController
-@RequestMapping("activitymetric")
+@RequestMapping("report")
 public class ActivityMetricController {
+	
 	private static final Logger LOGGER = LoggerFactory.getLogger(ActivityMetricController.class);
 
 	@Autowired
@@ -29,13 +30,13 @@ public class ActivityMetricController {
 	@Autowired
 	private ActivityMetricConfigRepository activityMetricConfRepo;
 	
-	@RequestMapping(method = RequestMethod.GET)
+	@RequestMapping(method = RequestMethod.GET, value="/activitymetric")
 	public HashMap<String, Object> getAggregatedActivityMetrices(@RequestParam("activityMetricTime") String date) {
 		try{
 			Date startDate = new SimpleDateFormat("dd-MMM-yy").parse(date);
 			Date endDate = Calendar.getInstance().getTime();
 			HashMap<String, Object> response = new HashMap<String, Object>();
-			response.put("metricData", activityMetric.getAggregatedValues(startDate, endDate));
+			response.put("metricData", activityMetric.getAggregatedValues(startDate, endDate, null));
 			response.put("asOfDate", endDate);
 			return response;
 		}

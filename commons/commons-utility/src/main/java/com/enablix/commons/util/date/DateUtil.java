@@ -2,6 +2,7 @@ package com.enablix.commons.util.date;
 
 import static java.time.temporal.TemporalAdjusters.previousOrSame;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
 import java.time.Instant;
@@ -14,7 +15,10 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
+
 public class DateUtil {
+
+	public static final String JSON_INPUT_DATE_FORMAT = "dd-MMM-yy";
 	
 	private static final String ISO8601_DATETIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ss'Z'";
 	
@@ -27,6 +31,20 @@ public class DateUtil {
 			}
 		};
 	
+	private static final ThreadLocal<SimpleDateFormat> JsonInputDateFormat = 
+		new ThreadLocal<SimpleDateFormat>() {
+			protected SimpleDateFormat initialValue() {
+				SimpleDateFormat df = new SimpleDateFormat(JSON_INPUT_DATE_FORMAT);
+				df.setTimeZone(TimeZone.getTimeZone("UTC"));
+				return df;
+			}
+		};
+		
+		
+	public static Date parseJsonInputDate(String date) throws ParseException {
+		return date == null ? null : JsonInputDateFormat.get().parse(date);
+	}
+		
 	public static Date getEndOfDay(Date date) {
 		LocalDateTime localDateTime = dateToLocalDateTime(date);
 		LocalDateTime endOfDay = localDateTime.with(LocalTime.MAX);

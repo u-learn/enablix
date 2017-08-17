@@ -52,13 +52,14 @@ public class AppConstants {
 	
 	public enum MetricType {
 		
+		USER_REGISTRATION("User Registration", "ACTMETRIC1"),
 		NO_OF_LOGINS("Number of Logins", "ACTMETRIC2"),
+		DISTINCT_LOGIN("Number of Distinct Logins", "ACTMETRIC3"),
 		CONTENT_ADD("Content Adds", "ACTMETRIC4"),
 		CONTENT_UPDATES("Content Updates", "ACTMETRIC5"),
 		CONTENT_ACCESS("Content Access", "ACTMETRIC6"),
 		CONTENT_PREVIEW("Content Preview", "ACTMETRIC7"),
 		CONTENT_DOWNLOAD("Content Download", "ACTMETRIC8"),
-		DISTINCT_LOGIN("Number of Distinct Logins", "ACTMETRIC3"),
 		SEARCH("Searches", "ACTMETRIC9");
 		
 		private String value;

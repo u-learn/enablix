@@ -1,6 +1,5 @@
 package com.enablix.app.report.activity.metric;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -12,9 +11,10 @@ import org.springframework.stereotype.Component;
 
 import com.enablix.core.domain.report.activitymetric.ActivityMetricConfig;
 import com.enablix.core.domain.report.activitymetric.MetricStats;
+import com.enablix.core.mongo.search.service.SearchRequest;
 
 @Component
-public class ActivityMetricServiceImpl  implements ActivityMetricService {
+public class ActivityMetricServiceImpl implements ActivityMetricService {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(ActivityMetricServiceImpl.class);
 	
@@ -31,7 +31,8 @@ public class ActivityMetricServiceImpl  implements ActivityMetricService {
 	}
 
 	@Override
-	public List<MetricStats> getAggregatedValues(Date startDate, Date endDate) throws ParseException {
+	public List<MetricStats> getAggregatedValues(Date startDate, Date endDate, SearchRequest userFilter) {
+		
 		List<MetricStats> metricStats = new ArrayList<MetricStats>();
 		List<ActivityMetricConfig> activityMetrics = getActivityMetricConfig();
 		
@@ -41,12 +42,12 @@ public class ActivityMetricServiceImpl  implements ActivityMetricService {
 				LOGGER.debug(" No Implementation Found for the Activity "+activityMetricConfig);
 				continue;
 			}
-			MetricStats metricStat = metricStatCalc.calculateStats(startDate, endDate);
+			MetricStats metricStat = metricStatCalc.calculateStats(startDate, endDate, userFilter);
 			metricStats.add(metricStat);
 		}
 		
 		return metricStats;
 		
 	}
-	
+
 }

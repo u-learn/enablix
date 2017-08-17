@@ -16,8 +16,8 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Component;
 
 import com.enablix.commons.constants.AppConstants.MetricType;
-import com.enablix.commons.util.date.DateUtil;
 import com.enablix.core.domain.report.activitymetric.MetricStats;
+import com.enablix.core.mongo.search.service.SearchRequest;
 
 @Component
 public class DistinctLoginMetricImpl extends ActivityMetric {
@@ -32,15 +32,11 @@ public class DistinctLoginMetricImpl extends ActivityMetric {
 	}
 
 	@Override
-	public MetricStats calculateStats(Date startDate, Date endDate) {
+	public MetricStats calculateStats(Date startDate, Date endDate, SearchRequest userFilter) {
 
 		MetricStats metricStats = null;
 
-		startDate = DateUtil.getStartOfDay(startDate);
-		endDate = DateUtil.getEndOfDay(endDate);
-
-		Criteria criteria = Criteria.where("createdAt").gte(startDate).lte(endDate);
-		criteria = criteria.andOperator(baseCriteria());
+		Criteria criteria = buildCriteria(startDate, endDate, userFilter);
 
 		Query query = Query.query(criteria);
 

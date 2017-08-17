@@ -5,6 +5,7 @@ import static org.springframework.data.mongodb.core.aggregation.Aggregation.matc
 import static org.springframework.data.mongodb.core.aggregation.Aggregation.newAggregation;
 import static org.springframework.data.mongodb.core.aggregation.Aggregation.sort;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -20,16 +21,28 @@ import org.springframework.data.mongodb.core.query.Query;
 import com.enablix.app.report.activity.metric.MetricStatsCalculator;
 import com.enablix.app.report.util.TrendUtil;
 import com.enablix.commons.constants.AppConstants.MetricType;
+import com.enablix.commons.util.collection.CollectionUtil;
 import com.enablix.commons.util.date.DateUtil;
 import com.enablix.core.domain.activity.ActivityAudit;
 import com.enablix.core.domain.report.activitymetric.MetricStats;
 import com.enablix.core.domain.report.activitymetric.TrendAggMetric;
+import com.enablix.core.domain.security.authorization.UserProfile;
+import com.enablix.core.mongo.dao.GenericDao;
+import com.enablix.core.mongo.search.service.SearchRequest;
+import com.enablix.core.mongo.search.service.SearchRequestTransformer;
+import com.enablix.core.mongo.view.MongoDataView;
 
 public abstract class ActivityMetric implements MetricStatsCalculator {
 
 	@Autowired
 	protected MongoTemplate mongoTemplate;
 
+	@Autowired
+	private SearchRequestTransformer requestTx;
+	
+	@Autowired
+	private GenericDao dao;
+	
 	public MongoTemplate getMongoTemplate() {
 		return mongoTemplate;
 	}
@@ -37,15 +50,34 @@ public abstract class ActivityMetric implements MetricStatsCalculator {
 	protected abstract Criteria baseCriteria();
 	
 	@Override
-	public MetricStats calculateStats(Date startDate, Date endDate) {
+	public MetricStats calculateStats(Date startDate, Date endDate, SearchRequest userFilter) {
+		Criteria criteria = buildCriteria(startDate, endDate, userFilter);
+		return calculateMetricStats(startDate, endDate, metricType(), criteria);
+	}
+	
+	protected Criteria buildCriteria(Date startDate, Date endDate, SearchRequest userFilter) {
 		
 		startDate = DateUtil.getStartOfDay(startDate);
 		endDate = DateUtil.getEndOfDay(endDate);
 		
-		Criteria criteria = Criteria.where("createdAt").gte(startDate).lte(endDate);
-		criteria = criteria.andOperator(baseCriteria());
+		List<Criteria> criterions = new ArrayList<>();
+		criterions.add(Criteria.where("createdAt").gte(startDate).lte(endDate));
+		criterions.add(baseCriteria());
 		
-		return calculateMetricStats(startDate, endDate, metricType(), criteria);
+		if (userFilter != null && CollectionUtil.isNotEmpty(userFilter.getFilters())) {
+			List<String> filterUsrIds = findFilterByUserIds(userFilter);
+			Criteria userCriteria = new Criteria().orOperator(Criteria.where("actor.userId").in(filterUsrIds), 
+												Criteria.where("actor.externalId").in(filterUsrIds));
+			criterions.add(userCriteria);
+		}
+		
+		return new Criteria().andOperator(criterions.toArray(new Criteria[0]));
+	}
+	
+	protected List<String> findFilterByUserIds(SearchRequest userFilter) {
+		Criteria criteria = requestTx.buildQueryCriteria(userFilter);
+		List<UserProfile> findByCriteria = dao.findByCriteria(criteria, UserProfile.class, MongoDataView.ALL_DATA);
+		return CollectionUtil.transform(findByCriteria, () -> new ArrayList<String>(), (up) -> up.getEmail());
 	}
 	
 	public MetricStats calculateMetricStats(Date startDate, Date endDate, MetricType activityCode, Criteria criteria) {

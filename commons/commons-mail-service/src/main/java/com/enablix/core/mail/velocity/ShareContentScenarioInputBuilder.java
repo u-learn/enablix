@@ -19,7 +19,7 @@ public class ShareContentScenarioInputBuilder {
 	public ShareContentVelocityInput build(String newUserId, 
 			DisplayableContent sharedContent, String emailCustomContent, DataView view) {
 		
-		ShareContentVelocityInput input = new ShareContentVelocityInput(newUserId, sharedContent,emailCustomContent);
+		ShareContentVelocityInput input = new ShareContentVelocityInput(newUserId, sharedContent, emailCustomContent);
 		
 		Collection<VelocityTemplateInputResolver<ShareContentVelocityInput>> resolvers = 
 				factory.getResolvers(input);

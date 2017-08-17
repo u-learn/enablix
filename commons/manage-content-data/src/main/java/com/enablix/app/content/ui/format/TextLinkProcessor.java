@@ -50,6 +50,8 @@ public class TextLinkProcessor {
 						links.add(hyperlink);
 						content.setHyperlink(hyperlink);
 					});
+					
+					txtVal.setLinks(links);
 				}
 			}
 		}

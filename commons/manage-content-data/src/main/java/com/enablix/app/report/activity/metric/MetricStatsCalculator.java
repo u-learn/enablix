@@ -5,12 +5,13 @@ import java.util.List;
 
 import com.enablix.commons.constants.AppConstants.MetricType;
 import com.enablix.core.domain.report.activitymetric.MetricStats;
+import com.enablix.core.mongo.search.service.SearchRequest;
 
 public interface MetricStatsCalculator {
 	
 	MetricType metricType();
 	
-	MetricStats calculateStats(Date startDate, Date endDate);
+	MetricStats calculateStats(Date startDate, Date endDate, SearchRequest userFilter);
 	
 	List<MetricStats> calculateDailyTrend(Date startDate, Date endDate);
 	
