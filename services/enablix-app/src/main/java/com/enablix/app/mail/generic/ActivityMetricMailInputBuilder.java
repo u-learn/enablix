@@ -66,7 +66,7 @@ public class ActivityMetricMailInputBuilder implements GenericEmailVelocityInput
 		Date endDate = Calendar.getInstance().getTime();
 		
 		List<MetricStats> metricStats = metricService.getAggregatedValues(startDate, endDate, request.getDataFilter());
-		metricStats.add(userRegistrationMetric.calculateStats(startDate, endDate, null));
+		metricStats.add(userRegistrationMetric.getUserCount(request.getDataFilter()));
 
 		Map<String, Object> metricValues = new HashMap<>();
 		metricStats.forEach((stat) -> { metricValues.put(stat.getMetricCode(), stat.getMetricValue()); });
