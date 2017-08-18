@@ -52,7 +52,7 @@ enablix.serviceURL = {
 	"getAuditActivityTypes" : enablix.domainName + "/getAuditConfiguration/getAuditActivityTypes",
 	"getActivityMetric" : enablix.domainName + "/report/activitymetric",
 	"getActivityTrend" : enablix.domainName + "/activitytrend",
-	"getActivityMetricesTypes" : enablix.domainName + "/report/activitymetric/getactivitymetrices",
+	"getActivityMetricesTypes" : enablix.domainName + "/report/getactivitymetrices",
 	"getsmtpconfig" : enablix.domainName + "/getsmtpconfig/:domainName",
 	"checkusername" : enablix.domainName + "/checkusername",
 	"fetchAllRoles" : enablix.domainName + "/roles",
