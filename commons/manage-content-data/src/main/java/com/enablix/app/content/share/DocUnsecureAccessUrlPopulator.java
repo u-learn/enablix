@@ -14,6 +14,9 @@ public class DocUnsecureAccessUrlPopulator {
 	@Value("${site.url.doc.download}")
 	private String docDownloadUrl;
 	
+	@Value("${site.url.doc.thumbnail}")
+	private String docThumbnailUrl;
+	
 	@Autowired
 	private SharedContentUrlCreator urlCreator;
 	
@@ -22,9 +25,14 @@ public class DocUnsecureAccessUrlPopulator {
 		DocRef contentDoc = content.getDoc();
 		
 		if (contentDoc != null) {
+			
 			String shareableUrl = urlCreator.createShareableUrl(
-				getActualDocDownloadUrl(contentDoc.getDocIdentity()), sharedWithEmail, true);
+					getActualDocDownloadUrl(contentDoc.getDocIdentity()), sharedWithEmail, true);
 			contentDoc.setAccessUrl(EnvPropertiesUtil.getProperties().getServerUrl() + shareableUrl);
+			
+			String shareableThmbUrl = urlCreator.createShareableUrl(
+					getActualDocThumbnailUrl(contentDoc.getDocIdentity()), sharedWithEmail, true);
+			contentDoc.setThumbnailUrl(EnvPropertiesUtil.getProperties().getServerUrl() + shareableThmbUrl);
 		}
 		
 	}
@@ -33,6 +41,9 @@ public class DocUnsecureAccessUrlPopulator {
 		return docDownloadUrl.replaceAll(":docIdentity", docIdentity);
 	}
 	
+	public String getActualDocThumbnailUrl(String docIdentity) {
+		return docThumbnailUrl.replaceAll(":docIdentity", docIdentity);
+	}
 	
 	public void populateSecureUrl(DisplayableContent content) {
 		

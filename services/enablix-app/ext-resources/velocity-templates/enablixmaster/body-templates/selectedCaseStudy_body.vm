@@ -1,0 +1,36 @@
+#@mail_template('eOriginal Case Studies')
+
+	#spacer_row('15')
+											
+	#mail_opening(${obj.recipientUser.name})
+	
+	#spacer_row('15')
+	
+	We have several case studies for you on eOriginal Content Center.
+	
+	#spacer_row('20')
+	
+	#@three_col_layout('' '0')
+		#foreach($key in ${obj.content.keySet()}) 
+			#set ($contentList = $obj.content.get($key))
+			#foreach($content in $contentList)
+				#@three_col_layout_column()
+					#content_preview_card($content 'EMAIL' 'RECOMMENDATION' '')
+				#end
+			#end
+		#end
+	#end
+	
+	#spacer_row('20')
+	
+	You can use these to
+	
+	<ul>
+		<li>get your prospect's attention</li>
+		<li>demonstrate value</li>
+		<li>show your offering's differentiation</li>
+	</ul>
+	
+	#mail_closing($obj.tenant.name)
+
+#end

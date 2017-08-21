@@ -21,6 +21,8 @@ public interface ContentCrudService {
 	
 	Map<String, Object> findRecord(String collectionName, String elementQId, String elementIdentity, MongoDataView view);
 	
+	Map<String, Object> findRecordByDocIdentity(String collectionName, String docElemQId, String docIdentity, MongoDataView view);
+	
 	List<Map<String, Object>> findChildElements(String collectionName, String childFieldId, String recordIdentity, MongoDataView view);
 	
 	List<Map<String, Object>> findAllRecord(String collectionName, MongoDataView view);

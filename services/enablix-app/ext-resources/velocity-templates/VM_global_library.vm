@@ -3,17 +3,21 @@ $a_siteUrl/app.html#/portal/container/$a_containerQId/$a_contentIdentity/c/singl
 #end
 
 
-
 #macro( action_button $a_btnText $a_btnUrl )
+	#action_button_with_padding( $a_btnText $a_btnUrl '42')
+#end
+
+
+#macro( action_button_with_padding $a_btnText $a_btnUrl $a_btnPadding)
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 	<tr>
 		<td>
 			<table width="100%" border="0" cellspacing="0" cellpadding="0">
 				<tr>
 					<td align="center">
-						<table border="0" cellspacing="0" cellpadding="0" bgcolor="#0e2a49" class="mobile-shell">
+						<table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="#0e2a49" class="mobile-shell">
 							<tr>
-								<td class="img" style="font-size:0pt; line-height:0pt; text-align:left" width="42"></td>
+								<td class="img" style="font-size:0pt; line-height:0pt; text-align:left" width="$a_btnPadding"></td>
 								<td>
 									#spacer_row('12')
 									<div class="text-button" style="color:#ffffff; font-family:Arial,sans-serif, 'OS'; font-size:16px; line-height:20px; text-align:center; font-weight:bold">
@@ -22,7 +26,7 @@ $a_siteUrl/app.html#/portal/container/$a_containerQId/$a_contentIdentity/c/singl
 									#spacer_row('12')
 
 								</td>
-								<td class="img" style="font-size:0pt; line-height:0pt; text-align:left" width="42"></td>
+								<td class="img" style="font-size:0pt; line-height:0pt; text-align:left" width="$a_btnPadding"></td>
 							</tr>
 						</table>
 					</td>
@@ -141,8 +145,6 @@ $a_siteUrl/app.html#/portal/container/$a_containerQId/$a_contentIdentity/c/singl
 
 
 
-
-
 #macro( spacer_row $a_rowHeight )
 <table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tbody><tr><td height="$a_rowHeight" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></tbody></table>
 #end
@@ -158,6 +160,10 @@ $a_siteUrl/app.html#/portal/container/$a_containerQId/$a_contentIdentity/c/singl
 <a href="${a_linkUrl}">
 <span class="link-u" style="color:#004ba1; text-decoration:underline">${a_linkText}</span>
 </a>
+#end
+
+#macro( small_image_link $a_imgSrc $a_linkUrl )
+<a href="${a_linkUrl}"><img src="$a_imgSrc" style="max-width: 160px; max-height: 160px;"></img></a>
 #end
 
 #macro( portal_home_link $a_linkText )
@@ -225,6 +231,129 @@ $a_tenantName Team
 		<td class="content-spacing2" style="font-size:0pt; line-height:0pt; text-align:left" width="30"></td>
 	</tr>
 </table>
+#end
+
+
+#macro( three_col_layout $a_bgcolor $a_padding)
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<td bgcolor="${a_bgcolor}">
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+				<tr>
+					<td class="content-spacing" style="font-size:0pt; line-height:0pt; text-align:left" width="$a_padding"></td>
+					<td>
+						<table width="100%" border="0" cellspacing="0" cellpadding="0">
+							<tr>
+								<td align="center">
+									<table border="0" cellspacing="0" cellpadding="0">
+										<tr>
+											$!bodyContent
+										</tr>
+									</table>
+								</td>
+							</tr>
+						</table>
+					</td>
+					<td class="content-spacing" style="font-size:0pt; line-height:0pt; text-align:left" width="$a_padding"></td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+</table>
+#end
+
+#macro( three_col_layout_column )
+<th class="column-top" style="font-size:0pt; line-height:0pt; padding:0; margin:0; font-weight:normal; vertical-align:top; Margin:0" width="190" bgcolor="#ffffff">
+	$!bodyContent
+</th>
+<th class="column" style="font-size:0pt; line-height:0pt; padding:0; margin:0; font-weight:normal; Margin:0" width="10">#spacer_row('15')</th>
+#end
+
+
+#macro( content_list_card $a_cardTitle )
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<td valign="top" style="border: 1px solid #e6e6e6; font-size: 0pt; line-height: 0pt; text-align: left;">
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+				<tr>
+					<td class="mobile-height" valign="top">
+						<table width="100%" border="0" cellspacing="0" cellpadding="0">
+							<tr>
+								<td>
+									<table width="100%" border="0" cellspacing="0" cellpadding="0">
+										<tr>
+											<td class="content-spacing" style="font-size:0pt; line-height:0pt; text-align:left" width="19"></td>
+											<td class="text3" style="color:#626262; font-family:Arial,sans-serif, 'OS'; font-size:12px; line-height:22px; text-align:left">
+												<table width="100%" border="0" cellspacing="0" cellpadding="0">
+													<tr>
+														<td style="border-bottom: 1px solid #e6e6e6;">
+															<table width="100%" border="0" cellspacing="0" cellpadding="0">
+																<tr>
+																	<td class="img" style="font-size:0pt; line-height:0pt; text-align:left" valign="top">
+																		<table width="100%" border="0" cellspacing="0" cellpadding="0">
+																			<tr>
+																				<td class="mobile-height" valign="top">
+																					#spacer_row('16')
+
+																					<div class="h2" style="color:#424242; font-family:Arial,sans-serif, 'OS'; font-size:12px; line-height:16px; text-align:left; font-weight:bold; text-transform:uppercase">$a_cardTitle</div>
+																					#spacer_row('16')
+
+																				</td>
+																			</tr>
+																		</table>
+																	</td>
+																</tr>
+															</table>
+														</td>
+													</tr>
+												</table>
+												#spacer_row('16')
+
+												$!bodyContent
+
+												#spacer_row('16')
+
+											</td>
+											<td class="content-spacing" style="font-size:0pt; line-height:0pt; text-align:left" width="19"></td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+</table> 
+#end
+
+#macro( content_preview_card $a_dispRecord $a_atChannel $a_atContextId $a_atContextName)
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<td valign="top">
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+				<tr>
+					<td class="mobile-height" valign="bottom">
+						<table width="100%" border="0" cellspacing="0" cellpadding="0">
+							<tr>
+								<td height="160" style="border: 1px solid #e6e6e6; border-radius: 4px; font-size: 0pt; line-height: 0pt; text-align: center;">
+									#if(${a_dispRecord.doc.thumbnailUrl}) #small_image_link(${a_dispRecord.doc.thumbnailUrl} '${a_dispRecord.portalUrl}?atChannel=$a_atChannel&atContext=$a_atContext&atContextId=$a_atContextId' ) #end
+								</td>
+							</tr>
+							<tr><td>#spacer_row('12')</td></tr>
+							<tr>
+								#@action_button_cell('200')
+									#action_button_with_padding($a_dispRecord.title '$a_dispRecord.portalUrl?atChannel=$a_atChannel&atContext=$a_atContext&atContextId=$a_atContextId' '5')
+								#end
+							</tr>
+						</table>
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+</table> 
 #end
 
 

@@ -7,6 +7,8 @@ public class DocRef extends AbstractFieldValue {
 	private String docIdentity;
 	
 	private String accessUrl;
+	
+	private String thumbnailUrl;
 
 	public DocRef() {
 		super(FieldValueType.DOC);
@@ -34,6 +36,14 @@ public class DocRef extends AbstractFieldValue {
 
 	public void setAccessUrl(String accessUrl) {
 		this.accessUrl = accessUrl;
+	}
+
+	public String getThumbnailUrl() {
+		return thumbnailUrl;
+	}
+
+	public void setThumbnailUrl(String thumbnailUrl) {
+		this.thumbnailUrl = thumbnailUrl;
 	}
 
 	@Override

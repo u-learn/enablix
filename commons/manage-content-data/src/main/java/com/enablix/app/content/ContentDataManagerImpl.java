@@ -595,5 +595,18 @@ public class ContentDataManagerImpl implements ContentDataManager {
 		
 		return fetchContentStackData(containerQId, instanceIdentity, filterItemQId, pageable, userDataView);
 	}
+
+
+	@Override
+	public Map<String, Object> getContentRecordByDocRef(String docIdentity, String docContentQId, DataView view) {
+
+		TemplateFacade template = templateMgr.getTemplateFacade(ProcessContext.get().getTemplateId());
+		
+		String containerQId = QIdUtil.getParentQId(docContentQId);
+		String collectionName = template.getCollectionName(containerQId);
+		String docAttrId = QIdUtil.getElementId(docContentQId);
+		
+		return crud.findRecordByDocIdentity(collectionName, docAttrId, docIdentity, DataViewUtil.getMongoDataView(view));
+	}
 	
 }

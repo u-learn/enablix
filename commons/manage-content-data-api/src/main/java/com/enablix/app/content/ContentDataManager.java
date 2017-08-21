@@ -30,6 +30,8 @@ public interface ContentDataManager {
 	
 	Map<String, Object> getContentRecord(ContentDataRef dataRef, TemplateFacade template, DataView view);
 	
+	Map<String, Object> getContentRecordByDocRef(String docIdentity, String docContentQId, DataView view);
+	
 	List<Map<String, Object>> getContentRecords(String containerQId, List<String> recordIdentities, TemplateFacade template, DataView view);
 
 	List<ContentDataRecord> getContentStackRecords(List<ContentStackItem> contentStackItems, DataView view);

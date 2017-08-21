@@ -20,6 +20,7 @@ import org.springframework.stereotype.Component;
 import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.commons.util.QIdUtil;
 import com.enablix.commons.util.StringUtil;
+import com.enablix.commons.util.collection.CollectionUtil;
 import com.enablix.commons.util.json.JsonUtil;
 import com.enablix.core.mongo.search.SearchFilter;
 import com.enablix.core.mongo.view.MongoDataView;
@@ -452,6 +453,16 @@ public class ContentCrudServiceImpl implements ContentCrudService {
 	@Override
 	public long findChildElementsCount(String collName, String qIdRelativeToParent, String parentIdentity, MongoDataView view) {
 		return findChildElements(collName, qIdRelativeToParent, parentIdentity, view).size();
+	}
+
+	@Override
+	public Map<String, Object> findRecordByDocIdentity(String collectionName, String docAttrId, String docIdentity,
+			MongoDataView view) {
+		
+		Criteria criteria = Criteria.where(docAttrId + ".identity").is(docIdentity);
+		List<Map<String, Object>> allRecords = findAllRecordForCriteria(collectionName, criteria, view);
+		
+		return CollectionUtil.isEmpty(allRecords) ? new HashMap<>() : allRecords.get(0);
 	}
 	
 }

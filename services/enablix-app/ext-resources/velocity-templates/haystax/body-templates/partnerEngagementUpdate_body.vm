@@ -1,0 +1,32 @@
+#@mail_template('Partner Engagement Update')
+
+	#spacer_row('15')
+											
+	#mail_opening(${obj.recipientUser.name})
+	
+	#spacer_row('15')
+	
+	Last week ${obj.actor.name} #if(${obj.actor.businessProfile.orgName}) from ${obj.actor.businessProfile.orgName}#end was active on the partner portal. Here is a quick insight into the content he downloaded.
+	
+	#spacer_row('15')
+	
+	#@three_col_layout('' '0')
+		#foreach($key in ${obj.contentAccess.keySet()}) 
+			#set ($accessBucket = $obj.contentAccess.get($key))
+			#@three_col_layout_column()
+				#@content_list_card($accessBucket.contentLabel)
+					#foreach($contentRef in $accessBucket.contentList)
+						-&nbsp;&nbsp;#generic_link('#content_portal_url(${obj.url} ${contentRef.containerQId} ${contentRef.instanceIdentity})' ${contentRef.title})<br /> 
+					#end
+				#end
+			#end
+		#end
+	#end
+		
+	#spacer_row('15')
+	
+	Keep enabling your partners.
+	
+	#mail_closing($obj.tenant.name)
+
+#end

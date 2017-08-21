@@ -24,7 +24,7 @@ import com.enablix.core.mail.velocity.VelocityTemplateInputResolverFactory;
 import com.enablix.data.view.DataView;
 
 @Component
-public class ActivityMetricMailInputBuilder implements GenericEmailVelocityInputBuilder<ActivityMetricMailInput> {
+public class ActivityMetricMailInputBuilder extends AbstractEmailVelocityInputBuilder<ActivityMetricMailInput> {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(ActivityMetricMailInputBuilder.class);
 	
@@ -38,10 +38,8 @@ public class ActivityMetricMailInputBuilder implements GenericEmailVelocityInput
 	private VelocityTemplateInputResolverFactory factory;
 	
 	@Override
-	public ActivityMetricMailInput build(EmailRequest request, DataView dataView) {
-		
-		ActivityMetricMailInput input = new ActivityMetricMailInput();
-		input.setInputData(request.getInputData());
+	protected ActivityMetricMailInput buildInput(ActivityMetricMailInput input, EmailRequest request,
+			DataView dataView) {
 		
 		String startDateStr = (String) request.getInputData().get("metricStartDate");
 		
@@ -93,6 +91,11 @@ public class ActivityMetricMailInputBuilder implements GenericEmailVelocityInput
 	@Override
 	public String mailType() {
 		return GenericMailConstants.MAIL_TYPE_ACTIVITY_METRIC;
+	}
+
+	@Override
+	protected ActivityMetricMailInput createInputInstance() {
+		return new ActivityMetricMailInput();
 	}
 
 }
