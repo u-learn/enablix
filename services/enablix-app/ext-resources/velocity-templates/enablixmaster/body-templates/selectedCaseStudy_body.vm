@@ -14,10 +14,19 @@
 		#foreach($key in ${obj.content.keySet()}) 
 			#set ($contentList = $obj.content.get($key))
 			#foreach($content in $contentList)
+				#set ($contentQId = $content.containerQId)
 				#@three_col_layout_column()
-					#content_preview_card($content 'EMAIL' 'RECOMMENDATION' '')
+					#content_preview_card($content 'EMAIL' '' 'RECOMMENDATION')
 				#end
 			#end
+		#end
+	#end
+	
+	#spacer_row('15')
+	
+	#@action_button_table()
+		#@action_button_cell('200')
+			#action_button_with_padding('All Case Studies' "$obj.url/app.html#/portal/containerlist/$contentQId?layout=tile&atChannel=EMAIL&atContext=RECOMMENDATION" '10')
 		#end
 	#end
 	

@@ -329,6 +329,7 @@ $a_tenantName Team
 #end
 
 #macro( content_preview_card $a_dispRecord $a_atChannel $a_atContextId $a_atContextName)
+#set ($contentUrl = ${a_dispRecord.portalUrl} + '?atChannel=' + $a_atChannel + '&atContext=' + $a_atContextName + '&atContextId=' + $a_atContextId)
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 	<tr>
 		<td valign="top">
@@ -338,14 +339,12 @@ $a_tenantName Team
 						<table width="100%" border="0" cellspacing="0" cellpadding="0">
 							<tr>
 								<td height="160" style="border: 1px solid #e6e6e6; border-radius: 4px; font-size: 0pt; line-height: 0pt; text-align: center;">
-									#if(${a_dispRecord.doc.thumbnailUrl}) #small_image_link(${a_dispRecord.doc.thumbnailUrl} '${a_dispRecord.portalUrl}?atChannel=$a_atChannel&atContext=$a_atContext&atContextId=$a_atContextId' ) #end
+									#if(${a_dispRecord.doc.thumbnailUrl}) #small_image_link(${a_dispRecord.doc.thumbnailUrl} ${contentUrl} ) #end
 								</td>
 							</tr>
 							<tr><td>#spacer_row('12')</td></tr>
 							<tr>
-								#@action_button_cell('200')
-									#action_button_with_padding($a_dispRecord.title '$a_dispRecord.portalUrl?atChannel=$a_atChannel&atContext=$a_atContext&atContextId=$a_atContextId' '5')
-								#end
+								<td style="font-family:Arial,sans-serif, 'OS'; font-size:14px; line-height:16px; text-align:center; font-weight:bold;">#generic_link(${contentUrl} $a_dispRecord.title)<td>
 							</tr>
 						</table>
 					</td>
