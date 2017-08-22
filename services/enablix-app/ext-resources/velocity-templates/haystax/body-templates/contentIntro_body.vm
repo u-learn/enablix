@@ -1,0 +1,34 @@
+#set ($introContent = $obj.content.get($obj.inputData.get('introType')).get(0))
+#@mail_template('Introduction')
+
+	#spacer_row('15')
+											
+	#mail_opening(${obj.recipientUser.name})
+	
+	#spacer_row('15')
+	
+	Check out this introductory collateral on $introContent.title:
+	
+	#spacer_row('20')
+	
+	#@three_col_layout('' '0')
+		#foreach($key in ${obj.content.keySet()}) 
+			#if ($key != $obj.inputData.get('introType'))
+				#set ($contentList = $obj.content.get($key))
+				#foreach($content in $contentList)
+					#set ($contentQId = $content.containerQId)
+					#@three_col_layout_column()
+						#content_preview_card($content 'EMAIL' $introContent.recordIdentity 'CONTENTINTRO')
+					#end
+				#end
+			#end
+		#end
+	#end
+	
+	#spacer_row('20')
+	
+	To check out more content on $introContent.title #generic_link( "#content_portal_url($obj.url $introContent.containerQId $introContent.recordIdentity)?atChannel=EMAIL&atContext=CONTENTINTRO" 'click here')
+	
+	#mail_closing($obj.tenant.name)
+
+#end

@@ -6,7 +6,7 @@
 	
 	#spacer_row('15')
 	
-	Last week ${obj.actor.name} #if(${obj.actor.businessProfile.orgName}) from ${obj.actor.businessProfile.orgName}#end was active on the partner portal. Here is a quick insight into the content he downloaded.
+	Last week ${obj.actor.name} #if(${obj.actor.businessProfile.orgName}) from ${obj.actor.businessProfile.orgName}#end was active on the partner portal. Here is a quick insight.
 	
 	#spacer_row('15')
 	

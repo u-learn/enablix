@@ -1,0 +1,1 @@
+$obj.content.get($obj.inputData.get('introType')).get(0).title: Introduction
