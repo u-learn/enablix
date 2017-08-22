@@ -16,7 +16,7 @@
 			#@three_col_layout_column()
 				#@content_list_card($accessBucket.contentLabel)
 					#foreach($contentRef in $accessBucket.contentList)
-						-&nbsp;&nbsp;#generic_link('#content_portal_url(${obj.url} ${contentRef.containerQId} ${contentRef.instanceIdentity})' ${contentRef.title})<br /> 
+						-&nbsp;&nbsp;#generic_link("#content_portal_url(${obj.url} ${contentRef.containerQId} ${contentRef.instanceIdentity})" ${contentRef.title})<br /> 
 					#end
 				#end
 			#end

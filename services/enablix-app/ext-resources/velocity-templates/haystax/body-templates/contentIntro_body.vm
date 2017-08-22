@@ -27,7 +27,7 @@
 	
 	#spacer_row('20')
 	
-	To check out more content on $introContent.title #generic_link( "#content_portal_url($obj.url $introContent.containerQId $introContent.recordIdentity)?atChannel=EMAIL&atContext=CONTENTINTRO" 'click here')
+	To check out more content on $introContent.title #generic_link( "#content_portal_url($obj.url $introContent.containerQId $introContent.recordIdentity)?atChannel=EMAIL&atContext=CONTENTINTRO&atContextId=$introContent.recordIdentity" 'click here')
 	
 	#mail_closing($obj.tenant.name)
 
