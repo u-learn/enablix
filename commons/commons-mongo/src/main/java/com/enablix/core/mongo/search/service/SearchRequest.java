@@ -19,6 +19,7 @@ import org.springframework.data.domain.Sort.Direction;
 import com.enablix.core.mongo.search.BoolFilter;
 import com.enablix.core.mongo.search.ConditionOperator;
 import com.enablix.core.mongo.search.DateFilter;
+import com.enablix.core.mongo.search.NumericFilter;
 import com.enablix.core.mongo.search.SearchFilter;
 import com.enablix.core.mongo.search.StringFilter;
 import com.enablix.core.mongo.search.StringListFilter;
@@ -124,6 +125,19 @@ public class SearchRequest {
 					Boolean propValue = filterValue instanceof Boolean ? (Boolean) filterValue : 
 											Boolean.valueOf(String.valueOf(filterValue));
 					filter = new BoolFilter(field, propValue, operator);
+					break;
+					
+				case NUMBER:
+					
+					Number numValue = null;
+					
+					if (filterValue instanceof Number) {
+						numValue = (Number) filterValue;
+					} else {
+						numValue = Double.parseDouble(String.valueOf(filterValue));
+					}
+					
+					filter = new NumericFilter(field, numValue, operator);
 					break;
 					
 				case STRING:
