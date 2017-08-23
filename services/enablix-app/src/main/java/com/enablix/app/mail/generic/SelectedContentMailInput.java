@@ -1,6 +1,6 @@
 package com.enablix.app.mail.generic;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -11,7 +11,7 @@ public class SelectedContentMailInput extends BasicEmailVelocityInput {
 	private Map<String, List<DisplayableContent>> content;
 	
 	public SelectedContentMailInput() {
-		this.content = new HashMap<>();
+		this.content = new LinkedHashMap<>();
 	}
 
 	public Map<String, List<DisplayableContent>> getContent() {
