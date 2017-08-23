@@ -73,13 +73,13 @@ enablix.studioApp.config(['$mdThemingProvider', function($mdThemingProvider) {
 	    });	
 }]);
 
-var appSetup = function(StudioSetupService) {
+var appSetup = ["StudioSetupService", function(StudioSetupService) {
 	return StudioSetupService.setupStudio();
-};
+}];
 
-var contentWFInit = function(ContentApprovalService) {
+var contentWFInit = ["ContentApprovalService", function(ContentApprovalService) {
 	return ContentApprovalService.init();
-}
+}];
 
 enablix.studioApp.config(
 [		'$stateProvider', '$urlRouterProvider', '$httpProvider',
@@ -477,7 +477,10 @@ function($stateProvider,   $urlRouterProvider,   $httpProvider) {
 			templateUrl: 'views/system/audit/auditList.html',
 			controller: 'AuditController',
 			resolve: {
-				setupData: appSetup 
+				setupData: appSetup,
+				auditInit: ["AuditConfigService", function(AuditConfigService) {
+					return AuditConfigService.init();
+				}]
 			}
 		})
 		.state('system.docstore', {

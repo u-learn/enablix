@@ -365,6 +365,7 @@ enablix.studioApp.controller('AuditController',
         
         var defaultActivityTypeFilterValue = activityTypeFilter.filterValueTransformer(activityTypeFilter.defaultValues());
         $scope.dataFilters[activityTypeFilter.id] = defaultActivityTypeFilterValue;
+        removeNullProperties($scope.dataFilters);
         
         fetchAuditResult();
     }

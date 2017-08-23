@@ -18,11 +18,14 @@ enablix.studioApp.factory('AuditConfigService',
 				
 				if (activityTypes == null) {
 					
-					RESTService.getForData('getAuditActivityTypes', null, null, function(data) {
-						activityTypes = data;
-	                }, function() {
-	                    Notification.error({ message: "Error loading Activity data", delay: enablix.errorMsgShowTime });
-	                });
+					return RESTService.getForData('getAuditActivityTypes', null, null, function(data) {
+								activityTypes = data;
+			                }, function() {
+			                    Notification.error({ message: "Error loading Activity data", delay: enablix.errorMsgShowTime });
+			                });
+					
+				} else {
+					return activityTypes;
 				}
 			}
 			
