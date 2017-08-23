@@ -132,14 +132,14 @@ enablix.studioApp.factory('UserService',
 		var deleteUser= function(identity,_success)
 		{
 			RESTService.postForData('deletesystemuser', null, identity, null,function(data) {
-				 if(data){
+				 if(data) {
 					Notification.primary({message: "User deleted successfully", delay: enablix.errorMsgShowTime});
 					_success(data);
 				 } else {
 					Notification.error({message: "Something went wrong while deleting user", delay: enablix.errorMsgShowTime});
 					_success(data);
 				 };	
-				StateUpdateService.goToListUser();
+				//StateUpdateService.goToListUser();
 	    	}, function() {    		
 	    		Notification.error({message: "Error ", delay: enablix.errorMsgShowTime});
 	    		StateUpdateService.goToListUser();
@@ -201,9 +201,9 @@ enablix.studioApp.factory('UserService',
 			});
 		};
 		
-		var searchTenantUsers = function(_dataFilters, _onSuccess, _onError) {
+		var searchTenantUsers = function(_dataFilters, _pagination, _onSuccess, _onError) {
 
-			DataSearchService.getSearchResult(USER_PROFILE_DOMAIN, _dataFilters, null, 
+			DataSearchService.getSearchResult(USER_PROFILE_DOMAIN, _dataFilters, _pagination, 
 						filterMetadata, _onSuccess, _onError)
 		};
 		

@@ -435,7 +435,7 @@ function($stateProvider,   $urlRouterProvider,   $httpProvider) {
 		.state('system.users', {
 			url: '/users',
 			templateUrl: 'views/user/userdata.html',
-			controller: 'UserController',
+			controller: function() {},
 			resolve: {
 				setupData: appSetup 
 			}

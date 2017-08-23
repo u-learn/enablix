@@ -10,21 +10,120 @@ enablix.studioApp.controller('UserController',
 
 			$scope.dataFilters = {};
 			
-			function fetchData() {
-				UserService.searchTenantUsers($scope.dataFilters, function(data) {	
-					$scope.userData = data.content;				 
-				}, function() {    		
-					Notification.error({message: "Error fetching users", delay: enablix.errorMsgShowTime});
-				});
+			$scope.userData = [];
+			
+			$scope.pagination = {
+		    	 		"pageSize" : 10,
+		    	 		"pageNum" : 0,
+					 	"sort" : {
+					 		"field" : "name",
+					 		"direction" : "ASC"
+					 	}
+		    		};
+			
+			$scope.tableHeaders = [{
+	                desc: "Name",
+	                valueKey: "name",
+	                sortProperty: "name"
+	            },
+	            {
+	                desc: "Email",
+	                valueKey: "email",
+	                sortProperty: "email"
+	            },
+	            {
+	                desc: "Roles",
+	                valueFn: function(record) {
+	                	
+	                	var roles = record.systemProfile.roles;
+	                	
+	                	var roleStr = "";
+	                	for (var i = 0; i < roles.length; i++) {
+	                		if (i > 0 && i == (roles.length - 1)) {
+	                			roleStr += " and ";
+	                		} else if (i != 0) {
+	                			roleStr += ", ";
+	                		}
+	                		roleStr += roles[i].roleName;
+	                	}
+	                	
+	                    return roleStr;
+	                }
+	            }
+	        ];
+			
+			$scope.addUser = function() {
+				StateUpdateService.goAddUser();
+			}
+
+			$scope.userRecordView = function(record) {
+				StateUpdateService.goViewUser(record.identity);
+			}	 
+
+			$scope.userRecordEdit = function(record) {
+				StateUpdateService.goEditUser(record.identity);
+			}	 
+
+			$scope.deleteUserRecord = function(record) {
+
+				var confirmModal = ConfirmationModalWindow.showWindow("Confirm", 
+						"Do you want to continue?", 
+						"Proceed", "Cancel");
+
+				confirmModal.result.then(function(confirmed) {
+
+					if (confirmed) {
+						UserService.deleteUser(record.identity, function(data){
+							
+							$scope.pagination.pageNum = 0;
+							$scope.fetchData();
+							
+						});
+					}
+				});			 
+			}
+			
+			$scope.tableRecordActions = 
+				[{
+					actionName: "Detail",
+					tooltip: "Details",
+					iconClass: "fa fa-eye",
+					tableCellClass: "details",
+					actionCallbackFn: $scope.userRecordView
+				},
+				{
+					actionName: "Edit",
+					tooltip: "Edit",
+					iconClass: "fa fa-pencil",
+					tableCellClass: "edit",
+					actionCallbackFn: $scope.userRecordEdit
+				},
+				{
+					actionName: "Remove",
+					tooltip: "Delete",
+					iconClass: "fa fa-times",
+					tableCellClass: "remove",
+					actionCallbackFn: $scope.deleteUserRecord
+				}];
+			
+			$scope.fetchData = function() {
+				UserService.searchTenantUsers($scope.dataFilters, $scope.pagination, 
+					function(data) {	
+						$scope.userData = data.content;	
+						$scope.pageData = data;
+					}, function() {    		
+						Notification.error({message: "Error fetching users", delay: enablix.errorMsgShowTime});
+					});
 			};
 
 			$scope.onSearch = function(_filterValues) {
 				// remove search keys with null values as those get treated as null value on back end
 				removeNullProperties(_filterValues);
 				
+				$scope.pagination.pageNum = 0;
 				$scope.dataFilters = _filterValues;
 				
-				fetchData();
+				$scope.fetchData();
 			}
 			
 			var userRoleItemDef = {
@@ -79,33 +178,7 @@ enablix.studioApp.controller('UserController',
 					}
 				];
 			
-			$scope.addUser = function() {
-				StateUpdateService.goAddUser();
-			}
-
-			$scope.userRecordView = function(identity) {
-				StateUpdateService.goViewUser(identity);
-			}	 
-
-			$scope.userRecordEdit = function(identity) {
-				StateUpdateService.goEditUser(identity);
-			}	 
-
-			$scope.deleteUserRecord=function(identity) {
-
-				var confirmModal = ConfirmationModalWindow.showWindow("Confirm", 
-						"Do you want to continue?", 
-						"Proceed", "Cancel");
-
-				confirmModal.result.then(function(confirmed) {
-
-					if (confirmed) {
-						UserService.deleteUser(identity,function(data){
-							init();
-						});
-					}
-				});			 
-			}
+			
 
 		}
 	]);			

@@ -6,33 +6,6 @@
 	<div class="data-filter-cont">
 		<ebx-data-filters heading="Filter" filters="filters" search-label="Go" on-search="onSearch" search-on-page-load="true"/>
 	</div>
-	<div class="cont">
-		<!-- <label>Search:</label><input class="form-control" ng-model="searchText"><br> -->
-		<table class="datatable">
-			<thead>
-				<tr>
-					<th><span></span></th>				
-					<th class="edit"></th>
-					<th class="remove"></th>
-					<th><span>Name</span></th>
-					<th><span>Email</span></th>
-					<th><span>Roles</span></th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr ng-repeat="user in userData">
-					<td class="details"><a class="fa fa-eye" ng-click="userRecordView(user.identity)"></a></td>
-					<td class="edit"><a class="fa fa-pencil" ng-click="userRecordEdit(user.identity)"></a></td>
-					<td class="remove"><a class="fa fa-times" ng-click="deleteUserRecord(user.identity)"></a></td>
-					<td><span ng-bind="user.name"></span></td>
-					<td><span ng-bind="user.email"></span></td>
-					<td>
-						<span ng-repeat="role in user.systemProfile.roles">
-				            {{role.roleName}}{{$last ? '' : ($index==user.systemProfile.roles.length-2) ? ' and ' : ','}}
-			        	</span>
-			        </td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
+	<ebx-generic-table table-headers="tableHeaders" table-data="userData" row-actions="tableRecordActions" 
+						page-data="pageData" pagination-data="pagination" fetch-result-fn="fetchData"></ebx-generic-table>
 </div>
