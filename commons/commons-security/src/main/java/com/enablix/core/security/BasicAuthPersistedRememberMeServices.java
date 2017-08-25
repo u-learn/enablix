@@ -133,11 +133,12 @@ public class BasicAuthPersistedRememberMeServices extends PersistentTokenBasedRe
 				token.getUsername(), token.getSeries(), generateTokenData(), new Date());
 
 		try {
+			
 			tokenRepository.updateToken(newToken.getSeries(), newToken.getTokenValue(),
 					newToken.getDate());
 			addCookie(newToken, request, response);
-		}
-		catch (Exception e) {
+			
+		} catch (Exception e) {
 			logger.error("Failed to update token: ", e);
 			throw new RememberMeAuthenticationException(
 					"Autologin failed due to data access problem");
@@ -145,12 +146,20 @@ public class BasicAuthPersistedRememberMeServices extends PersistentTokenBasedRe
 
 		UserDetails userDetails = getUserDetailsService().loadUserByUsername(token.getUsername());
 
-		if (DateUtil.getDayOfYear(token.getDate()) != DateUtil.getDayOfYear(newToken.getDate())) {
+		if (shouldAuditLogin(token, newToken)) {
 			// audit user login via remember-me token only once a day
 			loginListener.auditUserLogin(userDetails);
 		}
 		
 		return userDetails;
+	}
+	
+	private boolean shouldAuditLogin(PersistentRememberMeToken token, PersistentRememberMeToken newToken) {
+		
+		int presentDayOfYear = DateUtil.getDayOfYear(newToken.getDate());
+		int lastLoginDayOfYear = tokenArchive.getAndSetLastRememberMeLoginDay(newToken.getUsername(), presentDayOfYear);
+
+		return lastLoginDayOfYear != presentDayOfYear;
 	}
 
 	private void addCookie(PersistentRememberMeToken token, HttpServletRequest request,
