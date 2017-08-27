@@ -1,0 +1,28 @@
+#@mail_template('Sales Engagement Update')
+
+	#spacer_row('15')
+											
+	#mail_opening(${obj.recipientUser.name})
+	
+	#spacer_row('15')
+	
+	Here are some insights from Sales Team's engagement on Enablix in last ${obj.inputData.get('metricPeriodText')}:
+	
+	#spacer_row('15')
+	
+	<ul>
+		<li><b>${obj.metricValues.get('ACTMETRIC1')}</b> sales members are registered on the system.</li>
+		<li><b>${obj.metricValues.get('ACTMETRIC3')}</b> sales members have logged in to the system at least once.</li>
+		<li>There were <b>${obj.metricValues.get('ACTMETRIC2')}</b> logins.</li>
+		<li>Content was accessed <b>${obj.metricValues.get('ACTMETRIC6')}</b> times.</li>
+		<li>Content was previewed <b>${obj.metricValues.get('ACTMETRIC7')}</b> times.</li>
+		<li>Content was downloaded <b>${obj.metricValues.get('ACTMETRIC8')}</b> times.</li>
+	</ul>
+	
+	#spacer_row('15')
+	
+	Check out the <a href="${obj.url}/app.html#/reports/d/activity-metric-calculator">audit trail</a> for system activity details.
+	
+	#mail_closing('Enablix')
+
+#end
