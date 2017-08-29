@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<contentTemplate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.17" id="haystax_enterprise" xsi:noNamespaceSchemaLocation="../xsd/content-template.xsd">
+<contentTemplate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.18" id="haystax_enterprise" xsi:noNamespaceSchemaLocation="../xsd/content-template.xsd">
 	<dataDefinition>
 		<container id="product" label="Products" businessCategory="BUSINESS_DIMENSION">
 			<contentItem id="name" label="Name" type="text" searchBoost="7"/>
 			<contentItem id="shortName" label="Short Name" type="text" searchBoost="7"/>
 			<contentItem id="visibility" label="Visibility" type="bounded">
-	      		<bounded multivalued="true">
+	      		<bounded>
 	      			<refList>
 	      				<datastore>
 	      					<storeId>contentVisibilityType</storeId>
@@ -40,6 +40,7 @@
 			<container id="prodSWOT" label="SWOT" linkContainerQId="swot" linkContentItemId="products"/>						
 			<container id="prodPress" label="Press" linkContainerQId="press" linkContentItemId="products"/>	
 			<container id="prodPOC" label="Proof of Concepts" linkContainerQId="poc" linkContentItemId="products"/>
+			<container id="prodPROV" label="Proof of Value" linkContainerQId="prov" linkContentItemId="products"/>			
 			<container id="prodProposal" label="Proposals" linkContainerQId="proposal" linkContentItemId="products"/>
 			<container id="prodResearch" label="Scientific Research" linkContainerQId="research" linkContentItemId="products"/>
 			<container id="prodRFXQA" label="RFX Q&amp;A" linkContainerQId="rfxqa" linkContentItemId="rfxproducts"/>						
@@ -75,7 +76,7 @@
 				</bounded>
 			</contentItem>
 			<contentItem id="visibility" label="Visibility" type="bounded">
-	      		<bounded multivalued="true">
+	      		<bounded>
 	      			<refList>
 	      				<datastore>
 	      					<storeId>contentVisibilityType</storeId>
@@ -110,6 +111,7 @@
 			<container id="solSWOT" label="SWOT" linkContainerQId="swot" linkContentItemId="solutions"/>									
 			<container id="solPress" label="Press" linkContainerQId="press" linkContentItemId="solutions"/>						
 			<container id="solPOC" label="Proof of Concepts" linkContainerQId="poc" linkContentItemId="solutions"/>
+			<container id="solPROV" label="Proof of Value" linkContainerQId="prov" linkContentItemId="solutions"/>						
 			<container id="solProposal" label="Proposals" linkContainerQId="proposal" linkContentItemId="solutions"/>			
 			<container id="solResearch" label="Scientific Research" linkContainerQId="research" linkContentItemId="solutions"/>
 			<container id="solRFXQA" label="RFX Q&amp;A" linkContainerQId="rfxqa" linkContentItemId="rfxsolutions"/>									
@@ -149,7 +151,7 @@
 				</bounded>
 			</contentItem>	
 			<contentItem id="visibility" label="Visibility" type="bounded">
-	      		<bounded multivalued="true">
+	      		<bounded>
 	      			<refList>
 	      				<datastore>
 	      					<storeId>contentVisibilityType</storeId>
@@ -180,6 +182,7 @@
 			<container id="appPress" label="Press" linkContainerQId="press" linkContentItemId="apps"/>				
 			<container id="appProposal" label="Proposals" linkContainerQId="proposal" linkContentItemId="apps"/>			
 			<container id="appPOC" label="Proof of Concepts" linkContainerQId="poc" linkContentItemId="apps"/>
+			<container id="appPROV" label="Proof of Value" linkContainerQId="prov" linkContentItemId="apps"/>						
 			<container id="appResearch" label="Scientific Research" linkContainerQId="research" linkContentItemId="apps"/>						
 			<container id="appRFXQA" label="RFX Q&amp;A" linkContainerQId="rfxqa" linkContentItemId="rfxapps"/>									
 			<container id="appTopic" label="Topics" linkContainerQId="topic" linkContentItemId="apps"/>				
@@ -192,7 +195,7 @@
 			<contentItem id="name" label="Competitor Name" type="text" searchBoost="7"/>
 			<contentItem id="shortName" label="Short Name" type="text" searchBoost="7"/>
 			<contentItem id="visibility" label="Visibility" type="bounded">
-	      		<bounded multivalued="true">
+	      		<bounded>
 	      			<refList>
 	      				<datastore>
 	      					<storeId>contentVisibilityType</storeId>
@@ -217,6 +220,7 @@
 			<container id="compArticle" label="News Article" linkContainerQId="article" linkContentItemId="competitors"/>
 			<container id="compPress" label="Press" linkContainerQId="press" linkContentItemId="competitors"/>											
 			<container id="compPOC" label="Proof of Concepts" linkContainerQId="poc" linkContentItemId="competitors"/>
+			<container id="compPROV" label="Proof of Value" linkContainerQId="prov" linkContentItemId="competitors"/>						
 			<container id="compProposal" label="Proposals" linkContainerQId="proposal" linkContentItemId="competitors"/>
 			<container id="compResearch" label="Scientific Research" linkContainerQId="research" linkContentItemId="competitors"/>
 			<container id="compRFXQA" label="RFX Q&amp;A" linkContainerQId="rfxqa" linkContentItemId="rfxcompetitors"/>			
@@ -232,7 +236,7 @@
 			<contentItem id="name" label="Account Name" type="text" searchBoost="7"/>
 			<contentItem id="shortName" label="Account Short Name" type="text" searchBoost="7"/>
 			<contentItem id="visibility" label="Visibility" type="bounded">
-	      		<bounded multivalued="true">
+	      		<bounded>
 	      			<refList>
 	      				<datastore>
 	      					<storeId>contentVisibilityType</storeId>
@@ -377,7 +381,7 @@
 				</bounded>
 			</contentItem>
 			<contentItem id="visibility" label="Visibility" type="bounded">
-	      		<bounded multivalued="true">
+	      		<bounded>
 	      			<refList>
 	      				<datastore>
 	      					<storeId>contentVisibilityType</storeId>
@@ -409,6 +413,7 @@
 			<container id="partnerSWOT" label="SWOT" linkContainerQId="swot" linkContentItemId="partners"/>									
 			<container id="partnerPress" label="Press" linkContainerQId="press" linkContentItemId="partners"/>									
 			<container id="partnerPOC" label="Proof of Concepts" linkContainerQId="poc" linkContentItemId="partners"/>
+			<container id="partnerPROV" label="Proof of Value" linkContainerQId="prov" linkContentItemId="partners"/>						
 			<container id="partnerProposal" label="Proposals" linkContainerQId="proposal" linkContentItemId="partners"/>
 			<container id="partnerResearch" label="Scientific Research" linkContainerQId="research" linkContentItemId="partners"/>
 			<container id="partnerRFXQA" label="RFX Q&amp;A" linkContainerQId="rfxqa" linkContentItemId="rfxpartners"/>			
@@ -433,7 +438,7 @@
 				</bounded>
 			</contentItem>
 			<contentItem id="visibility" label="Visibility" type="bounded">
-	      		<bounded multivalued="true">
+	      		<bounded>
 	      			<refList>
 	      				<datastore>
 	      					<storeId>contentVisibilityType</storeId>
@@ -528,7 +533,7 @@
 				</bounded>
 			</contentItem>			
 			<contentItem id="visibility" label="Visibility" type="bounded">
-	      		<bounded multivalued="true">
+	      		<bounded>
 	      			<refList>
 	      				<datastore>
 	      					<storeId>contentVisibilityType</storeId>
@@ -641,7 +646,7 @@
 				</bounded>
 			</contentItem>
 			<contentItem id="visibility" label="Visibility" type="bounded">
-	      		<bounded multivalued="true">
+	      		<bounded>
 	      			<refList>
 	      				<datastore>
 	      					<storeId>contentVisibilityType</storeId>
@@ -733,7 +738,7 @@
 				</bounded>
 			</contentItem>
 			<contentItem id="visibility" label="Visibility" type="bounded">
-	      		<bounded multivalued="true">
+	      		<bounded>
 	      			<refList>
 	      				<datastore>
 	      					<storeId>contentVisibilityType</storeId>
@@ -837,7 +842,7 @@
 				</bounded>
 			</contentItem>	
 			<contentItem id="visibility" label="Visibility" type="bounded">
-	      		<bounded multivalued="true">
+	      		<bounded>
 	      			<refList>
 	      				<datastore>
 	      					<storeId>contentVisibilityType</storeId>
@@ -886,7 +891,7 @@
 				</bounded>
 			</contentItem>	
 			<contentItem id="visibility" label="Visibility" type="bounded">
-	      		<bounded multivalued="true">
+	      		<bounded>
 	      			<refList>
 	      				<datastore>
 	      					<storeId>contentVisibilityType</storeId>
@@ -960,7 +965,7 @@
 				</bounded>
 			</contentItem>
 			<contentItem id="visibility" label="Visibility" type="bounded">
-	      		<bounded multivalued="true">
+	      		<bounded>
 	      			<refList>
 	      				<datastore>
 	      					<storeId>contentVisibilityType</storeId>
@@ -1054,7 +1059,7 @@
 				</bounded>
 			</contentItem>
 			<contentItem id="visibility" label="Visibility" type="bounded">
-	      		<bounded multivalued="true">
+	      		<bounded>
 	      			<refList>
 	      				<datastore>
 	      					<storeId>contentVisibilityType</storeId>
@@ -1147,7 +1152,7 @@
 				</bounded>
 			</contentItem>			
 			<contentItem id="visibility" label="Visibility" type="bounded">
-	      		<bounded multivalued="true">
+	      		<bounded>
 	      			<refList>
 	      				<datastore>
 	      					<storeId>contentVisibilityType</storeId>
@@ -1187,7 +1192,7 @@
 				</bounded>
 			</contentItem>	
 			<contentItem id="visibility" label="Visibility" type="bounded">
-	      		<bounded multivalued="true">
+	      		<bounded>
 	      			<refList>
 	      				<datastore>
 	      					<storeId>contentVisibilityType</storeId>
@@ -1293,7 +1298,7 @@
 				</bounded>
 			</contentItem>
 			<contentItem id="visibility" label="Visibility" type="bounded">
-	      		<bounded multivalued="true">
+	      		<bounded>
 	      			<refList>
 	      				<datastore>
 	      					<storeId>contentVisibilityType</storeId>
@@ -1397,7 +1402,7 @@
 				</bounded>
 			</contentItem>
 			<contentItem id="visibility" label="Visibility" type="bounded">
-	      		<bounded multivalued="true">
+	      		<bounded>
 	      			<refList>
 	      				<datastore>
 	      					<storeId>contentVisibilityType</storeId>
@@ -1469,7 +1474,7 @@
 				</bounded>
 			</contentItem>			
 			<contentItem id="visibility" label="Visibility" type="bounded">
-	      		<bounded multivalued="true">
+	      		<bounded>
 	      			<refList>
 	      				<datastore>
 	      					<storeId>contentVisibilityType</storeId>
@@ -1540,7 +1545,7 @@
 				</bounded>
 			</contentItem>						
 			<contentItem id="visibility" label="Visibility" type="bounded">
-	      		<bounded multivalued="true">
+	      		<bounded>
 	      			<refList>
 	      				<datastore>
 	      					<storeId>contentVisibilityType</storeId>
@@ -1633,7 +1638,7 @@
 				</bounded>
 			</contentItem>	
 			<contentItem id="visibility" label="Visibility" type="bounded">
-	      		<bounded multivalued="true">
+	      		<bounded>
 	      			<refList>
 	      				<datastore>
 	      					<storeId>contentVisibilityType</storeId>
@@ -1717,7 +1722,7 @@
 				</bounded>
 			</contentItem>	
 			<contentItem id="visibility" label="Visibility" type="bounded">
-	      		<bounded multivalued="true">
+	      		<bounded>
 	      			<refList>
 	      				<datastore>
 	      					<storeId>contentVisibilityType</storeId>
@@ -1755,7 +1760,7 @@
 				</bounded>
 			</contentItem>	
 			<contentItem id="visibility" label="Visibility" type="bounded">
-	      		<bounded multivalued="true">
+	      		<bounded>
 	      			<refList>
 	      				<datastore>
 	      					<storeId>contentVisibilityType</storeId>
@@ -1860,7 +1865,7 @@
 				</bounded>
 			</contentItem>
 			<contentItem id="visibility" label="Visibility" type="bounded">
-	      		<bounded multivalued="true">
+	      		<bounded>
 	      			<refList>
 	      				<datastore>
 	      					<storeId>contentVisibilityType</storeId>
@@ -1880,7 +1885,7 @@
 			<contentItem id="blogsite" label="Blog" type="text"/>
 			<contentItem id="newsroomsite" label="Newsroom" type="text"/>	
 			<contentItem id="visibility" label="Visibility" type="bounded">
-	      		<bounded multivalued="true">
+	      		<bounded>
 	      			<refList>
 	      				<datastore>
 	      					<storeId>contentVisibilityType</storeId>
@@ -1891,7 +1896,7 @@
 	      		</bounded>
       		</contentItem>											
 		</container>			
-		<container id="pov" label="Point of Views" businessCategory="BUSINESS_CONTENT">
+		<container id="pov" label="Points of View" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="file" label="File" type="doc"/>
 			<contentItem id="summary" label="Description" type="richText"/>
@@ -1962,7 +1967,7 @@
 				</bounded>
 			</contentItem>
 			<contentItem id="visibility" label="Visibility" type="bounded">
-	      		<bounded multivalued="true">
+	      		<bounded>
 	      			<refList>
 	      				<datastore>
 	      					<storeId>contentVisibilityType</storeId>
@@ -2066,7 +2071,7 @@
 				</bounded>
 			</contentItem>			
 			<contentItem id="visibility" label="Visibility" type="bounded">
-	      		<bounded multivalued="true">
+	      		<bounded>
 	      			<refList>
 	      				<datastore>
 	      					<storeId>contentVisibilityType</storeId>
@@ -2172,7 +2177,7 @@
 				</bounded>
 			</contentItem>	
 			<contentItem id="visibility" label="Visibility" type="bounded">
-	      		<bounded multivalued="true">
+	      		<bounded>
 	      			<refList>
 	      				<datastore>
 	      					<storeId>contentVisibilityType</storeId>
@@ -2275,7 +2280,7 @@
 				</bounded>
 			</contentItem>
 			<contentItem id="visibility" label="Visibility" type="bounded">
-	      		<bounded multivalued="true">
+	      		<bounded>
 	      			<refList>
 	      				<datastore>
 	      					<storeId>contentVisibilityType</storeId>
@@ -2292,6 +2297,88 @@
 				<contentItem id="detail" label="Description" type="richText" searchBoost="2"/>
 			</container>			
 		</container>
+		<container id="prov" label="Proof of Value" businessCategory="BUSINESS_CONTENT">
+			<contentItem id="title" label="Title" type="text"/>
+			<contentItem id="file" label="File" type="doc"/>
+			<contentItem id="desc" label="Description" type="richText"/>
+			<contentItem id="solutions" label="Solutions" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>solution</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="products" label="Products" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>product</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="partners" label="Partners" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>partner</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="apps" label="Apps" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>app</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>			
+			<contentItem id="competitors" label="Competitors" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>competitor</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="topics" label="Topics" type="bounded">
+				<bounded>
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>topic</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="visibility" label="Visibility" type="bounded">
+	      		<bounded>
+	      			<refList>
+	      				<datastore>
+	      					<storeId>contentVisibilityType</storeId>
+	      					<dataId>identity</dataId>
+	      					<dataLabel>visibilityType</dataLabel>
+	      				</datastore>
+	      			</refList>
+	      		</bounded>
+      		</contentItem>			
+		</container>		
 		<container id="proposal" label="Proposals" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="file" label="File" type="doc"/>
@@ -2396,7 +2483,7 @@
 				</bounded>
 			</contentItem>
 			<contentItem id="visibility" label="Visibility" type="bounded">
-	      		<bounded multivalued="true">
+	      		<bounded>
 	      			<refList>
 	      				<datastore>
 	      					<storeId>contentVisibilityType</storeId>
@@ -2548,7 +2635,7 @@
 				</bounded>
 			</contentItem>
 			<contentItem id="visibility" label="Visibility" type="bounded">
-	      		<bounded multivalued="true">
+	      		<bounded>
 	      			<refList>
 	      				<datastore>
 	      					<storeId>contentVisibilityType</storeId>
@@ -2661,7 +2748,7 @@
 				</bounded>
 			</contentItem>
 			<contentItem id="visibility" label="Visibility" type="bounded">
-	      		<bounded multivalued="true">
+	      		<bounded>
 	      			<refList>
 	      				<datastore>
 	      					<storeId>contentVisibilityType</storeId>
@@ -2684,7 +2771,8 @@
 						</datastore>
 					</refList>
 				</bounded>
-			</contentItem>			
+			</contentItem>
+			<contentItem id="file" label="File" type="doc"/>
 			<contentItem id="answer" label="Answer" type="richText" searchBoost="3"/>
 			<contentItem id="rfxproducts" label="Products" type="bounded" searchBoost="4">
 				<bounded multivalued="true">
@@ -2764,7 +2852,7 @@
 				</bounded>
 			</contentItem>			
 			<contentItem id="visibility" label="Visibility" type="bounded">
-	      		<bounded multivalued="true">
+	      		<bounded>
 	      			<refList>
 	      				<datastore>
 	      					<storeId>contentVisibilityType</storeId>
@@ -2834,7 +2922,7 @@
 				</bounded>
 			</contentItem>
 			<contentItem id="visibility" label="Visibility" type="bounded">
-	      		<bounded multivalued="true">
+	      		<bounded>
 	      			<refList>
 	      				<datastore>
 	      					<storeId>contentVisibilityType</storeId>
@@ -2933,7 +3021,7 @@
 				</bounded>
 			</contentItem>	
 			<contentItem id="visibility" label="Visibility" type="bounded">
-	      		<bounded multivalued="true">
+	      		<bounded>
 	      			<refList>
 	      				<datastore>
 	      					<storeId>contentVisibilityType</storeId>
@@ -2949,7 +3037,7 @@
 			<contentItem id="file" label="File" type="doc"/>
 			<contentItem id="summary" label="Description" type="richText"/>
 			<contentItem id="visibility" label="Visibility" type="bounded">
-	      		<bounded multivalued="true">
+	      		<bounded>
 	      			<refList>
 	      				<datastore>
 	      					<storeId>contentVisibilityType</storeId>
@@ -3032,7 +3120,7 @@
 				</bounded>
 			</contentItem>
 			<contentItem id="visibility" label="Visibility" type="bounded">
-	      		<bounded multivalued="true">
+	      		<bounded>
 	      			<refList>
 	      				<datastore>
 	      					<storeId>contentVisibilityType</storeId>
@@ -3057,10 +3145,11 @@
 			<container id="topicLunchLearn" label="Lunch and Learn" linkContainerQId="lunchandlearn" linkContentItemId="topics"/>									
 			<container id="topicEvent" label="Events" linkContainerQId="event" linkContentItemId="topics"/>			
 			<container id="topicArticle" label="News Articles" linkContainerQId="article" linkContentItemId="topics"/>				
-			<container id="topicPOV" label="Point of Views" linkContainerQId="pov" linkContentItemId="topics"/>		
+			<container id="topicPOV" label="Points of View" linkContainerQId="pov" linkContentItemId="topics"/>		
 			<container id="topicSalesDeck" label="Presentations" linkContainerQId="salesDeck" linkContentItemId="topics"/>			
 			<container id="topicPress" label="Press" linkContainerQId="press" linkContentItemId="topics"/>													
 			<container id="topicPOC" label="Proof of Concepts" linkContainerQId="poc" linkContentItemId="topics"/>
+			<container id="topicPROV" label="Proof of Value" linkContainerQId="prov" linkContentItemId="topics"/>						
 			<container id="topicProposal" label="Proposals" linkContainerQId="proposal" linkContentItemId="topics"/>
 			<container id="topicResearch" label="Scientific Research" linkContainerQId="research" linkContentItemId="topics"/>
 			<container id="topicRFXQA" label="RFX Q&amp;A" linkContainerQId="rfxqa" linkContentItemId="rfxtopics"/>						
@@ -3174,7 +3263,7 @@
 				</bounded>
 			</contentItem>
 			<contentItem id="visibility" label="Visibility" type="bounded">
-	      		<bounded multivalued="true">
+	      		<bounded>
 	      			<refList>
 	      				<datastore>
 	      					<storeId>contentVisibilityType</storeId>
@@ -3288,7 +3377,7 @@
 				</bounded>
 			</contentItem>
 			<contentItem id="visibility" label="Visibility" type="bounded">
-	      		<bounded multivalued="true">
+	      		<bounded>
 	      			<refList>
 	      				<datastore>
 	      					<storeId>contentVisibilityType</storeId>
@@ -3379,7 +3468,7 @@
 				</bounded>
 			</contentItem>
 			<contentItem id="visibility" label="Visibility" type="bounded">
-	      		<bounded multivalued="true">
+	      		<bounded>
 	      			<refList>
 	      				<datastore>
 	      					<storeId>contentVisibilityType</storeId>
@@ -3473,7 +3562,7 @@
 				</bounded>
 			</contentItem>		
 			<contentItem id="visibility" label="Visibility" type="bounded">
-	      		<bounded multivalued="true">
+	      		<bounded>
 	      			<refList>
 	      				<datastore>
 	      					<storeId>contentVisibilityType</storeId>
@@ -3489,7 +3578,7 @@
 			<contentItem id="summary" label="Description" type="richText"/>
 			<contentItem id="file" label="File" type="doc"/>
 			<contentItem id="visibility" label="Visibility" type="bounded">
-	      		<bounded multivalued="true">
+	      		<bounded>
 	      			<refList>
 	      				<datastore>
 	      					<storeId>contentVisibilityType</storeId>
@@ -3516,7 +3605,7 @@
 				</bounded>
 			</contentItem>	
 			<contentItem id="visibility" label="Visibility" type="bounded">
-	      		<bounded multivalued="true">
+	      		<bounded>
 	      			<refList>
 	      				<datastore>
 	      					<storeId>contentVisibilityType</storeId>
@@ -3532,7 +3621,7 @@
 			<contentItem id="desc" label="Description" type="richText"/>
 			<contentItem id="file" label="File" type="doc"/>
 			<contentItem id="visibility" label="Visibility" type="bounded">
-	      		<bounded multivalued="true">
+	      		<bounded>
 	      			<refList>
 	      				<datastore>
 	      					<storeId>contentVisibilityType</storeId>
@@ -3547,7 +3636,7 @@
 			<contentItem id="name" label="Employee Name" type="text" searchBoost="7"/>
 			<contentItem id="file" label="File" type="doc"/>
 			<contentItem id="visibility" label="Visibility" type="bounded">
-	      		<bounded multivalued="true">
+	      		<bounded>
 	      			<refList>
 	      				<datastore>
 	      					<storeId>contentVisibilityType</storeId>
@@ -3563,7 +3652,7 @@
 			<contentItem id="summary" label="Description" type="richText"/>
 			<contentItem id="file" label="File" type="doc"/>
 			<contentItem id="visibility" label="Visibility" type="bounded">
-	      		<bounded multivalued="true">
+	      		<bounded>
 	      			<refList>
 	      				<datastore>
 	      					<storeId>contentVisibilityType</storeId>
@@ -3579,7 +3668,7 @@
 			<contentItem id="summary" label="Description" type="richText"/>
 			<contentItem id="file" label="File" type="doc"/>
 			<contentItem id="visibility" label="Visibility" type="bounded">
-	      		<bounded multivalued="true">
+	      		<bounded>
 	      			<refList>
 	      				<datastore>
 	      					<storeId>contentVisibilityType</storeId>
@@ -3596,7 +3685,7 @@
 			<contentItem id="url" label="URL" type="text"/>
 			<contentItem id="file" label="File" type="doc"/>
 			<contentItem id="visibility" label="Visibility" type="bounded">
-	      		<bounded multivalued="true">
+	      		<bounded>
 	      			<refList>
 	      				<datastore>
 	      					<storeId>contentVisibilityType</storeId>
@@ -3613,7 +3702,7 @@
 			<contentItem id="url" label="URL" type="text"/>
 			<contentItem id="file" label="File" type="doc"/>
 			<contentItem id="visibility" label="Visibility" type="bounded">
-	      		<bounded multivalued="true">
+	      		<bounded>
 	      			<refList>
 	      				<datastore>
 	      					<storeId>contentVisibilityType</storeId>
@@ -3730,7 +3819,7 @@
 				</bounded>
 			</contentItem>
 			<contentItem id="visibility" label="Visibility" type="bounded">
-	      		<bounded multivalued="true">
+	      		<bounded>
 	      			<refList>
 	      				<datastore>
 	      					<storeId>contentVisibilityType</storeId>
@@ -3886,6 +3975,7 @@
 					<childContainer id="salesDeck"/>
 					<childContainer id="press"/>															
 					<childContainer id="poc"/>
+					<childContainer id="prov"/>					
 					<childContainer id="proposal"/>
 					<childContainer id="research"/>
 					<childContainer id="rfxqa"/>										
@@ -4386,7 +4476,6 @@
 					<hideContentItem id="partners"/>
 					<hideContentItem id="competitors"/>
 					<hideContentItem id="topics"/>					
-					<hideContentItem id="solutions"/>					
 					<hideContentItem id="visibility"/>					
 				</listViewConfig>
 				<portalConfig>
@@ -4410,6 +4499,26 @@
 			</container>
 		</contentUIDef>
 		<contentUIDef qualifiedId="poc.poccontent.detail">
+			<text type="long"/>
+		</contentUIDef>
+		<contentUIDef qualifiedId="prov">
+			<container labelQualifiedId="prov.title">
+				<listViewConfig>
+					<hideContentItem id="desc"/>
+					<hideContentItem id="products"/>
+					<hideContentItem id="solutions"/>
+					<hideContentItem id="apps"/>
+					<hideContentItem id="partners"/>
+					<hideContentItem id="competitors"/>
+					<hideContentItem id="topics"/>					
+					<hideContentItem id="visibility"/>					
+				</listViewConfig>
+				<portalConfig>
+					<headingContentItem id="title"/>
+				</portalConfig>
+			</container>
+		</contentUIDef>
+		<contentUIDef qualifiedId="prov.desc">
 			<text type="long"/>
 		</contentUIDef>
 		<contentUIDef qualifiedId="positioning">
@@ -5079,6 +5188,7 @@
 					<childContainer id="salesDeck"/>
 					<childContainer id="press"/>										
 					<childContainer id="poc"/>
+					<childContainer id="prov"/>					
 					<childContainer id="proposal"/>
 					<childContainer id="research"/>
 					<childContainer id="rfxqa"/>					
