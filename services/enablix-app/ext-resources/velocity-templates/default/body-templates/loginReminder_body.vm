@@ -1,0 +1,32 @@
+#@mail_template('Welcome')
+
+	#spacer_row('15')
+											
+	#mail_opening(${obj.recipientUser.name})
+	
+	#spacer_row('15')
+	
+	We may have missed you last time. Admin has invited you to join #tenant_portal_link().
+	<br />	
+	<br />
+	Your User ID is your email address ${obj.recipientUser.email} <br />
+	Your temporary password is: <b>${obj.password}</b> 
+	
+	#spacer_double_row('20','10')
+
+	#@action_button_table()
+		#@action_button_cell('200')
+			#action_button('Login' "${obj.url}/login.html#login")
+		#end
+	#end
+	
+	#spacer_double_row('20','10')
+	
+	#tenant_portal_link() is for you and your colleagues to manage, share and distribute sales, pre-sales, product and marketing collateral. ${obj.tenant.name} is powered by Enablix, a sales & marketing collaboration platform. 
+	<br />
+	<br />											
+	Have any questions or feedback? You can reply to this email.
+	
+	#mail_closing('Enablix')
+
+#end

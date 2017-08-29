@@ -15,4 +15,6 @@ public interface UserRepository extends BaseMongoRepository<User> {
 	
 	Long deleteByUserId(String userId);
 
+	User findByUserIdAndTenantId(String userId, String tenantId);
+
 }

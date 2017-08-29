@@ -12,6 +12,8 @@ public class GenericMailConstants {
 	
 	public static final String MAIL_TYPE_USER_CONTENT_ACCESS = "usercontentaccess";
 	
+	public static final String MAIL_TYPE_LOGIN_REMINDER = "loginreminder";
+	
 	public static final String MAIL_TYPE_GENERAL = "general";
 	
 }
