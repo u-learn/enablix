@@ -1,0 +1,45 @@
+#@mail_template('eOriginal White Papers')
+
+	#spacer_row('15')
+											
+	#mail_opening(${obj.recipientUser.name})
+	
+	#spacer_row('15')
+	
+	We have several white papers for you on eOriginal Content Center.
+	
+	#spacer_row('20')
+	
+	#@three_col_layout('' '0')
+		#foreach($key in ${obj.content.keySet()}) 
+			#set ($contentList = $obj.content.get($key))
+			#foreach($content in $contentList)
+				#set ($contentQId = $content.containerQId)
+				#@three_col_layout_column()
+					#content_preview_card($content 'EMAIL' '' 'RECOMMENDATION')
+				#end
+			#end
+		#end
+	#end
+	
+	#spacer_row('15')
+	
+	#@action_button_table()
+		#@action_button_cell('200')
+			#action_button_with_padding('All White Papers' "$obj.url/app.html#/portal/containerlist/$contentQId?layout=tile&atChannel=EMAIL&atContext=RECOMMENDATION" '10')
+		#end
+	#end
+	
+	#spacer_row('20')
+	
+	You can use these to
+	
+	<ul>
+		<li>educate your prospects</li>
+		<li>prompt and provoke innovative thinking</li>
+		<li>communicate a point of view on highly relevant issues</li>
+	</ul>
+	
+	#mail_closing('Enablix')
+
+#end
