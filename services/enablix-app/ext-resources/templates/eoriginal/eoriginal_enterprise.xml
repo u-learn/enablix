@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<contentTemplate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="eoriginal_enterprise" version="1.12" xsi:noNamespaceSchemaLocation="../xsd/content-template.xsd">
+<contentTemplate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="eoriginal_enterprise" version="1.13" xsi:noNamespaceSchemaLocation="../xsd/content-template.xsd">
 	<dataDefinition>
 		<container id="solution" label="Solutions" businessCategory="BUSINESS_DIMENSION">
 			<contentItem id="name" label="Name" type="text" searchBoost="7"/>
@@ -597,6 +597,11 @@
 				</bounded>
 			</contentItem>						
 		</container>
+		<container id="ppttemplate" label="Corporate PPT Templates" businessCategory="BUSINESS_CONTENT">
+			<contentItem id="title" label="Title" type="text"/>
+			<contentItem id="desc" label="Description" type="richText"/>
+			<contentItem id="file" label="File" type="doc"/>				
+		</container>		
 		<container id="datasheet" label="Data Sheets" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="file" label="File" type="doc"/>
@@ -1972,6 +1977,7 @@
 					<childContainer id="battlecard"/>
 					<childContainer id="blog"/>
 					<childContainer id="casestudy"/>
+					<childContainer id="ppttemplate"/>					
 					<childContainer id="datasheet"/>					
 					<childContainer id="discoveryquestion"/>
 					<childContainer id="featuresheet"/>	
@@ -2200,6 +2206,20 @@
 		<contentUIDef qualifiedId="casestudy.highlights">
 			<text type="long"/>
 		</contentUIDef>
+		<contentUIDef qualifiedId="ppttemplate">
+			<container labelQualifiedId="ppttemplate.title">
+				<listViewConfig>
+					<hideContentItem id="file"/>
+					<hideContentItem id="desc"/>
+				</listViewConfig>
+				<portalConfig>
+					<headingContentItem id="title"/>
+				</portalConfig>
+			</container>
+		</contentUIDef>
+		<contentUIDef qualifiedId="ppttemplate.desc">
+			<text type="long"/>
+		</contentUIDef>			
 		<contentUIDef qualifiedId="datasheet">
 			<container labelQualifiedId="datasheet.title">
 				<listViewConfig>
@@ -2498,7 +2518,6 @@
 			<itemContainers>
 				<itemContainer qualifiedId="solution"/>
 				<itemContainer qualifiedId="industry"/>				
-				<itemContainer qualifiedId="competitor"/>
 				<itemContainer qualifiedId="partner"/>
 			</itemContainers>
 			<enclosures>
@@ -2507,6 +2526,7 @@
 					<childContainer id="battlecard"/>
 					<childContainer id="blog"/>
 					<childContainer id="casestudy"/>
+					<childContainer id="ppttemplate"/>					
 					<childContainer id="datasheet"/>					
 					<childContainer id="discoveryquestion"/>
 					<childContainer id="event"/>										
