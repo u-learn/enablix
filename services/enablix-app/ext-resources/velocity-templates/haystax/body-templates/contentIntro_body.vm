@@ -7,7 +7,7 @@
 	
 	#spacer_row('15')
 	
-	Check out this introductory collateral on $introContent.title:
+	Check out this #if(${obj.inputData.get('introMaterial')}) ${obj.inputData.get('introMaterial')}#else introductory collateral#end on $introContent.title:
 	
 	#spacer_row('20')
 	
@@ -29,6 +29,6 @@
 	
 	To check out more content on $introContent.title #generic_link( "#content_portal_url($obj.url $introContent.containerQId $introContent.recordIdentity)?atChannel=EMAIL&atContext=CONTENTINTRO&atContextId=$introContent.recordIdentity" 'click here')
 	
-	#mail_closing($obj.tenant.name)
+	#mail_closing('Enablix')
 
 #end
