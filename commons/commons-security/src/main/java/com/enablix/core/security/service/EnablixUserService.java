@@ -189,10 +189,10 @@ public class EnablixUserService implements UserService, UserDetailsService {
 		modUser.setUserId(user.getUserId());
 		userRepo.save(modUser);
 
-		UserProfile modUserProfile = userProfileRepo.findByUserIdentity(user.getIdentity());
+		UserProfile modUserProfile = userProfileRepo.findByUserIdentity(modUser.getIdentity());
 		if (modUserProfile == null) {
 			modUserProfile = userProfile;
-			modUserProfile.setUserIdentity(user.getIdentity());
+			modUserProfile.setUserIdentity(modUser.getIdentity());
 		}
 		modUserProfile.setId(userProfile.getId());
 		modUserProfile.setName(userProfile.getName());
