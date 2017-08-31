@@ -1,10 +1,11 @@
 enablix.studioApp.controller('ContentSuggestEditCtrl', 
-			['$scope', '$stateParams', 'ContentApprovalService', 'ContentTemplateService', 'Notification', 'StateUpdateService',
-	function( $scope,   $stateParams,   ContentApprovalService,   ContentTemplateService,   Notification,   StateUpdateService) {
+			['$scope', '$stateParams', 'ContentApprovalService', 'ContentTemplateService', 'Notification', 'StateUpdateService', 'isDraftPage',
+	function( $scope,   $stateParams,   ContentApprovalService,   ContentTemplateService,   Notification,   StateUpdateService,   isDraftPage) {
 		
 		$scope.temporaryFileUpload = true;
 		
 		$scope.approvalRecord = {};
+		$scope.draftEdit = isDraftPage;
 		
 		ContentApprovalService.getContent($stateParams.refObjectIdentity, function(record) {
 			
@@ -24,22 +25,41 @@ enablix.studioApp.controller('ContentSuggestEditCtrl',
 			
 		});
 		
-		$scope.saveContentData = function() {
+		$scope.saveContentData = function(saveAsDraft) {
 			
+			// if draft page and save as draft, then edit action
+			// if draft page and publish, then if content approval required then submit action else publish action
+			// if not draft page
 			var dataToSave = $scope.containerData; 
 			
-			ContentApprovalService.editContent($stateParams.refObjectIdentity, $scope.approvalRecord.objectRef.contentQId, 
-					$scope.approvalRecord.objectRef.parentIdentity, $scope.notes, dataToSave, 
-					function(data) {
-						Notification.primary("Saved successfully!");
-						StateUpdateService.goToPreviousState();
-					}, 
-					function (data) {
-						Notification.error({message: "Error saving data", delay: enablix.errorMsgShowTime});
-					});
+			if ($scope.draftEdit && !saveAsDraft) {
+				
+				ContentApprovalService.publishContent($stateParams.refObjectIdentity, $scope.approvalRecord.objectRef.contentQId, 
+						$scope.approvalRecord.objectRef.parentIdentity, $scope.notes, dataToSave, 
+						function(data) {
+							Notification.primary("Saved successfully!");
+							StateUpdateService.goToPreviousState();
+						}, 
+						function (data) {
+							Notification.error({message: "Error saving data", delay: enablix.errorMsgShowTime});
+						});
+				
+			} else {
+				
+				ContentApprovalService.editContent($stateParams.refObjectIdentity, $scope.approvalRecord.objectRef.contentQId, 
+						$scope.approvalRecord.objectRef.parentIdentity, $scope.notes, dataToSave, 
+						function(data) {
+							Notification.primary("Saved successfully!");
+							StateUpdateService.goToPreviousState();
+						}, 
+						function (data) {
+							Notification.error({message: "Error saving data", delay: enablix.errorMsgShowTime});
+						});
+			}
 		};
 		
 		$scope.headingCancelLabel = "Back";
+		$scope.saveBtnLabel = isDraftPage ? "Publish" : "Save";
 		$scope.cancelOperation = function() {
 			StateUpdateService.goBack();
 		};

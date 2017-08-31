@@ -1,6 +1,6 @@
 enablix.studioApp.controller('ContentRequestListCtrl', 
-			['$scope', '$state', '$stateParams', 'ContentApprovalService', 'ActionNotesWindow', 'DataSearchService', 'ContentTemplateService', 'Notification', '$filter', 'StateUpdateService', 'AuthorizationService',
-	function( $scope,   $state,   $stateParams,   ContentApprovalService,   ActionNotesWindow,   DataSearchService,   ContentTemplateService,   Notification,   $filter,   StateUpdateService,   AuthorizationService) {
+			['$scope', '$state', '$stateParams', 'ContentApprovalService', 'ActionNotesWindow', 'DataSearchService', 'ContentTemplateService', 'Notification', '$filter', 'StateUpdateService', 'AuthorizationService', 'isDraftPage',
+	function( $scope,   $state,   $stateParams,   ContentApprovalService,   ActionNotesWindow,   DataSearchService,   ContentTemplateService,   Notification,   $filter,   StateUpdateService,   AuthorizationService,   isDraftPage) {
 		
 		$scope.pagination = {
 			pageSize: enablix.defaultPageSize,
@@ -46,16 +46,30 @@ enablix.studioApp.controller('ContentRequestListCtrl',
 		     }];
 		
 		$scope.contentRequestDetails = function(record) {
+			
 			if ($state.includes("myaccount")) {
-				StateUpdateService.goToMyContentRequestDetail(record.objectRef.identity)
+				
+				if (isDraftPage) {
+					StateUpdateService.goToMyDraftContentDetail(record.objectRef.identity);
+				} else {
+					StateUpdateService.goToMyContentRequestDetail(record.objectRef.identity);
+				}
+				
 			} else {
 				StateUpdateService.goToContentRequestDetail(record.objectRef.identity)
 			}
 		}
 		
 		$scope.contentRequestEdit = function(record) {
+			
 			if ($state.includes("myaccount")) {
-				StateUpdateService.goToMyContentRequestEdit(record.objectRef.identity);
+				
+				if (isDraftPage) {
+					StateUpdateService.goToMyDraftContentEdit(record.objectRef.identity);
+				} else {
+					StateUpdateService.goToMyContentRequestEdit(record.objectRef.identity);
+				}
+				
 			} else {
 				StateUpdateService.goToContentRequestEdit(record.objectRef.identity);
 			}
@@ -131,6 +145,12 @@ enablix.studioApp.controller('ContentRequestListCtrl',
 		
 		if ($state.includes("myaccount")) {
 			$scope.dataFilters.createdBy = AuthorizationService.getCurrentUser().userId;
+		}
+		
+		if (isDraftPage) {
+			$scope.dataFilters.requestState = ContentApprovalService.stateDraft();
+		} else {
+			$scope.dataFilters.requestStateNot = ContentApprovalService.stateDraft();
 		}
 		
 		var fetchSearchResult = function() {

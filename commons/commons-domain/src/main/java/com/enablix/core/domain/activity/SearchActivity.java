@@ -6,6 +6,11 @@ public class SearchActivity extends BaseSearchActivity {
 	
 	private long resultCount;
 	
+	@SuppressWarnings("unused")
+	private SearchActivity() {
+		// for ORM
+	}
+	
 	public SearchActivity(String searchTerm, long pageNum, long resultCount) {
 		super(ActivityType.SEARCH_FREE_TEXT, searchTerm);
 		this.pageNum = pageNum;

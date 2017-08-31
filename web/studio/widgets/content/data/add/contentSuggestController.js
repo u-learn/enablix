@@ -2,12 +2,13 @@ enablix.studioApp.controller('ContentSuggestCtrl',
 			['$scope', 'containerQId', 'contentIdentity', 'parentIdentity', 'PubSub', 'ContentApprovalService', 'ContentOperInitService', 'ContentDataService', 'Notification', 'QIdUtil', '$modalInstance',
 	function( $scope,   containerQId,   contentIdentity,   parentIdentity,   PubSub,   ContentApprovalService,   ContentOperInitService,   ContentDataService,   Notification,   QIdUtil,   $modalInstance) {
 		
-		var editOperation = !isNullOrUndefined(contentIdentity);
-		if (editOperation) {
+		$scope.editOperation = !isNullOrUndefined(contentIdentity);
+		if ($scope.editOperation) {
 			// edit suggestion
 			ContentOperInitService.initEditContentOper($scope, containerQId, contentIdentity);
 		} else {
 			// add suggestion
+			$scope.addOperation = true;
 			ContentOperInitService.initAddContentOper($scope, containerQId, parentIdentity);
 		}
 		
@@ -15,11 +16,11 @@ enablix.studioApp.controller('ContentSuggestCtrl',
 		$scope.temporaryFileUpload = $scope.approvalWFRequired;
 		$scope.headingCancelLabel = "x";
 		
-		$scope.saveContentData = function() {
+		$scope.saveContentData = function(_saveAsDraft) {
 			
 			var dataToSave = $scope.containerData; 
 			
-			if ($scope.approvalWFRequired) {
+			if ($scope.approvalWFRequired || (!$scope.editOperation && _saveAsDraft)) {
 				
 				ContentApprovalService.submitContent(
 					containerQId, parentIdentity, $scope.notes, dataToSave, 
@@ -29,11 +30,11 @@ enablix.studioApp.controller('ContentSuggestCtrl',
 					}, 
 					function (data) {
 						Notification.error({message: "Error saving data", delay: enablix.errorMsgShowTime});
-					});
+					}, _saveAsDraft);
 				
 			} else {
 				
-				if (editOperation) {
+				if ($scope.editOperation) {
 					
 					ContentDataService.saveContainerData(
 						enablix.templateId, containerQId, 

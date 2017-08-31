@@ -4,7 +4,8 @@
 </div>
 <ng-include src="'views/content/content-add-fields.html'"></ng-include>
 <div class="foot clearfix">
-	<button ng-click="saveContentData()" class="button button-add">Save</button>
+	<button ng-click="saveContentData()" class="button button-add">{{::addOperation ? 'Publish' : 'Save'}}</button>
+	<button ng-if="addOperation || draftEdit" ng-click="saveContentDraft()" class="button button-edit">Save As Draft</button>
 	<a ng-click="cancelOperation()" class="button button-delete">Cancel</a>
 </div>
 </form>

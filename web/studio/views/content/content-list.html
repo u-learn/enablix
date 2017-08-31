@@ -1,7 +1,16 @@
+<div class="block" ng-if="draftDataList && draftDataList.length > 0">
+	<div class="head">
+		<h2>Draft {{::pageHeading}}</h2>
+	</div>
+	<eb-table table-headers="listHeaders" table-data="draftDataList" row-click-fn="contentDraftDetails"
+				record-edit-fn="contentDraftEdit" record-delete-fn="deleteDraftContent"
+				page-data="draftPageData" fetch-result-fn="fetchDraftResult" pagination-data="draftPagination"></eb-table>
+</div>
+
 <div class="block">
 	<div class="head">
 		<a ng-click="navToAddContent()" class="button button-add">Add new</a>
-		<h2>{{pageHeading}}</h2>
+		<h2>{{::pageHeading}}</h2>
 	</div>
 	<eb-table table-headers="listHeaders" table-data="listData" row-click-fn="navToContentDetail"
 				record-edit-fn="navToEdit" record-delete-fn="deleteRecord" other-actions="tableRecordActions"

@@ -81,6 +81,10 @@ enablix.studioApp.controller('contentIndexCtrl',
 			moveToNodeView($scope.contentIndex.currentNode);
 		}
 		
+		$scope.postContentDraftSave = function() {
+			moveToNodeView($scope.contentIndex.currentNode);
+		}
+		
 		$scope.goToAddContent = function(containerQId, parentIdentity) {
 			StateUpdateService.goToStudioAdd(containerQId, parentIdentity);
 		};

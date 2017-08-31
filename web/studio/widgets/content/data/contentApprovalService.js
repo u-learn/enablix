@@ -5,12 +5,16 @@ enablix.studioApp.factory('ContentApprovalService',
 
 	 		var DOMAIN_TYPE = "com.enablix.content.approval.model.ContentApproval";
 	 		
+	 		var ACTION_SAVE_DRAFT = "SAVE_DRAFT";
 	 		var ACTION_REJECT = "REJECT";
 	 		var ACTION_APPROVE = "APPROVE";
 	 		var ACTION_EDIT = "EDIT";
 	 		var ACTION_VIEW_DETAILS = "VIEW_DETAILS";
 	 		var ACTION_WITHDRAW = "WITHDRAW";
+	 		var ACTION_PUBLISH = "PUBLISH";
 	 		
+	 		var STATE_DRAFT = "DRAFT";
+	 		var STATE_PUBLISHED = "PUBLISHED";
 	 		var STATE_PENDING_APPROVAL = "PENDING_APPROVAL";
 	 		var STATE_WITHDRAWN = "WITHDRAWN";
 	 		var STATE_APPROVED = "APPROVED";
@@ -24,9 +28,24 @@ enablix.studioApp.factory('ContentApprovalService',
 	 					"operator" : "EQ",
 	 					"dataType" : "STRING"
 	 				},
+	 				"contentQId" : {
+	 					"field" : "objectRef.contentQId",
+	 					"operator" : "EQ",
+	 					"dataType" : "STRING"
+	 				},
 	 				"requestState" : {
 	 					"field" : "currentState.stateName",
 	 					"operator" : "EQ",
+	 					"dataType" : "STRING"
+	 				},
+	 				"requestStateNot" : {
+	 					"field" : "currentState.stateName",
+	 					"operator" : "NOT_EQ",
+	 					"dataType" : "STRING"
+	 				},
+	 				"requestStateNotIn" : {
+	 					"field" : "currentState.stateName",
+	 					"operator" : "NOT_IN",
 	 					"dataType" : "STRING"
 	 				},
 	 				"refObjectNE" : {
@@ -57,9 +76,10 @@ enablix.studioApp.factory('ContentApprovalService',
 	 		};
 	 		
 	 		
-	    	var submitContent = function(_contentQId, _parentRecordIdentity, _notes, _data, _onSuccess, _onError) {
+	 		var submitContent = function(_contentQId, _parentRecordIdentity, _notes, _data, _onSuccess, _onError, _isSaveDraft) {
 	 			
 	    		var addRequest = isNullOrUndefined(_data.identity);
+	    		var serviceUrlKey = _isSaveDraft ? "saveContentDraft" : "submitContentSuggestion";
 	    		
 	 			var contentDetail = {
 	 					"contentQId": _contentQId,
@@ -70,7 +90,22 @@ enablix.studioApp.factory('ContentApprovalService',
 	 			};
 	 			
 	 			var headers = getUrlParameters($location);
-	 			RESTService.postForData("submitContentSuggestion", {}, contentDetail, null, _onSuccess, _onError, null, headers);
+	 			RESTService.postForData(serviceUrlKey, {}, contentDetail, null, _onSuccess, _onError, null, headers);
+	 			
+	 		};
+	 		
+	 		var publishContent = function(_refObjectIdentity, _contentQId, _parentRecordIdentity, _notes, _data, _onSuccess, _onError) {
+	 			
+	 			var contentDetail = {
+	 					"identity": _refObjectIdentity,
+	 					"contentQId": _contentQId,
+	 					"parentIdentity": _parentRecordIdentity,
+	 					"notes": _notes,
+	 					"data": _data
+	 			};
+	 			
+	 			
+	 			RESTService.postForData("publishContentSuggestion", {}, contentDetail, null, _onSuccess, _onError, null);
 	 			
 	 		};
 	 		
@@ -321,6 +356,7 @@ enablix.studioApp.factory('ContentApprovalService',
 	 		return {
 	 			init: init,
 	 			submitContent: submitContent,
+	 			publishContent: publishContent,
 	 			approveContent: approveContent,
 	 			rejectContent: rejectContent,
 	 			withdrawContent: withdrawContent,
@@ -339,10 +375,15 @@ enablix.studioApp.factory('ContentApprovalService',
 	 			actionApprove: function() { return ACTION_APPROVE; },
 	 			actionEdit: function() { return ACTION_EDIT; },
 	 			actionWithdraw: function() { return ACTION_WITHDRAW; },
+	 			actionSaveDraft: function() { return ACTION_SAVE_DRAFT; },
 	 			actionViewDetails: function() { return ACTION_VIEW_DETAILS; },
+	 			actionPublish: function() { return ACTION_PUBLISH; },
+	 			
 	 			stateWithdrawn: function() { return STATE_WITHDRAWN; },
 	 			stateRejected: function() { return STATE_REJECTED; },
-	 			stateApproved: function() { return STATE_APPROVED; }
+	 			stateApproved: function() { return STATE_APPROVED; },
+	 			stateDraft: function() { return STATE_DRAFT; },
+	 			statePublished: function() { return STATE_PUBLISHED; }
 	 			
 	 		};
 	 	}

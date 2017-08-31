@@ -9,7 +9,8 @@
 	<textarea placeholder="Add Notes" class="form-control" ng-model="notes" rows="3"></textarea>
 </div>
 <div class="foot clearfix">
-	<button ng-click="saveContentData()" class="button button-add">Save</button>
+	<button ng-click="saveContentData()" class="button button-add">{{::(addOperation || draftEdit) ? 'Publish' : 'Save'}}</button>
+	<button ng-if="addOperation || draftEdit" ng-click="saveContentData(true)" class="button button-edit">Save As Draft</button>
 	<a ng-click="cancelOperation()" class="button button-delete">Cancel</a>
 </div>
 </form>

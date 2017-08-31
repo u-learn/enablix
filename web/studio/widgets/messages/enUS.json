@@ -6,11 +6,13 @@
 	"content.approval.status.APPROVED" : "Approved",
 	"content.approval.status.WITHDRAWN" : "Withdrawn",
 	"content.approval.status.DRAFT" : "Draft",
+	"content.approval.status.PUBLISHED" : "Published",
 	
 	"content.approval.action.SUBMIT" : "Submit",
 	"content.approval.action.APPROVE" : "Approve",
 	"content.approval.action.REJECT" : "Reject",
 	"content.approval.action.EDIT" : "Edit",
 	"content.approval.action.WITHDRAW" : "Withdraw",
-	"content.approval.action.SAVE_DRAFT" : "Save As Draft"
+	"content.approval.action.SAVE_DRAFT" : "Save Draft",
+	"content.approval.action.PUBLISH" : "Publish"
 }

@@ -1,6 +1,6 @@
 enablix.studioApp.controller('ContentListCtrl', 
-			['$scope', '$state', '$stateParams', 'ContentDataService', 'ContentIndexService', 'ContentTemplateService', 'StateUpdateService', 'StudioSetupService', 'Notification', 'ContentUtil', 'QuickLinksService', 'AssocQuickLinkModalWindow', 'ManageRecoModalWindow', 'DataSearchService',
-	function( $scope,   $state,   $stateParams,   ContentDataService,   ContentIndexService,   ContentTemplateService,   StateUpdateService,   StudioSetupService,   Notification,   ContentUtil,   QuickLinksService,   AssocQuickLinkModalWindow,   ManageRecoModalWindow,   DataSearchService) {
+			['$scope', '$state', '$stateParams', 'ContentDataService', 'ContentApprovalService', 'ContentIndexService', 'ContentTemplateService', 'StateUpdateService', 'StudioSetupService', 'Notification', 'ContentUtil', 'QuickLinksService', 'AssocQuickLinkModalWindow', 'ManageRecoModalWindow', 'DataSearchService', 'AuthorizationService',
+	function( $scope,   $state,   $stateParams,   ContentDataService,   ContentApprovalService,   ContentIndexService,   ContentTemplateService,   StateUpdateService,   StudioSetupService,   Notification,   ContentUtil,   QuickLinksService,   AssocQuickLinkModalWindow,   ManageRecoModalWindow,   DataSearchService,   AuthorizationService) {
 		
 		var containerQId = $stateParams.containerQId;
 		var parentIdentity = $stateParams.parentIdentity;
@@ -103,5 +103,66 @@ enablix.studioApp.controller('ContentListCtrl',
 			$scope.goToContentDetail(containerQId, elementIdentity);
 		};
 		
+		
+		/*******************************************************
+		 * Draft content list
+		 *******************************************************/ 
+
+		if ($state.includes('studio.list')) {
+			
+			$scope.draftPagination = {
+					pageNum: 0,
+					pageSize: 5,
+					sort: {
+						field: "createdAt",
+						direction: "ASC"
+					}
+			};
+			
+			
+			$scope.contentDraftDetails = function(recordObjectRefIdentity) {
+				StateUpdateService.goToMyDraftContentDetail(recordObjectRefIdentity);
+			}
+			
+			$scope.contentDraftEdit = function(recordObjectRefIdentity) {
+				StateUpdateService.goToMyDraftContentEdit(recordObjectRefIdentity);
+			}
+					
+			$scope.draftDataList = [];
+			
+			$scope.draftDataFilters = {
+					"createdBy": AuthorizationService.getCurrentUser().userId,
+					"requestState": ContentApprovalService.stateDraft(),
+					"contentQId": containerQId
+			};
+			
+			var fetchDraftContentList = function() {
+				
+				ContentApprovalService.getContentRequests($scope.draftDataFilters, $scope.draftPagination, function(dataPage) {
+						
+						var draftList = [];
+						
+						angular.forEach(dataPage.content, function(draftReq) {
+							
+							var dataItem = draftReq.objectRef.data;
+							dataItem.identity = draftReq.objectRef.identity;
+							
+							draftList.push(dataItem);
+						});
+						
+						$scope.draftDataList = draftList;
+						$scope.draftPageData = dataPage;
+						
+					}, function(errorData) {
+						Notification.error({message: "Error retrieving data", delay: enablix.errorMsgShowTime});
+					});
+			}
+			
+			$scope.fetchDraftResult = function(_pagination) {
+				fetchDraftContentList();
+			}
+			
+			fetchDraftContentList();
+		}
 	}
 ]);

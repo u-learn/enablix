@@ -1,8 +1,9 @@
 package com.enablix.content.approval.config;
 
-import static com.enablix.content.approval.ContentApprovalConstants.STATE_DRAFT;
 import static com.enablix.content.approval.ContentApprovalConstants.STATE_APPROVED;
+import static com.enablix.content.approval.ContentApprovalConstants.STATE_DRAFT;
 import static com.enablix.content.approval.ContentApprovalConstants.STATE_PENDING_APPROVAL;
+import static com.enablix.content.approval.ContentApprovalConstants.STATE_PUBLISHED;
 import static com.enablix.content.approval.ContentApprovalConstants.STATE_REJECTED;
 import static com.enablix.content.approval.ContentApprovalConstants.STATE_WITHDRAWN;
 import static com.enablix.content.approval.ContentApprovalConstants.WORKFLOW_NAME;
@@ -14,6 +15,7 @@ import org.springframework.context.annotation.Configuration;
 import com.enablix.commons.util.PermissionConstants;
 import com.enablix.content.approval.action.ApproveAction;
 import com.enablix.content.approval.action.EditAction;
+import com.enablix.content.approval.action.PublishAction;
 import com.enablix.content.approval.action.RejectAction;
 import com.enablix.content.approval.action.SaveDraftAction;
 import com.enablix.content.approval.action.SubmitAction;
@@ -66,7 +68,7 @@ public class ContentWorkflowConfiguration {
 		
 		def.registerAction(STATE_DRAFT, contentEditActionConfig());
 		def.registerAction(STATE_DRAFT, contentSubmitActionConfig());
-		def.registerAction(STATE_DRAFT, contentApproveActionConfig());
+		def.registerAction(STATE_DRAFT, contentPublishActionConfig());
 		
 		def.registerAction(STATE_PENDING_APPROVAL, contentEditActionConfig());
 		def.registerAction(STATE_PENDING_APPROVAL, contentApproveActionConfig());
@@ -96,6 +98,29 @@ public class ContentWorkflowConfiguration {
 			saveDraftActionConfig = new ActionConfigurationImpl(actionDef, action, nextStateBuilder, permissionAuth);
 		
 		return saveDraftActionConfig;
+	}
+	
+	@Bean
+	public PublishAction contentPublishAction() {
+		return new PublishAction();
+	}
+	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@Bean
+	public ActionConfigurationImpl<ContentDetail, ContentApproval, ContentDetail, Boolean, GenericActionResult<ContentDetail, Boolean>> 
+			contentPublishActionConfig() {
+		
+		PublishAction action = contentPublishAction();
+		ActionDefinition actionDef = new ActionDefinition(action.getActionName());
+		actionDef.addRequiredPermission(PermissionConstants.PERMISSION_VIEW_STUDIO);
+		
+		SimpleNextStateBuilder<Object, ActionInput> nextStateBuilder = simpleContentNextStateBuilder();
+		nextStateBuilder.addNextStateConfig(STATE_DRAFT, action.getActionName(), STATE_PUBLISHED);
+		
+		ActionConfigurationImpl<ContentDetail, ContentApproval, ContentDetail, Boolean, GenericActionResult<ContentDetail, Boolean>> 
+			submitActionConfig = new ActionConfigurationImpl(actionDef, action, nextStateBuilder, permissionAuth);
+		
+		return submitActionConfig;
 	}
 	
 	@Bean

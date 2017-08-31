@@ -1,6 +1,6 @@
 enablix.studioApp.controller('ContentSuggestDetailCtrl', 
-			['$scope', '$state', '$stateParams', 'ContentApprovalService', 'ContentTemplateService', 'StateUpdateService', 'Notification', 'ActionNotesWindow', 'ConfirmationModalWindow', '$filter',
-	function( $scope,   $state,   $stateParams,   ContentApprovalService,   ContentTemplateService,   StateUpdateService,   Notification,   ActionNotesWindow,   ConfirmationModalWindow,   $filter) {
+			['$scope', '$state', '$stateParams', 'ContentApprovalService', 'ContentTemplateService', 'StateUpdateService', 'Notification', 'ActionNotesWindow', 'ConfirmationModalWindow', '$filter', 'isDraftPage',
+	function( $scope,   $state,   $stateParams,   ContentApprovalService,   ContentTemplateService,   StateUpdateService,   Notification,   ActionNotesWindow,   ConfirmationModalWindow,   $filter,   isDraftPage) {
 		
 		var containerQId = $stateParams.containerQId;
 		
@@ -136,8 +136,15 @@ enablix.studioApp.controller('ContentSuggestDetailCtrl',
 		}
 		
 		$scope.editContent = function() {
+
 			if ($state.includes("myaccount")) {
-				StateUpdateService.goToMyContentRequestEdit($stateParams.refObjectIdentity);
+			
+				if (isDraftPage) {
+					StateUpdateService.goToMyDraftContentEdit($stateParams.refObjectIdentity);
+				} else {
+					StateUpdateService.goToMyContentRequestEdit($stateParams.refObjectIdentity);
+				}
+				
 			} else {
 				StateUpdateService.goToContentRequestEdit($stateParams.refObjectIdentity);
 			}

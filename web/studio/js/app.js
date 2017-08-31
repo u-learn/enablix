@@ -599,6 +599,7 @@ function($stateProvider,   $urlRouterProvider,   $httpProvider) {
 			resolve: {
 				setupData: appSetup,
 				contentWFInit: contentWFInit,
+				isDraftPage: function() { return false; },
 				checkPageAccess: ['setupData', 'AuthorizationService', function(setupData, AuthorizationService) {
 					return AuthorizationService.userHasPageAccess('MANAGE_CONTENT_REQUEST')
 				}]
@@ -611,6 +612,7 @@ function($stateProvider,   $urlRouterProvider,   $httpProvider) {
 			resolve: {
 				setupData: appSetup,
 				contentWFInit: contentWFInit,
+				isDraftPage: function() { return false; },
 				checkPageAccess: ['setupData', 'AuthorizationService', function(setupData, AuthorizationService) {
 					return AuthorizationService.userHasPageAccess('MANAGE_CONTENT_REQUEST')
 				}]
@@ -623,6 +625,7 @@ function($stateProvider,   $urlRouterProvider,   $httpProvider) {
 			resolve: {
 				setupData: appSetup,
 				contentWFInit: contentWFInit,
+				isDraftPage: function() { return false; },
 				checkPageAccess: ['setupData', 'AuthorizationService', function(setupData, AuthorizationService) {
 					return AuthorizationService.userHasPageAccess('MANAGE_CONTENT_REQUEST')
 				}]
@@ -675,6 +678,7 @@ function($stateProvider,   $urlRouterProvider,   $httpProvider) {
 			resolve: {
 				setupData: appSetup,
 				contentWFInit: contentWFInit,
+				isDraftPage: function() { return false; },
 				checkPageAccess: ['setupData', 'AuthorizationService', function(setupData, AuthorizationService) {
 					return AuthorizationService.userHasPageAccess('SUGGEST_CONTENT')
 				}]
@@ -687,6 +691,7 @@ function($stateProvider,   $urlRouterProvider,   $httpProvider) {
 			resolve: {
 				setupData: appSetup,
 				contentWFInit: contentWFInit,
+				isDraftPage: function() { return false; },
 				checkPageAccess: ['setupData', 'AuthorizationService', function(setupData, AuthorizationService) {
 					return AuthorizationService.userHasPageAccess('SUGGEST_CONTENT')
 				}]
@@ -699,6 +704,46 @@ function($stateProvider,   $urlRouterProvider,   $httpProvider) {
 			resolve: {
 				setupData: appSetup,
 				contentWFInit: contentWFInit,
+				isDraftPage: function() { return false; },
+				checkPageAccess: ['setupData', 'AuthorizationService', function(setupData, AuthorizationService) {
+					return AuthorizationService.userHasPageAccess('SUGGEST_CONTENT')
+				}]
+			}
+		})
+		.state('myaccount.contentdraftlist', {
+			url: '/contentdrafts',
+			templateUrl: 'views/content/content-suggest-list.html',
+			controller: 'ContentRequestListCtrl',
+			resolve: {
+				setupData: appSetup,
+				contentWFInit: contentWFInit,
+				isDraftPage: function() { return true; },
+				checkPageAccess: ['setupData', 'AuthorizationService', function(setupData, AuthorizationService) {
+					return AuthorizationService.userHasPageAccess('SUGGEST_CONTENT')
+				}]
+			}
+		})
+		.state('myaccount.contentdraftedit', {
+			url: '/contentdrafts/edit/{refObjectIdentity}/',
+			templateUrl: 'views/content/content-suggest.html',
+			controller: 'ContentSuggestEditCtrl',
+			resolve: {
+				setupData: appSetup,
+				contentWFInit: contentWFInit,
+				isDraftPage: function() { return true; },
+				checkPageAccess: ['setupData', 'AuthorizationService', function(setupData, AuthorizationService) {
+					return AuthorizationService.userHasPageAccess('SUGGEST_CONTENT')
+				}]
+			}
+		})
+		.state('myaccount.contentdraftview', {
+			url: '/contentdrafts/a/view/{refObjectIdentity}/',
+			templateUrl: 'views/content/content-suggest-detail.html',
+			controller: 'ContentSuggestDetailCtrl',
+			resolve: {
+				setupData: appSetup,
+				contentWFInit: contentWFInit,
+				isDraftPage: function() { return true; },
 				checkPageAccess: ['setupData', 'AuthorizationService', function(setupData, AuthorizationService) {
 					return AuthorizationService.userHasPageAccess('SUGGEST_CONTENT')
 				}]

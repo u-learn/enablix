@@ -7,5 +7,6 @@
 	<buildSpec>
 	</buildSpec>
 	<natures>
+		<nature>mega.lightning.lightningNature</nature>
 	</natures>
 </projectDescription>

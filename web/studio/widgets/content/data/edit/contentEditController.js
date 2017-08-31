@@ -8,6 +8,7 @@ enablix.studioApp.controller('ContentEditCtrl',
 		$scope.$stateParams = $stateParams;
 		
 		ContentOperInitService.initEditContentOper($scope, containerQId, elementIdentity);
+		$scope.editOperation = true;
 		
 		$scope.pendingEditRequests = null;
 		

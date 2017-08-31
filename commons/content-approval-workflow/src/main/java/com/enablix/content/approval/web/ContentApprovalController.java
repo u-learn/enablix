@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.enablix.commons.util.PermissionConstants;
 import com.enablix.content.approval.ContentApprovalConstants;
 import com.enablix.content.approval.ContentApprovalUtil;
 import com.enablix.content.approval.model.ContentApproval;
@@ -21,6 +22,7 @@ import com.enablix.content.approval.repo.ContentApprovalRepository;
 import com.enablix.core.activity.audit.ActivityTrackingContext;
 import com.enablix.core.domain.activity.Activity.ActivityType;
 import com.enablix.core.domain.activity.ActivityChannel.Channel;
+import com.enablix.core.security.SecurityUtil;
 import com.enablix.services.util.ActivityLogger;
 import com.enablix.state.change.ActionException;
 import com.enablix.state.change.StateChangeWorkflowManager;
@@ -69,6 +71,22 @@ public class ContentApprovalController {
 		
 		wfManager.executeAction(ContentApprovalConstants.WORKFLOW_NAME, actionInput.getIdentity(), 
 				ContentApprovalConstants.ACTION_APPROVE, actionInput);
+	}
+	
+	@RequestMapping(method = RequestMethod.POST, value="/publish/", consumes = "application/json")
+	public void publishContent(@RequestBody ContentDetail contentDetails) throws ActionException {
+		
+		LOGGER.debug("Content workfow publish request");
+		
+		if (SecurityUtil.currentUserHasAllPermission(PermissionConstants.PERMISSION_VIEW_STUDIO)) {
+			
+			wfManager.executeAction(ContentApprovalConstants.WORKFLOW_NAME, contentDetails.getIdentity(), 
+				ContentApprovalConstants.ACTION_PUBLISH, contentDetails);
+			
+		} else {
+			wfManager.executeAction(ContentApprovalConstants.WORKFLOW_NAME, contentDetails.getIdentity(), 
+					ContentApprovalConstants.ACTION_SUBMIT, contentDetails);
+		}
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, value="/reject/", consumes = "application/json")
