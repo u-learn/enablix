@@ -12,14 +12,14 @@ public class NonRegisteredActor extends Actor {
 	}
 	
 	public NonRegisteredActor(String externalId) {
-		super();
-		this.externalId = externalId;
+		this(externalId, externalId);
 	}
 	
 	public NonRegisteredActor(String externalId, String name) {
 		super();
 		this.externalId = externalId;
 		this.name = name;
+		setUserId(externalId);
 	}
 
 	public String getExternalId() {
