@@ -22,6 +22,15 @@ enablix.studioApp.controller('MyAccountController',
 				         { label: "My Account" },
 				         { label: "Content Requests" }
 					];
+			} else if ($state.includes('myaccount.contentdraftlist') 
+					|| $state.includes('myaccount.contentdraftedit') 
+					|| $state.includes('myaccount.contentdraftview')) {
+				
+				$scope.breadcrumbList = 
+					[
+				         { label: "My Account" },
+				         { label: "Content Drafts" }
+					];
 			} else if ($state.includes('myaccount.slackdtls') 
 					|| $state.includes('myaccount.slackauthorization')) {
 				

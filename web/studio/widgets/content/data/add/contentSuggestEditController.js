@@ -59,9 +59,13 @@ enablix.studioApp.controller('ContentSuggestEditCtrl',
 		};
 		
 		$scope.headingCancelLabel = "Back";
-		$scope.saveBtnLabel = isDraftPage ? "Publish" : "Save";
+		
 		$scope.cancelOperation = function() {
-			StateUpdateService.goBack();
+			if (isDraftPage) {
+				StateUpdateService.goToMyDraftContentList();
+			} else { 
+				StateUpdateService.goBack();
+			}
 		};
 		
 	}

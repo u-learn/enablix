@@ -263,6 +263,10 @@ enablix.studioApp.factory('StateUpdateService',
 	 			});
 	 		}
 	 		
+	 		var goToMyDraftContentList = function() {
+	 			$state.go("myaccount.contentdraftlist");
+	 		}
+	 		
 	 		var goToMyDraftContentEdit = function(refObjectIdentity) {
 	 			$state.go("myaccount.contentdraftedit", {
 	 				"refObjectIdentity": refObjectIdentity
@@ -443,6 +447,7 @@ enablix.studioApp.factory('StateUpdateService',
 	 			goToContentRequestDetail : goToContentRequestDetail,
 	 			goToMyContentRequestEdit : goToMyContentRequestEdit,
 	 			goToMyContentRequestDetail : goToMyContentRequestDetail,
+	 			goToMyDraftContentList: goToMyDraftContentList,
 	 			goToMyDraftContentEdit: goToMyDraftContentEdit,
 	 			goToMyDraftContentDetail: goToMyDraftContentDetail,
 	 			goToContentConnList : goToContentConnList,
