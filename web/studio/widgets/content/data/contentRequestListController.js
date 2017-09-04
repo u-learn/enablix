@@ -2,6 +2,8 @@ enablix.studioApp.controller('ContentRequestListCtrl',
 			['$scope', '$state', '$stateParams', 'ContentApprovalService', 'ActionNotesWindow', 'DataSearchService', 'ContentTemplateService', 'Notification', '$filter', 'StateUpdateService', 'AuthorizationService', 'isDraftPage',
 	function( $scope,   $state,   $stateParams,   ContentApprovalService,   ActionNotesWindow,   DataSearchService,   ContentTemplateService,   Notification,   $filter,   StateUpdateService,   AuthorizationService,   isDraftPage) {
 		
+		$scope.tableHeading = isDraftPage ? "Content Drafts" : "Content Requests";
+				
 		$scope.pagination = {
 			pageSize: enablix.defaultPageSize,
 			pageNum: 0,
