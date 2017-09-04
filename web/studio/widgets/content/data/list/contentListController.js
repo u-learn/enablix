@@ -127,6 +127,12 @@ enablix.studioApp.controller('ContentListCtrl',
 			$scope.contentDraftEdit = function(recordObjectRefIdentity) {
 				StateUpdateService.goToMyDraftContentEdit(recordObjectRefIdentity);
 			}
+			
+			$scope.contentDraftDelete = function(recordObjectRefIdentity) {
+				ContentApprovalService.initDiscardAction(recordObjectRefIdentity, function(data) {
+					fetchDraftContentList();
+				});
+			}
 					
 			$scope.draftDataList = [];
 			

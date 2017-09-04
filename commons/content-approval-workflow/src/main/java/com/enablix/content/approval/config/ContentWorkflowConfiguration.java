@@ -14,6 +14,7 @@ import org.springframework.context.annotation.Configuration;
 
 import com.enablix.commons.util.PermissionConstants;
 import com.enablix.content.approval.action.ApproveAction;
+import com.enablix.content.approval.action.DiscardAction;
 import com.enablix.content.approval.action.EditAction;
 import com.enablix.content.approval.action.PublishAction;
 import com.enablix.content.approval.action.RejectAction;
@@ -36,6 +37,7 @@ import com.enablix.state.change.impl.StateChangeWorkflowDefinitionImpl;
 import com.enablix.state.change.model.ActionInput;
 import com.enablix.state.change.model.GenericActionResult;
 import com.enablix.state.change.model.ObjectState;
+import com.enablix.state.change.model.SimpleActionInput;
 
 @Configuration
 public class ContentWorkflowConfiguration {
@@ -69,6 +71,7 @@ public class ContentWorkflowConfiguration {
 		def.registerAction(STATE_DRAFT, contentEditActionConfig());
 		def.registerAction(STATE_DRAFT, contentSubmitActionConfig());
 		def.registerAction(STATE_DRAFT, contentPublishActionConfig());
+		def.registerAction(STATE_DRAFT, contentDiscardActionConfig());
 		
 		def.registerAction(STATE_PENDING_APPROVAL, contentEditActionConfig());
 		def.registerAction(STATE_PENDING_APPROVAL, contentApproveActionConfig());
@@ -118,9 +121,28 @@ public class ContentWorkflowConfiguration {
 		nextStateBuilder.addNextStateConfig(STATE_DRAFT, action.getActionName(), STATE_PUBLISHED);
 		
 		ActionConfigurationImpl<ContentDetail, ContentApproval, ContentDetail, Boolean, GenericActionResult<ContentDetail, Boolean>> 
-			submitActionConfig = new ActionConfigurationImpl(actionDef, action, nextStateBuilder, permissionAuth);
+			publishActionConfig = new ActionConfigurationImpl(actionDef, action, nextStateBuilder, permissionAuth);
 		
-		return submitActionConfig;
+		return publishActionConfig;
+	}
+	
+	@Bean
+	public DiscardAction contentDiscardAction() {
+		return new DiscardAction();
+	}
+	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@Bean
+	public ActionConfigurationImpl<ContentDetail, ContentApproval, SimpleActionInput, Boolean, GenericActionResult<ContentDetail, Boolean>> 
+			contentDiscardActionConfig() {
+		
+		DiscardAction action = contentDiscardAction();
+		ActionDefinition actionDef = new ActionDefinition(action.getActionName());
+		
+		ActionConfigurationImpl<ContentDetail, ContentApproval, SimpleActionInput, Boolean, GenericActionResult<ContentDetail, Boolean>> 
+			discardActionConfig = new ActionConfigurationImpl(actionDef, action, noChangeStateBuilder, createdByAuth);
+		
+		return discardActionConfig;
 	}
 	
 	@Bean

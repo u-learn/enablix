@@ -12,6 +12,7 @@ enablix.studioApp.factory('ContentApprovalService',
 	 		var ACTION_VIEW_DETAILS = "VIEW_DETAILS";
 	 		var ACTION_WITHDRAW = "WITHDRAW";
 	 		var ACTION_PUBLISH = "PUBLISH";
+	 		var ACTION_DISCARD = "DISCARD";
 	 		
 	 		var STATE_DRAFT = "DRAFT";
 	 		var STATE_PUBLISHED = "PUBLISHED";
@@ -136,6 +137,32 @@ enablix.studioApp.factory('ContentApprovalService',
 	 			
 	 		};
 	 		
+	 		var discardContent = function(_contentRequestIdentity, _onSuccess, _onError) {
+	 			
+	 			var actionInput = {
+	 					"identity": _contentRequestIdentity
+	 			};
+	 			
+	 			var headers = getUrlParameters($location);
+	 			RESTService.postForData("discardContentSuggestion", {}, actionInput, null, 
+	 					function(data) {
+	 						
+	 						Notification.primary("Content deleted!");
+	 						if (_onSuccess) {
+	 							_onSuccess(data);
+	 						}
+	 						
+	 					}, function(error) {
+	 						
+	 						Notification.error({message: "Error deleting content : " + error.message, delay: enablix.errorMsgShowTime});
+	 						if (_onError) {
+	 							_onError(error);
+	 						}
+	 						
+	 					}, null), headers;
+	 			
+	 		};
+	 		
 	 		var rejectContent = function(_contentRequestIdentity, _notes, _onSuccess, _onError) {
 	 			
 	 			var actionInput = {
@@ -222,7 +249,7 @@ enablix.studioApp.factory('ContentApprovalService',
 	 		
 	 		var isActionAllowed = function(actionName, record) {
 	 			
-	 			if (actionName == ACTION_WITHDRAW 
+	 			if ((actionName == ACTION_WITHDRAW || actionName == ACTION_DISCARD)
 						&& AuthorizationService.getCurrentUser().userId != record.createdBy) {
 					return false;
 				}
@@ -348,6 +375,15 @@ enablix.studioApp.factory('ContentApprovalService',
 				});
 			};
 			
+			var initDiscardAction = function(_recordObjectRefIdentity, _onActionCompletion) {
+				var confirmModal = ConfirmationModalWindow.showWindow("Confirm", 
+						"Do you want to continue with discard action?", 
+						"Proceed", "Cancel");
+				confirmModal.result.then(function(notes) {
+					discardContent(_recordObjectRefIdentity, _onActionCompletion);
+				});
+			};
+			
 			
 			var isApprovalWFRequired = function() {
 				return !AuthorizationService.userHasPermission(PERM_SUBMIT_CONTENT_FROM_PORTAL);
@@ -358,6 +394,7 @@ enablix.studioApp.factory('ContentApprovalService',
 	 			submitContent: submitContent,
 	 			publishContent: publishContent,
 	 			approveContent: approveContent,
+	 			discardContent: discardContent,
 	 			rejectContent: rejectContent,
 	 			withdrawContent: withdrawContent,
 	 			editContent: editContent,
@@ -369,6 +406,7 @@ enablix.studioApp.factory('ContentApprovalService',
 	 			initApproveAction: initApproveAction,
 	 			initRejectAction: initRejectAction,
 	 			initWithdrawAction: initWithdrawAction,
+	 			initDiscardAction: initDiscardAction,
 	 			isApprovalWFRequired: isApprovalWFRequired,
 	 			
 	 			actionReject: function() { return ACTION_REJECT; },
@@ -378,6 +416,7 @@ enablix.studioApp.factory('ContentApprovalService',
 	 			actionSaveDraft: function() { return ACTION_SAVE_DRAFT; },
 	 			actionViewDetails: function() { return ACTION_VIEW_DETAILS; },
 	 			actionPublish: function() { return ACTION_PUBLISH; },
+	 			actionDiscard: function() { return ACTION_DISCARD; },
 	 			
 	 			stateWithdrawn: function() { return STATE_WITHDRAWN; },
 	 			stateRejected: function() { return STATE_REJECTED; },

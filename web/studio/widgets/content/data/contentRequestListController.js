@@ -87,6 +87,12 @@ enablix.studioApp.controller('ContentRequestListCtrl',
 			});
 		}
 		
+		$scope.contentRequestDiscard = function(record) {
+			ContentApprovalService.initDiscardAction(record.objectRef.identity, function(data) {
+				fetchSearchResult();
+			});
+		} 
+		
 		$scope.contentRequestWithdraw = function(record) {
 			ContentApprovalService.initWithdrawAction(record, function(data) {
 				fetchSearchResult();
@@ -113,30 +119,6 @@ enablix.studioApp.controller('ContentRequestListCtrl',
 				tableCellClass: "edit",
 				actionCallbackFn: $scope.contentRequestEdit,
 				checkApplicable: isActionAllowed
-			},
-			{
-				actionName: ContentApprovalService.actionApprove(),
-				tooltip: "Approve",
-				iconClass: "fa fa-check",
-				tableCellClass: "approve",
-				actionCallbackFn: $scope.contentRequestApprove,
-				checkApplicable: isActionAllowed
-			},
-			{
-				actionName: ContentApprovalService.actionReject(),
-				tooltip: "Reject",
-				iconClass: "fa fa-ban",
-				tableCellClass: "remove",
-				actionCallbackFn: $scope.contentRequestReject,
-				checkApplicable: isActionAllowed
-			},
-			{
-				actionName: ContentApprovalService.actionWithdraw(),
-				tooltip: "Withdraw",
-				iconClass: "fa fa-undo",
-				tableCellClass: "remove",
-				actionCallbackFn: $scope.contentRequestWithdraw,
-				checkApplicable: isActionAllowed
 			}];
 		
 		$scope.dataList = [];
@@ -148,9 +130,44 @@ enablix.studioApp.controller('ContentRequestListCtrl',
 		}
 		
 		if (isDraftPage) {
+			
 			$scope.dataFilters.requestState = ContentApprovalService.stateDraft();
+			
+			$scope.tableRecordActions.push({
+				actionName: ContentApprovalService.actionDiscard(),
+				tooltip: "Discard",
+				iconClass: "fa fa-times",
+				tableCellClass: "remove",
+				actionCallbackFn: $scope.contentRequestDiscard,
+				checkApplicable: isActionAllowed
+			});
+			
 		} else {
 			$scope.dataFilters.requestStateNot = ContentApprovalService.stateDraft();
+			$scope.tableRecordActions.push({
+				actionName: ContentApprovalService.actionApprove(),
+				tooltip: "Approve",
+				iconClass: "fa fa-check",
+				tableCellClass: "approve",
+				actionCallbackFn: $scope.contentRequestApprove,
+				checkApplicable: isActionAllowed
+			});
+			$scope.tableRecordActions.push({
+				actionName: ContentApprovalService.actionReject(),
+				tooltip: "Reject",
+				iconClass: "fa fa-ban",
+				tableCellClass: "remove",
+				actionCallbackFn: $scope.contentRequestReject,
+				checkApplicable: isActionAllowed
+			});
+			$scope.tableRecordActions.push({
+				actionName: ContentApprovalService.actionWithdraw(),
+				tooltip: "Withdraw",
+				iconClass: "fa fa-undo",
+				tableCellClass: "remove",
+				actionCallbackFn: $scope.contentRequestWithdraw,
+				checkApplicable: isActionAllowed
+			});
 		}
 		
 		var fetchSearchResult = function() {

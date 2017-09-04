@@ -1,5 +1,6 @@
 package com.enablix.app.content;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -22,6 +23,8 @@ public interface ContentDataManager {
 	Object fetchDataJson(FetchContentRequest request, DataView view);
 	
 	void deleteData(DeleteContentRequest request);
+	
+	void deleteRecordDocuments(Map<String, Object> record, String containerQId) throws IOException;
 
 	List<Map<String, Object>> fetchPeers(FetchContentRequest request, DataView view);
 

@@ -74,6 +74,7 @@ enablix.serviceURL = {
 	"publishContentSuggestion": enablix.domainName + "/contentwf/publish/",
 	"submitContentSuggestion": enablix.domainName + "/contentwf/submit/",
 	"approveContentSuggestion": enablix.domainName + "/contentwf/approve/",
+	"discardContentSuggestion": enablix.domainName + "/contentwf/discard/",
 	"rejectContentSuggestion": enablix.domainName + "/contentwf/reject/",
 	"withdrawContentSuggestion": enablix.domainName + "/contentwf/withdraw/",
 	"editContentSuggestion": enablix.domainName + "/contentwf/edit/",

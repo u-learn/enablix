@@ -21,6 +21,7 @@ import com.enablix.state.change.ActionException;
 import com.enablix.state.change.ActionInterceptor;
 import com.enablix.state.change.NextStateBuilder;
 import com.enablix.state.change.StateChangeAction;
+import com.enablix.state.change.StateChangeConstants;
 import com.enablix.state.change.StateChangeWorkflowManager;
 import com.enablix.state.change.action.access.ActionAccessAuthorizer;
 import com.enablix.state.change.definition.ActionConfiguration;
@@ -98,31 +99,39 @@ public class StateChangeWorkflowManagerImpl implements StateChangeWorkflowManage
 			StateChangeAction action = actionConfig.getAction();
 			ActionResult actionResult = action.execute(actionInput, recording.getObjectRef());
 			
-			RefObject updatedRefObject = actionResult.updatedRefObject();
-			if (StringUtil.isEmpty(updatedRefObject.getIdentity())) {
-				updatedRefObject.setIdentity(IdentityUtil.generateIdentity(updatedRefObject));
+			if (StateChangeConstants.ACTION_DISCARD.equals(actionName)) {
+			
+				// delete recording
+				repo.delete(recording);
+				
+			} else {
+			
+				RefObject updatedRefObject = actionResult.updatedRefObject();
+				if (StringUtil.isEmpty(updatedRefObject.getIdentity())) {
+					updatedRefObject.setIdentity(IdentityUtil.generateIdentity(updatedRefObject));
+				}
+				
+				recording.setObjectRef(updatedRefObject);
+				
+				// Calculate next state
+				NextStateBuilder nextStateBuilder = actionConfig.getNextStateBuilder();
+				ObjectState currentState = recording.getCurrentState();
+				ObjectState nextState = nextStateBuilder.nextState(currentState, 
+										action.getActionName(), actionResult, actionInput);
+				recording.setCurrentState(nextState);
+				
+				// Update action history
+				String userId = ProcessContext.get().getUserId();
+				String userName = ProcessContext.get().getUserDisplayName();
+				
+				recording.getActionHistory().getActions().add(
+						new ActionData(action.getActionName(), currentState.getStateName(), nextState.getStateName(), 
+										actionInput, actionResult.returnValue(), userId, userName, new Date()));
+				
+				checkAndSetDataSegmentInfo(recording, actionInput);
+				
+				recording = (StateChangeRecording) repo.save(recording);
 			}
-			
-			recording.setObjectRef(updatedRefObject);
-			
-			// Calculate next state
-			NextStateBuilder nextStateBuilder = actionConfig.getNextStateBuilder();
-			ObjectState currentState = recording.getCurrentState();
-			ObjectState nextState = nextStateBuilder.nextState(currentState, 
-									action.getActionName(), actionResult, actionInput);
-			recording.setCurrentState(nextState);
-			
-			// Update action history
-			String userId = ProcessContext.get().getUserId();
-			String userName = ProcessContext.get().getUserDisplayName();
-			
-			recording.getActionHistory().getActions().add(
-					new ActionData(action.getActionName(), currentState.getStateName(), nextState.getStateName(), 
-									actionInput, actionResult.returnValue(), userId, userName, new Date()));
-			
-			checkAndSetDataSegmentInfo(recording, actionInput);
-			
-			recording = (StateChangeRecording) repo.save(recording);
 			
 			// execute action completed interceptors
 			executeActionCompletedInterceptors(interceptors, actionName, actionInput, recording);

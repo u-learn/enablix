@@ -25,6 +25,7 @@ import com.enablix.core.domain.activity.ActivityChannel.Channel;
 import com.enablix.core.security.SecurityUtil;
 import com.enablix.services.util.ActivityLogger;
 import com.enablix.state.change.ActionException;
+import com.enablix.state.change.StateChangeConstants;
 import com.enablix.state.change.StateChangeWorkflowManager;
 import com.enablix.state.change.definition.ActionDefinition;
 import com.enablix.state.change.impl.ActionRegistry;
@@ -96,6 +97,15 @@ public class ContentApprovalController {
 		
 		wfManager.executeAction(ContentApprovalConstants.WORKFLOW_NAME, actionInput.getIdentity(), 
 				ContentApprovalConstants.ACTION_REJECT, actionInput);
+	}
+	
+	@RequestMapping(method = RequestMethod.POST, value="/discard/", consumes = "application/json")
+	public void discardDraftContent(@RequestBody SimpleActionInput actionInput) throws ActionException {
+		
+		LOGGER.debug("Content workfow discard request");
+		
+		wfManager.executeAction(ContentApprovalConstants.WORKFLOW_NAME, actionInput.getIdentity(), 
+				StateChangeConstants.ACTION_DISCARD, actionInput);
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, value="/withdraw/", consumes = "application/json")

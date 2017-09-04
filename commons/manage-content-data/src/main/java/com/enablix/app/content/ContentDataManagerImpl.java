@@ -1,5 +1,6 @@
 package com.enablix.app.content;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -15,6 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import com.enablix.app.content.delete.DeleteContentRequest;
+import com.enablix.app.content.doc.DocumentManager;
 import com.enablix.app.content.enrich.ContentEnricher;
 import com.enablix.app.content.enrich.ContentEnricherRegistry;
 import com.enablix.app.content.event.ContentDataEventListener;
@@ -26,6 +28,7 @@ import com.enablix.app.content.update.UpdateContentRequest;
 import com.enablix.app.content.update.UpdateContentRequestValidator;
 import com.enablix.app.template.service.TemplateManager;
 import com.enablix.commons.constants.ContentDataConstants;
+import com.enablix.commons.dms.api.DocumentMetadata;
 import com.enablix.commons.util.QIdUtil;
 import com.enablix.commons.util.StringUtil;
 import com.enablix.commons.util.collection.CollectionUtil;
@@ -74,6 +77,9 @@ public class ContentDataManagerImpl implements ContentDataManager {
 	
 	@Autowired
 	private ContentChangeEvaluator contentChangeEvaluator;
+	
+	@Autowired
+	private DocumentManager docManager;
 	
 	/*
 	 * Use cases:
@@ -607,6 +613,46 @@ public class ContentDataManagerImpl implements ContentDataManager {
 		String docAttrId = QIdUtil.getElementId(docContentQId);
 		
 		return crud.findRecordByDocIdentity(collectionName, docAttrId, docIdentity, DataViewUtil.getMongoDataView(view));
+	}
+
+
+	
+	@Override
+	public void deleteRecordDocuments(Map<String, Object> record, String containerQId) throws IOException {
+		processRecordDocuments(record, containerQId, (docMd) -> { docManager.delete(docMd); return docMd; });
+	}
+
+	@SuppressWarnings("rawtypes")
+	private void processRecordDocuments(Map<String, Object> record, String containerQId, 
+			DocumentProcessor process) throws IOException {
+		
+		TemplateFacade template = templateMgr.getTemplateFacade(ProcessContext.get().getTemplateId());
+		ContainerType containerDef = template.getContainerDefinition(containerQId);
+		
+		if (containerDef != null) {
+		
+			for (ContentItemType itemType : containerDef.getContentItem()) {
+			
+				if (itemType.getType() == ContentItemClassType.DOC) {
+					
+					Object docMd = record.get(itemType.getId());
+				
+					if (docMd != null && docMd instanceof Map) {
+						
+						String docIdentity = (String) ((Map) docMd).get(ContentDataConstants.IDENTITY_KEY);
+						DocumentMetadata docMetadata = docManager.getDocumentMetadata(docIdentity);
+						
+						if (docMetadata != null) {
+							process.process(docMetadata);
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	private static interface DocumentProcessor {
+		DocumentMetadata process(DocumentMetadata docMd) throws IOException;
 	}
 	
 }
