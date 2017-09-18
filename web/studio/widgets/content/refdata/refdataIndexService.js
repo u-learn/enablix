@@ -24,6 +24,8 @@ enablix.studioApp.factory('RefdataIndexService',
 					}
 				});
 				
+				indexData.sort(sortByLabelProp)
+				
 				return indexData;
 			};
 		
