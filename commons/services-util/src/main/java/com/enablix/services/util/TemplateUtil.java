@@ -10,6 +10,7 @@ import org.springframework.util.Assert;
 import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.commons.util.QIdUtil;
 import com.enablix.commons.util.StringUtil;
+import com.enablix.commons.util.collection.CollectionUtil;
 import com.enablix.core.api.TemplateFacade;
 import com.enablix.core.commons.xsdtopojo.BoundedListDatastoreType;
 import com.enablix.core.commons.xsdtopojo.BoundedRefListType;
@@ -24,6 +25,8 @@ import com.enablix.core.commons.xsdtopojo.ContentItemType;
 import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 import com.enablix.core.commons.xsdtopojo.ContentUIDefType;
 import com.enablix.core.commons.xsdtopojo.DataDefinitionType;
+import com.enablix.core.commons.xsdtopojo.QualityRuleConfigType;
+import com.enablix.core.commons.xsdtopojo.QualityRulesType;
 import com.enablix.core.commons.xsdtopojo.UiDefinitionType;
 import com.enablix.core.commons.xsdtopojo.UserProfileRefType;
 
@@ -454,6 +457,22 @@ public class TemplateUtil {
 		}
 		
 		return null;
+	}
+
+
+	public static boolean hasQualityCheckRules(ContentTemplate template) {
+		
+		QualityRuleConfigType qualityRuleConfig = template.getQualityRuleConfig();
+		
+		if (qualityRuleConfig != null) {
+		
+			QualityRulesType qualityRules = qualityRuleConfig.getQualityRules();
+			if (qualityRules != null) {
+				return CollectionUtil.isNotEmpty(qualityRules.getRule());
+			}
+		}
+		
+		return false;
 	}
 	
 }

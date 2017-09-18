@@ -111,6 +111,8 @@ public class SlackAttachment {
 		private String footerIcon;
 		private String color;
 		private String footerText;
+
+		@SuppressWarnings("unused")
 		private List<DisplayField<?>> fields;
 
 		public SlackAttachmentBuidler fallBack(String fallBack)	{

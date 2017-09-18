@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import com.enablix.app.content.delete.DeleteContentRequest;
 import com.enablix.app.content.fetch.FetchContentRequest;
 import com.enablix.app.content.update.UpdateContentRequest;
+import com.enablix.app.content.update.UpdateContentResponse;
 import com.enablix.core.api.ContentDataRecord;
 import com.enablix.core.api.ContentDataRef;
 import com.enablix.core.api.ContentRecordGroup;
@@ -18,7 +19,7 @@ import com.enablix.data.view.DataView;
 
 public interface ContentDataManager {
 
-	Map<String, Object> saveData(UpdateContentRequest request);
+	UpdateContentResponse saveData(UpdateContentRequest request);
 	
 	Object fetchDataJson(FetchContentRequest request, DataView view);
 	

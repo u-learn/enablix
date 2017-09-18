@@ -2,7 +2,6 @@ package com.enablix.app.content;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -17,15 +16,11 @@ import org.springframework.stereotype.Component;
 
 import com.enablix.app.content.delete.DeleteContentRequest;
 import com.enablix.app.content.doc.DocumentManager;
-import com.enablix.app.content.enrich.ContentEnricher;
-import com.enablix.app.content.enrich.ContentEnricherRegistry;
 import com.enablix.app.content.event.ContentDataEventListener;
 import com.enablix.app.content.event.ContentDataEventListenerRegistry;
 import com.enablix.app.content.fetch.FetchContentRequest;
-import com.enablix.app.content.update.ContentUpdateHandler;
-import com.enablix.app.content.update.ContentUpdateHandlerFactory;
 import com.enablix.app.content.update.UpdateContentRequest;
-import com.enablix.app.content.update.UpdateContentRequestValidator;
+import com.enablix.app.content.update.UpdateContentResponse;
 import com.enablix.app.template.service.TemplateManager;
 import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.commons.dms.api.DocumentMetadata;
@@ -33,6 +28,7 @@ import com.enablix.commons.util.QIdUtil;
 import com.enablix.commons.util.StringUtil;
 import com.enablix.commons.util.collection.CollectionUtil;
 import com.enablix.commons.util.process.ProcessContext;
+import com.enablix.content.quality.QualityAnalyzer;
 import com.enablix.core.api.ContentDataRecord;
 import com.enablix.core.api.ContentDataRef;
 import com.enablix.core.api.ContentRecordGroup;
@@ -43,8 +39,7 @@ import com.enablix.core.commons.xsdtopojo.ContentItemClassType;
 import com.enablix.core.commons.xsdtopojo.ContentItemType;
 import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 import com.enablix.core.content.event.ContentDataDelEvent;
-import com.enablix.core.content.event.ContentDataSaveEvent;
-import com.enablix.core.domain.content.ContentChangeDelta;
+import com.enablix.core.domain.content.quality.QualityAnalysis;
 import com.enablix.core.mongo.content.ContentCrudService;
 import com.enablix.core.mongo.view.MongoDataView;
 import com.enablix.data.view.DataView;
@@ -61,25 +56,22 @@ public class ContentDataManagerImpl implements ContentDataManager {
 	private TemplateManager templateMgr;
 	
 	@Autowired
-	private UpdateContentRequestValidator updateValidator;
-
-	@Autowired
 	private ContentCrudService crud;
-	
-	@Autowired
-	private ContentEnricherRegistry enricherRegistry;
-	
-	@Autowired
-	private ContentUpdateHandlerFactory handlerFactory;
 	
 	@Autowired
 	private ContentDataEventListenerRegistry listenerRegistry;
 	
 	@Autowired
-	private ContentChangeEvaluator contentChangeEvaluator;
+	private DocumentManager docManager;
 	
 	@Autowired
-	private DocumentManager docManager;
+	private QualityAnalyzer qualityAnalyzer;
+	
+	@Autowired
+	private ContentPersistOperation persistor;
+	
+	@Autowired
+	private QualityAlertProcessorFactory alertProcessorFactory;
 	
 	/*
 	 * Use cases:
@@ -89,55 +81,30 @@ public class ContentDataManagerImpl implements ContentDataManager {
 	 * 3. Update existing container record attributes == Mongo update $set
 	 */
 	@Override
-	public Map<String, Object> saveData(UpdateContentRequest request) {
+	public UpdateContentResponse saveData(UpdateContentRequest request) {
 		
-		Collection<Error> errors = updateValidator.validate(request);
-		if (errors != null && !errors.isEmpty()) {
-			LOGGER.error("Update request validation error: {}", errors);
-			throw new IllegalArgumentException("Update request validation error: " + errors);
+		UpdateContentResponse response = new UpdateContentResponse();
+		response.setContentRecord(request.getDataAsMap());
+		
+		TemplateFacade template = templateMgr.getTemplateFacade(ProcessContext.get().getTemplateId());
+		
+		QualityAnalysis analysis = qualityAnalyzer.analyze(request.getDataAsMap(), 
+				request.getContentQId(), request.getQualityAnalysisLevel(), template);
+		
+		response.setQualityAnalysis(analysis);
+		
+		if (analysis.hasAlerts()) {
+			
+			QualityAlertProcessor processor = alertProcessorFactory.getProcessor(request.getQualityAlertProcessing());
+			response = processor.processQualityAlerts(analysis, request, persistor);
+			
+		} else {
+			
+			Map<String, Object> updatedRecord = persistor.persist(request);
+			response.setContentRecord(updatedRecord);
 		}
 		
-		TemplateFacade templateWrapper = templateMgr.getTemplateFacade(request.getTemplateId());
-		
-		// check for linked container
-		ContainerType container = templateWrapper.getContainerDefinition(request.getContentQId()); 
-		
-		String linkedContainerQId = container.getLinkContainerQId();
-		if (!StringUtil.isEmpty(linkedContainerQId)) {
-			request.setParentIdentity(null);
-			request.setContentQId(linkedContainerQId);
-			container = templateWrapper.getContainerDefinition(linkedContainerQId);
-		}
-		
-		// update the data store with content
-		ContentUpdateHandler updateHandler = handlerFactory.getHandler(request);
-		boolean newRecord = (request.isInsertRootRequest() || request.isInsertChildRequest()) 
-				&& TemplateUtil.hasOwnCollection(container);
-		
-		Map<String, Object> contentDataMap = request.getDataAsMap();
-		
-		// Enrichment step
-		for (ContentEnricher enricher : enricherRegistry.getEnrichers()) {
-			enricher.enrich(request, contentDataMap, templateWrapper);
-		}
-		
-		Map<String, Object> oldRecord = updateHandler.updateContent(templateWrapper, request.getParentIdentity(), 
-				request.getContentQId(), contentDataMap);
-		
-		// notify listeners
-		ContentDataSaveEvent saveEvent = new ContentDataSaveEvent(
-				contentDataMap, request.getTemplateId(), container, newRecord);
-		saveEvent.setPriorData(oldRecord);
-		
-		ContentChangeDelta delta = contentChangeEvaluator.findDelta(saveEvent.getPriorData(), 
-				saveEvent.getDataAsMap(), saveEvent.getContainerType());
-		saveEvent.setChangeDelta(delta);
-		
-		for (ContentDataEventListener listener : listenerRegistry.getListeners()) {
-			listener.onContentDataSave(saveEvent);
-		}
-		
-		return contentDataMap;
+		return response;
 	}
 	
 

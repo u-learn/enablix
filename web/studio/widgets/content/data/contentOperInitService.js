@@ -47,6 +47,7 @@ enablix.studioApp.factory('ContentOperInitService',
 					}
 
 					_scope.pageHeading = "Add " + containerLabel;
+					_scope.qualityAlerts = {};
 
 					_scope.containerData = {};
 
@@ -94,7 +95,8 @@ enablix.studioApp.factory('ContentOperInitService',
 					}
 
 					_scope.pageHeading = "Edit " + containerLabel;
-
+					_scope.qualityAlerts = {};
+					
 					//_scope.containerData = {};
 
 					ContentDataService.getContentRecordData(enablix.templateId, _containerQId, _contentIdentity, null,
@@ -135,6 +137,7 @@ enablix.studioApp.factory('ContentOperInitService',
 					}
 
 					_scope.pageHeading = "Edit " + containerLabel;
+					_scope.qualityAlerts = {};
 					_scope.containerData = angular.copy(_contentData);
 
 					angular.forEach(_scope.containerDef.contentItem, function(itemDef) {

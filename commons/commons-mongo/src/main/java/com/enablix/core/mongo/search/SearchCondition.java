@@ -1,6 +1,7 @@
 package com.enablix.core.mongo.search;
 
 import java.util.Collection;
+import java.util.regex.Pattern;
 
 import org.springframework.data.mongodb.core.query.Criteria;
 
@@ -101,7 +102,12 @@ public abstract class SearchCondition<T> extends AbstractFilter {
 			break;
 			
 		case REGEX:
-			criteria.regex(String.valueOf(getPropertyValue()));
+			Object propVal = getPropertyValue();
+			if (propVal instanceof Pattern) {
+				criteria.regex((Pattern) propVal);
+			} else {
+				criteria.regex(String.valueOf(propVal));
+			}
 			break;
 			
 		case EXISTS:

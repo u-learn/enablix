@@ -2,12 +2,13 @@ package com.enablix.analytics.info.detection;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.enablix.app.content.ContentDataManager;
 import com.enablix.app.content.update.UpdateContentRequest;
+import com.enablix.app.content.update.UpdateContentRequest.QualityAlertProcessing;
+import com.enablix.app.content.update.UpdateContentResponse;
 import com.enablix.commons.util.process.ProcessContext;
 import com.enablix.core.api.ContentDataRecord;
 
@@ -27,10 +28,11 @@ public class ContentRecordPersister {
 			
 			UpdateContentRequest update = new UpdateContentRequest(
 					templateId, null, contentQId, suggestion.getContent().getRecord());
+			update.setQualityAlertProcessing(QualityAlertProcessing.CONTINUE);
 			
-			Map<String, Object> savedRecord = dataMgr.saveData(update);
+			UpdateContentResponse response = dataMgr.saveData(update);
 			
-			ContentDataRecord savedContent = new ContentDataRecord(templateId, contentQId, savedRecord);
+			ContentDataRecord savedContent = new ContentDataRecord(templateId, contentQId, response.getContentRecord());
 			savedSuggestions.add(new ContentSuggestion(savedContent, suggestion.getOpinionBy(), suggestion.getConfidence()));
 		}
 		

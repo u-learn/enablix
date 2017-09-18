@@ -9,6 +9,8 @@ import org.springframework.stereotype.Component;
 
 import com.enablix.app.content.ContentDataManager;
 import com.enablix.app.content.update.UpdateContentRequest;
+import com.enablix.app.content.update.UpdateContentRequest.QualityAlertProcessing;
+import com.enablix.app.content.update.UpdateContentResponse;
 import com.enablix.app.template.service.TemplateManager;
 import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.commons.util.process.ProcessContext;
@@ -46,8 +48,12 @@ public class ExternalContentHandlerImpl implements ExternalContentHandler {
 		
 		EnablixContent ebxContent = mapper.transformToEnablixContent(content, template);
 		
-		Map<String, Object> savedData = dataMgr.saveData(new UpdateContentRequest(template.getId(), 
-				ebxContent.getParentIdentity(), content.getContentQId(), ebxContent.getData()));
+		UpdateContentRequest request = new UpdateContentRequest(template.getId(), 
+				ebxContent.getParentIdentity(), content.getContentQId(), ebxContent.getData());
+		request.setQualityAlertProcessing(QualityAlertProcessing.CONTINUE);
+		
+		UpdateContentResponse response = dataMgr.saveData(request);
+		Map<String, Object> savedData = response.getContentRecord();
 		
 		return (String) savedData.get(ContentDataConstants.IDENTITY_KEY);
 	}

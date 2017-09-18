@@ -10,6 +10,7 @@
 				<xs:element name="portalUIDefinition" type="portalUIDefType" minOccurs="0"/>
 				<xs:element name="contentTypeMappingConfig" type="contentTypeMappingConfigType" minOccurs="0"/>
 				<xs:element name="dataSegmentDefinition" type="dataSegmentDefinitionType" minOccurs="0"/>
+				<xs:element name="qualityRuleConfig" type="qualityRuleConfigType" minOccurs="0"/>
 			</xs:sequence>
 			<xs:attribute name="id" type="xs:string" use="required"/>
 			<xs:attribute name="version" type="xs:string"/>
@@ -48,6 +49,40 @@
 		</xs:sequence>
 	</xs:complexType>
 	
+	<xs:complexType name="qualityRuleConfigType">
+		<xs:sequence>
+			<xs:element name="qualityRules" type="qualityRulesType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="qualityRulesType">
+		<xs:sequence>
+			<xs:element name="rule" type="qualityRuleType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="qualityRuleType">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="exclude" type="containerRefListType" minOccurs="0"/>
+				<xs:element name="include" type="containerRefListType" minOccurs="0"/>
+			</xs:choice>
+			<xs:element name="configParams" type="paramSetType" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute name="id" type="xs:string"/>
+	</xs:complexType>
+	
+	<xs:complexType name="containerRefListType">
+		<xs:sequence>
+			<xs:element name="container" type="containerRefType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="containerRefType">
+		<xs:attribute name="qualifiedId" type="xs:string" use="required"/>
+	</xs:complexType>
+	
+	
 	<xs:complexType name="containerDataContextType">
 		<xs:attribute name="qualifiedId" type="xs:string" use="required"/>
 	</xs:complexType>
@@ -57,6 +92,38 @@
 		<xs:attribute name="qualifiedId" type="xs:string"/>
 		<xs:attribute name="label" type="xs:string" use="optional"/>
 		<xs:attribute name="searchBoost" type="xs:nonNegativeInteger" use="optional" default="1"/>
+	</xs:complexType>
+	
+	<xs:complexType name="qualityControlledContentType">
+		<xs:complexContent>
+			<xs:extension base="baseContentType">
+				<xs:sequence>
+					<xs:element name="qualityConfig" type="qualityConfigType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	
+	<xs:complexType name="qualityConfigType">
+		<xs:complexContent>
+			<xs:extension base="paramSetType">
+				<xs:sequence>
+					<xs:element name="paramSet" type="paramSetType" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	
+	<xs:complexType name="paramSetType">
+		<xs:sequence>
+			<xs:element name="param" type="parameterType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute name="name" use="optional"/>
+	</xs:complexType>
+	
+	<xs:complexType name="parameterType">
+		<xs:attribute name="name" type="xs:string" use="required"/>
+		<xs:attribute name="value" type="xs:string" use="required"/>
 	</xs:complexType>
 	
 	<xs:complexType name="containerType">
@@ -84,7 +151,7 @@
 	
 	<xs:complexType name="contentItemType">
 		<xs:complexContent>
-			<xs:extension base="baseContentType">
+			<xs:extension base="qualityControlledContentType">
 				<xs:choice minOccurs="0">
 					<xs:element name="text" type="textType"/>
 					<xs:element name="bounded" type="boundedType"/>
@@ -189,7 +256,7 @@
 	
 	<xs:complexType name="baseContainerType">
 		<xs:complexContent>
-			<xs:extension base="baseContentType">
+			<xs:extension base="qualityControlledContentType">
 				<xs:sequence>
 					<xs:element name="contentItem" type="contentItemType" minOccurs="0" maxOccurs="unbounded"/>
 				</xs:sequence>

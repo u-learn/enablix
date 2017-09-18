@@ -25,8 +25,13 @@ enablix.studioApp.controller('ContentAddCtrl',
 						$scope.postDataSave(data);
 					}, 
 					function (data) {
-						//alert("Error saving data");
-						Notification.error({message: "Error saving data", delay: enablix.errorMsgShowTime});
+						
+						if (data.qualityAlerts) {
+							$scope.qualityAlerts = data;
+						} else {
+							//alert("Error saving data");
+							Notification.error({message: "Error saving data", delay: enablix.errorMsgShowTime});
+						}
 					});
 		};
 		

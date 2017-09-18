@@ -8,6 +8,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import com.enablix.app.content.ui.DisplayContext;
+import com.enablix.app.content.ui.FieldValueBuilder;
+import com.enablix.commons.util.StringUtil;
 import com.enablix.core.api.TemplateFacade;
 import com.enablix.core.commons.xsdtopojo.ContentItemClassType;
 import com.enablix.core.commons.xsdtopojo.ContentItemType;
@@ -49,6 +52,11 @@ public class DateToTextValueBuilder implements FieldValueBuilder<TextValue, Obje
 	@Override
 	public boolean canHandle(ContentItemType fieldDef) {
 		return fieldDef.getType() == ContentItemClassType.DATE_TIME;
+	}
+
+	@Override
+	public boolean isEmptyValue(ContentItemType fieldDef, Object fieldValue, TemplateFacade template) {
+		return fieldValue == null || ((fieldValue instanceof String) && StringUtil.isEmpty((String) fieldValue));
 	}
 
 }

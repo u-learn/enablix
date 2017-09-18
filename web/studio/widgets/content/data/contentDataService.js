@@ -107,7 +107,43 @@ enablix.studioApp.factory('ContentDataService',
 	 				headers.atActivityOrigin = "Portal";
 	 			}
 	 			
-	 			RESTService.postForData(url, params, _data, null, _onSuccess, _onError, null, headers);
+	 			RESTService.postForData(url, params, _data, null, function(result) {
+	 				
+	 				if (result.qualityAnalysis && result.qualityAnalysis.hasError) {
+	 					_onError(transformQualityAlerts(result.qualityAnalysis));
+	 				} else {
+	 					_onSuccess(result);
+	 				}
+	 				
+	 			}, _onError, null, headers);
+	 		}
+	 		
+	 		var transformQualityAlerts = function(_qa) {
+	 			
+	 			var newQA = {
+	 					"qualityAlerts": true,
+	 					"__general" : []
+	 			};
+	 			
+	 			angular.forEach(_qa.alerts, function(alert) {
+	 				
+	 				if (alert.info && alert.info.attributeId) {
+	 					
+	 					var attrId = alert.info.attributeId;
+	 					var existingAttrAlerts = newQA[attrId];
+	 					
+	 					if (isNullOrUndefined(existingAttrAlerts)) {
+	 						existingAttrAlerts = [];
+	 						newQA[attrId] = existingAttrAlerts;
+	 					}
+	 					existingAttrAlerts.push(alert);
+	 					
+	 				} else {
+	 					newQA["__general"].push(alert);
+	 				}
+	 			});
+	 			
+	 			return newQA;
 	 		}
 	 		
 	 		var deleteContentData = function(_contentQId, _recordIdentity, _onSuccess, _onError) {

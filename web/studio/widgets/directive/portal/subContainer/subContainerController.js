@@ -252,7 +252,7 @@ enablix.studioApp.controller('PortalSubContainerCtrl',
 				
 			} else {
 				
-				if (!$scope.singleItemCard || $scope.bodyData.identity == data.identity) {
+				if ((!$scope.singleItemCard || $scope.bodyData.identity == data.identity) && data.identity != undefined) {
 					$scope.info = null; // setting it to null so that we pick up fresh data from database
 					$scope.render();
 				}

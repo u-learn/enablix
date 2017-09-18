@@ -1,9 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<contentTemplate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="master_enterprise" version="3.05" xsi:noNamespaceSchemaLocation="../xsd/content-template.xsd">
+<contentTemplate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="master_enterprise" version="3.05" xsi:noNamespaceSchemaLocation="../../xsd/content-template.xsd">
 	<dataDefinition>
 		<container id="product" label="Products" businessCategory="BUSINESS_DIMENSION">
-			<contentItem id="name" label="Name" type="text" searchBoost="7"/>
-			<contentItem id="shortName" label="Short Name" type="text" searchBoost="7"/>
+			<contentItem id="name" label="Name" type="text" searchBoost="7">
+				<qualityConfig>
+					<param name="REQUIRED_VALIDATION" value="true"/>
+					<paramSet name="DUPLICATE_CHECK">
+						<param name="MATCH_ATTR" value="name"/>
+						<param name="MATCH_ATTR" value="shortName"/>
+						<param name="SEVERITY" value="HIGH"/>
+					</paramSet>
+				</qualityConfig>
+			</contentItem>
+			<contentItem id="shortName" label="Short Name" type="text" searchBoost="7">
+				<qualityConfig>
+					<paramSet name="REQUIRED_CHECK">
+						<param name="SEVERITY" value="HIGH"/>
+					</paramSet>
+				</qualityConfig>
+			</contentItem>
 			<container id="dataSheet" label="Data Sheet" single="true" businessCategory="BUSINESS_CONTENT">
 				<contentItem id="title" label="Title" type="text"/>			
 				<contentItem id="file" label="File" type="doc"/>
@@ -1025,9 +1040,20 @@
 		</container>
 		<container id="caseStudy" label="Case Studies" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
-			<contentItem id="file" label="File" type="doc"/>
+			<contentItem id="file" label="File" type="doc">
+				<qualityConfig>
+					<paramSet name="REQUIRED_CHECK">
+						<param name="SEVERITY" value="HIGH"/>
+					</paramSet>
+				</qualityConfig>
+			</contentItem>
 			<contentItem id="highlights" label="Case Highlights" type="text"/>
 			<contentItem id="type" label="Type" type="bounded">
+				<qualityConfig>
+					<paramSet name="REQUIRED_CHECK">
+						<param name="SEVERITY" value="MEDIUM"/>
+					</paramSet>
+				</qualityConfig>
 				<bounded multivalued="true">
 					<refList>
 						<datastore>
@@ -3714,4 +3740,11 @@
       		</bounded>
       	</segmentAttr>
 	</dataSegmentDefinition>
+	<qualityRuleConfig>
+		<qualityRules>
+			<rule id="REQUIRED_ATTR_VALIDATION_RULE"/>
+			<rule id="REQUIRED_ATTR_CHECK_RULE"/>
+			<rule id="DUPLICATE_ATTR_VALUE_CHECK_RULE"/>
+		</qualityRules>
+	</qualityRuleConfig>
 </contentTemplate>

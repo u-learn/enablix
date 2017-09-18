@@ -22,8 +22,8 @@ enablix.studioApp.controller('PortalCntnrListCtrl',
 				pageSize: enablix.defaultPageSize,
 				pageNum: $stateParams.page,
 				sort: {
-					field: "createdAt",
-					direction: "ASC"
+					field: "modifiedAt",
+					direction: "DESC"
 				}
 			};
 		

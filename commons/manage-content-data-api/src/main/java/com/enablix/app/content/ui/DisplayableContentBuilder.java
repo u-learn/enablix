@@ -1,4 +1,4 @@
-package com.enablix.app.content.ui.format;
+package com.enablix.app.content.ui;
 
 import com.enablix.core.api.ContentDataRecord;
 import com.enablix.core.api.TemplateFacade;

@@ -52,13 +52,15 @@ enablix.studioApp.controller('ContentEditCtrl',
 					enablix.templateId, containerQId, 
 					null, dataToSave, 
 					function(data) {
-						//alert("Update successfully!");
 						Notification.primary("Updated successfully!");
 						$scope.postDataUpdate(data);
 					}, 
 					function (data) {
-						//alert("Error updating data");
-						Notification.error({message: "Error updating data", delay: enablix.errorMsgShowTime});
+						if (data.qualityAlerts) {
+							$scope.qualityAlerts = data;
+						} else {
+							Notification.error({message: "Error updating data", delay: enablix.errorMsgShowTime});
+						}
 					});
 			
 		}

@@ -122,7 +122,6 @@ public class XLSRefdataProcessor implements DataFileProcessor {
 		return DatastoreUtil.getCollectionName(getTemplateIdFromFile(dataFile), getRefdataContainerId(sheet));
 	}
 	
-	@SuppressWarnings("deprecation")
 	private String getCellValueAsString(Cell cell) {
 		
 		String cellValue = "";

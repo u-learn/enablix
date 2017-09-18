@@ -273,6 +273,10 @@ public final class CollectionUtil {
 		return collection;
 	}
 	
+	public static boolean isEmpty(Map<?, ?> data) {
+		return data == null || data.isEmpty();
+	}
+	
 	public static boolean isNotEmpty(Map<?, ?> contentRecord) {
 		return contentRecord != null && !contentRecord.isEmpty();
 	}

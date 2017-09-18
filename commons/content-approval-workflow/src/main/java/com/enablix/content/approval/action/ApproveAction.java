@@ -1,11 +1,10 @@
 package com.enablix.content.approval.action;
 
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.enablix.app.content.ContentDataManager;
 import com.enablix.app.content.update.UpdateContentRequest;
+import com.enablix.app.content.update.UpdateContentResponse;
 import com.enablix.commons.util.process.ProcessContext;
 import com.enablix.content.approval.ContentApprovalConstants;
 import com.enablix.content.approval.model.ContentDetail;
@@ -33,9 +32,11 @@ public class ApproveAction extends BaseContentAction<SimpleActionInput, Boolean>
 		
 		String templateId = ProcessContext.get().getTemplateId();
 		
-		Map<String, Object> updatedData = dataMgr.saveData(new UpdateContentRequest(templateId, 
+		UpdateContentResponse updatedData = dataMgr.saveData(new UpdateContentRequest(templateId, 
 				objectRef.getParentIdentity(), objectRef.getContentQId(), objectRef.getData()));
-		objectRef.setData(updatedData);
+
+		// TODO: handle quality alerts
+		objectRef.setData(updatedData.getContentRecord());
 		
 		return new GenericActionResult<ContentDetail, Boolean>(objectRef, Boolean.TRUE);
 	}

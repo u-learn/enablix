@@ -5,9 +5,15 @@ import java.util.Map;
 import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.commons.util.StringUtil;
 import com.enablix.commons.util.json.JsonUtil;
+import com.enablix.content.quality.QualityAnalyzer.AnalysisRuleSet;
 
 public class UpdateContentRequest implements ContentUpdateContext {
 
+	public enum QualityAlertProcessing {
+		BREAK, 
+		CONTINUE
+	}
+	
 	private String templateId;
 	
 	private String parentIdentity;
@@ -15,6 +21,10 @@ public class UpdateContentRequest implements ContentUpdateContext {
 	private String contentQId;
 	
 	private Map<String, Object> dataAsMap;
+	
+	private QualityAlertProcessing qualityAlertProcessing;
+	
+	private AnalysisRuleSet qualityAnalysisLevel;
 
 	protected UpdateContentRequest() {
 		
@@ -37,6 +47,8 @@ public class UpdateContentRequest implements ContentUpdateContext {
 		this.parentIdentity = parentIdentity;
 		this.contentQId = contentQId;
 		this.dataAsMap = dataAsMap;
+		this.qualityAlertProcessing = QualityAlertProcessing.BREAK;
+		this.qualityAnalysisLevel = AnalysisRuleSet.ALL;
 	}
 	
 	public String getTemplateId() {
@@ -92,6 +104,22 @@ public class UpdateContentRequest implements ContentUpdateContext {
 	@Override
 	public String templateId() {
 		return getTemplateId();
+	}
+
+	public QualityAlertProcessing getQualityAlertProcessing() {
+		return qualityAlertProcessing;
+	}
+
+	public void setQualityAlertProcessing(QualityAlertProcessing qualityAlertProcessing) {
+		this.qualityAlertProcessing = qualityAlertProcessing;
+	}
+
+	public AnalysisRuleSet getQualityAnalysisLevel() {
+		return qualityAnalysisLevel;
+	}
+
+	public void setQualityAnalysisLevel(AnalysisRuleSet qualityAnalysisLevel) {
+		this.qualityAnalysisLevel = qualityAnalysisLevel;
 	}
 	
 }

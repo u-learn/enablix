@@ -46,8 +46,11 @@ enablix.studioApp.controller('ContentSuggestCtrl',
 							$modalInstance.close();
 						}, 
 						function (data) {
-							//alert("Error updating data");
-							Notification.error({message: "Error updating data", delay: enablix.errorMsgShowTime});
+							if (data.qualityAlerts) {
+								$scope.qualityAlerts = data;
+							} else {
+								Notification.error({message: "Error updating data", delay: enablix.errorMsgShowTime});
+							}
 						});
 					
 				} else {
@@ -61,7 +64,11 @@ enablix.studioApp.controller('ContentSuggestCtrl',
 							$modalInstance.close();
 						}, 
 						function (data) {
-							Notification.error({message: "Error saving data", delay: enablix.errorMsgShowTime});
+							if (data.qualityAlerts) {
+								$scope.qualityAlerts = data;
+							} else {
+								Notification.error({message: "Error saving data", delay: enablix.errorMsgShowTime});
+							}
 						});
 				}
 			}

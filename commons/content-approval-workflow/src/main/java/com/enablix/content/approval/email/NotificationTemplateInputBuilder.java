@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.enablix.app.content.share.DocUnsecureAccessUrlPopulator;
-import com.enablix.app.content.ui.format.DisplayContext;
-import com.enablix.app.content.ui.format.DisplayableContentBuilder;
+import com.enablix.app.content.ui.DisplayContext;
+import com.enablix.app.content.ui.DisplayableContentBuilder;
 import com.enablix.app.content.ui.format.TextLinkProcessor;
 import com.enablix.app.template.service.TemplateManager;
 import com.enablix.commons.util.StringUtil;

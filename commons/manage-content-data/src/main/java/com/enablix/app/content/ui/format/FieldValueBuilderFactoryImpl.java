@@ -4,6 +4,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import com.enablix.app.content.ui.FieldValueBuilder;
+import com.enablix.app.content.ui.FieldValueBuilderFactory;
 import com.enablix.commons.util.beans.SpringBackedAbstractFactory;
 import com.enablix.core.commons.xsdtopojo.ContentItemType;
 

@@ -64,12 +64,12 @@ public class BeanEventHandlerRegisterer implements BeanPostProcessor {
 							final String handlerId = es.handlerId() != null ? es.handlerId() : m.getName();
 							final DefaultEventListener listener = this.newListener(handlerId, obj, m);
 							
-							LOGGER.trace("Registering handler method {} for Event {}", clazz.getName() + m.getName(),
+							LOGGER.debug("Registering handler method {} for Event {}", clazz.getName() + "." + m.getName(),
 									eventName);
 							
 							EventUtil.register(eventName, listener);
 							
-							LOGGER.trace("Registed handler method {} for Event {}", clazz.getName() + m.getName(),
+							LOGGER.debug("Registered handler method {} for Event {}", clazz.getName() + "." + m.getName(),
 									eventName);
 						}
 					}

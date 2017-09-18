@@ -1556,12 +1556,20 @@ eb-nav-link:first-child li {
 	white-space: nowrap;
 	color: white !important;
 }
-.error {
+.error, .ERROR {
 	margin: 0.5em 0 0;
 	font-size: 0.875em;
 	font-weight: 300;
 	text-align: left;
 	color : red;
+}
+
+.WARN, .warn {
+	margin: 0.5em 0 0;
+	font-size: 0.875em;
+	font-weight: 300;
+	text-align: left;
+	color : #f1c40f;
 }
 
 input[type=checkbox] {
@@ -2551,4 +2559,8 @@ md-autocomplete.form-control {
 .page-heading ebx-suggest-content {
 	font-size: 0.875em;
 	padding-left: 0.5em;
+}
+
+.alert-group {
+	margin-top: 15px;
 }

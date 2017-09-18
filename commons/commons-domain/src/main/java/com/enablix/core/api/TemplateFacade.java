@@ -1,10 +1,12 @@
 package com.enablix.core.api;
 
 import java.util.Collection;
+import java.util.List;
 
 import com.enablix.core.commons.xsdtopojo.ContainerType;
 import com.enablix.core.commons.xsdtopojo.ContentItemType;
 import com.enablix.core.commons.xsdtopojo.ContentTemplate;
+import com.enablix.core.commons.xsdtopojo.QualityRuleType;
 
 public interface TemplateFacade {
 
@@ -30,5 +32,9 @@ public interface TemplateFacade {
 	Collection<String> getDataSegmentAttrIds();
 
 	Collection<String> getAllCollectionNames();
+
+	List<String> getApplicableQualityRules(String contentQId);
+
+	QualityRuleType getQualityRule(String ruleId);
 
 }

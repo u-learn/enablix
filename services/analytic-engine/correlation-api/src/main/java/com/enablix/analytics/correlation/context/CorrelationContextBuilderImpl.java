@@ -23,7 +23,6 @@ import com.enablix.core.commons.xsdtopojo.ContentItemType;
 import com.enablix.core.domain.content.connection.ConnectionContextAttribute;
 import com.enablix.core.domain.content.connection.ContentTypeConnection;
 import com.enablix.core.domain.content.connection.ContentValueConnection;
-import com.enablix.services.util.DataViewUtil;
 
 @Component
 public class CorrelationContextBuilderImpl implements CorrelationContextBuilder {
@@ -31,9 +30,11 @@ public class CorrelationContextBuilderImpl implements CorrelationContextBuilder 
 	@Autowired
 	private TemplateManager templateMgr;
 	
+	@SuppressWarnings("unused")
 	@Autowired
 	private ContentTypeConnectionRepository contentConnRepo;
 	
+	@SuppressWarnings("unused")
 	@Autowired
 	private ContentDataManager contentDataMgr;
 	
@@ -69,6 +70,7 @@ public class CorrelationContextBuilderImpl implements CorrelationContextBuilder 
 		return context;
 	}
 
+	@SuppressWarnings("unused")
 	private boolean matchConnectionContextWithRecord(ContentTypeConnection contentConn,
 			Map<String, Object> contentRecord, TemplateFacade template, ContainerType recordContainer) {
 		
@@ -198,6 +200,7 @@ public class CorrelationContextBuilderImpl implements CorrelationContextBuilder 
 		return false;
 	}
 
+	@SuppressWarnings("unused")
 	private Set<String> findContainersInScope(ContentTypeConnection contentConn, 
 			Map<String, Object> contentRecord, TemplateFacade template, ContainerType itemContainer) {
 		

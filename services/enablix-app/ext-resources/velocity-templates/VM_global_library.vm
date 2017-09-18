@@ -174,14 +174,21 @@ $a_siteUrl/app.html#/portal/container/$a_containerQId/$a_contentIdentity/c/singl
 
 
 #macro( tenant_portal_link )
-#portal_home_link(${obj.tenant.name})
+#portal_home_link('Enablix')
 #end
 
+
+#macro( mail_closing_ebx )
+#spacer_double_row('20' '15')
+Cheers, <br />
+The team at Enablix
+#spacer_double_row('20' '15')
+#end
 
 #macro( mail_closing $a_tenantName)
 #spacer_double_row('20' '15')
 Cheers, <br />
-$a_tenantName Team
+The team at Enablix
 #spacer_double_row('20' '15')
 #end
 

@@ -24,5 +24,6 @@
 	<div ng-if="item.type == 'RICH_TEXT'">
 		<eb-richtext-editor content-def="item" plain-text="containerData[item.id]" rich-text="containerData[item.id + '_rt']"></eb-richtext-editor>
 	</div>
+	<eb-content-quality-alerts alerts="qualityAlerts[item.id]" ng-if="qualityAlerts[item.id]"/>
 	</div>
 </div>

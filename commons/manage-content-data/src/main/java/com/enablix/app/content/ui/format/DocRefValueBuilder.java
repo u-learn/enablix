@@ -4,7 +4,10 @@ import java.util.Map;
 
 import org.springframework.stereotype.Component;
 
+import com.enablix.app.content.ui.DisplayContext;
+import com.enablix.app.content.ui.FieldValueBuilder;
 import com.enablix.commons.constants.ContentDataConstants;
+import com.enablix.commons.util.collection.CollectionUtil;
 import com.enablix.core.api.TemplateFacade;
 import com.enablix.core.commons.xsdtopojo.ContentItemClassType;
 import com.enablix.core.commons.xsdtopojo.ContentItemType;
@@ -25,6 +28,11 @@ public class DocRefValueBuilder implements FieldValueBuilder<DocRef, Map<String,
 	@Override
 	public boolean canHandle(ContentItemType fieldDef) {
 		return fieldDef.getType() == ContentItemClassType.DOC;
+	}
+
+	@Override
+	public boolean isEmptyValue(ContentItemType fieldDef, Map<String, Object> fieldValue, TemplateFacade template) {
+		return CollectionUtil.isEmpty(fieldValue);
 	}
 
 }

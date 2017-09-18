@@ -63,4 +63,26 @@
       </bounded>
     </contentUIDef>
   </uiDefinition>
+  
+  <qualityRuleConfig>
+  	<validationRules>
+  		<rule id="MANDATORY_LABEL_FIELD">
+  			<exclude>
+  				<container qualifiedId="caseStudy"/>
+  			</exclude>
+  		</rule>
+  		<rule id="MANDATORY_FIELD">
+  			<include>
+  				<container qualifiedId="caseStudy"/>
+  			</include>
+  		</rule>
+  	</validationRules>
+  	<qualityChecks>
+  		<rule id="IMPORTANT_FIELD">
+  			<include>
+  				<container qualifiedId="caseStudy"/>
+  			</include>
+  		</rule>
+  	</qualityChecks>
+  </qualityRuleConfig>
 </contentTemplate>

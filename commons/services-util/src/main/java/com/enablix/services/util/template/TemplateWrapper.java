@@ -1,17 +1,25 @@
 package com.enablix.services.util.template;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
 import org.springframework.util.Assert;
 
+import com.enablix.commons.util.collection.CollectionUtil;
 import com.enablix.core.api.TemplateFacade;
+import com.enablix.core.commons.xsdtopojo.ContainerRefListType;
+import com.enablix.core.commons.xsdtopojo.ContainerRefType;
 import com.enablix.core.commons.xsdtopojo.ContainerType;
 import com.enablix.core.commons.xsdtopojo.ContentItemType;
 import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 import com.enablix.core.commons.xsdtopojo.DataSegmentDefinitionType;
+import com.enablix.core.commons.xsdtopojo.QualityRuleConfigType;
+import com.enablix.core.commons.xsdtopojo.QualityRuleType;
+import com.enablix.core.commons.xsdtopojo.QualityRulesType;
 import com.enablix.services.util.TemplateUtil;
 import com.enablix.services.util.template.walker.ContainerVisitor;
 import com.enablix.services.util.template.walker.TemplateContainerWalker;
@@ -27,6 +35,8 @@ public class TemplateWrapper implements TemplateFacade {
 	private Map<String, ContainerType> collectionNameContainerMap;
 	private Map<String, ContentItemType> dataSegmentAttrIdMap;
 	private Map<String, ContentItemType> containerDataSegmentAttrMap;
+	private Map<String, QualityRuleType> qualityRuleConfigMap;
+	private Map<String, List<String>> containerQualityRuleIdMap;
 
 	public TemplateWrapper(ContentTemplate template) {
 		super();
@@ -48,10 +58,30 @@ public class TemplateWrapper implements TemplateFacade {
 	
 	private void initCache() {
 		Assert.notNull(this.template, "Content template can not be null");
+		initQualityRuleCache();
 		initDataSegmentCache();
 		initContainerCache();
 	}
 	
+	private void initQualityRuleCache() {
+		
+		this.qualityRuleConfigMap = new HashMap<>();
+		
+		QualityRuleConfigType qualityRuleConfig = template.getQualityRuleConfig();
+		
+		if (qualityRuleConfig != null) {
+		
+			QualityRulesType rules = qualityRuleConfig.getQualityRules();
+			
+			if (rules != null) {
+				for (QualityRuleType rule : rules.getRule()) {
+					qualityRuleConfigMap.put(rule.getId(), rule);
+				}
+			}
+		}
+		
+	}
+
 	private void initDataSegmentCache() {
 		
 		this.dataSegmentAttrIdMap = new HashMap<String, ContentItemType>();
@@ -73,6 +103,8 @@ public class TemplateWrapper implements TemplateFacade {
 		this.containerStudioLabelAttrIdMap = new HashMap<>();
 		this.collectionNameContainerMap = new HashMap<>();
 		this.containerDataSegmentAttrMap = new HashMap<>();
+		this.containerQualityRuleIdMap = new HashMap<>();
+		
 		
 		TemplateContainerWalker walker = new TemplateContainerWalker(this.template);
 		walker.walk(new ContainerVisitor() {
@@ -97,6 +129,8 @@ public class TemplateWrapper implements TemplateFacade {
 					collectionNameContainerMap.put(collectionName, container);
 				}
 				
+				initQualityRuleMapping(container);
+				
 				for (Entry<String, ContentItemType> segmentAttr : dataSegmentAttrIdMap.entrySet()) {
 					
 					ContentItemType containerContentItem = 
@@ -108,6 +142,46 @@ public class TemplateWrapper implements TemplateFacade {
 								containerContentItem);
 					}
 				}
+			}
+
+			private void initQualityRuleMapping(ContainerType container) {
+				
+				for (QualityRuleType rule : qualityRuleConfigMap.values()) {
+					
+					boolean ruleApplicable = true;
+					
+					ContainerRefListType excludeContainerQIds = rule.getExclude();
+					ContainerRefListType includeContainerQIds = rule.getInclude();
+					
+					if (excludeContainerQIds != null) {
+						
+						if (isContainerInList(container, excludeContainerQIds)) {
+							ruleApplicable = false;
+						}
+						
+					} else if (includeContainerQIds != null) {
+						
+						if (!isContainerInList(container, includeContainerQIds)) {
+							ruleApplicable = false;
+						}
+					}
+					
+					if (ruleApplicable) {
+						CollectionUtil.addToMappedListValue(container.getQualifiedId(), 
+								rule.getId(), containerQualityRuleIdMap, () -> new ArrayList<>());
+					}
+				}
+			}
+
+			private boolean isContainerInList(ContainerType container, ContainerRefListType excludeContainerQIds) {
+				
+				for (ContainerRefType crt : excludeContainerQIds.getContainer()) {
+					if (container.getQualifiedId().equals(crt.getQualifiedId())) {
+						return true;
+					}
+				}
+				
+				return false;
 			}
 			
 		});
@@ -191,6 +265,16 @@ public class TemplateWrapper implements TemplateFacade {
 	@Override
 	public Collection<String> getAllCollectionNames() {
 		return collectionNameContainerMap.keySet();
+	}
+
+	@Override
+	public List<String> getApplicableQualityRules(String contentQId) {
+		return containerQualityRuleIdMap.get(contentQId);
+	}
+
+	@Override
+	public QualityRuleType getQualityRule(String ruleId) {
+		return qualityRuleConfigMap.get(ruleId);
 	}
 	
 }
