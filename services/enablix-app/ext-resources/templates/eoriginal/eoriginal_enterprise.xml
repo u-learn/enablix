@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<contentTemplate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="eoriginal_enterprise" version="1.13" xsi:noNamespaceSchemaLocation="../xsd/content-template.xsd">
+<contentTemplate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="eoriginal_enterprise" version="1.14" xsi:noNamespaceSchemaLocation="../xsd/content-template.xsd">
 	<dataDefinition>
 		<container id="solution" label="Solutions" businessCategory="BUSINESS_DIMENSION">
 			<contentItem id="name" label="Name" type="text" searchBoost="7"/>
@@ -219,7 +219,7 @@
 		<container id="topic" label="Topics" businessCategory="BUSINESS_DIMENSION">
 			<contentItem id="name" label="Topic Name" type="text"/>
 			<contentItem id="shortName" label="Short Name" type="text"/>
-			<contentItem id="desc" label="Description" type="richText"/>
+			<contentItem id="desc" label="Description" type="richText" searchBoost="2"/>
 			<contentItem id="solutions" label="Solutions" type="bounded">
 				<bounded multivalued="true">
 					<refList>
@@ -283,11 +283,11 @@
 			<container id="topicContent" label="Other Content" linkContainerQId="content" linkContentItemId="topics"/>
 		</container>
 		<container id="article" label="Article" businessCategory="BUSINESS_CONTENT">
-			<contentItem id="title" label="Title" type="text"/>
+			<contentItem id="title" label="Title" type="text" searchBoost="7"/>
 			<contentItem id="url" label="URL" type="text"/>
 			<contentItem id="file" label="File" type="doc"/>
 			<contentItem id="importance" label="Importance" type="richText" searchBoost="2"/>
-			<contentItem id="solutions" label="Solutions" type="bounded">
+			<contentItem id="solutions" label="Solutions" type="bounded" searchBoost="6">
 				<bounded multivalued="true">
 					<refList>
 						<datastore hyperlink="true">
@@ -298,7 +298,7 @@
 					</refList>
 				</bounded>
 			</contentItem>
-			<contentItem id="industries" label="Industries" type="bounded">
+			<contentItem id="industries" label="Industries" type="bounded" searchBoost="6">
 				<bounded multivalued="true">
 					<refList>
 						<datastore hyperlink="true">
@@ -309,7 +309,7 @@
 					</refList>
 				</bounded>
 			</contentItem>						
-			<contentItem id="competitors" label="Competitors" type="bounded">
+			<contentItem id="competitors" label="Competitors" type="bounded" searchBoost="6">
 				<bounded multivalued="true">
 					<refList>
 						<datastore hyperlink="true">
@@ -320,7 +320,7 @@
 					</refList>
 				</bounded>
 			</contentItem>
-			<contentItem id="partners" label="Partners" type="bounded">
+			<contentItem id="partners" label="Partners" type="bounded" searchBoost="6">
 				<bounded multivalued="true">
 					<refList>
 						<datastore hyperlink="true">
@@ -331,7 +331,7 @@
 					</refList>
 				</bounded>
 			</contentItem>
-			<contentItem id="analysts" label="Analysts" type="bounded">
+			<contentItem id="analysts" label="Analysts" type="bounded" searchBoost="6">
 				<bounded multivalued="true">
 					<refList>
 						<datastore hyperlink="true">
@@ -342,7 +342,7 @@
 					</refList>
 				</bounded>
 			</contentItem>
-			<contentItem id="topics" label="Topics" type="bounded">
+			<contentItem id="topics" label="Topics" type="bounded" searchBoost="6">
 				<bounded>
 					<refList>
 						<datastore hyperlink="true">
@@ -428,6 +428,7 @@
 		<container id="blog" label="Blogs" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="url" label="URL" type="text"/>
+			<contentItem id="blogdate" label="Publish Date" type="dateTime"/>
 			<contentItem id="blogSource" label="Source" type="bounded">
 				<bounded>
 					<fixedList>
@@ -436,6 +437,7 @@
 					</fixedList>
 				</bounded>
 			</contentItem>
+			<contentItem id="desc" label="Description" type="richText" searchBoost="2"/>			
 			<contentItem id="solutions" label="Solutions" type="bounded">
 				<bounded multivalued="true">
 					<refList>
@@ -966,11 +968,12 @@
 				</bounded>
 			</contentItem>				
 		</container>				
-		<container id="press" label="Press" businessCategory="BUSINESS_CONTENT">
+		<container id="press" label="Press Releases" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text" searchBoost="7"/>
 			<contentItem id="file" label="File" type="doc"/>			
 			<contentItem id="url" label="URL" type="text"/>
-			<contentItem id="source" label="Source" type="text" searchBoost="6"/>			
+			<contentItem id="prdate" label="Publish Date" type="dateTime"/>
+			<contentItem id="desc" label="Description" type="richText" searchBoost="2"/>						
 			<contentItem id="solutions" label="Solutions" type="bounded" searchBoost="6">
 				<bounded multivalued="true">
 					<refList>
@@ -2172,7 +2175,9 @@
 		<contentUIDef qualifiedId="blog">
 			<container labelQualifiedId="blog.title">
 				<listViewConfig>
+					<hideContentItem id="blogdate"/>				
 					<hideContentItem id="blogSource"/>
+					<hideContentItem id="desc"/>					
 					<hideContentItem id="solutions"/>
 					<hideContentItem id="industries"/>										
 					<hideContentItem id="competitors"/>
@@ -2185,7 +2190,10 @@
 					<headingContentItem id="title"/>
 				</portalConfig>
 			</container>
-		</contentUIDef>		
+		</contentUIDef>
+		<contentUIDef qualifiedId="blog.desc">
+			<text type="long"/>
+		</contentUIDef>				
 		<contentUIDef qualifiedId="casestudy">
 			<container labelQualifiedId="casestudy.title">
 				<listViewConfig>
@@ -2381,8 +2389,7 @@
 				<listViewConfig>
 					<hideContentItem id="file"/>
 					<hideContentItem id="url"/>					
-					<hideContentItem id="highlight"/>
-					<hideContentItem id="source"/>					
+					<hideContentItem id="desc"/>
 					<hideContentItem id="solutions"/>
 					<hideContentItem id="industries"/>										
 					<hideContentItem id="partners"/>
@@ -2396,7 +2403,7 @@
 				</portalConfig>
 			</container>
 		</contentUIDef>
-		<contentUIDef qualifiedId="press.highlight">
+		<contentUIDef qualifiedId="press.desc">
 			<text type="long"/>
 		</contentUIDef>	
 		<contentUIDef qualifiedId="slideshare">
