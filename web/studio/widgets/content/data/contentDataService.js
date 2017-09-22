@@ -112,7 +112,7 @@ enablix.studioApp.factory('ContentDataService',
 	 				if (result.qualityAnalysis && result.qualityAnalysis.hasError) {
 	 					_onError(transformQualityAlerts(result.qualityAnalysis));
 	 				} else {
-	 					_onSuccess(result);
+	 					_onSuccess(result.contentRecord);
 	 				}
 	 				
 	 			}, _onError, null, headers);

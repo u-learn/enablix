@@ -18,6 +18,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
 import com.enablix.commons.util.collection.CollectionUtil;
+import com.enablix.commons.util.concurrent.Events;
 import com.enablix.commons.util.id.IdentityUtil;
 import com.enablix.commons.util.json.JsonUtil;
 import com.enablix.commons.util.process.ProcessContext;
@@ -29,6 +30,8 @@ import com.enablix.core.domain.tenant.Tenant;
 import com.enablix.core.domain.user.User;
 import com.enablix.core.mail.service.MailService;
 import com.enablix.core.mail.utility.MailConstants;
+import com.enablix.core.mq.Event;
+import com.enablix.core.mq.util.EventUtil;
 import com.enablix.core.security.auth.repo.RoleRepository;
 import com.enablix.core.security.auth.repo.UserProfileRepository;
 import com.enablix.core.system.repo.TenantRepository;
@@ -152,14 +155,18 @@ public class EnablixUserService implements UserService, UserDetailsService {
 		}
 
 		User newuser = userRepo.save(user);
+		
 		userProfile.setIdentity(IdentityUtil.generateIdentity(newuser));
 		userProfile.setUserIdentity(newuser.getIdentity());
 		userProfile.setId(newuser.getId());
 		userProfile.setSystemProfile(userSystemProfile);
 		userProfile.setBusinessProfile(usrBusinessProfile);
-		userProfileRepo.save(userProfile);
+		
+		userProfile = userProfileRepo.save(userProfile);
 
-		mailService.sendHtmlEmail(newuser,userProfile.getEmail(),"setpassword");
+		mailService.sendHtmlEmail(newuser, userProfile.getEmail(), "setpassword");
+		
+		EventUtil.publishEvent(new Event<UserProfile>(Events.USER_ADDED, userProfile));
 
 		return newuser;
 	}

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<contentMapping id="Wordpress-WP-Post" name="Wordpress Post content mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../xsd/content-mapping.xsd">
+	
+	<container qualifiedId="blog">
+		<sourceId>post.id</sourceId>
+		<contentItemMappings>
+			<itemMapping itemId="title">post.title.rendered</itemMapping>
+			<itemMapping itemId="url">post.link</itemMapping>
+		</contentItemMappings>
+	</container>
+	
+</contentMapping>

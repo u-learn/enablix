@@ -12,7 +12,10 @@ import com.enablix.app.config.ConfigurationCrudService;
 import com.enablix.commons.config.TenantDBConfigurationProvider;
 import com.enablix.commons.dms.DMSUtil;
 import com.enablix.commons.dms.DocumentStoreConstants;
+import com.enablix.commons.util.concurrent.Events;
 import com.enablix.core.domain.config.Configuration;
+import com.enablix.core.mq.Event;
+import com.enablix.core.mq.util.EventUtil;
 
 @RestController
 @RequestMapping("docstore")
@@ -62,6 +65,8 @@ public class DocStoreConfigController {
 
 		configManager.saveOrUpdate(defaultDocStoreConfig);
 		configManager.saveOrUpdate(config);
+		
+		EventUtil.publishEvent(new Event<Configuration>(Events.DOC_STORE_CONFIG_UPDATED, config));
 	}
 
 	

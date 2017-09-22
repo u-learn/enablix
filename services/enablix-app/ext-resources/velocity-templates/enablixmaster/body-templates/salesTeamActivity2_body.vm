@@ -6,7 +6,7 @@
 	
 	#spacer_row('15')
 	
-	Here are some insights from Sales Team's engagement on Enablix in last ${obj.inputData.get('metricPeriodText')}:
+	Here are some insights from Sales and Sales Engineering Team's engagement on Enablix in last ${obj.inputData.get('metricPeriodText')}:
 	
 	#spacer_row('15')
 	

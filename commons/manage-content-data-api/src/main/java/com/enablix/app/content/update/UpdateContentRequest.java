@@ -48,7 +48,7 @@ public class UpdateContentRequest implements ContentUpdateContext {
 		this.contentQId = contentQId;
 		this.dataAsMap = dataAsMap;
 		this.qualityAlertProcessing = QualityAlertProcessing.BREAK;
-		this.qualityAnalysisLevel = AnalysisRuleSet.ALL;
+		this.qualityAnalysisLevel = AnalysisRuleSet.ERROR;
 	}
 	
 	public String getTemplateId() {

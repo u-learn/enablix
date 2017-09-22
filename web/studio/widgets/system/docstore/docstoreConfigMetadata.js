@@ -58,5 +58,20 @@ enablix.docstore.metadata =
 			"paramName" : "Password"
 		}
 	]
+},
+{
+	"storeTypeName" : "Google Drive",
+	"storeTypeCode" : "GOOGLEDRIVE",
+	"params" : [
+		{
+			"paramKey" : "BASE_FOLDER",
+			"paramName" : "Base Folder"
+		},
+		{
+			"paramKey" : "AUTH_KEY_FILE",
+			"paramName" : "Service Account Key File",
+			"paramType" : "FILE_CONTENT"
+		}
+	]
 }
 ];

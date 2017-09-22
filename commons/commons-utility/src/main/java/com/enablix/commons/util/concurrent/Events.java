@@ -15,4 +15,8 @@ public final class Events {
 	public static final String CONTENT_TEMPLATE_UPDATED = "CONTENT_TEMPLATE_UPDATED";
 	public static final String DOCUMENT_UPLOADED = "DOCUMENT_UPLOADED";
 	
+	
+	public static final String DOC_STORE_CONFIG_UPDATED = "DOC_STORE_CONFIG_UPDATED";
+	public static final String USER_ADDED = "USER_ADDED";
+	
 }

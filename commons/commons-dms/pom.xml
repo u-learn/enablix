@@ -9,6 +9,7 @@
   	<module>dms-webdav</module>
   	<module>dms-sharepoint</module>
   	<module>dms-impl</module>
+  	<module>dms-googledrive</module>
   </modules>
   <parent>
   	<groupId>com.enablix.commons</groupId>

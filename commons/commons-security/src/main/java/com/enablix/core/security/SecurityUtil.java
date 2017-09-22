@@ -1,5 +1,6 @@
 package com.enablix.core.security;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import org.springframework.security.core.Authentication;
@@ -8,6 +9,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.enablix.commons.constants.AppConstants;
+import com.enablix.core.domain.security.authorization.UserProfile;
 import com.enablix.core.security.service.EnablixUserService.LoggedInUser;
 
 public class SecurityUtil {
@@ -69,6 +71,20 @@ public class SecurityUtil {
 		
 		for (String perm : permissions) {
 			if (!authorities.contains(perm)) {
+				return false;
+			}
+		}
+		
+		return true;
+	}
+	
+	public static boolean userHasAllPermission(UserProfile userProfile, String... permissions) {
+		
+		Set<String> allPerms = new HashSet<>();
+		userProfile.getSystemProfile().getRoles().forEach((role) -> allPerms.addAll(role.getPermissions()));
+		
+		for (String perm : permissions) {
+			if (!allPerms.contains(perm)) {
 				return false;
 			}
 		}
