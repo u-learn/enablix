@@ -7,7 +7,7 @@
 			<container id="prodArticle" label="Article" linkContainerQId="article" linkContentItemId="products"/>						
 			<container id="prodBattleCard" label="Battle Cards" linkContainerQId="battlecard" linkContentItemId="products"/>			
 			<container id="prodBlog" label="Blogs" linkContainerQId="blog" linkContentItemId="products"/>
-			<container id="prodCaseStudy" label="Case Studies" linkContainerQId="caseStudy" linkContentItemId="products"/>
+			<container id="prodCaseStudy" label="Case Studies" linkContainerQId="casestudy" linkContentItemId="products"/>
 			<container id="prodDataSheet" label="Data Sheets" linkContainerQId="datasheet" linkContentItemId="products"/>						
 			<container id="prodDemoEnv" label="Demo Environments" linkContainerQId="demoenvironment" linkContentItemId="products"/>									
 			<container id="prodDemoScript" label="Demo Scripts" linkContainerQId="demoscript" linkContentItemId="products"/>												
@@ -20,7 +20,7 @@
 			<container id="prodDoc" label="Product Documentation" linkContainerQId="productdoc" linkContentItemId="products"/>						
 			<container id="prodResearch" label="Research" linkContainerQId="research" linkContentItemId="products"/>
 			<container id="prodRFXQA" label="RFX Q&amp;A" linkContainerQId="rfxqa" linkContentItemId="rfxproducts"/>						
-			<container id="prodSalesKits" label="Sales Kits" linkContainerQId="salesKit" linkContentItemId="products"/>			
+			<container id="prodSalesKits" label="Sales Kits" linkContainerQId="saleskit" linkContentItemId="products"/>			
 			<container id="prodVideo" label="Videos" linkContainerQId="video" linkContentItemId="products"/>						
 			<container id="prodWebinarRec" label="Webinar Recordings" linkContainerQId="webinarrecording" linkContentItemId="products"/>						
 			<container id="prodWhitePaper" label="White Papers" linkContainerQId="whitepaper" linkContentItemId="products"/>			
@@ -32,7 +32,7 @@
 			<container id="solArticle" label="Article" linkContainerQId="article" linkContentItemId="solutions"/>						
 			<container id="solBattleCard" label="Battle Cards" linkContainerQId="battlecard" linkContentItemId="solutions"/>			
 			<container id="solBlog" label="Blogs" linkContainerQId="blog" linkContentItemId="solutions"/>
-			<container id="solCaseStudy" label="Case Studies" linkContainerQId="caseStudy" linkContentItemId="solutions"/>
+			<container id="solCaseStudy" label="Case Studies" linkContainerQId="casestudy" linkContentItemId="solutions"/>
 			<container id="solDataSheet" label="Data Sheets" linkContainerQId="datasheet" linkContentItemId="solutions"/>						
 			<container id="solDemoEnv" label="Demo Environments" linkContainerQId="demoenvironment" linkContentItemId="solutions"/>									
 			<container id="solDemoScript" label="Demo Scripts" linkContainerQId="demoscript" linkContentItemId="solutions"/>												
@@ -45,7 +45,7 @@
 			<container id="solDoc" label="Product Documentation" linkContainerQId="productdoc" linkContentItemId="solutions"/>						
 			<container id="solResearch" label="Research" linkContainerQId="research" linkContentItemId="solutions"/>
 			<container id="solRFXQA" label="RFX Q&amp;A" linkContainerQId="rfxqa" linkContentItemId="rfxsolutions"/>						
-			<container id="solSalesKits" label="Sales Kits" linkContainerQId="salesKit" linkContentItemId="solutions"/>			
+			<container id="solSalesKits" label="Sales Kits" linkContainerQId="saleskit" linkContentItemId="solutions"/>			
 			<container id="solVideo" label="Videos" linkContainerQId="video" linkContentItemId="solutions"/>						
 			<container id="solWebinarRec" label="Webinar Recordings" linkContainerQId="webinarrecording" linkContentItemId="solutions"/>						
 			<container id="solWhitePaper" label="White Papers" linkContainerQId="whitepaper" linkContentItemId="solutions"/>			
@@ -57,7 +57,7 @@
 			<container id="compArticle" label="Article" linkContainerQId="article" linkContentItemId="competitors"/>						
 			<container id="compBattleCard" label="Battle Cards" linkContainerQId="battlecard" linkContentItemId="competitors"/>			
 			<container id="compBlog" label="Blogs" linkContainerQId="blog" linkContentItemId="competitors"/>
-			<container id="compCaseStudy" label="Case Studies" linkContainerQId="caseStudy" linkContentItemId="competitors"/>
+			<container id="compCaseStudy" label="Case Studies" linkContainerQId="casestudy" linkContentItemId="competitors"/>
 			<container id="compDataSheet" label="Data Sheets" linkContainerQId="datasheet" linkContentItemId="competitors"/>						
 			<container id="compDemoEnv" label="Demo Environments" linkContainerQId="demoenvironment" linkContentItemId="competitors"/>									
 			<container id="compDemoScript" label="Demo Scripts" linkContainerQId="demoscript" linkContentItemId="competitors"/>												
@@ -70,7 +70,7 @@
 			<container id="compDoc" label="Product Documentation" linkContainerQId="productdoc" linkContentItemId="competitors"/>						
 			<container id="compResearch" label="Research" linkContainerQId="research" linkContentItemId="competitors"/>
 			<container id="compRFXQA" label="RFX Q&amp;A" linkContainerQId="rfxqa" linkContentItemId="rfxcompetitors"/>						
-			<container id="compSalesKits" label="Sales Kits" linkContainerQId="salesKit" linkContentItemId="competitors"/>			
+			<container id="compSalesKits" label="Sales Kits" linkContainerQId="saleskit" linkContentItemId="competitors"/>			
 			<container id="compVideo" label="Videos" linkContainerQId="video" linkContentItemId="competitors"/>						
 			<container id="compWebinarRec" label="Webinar Recordings" linkContainerQId="webinarrecording" linkContentItemId="competitors"/>						
 			<container id="compWhitePaper" label="White Papers" linkContainerQId="whitepaper" linkContentItemId="competitors"/>			
@@ -82,7 +82,7 @@
 			<container id="partnerArticle" label="Article" linkContainerQId="article" linkContentItemId="partners"/>						
 			<container id="partnerBattleCard" label="Battle Cards" linkContainerQId="battlecard" linkContentItemId="partners"/>			
 			<container id="partnerBlog" label="Blogs" linkContainerQId="blog" linkContentItemId="partners"/>
-			<container id="partnerCaseStudy" label="Case Studies" linkContainerQId="caseStudy" linkContentItemId="partners"/>
+			<container id="partnerCaseStudy" label="Case Studies" linkContainerQId="casestudy" linkContentItemId="partners"/>
 			<container id="partnerDataSheet" label="Data Sheets" linkContainerQId="datasheet" linkContentItemId="partners"/>						
 			<container id="partnerDemoEnv" label="Demo Environments" linkContainerQId="demoenvironment" linkContentItemId="partners"/>									
 			<container id="partnerDemoScript" label="Demo Scripts" linkContainerQId="demoscript" linkContentItemId="partners"/>												
@@ -95,7 +95,7 @@
 			<container id="partnerDoc" label="Product Documentation" linkContainerQId="productdoc" linkContentItemId="partners"/>						
 			<container id="partnerResearch" label="Research" linkContainerQId="research" linkContentItemId="partners"/>
 			<container id="partnerRFXQA" label="RFX Q&amp;A" linkContainerQId="rfxqa" linkContentItemId="rfxpartners"/>						
-			<container id="partnerSalesKits" label="Sales Kits" linkContainerQId="salesKit" linkContentItemId="partners"/>			
+			<container id="partnerSalesKits" label="Sales Kits" linkContainerQId="saleskit" linkContentItemId="partners"/>			
 			<container id="partnerVideo" label="Videos" linkContainerQId="video" linkContentItemId="partners"/>						
 			<container id="partnerWebinarRec" label="Webinar Recordings" linkContainerQId="webinarrecording" linkContentItemId="partners"/>						
 			<container id="partnerWhitePaper" label="White Papers" linkContainerQId="whitepaper" linkContentItemId="partners"/>			
@@ -107,7 +107,7 @@
 			<container id="analystArticle" label="Article" linkContainerQId="article" linkContentItemId="analysts"/>						
 			<container id="analystBattleCard" label="Battle Cards" linkContainerQId="battlecard" linkContentItemId="analysts"/>			
 			<container id="analystBlog" label="Blogs" linkContainerQId="blog" linkContentItemId="analysts"/>
-			<container id="analystCaseStudy" label="Case Studies" linkContainerQId="caseStudy" linkContentItemId="analysts"/>
+			<container id="analystCaseStudy" label="Case Studies" linkContainerQId="casestudy" linkContentItemId="analysts"/>
 			<container id="analystDataSheet" label="Data Sheets" linkContainerQId="datasheet" linkContentItemId="analysts"/>						
 			<container id="analystDemoEnv" label="Demo Environments" linkContainerQId="demoenvironment" linkContentItemId="analysts"/>									
 			<container id="analystDemoScript" label="Demo Scripts" linkContainerQId="demoscript" linkContentItemId="analysts"/>												
@@ -120,7 +120,7 @@
 			<container id="analystDoc" label="Product Documentation" linkContainerQId="productdoc" linkContentItemId="analysts"/>						
 			<container id="analystResearch" label="Research" linkContainerQId="research" linkContentItemId="analysts"/>
 			<container id="analystRFXQA" label="RFX Q&amp;A" linkContainerQId="rfxqa" linkContentItemId="rfxanalysts"/>						
-			<container id="analystSalesKits" label="Sales Kits" linkContainerQId="salesKit" linkContentItemId="analysts"/>			
+			<container id="analystSalesKits" label="Sales Kits" linkContainerQId="saleskit" linkContentItemId="analysts"/>			
 			<container id="analystVideo" label="Videos" linkContainerQId="video" linkContentItemId="analysts"/>						
 			<container id="analystWebinarRec" label="Webinar Recordings" linkContainerQId="webinarrecording" linkContentItemId="analysts"/>						
 			<container id="analystWhitePaper" label="White Papers" linkContainerQId="whitepaper" linkContentItemId="analysts"/>			
@@ -132,7 +132,7 @@
 			<container id="topicArticle" label="Article" linkContainerQId="article" linkContentItemId="topics"/>						
 			<container id="topicBattleCard" label="Battle Cards" linkContainerQId="battlecard" linkContentItemId="topics"/>			
 			<container id="topicBlog" label="Blogs" linkContainerQId="blog" linkContentItemId="topics"/>
-			<container id="topicCaseStudy" label="Case Studies" linkContainerQId="caseStudy" linkContentItemId="topics"/>
+			<container id="topicCaseStudy" label="Case Studies" linkContainerQId="casestudy" linkContentItemId="topics"/>
 			<container id="topicDataSheet" label="Data Sheets" linkContainerQId="datasheet" linkContentItemId="topics"/>						
 			<container id="topicDemoEnv" label="Demo Environments" linkContainerQId="demoenvironment" linkContentItemId="topics"/>									
 			<container id="topicDemoScript" label="Demo Scripts" linkContainerQId="demoscript" linkContentItemId="topics"/>												
@@ -145,7 +145,7 @@
 			<container id="topicDoc" label="Product Documentation" linkContainerQId="productdoc" linkContentItemId="topics"/>						
 			<container id="topicResearch" label="Research" linkContainerQId="research" linkContentItemId="topics"/>
 			<container id="topicRFXQA" label="RFX Q&amp;A" linkContainerQId="rfxqa" linkContentItemId="rfxtopics"/>						
-			<container id="topicSalesKits" label="Sales Kits" linkContainerQId="salesKit" linkContentItemId="topics"/>			
+			<container id="topicSalesKits" label="Sales Kits" linkContainerQId="saleskit" linkContentItemId="topics"/>			
 			<container id="topicVideo" label="Videos" linkContainerQId="video" linkContentItemId="topics"/>						
 			<container id="topicWebinarRec" label="Webinar Recordings" linkContainerQId="webinarrecording" linkContentItemId="topics"/>						
 			<container id="topicWhitePaper" label="White Papers" linkContainerQId="whitepaper" linkContentItemId="topics"/>			
