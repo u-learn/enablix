@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<contentTemplate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="kasisto_enterprise" version="1.0" xsi:noNamespaceSchemaLocation="../xsd/content-template.xsd">
+<contentTemplate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="kasisto_enterprise" version="1.0" xsi:noNamespaceSchemaLocation="../../xsd/content-template.xsd">
 	<dataDefinition>
 		<container id="product" label="Products" businessCategory="BUSINESS_DIMENSION">
 			<contentItem id="name" label="Name" type="text" searchBoost="7"/>
@@ -7,7 +7,7 @@
 			<container id="prodArticle" label="Article" linkContainerQId="article" linkContentItemId="products"/>						
 			<container id="prodBattleCard" label="Battle Cards" linkContainerQId="battlecard" linkContentItemId="products"/>			
 			<container id="prodBlog" label="Blogs" linkContainerQId="blog" linkContentItemId="products"/>
-			<container id="prodCaseStudy" label="Case Studies" linkContainerQId="caseStudy" linkContentItemId="products"/>			\
+			<container id="prodCaseStudy" label="Case Studies" linkContainerQId="caseStudy" linkContentItemId="products"/>
 			<container id="prodDataSheet" label="Data Sheets" linkContainerQId="datasheet" linkContentItemId="products"/>						
 			<container id="prodDemoEnv" label="Demo Environments" linkContainerQId="demoenvironment" linkContentItemId="products"/>									
 			<container id="prodDemoScript" label="Demo Scripts" linkContainerQId="demoscript" linkContentItemId="products"/>												
@@ -32,7 +32,7 @@
 			<container id="solArticle" label="Article" linkContainerQId="article" linkContentItemId="solutions"/>						
 			<container id="solBattleCard" label="Battle Cards" linkContainerQId="battlecard" linkContentItemId="solutions"/>			
 			<container id="solBlog" label="Blogs" linkContainerQId="blog" linkContentItemId="solutions"/>
-			<container id="solCaseStudy" label="Case Studies" linkContainerQId="caseStudy" linkContentItemId="solutions"/>			\
+			<container id="solCaseStudy" label="Case Studies" linkContainerQId="caseStudy" linkContentItemId="solutions"/>
 			<container id="solDataSheet" label="Data Sheets" linkContainerQId="datasheet" linkContentItemId="solutions"/>						
 			<container id="solDemoEnv" label="Demo Environments" linkContainerQId="demoenvironment" linkContentItemId="solutions"/>									
 			<container id="solDemoScript" label="Demo Scripts" linkContainerQId="demoscript" linkContentItemId="solutions"/>												
@@ -57,7 +57,7 @@
 			<container id="compArticle" label="Article" linkContainerQId="article" linkContentItemId="competitors"/>						
 			<container id="compBattleCard" label="Battle Cards" linkContainerQId="battlecard" linkContentItemId="competitors"/>			
 			<container id="compBlog" label="Blogs" linkContainerQId="blog" linkContentItemId="competitors"/>
-			<container id="compCaseStudy" label="Case Studies" linkContainerQId="caseStudy" linkContentItemId="competitors"/>			\
+			<container id="compCaseStudy" label="Case Studies" linkContainerQId="caseStudy" linkContentItemId="competitors"/>
 			<container id="compDataSheet" label="Data Sheets" linkContainerQId="datasheet" linkContentItemId="competitors"/>						
 			<container id="compDemoEnv" label="Demo Environments" linkContainerQId="demoenvironment" linkContentItemId="competitors"/>									
 			<container id="compDemoScript" label="Demo Scripts" linkContainerQId="demoscript" linkContentItemId="competitors"/>												
@@ -82,7 +82,7 @@
 			<container id="partnerArticle" label="Article" linkContainerQId="article" linkContentItemId="partners"/>						
 			<container id="partnerBattleCard" label="Battle Cards" linkContainerQId="battlecard" linkContentItemId="partners"/>			
 			<container id="partnerBlog" label="Blogs" linkContainerQId="blog" linkContentItemId="partners"/>
-			<container id="partnerCaseStudy" label="Case Studies" linkContainerQId="caseStudy" linkContentItemId="partners"/>			\
+			<container id="partnerCaseStudy" label="Case Studies" linkContainerQId="caseStudy" linkContentItemId="partners"/>
 			<container id="partnerDataSheet" label="Data Sheets" linkContainerQId="datasheet" linkContentItemId="partners"/>						
 			<container id="partnerDemoEnv" label="Demo Environments" linkContainerQId="demoenvironment" linkContentItemId="partners"/>									
 			<container id="partnerDemoScript" label="Demo Scripts" linkContainerQId="demoscript" linkContentItemId="partners"/>												
@@ -107,7 +107,7 @@
 			<container id="analystArticle" label="Article" linkContainerQId="article" linkContentItemId="analysts"/>						
 			<container id="analystBattleCard" label="Battle Cards" linkContainerQId="battlecard" linkContentItemId="analysts"/>			
 			<container id="analystBlog" label="Blogs" linkContainerQId="blog" linkContentItemId="analysts"/>
-			<container id="analystCaseStudy" label="Case Studies" linkContainerQId="caseStudy" linkContentItemId="analysts"/>			\
+			<container id="analystCaseStudy" label="Case Studies" linkContainerQId="caseStudy" linkContentItemId="analysts"/>
 			<container id="analystDataSheet" label="Data Sheets" linkContainerQId="datasheet" linkContentItemId="analysts"/>						
 			<container id="analystDemoEnv" label="Demo Environments" linkContainerQId="demoenvironment" linkContentItemId="analysts"/>									
 			<container id="analystDemoScript" label="Demo Scripts" linkContainerQId="demoscript" linkContentItemId="analysts"/>												
@@ -132,7 +132,7 @@
 			<container id="topicArticle" label="Article" linkContainerQId="article" linkContentItemId="topics"/>						
 			<container id="topicBattleCard" label="Battle Cards" linkContainerQId="battlecard" linkContentItemId="topics"/>			
 			<container id="topicBlog" label="Blogs" linkContainerQId="blog" linkContentItemId="topics"/>
-			<container id="topicCaseStudy" label="Case Studies" linkContainerQId="caseStudy" linkContentItemId="topics"/>			\
+			<container id="topicCaseStudy" label="Case Studies" linkContainerQId="caseStudy" linkContentItemId="topics"/>
 			<container id="topicDataSheet" label="Data Sheets" linkContainerQId="datasheet" linkContentItemId="topics"/>						
 			<container id="topicDemoEnv" label="Demo Environments" linkContainerQId="demoenvironment" linkContentItemId="topics"/>									
 			<container id="topicDemoScript" label="Demo Scripts" linkContainerQId="demoscript" linkContentItemId="topics"/>												
