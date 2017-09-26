@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 import com.enablix.commons.util.FileUtil;
 import com.enablix.commons.util.StringUtil;
 import com.enablix.commons.util.collection.CollectionUtil;
+import com.enablix.commons.util.json.JsonUtil;
 import com.enablix.core.domain.config.Configuration;
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import com.google.api.client.googleapis.util.Utils;
@@ -43,8 +44,9 @@ public class GoogleDriveService {
 		
 		ByteArrayInputStream bis = null;
 		if (keyFile instanceof Map) {
-			String fileData = (String) ((Map<?, ?>) keyFile).get("data");
-			bis = new ByteArrayInputStream(fileData.getBytes());
+			Map<?,?> fileData = (Map<?,?>) ((Map<?, ?>) keyFile).get("data");
+			String jsonString = JsonUtil.toJsonString(fileData);
+			bis = new ByteArrayInputStream(jsonString.getBytes());
 		}
 		
 		if (bis == null) {

@@ -40,7 +40,7 @@ enablix.studioApp
                     var reader = new FileReader();
                     reader.onload = function (loadEvent) {
                         scope.$apply(function () {
-                            scope.ngFileModel = {
+                            scope.ngJsonFileModel = {
                                 name: changeEvent.target.files[0].name,
                                 size: changeEvent.target.files[0].size,
                                 type: changeEvent.target.files[0].type,
