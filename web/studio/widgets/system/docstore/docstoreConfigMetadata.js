@@ -68,9 +68,9 @@ enablix.docstore.metadata =
 			"paramName" : "Base Folder"
 		},
 		{
-			"paramKey" : "AUTH_KEY_FILE",
+			"paramKey" : "AUTH_KEY_FILE_ENC",
 			"paramName" : "Service Account Key File",
-			"paramType" : "FILE_CONTENT"
+			"paramType" : "TEXT_FILE_CONTENT"
 		}
 	]
 }

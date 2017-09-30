@@ -53,3 +53,28 @@ enablix.studioApp
             }
         }
     }]);
+
+enablix.studioApp
+.directive("ngTextFileModel", [function () {
+    return {
+        scope: {
+            ngTextFileModel: "="
+        },
+        link: function (scope, element, attributes) {
+            element.bind("change", function (changeEvent) {
+                var reader = new FileReader();
+                reader.onload = function (loadEvent) {
+                    scope.$apply(function () {
+                        scope.ngTextFileModel = {
+                            name: changeEvent.target.files[0].name,
+                            size: changeEvent.target.files[0].size,
+                            type: changeEvent.target.files[0].type,
+                            data: loadEvent.target.result
+                        };
+                    });
+                }
+                reader.readAsText(changeEvent.target.files[0]);
+            });
+        }
+    }
+}]);

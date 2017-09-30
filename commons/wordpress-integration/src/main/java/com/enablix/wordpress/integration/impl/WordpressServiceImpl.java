@@ -1,5 +1,6 @@
 package com.enablix.wordpress.integration.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -11,13 +12,13 @@ import org.springframework.web.client.HttpClientErrorException;
 
 import com.afrozaar.wordpress.wpapi.v2.Wordpress;
 import com.afrozaar.wordpress.wpapi.v2.api.Contexts;
+import com.afrozaar.wordpress.wpapi.v2.config.ClientConfig;
+import com.afrozaar.wordpress.wpapi.v2.config.ClientFactory;
 import com.afrozaar.wordpress.wpapi.v2.exception.PostNotFoundException;
 import com.afrozaar.wordpress.wpapi.v2.model.Post;
 import com.afrozaar.wordpress.wpapi.v2.model.Term;
 import com.afrozaar.wordpress.wpapi.v2.request.SearchRequest;
 import com.afrozaar.wordpress.wpapi.v2.response.PagedResponse;
-import com.afrozaar.wordpress.wpapi.v2.util.ClientConfig;
-import com.afrozaar.wordpress.wpapi.v2.util.ClientFactory;
 import com.enablix.analytics.info.detection.ContentSuggestion;
 import com.enablix.analytics.info.detection.InfoDetector;
 import com.enablix.commons.config.ConfigurationUtil;
@@ -34,6 +35,8 @@ import com.enablix.wordpress.model.WordpressInfo;
 public class WordpressServiceImpl implements WordpressService {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(WordpressServiceImpl.class);
+	
+	private static final String POST_CATEGORIES = "/categories?post={postId}";
 	
 	@Autowired
 	private InfoDetector infoDetector;
@@ -74,8 +77,40 @@ public class WordpressServiceImpl implements WordpressService {
 	}
 	
 	@Override
+	public List<Term> getPostCategories(Wordpress wp, Post post) {
+		
+		List<Term> collected = new ArrayList<>();
+        
+		PagedResponse<Term> pagedResponse = wp.getPagedResponse(
+				POST_CATEGORIES, Term.class, post.getId().toString());
+		
+		collected.addAll(pagedResponse.getList());
+		
+		while (pagedResponse.hasNext()) {
+			pagedResponse = wp.traverse(pagedResponse, PagedResponse.NEXT);
+			collected.addAll(pagedResponse.getList());
+		}
+		
+		return collected;
+	}
+
+	@Override
+	public List<Term> getPostTagsAndCategories(Wordpress wp, Post post) {
+		
+		List<Term> tags = wp.getPostTags(post);
+		
+		if (tags == null) {
+			tags = new ArrayList<>();
+		}
+		
+		tags.addAll(getPostCategories(wp, post));
+		
+		return tags;
+	}
+	
+	@Override
 	public Wordpress createClient(String baseUrl) {
-		return ClientFactory.fromConfig(ClientConfig.of(baseUrl, null, null, true));
+		return ClientFactory.fromConfig(ClientConfig.of(baseUrl, null, null, true, true));
 	}
 
 	@Override
@@ -103,7 +138,7 @@ public class WordpressServiceImpl implements WordpressService {
 		
 		if (post != null) {
 			
-			List<Term> postTags = getPostTags(wp, post);
+			List<Term> postTags = getPostTagsAndCategories(wp, post);
 			WordpressInfo wpInfo = new WordpressInfo(post, postTags);
 			contentSuggestion = infoDetector.analyse(wpInfo);
 		}

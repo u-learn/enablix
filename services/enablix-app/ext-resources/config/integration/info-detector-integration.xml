@@ -41,29 +41,36 @@
 	<int:header-enricher input-channel="info-detect-request-channel" output-channel="info-type-analyser-channel">
 		<int:header name="checkInfoAlreadyExist" expression="payload.isSaveContentRecord()"/>
 		<int:header name="saveContentRecord" expression="payload.isSaveContentRecord()"/>
+		<int:header name="infoType" expression="payload.getInformation().type()"/>
 	</int:header-enricher>
 				 
 	<int:service-activator id="infoContTypeIdentifierActivator" 
 						   input-channel="info-type-analyser-channel"
 						   output-channel="info-type-router-channel"
 						   requires-reply="true"
-						   ref="wpPostInfoTypeAnalyser" method="analyse"/>
+						   ref="infoTypeAnalyser" method="analyse"/>
 
 	<int:header-value-router header-name="checkInfoAlreadyExist" 
 							 input-channel="info-type-router-channel"
 							 default-output-channel="content-mapping-attr-analyser-channel">
 		<int:mapping value="true" channel="info-exists-filter-channel"/>
-		<int:mapping value="false" channel="content-mapping-attr-analyser-channel"/>
+		<int:mapping value="false" channel="info-tag-enricher-channel"/>
 	</int:header-value-router>
 						   
 	<int:filter id="infoExistsFilter" input-channel="info-exists-filter-channel"
-				output-channel="content-mapping-attr-analyser-channel"
+				output-channel="info-tag-enricher-channel"
 				discard-channel="info-exists-channel"
-				ref="infoExistsChecker"></int:filter>
+				ref="wpPostExistsChecker"></int:filter>
 				
 	<int:transformer input-channel="info-exists-channel"
 					 output-channel="info-detect-response-channel"
 					 expression="new java.util.ArrayList()"/>
+	
+	<int:service-activator id="infoTagEnricherActivator"
+						   input-channel="info-tag-enricher-channel"
+						   output-channel="content-mapping-attr-analyser-channel"
+						   requires-reply="true"
+						   ref="infoTagAliasEnricher" method="enrich"/>
 	
 	<int:service-activator id="contentMappingAnalyserActivator" 
 						   input-channel="content-mapping-attr-analyser-channel"
@@ -100,7 +107,21 @@
 						   requires-reply="true"
 						   ref="contentRecordPersistor" method="persist"/>
 				 
-	<bean id="wpPostInfoTypeAnalyser" class="com.enablix.wordpress.info.detection.WPPostInfoTypeAnalyser"/>
+	<bean id="infoTypeAnalyser" class="com.enablix.analytics.info.detection.impl.InfoTypeAnalyser">
+		<property name="infoTypeResolvers">
+			<list>
+				<ref bean="wpPostInfoTypeResolver"/>
+				<ref bean="urlPatternBasedInfoTypeResolver"/>
+				<ref bean="defaultInfoTypeResolver"/>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="wpPostInfoTypeResolver" class="com.enablix.wordpress.info.detection.WPPostInfoTypeAnalyser"/>
+	<bean id="defaultInfoTypeResolver" class="com.enablix.analytics.info.detection.impl.DefaultInfoTypeResolver"/>
+	<bean id="urlPatternBasedInfoTypeResolver" class="com.enablix.analytics.info.detection.impl.InfoLinkPatternBasedTypeResolver"/>
+	
+	<bean id="infoTagAliasEnricher" class="com.enablix.analytics.info.detection.impl.InfoTagAliasEnricher"/>
 	
 	<bean id="contentMappingAttrAnalyser" class="com.enablix.analytics.info.detection.mapping.ContentMappingBasedAttrAnalyser"/>
 	
@@ -108,7 +129,7 @@
 	
 	<bean id="contentSuggestBuilder" class="com.enablix.analytics.info.detection.impl.ContentSuggestionBuilderImpl"/>
 	
-	<bean id="infoExistsChecker" class="com.enablix.wordpress.info.detection.WPInfoAlreadyExistsFilter"/>
+	<bean id="wpPostExistsChecker" class="com.enablix.wordpress.info.detection.WPInfoAlreadyExistsFilter"/>
 	
 	<bean id="contentRecordPersistor" class="com.enablix.analytics.info.detection.ContentRecordPersister"/>
 

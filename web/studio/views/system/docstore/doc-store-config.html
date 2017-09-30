@@ -10,7 +10,7 @@
 				<th>Document Store Type:</th>
 				<td>{{docstore.STORE_TYPE}}</td>
 			</tr>
-			<tr ng-repeat="param in selectDocStoreTypeMd.params" ng-if="!param.paramKey.endsWith('_ENC') && param.paramType != 'FILE_CONTENT'">
+			<tr ng-repeat="param in selectDocStoreTypeMd.params" ng-if="!param.paramKey.endsWith('_ENC') && !param.paramType.endsWith('FILE_CONTENT')">
 				<th>{{param.paramName}}:</th>
 				<td>{{docstore[param.paramKey]}}</td>
 			</tr>
@@ -29,10 +29,10 @@
 <div class="cont" ng-repeat="param in selectDocStoreTypeMd.params">
 	<div>
 		<label class="form-label">{{param.paramName}}</label>
-		<input focus="{{$first}}" ng-if="param.paramType != 'FILE_CONTENT'" name="{{param.paramKey}}" placeholder="Enter {{param.paramName}}" 
+		<input focus="{{$first}}" ng-if="!param.paramType.endsWith('FILE_CONTENT')" name="{{param.paramKey}}" placeholder="Enter {{param.paramName}}" 
 				ng-model="docstore[param.paramKey]" class="form-control" type="{{param.paramKey.endsWith('_ENC') ? 'password' : 'text'}}" size="80" required>
-		<input id="{{param.paramKey}}" ng-if="param.paramType == 'FILE_CONTENT'" type="file" style="font-size: 0.875em;"
-				name="{{param.paramKey}}" ng-json-file-model="docstore[param.paramKey]" data-file size="30">
+		<input id="{{param.paramKey}}" ng-if="param.paramType == 'TEXT_FILE_CONTENT'" type="file" style="font-size: 0.875em;"
+				name="{{param.paramKey}}" ng-text-file-model="docstore[param.paramKey]" data-file size="30">
 	</div>
 </div>
 <div class="foot clearfix">

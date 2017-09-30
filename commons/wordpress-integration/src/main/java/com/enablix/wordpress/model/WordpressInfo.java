@@ -1,6 +1,7 @@
 package com.enablix.wordpress.model;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -86,6 +87,13 @@ public class WordpressInfo implements Information, TaggedInfo, IdentifiableInfo,
 	@Override
 	public Map<String, Object> infoData() {
 		return (Map<String, Object>) BeanUtil.beanToMap(this);
+	}
+
+	@Override
+	public void addTags(Collection<InfoTag> infoTags) {
+		if (CollectionUtil.isNotEmpty(infoTags)) {
+			infoTags.addAll(infoTags);
+		}
 	}
 	
 }

@@ -36,9 +36,10 @@ dbs.forEach(function(database) {
     	tenantUsers.forEach(function(user) {
     		
     		var userProfile = db.ebx_user_profile.find({ "userIdentity": user.identity });
+    		userProfile = userProfile[0];
     		
     		db.ebx_activity_audit.update(
-    				{ "actor._class" : "com.enablix.core.domain.activity.NonRegisteredActor", "actor.externalId": user.userId },
+    				{ "actor._class" : "com.enablix.core.domain.activity.RegisteredActor", "actor.userId": user.userId },
     				{ "$set": { 
     						"actor": {
     							"_class" : "com.enablix.core.domain.activity.RegisteredActor", 

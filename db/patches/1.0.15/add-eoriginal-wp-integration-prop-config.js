@@ -19,7 +19,24 @@ var wpConfig =
 				"defaultContentTypeQId" : "blog",
 				"wpCatToContQId" : {},
 				"contQIdToSlugMatchAttrId" : {
-					"blog" : "url"
+					"blog" : "url",
+					"press" : "url"
+				},
+				"linkPatternToContQId" : {
+					"**/blog/*" : "blog",
+					"**/press-releases/*": "press"
+				},
+				"tagAliasMapping" : {
+					"Audit and Compliance" : ["Compliance", "Auditability"],
+					"Auto Financing" : ["Vehicle Finance"],
+					"Chattel Paper" : ["eChattel"],
+					"Custodian Services" : ["Custodians"],
+					"Digital Asset Management" : ["Digital Transaction Management and Digital Asset Management"],
+					"Digital Mortgage" : ["Mortgage"],
+					"Digital Transactions" : ["Digital Transaction Management", "Digital asset management and digital transactions"],
+					"Electronic Chattel Paper" : ["Electronic Chattel"],
+					"eMortgage" : ["Mortgage", "Digital Mortgage"],
+					"Transaction Management" : ["Digital Transaction Management"]
 				}
 			}
 		}, 

@@ -7,11 +7,9 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.enablix.analytics.info.detection.AnalysisLevel;
-import com.enablix.analytics.info.detection.BaseInfoAnalyser;
 import com.enablix.analytics.info.detection.InfoDetectionContext;
+import com.enablix.analytics.info.detection.InfoTypeResolver;
 import com.enablix.analytics.info.detection.Information;
-import com.enablix.analytics.info.detection.Opinion;
 import com.enablix.analytics.info.detection.TypeOpinion;
 import com.enablix.app.template.service.TemplateManager;
 import com.enablix.commons.util.StringUtil;
@@ -23,15 +21,15 @@ import com.enablix.wordpress.integration.WPIntegrationProperties;
 import com.enablix.wordpress.integration.WordpressConstants;
 import com.enablix.wordpress.model.WordpressInfo;
 
-public class WPPostInfoTypeAnalyser extends BaseInfoAnalyser {
+public class WPPostInfoTypeAnalyser implements InfoTypeResolver {
 
 	@Autowired
 	private TemplateManager templateManager;
 
 	@Override
-	protected List<Opinion> analyseInfo(InfoDetectionContext ctx) {
+	public List<TypeOpinion> resolve(InfoDetectionContext ctx) {
 		
-		List<Opinion> opinions = null;
+		List<TypeOpinion> opinions = null;
 		Information information = ctx.getInformation();
 		
 		if (information instanceof WordpressInfo) {
@@ -105,9 +103,4 @@ public class WPPostInfoTypeAnalyser extends BaseInfoAnalyser {
 		return WordpressConstants.WP_POST_TYPE_ANALYSER;
 	}
 	
-	@Override
-	public AnalysisLevel level() {
-		return AnalysisLevel.L0;
-	}
-
 }

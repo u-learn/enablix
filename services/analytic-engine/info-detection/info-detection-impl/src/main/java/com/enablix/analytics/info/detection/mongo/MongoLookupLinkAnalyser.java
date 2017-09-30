@@ -114,9 +114,13 @@ public class MongoLookupLinkAnalyser extends TaggedInfoAnalyser {
 		ContainerType containerDef = templateFacade.getContainerDefinition(containerQId);
 		
 		if (containerDef != null) {
+			
 			for (ContentItemType contentItem : containerDef.getContentItem()) {
+			
 				if (contentItem.getType() == ContentItemClassType.TEXT) {
 					fieldIds.add(contentItem.getId());
+				} else if (contentItem.getType() == ContentItemClassType.BOUNDED) {
+					fieldIds.add(contentItem.getId() + ".label");
 				}
 			}
 		}

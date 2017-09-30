@@ -10,6 +10,8 @@
 			<!-- default visibility = Everyone -->
 			<itemMapping itemId="visibility" listAttribute="ID" 
 						 default="6714adcf-63bc-4ef8-8e27-babc9e9a15fb"></itemMapping>
+			<!-- default source = internal -->
+			<itemMapping itemId="blogSource" listAttribute="ID" default="internal"></itemMapping>
 		</contentItemMappings>
 	</container>
 	

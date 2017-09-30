@@ -6,6 +6,16 @@
 		<contentItemMappings>
 			<itemMapping itemId="title">post.title.rendered</itemMapping>
 			<itemMapping itemId="url">post.link</itemMapping>
+			<itemMapping itemId="blogdate">post.date_gmt</itemMapping>
+		</contentItemMappings>
+	</container>
+	
+	<container qualifiedId="press">
+		<sourceId>post.id</sourceId>
+		<contentItemMappings>
+			<itemMapping itemId="title">post.title.rendered</itemMapping>
+			<itemMapping itemId="url">post.link</itemMapping>
+			<itemMapping itemId="prdate">post.date_gmt</itemMapping>
 		</contentItemMappings>
 	</container>
 	

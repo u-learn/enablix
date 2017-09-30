@@ -15,7 +15,6 @@ import org.springframework.stereotype.Component;
 import com.enablix.commons.util.FileUtil;
 import com.enablix.commons.util.StringUtil;
 import com.enablix.commons.util.collection.CollectionUtil;
-import com.enablix.commons.util.json.JsonUtil;
 import com.enablix.core.domain.config.Configuration;
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import com.google.api.client.googleapis.util.Utils;
@@ -36,7 +35,7 @@ public class GoogleDriveService {
 	
 	public Drive getDrive(Configuration config) throws FileNotFoundException, IOException {
         
-		Object keyFile = config.getConfig().get("AUTH_KEY_FILE");
+		Object keyFile = config.getConfig().get("AUTH_KEY_FILE_ENC");
 		if (keyFile == null) {
 			LOGGER.error("Google API authorization key file not found");
 			throw new IllegalStateException("Google API authorization key file not found");
@@ -44,9 +43,8 @@ public class GoogleDriveService {
 		
 		ByteArrayInputStream bis = null;
 		if (keyFile instanceof Map) {
-			Map<?,?> fileData = (Map<?,?>) ((Map<?, ?>) keyFile).get("data");
-			String jsonString = JsonUtil.toJsonString(fileData);
-			bis = new ByteArrayInputStream(jsonString.getBytes());
+			String fileData = (String) ((Map<?, ?>) keyFile).get("data");
+			bis = new ByteArrayInputStream(fileData.getBytes());
 		}
 		
 		if (bis == null) {

@@ -26,5 +26,9 @@ public interface WordpressService {
 	Post getPostBySlug(Wordpress wp, String postSlug);
 	
 	void processPosts(Wordpress wp, WPPostProcessor postProcessor, SearchRequest<Post> postSearch);
+
+	List<Term> getPostCategories(Wordpress wp, Post post);
+
+	List<Term> getPostTagsAndCategories(Wordpress wp, Post post);
 	
 }
