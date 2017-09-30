@@ -72,6 +72,7 @@ public class PostFeederTask implements Task {
 								 .withContext(Contexts.VIEW)
 								 .withParam(WordpressConstants.WP_API_PARAM_PUBLISHED_AFTER, 
 										 DateUtil.dateToUTCiso8601String(lastRunDate))
+								 .withOrderAsc()
 								 .build();
 			
 			setActivityTrackingContext();
