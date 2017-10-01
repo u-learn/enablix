@@ -52,7 +52,7 @@
 
 	<int:header-value-router header-name="checkInfoAlreadyExist" 
 							 input-channel="info-type-router-channel"
-							 default-output-channel="content-mapping-attr-analyser-channel">
+							 default-output-channel="info-tag-enricher-channel">
 		<int:mapping value="true" channel="info-exists-filter-channel"/>
 		<int:mapping value="false" channel="info-tag-enricher-channel"/>
 	</int:header-value-router>

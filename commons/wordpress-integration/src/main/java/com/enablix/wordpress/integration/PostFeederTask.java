@@ -126,7 +126,7 @@ public class PostFeederTask implements Task {
 
 		@Override
 		public void process(Post post) {
-			WordpressInfo wpInfo = new WordpressInfo(post, wpService.getPostTags(wp, post));
+			WordpressInfo wpInfo = new WordpressInfo(post, wpService.getPostTagsAndCategories(wp, post));
 			infoDetector.analyseAndSaveContentRecord(wpInfo);
 			postCount++;
 		}
