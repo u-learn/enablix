@@ -180,7 +180,7 @@ enablix.studioApp.controller('ThirdPartyIntegrationListController',
 		$scope.fetchSearchResult = function() {
 
 			var _dataFilters = {
-					keyRegex: "integration.*"
+					keyRegex: "^integration.*"
 			};
 			
 			DataSearchService.getSearchResult(CONFIG_DOMAIN_TYPE, _dataFilters, $scope.pagination, $scope.filterMetadata,
