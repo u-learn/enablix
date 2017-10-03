@@ -59,8 +59,13 @@ function(ContentTemplateService,   StateUpdateService,   $filter,   $compile) {
 			}
 			
 			scope.navToItemDetail = function(_containerQId, _contentIdentity) {
+				
 				StateUpdateService.goToPortalContainerBody(
 						_containerQId, _contentIdentity, 'single', _containerQId);
+				
+				if (scope.$parent && scope.$parent.navToItemDetail) {
+					scope.$parent.navToItemDetail(_containerQId, _contentIdentity);
+				}
 			}
 			
 			element.html('').append( $compile( template )( scope ) );

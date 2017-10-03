@@ -47,6 +47,10 @@ enablix.studioApp.controller('RecordDetailWindowCtrl',
 			$modalInstance.close();
 		}
 		
+		$scope.navToItemDetail = function() {
+			$scope.close();
+		}
+		
 		if (isNullOrUndefined(recordDetail)) {
 			
 			if (!isNullOrUndefined(recordIdentity)) {
