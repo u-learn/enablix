@@ -3,6 +3,7 @@ package com.enablix.app.mail.web;
 import java.util.List;
 import java.util.Map;
 
+import com.enablix.core.domain.security.authorization.UserProfile;
 import com.enablix.core.mongo.search.service.SearchRequest;
 
 public class EmailRequest {
@@ -53,6 +54,15 @@ public class EmailRequest {
 		private String emailId;
 		
 		private String name;
+		
+		public Recipient() {
+			
+		}
+		
+		public Recipient(UserProfile user) {
+			this.emailId = user.getEmail();
+			this.name = user.getName();
+		}
 
 		public String getEmailId() {
 			return emailId;

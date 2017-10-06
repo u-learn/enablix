@@ -41,27 +41,19 @@ public class ActivityMetricMailInputBuilder extends AbstractEmailVelocityInputBu
 	protected ActivityMetricMailInput buildInput(ActivityMetricMailInput input, EmailRequest request,
 			DataView dataView) {
 		
-		String startDateStr = (String) request.getInputData().get("metricStartDate");
-		
-		Date startDate = null;
-		
-		try {
-			
-			startDate = DateUtil.parseJsonInputDate(startDateStr);
-			
-		} catch (ParseException e) {
-			
-			LOGGER.error("Invalid value for [metricStartDate]: {}. Date should be in [{}] format", 
-					startDateStr, DateUtil.JSON_INPUT_DATE_FORMAT);
-			throw new IllegalArgumentException("Invalid value for [metricStartDate]: " + startDateStr);
-		}
+		Date startDate = getInputDate(request, GenericMailConstants.IN_DATA_METRIC_START_DATE);
 		
 		if (startDate == null) {
-			LOGGER.error("Required parameter [metricStartDate] missing");
-			throw new IllegalArgumentException("Required parameter [metricStartDate] missing");
+			LOGGER.error("Required parameter [{}] missing", GenericMailConstants.IN_DATA_METRIC_START_DATE);
+			throw new IllegalArgumentException("Required parameter [" + GenericMailConstants.IN_DATA_METRIC_START_DATE + "] missing");
 		}
 		
-		Date endDate = Calendar.getInstance().getTime();
+		
+		Date endDate = getInputDate(request, GenericMailConstants.IN_DATA_METRIC_END_DATE);;
+		
+		if (endDate == null) {
+			endDate = Calendar.getInstance().getTime();
+		}
 		
 		List<MetricStats> metricStats = metricService.getAggregatedValues(startDate, endDate, request.getDataFilter());
 		metricStats.add(userRegistrationMetric.getUserCount(request.getDataFilter()));
@@ -72,6 +64,26 @@ public class ActivityMetricMailInputBuilder extends AbstractEmailVelocityInputBu
 		input.setMetricValues(metricValues);
 		
 		return input;
+	}
+
+	private Date getInputDate(EmailRequest request, String inParamName) {
+		
+		Object inDate = request.getInputData().get(inParamName);
+		
+		Date date = null;
+		
+		try {
+			
+			date = DateUtil.checkAndParseJsonDate(inDate);
+			
+		} catch (ParseException e) {
+			
+			LOGGER.error("Invalid value for [{}]: {}. Date should be in [{}] format", 
+					inParamName, inDate, DateUtil.JSON_INPUT_DATE_FORMAT);
+			throw new IllegalArgumentException("Invalid value for [" + inParamName + "]: " + inDate);
+		}
+		
+		return date;
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })

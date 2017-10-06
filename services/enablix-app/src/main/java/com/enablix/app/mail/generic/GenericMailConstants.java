@@ -2,6 +2,14 @@ package com.enablix.app.mail.generic;
 
 public class GenericMailConstants {
 
+	public static final String IN_DATA_METRIC_END_DATE = "metricEndDate";
+
+	public static final String IN_DATA_METRIC_START_DATE = "metricStartDate";
+
+	public static final String IN_DATA_MONTH = "metricMonth";
+	
+	public static final String IN_DATA_YEAR = "metricYear";
+
 	private GenericMailConstants() {
 		// no object creation
 	}
@@ -15,5 +23,8 @@ public class GenericMailConstants {
 	public static final String MAIL_TYPE_LOGIN_REMINDER = "loginreminder";
 	
 	public static final String MAIL_TYPE_GENERAL = "general";
+	
+	
+	public static final String MAIL_TEMPLATE_MONTHLY_TEAM_ACTIVITY = "monthlyTeamActivity";
 	
 }

@@ -1,0 +1,23 @@
+#@mail_template('Enablix Engagement')
+
+	#spacer_row('15')
+											
+	#mail_opening(${obj.recipientUser.name})
+	
+	#spacer_row('15')
+	
+	Here are user engagement details from last month:
+	
+	#spacer_row('15')
+	
+	<ul>
+		<li><b>${obj.metricValues.get('ACTMETRIC3')}</b> users logged in.</li>
+		<li>Content was accessed <b>${obj.metricValues.get('ACTMETRIC6')}</b> times.</li>
+		<li>Content was previewed <b>${obj.metricValues.get('ACTMETRIC7')}</b> times.</li>
+		<li>Content was downloaded <b>${obj.metricValues.get('ACTMETRIC8')}</b> times.</li>
+		<li>Content was searched <b>${obj.metricValues.get('ACTMETRIC9')}</b> times.</li>
+	</ul>
+	
+	#mail_closing('Enablix')
+
+#end

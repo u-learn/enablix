@@ -40,11 +40,56 @@ public class DateUtil {
 			}
 		};
 		
+	
+	public static Date checkAndParseJsonDate(Object date) throws ParseException {
+		
+		if (date != null) {
+		
+			if (date instanceof Date) {
+				return (Date) date;
+			} else if (date instanceof String) {
+				return JsonInputDateFormat.get().parse((String) date);
+			}
+		}
+		
+		return null;
+	}
 		
 	public static Date parseJsonInputDate(String date) throws ParseException {
 		return date == null ? null : JsonInputDateFormat.get().parse(date);
 	}
-		
+	
+	/**
+     * @param month Month number
+     * @return The short month name
+     */
+    public static String getMonthNameShort(int month) {
+        Calendar cal = Calendar.getInstance();
+        // Calendar numbers months from 0
+        cal.set(Calendar.MONTH, month - 1);
+        return cal.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.getDefault());
+    }
+    
+    /**
+     * @param month Month number
+     * @return The short month name
+     */
+    public static String getMonthNameShort(Date date) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        return cal.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.getDefault());
+    }
+	
+    /**
+     * @param month Month number
+     * @return The short month name
+     */
+    public static String getMonthName(Date date) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        return cal.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault());
+    }
+    
 	public static Date getEndOfDay(Date date) {
 		LocalDateTime localDateTime = dateToLocalDateTime(date);
 		LocalDateTime endOfDay = localDateTime.with(LocalTime.MAX);
@@ -149,7 +194,20 @@ public class DateUtil {
 	public static Date getPreviousDate(Date date){
 		LocalDateTime previousDate = dateToLocalDateTime(date).minusDays(1);
 		return getStartOfDay(localDateTimeToDate(previousDate));
+	}
+
+	public static Period getPreviousMonth() {
+		return getPreviousMonth(Calendar.getInstance().getTime());
+	}
+	
+	public static Period getPreviousMonth(Date date) {
 		
+		LocalDateTime inDate = dateToLocalDateTime(date);
+		
+		LocalDateTime monthStartDate = inDate.minusMonths(1).withDayOfMonth(1).with(LocalTime.MIN);
+		LocalDateTime monthEndDate = inDate.withDayOfMonth(1).minusDays(1).with(LocalTime.MAX);
+		
+		return new Period(localDateTimeToDate(monthStartDate), localDateTimeToDate(monthEndDate));
 	}
 	
 	private static Date localDateTimeToDate(LocalDateTime startOfDay) {
@@ -168,6 +226,12 @@ public class DateUtil {
 	public static void main(String[] args) {
 		Date today = Calendar.getInstance().getTime();
 		System.out.println(dateToUTCiso8601String(today));
+	}
+
+	public static int getYear(Date date) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		return cal.get(Calendar.YEAR);
 	}
 
 	
