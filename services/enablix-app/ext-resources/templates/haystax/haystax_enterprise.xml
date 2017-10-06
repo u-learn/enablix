@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<contentTemplate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.19" id="haystax_enterprise" xsi:noNamespaceSchemaLocation="../xsd/content-template.xsd">
+<contentTemplate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.20" id="haystax_enterprise" xsi:noNamespaceSchemaLocation="../xsd/content-template.xsd">
 	<dataDefinition>
 		<container id="product" label="Products" businessCategory="BUSINESS_DIMENSION">
 			<contentItem id="name" label="Name" type="text" searchBoost="7"/>
@@ -482,6 +482,57 @@
 			<container id="analystWhitePaper" label="White Papers" linkContainerQId="whitepaper" linkContentItemId="analysts"/>
 			<container id="analystContent" label="Other Content" linkContainerQId="content" linkContentItemId="analysts"/>			
 		</container>
+		<container id="industry" label="Industries" businessCategory="BUSINESS_DIMENSION">
+			<contentItem id="name" label="Name" type="text" searchBoost="7"/>
+			<contentItem id="shortName" label="Short Name" type="text" searchBoost="7"/>
+			<contentItem id="visibility" label="Visibility" type="bounded">
+	      		<bounded>
+	      			<refList>
+	      				<datastore>
+	      					<storeId>contentVisibilityType</storeId>
+	      					<dataId>identity</dataId>
+	      					<dataLabel>visibilityType</dataLabel>
+	      				</datastore>
+	      			</refList>
+	      		</bounded>
+      		</contentItem>
+			<container id="indAnalystResearch" label="Analyst Research" linkContainerQId="analystresearch" linkContentItemId="industries"/>      			      						
+			<container id="indBattleCard" label="Battle Cards" linkContainerQId="battlecard" linkContentItemId="industries"/>						
+			<container id="indBlog" label="Blogs" linkContainerQId="blog" linkContentItemId="industries"/>
+			<container id="indBlurb" label="Blurbs" linkContainerQId="blurb" linkContentItemId="industries"/>						
+			<container id="indCaseStudy" label="Case Studies" linkContainerQId="caseStudy" linkContentItemId="industries"/>
+			<container id="indSuccessStory" label="Customer Success Stories" linkContainerQId="successstory" linkContentItemId="industries"/>			
+			<container id="indPositioning" label="Corporate Positioning" linkContainerQId="positioning" linkContentItemId="industries"/>									
+			<container id="indDemoEnv" label="Demo Environments" linkContainerQId="demoenvironment" linkContentItemId="industries"/>												
+			<container id="indDemoScript" label="Demo Scripts" linkContainerQId="demoscript" linkContentItemId="industries"/>															
+			<container id="indDocs" label="Solution Documentation" linkContainerQId="docs" linkContentItemId="industries"/>						
+			<container id="indDiscQuestions" label="Discovery Questions" linkContainerQId="discoveryQuestion" linkContentItemId="industries"/>
+			<container id="indFAQ" label="FAQ" linkContainerQId="faq" linkContentItemId="industries"/>
+			<container id="indOnePager" label="Fact Sheets" linkContainerQId="onepager" linkContentItemId="industries"/>									
+			<container id="indImages" label="Images" linkContainerQId="image" linkContentItemId="industries"/>
+			<container id="indImplDocs" label="Implementation Docs" linkContainerQId="implementationdoc" linkContentItemId="industries"/>			
+			<container id="indImpSlide" label="Important Slides" linkContainerQId="importantslide" linkContentItemId="industries"/>
+			<container id="indLunchLearn" label="Lunch and Learn" linkContainerQId="lunchandlearn" linkContentItemId="industries"/>									
+			<container id="indEvent" label="Events" linkContainerQId="event" linkContentItemId="industries"/>			
+			<container id="indMessageTree" label="Message Trees" linkContainerQId="messageTree" linkContentItemId="industries"/>
+			<container id="indArticle" label="News Article" linkContainerQId="article" linkContentItemId="industries"/>
+			<container id="indSalesDeck" label="Presentations" linkContainerQId="salesDeck" linkContentItemId="industries"/>			
+			<container id="indSalesKits" label="Sales Kits" linkContainerQId="salesKit" linkContentItemId="industries"/>						
+			<container id="indSWOT" label="SWOT" linkContainerQId="swot" linkContentItemId="industries"/>									
+			<container id="indPress" label="Press" linkContainerQId="press" linkContentItemId="industries"/>						
+			<container id="indPMPlaybook" label="Program Management Playbooks" linkContainerQId="pmplaybook" linkContentItemId="industries"/>							
+			<container id="indPOC" label="Proof of Concepts" linkContainerQId="poc" linkContentItemId="industries"/>
+			<container id="indPROV" label="Proof of Value" linkContainerQId="prov" linkContentItemId="industries"/>						
+			<container id="indProposal" label="Proposals" linkContainerQId="proposal" linkContentItemId="industries"/>			
+			<container id="indResearch" label="Scientific Research" linkContainerQId="research" linkContentItemId="industries"/>
+			<container id="indRFXQA" label="RFX Q&amp;A" linkContainerQId="rfxqa" linkContentItemId="rfxindustries"/>										
+			<container id="indTestimonial" label="Testimonials" linkContainerQId="testimonial" linkContentItemId="industries"/>			
+			<container id="indTopic" label="Topics" linkContainerQId="topic" linkContentItemId="industries"/>
+			<container id="indVideo" label="Videos" linkContainerQId="video" linkContentItemId="industries"/>			
+			<container id="indWhitePaper" label="White Papers" linkContainerQId="whitepaper" linkContentItemId="industries"/>			
+			<container id="indWinLoss" label="Win Loss Analysis" linkContainerQId="winloss" linkContentItemId="industries"/>
+			<container id="indContent" label="Other Content" linkContainerQId="content" linkContentItemId="industries"/>
+		</container>
 		<container id="battlecard" label="Battle Cards" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text" searchBoost="7"/>
 			<contentItem id="file" label="File" type="doc"/>
@@ -541,6 +592,17 @@
 					</refList>
 				</bounded>
 			</contentItem>
+			<contentItem id="industries" label="Industries" type="bounded" searchBoost="6">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>industry</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>			
 			<contentItem id="topics" label="Topics" type="bounded" searchBoost="6">
 				<bounded multivalued="true">
 					<refList>
@@ -632,6 +694,17 @@
 					</refList>
 				</bounded>
 			</contentItem>
+			<contentItem id="industries" label="Industries" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>industry</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>			
 			<contentItem id="analysts" label="Analysts" type="bounded">
 				<bounded multivalued="true">
 					<refList>
@@ -723,7 +796,7 @@
 						</datastore>
 					</refList>
 				</bounded>
-			</contentItem>
+			</contentItem>					
 			<contentItem id="partners" label="Partners" type="bounded">
 				<bounded multivalued="true">
 					<refList>
@@ -735,6 +808,17 @@
 					</refList>
 				</bounded>
 			</contentItem>
+			<contentItem id="industries" label="Industries" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>industry</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>				
 			<contentItem id="analysts" label="Analysts" type="bounded">
 				<bounded multivalued="true">
 					<refList>
@@ -850,6 +934,17 @@
 					</refList>
 				</bounded>
 			</contentItem>
+			<contentItem id="industries" label="Industries" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>industry</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>			
 			<contentItem id="topics" label="Topics" type="bounded" searchBoost="6">
 				<bounded multivalued="true">
 					<refList>
@@ -910,6 +1005,17 @@
 					</refList>
 				</bounded>
 			</contentItem>	
+			<contentItem id="industries" label="Industries" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>industry</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>			
 			<contentItem id="visibility" label="Visibility" type="bounded">
 	      		<bounded>
 	      			<refList>
@@ -995,6 +1101,17 @@
 					</refList>
 				</bounded>
 			</contentItem>
+			<contentItem id="industries" label="Industries" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>industry</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>			
 			<contentItem id="analysts" label="Analysts" type="bounded">
 				<bounded multivalued="true">
 					<refList>
@@ -1072,6 +1189,17 @@
 					<refList>
 						<datastore hyperlink="true">
 							<storeId>partner</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>			
+			<contentItem id="industries" label="Industries" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>industry</storeId>
 							<dataId>identity</dataId>
 							<dataLabel>shortName</dataLabel>
 						</datastore>
@@ -1172,6 +1300,17 @@
 					</refList>
 				</bounded>
 			</contentItem>			
+			<contentItem id="industries" label="Industries" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>industry</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>			
 			<contentItem id="topics" label="Topics" type="bounded">
 				<bounded multivalued="true">
 					<refList>
@@ -1265,6 +1404,17 @@
 					</refList>
 				</bounded>
 			</contentItem>
+			<contentItem id="industries" label="Industries" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>industry</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>			
 			<contentItem id="topics" label="Topics" type="bounded">
 				<bounded multivalued="true">
 					<refList>
@@ -1316,6 +1466,17 @@
 					</refList>
 				</bounded>
 			</contentItem>	
+			<contentItem id="industries" label="Industries" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>industry</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>			
 			<contentItem id="visibility" label="Visibility" type="bounded">
 	      		<bounded>
 	      			<refList>
@@ -1400,6 +1561,17 @@
 					</refList>
 				</bounded>
 			</contentItem>
+			<contentItem id="industries" label="Industries" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>industry</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>			
 			<contentItem id="analysts" label="Analysts" type="bounded" searchBoost="6">
 				<bounded multivalued="true">
 					<refList>
@@ -1516,6 +1688,17 @@
 					</refList>
 				</bounded>
 			</contentItem>
+			<contentItem id="industries" label="Industries" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>industry</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>			
 			<contentItem id="topics" label="Topics" type="bounded">
 				<bounded multivalued="true">
 					<refList>
@@ -1588,6 +1771,17 @@
 					</refList>
 				</bounded>
 			</contentItem>
+			<contentItem id="industries" label="Industries" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>industry</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>			
 			<contentItem id="topics" label="Topics" type="bounded">
 				<bounded>
 					<refList>
@@ -1659,6 +1853,17 @@
 					</refList>
 				</bounded>
 			</contentItem>
+			<contentItem id="industries" label="Industries" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>industry</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>			
 			<contentItem id="topics" label="Topics" type="bounded" searchBoost="6">
 				<bounded multivalued="true">
 					<refList>
@@ -1752,6 +1957,17 @@
 					</refList>
 				</bounded>
 			</contentItem>
+			<contentItem id="industries" label="Industries" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>industry</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>			
 			<contentItem id="topics" label="Topics" type="bounded">
 				<bounded>
 					<refList>
@@ -1836,6 +2052,17 @@
 					</refList>
 				</bounded>
 			</contentItem>
+			<contentItem id="industries" label="Industries" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>industry</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>			
 			<contentItem id="topics" label="Topics" type="bounded">
 				<bounded>
 					<refList>
@@ -1885,6 +2112,17 @@
 					</refList>
 				</bounded>
 			</contentItem>	
+			<contentItem id="industries" label="Industries" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>industry</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>			
 			<contentItem id="visibility" label="Visibility" type="bounded">
 	      		<bounded>
 	      			<refList>
@@ -1957,6 +2195,17 @@
 					</refList>
 				</bounded>
 			</contentItem>
+			<contentItem id="industries" label="Industries" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>industry</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>			
 			<contentItem id="analysts" label="Analysts" type="bounded">
 				<bounded multivalued="true">
 					<refList>
@@ -2059,6 +2308,17 @@
 					</refList>
 				</bounded>
 			</contentItem>
+			<contentItem id="industries" label="Industries" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>industry</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>			
 			<contentItem id="customers" label="Customers" type="bounded">
 				<bounded multivalued="true">
 					<refList>
@@ -2069,7 +2329,7 @@
 						</datastore>
 					</refList>
 				</bounded>
-			</contentItem>
+			</contentItem>			
 			<contentItem id="opportunities" label="Sales Opportunity" type="bounded">
 				<bounded>
 					<refList>
@@ -2152,6 +2412,17 @@
 					</refList>
 				</bounded>
 			</contentItem>
+			<contentItem id="industries" label="Industries" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>industry</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>			
 			<contentItem id="analysts" label="Analysts" type="bounded">
 				<bounded multivalued="true">
 					<refList>
@@ -2269,6 +2540,17 @@
 					</refList>
 				</bounded>
 			</contentItem>
+			<contentItem id="industries" label="Industries" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>industry</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>			
 			<contentItem id="analysts" label="Analysts" type="bounded">
 				<bounded multivalued="true">
 					<refList>
@@ -2374,6 +2656,17 @@
 					</refList>
 				</bounded>
 			</contentItem>
+			<contentItem id="industries" label="Industries" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>industry</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>			
 			<contentItem id="analysts" label="Analysts" type="bounded">
 				<bounded multivalued="true">
 					<refList>
@@ -2488,6 +2781,17 @@
 					</refList>
 				</bounded>
 			</contentItem>
+			<contentItem id="industries" label="Industries" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>industry</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>			
 			<contentItem id="competitors" label="Competitors" type="bounded">
 				<bounded multivalued="true">
 					<refList>
@@ -2565,6 +2869,17 @@
 					</refList>
 				</bounded>
 			</contentItem>
+			<contentItem id="industries" label="Industries" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>industry</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>			
 			<contentItem id="apps" label="Apps" type="bounded">
 				<bounded multivalued="true">
 					<refList>
@@ -2691,6 +3006,17 @@
 					</refList>
 				</bounded>
 			</contentItem>
+			<contentItem id="industries" label="Industries" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>industry</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>			
 			<contentItem id="competitors" label="Competitors" type="bounded">
 				<bounded multivalued="true">
 					<refList>
@@ -2832,6 +3158,17 @@
 					</refList>
 				</bounded>
 			</contentItem>
+			<contentItem id="industries" label="Industries" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>industry</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>			
 			<contentItem id="analysts" label="Analysts" type="bounded">
 				<bounded multivalued="true">
 					<refList>
@@ -2945,6 +3282,17 @@
 					</refList>
 				</bounded>
 			</contentItem>
+			<contentItem id="industries" label="Industries" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>industry</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>			
 			<contentItem id="analysts" label="Analysts" type="bounded">
 				<bounded multivalued="true">
 					<refList>
@@ -3141,6 +3489,17 @@
 					</refList>
 				</bounded>
 			</contentItem>
+			<contentItem id="industries" label="Industries" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>industry</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>			
 			<contentItem id="topics" label="Topics" type="bounded">
 				<bounded multivalued="true">
 					<refList>
@@ -3240,6 +3599,17 @@
 					</refList>
 				</bounded>
 			</contentItem>	
+			<contentItem id="industries" label="Industries" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>industry</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>			
 			<contentItem id="topics" label="Topics" type="bounded" searchBoost="6">
 				<bounded multivalued="true">
 					<refList>
@@ -3350,6 +3720,17 @@
 					</refList>
 				</bounded>
 			</contentItem>
+			<contentItem id="industries" label="Industries" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>industry</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>			
 			<contentItem id="analysts" label="Analysts" type="bounded">
 				<bounded multivalued="true">
 					<refList>
@@ -3444,6 +3825,17 @@
 					</refList>
 				</bounded>
 			</contentItem>
+			<contentItem id="industries" label="Industries" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>industry</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>			
 			<contentItem id="analysts" label="Analysts" type="bounded" searchBoost="6">
 				<bounded multivalued="true">
 					<refList>
@@ -3568,6 +3960,17 @@
 					</refList>
 				</bounded>
 			</contentItem>
+			<contentItem id="industries" label="Industries" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>industry</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>			
 			<contentItem id="analysts" label="Analysts" type="bounded">
 				<bounded multivalued="true">
 					<refList>
@@ -3682,6 +4085,17 @@
 					</refList>
 				</bounded>
 			</contentItem>
+			<contentItem id="industries" label="Industries" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>industry</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>			
 			<contentItem id="analysts" label="Analysts" type="bounded">
 				<bounded multivalued="true">
 					<refList>
@@ -3806,6 +4220,17 @@
 					</refList>
 				</bounded>
 			</contentItem>
+			<contentItem id="industries" label="Industries" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>industry</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>			
 			<contentItem id="visibility" label="Visibility" type="bounded">
 	      		<bounded>
 	      			<refList>
@@ -3889,6 +4314,17 @@
 					</refList>
 				</bounded>
 			</contentItem>
+			<contentItem id="industries" label="Industries" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>industry</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>			
 			<contentItem id="topics" label="Topics" type="bounded" searchBoost="6">
 				<bounded multivalued="true">
 					<refList>
@@ -3914,8 +4350,19 @@
 		</container>	
 		<container id="pricingtemplate" label="Pricing Template" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
-			<contentItem id="summary" label="Description" type="richText"/>
 			<contentItem id="file" label="File" type="doc"/>
+			<contentItem id="licensemodel" label="License Model" type="bounded" searchBoost="5">
+				<bounded>
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>licenseModel</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>name</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>	
+			<contentItem id="summary" label="Description" type="richText"/>								
 			<contentItem id="visibility" label="Visibility" type="bounded">
 	      		<bounded>
 	      			<refList>
@@ -3930,8 +4377,7 @@
 		</container>		
 		<container id="partneragreement" label="Partnership Agreement" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
-			<contentItem id="file" label="File" type="doc"/>			
-			<contentItem id="summary" label="Description" type="richText"/>
+			<contentItem id="file" label="File" type="doc"/>		
 			<contentItem id="partners" label="Partners" type="bounded">
 				<bounded multivalued="true">
 					<refList>
@@ -3942,7 +4388,19 @@
 						</datastore>
 					</refList>
 				</bounded>
-			</contentItem>	
+			</contentItem>
+			<contentItem id="licensemodel" label="License Model" type="bounded" searchBoost="5">
+				<bounded>
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>licenseModel</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>name</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>											
+			<contentItem id="summary" label="Description" type="richText"/>
 			<contentItem id="visibility" label="Visibility" type="bounded">
 	      		<bounded>
 	      			<refList>
@@ -3957,8 +4415,19 @@
 		</container>
 		<container id="corporateagreement" label="Corporate Agreements" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
-			<contentItem id="desc" label="Description" type="richText"/>
 			<contentItem id="file" label="File" type="doc"/>
+			<contentItem id="licensemodel" label="License Model" type="bounded" searchBoost="5">
+				<bounded>
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>licenseModel</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>name</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>			
+			<contentItem id="desc" label="Description" type="richText"/>
 			<contentItem id="visibility" label="Visibility" type="bounded">
 	      		<bounded>
 	      			<refList>
@@ -4135,6 +4604,17 @@
 					</refList>
 				</bounded>
 			</contentItem>
+			<contentItem id="industries" label="Industries" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>industry</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>			
 			<contentItem id="analysts" label="Analysts" type="bounded">
 				<bounded multivalued="true">
 					<refList>
@@ -4178,10 +4658,6 @@
 			<contentItem id="desc" label="Description" type="text"/>
 			<container id="caseStudyTypeCaseStudy" label="Case Studies" linkContainerQId="caseStudy" linkContentItemId="type"/>						
 		</container>
-		<container id="industry" label="Industries" refData="true">
-			<contentItem id="name" label="Industry Name" type="text"/>
-			<contentItem id="desc" label="Description" type="text"/>
-		</container>
 		<container id="regions" label="Regions" refData="true">
 			<contentItem id="name" label="Region Name" type="text"/>
 			<contentItem id="desc" label="Description" type="text"/>
@@ -4207,11 +4683,14 @@
 			<contentItem id="visibilityType" label="Name" type="text"/>
 			<contentItem id="desc" label="Description" type="text"/>
 		</container>		
-		<container id="faqCategory" label="FAQ Category" refData="true">
+		<container id="faqCategory" label="FAQ Categories" refData="true">
 			<contentItem id="categoryName" label="Category" type="text"/>
 			<contentItem id="desc" label="Description" type="text"/>
 			<container id="faqCategoryFAQ" label="FAQ" linkContainerQId="faq" linkContentItemId="type"/>			
 		</container>
+		<container id="licenseModel" label="License Models" refData="true">
+			<contentItem id="name" label="Name" type="text"/>
+		</container>		
 		<container id="videoCategory" label="Video Category" refData="true">
 			<contentItem id="categoryName" label="Name" type="text"/>
 			<contentItem id="desc" label="Description" type="text"/>
@@ -4388,7 +4867,22 @@
 			<text type="short">
 				<autoPopulate><refContentItem itemId="name"/></autoPopulate>
 			</text>
-		</contentUIDef>		
+		</contentUIDef>
+		<contentUIDef qualifiedId="industry">
+			<container labelQualifiedId="industry.shortName">
+				<listViewConfig>
+					<hideContentItem id="visibility"/>					
+				</listViewConfig>
+				<portalConfig>
+					<headingContentItem id="shortName"/>
+				</portalConfig>
+			</container>			
+		</contentUIDef>
+		<contentUIDef qualifiedId="industry.shortName">
+			<text type="short">
+				<autoPopulate><refContentItem itemId="name"/></autoPopulate>
+			</text>
+		</contentUIDef>				
 		<contentUIDef qualifiedId="product">
 			<container labelQualifiedId="product.shortName">
 				<listViewConfig>
