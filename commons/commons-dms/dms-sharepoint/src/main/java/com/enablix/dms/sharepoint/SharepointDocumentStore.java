@@ -163,7 +163,7 @@ public class SharepointDocumentStore extends AbstractDocumentStore<SharepointDoc
 	}
 
 	private String createFilepath(String baseFolder, String contentPath) {
-		return baseFolder + "/" + contentPath;
+		return SharepointUtil.createFileLocationWithBaseFolder(contentPath, baseFolder);
 	}
 	
 	@Override

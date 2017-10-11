@@ -45,7 +45,7 @@ public class SharepointUtil {
 	}
 
 	public static String createFileLocationWithBaseFolder(String fileLocation, String baseFolder) {
-		return baseFolder + "/" + fileLocation;
+		return baseFolder + (fileLocation.startsWith("/") ? "" : "/") + fileLocation;
 	}
 
 	
