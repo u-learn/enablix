@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<contentTemplate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.20" id="haystax_enterprise" xsi:noNamespaceSchemaLocation="../xsd/content-template.xsd">
+<contentTemplate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.21" id="haystax_enterprise" xsi:noNamespaceSchemaLocation="../xsd/content-template.xsd">
 	<dataDefinition>
 		<container id="product" label="Products" businessCategory="BUSINESS_DIMENSION">
 			<contentItem id="name" label="Name" type="text" searchBoost="7"/>
@@ -4690,6 +4690,9 @@
 		</container>
 		<container id="licenseModel" label="License Models" refData="true">
 			<contentItem id="name" label="Name" type="text"/>
+			<container id="licenseModelPricingTemplate" label="Pricing Template" linkContainerQId="pricingtemplate" linkContentItemId="licensemodel"/>			
+			<container id="licenseModelPartnerAgreement" label="Pricing Template" linkContainerQId="pricingtemplate" linkContentItemId="licensemodel"/>			
+			<container id="licenseModelCorpAgreement" label="Pricing Template" linkContainerQId="pricingtemplate" linkContentItemId="licensemodel"/>												
 		</container>		
 		<container id="videoCategory" label="Video Category" refData="true">
 			<contentItem id="categoryName" label="Name" type="text"/>
@@ -4989,7 +4992,8 @@
 					<hideContentItem id="solutions"/>					
 					<hideContentItem id="apps"/>
 					<hideContentItem id="competitors"/>
-					<hideContentItem id="partners"/>	
+					<hideContentItem id="partners"/>
+					<hideContentItem id="industries"/>												
 					<hideContentItem id="analysts"/>																													
 					<hideContentItem id="topics"/>					
 					<hideContentItem id="positionings"/>	
@@ -5015,7 +5019,8 @@
 					<hideContentItem id="solutions"/>					
 					<hideContentItem id="apps"/>
 					<hideContentItem id="competitors"/>
-					<hideContentItem id="partners"/>	
+					<hideContentItem id="partners"/>
+					<hideContentItem id="industries"/>						
 					<hideContentItem id="analysts"/>																													
 					<hideContentItem id="topics"/>					
 					<hideContentItem id="positionings"/>	
@@ -5065,6 +5070,7 @@
 					<hideContentItem id="apps"/>
 					<hideContentItem id="competitors"/>
 					<hideContentItem id="partners"/>
+					<hideContentItem id="industries"/>										
 					<hideContentItem id="analysts"/>
 					<hideContentItem id="topics"/>
 					<hideContentItem id="visibility"/>										
@@ -5100,6 +5106,7 @@
 					<hideContentItem id="apps"/>
 					<hideContentItem id="competitors"/>
 					<hideContentItem id="partners"/>
+					<hideContentItem id="industries"/>											
 					<hideContentItem id="analysts"/>
 					<hideContentItem id="visibility"/>										
 				</listViewConfig>
@@ -5123,6 +5130,7 @@
 					<hideContentItem id="file"/>
 					<hideContentItem id="products"/>
 					<hideContentItem id="solutions"/>
+					<hideContentItem id="industries"/>										
 					<hideContentItem id="visibility"/>					
 				</listViewConfig>
 				<portalConfig>
@@ -5144,6 +5152,7 @@
 					<hideContentItem id="competitors"/>
 					<hideContentItem id="customers"/>
 					<hideContentItem id="partners"/>
+					<hideContentItem id="industries"/>					
 					<hideContentItem id="topics"/>
 					<hideContentItem id="visibility"/>					
 				</listViewConfig>
@@ -5173,7 +5182,8 @@
 					<hideContentItem id="products"/>
 					<hideContentItem id="solutions"/>
 					<hideContentItem id="apps"/>
-					<hideContentItem id="partners"/>																				
+					<hideContentItem id="partners"/>
+					<hideContentItem id="industries"/>																														
 					<hideContentItem id="topics"/>	
 					<hideContentItem id="visibility"/>															
 				</listViewConfig>
@@ -5194,7 +5204,8 @@
 					<hideContentItem id="demoenvironments"/>
 					<hideContentItem id="products"/>
 					<hideContentItem id="solutions"/>
-					<hideContentItem id="partners"/>						
+					<hideContentItem id="partners"/>
+					<hideContentItem id="industries"/>																
 					<hideContentItem id="apps"/>											
 					<hideContentItem id="topics"/>					
 					<hideContentItem id="visibility"/>										
@@ -5214,7 +5225,8 @@
 					<hideContentItem id="buyer"/>	
 					<hideContentItem id="products"/>
 					<hideContentItem id="solutions"/>
-					<hideContentItem id="partners"/>						
+					<hideContentItem id="partners"/>
+					<hideContentItem id="industries"/>																
 					<hideContentItem id="apps"/>	
 					<hideContentItem id="competitors"/>															
 					<hideContentItem id="topics"/>					
@@ -5234,6 +5246,7 @@
 					<hideContentItem id="desc"/>
 					<hideContentItem id="file"/>
 					<hideContentItem id="url"/>
+					<hideContentItem id="industries"/>										
 					<hideContentItem id="visibility"/>															
 				</listViewConfig>
 				<portalConfig>
@@ -5256,6 +5269,7 @@
 					<hideContentItem id="apps"/>
 					<hideContentItem id="competitors"/>
 					<hideContentItem id="partners"/>
+					<hideContentItem id="industries"/>										
 					<hideContentItem id="topics"/>
 					<hideContentItem id="visibility"/>					
 				</listViewConfig>
@@ -5275,6 +5289,7 @@
 					<hideContentItem id="url"/>
 					<hideContentItem id="products"/>
 					<hideContentItem id="solutions"/>
+					<hideContentItem id="industries"/>										
 					<hideContentItem id="apps"/>					
 					<hideContentItem id="visibility"/>															
 				</listViewConfig>
@@ -5311,6 +5326,7 @@
 					<hideContentItem id="solutions"/>
 					<hideContentItem id="apps"/>
 					<hideContentItem id="partners"/>
+					<hideContentItem id="industries"/>										
 					<hideContentItem id="competitors"/>
 					<hideContentItem id="topics"/>					
 					<hideContentItem id="visibility"/>					
@@ -5346,6 +5362,7 @@
 					<hideContentItem id="solutions"/>
 					<hideContentItem id="apps"/>
 					<hideContentItem id="partners"/>
+					<hideContentItem id="industries"/>										
 					<hideContentItem id="competitors"/>
 					<hideContentItem id="topics"/>					
 					<hideContentItem id="visibility"/>					
@@ -5366,6 +5383,7 @@
 					<hideContentItem id="solutions"/>
 					<hideContentItem id="products"/>					
 					<hideContentItem id="competitors"/>
+					<hideContentItem id="industries"/>										
 					<hideContentItem id="visibility"/>					
 				</listViewConfig>
 				<portalConfig>
@@ -5386,6 +5404,7 @@
 					<hideContentItem id="customers"/>
 					<hideContentItem id="opportunities"/>					
 					<hideContentItem id="partners"/>
+					<hideContentItem id="industries"/>										
 					<hideContentItem id="topics"/>
 					<hideContentItem id="visibility"/>						
 				</listViewConfig>
@@ -5408,7 +5427,8 @@
 					<hideContentItem id="solutions"/>
 					<hideContentItem id="apps"/>
 					<hideContentItem id="competitors"/>
-					<hideContentItem id="partners"/>																															
+					<hideContentItem id="partners"/>
+					<hideContentItem id="industries"/>																																									
 					<hideContentItem id="analysts"/>
 					<hideContentItem id="customers"/>	
 					<hideContentItem id="topics"/>
@@ -5432,7 +5452,8 @@
 					<hideContentItem id="solutions"/>
 					<hideContentItem id="apps"/>
 					<hideContentItem id="competitors"/>
-					<hideContentItem id="partners"/>																															
+					<hideContentItem id="partners"/>
+					<hideContentItem id="industries"/>																																									
 					<hideContentItem id="analysts"/>
 					<hideContentItem id="customers"/>	
 					<hideContentItem id="topics"/>
@@ -5458,6 +5479,7 @@
 					<hideContentItem id="solutions"/>
 					<hideContentItem id="apps"/>
 					<hideContentItem id="partners"/>
+					<hideContentItem id="industries"/>										
 					<hideContentItem id="competitors"/>
 					<hideContentItem id="topics"/>
 					<hideContentItem id="visibility"/>												
@@ -5522,6 +5544,7 @@
 					<hideContentItem id="competitors"/>					
 					<hideContentItem id="products"/>
 					<hideContentItem id="solutions"/>
+					<hideContentItem id="industries"/>					
 					<hideContentItem id="apps"/>
 					<hideContentItem id="partners"/>						
 					<hideContentItem id="analysts"/>															
@@ -5548,11 +5571,12 @@
 				<listViewConfig>
 					<hideContentItem id="desc"/>
 					<hideContentItem id="file"/>					
-					<hideContentItem id="competitors"/>					
+					<hideContentItem id="competitors"/>
 					<hideContentItem id="products"/>
 					<hideContentItem id="solutions"/>
 					<hideContentItem id="apps"/>
-					<hideContentItem id="partners"/>										
+					<hideContentItem id="partners"/>	
+					<hideContentItem id="industries"/>																				
 					<hideContentItem id="topics"/>
 					<hideContentItem id="visibility"/>										
 				</listViewConfig>
@@ -5573,7 +5597,8 @@
 					<hideContentItem id="products"/>
 					<hideContentItem id="solutions"/>
 					<hideContentItem id="apps"/>
-					<hideContentItem id="partners"/>	
+					<hideContentItem id="partners"/>
+					<hideContentItem id="industries"/>						
 					<hideContentItem id="analysts"/>															
 					<hideContentItem id="topics"/>
 					<hideContentItem id="visibility"/>										
@@ -5596,6 +5621,7 @@
 					<hideContentItem id="apps"/>
 					<hideContentItem id="competitors"/>
 					<hideContentItem id="partners"/>
+					<hideContentItem id="industries"/>					
 					<hideContentItem id="analysts"/>
 					<hideContentItem id="customers"/>
 					<hideContentItem id="topics"/>															
@@ -5620,6 +5646,7 @@
 					<hideContentItem id="apps"/>
 					<hideContentItem id="competitors"/>
 					<hideContentItem id="partners"/>
+					<hideContentItem id="industries"/>					
 					<hideContentItem id="visibility"/>					
 				</listViewConfig>
 				<portalConfig>
@@ -5637,8 +5664,10 @@
 					<hideContentItem id="file"/>					
 					<hideContentItem id="apps"/>
 					<hideContentItem id="partners"/>
+					<hideContentItem id="industries"/>					
 					<hideContentItem id="competitors"/>					
 					<hideContentItem id="topics"/>
+					<hideContentItem id="visibility"/>					
 				</listViewConfig>
 				<portalConfig>
 					<headingContentItem id="title"/>
@@ -5659,6 +5688,7 @@
 					<hideContentItem id="apps"/>
 					<hideContentItem id="competitors"/>
 					<hideContentItem id="partners"/>
+					<hideContentItem id="industries"/>					
 					<hideContentItem id="analysts"/>
 					<hideContentItem id="customers"/>					
 					<hideContentItem id="topics"/>
@@ -5680,6 +5710,7 @@
 					<hideContentItem id="apps"/>
 					<hideContentItem id="competitors"/>
 					<hideContentItem id="partners"/>
+					<hideContentItem id="industries"/>					
 					<hideContentItem id="analysts"/>
 					<hideContentItem id="topics"/>
 					<hideContentItem id="blurbText"/>
@@ -5705,6 +5736,7 @@
 					<hideContentItem id="apps"/>
 					<hideContentItem id="competitors"/>
 					<hideContentItem id="partners"/>
+					<hideContentItem id="industries"/>					
 					<hideContentItem id="analysts"/>
 					<hideContentItem id="customers"/>					
 					<hideContentItem id="topics"/>
@@ -5727,6 +5759,7 @@
 					<hideContentItem id="solutions"/>
 					<hideContentItem id="apps"/>
 					<hideContentItem id="partners"/>
+					<hideContentItem id="industries"/>										
 					<hideContentItem id="analysts"/>
 					<hideContentItem id="customers"/>
 					<hideContentItem id="opportunities"/>										
@@ -5752,6 +5785,7 @@
 					<hideContentItem id="apps"/>
 					<hideContentItem id="competitors"/>
 					<hideContentItem id="partners"/>
+					<hideContentItem id="industries"/>										
 					<hideContentItem id="analysts"/>
 					<hideContentItem id="customers"/>
 					<hideContentItem id="topics"/>
@@ -5775,7 +5809,8 @@
 					<hideContentItem id="solutions"/>
 					<hideContentItem id="apps"/>				
 					<hideContentItem id="competitors"/>					
-					<hideContentItem id="partners"/>										
+					<hideContentItem id="partners"/>
+					<hideContentItem id="industries"/>																				
 					<hideContentItem id="topics"/>					
 					<hideContentItem id="visibility"/>					
 				</listViewConfig>
@@ -5796,7 +5831,8 @@
 					<hideContentItem id="solutions"/>
 					<hideContentItem id="apps"/>
 					<hideContentItem id="competitors"/>					
-					<hideContentItem id="partners"/>										
+					<hideContentItem id="partners"/>	
+					<hideContentItem id="industries"/>																			
 					<hideContentItem id="topics"/>					
 					<hideContentItem id="visibility"/>					
 				</listViewConfig>
@@ -5829,7 +5865,8 @@
 					<hideContentItem id="products"/>					
 					<hideContentItem id="solutions"/>
 					<hideContentItem id="apps"/>
-					<hideContentItem id="partners"/>										
+					<hideContentItem id="partners"/>	
+					<hideContentItem id="industries"/>																			
 					<hideContentItem id="topics"/>					
 					<hideContentItem id="visibility"/>										
 				</listViewConfig>
@@ -5843,7 +5880,8 @@
 				<listViewConfig>
 					<hideContentItem id="file"/>
 					<hideContentItem id="summary"/>
-					<hideContentItem id="visibility"/>					
+					<hideContentItem id="visibility"/>	
+									
 				</listViewConfig>
 				<portalConfig>
 					<headingContentItem id="title"/>
@@ -5864,6 +5902,7 @@
 					<hideContentItem id="apps"/>
 					<hideContentItem id="competitors"/>
 					<hideContentItem id="partners"/>
+					<hideContentItem id="industries"/>					
 					<hideContentItem id="customers"/>					
 					<hideContentItem id="topics"/>
 					<hideContentItem id="visibility"/>						
@@ -6003,6 +6042,7 @@
 					<hideContentItem id="apps"/>
 					<hideContentItem id="competitors"/>										
 					<hideContentItem id="partners"/>
+					<hideContentItem id="industries"/>					
 					<hideContentItem id="analysts"/>					
 					<hideContentItem id="topics"/>
 					<hideContentItem id="visibility"/>						
@@ -6022,6 +6062,7 @@
 					<hideContentItem id="partners"/>					
 					<hideContentItem id="competitors"/>					
 					<hideContentItem id="partners"/>
+					<hideContentItem id="industries"/>											
 					<hideContentItem id="topics"/>
 					<hideContentItem id="visibility"/>					
 				</listViewConfig>			
