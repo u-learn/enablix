@@ -44,6 +44,7 @@ import com.enablix.app.content.ui.DisplayableContentBuilder;
 import com.enablix.app.content.ui.format.TextLinkProcessor;
 import com.enablix.app.template.service.TemplateManager;
 import com.enablix.app.web.HubspotCRMExtResponse.HubspotContent;
+import com.enablix.commons.config.ConfigurationUtil;
 import com.enablix.commons.util.StringUtil;
 import com.enablix.commons.util.collection.CollectionUtil;
 import com.enablix.commons.util.process.ProcessContext;
@@ -53,6 +54,7 @@ import com.enablix.core.api.TemplateFacade;
 import com.enablix.core.commons.xsdtopojo.ContainerBusinessCategoryType;
 import com.enablix.core.commons.xsdtopojo.ContainerType;
 import com.enablix.core.commons.xsdtopojo.ContentItemType;
+import com.enablix.core.domain.config.Configuration;
 import com.enablix.core.domain.content.connection.ContentTypeConnection;
 import com.enablix.core.domain.content.connection.ContentValueConnection;
 import com.enablix.core.mongo.content.ContentCrudService;
@@ -137,6 +139,17 @@ public class LinkedContentController {
 		hbResponse.setItemLabel("See more content");
 		
 		return hbResponse;
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, 
+			value="/t/{tenantId}/hbspt/testcontent/", 
+			produces = "application/json")
+	public Map<String, Object> hubspotTestContentRequest(
+			HttpServletRequest request, HttpServletResponse response,
+			@PathVariable String tenantId, @RequestParam String userEmail) {
+		
+		Configuration config = ConfigurationUtil.getConfig("HUBSPOT_TEST_CONTENT");
+		return config.getConfig();
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, 
