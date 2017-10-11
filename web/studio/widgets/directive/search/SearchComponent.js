@@ -521,10 +521,6 @@ function freeSearchTemplate(_query) {
     return "\n    <div class=\"tt-selectable container-fluid eb-search-for\">\n        Search for <strong>\"" + escapeHtml(query) + "\"</strong>\n    </div>\n    ";
 }
 
-function remoteSearchTemplate(_result) {
-    return "\n    <div class=\"container-fluid\">\n " + _result.value + "\n        </div>\n    ";
-}
-
 var templates = {
     suggestion: suggestionTemplate
 };
@@ -595,23 +591,6 @@ var SearchComponent = exports.SearchComponent = function SearchComponent(_ref2) 
     	console.log(e);
     }
     
-    this.remoteHound = new Bloodhound({
-        datumTokenizer: Bloodhound.tokenizers.whitespace,
-        queryTokenizer: Bloodhound.tokenizers.whitespace,
-        remote: {
-        	wildcard: '%QUERY',
-        	url: '/search/t/%QUERY/',
-        	transform: function(response) {
-        		// Map the remote source JSON array to a JavaScript object array
-        		return _.map(response.content, function(item) {
-        			return {
-        				value: item.label
-        			};
-        		});
-        	}
-        }
-    });
-    
     this.indexer = new _Indexer2.default(asyncData);
     this.$e = $(mountPoint);
     this.$e.typeahead(_constants.TYPEAHEAD_OPTIONS, 
@@ -631,14 +610,6 @@ var SearchComponent = exports.SearchComponent = function SearchComponent(_ref2) 
 	    	limit: 1,
 	    	templates: {
 	    		suggestion: freeSearchTemplate
-	    	}
-    	},
-    	{   // content data source
-	        name: 'entities-title',
-	        source: this.remoteHound,
-	        limit: 5,
-	        templates: {
-	    		suggestion: remoteSearchTemplate
 	    	}
     	}
     ).bind("typeahead:select", this.searchOnSelect)
@@ -803,29 +774,10 @@ var Indexer = function () {
                 return obj.label;
             }
         });
-        
-        /*new BloodHound({
-        	datumTokenizer: Bloodhound.tokenizers.obj.whitespace,
-            queryTokenizer: Bloodhound.tokenizers.whitespace,
-            remote: {
-            	wildcard: '%QUERY',
-            	url: '/search/t/%QUERY/',
-            	transform: function(response) {
-            		// Map the remote source JSON array to a JavaScript object array
-            		return _.map(response.content, function(item) {
-            			return {
-            				value: item.label
-            			};
-            		});
-            	}
-            }
-        });*/
-        
         this.asyncTemplate = asyncData.template;
         this.asyncData = asyncData;
         //Kick off async processing
         this.asyncReady = this._processAsyncData();
-        
     }
 
     _createClass(Indexer, [{

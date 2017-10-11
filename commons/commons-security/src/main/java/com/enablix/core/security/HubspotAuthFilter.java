@@ -80,6 +80,8 @@ public class HubspotAuthFilter extends OncePerRequestFilter {
 			return;
 		}
 		
+		LOGGER.debug("OAuth2 token found for hubspot integration");
+		
 		//String hubspotAppKey = authToken.getHubspotAppKey();
 		
 		// TODO: validate request using hubspot app key
