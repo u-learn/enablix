@@ -32,7 +32,8 @@ public class CustomResourceResolver extends EnablixPathResourceResolver {
 	}
 
 	@Override
-	protected Resource resolveResourceInternal(HttpServletRequest request, String requestPath, List<? extends Resource> locations, ResourceResolverChain chain) {
+	protected Resource resolveResourceInternal(HttpServletRequest request, 
+			String requestPath, List<? extends Resource> locations, ResourceResolverChain chain) {
 		
 		Resource resource = super.resolveResourceInternal(request, requestPath, locations, chain);
 		if (resource != null) {

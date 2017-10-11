@@ -23,10 +23,12 @@ import org.elasticsearch.search.aggregations.bucket.terms.StringTerms;
 import org.elasticsearch.search.aggregations.bucket.terms.Terms.Bucket;
 import org.elasticsearch.search.aggregations.bucket.terms.TermsBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.enablix.analytics.search.es.ESQueryBuilder;
@@ -65,7 +67,6 @@ import com.enablix.services.util.DataViewUtil;
 import com.enablix.services.util.TemplateUtil;
 
 @RestController
-@RequestMapping("content")
 public class LinkedContentController {
 
 	private static final String ATTR_ID_OR_SEP = "|";
@@ -98,8 +99,29 @@ public class LinkedContentController {
 	@Autowired
 	private ContentTypeConnectionRepository contentTypeConnRepo;
 	
+	@RequestMapping(method = RequestMethod.GET, 
+			value="/t/{tenantId}/hbspt/content/linked/{refQId}/{refMatchAttrId}/{refMatchAttrValue}/{lookupContentQId}/", 
+			produces = "application/json")
+	public HubspotCRMExtResponse hubspotContentRequest(
+			HttpServletRequest request, HttpServletResponse response,
+			@PathVariable String tenantId, @PathVariable String refQId,
+			@PathVariable String refMatchAttrId, @PathVariable String refMatchAttrValue,
+			@PathVariable String lookupContentQId,
+			@RequestParam String userEmail) {
+		
+		List<LinkedContent> content = fetchLinkedContent(refQId, refMatchAttrId, 
+				refMatchAttrValue, lookupContentQId, null, userEmail);
+		
+		HubspotCRMExtResponse hbResponse = new HubspotCRMExtResponse();
+		hbResponse.setResults(content == null ? new ArrayList<>() : content);
+		hbResponse.setTotalCount(hbResponse.getResults().size());
+		hbResponse.setItemLabel("See more content");
+		
+		return hbResponse;
+	}
+	
 	@RequestMapping(method = RequestMethod.POST, 
-			value="/linked/", consumes = "application/json",
+			value="/content/linked/", consumes = "application/json",
 			produces = "application/json")
 	public List<LinkedContent> getSpecificLinkedContent(
 			HttpServletRequest request, HttpServletResponse response,
@@ -112,7 +134,7 @@ public class LinkedContentController {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, 
-			value="/linked/mapped/", consumes = "application/json", 
+			value="/content/linked/mapped/", consumes = "application/json", 
 			produces = "application/json")
 	public List<DisplayableContent> getCategoryMappedContent(
 			HttpServletRequest request, HttpServletResponse response,

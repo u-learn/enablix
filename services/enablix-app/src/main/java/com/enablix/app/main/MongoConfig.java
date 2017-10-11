@@ -28,7 +28,8 @@ import com.mongodb.MongoClientOptions;
 		basePackages = {"com.enablix.core.system.repo", 
 						"com.enablix.core.security.token.repo",
 						"com.enablix.scheduler.repo",
-						"com.enablix.core.security.oauth2.repo"},
+						"com.enablix.core.security.oauth2.repo",
+						"com.enablix.core.security.hubspot.repo"},
 		mongoTemplateRef = "systemMongoTemplate"
 		)
 public class MongoConfig {

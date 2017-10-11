@@ -15,6 +15,7 @@ import org.springframework.security.web.util.matcher.RequestMatcher;
 import com.enablix.core.security.AuditTrackingContextInitFilter;
 import com.enablix.core.security.ProcessContextInitFilter;
 import com.enablix.core.security.RequestContextFilter;
+import com.enablix.core.security.SecurityConstant;
 
 @Configuration
 @EnableResourceServer
@@ -39,8 +40,8 @@ public class OAuth2ResourceServerConfig extends ResourceServerConfigurerAdapter 
 
 		@Override
 		public boolean matches(HttpServletRequest request) {
-			String auth = request.getHeader("Authorization");
-			return (auth != null && auth.startsWith("Bearer"));
+			String auth = request.getHeader(SecurityConstant.AUTHORIZATION_HEADER);
+			return (auth != null && auth.startsWith(SecurityConstant.BEARER_TOKEN));
 		}
 		
 	}

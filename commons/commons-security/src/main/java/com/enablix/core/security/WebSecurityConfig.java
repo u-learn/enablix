@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.security.web.authentication.RememberMeServices;
+import org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices;
 import org.springframework.security.web.authentication.switchuser.SwitchUserFilter;
 
 import com.enablix.core.security.service.EnablixUserService;
@@ -37,6 +38,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http = http.addFilterAfter(new ProcessContextInitFilter(systemUserRequestPatterns), SwitchUserFilter.class);
 		http = http.addFilterAfter(new AuditTrackingContextInitFilter(), SwitchUserFilter.class);
 		http = http.addFilterBefore(new RequestContextFilter(), ProcessContextInitFilter.class);
+		//http = http.addFilterBefore(hubspotAuthFilter(), RequestContextFilter.class);
 		
 		// Add guest login filter ahead of username/password filter. Also, read the following:
 		// http://mtyurt.net/2015/07/15/spring-how-to-insert-a-filter-before-springsecurityfilterchain/
@@ -80,11 +82,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		return new GuestUserLoginFilter();
 	}
 	
+	/*@Bean
+	public HubspotAuthFilter hubspotAuthFilter() {
+		return new HubspotAuthFilter();
+	}*/
+	
 	@Bean
 	public RememberMeServices rememberMeServices() {
-		BasicAuthPersistedRememberMeServices rememberMeServices = 
+		
+		/*BasicAuthPersistedRememberMeServices rememberMeServices = 
 				new BasicAuthPersistedRememberMeServices(PERSISTENT_REMEMBER_ME_KEY, 
-					userService, mongoPersistentTokenRepository());
+					userService, mongoPersistentTokenRepository());*/
+		
+		TokenBasedRememberMeServices rememberMeServices = 
+				new TokenBasedRememberMeServices(PERSISTENT_REMEMBER_ME_KEY, userService);
+		
 		rememberMeServices.setTokenValiditySeconds(REMEMBER_ME_TOKEN_VALIDITY_IN_SECONDS);
 		return rememberMeServices;
 	}
