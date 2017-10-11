@@ -43,6 +43,7 @@ import com.enablix.app.content.ui.DisplayContext;
 import com.enablix.app.content.ui.DisplayableContentBuilder;
 import com.enablix.app.content.ui.format.TextLinkProcessor;
 import com.enablix.app.template.service.TemplateManager;
+import com.enablix.app.web.HubspotCRMExtResponse.HubspotContent;
 import com.enablix.commons.util.StringUtil;
 import com.enablix.commons.util.collection.CollectionUtil;
 import com.enablix.commons.util.process.ProcessContext;
@@ -113,7 +114,13 @@ public class LinkedContentController {
 				refMatchAttrValue, lookupContentQId, null, userEmail);
 		
 		HubspotCRMExtResponse hbResponse = new HubspotCRMExtResponse();
-		hbResponse.setResults(content == null ? new ArrayList<>() : content);
+		hbResponse.setResults(content == null ? new ArrayList<>() : 
+			CollectionUtil.transform(content, () -> new ArrayList<HubspotContent>(), (ct) -> {
+				HubspotContent hbContent = new HubspotContent();
+				hbContent.setContentLabel(ct.getContentLabel());
+				hbContent.setContentCount(ct.getContentCount());
+				return hbContent;
+			}));
 		hbResponse.setTotalCount(hbResponse.getResults().size());
 		hbResponse.setItemLabel("See more content");
 		

@@ -2,11 +2,9 @@ package com.enablix.app.web;
 
 import java.util.List;
 
-import com.enablix.app.web.LinkedContentController.LinkedContent;
-
 public class HubspotCRMExtResponse {
 
-	private List<LinkedContent> results;
+	private List<HubspotContent> results;
 	
 	private int totalCount;
 	
@@ -14,11 +12,11 @@ public class HubspotCRMExtResponse {
 	
 	private String itemLabel;
 
-	public List<LinkedContent> getResults() {
+	public List<HubspotContent> getResults() {
 		return results;
 	}
 
-	public void setResults(List<LinkedContent> results) {
+	public void setResults(List<HubspotContent> results) {
 		this.results = results;
 	}
 
@@ -46,5 +44,29 @@ public class HubspotCRMExtResponse {
 		this.itemLabel = itemLabel;
 	}
 	
+	
+	public static class HubspotContent {
+		
+		private String contentLabel;
+		
+		private int contentCount;
+
+		public String getContentLabel() {
+			return contentLabel;
+		}
+
+		public void setContentLabel(String contentLabel) {
+			this.contentLabel = contentLabel;
+		}
+
+		public int getContentCount() {
+			return contentCount;
+		}
+
+		public void setContentCount(int contentCount) {
+			this.contentCount = contentCount;
+		}
+		
+	}
 	
 }
