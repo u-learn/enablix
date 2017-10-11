@@ -115,7 +115,8 @@ public class SharepointDocumentStore extends AbstractDocumentStore<SharepointDoc
 		
 		SharepointSession spSession = login(config);
 		
-		String currentFileLocation = docMetadata.getFileLocation();
+		String currentFileLocation = SharepointUtil.createFileLocationWithBaseFolder(
+				docMetadata.getFileLocation(), spSession.getBaseFolder());
 		String moveToFilepath = createFilepath(baseFolder, newContentPath);
 		String moveToFileLocation = createFileLocation(moveToFilepath, docMetadata.getName());
 		
