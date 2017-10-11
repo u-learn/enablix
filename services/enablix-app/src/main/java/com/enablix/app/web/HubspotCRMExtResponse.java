@@ -10,7 +10,7 @@ public class HubspotCRMExtResponse {
 	
 	private int totalCount;
 	
-	private String allItemsLink;
+	private String allItemsLink = "All Content";
 	
 	private String itemLabel;
 
