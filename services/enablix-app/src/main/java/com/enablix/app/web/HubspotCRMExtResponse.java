@@ -47,9 +47,29 @@ public class HubspotCRMExtResponse {
 	
 	public static class HubspotContent {
 		
+		private long objectId;
+		
+		private String title;
+		
 		private String contentLabel;
 		
 		private int contentCount;
+
+		public long getObjectId() {
+			return objectId;
+		}
+
+		public void setObjectId(long objectId) {
+			this.objectId = objectId;
+		}
+
+		public String getTitle() {
+			return title;
+		}
+
+		public void setTitle(String title) {
+			this.title = title;
+		}
 
 		public String getContentLabel() {
 			return contentLabel;

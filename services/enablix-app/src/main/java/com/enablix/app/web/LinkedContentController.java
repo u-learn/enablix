@@ -113,14 +113,26 @@ public class LinkedContentController {
 		List<LinkedContent> content = fetchLinkedContent(refQId, refMatchAttrId, 
 				refMatchAttrValue, lookupContentQId, null, userEmail);
 		
-		HubspotCRMExtResponse hbResponse = new HubspotCRMExtResponse();
-		hbResponse.setResults(content == null ? new ArrayList<>() : 
-			CollectionUtil.transform(content, () -> new ArrayList<HubspotContent>(), (ct) -> {
+		long objectId = 0;
+		
+		List<HubspotContent> hbContents = new ArrayList<>();
+		
+		if (content != null) {
+			
+			for (LinkedContent ct : content) {
+				
 				HubspotContent hbContent = new HubspotContent();
 				hbContent.setContentLabel(ct.getContentLabel());
 				hbContent.setContentCount(ct.getContentCount());
-				return hbContent;
-			}));
+				hbContent.setObjectId(++objectId);
+				hbContent.setTitle(ct.getContentLabel());
+				
+				hbContents.add(hbContent);
+			}
+		}
+		
+		HubspotCRMExtResponse hbResponse = new HubspotCRMExtResponse();
+		hbResponse.setResults(hbContents);
 		hbResponse.setTotalCount(hbResponse.getResults().size());
 		hbResponse.setItemLabel("See more content");
 		
