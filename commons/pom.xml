@@ -43,5 +43,6 @@
 	<module>mq-impl</module>
 	<module>content-quality-monitor</module>
 	<module>manage-content-template-api</module>
+	<module>hubspot-integration</module>
   </modules>
 </project>

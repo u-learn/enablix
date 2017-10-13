@@ -43,7 +43,6 @@ import com.enablix.app.content.ui.DisplayContext;
 import com.enablix.app.content.ui.DisplayableContentBuilder;
 import com.enablix.app.content.ui.format.TextLinkProcessor;
 import com.enablix.app.template.service.TemplateManager;
-import com.enablix.app.web.HubspotCRMExtResponse.HubspotContent;
 import com.enablix.commons.config.ConfigurationUtil;
 import com.enablix.commons.util.StringUtil;
 import com.enablix.commons.util.collection.CollectionUtil;
@@ -65,6 +64,8 @@ import com.enablix.core.mongo.view.MongoDataView;
 import com.enablix.core.ui.DisplayableContent;
 import com.enablix.data.segment.DataSegmentService;
 import com.enablix.data.view.DataView;
+import com.enablix.hubspot.model.HubspotCRMExtResponse;
+import com.enablix.hubspot.model.HubspotContent;
 import com.enablix.services.util.ContentDataUtil;
 import com.enablix.services.util.DataViewUtil;
 import com.enablix.services.util.TemplateUtil;
@@ -124,8 +125,6 @@ public class LinkedContentController {
 			for (LinkedContent ct : content) {
 				
 				HubspotContent hbContent = new HubspotContent();
-				hbContent.setContentLabel(ct.getContentLabel());
-				hbContent.setContentCount(ct.getContentCount());
 				hbContent.setObjectId(++objectId);
 				hbContent.setTitle(ct.getContentLabel());
 				
