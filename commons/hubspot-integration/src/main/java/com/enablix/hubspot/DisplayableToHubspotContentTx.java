@@ -19,7 +19,7 @@ public class DisplayableToHubspotContentTx {
 		HubspotContent hbContent = new HubspotContent();
 
 		hbContent.setObjectId(objectId);
-		hbContent.setTitle(in.getTitle());
+		hbContent.setTitle(in.getContainerLabel() + " - " + in.getTitle());
 		hbContent.setLink(in.getPortalUrl());
 		hbContent.setContentType(in.getContainerLabel());
 		hbContent.setDownloadLink(getDocDownloadProp(in));
@@ -56,7 +56,7 @@ public class DisplayableToHubspotContentTx {
 		
 		Hyperlink hyperlink = in.getHyperlink();
 		if (hyperlink != null) {
-			link = new Link(hyperlink.getHref(), hyperlink.getTitle());
+			link = new Link(hyperlink.getHref(), "Click URL");
 		}
 		
 		return link;
