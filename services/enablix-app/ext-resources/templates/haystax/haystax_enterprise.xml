@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<contentTemplate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.21" id="haystax_enterprise" xsi:noNamespaceSchemaLocation="../xsd/content-template.xsd">
+<contentTemplate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.22" id="haystax_enterprise" xsi:noNamespaceSchemaLocation="../xsd/content-template.xsd">
 	<dataDefinition>
 		<container id="product" label="Products" businessCategory="BUSINESS_DIMENSION">
 			<contentItem id="name" label="Name" type="text" searchBoost="7"/>
@@ -4691,8 +4691,8 @@
 		<container id="licenseModel" label="License Models" refData="true">
 			<contentItem id="name" label="Name" type="text"/>
 			<container id="licenseModelPricingTemplate" label="Pricing Template" linkContainerQId="pricingtemplate" linkContentItemId="licensemodel"/>			
-			<container id="licenseModelPartnerAgreement" label="Pricing Template" linkContainerQId="pricingtemplate" linkContentItemId="licensemodel"/>			
-			<container id="licenseModelCorpAgreement" label="Pricing Template" linkContainerQId="pricingtemplate" linkContentItemId="licensemodel"/>												
+			<container id="licenseModelPartnerAgreement" label="Partner Agreements" linkContainerQId="partneragreement" linkContentItemId="licensemodel"/>			
+			<container id="licenseModelCorpAgreement" label="Corporate Agreements" linkContainerQId="corporateagreement" linkContentItemId="licensemodel"/>												
 		</container>		
 		<container id="videoCategory" label="Video Category" refData="true">
 			<contentItem id="categoryName" label="Name" type="text"/>
