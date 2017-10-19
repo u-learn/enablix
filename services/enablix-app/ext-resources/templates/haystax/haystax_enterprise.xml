@@ -2634,7 +2634,7 @@
 					</refList>
 				</bounded>
 			</contentItem>						
-			<contentItem id="competitors" label="Competitors">
+			<contentItem id="competitors" label="Competitors" type="bounded">
 				<bounded multivalued="true">
 					<refList>
 						<datastore hyperlink="true">
