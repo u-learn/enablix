@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<contentTemplate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.22" id="haystax_enterprise" xsi:noNamespaceSchemaLocation="../xsd/content-template.xsd">
+<contentTemplate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.23" id="haystax_enterprise" xsi:noNamespaceSchemaLocation="../xsd/content-template.xsd">
 	<dataDefinition>
 		<container id="product" label="Products" businessCategory="BUSINESS_DIMENSION">
 			<contentItem id="name" label="Name" type="text" searchBoost="7"/>
@@ -6102,7 +6102,14 @@
 					<headingContentItem id="visibilityType"/>
 				</portalConfig>
 			</container>
-		</contentUIDef>			
+		</contentUIDef>		
+		<contentUIDef qualifiedId="licenseModel">
+			<container labelQualifiedId="licenseModel.name">		
+				<portalConfig>
+					<headingContentItem id="name"/>
+				</portalConfig>
+			</container>
+		</contentUIDef>					
 	</uiDefinition>
 	<portalUIDefinition>
 		<topNavigation>
