@@ -92,7 +92,7 @@ public class WordpressInfo implements Information, TaggedInfo, IdentifiableInfo,
 	@Override
 	public void addTags(Collection<InfoTag> infoTags) {
 		if (CollectionUtil.isNotEmpty(infoTags)) {
-			infoTags.addAll(infoTags);
+			this.infoTags.addAll(infoTags);
 		}
 	}
 	

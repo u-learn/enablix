@@ -13,6 +13,14 @@ public class SimpleInfoTag implements InfoTag {
 		return tag;
 	}
 
+	public String getTag() {
+		return tag;
+	}
+
+	public void setTag(String tag) {
+		this.tag = tag;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
