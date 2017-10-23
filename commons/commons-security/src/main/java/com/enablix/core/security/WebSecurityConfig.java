@@ -95,7 +95,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 					userService, mongoPersistentTokenRepository());*/
 		
 		TokenBasedRememberMeServices rememberMeServices = 
-				new TokenBasedRememberMeServices(PERSISTENT_REMEMBER_ME_KEY, userService);
+				new CustomTokenBasedRememberMeServices(PERSISTENT_REMEMBER_ME_KEY, userService);
 		
 		rememberMeServices.setTokenValiditySeconds(REMEMBER_ME_TOKEN_VALIDITY_IN_SECONDS);
 		return rememberMeServices;
