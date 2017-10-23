@@ -7,15 +7,17 @@ import java.util.Map;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.web.filter.GenericFilterBean;
 
 import com.enablix.commons.util.process.ProcessContext;
 import com.enablix.core.activity.audit.ActivityTrackingContext;
 
-public class AuditTrackingContextInitFilter extends OncePerRequestFilter {
+public class AuditTrackingContextInitFilter extends GenericFilterBean {
 
 	
 	private static final String AUDIT_TRACKING_PARAM_PREFIX = "at";
@@ -24,8 +26,11 @@ public class AuditTrackingContextInitFilter extends OncePerRequestFilter {
 	}
 	
 	@Override
-	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
+	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
 			throws ServletException, IOException {
+		
+		HttpServletRequest request = (HttpServletRequest) req;
+		HttpServletResponse response = (HttpServletResponse) res;
 		
 		try {
 			Map<String, String> auditTrackingParams = new HashMap<>();

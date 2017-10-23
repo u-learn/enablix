@@ -215,6 +215,7 @@ enablix.studioApp.factory('RESTService', [
 				}
 			};
 
+			
 			var postForData = function(_resourceKey, _params, _data,
 					transformer, _success, _error, _contentType, _headers) {
 				
@@ -254,13 +255,52 @@ enablix.studioApp.factory('RESTService', [
 				});
 
 			};
+			
+			var postForDataSync = function(_resourceKey, _params, _data,
+					transformer, _success, _error, _contentType, _headers) {
+				
+				var ct = _contentType;
+				if (_contentType == null || _contentType == undefined || _contentType != '') {
+					ct = 'application/json; charset=utf-8';
+				}
+				
+				var callHeaders = addCommonHeaders(_headers);
+				
+				var requestConfig = genereateRequestConfig(_resourceKey, _params);
+				
+				$.ajax({
+				    type: 'POST',
+				    url: requestConfig.url,
+				    params : requestConfig.paramsJson,
+				    headers : callHeaders,
+				    async: false,
+				    data: JSON.stringify(_data),
+				    contentType: ct,
+				    success: function(data, textStatus) {
+				    	if (transformer != undefined) {
+							_success(transformer(data));
+						} else {
+							_success(data);
+						}
+				    },
+				    error: function(xhr, textStatus, errorThrown){
+				    	if (isVersionMismatchError(errorThrown, textStatus)) {
+							return;
+						}
 						
+						checkAuthenticationErrorAndExecute(errorThrown, status, _error);
+				    }
+				});
+
+			};
+			
 			// rest interface
 			return {
 				getForData : getForData,
 				postForData : postForData,
 				postForFile : postForFile,
-				getForDataSync:getForDataSync
+				getForDataSync : getForDataSync,
+				postForDataSync : postForDataSync
 			};
 		}]);
 

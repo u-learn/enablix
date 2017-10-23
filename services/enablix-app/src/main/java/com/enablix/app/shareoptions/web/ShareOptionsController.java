@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.enablix.app.content.share.SharedContentUrlCreator;
 import com.enablix.app.content.ui.web.ActivityAuditController.ContentAuditRequest;
+import com.enablix.commons.util.EnvPropertiesUtil;
 import com.enablix.commons.util.id.UUIDIdentityGenerator;
 import com.enablix.commons.util.process.ProcessContext;
 import com.enablix.core.api.ContentDataRef;
@@ -27,9 +29,12 @@ public class ShareOptionsController {
 	
 	@Autowired
 	private UUIDIdentityGenerator uuidGen;
+	
+	@Autowired
+	private SharedContentUrlCreator shareableUrlCreator;
 
-	@RequestMapping(method = RequestMethod.POST, value = "/downldDocURLAudit")
-	public @ResponseBody Boolean auditDownldDoc(@RequestBody ContentAuditRequest request) {
+	@RequestMapping(method = RequestMethod.POST, value = "/downldDocURLCopyAudit/")
+	public @ResponseBody Boolean auditDocUrlCopy(@RequestBody ContentAuditRequest request) {
 		try	{
 			String templateId = ProcessContext.get().getTemplateId();
 			ContentDataRef dataRef = ContentDataRef.createContentRef(templateId, request.getContainerQId(), 
@@ -43,8 +48,21 @@ public class ShareOptionsController {
 		}
 	}
 	
-	@RequestMapping(method = RequestMethod.POST, value = "/portalURLAudit")
-	public @ResponseBody Boolean auditPortalURL(@RequestBody ContentAuditRequest request) {
+	@RequestMapping(method = RequestMethod.POST, value = "/shareableDocUrl/", produces="text/plain")
+	public @ResponseBody String getShareableDocUrl(@RequestBody ShareableUrlRequest request) {
+		
+		String serverUrl = EnvPropertiesUtil.getProperties().getServerUrl();
+		String userId = ProcessContext.get().getUserId();
+		
+		String shareableUrl = shareableUrlCreator.createShareableUrl(request.getUrl(), userId, true);
+		
+		auditDocUrlCopy(request.getAuditRequest());
+		
+		return serverUrl + shareableUrl;
+	}
+	
+	@RequestMapping(method = RequestMethod.POST, value = "/portalURLCopyAudit/")
+	public @ResponseBody Boolean auditPortalURLCopy(@RequestBody ContentAuditRequest request) {
 		try	{
 			String templateId = ProcessContext.get().getTemplateId();
 			ContentDataRef dataRef = ContentDataRef.createContentRef(templateId, request.getContainerQId(), 
@@ -58,7 +76,7 @@ public class ShareOptionsController {
 		}
 	}
 
-	@RequestMapping(value = "/auditShareViaEmailClient", method = RequestMethod.POST, produces = "application/json")
+	@RequestMapping(value = "/auditShareViaEmailClient/", method = RequestMethod.POST, produces = "application/json")
 	public @ResponseBody Boolean auditShareViaEmailClient(@RequestBody ContentAuditRequest request) {
 		try	{
 			String templateId = ProcessContext.get().getTemplateId();
@@ -72,6 +90,30 @@ public class ShareOptionsController {
 			LOGGER.error("Error Saving the Audit Data for the Activity :: Portal URL Copied",e);
 			return false;
 		}
+	}
+	
+	public static class ShareableUrlRequest {
+		
+		private String url;
+		
+		private ContentAuditRequest auditRequest;
+
+		public String getUrl() {
+			return url;
+		}
+
+		public void setUrl(String url) {
+			this.url = url;
+		}
+
+		public ContentAuditRequest getAuditRequest() {
+			return auditRequest;
+		}
+
+		public void setAuditRequest(ContentAuditRequest auditRequest) {
+			this.auditRequest = auditRequest;
+		}
+		
 	}
 	
 }
