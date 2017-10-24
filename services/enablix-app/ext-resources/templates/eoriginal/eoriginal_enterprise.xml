@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<contentTemplate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="eoriginal_enterprise" version="1.16" xsi:noNamespaceSchemaLocation="../xsd/content-template.xsd">
+<contentTemplate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="eoriginal_enterprise" version="1.17" xsi:noNamespaceSchemaLocation="../xsd/content-template.xsd">
 	<dataDefinition>
 		<container id="solution" label="Solutions" businessCategory="BUSINESS_DIMENSION">
 			<contentItem id="name" label="Name" type="text" searchBoost="7"/>
@@ -2634,7 +2634,8 @@
 					<hideContentItem id="analysts"/>					
 					<hideContentItem id="topics"/>
 					<hideContentItem id="events"/>	
-					<hideContentItem id="tags"/>														
+					<hideContentItem id="tags"/>
+					<hideContentItem id="access"/>																			
 				</listViewConfig>
 				<portalConfig>
 					<headingContentItem id="title"/>
@@ -2677,7 +2678,8 @@
 					<hideContentItem id="competitors"/>															
 					<hideContentItem id="analysts"/>					
 					<hideContentItem id="topics"/>
-					<hideContentItem id="tags"/>					
+					<hideContentItem id="tags"/>
+					<hideContentItem id="access"/>										
 				</listViewConfig>
 				<portalConfig>
 					<headingContentItem id="title"/>
@@ -2692,6 +2694,7 @@
 				<listViewConfig>
 					<hideContentItem id="desc"/>
 					<hideContentItem id="file"/>
+					<hideContentItem id="access"/>					
 				</listViewConfig>
 				<portalConfig>
 					<headingContentItem id="title"/>
@@ -2734,7 +2737,8 @@
 					<hideContentItem id="competitors"/>															
 					<hideContentItem id="analysts"/>					
 					<hideContentItem id="topics"/>
-					<hideContentItem id="tags"/>					
+					<hideContentItem id="tags"/>
+					<hideContentItem id="access"/>										
 				</listViewConfig>
 				<portalConfig>
 					<headingContentItem id="title"/>
