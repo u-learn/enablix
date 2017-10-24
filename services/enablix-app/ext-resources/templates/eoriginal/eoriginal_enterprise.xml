@@ -1361,17 +1361,17 @@
 				<contentItem id="contenttype" label="Type" type="text" searchBoost="5"/>				
 				<contentItem id="desc" label="Description" type="richText"/>
 				<contentItem id="access" label="Access" type="bounded">
-				<bounded multivalued="false">
-					<refList>
-						<datastore hyperlink="true">
-							<storeId>accessType</storeId>
-							<dataId>identity</dataId>
-							<dataLabel>name</dataLabel>
-						</datastore>
-					</refList>
-				</bounded>
-			</contentItem>																		
-		</container>				
+					<bounded multivalued="false">
+						<refList>
+							<datastore hyperlink="true">
+								<storeId>accessType</storeId>
+								<dataId>identity</dataId>
+								<dataLabel>name</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>																		
+			</container>				
 		</container>		
 		<container id="research" label="Research" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text" searchBoost="7"/>
@@ -2868,4 +2868,17 @@
 			<containerDataContext qualifiedId="regions"/>
 		</contextConfig>
 	</contentTypeMappingConfig>
+	<dataSegmentDefinition>
+		<segmentAttr id="accessType" label="Access Types" type="bounded">
+      		<bounded multivalued="false">
+				<refList>
+					<datastore hyperlink="true">
+						<storeId>accessType</storeId>
+						<dataId>identity</dataId>
+						<dataLabel>name</dataLabel>
+					</datastore>
+				</refList>
+			</bounded>
+    	</segmentAttr>
+	</dataSegmentDefinition>
 </contentTemplate>

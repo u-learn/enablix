@@ -125,8 +125,9 @@ var ContainerNode = exports.ContainerNode = function () {
         this.type = "ContainerNode";
 
         _.assign(this, { businessCategory: businessCategory, id: id, label: label, qualifiedId: qualifiedId, searchBoost: searchBoost, depth: depth, isLinkContainer: isLinkContainer });
-        if (!container || container.length === 0) return;
         this.nodes = {};
+        if (!container || container.length === 0) return;
+        //this.nodes = {};
         var newDepth = ++depth;
         function addDepth(subContainer) {
             return createContainerNode(subContainer, newDepth);
