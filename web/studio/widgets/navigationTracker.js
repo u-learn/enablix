@@ -178,8 +178,8 @@ enablix.studioApp.factory('NextStateUrlParams',
 
 enablix.studioApp.factory('LocationUtil', 
 	[
-	 			'$location', '$transitions',
-	 	function($location,   $transitions) {
+	 			'$location', '$state', '$transitions',
+	 	function($location,   $state,   $transitions) {
 	 		
 			var URL_SEARCH_FIELD_PREFIX = "sf_";
 			var URL_SEARCH_FIELD_PREFIX_LEN = URL_SEARCH_FIELD_PREFIX.length;
@@ -221,10 +221,32 @@ enablix.studioApp.factory('LocationUtil',
 				
 				$location.search(newParams);
 			}
+			
+			var createExtLinkUrl = function(_url, _linkParams) {
+				
+				var url = encodeURIComponent(_url);
+				url = $location.protocol() + "://"
+						+ $location.host() + ":"
+						+ $location.port() + "/xlink?u="
+						+ url;
+	
+				if (_linkParams) {
+					angular.forEach(_linkParams, function(value, key) {
+						url += "&" + key + "=" + value
+					});
+				}
+	
+				if ($state.includes("portal")) {
+					url += "&atChannel=WEB";
+				}
+				
+				return url;
+			}
 	 		
 	 		return {
 	 			readUrlSearchFilters: readUrlSearchFilters,
-				updateUrlSearchFilters: updateUrlSearchFilters
+				updateUrlSearchFilters: updateUrlSearchFilters,
+				createExtLinkUrl: createExtLinkUrl
 	 		};
 	 	}
 	 ]);

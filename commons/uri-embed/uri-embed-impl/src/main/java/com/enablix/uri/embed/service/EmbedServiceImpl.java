@@ -1,0 +1,31 @@
+package com.enablix.uri.embed.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import com.enablix.core.domain.uri.embed.EmbedInfo;
+import com.enablix.uri.embed.EmbedService;
+
+@Component
+public class EmbedServiceImpl implements EmbedService {
+
+	@Autowired
+	private LocalEmbedInfoCache localCache;
+	
+	@Autowired
+	private EmbedInfoProvider provider;
+	
+	@Override
+	public EmbedInfo getEmbedInfo(String url) {
+		
+		EmbedInfo embedInfo = localCache.get(url);
+		
+		if (embedInfo == null) {
+			embedInfo = provider.fetchEmbedInfo(url);
+			localCache.put(url, embedInfo);
+		}
+		
+		return embedInfo;
+	}
+	
+}

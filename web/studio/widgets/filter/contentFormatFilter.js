@@ -88,8 +88,8 @@ function($filter,   $compile) {
 	
 }]);
 
-enablix.filters.filter('ebxLinky', ['$sanitize', '$location', '$state',
-	function($sanitize, $location, $state) {
+enablix.filters.filter('ebxLinky', ['$sanitize', '$location', '$state', 'LocationUtil',
+	function($sanitize, $location, $state, LocationUtil) {
 		//var LINKY_URL_REGEXP = /((ftp|https?):\/\/|(www\.)|(mailto:)?[A-Za-z0-9._%+-]+@)\S*[^\s.;,(){}<>"”’]/, MAILTO_REGEXP = /^mailto:/;
 		var LINKY_URL_REGEXP = /((ftp|https?):\/\/|(www\.)|(mailto:)?[A-Za-z0-9._%+-]+@)\S*[^\s.;,(){}<>"”’]/, MAILTO_REGEXP = /^mailto:/;
 	
@@ -107,21 +107,7 @@ enablix.filters.filter('ebxLinky', ['$sanitize', '$location', '$state',
 	
 			function addLink(_url, text, linkParams) {
 	
-				var url = encodeURIComponent(_url);
-				url = $location.protocol() + "://"
-						+ $location.host() + ":"
-						+ $location.port() + "/xlink?u="
-						+ url;
-	
-				if (linkParams) {
-					angular.forEach(linkParams, function(value, key) {
-						url += "&" + key + "=" + value
-					});
-				}
-	
-				if ($state.includes("portal")) {
-					url += "&atChannel=WEB";
-				}
+				var url = LocationUtil.createExtLinkUrl(_url);
 	
 				html.push('<a ');
 				if (angular.isDefined(target)) {

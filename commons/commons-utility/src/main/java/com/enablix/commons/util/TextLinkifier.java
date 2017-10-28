@@ -1,6 +1,8 @@
 package com.enablix.commons.util;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -9,6 +11,10 @@ public class TextLinkifier {
 
 	private static String LINK_PATTERN = "((ftp|https?)://|(www\\.)|(mailto:)?[A-Za-z0-9._%+-]+@)\\S*[^\\s.;,(){}<>]";
 	private static Pattern pattern = Pattern.compile(LINK_PATTERN, Pattern.DOTALL | Pattern.UNIX_LINES | Pattern.CASE_INSENSITIVE);
+	
+	private static String URL_PATTERN = "((https?)://|(www\\.)|(mailto:)?[A-Za-z0-9._%+-]+@)\\S*[^\\s.;,(){}<>]";
+	private static Pattern urlpattern = Pattern.compile(URL_PATTERN, Pattern.DOTALL | Pattern.UNIX_LINES | Pattern.CASE_INSENSITIVE);
+	
 	private static DefaultLinkDecorator defaultLinkDecorator = new DefaultLinkDecorator("Click Here");
 
 	/**
@@ -17,6 +23,16 @@ public class TextLinkifier {
 	 */
 	public static LinkifiedOutput linkifyText(String text) {
 		return linkifyText(text, null, defaultLinkDecorator);
+	}
+	
+	public static Collection<String> parseUrls(String text) {
+		Collection<String> urls = new HashSet<>();
+		Matcher matcher = urlpattern.matcher(text);
+		while (matcher.find()) {
+			String url = matcher.group();
+			urls.add(url);
+		}
+		return urls;
 	}
 	
 	public static LinkifiedOutput linkifyText(String text, String contentItemQId, LinkDecorator linkDecorator) {
@@ -52,6 +68,7 @@ public class TextLinkifier {
 	public static void main(String[] args) {
 		String url = "some text www.google.com another text http://www.google.com ending text";
 		System.out.println(linkifyText(url));
+		System.out.println(parseUrls(url));
 	}
 	
 	public static interface LinkDecorator {

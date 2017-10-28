@@ -73,7 +73,7 @@ enablix.studioApp.factory('ContentUtil',
 							
 							var previewHandler = DocPreviewService.getPreviewHandler(docInstance);
 							if (previewHandler != null) {
-								_dataRecord.docThumbnailUrl = previewHandler.smallThumbnailUrl(docInstance);
+								_dataRecord.thumbnailUrl = previewHandler.smallThumbnailUrl(docInstance);
 							}
 						}
 						
@@ -100,6 +100,12 @@ enablix.studioApp.factory('ContentUtil',
 						if (isNullOrUndefined(_dataRecord[item.id + "_rt"])) {
 							_dataRecord[item.id + "_rt"] = _dataRecord[item.id];
 						}
+					}
+				}
+				
+				if (isNullOrUndefined(_dataRecord.thumbnailUrl)) {
+					if (_dataRecord.__urls && _dataRecord.__urls.length > 0) {
+						_dataRecord.thumbnailUrl = _dataRecord.__urls[0].previewImageUrl;
 					}
 				}
 			}

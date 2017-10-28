@@ -117,4 +117,8 @@ public abstract class BaseDao {
 		getMongoTemplate().updateMulti(query, update, collectionName);
 	}
 	
+	public void updateFirst(Query query, Update update, String collectionName) {
+		getMongoTemplate().updateFirst(query, update, collectionName);
+	}
+	
 }

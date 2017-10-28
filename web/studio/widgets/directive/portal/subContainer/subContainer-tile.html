@@ -1,5 +1,5 @@
 <div class="block record-tile" ng-if="showSubContainer" layout="row">
-	<div class="doc-thumbnail" ng-if="bodyData.docThumbnailUrl" flex="none"><img ng-src="{{bodyData.docThumbnailUrl}}" ng-click="openRecordDetailWindow(bodyData)"></img></div>
+	<div class="doc-thumbnail" ng-if="bodyData.thumbnailUrl" flex="none"><img ng-src="{{bodyData.thumbnailUrl}}" ng-click="openRecordDetailWindow(bodyData)"></img></div>
 	<div class="record-data" flex>
 		<div class="head" layout="row">
 			<h2 flex><span ng-if="::!summaryView">{{::bodyData.headingLabel}}</span>

@@ -2564,3 +2564,35 @@ md-autocomplete.form-control {
 .alert-group {
 	margin-top: 15px;
 }
+
+.embed-image {
+    padding: 0 10px 0 10px;
+    float: left;
+}
+
+.embed-image img {
+    max-width: 25vh;
+    max-height: 25vh;
+}
+
+.embed-excerpt {
+    overflow: auto;
+}
+
+.embed-desc {
+    font-family: Montserrat;
+    font-size: 0.875em;
+    line-height: 1.25em;
+}
+
+.embed-heading {
+    padding-bottom: 1em;
+    font-family: Montserrat;
+    font-weight: 400;
+    font-size: 0.875em;
+    line-height: 1.5em;
+}
+
+.embed-preview iframe {
+	max-width: 100%;
+}

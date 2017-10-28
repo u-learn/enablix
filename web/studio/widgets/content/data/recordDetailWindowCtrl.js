@@ -31,6 +31,10 @@ enablix.studioApp.controller('RecordDetailWindowCtrl',
 					}
 				}
 				
+			} else if (recordDetail.__urls && recordDetail.__urls.length > 0) {
+				$scope.htmlType = 'angular-html';
+				$scope.previewUrlInfo = recordDetail.__urls[0];
+				$scope.previewHtml = '<ebx-url-preview url-info="previewUrlInfo" content-q-id="containerQId" content-identity="recordIdentity"></ebx-url-preview>';
 			}
 		}
 		

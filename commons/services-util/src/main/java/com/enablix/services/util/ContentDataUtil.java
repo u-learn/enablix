@@ -197,6 +197,10 @@ public class ContentDataUtil {
 		return (String) contentData.get(ContentDataConstants.IDENTITY_KEY);
 	}
 	
+	public static String getRecordId(Map<String, Object> contentData) {
+		return String.valueOf(contentData.get(ContentDataConstants.RECORD_ID_KEY));
+	}
+	
 	public static List<String> checkAndConvertToIdOrIdentityCollection(Object value) {
 		
 		List<String> listValue = null;
