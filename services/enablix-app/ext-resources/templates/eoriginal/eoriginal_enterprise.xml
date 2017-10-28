@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<contentTemplate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="eoriginal_enterprise" version="1.17" xsi:noNamespaceSchemaLocation="../xsd/content-template.xsd">
+<contentTemplate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="eoriginal_enterprise" version="1.18" xsi:noNamespaceSchemaLocation="../xsd/content-template.xsd">
 	<dataDefinition>
 		<container id="solution" label="Solutions" businessCategory="BUSINESS_DIMENSION">
 			<contentItem id="name" label="Name" type="text" searchBoost="7"/>
@@ -9,13 +9,16 @@
 			<container id="solBlog" label="Blogs" linkContainerQId="blog" linkContentItemId="solutions"/>			
 			<container id="solCaseStudy" label="Case Studies" linkContainerQId="casestudy" linkContentItemId="solutions"/>
 			<container id="solCustSuccessStory" label="Customer Success Stories" linkContainerQId="successstory" linkContentItemId="solutions"/>			
-			<container id="solDataSheet" label="Data Sheet" linkContainerQId="datasheet" linkContentItemId="solutions"/>						
+			<container id="solDataSheet" label="Data Sheet" linkContainerQId="datasheet" linkContentItemId="solutions"/>
+			<container id="solDemoEnvironment" label="Demo Environments" linkContainerQId="demoenvironment" linkContentItemId="solutions"/>
+			<container id="solDemoScript" label="Demo Scripts" linkContainerQId="demoscript" linkContentItemId="solutions"/>												
 			<container id="solDiscQuestion" label="Discovery Questions" linkContainerQId="discoveryquestion" linkContentItemId="solutions"/>
 			<container id="solEvent" label="Events" linkContainerQId="event" linkContentItemId="solutions"/>							
 			<container id="solFeatureSheet" label="Feature Sheets" linkContainerQId="featuresheet" linkContentItemId="solutions"/>										
 			<container id="solImpSlide" label="Important Slides" linkContainerQId="importantslide" linkContentItemId="solutions"/>											
 			<container id="solPresentation" label="Presentations" linkContainerQId="presentation" linkContentItemId="solutions"/>			
 			<container id="solPress" label="Press" linkContainerQId="press" linkContentItemId="solutions"/>									
+			<container id="solPOCs" label="Proof of Concepts" linkContainerQId="poc" linkContentItemId="solutions"/>			
 			<container id="solProposal" label="Proposals" linkContainerQId="proposal" linkContentItemId="solutions"/>												
 			<container id="solResearch" label="Research" linkContainerQId="research" linkContentItemId="solutions"/>			
 			<container id="solSlideshare" label="Slideshares" linkContainerQId="slideshare" linkContentItemId="solutions"/>
@@ -47,12 +50,15 @@
 			<container id="indCaseStudy" label="Case Studies" linkContainerQId="casestudy" linkContentItemId="industries"/>
 			<container id="indCustSuccessStory" label="Customer Success Stories" linkContainerQId="successstory" linkContentItemId="industries"/>						
 			<container id="indDataSheet" label="Data Sheet" linkContainerQId="datasheet" linkContentItemId="industries"/>						
+			<container id="indDemoEnvironment" label="Demo Environments" linkContainerQId="demoenvironment" linkContentItemId="industries"/>
+			<container id="indDemoScript" label="Demo Scripts" linkContainerQId="demoscript" linkContentItemId="industries"/>															
 			<container id="indDiscQuestion" label="Discovery Questions" linkContainerQId="discoveryquestion" linkContentItemId="industries"/>
 			<container id="indEvent" label="Events" linkContainerQId="event" linkContentItemId="industries"/>							
 			<container id="indFeatureSheet" label="Feature Sheets" linkContainerQId="featuresheet" linkContentItemId="industries"/>													
 			<container id="indImpSlide" label="Important Slides" linkContainerQId="importantslide" linkContentItemId="industries"/>											
 			<container id="indPresentation" label="Presentations" linkContainerQId="presentation" linkContentItemId="industries"/>			
 			<container id="indPress" label="Press" linkContainerQId="press" linkContentItemId="industries"/>
+			<container id="indPOCs" label="Proof of Concepts" linkContainerQId="poc" linkContentItemId="industries"/>						
 			<container id="indProposal" label="Proposals" linkContainerQId="proposal" linkContentItemId="industries"/>			
 			<container id="indResearch" label="Research" linkContainerQId="research" linkContentItemId="industries"/>						
 			<container id="indSalesKit" label="Sales Kits" linkContainerQId="saleskit" linkContentItemId="industries"/>			
@@ -76,7 +82,8 @@
 			<container id="compEvent" label="Events" linkContainerQId="event" linkContentItemId="competitors"/>
 			<container id="compFeatureSheet" label="Feature Sheets" linkContainerQId="featuresheet" linkContentItemId="competitors"/>				
 			<container id="compPresentation" label="Presentations" linkContainerQId="presentation" linkContentItemId="competitors"/>						
-			<container id="comPress" label="Press" linkContainerQId="press" linkContentItemId="competitors"/>									
+			<container id="comPress" label="Press" linkContainerQId="press" linkContentItemId="competitors"/>
+			<container id="compPOCs" label="Proof of Concepts" linkContainerQId="poc" linkContentItemId="competitors"/>						
 			<container id="compProposal" label="Proposals" linkContainerQId="proposal" linkContentItemId="competitors"/>			
 			<container id="compResearch" label="Research" linkContainerQId="research" linkContentItemId="competitors"/>									
 			<container id="compSalesKit" label="Sales Kits" linkContainerQId="saleskit" linkContentItemId="competitors"/>
@@ -107,13 +114,16 @@
 			<container id="partnerBlog" label="Blogs" linkContainerQId="blog" linkContentItemId="partners"/>																		
 			<container id="partnerCaseStudy" label="Case Studies" linkContainerQId="casestudy" linkContentItemId="partners"/>
 			<container id="partnerCustSuccessStory" label="Customer Success Stories" linkContainerQId="successstory" linkContentItemId="partners"/>			
-			<container id="partnerDataSheet" label="Data Sheet" linkContainerQId="datasheet" linkContentItemId="partners"/>									
+			<container id="partnerDataSheet" label="Data Sheet" linkContainerQId="datasheet" linkContentItemId="partners"/>
+			<container id="partnerDemoEnvironment" label="Demo Environments" linkContainerQId="demoenvironment" linkContentItemId="partners"/>
+			<container id="partnerDemoScript" label="Demo Scripts" linkContainerQId="demoscript" linkContentItemId="partners"/>																		
 			<container id="partnerDiscQuestion" label="Discovery Questions" linkContainerQId="discoveryquestion" linkContentItemId="partners"/>
 			<container id="partnerEvent" label="Events" linkContainerQId="event" linkContentItemId="partners"/>
 			<container id="partnerFeatureSheet" label="Feature Sheets" linkContainerQId="featuresheet" linkContentItemId="partners"/>				
 			<container id="partnerImpSlide" label="Important Slides" linkContainerQId="importantslide" linkContentItemId="partners"/>											
 			<container id="partnerPresentation" label="Presentations" linkContainerQId="presentation" linkContentItemId="partners"/>						
 			<container id="partnerPress" label="Press" linkContainerQId="press" linkContentItemId="partners"/>									
+			<container id="partnerPOCs" label="Proof of Concepts" linkContainerQId="poc" linkContentItemId="partners"/>						
 			<container id="partnerProposal" label="Proposals" linkContainerQId="proposal" linkContentItemId="partners"/>			
 			<container id="partnerResearch" label="Research" linkContainerQId="research" linkContentItemId="partners"/>									
 			<container id="partnerSalesKit" label="Sales Kits" linkContainerQId="saleskit" linkContentItemId="partners"/>												
@@ -176,7 +186,8 @@
 						</datastore>
 					</refList>
 				</bounded>
-			</contentItem>		
+			</contentItem>	
+			<container id="accPOCs" label="Proof of Concepts" linkContainerQId="poc" linkContentItemId="accounts"/>							
 		</container>	
 		<container id="opportunity" label="Opportunities" businessCategory="BUSINESS_DIMENSION">
 			<contentItem id="title" label="Name" type="text" searchBoost="7"/>
@@ -225,6 +236,7 @@
 					</refList>
 				</bounded>
 			</contentItem>	
+			<container id="opportunityPOCs" label="Proof of Concepts" linkContainerQId="poc" linkContentItemId="opportunities"/>						
 		</container>						
 		<container id="topic" label="Topics" businessCategory="BUSINESS_DIMENSION">
 			<contentItem id="name" label="Topic Name" type="text"/>
@@ -277,14 +289,17 @@
 			<container id="topicArticle" label="Articles" linkContainerQId="article" linkContentItemId="topics"/>			
 			<container id="topicBlog" label="Blogs" linkContainerQId="blog" linkContentItemId="topics"/>
 			<container id="topicCaseStudy" label="Case Studies" linkContainerQId="casestudy" linkContentItemId="topics"/>
-			<container id="topicCustSuccessStory" label="Customer Success Stories" linkContainerQId="successstory" linkContentItemId="topics"/>						
+			<container id="topicCustSuccessStory" label="Customer Success Stories" linkContainerQId="successstory" linkContentItemId="topics"/>
+			<container id="topicDemoEnvironment" label="Demo Environments" linkContainerQId="demoenvironment" linkContentItemId="topics"/>
+			<container id="topicDemoScript" label="Demo Scripts" linkContainerQId="demoscript" linkContentItemId="topics"/>															
 			<container id="topicDiscQuestion" label="Discovery Questions" linkContainerQId="discoveryquestion" linkContentItemId="topics"/>			
 			<container id="topicEvent" label="Events" linkContainerQId="event" linkContentItemId="topics"/>	
 			<container id="topicFeatureSheet" label="Feature Sheets" linkContainerQId="featuresheet" linkContentItemId="topics"/>				
 			<container id="topicImpSlide" label="Important Slides" linkContainerQId="importantslide" linkContentItemId="topics"/>											
 			<container id="topicPresentation" label="Presentations" linkContainerQId="presentation" linkContentItemId="topics"/>						
 			<container id="topicPress" label="Press" linkContainerQId="press" linkContentItemId="topics"/>						
-			<container id="topicProposal" label="Proposals" linkContainerQId="proposal" linkContentItemId="topics"/>			
+			<container id="topicProposal" label="Proposals" linkContainerQId="proposal" linkContentItemId="topics"/>
+			<container id="topicPOCs" label="Proof of Concepts" linkContainerQId="poc" linkContentItemId="topics"/>						
 			<container id="topicResearch" label="Research" linkContainerQId="research" linkContentItemId="topics"/>									
 			<container id="topicSalesKit" label="Sales Kits" linkContainerQId="saleskit" linkContentItemId="topics"/>
 			<container id="topicSlideshare" label="Slideshares" linkContainerQId="slideshare" linkContentItemId="topics"/>
@@ -375,7 +390,18 @@
 						</datastore>
 					</refList>
 				</bounded>
-			</contentItem>				
+			</contentItem>
+			<contentItem id="access" label="Access" type="bounded">
+				<bounded multivalued="false">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>accessType</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>name</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>										
 		</container>			
 		<container id="battlecard" label="Battle Cards" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
@@ -435,7 +461,18 @@
 						</datastore>
 					</refList>
 				</bounded>
-			</contentItem>						
+			</contentItem>	
+			<contentItem id="access" label="Access" type="bounded">
+				<bounded multivalued="false">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>accessType</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>name</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>															
 		</container>		
 		<container id="blog" label="Blogs" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
@@ -526,7 +563,18 @@
 						</datastore>
 					</refList>
 				</bounded>
-			</contentItem>				
+			</contentItem>
+			<contentItem id="access" label="Access" type="bounded">
+				<bounded multivalued="false">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>accessType</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>name</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>														
 		</container>		
 		<container id="casestudy" label="Case Studies" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
@@ -610,11 +658,33 @@
 					</refList>
 				</bounded>
 			</contentItem>						
+			<contentItem id="access" label="Access" type="bounded">
+				<bounded multivalued="false">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>accessType</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>name</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>										
 		</container>
 		<container id="ppttemplate" label="Corporate PPT Templates" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="desc" label="Description" type="richText"/>
-			<contentItem id="file" label="File" type="doc"/>				
+			<contentItem id="file" label="File" type="doc"/>
+			<contentItem id="access" label="Access" type="bounded">
+				<bounded multivalued="false">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>accessType</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>name</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>														
 		</container>		
 		<container id="successstory" label="Customer Success Stories" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
@@ -697,7 +767,18 @@
 						</datastore>
 					</refList>
 				</bounded>
-			</contentItem>									
+			</contentItem>	
+			<contentItem id="access" label="Access" type="bounded">
+				<bounded multivalued="false">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>accessType</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>name</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>																		
 		</container>					
 		<container id="datasheet" label="Data Sheets" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
@@ -746,8 +827,174 @@
 						</datastore>
 					</refList>
 				</bounded>
-			</contentItem>								
+			</contentItem>	
+			<contentItem id="access" label="Access" type="bounded">
+				<bounded multivalued="false">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>accessType</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>name</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>																	
 		</container>									
+		<container id="demoenvironment" label="Demo Environments" businessCategory="BUSINESS_CONTENT">
+			<contentItem id="title" label="Title" type="text"/>
+			<contentItem id="desc" label="Description" type="richText" searchBoost="2"/>			
+			<contentItem id="url" label="URL" type="text" searchBoost="3"/>			
+			<contentItem id="credentials" label="Credentials" type="text"/>	
+			<contentItem id="solutions" label="Solutions" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>solution</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="industries" label="Industries" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>industry</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>	
+			<contentItem id="partners" label="Partners" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>partner</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>	
+			<contentItem id="topics" label="Topics" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>topic</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>			
+			<contentItem id="tags" label="Business Tags" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>businessTag</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>tagName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>	
+			<contentItem id="access" label="Access" type="bounded">
+				<bounded multivalued="false">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>accessType</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>name</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>																	
+			<container id="demoDemoScripts" label="Demo Scripts" linkContainerQId="demoscript" linkContentItemId="demoenvironments"/>									
+		</container>	
+		<container id="demoscript" label="Demo Scripts" businessCategory="BUSINESS_CONTENT">
+			<contentItem id="title" label="Title" type="text"/>
+			<contentItem id="desc" label="Description" type="richText" searchBoost="2"/>			
+			<contentItem id="file" label="File" type="doc"/>			
+			<contentItem id="demoenvironments" label="Demo Environments" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>demoenvironment</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>title</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="solutions" label="Solutions" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>solution</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="industries" label="Industries" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>industry</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>	
+			<contentItem id="partners" label="Partners" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>partner</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>	
+			<contentItem id="topics" label="Topics" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>topic</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>			
+			<contentItem id="tags" label="Business Tags" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>businessTag</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>tagName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>	
+			<contentItem id="access" label="Access" type="bounded">
+				<bounded multivalued="false">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>accessType</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>name</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>																	
+		</container>					
 		<container id="discoveryquestion" label="Discovery Questions" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="question" label="Question" type="text" searchBoost="6"/>
 			<contentItem id="significance" label="Significance" type="richText" searchBoost="2"/>
@@ -816,7 +1063,18 @@
 						</datastore>
 					</refList>
 				</bounded>
-			</contentItem>				
+			</contentItem>	
+			<contentItem id="access" label="Access" type="bounded">
+				<bounded multivalued="false">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>accessType</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>name</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>													
 		</container>		
 		<container id="event" label="Events" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Event Title" type="text" searchBoost="7"/>
@@ -911,7 +1169,18 @@
 						</datastore>
 					</refList>
 				</bounded>
-			</contentItem>				
+			</contentItem>	
+			<contentItem id="access" label="Access" type="bounded">
+				<bounded multivalued="false">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>accessType</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>name</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>													
 			<container id="eventPresentation" label="Presentations" linkContainerQId="presentation" linkContentItemId="events"/>						
 			<container id="eventVideo" label="Videos" linkContainerQId="video" linkContentItemId="events"/>									
 			<container id="eventcontent" label="Event Content">
@@ -919,6 +1188,17 @@
 				<contentItem id="file" label="File" type="doc"/>
 				<contentItem id="url" label="URL" type="text"/>
 				<contentItem id="desc" label="Description" type="richText" searchBoost="2"/>
+				<contentItem id="access" label="Access" type="bounded">
+					<bounded multivalued="false">
+						<refList>
+							<datastore hyperlink="true">
+								<storeId>accessType</storeId>
+								<dataId>identity</dataId>
+								<dataLabel>name</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>				
 			</container>
 		</container>			
 		<container id="featuresheet" label="Feature Sheets" businessCategory="BUSINESS_CONTENT">
@@ -990,7 +1270,18 @@
 						</datastore>
 					</refList>
 				</bounded>
-			</contentItem>							
+			</contentItem>	
+			<contentItem id="access" label="Access" type="bounded">
+				<bounded multivalued="false">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>accessType</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>name</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>																
 		</container>		
 		<container id="importantslide" label="Important Slides">
 			<contentItem id="title" label="Title" type="text"/>
@@ -1061,7 +1352,18 @@
 						</datastore>
 					</refList>
 				</bounded>
-			</contentItem>				
+			</contentItem>	
+			<contentItem id="access" label="Access" type="bounded">
+				<bounded multivalued="false">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>accessType</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>name</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>													
 		</container>				
 		<container id="press" label="Press Releases" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text" searchBoost="7"/>
@@ -1145,7 +1447,18 @@
 						</datastore>
 					</refList>
 				</bounded>
-			</contentItem>								
+			</contentItem>	
+			<contentItem id="access" label="Access" type="bounded">
+				<bounded multivalued="false">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>accessType</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>name</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>																	
 		</container>			
 		<container id="presentation" label="Presentations" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text" searchBoost="7"/>
@@ -1263,6 +1576,126 @@
 				</bounded>
 			</contentItem>							
 		</container>
+		<container id="poc" label="Proof of Concept" businessCategory="BUSINESS_CONTENT">
+			<contentItem id="title" label="Title" type="text"/>
+			<contentItem id="desc" label="Description" type="richText"/>
+			<contentItem id="accounts" label="Account" type="bounded">
+				<bounded>
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>account</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>name</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="opportunities" label="Opportunity" type="bounded">
+				<bounded>
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>opportunity</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>title</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="solutions" label="Solutions" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>solution</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="industries" label="Industries" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>industry</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>			
+			<contentItem id="competitors" label="Competitors" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>competitor</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="partners" label="Partners" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>partner</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="topics" label="Topics" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>topic</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="tags" label="Business Tags" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>businessTag</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>tagName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>	
+			<contentItem id="access" label="Access" type="bounded">
+				<bounded multivalued="false">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>accessType</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>name</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>																	
+			<container id="poccontent" label="POC Content">
+				<contentItem id="title" label="Title" type="text"/>
+				<contentItem id="file" label="File" type="doc"/>
+				<contentItem id="url" label="URL" type="text"/>
+				<contentItem id="desc" label="Description" type="richText"/>
+				<contentItem id="access" label="Access" type="bounded">
+					<bounded multivalued="false">
+						<refList>
+							<datastore hyperlink="true">
+								<storeId>accessType</storeId>
+								<dataId>identity</dataId>
+								<dataLabel>name</dataLabel>
+							</datastore>
+						</refList>
+					</bounded>
+				</contentItem>
+			</container>			
+		</container>		
 		<container id="proposal" label="Proposals" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="file" label="File" type="doc"/>
@@ -1463,6 +1896,17 @@
 					</refList>
 				</bounded>
 			</contentItem>				
+			<contentItem id="access" label="Access" type="bounded">
+				<bounded multivalued="false">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>accessType</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>name</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>										
 		</container>		
 		<container id="saleskit" label="Sales Kits" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="kitName" label="Name" type="text" searchBoost="7"/>
@@ -1534,6 +1978,17 @@
 				</bounded>
 			</contentItem>				
 			<contentItem id="kitContent" label="Content Items" type="contentStack"/>
+			<contentItem id="access" label="Access" type="bounded">
+				<bounded multivalued="false">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>accessType</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>name</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>										
 		</container>	
 		<container id="slideshare" label="Slideshare" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text" searchBoost="7"/>
@@ -1626,7 +2081,18 @@
 						</datastore>
 					</refList>
 				</bounded>
-			</contentItem>				
+			</contentItem>	
+			<contentItem id="access" label="Access" type="bounded">
+				<bounded multivalued="false">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>accessType</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>name</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>													
 		</container>	
 		<container id="solutionoverview" label="Solution Overview" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text" searchBoost="7"/>
@@ -1823,7 +2289,18 @@
 						</datastore>
 					</refList>
 				</bounded>
-			</contentItem>				
+			</contentItem>	
+			<contentItem id="access" label="Access" type="bounded">
+				<bounded multivalued="false">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>accessType</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>name</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>													
 		</container>				
 		<container id="webinar" label="Webinars" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
@@ -1918,12 +2395,17 @@
 					</refList>
 				</bounded>
 			</contentItem>	
-			<container id="supportingcontent" label="Supporting Content">
-				<contentItem id="title" label="Title" type="text" searchBoost="6"/>
-				<contentItem id="file" label="File" type="doc"/>
-				<contentItem id="url" label="URL" type="text"/>
-				<contentItem id="desc" label="Description" type="richText" searchBoost="2"/>
-			</container>						
+			<contentItem id="access" label="Access" type="bounded">
+				<bounded multivalued="false">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>accessType</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>name</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>															
 		</container>					
 		<container id="whitepaper" label="White Papers" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
@@ -2014,7 +2496,18 @@
 						</datastore>
 					</refList>
 				</bounded>
-			</contentItem>				
+			</contentItem>	
+			<contentItem id="access" label="Access" type="bounded">
+				<bounded multivalued="false">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>accessType</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>name</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>						
 		</container>			
 		<container id="content" label="Other Content" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
@@ -2087,7 +2580,18 @@
 						</datastore>
 					</refList>
 				</bounded>
-			</contentItem>				
+			</contentItem>
+			<contentItem id="access" label="Access" type="bounded">
+				<bounded multivalued="false">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>accessType</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>name</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>							
 		</container>
 		<container id="accessType" label="Access Types" refData="true" businessCategory="BUSINESS_DIMENSION">
 			<contentItem id="name" label="Name" type="text"/>
@@ -2119,13 +2623,16 @@
 			<container id="tagCaseStudy" label="Case Studies" linkContainerQId="casestudy" linkContentItemId="tags"/>			
 			<container id="tagCustSuccessStory" label="Customer Success Stories" linkContainerQId="successstory" linkContentItemId="tags"/>						
 			<container id="tagDataSheet" label="Data Sheets" linkContainerQId="datasheet" linkContentItemId="tags"/>												
+			<container id="tagDemoEnvironment" label="Demo Environments" linkContainerQId="demoenvironment" linkContentItemId="tags"/>
+			<container id="tagDemoScript" label="Demo Scripts" linkContainerQId="demoscript" linkContentItemId="tags"/>
 			<container id="tagDiscQuestion" label="Discovery Questions" linkContainerQId="discoveryquestion" linkContentItemId="tags"/>			
 			<container id="tagEvent" label="Events" linkContainerQId="event" linkContentItemId="tags"/>			
 			<container id="tagFeatureSheet" label="Feature Sheets" linkContainerQId="featuresheet" linkContentItemId="tags"/>			
 			<container id="tagImpSlide" label="Important Slides" linkContainerQId="importantslide" linkContentItemId="tags"/>			
 			<container id="tagPress" label="Press" linkContainerQId="press" linkContentItemId="tags"/>												
 			<container id="tagPresentation" label="Presentations" linkContainerQId="presentation" linkContentItemId="tags"/>			
-			<container id="tagProposal" label="Proposals" linkContainerQId="proposal" linkContentItemId="tags"/>						
+			<container id="tagProposal" label="Proposals" linkContainerQId="proposal" linkContentItemId="tags"/>
+			<container id="tagPOCs" label="Proof of Concepts" linkContainerQId="poc" linkContentItemId="tags"/>						
 			<container id="tagResearch" label="Research" linkContainerQId="research" linkContentItemId="tags"/>			
 			<container id="tagSalesKit" label="Sales Kits" linkContainerQId="saleskit" linkContentItemId="tags"/>			
 			<container id="tagSlideshare" label="Slideshares" linkContainerQId="slideshare" linkContentItemId="tags"/>
@@ -2218,12 +2725,15 @@
 					<childContainer id="casestudy"/>
 					<childContainer id="ppttemplate"/>					
 					<childContainer id="successstory"/>										
-					<childContainer id="datasheet"/>					
+					<childContainer id="datasheet"/>	
+					<childContainer id="demoenvironment"/>	
+					<childContainer id="demoscript"/>															
 					<childContainer id="discoveryquestion"/>
 					<childContainer id="featuresheet"/>	
 					<childContainer id="importantslide"/>										
 					<childContainer id="press"/>																				
 					<childContainer id="presentation"/>	
+					<childContainer id="poc"/>						
 					<childContainer id="proposal"/>						
 					<childContainer id="research"/>					
 					<childContainer id="saleskit"/>	
@@ -2302,7 +2812,8 @@
 					<hideContentItem id="partners"/>
 					<hideContentItem id="analysts"/>															
 					<hideContentItem id="topics"/>		
-					<hideContentItem id="tags"/>								
+					<hideContentItem id="tags"/>
+					<hideContentItem id="access"/>													
 				</listViewConfig>
 				<portalConfig>
 					<headingContentItem id="title"/>
@@ -2321,6 +2832,7 @@
 					<hideContentItem id="file"/>
 					<hideContentItem id="url"/>					
 					<hideContentItem id="desc"/>
+					<hideContentItem id="access"/>					
 				</listViewConfig>
 				<portalConfig>
 					<headingContentItem id="title"/>
@@ -2339,7 +2851,8 @@
 					<hideContentItem id="competitors"/>
 					<hideContentItem id="partners"/>
 					<hideContentItem id="topics"/>	
-					<hideContentItem id="tags"/>									
+					<hideContentItem id="tags"/>
+					<hideContentItem id="access"/>														
 				</listViewConfig>
 				<portalConfig>
 					<headingContentItem id="title"/>
@@ -2359,7 +2872,8 @@
 					<hideContentItem id="industries"/>															
 					<hideContentItem id="partners"/>
 					<hideContentItem id="topics"/>		
-					<hideContentItem id="tags"/>													
+					<hideContentItem id="tags"/>
+					<hideContentItem id="access"/>																		
 				</listViewConfig>
 				<portalConfig>
 					<headingContentItem id="title"/>
@@ -2400,7 +2914,8 @@
 					<hideContentItem id="industries"/>
 					<hideContentItem id="competitors"/>
 					<hideContentItem id="partners"/>	
-					<hideContentItem id="tags"/>																								
+					<hideContentItem id="tags"/>
+					<hideContentItem id="access"/>																													
 				</listViewConfig>
 				<portalConfig>
 					<headingContentItem id="title"/>
@@ -2422,7 +2937,8 @@
 					<hideContentItem id="partners"/>
 					<hideContentItem id="analysts"/>
 					<hideContentItem id="topics"/>
-					<hideContentItem id="tags"/>															
+					<hideContentItem id="tags"/>
+					<hideContentItem id="access"/>																				
 				</listViewConfig>
 				<portalConfig>
 					<headingContentItem id="title"/>
@@ -2442,7 +2958,8 @@
 					<hideContentItem id="competitors"/>					
 					<hideContentItem id="partners"/>					
 					<hideContentItem id="topics"/>		
-					<hideContentItem id="tags"/>																																	
+					<hideContentItem id="tags"/>	
+					<hideContentItem id="access"/>																																					
 				</listViewConfig>
 				<portalConfig>
 					<headingContentItem id="title"/>
@@ -2457,6 +2974,7 @@
 				<listViewConfig>
 					<hideContentItem id="file"/>
 					<hideContentItem id="desc"/>
+					<hideContentItem id="access"/>					
 				</listViewConfig>
 				<portalConfig>
 					<headingContentItem id="title"/>
@@ -2478,7 +2996,8 @@
 					<hideContentItem id="partners"/>						
 					<hideContentItem id="analysts"/>															
 					<hideContentItem id="topics"/>
-					<hideContentItem id="tags"/>										
+					<hideContentItem id="tags"/>	
+					<hideContentItem id="access"/>														
 				</listViewConfig>
 				<portalConfig>
 					<headingContentItem id="title"/>
@@ -2494,12 +3013,55 @@
 					<hideContentItem id="file"/>
 					<hideContentItem id="url"/>
 					<hideContentItem id="partners"/>					
-					<hideContentItem id="tags"/>										
+					<hideContentItem id="tags"/>
+					<hideContentItem id="access"/>															
 				</listViewConfig>
 				<portalConfig>
 					<headingContentItem id="title"/>
 				</portalConfig>
 			</container>
+		</contentUIDef>		
+		<contentUIDef qualifiedId="demoenvironment">
+			<container labelQualifiedId="demoenvironment.desc">
+				<listViewConfig>
+					<hideContentItem id="desc"/>
+					<hideContentItem id="url"/>					
+					<hideContentItem id="credentials"/>					
+					<hideContentItem id="solutions"/>
+					<hideContentItem id="industries"/>										
+					<hideContentItem id="topics"/>					
+					<hideContentItem id="partners"/>	
+					<hideContentItem id="tags"/>	
+					<hideContentItem id="access"/>													
+				</listViewConfig>
+				<portalConfig>
+					<headingContentItem id="title"/>
+				</portalConfig>
+			</container>
+		</contentUIDef>
+		<contentUIDef qualifiedId="demoenvironment.title">
+			<text type="long"/>
+		</contentUIDef>
+		<contentUIDef qualifiedId="demoscript">
+			<container labelQualifiedId="demoscript.desc">
+				<listViewConfig>
+					<hideContentItem id="desc"/>
+					<hideContentItem id="file"/>					
+					<hideContentItem id="demoenvironments"/>					
+					<hideContentItem id="solutions"/>
+					<hideContentItem id="industries"/>										
+					<hideContentItem id="topics"/>					
+					<hideContentItem id="partners"/>	
+					<hideContentItem id="tags"/>	
+					<hideContentItem id="access"/>													
+				</listViewConfig>
+				<portalConfig>
+					<headingContentItem id="title"/>
+				</portalConfig>
+			</container>
+		</contentUIDef>
+		<contentUIDef qualifiedId="demoscript.title">
+			<text type="long"/>
 		</contentUIDef>		
 		<contentUIDef qualifiedId="discoveryquestion">
 			<container labelQualifiedId="discoveryquestion.question">
@@ -2509,7 +3071,8 @@
 					<hideContentItem id="industries"/>										
 					<hideContentItem id="competitors"/>					
 					<hideContentItem id="partners"/>	
-					<hideContentItem id="tags"/>									
+					<hideContentItem id="tags"/>	
+					<hideContentItem id="access"/>													
 				</listViewConfig>
 				<portalConfig>
 					<headingContentItem id="question"/>
@@ -2532,7 +3095,8 @@
 					<hideContentItem id="partners"/>
 					<hideContentItem id="analysts"/>
 					<hideContentItem id="topics"/>
-					<hideContentItem id="tags"/>																																																							
+					<hideContentItem id="tags"/>	
+					<hideContentItem id="access"/>																																																											
 				</listViewConfig>
 				<portalConfig>
 					<headingContentItem id="title"/>
@@ -2555,7 +3119,8 @@
 					<hideContentItem id="partners"/>
 					<hideContentItem id="analysts"/>
 					<hideContentItem id="topics"/>		
-					<hideContentItem id="tags"/>													
+					<hideContentItem id="tags"/>
+					<hideContentItem id="access"/>																		
 				</listViewConfig>
 			</container>
 		</contentUIDef>		
@@ -2574,7 +3139,8 @@
 					<hideContentItem id="analysts"/>					
 					<hideContentItem id="topics"/>
 					<hideContentItem id="events"/>							
-					<hideContentItem id="tags"/>								
+					<hideContentItem id="tags"/>
+					<hideContentItem id="access"/>													
 				</listViewConfig>
 				<portalConfig>
 					<headingContentItem id="title"/>
@@ -2584,20 +3150,6 @@
 		<contentUIDef qualifiedId="webinar.desc">
 			<text type="long"/>
 		</contentUIDef>
-		<contentUIDef qualifiedId="webinar.supportingcontent">
-			<container labelQualifiedId="webinar.supportingcontent.title">
-				<listViewConfig>
-					<hideContentItem id="file"/>
-					<hideContentItem id="desc"/>
-				</listViewConfig>
-				<portalConfig>
-					<headingContentItem id="title"/>
-				</portalConfig>
-			</container>
-		</contentUIDef>
-		<contentUIDef qualifiedId="webinar.supportingcontent.desc">
-			<text type="long"/>
-		</contentUIDef>		
 		<contentUIDef qualifiedId="whitepaper">
 			<container labelQualifiedId="whitepaper.title">
 				<listViewConfig>
@@ -2610,7 +3162,8 @@
 					<hideContentItem id="partners"/>					
 					<hideContentItem id="analysts"/>					
 					<hideContentItem id="topics"/>		
-					<hideContentItem id="tags"/>								
+					<hideContentItem id="tags"/>	
+					<hideContentItem id="access"/>												
 				</listViewConfig>
 				<portalConfig>
 					<headingContentItem id="title"/>
@@ -2635,7 +3188,7 @@
 					<hideContentItem id="topics"/>
 					<hideContentItem id="events"/>	
 					<hideContentItem id="tags"/>
-					<hideContentItem id="access"/>																			
+					<hideContentItem id="access"/>																								
 				</listViewConfig>
 				<portalConfig>
 					<headingContentItem id="title"/>
@@ -2657,7 +3210,8 @@
 					<hideContentItem id="competitors"/>															
 					<hideContentItem id="analysts"/>					
 					<hideContentItem id="topics"/>
-					<hideContentItem id="tags"/>					
+					<hideContentItem id="tags"/>	
+					<hideContentItem id="access"/>									
 				</listViewConfig>
 				<portalConfig>
 					<headingContentItem id="title"/>
@@ -2667,6 +3221,44 @@
 		<contentUIDef qualifiedId="press.desc">
 			<text type="long"/>
 		</contentUIDef>	
+		<contentUIDef qualifiedId="poc">
+			<container labelQualifiedId="poc.title">
+				<listViewConfig>
+					<hideContentItem id="desc"/>
+					<hideContentItem id="accounts"/>
+					<hideContentItem id="opportunities"/>															
+					<hideContentItem id="solutions"/>
+					<hideContentItem id="industries"/>										
+					<hideContentItem id="partners"/>
+					<hideContentItem id="competitors"/>																			
+					<hideContentItem id="topics"/>
+					<hideContentItem id="tags"/>
+					<hideContentItem id="access"/>
+				</listViewConfig>
+				<portalConfig>
+					<headingContentItem id="title"/>
+				</portalConfig>
+			</container>
+		</contentUIDef>
+		<contentUIDef qualifiedId="poc.desc">
+			<text type="long"/>
+		</contentUIDef>	
+		<contentUIDef qualifiedId="poc.pocconent">
+			<container labelQualifiedId="poc.poccontent.title">
+				<listViewConfig>
+					<hideContentItem id="desc"/>
+					<hideContentItem id="file"/>
+					<hideContentItem id="url"/>					
+					<hideContentItem id="access"/>					
+				</listViewConfig>
+				<portalConfig>
+					<headingContentItem id="title"/>
+				</portalConfig>
+			</container>
+		</contentUIDef>
+		<contentUIDef qualifiedId="poc.poccontent.desc">
+			<text type="long"/>
+		</contentUIDef>			
 		<contentUIDef qualifiedId="proposal">
 			<container labelQualifiedId="proposal.title">
 				<listViewConfig>
@@ -2716,7 +3308,8 @@
 					<hideContentItem id="analysts"/>					
 					<hideContentItem id="topics"/>
 					<hideContentItem id="events"/>					
-					<hideContentItem id="tags"/>					
+					<hideContentItem id="tags"/>
+					<hideContentItem id="access"/>										
 				</listViewConfig>
 				<portalConfig>
 					<headingContentItem id="title"/>
@@ -2759,7 +3352,8 @@
 					<hideContentItem id="partners"/>
 					<hideContentItem id="analysts"/>
 					<hideContentItem id="topics"/>		
-					<hideContentItem id="tags"/>								
+					<hideContentItem id="tags"/>
+					<hideContentItem id="access"/>													
 				</listViewConfig>
 				<portalConfig>
 					<headingContentItem id="title"/>
@@ -2778,7 +3372,8 @@
 					<hideContentItem id="competitors"/>
 					<hideContentItem id="partners"/>
 					<hideContentItem id="topics"/>
-					<hideContentItem id="tags"/>					
+					<hideContentItem id="tags"/>	
+					<hideContentItem id="access"/>									
 				</listViewConfig>
 				<portalConfig>
 					<headingContentItem id="title"/>
@@ -2797,7 +3392,8 @@
 					<hideContentItem id="competitors"/>
 					<hideContentItem id="partners"/>
 					<hideContentItem id="topics"/>
-					<hideContentItem id="tags"/>					
+					<hideContentItem id="tags"/>		
+					<hideContentItem id="access"/>								
 					<hideContentItem id="kitContent"/>					
 				</listViewConfig>			
 				<portalConfig>
@@ -2841,13 +3437,16 @@
 					<childContainer id="casestudy"/>
 					<childContainer id="ppttemplate"/>
 					<childContainer id="successstory"/>										
-					<childContainer id="datasheet"/>					
+					<childContainer id="datasheet"/>
+					<childContainer id="demoenvironment"/>
+					<childContainer id="demoscript"/>										
 					<childContainer id="discoveryquestion"/>
 					<childContainer id="event"/>										
 					<childContainer id="featuresheet"/>					
 					<childContainer id="importantslide"/>					
 					<childContainer id="presentation"/>		
 					<childContainer id="press"/>
+					<childContainer id="poc"/>					
 					<childContainer id="proposal"/>															
 					<childContainer id="research"/>									
 					<childContainer id="template"/>
