@@ -1,0 +1,93 @@
+@import 'font.mixin';
+@import 'breakpoint.mixin';
+
+@import 'colors';
+@import 'fonts';
+@import 'buttons';
+
+//reset default styles for elements
+h1, h2, h3, h4, p, ul, input, body{
+    padding: 0;
+    margin: 0;
+}
+
+a{
+    text-decoration: none;
+    color: inherit; 
+}
+textarea, input, select { 
+    border:none;
+    background-image:none;
+    background-color:transparent;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    -webkit-appearance:none;
+    outline: none;
+    -webkit-appearance: none; 
+}
+
+@mixin vcenterChildren {
+    display: flex;
+    align-items: center;
+    // justify-content: center;
+}
+
+
+@import '../pages/index.scss';
+
+.container {
+    margin-top: 56px;
+}
+
+.wrapper {
+    margin-left: 88px;
+    margin-right: 88px;
+    margin-top: 40px;
+}
+
+.icon {
+    height: 32px;
+    width: 32px;
+
+    &.small {
+        height: 16px;
+        width: 16px;
+    }
+
+    &.grey-border {
+      border: 2px solid $grey-lig-5;
+      border-radius: 50%;
+    }
+  }
+
+body {
+    background: $grey-lig-5;
+}
+
+.divider {
+    height: 32px;
+    width: 1px;
+    background: rgba(0,0,0,0.03);
+    float: left;
+    margin: 0 16px;
+}
+
+.user {
+    position: relative;
+    
+    .add-padding {
+        left: -9px;
+    }
+    
+    .profile {
+        float: left;
+    }
+    img {
+        float: left;
+    }
+}
+
+[contenteditable]:focus, input:focus, button:focus {
+    outline: 0px solid transparent;
+}

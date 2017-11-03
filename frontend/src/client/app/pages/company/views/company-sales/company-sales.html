@@ -1,0 +1,56 @@
+<div class="company">
+    <div class="header">
+        <h1>Sales Funnel</h1>
+        <p>Select what content types you'd like ot see in each stage of your sales<br>
+        funnel. You may have the same content types in different stages.</p>
+
+        <a class="cta-link">Add Sales Stage</a>
+    </div>
+    <div class="main sales-funnel">
+        <!-- new stage -->
+        <div class="stage new">
+            <div class="main">
+                <div class="header-section">
+                    <h2>
+                        <input placeholder="Funnel name" />
+                    </h2>
+                    <div class="customize-options">
+                        <a><img src="/assets/images/buttons/save_btn.png" /></a>
+                        <a><img src="/assets/images/icons/delete-24-white-blue.svg" /></a>
+                        <a><img src="/assets/images/icons/move-24-white-blue.svg" /></a>
+                    </div>
+                </div>
+                <div class="tags-container">
+                    <div class="tag" ng-class="{inactive: !type.active}" ng-repeat="type in ctrl.newSaleStage.contentTypes">
+                        <div class="content" >
+                            <span>{{type.title}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- pre-existing stages -->
+        <div class="stage" ng-repeat="stage in ctrl.salesFunnel">
+            <div class="main">
+                <div class="header-section">
+                    <h2>{{stage.funnelName}}</h2>
+                    <div class="customize-options">
+                        <a><img src="/assets/images/icons/edit-24-white-blue.svg" /></a>
+                        <a><img src="/assets/images/icons/delete-24-white-blue.svg" /></a>
+                        <a><img src="/assets/images/icons/move-24-white-blue.svg" /></a>
+                    </div>
+                </div>
+                <div class="tags-container">
+                    <div class="tag" ng-class="{inactive: !type.active}" ng-repeat="type in stage.contentTypes">
+                        <div class="content" >
+                            <span>{{type.title}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="sidebar">
+    <content-types></content-types>
+</div>

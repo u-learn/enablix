@@ -1,0 +1,42 @@
+.sales-funnel{
+    .stage {
+        background: $white;
+        box-shadow: 0 1px 1px 0 rgba(0,0,0,0.06);
+        border-radius: 4px;
+        margin-bottom: 16px;
+        height: 157px;
+
+        @include breakpoint(sm) {
+            height: 222px;
+        }
+
+        &.new {
+            background: $grey-lig-5;
+            border: 1px dashed $grey-lig-20;
+            input {
+                font-size: 24px;
+                font-family: $FPLight;
+                color: $grey-dark;
+                background: $grey-lig-5;
+            }
+        }
+
+        .main {
+            padding: 22px 20px 28px 24px;    
+        }
+
+        .header-section {
+            height:43px;
+
+            h2 {                
+                font-family: $FPLight;
+                color: $black;
+                float: left;
+            }
+
+            .customize-options {
+                float: right;
+            }
+        }
+    }
+}

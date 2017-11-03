@@ -1,0 +1,140 @@
+.company-information {
+    h1 {
+        float: left;
+    }
+    .changes-saved {
+        float: right;
+    }
+
+    form {
+        width: 55%;
+        input {
+            &[type="text"] {
+                height: 48px;
+                background: #FFFFFF;
+                box-shadow: 0 1px 1px 0 rgba(0,0,0,0.06);
+                border-radius: 6px;
+                padding: 0 16px;
+                margin-top: 13px;
+                font-family: $FPBlond;
+                font-size: 16px;
+                color: $black;
+                width: calc(100% - 32px);
+            }
+
+            &[type="checkbox"] {
+                width: 16px;
+                height: 16px;
+                background: #FFFFFF;
+                border: 1px solid #E3EBEF;
+                box-shadow: 0 1px 1px 0 rgba(0,0,0,0.06);
+                border-radius: 4px;
+                margin-right: 10px;
+
+                &:checked {
+                    // styles for checked off checkbox
+                }
+            }
+        }
+
+        h4 {
+            font-family: $FPBlond;
+            color: $black;
+        }
+
+        p{
+            padding-top: 8px;
+            font-family: $FPBlond;
+            font-size: 14px;
+            color: #808C9B;
+            line-height: 17px;
+            a.url {
+                font-family: $FPSemiBold;
+            }
+
+            &.alert {
+                line-height: 17px;
+                margin: 16px 0 24px;
+            }
+        }
+
+        button {
+            border: 1px solid #E3EBEF;
+            box-shadow: 0 1px 1px 0 rgba(0,0,0,0.06);
+            border-radius: 4px;
+            font-family: $FPBlond;
+            font-size: 14px;
+            line-height: 18px;
+            background:$white;
+            padding: 12px 20px 9px;
+        }
+    }
+    
+    .red {
+        color: #CA2727;
+    }
+    
+    .info {
+        margin-bottom: 48px;
+    }
+
+    a {
+        color: #1F8AEF;
+    }
+
+    .notify-options {
+        margin-top: 24px;
+        border-top: 1px solid rgba(0,0,0,.03);
+
+        .opt {
+            height: 60px;
+            border-bottom: 1px solid rgba(0,0,0,.03);
+            display: flex;
+            align-items: center;
+        }
+
+        .display-text {
+            font-family: $FPBlond;
+            font-size: 16px;
+            color: #000000;
+        }
+    }
+
+    .upload-company-icon {
+        height: 88px;
+        background: $white;
+        box-shadow: 0 1px 1px 0 rgba(0,0,0,0.06);
+        border-radius: 6px;
+        margin-top: 8px;
+        width: 100%;
+        font-family: $FPBlond;
+        //put in mixin
+        display: flex;
+        align-items: center;
+
+        .upload-content, img {
+            float: left;
+        }
+
+        img.logo {
+            margin: 8px;
+            width: 72px;
+        }
+
+        .upload-content {
+            width: 65%;
+            margin-left: 8px;
+            a {
+                font-size: 16px;
+            }
+        }
+
+        .upload-button {
+            margin: 0px 32px;
+            p {
+                font-size: 16px;
+                color: #BFCBD9;
+            }   
+        }
+    }
+}

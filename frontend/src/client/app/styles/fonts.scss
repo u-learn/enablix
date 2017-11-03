@@ -1,0 +1,15 @@
+//fonts variables
+$FPBlond: 'Fakt Pro Blond';
+$FPLight: 'Fakt Pro Light';
+$FPMedium: 'Fakt Pro Medium';
+$FPNormal: 'Fakt Pro Normal';
+$FPSemiBold: 'Fakt Pro SemiBold';
+$FPThin: 'Fakt Pro Thin';
+
+/* Note: src relative to public/css folder */
+@include font-face("Fakt Pro Blond", "../assets/fonts/FaktPro-Blond", null, null, ttf);
+@include font-face("Fakt Pro Light", "../assets/fonts/FaktPro-Light", null, null, ttf);
+@include font-face("Fakt Pro Medium", "../assets/fonts/FaktPro-Medium", null, null, ttf);
+@include font-face("Fakt Pro Normal", "../assets/fonts/FaktPro-Normal", null, null, ttf);
+@include font-face("Fakt Pro SemiBold", "../assets/fonts/FaktPro-SemiBold", null, null, ttf);
+@include font-face("Fakt Pro Thin", "../assets/fonts/FaktPro-Thin", null, null, ttf);

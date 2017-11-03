@@ -1,0 +1,68 @@
+<div class="company company-information">
+    <div class="header">
+        <h1>Company Information</h1>
+        <div class="changes-saved">
+            <img src="/assets/images/buttons/save_btn_large.png" />
+        </div>
+        <div style="clear: both;"></div>
+    </div>
+    <div class="main">
+        <form>
+            <div class="info">
+                <h4>Company Name</h4>
+                <input type="text"/>
+                <!--  ng-model="company.name" -->
+                <p>Based on your team name, your URL is <a class="url">brillant.enablix.com</a></p>        
+            </div>
+            <div class="info">
+                <h4>Company Icon</h4>
+                <p>This icon will be used to identify your team in Enablix.<br>
+                    It will only be visible to members of your workspace.
+                </p>
+                <div class="upload-company-icon">
+                    <img class="logo" src="/assets/images/company/brillant_logo.svg" />
+                    <div class="upload-content">
+                        <a>Browse</a>
+                        <p>Must be JPG or PNG in 1:1 ratio, below 2MB</p>
+                    </div>
+                    <div class="upload-button">
+                        <p>Upload</p>
+                    </div>
+                </div>
+            </div>
+            <div class="info">
+                <h4>Team Notifications</h4>
+                <p>Set up what notifications your team will see</p>
+                <div class="notify-options">
+                    <div class="opt">
+                        <input type="checkbox" name="vehicle" value="Bake">
+                        <span class="display-text">When someone uploads new assets</span>
+                    </div>
+                    <div class="opt">
+                        <input type="checkbox" name="vehicle" value="Car" checked>
+                            <span class="display-text">When new member is invited to the team</span>
+                    </div>
+                    <div class="opt">
+                            <input type="checkbox" name="vehicle" value="Bake">
+                            <span class="display-text">When someone downloads or shares an asset</span>
+                        </div>
+                        <div class="opt">
+                            <input type="checkbox" name="vehicle" value="Car" checked>
+                                <span class="display-text">Weekly Insight Report</span>
+                        </div>
+                </div>
+            </div>
+            <div class="info">
+                <h4>Delete Team</h4>
+                <p>Deleting your Enablix team cannot be undone. All messages and files will be irretrievable.
+                    Please use caution and consider exporting your data before deletion.</p>
+                <p class="red alert">Note: Don't delete your workspace if you just want to change your team's name or URL.</p>
+                <button class="red" type="submit" value="Delete Team">Delete Team</button>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="sidebar" ng-click="ctrl.navigateToRecentActivity()">
+    <!-- recent-activities directive -->
+    <recent-activity in-sidebar="true"></recent-activity>
+</div>

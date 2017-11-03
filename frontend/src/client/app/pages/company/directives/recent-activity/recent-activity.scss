@@ -1,0 +1,75 @@
+recent-activity {
+    .header {
+        height: 89px;
+
+        h1, h2 {
+            font-family: $FPLight;
+            padding-bottom: 8px;
+        }
+        p {
+            font-family: $FPBlond;
+            font-size: 14px;
+            color: $grey-dark;
+            line-height: 17px;
+            width: 90%;
+        }
+    }
+
+    table {
+        thead {
+            td:first-child{
+                width: 76%;
+            }
+            td:not(:first-child){
+                width: 12%;
+            }
+        }
+    }
+
+    .activity {
+        height: 80px;
+
+        &.inSidebar {
+            height: 103px; //might modify to be responsive
+        }
+
+        >div {
+            &.vertical-align {
+                height: 36px;
+            }
+            padding: 22px 0;
+        }
+
+        img.user-img {
+            padding-right: 12px;
+        }
+        
+        img.user-img, .activity-detail{
+            float: left;
+        }
+    }
+
+    .activity-detail {
+        &.narrow {
+            width: calc(100% - 44px - 12px); //account for img space
+        }
+
+        .description {
+            font-size: 14px;
+            line-height: 18px;
+            color: #2D2D2D;
+            margin-bottom: 10px;
+
+            &.large-display {
+                font-size: 16px;
+                color: $black;
+                margin-bottom: 0;
+            }
+        }
+
+        .date-modified {
+            font-size: 12px;
+            color: $grey-dark;
+        }
+    }
+}

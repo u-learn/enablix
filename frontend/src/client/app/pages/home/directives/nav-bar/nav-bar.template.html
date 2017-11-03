@@ -1,0 +1,43 @@
+<div class="nav-bar">
+    <div class="left">
+        <img class="enablix-logo" src="/assets/images/company/enablix_logo@2x.png" />
+        <div class="client-brand" ng-if="isCompanyState">
+            <img class="logo" src="/assets/images/company/brillant_logo.svg" />
+            <h3 class="brand">Brillant AB</h3>
+        </div>
+        <div class="search-bar" ng-if="isDashboardState">
+        </div>
+        <div class="consolidate-header" ng-if="isConsolidateContentState">
+            <h3>Consolidate Content</h3>
+        </div>
+    </div>
+    <div class="right">
+        <div class="upload" ng-if="isDashboardState || isConsolidateContentState">
+            <button>Upload</button>
+        </div>
+        <div class="draft"  ng-if="isDashboardState || isConsolidateContentState">
+            <img src="/assets/images/buttons/drafts_btn.png" />
+        </div>
+        <div class="line" ng-if="isDashboardState || isConsolidateContentState"></div>
+        <div class="client-brand"  ng-if="isDashboardState || isConsolidateContentState">
+            <img class="logo" src="/assets/images/company/brillant_logo.svg" />
+            <h3 class="brand">Brillant AB</h3>
+        </div>
+
+        <div class="users-group" ng-if="isCompanyState">
+            <img class="icon grey-border user-img" src="/assets/images/company/profile_img@2x.png" />
+            <img class="icon grey-border user-img" src="/assets/images/company/profile_img@2x.png" />
+            <img class="icon grey-border user-img" src="/assets/images/company/profile_img@2x.png" />
+            <div class="circle users-count">
+                <span>5</span>
+            </div>
+        </div>
+        <div class="line"></div>
+        <div class="notification">
+            <img src="/assets/images/buttons/notifications_btn.png" />
+        </div>
+        <div class="user">
+            <img class="icon user-img" src="/assets/images/company/profile_img@2x.png" />
+        </div>
+    </div>
+</div>

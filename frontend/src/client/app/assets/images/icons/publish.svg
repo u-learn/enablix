@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="26px" height="26px" viewBox="0 0 26 26" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 47.1 (45422) - http://www.bohemiancoding.com/sketch -->
+    <title>publish</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="_assets" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="publish" fill-rule="nonzero" fill="#000000">
+            <g id="paper_plane" transform="translate(4.000000, 4.000000)">
+                <polygon id="Shape" points="18 9 10.5 9 1.0035 7.41375 0 6 0 1.5 2.2455 0.1995 17.54325 8.30925"></polygon>
+                <circle id="Oval" cx="17.25" cy="9" r="1"></circle>
+                <circle id="Oval" cx="1.5" cy="6" r="1.5"></circle>
+                <circle id="Oval" cx="1.5" cy="1.5" r="1.5"></circle>
+                <polygon id="Shape" points="18 9 10.5 9 1.0035 10.58625 0 12 0 16.5 2.2455 17.8005 17.54325 9.69075"></polygon>
+                <circle id="Oval" cx="1.5" cy="12" r="1.5"></circle>
+                <circle id="Oval" cx="1.5" cy="16.5" r="1.5"></circle>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,19 @@
+button.action {
+    margin-right: 12px;
+    background: #1F8AEF;
+    color: $white;
+}
+
+button.cancel {
+    background: $white;
+    color: #808C9B;
+}
+
+button {
+    height: 48px;
+    border: 1px solid rgba(0,0,0,0.10);
+    box-shadow: 0 1px 1px 0 rgba(0,0,0,0.04);
+    border-radius: 4px;
+    font-family: $FPLight;
+    font-size: 18px;
+}

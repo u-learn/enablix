@@ -1,0 +1,44 @@
+<div>
+    <div class="header">
+        <h1 ng-if="!inSidebar">Recent Activities</h1>
+        <h2 ng-if="inSidebar">Recent Activities</h2>
+        <p>See what your team members were doing lately</p>
+    </div>
+    <div>
+        <div class="activity-table">
+            <table>
+                <thead ng-if="!inSidebar">
+                    <tr>
+                        <td><img class="icon small" src="/assets/images/icons/search-grey.svg" /><span>Activity</span></td>
+                        <td><span>Type</span><img class="icon dropdown" src="/assets/images/icons/dropdown.svg" /></td>
+                        <td><span>When</span><img class="icon dropdown" src="/assets/images/icons/dropdown.svg" /></td>
+                    </tr>
+                </thead>
+                <tr class="content" ng-repeat="a in data">
+                    <td>
+                        <div class="activity" ng-class="{'inSidebar': inSidebar}">
+                            <div ng-class="{'vertical-align': !inSidebar}">
+                                <img class="icon user-img" src="/assets/images/company/profile_img@2x.png" />
+                                <div class="activity-detail" ng-class="{'narrow': inSidebar}">
+                                    <p class="description" ng-class="{'large-display': !inSidebar}">
+                                        {{a.description}}
+                                    </p>
+                                    <p class="date-modified" ng-if="inSidebar">
+                                        {{a.date}}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="type td-text" ng-if="!inSidebar">
+                        <p>{{a.type}}</p>
+                    </td>
+                    <td class="date td-text" ng-if="!inSidebar">
+                        <p>{{a.date}}</p>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+    </div>
+</div>

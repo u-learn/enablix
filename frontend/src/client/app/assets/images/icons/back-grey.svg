@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="15px" height="12px" viewBox="0 0 15 12" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 47.1 (45422) - http://www.bohemiancoding.com/sketch -->
+    <title>back_icon</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Company" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Company-Activity" transform="translate(-88.000000, -109.000000)" fill-rule="nonzero" fill="#BFCBD9">
+            <g id="company-menu" transform="translate(88.000000, 102.000000)">
+                <path d="M3.74226804,14.32 C3.49484536,14.08 3.58762887,13.9 3.92783505,13.9 L14.3814433,13.9 C14.7216495,13.9 15,13.63 15,13.3 L15,12.7 C15,12.37 14.7216495,12.1 14.3814433,12.1 L3.92783505,12.1 C3.58762887,12.1 3.49484536,11.92 3.74226804,11.68 L8.13402062,7.42 C8.3814433,7.18 8.28865979,7 7.94845361,7 L6.55670103,7 C6.21649485,7 5.75257732,7.18 5.50515464,7.42 L0.18556701,12.58 C-0.0618556701,12.82 -0.0618556701,13.18 0.18556701,13.42 L5.50515464,18.58 C5.75257732,18.82 6.21649485,19 6.55670103,19 L7.94845361,19 C8.28865979,19 8.3814433,18.82 8.13402062,18.58 L3.74226804,14.32 Z" id="back_icon"></path>
+            </g>
+        </g>
+    </g>
+</svg>

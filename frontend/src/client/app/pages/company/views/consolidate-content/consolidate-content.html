@@ -1,0 +1,78 @@
+<nav-bar state="ctrl.state"></nav-bar>
+<div class="wrapper">
+    <div class="container">
+            <div class="company no-sidebar">
+                <div class="header">
+                    <h1>Consolidate Content</h1>
+                    <p class="no-bottom-padding">See and consolidate assets from your marketing team<br>
+                    or assets that need some quality check.</p>
+                </div>
+                <div class="main consolidate-content">
+                    <div>
+                        <company-navbar emit-state="true" tabs="ctrl.consolidateContentTabs" ng-if="!ctrl.state.includes('consolidate-content.edit')"></company-navbar>
+                        <div class="edit-navbar" ng-if="ctrl.state.includes('consolidate-content.edit')">
+                            <div class="select-dropdown-option">
+                                <select>
+                                    <option style="background: url(/assets/images/buttons/radio_not_checked.png)"></option>
+                                </select>
+                        </div>
+                        <div class="divider"></div>
+                        <div class="edit-actions-container"></div>
+                            <div class="edit-action"><img src="/assets/images/buttons/approve_btn.png" /></div>
+                            <div class="edit-action"><img src="/assets/images/buttons/reject_btn.png" /></div>
+                            <div class="edit-action"><img src="/assets/images/buttons/trash_btn.png" /></div>
+                        </div>
+                    </div>
+                    <div class="assets-table container">
+                        <form>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <td><img class="icon small" src="/assets/images/icons/search-grey.svg" /><span>Asset</span></td>
+                                        <td><span>Content Type</span><img class="icon dropdown" src="/assets/images/icons/dropdown.svg" /></td>
+                                        <td><span>Status</span><img class="icon dropdown" src="/assets/images/icons/dropdown.svg" /></td>
+                                        <td><span>Created on</span></td>
+                                        <td><span>Creator</span></td>
+                                    </tr>
+                                </thead>
+                                <tr class="content" ng-repeat="a in ctrl.consolidateContentData">
+                                    <td>
+                                        <div class="asset">
+                                            <div class="vertical-align">
+                                                <input type="radio" value="{{a.id}}" 
+                                                        ng-click="ctrl.selectedAsset(value)"
+                                                        ng-if="(a.status === 'Pending' && !ctrl.state.includes('consolidate-content.pending') || ctrl.state.includes('consolidate-content.edit'))">
+                                                <img class="thumbnail" ng-src="{{a.thumbanil}}" />
+                                                <p>{{a.description}}</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="type tags-container">
+                                        <div class="tag">
+                                            <div class="content">
+                                                <span>{{a.type}}</span>
+                                            </div>
+                                        </div>                            
+                                    </td>
+                                    <td class="status td-text">
+                                        <p>{{a.status}}</p>
+                                    </td>
+                                    <td class="date td-text">
+                                        <p>{{a.date}}</p>
+                                    </td>
+                                    <td class="creator td-text">
+                                        <div class="asset">
+                                            <div class="vertical-align">
+                                                <img class="icon user-img" src="/assets/images/company/profile_img@2x.png" />
+                                                <p>{{a.creator}}</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>

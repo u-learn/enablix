@@ -1,0 +1,61 @@
+<div class="company company-properties">
+    <div class="header">
+        <h1>Company Properties</h1>
+        <p>Set up your company properties. On the right column you can read more<br>
+        about setting up the right company properties for your business.</p>
+
+        <a class="cta-link">Add Company Sector</a>
+    </div>
+    <div class="main">
+        <div class="sector">
+            <h2>Content Types</h2>
+            <content-types hide-header="true"></content-types>
+        </div>
+        <!-- can be refactored and use same component as content-types (pass bindings to content-types) -->
+        <div class="sector" ng-repeat="s in ctrl.sectors">
+            <h2>{{s.title}}</h2>
+            <div>
+                <div class="sectors-container">
+                    <div class="company-sector" ng-repeat="t in s.types">
+                        <div class="content">
+                            <span>{{t.title}}</span>
+                            <a class="remove" href="">
+                                <img class="" src="/assets/images/icons/close-white.svg" />                
+                            </a>
+                        </div>
+                    </div>
+                    <div class="add-tag">
+                        <a href="">
+                            <img src="/assets/images/icons/add-sectors-btn.svg" />    
+                        </a>
+                    </div>
+                    <div style="clear:both"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="sidebar">
+    <!-- recent-activities directive -->
+    <div class="company-properties-sidebar">
+        <div class="properties-explain">
+            <h3 class="headline">
+                    What can you use Company Properties for?
+            </h3>
+            <p class="description">
+                A boss is far more likely to give you the benefit of the doubt when you use one of these old dogs as they will question your sanity for attempting to use such an audacious excuse. Reverse psychology. Use it to your advantage
+            </p>
+        </div>
+        <div class="properties-explain">
+            <h3 class="headline">
+                    How to set company properties?
+            </h3>
+            <p class="description">
+                Have a handy repotoire of excuses lined up
+                <br>
+                <br>
+                Everyone has heard of the line ‘the dog ate it…’ or ‘I left it in my jeans when it went into the wash’ to avoid handing in an assignment but how often do we actually use them? Some of these old well worn excuses are due for a renaissance period. A boss is far more likely to give you the benefit of the doubt when you use one of these old dogs as they will question your sanity for attempting to use such an audacious excuse. Reverse psychology. Use it to your advantage
+            </p>
+        </div>
+    </div>
+</div>

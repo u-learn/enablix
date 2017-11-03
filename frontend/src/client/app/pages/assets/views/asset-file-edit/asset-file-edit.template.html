@@ -1,0 +1,64 @@
+<div class="left asset-file">
+    <h1 contenteditable="true" ng-model="ctrl.fileUpload.title">{{ctrl.fileUpload.title}}</h1>
+    <p class="label">Last updated yesterday at 11:02am</p>
+
+    <div class="row">
+        <p class="label">Description</p>
+        <input class="description" type="text" placeholder="Type description" />
+    </div>
+    <div class="row with-height">
+        <p class="label">Source</p>
+        <img class="fileType" src="/assets/images/icons/ppt_icon.svg"/>
+        <p class="text">StdChartered_CaseStudy.pptx</p>
+    </div>
+    <div class="row">
+        <p class="label">Content Type</p>
+        <div>
+            <select>
+                <option>Case Study</option>
+            </select>
+        </div>
+    </div>
+    <div class="row with-height">
+        <p class="label">Relevance</p>
+        <!-- can be refactored into directive -->
+        <div class="sectors-container">
+            <div class="add-tag">
+                <a href="">
+                    <img src="/assets/images/icons/add-sectors-btn.svg" />    
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="row with-height">
+        <p class="label">Properties</p>
+        <div class="sectors-container">
+            <div class="company-sector">
+                <div class="content">
+                    <span>North America</span>
+                    <a class="remove" href="">
+                        <img class="" src="/assets/images/icons/close-white.svg" />                
+                    </a>
+                </div>
+            </div>
+            <div class="company-sector">
+                <div class="content">
+                    <input ng-model="ctrl.newProperty" />
+                    <a class="remove" href="">
+                        <img class="" src="/assets/images/icons/close-white.svg" />                
+                    </a>
+                </div>
+            </div>
+            <div class="add-tag" ng-click="this.addProperties()">
+                <a href="">
+                    <img src="/assets/images/icons/add-sectors-btn.svg" />    
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="right">
+    <div class="file-preview">
+        
+    </div>
+</div>

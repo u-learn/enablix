@@ -1,0 +1,132 @@
+.assets-navbar {
+    height: 32px;
+    margin-bottom: 66px;
+
+    >div:first-child {
+        width: 370px;
+        img {
+            cursor: pointer;
+        }
+    }
+    div:not(.user){
+        float: left;
+    }
+    div.user {
+        float: right;
+    }
+    .edit-container, .share-container{
+        div.action-btn {
+            float: left;
+            &:not(:last-child){
+                margin-right: 8px;
+            }
+
+            cursor: pointer;
+        }
+    }
+}
+
+.assets-container {
+    h1 {
+        font-family: $FPLight;
+        color: $black;
+        line-height: 38px;
+    }
+    
+    .left {
+        width: 300px;
+        float: left;
+        margin-right:70px;
+
+        .row:not(:last-child) {
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(0,0,0,0.03);
+
+            &.with-height{
+                height: 73px;
+            }
+
+            img.fileType {
+                float: left;
+                margin-right: 6px;
+            }
+        }
+
+        .label {
+            font-family: $FPBlond;
+            font-size: 14px;
+            color: #808C9B;
+            line-height: 17px;
+            padding-bottom: 8px;
+            padding-top: 16px;
+        }
+
+        .text {
+            font-family: $FPBlond;
+            font-size: 14px;
+            color: #2D2D2D;
+            line-height: 18px;
+        }
+    }
+
+    .right {
+        float: left;
+        width: calc(100% - 370px - 40px);
+    }
+
+    input, select {
+        width: 296px;
+        height: 40px;
+        font-size: 14px;
+        padding-left: 14px;
+        color: #2D2D2D;
+        border-radius: 4px;
+        border: 1px solid #E3EBEF;
+        box-shadow: 0 1px 1px 0 rgba(0,0,0,0.06);
+        -webkit-appearance: none;
+        background-color: $white;
+    }
+
+    select {
+        background: url('../assets/images/icons/dropdown-blue.svg') no-repeat right $white;
+        background-position: right 17px center;
+    }
+        
+}
+
+.delete-prompt {
+    font-family: $FPBlond;
+    position: absolute;
+    width: calc(100% - 16px);
+    height: calc(100vh - 106px);
+    top: calc(50% - 131px);
+    z-index: 10;
+    margin-right: 8px;
+
+    >div {
+        width: 528px;
+        margin: 0 auto;
+        border-radius: 4px;
+        background: #F7F9F9;
+        padding: 32px 48px 40px;
+    }
+
+    h1 {
+        margin-bottom: 24px;
+    }
+
+    h3 {
+        margin-bottom: 32px;
+        line-height: 24px;
+    }
+
+    button {
+        width: 146px;
+    }
+}
+
+@import './views/asset-text/asset-text.scss';
+@import './views/asset-text-edit/asset-text-edit.scss';
+@import './views/asset-url-edit/asset-url-edit.scss';
+@import './views/asset-file/asset-file.scss';
+@import './views/asset-file-edit/asset-file-edit.scss';

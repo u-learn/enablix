@@ -1,0 +1,26 @@
+content-types{
+    .header {
+        h2 {
+            font-family: $FPLight;
+            font-size: 24px;
+            color: $black;
+            padding-bottom: 16px;
+        }
+
+        p {
+            font-family: $FPBlond;
+            font-size: 14px;
+            color: $grey-dark;
+            line-height: 17px;
+        }
+        height: 74px;
+        margin-bottom: 32px;
+    }
+
+    // .tags-container {
+    //     .tag:nth-last-child(2) {
+    //         float: left;
+    //     }
+    // }
+    
+}

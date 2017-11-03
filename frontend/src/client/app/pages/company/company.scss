@@ -1,0 +1,149 @@
+.company {
+    margin-right: 80px;
+    width: calc(100% - 296px - 80px);
+    float: left;
+
+    &.no-sidebar {
+        width: 100%;
+    }
+
+    .header {
+        margin-bottom: 40px;
+        h1 {
+            font-family: $FPLight;
+        }
+
+        p{
+            font-family: $FPBlond;
+            font-size: 14px;
+            color: $grey-dark;
+            padding-top: 7px; //sibling h1
+            padding-bottom: 32px; //sibling a
+            line-height: 17px;
+            &.no-bottom-padding {
+                padding-bottom: 0; //no sibling a
+            }            
+        }
+        a.cta-link{
+            font-family: $FPSemiBold;
+            font-size: 14px;
+            color:$blue-med-20;
+        }
+    }    
+}
+
+.sidebar {
+    width: 296px;
+    float: right;
+}
+
+//tags for company properties - shared between company-properties and sales view
+.tags-container, .sectors-container {
+    .tag, .add-tag, .company-sector {
+        position:relative;
+        font-family: $FPLight;
+        font-size: 16px;
+        color: $white;
+        float: left;
+    }
+
+    .tag, .company-sector {
+        margin: 0 6px 10px 0;
+        padding: 0 8px;
+        display: inline-block;
+
+        &.inactive {
+            background: $white;
+            box-shadow: 0 1px 1px 0 rgba(0,0,0,0.06);
+            color: $grey-med;
+        }
+
+        .content, .remove {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 28px;
+        }
+
+        .content {
+            span {
+                height: 16px;
+            }
+            span + a{
+                padding-left: 5px;
+            }
+        }
+    }
+
+    .tag {
+        border-radius: 100px;
+        background: $blue-med-20;
+    }
+
+    .company-sector {
+        background: $blue-med-10;
+        border-radius: 4px;
+
+        &.purple {
+            background: #724BD0;
+        }
+    }
+    
+}
+
+//table shared between consolidate content and recent-activity
+.assets-table, .activity-table {
+    font-family: $FPBlond;
+
+    .td-text {
+        font-size: 14px;
+        color: $grey-dark;
+        line-height: 17px;
+    }
+
+    table {
+        width: 100%;
+        thead {
+            font-size: 18px;
+            color: $grey-dark;
+
+            tr {
+                height: 41px;
+            }
+
+            td:first-child{
+                .icon {
+                    padding-right: 12px;
+                }
+            }
+            td:not(:first-child){
+                .icon.dropdown {
+                    padding-left: 7px;
+                    width: 9px;
+                    height: 7px;
+                }
+            }
+        }
+
+        .content{
+            td {
+                border-top: 1px solid rgba(0, 0, 0, .03);
+            }
+        }
+    }
+
+    .activity, .asset {
+        >div.vertical-align {
+            @include vcenterChildren;
+        }
+    }
+}
+
+@import './views/company-information/company-information.scss';
+@import './views/company-properties/company-properties.scss';
+@import './views/company-sales/company-sales.scss';
+@import './views/consolidate-content/consolidate-content.scss';
+
+@import './directives/recent-activity/recent-activity.scss';
+@import './directives/content-types/content-types.scss';
+@import './directives/company-navbar/company-navbar.scss';

@@ -1,0 +1,16 @@
+.text-preview {
+    textarea, div {
+        border-radius: 4px;
+        margin-right: 40px;
+        width: calc(100% - 40px - 32px);
+        background: $white;
+        height: 340px;
+        box-shadow: 0 1px 1px 0 rgba(0,0,0,0.06);
+        padding: 21px 32px;
+
+        font-family: $FPLight;
+        font-size: 24px;
+        color: $black;
+        line-height: 32px;
+    }
+}

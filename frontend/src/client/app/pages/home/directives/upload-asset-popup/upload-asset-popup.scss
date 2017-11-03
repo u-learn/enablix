@@ -1,0 +1,45 @@
+.upload-asset-popup{
+    >div {
+        width: calc(624px - 48px - 48px);
+        padding: 32px 48px;
+        background: #F7F9F9;
+        z-index: 10;
+        position: relative;
+        border-radius: 4px;
+    }
+
+    h1 {
+        font-family: $FPLight;
+        line-height: 38px;
+        margin-bottom: 32px;
+    }
+
+    .preview-text, .preview-img{
+        border-radius: 4px;
+        font-family: $FPBlond;
+    }
+
+    .preview-text{
+        width: 512px;
+        padding: 8px;
+        background: $white;
+        border: 1px solid #E3EBEF;
+        box-shadow: 0 1px 1px 0 rgba(0,0,0,0.06);
+        @include vcenterChildren;
+
+        img {
+            padding-right: 8px;
+        }
+    }
+
+    .preview-img {
+        margin-top: 20px;
+    }
+
+    .actionBtns {
+        margin-top: 24px;
+        button {
+            width: 123px;
+        }
+    }
+}

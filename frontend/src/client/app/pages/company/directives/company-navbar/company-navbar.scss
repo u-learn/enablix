@@ -1,0 +1,30 @@
+// company-navbar{
+.tabs-container {
+    height: 39px;
+    border-bottom: 1px solid rgba(0,0,0,.03);
+    list-style-type: none;
+
+    .tab:not(:last-child){
+        margin-right: 28px;
+    }
+}
+.tab {
+    font-family: $FPBlond;
+    font-size: 18px;
+    color: $grey-med;
+    float: left;
+    height: 37px;
+
+    img.back-icon {
+        padding-right: 14px;
+    }
+
+    span.black {
+        color: $black;  
+    }
+
+    &.active {
+        border-bottom: 2px solid $blue-med-20;
+    }
+} 
+// }

@@ -1,0 +1,85 @@
+.assets-table {
+    table {
+        thead {
+            td:first-child{
+                width: 43%;
+            }
+            td:not(:first-child){
+                width: 14.25%;
+            }
+        }
+    }
+
+    .asset {
+        height: 109px;
+
+        >div {
+            &.vertical-align {
+                height: 60px;
+            }
+            padding: 24px 0;
+        }
+
+        img.user-img {
+            padding-right: 8px;
+        }
+    }
+
+    .thumbnail {
+        height: 60px;
+        width: 96px;
+        padding-right: 16px;
+    }
+}
+
+.consolidate-content{
+    >div {
+       padding-top: 16px; 
+    }
+    form {
+        input[type="radio"]{
+            background-image:url('../assets/images/buttons/radio_not_checked.png');
+            cursor:pointer;
+            background-size:contain;
+            background-repeat:no-repeat;
+            height: 20px;
+            width: 20px;
+            margin-right: 16px;
+        }
+
+        input[type="radio"]:checked{ 
+            background-image:url('../assets/images/buttons/radio_checked.png');
+        }
+    }
+    
+    .select-dropdown-option {
+        float: left;
+        height: 32px;
+        width: 48px;
+        
+        //might be difficult to change the dropdown option
+        select {
+            height: 32px;
+            width: 100%;
+            border: 1px solid #E3EBEF;
+            background:url('../assets/images/buttons/dropdown_btn.png') no-repeat;
+            -webkit-appearance: none;
+        }
+    }
+    .edit-navbar {
+        height: 32px;
+        padding-bottom: 24px;
+        border-bottom: 1px solid rgba(0,0,0,0.03);
+    }
+    .edit-action{
+        float: left;
+        margin-right: 8px;
+        cursor: pointer;
+
+        &:last-child {
+            ::after {
+                clear: both;
+            }
+        }
+    }
+}

@@ -1,0 +1,22 @@
+<div>
+    <div class="header" ng-hide="{{hideHeader}}">
+        <h2>Content Types</h2>
+        <p>Control your company content type tags by adding or removing them below:</p>
+    </div>
+    <div class="tags-container">
+        <div class="tag" ng-repeat="t in tags">
+            <div class="content">
+                <span>{{t.title}}</span>
+                <a class="remove" href="">
+                    <img class="" src="/assets/images/icons/close-white.svg" /> 
+                </a>
+            </div>
+        </div>
+        <div class="add-tag">
+            <a href="">
+                <img src="/assets/images/icons/add-tags-btn.svg" />    
+            </a>
+        </div>
+        <div style="clear:both"></div>
+    </div>
+</div>

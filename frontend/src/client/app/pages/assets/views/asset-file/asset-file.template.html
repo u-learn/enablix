@@ -1,0 +1,73 @@
+<div class="left asset-file">
+    <h1 ng-click="ctrl.activateEditHeader()">Chartered Case Study</h1>
+    <!-- <input class="hidden-input-style" ng-show="ctrl.showInputHeader" /> -->
+    <p class="label">Last updated yesterday at 11:02am</p>
+    <div class="row">
+        <p class="label">Status</p>
+        <div>
+            <select ng-model="ctrl.fileUpload.status" 
+                    ng-change="ctrl.log()"
+                    ng-options="status.type for status in ctrl.statusOptions"> 
+            </select>
+        </div>
+    </div>
+    <div class="row">
+        <p class="label">Description</p>
+        <p class="text">This case study discusses how SCB achieved higher ROI and stronger security in their digital banking channel.</p>
+    </div>
+    <div class="row with-height">
+        <p class="label">Source</p>
+        <img class="fileType" src="/assets/images/icons/ppt_icon.svg"/>
+        <p class="text">StdChartered_CaseStudy.pptx</p>
+    </div>
+    <div class="row with-height">
+        <p class="label">Content Type</p>
+        <div class="tags-container">
+            <div class="tag">
+                <div class="content">
+                    <span>Case Study</span>
+                </div>
+            </div>                            
+        </div>
+    </div>
+    <div class="row with-height">
+        <p class="label">Relevance</p>
+        <!-- can be refactored into directive -->
+        <div class="sectors-container">
+            <div class="company-sector purple">
+                <div class="content">
+                    <span>IdentityGuard</span>
+                </div>
+            </div>
+            <div class="company-sector purple">
+                <div class="content">
+                    <span>IdentityGuard Mobile</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row with-height">
+        <p class="label">Properties</p>
+        <div class="sectors-container">
+            <div class="company-sector">
+                <div class="content">
+                    <span>North America</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="right">
+    <div class="file-preview">
+        <div class="active-slide">
+            <img class="slide" ng-src="{{ctrl.activeSlide.url}}" />
+        </div>
+        <div class="all-slides">
+            <div class="mini-slide" ng-class="{'active': ctrl.activeSlide.id === $index + 1}" ng-repeat="s in ctrl.slides" ng-click="ctrl.selectedSlide($index)" >
+                <img class="slide-thumbnail" ng-src="{{s.url}}" />
+                <div class="overlay"></div>
+                <div class="eye"></div>
+            </div>
+        </div>
+    </div>
+</div>

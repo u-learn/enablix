@@ -1,0 +1,120 @@
+.nav-bar {
+    height: 80px;
+    padding: 0 40px 0 44px;
+    @include vcenterChildren;
+
+    .left {
+        width: 50%;
+        @include vcenterChildren;
+    }
+  
+    .right {
+        @include vcenterChildren;
+        width: 50%;
+        justify-content: flex-end;
+    }
+  
+    .line {
+      opacity: 0.03;
+      background: $black;
+      width: 1px;
+      height: 32px;
+      margin-right: 16px;
+      margin-left: 16px;
+    }
+  
+    .enablix-logo {
+      height: 16px;
+      margin-right: 24px;
+    }
+  
+    .client-brand {
+        @include vcenterChildren;
+        height: 48px;
+        width: 227px;
+        background: $white;
+        box-shadow: 0 1px 1px 0 rgba(0,0,0,0.06);
+        border-radius: 4px;
+        padding-right: 8px;
+  
+        .logo {
+            padding: 8px;
+        }
+      
+        h3 {
+            line-height: 20px;
+            font-family: $FPBlond;
+        }
+    }
+
+    .user {
+        margin-left: 8px;
+    }
+
+    .notification, .draft {
+        height: 32px;
+    }
+  
+    .users-group {
+        display: flex;
+        position: relative;
+        left: 38px;
+
+      .users-count, .user-img{
+        position: relative;
+      }
+  
+      .user-img {
+        &:nth-child(2){
+          left: -12px;
+        }
+        &:nth-child(3){
+          left: -24px;
+        }
+      }
+  
+      .users-count {
+        left: -36px;
+      }
+    }
+  
+    .circle {
+      border-radius: 50%;
+      height: 32px;
+      width: 32px;
+  
+      &.users-count {
+        background-color: $blue-med-20;
+        border: 2px solid $grey-lig-5;
+        font-family: $FPBlond;
+        font-size: 14px;
+        color:$white; 
+        line-height: 36px;
+        text-align: center;
+      }
+    }
+
+    .upload {
+        margin-right: 16px;
+        > button {
+            height: 48px;
+            width: 117px;
+            background: #1F8AEF;
+            border: 1px solid rgba(0,0,0,0.10);
+            box-shadow: 0 1px 1px 0 rgba(0,0,0,0.04);
+            border-radius: 4px;
+            font-family: $FPBlond;
+            font-size: 18px;
+            color:$white;
+        }
+    }
+
+    .consolidate-header {
+        font-family: $FPBlond;
+        color: $black;
+        line-height: 20px;
+    }
+    .search-bar {
+
+    }
+  }

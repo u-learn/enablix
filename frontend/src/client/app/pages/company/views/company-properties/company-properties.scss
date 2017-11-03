@@ -1,0 +1,34 @@
+.company-properties {
+    .sector {
+        padding: 24px 0 20px;
+        border-top: 1px solid rgba(0,0,0,0.03);
+
+        h2 {
+            font-family: $FPLight;
+            color: $black;
+            padding-bottom: 20px;
+        }
+    }
+    .main {
+        border-top: 1px solid rgba(0,0,0,0.03)
+    }
+}
+
+.company-properties-sidebar {
+    .properties-explain {
+        margin-bottom: 40px;
+    }
+
+    h3.headline {
+        font-family: $FPBlond;
+        font-size: 18px;
+        padding-bottom: 12px;
+        line-height: 20px;
+    }
+    .description {
+        font-family: $FPLight; //different font   
+        font-size: 14px;
+        color: $grey-dark;
+        line-height: 17px;
+    }
+}
