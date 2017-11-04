@@ -107,7 +107,7 @@ enablix.filters.filter('ebxLinky', ['$sanitize', '$location', '$state', 'Locatio
 	
 			function addLink(_url, text, linkParams) {
 	
-				var url = LocationUtil.createExtLinkUrl(_url);
+				var url = LocationUtil.createExtLinkUrl(_url, linkParams);
 	
 				html.push('<a ');
 				if (angular.isDefined(target)) {

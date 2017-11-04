@@ -111,6 +111,10 @@ public class EmbedInfo extends BaseDocumentEntity {
 		this.oembed = oembed;
 	}
 
+	public boolean isError() {
+		return "error".equals(getType());
+	}
+	
 	@Override
 	public String toString() {
 		return "EmbedInfo [type=" + type + ", url=" + url + ", site=" + site + ", title=" + title + ", description="

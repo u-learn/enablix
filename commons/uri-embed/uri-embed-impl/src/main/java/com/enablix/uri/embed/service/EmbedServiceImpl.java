@@ -21,8 +21,18 @@ public class EmbedServiceImpl implements EmbedService {
 		EmbedInfo embedInfo = localCache.get(url);
 		
 		if (embedInfo == null) {
+			
 			embedInfo = provider.fetchEmbedInfo(url);
-			localCache.put(url, embedInfo);
+			
+			if (embedInfo != null) {
+			
+				if (embedInfo.isError()) {
+					embedInfo = null;
+				} else {
+					localCache.put(url, embedInfo);
+				}
+			}
+			
 		}
 		
 		return embedInfo;
