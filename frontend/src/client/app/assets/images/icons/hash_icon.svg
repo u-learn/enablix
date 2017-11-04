@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 47.1 (45422) - http://www.bohemiancoding.com/sketch -->
+    <title>content_type_icon</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Upload" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Upload-URL-Dashboard-v2" transform="translate(-550.000000, -743.000000)" fill="#808C9B">
+            <g id="captureURL_withURL" transform="translate(488.000000, 151.000000)">
+                <g id="content_type" transform="translate(48.000000, 576.000000)">
+                    <path d="M18,26 L18,22 L15,22 C14.4477153,22 14,21.5522847 14,21 C14,20.4477153 14.4477153,20 15,20 L15,20 L18,20 L18,17 L18,17 C18,16.4477153 18.4477153,16 19,16 C19.5522847,16 20,16.4477153 20,17 L20,20 L24,20 L24,17 L24,17 C24,16.4477153 24.4477153,16 25,16 C25.5522847,16 26,16.4477153 26,17 L26,20 L29,20 C29.5522847,20 30,20.4477153 30,21 C30,21.5522847 29.5522847,22 29,22 L26,22 L26,26 L29,26 C29.5522847,26 30,26.4477153 30,27 C30,27.5522847 29.5522847,28 29,28 L26,28 L26,31 C26,31.5522847 25.5522847,32 25,32 C24.4477153,32 24,31.5522847 24,31 L24,28 L20,28 L20,31 C20,31.5522847 19.5522847,32 19,32 C18.4477153,32 18,31.5522847 18,31 L18,28 L15,28 C14.4477153,28 14,27.5522847 14,27 C14,26.4477153 14.4477153,26 15,26 L15,26 L18,26 Z M20,26 L24,26 L24,22 L20,22 L20,26 Z" id="content_type_icon"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

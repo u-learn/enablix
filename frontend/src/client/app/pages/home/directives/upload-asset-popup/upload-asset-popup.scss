@@ -14,12 +14,21 @@
         margin-bottom: 32px;
     }
 
-    .preview-text, .preview-img{
+    .preview-text, .preview-img, .preview-tag{
         border-radius: 4px;
         font-family: $FPBlond;
     }
 
-    .preview-text{
+    input, select, textarea {
+        width: 100%;
+        font-size: 18px;
+    }
+
+    textarea {
+        height: 154px;
+    }
+
+    .preview-text, .preview-tag{
         width: 512px;
         padding: 8px;
         background: $white;
@@ -30,10 +39,19 @@
         img {
             padding-right: 8px;
         }
+
+        &.align-top {
+            align-items: start;
+
+            > img {
+                padding: 0px 8px 0 0;
+            }
+            margin-bottom: 16px;
+        }
     }
 
     .preview-img {
-        margin-top: 20px;
+        margin: 20px 0;
     }
 
     .actionBtns {

@@ -9,7 +9,7 @@
                 </div>
                 <div class="main consolidate-content">
                     <div>
-                        <company-navbar emit-state="true" tabs="ctrl.consolidateContentTabs" ng-if="!ctrl.state.includes('consolidate-content.edit')"></company-navbar>
+                        <company-navbar page="consolidate-content" state="ctrl.state" emit-state="true" tabs="ctrl.consolidateContentTabs" ng-if="!ctrl.state.includes('consolidate-content.edit')"></company-navbar>
                         <div class="edit-navbar" ng-if="ctrl.state.includes('consolidate-content.edit')">
                             <div class="select-dropdown-option">
                                 <select>
@@ -36,12 +36,12 @@
                                     </tr>
                                 </thead>
                                 <tr class="content" ng-repeat="a in ctrl.consolidateContentData">
-                                    <td>
+                                    <td ng-mouseover="ctrl.showRadioButtonOption($index)" ng-mouseleave="ctrl.hideRadioButtonOption($index)">
                                         <div class="asset">
                                             <div class="vertical-align">
                                                 <input type="radio" value="{{a.id}}" 
-                                                        ng-click="ctrl.selectedAsset(value)"
-                                                        ng-if="(a.status === 'Pending' && !ctrl.state.includes('consolidate-content.pending') || ctrl.state.includes('consolidate-content.edit'))">
+                                                        ng-click="ctrl.selectedAsset(value)"                                                        
+                                                        ng-show="ctrl.editState || ctrl.activeRadionBtn === $index" />
                                                 <img class="thumbnail" ng-src="{{a.thumbanil}}" />
                                                 <p>{{a.description}}</p>
                                             </div>

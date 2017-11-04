@@ -1,9 +1,9 @@
 class RecentActivity {
-    constructor () {
-
+    constructor ($state) {
+        this.state = $state;
     }
 }
 
-RecentActivity.$inject = [];
+RecentActivity.$inject = ['$state'];
 
 module.exports = RecentActivity;

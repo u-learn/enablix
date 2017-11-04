@@ -23,5 +23,6 @@ export default class NavBar {
     scope.isConsolidateContentState = scope.state.current.name.includes('consolidate-content');
     scope.isDashboardState = scope.state.current.name.includes('home') || scope.state.current.name.includes('dashboard');
     scope.isCompanyState = scope.state.current.name.includes('company');
+    scope.isRecentActivitiesState = scope.state.current.name.includes('recent-activity');
   }
 }

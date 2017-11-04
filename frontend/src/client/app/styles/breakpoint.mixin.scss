@@ -20,9 +20,3 @@
     @warn "Breakpoint mixin supports: xs, sm, md, lg";
   }
 }
-
-@mixin container {
-  padding: 0 25px;
-  width: calc(100vw - 50px);
-  display: flex;
-}

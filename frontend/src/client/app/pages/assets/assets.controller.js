@@ -4,6 +4,14 @@ class AssetsController {
       this.showPublishOptions = false;
       this.showDeletePrompt = false;
 
+      this.goBackHome = () => {
+        $state.go('home');
+      }
+
+      this.previewState = () => {
+        //go back to original state
+      }
+
       if($state.current.name.includes('edit')){
         this.showPublishOptions = true;
       } 
@@ -35,6 +43,15 @@ class AssetsController {
         this.showDeletePrompt = false;
       }
 
+      this.emailAction = (action) => {
+        if(action === 'send'){
+          //delete
+        } else {
+          //close
+        }
+        this.showEmailPrompt = false;
+      }
+
       this.showActionConfirmed = {attachment: false};
       this.confirmationActionImg = {attachment: {link: 'assets/images/buttons/copied_url_btn.png'}};
       this.confirmAction = (actionType) => {
@@ -43,6 +60,12 @@ class AssetsController {
           //https://stackoverflow.com/questions/400212/how-do-i-copy-to-the-clipboard-in-javascript
         }
       }
+
+      this.emailPrompt = () => {
+        this.showEmailPrompt = true;
+      };
+
+      this.email = {};
     }
 
   }

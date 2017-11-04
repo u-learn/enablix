@@ -1,30 +1,43 @@
+import { previewSlides, statusOptions } from '../../../../helper/data/common';
+
 class AssetFileEditController {
     constructor ($scope, $state) {
-      this.addProperties = () => {
+        this.statusOptions = statusOptions;
+        this.fileUpload = {title: 'Chartered Case Study'};
+        this.fileUpload.status = this.statusOptions[0];
         
-      }
-      this.fileUpload = {title: 'Chartered Case Study'};
-      this.newProperty = '';
+        this.slides = previewSlides;
+        this.activeSlide = this.slides[0];
+        this.showInputHeader = false;
 
-      this.matchedProperties = [];
-      const assetFileNestedArray = definedProperties.map(sector => {
+        this.selectedSlide = (ind) => {
+            this.activeSlide = this.slides[ind];
+        };
+
+        this.addProperties = () => {
+        
+        }
+        this.fileUpload = {title: 'Chartered Case Study'};
+        this.newProperty = '';
+
+        this.matchedProperties = [];
+        const assetFileNestedArray = definedProperties.map(sector => {
         return sector.types.map(type => {
-          type.sector = sector.title;
-          return type;
+            type.sector = sector.title;
+            return type;
         });
-      });
+        });
 
-      const assetFileArray = assetFileNestedArray[0].concat(...assetFileNestedArray.slice(1));
+        const assetFileArray = assetFileNestedArray[0].concat(...assetFileNestedArray.slice(1));
 
-      //each keydown => call this function
-      this.searchMatch = (event) => {
+        //each keydown => call this function
+        this.searchMatch = (event) => {
         this.matchedProperties = assetFileArray.filter(asset => {
-          if(asset.title.includes(event.target.value)){
+            if(asset.title.includes(event.target.value)){
             return asset;
-          }
+            }
         })
-      }
-
+        }
     }
   }
   

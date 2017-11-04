@@ -1,9 +1,9 @@
 class CompanyInformation {
   constructor ($scope, $state) {
+
     this.navigateToRecentActivity = () => {
       $state.go('recent-activity');
     };
-      // $scope.company = {};
   }
 }
 

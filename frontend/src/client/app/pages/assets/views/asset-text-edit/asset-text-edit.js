@@ -1,8 +1,6 @@
 class AssetTextEditController {
     constructor ($scope, $state) {
-    //   this.navigateToRecentActivity = () => {
-    //     $state.go('recent-activity');
-    //   };
+      
     }
   }
   

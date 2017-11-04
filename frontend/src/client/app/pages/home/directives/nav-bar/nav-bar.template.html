@@ -1,7 +1,7 @@
 <div class="nav-bar">
     <div class="left">
         <img class="enablix-logo" src="/assets/images/company/enablix_logo@2x.png" />
-        <div class="client-brand" ng-if="isCompanyState">
+        <div class="client-brand" ng-if="isCompanyState || isRecentActivitiesState">
             <img class="logo" src="/assets/images/company/brillant_logo.svg" />
             <h3 class="brand">Brillant AB</h3>
         </div>
@@ -24,7 +24,7 @@
             <h3 class="brand">Brillant AB</h3>
         </div>
 
-        <div class="users-group" ng-if="isCompanyState">
+        <div class="users-group" ng-if="isCompanyState || isRecentActivitiesState">
             <img class="icon grey-border user-img" src="/assets/images/company/profile_img@2x.png" />
             <img class="icon grey-border user-img" src="/assets/images/company/profile_img@2x.png" />
             <img class="icon grey-border user-img" src="/assets/images/company/profile_img@2x.png" />

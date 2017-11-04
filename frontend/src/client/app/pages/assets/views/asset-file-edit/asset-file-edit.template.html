@@ -59,6 +59,15 @@
 </div>
 <div class="right">
     <div class="file-preview">
-        
+        <div class="active-slide">
+            <img class="slide" ng-src="{{ctrl.activeSlide.url}}" />
+        </div>
+        <div class="all-slides">
+            <div class="mini-slide" ng-class="{'active': ctrl.activeSlide.id === $index + 1}" ng-repeat="s in ctrl.slides" ng-click="ctrl.selectedSlide($index)" >
+                <img class="slide-thumbnail" ng-src="{{s.url}}" />
+                <div class="overlay"></div>
+                <div class="eye"></div>
+            </div>
+        </div>
     </div>
 </div>

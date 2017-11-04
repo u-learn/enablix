@@ -1,5 +1,5 @@
 <div class="assets-navbar">
-    <div>
+    <div ng-click="ctrl.goBackHome()">
         <img src="../../assets/images/buttons/back_btn.png"/>
     </div>
     <div ng-if="!ctrl.showPublishOptions">
@@ -14,24 +14,31 @@
                 <img ng-hide="ctrl.showActionConfirmed.attachment" src="../../assets/images/buttons/attachment_btn.png" />
                 <img ng-show="ctrl.showActionConfirmed.attachment" ng-src="{{ctrl.confirmationActionImg.attachment.link}}" />
             </div>
-            <div class="action-btn"><img src="../../assets/images/buttons/email_btn.png" /></div>
+            <div class="action-btn" ng-click="ctrl.emailPrompt()"><img src="../../assets/images/buttons/email_btn.png" /></div>
         </div>
     </div>
 
     <div ng-if="ctrl.showPublishOptions">
         <div>
-            <img src="../../assets/images/buttons/publish_btn.png" />
-            <img src="../../assets/images/buttons/save_draft_btn.png" />
+            <img ng-click="ctrl.previewState()" src="../../assets/images/buttons/publish_btn.png" />
+            <img ng-click="ctrl.goBackHome()" src="../../assets/images/buttons/save_draft_btn.png" />
             <img ng-click="ctrl.cancelState()" src="../../assets/images/buttons/cancel_publish_btn.png" />
         </div>
     </div>
-
-    <div class="user">
+    <div class="far-right">
+        <div class="notification">
+            <img src="/assets/images/buttons/notifications_btn.png" />
+        </div>
+        <div class="user">
+            <img class="icon user-img" src="/assets/images/company/profile_img@2x.png" />
+        </div>
+    </div>
+    <!-- <div class="user">
         <img src="../../assets/images/icons/notifications_btn.svg" />
         <div class="profile">
             <img class="icon user-img" src="../../assets/images/company/profile_img@2x.png" />
         </div>
-    </div>
+    </div> -->
 </div>
 <div class="assets-container">
     <div ui-view></div>
@@ -44,5 +51,15 @@
         
         <button class="action" ng-click="ctrl.deleteAction('delete')">Delete Asset</button>
         <button class="cancel" ng-click="ctrl.deleteAction('close')">No, keep it.</button>
+    </div>
+</div>
+<div ng-show="ctrl.showEmailPrompt" class="email-prompt">
+    <div>
+        <h1>Share by Email</h1>
+        <input class="email-input border-style" ng-model="ctrl.email.emailAddresses" type="text" />
+        <textarea class="email-message border-style" ng-model="ctrl.email.message" placeholder="Message (optional)"></textarea>
+
+        <button class="action" ng-click="ctrl.emailAction('send')">Send</button>
+        <button class="cancel" ng-click="ctrl.emailAction('close')">Cancel</button>
     </div>
 </div>

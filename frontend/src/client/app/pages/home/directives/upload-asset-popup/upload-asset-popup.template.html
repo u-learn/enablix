@@ -1,5 +1,17 @@
 <div class="upload-asset-popup">
-    <div>
+    <!-- url popup  -->
+    <div  ng-if="showUrlForm">
+        <h1>Capture URL</h1>
+        <div class="preview-text">
+            <img src="/assets/images/icons/globe_earth.svg" />
+            <input placeholder="URL" />
+        </div>
+        <div class="actionBtns">
+            <button class="action" ng-click="activatePreview('url')">Capture</button>
+            <button class="cancel" ng-click="cancel()">Cancel</button>
+        </div>
+    </div>
+    <div ng-if="showUrlPreview">
         <h1>Premature Scaling: Why It Kills Startups and How to Avoid It
             <img src="/assets/images/icons/edit_title.svg" />
         </h1>
@@ -10,9 +22,68 @@
         <div class="preview-img">
             <img src="/assets/images/covers/preview-url.png" />
         </div>
+        <div class="preview-tag">
+            <img src="/assets/images/icons/hash_icon.svg" />
+            <select ng-model="asset.selectedTag" ng-options="option.name for option in tagOptions">
+            </select>
+        </div>
         <div class="actionBtns">
-            <button class="action">Capture</button>
-            <button class="cancel">Cancel</button>
+            <button class="action" ng-click="createAsset('url')">Capture</button>
+            <button class="cancel" ng-click="cancel()">Cancel</button>
+        </div>
+    </div>
+    <!-- file popup  -->
+    <div ng-if="showFileForm">
+        <h1>Facebook Audience Usage</h1>
+        <div class="preview-img">
+            <img src="/assets/images/covers/asset_preview_file.png" />
+        </div>
+        <div class="actionBtns">
+            <button class="action" ng-click="activatePreview('file')">Upload</button>
+            <button class="cancel" ng-click="cancel()">Cancel</button>
+        </div>
+    </div>
+    <div ng-if="showFilePreview">
+        <h1>Facebook Audience Usage</h1>
+        <div class="preview-img">
+            <img src="/assets/images/covers/asset_preview_file.png" />
+        </div>
+        <div class="preview-tag">
+            <img src="/assets/images/icons/hash_icon.svg" />
+            <select ng-model="asset.selectedTag" ng-options="option.name for option in tagOptions">
+            </select>
+        </div>
+        <div class="actionBtns">
+            <button class="action" ng-click="createAsset('file')">Upload</button>
+            <button class="cancel" ng-click="cancel()">Cancel</button>
+        </div>
+    </div>
+    <!-- text popup  -->
+    <div ng-if="showTextForm">
+        <h1>Does your platform scale?</h1>
+        <div class="preview-text align-top">
+            <img src="/assets/images/icons/note.png" />
+            <textarea ng-model="asset.textAdded"></textarea>
+        </div>
+        <div class="actionBtns">
+            <button class="action" ng-click="activatePreview('text')">Create</button>
+            <button class="cancel" ng-click="cancel()">Cancel</button>
+        </div>
+    </div>
+    <div ng-if="showTextPreview">
+        <h1>Does your platform scale?</h1>
+        <div class="preview-text align-top">
+            <img src="/assets/images/icons/note.png" />
+            <textarea ng-model="asset.textAdded"></textarea>
+        </div>
+        <div class="preview-tag">
+            <img src="/assets/images/icons/hash_icon.svg" />
+            <select ng-model="asset.selectedTag" ng-options="option.name for option in tagOptions">
+            </select>
+        </div>
+        <div class="actionBtns">
+            <button class="action" ng-click="createAsset('text')">Create</button>
+            <button class="cancel" ng-click="cancel()">Cancel</button>
         </div>
     </div>
 </div>

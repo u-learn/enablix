@@ -1,8 +1,22 @@
+.sidebar {
+    width: 296px;
+    float: right;
+    margin-left: 80px;
+    display: none;
+
+    @include breakpoint(md){
+        display: block;
+    }
+}
+
 .company {
-    margin-right: 80px;
-    width: calc(100% - 296px - 80px);
+    width: 100%;
     float: left;
 
+    @include breakpoint(md){
+        width: calc(100% - 296px - 80px);
+    }
+    
     &.no-sidebar {
         width: 100%;
     }
@@ -30,11 +44,6 @@
             color:$blue-med-20;
         }
     }    
-}
-
-.sidebar {
-    width: 296px;
-    float: right;
 }
 
 //tags for company properties - shared between company-properties and sales view

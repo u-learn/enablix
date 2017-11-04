@@ -4,8 +4,11 @@
             td:first-child{
                 width: 43%;
             }
-            td:not(:first-child){
-                width: 14.25%;
+            td:not(:first-child):not(:nth-child(3)){
+                width: 12.25%;
+            }
+            td:nth-child(3){
+                width: 9%;
             }
         }
     }

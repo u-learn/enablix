@@ -22,7 +22,8 @@
                 <div class="upload-company-icon">
                     <img class="logo" src="/assets/images/company/brillant_logo.svg" />
                     <div class="upload-content">
-                        <a>Browse</a>
+                        <input class="inputFile" type="file" id="file" name="myfiles[]" />
+                        <label for="file">Browse</label>
                         <p>Must be JPG or PNG in 1:1 ratio, below 2MB</p>
                     </div>
                     <div class="upload-button">
@@ -47,7 +48,7 @@
                             <span class="display-text">When someone downloads or shares an asset</span>
                         </div>
                         <div class="opt">
-                            <input type="checkbox" name="vehicle" value="Car" checked>
+                            <input type="checkbox" name="vehicle" value="Car">
                                 <span class="display-text">Weekly Insight Report</span>
                         </div>
                 </div>
@@ -63,6 +64,5 @@
     </div>
 </div>
 <div class="sidebar" ng-click="ctrl.navigateToRecentActivity()">
-    <!-- recent-activities directive -->
     <recent-activity in-sidebar="true"></recent-activity>
 </div>

@@ -7,7 +7,13 @@
     }
 
     form {
-        width: 55%;
+        @include breakpoint(md){
+            width: 75%;
+        }
+
+        @include breakpoint(lg){
+            width: 55%;
+        }
         input {
             &[type="text"] {
                 height: 48px;
@@ -32,7 +38,7 @@
                 margin-right: 10px;
 
                 &:checked {
-                    // styles for checked off checkbox
+                    background: #1F8AEF;
                 }
             }
         }
@@ -78,7 +84,7 @@
         margin-bottom: 48px;
     }
 
-    a {
+    a, label {
         color: #1F8AEF;
     }
 
