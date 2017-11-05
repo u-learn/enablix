@@ -145,7 +145,10 @@ enablix.studioApp.controller('ContentRequestListCtrl',
 			});
 			
 		} else {
-			$scope.dataFilters.requestStateNot = ContentApprovalService.stateDraft();
+			$scope.dataFilters.requestStateNotIn = [ 
+				ContentApprovalService.stateDraft(),
+				ContentApprovalService.statePublished()
+			];
 			$scope.tableRecordActions.push({
 				actionName: ContentApprovalService.actionApprove(),
 				tooltip: "Approve",
