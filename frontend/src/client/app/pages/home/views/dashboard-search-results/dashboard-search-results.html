@@ -1,0 +1,20 @@
+<div class="free-results">
+    <div class="header">
+        <h1>31 results found</h1>
+    </div>
+    <div class="main">
+        <div class="result">
+            <h2>Case Studies ({{data.cardsData[0].cards.length}})</h2>
+            <cards data="data.cardsData[0].cards"></cards>
+        </div>
+        <div class="result">
+            <h2>Products ({{data.dimensionData.Products.cards.length}})</h2>
+            <dimension-cards data="data.dimensionData.Products" show-all-cards="true" full-width="true"></dimension-cards>
+        </div>
+        <div class="result">
+            <h2>Battle Cards ({{data.cardsData[1].cards.length}})</h2>
+            <cards data="data.cardsData[1].cards"></cards>
+        </div>
+    </div>
+</div>
+

@@ -36,6 +36,7 @@
         box-shadow: 0 1px 1px 0 rgba(0,0,0,0.06);
         border-radius: 4px;
         padding-right: 8px;
+        cursor: pointer;
   
         .logo {
             padding: 8px;
@@ -53,6 +54,10 @@
 
     .notification, .draft {
         height: 32px;
+
+        img {
+          cursor: pointer;
+        }
     }
   
     .users-group {
@@ -95,6 +100,7 @@
     }
 
     .upload {
+        font-family: $FPBlond;
         margin-right: 16px;
         > button {
             height: 48px;
@@ -102,8 +108,7 @@
             background: #1F8AEF;
             border: 1px solid rgba(0,0,0,0.10);
             box-shadow: 0 1px 1px 0 rgba(0,0,0,0.04);
-            border-radius: 4px;
-            font-family: $FPBlond;
+            border-radius: 4px;            
             font-size: 18px;
             color:$white;
         }
@@ -116,5 +121,74 @@
     }
     .search-bar {
 
+    }
+
+    .notify-popup {
+      width: 334px;
+      background: $white;
+      position: absolute;
+      right: 40px;
+      top: 80px;
+      box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.06);
+      border-radius: 4px;
+
+      &:before {
+        content: "";
+        position: absolute;
+        top: -16px;
+        right: 50px; 
+        border-width: 8px;
+        border-style: solid;
+        border-color:  transparent transparent #fff transparent;
+      }
+      
+      > div {
+        padding: 16px;
+      }
+
+      .activity {
+        font-family: $FPBlond;
+        font-size: 14px;
+        line-height: 18px;
+        display: flex;
+      }
+
+      .see-asset {
+        cursor: pointer;
+        font-family: $FPSemiBold;
+        background-color: $grey-lig-5;
+        font-size: 14px;
+        color: #1F8AEF;
+      }
+    }
+
+    .upload-options-container {
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      // border-radius: 2px;
+      background-color: $white;
+      height: 144px;
+      position: absolute;
+      width: 228px;
+      margin-left: -112px;
+
+      
+
+      .upload-option{
+        padding: 8px 16px;
+        height: 32px;
+        @include vcenterChildren;
+
+        &:not(:last-child){
+          border-bottom: 1px solid rgba(0,0,0,0.10);
+        }
+
+        img {
+          transform: rotate(180deg);
+        }
+
+        span {
+          padding-left: 8px;
+        }
+      } 
     }
   }

@@ -1,0 +1,32 @@
+<div class="dashboard-sales-funnel">
+    <div class="header-container">
+        <h2>Authentication Cloud Service</h2>
+        <div class="dashboard-buttons">
+            <img src="/assets/images/buttons/edit_btn.png" />
+            <div class="divider"></div>
+            <img src="/assets/images/buttons/attachment_btn.png" />
+            <img src="/assets/images/buttons/email_btn.png" />
+            <img src="/assets/images/buttons/trash_btn.png" />
+            <div class="divider"></div>
+            <img src="/assets/images/buttons/funnel_view_active_btn.png" />
+            <img src="/assets/images/buttons/list_view_btn.png" ng-click="goToListView()" />
+        </div>
+    </div>
+    <div class="main">
+        <div>
+            <div class="sidebar toRight">
+                    <simple-sidebar data="salesFunnelData"></simple-sidebar>
+                </div>
+                <div class="cards-container">
+                    <cards data="cardsData"></cards>
+                    <!-- next sales funnel -->
+                    <div class="sales-funnel-header">
+                        <div class="line"></div>
+                        <h2>Qualification</h2>
+                        <div class="line"></div>
+                    </div>
+                    <cards data="cardsData"></cards>
+                </div>
+        </div>
+    </div>
+</div>

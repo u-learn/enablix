@@ -3,10 +3,10 @@
         <h2>Content Types</h2>
         <p>Control your company content type tags by adding or removing them below:</p>
     </div>
-    <div class="tags-container">
-        <div class="tag" ng-repeat="t in tags">
+    <div class="tags-container" ng-if="!forSearchFilter">
+        <div class="tag" ng-repeat="t in data">
             <div class="content">
-                <span>{{t.title}}</span>
+                <span>{{t.title}}</span>                
                 <a class="remove" href="">
                     <img class="" src="/assets/images/icons/close-white.svg" /> 
                 </a>
@@ -18,5 +18,12 @@
             </a>
         </div>
         <div style="clear:both"></div>
+    </div>
+    <div class="tags-container filtered" ng-if="forSearchFilter">
+        <div class="tag" ng-repeat="t in data">
+            <div class="content">
+                <span>{{t}}</span>                
+            </div>
+        </div>
     </div>
 </div>

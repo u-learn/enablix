@@ -11,27 +11,9 @@
             <h2>Content Types</h2>
             <content-types hide-header="true"></content-types>
         </div>
-        <!-- can be refactored and use same component as content-types (pass bindings to content-types) -->
         <div class="sector" ng-repeat="s in ctrl.sectors">
             <h2>{{s.title}}</h2>
-            <div>
-                <div class="sectors-container">
-                    <div class="company-sector" ng-repeat="t in s.types">
-                        <div class="content">
-                            <span>{{t.title}}</span>
-                            <a class="remove" href="">
-                                <img class="" src="/assets/images/icons/close-white.svg" />                
-                            </a>
-                        </div>
-                    </div>
-                    <div class="add-tag">
-                        <a href="">
-                            <img src="/assets/images/icons/add-sectors-btn.svg" />    
-                        </a>
-                    </div>
-                    <div style="clear:both"></div>
-                </div>
-            </div>
+            <company-properties data="s.types"></company-properties>
         </div>
     </div>
 </div>

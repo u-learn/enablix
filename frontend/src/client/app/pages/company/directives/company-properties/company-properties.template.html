@@ -1,0 +1,28 @@
+<div>
+    <div>
+        <div class="sectors-container" ng-if="!forSearchFilter">
+            <div class="company-sector" ng-repeat="t in data">
+                <div class="content">
+                    <span>{{t.title}}</span>
+                    <a class="remove" href="">
+                        <img class="" src="/assets/images/icons/close-white.svg" />                
+                    </a>
+                </div>
+            </div>
+            <div class="add-tag">
+                <a href="">
+                    <img src="/assets/images/icons/add-sectors-btn.svg" />    
+                </a>
+            </div>
+            <div style="clear:both"></div>
+        </div>
+    </div>
+    <div class="sectors-container filtered" ng-if="forSearchFilter">
+        <div class="company-sector dimension-tag" ng-class="t.color" ng-repeat="t in data">
+            <div class="content">
+                    <span>{{t.title}}</span>
+            </div>
+        </div>
+    </div>
+</div>
+

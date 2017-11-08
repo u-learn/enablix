@@ -1,0 +1,10 @@
+<div class="simple-sidebar">
+    <div class="stage">
+        <div ng-repeat="s in data[0].salesStage">
+            <h2 class="sales-funnel-name" ng-if="$index === 0">{{s.name}}</h2>
+            <h3 class="sales-funnel-name" ng-if="$index > 0">{{s.name}}</h3>
+            <p class="description">{{s.description}}</p>
+            <p class="assets-count" ng-if="s.assetsCount">{{s.assetsCount}} Assets</p>
+        </div>
+    </div>
+</div>

@@ -6,7 +6,10 @@ export default class RecentActivity {
     this.template = RecentActivityTemplate;
     this.restrict = 'E';
     this.scope = {
-      inSidebar: '@'
+      inSidebar: '@',
+      headerData: '=',
+      data: '=',
+      hideImageFirst: '@'
     };
     this.transclude = true;
   }
@@ -18,15 +21,11 @@ export default class RecentActivity {
 
   // optional link function
   link (scope, element, attributes) {
-    scope.data = [
-      {'description': 'Dan changed team URL to brillantAB.enablix.com', 'date': 'March 12, 2017 11:02am', 'type': 'Company Edit'},
-      {'description': 'Dan changed team URL to brillantAB.enablix.com', 'date': 'March 12, 2017 11:02am', 'type': 'Invitation'},
-      {'description': 'Dan changed team URL to brillantAB.enablix.com', 'date': 'March 12, 2017 11:02am', 'type': 'Search'},
-      {'description': 'Dan changed team URL to brillantAB.enablix.com', 'date': 'March 12, 2017 11:02am', 'type': 'Share'},
-      {'description': 'Dan changed team URL to brillantAB.enablix.com', 'date': 'March 12, 2017 11:02am', 'type': 'Company Edit'},
-      {'description': 'Dan changed team URL to brillantAB.enablix.com', 'date': 'March 12, 2017 11:02am', 'type': 'Access'},
-      {'description': 'Dan changed team URL to brillantAB.enablix.com', 'date': 'March 12, 2017 11:02am', 'type': 'Approval'}
-    ];
+
+    console.log('data', scope.data);
+    
+    scope.header = scope.headerData ? scope.headerData.title : 'Recent Activities';
+    scope.subheader = scope.headerData ? scope.headerData.subheader : 'See what your team members were doing lately';
     
     element.bind('click', (event) => {
 

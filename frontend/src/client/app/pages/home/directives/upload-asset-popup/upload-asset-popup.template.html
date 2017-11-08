@@ -8,7 +8,7 @@
         </div>
         <div class="actionBtns">
             <button class="action" ng-click="activatePreview('url')">Capture</button>
-            <button class="cancel" ng-click="cancel()">Cancel</button>
+            <button class="cancel" ng-click="cancel('showUrlForm')">Cancel</button>
         </div>
     </div>
     <div ng-if="showUrlPreview">
@@ -29,7 +29,7 @@
         </div>
         <div class="actionBtns">
             <button class="action" ng-click="createAsset('url')">Capture</button>
-            <button class="cancel" ng-click="cancel()">Cancel</button>
+            <button class="cancel" ng-click="cancel('showUrlPreview')">Cancel</button>
         </div>
     </div>
     <!-- file popup  -->
@@ -40,7 +40,7 @@
         </div>
         <div class="actionBtns">
             <button class="action" ng-click="activatePreview('file')">Upload</button>
-            <button class="cancel" ng-click="cancel()">Cancel</button>
+            <button class="cancel" ng-click="cancel('showFileForm')">Cancel</button>
         </div>
     </div>
     <div ng-if="showFilePreview">
@@ -55,7 +55,7 @@
         </div>
         <div class="actionBtns">
             <button class="action" ng-click="createAsset('file')">Upload</button>
-            <button class="cancel" ng-click="cancel()">Cancel</button>
+            <button class="cancel" ng-click="cancel('showFilePreview')">Cancel</button>
         </div>
     </div>
     <!-- text popup  -->
@@ -67,7 +67,7 @@
         </div>
         <div class="actionBtns">
             <button class="action" ng-click="activatePreview('text')">Create</button>
-            <button class="cancel" ng-click="cancel()">Cancel</button>
+            <button class="cancel" ng-click="cancel('showTextForm')">Cancel</button>
         </div>
     </div>
     <div ng-if="showTextPreview">
@@ -83,7 +83,7 @@
         </div>
         <div class="actionBtns">
             <button class="action" ng-click="createAsset('text')">Create</button>
-            <button class="cancel" ng-click="cancel()">Cancel</button>
+            <button class="cancel" ng-click="cancel('showTextPreview')">Cancel</button>
         </div>
     </div>
 </div>

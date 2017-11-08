@@ -6,7 +6,9 @@ export default class ContentTypes {
     this.template = ContentTypesTemplate;
     this.restrict = 'E';
     this.scope = {
-      hideHeader: '@'
+      hideHeader: '@',
+      forSearchFilter: '@',
+      data: '='
     };
     this.transclude = true;
   }
@@ -18,23 +20,41 @@ export default class ContentTypes {
 
   // optional link function
   link (scope, element, attributes) {
-    scope.tags = [
-      {title: 'Data Sheet'},
-      {title: 'Blog'},
-      {title: 'White Paper'},
-      {title: 'Case Study'},
-      {title: 'FAQ'},
-      {title: 'Discovery Question'},
-      {title: 'Battle Card'},
-      {title: 'Sales Deck'},
-      {title: 'Feature Sheet'},
-      {title: 'Demo Environment'},
-      {title: 'NDA'},
-      {title: 'Demo Script'},
-      {title: 'Proposal'}
-    ];
+    // const d = _.clone(scope.data);
+
+    // console.log(scope.data);
+    
+    //modify display data for search filters 
+    // const displayData = (data) => {
+    //   if (data.length > 4){
+    //     const firstFour = data.slice(0, 4);
+    //     firstFour.push(`+${data.length - 4}`);
+    //     return firstFour;
+    //   } else {
+    //     return data;
+    //   }
+    // };
+
+    scope.data = scope.data ? scope.data : defaultTags;
+    
     element.bind('click', (event) => {
 
     });
   }
 }
+
+const defaultTags = [
+  {title: 'Data Sheet'},
+  {title: 'Blog'},
+  {title: 'White Paper'},
+  {title: 'Case Study'},
+  {title: 'FAQ'},
+  {title: 'Discovery Question'},
+  {title: 'Battle Card'},
+  {title: 'Sales Deck'},
+  {title: 'Feature Sheet'},
+  {title: 'Demo Environment'},
+  {title: 'NDA'},
+  {title: 'Demo Script'},
+  {title: 'Proposal'}
+];

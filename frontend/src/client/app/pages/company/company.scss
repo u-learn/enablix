@@ -1,49 +1,8 @@
-.sidebar {
-    width: 296px;
-    float: right;
-    margin-left: 80px;
-    display: none;
-
-    @include breakpoint(md){
-        display: block;
-    }
-}
-
 .company {
-    width: 100%;
-    float: left;
-
-    @include breakpoint(md){
-        width: calc(100% - 296px - 80px);
-    }
-    
-    &.no-sidebar {
-        width: 100%;
-    }
-
-    .header {
-        margin-bottom: 40px;
-        h1 {
-            font-family: $FPLight;
-        }
-
-        p{
-            font-family: $FPBlond;
-            font-size: 14px;
-            color: $grey-dark;
-            padding-top: 7px; //sibling h1
-            padding-bottom: 32px; //sibling a
-            line-height: 17px;
-            &.no-bottom-padding {
-                padding-bottom: 0; //no sibling a
-            }            
-        }
-        a.cta-link{
-            font-family: $FPSemiBold;
-            font-size: 14px;
-            color:$blue-med-20;
-        }
-    }    
+    p{
+        padding-top: 7px; //sibling h1
+        padding-bottom: 32px; //sibling a    
+    } 
 }
 
 //tags for company properties - shared between company-properties and sales view
@@ -156,3 +115,4 @@
 @import './directives/recent-activity/recent-activity.scss';
 @import './directives/content-types/content-types.scss';
 @import './directives/company-navbar/company-navbar.scss';
+@import './directives/company-properties/company-properties.scss';

@@ -1,6 +1,9 @@
+import { recentActivityData } from '../../../../helper/data/recent';
+
 class RecentActivity {
     constructor ($state) {
         this.state = $state;
+        this.recentActivityData = recentActivityData;
     }
 }
 

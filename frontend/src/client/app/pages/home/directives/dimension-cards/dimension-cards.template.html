@@ -1,0 +1,49 @@
+<!-- this is for dim cards that shows 2 cards per row -->
+<div class="dim-card-container multiple-dimensions" ng-repeat="a in dimensionTypes" ng-if="!showAllCards">
+    <h2 ng-bind="a"></h2>
+    <div class="dim-cards add-margin">
+        <div class="dim-card" ng-repeat="card in limitCards(displayData[a].cards)">
+            <div class="card-title" ng-if="card.title">
+                <div class="color-block" ng-class="displayData[a].color"></div>
+                <p ng-bind="card.title"></p>
+            </div>
+            <div class="card-properties" ng-if="card.companyProperties">
+                <div ng-repeat="prop in card.companyProperties">
+                    <p ng-bind="prop"></p>
+                    <span class="dot">&middot;</span>
+                </div>
+            </div>
+            <div class="card-remaining-count" ng-if="card.remainingCards">
+                <p>+{{card.remainingCards}}</p>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+
+<!-- this is for dim cards that shows full width -->
+<div class="dim-card-container particular-dimension" ng-if="showAllCards">
+    <div class="dim-cards">
+        <div class="dim-card new" ng-hide="hideNewDimForm">
+            <div class="card-dim-form">
+                <input ng-model="newDimData.title" type="text" placeholder="Name" />
+            </div>
+            <div class="action-buttons">
+                <img ng-click="saveNewCard()" width="64px" height="26px" src="/assets/images/buttons/dimension_save_btn.png" />
+                <img ng-click="deleteNewCard()" class="delete-icon" width="26px" height="26px" src="/assets/images/buttons/trash_btn.png" />
+            </div>
+        </div>
+        <div class="dim-card" ng-repeat="card in displayData.cards">
+            <div class="card-title" ng-if="card.title">
+                <div class="color-block" ng-class="displayData.color"></div>
+                <p ng-bind="card.title"></p>
+            </div>
+            <div class="card-properties" ng-if="card.companyProperties">
+                <div ng-repeat="prop in card.companyProperties">
+                    <p ng-bind="prop"></p>
+                    <span class="dot">&middot;</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,2 +1,19 @@
 <nav-bar state="ctrl.state"></nav-bar>
-<upload-asset-popup state="ctrl.state"></upload-asset-popup>
+<upload-asset-popup state="ctrl.state" ng-show="ctrl.showPromptOverlay"></upload-asset-popup>
+<div class="wrapper">
+    <div class="container">
+        <div ui-view></div>
+    </div>
+</div>
+<div class="error-message" ng-if="ctrl.showError">
+    <img src="/assets/images/icons/error-icon.svg" />
+    <p>Erm! The asset you are trying to access is no longer valid</p>
+    <div class="action-buttons">
+        <button>
+            <p>Restore asset</p>
+        </button>
+        <button>
+            <p>Close</p>
+        </button>
+    </div>
+</div>

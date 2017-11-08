@@ -1,0 +1,25 @@
+<div class="search-bar">
+    <div class="input-row">
+        <img class="search-icon" src="/assets/images/icons/search-grey.svg" />
+        <input type="text" ng-model="search.input" placeholder="Search" ng-focus="showSearchBar()" ng-change="updateFilters()" ng-blur="hideSearchBar()" />
+        <img class="funnel-icon" src="/assets/images/icons/filter-grey.svg" />
+    </div>
+    
+    <div class="filtered-rows" ng-show="showFilteredResults">
+        <div class="filtered-row" ng-repeat="filter in differentFilters">
+            <h3 ng-bind="filter"></h3>
+            <div ng-if="filter === 'Content Types'">
+                <content-types hide-header="true" for-search-filter="true" data="contentTypes"></content-types>
+            </div>
+            <div ng-if="filter === 'Dimensions'">
+                <company-properties for-search-filter="true" data="dimensions"></company-properties>
+            </div>
+            <div ng-if="filter === 'Objects'">
+                <company-properties for-search-filter="true" data="objects"></company-properties>
+            </div>
+        </div>
+        <div class="filtered-row free-search" ng-if="search.input">
+            <h4>Search for "{{search.input}}"</h4>
+        </div>
+    </div>
+</div>

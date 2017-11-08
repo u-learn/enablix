@@ -1,6 +1,55 @@
 @import './directives/nav-bar/nav-bar.scss';
 @import './directives/upload-asset-popup/upload-asset-popup.scss';
+@import './directives/cards/cards.scss';
+@import './directives/dimension-cards/dimension-cards.scss';
+@import './directives/simple-sidebar/simple-sidebar.scss';
+@import './directives/footer/footer.scss';
+@import './directives/search-bar/search-bar.scss';
 
 upload-asset-popup{
     @include overlay;
+}
+
+@import './views/dashboard-1/dashboard-1.scss';
+@import './views/dashboard-dimension/dashboard-dimension.scss';
+@import './views/dashboard-sales-funnel/dashboard-sales-funnel.scss';
+@import './views/dashboard-search-results/dashboard-search-results.scss';
+
+.error-message {
+    width: calc(100% - 84px - 84px);
+    position: fixed;
+    bottom: 0;
+    height: 84px;
+    padding: 0 84px;
+    background: #C23535;
+    box-shadow: 0 -1px 2px 0 rgba(0,0,0,0.06);
+    font-family: $FPBlond;
+    display: flex;
+    align-items: center;
+
+    img {
+        margin-right: 16px;
+    }
+
+    p {
+        font-size: 18px;
+        color: $white;
+    }
+
+    .action-buttons {
+        margin-left: auto;
+        button {
+            background: rgba(0, 0, 0, 0.1);
+            padding: 8px 12px;
+
+            p {
+                font-size: 16px;
+                color: #FFF;
+            }
+        }
+
+        button + button {
+            margin-left: 8px;
+        }
+    }
 }

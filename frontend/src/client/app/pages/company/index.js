@@ -1,11 +1,10 @@
 import angular from 'angular';
 import CompanyController from './company.controller';
 
-// import NavBar from '../../components/nav-bar/nav-bar.component';
-
 import CompanyNavBar from './directives/company-navbar/company-navbar';
 import RecentActivity from './directives/recent-activity/recent-activity';
 import ContentTypes from './directives/content-types/content-types';
+import CompanyProperties from './directives/company-properties/company-properties';
 
 import routes from './config.js';
 
@@ -15,4 +14,5 @@ export default angular.module('Company', [])
   .directive('recentActivity', () => new RecentActivity())
   .directive('contentTypes', () => new ContentTypes())
   .directive('companyNavbar', () => new CompanyNavBar())
+  .directive('companyProperties', () => new CompanyProperties())
   .name;

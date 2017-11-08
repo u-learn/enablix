@@ -1,0 +1,15 @@
+.dashboard {
+    .subheader-text {
+        padding-top: 8px;
+        padding-bottom: 16px;
+        width: 440px;  
+    } 
+    .main.featured {
+        margin-bottom: 66px;
+    }
+}
+
+dimension-cards {
+    display: flex;
+    flex-wrap: wrap;
+}

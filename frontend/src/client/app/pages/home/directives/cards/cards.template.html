@@ -1,0 +1,16 @@
+<div class="card-container">
+    <div class="card" ng-repeat="d in data">
+        <img ng-if="d.thumbnail" ng-src="{{d.thumbnail}}" />
+        <div class="cardImgText" ng-if="d.text">
+            <p ng-bind="d.text"></p>
+        </div>
+        <div class="cardDefaultImg" ng-if="!d.text && !d.thumbnail">
+            <img src="/assets/images/icons/no-thumbnail-icon.svg" />
+        </div>
+        <div class="content">
+            <p class="content-type" ng-bind="d.contentType"></p>
+            <p class="card-title" ng-bind="d.title"></p>
+            <p class="company-properties" ng-bind="d.companyProperties"></p>
+        </div>
+    </div>
+</div>

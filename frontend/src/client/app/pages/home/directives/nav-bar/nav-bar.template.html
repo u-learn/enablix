@@ -5,7 +5,8 @@
             <img class="logo" src="/assets/images/company/brillant_logo.svg" />
             <h3 class="brand">Brillant AB</h3>
         </div>
-        <div class="search-bar" ng-if="isDashboardState">
+        <div ng-if="isDashboardState">
+            <search-bar data="searchBarData"></search-bar>
         </div>
         <div class="consolidate-header" ng-if="isConsolidateContentState">
             <h3>Consolidate Content</h3>
@@ -13,13 +14,27 @@
     </div>
     <div class="right">
         <div class="upload" ng-if="isDashboardState || isConsolidateContentState">
-            <button>Upload</button>
+            <button ng-click="showUploadOptions()">Upload</button>
+            <div class="upload-options-container" ng-show="uploadOptions">
+                <div class="upload-option" ng-click="openUploadPrompt('file')">
+                    <img src="/assets/images/icons/upload-icon-blue.svg" />
+                    <span>Upload File</span>
+                </div>
+                <div class="upload-option" ng-click="openUploadPrompt('url')">
+                    <img src="/assets/images/icons/globe_earth-blue.svg" />
+                    <span>URL</span>
+                </div>
+                <div class="upload-option" ng-click="openUploadPrompt('text')">
+                    <img src="/assets/images/icons/upload-icon-blue.svg" />
+                    <span>Create Text</span>
+                </div>
+            </div>
         </div>
         <div class="draft"  ng-if="isDashboardState || isConsolidateContentState">
-            <img src="/assets/images/buttons/drafts_btn.png" />
+            <img src="/assets/images/buttons/drafts_btn.png" ng-click="goToConsolidateState()"/>
         </div>
         <div class="line" ng-if="isDashboardState || isConsolidateContentState"></div>
-        <div class="client-brand"  ng-if="isDashboardState || isConsolidateContentState">
+        <div class="client-brand"  ng-if="isDashboardState || isConsolidateContentState" ng-click="goToCompanyBusinessState()">
             <img class="logo" src="/assets/images/company/brillant_logo.svg" />
             <h3 class="brand">Brillant AB</h3>
         </div>
@@ -34,9 +49,18 @@
         </div>
         <div class="line"></div>
         <div class="notification">
-            <img src="/assets/images/buttons/notifications_btn.png" />
+            <img src="/assets/images/buttons/notifications_btn.png" ng-mouseover="showNotifications()" ng-mouseleave="showNotifications()" />
+            <div ng-show="showNotificationsPopup" class="notify-popup">
+                <div class="activity">
+                    <p>Gaurav approved Mobile Security for First Republic Bank</p>
+                    <img class="icon user-img" src="/assets/images/company/profile_img@2x.png" />
+                </div>
+                <div class="see-asset">
+                    <a>See Asset</a>
+                </div>
+            </div>
         </div>
-        <div class="user">
+        <div class="user" ng-click="fireError()">
             <img class="icon user-img" src="/assets/images/company/profile_img@2x.png" />
         </div>
     </div>

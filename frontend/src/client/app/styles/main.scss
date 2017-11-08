@@ -6,6 +6,11 @@
 @import 'fonts';
 @import 'buttons';
 
+html, body {
+    // min-height: 100% !important;
+    height: 100%;
+}
+
 //reset default styles for elements
 h1, h2, h3, h4, p, ul, input, body{
     padding: 0;
@@ -53,15 +58,6 @@ select {
 	position: absolute;
 	z-index: -1;
 }
-
-@mixin vcenterChildren {
-    display: flex;
-    align-items: center;
-    // justify-content: center;
-}
-
-
-@import '../pages/index.scss';
 
 .container {
     margin-top: 56px;
@@ -130,3 +126,59 @@ body {
 [contenteditable]:focus, input:focus, button:focus {
     outline: 0px solid transparent;
 }
+
+
+.sidebar {
+    height: 100%;
+    width: 296px;
+    float: right;
+    margin-left: 80px;
+    display: none;
+
+    &.toRight {
+        float: left;
+        margin-left: 0;
+        margin-right: 80px;
+    }
+
+    @include breakpoint(md){
+        display: block;
+    }
+}
+
+.company, .dashboard, .dimension {
+    width: 100%;
+    float: left;
+
+    @include breakpoint(md){
+        width: calc(100% - 296px - 80px);
+    }
+    
+    &.no-sidebar {
+        width: 100%;
+    }
+
+    .header {
+        margin-bottom: 40px;
+        h1 {
+            font-family: $FPLight;
+        }
+
+        p{
+            font-family: $FPBlond;
+            font-size: 14px;
+            color: $grey-dark;
+            line-height: 17px;
+            &.no-bottom-padding {
+                padding-bottom: 0; //no sibling a
+            }            
+        }
+        a.cta-link{
+            font-family: $FPSemiBold;
+            font-size: 14px;
+            color:$blue-med-20;
+        }
+    }   
+}
+
+@import '../pages/index.scss';

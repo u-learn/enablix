@@ -5,7 +5,7 @@ class AssetsController {
       this.showDeletePrompt = false;
 
       this.goBackHome = () => {
-        $state.go('home');
+        $state.go('home.dashboard');
       }
 
       this.previewState = () => {

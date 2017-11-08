@@ -1,8 +1,8 @@
 <div>
     <div class="header">
-        <h1 ng-if="!inSidebar">Recent Activities</h1>
-        <h2 ng-if="inSidebar">Recent Activities</h2>
-        <p>See what your team members were doing lately</p>
+        <h1 ng-if="!inSidebar">{{header}}</h1>
+        <h2 ng-if="inSidebar">{{header}}</h2>
+        <p>{{subheader}}</p>
     </div>
     <div>
         <div class="activity-table">
@@ -18,8 +18,8 @@
                     <td>
                         <div class="activity" ng-class="{'inSidebar': inSidebar}">
                             <div ng-class="{'vertical-align': !inSidebar}">
-                                <img class="icon user-img" src="/assets/images/company/profile_img@2x.png" />
-                                <div class="activity-detail" ng-class="{'narrow': inSidebar}">
+                                <img ng-if="!hideImageFirst" class="icon user-img" src="/assets/images/company/profile_img@2x.png" />
+                                <div class="activity-detail" ng-class="{'narrow': inSidebar, 'asset-thumbnail': hideImageFirst}">
                                     <p class="description" ng-class="{'large-display': !inSidebar}">
                                         {{a.description}}
                                     </p>
@@ -27,6 +27,7 @@
                                         {{a.date}}
                                     </p>
                                 </div>
+                                <img ng-if="hideImageFirst" ng-src="{{a.thumbnailImg}}" />
                             </div>
                         </div>
                     </td>

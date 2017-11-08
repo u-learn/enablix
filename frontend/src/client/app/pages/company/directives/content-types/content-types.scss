@@ -17,10 +17,16 @@ content-types{
         margin-bottom: 32px;
     }
 
-    // .tags-container {
-    //     .tag:nth-last-child(2) {
-    //         float: left;
-    //     }
-    // }
     
+    .filtered {
+        .tag:last-child{
+            background: white;
+            color: #1F8AEF;
+            border: 1px solid #E3EBEF;
+        }
+
+        .tag {
+            margin-bottom: 0px;
+        }
+    }
 }

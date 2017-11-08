@@ -1,0 +1,28 @@
+<div class="dashboard-sales-funnel">
+    <div class="header-container">
+        <h2>Authentication Cloud Service</h2>
+        <div class="dashboard-buttons">
+            <img src="/assets/images/buttons/edit_btn.png" />
+            <div class="divider"></div>
+            <img src="/assets/images/buttons/attachment_btn.png" />
+            <img src="/assets/images/buttons/email_btn.png" />
+            <img src="/assets/images/buttons/trash_btn.png" />
+            <div class="divider"></div>
+            <img src="/assets/images/buttons/funnel_view_btn.png"  ng-click="goToFunnelView()" />
+            <img src="/assets/images/buttons/list_view_active_btn.png" />
+        </div>
+    </div>
+    <div class="main">
+        <div>
+            <div class="content-types-container" ng-repeat="product in productContentTypeData">
+                <div ng-repeat="c in product.contentTypes">
+                    <h2>{{c.contentType}} ({{c.cardsCount}})</h2>
+                    <div class="seeAll">
+                        <a>See All</a>
+                    </div>
+                    <cards data="c.cards"></cards>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

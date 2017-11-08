@@ -1,17 +1,7 @@
 <div>
     <ul class="tabs-container">
-        <!-- navbar -->
-        <!-- ng-hide="{{ctrl.showRecentNav}}" -->
         <li class="tab" ui-sref={{tab.sref}} ng-click="activateTab(tab)" ng-repeat='tab in tabs' ng-class="{active: activeTab === tab}">
             <a href="">{{tab.title}}</a>
         </li>
-        <!-- recent activity navbar -->
-        <!-- <li class="tab" ng-show="{{ctrl.showRecentNav}}">
-            <a href="">
-                <img class="back-icon" src="/assets/images/icons/back-grey.svg" />
-                <span>Information /</span>
-            </a>
-            <span class="black">Recent Activities</span> 
-        </li> -->
     </ul>
 </div>

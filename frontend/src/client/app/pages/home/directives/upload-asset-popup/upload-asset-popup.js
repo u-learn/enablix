@@ -24,20 +24,20 @@ export default class UploadAssetPopup {
     scope.tagOptions = tagOptions;
     scope.asset.selectedTag = tagOptions[0];
 
-    
     scope.activatePreview = (type) => {
       if (type === 'file') {
         scope.showFilePreview = true;
         scope.showFileForm = false;
       } else if (type === 'text') {
         scope.showTextPreview = true;
-        scope.showTextForm  = false;
+        scope.showTextForm = false;
       } else {
         scope.showUrlPreview = true;
         scope.showUrlForm = false;
       }
     };
-    scope.showTextForm = true;
+
+    // scope.showTextForm = true;
     scope.createAsset = (type) => {
       if (type === 'file') {
         scope.state.go('assets.file-edit');
@@ -47,7 +47,22 @@ export default class UploadAssetPopup {
         scope.state.go('assets.url-edit');
       }
     };
-  }
+
+    scope.$on('upload-prompt-text', () => { 
+      scope.showTextForm = true;
+    });
+    scope.$on('upload-prompt-file', () => {
+      scope.showFileForm = true;
+    });
+    scope.$on('upload-prompt-url', () => {
+      scope.showUrlForm = true;
+    });
+
+    scope.cancel = (type) => {
+      scope[type] = false;
+      scope.$emit('hide-overlay-prompt');
+    };
+  };
 }
 
 const tagOptions = Data.contentType;

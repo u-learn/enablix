@@ -1,0 +1,30 @@
+.free-results {
+    .header {
+        h1 {
+            font-family: $FPLight;
+            font-size: 32px;
+        }
+        margin-bottom: 32px;
+    }
+
+    .result {
+
+        h2 {
+            font-family: $FPLight;
+            font-size: 24px;
+            margin-bottom: 32px;    
+        }
+    }
+
+    .main { 
+        border-top: 1px solid rgba(0,0,0, 0.03);
+
+        > div:first-child {
+            margin-top: 56px;
+        }
+
+        > div:not(:first-child) {
+            margin-top: calc(56px - 24px);
+        }
+    }
+}

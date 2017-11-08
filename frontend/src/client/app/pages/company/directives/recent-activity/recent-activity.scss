@@ -54,6 +54,10 @@ recent-activity {
             width: calc(100% - 44px - 12px); //account for img space
         }
 
+        &.narrow.asset-thumbnail {
+            width: calc(100% - 64px - 12px);
+        }
+
         .description {
             font-size: 14px;
             line-height: 18px;

@@ -1,0 +1,171 @@
+.dim-card-container {
+    width: calc(50% - 8px - 12px);
+    padding-left: 8px;
+
+    &.multiple-dimensions {
+        padding-top: 24px;
+        border-top: 1px solid rgba(0,0,0,0.03);
+        border-bottom: 1px solid rgba(179, 38, 38, 0.03);
+    }
+
+    &.fullWidth {
+        width: calc(100% - 8px - 12px);
+    }
+
+    &.particular-dimension {
+        width: 100%;
+    }
+    
+    &:nth-child(2n){
+        margin-left: 24px;
+    }
+
+    h2 {
+        font-family: $FPLight;
+        font-size: 24px;
+        color: #000000;
+        margin-bottom: 24px;
+    }
+
+    .dim-cards {
+        display: flex;
+        flex-wrap: wrap;
+        
+        &.add-margin {
+            margin-bottom: 40px;
+        }
+    }
+
+    .dim-card {
+        height: 128px;
+        width: 246px;
+        background: $white;
+        box-shadow: 0 1px 2px 0 rgba(0,0,0,0.04);
+        border-radius: 4px 4px 4px 4px 0;
+        margin: 0 16px 16px 0;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+
+        &.new {
+            border: 1px dashed $grey-lig-20;
+            background: $grey-lig-5;   
+        }
+    }
+    
+    .card-title {
+        padding-top: 16px;
+        font-family: $FPBlond;
+        font-size: 18px;
+        color: $black;
+        line-height: 20px;
+        display: flex;
+
+        .color-block {
+            height: 14px;
+            width: 4px;            
+            margin-right: 14px;
+
+            &.purple {
+                background: #724BD0;
+            }
+
+            &.red {
+                background: #ED583E;   
+            }
+
+            &.gold {
+                background: #D0A82B;
+            }
+
+            &.blue {
+                background: #2978C8;
+            }
+        }
+    }
+
+    .card-dim-form {
+        padding-top: 16px;
+
+        input {
+            font-size: 18px;
+            background: $grey-lig-5;
+        }
+    }
+
+    .card-dim-form, .action-buttons {
+        padding-left: 18px;
+    }
+
+    .card-properties, .action-buttons {
+        display: flex;
+        margin-top: auto;
+        padding-bottom: 16px;
+        justify-content: center;
+
+        img {
+            cursor: pointer;
+        }
+
+        .delete-icon {
+            margin-left: 6px;
+            box-shadow: 0 1px 1px 0 rgba(0,0,0,0.06);
+        }
+    }
+
+    .card-properties {
+        font-family: $FPBlond;
+        font-size: 12px;
+        color: #BFCBD9;
+        padding-left: 18px;
+
+        .dot {
+            padding: 0 6px 0 4px;
+        }
+
+        >div {
+            display: flex;
+
+            &:last-child {
+                span.dot {
+                    display: none;
+                }
+            }
+        }
+    }
+
+    .card-remaining-count {
+        width: 100%;
+        height: 100%;
+        @include vcenterChildren;
+        justify-content: center;
+        background: rgba(0,0,0,0.01);
+        border: 1px solid #EFF1F1;
+        border-radius: 4px;
+
+        p {
+            font-family: $FPLight;
+            font-size: 32px;
+            color: #808C9B;
+            line-height: 24px;
+        }
+    }
+}
+
+.color-block, .dimension-tag {
+    &.purple {
+        background: #724BD0;
+    }
+
+    &.red {
+        background: #ED583E;   
+    }
+
+    &.gold {
+        background: #D0A82B;
+    }
+
+    &.blue {
+        background: #2978C8;
+    }
+}

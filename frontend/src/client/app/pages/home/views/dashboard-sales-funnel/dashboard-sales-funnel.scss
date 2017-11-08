@@ -1,0 +1,89 @@
+.dashboard-sales-funnel {
+    
+    .header-container {
+        margin-bottom: 32px;
+        display: flex;
+
+        h2 {
+            font-family: $FPLight;
+            font-size: 32px;
+        }
+
+        .dashboard-buttons {
+            float: right;
+            display: flex;
+            height: 32px;
+            margin-left: auto;
+        }
+
+        img:not(:first-child):not(:nth-child(5)):not(:last-child) {
+            margin-right: 8px;
+        }
+
+        img {
+            cursor: pointer;
+        }
+    }
+
+    .main {
+        border-top: 1px solid rgba(0,0,0,0.03);
+        padding-top: 56px;
+
+        > div {
+            overflow-y: auto;
+            height: calc(100vh - 262px);
+        }
+    }
+}
+.cards-container {
+    .sales-funnel-header {
+        display: flex;
+        align-items: center;
+        margin: 40px 0;
+    }
+
+    h2 {
+        font-family: $FPLight;
+        font-size: 24px;
+        height: 24px;
+        width: 130px;
+        padding: 0px 20px;
+    }
+    
+    .line {
+        opacity: 0.03;
+        background: #000000;
+        height: 1px;
+        width: calc((100% - 130px - 40px) * 0.5);
+    }
+}
+
+.content-types-container {
+    display: flex;
+    flex-wrap: wrap;
+    
+    >div {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        margin-bottom: 65px;
+        
+        &:nth-child(2n){
+            margin-left: 80px;
+        }
+    }
+
+
+    h2 {
+        font-family: $FPLight;
+        font-size: 24px;
+        margin-bottom: 9px;
+    }
+
+    .seeAll {
+        font-family: $FPSemiBold;
+        font-size: 14px;
+        color: #1F8AEF;
+        margin-bottom: 32px;
+    }
+}
