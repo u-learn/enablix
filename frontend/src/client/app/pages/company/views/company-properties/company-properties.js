@@ -1,5 +1,21 @@
 class CompanyProperties {
     constructor () {
+        this.defaultTags = [
+            {title: 'Data Sheet'},
+            {title: 'Blog'},
+            {title: 'White Paper'},
+            {title: 'Case Study'},
+            {title: 'FAQ'},
+            {title: 'Discovery Question'},
+            {title: 'Battle Card'},
+            {title: 'Sales Deck'},
+            {title: 'Feature Sheet'},
+            {title: 'Demo Environment'},
+            {title: 'NDA'},
+            {title: 'Demo Script'},
+            {title: 'Proposal'}
+          ];
+          
         this.sectors = [
             {
                 title: 'Market Tiers',

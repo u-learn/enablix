@@ -6,9 +6,9 @@
         margin-bottom: 16px;
         height: 157px;
 
-        @include breakpoint(sm) {
-            height: 222px;
-        }
+        // @include breakpoint(sm) {
+        //     height: 222px;
+        // }
 
         &.new {
             background: $grey-lig-5;
