@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Enablix</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="keywords" content="Sales Enablement,Sales Portal,Marketing Portal,Marketing Content Management">
+	<link rel="icon" type="image/png" href="/favicon.png">
+	<link href="./css/bootstrap.min.css" rel="stylesheet" type="text/css">
+	<style>
+		@font-face {
+			font-family: Circular;
+			src: url("./fonts/CircularAirPro-Book.otf") format("opentype");
+		}
+		
+		@font-face {
+			font-family: FaktPro-Light;
+			src: url("./fonts/FaktPro-Light.ttf") format("truetype");
+		}
+		
+		@font-face {
+			font-family: FaktPro-Blond;
+			src: url("./fonts/FaktPro-Blond.otf") format("opentype");
+		}
+		
+		@font-face {
+			font-family: FaktPro-Medium;
+			src: url("./fonts/FaktPro-Medium.ttf") format("truetype");
+		}
+
+		.header {
+			font-family: FaktPro-Blond;
+			font-weight: bold;
+			padding: 2% 5% 1% 5%;
+			font-size: 1.3em;
+		}
+		
+		.logo {
+			float: left;
+		}
+		
+		.main {
+			padding-left: 5%;
+		}
+		
+		.invite {
+			padding-top: 5%;
+			padding-right: 5%;
+		}
+		
+		.invite .heading {
+			font-family: Circular;
+			font-size: 3em; 
+			font-weight : bold; 
+			text-align : left;
+		}
+		
+		.invite .caption {
+			font-size: 2em;
+			font-family: "FaktPro-Light";
+			padding-top: 4%;
+			font-weight: bold;
+		}
+		
+		.invite .appinfo {
+			font-size: 1em;
+			font-family: FaktPro-Blond;
+			padding-top: 2%;
+			font-weight: bold;
+			opacity: 0.5;
+		}
+		
+		.invite .appinfo div {
+			padding-right: 0;
+		}
+		
+		.invite .inviteform {
+			padding-top: 2%;
+			margin-right: 0;
+		    margin-left: 0;
+		    font-size: 1.25em;
+		}
+		
+		.inviteform input {
+			border-radius: 4px;
+		    background-color: #ffffff;
+		    border: 1px solid #e3ebef;
+		    padding: 0.75em 1em 0.5em 1em;
+		    font-family: FaktPro-Blond;
+		    font-weight: bold;
+		    width: 100%;
+		}
+		
+		.inviteform button {
+			padding: 0.65em 0.5em 0.6em 0.5em;
+		    background: #1f89ef;
+		    font-family: FaktPro-Medium;
+		    font-weight: bold;
+		    color: #fff;
+		    border-radius: 4px;
+		    border: 1px solid #1f89ef;
+		    width: 100%;
+		}
+		
+		.inviteform .formcontrol {
+			padding-left: 0;
+			padding-right: 5px;
+			padding-top: 2%;
+		}
+		
+		.footer .right {
+		}
+		
+		.preview {
+			overflow: hidden;
+			text-align: right;
+		}
+		
+		.preview img {
+			max-height: 100vh;
+		}
+		
+		.footer {
+			font-family: FaktPro-Blond;
+			font-weight: bold;
+			font-size: 0.875em;
+			padding: 40px 5% 2% 5%;
+		}
+		
+		.footer .right, .header .right {
+			text-align: right;
+		}
+		
+		
+		.testimonials {
+		}
+		
+		.ttmtext {
+			font-family: FaktPro-Light;
+			font-size: 1.5em;
+			font-weight: bold;
+		}
+		
+		.ttmperson {
+			padding-top: 3%;
+		}
+		
+		.ttmperson .ttmname {
+			font-family: FaktPro-Medium;
+			font-size: 1em;
+			font-weight: bold;
+		}
+		
+		.ttmperson .ttmdesignation {
+			font-family: FaktPro-Light;
+			font-size: 1em;
+			font-weight: bold;
+			opacity: 0.5;
+		}
+		
+		.ttmperson .ttmpersonimg {
+			float: left;
+			padding-right: 8px;
+		}
+		
+		.ttmpersonimg img {
+			max-height: 2.6em;
+		}
+		
+		a {
+			color: inherit;
+		}
+		
+		.main .row, .footer.row {
+			margin-right: 0;
+		}
+		
+		.main .row {
+			position: relative;
+		}
+		
+		body {
+			font-size: 10px;
+		}
+		
+		@media (min-width: 992px) {
+		
+			.testimonials {
+				position: absolute;
+				top: 460px;
+				max-width: 600px;
+			}
+			
+			body {
+				font-size: 14px;
+			}
+		
+			.footer {
+				padding: 1% 5% 2% 5%;
+			}
+			
+			.ttmperson {
+				padding-top: 4%;
+			}
+			
+			.preview img {
+			    max-height: 728px;
+			}
+		
+			.inviteform .emailinput {
+				width: 60%;
+			}
+			
+			.inviteform .submitbtn {
+				width: 40%;
+			}	
+		}
+		
+		.centercontainer {
+			max-width: 1244px;
+			margin-left: auto;
+			margin-right: auto;
+		}
+		
+		.logotext {
+			margin-left: -5px;
+		}
+		
+		.error {
+			margin: 0.5em 0 0;
+			font-family: FaktPro-Blond;
+			font-size: 0.875em;
+			font-weight: 300;
+			text-align: left;
+			color : red;
+		}
+
+</style>
+<script type="text/javascript" src="js/vendor/angular/angular.min.js"></script>
+<script type="text/javascript" src="js/vendor/angular/angular-ui-router.js"></script>
+<script type="text/javascript" src="js/vendor/angular/angular-messages.min.js"></script>
+
+<script type="text/javascript" src="js/ld.js"></script>
+
+</head>
+<body ng-app="site">
+<div class="centercontainer">
+<div class="header"><!-- header -->
+	<div class="logo"><!-- Logo -->
+		<a href="https://www.enablix.com"><img src="./assets/logo.png"></img></a>
+		<span class="logotext">enablix</span>
+	</div>
+	<div class="right"><!-- top nav -->
+		<div><a href="https://enablix.wordpress.com/" target=“_blank” onclick="handleOutboundLinkClicks(event)">Blog</a></div>
+	</div>
+</div>
+<div class="main">
+	<div class="row">
+		<div class="invite col-md-6">
+			<div class="heading">Stop content chaos</div>
+			<div class="caption">The easiest way for marketing to enable sales-and get results</div>
+			<div class="inviteform row" ng-controller="InviteRequestController">
+				<form name="modalForm">
+					<div class="formcontrol col-md-7 emailinput">
+						<input  name="email" placeholder="Email address" ng-model="contactUsForm.email" ng-blur="modalForm.email.$valid" ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,5})$/" required>
+						<div ng-messages="modalForm.email.$error" ng-if="modalForm.email.$touched" role="alert">
+							<div ng-message="required" class="error">Please enter email address</div>
+							<div ng-message="pattern" class="error">Please enter a valid email address</div>      
+						</div>
+					</div>
+					<div class="formcontrol col-md-5 submitbtn"><button name="inviteBtn" ng-click="submitContactUs()">Request Invitation</button></div>
+				</form>
+			</div>
+			<div class="appinfo row">
+				<div class="col-md-8">We are working with beta customers through our web platform.</div>
+				<div class="col-md-4"></div>
+			</div>
+		</div>
+		<div class="preview col-md-6">
+			<img src="./assets/asset4.png"></img>
+		</div>
+		<div class="testimonials col-md-6">
+			<div class="testimonial">
+				<div class="ttmtext">"Talk about how enablix improves content management and organized workflow"</div>
+				<div class="ttmperson">
+					<div class="ttmpersonimg">
+						<img src="./assets/person.png"/>
+					</div>
+					<div class="ttmpersondetail">
+						<div class="ttmname">Russell Reynolds</div>
+						<div class="ttmdesignation">Marketing Director, Haystax LLC</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="footer row">
+	<div class="left col-md-6">All rights reserved to Enablix LLC &copy; 2017</div>
+	<div class="right"><a href="/terms" target="_blank">Terms and Conditions</a> | <a href="/privacy" target="_blank">Privacy Policy</a></div>
+</div>
+</div>
+<!-- scripts -->
+<script src="js/vendor/jquery/jquery-2.1.3.min.js"></script>
+<!--/ scripts -->
+<script>
+    var gaProp = null;
+
+    switch (window.location.hostname) {
+        case 'www.enablix.com':
+            gaProp = 'UA-90499107-1'; // production
+            break;
+        case '52.2.15.106':
+        	gaProp = 'UA-90499107-2'; // test env
+        	break;
+        case 'test.enablix.com':
+        	gaProp = 'UA-90499107-2'; // test env
+        	break;
+    }
+    
+   	if (gaProp != null) {
+		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+		
+		ga('create', gaProp, 'auto');
+		ga('send', 'pageview');
+	}
+   	
+   	function handleOutboundLinkClicks(event) {
+    	
+   		if (gaProp != null) {
+			ga('send', 'event', {
+				eventCategory : 'Outbound Link',
+				eventAction : 'click',
+				eventLabel : event.target.href,
+				transport: 'beacon'
+			});
+   		}
+   		
+	}
+   	
+</script>
+</body>
+</html>

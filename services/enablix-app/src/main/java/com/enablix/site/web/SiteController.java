@@ -63,6 +63,12 @@ public class SiteController {
 		contactUsMgr.captureContactUsRequest(contactUs.getContactUs());
 	}
 	
+	@RequestMapping(method = RequestMethod.POST, value="/site/contactusnc")
+	public void contactUsWithoutCaptcha(HttpServletRequest request, HttpServletResponse response, 
+			@RequestBody ContactUsRequest contactUs) throws ServletException, IOException {
+		contactUsMgr.captureContactUsRequest(contactUs);
+	}
+	
 	public static class ContactUsForm {
 		
 		private String captchaResponse;

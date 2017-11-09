@@ -4,10 +4,12 @@
 	<h3>Demo Request</h3>
 	<div style = "font: normal 14px/normal Arial, Helvetica, sans-serif;">
 		<table>
+			#if ($obj.name)
 			<tr>
 				<td>Name:</td>
 				<td>${obj.name}</td>
 			</tr>
+			#end
 			<tr>
 				<td>Email:</td>
 				<td>${obj.email}</td>

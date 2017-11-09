@@ -1,1 +1,1 @@
-Demo Request : ${obj.name}
+Demo Request : #if ($obj.name) ${obj.name} #else ${obj.email} #end
