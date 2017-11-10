@@ -33,7 +33,9 @@ export default class SearchBar {
         calculateScopeData(tempData, true);
 
         scope.showSearchBar = () => { scope.showFilteredResults = true; };
-        scope.hideSearchBar = () => { scope.showFilteredResults = false; };
+        scope.hideSearchBar = () => {            
+            scope.showFilteredResults = false; 
+        };
         scope.showFilteredResults = false;
  
         scope.updateFilters = () => {
@@ -57,6 +59,30 @@ export default class SearchBar {
                 calculateScopeData(allData, true);
             }
         };
+
+        scope.selectedContentTypes = [];
+        scope.selectedDimOrObj = [];
+
+        scope.$on('dimOrObjSelected', (event, data) => {
+            scope.selectedDimOrObj.push(data);
+            scope.search.input = '';
+            // scope.objects = scope.objects.filter((item) => { return item.title !== data.title});
+            // scope.dimensions = scope.dimensions.filter((item) => { return item.title !== data.title});
+        })
+
+        scope.$on('contentTypeSelected', (event, data) => {
+            scope.selectedContentTypes.push(data);
+            scope.search.input = '';
+            // scope.contentTypes = scope.contentTypes.filter((item) => { return item !== data});
+        })
+
+        scope.$on('removeContentTypeSelected', (event, removeTag) => {
+            scope.selectedContentTypes = scope.selectedContentTypes.filter((item) => { return item !== removeTag});
+        });
+
+        scope.$on('removedimOrObjSelected', (event, removeTag) => {
+            scope.selectedDimOrObj = scope.selectedDimOrObj.filter((item) =>  { return item.title !== removeTag.title });            
+        });
     };
 }
 

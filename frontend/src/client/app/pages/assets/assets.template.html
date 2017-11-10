@@ -4,17 +4,32 @@
     </div>
     <div ng-if="!ctrl.showPublishOptions">
         <div class="edit-container">
-            <div class="action-btn" ng-click="ctrl.editState()"><img src="../../assets/images/buttons/edit_btn.png" /></div>
-            <div class="action-btn" ng-click="ctrl.deletePrompt()"><img src="../../assets/images/buttons/trash_btn.png" /></div>
+            <div class="action-btn" ng-click="ctrl.editState()" ng-mouseover="ctrl.showBtn('edit')" ng-mouseleave="ctrl.hideBtn('edit')"><img src="../../assets/images/buttons/edit_btn.png" /></div>
+            <div ng-show="ctrl.btnState.edit" class="editable-btn">
+                    <p class="text">Edit</p>
+            </div>
+            <div class="action-btn" ng-click="ctrl.deletePrompt()" ng-mouseover="ctrl.showBtn('delete')" ng-mouseleave="ctrl.hideBtn('delete')"><img src="../../assets/images/buttons/trash_btn.png" /></div>
+            <div ng-show="ctrl.btnState.delete" class="editable-btn">
+                <p class="text">Delete</p>
+            </div>
         </div>
         <div class="divider"></div>
         <div class="share-container">
-            <div class="action-btn"><img src="../../assets/images/buttons/copy_btn.png" /></div>
-            <div class="action-btn" ng-click="ctrl.confirmAction('attachment')">
-                <img ng-hide="ctrl.showActionConfirmed.attachment" src="../../assets/images/buttons/attachment_btn.png" />
-                <img ng-show="ctrl.showActionConfirmed.attachment" ng-src="{{ctrl.confirmationActionImg.attachment.link}}" />
+            <div class="action-btn" ng-click="ctrl.confirmAction('copy')" ng-mouseover="ctrl.showBtn('copy')" ng-mouseleave="ctrl.hideBtn('copy')"><img src="../../assets/images/buttons/copy_btn.png" /></div>
+            <div ng-show="ctrl.btnState.copy" class="editable-btn">
+                <p ng-hide="ctrl.showActionConfirmed.copy" class="text">Copy</p>
+                <p ng-show="ctrl.showActionConfirmed.copy" class="text"><img src="/assets/images/icons/check-icon.svg" />Copied</p>
             </div>
-            <div class="action-btn" ng-click="ctrl.emailPrompt()"><img src="../../assets/images/buttons/email_btn.png" /></div>
+            <div class="action-btn" ng-click="ctrl.confirmAction('attachment')" ng-mouseover="ctrl.showBtn('attach')" ng-mouseleave="ctrl.hideBtn('attach')"><img src="../../assets/images/buttons/attachment_btn.png" /></div>
+            <div ng-show="ctrl.btnState.attach || ctrl.showActionConfirmed.attachment" class="editable-btn">
+                <p ng-hide="ctrl.showActionConfirmed.attachment" class="text">Attach</p>
+                <p ng-show="ctrl.showActionConfirmed.attachment" class="text"><img src="/assets/images/icons/check-icon.svg" />Attached</p>
+            </div>
+            <div class="action-btn" ng-click="ctrl.confirmAction('email')" ng-mouseover="ctrl.showBtn('email')" ng-mouseleave="ctrl.hideBtn('email')"><img src="../../assets/images/buttons/email_btn.png" /></div>
+            <div ng-show="ctrl.btnState.email" class="editable-btn">
+                <p ng-hide="ctrl.showActionConfirmed.email" class="text">Email</p>
+                <p ng-show="ctrl.showActionConfirmed.email" class="text"><img src="/assets/images/icons/check-icon.svg" />Emailed</p>
+            </div>
         </div>
     </div>
 
@@ -33,12 +48,6 @@
             <img class="icon user-img" src="/assets/images/company/profile_img@2x.png" />
         </div>
     </div>
-    <!-- <div class="user">
-        <img src="../../assets/images/icons/notifications_btn.svg" />
-        <div class="profile">
-            <img class="icon user-img" src="../../assets/images/company/profile_img@2x.png" />
-        </div>
-    </div> -->
 </div>
 <div class="assets-container">
     <div ui-view></div>
@@ -56,7 +65,8 @@
 <div ng-show="ctrl.showEmailPrompt" class="email-prompt">
     <div>
         <h1>Share by Email</h1>
-        <input class="email-input border-style" ng-model="ctrl.email.emailAddresses" type="text" />
+        <label for="email">To: </label>
+        <input id="email" class="email-input border-style" ng-model="ctrl.email.emailAddresses" type="text" />
         <textarea class="email-message border-style" ng-model="ctrl.email.message" placeholder="Message (optional)"></textarea>
 
         <button class="action" ng-click="ctrl.emailAction('send')">Send</button>

@@ -10,13 +10,12 @@
         <form>
             <div class="info">
                 <h4>Company Name</h4>
-                <input type="text"/>
-                <!--  ng-model="company.name" -->
-                <p>Based on your team name, your URL is <a class="url">brillant.enablix.com</a></p>        
+                <input type="text" ng-model="company.name"/>
+                <p class="add-padding-top">Based on your team name, your URL is <a class="url">brillant.enablix.com</a></p>        
             </div>
             <div class="info">
                 <h4>Company Icon</h4>
-                <p>This icon will be used to identify your team in Enablix.<br>
+                <p class="add-padding-top">This icon will be used to identify your team in Enablix.<br>
                     It will only be visible to members of your workspace.
                 </p>
                 <div class="upload-company-icon">
@@ -24,7 +23,7 @@
                     <div class="upload-content">
                         <input class="inputFile" type="file" id="file" name="myfiles[]" />
                         <label for="file">Browse</label>
-                        <p>Must be JPG or PNG in 1:1 ratio, below 2MB</p>
+                        <p class="add-padding-top">Must be JPG or PNG in 1:1 ratio, below 2MB</p>
                     </div>
                     <div class="upload-button">
                         <p>Upload</p>
@@ -55,7 +54,7 @@
             </div>
             <div class="info">
                 <h4>Delete Team</h4>
-                <p>Deleting your Enablix team cannot be undone. All messages and files will be irretrievable.
+                <p class="add-padding-top">Deleting your Enablix team cannot be undone. All messages and files will be irretrievable.
                     Please use caution and consider exporting your data before deletion.</p>
                 <p class="red alert">Note: Don't delete your workspace if you just want to change your team's name or URL.</p>
                 <button class="red" type="submit" value="Delete Team">Delete Team</button>

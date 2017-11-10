@@ -39,6 +39,12 @@
 
                 &:checked {
                     background: #1F8AEF;
+
+                    &::before {
+                        margin-left: 2px;
+                        content: '\2713';
+                        color: white;
+                    }
                 }
             }
         }
@@ -49,13 +55,16 @@
         }
 
         p{
-            padding-top: 8px;
             font-family: $FPBlond;
             font-size: 14px;
             color: #808C9B;
             line-height: 17px;
             a.url {
                 font-family: $FPSemiBold;
+            }
+
+            &.add-padding-top {
+                padding-top: 8px;
             }
 
             &.alert {

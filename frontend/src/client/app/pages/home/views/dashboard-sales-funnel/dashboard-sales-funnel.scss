@@ -29,13 +29,18 @@
         border-top: 1px solid rgba(0,0,0,0.03);
         padding-top: 56px;
 
-        > div {
-            overflow-y: auto;
-            height: calc(100vh - 262px);
-        }
     }
 }
 .cards-container {
+    display: block;
+    width: 100%;
+    overflow-y: auto;
+    height: calc(100vh - 262px);
+
+    @include breakpoint(md){
+        width: calc(100vw - 320px - 96px);
+    }
+
     .sales-funnel-header {
         display: flex;
         align-items: center;
@@ -61,16 +66,19 @@
 .content-types-container {
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-between;
     
     >div {
         display: flex;
         flex-direction: column;
-        align-items: flex-start;
         margin-bottom: 65px;
-        
-        &:nth-child(2n){
-            margin-left: 80px;
-        }
+        align-items: flex-start;
+        flex-grow: 1;
+        max-width: 50%;
+    }
+
+    cards {
+        width: 100%;
     }
 
 

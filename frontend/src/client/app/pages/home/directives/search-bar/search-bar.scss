@@ -1,5 +1,5 @@
 .search-bar {
-    min-width: 624px;
+    min-width: 586px;
     border-radius: 6px;
     border: 1px solid #E3EBEF;
     background: $white;
@@ -8,7 +8,7 @@
 
     .input-row {
         height: 50px;
-        width: calc(100% - 32px);
+        // width: calc(100% - 32px);
         display: flex;
         padding: 0 16px;
         
@@ -26,10 +26,16 @@
         }
     }
 
+    .selectedTagsHolder {
+        display: flex;
+        align-items: center;
+    }
+
     .filtered-rows {
         background: white;
         position: absolute;
-        min-width: 624px;
+        // min-width: 624px;
+        min-width: 586px;
         box-shadow: 0 1px 1px 0 rgba(0,0,0,0.06);
         border-bottom-right-radius: 6px;
         border-bottom-left-radius: 6px;
@@ -40,7 +46,7 @@
     }
 
     .filtered-row {
-        margin: 0 32px;
+        margin: 0 16px;
         height: 58px;
         display: flex;
         align-items: center;

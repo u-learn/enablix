@@ -21,6 +21,10 @@
       height: 32px;
       margin-right: 16px;
       margin-left: 16px;
+
+      @media only screen and (max-width: 1072px) {
+        display: none;
+      }
     }
   
     .enablix-logo {
@@ -46,6 +50,10 @@
             line-height: 20px;
             font-family: $FPBlond;
         }
+
+        @media only screen and (max-width: 1072px) {
+          display: none;
+        }
     }
 
     .user {
@@ -58,6 +66,12 @@
         img {
           cursor: pointer;
         }
+    }
+
+    .draft {
+      @media only screen and (max-width: 1144px) {
+        display: none;
+      }
     }
   
     .users-group {
@@ -112,6 +126,11 @@
             font-size: 18px;
             color:$white;
         }
+
+        @media only screen and (max-width: 1260px) {
+          display: none;
+        }
+
     }
 
     .consolidate-header {

@@ -7,6 +7,21 @@
     .main.featured {
         margin-bottom: 66px;
     }
+
+    .card-container {
+        height: 228px;
+        overflow: hidden;
+
+        .card {
+            &:not(:first-child){
+                margin-left: auto;
+            }
+
+            &:not(:last-child){
+                margin-right: auto;
+            }
+        }
+    }
 }
 
 dimension-cards {

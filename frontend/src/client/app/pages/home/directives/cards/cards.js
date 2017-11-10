@@ -7,7 +7,8 @@ export default class Cards {
     this.restrict = 'E';
     this.scope = {
       state: '=',
-      data: '='
+      data: '=',
+      addFlex: '@'
     };
     this.transclude = true;
   }

@@ -14,19 +14,19 @@
     </div>
     <div class="main">
         <div>
-            <div class="sidebar toRight">
-                    <simple-sidebar data="salesFunnelData"></simple-sidebar>
+            <div class="sidebar toRight sticky">
+                <simple-sidebar data="salesFunnelData"></simple-sidebar>
+            </div>
+            <div class="cards-container">
+                <cards add-flex="true" data="cardsData"></cards>
+                <!-- next sales funnel -->
+                <div class="sales-funnel-header">
+                    <div class="line"></div>
+                    <h2>Qualification</h2>
+                    <div class="line"></div>
                 </div>
-                <div class="cards-container">
-                    <cards data="cardsData"></cards>
-                    <!-- next sales funnel -->
-                    <div class="sales-funnel-header">
-                        <div class="line"></div>
-                        <h2>Qualification</h2>
-                        <div class="line"></div>
-                    </div>
-                    <cards data="cardsData"></cards>
-                </div>
+                <cards add-flex="true" data="cardsData"></cards>
+            </div>
         </div>
     </div>
 </div>

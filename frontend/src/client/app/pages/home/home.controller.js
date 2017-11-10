@@ -16,6 +16,10 @@ class HomeController {
     $scope.$on('fireError', () => {
       this.showError = true;
     });
+
+    this.hideError = () => {
+      this.showError = false;
+    };
   }
 }
 

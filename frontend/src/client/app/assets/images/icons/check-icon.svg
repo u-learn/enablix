@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="12px" height="12px" viewBox="0 0 12 12" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 47.1 (45422) - http://www.bohemiancoding.com/sketch -->
+    <title>ok</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Asset-page" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="File-URL-Copied" transform="translate(-615.000000, -34.000000)" fill-rule="nonzero" fill="#1F8AEF">
+            <g id="top_bar" transform="translate(88.000000, 24.000000)">
+                <g id="asset_actions" transform="translate(372.000000, 0.000000)">
+                    <g id="share_url" transform="translate(145.000000, 0.000000)">
+                        <g id="ok" transform="translate(10.000000, 10.000000)">
+                            <path d="M6,0 C2.6865,0 0,2.6865 0,6 C0,9.3135 2.6865,12 6,12 C9.3135,12 12,9.3135 12,6 C12,2.6865 9.3135,0 6,0 Z M9.3535,4.8535 L5.5735,8.6335 C5.4795,8.7275 5.3525,8.78 5.22,8.78 C5.0875,8.78 4.96,8.7275 4.8665,8.6335 L3.14,6.907 C2.9445,6.7115 2.9445,6.3955 3.14,6.2 C3.3355,6.0045 3.6515,6.0045 3.847,6.2 L5.22,7.573 L8.6465,4.1465 C8.842,3.951 9.158,3.951 9.3535,4.1465 C9.549,4.342 9.549,4.658 9.3535,4.8535 Z" id="Shape"></path>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

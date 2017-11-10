@@ -24,20 +24,6 @@ export default class UploadAssetPopup {
     scope.tagOptions = tagOptions;
     scope.asset.selectedTag = tagOptions[0];
 
-    scope.activatePreview = (type) => {
-      if (type === 'file') {
-        scope.showFilePreview = true;
-        scope.showFileForm = false;
-      } else if (type === 'text') {
-        scope.showTextPreview = true;
-        scope.showTextForm = false;
-      } else {
-        scope.showUrlPreview = true;
-        scope.showUrlForm = false;
-      }
-    };
-
-    // scope.showTextForm = true;
     scope.createAsset = (type) => {
       if (type === 'file') {
         scope.state.go('assets.file-edit');
@@ -49,13 +35,13 @@ export default class UploadAssetPopup {
     };
 
     scope.$on('upload-prompt-text', () => { 
-      scope.showTextForm = true;
+      scope.showTextPreview = true;
     });
     scope.$on('upload-prompt-file', () => {
-      scope.showFileForm = true;
+      scope.showFilePreview = true;
     });
     scope.$on('upload-prompt-url', () => {
-      scope.showUrlForm = true;
+      scope.showUrlPreview = true;
     });
 
     scope.cancel = (type) => {

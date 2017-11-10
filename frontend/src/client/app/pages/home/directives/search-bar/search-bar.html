@@ -1,7 +1,16 @@
-<div class="search-bar">
+<div class="search-bar" click-outside="hideSearchBar()">
     <div class="input-row">
         <img class="search-icon" src="/assets/images/icons/search-grey.svg" />
-        <input type="text" ng-model="search.input" placeholder="Search" ng-focus="showSearchBar()" ng-change="updateFilters()" ng-blur="hideSearchBar()" />
+        <!-- inject any tags -->
+        <div class="selectedTagsHolder">
+            <div ng-if="selectedContentTypes.length > 0">
+                <content-types hide-header="true" for-search-filter="true" show-close="true" data="selectedContentTypes"></content-types>
+            </div>
+            <div ng-if="selectedDimOrObj.length > 0">
+                <company-properties for-search-filter="true" show-close="true" data="selectedDimOrObj"></company-properties>
+            </div>
+        </div>
+        <input type="text" ng-model="search.input" placeholder="Search" ng-focus="showSearchBar()" ng-change="updateFilters()"/> 
         <img class="funnel-icon" src="/assets/images/icons/filter-grey.svg" />
     </div>
     

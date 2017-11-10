@@ -8,7 +8,8 @@ export default class ContentTypes {
     this.scope = {
       hideHeader: '@',
       forSearchFilter: '@',
-      data: '='
+      data: '=',
+      showClose: '@'
     };
     this.transclude = true;
   }
@@ -20,6 +21,16 @@ export default class ContentTypes {
 
   // optional link function
   link (scope, element, attributes) {
+    scope.selectedTag = (tagData) => {
+      scope.$emit('contentTypeSelected', tagData);
+    };
+
+    scope.removeTag = (tagData) => {
+      if(scope.showClose){
+        scope.$emit('removeContentTypeSelected', tagData);
+      }
+    }
+
     element.bind('click', (event) => {
 
     });

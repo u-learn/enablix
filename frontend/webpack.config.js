@@ -3,6 +3,7 @@
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
+var ProvidePlugin = require('webpack').ProvidePlugin;
 var path = require('path');
 var ENV = process.env.npm_lifecycle_event;
 var isProd = ENV === 'build';
@@ -63,7 +64,13 @@ module.exports = (function makeWebpackConfig () {
     new CopyWebpackPlugin([{
       from: 'src/client/app/assets',
       to: 'assets'
-    }])
+    }]),
+    new ProvidePlugin({
+      $: 'jquery',
+      jQuery: 'jquery',
+      'window.jQuery': 'jquery',
+      'windows.jQuery': 'jquery',
+    })
   ];
 
   //fix building for PROD!!

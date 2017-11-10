@@ -19,10 +19,14 @@
         </div>
         <div style="clear:both"></div>
     </div>
+
     <div class="tags-container filtered" ng-if="forSearchFilter">
-        <div class="tag" ng-repeat="t in data">
+        <div class="tag" ng-class="{'noCountTag': showClose}" ng-repeat="t in data" ng-click="selectedTag(t)">
             <div class="content">
-                <span>{{t}}</span>                
+                <span>{{t}}</span>
+                <a class="remove" href="" ng-click="removeTag(t)" ng-show="showClose">
+                    <img class="" src="/assets/images/icons/close-white.svg" /> 
+                </a>              
             </div>
         </div>
     </div>

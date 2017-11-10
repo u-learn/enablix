@@ -18,9 +18,12 @@
         </div>
     </div>
     <div class="sectors-container filtered" ng-if="forSearchFilter">
-        <div class="company-sector dimension-tag" ng-class="t.color" ng-repeat="t in data">
+        <div class="company-sector dimension-tag" ng-class="t.color" ng-repeat="t in data" ng-click="selectedTag(t)">
             <div class="content">
                     <span>{{t.title}}</span>
+                    <a class="remove" href="" ng-show="showClose" ng-click="removeTag(t)">
+                        <img class="" src="/assets/images/icons/close-white.svg" />                
+                    </a>
             </div>
         </div>
     </div>

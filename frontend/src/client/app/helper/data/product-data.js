@@ -156,8 +156,13 @@ const productContentTypeData = [
             },             
             {
                 'contentType': 'White Papers',
-                'cardsCount': 2,
+                'cardsCount': 3,
                 'cards': [
+                    {
+                        'title': 'Types of Paper In Catalog Printing',
+                        'thumbnail': 'assets/images/company/cards-thumbnail-5.png',
+                        'companyProperties': 'Forrita GetAccess, +4'
+                    },
                     {
                         'title': 'Types of Paper In Catalog Printing',
                         'thumbnail': 'assets/images/company/cards-thumbnail-5.png',

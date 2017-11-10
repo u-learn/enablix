@@ -19,7 +19,7 @@ content-types{
 
     
     .filtered {
-        .tag:last-child{
+        .tag:last-child:not(.noCountTag){
             background: white;
             color: #1F8AEF;
             border: 1px solid #E3EBEF;

@@ -16,6 +16,23 @@ angular
   .factory('_', ['$window', ($window) => {
     return $window._;
   }])
+  .directive('clickOutside', function ($document) {
+      return {
+          restrict: 'A',
+          scope: {
+              clickOutside: '&'
+          },
+          link: function (scope, el, attr) {
+              $document.on('click', function (e) {
+                  if (el !== e.target && !el[0].contains(e.target)) {
+                      scope.$apply(function () {
+                          scope.$eval(scope.clickOutside);
+                      });
+                  }
+              });
+          }
+      }
+  })
   .run(['$rootScope', ($root) => {
     $root.$on('$stateChangeStart', (e, newUrl, oldUrl) => {
       if (newUrl !== oldUrl) {

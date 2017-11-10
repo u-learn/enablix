@@ -8,7 +8,8 @@ export default class CompanyProperties {
     this.scope = {
       hideHeader: '@',
       forSearchFilter: '@',
-      data: '='
+      data: '=',
+      showClose: '@'
     };
     this.transclude = true;
   }
@@ -20,9 +21,17 @@ export default class CompanyProperties {
 
   // optional link function
   link (scope, element, attributes) {
+    scope.selectedTag = (tagData) => {
+      scope.$emit('dimOrObjSelected', tagData);
+    }
 
+    scope.removeTag = (tagData) => {
+      if(scope.showClose){
+        scope.$emit('removedimOrObjSelected', tagData);
+      }
+    }
     element.bind('click', (event) => {
-
+      
     });
   }
 }

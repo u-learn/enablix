@@ -135,6 +135,14 @@
         margin-bottom: 32px;
     }
 
+    label[for=email] {
+        position: absolute;
+        margin: 11px 0px 0px 16px;
+        font-family: FaktPro-Blond;
+        font-size: 18px;
+        color: #BFCBD9;
+    }
+
     .email-input, .email-message {
         width: 100%;
         font-size: 18px;
@@ -159,6 +167,28 @@
 .assets-container, .assets-navbar {
     margin-left: 88px;
     margin-right: 44px;
+}
+
+.editable-btn {
+    width: 118px;
+    height: 32px;
+    background: #FFFFFF;
+    box-shadow: 0 1px 1px 0 rgba(0,0,0,0.06);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 8px;
+
+    .text { 
+        font-family: FaktPro-Blond;
+        color: #1F8AEF;
+        height: 14px;
+
+        img {
+            margin-right: 8px;
+        }
+    }
 }
 
 

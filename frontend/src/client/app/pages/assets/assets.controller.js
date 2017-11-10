@@ -1,5 +1,5 @@
 class AssetsController {
-    constructor ($state, $window) {
+    constructor ($state, $window, $timeout) {
       this.state = $state;
       this.showPublishOptions = false;
       this.showDeletePrompt = false;
@@ -52,13 +52,18 @@ class AssetsController {
         this.showEmailPrompt = false;
       }
 
-      this.showActionConfirmed = {attachment: false};
+      this.showActionConfirmed = {
+        attachment: false,
+        copy: false,
+        email: false
+      };
       this.confirmationActionImg = {attachment: {link: 'assets/images/buttons/copied_url_btn.png'}};
       this.confirmAction = (actionType) => {
-        if (actionType === 'attachment'){
-          this.showActionConfirmed.attachment = true;
+          this.showActionConfirmed[actionType] = true;
           //https://stackoverflow.com/questions/400212/how-do-i-copy-to-the-clipboard-in-javascript
-        }
+          $timeout(() => {
+            this.showActionConfirmed[actionType] = false;
+          }, 1000);
       }
 
       this.emailPrompt = () => {
@@ -66,11 +71,27 @@ class AssetsController {
       };
 
       this.email = {};
-    }
 
+      this.btnState = {
+        'edit': false,
+        'delete': false,
+        'copy': false,
+        'attach': false,
+        'email': false
+      };
+
+      this.showBtn = (type) => {
+        console.log(type)
+        this.btnState[type] = true;
+      };
+
+      this.hideBtn = (type) => {
+        this.btnState[type] = false;
+      };
+    }
   }
   
-  AssetsController.$inject = ['$state', '$window'];
+  AssetsController.$inject = ['$state', '$window', '$timeout'];
   
   module.exports = AssetsController;
   
