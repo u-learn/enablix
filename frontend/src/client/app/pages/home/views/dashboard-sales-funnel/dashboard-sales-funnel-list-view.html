@@ -2,14 +2,30 @@
     <div class="header-container">
         <h2>Authentication Cloud Service</h2>
         <div class="dashboard-buttons">
-            <img src="/assets/images/buttons/edit_btn.png" />
+            <div class="action-btn" ng-mouseover="showHoverState('edit')" ng-mouseout="hideHoverState('edit')">
+                <div class="icon small edit"></div>
+                <p ng-show="actionBtnState.edit">Edit</p>
+            </div>
             <div class="divider"></div>
-            <img src="/assets/images/buttons/attachment_btn.png" />
-            <img src="/assets/images/buttons/email_btn.png" />
-            <img src="/assets/images/buttons/trash_btn.png" />
+            <div class="action-btn" ng-mouseover="showHoverState('attach')" ng-mouseout="hideHoverState('attach')">
+                <div class="icon small attach"></div>
+                <p ng-show="actionBtnState.attach">Attach</p>
+            </div>
+            <div class="action-btn" ng-mouseover="showHoverState('email')" ng-mouseout="hideHoverState('email')">
+                <div class="icon small email"></div>
+                <p ng-show="actionBtnState.email">Email</p>
+            </div>
+            <div class="action-btn" ng-mouseover="showHoverState('trash')" ng-mouseout="hideHoverState('trash')">
+                <div class="icon small trash"></div>
+                <p ng-show="actionBtnState.trash">Trash</p>
+            </div>
             <div class="divider"></div>
-            <img src="/assets/images/buttons/funnel_view_btn.png"  ng-click="goToFunnelView()" />
-            <img src="/assets/images/buttons/list_view_active_btn.png" />
+            <button class="circle icon-btn" ng-click="goToFunnelView()">
+                <div class="icon small funnel"></div>
+            </button>
+            <button class="circle icon-btn active">
+                <div class="icon small list"></div>
+            </button>
         </div>
     </div>
     <div class="main">

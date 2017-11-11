@@ -8,14 +8,14 @@
 
 company-properties {
     .filtered {
-        // .tag:last-child{
-        //     background: white;
-        //     color: #1F8AEF;
-        //     border: 1px solid #E3EBEF;
-        // }
-
+        
         .dimension-tag {
             margin-bottom: 0px;
         }
+    }
+
+    .action-btn {
+        height: 28px;
+        width: 28px;
     }
 }

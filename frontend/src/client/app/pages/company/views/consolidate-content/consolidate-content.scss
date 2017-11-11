@@ -58,15 +58,15 @@
     .select-dropdown-option {
         float: left;
         height: 32px;
-        width: 48px;
+        width: 96px;
         
-        //might be difficult to change the dropdown option
         select {
             height: 32px;
             width: 100%;
             border: 1px solid #E3EBEF;
-            background:url('../assets/images/buttons/dropdown_btn.png') no-repeat;
             -webkit-appearance: none;
+            padding-left: 8px;
+            background-position: right 8px center; 
 
             option {
                 &:before {
@@ -76,6 +76,15 @@
             }
         }
     }
+
+    .dashboard-buttons {
+        float: left;
+        .action-btn {
+            height: 32px;
+            width: 32px;
+        }
+    }
+
     .edit-navbar {
         height: 32px;
         padding-bottom: 24px;

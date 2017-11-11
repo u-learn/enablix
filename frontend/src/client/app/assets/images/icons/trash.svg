@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="10px" height="12px" viewBox="0 0 10 12" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 47.1 (45422) - http://www.bohemiancoding.com/sketch -->
+    <title>trash</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Company" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Create-Sales-Funnel-1" transform="translate(-1075.000000, -399.000000)" fill-rule="nonzero" fill="#1F8AEF">
+            <g id="New-Stage" transform="translate(88.000000, 375.000000)">
+                <g id="delete" transform="translate(980.000000, 18.000000)">
+                    <g id="trash" transform="translate(7.500000, 6.750000)">
+                        <path d="M6.71543478,10.5 L2.415,10.5 C1.94980435,10.5 1.55902174,10.1503043 1.50743478,9.68784783 L0.684782609,2.2826087 L8.44565217,2.2826087 L7.623,9.68784783 C7.57141304,10.1503043 7.18063043,10.5 6.71543478,10.5 Z" id="Shape"></path>
+                        <path d="M8.67391304,1.36956522 L0.456521739,1.36956522 C0.204521739,1.36956522 0,1.16504348 0,0.913043478 L0,0.913043478 C0,0.661043478 0.204521739,0.456521739 0.456521739,0.456521739 L8.67391304,0.456521739 C8.92591304,0.456521739 9.13043478,0.661043478 9.13043478,0.913043478 L9.13043478,0.913043478 C9.13043478,1.16504348 8.92591304,1.36956522 8.67391304,1.36956522 Z" id="Shape"></path>
+                        <path d="M5.93478261,0.913043478 L3.19565217,0.913043478 L3.19565217,0.456521739 C3.19565217,0.204521739 3.40017391,0 3.65217391,0 L5.47826087,0 C5.73026087,0 5.93478261,0.204521739 5.93478261,0.456521739 L5.93478261,0.913043478 Z" id="Shape"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

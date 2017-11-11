@@ -46,8 +46,12 @@ export default class NavBar {
     };
 
     scope.showNotifications = () => {
-      scope.showNotificationsPopup = !scope.showNotificationsPopup;
-    }
+      scope.showNotificationsPopup = true;
+    };
+
+    scope.hideNotifications = () => {
+      scope.showNotificationsPopup = false;
+    };
 
     scope.fireError = () => {
       scope.$emit('fireError');

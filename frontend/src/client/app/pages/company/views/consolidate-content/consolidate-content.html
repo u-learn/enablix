@@ -4,7 +4,7 @@
             <div class="company no-sidebar">
                 <div class="header">
                     <h1>Consolidate Content</h1>
-                    <p class="no-bottom-padding">See and consolidate assets from your marketing team<br>
+                    <p class="subheader no-bottom-padding">See and consolidate assets from your marketing team<br>
                     or assets that need some quality check.</p>
                 </div>
                 <div class="main consolidate-content">
@@ -13,14 +13,25 @@
                         <div class="edit-navbar" ng-if="ctrl.state.includes('consolidate-content.edit')">
                             <div class="select-dropdown-option">
                                 <select>
-                                    <option style="background: url(/assets/images/buttons/radio_not_checked.png)"></option>
+                                    <option></option>
+                                    <option>Select All</option>
+                                    <option>Unselect All</option>
                                 </select>
                         </div>
                         <div class="divider"></div>
-                        <div class="edit-actions-container"></div>
-                            <div class="edit-action"><img src="/assets/images/buttons/approve_btn.png" /></div>
-                            <div class="edit-action"><img src="/assets/images/buttons/reject_btn.png" /></div>
-                            <div class="edit-action"><img src="/assets/images/buttons/trash_btn.png" /></div>
+                        <div class="dashboard-buttons">
+                                <div class="action-btn">
+                                    <div class="icon approve"></div>
+                                    <!-- <p ng-show="ctrl.actionBtnState.approve">Approve</p> -->
+                                </div>
+                                <div class="action-btn">
+                                    <div class="icon reject"></div>
+                                    <!-- <p ng-show="ctrl.actionBtnState.edit">Reject</p> -->
+                                </div>
+                                <div class="action-btn">
+                                    <div class="icon trash"></div>
+                                    <!-- <p ng-show="ctrl.actionBtnState.delete">Trash</p> -->
+                                </div>
                         </div>
                     </div>
                     <div class="assets-table container">

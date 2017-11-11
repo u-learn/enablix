@@ -36,6 +36,21 @@
 
             .customize-options {
                 float: right;
+                display: flex;
+
+                .publish-buttons + .dashboard-buttons {
+                    margin-left: 8px;
+                }
+
+                .publish-btn, .action-btn {
+                    height: 24px;
+                }
+                
+                .action-btn {
+                    width: 24px;
+                    padding: 0;
+                    @include hcenterChildren;
+                }
             }
         }
     }

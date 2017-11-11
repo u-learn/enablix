@@ -1,4 +1,11 @@
 .dashboard-sales-funnel {
+
+    .dashboard-buttons {
+        .action-btn {
+            height: 32px;
+            width: 32px;
+        }
+    }
     
     .header-container {
         margin-bottom: 32px;
@@ -7,21 +14,6 @@
         h2 {
             font-family: $FPLight;
             font-size: 32px;
-        }
-
-        .dashboard-buttons {
-            float: right;
-            display: flex;
-            height: 32px;
-            margin-left: auto;
-        }
-
-        img:not(:first-child):not(:nth-child(5)):not(:last-child) {
-            margin-right: 8px;
-        }
-
-        img {
-            cursor: pointer;
         }
     }
 

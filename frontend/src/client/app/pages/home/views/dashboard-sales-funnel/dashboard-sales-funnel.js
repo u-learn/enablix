@@ -10,6 +10,22 @@ class DashboardSalesFunnel {
         $scope.goToListView = () => {
             $state.go('home.salesFunnelList');
         }
+
+        $scope.showHoverState = (type) => {
+            $scope.actionBtnState[type] = true;
+        }   
+
+        $scope.hideHoverState = (type) => {
+            $scope.actionBtnState[type] = false;
+        }   
+
+        $scope.actionBtnState = {
+            email: false,
+            edit: false,
+            attach: false,
+            trash: false,
+
+        }
     }
 }
 

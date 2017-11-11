@@ -30,9 +30,9 @@
                 </div>
             </div>
         </div>
-        <div class="draft"  ng-if="isDashboardState || isConsolidateContentState">
-            <img src="/assets/images/buttons/drafts_btn.png" ng-click="goToConsolidateState()"/>
-        </div>
+        <button ng-if="isDashboardState || isConsolidateContentState" ng-click="goToConsolidateState()" class="circle icon-btn">
+            <div class="icon small drafts"></div>
+        </button>
         <div class="line" ng-if="isDashboardState || isConsolidateContentState"></div>
         <div class="client-brand"  ng-if="isDashboardState || isConsolidateContentState" ng-click="goToCompanyBusinessState()">
             <img class="logo" src="/assets/images/company/brillant_logo.svg" />
@@ -49,7 +49,9 @@
         </div>
         <div class="line"></div>
         <div class="notification">
-            <img src="/assets/images/buttons/notifications_btn.png" ng-mouseover="showNotifications()" ng-mouseleave="showNotifications()" />
+            <button ng-mouseover="showNotifications()" ng-mouseleave="hideNotifications()" class="circle icon-btn">
+                <div class="icon small notification"></div>
+            </button>
             <div ng-show="showNotificationsPopup" class="notify-popup">
                 <div class="activity">
                     <p>Gaurav approved Mobile Security for First Republic Bank</p>

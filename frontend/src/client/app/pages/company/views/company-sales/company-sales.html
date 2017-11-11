@@ -1,7 +1,7 @@
 <div class="company">
     <div class="header">
         <h1>Sales Funnel</h1>
-        <p>Select what content types you'd like ot see in each stage of your sales<br>
+        <p class="subheader">Select what content types you'd like ot see in each stage of your sales<br>
         funnel. You may have the same content types in different stages.</p>
 
         <a class="cta-link">Add Sales Stage</a>
@@ -15,9 +15,22 @@
                         <input placeholder="Funnel name" />
                     </h2>
                     <div class="customize-options">
-                        <a><img src="/assets/images/buttons/save_btn.png" /></a>
-                        <a><img src="/assets/images/icons/delete-24-white-blue.svg" /></a>
-                        <a><img src="/assets/images/icons/move-24-white-blue.svg" /></a>
+                            <div class="publish-buttons">
+                                <button class="publish-btn" ng-click="ctrl.goBackHome()">
+                                    <div class="icon small white-check"></div>
+                                    <p class="btn-text">Save Stage</p>
+                                </button>
+                            </div>
+                            <div class="dashboard-buttons">
+                                <div class="action-btn" ng-mouseover="ctrl.showBtn('delete')" ng-mouseout="ctrl.hideBtn('delete')" ng-click="ctrl.editState()">
+                                    <div class="icon trash"></div>
+                                    <!-- <p ng-show="ctrl.actionBtnState.delete">Edit</p> -->
+                                </div>
+                                <div class="action-btn" ng-mouseover="ctrl.showBtn('move')" ng-mouseout="ctrl.hideBtn('move')" ng-click="ctrl.editState()">
+                                    <div class="icon move"></div>
+                                    <!-- <p ng-show="ctrl.actionBtnState.delete">Edit</p> -->
+                                </div>
+                            </div>
                     </div>
                 </div>
                 <div class="tags-container">
@@ -35,9 +48,20 @@
                 <div class="header-section">
                     <h2>{{stage.funnelName}}</h2>
                     <div class="customize-options">
-                        <a><img src="/assets/images/icons/edit-24-white-blue.svg" /></a>
-                        <a><img src="/assets/images/icons/delete-24-white-blue.svg" /></a>
-                        <a><img src="/assets/images/icons/move-24-white-blue.svg" /></a>
+                        <div class="dashboard-buttons">
+                            <div class="action-btn" ng-mouseover="ctrl.showBtn('edit')" ng-mouseout="ctrl.hideBtn('edit')" ng-click="ctrl.editState()">
+                                <div class="icon edit"></div>
+                                <!-- <p ng-show="ctrl.actionBtnState.delete">Edit</p> -->
+                            </div>
+                            <div class="action-btn" ng-mouseover="ctrl.showBtn('delete')" ng-mouseout="ctrl.hideBtn('delete')" ng-click="ctrl.editState()">
+                                <div class="icon trash"></div>
+                                <!-- <p ng-show="ctrl.actionBtnState.delete">Edit</p> -->
+                            </div>
+                            <div class="action-btn" ng-mouseover="ctrl.showBtn('move')" ng-mouseout="ctrl.hideBtn('move')" ng-click="ctrl.editState()">
+                                <div class="icon move"></div>
+                                <!-- <p ng-show="ctrl.actionBtnState.delete">Edit</p> -->
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="tags-container">

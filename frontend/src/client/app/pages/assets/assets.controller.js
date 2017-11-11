@@ -23,8 +23,6 @@ class AssetsController {
       };
 
       this.cancelState = () => {
-        // const backState = this.state.current.name.slice(-5);
-        // $state.go(backState);
         $window.history.back();
         this.showPublishOptions = false;
       }
@@ -53,11 +51,11 @@ class AssetsController {
       }
 
       this.showActionConfirmed = {
-        attachment: false,
-        copy: false,
-        email: false
+        attach: false,
+        // copy: false,
+        // email: false
       };
-      this.confirmationActionImg = {attachment: {link: 'assets/images/buttons/copied_url_btn.png'}};
+
       this.confirmAction = (actionType) => {
           this.showActionConfirmed[actionType] = true;
           //https://stackoverflow.com/questions/400212/how-do-i-copy-to-the-clipboard-in-javascript
@@ -66,28 +64,57 @@ class AssetsController {
           }, 1000);
       }
 
+      this.externalActions = (actionType) => {
+        this.actionBtnState[actionType] = false;
+        if(actionType === 'website'){
+          //go to href url
+          window.open("https://medium.com/swlh/premature-scaling-why-it-kills-startups-and-how-to-avoid-it-500677f45024");
+        } else if (actionType === 'download'){
+          //download asset
+        }
+      }
+
       this.emailPrompt = () => {
         this.showEmailPrompt = true;
       };
 
       this.email = {};
 
-      this.btnState = {
+      this.assetTypeBtn = (() => {
+        if (this.state.current.name.includes("text")) {
+          return "copy";
+        } else if (this.state.current.name.includes("url")) {
+          return "website";
+        } else {
+          return "download";
+        }
+      })();
+
+      this.actionBtnState = {
         'edit': false,
         'delete': false,
         'copy': false,
         'attach': false,
-        'email': false
+        'email': false,
+        'website': false
       };
 
       this.showBtn = (type) => {
-        console.log(type)
-        this.btnState[type] = true;
+        this.actionBtnState[type] = true;
       };
 
       this.hideBtn = (type) => {
-        this.btnState[type] = false;
+        this.actionBtnState[type] = false;
       };
+
+      this.showNotifications = () => {
+        this.showNotificationsPopup = true;
+      };
+
+      this.hideNotifications = () => {
+        this.showNotificationsPopup = false;
+      };
+  
     }
   }
   

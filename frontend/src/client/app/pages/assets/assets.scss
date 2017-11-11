@@ -14,7 +14,7 @@
         }
     }
 
-    .edit-container, .share-container {
+    .share-container {
         display: flex;
 
         div.action-btn {
@@ -25,7 +25,7 @@
         }
     }
 
-    .notification {
+    .notification-container {
         margin-right: 8px;
     }
 
@@ -33,7 +33,15 @@
         margin-left: auto;
         margin-right: 0;
     }
+
+    .dashboard-buttons {
+        .action-btn {
+            height: 32px;
+            width: 32px;
+        }
+    }
 }
+
 
 .assets-container {
     h1 {
@@ -168,30 +176,6 @@
     margin-left: 88px;
     margin-right: 44px;
 }
-
-.editable-btn {
-    width: 118px;
-    height: 32px;
-    background: #FFFFFF;
-    box-shadow: 0 1px 1px 0 rgba(0,0,0,0.06);
-    border-radius: 4px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-right: 8px;
-
-    .text { 
-        font-family: FaktPro-Blond;
-        color: #1F8AEF;
-        height: 14px;
-
-        img {
-            margin-right: 8px;
-        }
-    }
-}
-
-
 
 @import './views/asset-text/asset-text.scss';
 @import './views/asset-text-edit/asset-text-edit.scss';
