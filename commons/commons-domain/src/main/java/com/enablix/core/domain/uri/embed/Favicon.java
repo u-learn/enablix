@@ -6,6 +6,14 @@ public class Favicon {
 	
 	private String safe;
 
+	public Favicon() {
+		
+	}
+	
+	public Favicon(String url) {
+		this.url = url;
+	}
+	
 	public String getUrl() {
 		return url;
 	}
