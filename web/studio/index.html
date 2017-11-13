@@ -1,432 +1,400 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Enablix :: Information that matters ::</title>
-    <meta name="description" content="Enablix Information that matters">
-    <meta name="author" content="Enablix">
-    <link rel="icon" type="image/png" href="/favicon.png">
-    <!-- Bootstrap Core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom Fonts -->
-    <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel='stylesheet' type='text/css'>
-    <link href="https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic" rel='stylesheet' type='text/css'>
-
-    <!-- Theme CSS -->
-    <link href="css/creative.min.css" rel="stylesheet">
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-    
-	<link rel="stylesheet" type="text/css" href="css/website.css"/>
-	    
-	<!-- build:js js/index-vendor-bundle.js -->
-   	<script type="text/javascript" src="js/vendor/angular/angular.js"></script>
-   	<script type="text/javascript" src="js/vendor/angular/angular-animate.min.js"></script>
-	<script type="text/javascript" src="js/vendor/angular/angular-aria.min.js"></script>
-	<script type="text/javascript" src="js/vendor/angular/angular-resource.min.js"></script>
-	<script type="text/javascript" src="js/vendor/angular/angular-ui-router.js"></script>
-	<script type="text/javascript" src="js/vendor/angular/angular-sanitize.min.js"></script>
-    <script type="text/javascript" src="js/common/widgets/tree/angular.treeview.js"></script>
-	<script type="text/javascript" src="js/common/widgets/tree/listGroupTree.js"></script>
-	<script type="text/javascript" src="js/vendor/angular/angular-file-upload.js"></script>
-	<script type="text/javascript" src="js/vendor/angular/ui-bootstrap-tpls-0.12.1.js"></script>
-	<script type="text/javascript" src="js/vendor/multi-select/isteven-multi-select.js"></script>
-	<script type="text/javascript" src="js/vendor/angular/angular-ui-notification.min.js"></script>
-	<script type="text/javascript" src="js/vendor/angular/angular-messages.min.js"></script>
-	<script type="text/javascript" src="js/vendor/angular/select.js"></script>
-	<script type="text/javascript" src="js/vendor/angular/angular-translate.js"></script>
-	<script type="text/javascript" src="js/vendor/angular/angular-translate-loader-url.js"></script>
-	<script type="text/javascript" src="js/vendor/angular/angular-translate-loader-static-files.js"></script>
-    <script type="text/javascript" src="js/vendor/angular/angular-no-captcha.js"></script>
-    <script type="text/javascript" src="js/vendor/angular/angular-pubsub.min.js"></script>
-    <script type="text/javascript" src="js/vendor/angular/angular-material.min.js"></script>
-    <script type="text/javascript" src="js/vendor/spin/spin.min.js"></script>
-	<script type="text/javascript" src="js/vendor/angular/angular-spinner.min.js"></script>
-	<script type="text/javascript" src="js/vendor/angular/angular-loading-spinner.js"></script>
-	<script type="text/javascript" src="js/vendor/quill/1.1.5/quill.js"></script>
-	<script type="text/javascript" src="js/vendor/ng-quill-3.0.0/ng-quill.js"></script>
-	<script type="text/javascript" src="js/vendor/d3/d3.v3.js"></script>
-	<script type="text/javascript" src="js/vendor/charts/heatmap.js"></script>
-	<script type="text/javascript" src="js/vendor/d3/angular-nvd3-1.0.9.min.js"></script>
-    <!-- endbuild -->
-    
-    <!-- application scripts -->
-    <!-- build:js js/index-bundle.js -->
-	<script type="text/javascript" src="js/common/utility.js"></script>
-	<script type="text/javascript" src="js/app.js"></script>
-	<script type="text/javascript" src="js/serverDomain.js"></script>
-	<script type="text/javascript" src="js/serviceUrl.js"></script>
-	<script type="text/javascript" src="js/common/restService.js"></script>
-	<script type="text/javascript" src="widgets/filter/appFilterModule.js"></script>
-	<script type="text/javascript" src="widgets/filter/contentFormatFilter.js"></script>
-	<script type="text/javascript" src="widgets/filter/dateFilter.js"></script>
-	<script type="text/javascript" src="widgets/studio/tenantInfoService.js"></script>
-	<script type="text/javascript" src="widgets/stateUpdateService.js"></script>
-	<script type="text/javascript" src="widgets/cache/cacheService.js"></script>
-	<script type="text/javascript" src="widgets/resourceVersionService.js"></script>
-	<script type="text/javascript" src="widgets/system/userpref/userPrefsService.js"></script>
-	
-	<script type="text/javascript" src="widgets/website/websiteMainCtrl.js"></script>
-	<script type="text/javascript" src="widgets/website/contactus/contactUsModal.js"></script>
-	<script type="text/javascript" src="widgets/website/contactus/contactUsController.js"></script>
-	<script type="text/javascript" src="widgets/website/modalpage/modalPageService.js"></script>
-	<script type="text/javascript" src="widgets/website/modalpage/modalPageController.js"></script>
-	
-    <script type="text/javascript" src="widgets/modal/infoModal.js"></script>
-    <script type="text/javascript" src="widgets/modal/infoModalController.js"></script>
-    <script type="text/javascript" src="widgets/navigationTracker.js"></script>
-    <!-- endbuild -->
-    
-  </head>
-  <body id="page-top" ng-app="studio" ng-controller="WebsiteMainCtrl">
-
-    <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
-        <!-- <div class="container-fluid"> -->
-        <div class="container-fluid">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
-                </button>
-                <a class="navbar-brand page-scroll" href="#page-top" style="padding-top: 10px;"><img src="img/logo.png" border="0" alt="Enablix"/></a>
-            </div>
-
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a class="page-scroll" href="#about">About</a>
-                    </li>
-                    <li>
-                        <a class="page-scroll" href="#services">Use Cases</a>
-                    </li>
-                    <li>
-                        <a class="page-scroll" href="#integrations">Integrations</a>
-                    </li>
-                    <li>
-                        <a class="page-scroll" href="https://enablix.wordpress.com/" target=“_blank”>Blog</a>
-                    </li>
-                    <!--<li>
-                        <a class="page-scroll" ng-click="showContactUsModal()" href="javascript:;">Contact Us</a>
-                    </li>-->     
-                    <li>
-                        <a class="page-scroll" href="app.html#/portal/home">Customer Login</a>
-                    </li>
-                </ul>
-            </div>
-            <!-- /.navbar-collapse -->
-        </div>
-        <!-- /.container-fluid -->
-    </nav>
-
-    <header>
-        <div class="header-content">
-            <div class="header-content-inner">
-                <h1 id="homeHeading">B2B Marketers, lets put your content to use</h1>
-                <hr>
-                <p><h3>We help B2B marketers accelerate and grow sales pipeline by automating delivery of 
-                hyper-relevant intelligence to sales.</h3></p>
-                <a href="#about" class="btn btn-primary btn-xl page-scroll">Learn More</a> 
-                <!-- <a href="#about" class="page-scroll btn btn-default btn-xl sr-button">Find Out More</a> -->
-            </div>
-        </div>
-    </header>
-
-    <section class="bg-primary" id="about">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8 col-lg-offset-2 text-center">
-                    <h2 class="section-heading">Content is Everywhere</h2>
-                    <hr class="light">
-                    <p>Organizations already have content resources that can drive pipeline growth. But B2B marketers are struggling to put that information in front of sales when they need it. 
-                    With Enablix B2B marketers can automate content recommendation to sales and grow sales output. Marketers can leverage our packaged process templates and automate enablement. </p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-4 col-md-6 text-center">
-                    <div class="service-box">
-                        <i class="fa fa-4x fa-mouse-pointer  text-secondary sr-icons"></i>
-                        <h3>Select</h3>
-                        <p class="text">Start with our ready-to-use content enablement templates that come packaged with Enablix</p>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 text-center">
-                    <div class="service-box">
-                        <i class="fa fa-4x fa-pencil text-secondary sr-icons"></i>
-                        <h3>Refine</h3>
-                        <p class="text">Refine and tweak it for your specific goals. It's quick and easy. </p>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 text-center">
-                    <div class="service-box">
-                        <i class="fa fa-4x fa-play-circle-o text-secondary sr-icons"></i>
-                        <h3>Execute</h3>
-                        <p class="text">Sit back, relax and see how automated sales enablement works its wonders</p>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-8 col-lg-offset-2 text-center">
-                	<br/>
-                	<br/>
-                    <a href="#services" class="page-scroll btn btn-default btn-xl sr-button">Use Cases</a>
-                </div>
-            </div>            
-        </div>
-    </section>
-    <section id="services">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 text-center">
-                    <h2 class="section-heading">Our Popular Use Cases</h2>
-                    <hr class="primary">
-                </div>
-            </div>
-        </div>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-4 col-md-6 text-center">
-                    <div class="service-box">
-                        <i class="fa fa-4x fa-compass text-primary sr-icons"></i>
-                        <h3>Guide Sales</h3>
-                        <p class="text-muted">Drive them to a win with targeted content and recommendations</p>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 text-center">
-                    <div class="service-box">
-                        <i class="fa fa-4x fa-paper-plane text-primary sr-icons"></i>
-                        <h3>Go-To-Market</h3>
-                        <p class="text-muted">Execute your growth strategy with never-before seen simplicity</p>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 text-center">
-                    <div class="service-box">
-                        <i class="fa fa-4x fa-calendar text-primary sr-icons"></i>
-                        <h3>Marketing Events</h3>
-                        <p class="text-muted">Guide your sales team to drive quality targets to events</p>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-4 col-md-6 text-center">
-                    <div class="service-box">
-                        <i class="fa fa-4x fa-home text-primary sr-icons"></i>
-                        <h3>Account Nurturing</h3>
-                        <p class="text-muted">Put your account based strategy in super drive</p>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 text-center">
-                    <div class="service-box">
-                        <i class="fa fa-4x fa-bullseye text-primary sr-icons"></i>
-                        <h3>Sales On-Boarding</h3>
-                        <p class="text-muted">Stop worrying about new hire enablement. Automate their on-boarding</p>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 text-center">
-                    <div class="service-box">
-                        <i class="fa fa-4x fa-rocket text-primary sr-icons"></i>
-                        <h3>Product Launch</h3>
-                        <p class="text-muted">New products are meant to drive revenue. We have the tools to make it happen</p>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-            	<div class="col-lg-8 col-lg-offset-2 text-center">
-                	<br/>
-                	<br/>
-                    <a href="#integrations" class="btn btn-primary btn-xl page-scroll">Integrations</a>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <section id="integrations">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 text-center">
-                    <h2 class="section-heading">We integrate with your ecosystem</h2>
-                    <hr class="primary">
-                </div>
-            </div>
-        </div>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-4 col-md-6 text-center">
-                    <div class="service-box">
-                        <i class="fa fa-4x fa-diamond text-primary sr-icons"></i>
-                        <h3>CRM</h3>
-                        <p class="text-muted">We recommend content and guide sales reps in the context of their opportunities and accounts</p>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 text-center">
-                    <div class="service-box">
-                        <i class="fa fa-4x fa-archive text-primary sr-icons"></i>
-                        <h3>Content Stores</h3>
-                        <p class="text-muted">We leverage your content in your content management systems</p>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 text-center">
-                    <div class="service-box">
-                        <i class="fa fa-4x fa-cog text-primary sr-icons"></i>
-                        <h3>Marketing Automation</h3>
-                        <p class="text-muted">We help marketers save time and maintain consistency</p>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-4 col-md-6 text-center">
-                    <div class="service-box">
-                        <i class="fa fa-4x fa-comments text-primary sr-icons"></i>
-                        <h3>Communication Tools</h3>
-                        <p class="text-muted">Increase content adoption by leveraging existing methods of communication</p>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 text-center">
-                    <div class="service-box">
-                        <i class="fa fa-4x fa-lightbulb-o text-primary sr-icons"></i>
-                        <h3>Learning Management</h3>
-                        <p class="text-muted">Scale your LMS. Leverage it for driving successful outcomes.</p>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 text-center">
-                    <div class="service-box">
-                        <i class="fa fa-4x fa-bars text-primary sr-icons"></i>
-                        <h3>And Much More...</h3>
-                        <p class="text-muted">We want to work in your sales/marketing ecosystem. Not disrupt it</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="no-padding" id="portfolio">
-        <div class="container-fluid">
-            <div class="row no-gutter">
-                <div class="col-lg-4 col-sm-6">
-                    <a class="portfolio-box" href="https://enablix.wordpress.com/category/sales-enablement/" target="_blank">
-                        <img src="img/portfolio/thumbnails/1.jpg" class="img-responsive" alt="">
-                        <div class="portfolio-box-caption">
-                            <div class="portfolio-box-caption-content">
-                                <div class="project-category text-faded">
-                                    <h3>Sales Enablement</h3>
-                                </div>
-                                <div class="project-name">
-                                    Sales Enablement is a critical function for B2B Marketers. However many organizations 
-                                    struggle to operationalize it. We discuss strategies that can help marketers 
-                                    put their sales enablement strategy in action. 
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-4 col-sm-6">
-                    <a href="https://enablix.wordpress.com/category/measure-roi/" class="portfolio-box" target="_blank">
-                        <img src="img/portfolio/thumbnails/2.jpg" class="img-responsive" alt="">
-                        <div class="portfolio-box-caption">
-                            <div class="portfolio-box-caption-content">
-                                <div class="project-category text-faded">
-                                    <h3>Measure</h3>
-                                </div>
-                                <div class="project-name">
-                                    Everyone agrees that measuring the return on your efforts is super critical. We discuss how B2B Marketers can measure the return on enabling sales with 
-                                    the right content and intelligence. 
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-4 col-sm-6">
-                    <a href="https://enablix.wordpress.com/category/content-stories/" class="portfolio-box" target="_blank">
-                        <img src="img/portfolio/thumbnails/3.jpg" class="img-responsive" alt="">
-                        <div class="portfolio-box-caption">
-                            <div class="portfolio-box-caption-content">
-                                <div class="project-category text-faded">
-                                    <h3>Content Stories</h3>
-                                </div>
-                                <div class="project-name">
-									Content is the focal point of our customer’s interaction. Every day we work with our 
-									customers to make it easy for them to capture, distribute and consume content. Here, 
-									we share our and our customer’s stories as we all deal with the challenges and benefits 
-									of using content to drive pipeline velocity and growth. 
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-    <section id="contact">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8 col-lg-offset-2 text-center">
-                    <h2 class="section-heading">Let's Get In Touch!</h2>
-                    <hr class="primary">
-                    <p>Ready to start helping sales win more and win faster? Who wouldn't be! Send us an email and we will help you help sales make money!</p>
-                </div>
-                <div class="col-lg-8 col-lg-offset-2 text-center">
-                    <i class="fa fa-envelope-o fa-3x sr-contact"></i>
-                    <p><a href="mailto:support@enablix.com">support@enablix.com</a></p>
-                </div>
-            </div>
-        </div>
-    </section>
-	<!-- page footer -->
-	<footer class="page-footer">
-		<!-- copyrights -->
-		<div class="copyrights">&copy 2017 Enablix LLC. All rights reserved. | <a href="/terms" target="_blank">Terms and Conditions</a> | <a href="/privacy" target="_blank">Privacy Policy</a></div>
-		<!--/ copyrights -->
-	</footer>
-	<!--/ page footer -->
-
-    <!-- jQuery -->
-    <script src="js/vendor/jquery/jquery-2.1.3.min.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="js/vendor/bootstrap/bootstrap.min.js"></script>
-
-    <!-- Plugin JavaScript -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
-    <script src="js/vendor/scrollreveal/scrollreveal.min.js"></script>
-
-    <!-- Theme JavaScript -->
-    <script src="js/website/creative.min.js"></script>
-    
-    <script>
-	    var gaProp = null;
-	
-	    switch (window.location.hostname) {
-	        case 'www.enablix.com':
-	            gaProp = 'UA-90499107-1'; // production
-	            break;
-	        case '52.2.15.106':
-	        	gaProp = 'UA-90499107-2'; // test env
-	        	break;
-	        case 'test.enablix.com':
-	        	gaProp = 'UA-90499107-2'; // test env
-	        	break;
-	    }
-	    
-    	if (gaProp != null) {
-			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-			})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-			
-			ga('create', gaProp, 'auto');
-			ga('send', 'pageview');
+<html>
+<head>
+	<title>enablix</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="keywords" content="Sales Enablement,Sales Portal,Marketing Portal,Marketing Content Management">
+	<link rel="icon" type="image/png" href="/favicon.png">
+	<link href="./css/bootstrap.min.css" rel="stylesheet" type="text/css">
+	<style>
+		@font-face {
+			font-family: Circular;
+			src: url("./fonts/CircularAirPro-Book.otf") format("opentype");
 		}
-	
-	</script>
+		
+		@font-face {
+			font-family: FaktPro-Light;
+			src: url("./fonts/FaktPro-Light.ttf") format("truetype");
+		}
+		
+		@font-face {
+			font-family: FaktPro-Blond;
+			src: url("./fonts/FaktPro-Blond.otf") format("opentype");
+		}
+		
+		@font-face {
+			font-family: FaktPro-Medium;
+			src: url("./fonts/FaktPro-Medium.ttf") format("truetype");
+		}
 
+		.header {
+			font-family: FaktPro-Blond;
+			font-weight: bold;
+			padding: 2% 5% 2% 5%;
+			font-size: 1.3em;
+		}
+		
+		.logo {
+			float: left;
+		}
+		
+		.main {
+			padding-left: 5%;
+			padding-top: 5%;
+		}
+		
+		.invite {
+			padding-top: 2%;
+			padding-right: 5%;
+			padding-bottom: 5%;
+		}
+		
+		.invite .heading {
+			font-family: Circular;
+			font-size: 3em; 
+			font-weight : bold; 
+			text-align : left;
+		}
+		
+		.invite .caption {
+			font-size: 2em;
+			font-family: "FaktPro-Light";
+			padding-top: 4%;
+			font-weight: bold;
+		}
+		
+		.invite .appinfo {
+			font-size: 1em;
+			font-family: FaktPro-Blond;
+			padding-top: 2%;
+			font-weight: bold;
+			opacity: 0.5;
+		}
+		
+		.invite .appinfo div {
+			padding-right: 0;
+		}
+		
+		.invite .inviteform {
+			padding-top: 2%;
+			margin-right: 0;
+		    margin-left: 0;
+		    font-size: 1.25em;
+		}
+		
+		.inviteform input {
+			border-radius: 4px;
+		    background-color: #ffffff;
+		    border: 1px solid #e3ebef;
+		    padding: 0.75em 1em 0.5em 1em;
+		    font-family: FaktPro-Blond;
+		    font-weight: bold;
+		    width: 100%;
+		}
+		
+		.inviteform button {
+			padding: 0.65em 0.5em 0.6em 0.5em;
+		    background: #1f89ef;
+		    font-family: FaktPro-Medium;
+		    font-weight: bold;
+		    color: #fff;
+		    border-radius: 4px;
+		    border: 1px solid #1f89ef;
+		    width: 100%;
+		}
+		
+		.inviteform .formcontrol {
+			padding-left: 0;
+			padding-right: 5px;
+			padding-top: 2%;
+		}
+		
+		.preview {
+			overflow: hidden;
+			text-align: right;
+		}
+		
+		.preview img {
+			max-height: 100vh;
+		}
+		
+		.footer {
+			font-family: FaktPro-Blond;
+			font-weight: bold;
+			font-size: 0.875em;
+			padding: 40px 5% 2% 5%;
+		}
+		
+		.header a:hover {
+		    text-decoration: none;
+		}
+		
+		.header .right {
+			text-align: right;
+			margin-top: 5px;
+		}
+		
+		.header .right a {
+		    padding-left: 25px;
+		}
+		
+		.testimonials {
+		}
+		
+		.ttmtext {
+			font-family: FaktPro-Light;
+			font-size: 1.5em;
+			font-weight: bold;
+		}
+		
+		.ttmperson {
+			padding-top: 3%;
+		}
+		
+		.ttmperson .ttmname {
+			font-family: FaktPro-Medium;
+			font-size: 1em;
+			font-weight: bold;
+		}
+		
+		.ttmperson .ttmdesignation {
+			font-family: FaktPro-Light;
+			font-size: 1em;
+			font-weight: bold;
+			opacity: 0.5;
+		}
+		
+		.ttmpersonimg img {
+			max-height: 2.6em;
+			border-radius: 50%;
+		}
+		
+		a {
+			color: inherit;
+		}
+		
+		.main .row, .footer.row {
+			margin-right: 0;
+		}
+		
+		.main .row {
+			position: relative;
+		}
+		
+		body {
+			font-size: 10px;
+		}
+		
+		@media (max-width:992px) {
+		
+			.mobile-align {
+				text-align: center !important;
+			}
+			
+			.ttmperson .ttmpersonimg {
+				padding-bottom: 8px;
+			}
+		}
+		
+		@media (min-width: 992px) {
+		
+			.testimonials {
+				position: absolute;
+				top: 460px;
+				max-width: 600px;
+			}
+			
+			body {
+				font-size: 14px;
+			}
+		
+			.footer {
+				padding: 1% 5% 2% 5%;
+			}
+			
+			.footer .right {
+				text-align: right;
+			}
+			
+			.ttmperson {
+				padding-top: 4%;
+			}
+			
+			.ttmperson .ttmpersonimg {
+				padding-right: 8px;
+			}
+			
+			.preview img {
+			    max-height: 728px;
+			}
+		
+			.inviteform .emailinput {
+				width: 60%;
+			}
+			
+			.inviteform .submitbtn {
+				width: 40%;
+			}	
+			
+			.ttmpersondetail {
+				text-align: left;
+			}
+			
+			.ttmperson .ttmpersonimg {
+				float: left;
+			}
+		}
+		
+		.centercontainer {
+			max-width: 1244px;
+			margin-left: auto;
+			margin-right: auto;
+		}
+		
+		.logotext {
+			margin-left: -5px;
+		}
+		
+		.error {
+			margin: 0.5em 0 0;
+			font-family: FaktPro-Blond;
+			font-size: 0.875em;
+			font-weight: 300;
+			text-align: left;
+			color : red;
+		}
+		
+		.ttmpersondetail {
+			display: flex;
+    		flex-direction: column;
+		}
+
+</style>
+<script type="text/javascript" src="js/vendor/angular/angular.min.js"></script>
+<script type="text/javascript" src="js/vendor/angular/angular-ui-router.js"></script>
+<script type="text/javascript" src="js/vendor/angular/angular-messages.min.js"></script>
+
+<script type="text/javascript" src="js/ld.js"></script>
+
+</head>
+<body ng-app="site" class="mobile-align">
+<div class="centercontainer">
+<div class="header"><!-- header -->
+	<div class="logo"><!-- Logo -->
+		<a href="https://www.enablix.com"><img src="./assets/logo.png"></img></a>
+		<span class="logotext">enablix</span>
+	</div>
+	<div class="right"><!-- top nav -->
+		<div><a href="https://enablix.wordpress.com/" target="_blank" onclick="handleOutboundLinkClicks(event)">Blog</a><a href="/app.html#/portal/home">Customer Login</a></div>
+	</div>
+</div>
+<div class="main">
+	<div class="row">
+		<div class="invite col-md-6">
+			<div class="heading mobile-align">Stop content chaos</div>
+			<div class="caption">The easiest way for marketing to enable sales-and get results</div>
+			<div class="inviteform row" ng-controller="InviteRequestController">
+				<form name="modalForm">
+					<div class="formcontrol col-md-7 emailinput">
+						<input  name="email" placeholder="Email address" ng-model="contactUsForm.email" ng-blur="modalForm.email.$valid" ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,5})$/" required>
+						<div ng-messages="modalForm.email.$error" ng-if="modalForm.email.$touched" role="alert">
+							<div ng-message="required" class="error">Please enter email address</div>
+							<div ng-message="pattern" class="error">Please enter a valid email address</div>      
+						</div>
+					</div>
+					<div class="formcontrol col-md-5 submitbtn"><button name="inviteBtn" ng-click="submitContactUs()">Request Invitation</button></div>
+				</form>
+			</div>
+			<div class="appinfo row">
+				<div class="col-md-8">We are working with beta customers through our web platform.</div>
+				<div class="col-md-4"></div>
+			</div>
+		</div>
+		<div class="preview col-md-6">
+			<img src="./assets/asset.png"></img>
+		</div>
+		<div class="testimonials col-md-6">
+			<div class="testimonial">
+				<div class="ttmtext">"With Enablix, we have built a centralized and trusted source of knowledge for our sales team. Enablix is a critical component of our marketing platform."</div>
+				<div class="mobile-align">
+					<div class="ttmperson">
+						<div class="ttmpersonimg">
+							<img src="./assets/jaffrey.jpg"/>
+						</div>
+						<div class="ttmpersondetail">
+							<div class="ttmname">Jaffrey Ali</div>
+							<div class="ttmdesignation">VP, Products and Marketing, Haystax Technology</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="footer">
+	<div class="left">All rights reserved to Enablix LLC &copy; 2017</div>
+	<div class="right"><a href="/terms" target="_blank">Terms and Conditions</a> | <a href="/privacy" target="_blank">Privacy Policy</a></div>
+</div>
+</div>
+<!-- scripts -->
+<script src="js/vendor/jquery/jquery-2.1.3.min.js"></script>
+<!--/ scripts -->
+<script>
+    var gaProp = null;
+    var intercomAppId = null;
+
+    switch (window.location.hostname) {
+        case 'www.enablix.com':
+            gaProp = 'UA-90499107-1'; // production
+            intercomAppId = 'x80n4t7e';
+            break;
+        case '52.2.15.106':
+        	gaProp = 'UA-90499107-2'; // test env
+        	intercomAppId = 'pholk4q5';
+        	break;
+        case 'test.enablix.com':
+        	gaProp = 'UA-90499107-2'; // test env
+        	intercomAppId = 'pholk4q5';
+        	break;
+        case 'localhost':
+        	gaProp = 'UA-90499107-2'; // test env
+        	intercomAppId = 'pholk4q5';
+        	break;
+    }
+    
+   	if (gaProp != null) {
+		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+		
+		ga('create', gaProp, 'auto');
+		ga('send', 'pageview');
+	}
+   	
+   	function handleOutboundLinkClicks(event) {
+    	
+   		if (gaProp != null) {
+			ga('send', 'event', {
+				eventCategory : 'Outbound Link',
+				eventAction : 'click',
+				eventLabel : event.target.href,
+				transport: 'beacon'
+			});
+   		}
+   		
+	}
+   	
+   
+   		
+</script>
+<!-- 	Intercom installation  -->
+<script>
+    window.intercomSettings = {
+      app_id: intercomAppId // test app id - pholk4q5
+    };
+</script>
+<script>(function(){var w=window;var ic=w.Intercom;if(typeof ic==="function"){ic('reattach_activator');ic('update',intercomSettings);}else{var d=document;var i=function(){i.c(arguments)};i.q=[];i.c=function(args){i.q.push(args)};w.Intercom=i;function l(){var s=d.createElement('script');s.type='text/javascript';s.async=true;s.src='https://widget.intercom.io/widget/x80n4t7e';var x=d.getElementsByTagName('script')[0];x.parentNode.insertBefore(s,x);}if(w.attachEvent){w.attachEvent('onload',l);}else{w.addEventListener('load',l,false);}}})()</script>
+   
 </body>
 </html>
