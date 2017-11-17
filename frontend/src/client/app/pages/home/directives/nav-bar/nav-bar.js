@@ -8,8 +8,6 @@ export default class NavBar {
     this.restrict = 'E';
     this.scope = {
       state: '='
-      // tabs: '=',
-      // emitState: '@'
     };
     this.transclude = true;
   }
@@ -26,7 +24,17 @@ export default class NavBar {
     scope.isCompanyState = scope.state.current.name.includes('company');
     scope.isRecentActivitiesState = scope.state.current.name.includes('recent-activity');
 
-    scope.searchBarData = searchBarData;
+    scope.searchBarData = (() => {
+      if (scope.state.current.name.includes('salesFunnel')) {
+        return searchBarData.objects;
+      } else if (scope.state.current.name.includes('dimension')) {
+        return searchBarData.dimensions;
+      } else {
+        return searchBarData.dashboard;
+      }
+    })();
+    
+    
 
     scope.openUploadPrompt = (type) => {
       scope.uploadOptions = false;

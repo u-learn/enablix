@@ -4,7 +4,17 @@
         border-top: 1px solid rgba(0,0,0,0.03);
 
         h2 {
-            font-family: $FPLight;
+            font-family: $FPThin;
+
+
+
+
+
+
+
+
+
+            
             color: $black;
             padding-bottom: 20px;
         }
@@ -20,13 +30,13 @@
     }
 
     h3.headline {
-        font-family: $FPBlond;
+        font-family: $FPLight;
         font-size: 18px;
         padding-bottom: 12px;
         line-height: 20px;
     }
     .description {
-        font-family: $FPLight; //different font   
+        font-family: $FPThin; //different font   
         font-size: 14px;
         color: $grey-dark;
         line-height: 17px;

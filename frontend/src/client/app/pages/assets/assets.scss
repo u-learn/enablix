@@ -33,19 +33,12 @@
         margin-left: auto;
         margin-right: 0;
     }
-
-    .dashboard-buttons {
-        .action-btn {
-            height: 32px;
-            width: 32px;
-        }
-    }
 }
 
 
 .assets-container {
     h1 {
-        font-family: $FPLight;
+        font-family: $FPThin;
         color: $black;
         line-height: 38px;
     }
@@ -60,7 +53,7 @@
             border-bottom: 1px solid rgba(0,0,0,0.03);
 
             &.with-height{
-                height: 73px;
+                min-height: 73px;
             }
 
             img.fileType {
@@ -70,7 +63,7 @@
         }
 
         .label {
-            font-family: $FPBlond;
+            font-family: $FPLight;
             font-size: 14px;
             color: #808C9B;
             line-height: 17px;
@@ -79,10 +72,15 @@
         }
 
         .text {
-            font-family: $FPBlond;
+            font-family: $FPLight;
             font-size: 14px;
             color: #2D2D2D;
             line-height: 18px;
+        }
+
+        .dashboard-buttons .action-btn {
+            height: 28px;
+            width: 28px;
         }
     }
 
@@ -96,11 +94,20 @@
         height: 40px;
         font-size: 14px;
         padding-left: 14px;
-    }        
+    }  
+    
+    .dashboard-buttons {
+        float: left;
+        .action-btn {
+            height: 32px;
+            width: 32px;
+            
+        }
+    }
 }
 
 .delete-prompt {
-    font-family: $FPBlond;
+    font-family: $FPLight;
     @include overlay;
 
     >div {
@@ -127,7 +134,7 @@
 }
 
 .email-prompt {
-    font-family: $FPLight;
+    font-family: $FPThin;
     @include overlay;
     
     >div {
@@ -182,3 +189,4 @@
 @import './views/asset-url-edit/asset-url-edit.scss';
 @import './views/asset-file/asset-file.scss';
 @import './views/asset-file-edit/asset-file-edit.scss';
+@import './directives/relevance-dropdown/relevance-dropdown.scss';

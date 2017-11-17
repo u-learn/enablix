@@ -45,7 +45,7 @@ export default class DimensionCards {
       } else {
         scope.displayData.cards.map(card => {
           return shortenCompanyProperties(card);
-        });
+        })
       }
     })();
 

@@ -3,11 +3,11 @@ recent-activity {
         height: 89px;
 
         h1, h2 {
-            font-family: $FPLight;
+            font-family: $FPThin;
             padding-bottom: 8px;
         }
         p {
-            font-family: $FPBlond;
+            font-family: $FPLight;
             font-size: 14px;
             color: $grey-dark;
             line-height: 17px;
@@ -25,7 +25,7 @@ recent-activity {
             }
         }
     }
-
+    
     .activity {
         height: 80px;
 

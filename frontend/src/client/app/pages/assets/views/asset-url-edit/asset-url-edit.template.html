@@ -20,27 +20,31 @@
         <p class="label">Relevance</p>
         <!-- can be refactored into directive -->
         <div class="sectors-container">
-            <div class="add-tag">
-                <a href="">
-                    <img src="/assets/images/icons/add-sectors-btn.svg" />    
-                </a>
+            <div class="relevanceTags" ng-hide="ctrl.relevanceTags.length === 0">
+                <company-properties style="display:flex" for-search-filter="false" data="ctrl.relevanceTags"></company-properties>
+            </div>
+            <div class="dashboard-buttons no-float">
+                <div class="action-btn" ng-click="ctrl.showRelevanceDropdown()" ng-hide="ctrl.showDropdown">
+                    <div class="icon small plus"></div>
+                </div>
+                <relevance-dropdown ng-show="ctrl.showDropdown"></relevance-dropdown>
             </div>
         </div>
     </div>
     <div class="row with-height">
         <p class="label">Properties</p>
         <div class="sectors-container">
-            <div class="add-tag">
-                <a href="">
-                    <img src="/assets/images/icons/add-sectors-btn.svg" />    
-                </a>
+            <div class="dashboard-buttons no-float">
+                <div class="action-btn">
+                    <div class="icon small plus"></div>
+                </div>
             </div>
         </div>
     </div>
 </div>
 <div class="right">
     <div class="url-asset">
-        <img class="url-preview" src='/assets/images/covers/assets_preview_url.png' />
+        <img class="url-preview" src='/assets/images/covers/url_image@2x.png' />
         <!-- <iframe frameborder="0" src="{{ctrl.url}}"></iframe> -->
     </div>
 </div>

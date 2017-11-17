@@ -1,89 +1,89 @@
-<nav-bar state="ctrl.state"></nav-bar>
 <div class="wrapper">
+    <nav-bar state="ctrl.state"></nav-bar>
     <div class="container">
-            <div class="company no-sidebar">
-                <div class="header">
-                    <h1>Consolidate Content</h1>
-                    <p class="subheader no-bottom-padding">See and consolidate assets from your marketing team<br>
-                    or assets that need some quality check.</p>
+        <div class="company no-sidebar">
+            <div class="header">
+                <h1>Consolidate Content</h1>
+                <p class="subheader no-bottom-padding">See and consolidate assets from your marketing team<br>
+                or assets that need some quality check.</p>
+            </div>
+            <div class="main consolidate-content">
+                <div>
+                    <company-navbar page="consolidate-content" state="ctrl.state" emit-state="true" tabs="ctrl.consolidateContentTabs" ng-if="!ctrl.state.includes('consolidate-content.edit')"></company-navbar>
+                    <div class="edit-navbar" ng-if="ctrl.state.includes('consolidate-content.edit')">
+                        <div class="select-dropdown-option">
+                            <select>
+                                <option></option>
+                                <option>Select All</option>
+                                <option>Unselect All</option>
+                            </select>
+                    </div>
+                    <div class="divider"></div>
+                    <div class="dashboard-buttons">
+                            <div class="action-btn">
+                                <div class="icon approve"></div>
+                                <!-- <p ng-show="ctrl.actionBtnState.approve">Approve</p> -->
+                            </div>
+                            <div class="action-btn">
+                                <div class="icon reject"></div>
+                                <!-- <p ng-show="ctrl.actionBtnState.edit">Reject</p> -->
+                            </div>
+                            <div class="action-btn">
+                                <div class="icon trash"></div>
+                                <!-- <p ng-show="ctrl.actionBtnState.delete">Trash</p> -->
+                            </div>
+                    </div>
                 </div>
-                <div class="main consolidate-content">
-                    <div>
-                        <company-navbar page="consolidate-content" state="ctrl.state" emit-state="true" tabs="ctrl.consolidateContentTabs" ng-if="!ctrl.state.includes('consolidate-content.edit')"></company-navbar>
-                        <div class="edit-navbar" ng-if="ctrl.state.includes('consolidate-content.edit')">
-                            <div class="select-dropdown-option">
-                                <select>
-                                    <option></option>
-                                    <option>Select All</option>
-                                    <option>Unselect All</option>
-                                </select>
-                        </div>
-                        <div class="divider"></div>
-                        <div class="dashboard-buttons">
-                                <div class="action-btn">
-                                    <div class="icon approve"></div>
-                                    <!-- <p ng-show="ctrl.actionBtnState.approve">Approve</p> -->
-                                </div>
-                                <div class="action-btn">
-                                    <div class="icon reject"></div>
-                                    <!-- <p ng-show="ctrl.actionBtnState.edit">Reject</p> -->
-                                </div>
-                                <div class="action-btn">
-                                    <div class="icon trash"></div>
-                                    <!-- <p ng-show="ctrl.actionBtnState.delete">Trash</p> -->
-                                </div>
-                        </div>
-                    </div>
-                    <div class="assets-table container">
-                        <form>
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <td><img class="icon small" src="/assets/images/icons/search-grey.svg" /><span>Asset</span></td>
-                                        <td><span>Content Type</span><img class="icon dropdown" src="/assets/images/icons/dropdown.svg" /></td>
-                                        <td><span>Status</span><img class="icon dropdown" src="/assets/images/icons/dropdown.svg" /></td>
-                                        <td><span>Created on</span></td>
-                                        <td><span>Creator</span></td>
-                                    </tr>
-                                </thead>
-                                <tr class="content" ng-repeat="a in ctrl.consolidateContentData">
-                                    <td ng-mouseover="ctrl.showRadioButtonOption($index)" ng-mouseleave="ctrl.hideRadioButtonOption($index)">
-                                        <div class="asset">
-                                            <div class="vertical-align">
-                                                <input type="radio" value="{{a.id}}" 
-                                                        ng-click="ctrl.selectedAsset(value)"                                                        
-                                                        ng-show="ctrl.editState || ctrl.activeRadionBtn === $index" />
-                                                <img class="thumbnail" ng-src="{{a.thumbanil}}" />
-                                                <p>{{a.description}}</p>
-                                            </div>
-                                        </div>
+                <div class="assets-table">
+                    <form>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <td><img class="icon small" src="/assets/images/icons/search-grey.svg" />
+                                        <input class="search-asset" placeholder="Asset" ng-model="search.asset" />
                                     </td>
-                                    <td class="type tags-container">
-                                        <div class="tag">
-                                            <div class="content">
-                                                <span>{{a.type}}</span>
-                                            </div>
-                                        </div>                            
-                                    </td>
-                                    <td class="status td-text">
-                                        <p>{{a.status}}</p>
-                                    </td>
-                                    <td class="date td-text">
-                                        <p>{{a.date}}</p>
-                                    </td>
-                                    <td class="creator td-text">
-                                        <div class="asset">
-                                            <div class="vertical-align">
-                                                <img class="icon user-img" src="/assets/images/company/profile_img@2x.png" />
-                                                <p>{{a.creator}}</p>
-                                            </div>
-                                        </div>
-                                    </td>
+                                    <td><span>Content Type</span><img class="icon dropdown" src="/assets/images/icons/dropdown.svg" /></td>
+                                    <td><span>Status</span><img class="icon dropdown" src="/assets/images/icons/dropdown.svg" /></td>
+                                    <td><span>Created on</span></td>
+                                    <td><span>Creator</span></td>
                                 </tr>
-                            </table>
-                        </form>
-                    </div>
+                            </thead>
+                            <tr class="content" ng-repeat="a in ctrl.consolidateContentData">
+                                <td ng-mouseover="ctrl.showRadioButtonOption($index)" ng-mouseleave="ctrl.hideRadioButtonOption($index)">
+                                    <div class="asset">
+                                        <div class="vertical-align">
+                                            <input type="checkbox" value="{{a.id}}" ng-click="ctrl.selectedAsset(value)"  ng-show="ctrl.editState || ctrl.activeRadionBtn === $index" /> 
+                                            <img class="thumbnail" ng-src="{{a.thumbanil}}" />
+                                            <p>{{a.description}}</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="type tags-container">
+                                    <div class="tag">
+                                        <div class="content">
+                                            <span>{{a.type}}</span>
+                                        </div>
+                                    </div>                            
+                                </td>
+                                <td class="status td-text">
+                                    <p>{{a.status}}</p>
+                                </td>
+                                <td class="date td-text">
+                                    <p>{{a.date}}</p>
+                                </td>
+                                <td class="creator td-text">
+                                    <div class="asset">
+                                        <div class="vertical-align">
+                                            <img class="icon user-img" src="/assets/images/company/profile_img@2x.png" />
+                                            <p>{{a.creator}}</p>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </form>
                 </div>
             </div>
         </div>
+    </div>
 </div>

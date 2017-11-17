@@ -2,11 +2,19 @@ button.action {
     margin-right: 12px;
     background: #1F8AEF;
     color: $white;
+
+    &:hover {
+        background: #44A1F8;
+    }
 }
 
 button.cancel {
     background: $white;
     color: #808C9B;
+
+    &:hover {
+        background: #fcfcfc;
+    }    
 }
 
 button {
@@ -14,7 +22,7 @@ button {
     border: 1px solid rgba(0,0,0,0.10);
     box-shadow: 0 1px 1px 0 rgba(0,0,0,0.04);
     border-radius: 4px;
-    font-family: $FPLight;
+    font-family: $FPThin;
     font-size: 18px;
 }
 
@@ -33,12 +41,20 @@ button {
         border-radius: 4px;
         cursor: pointer;
 
+        &:hover {
+            background: #fcfcfc;
+        }
+
+        &.add-padding {
+            padding: 0 8px;
+        }
+
         & + .action-btn {
             margin-left: 8px;
         }
 
         p {
-            font-family: $FPLight;
+            font-family: $FPThin;
             height: 13px;                    
             font-size: 14px;
             color: #1F8AEF;
@@ -67,19 +83,19 @@ button {
             }
 
             &.email {
-                background: url("/assets/images/icons/message.png") no-repeat center;
+                background: url("/assets/images/icons/message.svg") no-repeat center;
             }
         
             &.trash {
-                background: url("/assets/images/icons/trash.png") no-repeat center;
+                background: url("/assets/images/icons/trash.svg") no-repeat center;
             }
 
             &.copy {
-                background: url("/assets/images/icons/copy.png") no-repeat center;
+                background: url("/assets/images/icons/copy.svg") no-repeat center;
             }
 
             &.download {
-                background: url("/assets/images/icons/download.png") no-repeat center;
+                background: url("/assets/images/icons/download.svg") no-repeat center;
             }
 
             &.website {
@@ -87,7 +103,7 @@ button {
             }
 
             &.move {
-                background: url("/assets/images/icons/move.png") no-repeat center;
+                background: url("/assets/images/icons/move.svg") no-repeat center;
             }
 
             &.plus {
@@ -137,7 +153,8 @@ button {
 }
 
 .publish-buttons {
-    display: flex;
+    // display: flex;
+    @include vcenterChildren;
 
     .publish-btn {
         display: flex;
@@ -145,6 +162,14 @@ button {
         height: 32px;
         color:$white;
         cursor: pointer;
+
+        &:hover:not(.white) {
+            background: #44A1F8;
+        }
+
+        &:hover.white {
+            background: #fcfcfc;
+        }
 
         & + .publish-btn {
             margin-left: 8px;
@@ -167,19 +192,19 @@ button {
         }
 
         .send {
-            background: url("/assets/images/icons/paper_plane.png") no-repeat center;
+            background: url("/assets/images/icons/paper_plane.svg") no-repeat center;
         }
 
         .save {
-            background: url("/assets/images/icons/save.png") no-repeat center;
+            background: url("/assets/images/icons/save.svg") no-repeat center;
         }
 
         .cancel {
-            background: url("/assets/images/icons/cancel.png") no-repeat center;
+            background: url("/assets/images/icons/cancel.svg") no-repeat center;
         }
 
         .white-check {
-            background: url("/assets/images/icons/ok.png") no-repeat center;
+            background: url("/assets/images/icons/ok.svg") no-repeat center;
         }
     }
 }
@@ -192,6 +217,10 @@ button {
     display: inline-block;
     background-color: $white;
     @include hcenterChildren;
+
+    &:hover {
+        background: #fcfcfc;
+    }
   
     .notification {
         background: url("/assets/images/icons/bell_icon.svg") no-repeat center;
@@ -202,7 +231,7 @@ button {
     }
 
     .back {
-        background: url("/assets/images/icons/back_icon.png") no-repeat center; 
+        background: url("/assets/images/icons/back-grey.svg") no-repeat center; 
     }
 
     .plus {

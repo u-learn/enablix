@@ -1,0 +1,21 @@
+<div>
+    <div class="tag-input">
+        <input type="text" ng-change="searchObject()" ng-model="search.object" ng-focus="displayDropdown()" /> 
+    </div>
+    <div class="input-search-result" ng-hide="displayData.length === 0">
+        <table cellpadding="0" cellspacing="0">
+            <thead>
+            <tr class="header">
+               <th>Pick Object</th>
+               <th><img ng-click="hideDropdown()" src="/assets/images/icons/close-grey.svg" /></th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="d in displayData track by $index" ng-click="addNewTag(d)">
+                    <td class="object-name" ng-bind="d.title"></td>
+                    <td class="object-property" ng-bind="d.type" ng-class="d.color"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

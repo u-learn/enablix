@@ -22,7 +22,11 @@ export default class ContentTypes {
   // optional link function
   link (scope, element, attributes) {
     scope.selectedTag = (tagData) => {
-      scope.$emit('contentTypeSelected', tagData);
+
+      //don't want tags selected to be clickable
+      if(!scope.showClose){
+        scope.$emit('contentTypeSelected', tagData);
+      }
     };
 
     scope.removeTag = (tagData) => {

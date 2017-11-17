@@ -22,7 +22,7 @@ export default class RecentActivity {
   // optional link function
   link (scope, element, attributes) {
 
-    console.log('data', scope.data);
+    scope.search = {}
     
     scope.header = scope.headerData ? scope.headerData.title : 'Recent Activities';
     scope.subheader = scope.headerData ? scope.headerData.subheader : 'See what your team members were doing lately';

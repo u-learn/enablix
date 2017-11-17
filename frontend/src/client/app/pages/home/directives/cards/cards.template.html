@@ -1,7 +1,7 @@
 <div class="card-container">
-    <div class="card" ng-repeat="d in data" ng-class="{'with-flex': addFlex}">
+    <div class="card" ng-repeat="d in data" ng-class="{'with-flex': addFlex, 'placeholder': d.title === 'placeholder'}">
         <div>
-                <img ng-if="d.thumbnail" ng-src="{{d.thumbnail}}" />
+                <img class="card-img" ng-if="d.thumbnail" ng-src="{{d.thumbnail}}" />
                 <div class="cardImgText" ng-if="d.text">
                     <p ng-bind="d.text"></p>
                 </div>

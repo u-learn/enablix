@@ -11,15 +11,28 @@
 
     &.with-flex {
         flex-grow: 1;
-        min-width: 25%;
         display: flex;
-        justify-content: space-between;
-    }
+        justify-content: flex-start;
+        // justify-content: space-between;
 
+        // @include breakpoint(sm){
+        //     min-width: 25%;
+        //     justify-content:center
+        // }
+
+        // @include breakpoint(md){
+        //     min-width: 33%;
+        // }
+
+
+        // @include breakpoint(lg){
+        //     min-width: 20%;
+        // }
+    }
+    
     .cardDefaultImg, .cardImgText {
-        height: 108px;
+        height: 104px;
         width: 192px;
-        // padding: 0 16px;
         background: #2C4290;
         @include vcenterChildren;
         border-radius: 4px 4px 0 0;
@@ -31,10 +44,14 @@
     
     .cardImgText {
         color: $white;
-        font-family: $FPBlond;
+        font-family: $FPLight;
         font-size: 14px;
         line-height: 18px;
         width: 192px;
+    }
+
+    .card-img {
+        display: block;
     }
 
     img + .content {
@@ -59,16 +76,17 @@
         }
 
         .card-title {
-            font-family: $FPBlond;
+            font-family: $FPLight;
             font-size: 14px;
             color: #2D2D2D;
             line-height: 18px;
             margin-bottom: 18px;
             padding: 0 8px;
+            height: 36px;
         }
 
         .company-properties {
-            font-family: $FPBlond;
+            font-family: $FPLight;
             font-size: 12px;
             color: #BFCBD9;
         }

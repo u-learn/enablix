@@ -4,7 +4,7 @@
         <p>Control your company content type tags by adding or removing them below:</p>
     </div>
     <div class="tags-container" ng-if="!forSearchFilter">
-        <div class="tag" ng-repeat="t in data">
+        <div class="tag" ng-repeat="t in data track by $index">
             <div class="content">
                 <span>{{t.title}}</span>                
                 <a class="remove" href="">
@@ -23,13 +23,11 @@
     </div>
 
     <div class="tags-container filtered" ng-if="forSearchFilter">
-        <div class="tag" ng-class="{'noCountTag': showClose}" ng-repeat="t in data" ng-click="selectedTag(t)">
+        <div class="tag" ng-class="{'white': t.includes('+')}" ng-repeat="t in data track by $index" ng-click="selectedTag(t)" >
             <div class="content">
                 <span>{{t}}</span>
                 <a class="remove" href="" ng-click="removeTag(t)" ng-show="showClose">
-                    <button class="circle icon-btn">
-                        <div class="icon small plus"></div>
-                    </button>
+                    <img class="" src="/assets/images/icons/close-white.svg" /> 
                 </a>              
             </div>
         </div>

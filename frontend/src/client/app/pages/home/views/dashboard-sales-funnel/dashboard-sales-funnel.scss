@@ -1,7 +1,7 @@
 .dashboard-sales-funnel {
 
     .dashboard-buttons {
-        .action-btn {
+        .action-btn.fixed-size {
             height: 32px;
             width: 32px;
         }
@@ -12,7 +12,7 @@
         display: flex;
 
         h2 {
-            font-family: $FPLight;
+            font-family: $FPThin;
             font-size: 32px;
         }
     }
@@ -22,7 +22,26 @@
         padding-top: 56px;
 
     }
+
+    .card.with-flex{
+        justify-content: flex-start!important;
+    }
 }
+
+.dashboard-sales-funnel.list {
+    
+    .card {
+
+        &:nth-child(2){
+            display: none;
+    
+            @include breakpoint(lg){
+                display: block;
+            }
+        }
+    }
+}
+
 .cards-container {
     display: block;
     width: 100%;
@@ -30,7 +49,7 @@
     height: calc(100vh - 262px);
 
     @include breakpoint(md){
-        width: calc(100vw - 320px - 96px);
+        width: calc(100% - 354px);
     }
 
     .sales-funnel-header {
@@ -40,7 +59,7 @@
     }
 
     h2 {
-        font-family: $FPLight;
+        font-family: $FPThin;
         font-size: 24px;
         height: 24px;
         width: 130px;
@@ -75,7 +94,7 @@
 
 
     h2 {
-        font-family: $FPLight;
+        font-family: $FPThin;
         font-size: 24px;
         margin-bottom: 9px;
     }
@@ -87,3 +106,4 @@
         margin-bottom: 32px;
     }
 }
+

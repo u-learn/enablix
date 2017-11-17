@@ -9,13 +9,18 @@
   }
  
   @else if $class == md {
-    @media (min-width: 992px) { @content; }
+    @media (min-width: 1060px) { @content; }
   }
  
   @else if $class == lg {
-    @media (min-width: 1200px) { @content; }
+    @media (min-width: 1248px) { @content; }
   }
- 
+
+  @else if $class == xlg {
+    @media (min-width: 1520px) { @content; }
+  }
+
+
   @else {
     @warn "Breakpoint mixin supports: xs, sm, md, lg";
   }

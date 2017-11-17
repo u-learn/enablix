@@ -17,11 +17,20 @@ h1, h2, h3, h4, p, ul, input, body{
     margin: 0;
 }
 
+h1[contenteditable]{
+    color: $grey-dark;
+}
+
+.main {
+    height: 100%;
+}
+
 a{
     text-decoration: none;
     color: inherit; 
 }
-textarea, input, select { 
+
+textarea, input:not([type=checkbox]), select { 
     border:none;
     background-image:none;
     background-color:transparent;
@@ -33,9 +42,9 @@ textarea, input, select {
     -webkit-appearance: none; 
 }
 
-input, select, textarea {
+input:not([type=checkbox]), select, textarea {
     color: #2D2D2D;
-    -webkit-appearance: none;
+    // -webkit-appearance: none;
     background-color: $white;
 
     &.border-style {
@@ -51,6 +60,17 @@ select {
     cursor: pointer;
 }
 
+.company-information, .consolidate-content {
+
+    input[type="checkbox"] {
+        // -webkit-appearance:none;
+        background:white;
+        border-radius:4px;
+        // border: 1px solid #E3EBEF;
+        // box-shadow: 0 1px 1px 0 rgba(0,0,0,0.06); 
+    }
+}
+
 .inputFile {
 	width: 0.1px;
 	height: 0.1px;
@@ -62,24 +82,35 @@ select {
 
 .container {
     margin-top: 56px;
-}
 
-.wrapper {
     @include breakpoint(sm){
-        margin-right: 16px;
-        margin-left: 16px;
-    }
-
-    @include breakpoint(md){
-        margin-right: 32px;
-        margin-left: 32px;
+        margin-right: 36px;
+        margin-left: 48px;
     }
     
-    @include breakpoint(lg){
+    @include breakpoint(md){
         margin-right: 48px;
         margin-left: 48px;
     }
-    margin-top: 40px;
+}
+
+.wrapper {
+    height: 100%;
+    min-width: 1024px;
+    max-width: 1600px;
+    margin: auto;
+
+    @include breakpoint(md){
+        margin: 0 32px;
+    }
+    
+    @include breakpoint(lg){
+        margin: 0 48px;
+    }
+
+    @include breakpoint(xlg){
+        margin: auto;
+    }
 }
 
 .icon {
@@ -130,7 +161,7 @@ body {
     }
 
     .activity {
-      font-family: $FPBlond;
+      font-family: $FPLight;
       font-size: 14px;
       line-height: 18px;
       display: flex;
@@ -187,13 +218,29 @@ body {
     height: 100%;
     width: 296px;
     float: right;
-    margin-left: 80px;
     display: none;
+    // margin-left: 80px;
+
+    @include breakpoint(md){
+        margin-right: 16px;
+    }
+
+    @include breakpoint(lg){
+        margin-right: 0;
+    }
+
+    @media only screen and (max-width: 1268px) {
+        margin-right: 16px;
+    }
 
     &.toRight {
         float: left;
         margin-left: 0;
         margin-right: 24px;
+
+        @include breakpoint(md){
+            margin-right: 48px;
+        }
     }
 
     &.sticky {
@@ -221,11 +268,11 @@ body {
     .header {
         margin-bottom: 40px;
         h1 {
-            font-family: $FPLight;
+            font-family: $FPThin;
         }
 
         p.subheader {
-            font-family: $FPBlond;
+            font-family: $FPLight;
             font-size: 14px;
             color: $grey-dark;
             line-height: 17px;
@@ -234,6 +281,7 @@ body {
             }            
         }
         a.cta-link{
+            cursor: pointer;
             font-family: $FPSemiBold;
             font-size: 14px;
             color:$blue-med-20;

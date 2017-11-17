@@ -2,7 +2,7 @@
     padding: 0 25px;
     width: calc(100vw - 50px);
     display: flex;
-  }
+}
   
 @mixin overlay {
   display: flex;
@@ -18,7 +18,7 @@
       background-color: rgba(37,42,44,0.70);
       opacity: 0.8;
       z-index: 9;
-      position: absolute;
+      position: fixed;
       height: 100vh;
       width: 100vw;
   }

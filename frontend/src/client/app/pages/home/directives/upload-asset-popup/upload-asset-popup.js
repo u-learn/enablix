@@ -30,9 +30,17 @@ export default class UploadAssetPopup {
       } else if (type === 'text') {
         scope.state.go('assets.text-edit');
       } else {
+        scope.previewContent = false;
         scope.state.go('assets.url-edit');
       }
     };
+
+    scope.url = {};
+
+    scope.previewContent = false;
+    scope.showPreview = () => {
+      scope.previewContent = true;
+    }    
 
     scope.$on('upload-prompt-text', () => { 
       scope.showTextPreview = true;

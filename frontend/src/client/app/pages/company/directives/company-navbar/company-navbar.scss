@@ -1,4 +1,9 @@
-// company-navbar{
+company-navbar{
+   >div {
+    margin-bottom: 56px;
+   } 
+}
+
 .tabs-container {
     height: 39px;
     border-bottom: 1px solid rgba(0,0,0,.03);
@@ -8,8 +13,9 @@
         margin-right: 28px;
     }
 }
+
 .tab {
-    font-family: $FPBlond;
+    font-family: $FPLight;
     font-size: 18px;
     color: $grey-med;
     float: left;
@@ -24,7 +30,7 @@
     }
 
     &.active {
+        color: $black;
         border-bottom: 2px solid $blue-med-20;
     }
-} 
-// }
+}

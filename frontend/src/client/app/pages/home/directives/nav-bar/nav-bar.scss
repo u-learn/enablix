@@ -1,7 +1,15 @@
 .nav-bar {
     height: 80px;
-    padding: 0 40px 0 44px;
+    // padding: 0 40px 0 44px;
     @include vcenterChildren;
+
+    @include breakpoint(sm){
+      padding: 0;
+    }
+
+    @include breakpoint(sm){
+      padding: 0 8px;
+    }
 
     .left {
         width: 50%;
@@ -22,14 +30,15 @@
       margin-right: 16px;
       margin-left: 16px;
 
-      @media only screen and (max-width: 1072px) {
-        display: none;
+      @media only screen and (max-width: 1080px) {
+        margin-right: 8px;
+        margin-left: 8px;
       }
     }
   
     .enablix-logo {
       height: 16px;
-      margin-right: 24px;
+      margin-right: 20px;
     }
   
     .client-brand {
@@ -41,6 +50,16 @@
         border-radius: 4px;
         padding-right: 8px;
         cursor: pointer;
+
+        &.noBorder{
+          background: $grey-lig-5;
+          box-shadow: none;
+          border-radius: none;
+        }
+
+        &:hover {
+          background: #fcfcfc;
+        }
   
         .logo {
             padding: 8px;
@@ -49,22 +68,26 @@
         h3 {
             // line-height: 20px;
             height: 18px;
-            font-family: $FPBlond;
+            font-family: $FPLight;
+
         }
 
-        @media only screen and (max-width: 1072px) {
-          display: none;
+        @media only screen and (max-width: 1268px) {
+          width: 32px;
+          padding: 0 8px;
+
+          .logo {
+            padding: 0;
+          }
+
+          h3 {
+            display: none;
+          }
         }
     }
 
     .user {
         margin-left: 8px;
-    }
-
-    .draft {
-      @media only screen and (max-width: 1144px) {
-        display: none;
-      }
     }
   
     .users-group {
@@ -93,7 +116,7 @@
     .circle.users-count {
         background-color: $blue-med-20;
         border: 2px solid $grey-lig-5;
-        font-family: $FPBlond;
+        font-family: $FPLight;
         font-size: 14px;
         color:$white; 
         line-height: 36px;
@@ -101,8 +124,9 @@
     }
 
     .upload {
-        font-family: $FPBlond;
+        font-family: $FPLight;
         margin-right: 16px;
+
         > button {
             height: 48px;
             width: 117px;
@@ -112,23 +136,21 @@
             border-radius: 4px;            
             font-size: 18px;
             color:$white;
-        }
 
-        @media only screen and (max-width: 1260px) {
-          display: none;
+            &:hover {
+              background: #44A1F8;
+            }
         }
-
     }
 
     .consolidate-header {
-        font-family: $FPBlond;
+        font-family: $FPLight;
         color: $black;
         line-height: 20px;
     }
 
     .upload-options-container {
-      border: 1px solid rgba(0, 0, 0, 0.1);
-      // border-radius: 2px;
+      border: 1px solid rgba(0, 0, 0, 0.1);      
       background-color: $white;
       height: 144px;
       position: absolute;

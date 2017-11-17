@@ -22,7 +22,7 @@
 </div>
 
 <!-- this is for dim cards that shows full width -->
-<div class="dim-card-container particular-dimension" ng-if="showAllCards">
+<div class="dim-card-container full-width" ng-if="showAllCards">
     <div class="dim-cards">
         <div class="dim-card new" ng-hide="hideNewDimForm">
             <div class="card-dim-form">
@@ -33,7 +33,7 @@
                 <img ng-click="deleteNewCard()" class="delete-icon" width="26px" height="26px" src="/assets/images/buttons/trash_btn.png" />
             </div>
         </div>
-        <div class="dim-card" ng-repeat="card in displayData.cards">
+        <div class="dim-card" ng-repeat="card in displayData.cards" ng-class="{'placeholder': card.title === 'placeholder'}">
             <div class="card-title" ng-if="card.title">
                 <div class="color-block" ng-class="displayData.color"></div>
                 <p ng-bind="card.title"></p>

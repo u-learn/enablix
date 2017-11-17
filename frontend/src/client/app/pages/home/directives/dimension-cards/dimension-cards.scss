@@ -1,5 +1,4 @@
 .dim-card-container {
-    width: calc(50%);
 
     &.multiple-dimensions {
         padding-top: 24px;
@@ -7,24 +6,25 @@
         border-bottom: 1px solid rgba(179, 38, 38, 0.03);
     }
 
-    &.fullWidth {
-        width: calc(100%);
-    }
-
-    &.particular-dimension {
-        width: 100%;
-    }
-
     h2 {
-        font-family: $FPLight;
+        font-family: $FPThin;
         font-size: 24px;
         color: #000000;
         margin-bottom: 24px;
     }
 
+    &.full-width {
+        width: 100%;
+
+        .dim-cards {
+            flex-flow: row wrap;
+            justify-content: space-between;
+        }
+        
+    }
+
     .dim-cards {
         display: flex;
-        flex-wrap: wrap;
         
         &.add-margin {
             margin-bottom: 40px;
@@ -50,7 +50,7 @@
     
     .card-title {
         padding-top: 16px;
-        font-family: $FPBlond;
+        font-family: $FPLight;
         font-size: 18px;
         color: $black;
         line-height: 20px;
@@ -109,9 +109,10 @@
     }
 
     .card-properties {
-        font-family: $FPBlond;
+        font-family: $FPLight;
         font-size: 12px;
         color: #BFCBD9;
+        padding-right: 18px;
         padding-left: 18px;
 
         .dot {
@@ -139,7 +140,7 @@
         border-radius: 4px;
 
         p {
-            font-family: $FPLight;
+            font-family: $FPThin;
             font-size: 32px;
             color: #808C9B;
             line-height: 24px;
@@ -162,5 +163,9 @@
 
     &.blue {
         background: #2978C8;
+    }
+
+    &.lightBlue {
+        background: #1F8AEF;
     }
 }

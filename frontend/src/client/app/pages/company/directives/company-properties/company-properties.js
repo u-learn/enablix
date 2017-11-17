@@ -22,7 +22,9 @@ export default class CompanyProperties {
   // optional link function
   link (scope, element, attributes) {
     scope.selectedTag = (tagData) => {
-      scope.$emit('dimOrObjSelected', tagData);
+      if(!scope.showClose){
+        scope.$emit('dimOrObjSelected', tagData);
+      }
     }
 
     scope.removeTag = (tagData) => {

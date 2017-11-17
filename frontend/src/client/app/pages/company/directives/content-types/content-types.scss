@@ -1,14 +1,14 @@
 content-types{
     .header {
         h2 {
-            font-family: $FPLight;
+            font-family: $FPThin;
             font-size: 24px;
             color: $black;
             padding-bottom: 16px;
         }
 
         p {
-            font-family: $FPBlond;
+            font-family: $FPLight;
             font-size: 14px;
             color: $grey-dark;
             line-height: 17px;
@@ -19,14 +19,14 @@ content-types{
 
     
     .filtered {
-        .tag:last-child:not(.noCountTag){
-            background: white;
-            color: #1F8AEF;
-            border: 1px solid #E3EBEF;
-        }
-
         .tag {
             margin-bottom: 0px;
+
+            &.white {
+                background: white;
+                color: #1F8AEF;
+                border: 1px solid #E3EBEF;
+            }
         }
     }
 }

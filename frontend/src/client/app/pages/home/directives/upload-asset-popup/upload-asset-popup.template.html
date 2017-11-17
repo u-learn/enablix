@@ -1,20 +1,23 @@
 <div class="upload-asset-popup">
     <!-- url popup  -->
     <div ng-if="showUrlPreview">
-        <h1 contenteditable="true">Premature Scaling: Why It Kills Startups and How to Avoid It
-            <img src="/assets/images/icons/edit_title.svg" />
+        <h1 ng-hide="previewContent">Capture URL
+            <!-- <img src="/assets/images/icons/edit_title.svg" /> -->
         </h1>
+        <h1 ng-show="previewContent" contenteditable="true">Premature Scaling: Why It Kills Startups and How to Avoid It</h1>
         <div class="preview-text">
             <img src="/assets/images/icons/globe_earth.svg" />
-            <p>https://medium.com/swlh/premature-scaling-why-it-kills-startups-and-how-to-avoid-it-500677f45024</p>
+            <input ng-blur="showPreview()" ng-model="asset.url" value="https://medium.com/swlh/premature-scaling-why-it-kills-startups-and-how-to-avoid-it-500677f45024" />
         </div>
-        <div class="preview-img">
-            <img src="/assets/images/covers/preview-url.png" />
-        </div>
-        <div class="preview-tag">
-            <img src="/assets/images/icons/hash_icon.svg" />
-            <select ng-model="asset.selectedTag" ng-options="option.name for option in tagOptions">
-            </select>
+        <div ng-show="previewContent">
+            <div class="preview-img">
+                <img src="/assets/images/covers/preview-url.png" />
+            </div>
+            <div class="preview-tag">
+                <img src="/assets/images/icons/hash_icon.svg" />
+                <select ng-model="asset.selectedTag" ng-options="option.name for option in tagOptions">
+                </select>
+            </div>
         </div>
         <div class="actionBtns">
             <button class="action" ng-click="createAsset('url')">Capture</button>
@@ -39,10 +42,10 @@
     </div>
     <!-- text popup  -->
     <div ng-if="showTextPreview">
-        <h1 contenteditable="true">Does your platform scale?</h1>
+        <input class="asset-text" placeholder="Title" ng-model="asset.text">
         <div class="preview-text align-top">
-            <img src="/assets/images/icons/note.png" />
-            <textarea ng-model="asset.textAdded"></textarea>
+            <img src="/assets/images/icons/note.svg" />
+            <textarea ng-model="asset.textAdded" placeholder="Content"></textarea>
         </div>
         <div class="preview-tag">
             <img src="/assets/images/icons/hash_icon.svg" />

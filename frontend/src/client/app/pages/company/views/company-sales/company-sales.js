@@ -53,6 +53,17 @@ class SalesFunnel {
             funnelName: '',
             contentTypes
         };
+
+        this.showCreateNewStageForm = false;
+        this.addNewStage = () => {
+            this.showCreateNewStageForm = true;
+        }
+
+        this.pushNewStage = () => {
+            this.showCreateNewStageForm = false;
+
+            //functionality for saving new stage data
+        }
     }
 }
 

@@ -1,12 +1,12 @@
 <div class="nav-bar">
     <div class="left">
         <img class="enablix-logo" src="/assets/images/company/enablix_logo@2x.png" />
-        <div class="client-brand" ng-if="isCompanyState || isRecentActivitiesState">
+        <div class="client-brand" ng-if="isCompanyState || isRecentActivitiesState" ng-class="{'noBorder': isCompanyState}">
             <img class="logo" src="/assets/images/company/brillant_logo.svg" />
             <h3 class="brand">Brillant AB</h3>
         </div>
         <div ng-if="isDashboardState">
-            <search-bar data="searchBarData"></search-bar>
+            <search-bar data="searchBarData" state="state"></search-bar>
         </div>
         <div class="consolidate-header" ng-if="isConsolidateContentState">
             <h3>Consolidate Content</h3>
@@ -25,7 +25,7 @@
                     <span>URL</span>
                 </div>
                 <div class="upload-option" ng-click="openUploadPrompt('text')">
-                    <img src="/assets/images/icons/upload-icon-blue.svg" />
+                    <img src="/assets/images/icons/note-blue.svg" />
                     <span>Create Text</span>
                 </div>
             </div>

@@ -8,15 +8,20 @@
         border-radius: 4px;
     }
 
-    h1 {
-        font-family: $FPLight;
+    h1, .asset-text {
+        font-family: $FPThin;
         line-height: 38px;
         margin-bottom: 32px;
+        font-size: 32px;
+    }
+
+    .asset-text {
+        background: #F7F9F9;
     }
 
     .preview-text, .preview-img, .preview-tag{
         border-radius: 4px;
-        font-family: $FPBlond;
+        font-family: $FPLight;
     }
 
     input, select, textarea {

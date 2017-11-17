@@ -3,21 +3,22 @@
     border-radius: 6px;
     border: 1px solid #E3EBEF;
     background: $white;
-    font-family: $FPLight;
+    font-family: $FPThin;
     box-shadow: 0 1px 1px 0 rgba(0,0,0,0.06);
 
     .input-row {
         height: 50px;
-        // width: calc(100% - 32px);
         display: flex;
         padding: 0 16px;
+        align-items: center;
         
         img.search-icon {
             margin-right: 8px;
         }
 
-        img.funnel-icon {
+        img.funnel-icon, img.close-icon,  {
             margin-left: 8px;
+            margin-left: auto;
         }
         
         input {
@@ -33,9 +34,8 @@
 
     .filtered-rows {
         background: white;
-        position: absolute;
-        // min-width: 624px;
-        min-width: 586px;
+        position: absolute; 
+        width: 586px;
         box-shadow: 0 1px 1px 0 rgba(0,0,0,0.06);
         border-bottom-right-radius: 6px;
         border-bottom-left-radius: 6px;
@@ -47,7 +47,7 @@
 
     .filtered-row {
         margin: 0 16px;
-        height: 58px;
+        // min-height: 58px;
         display: flex;
         align-items: center;
 
@@ -58,12 +58,59 @@
         h3 {
             width: 150px;
         }
+
+        >div {
+            margin: 16px 0 8px 0;
+            width: calc(100% - 150px);
+        }
+
+        .dimension-tag {
+            &:nth-child(n+2){
+                margin-bottom: 8px;
+            }
+        }
         
+        .tag {
+            &:nth-child(n+4){
+                margin-bottom: 8px;
+            }
+        }
     }
 
     .free-search {
-        font-family: $FPLight;
+        font-family: $FPThin;
         font-size: 16px;
         color: #1F8AEF;
+        margin: 16px;
+    }
+
+    .selectedTagsHolder {
+        .company-sector {
+            margin-bottom: 0px;    
+        }
+    }
+
+    @media only screen and (max-width: 1080px) {
+        min-width: 548px;
+
+        .filtered-rows {
+            width: 548px;
+        }
+
+        .input-row {
+            padding: 0 8px;
+        }
+
+        .filtered-row { 
+            margin: 0 8px;
+            
+            h3 {
+                width: 130px;
+            }
+
+            >div {
+                width: calc(100% - 130px);
+            }
+        }
     }
 }

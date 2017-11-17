@@ -1,75 +1,77 @@
-<div class="assets-navbar">
-    <div ng-click="ctrl.goBackHome()">
-        <button class="circle icon-btn">
-            <div class="icon small back"></div>
-        </button>
-    </div>
-    <div ng-if="!ctrl.showPublishOptions">
-        <div class="dashboard-buttons">
-            <div class="action-btn" ng-mouseover="ctrl.showBtn('edit')" ng-mouseout="ctrl.hideBtn('edit')" ng-click="ctrl.editState()">
-                <div class="icon small edit"></div>
-                <p ng-show="ctrl.actionBtnState.edit">Edit</p>
-            </div>
-            <div class="action-btn" ng-mouseover="ctrl.showBtn('delete')" ng-mouseout="ctrl.hideBtn('delete')" ng-click="ctrl.deletePrompt()">
-                <div class="icon small trash"></div>
-                <p ng-show="ctrl.actionBtnState.delete">Trash</p>
-            </div>
-            <div class="divider"></div>
-            <!-- different depending on asset page -->
-            <div class="action-btn" ng-click="ctrl.externalActions(ctrl.assetTypeBtn)" ng-mouseover="ctrl.showBtn(ctrl.assetTypeBtn)" ng-mouseleave="ctrl.hideBtn(ctrl.assetTypeBtn)">
-                <div class="icon small" ng-class="ctrl.assetTypeBtn"></div>
-                <p ng-show="ctrl.actionBtnState.{{ctrl.assetTypeBtn}}" ng-bind="ctrl.assetTypeBtn"></p>
-            </div>
-            <div class="action-btn" ng-click="ctrl.confirmAction('attach')" ng-mouseover="ctrl.showBtn('attach')" ng-mouseleave="ctrl.hideBtn('attach')">
-                <div class="icon small attach" ng-hide="ctrl.showActionConfirmed.attach"></div>
-                <p ng-show="ctrl.actionBtnState.attach && !ctrl.showActionConfirmed.attach">URL Copy</p>    
-                <p class="confirmed-action" ng-show="ctrl.showActionConfirmed.attach"><img src="/assets/images/icons/check-icon.svg" />URL Copied</p>
-            </div>
-            <div class="action-btn" ng-click="ctrl.emailPrompt()" ng-mouseover="ctrl.showBtn('email')" ng-mouseleave="ctrl.hideBtn('email')">
-                <div class="icon small email"></div>
-                <p ng-show="ctrl.actionBtnState.email">Email</p>
-            </div>
-        </div>
-    </div>
-
-    <div ng-if="ctrl.showPublishOptions">
-        <div class="publish-buttons">
-            <button class="publish-btn" ng-click="ctrl.previewState()">
-                <div class="icon small send"></div>
-                <p class="btn-text">Publish</p>
-            </button>
-            <button class="publish-btn" ng-click="ctrl.goBackHome()">
-                <div class="icon small save"></div>
-                <p class="btn-text">Save as Draft</p>
-            </button>
-            <button class="publish-btn white" ng-click="ctrl.cancelState()">
-                <div class="icon small cancel"></div>
-                <p class="btn-text">Cancel</p>
-            </button>
-        </div>
-    </div>
-    <div class="far-right">
-        <div class="notification-container" ng-mouseover="ctrl.showNotifications()" ng-mouseleave="ctrl.hideNotifications()">
+<div class="wrapper">
+    <div class="assets-navbar">
+        <div ng-click="ctrl.goBackHome()">
             <button class="circle icon-btn">
-                <div class="icon small notification"></div>
+                <div class="icon small back"></div>
             </button>
-            <div ng-show="ctrl.showNotificationsPopup" class="notify-popup">
-                <div class="activity">
-                    <p>Gaurav approved Mobile Security for First Republic Bank</p>
-                    <img class="icon user-img" src="/assets/images/company/profile_img@2x.png" />
+        </div>
+        <div ng-if="!ctrl.showPublishOptions">
+            <div class="dashboard-buttons">
+                <div class="action-btn add-padding" ng-mouseover="ctrl.showBtn('edit')" ng-mouseout="ctrl.hideBtn('edit')" ng-click="ctrl.editState()">
+                    <div class="icon small edit"></div>
+                    <p ng-show="ctrl.actionBtnState.edit">Edit</p>
                 </div>
-                <div class="see-asset">
-                    <a>See Asset</a>
+                <div class="action-btn add-padding" ng-mouseover="ctrl.showBtn('delete')" ng-mouseout="ctrl.hideBtn('delete')" ng-click="ctrl.deletePrompt()">
+                    <div class="icon small trash"></div>
+                    <p ng-show="ctrl.actionBtnState.delete">Trash</p>
+                </div>
+                <div class="divider"></div>
+                <!-- different depending on asset page -->
+                <div class="action-btn add-padding" ng-click="ctrl.externalActions(ctrl.assetTypeBtn)" ng-mouseover="ctrl.showBtn(ctrl.assetTypeBtn)" ng-mouseleave="ctrl.hideBtn(ctrl.assetTypeBtn)">
+                    <div class="icon small" ng-class="ctrl.assetTypeBtn"></div>
+                    <p ng-show="ctrl.actionBtnState.{{ctrl.assetTypeBtn}}" ng-bind="ctrl.assetTypeBtn"></p>
+                </div>
+                <div class="action-btn add-padding" ng-click="ctrl.confirmAction('attach')" ng-mouseover="ctrl.showBtn('attach')" ng-mouseleave="ctrl.hideBtn('attach')">
+                    <div class="icon small attach" ng-hide="ctrl.showActionConfirmed.attach"></div>
+                    <p ng-show="ctrl.actionBtnState.attach && !ctrl.showActionConfirmed.attach">URL Copy</p>    
+                    <p class="confirmed-action" ng-show="ctrl.showActionConfirmed.attach"><img src="/assets/images/icons/check-icon.svg" />URL Copied</p>
+                </div>
+                <div class="action-btn add-padding" ng-click="ctrl.emailPrompt()" ng-mouseover="ctrl.showBtn('email')" ng-mouseleave="ctrl.hideBtn('email')">
+                    <div class="icon small email"></div>
+                    <p ng-show="ctrl.actionBtnState.email">Email</p>
                 </div>
             </div>
         </div>
-        <div class="user">
-            <img class="icon user-img" src="/assets/images/company/profile_img@2x.png" />
+
+        <div ng-if="ctrl.showPublishOptions">
+            <div class="publish-buttons">
+                <button class="publish-btn" ng-click="ctrl.previewState()">
+                    <div class="icon small send"></div>
+                    <p class="btn-text">Publish</p>
+                </button>
+                <button class="publish-btn" ng-click="ctrl.goBackHome()">
+                    <div class="icon small save"></div>
+                    <p class="btn-text">Save as Draft</p>
+                </button>
+                <button class="publish-btn white" ng-click="ctrl.cancelState()">
+                    <div class="icon small cancel"></div>
+                    <p class="btn-text">Cancel</p>
+                </button>
+            </div>
+        </div>
+        <div class="far-right">
+            <div class="notification-container" ng-mouseover="ctrl.showNotifications()" ng-mouseleave="ctrl.hideNotifications()">
+                <button class="circle icon-btn">
+                    <div class="icon small notification"></div>
+                </button>
+                <div ng-show="ctrl.showNotificationsPopup" class="notify-popup">
+                    <div class="activity">
+                        <p>Gaurav approved Mobile Security for First Republic Bank</p>
+                        <img class="icon user-img" src="/assets/images/company/profile_img@2x.png" />
+                    </div>
+                    <div class="see-asset">
+                        <a>See Asset</a>
+                    </div>
+                </div>
+            </div>
+            <div class="user">
+                <img class="icon user-img" src="/assets/images/company/profile_img@2x.png" />
+            </div>
         </div>
     </div>
-</div>
-<div class="assets-container">
-    <div ui-view></div>
+    <div class="assets-container">
+        <div ui-view></div>
+    </div>
 </div>
 <div ng-show="ctrl.showDeletePrompt" class="delete-prompt">
     <div>

@@ -1,30 +1,44 @@
-<div class="search-bar" click-outside="hideSearchBar()">
+<div class="search-bar">
     <div class="input-row">
-        <img class="search-icon" src="/assets/images/icons/search-grey.svg" />
+        <img ng-hide="searchFunnelIconActive" class="search-icon" src="/assets/images/icons/search-grey.svg" />
+        <img ng-show="searchFunnelIconActive" class="search-icon" src="/assets/images/icons/search-blue.svg" />        
         <!-- inject any tags -->
         <div class="selectedTagsHolder">
-            <div ng-if="selectedContentTypes.length > 0">
-                <content-types hide-header="true" for-search-filter="true" show-close="true" data="selectedContentTypes"></content-types>
-            </div>
             <div ng-if="selectedDimOrObj.length > 0">
                 <company-properties for-search-filter="true" show-close="true" data="selectedDimOrObj"></company-properties>
             </div>
+            <div ng-if="selectedContentTypes.length > 0">
+                <content-types hide-header="true" for-search-filter="true" show-close="true" data="selectedContentTypes"></content-types>
+            </div>
         </div>
-        <input type="text" ng-model="search.input" placeholder="Search" ng-focus="showSearchBar()" ng-change="updateFilters()"/> 
-        <img class="funnel-icon" src="/assets/images/icons/filter-grey.svg" />
+        <input ng-hide="selectedContentTypes.length > 0 || selectedDimOrObj.length > 0" type="text" ng-model="search.input" placeholder="Search" ng-blur="searchInputUnactive()" ng-focus="searchInputActive()" ng-change="updateFilters()"/> 
+        <img ng-hide="showFilteredResults" class="funnel-icon" src="/assets/images/icons/filter-grey.svg" ng-click="showSearchBar()" />
+        <img ng-show="showFilteredResults" class="close-icon" src="/assets/images/icons/close-grey.svg" ng-click="hideSearchBar()" />
     </div>
     
     <div class="filtered-rows" ng-show="showFilteredResults">
         <div class="filtered-row" ng-repeat="filter in differentFilters">
             <h3 ng-bind="filter"></h3>
             <div ng-if="filter === 'Content Types'">
-                <content-types hide-header="true" for-search-filter="true" data="contentTypes"></content-types>
+                <content-types hide-header="true" for-search-filter="true" data="rowData3"></content-types>
             </div>
             <div ng-if="filter === 'Dimensions'">
-                <company-properties for-search-filter="true" data="dimensions"></company-properties>
+                <company-properties for-search-filter="true" data="rowData1"></company-properties>
             </div>
             <div ng-if="filter === 'Objects'">
-                <company-properties for-search-filter="true" data="objects"></company-properties>
+                <company-properties for-search-filter="true" data="rowData2"></company-properties>
+            </div>
+            <div ng-if="filter === 'Market'">
+                <company-properties for-search-filter="true" data="rowData1"></company-properties>
+            </div>
+            <div ng-if="filter === 'Regions'">
+                <company-properties for-search-filter="true" data="rowData3"></company-properties>
+            </div>
+            <div ng-if="filter === 'Buyer Persona'">
+                <company-properties for-search-filter="true" data="rowData2"></company-properties>
+            </div>
+            <div ng-if="filter === 'Sales Activity'">
+                <company-properties for-search-filter="true" data="rowData1"></company-properties>
             </div>
         </div>
         <div class="filtered-row free-search" ng-if="search.input">

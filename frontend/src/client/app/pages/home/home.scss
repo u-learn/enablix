@@ -23,7 +23,7 @@ upload-asset-popup{
     padding: 0 84px;
     background: #C23535;
     box-shadow: 0 -1px 2px 0 rgba(0,0,0,0.06);
-    font-family: $FPBlond;
+    font-family: $FPLight;
     display: flex;
     align-items: center;
 
@@ -51,5 +51,15 @@ upload-asset-popup{
         button + button {
             margin-left: 8px;
         }
+    }
+}
+
+.card, .dim-card {
+    &.placeholder {
+        visibility: hidden;
+        height: 0;
+        padding: 0;
+        border-top-width: 0;
+        border-bottom-width: 0;
     }
 }

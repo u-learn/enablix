@@ -6,6 +6,10 @@ class CompanyInformation {
       $state.go('recent-activity');
     };
 
+    $scope.company = {
+      name: 'Brillant'
+    }
+
     this.recentActivityData = recentActivityData;
   }
 }

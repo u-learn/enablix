@@ -22,7 +22,7 @@
                 border-radius: 6px;
                 padding: 0 16px;
                 margin-top: 13px;
-                font-family: $FPBlond;
+                font-family: $FPLight;
                 font-size: 16px;
                 color: $black;
                 width: calc(100% - 32px);
@@ -31,31 +31,17 @@
             &[type="checkbox"] {
                 width: 16px;
                 height: 16px;
-                background: #FFFFFF;
-                border: 1px solid #E3EBEF;
-                box-shadow: 0 1px 1px 0 rgba(0,0,0,0.06);
-                border-radius: 4px;
                 margin-right: 10px;
-
-                &:checked {
-                    background: #1F8AEF;
-
-                    &::before {
-                        margin-left: 2px;
-                        content: '\2713';
-                        color: white;
-                    }
-                }
             }
         }
 
         h4 {
-            font-family: $FPBlond;
+            font-family: $FPLight;
             color: $black;
         }
 
         p{
-            font-family: $FPBlond;
+            font-family: $FPLight;
             font-size: 14px;
             color: #808C9B;
             line-height: 17px;
@@ -77,7 +63,7 @@
             border: 1px solid #E3EBEF;
             box-shadow: 0 1px 1px 0 rgba(0,0,0,0.06);
             border-radius: 4px;
-            font-family: $FPBlond;
+            font-family: $FPLight;
             font-size: 14px;
             line-height: 18px;
             background:$white;
@@ -109,7 +95,7 @@
         }
 
         .display-text {
-            font-family: $FPBlond;
+            font-family: $FPLight;
             font-size: 16px;
             color: #000000;
         }
@@ -122,7 +108,7 @@
         border-radius: 6px;
         margin-top: 8px;
         width: 100%;
-        font-family: $FPBlond;
+        font-family: $FPLight;
         //put in mixin
         display: flex;
         align-items: center;
@@ -150,6 +136,20 @@
                 font-size: 16px;
                 color: #BFCBD9;
             }   
+        }
+    }
+
+    .publish-buttons.changes-saved {
+
+        .publish-btn {
+            @include vcenterChildren;
+
+            .white-check {
+                height: 14px;
+                width: 14px;
+                padding-right: 8px;
+                background-size: 18px;
+            }
         }
     }
 }

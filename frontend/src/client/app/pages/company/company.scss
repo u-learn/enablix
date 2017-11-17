@@ -1,15 +1,30 @@
-.company > .header {
-    p.subheader{
-        padding-top: 7px; //sibling h1
-        padding-bottom: 32px; //sibling a    
-    } 
+.company { 
+    > .header {
+        p.subheader{
+            padding-top: 7px; //sibling h1
+            padding-bottom: 32px; //sibling a    
+        } 
+    }
 }
+
+
+.search-activity, .search-asset {
+    font-size: 18px;
+    width: 90%;
+    background-color: #F7F9F9!important;
+}
+
+// .sectors-container {
+//     &:after {
+//         clear: both;
+//     }
+// }
 
 //tags for company properties - shared between company-properties and sales view
 .tags-container, .sectors-container {
     .tag, .add-tag, .company-sector {
         position:relative;
-        font-family: $FPLight;
+        font-family: $FPThin;
         font-size: 16px;
         color: $white;
         float: left;
@@ -61,7 +76,7 @@
 
 //table shared between consolidate content and recent-activity
 .assets-table, .activity-table {
-    font-family: $FPBlond;
+    font-family: $FPLight;
 
     .td-text {
         font-size: 14px;

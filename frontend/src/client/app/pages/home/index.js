@@ -20,5 +20,5 @@ export default angular.module('Home', [])
   .directive('dimensionCards', ($state) => new DimensionCards($state))
   .directive('simpleSidebar', ($state) => new SimpleSidebar())
   .directive('footer', ($state) => new Footer())
-  .directive('searchBar', ($state) => new SearchBar())
+  .directive('searchBar', ($state) => new SearchBar($state))
   .name;

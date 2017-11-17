@@ -4,11 +4,11 @@
         <p class="subheader">Select what content types you'd like ot see in each stage of your sales<br>
         funnel. You may have the same content types in different stages.</p>
 
-        <a class="cta-link">Add Sales Stage</a>
+        <a class="cta-link" ng-click="ctrl.addNewStage()">Add Sales Stage</a>
     </div>
     <div class="main sales-funnel">
         <!-- new stage -->
-        <div class="stage new">
+        <div class="stage new" ng-show="ctrl.showCreateNewStageForm">
             <div class="main">
                 <div class="header-section">
                     <h2>
@@ -18,7 +18,7 @@
                             <div class="publish-buttons">
                                 <button class="publish-btn" ng-click="ctrl.goBackHome()">
                                     <div class="icon small white-check"></div>
-                                    <p class="btn-text">Save Stage</p>
+                                    <p class="btn-text" ng-click="ctrl.pushNewStage()">Save Stage</p>
                                 </button>
                             </div>
                             <div class="dashboard-buttons">

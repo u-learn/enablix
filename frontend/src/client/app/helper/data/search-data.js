@@ -1,4 +1,5 @@
-const searchBarData = [
+const searchBarData = {};
+searchBarData.dashboard = [
     {
         dimension: 'Products',
         contentTypes: ['Case Study', 'Blog'],
@@ -169,6 +170,57 @@ const searchBarData = [
             }]
     }
 ];
+
+searchBarData.dimensions = {
+    Products: {
+        'Market': {
+            dimensionTags: [
+                {color: 'lightBlue', title: 'Mobile'},
+                {color: 'lightBlue', title: 'Security'},
+                {color: 'lightBlue', title: 'SSL Certificate'}
+            ]
+        },
+        'BuyerPersona': {
+            dimensionTags: [
+                {color: 'lightBlue', title: 'Technical'},
+                {color: 'lightBlue', title: 'Financial'},
+                {color: 'lightBlue', title: 'Management'}
+            ]
+        },
+        'Regions': {
+            dimensionTags: [
+                {color: 'lightBlue', title: 'North America'},
+                {color: 'lightBlue', title: 'Western Europe'},
+                {color: 'lightBlue', title: 'Middle East'}
+            ]
+        }
+    }
+};
+
+searchBarData.objects = {
+    'AuthenticationCloudService': {
+        'ContentTypes': {
+            objectTags: ["Data Sheet", "Blog", "White Paper", "Sales Kit", "+4"] //"FAQ", "Case Study",
+        },
+        'SalesActivity': {
+            objectTags: [
+                {color: 'lightBlue', title: 'Prospecting'},
+                {color: 'lightBlue', title: 'Qualification'},
+                {color: 'lightBlue', title: 'Need Analysis'},
+                // {color: 'lightBlue', title: 'Value Propposition'},
+                {color: 'white', title: '+2'}
+            ]
+        }, 
+        'BuyerPersona': {
+            objectTags: [
+                {color: 'lightBlue', title: 'Technical'},
+                {color: 'lightBlue', title: 'Financial'},
+                {color: 'lightBlue', title: 'Management'}
+            ]
+        }
+    }
+};
+
 
 module.exports = {
     searchBarData

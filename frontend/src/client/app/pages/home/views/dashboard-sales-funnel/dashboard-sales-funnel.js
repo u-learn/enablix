@@ -7,6 +7,15 @@ class DashboardSalesFunnel {
         $scope.cardsData = cardsData;
         $scope.salesFunnelData = productSalesFunnelData;
 
+        console.log(cardsData)
+
+        const numberOfPlaceholderes = 5 - (cardsData.length % 5);
+        if(numberOfPlaceholderes) {
+            for(var i = 0; i < numberOfPlaceholderes; i++){
+                $scope.cardsData.push({title: 'placeholder'});
+            }
+        }
+
         $scope.goToListView = () => {
             $state.go('home.salesFunnelList');
         }

@@ -11,14 +11,33 @@
     .card-container {
         height: 228px;
         overflow: hidden;
+    }
 
-        .card {
-            &:not(:first-child){
-                margin-left: auto;
+    .dim-card-container {
+
+        overflow-x: hidden;
+        @include breakpoint(lg){
+            width: 100%;
+        }
+        @include breakpoint(xlg){
+            width: 50%;
+        }
+
+        .dim-cards {
+            @include breakpoint(xlg){
+                flex-wrap: wrap!important;
             }
 
-            &:not(:last-child){
-                margin-right: auto;
+            flex-flow: row; 
+            
+            .dim-card {
+                &:nth-child(3){
+                    display: none;
+                    
+                    @include breakpoint(xlg){
+                        display: block;
+                    }
+                }
             }
         }
     }
@@ -27,4 +46,5 @@
 dimension-cards {
     display: flex;
     flex-wrap: wrap;
+    width: 100%;
 }

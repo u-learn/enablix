@@ -23,10 +23,10 @@
         <p class="label">Relevance</p>
         <!-- can be refactored into directive -->
         <div class="sectors-container">
-            <div class="add-tag">
-                <a href="">
-                    <img src="/assets/images/icons/add-sectors-btn.svg" />    
-                </a>
+            <div class="dashboard-buttons">
+                <div class="action-btn">
+                    <div class="icon small plus"></div>
+                </div>
             </div>
         </div>
     </div>
@@ -41,18 +41,10 @@
                     </a>
                 </div>
             </div>
-            <div class="company-sector">
-                <div class="content">
-                    <input ng-model="ctrl.newProperty" />
-                    <a class="remove" href="">
-                        <img class="" src="/assets/images/icons/close-white.svg" />                
-                    </a>
+            <div class="dashboard-buttons">
+                <div class="action-btn"  ng-click="this.addProperties()">
+                    <div class="icon small plus"></div>
                 </div>
-            </div>
-            <div class="add-tag" ng-click="this.addProperties()">
-                <a href="">
-                    <img src="/assets/images/icons/add-sectors-btn.svg" />    
-                </a>
             </div>
         </div>
     </div>

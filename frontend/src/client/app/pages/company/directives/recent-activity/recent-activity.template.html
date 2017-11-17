@@ -9,7 +9,9 @@
             <table>
                 <thead ng-if="!inSidebar">
                     <tr>
-                        <td><img class="icon small" src="/assets/images/icons/search-grey.svg" /><span>Activity</span></td>
+                        <td><img class="icon small" src="/assets/images/icons/search-grey.svg" />
+                            <input class="search-activity" placeholder="Activity" ng-model="search.activity" />
+                        </td>
                         <td><span>Type</span><img class="icon dropdown" src="/assets/images/icons/dropdown.svg" /></td>
                         <td><span>When</span><img class="icon dropdown" src="/assets/images/icons/dropdown.svg" /></td>
                     </tr>

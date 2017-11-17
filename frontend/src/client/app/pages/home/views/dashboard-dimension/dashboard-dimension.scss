@@ -9,4 +9,12 @@
         margin-top: 24px;
         margin-bottom: 40px;
     }
+
+    .full-width {
+
+        .dim-cards {
+            display: flex;
+            // flex-wrap: wrap;
+        }
+    }
 }
