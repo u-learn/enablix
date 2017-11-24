@@ -14,8 +14,3 @@ mvn clean install -DskipTests
 
 echo "-----------------Deploying enablix------------------------"
 mvn -f ../services/enablix-app/pom.xml clean install -DskipTests -P deployment
- 
-echo "-----------------Building Angular UI----------------------"
-cd ../web2/ebx-web
-npm install
-ng build --prod 
