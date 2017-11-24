@@ -15,6 +15,7 @@ export class LoginFormComponent implements OnInit {
   password: string;
   returnUrl: string;
   invalidCredentials: boolean
+  loginSuccess: boolean = false;
 
   constructor(private authService: AuthService, private router: Router, private route: ActivatedRoute) {
   	this.username = "";
@@ -37,6 +38,7 @@ export class LoginFormComponent implements OnInit {
     this.authService.loginUser(this.username, this.password)
   	  .subscribe(
   			data => {
+          this.loginSuccess = true;
   				this.router.navigateByUrl(this.returnUrl);		
   			},
   			error => {
