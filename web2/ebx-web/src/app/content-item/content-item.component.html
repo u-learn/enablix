@@ -3,3 +3,8 @@
   <p class="text" *ngIf="!editable">{{getValue()}}</p>
   <p class="text" *ngIf="editable"><input [(ngModel)]="record[contentItem.id]"></p>
 </div>
+<div *ngIf="contentItem.type == 'RICH_TEXT'">
+  <p class="label">{{contentItem.label}}</p>
+  <p class="text" *ngIf="!editable">{{getValue()}}</p>
+  <p class="text" *ngIf="editable"><textarea [(ngModel)]="record[contentItem.id]" row="4"></textarea>
+</div>

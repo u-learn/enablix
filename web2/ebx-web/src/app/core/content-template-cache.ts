@@ -144,7 +144,7 @@ export class ContentTemplateCache {
 
   getFreeInputContentItems(container: Container) : ContentItem[] {
     let freeInputItems = container.contentItem.filter(item => {
-      return item.type == 'TEXT' || item.type == 'DATE_TIME' || item.type == 'NUMERIC';
+      return item.type == 'TEXT' || item.type == 'DATE_TIME' || item.type == 'NUMERIC' || item.type == 'RICH_TEXT';
     });
     return freeInputItems;
   }

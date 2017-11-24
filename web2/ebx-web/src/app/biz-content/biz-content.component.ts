@@ -57,14 +57,14 @@ export class BizContentComponent implements OnInit, AfterViewInit {
                       result => {
                         this.record = result;
                         this.contentService.decorateRecord(this.container, this.record);
+                        this.initState();
                       }, 
                       error => {
                         console.error("Error getting record: " + error);
                         this.alert.error("Error fetching record details");
                       }
                     );
-
-            this.initState();
+            
           }
 
       });
@@ -97,7 +97,9 @@ export class BizContentComponent implements OnInit, AfterViewInit {
     
       this.inputItems = 
           this.contentTemplate.templateCache.getFreeInputContentItems(this.container)
-              .filter(item => this.container.titleItemId != item.id);
+              .filter(item => this.container.titleItemId != item.id && 
+                              (this.record.__decoration.__thumbnailUrl || 
+                                this.container.textItemId != item.id) );
 
       this.boundedItems = this.container.contentItem.filter(item => item.bounded);
     }
@@ -110,8 +112,9 @@ export class BizContentComponent implements OnInit, AfterViewInit {
             result => {
               
               this.editable = false;
-              this.record = this.contentService.decorateRecord(
+              this.contentService.decorateRecord(
                 this.container, result.contentRecord);
+              this.record = result.contentRecord;
 
               this.alert.success("Saved successfully!");
               this.navService.goToContentDetail(
