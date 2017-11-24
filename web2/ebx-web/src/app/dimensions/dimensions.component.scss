@@ -1,0 +1,39 @@
+@import '~styles/colors.scss';
+@import '~styles/layout.mixin.scss';
+@import '~styles/fonts.scss';
+@import '~styles/breakpoint.mixin.scss';
+
+.dimension-cards {
+    display: flex;
+    flex-wrap: wrap;
+
+    .dim-card-container {
+        display: flex;
+        flex-wrap: wrap;
+
+        @include breakpoint(lg){
+            width: 100%;
+        }
+        @include breakpoint(xlg){
+            width: 50%;
+        }
+
+        .dim-cards {
+            @include breakpoint(xlg){
+                flex-wrap: wrap !important;
+            }
+
+            /*flex-flow: row; */
+            
+            .dim-card {
+                &:nth-child(3){
+                    display: none;
+                    
+                    @include breakpoint(xlg){
+                        display: block;
+                    }
+                }
+            }
+        }
+    }
+}
