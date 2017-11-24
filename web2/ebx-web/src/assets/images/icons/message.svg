@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="11px" viewBox="0 0 16 11" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 47.1 (45422) - http://www.bohemiancoding.com/sketch -->
+    <title>message</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Asset-page" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Text" transform="translate(-653.000000, -35.000000)" fill-rule="nonzero" fill="#1F8AEF">
+            <g id="top_bar" transform="translate(88.000000, 24.000000)">
+                <g id="asset_actions" transform="translate(372.000000, 0.000000)">
+                    <g id="share_email" transform="translate(185.000000, 0.000000)">
+                        <g id="message" transform="translate(8.000000, 11.000000)">
+                            <path d="M8.67942857,6.012 L15.1217143,0 L0.878285714,0 L7.32,6.012 C7.70114286,6.36857143 8.29885714,6.36857143 8.67942857,6.012 Z" id="Shape"></path>
+                            <polygon id="Shape" points="4.51771429 4.96 0 0.743428571 0 9.47771429"></polygon>
+                            <polygon id="Shape" points="11.4822857 4.96 16 9.47771429 16 0.743428571"></polygon>
+                            <path d="M10.6462857,5.74 L9.45942857,6.84742857 C9.04971429,7.22971429 8.52457143,7.42057143 7.99942857,7.42057143 C7.47428571,7.42057143 6.94914286,7.22971429 6.53942857,6.84742857 L5.35257143,5.74 L0.808,10.2857143 L15.192,10.2857143 L10.6462857,5.74 Z" id="Shape"></path>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

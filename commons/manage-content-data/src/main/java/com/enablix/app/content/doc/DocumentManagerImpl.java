@@ -32,6 +32,7 @@ import com.enablix.core.mongo.search.StringFilter;
 import com.enablix.core.mongo.view.MongoDataView;
 import com.enablix.core.mq.Event;
 import com.enablix.core.mq.util.EventUtil;
+import com.enablix.doc.preview.DocPreviewService;
 
 @Component
 public class DocumentManagerImpl implements DocumentManager {
@@ -53,13 +54,16 @@ public class DocumentManagerImpl implements DocumentManager {
 	@Autowired
 	private GenericDao genericDao;
 	
+	@Autowired
+	private DocPreviewService docPreviewService;
+	
 	@Override
 	public DocumentMetadata saveUsingParentInfo(Document<?> doc, String docContainerQId, 
-			String docContainerParentInstanceIdentity) throws IOException {
+			String docContainerParentInstanceIdentity, boolean generatePreview) throws IOException {
 		
 		String contentPath = createContentPathUsingParentInfo(docContainerQId, 
 				docContainerParentInstanceIdentity, doc.getMetadata().isTemporary());
-		return save(doc, contentPath);
+		return save(doc, contentPath, generatePreview);
 	}
 
 	private String createContentPathUsingParentInfo(String docContainerQId, 
@@ -77,11 +81,11 @@ public class DocumentManagerImpl implements DocumentManager {
 
 	@Override
 	public DocumentMetadata saveUsingContainerInfo(Document<?> doc, String docContainerQId, 
-			String docContainerInstanceIdentity) throws IOException {
+			String docContainerInstanceIdentity, boolean generatePreview) throws IOException {
 		
 		String contentPath = createContentPathUsingContainerInfo(docContainerQId, 
 				docContainerInstanceIdentity, doc.getMetadata().isTemporary());
-		return save(doc, contentPath);
+		return save(doc, contentPath, generatePreview);
 	}
 
 	private String createContentPathUsingContainerInfo(String docContainerQId, 
@@ -121,13 +125,15 @@ public class DocumentManagerImpl implements DocumentManager {
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
-	public DocumentMetadata save(Document<?> doc, String contentPath) throws IOException {
+	public DocumentMetadata save(Document<?> doc, String contentPath, boolean generatePreview) throws IOException {
 		
 		DocumentStore ds = storeFactory.getDocumentStore(doc);
 		
 		DocumentMetadata docMD = ds.save(doc, contentPath);
 		
 		docMD = docRepo.save(docMD);
+		
+		docMD = docPreviewService.createPreview(docMD);
 		
 		EventUtil.publishEvent(new Event<DocumentMetadata>(Events.DOCUMENT_UPLOADED, docMD));
 		
@@ -208,7 +214,7 @@ public class DocumentManagerImpl implements DocumentManager {
 	}
 
 	@Override
-	public void updatePreviewStatus(String docIdentity, PreviewStatus status) {
+	public DocumentMetadata updatePreviewStatus(String docIdentity, PreviewStatus status) {
 		
 		DocumentMetadata docMetadata = getDocumentMetadata(docIdentity);
 		
@@ -217,28 +223,33 @@ public class DocumentManagerImpl implements DocumentManager {
 			docMetadata.setPreviewStatus(status);
 			docMetadata = docRepo.save(docMetadata);
 			
-			TemplateFacade template = templateMgr.getTemplateFacade(ProcessContext.get().getTemplateId());
-			
-			// update in content collection as well
-			String docQId = docMetadata.getContentQId();
-			String parentQId = QIdUtil.getParentQId(docQId);
-			String parentCollName = template.getCollectionName(parentQId);
-			
-			if (StringUtil.hasText(parentCollName)) {
-			
-				String docAttrId = QIdUtil.getElementId(docQId);
-				String docIdentityAttr = docAttrId + "." + ContentDataConstants.IDENTITY_KEY;
-				String previewStatusAttr = docAttrId + "." + DocumentMetadata.PREVIEW_STATUS_FLD_ID;
+			if (!StringUtil.isEmpty(docMetadata.getContentQId())) {
 				
-				StringFilter docIdentitFilter = new StringFilter(docIdentityAttr , docIdentity, ConditionOperator.EQ);
-				Query query = new Query(docIdentitFilter.toPredicate(new Criteria()));
-	
-				Update update = new Update();
-				update.set(previewStatusAttr, status);
-	
-				genericDao.updateMulti(query, update, parentCollName);
+				TemplateFacade template = templateMgr.getTemplateFacade(ProcessContext.get().getTemplateId());
+				
+				// update in content collection as well
+				String docQId = docMetadata.getContentQId();
+				String parentQId = QIdUtil.getParentQId(docQId);
+				String parentCollName = template.getCollectionName(parentQId);
+				
+				if (StringUtil.hasText(parentCollName)) {
+				
+					String docAttrId = QIdUtil.getElementId(docQId);
+					String docIdentityAttr = docAttrId + "." + ContentDataConstants.IDENTITY_KEY;
+					String previewStatusAttr = docAttrId + "." + DocumentMetadata.PREVIEW_STATUS_FLD_ID;
+					
+					StringFilter docIdentitFilter = new StringFilter(docIdentityAttr , docIdentity, ConditionOperator.EQ);
+					Query query = new Query(docIdentitFilter.toPredicate(new Criteria()));
+		
+					Update update = new Update();
+					update.set(previewStatusAttr, status);
+		
+					genericDao.updateMulti(query, update, parentCollName);
+				}
 			}
 		}
+		
+		return docMetadata;
 	}
 	
 	@Override

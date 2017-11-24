@@ -1,0 +1,112 @@
+@import '~styles/colors.scss';
+@import '~styles/layout.mixin.scss';
+@import '~styles/fonts.scss';
+
+.add-content-tags-container {
+
+    .tag-input {
+        input, span {
+            height: 28px;
+            width: 240px;
+            background: #FFFFFF;
+            border: 1px solid #E3EBEF;
+            box-shadow: 0 1px 1px 0 rgba(0,0,0,0.06);
+            border-radius: 4px;
+            color: #1F8AEF;
+            font-family: $FPLight;
+            font-size: 16px;
+            padding: 2px 0 0 8px;
+        }
+        margin-bottom: 8px;
+    }
+
+    .input-search-result {
+        position: absolute;
+        border: 1px solid #E3EBEF;
+        box-shadow: 0 1px 1px 0 rgba(0,0,0,0.06);
+        border-radius: 4px;
+        width: 296px;
+
+        >div {
+            height: 40px;
+        }
+
+        th:first-child {
+            padding-left: 11px;
+        }
+
+        th:last-child {
+            padding-right: 11px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            img {
+                height: 26px;
+            }
+        }
+
+        th, td {
+            //for some reason the font has some padding on the bottom of it - so adding some padding to top to maintain vertically centered
+            padding-top: 4px;
+        }
+
+        tbody {
+            display:block;
+            max-height: 120px;
+            overflow-y: scroll;
+        }
+
+        thead, tbody tr {
+            display:table;
+            width:100%;
+            table-layout:fixed;
+        }
+
+        .header {
+            font-family: $FPLight;
+            font-size: 14px;
+            font-weight: bold;
+            color: #1F8AEF;
+            line-height: 18px;
+            background: #F7F9F9;            
+            border-bottom: 1px solid rgba(0,0,0,0.03);
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+
+            .head-label {
+                padding-left: 11px;
+                padding-right: 11px;
+            }
+
+            .close {
+                padding-right: 11px;
+                padding-left: 11px;
+                cursor: pointer;
+            }
+
+            .head-label, .close {
+                padding-top: 4px;
+                display: flex;
+                align-items: center;
+            }
+        }
+
+        .content {
+            font-family: $FPLight;
+            font-size: 14px;
+            color: #2D2D2D;
+            text-align: left;
+            background-color: $white;
+            display: flex;
+            align-items: center;
+            padding-left: 11px;
+            cursor: pointer;
+        }
+
+        .content:not(last-child) {
+            border-bottom: 1px solid rgba(0,0,0,0.03);
+        }
+
+    }
+}

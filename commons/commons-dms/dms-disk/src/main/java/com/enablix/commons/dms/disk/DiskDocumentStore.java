@@ -116,6 +116,12 @@ public class DiskDocumentStore implements DocumentStore<DiskDocumentMetadata, Di
 		
 		// archive if the file already exist
 		File newFile = new File(newLoc);
+		
+		File parentFolder = newFile.getParentFile();
+		if (!parentFolder.exists()) {
+			parentFolder.mkdirs();
+		}
+		
 		if (newFile.exists()) {
 			archiveService.archiveDocument(docMetadata);
 		}

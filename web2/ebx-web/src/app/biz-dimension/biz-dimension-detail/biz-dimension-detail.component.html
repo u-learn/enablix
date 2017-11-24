@@ -1,0 +1,45 @@
+<div class="dashboard-sales-funnel list">
+    <div class="header-container">
+        <h2>{{record?.__title}}</h2>
+        <div class="dashboard-buttons">
+            <div class="action-btn add-padding" (click)="editState()">
+                <div class="icon small edit"></div>
+                <p class="show-me">Edit</p>
+            </div>
+            <div class="divider"></div>
+            <div class="action-btn add-padding" (click)="attach()">
+                <div class="icon small attach"></div>
+                <p class="show-me">Attach</p>
+            </div>
+            <div class="action-btn add-padding" (click)="email()">
+                <div class="icon small email"></div>
+                <p class="show-me">Email</p>
+            </div>
+            <ebx-content-delete-button class="action-btn add-padding" [container]="container" [record]="record" contentType="Dimension"></ebx-content-delete-button>
+            <!-- <div class="divider"></div>
+            <button class="circle icon-btn" ng-click="goToFunnelView()">
+                <div class="icon small funnel"></div>
+            </button>
+            <button class="circle icon-btn active">
+                <div class="icon small list"></div>
+            </button> -->
+        </div>
+    </div>
+    <div class="main">
+        <div>
+            <div class="content-types-container">
+                <div *ngFor="let cg of children">
+                    <h2>{{cg?.container?.label}} ({{cg.records.totalElements}})</h2>
+                    <div class="seeAll">
+                        <a>See All</a>
+                    </div>
+                    <div class="cards card-container">
+                      <div class="data-card" *ngFor="let rec of cg.records.content">
+                        <ebx-data-card  [containerQId]="cg.contentQId" [record]="rec"></ebx-data-card>
+                      </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

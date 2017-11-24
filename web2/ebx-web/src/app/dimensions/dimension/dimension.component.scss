@@ -1,0 +1,55 @@
+@import '~styles/colors.scss';
+@import '~styles/layout.mixin.scss';
+@import '~styles/fonts.scss';
+
+.dim-card-container {
+
+    &.multiple-dimensions {
+        padding-top: 24px;
+        border-top: 1px solid rgba(0,0,0,0.03);
+        border-bottom: 1px solid rgba(179, 38, 38, 0.03);
+    }
+
+    &.fullWidth {
+        width: calc(100%);
+    }
+
+    &.particular-dimension {
+        width: 100%;
+    }
+
+    h2 {
+        font-family: $FPThin;
+        font-size: 24px;
+        color: #000000;
+        margin-bottom: 24px;
+    }
+
+    
+
+    .cta-container {
+        margin-bottom: 40px;
+        
+        .cta-link {
+            cursor: pointer;
+            font-family: $FPSemiBold;
+            font-size: 14px;
+            color: #1F8AEF;
+        }    
+    }
+
+    .dim-cards {
+        display: flex;
+        flex-wrap: wrap;
+        
+        &.add-margin {
+            margin-bottom: 40px;
+        }
+
+
+    }
+
+    .dim-name {
+        cursor: pointer;
+    }
+}

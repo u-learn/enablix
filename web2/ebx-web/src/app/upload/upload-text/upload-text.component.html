@@ -1,0 +1,16 @@
+<div class="upload-asset-popup">
+  <input class="asset-text" placeholder="Title" [(ngModel)]="textInfo.title">
+  <div class="preview-text align-top">
+    <img src="/assets/images/icons/note.svg" />
+    <textarea [(ngModel)]="textInfo.text" placeholder="Content"></textarea>
+  </div>
+  <div class="preview-tag">
+    <ebx-select [formControl]="contentTypeCtrl"
+      headIcon="/assets/images/icons/hash_icon.svg"
+      [options]="contentTypes"></ebx-select>
+  </div>
+  <div class="actionBtns">
+    <button class="action" (click)="createText()">Create</button>
+    <button class="cancel" mat-dialog-close>Cancel</button>
+  </div>
+</div>

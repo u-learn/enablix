@@ -1,0 +1,18 @@
+<div class="content-tags-container">
+  <div class="tags">
+    <div class="content-tag" *ngFor="let tag of tags" [style.background]="tag.color">
+        <div class="content">
+          <span>{{tag.label}}</span>
+          <a *ngIf="editing" class="remove" (click)="removeTag(tag)">
+            <img class="" src="/assets/images/icons/close-white.svg">                
+          </a>
+        </div>
+    </div>
+    <div class="dashboard-buttons content-tag" *ngIf="editing">
+        <div class="action-btn" (click)="showAddTags()" [hidden]="addTagsVisible">
+            <div class="icon small plus"> </div>
+        </div>
+    </div>
+  </div>
+  <ebx-add-content-tags [tagItems]="tagItems" [hidden]="!addTagsVisible"></ebx-add-content-tags>
+</div>

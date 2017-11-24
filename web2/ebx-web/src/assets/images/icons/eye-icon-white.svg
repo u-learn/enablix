@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="16px" viewBox="0 0 24 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 47.1 (45422) - http://www.bohemiancoding.com/sketch -->
+    <title>visible</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Asset-page" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="File-Uploaded-2" transform="translate(-544.000000, -786.000000)" fill-rule="nonzero" fill="#FFFFFF">
+            <g id="slides" transform="translate(460.000000, 122.000000)">
+                <g id="selected_slide" transform="translate(0.000000, 618.000000)">
+                    <g id="visible" transform="translate(84.000000, 46.000000)">
+                        <circle id="Oval" cx="23" cy="8" r="1"></circle>
+                        <circle id="Oval" cx="1" cy="8" r="1"></circle>
+                        <circle id="Oval" cx="12.5" cy="8.5" r="2.5"></circle>
+                        <path d="M23.9716933,7.5264 C23.9716933,7.5264 19.2784499,0 11.9995957,0 C4.72074147,0 0.0274980191,7.5264 0.0274980191,7.5264 L1.25350236e-07,8.4352 C-0.000808636229,8.4352 3.91197989,16 11.9995957,16 C20.0872115,16 24,8.4352 24,8.4352 L23.9716933,7.5264 Z M11.9995957,13.6 C8.87292342,13.6 6.33826462,11.0928 6.33826462,8 C6.33826462,4.9072 8.87292342,2.4 11.9995957,2.4 C15.1262679,2.4 17.6609267,4.9072 17.6609267,8 C17.6609267,11.0928 15.1262679,13.6 11.9995957,13.6 Z" id="Shape"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

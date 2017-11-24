@@ -1,0 +1,143 @@
+@import '~styles/colors.scss';
+@import '~styles/layout.mixin.scss';
+@import '~styles/fonts.scss';
+
+.wrapper {
+    margin-top: 0;
+}
+
+.assets-container {
+
+    display: flex;
+    flex-direction: row;
+
+    h1 {
+        font-family: $FPThin;
+        color: $black;
+        line-height: 38px;
+
+        .editable {
+            background: $white;
+            padding: 14px;
+        }
+    }
+    
+    .left {
+        width: 300px;
+        margin-right:70px;
+
+        h1.editable {
+            background: $white;
+            padding: 14px;   
+        }
+
+        .row:not(:last-child) {
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(0,0,0,0.03);
+
+            &.with-height{
+                min-height: 73px;
+            }
+
+            img.fileType {
+                float: left;
+                margin-right: 6px;
+            }
+        }
+
+        .label {
+            font-family: $FPLight;
+            font-size: 14px;
+            color: #808C9B;
+            line-height: 17px;
+            padding-bottom: 8px;
+            padding-top: 16px;
+        }
+
+        .text {
+            font-family: $FPLight;
+            font-size: 14px;
+            color: #2D2D2D;
+            line-height: 18px;
+        }
+
+        .dashboard-buttons .action-btn {
+            height: 28px;
+            width: 28px;
+        }
+    }
+
+    .right {
+        float: left;
+        width: calc(100% - 370px - 40px);
+    }
+
+    input, select {
+        width: 296px;
+        height: 40px;
+        font-size: 14px;
+        padding-left: 14px;
+    }  
+    
+    .dashboard-buttons {
+        float: left;
+        .action-btn {
+            height: 32px;
+            width: 32px;
+
+        }
+    }
+}
+
+.assets-navbar {
+    height: 80px;
+    margin-bottom: 40px;
+    margin-left: 44px;
+    margin-right: 44px;
+    @include vcenterChildren;
+
+    >div {
+        display: flex;
+    }
+
+    >div:first-child {
+        width: 370px;
+        img {
+            cursor: pointer;
+        }
+    }
+
+    .share-container {
+        display: flex;
+
+        div.action-btn {
+            &:not(:last-child){
+                margin-right: 8px;
+            }
+            cursor: pointer;
+        }
+    }
+
+    .notification-container {
+        margin-right: 8px;
+    }
+
+    .far-right{
+        margin-left: auto;
+        margin-right: 0;
+    }
+
+    .dashboard-buttons {
+        float: left;
+        
+        .action-btn {
+            padding: 8px;
+
+        }
+    }
+}
+
+iframe, img.url-preview {
+    width: calc(100% - 40px - 32px);
+    height: 100%;
+}

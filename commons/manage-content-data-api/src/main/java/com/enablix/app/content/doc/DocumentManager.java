@@ -15,13 +15,13 @@ public interface DocumentManager {
 	
 	IDocument load(DocInfo docInfo, String storeType) throws IOException;
 
-	DocumentMetadata saveUsingParentInfo(Document<?> doc, String docContainerQId, String docContainerParentInstanceIdentity)
-			throws IOException;
+	DocumentMetadata saveUsingParentInfo(Document<?> doc, String docContainerQId, 
+			String docContainerParentInstanceIdentity, boolean generatePreview) throws IOException;
 	
-	DocumentMetadata save(Document<?> doc, String contentPath) throws IOException;
+	DocumentMetadata save(Document<?> doc, String contentPath, boolean generatePreview) throws IOException;
 
-	DocumentMetadata saveUsingContainerInfo(Document<?> doc, String docContainerQId, String docContainerInstanceIdentity)
-			throws IOException;
+	DocumentMetadata saveUsingContainerInfo(Document<?> doc, String docContainerQId, 
+			String docContainerInstanceIdentity, boolean generatePreview) throws IOException;
 	
 	Document<DocumentMetadata> buildDocument(InputStream dataStream, String name, String contentType, 
 			String contentQId, long fileSize, String docIdentity, boolean temporaryDoc);
@@ -38,7 +38,7 @@ public interface DocumentManager {
 
 	DocumentMetadata getDocumentMetadata(String docIdentity);
 	
-	void updatePreviewStatus(String docIdentity, PreviewStatus status);
+	DocumentMetadata updatePreviewStatus(String docIdentity, PreviewStatus status);
 
 	boolean checkReferenceRecordExists(DocumentMetadata docMetadata);
 	

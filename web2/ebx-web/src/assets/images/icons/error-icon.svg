@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="26px" height="23px" viewBox="0 0 26 23" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 47.1 (45422) - http://www.bohemiancoding.com/sketch -->
+    <title>error</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Dashboard" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Dashboard-with-Error" transform="translate(-88.000000, -1592.000000)" fill-rule="nonzero" fill="#FFFFFF">
+            <g id="error" transform="translate(0.000000, 1563.000000)">
+                <g transform="translate(88.000000, 29.000000)">
+                    <circle id="Oval" cx="24" cy="21" r="2"></circle>
+                    <path d="M15,2 C15,3.105 14.105,3 13,3 C11.895,3 11,3.105 11,2 C11,0.895 11.895,0 13,0 C14.105,0 15,0.895 15,2 Z" id="Shape"></path>
+                    <circle id="Oval" cx="2" cy="21" r="2"></circle>
+                    <path d="M14.836,1.21 L13,1 L11.164,1.21 L0.3,19.948 L2.144,23 L13,23 L23.856,23 L25.7,19.948 L14.836,1.21 Z M14.212,8.36 L14.012,14.833 L11.988,14.833 L11.788,8.36 L14.212,8.36 Z M13.003,19.189 C12.175,19.189 11.68,18.748 11.68,18.007 C11.68,17.252 12.174,16.811 13.003,16.811 C13.825,16.811 14.319,17.252 14.319,18.007 C14.319,18.748 13.825,19.189 13.003,19.189 Z" id="Shape"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

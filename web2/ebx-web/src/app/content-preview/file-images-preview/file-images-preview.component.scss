@@ -1,0 +1,60 @@
+@import '~styles/colors.scss';
+@import '~styles/layout.mixin.scss';
+@import '~styles/fonts.scss';
+
+.file-preview {
+    img.slide, img.slide-thumbnail {
+        border-radius: 4px;
+    }
+    img.slide {
+        width: 100%;
+        height: auto;
+    }
+
+    div.mini-slide {
+        display: inline-block;
+        margin-right: 8px;
+        z-index: 1;
+        cursor: pointer;
+
+        &.active > .overlay {
+            background-color: $black;
+            position:relative;
+            opacity: 0.5;
+            height: 108px;
+            width: 192px;
+            -moz-opacity: 50%;
+            -webkit-opacity: 50%;
+            z-index: 2;
+            top: -112px;
+            border-radius: 4px;
+
+            ~ .eye {
+                position: relative;
+                /*background: url('../assets/images/icons/eye-icon-white.svg') no-repeat;*/
+                z-index: 3;
+                width: 24px;
+                height: 16px;
+                top: -176px;
+                left: 84px;
+            }
+        }
+
+        img.slide-thumbnail {
+            height: 108px;
+            width: 192px;
+        }
+    }
+
+    .active-slide {
+        margin-bottom: 24px;
+        // display:inline-block;
+    }
+
+    .all-slides {
+        height: 108px;
+        overflow: auto;
+        white-space: nowrap;
+        overflow-y: hidden;
+    }
+}

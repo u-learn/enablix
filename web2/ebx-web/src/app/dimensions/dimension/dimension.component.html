@@ -1,0 +1,14 @@
+<div>
+  <h2 class="dim-name" (click)="navToDimList()">{{container.label}}</h2>
+  <div class="cta-container" *ngIf="showAddAction"><a class="cta-link" (click)="addNewDim()">Add</a></div>
+  <div class="dim-cards add-margin">
+    <div *ngFor="let rec of (data ? data.content : [])" (click)="navToDimDetail(rec.identity)">
+      <ebx-data-card [containerQId]="container.qualifiedId" [record]="rec"></ebx-data-card>
+    </div>
+    <div class="dim-card" *ngIf="remainingCount > 0">
+      <div class="card-remaining-count" (click)="navToDimList()">
+        <p class="ng-binding">+{{remainingCount}}</p>
+      </div><!-- end ngIf: card.remainingCards -->
+    </div>
+  </div>
+</div>

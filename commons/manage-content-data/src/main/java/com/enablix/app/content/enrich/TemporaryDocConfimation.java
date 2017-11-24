@@ -47,6 +47,7 @@ public class TemporaryDocConfimation implements ContentEnricher {
 						
 						String docIdentity = (String) docMap.get(ContentDataConstants.IDENTITY_KEY);
 						DocumentMetadata docMd = docManager.getDocumentMetadata(docIdentity);
+						docMd.setContentQId(itemDef.getQualifiedId());
 						
 						try {
 							

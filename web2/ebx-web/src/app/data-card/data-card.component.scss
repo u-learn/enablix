@@ -1,0 +1,214 @@
+@import '~styles/colors.scss';
+@import '~styles/layout.mixin.scss';
+@import '~styles/fonts.scss';
+
+.card {
+    height: 228px;
+    width: 192px;
+    text-align: center;
+    margin-bottom: 24px;
+    cursor: pointer;
+
+    &.with-flex {
+        flex-grow: 1;
+        min-width: 25%;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .cardDefaultImg, .cardImgText, .cardImg {
+        height: 108px;
+        width: 192px;
+        // padding: 0 16px;
+        
+        @include vcenterChildren;
+        border-radius: 4px 4px 0 0;
+        overflow-y: hidden;
+    }
+
+    .cardDefaultImg {
+        justify-content: center;
+        background: #2C4290;
+    }
+    
+    .cardImgText {
+        color: $white;
+        font-family: $FPLight;
+        font-size: 14px;
+        line-height: 18px;
+        padding: 24px 24px;
+        width: 144px; /* 192px - 24px - 24px */
+        height: 72px; /* line */
+        background: #2C4290;
+
+        p {
+            width: 144px; /* 192px - 24px - 24px */
+            height: 72px; /* 108px - 24px - 24px */
+        }
+    }
+
+    img {
+        max-width: 192px;
+    }
+
+    img + .content {
+        position: relative;
+        top: -4px;
+    }
+
+    .content {
+        background: $white;
+        
+        width: 192px;
+        height: 120px;
+        border-radius: 0 0 4px 4px;
+
+        .content-type {
+            text-transform: uppercase;
+            font-family: $FPMedium;
+            font-size: 10px;
+            color: #2CA6E3;
+            padding-bottom: 8px;
+            padding-top: 16px;
+        }
+
+        .card-title {
+            font-family: $FPBlond;
+            font-size: 14px;
+            color: #2D2D2D;
+            line-height: 18px;
+            margin-bottom: 18px;
+            padding: 0 8px;
+        }
+
+        .company-properties {
+            font-family: $FPBlond;
+            font-size: 12px;
+            color: #BFCBD9;
+        }
+
+    }
+}
+
+.dim-card {
+    height: 128px;
+    width: 222px;
+    background: $white;
+    box-shadow: 0 1px 2px 0 rgba(0,0,0,0.04);
+    border-radius: 4px 4px 4px 4px;
+    margin: 0 16px 16px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    cursor: pointer;
+
+    &.new {
+        border: 1px dashed $grey-lig-20;
+        background: $grey-lig-5;   
+    }
+}
+
+.dim-card {
+    .card-title {
+        padding-top: 16px;
+        font-family: $FPLight;
+        font-size: 18px;
+        color: $black;
+        line-height: 20px;
+        display: flex;
+
+        .color-block {
+            height: 14px;
+            width: 4px;            
+            margin-right: 14px;
+
+            &.purple {
+                background: #724BD0;
+            }
+
+            &.red {
+                background: #ED583E;   
+            }
+
+            &.gold {
+                background: #D0A82B;
+            }
+
+            &.blue {
+                background: #2978C8;
+            }
+        }
+    }
+}
+
+.card-properties, .action-buttons {
+    display: flex;
+    margin-top: auto;
+    padding-bottom: 16px;
+    justify-content: center;
+
+    img {
+        cursor: pointer;
+    }
+
+    .delete-icon {
+        margin-left: 6px;
+        box-shadow: 0 1px 1px 0 rgba(0,0,0,0.06);
+    }
+}
+
+.card-properties {
+    font-family: $FPLight;
+    font-size: 12px;
+    color: #BFCBD9;
+    padding-left: 18px;
+
+    .dot {
+        padding: 0 6px 0 4px;
+    }
+
+    >div {
+        display: flex;
+
+        &:last-child {
+            span.dot {
+                display: none;
+            }
+        }
+    }
+}
+
+.card-remaining-count {
+    width: 100%;
+    height: 100%;
+    @include vcenterChildren;
+    justify-content: center;
+    background: rgba(0,0,0,0.01);
+    border: 1px solid #EFF1F1;
+    border-radius: 4px;
+
+    p {
+        font-family: $FPLight;
+        font-size: 32px;
+        color: #808C9B;
+        line-height: 24px;
+    }
+}
+
+.color-block, .dimension-tag {
+    &.purple {
+        background: #724BD0;
+    }
+
+    &.red {
+        background: #ED583E;   
+    }
+
+    &.gold {
+        background: #D0A82B;
+    }
+
+    &.blue {
+        background: #2978C8;
+    }
+}

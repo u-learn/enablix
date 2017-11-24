@@ -1,0 +1,123 @@
+@import '~styles/colors.scss';
+@import '~styles/layout.mixin.scss';
+@import '~styles/fonts.scss';
+@import '~styles/breakpoint.mixin';
+
+.dashboard-sales-funnel {
+
+    .dashboard-buttons {
+        .action-btn.fixed-size {
+            height: 32px;
+            width: 32px;
+        }
+    }
+    
+    .header-container {
+        margin-bottom: 32px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+
+        h2 {
+            font-family: $FPThin;
+            font-size: 32px;
+        }
+    }
+
+    .main {
+        border-top: 1px solid rgba(0,0,0,0.03);
+        padding-top: 56px;
+
+    }
+
+    .card.with-flex{
+        justify-content: flex-start!important;
+    }
+}
+
+.dashboard-sales-funnel.list {
+    
+    .card {
+
+        &:nth-child(2){
+            display: none;
+    
+            @include breakpoint(lg){
+                display: block;
+            }
+        }
+    }
+}
+
+.cards-container {
+    display: block;
+    width: 100%;
+    overflow-y: auto;
+    height: calc(100vh - 262px);
+
+    @include breakpoint(md){
+        width: calc(100% - 354px);
+    }
+
+    .sales-funnel-header {
+        display: flex;
+        align-items: center;
+        margin: 40px 0;
+    }
+
+    h2 {
+        font-family: $FPThin;
+        font-size: 24px;
+        height: 24px;
+        width: 130px;
+        padding: 0px 20px;
+    }
+    
+    .line {
+        opacity: 0.03;
+        background: #000000;
+        height: 1px;
+        width: calc((100% - 130px - 40px) * 0.5);
+    }
+}
+
+.content-types-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    
+    >div {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 65px;
+        align-items: flex-start;
+        flex-grow: 1;
+        width: 50%;
+    }
+
+    .cards {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+
+
+        .data-card {
+            margin-right: 24px;
+        }
+    }
+
+
+    h2 {
+        font-family: $FPThin;
+        font-size: 24px;
+        margin-bottom: 9px;
+    }
+
+    .seeAll {
+        font-family: $FPSemiBold;
+        font-size: 14px;
+        color: #1F8AEF;
+        margin-bottom: 32px;
+    }
+}
+

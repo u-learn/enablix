@@ -1,0 +1,81 @@
+  <div class="assets-navbar">
+    <div (click)="goBackHome()">
+        <button class="circle icon-btn">
+            <div class="icon small back"></div>
+        </button>
+    </div>
+    <div *ngIf="!editable">
+        <div class="dashboard-buttons">
+            <div class="action-btn add-padding" (click)="editState()">
+                <div class="icon small edit"></div>
+                <p class="show-me">Edit</p>
+            </div>
+            <ebx-content-delete-button class="action-btn" [container]="container" [record]="record" contentType="Asset"></ebx-content-delete-button>
+            <div class="divider"></div>
+            <ebx-content-email-button class="action-btn" [container]="container" [record]="record" ></ebx-content-email-button>
+            <ebx-copy-portal-url-button class="action-btn" [container]="container" [record]="record"></ebx-copy-portal-url-button>
+            <ebx-doc-download-button *ngIf="record?.__decoration?.__docMetadata" class="action-btn" [container]="container" [record]="record"></ebx-doc-download-button>
+        </div>
+    </div>
+
+    <div *ngIf="editable">
+        <div class="publish-buttons">
+            <button class="publish-btn" (click)="publishContent()">
+                <div class="icon small send"></div>
+                <p class="btn-text">Publish</p>
+            </button>
+            <!-- <button class="publish-btn" (click)="saveDraft()">
+                <div class="icon small save"></div>
+                <p class="btn-text">Save as Draft</p>
+            </button> -->
+            <button class="publish-btn white" (click)="cancelEdit()">
+                <div class="icon small cancel"></div>
+                <p class="btn-text">Cancel</p>
+            </button>
+        </div>
+    </div>
+    <div class="far-right">
+        <ebx-user-icon></ebx-user-icon>
+    </div>
+  </div>
+  <div class="container">
+    <div class="assets-container flex-row" *ngIf="record">
+      <div class="left">
+          <h1 *ngIf="editable" contenteditable="true" class="editable" [(ngModel)]="record[container.titleItemId]"></h1>
+          <h1 *ngIf="!editable">{{record.__title}}</h1>
+          <p class="label">Last updated {{record.modifiedAt | ebxDate}}</p>
+
+          <div class="row" *ngFor="let item of inputItems">
+              <ebx-content-item [record]="record" [contentItem]="item" [editable]="editable"></ebx-content-item>
+          </div>
+          <div class="row">
+              <p class="label">Content Type</p>
+              <div class="tags-container">
+                <div class="tag" [style.background]="container.color">
+                    <div class="content">
+                        <span>{{container?.label}}</span>
+                    </div>
+                </div>                            
+              </div>
+          </div>
+          <div class="row with-height">
+              <p class="label">Relevance</p>
+              <!-- can be refactored into directive -->
+              <ebx-content-tags [record]="record" [tagItems]="boundedItems" [editing]="editable"></ebx-content-tags>
+          </div>
+          <!-- <div class="row with-height">
+              <p class="label">Properties</p>
+              <div class="sectors-container">
+                  <div class="dashboard-buttons no-float">
+                      <div class="action-btn">
+                          <div class="icon small plus"></div>
+                      </div>
+                  </div>
+              </div>
+          </div> -->
+      </div>
+      <div class="right">
+          <ebx-content-preview [record]="record" [container]="container" [editing]="editable"></ebx-content-preview>
+      </div>
+    </div>
+  </div>

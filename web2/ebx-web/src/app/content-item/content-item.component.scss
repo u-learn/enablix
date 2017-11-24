@@ -1,0 +1,14 @@
+@import '~styles/colors.scss';
+@import '~styles/layout.mixin.scss';
+@import '~styles/fonts.scss';
+
+.text input {
+    width: calc(100% - 14px - 14px);
+    font-size: 14px;
+    font-family: $FPLight;
+    padding-left: 14px;
+    padding-right: 14px;
+    background: $white;
+    @include vcenterChildren;
+}
+

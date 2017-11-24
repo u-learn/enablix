@@ -1,0 +1,21 @@
+.main.featured {
+  margin-bottom: 66px;
+}
+
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  height: 228px;
+  overflow: hidden;
+
+  .data-card {
+    margin-right: 24px;
+    /* &:not(:first-child){
+      margin-left: auto;
+    }
+
+    &:not(:last-child){
+      margin-right: auto;
+    } */
+  }
+}

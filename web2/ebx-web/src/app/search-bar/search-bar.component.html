@@ -1,0 +1,38 @@
+<div class="search-bar ng-isolate-scope" (clickOutside)="hideSearchBar()">
+    <div class="input-row">
+        <img class="search-icon" src="/assets/images/icons/search-grey.svg">
+        <!-- inject any tags -->
+        <div class="selectedTagsHolder">
+            <!-- ngIf: selectedContentTypes.length > 0 -->
+            <!-- ngIf: selectedDimOrObj.length > 0 -->
+        </div>
+        <input type="text" ng-model="search.input" placeholder="Search" (focus)="showSearchBar()" ng-change="updateFilters()" class="ng-pristine ng-valid ng-empty ng-touched"> 
+        <img class="funnel-icon" src="/assets/images/icons/filter-grey.svg">
+    </div>
+    
+    <div class="filtered-rows" [hidden]="!showOptions">
+        <!-- ngRepeat: filter in differentFilters --><div class="filtered-row ng-scope" ng-repeat="filter in differentFilters">
+            <h3 ng-bind="filter" class="ng-binding">Dimensions</h3>
+            <!-- ngIf: filter === 'Content Types' -->
+            <!-- ngIf: filter === 'Dimensions' --><div ng-if="filter === 'Dimensions'" class="ng-scope">
+                
+            </div><!-- end ngIf: filter === 'Dimensions' -->
+            <!-- ngIf: filter === 'Objects' -->
+        </div><!-- end ngRepeat: filter in differentFilters --><div class="filtered-row ng-scope" ng-repeat="filter in differentFilters">
+            <h3 ng-bind="filter" class="ng-binding">Objects</h3>
+            <!-- ngIf: filter === 'Content Types' -->
+            <!-- ngIf: filter === 'Dimensions' -->
+            <!-- ngIf: filter === 'Objects' --><div ng-if="filter === 'Objects'" class="ng-scope">
+                
+            </div><!-- end ngIf: filter === 'Objects' -->
+        </div><!-- end ngRepeat: filter in differentFilters --><div class="filtered-row ng-scope" ng-repeat="filter in differentFilters">
+            <h3 ng-bind="filter" class="ng-binding">Content Types</h3>
+            <!-- ngIf: filter === 'Content Types' --><div ng-if="filter === 'Content Types'" class="ng-scope">
+                
+            </div><!-- end ngIf: filter === 'Content Types' -->
+            <!-- ngIf: filter === 'Dimensions' -->
+            <!-- ngIf: filter === 'Objects' -->
+        </div><!-- end ngRepeat: filter in differentFilters -->
+        <!-- ngIf: search.input -->
+    </div>
+</div>

@@ -1,0 +1,32 @@
+<div *ngIf="recentActivities">
+    <div class="header">
+        <h2>Recent Activities</h2>
+        <p>What assets have been uploaded and approved recently by your team mates</p>
+    </div>
+    <div>
+      <div class="activity-table">
+        <table>
+          <tr class="content" *ngFor="let a of recentActivities.content">
+            <td>
+              <div class="activity inSidebar">
+                <div>
+                  <div class="activity-detail narrow asset-thumbnail">
+                    <p class="description">
+                      {{getTextDescription(a)}}
+                    </p>
+                    <p class="date-modified">
+                      {{a.modifiedAt | ebxDate}}
+                    </p>
+                  </div>
+                  <div class="content-icon">
+                    <img [src]="getIconUrl(a)" />
+                  </div>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+
+    </div>
+</div>

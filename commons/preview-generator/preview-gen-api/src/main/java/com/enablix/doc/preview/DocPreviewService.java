@@ -18,6 +18,6 @@ public interface DocPreviewService {
 	
 	IDocument getDocLargeThumbnail(String docIdentity) throws IOException;
 
-	void createPreview(DocumentMetadata docMetadata) throws IOException;
+	DocumentMetadata createPreview(DocumentMetadata docMetadata) throws IOException;
 	
 }

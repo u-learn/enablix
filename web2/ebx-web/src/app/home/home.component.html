@@ -1,0 +1,19 @@
+<!-- <div>
+    <h2>Angular 4 Alerts</h2>
+    <button class="btn btn-success" (click)="success('Success!!')">Success</button>
+    <button class="btn btn-danger" (click)="error('Error :(')">Error</button>
+    <button class="btn btn-info" (click)="info('Some info....')">Info</button>
+    <button class="btn btn-warning" (click)="warn('Warning: ...')">Warn</button>
+    <button class="btn btn-default" (click)="clear()">Clear</button>
+</div>
+ -->
+<ebx-header></ebx-header>
+<div class="container flex-row">
+  <div class="dashboard">
+    <ebx-recent-content></ebx-recent-content>
+    <ebx-dimensions></ebx-dimensions>  
+  </div>
+  <div class="sidebar" ng-click="navigateToRecentActivity()">
+    <ebx-recent-activities></ebx-recent-activities>
+  </div>
+</div>

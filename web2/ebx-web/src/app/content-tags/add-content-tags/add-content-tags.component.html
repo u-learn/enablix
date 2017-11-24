@@ -1,0 +1,26 @@
+<div class="add-content-tags-container">
+    <div class="tag-input">
+        <input type="text" [hidden]="selectContentItem" [formControl]="objectInputCtrl"/>
+        <input type="text" [hidden]="!selectContentItem" [formControl]="itemInputCtrl"/> 
+    </div>
+    <div class="input-search-result" *ngIf="!selectContentItem">
+        <div class="header">
+           <div class="head-label">Pick Object</div>
+           <div class="close" (click)="close()"><img src="/assets/images/icons/close-grey.svg" /></div>
+        </div>
+        <div class="content" *ngFor="let item of filteredObjectTags | async" (click)="selectItem(item)">
+            <div class="object-name" [style.color]="getItemColor(item)">{{item.label}}</div>
+        </div>
+    </div>
+    <div class="input-search-result" *ngIf="selectContentItem">
+        <div class="header">
+           <div class="close" (click)="clearContentItemSelection()"><img src="/assets/images/icons/back_icon.png" /></div>
+           <div class="head-label" [style.color]="getItemColor(selectContentItem)">{{selectContentItem.label}}</div>
+        </div>
+        <div class="content" *ngFor="let itemVal of filteredItemTags | async">
+            <div class="object-name" (click)="addItemVal(itemVal)">{{itemVal.label}}
+            </div>
+        </div>
+    </div>
+
+</div>

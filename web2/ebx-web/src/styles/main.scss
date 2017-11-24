@@ -1,0 +1,393 @@
+@import 'font.mixin';
+@import 'breakpoint.mixin';
+@import 'layout.mixin';
+
+@import 'colors';
+@import 'fonts';
+@import 'buttons';
+
+
+/* Note: src relative to ./src folder */
+@include font-face("Fakt Pro Blond", "../assets/fonts/FaktPro-Blond", null, null, ttf);
+@include font-face("Fakt Pro Light", "../assets/fonts/FaktPro-Light", null, null, ttf);
+@include font-face("Fakt Pro Medium", "../assets/fonts/FaktPro-Medium", null, null, ttf);
+@include font-face("Fakt Pro Normal", "../assets/fonts/FaktPro-Normal", null, null, ttf);
+@include font-face("Fakt Pro SemiBold", "../assets/fonts/FaktPro-SemiBold", null, null, ttf);
+@include font-face("Fakt Pro Thin", "../assets/fonts/FaktPro-Thin", null, null, ttf);
+
+html, body {
+    // min-height: 100% !important;
+    height: 100%;
+}
+
+//reset default styles for elements
+h1, h2, h3, h4, p, ul, input, body{
+    padding: 0;
+    margin: 0;
+}
+
+a{
+    text-decoration: none;
+    color: inherit; 
+}
+textarea, input, select { 
+    border:none;
+    background-image:none;
+    background-color:transparent;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    -webkit-appearance:none;
+    outline: none;
+    -webkit-appearance: none; 
+}
+
+input, select, textarea {
+    color: #2D2D2D;
+    -webkit-appearance: none;
+    background-color: $white;
+
+    &.border-style {
+        border-radius: 4px;
+        border: 1px solid #E3EBEF;
+        box-shadow: 0 1px 1px 0 rgba(0,0,0,0.06);
+    }
+}
+
+select {
+    background: url('../assets/images/icons/dropdown-blue.svg') no-repeat right $white;
+    background-position: right 17px center;
+    cursor: pointer;
+}
+
+.inputFile {
+	width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
+
+.container {
+    margin-top: 56px;
+
+    @include breakpoint(sm){
+        margin-right: 36px;
+        margin-left: 48px;
+    }
+    
+    @include breakpoint(md){
+        margin-right: 48px;
+        margin-left: 48px;
+    }
+
+}
+
+.wrapper {
+    height: 100%;
+    min-width: 1024px;
+    max-width: 1600px;
+    margin: auto;
+
+    @include breakpoint(md){
+        margin: 0 32px;
+    }
+    
+    @include breakpoint(lg){
+        margin: 0 48px;
+    }
+
+    @include breakpoint(xlg){
+        margin: auto;
+    }
+}
+
+.icon {
+    height: 32px;
+    width: 32px;
+
+    &.xsmall {
+        height: 12px;
+        width: 12px;
+    }
+
+    &.small {
+        height: 16px;
+        width: 16px;
+    }
+
+    &.grey-border {
+      border: 2px solid $grey-lig-5;
+      border-radius: 50%;
+    }
+  }
+
+body {
+    background: $grey-lig-5;
+}
+
+.notify-popup {
+    width: 334px;
+    background: $white;
+    position: absolute;
+    right: 40px;
+    top: 80px;
+    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.06);
+    border-radius: 4px;
+
+    &:before {
+      content: "";
+      position: absolute;
+      top: -16px;
+      right: 50px; 
+      border-width: 8px;
+      border-style: solid;
+      border-color:  transparent transparent #fff transparent;
+    }
+    
+    > div {
+      padding: 16px;
+    }
+
+    .activity {
+      font-family: $FPBlond;
+      font-size: 14px;
+      line-height: 18px;
+      display: flex;
+    }
+
+    .see-asset {
+      cursor: pointer;
+      font-family: $FPSemiBold;
+      background-color: $grey-lig-5;
+      font-size: 14px;
+      color: #1F8AEF;
+    }
+  }
+
+.circle {
+    border-radius: 50%;
+    height: 32px;
+    width: 32px;
+}
+
+.divider {
+    height: 32px;
+    width: 1px;
+    background: rgba(0,0,0,0.03);
+    float: left;
+    margin: 0 16px;
+
+    @media only screen and (max-width: 1072px) {
+        display: none;
+    }
+}
+
+.user {
+    position: relative;
+    
+    .add-padding {
+        left: -9px;
+    }
+    
+    .profile {
+        float: left;
+    }
+    img {
+        float: left;
+    }
+}
+
+[contenteditable]:focus, input:focus, button:focus {
+    outline: 0px solid transparent;
+}
+
+
+.sidebar {
+    height: 100%;
+    width: 296px;
+    float: right;
+    margin-left: 80px;
+    display: none;
+
+    &.toRight {
+        float: left;
+        margin-left: 0;
+        margin-right: 24px;
+    }
+
+    &.sticky {
+        height: calc(100vh - 262px);
+        overflow: auto;
+    }
+
+    @include breakpoint(md){
+        display: block;
+    }
+}
+
+.flex-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.company, .dashboard, .dimension {
+    width: 100%;
+
+    @include breakpoint(md){
+        width: calc(100% - 296px - 80px);
+    }
+    
+    &.no-sidebar {
+        width: 100%;
+    }
+
+    .header {
+        margin-bottom: 40px;
+        h1 {
+            font-family: $FPThin;
+        }
+
+        p.subheader {
+            font-family: $FPLight;
+            font-size: 14px;
+            color: $grey-dark;
+            line-height: 17px;
+            &.no-bottom-padding {
+                padding-bottom: 0; //no sibling a
+            }            
+        }
+        a.cta-link{
+            font-family: $FPSemiBold;
+            font-size: 14px;
+            color:$blue-med-20;
+        }
+    }
+
+    .subheader {
+        padding-top: 8px;
+        padding-bottom: 16px;
+        width: 440px;  
+    }    
+}
+
+//table shared between consolidate content and recent-activity
+.assets-table, .activity-table {
+    font-family: $FPLight;
+
+    .td-text {
+        font-size: 14px;
+        color: $grey-dark;
+        line-height: 17px;
+    }
+
+    table {
+        width: 100%;
+        thead {
+            font-size: 18px;
+            color: $grey-dark;
+
+            tr {
+                height: 41px;
+            }
+
+            td:first-child{
+                .icon {
+                    padding-right: 12px;
+                }
+            }
+            td:not(:first-child){
+                .icon.dropdown {
+                    padding-left: 7px;
+                    width: 9px;
+                    height: 7px;
+                }
+            }
+        }
+
+        .content{
+            td {
+                border-top: 1px solid rgba(0, 0, 0, .03);
+            }
+        }
+    }
+
+    .activity, .asset {
+        >div.vertical-align {
+            @include vcenterChildren;
+        }
+    }
+}
+
+.tags-container, .sectors-container, .content-tags-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    .tags {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .tag, .add-tag, .company-sector, .content-tag {
+        position:relative;
+        font-family: $FPThin;
+        font-size: 16px;
+        color: $white;
+    }
+
+    .tag, .company-sector, .content-tag {
+        margin: 0 6px 10px 0;
+        padding: 0 8px;
+        display: inline-block;
+
+        &.inactive {
+            background: $white;
+            box-shadow: 0 1px 1px 0 rgba(0,0,0,0.06);
+            color: $grey-med;
+        }
+
+        .content, .remove {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 28px;
+        }
+
+        .content {
+            span {
+                height: 16px;
+            }
+            span + a{
+                padding-left: 5px;
+            }
+        }
+    }
+
+    .tag {
+        border-radius: 100px;
+        background: $blue-med-20;
+    }
+
+    .content-tag {
+        border-radius: 4px;
+    }
+
+    .company-sector {
+        background: $blue-med-10;
+        border-radius: 4px;
+
+        &.purple {
+            background: #724BD0;
+        }
+    }
+    
+}
+
+.eye {
+    background: url('../assets/images/icons/eye-icon-white.svg') no-repeat;
+}
+
+//@import '../pages/index.scss';

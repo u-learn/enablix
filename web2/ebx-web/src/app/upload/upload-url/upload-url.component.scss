@@ -1,0 +1,76 @@
+@import '~styles/colors.scss';
+@import '~styles/layout.mixin.scss';
+@import '~styles/fonts.scss';
+
+.upload-asset-popup{
+  width: calc(624px - 48px - 48px);
+  padding: 8px 24px;
+  background: #F7F9F9;
+  z-index: 10;
+  position: relative;
+  border-radius: 4px;
+}
+
+h1, .asset-text {
+    font-family: $FPThin;
+    line-height: 38px;
+    margin-bottom: 32px;
+    font-size: 32px;
+}
+
+.asset-text {
+    background: #F7F9F9;
+}
+
+.preview-text, .preview-img, .preview-tag{
+    border-radius: 4px;
+    font-family: $FPLight;
+}
+
+input, select, textarea {
+    width: 100%;
+    font-size: 18px;
+}
+
+textarea {
+    height: 154px;
+}
+
+.preview-text {
+    width: 512px;
+    padding: 8px;
+    background: $white;
+    border: 1px solid #E3EBEF;
+    box-shadow: 0 1px 1px 0 rgba(0,0,0,0.06);
+    @include vcenterChildren;
+
+    img {
+        padding-right: 8px;
+    }
+
+    &.align-top {
+        align-items: start;
+
+        > img {
+            padding: 0px 8px 0 0;
+        }
+        margin-bottom: 16px;
+    }
+}
+
+.preview-img {
+    margin: 20px 0;
+    overflow-y: hidden;
+
+    img {
+      max-width: 528px;
+    }
+}
+
+
+.actionBtns {
+    margin-top: 24px;
+    button {
+        width: 123px;
+    }
+}

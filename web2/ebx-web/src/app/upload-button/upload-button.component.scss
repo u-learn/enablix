@@ -1,0 +1,63 @@
+@import '~styles/colors.scss';
+@import '~styles/fonts.scss';
+@import '~styles/layout.mixin.scss';
+
+.native-file-input {
+  display: none;
+}
+
+
+.upload {
+  font-family: $FPBlond;
+  margin-right: 16px;
+  > button {
+    height: 48px;
+    width: 117px;
+    background: #1F8AEF;
+    border: 1px solid rgba(0,0,0,0.10);
+    box-shadow: 0 1px 1px 0 rgba(0,0,0,0.04);
+    border-radius: 4px;            
+    font-size: 18px;
+    color:$white;
+
+    &:hover {
+      background: #44A1F8;
+    }
+  }
+
+  @media only screen and (max-width: 1260px) {
+    display: none;
+  }
+
+}
+
+
+.upload-options-container {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  // border-radius: 2px;
+  background-color: $white;
+  height: 144px;
+  position: absolute;
+  width: 228px;
+  margin-left: -112px;
+
+
+  .upload-option{
+    padding: 8px 16px;
+    height: 32px;
+    cursor: pointer;
+    @include vcenterChildren;
+
+    &:not(:last-child){
+      border-bottom: 1px solid rgba(0,0,0,0.10);
+    }
+
+    img {
+      transform: rotate(180deg);
+    }
+
+    span {
+      padding-left: 8px;
+    }
+  } 
+}

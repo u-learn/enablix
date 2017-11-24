@@ -1,9 +1,14 @@
 package com.enablix.commons.util.beans;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.BeanWrapper;
+import org.springframework.beans.PropertyAccessorFactory;
 
 import com.enablix.commons.constants.ContentDataConstants;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -20,8 +25,25 @@ public class BeanUtil {
 			ContentDataConstants.MODIFIED_BY_KEY,
 			ContentDataConstants.MODIFIED_BY_NAME_KEY};
 	
+	private static final Set<String> nonBizProps = new HashSet<>(Arrays.asList(NON_BUSINESS_PROPERTIES));
+	
 	public static void copyBusinessAttributes(Object source, Object target) {
 		BeanUtils.copyProperties(source, target, NON_BUSINESS_PROPERTIES);
+	}
+	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public static void copyBusinessAttributes(Map<?,?> source, Object target) {
+		
+		BeanWrapper wrapper = PropertyAccessorFactory.forBeanPropertyAccess(target);
+		Map fieldsToCopy = new HashMap<>();
+		
+		source.forEach((k, v) -> {
+			if (!nonBizProps.contains(String.valueOf(k))) {
+				fieldsToCopy.put(k, v);
+			}
+		});
+		
+		wrapper.setPropertyValues(fieldsToCopy);
 	}
 
 	public static Map<?,?> beanToMap(Object bean) {

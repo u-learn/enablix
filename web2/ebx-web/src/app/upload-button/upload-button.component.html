@@ -1,0 +1,18 @@
+<form #fileForm><input #fileInput type="file" class="native-file-input" (change)="onFileSelect($event)"></form>
+<div class="upload" (clickOutside)="hideUploadOptions()">
+  <button (click)="showUploadOptions()">Upload</button>
+  <div class="upload-options-container" [hidden]="!uploadOptions">
+    <div class="upload-option" (click)="openFileBrowser()">
+      <img src="/assets/images/icons/upload-icon-blue.svg" />
+      <span>File</span>
+    </div>
+    <div class="upload-option" (click)="openUploadDialog('url')">
+      <img src="/assets/images/icons/globe_earth-blue.svg" />
+      <span>URL</span>
+    </div>
+    <div class="upload-option" (click)="openUploadDialog('text')">
+      <img src="/assets/images/icons/note_icon-blue.svg" />
+      <span>Create Text</span>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,87 @@
+@import '~styles/colors.scss';
+@import '~styles/layout.mixin.scss';
+@import '~styles/fonts.scss';
+
+.ebx-select {
+  position: relative;
+  border-radius: 6px;
+  border: 1px solid #E3EBEF;
+  background: $white;
+  font-family: $FPLight;
+  box-shadow: 0 1px 1px 0 rgba(0,0,0,0.06);
+
+  .input-row {
+    height: 42px;
+    display: flex;
+    padding: 0 12px;
+
+    .head-icon {
+      margin-right: 8px;
+    }
+
+    .text-input {
+      font-size: 18px;
+      flex-grow: 1; 
+    }
+
+    .pills-container {
+      display: flex;
+      padding: 8px 0;
+
+      .pill {
+        margin-right: 8px;
+        border-radius: 4px;
+        padding: 0 8px;
+        display: flex;
+        align-items: center;
+        
+        .pill-label {
+          color: $white;
+          height: 16px;
+        }
+
+        .remove {
+          padding-left: 5px;
+          cursor: pointer;
+        }
+      }
+    }
+
+  }
+
+  .option-rows {
+
+    background: white;
+    position: absolute;
+    min-width: 100%;
+    box-shadow: 0 1px 1px 0 rgba(0,0,0,0.06);
+    border-bottom-right-radius: 6px;
+    border-bottom-left-radius: 6px;
+    margin-top: -4px;
+    margin-left: -1px;
+    margin-bottom: 24px;
+    border: 1px solid #E3EBEF;
+    border-top: 1px solid rgba(227,235,239, 0.5);
+    max-height: 220px;
+    overflow-y: auto;
+    z-index: 100;
+
+    .option-row {
+      margin: 0 16px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+
+      &:not(:last-child){
+          border-bottom: 1px solid rgba(227,235,239, 0.5);
+      }
+
+      .option-label {
+
+      }
+
+    }
+
+  }
+}

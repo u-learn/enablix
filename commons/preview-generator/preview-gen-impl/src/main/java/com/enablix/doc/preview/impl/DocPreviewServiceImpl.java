@@ -14,8 +14,8 @@ import com.enablix.app.content.doc.DocumentStoreFactory;
 import com.enablix.commons.dms.DocumentStoreConstants;
 import com.enablix.commons.dms.api.DocPreviewData;
 import com.enablix.commons.dms.api.DocumentMetadata;
-import com.enablix.commons.dms.api.DocumentStore;
 import com.enablix.commons.dms.api.DocumentMetadata.PreviewStatus;
+import com.enablix.commons.dms.api.DocumentStore;
 import com.enablix.core.api.DocInfo;
 import com.enablix.core.api.IDocument;
 import com.enablix.doc.preview.DocPreviewGenerator;
@@ -54,7 +54,7 @@ public class DocPreviewServiceImpl implements DocPreviewService {
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
-	public void createPreview(DocumentMetadata docMetadata) throws IOException {
+	public DocumentMetadata createPreview(DocumentMetadata docMetadata) throws IOException {
 		
 		// find the source doc store for the document
 		DocumentStore sourceDocStore = docStoreFactory.getDocumentStore(docMetadata);
@@ -65,17 +65,19 @@ public class DocPreviewServiceImpl implements DocPreviewService {
 		
 		// generate preview
 		DocPreviewData previewData = previewGenerator.createPreview(docMetadata, sourceDocStore, previewDocStore);
-
+		DocumentMetadata docMd = null;
+		
 		if (previewData != null) {
 			// save doc preview data
 			previewDataCrud.saveOrUpdate(previewData);
 			
 			// update preview status
-			docManager.updatePreviewStatus(docMetadata.getIdentity(), PreviewStatus.AVAILABLE);
+			docMd = docManager.updatePreviewStatus(docMetadata.getIdentity(), PreviewStatus.AVAILABLE);
 		} else {
-			docManager.updatePreviewStatus(docMetadata.getIdentity(), PreviewStatus.NOT_SUPPORTED);
+			docMd = docManager.updatePreviewStatus(docMetadata.getIdentity(), PreviewStatus.NOT_SUPPORTED);
 		}
 		
+		return docMd;
 	}
 
 	private String previewStoreType() {

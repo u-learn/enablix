@@ -3,6 +3,8 @@ package com.enablix.app.content.doc.web;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,15 +20,22 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.enablix.app.content.ContentDataManager;
 import com.enablix.app.content.doc.DocumentManager;
+import com.enablix.app.content.enrich.EmbeddedUrl;
+import com.enablix.app.template.service.TemplateManager;
+import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.commons.dms.api.DocPreviewData;
 import com.enablix.commons.dms.api.Document;
 import com.enablix.commons.dms.api.DocumentMetadata;
 import com.enablix.commons.util.QIdUtil;
 import com.enablix.commons.util.StringUtil;
+import com.enablix.commons.util.collection.CollectionUtil;
 import com.enablix.commons.util.process.ProcessContext;
+import com.enablix.core.api.ContentDataRef;
 import com.enablix.core.api.ContentLengthAwareDocument;
 import com.enablix.core.api.IDocument;
+import com.enablix.core.api.TemplateFacade;
 import com.enablix.core.domain.activity.Activity.ActivityType;
 import com.enablix.core.domain.activity.ActivityChannel.Channel;
 import com.enablix.core.domain.activity.Actor;
@@ -35,6 +44,8 @@ import com.enablix.core.domain.activity.RegisteredActor;
 import com.enablix.core.security.SecurityUtil;
 import com.enablix.doc.preview.DocPreviewService;
 import com.enablix.services.util.ActivityLogger;
+import com.enablix.services.util.ContentDataUtil;
+import com.enablix.services.util.DataViewUtil;
 
 @RestController
 @RequestMapping("doc")
@@ -53,21 +64,29 @@ public class DocumentController {
 	@Autowired
 	private DocPreviewService previewService;
 	
+	@Autowired
+	private ContentDataManager dataManager;
+	
+	@Autowired
+	private TemplateManager templateMgr;
+	
 	@RequestMapping(value = "/upload", method = RequestMethod.POST)
     public @ResponseBody DocumentMetadata handleFileUpload(
     		@RequestParam(value = "fileSize", required = true) long fileSize,
-    		@RequestParam(value = "contentQId", required = true) String contentQId,
+    		@RequestParam(value = "contentQId", required = false) String contentQId,
     		@RequestParam(value = "parentIdentity", required = false) String parentIdentity,
     		@RequestParam(value = "containerIdentity", required = false) String containerIdentity,
     		@RequestParam(value = "docIdentity", required = false) String docIdentity,
     		@RequestParam(value = "temporary", required = false) boolean temporary,
+    		@RequestParam(value = "generatePreview", required = false) boolean generatePreview,
             @RequestParam(value="file", required = true) MultipartFile file) {
         
         try {
-            Document<DocumentMetadata> document = docManager.buildDocument(file.getInputStream(), 
-            	file.getOriginalFilename(), file.getContentType(), contentQId, fileSize, docIdentity, temporary);
+            Document<DocumentMetadata> document = 
+            		docManager.buildDocument(file.getInputStream(), file.getOriginalFilename(), 
+            				file.getContentType(), contentQId, fileSize, docIdentity, temporary);
             
-            DocumentMetadata docMd = saveDocument(contentQId, parentIdentity, containerIdentity, document);
+            DocumentMetadata docMd = saveDocument(contentQId, parentIdentity, containerIdentity, document, generatePreview);
 			
             auditActivity(ActivityType.DOC_UPLOAD, docIdentity, docMd, 
             				null, null, null, null);
@@ -86,22 +105,22 @@ public class DocumentController {
 
 	private DocumentMetadata saveDocument(String contentQId, 
 			String parentIdentity, String containerIdentity,
-			Document<?> document) throws IOException {
+			Document<?> document, boolean generatePreview) throws IOException {
 		
 		String containerQId = getContainerQId(contentQId);
+		DocumentMetadata docMd = null;
 		
 		if (!StringUtil.isEmpty(parentIdentity)) {
-			docManager.saveUsingParentInfo(document, containerQId, parentIdentity);
+			docMd = docManager.saveUsingParentInfo(document, containerQId, parentIdentity, generatePreview);
 		} else {
-			docManager.saveUsingContainerInfo(document, containerQId, containerIdentity);
+			docMd = docManager.saveUsingContainerInfo(document, containerQId, containerIdentity, generatePreview);
 		}
 		
-		return document.getMetadata();
+		return docMd;
 	}
 
 	private String getContainerQId(String contentQId) {
-		String parentQId = QIdUtil.getParentQId(contentQId); // doc container QId
-		return parentQId;
+		return StringUtil.isEmpty(contentQId) ? "" : QIdUtil.getParentQId(contentQId); // doc container QId
 	}
 	
 	
@@ -193,6 +212,63 @@ public class DocumentController {
        	}
        	
    	}
+    
+    @RequestMapping(value = "/icon/r/{contentQId}/{recIdentity}/", method = {RequestMethod.GET})
+   	public void getPreviewDataIcon(HttpServletRequest request,
+               HttpServletResponse response, 
+               @PathVariable String contentQId,
+               @PathVariable String recIdentity ) throws IOException {
+       	
+    	boolean iconFound = false;
+    	
+    	TemplateFacade template = templateMgr.getTemplateFacade(ProcessContext.get().getTemplateId());
+    	ContentDataRef dataRef = ContentDataRef.createContentRef(
+    			template.getId(), contentQId, recIdentity, null);
+    	
+    	Map<String, Object> contentRecord = dataManager.getContentRecord(dataRef, template, DataViewUtil.allDataView());
+    	
+    	if (CollectionUtil.isNotEmpty(contentRecord)) {
+
+    		String docIdentity = ContentDataUtil.findDocIdentity(contentRecord, template.getContainerDefinition(contentQId));
+    		
+    		if (StringUtil.hasText(docIdentity)) {
+    		
+    			IDocument part = previewService.getDocSmallThumbnail(docIdentity);
+    			if (part != null) {
+    				sendDownloadResponse(response, part);
+    				iconFound = true;
+    			} 
+    		} else {
+    			// check url
+    			String previewImgUrl = findUrlPreviewImageUrl(contentRecord);
+    			if (StringUtil.hasText(previewImgUrl)) {
+    				response.sendRedirect(previewImgUrl);
+    				iconFound = true;
+    			}
+    		}
+       	}
+    	
+    	if (!iconFound) {
+    		response.sendError(HttpServletResponse.SC_NOT_FOUND);
+    	}
+       	
+   	}
+    
+    @SuppressWarnings("unchecked")
+	public String findUrlPreviewImageUrl(Map<String, Object> record) {
+		
+    	Object urls = record.get(ContentDataConstants.CONTENT_URLS_KEY);
+		
+		if (urls != null) {
+			List<EmbeddedUrl> urlList = (List<EmbeddedUrl>) urls;
+			if (urlList.size() > 0) {
+				EmbeddedUrl eUrl = urlList.get(0);
+				return eUrl.getPreviewImageUrl();
+			}
+		}
+		
+		return null;
+	}
     
     @RequestMapping(value = "/lthmbnl/{docIdentity}/", method = {RequestMethod.GET})
    	public void getPreviewDataLargeThumbnail(HttpServletRequest request,

@@ -1,0 +1,12 @@
+<div class="header">
+  <h1>Recently Updated Content</h1>
+  <p class="subheader">These are the contents recently updated in your organization.</p>
+  <a class="cta-link">See More</a>
+</div>
+<div class="main featured">
+  <div class="card-container">
+    <div class="data-card" *ngFor="let rec of (data ? data.content : [])">
+      <ebx-data-card [containerQId]="rec.data.contentQId" [recordIdentity]="rec.data.instanceIdentity"></ebx-data-card>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,6 @@
+<div class="text-preview">
+  <div *ngIf="!editing; else editableText">{{record[container.textItemId]}}</div>
+  <ng-template #editableText>
+    <div contenteditable="true" [(ngModel)]="record[container.textItemId]"></div>
+  </ng-template>
+</div>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="13px" height="14px" viewBox="0 0 13 14" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 47.1 (45422) - http://www.bohemiancoding.com/sketch -->
+    <title>copy</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Asset-page" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Text" transform="translate(-575.000000, -33.000000)" fill-rule="nonzero" fill="#1F8AEF">
+            <g id="top_bar" transform="translate(88.000000, 24.000000)">
+                <g id="asset_actions" transform="translate(372.000000, 0.000000)">
+                    <g id="see_website" transform="translate(105.000000, 0.000000)">
+                        <g id="copy" transform="translate(10.000000, 9.000000)">
+                            <path d="M3.92,12.32 C2.68464,12.32 1.68,11.31536 1.68,10.08 L1.68,2.8 L1.12,2.8 C0.5012,2.8 0,3.3012 0,3.92 L0,12.88 C0,13.4988 0.5012,14 1.12,14 L8.4,14 C9.0188,14 9.52,13.4988 9.52,12.88 L9.52,12.32 L3.92,12.32 Z" id="Shape"></path>
+                            <path d="M12.15592,3.24408 L9.07592,0.16408 C8.97064,0.0588 8.8284,0 8.68,0 L3.92,0 C3.3012,0 2.8,0.5012 2.8,1.12 L2.8,10.08 C2.8,10.6988 3.3012,11.2 3.92,11.2 L11.2,11.2 C11.8188,11.2 12.32,10.6988 12.32,10.08 L12.32,3.64 C12.32,3.4916 12.2612,3.34936 12.15592,3.24408 Z M8.96,3.92 C8.65088,3.92 8.4,3.66912 8.4,3.36 L8.4,1.06624 L11.25376,3.92 L8.96,3.92 Z" id="Shape"></path>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
