@@ -30,6 +30,7 @@ a{
     text-decoration: none;
     color: inherit; 
 }
+
 textarea, input, select { 
     border:none;
     background-image:none;
@@ -89,6 +90,8 @@ select {
     min-width: 1024px;
     max-width: 1600px;
     margin: auto;
+    display: flex;
+    flex-direction: column;
 
     @include breakpoint(md){
         margin: 0 32px;
