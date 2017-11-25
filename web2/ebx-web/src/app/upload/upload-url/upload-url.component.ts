@@ -69,6 +69,7 @@ export class UploadUrlComponent implements OnInit {
 
                 this.thumbnailUrl = this.embedInfoService.getThumbnailUrl(this.embedInfo);
                 this.urlInfo.title = this.embedInfo.title;
+                this.urlInfo.thumbnailUrl = this.thumbnailUrl;
 
                 this.loadingPreview = false;
                 this.previewContent = true;

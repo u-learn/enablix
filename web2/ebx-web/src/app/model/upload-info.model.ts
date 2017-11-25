@@ -5,10 +5,12 @@ export class UploadInfo {
 
 export class UrlCaptureInfo extends UploadInfo {
   url: string;
+  thumbnailUrl: string;
 }
 
 export class FileUploadInfo extends UploadInfo {
   docMetadata: any;
+  thumbnailUrl: string;
 }
 
 export class TextInfo extends UploadInfo {

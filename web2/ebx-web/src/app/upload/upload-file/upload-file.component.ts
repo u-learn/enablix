@@ -80,15 +80,18 @@ export class UploadFileComponent implements OnInit {
     this.fileService.uploadFile(formData).subscribe(
       res => {
         this.fileInfo.docMetadata = res;
+        
+        let decoration: any = {};
         let record = {
-          '__decoration': {
-            '__docMetadata': this.fileInfo.docMetadata  
-          }
+          '__decoration': decoration
         }
+
+        record.__decoration.__docMetadata = this.fileInfo.docMetadata;
 
         let previewHandler = this.contentPreviewService.getPreviewHandler(record);
         if (previewHandler != null) {
           this.previewImageUrl = previewHandler.smallThumbnailUrl(record);
+          this.fileInfo.thumbnailUrl = this.previewImageUrl;
         }
 
         this.loading = false;

@@ -28,7 +28,8 @@ export class NewContentService {
       this.content = {
         container: container,
         data: {
-          '__title': urlInfo.title
+          '__title': urlInfo.title,
+          '__decoration': {}
         },
         urlInfo: urlInfo
       }
@@ -82,7 +83,8 @@ export class NewContentService {
       this.content = {
         container: container,
         data: {
-          '__title': textInfo.title
+          '__title': textInfo.title,
+          '__decoration': {}
         },
         textInfo: textInfo
       }
@@ -98,7 +100,6 @@ export class NewContentService {
 
       if (descFldId) {
         this.content.data[descFldId] = textInfo.text;
-        this.content.data.__decoration = {};
         this.content.data.__decoration.__textContent = textInfo.text;
       }
     }

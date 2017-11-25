@@ -70,6 +70,7 @@ export class BizContentComponent implements OnInit, AfterViewInit {
       });
 
     } else {
+      this.contentService.decorateRecord(this.container, this.record);
       this.initState();
     }
 
