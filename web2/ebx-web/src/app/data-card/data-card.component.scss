@@ -29,6 +29,11 @@
     .cardDefaultImg {
         justify-content: center;
         background: #2C4290;
+
+        img {
+            max-width: 48px;
+            min-width: 48px;
+        }
     }
     
     .cardImgText {
@@ -49,6 +54,7 @@
 
     img {
         max-width: 192px;
+        min-width: 192px;
     }
 
     img + .content {

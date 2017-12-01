@@ -18,7 +18,7 @@
       <div><p ellipsis [innerHtml]="text"></p></div>
     </div>
     <div class="cardDefaultImg" *ngIf="!text && !thumbnailUrl">
-      <img src="/assets/images/icons/no-thumbnail-icon.svg" />
+      <img [src]="getNoPreviewImage()" />
     </div>
     <div class="content">
       <p class="content-type" [innerHtml]="containerLabel" (click)="navToDimList()"></p>

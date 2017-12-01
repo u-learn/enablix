@@ -4,6 +4,7 @@ import { ContentTemplateService } from '../core/content-template.service';
 import { ContentService } from '../core/content/content.service';
 import { AlertService } from '../core/alert/alert.service';
 import { NavigationService } from '../app-routing/navigation.service';
+import { Container } from '../model/container.model';
 
 @Component({
   selector: 'ebx-data-card',
@@ -16,6 +17,8 @@ export class DataCardComponent implements OnInit {
   @Input() record? : any;
   @Input() recordIdentity? : string;
   @Input() containerQId : string;
+
+  container: Container;
 
   isBizContent = false;
   title: string;
@@ -63,6 +66,7 @@ export class DataCardComponent implements OnInit {
     let container = this.contentTemplateService.getConcreteContainerByQId(this.containerQId);
 
     if (container != null) {
+      this.container = container;
       this.isBizContent = this.contentTemplateService.isBusinessContent(container);
       this.contentService.decorateRecord(container, this.record);
 
@@ -77,7 +81,7 @@ export class DataCardComponent implements OnInit {
         this.linkedContentCount = decoration.__linkedContentCount;
         
         if (!this.thumbnailUrl) {
-          this.text = decoration.__textContent;  
+          this.text = decoration.__textContent;
         }
       }
       
@@ -94,6 +98,17 @@ export class DataCardComponent implements OnInit {
 
   navToDimList() {
     this.navService.goToDimList(this.containerQId);
+  }
+
+  getNoPreviewImage() : string {
+    
+    let imgSrc = "/assets/images/icons/file_unknown.svg";
+    
+    if (this.record.__decoration && this.record.__decoration.__noPreviewImgUrl) {
+      imgSrc = this.record.__decoration.__noPreviewImgUrl;
+    } 
+
+    return imgSrc;
   }
 
 }

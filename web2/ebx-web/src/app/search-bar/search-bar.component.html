@@ -3,7 +3,7 @@
         <img class="search-icon" src="/assets/images/icons/search-grey.svg">
         <!-- inject any tags -->
         <div class="selectedTagsHolder">
-            <div class="pills-container" *ngIf="searchBarData">
+            <div class="pills-container" *ngIf="searchBarData && searchBarData.context">
                 <div class="pill" *ngFor="let item of searchBarData.context.contextItems" [style.background]="item.color" [class.roundpill]="item.type == 'BIZ_CONTENT'" (click)="addSearchBarItem(item)">
                   <span class="pill-label">{{item?.label}}</span>
                   <a class="remove" (click)="removeSearchBarItem(item)">
