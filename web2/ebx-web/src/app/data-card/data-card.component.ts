@@ -100,6 +100,10 @@ export class DataCardComponent implements OnInit {
     this.navService.goToDimList(this.containerQId);
   }
 
+  navToContentList() {
+    this.navService.goToContentList(this.containerQId);
+  }
+
   getNoPreviewImage() : string {
     
     let imgSrc = "/assets/images/icons/file_unknown.svg";

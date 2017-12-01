@@ -18,6 +18,10 @@ export class NavigationService {
     this.router.navigate(['/portal/content/detail', containerQId, identity]);
   }
 
+  goToContentList(containerQId: string) {
+    this.router.navigate(['/portal/content/list', containerQId]);
+  }
+
   goToDimList(containerQId: string) {
     this.router.navigate(['/portal/dim/list', containerQId]);
   }
