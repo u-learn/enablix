@@ -14,6 +14,7 @@ import { BizContentListComponent } from '../biz-content/biz-content-list/biz-con
 import { ContentTemplateResolve } from './content-template.resolve';
 import { ResourceVersionResolve } from './resource-version.resolve';
 import { TenantResolve } from './tenant.resolve';
+import { SearchBarResolve } from './search-bar.resolve';
 import { NavigationService } from './navigation.service';
 import { BizDimensionListComponent } from '../biz-dimension/biz-dimension-list/biz-dimension-list.component';
 import { BizDimensionDetailComponent } from '../biz-dimension/biz-dimension-detail/biz-dimension-detail.component';
@@ -37,10 +38,16 @@ const routes: Routes = [
       children: [
         {
           path: '',
-          component: HomeComponent
+          component: HomeComponent,
+          resolve: {
+            sbData: SearchBarResolve
+          }
         },
         {
           path: 'content',
+          resolve: {
+            sbData: SearchBarResolve
+          },
           children: [
             {
               path: 'new/:cQId',
@@ -59,6 +66,9 @@ const routes: Routes = [
         {
           path: 'dim',
           component: BizDimensionComponent,
+          resolve: {
+            sbData: SearchBarResolve
+          },
           children: [
             {
               path: 'list/:cQId',
@@ -96,6 +106,7 @@ const routes: Routes = [
     ContentTemplateResolve,
     ResourceVersionResolve,
     TenantResolve,
+    SearchBarResolve,
     NavigationService
   ],
   exports: [

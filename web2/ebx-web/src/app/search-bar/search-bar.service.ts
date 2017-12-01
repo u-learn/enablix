@@ -61,9 +61,7 @@ export class SearchBarService {
               private ctService: ContentTemplateService,
               private contentService: ContentService,
               private biDSBuilder: BoundedItemsDSBuilderService,
-              private route: ActivatedRoute) { 
-    this.init();
-  }
+              private route: ActivatedRoute) { }
 
   init() {
 
@@ -108,7 +106,11 @@ export class SearchBarService {
         })
 
       this.bizContentListDataset = new LocalDataset("Content Types", bizContentSearchItems);
+
+      this.searchBarData = new SearchBarData();
     }
+
+    return this.searchBarData;
   }
 
   loadBizDimObjects() {
