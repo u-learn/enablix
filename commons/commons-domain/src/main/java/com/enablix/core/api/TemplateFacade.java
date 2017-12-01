@@ -36,5 +36,13 @@ public interface TemplateFacade {
 	List<String> getApplicableQualityRules(String contentQId);
 
 	QualityRuleType getQualityRule(String ruleId);
+	
+	boolean isDocContainer(ContainerType container);
+	
+	boolean isTextContainer(ContainerType container);
+	
+	List<ContainerType> getBizContentContainers();
+	
+	List<ContainerType> getBizDimContainers();
 
 }

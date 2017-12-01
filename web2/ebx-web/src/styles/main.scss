@@ -31,7 +31,7 @@ a{
     color: inherit; 
 }
 
-textarea, input, select { 
+textarea, input[type="text"], select { 
     border:none;
     background-image:none;
     background-color:transparent;
@@ -43,7 +43,11 @@ textarea, input, select {
     -webkit-appearance: none; 
 }
 
-input, select, textarea {
+input[type="checkbox"] {
+    margin-right: 4px;
+}
+
+input[type="text"], select, textarea {
     color: #2D2D2D;
     -webkit-appearance: none;
     background-color: $white;
@@ -247,7 +251,7 @@ body {
     }
 
     .header {
-        margin-bottom: 40px;
+        margin-bottom: 32px;
         h1 {
             font-family: $FPThin;
         }
@@ -261,6 +265,11 @@ body {
                 padding-bottom: 0; //no sibling a
             }            
         }
+
+        div {
+            padding-top: 8px;
+        }
+
         a.cta-link{
             font-family: $FPSemiBold;
             font-size: 14px;
@@ -270,7 +279,7 @@ body {
 
     .subheader {
         padding-top: 8px;
-        padding-bottom: 16px;
+        /*padding-bottom: 16px;*/
         width: 440px;  
     }    
 }
@@ -391,6 +400,55 @@ body {
 
 .eye {
     background: url('../assets/images/icons/eye-icon-white.svg') no-repeat;
+}
+
+.pills-container {
+  display: flex;
+  padding-top: 8px;
+  min-height: 26px;
+
+  .pill {
+    margin-right: 8px;
+    border-radius: 4px;
+    padding: 0 8px;
+    display: flex;
+    align-items: center;
+    min-height: 26px;
+    margin-bottom: 8px;
+    
+    &.roundpill {
+        border-radius: 100px;
+    }
+
+    &.selectable {
+        cursor: pointer;
+    }
+
+    &.white {
+      background-color: $white;
+      border: 1px solid #E3EBEF;
+
+      .pill-label {
+        color: #1F8AEF;
+        font-weight: 700;
+      }
+
+
+    }
+
+    .pill-label {
+      color: $white;
+      height: 16px;
+      white-space: nowrap;
+
+      
+    }
+
+    .remove {
+      padding-left: 5px;
+      cursor: pointer;
+    }
+  }
 }
 
 //@import '../pages/index.scss';

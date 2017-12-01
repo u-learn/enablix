@@ -14,9 +14,9 @@ export class AuthService {
 
   constructor(private http: HttpClient, private apiUrlService: ApiUrlService, private userService: UserService) { }
 
-  loginUser(username: string, password: string) {
+  loginUser(username: string, password: string, rememberMe: boolean) {
 
-  	return this.http.get(this.apiUrlService.getUserUrl(), {headers: this.loginRequestHeaders(username, password)})
+  	return this.http.get(this.apiUrlService.getUserUrl(), {headers: this.loginRequestHeaders(username, password, rememberMe)})
                 		.map((res: any) => {
                 			let user = res;
                       if (user && user.name) {
@@ -35,9 +35,12 @@ export class AuthService {
     this.loginIn.emit(user.name);
   }
 
-  private loginRequestHeaders(username: string, password: string): HttpHeaders {
+  private loginRequestHeaders(username: string, password: string, rememberMe: boolean): HttpHeaders {
   	let headers = new HttpHeaders();
   	headers = headers.append("Authorization", "Basic " + btoa(username + ":" + password));
+    if (rememberMe) {
+      headers = headers.append("remember-me", "true");
+    }
   	return headers;
   }
 
@@ -53,7 +56,8 @@ export class AuthService {
   	// HACK: to clear basic auth associated with browser window, 
 	  // update it with a bad credentials
 	  // http://stackoverflow.com/questions/233507/how-to-log-out-user-from-web-site-using-basic-authentication
-  	return this.http.get(this.apiUrlService.getUserUrl(), {headers: this.loginRequestHeaders('~~baduser~~', '~~')})
+  	return this.http.get(this.apiUrlService.getUserUrl(), 
+                         {headers: this.loginRequestHeaders('~~baduser~~', '~~', false)})
   					.map(res => { 
   						/* map causing the request to execute and logout user */
   						return res;

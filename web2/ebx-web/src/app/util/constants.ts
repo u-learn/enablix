@@ -5,5 +5,6 @@ export class Constants {
 
   static bizContentColor = "#1F8AEF";
   static defaultTypeColor = "#b7babd";
+  static refDataColor = "#54a7e4";
 
 }

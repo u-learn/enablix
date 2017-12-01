@@ -10,6 +10,7 @@ import { LoginFormComponent } from '../login-page/login-form/login-form.componen
 import { HomeComponent } from '../home/home.component';
 import { NewContentEditComponent } from '../new-content-edit/new-content-edit.component';
 import { BizContentComponent } from '../biz-content/biz-content.component';
+import { BizContentListComponent } from '../biz-content/biz-content-list/biz-content-list.component';
 import { ContentTemplateResolve } from './content-template.resolve';
 import { ResourceVersionResolve } from './resource-version.resolve';
 import { TenantResolve } from './tenant.resolve';
@@ -48,6 +49,10 @@ const routes: Routes = [
             {
               path: 'detail/:cQId/:identity',
               component: BizContentComponent
+            },
+            {
+              path: 'list/:cQId',
+              component: BizContentListComponent
             }
           ]
         },

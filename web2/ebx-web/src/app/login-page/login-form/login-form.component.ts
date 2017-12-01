@@ -13,6 +13,8 @@ export class LoginFormComponent implements OnInit {
 
   username: string;
   password: string;
+  rememberMe: boolean;
+
   returnUrl: string;
   invalidCredentials: boolean
   loginSuccess: boolean = false;
@@ -35,7 +37,7 @@ export class LoginFormComponent implements OnInit {
   	
   	ev.preventDefault();
   	
-    this.authService.loginUser(this.username, this.password)
+    this.authService.loginUser(this.username, this.password, this.rememberMe)
   	  .subscribe(
   			data => {
           this.loginSuccess = true;

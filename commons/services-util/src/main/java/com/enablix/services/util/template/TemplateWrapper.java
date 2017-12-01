@@ -3,17 +3,21 @@ package com.enablix.services.util.template;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import org.springframework.util.Assert;
 
 import com.enablix.commons.util.collection.CollectionUtil;
 import com.enablix.core.api.TemplateFacade;
+import com.enablix.core.commons.xsdtopojo.ContainerBusinessCategoryType;
 import com.enablix.core.commons.xsdtopojo.ContainerRefListType;
 import com.enablix.core.commons.xsdtopojo.ContainerRefType;
 import com.enablix.core.commons.xsdtopojo.ContainerType;
+import com.enablix.core.commons.xsdtopojo.ContentItemClassType;
 import com.enablix.core.commons.xsdtopojo.ContentItemType;
 import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 import com.enablix.core.commons.xsdtopojo.DataSegmentDefinitionType;
@@ -37,6 +41,11 @@ public class TemplateWrapper implements TemplateFacade {
 	private Map<String, ContentItemType> containerDataSegmentAttrMap;
 	private Map<String, QualityRuleType> qualityRuleConfigMap;
 	private Map<String, List<String>> containerQualityRuleIdMap;
+	
+	private List<ContainerType> bizDimContainers;
+	private List<ContainerType> bizContentContainers;
+ 	private Set<String> docContainers;
+	private Set<String> richTextContainers;
 
 	public TemplateWrapper(ContentTemplate template) {
 		super();
@@ -105,6 +114,11 @@ public class TemplateWrapper implements TemplateFacade {
 		this.containerDataSegmentAttrMap = new HashMap<>();
 		this.containerQualityRuleIdMap = new HashMap<>();
 		
+		this.bizDimContainers = new ArrayList<>();
+		this.bizContentContainers = new ArrayList<>();
+		this.docContainers = new HashSet<>();
+		this.richTextContainers = new HashSet<>();
+		
 		
 		TemplateContainerWalker walker = new TemplateContainerWalker(this.template);
 		walker.walk(new ContainerVisitor() {
@@ -129,6 +143,16 @@ public class TemplateWrapper implements TemplateFacade {
 					collectionNameContainerMap.put(collectionName, container);
 				}
 				
+				if (container.getBusinessCategory() == ContainerBusinessCategoryType.BUSINESS_CONTENT) {
+					bizContentContainers.add(container);
+				}
+				
+				if (container.getBusinessCategory() == ContainerBusinessCategoryType.BUSINESS_DIMENSION) {
+					bizDimContainers.add(container);
+				}
+				
+				populateContainerType(container);
+				
 				initQualityRuleMapping(container);
 				
 				for (Entry<String, ContentItemType> segmentAttr : dataSegmentAttrIdMap.entrySet()) {
@@ -142,6 +166,20 @@ public class TemplateWrapper implements TemplateFacade {
 								containerContentItem);
 					}
 				}
+			}
+			
+			private void populateContainerType(ContainerType container) {
+				
+				container.getContentItem().forEach((contItem) -> {
+					
+					if (contItem.getType() == ContentItemClassType.DOC) {
+						docContainers.add(container.getQualifiedId());
+					}
+					
+					if (contItem.getType() == ContentItemClassType.RICH_TEXT) {
+						richTextContainers.add(container.getQualifiedId());
+					}
+				});
 			}
 
 			private void initQualityRuleMapping(ContainerType container) {
@@ -275,6 +313,26 @@ public class TemplateWrapper implements TemplateFacade {
 	@Override
 	public QualityRuleType getQualityRule(String ruleId) {
 		return qualityRuleConfigMap.get(ruleId);
+	}
+
+	@Override
+	public boolean isDocContainer(ContainerType container) {
+		return this.docContainers.contains(container.getQualifiedId());
+	}
+
+	@Override
+	public boolean isTextContainer(ContainerType container) {
+		return this.richTextContainers.contains(container.getQualifiedId());
+	}
+
+	@Override
+	public List<ContainerType> getBizContentContainers() {
+		return this.bizContentContainers;
+	}
+
+	@Override
+	public List<ContainerType> getBizDimContainers() {
+		return this.bizDimContainers;
 	}
 	
 }

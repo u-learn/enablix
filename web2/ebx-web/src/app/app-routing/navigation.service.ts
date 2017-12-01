@@ -25,5 +25,13 @@ export class NavigationService {
   goToDimDetail(containerQId: string, identity: string) {
     this.router.navigate(['/portal/dim/detail', containerQId, identity]);
   }
+
+  goToRoute(routePath: string, routeParams: string[]) {
+    let navigateParams = [routePath];
+    if (routeParams) {
+      routeParams.forEach(param => navigateParams.push(param));
+    }
+    this.router.navigate(navigateParams);
+  }
   
 }

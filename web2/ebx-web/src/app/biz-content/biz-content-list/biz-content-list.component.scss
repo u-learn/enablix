@@ -1,0 +1,27 @@
+@import '~styles/colors.scss';
+@import '~styles/layout.mixin.scss';
+@import '~styles/fonts.scss';
+
+.content-list-container {
+
+  .content-name {
+    font-family: $FPThin;
+    font-size: 24px;
+    color: #000000;
+    margin-bottom: 24px;
+  }
+
+  .content-cards {
+    display: flex;
+    flex-wrap: wrap;
+
+    &.add-margin {
+      margin-bottom: 24px;
+    }
+
+    .data-card {
+      margin-right: 24px;
+    }
+  }
+
+}

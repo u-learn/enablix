@@ -51,7 +51,7 @@ export class ActivityAuditService {
 
   getTextDescription(act: any) : string {
     return act.actor.name + " " + this.activityDesc[act.activity.activityType] 
-          + " " + this.ctService.getContainerLabel(act.activity.containerQId) 
+          + " " + this.ctService.getContainerSingularLabel(act.activity.containerQId) 
           + " - " + act.activity.itemTitle;
   }
 

@@ -3,12 +3,15 @@
 		<form (submit)="loginUser($event)">
 			<div *ngIf="invalidCredentials" class="input-group error">Invalid username or password</div>
 			<div class="input-group">
-				<div class="label">Username</div>
-				<div><input type="text" name="username" [(ngModel)]="username"></div>
+				<!-- <div class="label">Username</div> -->
+				<div><input type="text" name="username" [(ngModel)]="username" placeholder="Email"></div>
 			</div>
 			<div class="input-group">
-				<div class="label">Password</div>
-				<div><input type="password" name="password" [(ngModel)]="password"></div>
+				<!-- <div class="label">Password</div> -->
+				<div><input type="password" name="password" [(ngModel)]="password" placeholder="Password"></div>
+			</div>
+			<div>
+				<div><input type="checkbox" [checked]="rememberMe" (change)="rememberMe = !rememberMe">Remember Me</div>
 			</div>
 			<div class="input-group">
 				<div class="action-btn"><button type="submit">Login</button></div>

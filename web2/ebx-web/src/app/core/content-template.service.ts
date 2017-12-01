@@ -142,4 +142,9 @@ export class ContentTemplateService {
     let container = this.getContainerByQId(containerQId);
     return container ? container.label : "";
   }
+
+  getContainerSingularLabel(containerQId: string) : string {
+    let container = this.getContainerByQId(containerQId);
+    return container ? container.singularLabel : "";
+  }
 }

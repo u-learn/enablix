@@ -9,6 +9,7 @@ import { Pagination, Direction, SortCriteria } from '../../model/pagination.mode
 import { DataPage } from '../../model/data-page.model';
 import { NavigationService } from '../../app-routing/navigation.service';
 import { EditBizDimensionComponent } from '../../biz-dimension/edit-biz-dimension/edit-biz-dimension.component';
+import { AlertService } from '../../core/alert/alert.service';
 
 const DIM_PAGE_SIZE = 4;
 
@@ -29,6 +30,7 @@ export class DimensionComponent implements OnInit {
 
   constructor(private dataSearchService: DataSearchService,
               private navService: NavigationService,
+              private alert: AlertService,
               private dialog: MatDialog) { }
 
   ngOnInit() {
@@ -55,7 +57,6 @@ export class DimensionComponent implements OnInit {
     this.dataSearchService.getContainerDataSearchResult(this.container.qualifiedId, searchRequest)
         .subscribe(
             result => {
-               console.log(result);
                this.data = result;
                if (this.data.content && this.data.totalElements > this.showCount) {
                  this.data.content.splice(-1, 1); // remove the last record
@@ -63,7 +64,7 @@ export class DimensionComponent implements OnInit {
                }
             },
             error => {
-               // TODO: 
+              this.alert.error("Error fetching dimensions. Please try again later."); 
             }
           );
   }

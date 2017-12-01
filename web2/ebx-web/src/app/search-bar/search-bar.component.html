@@ -3,36 +3,40 @@
         <img class="search-icon" src="/assets/images/icons/search-grey.svg">
         <!-- inject any tags -->
         <div class="selectedTagsHolder">
-            <!-- ngIf: selectedContentTypes.length > 0 -->
-            <!-- ngIf: selectedDimOrObj.length > 0 -->
+            <div class="pills-container" *ngIf="searchBarData">
+                <div class="pill" *ngFor="let item of searchBarData.context.contextItems" [style.background]="item.color" [class.roundpill]="item.type == 'BIZ_CONTENT'" (click)="addSearchBarItem(item)">
+                  <span class="pill-label">{{item?.label}}</span>
+                  <a class="remove" (click)="removeSearchBarItem(item)">
+                    <img src="/assets/images/icons/close-white.svg">                
+                  </a>
+                </div>
+                <div class="pill" *ngFor="let item of searchBarData.filters" [style.background]="item.color" [class.roundpill]="item.type == 'BIZ_CONTENT' || item.type == 'FILTER'" (click)="addSearchBarItem(item)">
+                  <span class="pill-label">{{item?.label}}</span>
+                  <a class="remove" (click)="removeSearchBarItem(item)">
+                    <img src="/assets/images/icons/close-white.svg">                
+                  </a>
+                </div>
+            </div>
         </div>
-        <input type="text" ng-model="search.input" placeholder="Search" (focus)="showSearchBar()" ng-change="updateFilters()" class="ng-pristine ng-valid ng-empty ng-touched"> 
-        <img class="funnel-icon" src="/assets/images/icons/filter-grey.svg">
+        <input type="text" [formControl]="textCtrl"  placeholder="Search" (focus)="showSearchBar()" ng-change="updateFilters()" > 
+        <img class="funnel-icon" src="/assets/images/icons/filter-grey.svg" (click)="showSearchBar()">
     </div>
     
-    <div class="filtered-rows" [hidden]="!showOptions">
-        <!-- ngRepeat: filter in differentFilters --><div class="filtered-row ng-scope" ng-repeat="filter in differentFilters">
-            <h3 ng-bind="filter" class="ng-binding">Dimensions</h3>
-            <!-- ngIf: filter === 'Content Types' -->
-            <!-- ngIf: filter === 'Dimensions' --><div ng-if="filter === 'Dimensions'" class="ng-scope">
-                
-            </div><!-- end ngIf: filter === 'Dimensions' -->
-            <!-- ngIf: filter === 'Objects' -->
-        </div><!-- end ngRepeat: filter in differentFilters --><div class="filtered-row ng-scope" ng-repeat="filter in differentFilters">
-            <h3 ng-bind="filter" class="ng-binding">Objects</h3>
-            <!-- ngIf: filter === 'Content Types' -->
-            <!-- ngIf: filter === 'Dimensions' -->
-            <!-- ngIf: filter === 'Objects' --><div ng-if="filter === 'Objects'" class="ng-scope">
-                
-            </div><!-- end ngIf: filter === 'Objects' -->
-        </div><!-- end ngRepeat: filter in differentFilters --><div class="filtered-row ng-scope" ng-repeat="filter in differentFilters">
-            <h3 ng-bind="filter" class="ng-binding">Content Types</h3>
-            <!-- ngIf: filter === 'Content Types' --><div ng-if="filter === 'Content Types'" class="ng-scope">
-                
-            </div><!-- end ngIf: filter === 'Content Types' -->
-            <!-- ngIf: filter === 'Dimensions' -->
-            <!-- ngIf: filter === 'Objects' -->
-        </div><!-- end ngRepeat: filter in differentFilters -->
-        <!-- ngIf: search.input -->
+    <div class="filtered-rows" [hidden]="!showOptions" *ngIf="searchBarData && searchBarData.datasets && searchBarData.datasets.length > 0">
+        <ng-container *ngFor="let ds of searchBarData.datasets">
+            <div class="filtered-row" *ngIf="(filteredDSData[ds.getDatasetLabel()] | async)?.length > 0">
+                <div class="filter-label"><h4>{{ds.getDatasetLabel()}}</h4></div>
+                <div class="pills-container">
+                    <ng-container *ngFor="let item of filteredDSData[ds.getDatasetLabel()] | async; let i = index">
+                        <div *ngIf="i < dsItemLimit[ds.getDatasetLabel()]" class="pill selectable"  [style.background]="item.color" [class.roundpill]="item.type == 'BIZ_CONTENT' || item.type == 'FILTER'" (click)="addSearchBarItem(item)">
+                          <span class="pill-label">{{item?.label}}</span>
+                        </div>
+                    </ng-container>
+                    <div *ngIf="(filteredDSData[ds.getDatasetLabel()] | async)?.length > dsItemLimit[ds.getDatasetLabel()]" class="pill selectable roundpill white" (click)="expandDatasetItems(ds)">
+                      <span class="pill-label">+{{(filteredDSData[ds.getDatasetLabel()] | async)?.length - dsItemLimit[ds.getDatasetLabel()]}}</span>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
     </div>
 </div>

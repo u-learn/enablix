@@ -5,7 +5,7 @@ import { ContentPreviewHandler } from './content-preview-handler';
 export class ImagePreviewHandler implements ContentPreviewHandler {
   
   smallThumbnailUrl(dataRecord: any) : string {
-    return environment.baseAPIUrl + "/doc/preview/" + dataRecord.__docMetadata.identity;
+    return environment.baseAPIUrl + "/doc/preview/" + dataRecord.__decoration.__docMetadata.identity;
   }
 
   canHandle(dataRecord: any) : boolean {

@@ -36,6 +36,7 @@ import com.enablix.core.api.ContentDataRef;
 import com.enablix.core.api.ContentLengthAwareDocument;
 import com.enablix.core.api.IDocument;
 import com.enablix.core.api.TemplateFacade;
+import com.enablix.core.commons.xsdtopojo.ContainerType;
 import com.enablix.core.domain.activity.Activity.ActivityType;
 import com.enablix.core.domain.activity.ActivityChannel.Channel;
 import com.enablix.core.domain.activity.Actor;
@@ -51,6 +52,8 @@ import com.enablix.services.util.DataViewUtil;
 @RequestMapping("doc")
 public class DocumentController {
 
+	private static final String TEXT_CONTENT_IMG = "/assets/images/icons/text-icon.png";
+	
 	private static final Logger LOGGER = LoggerFactory.getLogger(DocumentController.class);
 	
 	/**
@@ -226,10 +229,11 @@ public class DocumentController {
     			template.getId(), contentQId, recIdentity, null);
     	
     	Map<String, Object> contentRecord = dataManager.getContentRecord(dataRef, template, DataViewUtil.allDataView());
-    	
-    	if (CollectionUtil.isNotEmpty(contentRecord)) {
+    	ContainerType container = template.getContainerDefinition(contentQId);
 
-    		String docIdentity = ContentDataUtil.findDocIdentity(contentRecord, template.getContainerDefinition(contentQId));
+    	if (CollectionUtil.isNotEmpty(contentRecord)) {
+    		
+			String docIdentity = ContentDataUtil.findDocIdentity(contentRecord, container);
     		
     		if (StringUtil.hasText(docIdentity)) {
     		
@@ -249,7 +253,12 @@ public class DocumentController {
        	}
     	
     	if (!iconFound) {
-    		response.sendError(HttpServletResponse.SC_NOT_FOUND);
+
+    		if (template.isTextContainer(container)) {
+    			response.sendRedirect(TEXT_CONTENT_IMG);
+    		} else {
+    			response.sendError(HttpServletResponse.SC_NOT_FOUND);
+    		}
     	}
        	
    	}

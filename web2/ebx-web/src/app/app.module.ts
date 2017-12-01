@@ -53,7 +53,9 @@ import { ContentDeleteButtonComponent } from './content-action/content-delete-bu
 import { DocDownloadButtonComponent } from './content-action/doc-download-button/doc-download-button.component';
 import { CopyPortalUrlButtonComponent } from './content-action/copy-portal-url-button/copy-portal-url-button.component';
 import { ContentEmailButtonComponent } from './content-action/content-email-button/content-email-button.component';
-
+import { SearchBarService } from './search-bar/search-bar.service';
+import { BizContentListComponent } from './biz-content/biz-content-list/biz-content-list.component';
+import { BoundedItemsDSBuilderService } from './search-bar/bounded-items-dsbuilder.service';
 
 @NgModule({
   declarations: [
@@ -94,7 +96,8 @@ import { ContentEmailButtonComponent } from './content-action/content-email-butt
     ContentDeleteButtonComponent,
     DocDownloadButtonComponent,
     CopyPortalUrlButtonComponent,
-    ContentEmailButtonComponent
+    ContentEmailButtonComponent,
+    BizContentListComponent
   ],
   imports: [
     BrowserModule,
@@ -116,6 +119,8 @@ import { ContentEmailButtonComponent } from './content-action/content-email-butt
     EmbedInfoService,
     ActivityAuditService,
     TenantService,
+    SearchBarService,
+    BoundedItemsDSBuilderService,
     { 
         provide: HTTP_INTERCEPTORS, 
         useClass: NgProgressInterceptor, 

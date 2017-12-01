@@ -17,7 +17,7 @@ export class DataCardComponent implements OnInit {
   @Input() recordIdentity? : string;
   @Input() containerQId : string;
 
-  isContentRecord = false;
+  isBizContent = false;
   title: string;
   text: string;
   containerLabel: string;
@@ -63,11 +63,11 @@ export class DataCardComponent implements OnInit {
     let container = this.contentTemplateService.getConcreteContainerByQId(this.containerQId);
 
     if (container != null) {
-      this.isContentRecord = this.contentTemplateService.isBusinessContent(container);
+      this.isBizContent = this.contentTemplateService.isBusinessContent(container);
       this.contentService.decorateRecord(container, this.record);
 
       this.title = this.record.__title;
-      this.containerLabel = container.label.toUpperCase();
+      this.containerLabel = container.singularLabel.toUpperCase();
       this.cardColor = container.color ;
 
       if (this.record.__decoration) {
@@ -90,6 +90,10 @@ export class DataCardComponent implements OnInit {
 
   navToBizDimension() {
     this.navService.goToDimDetail(this.containerQId, this.recordIdentity);
+  }
+
+  navToDimList() {
+    this.navService.goToDimList(this.containerQId);
   }
 
 }

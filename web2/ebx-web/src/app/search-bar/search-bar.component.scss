@@ -3,6 +3,7 @@
 @import '~styles/fonts.scss';
 
 .search-bar {
+    position: relative;
     min-width: 586px;
     border-radius: 6px;
     border: 1px solid #E3EBEF;
@@ -11,7 +12,7 @@
     box-shadow: 0 1px 1px 0 rgba(0,0,0,0.06);
 
     .input-row {
-        height: 50px;
+        min-height: 50px;
         // width: calc(100% - 32px);
         display: flex;
         padding: 0 16px;
@@ -22,24 +23,46 @@
 
         img.funnel-icon {
             margin-left: 8px;
+            cursor: pointer;
         }
         
         input {
-            font-size: 18px;
+            font-size: 16px;
             flex-grow: 1;
+            font-family: $FPThin;
+            font-weight: 700;
+        }
+
+        input::-webkit-input-placeholder {
+            color: #a4acb7 !important;
+        }
+         
+        input:-moz-placeholder { /* Firefox 18- */
+            color: #a4acb7 !important;  
+        }
+         
+        input::-moz-placeholder {  /* Firefox 19+ */
+            color: #a4acb7 !important;  
+        }
+         
+        input:-ms-input-placeholder {  
+            color: #a4acb7 !important;  
         }
     }
 
     .selectedTagsHolder {
         display: flex;
         align-items: center;
+
+        .pills-container {
+            flex-wrap: wrap;
+        }
     }
 
     .filtered-rows {
         background: white;
         position: absolute;
-        // min-width: 624px;
-        min-width: 586px;
+        width: 100%;
         box-shadow: 0 1px 1px 0 rgba(0,0,0,0.06);
         border-bottom-right-radius: 6px;
         border-bottom-left-radius: 6px;
@@ -47,11 +70,12 @@
         margin-left: -1px;
         border: 1px solid #E3EBEF;
         border-top: 1px solid rgba(227,235,239, 0.5);
+        z-index: 100;
     }
 
     .filtered-row {
         margin: 0 16px;
-        height: 58px;
+        min-height: 58px;
         display: flex;
         align-items: center;
 
@@ -59,8 +83,12 @@
             border-bottom: 1px solid rgba(227,235,239, 0.5);
         }
 
-        h3 {
-            width: 150px;
+        .filter-label {
+            min-width: 150px;
+        }
+
+        .pills-container {
+            flex-wrap: wrap;
         }
         
     }

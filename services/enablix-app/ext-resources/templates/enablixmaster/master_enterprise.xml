@@ -1440,7 +1440,7 @@
 	      		</bounded>
       		</contentItem>
 		</container>
-		<container id="blog" label="Blogs" businessCategory="BUSINESS_CONTENT">
+		<container id="blog" label="Blogs" singularLabel="Blog" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="url" label="URL" type="text"/>
 			<contentItem id="blogSource" label="Source" type="bounded">

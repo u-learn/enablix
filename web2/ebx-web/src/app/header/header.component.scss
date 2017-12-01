@@ -3,8 +3,8 @@
 @import '~styles/fonts.scss';
 
 .nav-bar {
-  height: 80px;
-  padding: 0 40px 0 0;
+  min-height: 72px;
+  padding: 8px 40px 0 0;
   @include vcenterChildren;
 
   .left {
@@ -49,6 +49,13 @@
 
       .logo {
           padding: 8px;
+
+          .logo-placeholder {
+            width: 32px;
+            height: 32px;
+            background-color: #2C4290;
+            border-radius: 4px;
+          }
       }
     
       h3 {

@@ -7,6 +7,13 @@ import { ContentPreviewService } from './content-preview.service';
 import { ContentTemplateService } from '../content-template.service';
 import { ApiUrlService } from '../api-url.service';
 import { ContentRecordGroup } from '../../model/content-record-group.model';
+import { DataSearchService } from '../../core/data-search/data-search.service';
+import { DataSearchRequest } from '../../core/data-search/data-search-request.model';
+import { Pagination, Direction, SortCriteria } from '../../model/pagination.model';
+import { DataPage } from '../../model/data-page.model';
+import { DataType, ConditionOperator } from '../../core/data-search/filter-metadata.model';
+import { Constants } from '../../util/constants';
+
 
 
 @Injectable()
@@ -14,7 +21,7 @@ export class ContentService {
 
   constructor(private contentTemplateService: ContentTemplateService, 
               private contentPreviewService: ContentPreviewService,
-              private http: HttpClient, 
+              private http: HttpClient, private dsService: DataSearchService,
               private apiUrlService: ApiUrlService) { }
 
   getContentRecord(containerQId: string, contentIdentity: string) : Observable<any> {
@@ -138,10 +145,28 @@ export class ContentService {
 
   deleteContentRecord(contentQId: string, contentIdentity: string) {
      
-     let apiUrl = this.apiUrlService.getContentDeleteUrl(
-       this.contentTemplateService.contentTemplate.id, contentQId, contentIdentity);
+    let apiUrl = this.apiUrlService.getContentDeleteUrl(
+      this.contentTemplateService.contentTemplate.id, contentQId, contentIdentity);
 
-     return this.http.post(apiUrl, {});
-   }
+    return this.http.post(apiUrl, {});
+  }
+
+  getAllRecords(containerQId: string, pageSize?: number) {
+
+    let searchRequest = new DataSearchRequest();
+    
+    searchRequest.projectedFields = [];
+    searchRequest.filters = {};
+
+    searchRequest.pagination = new Pagination();
+    searchRequest.pagination.pageNum = 0;
+    searchRequest.pagination.pageSize = pageSize ? pageSize : 500;
+    
+    searchRequest.pagination.sort = new SortCriteria();
+    searchRequest.pagination.sort.field = Constants.FLD_MODIFIED_AT
+    searchRequest.pagination.sort.direction = Direction.DESC;
+
+    return this.dsService.getContainerDataSearchResult(containerQId, searchRequest);
+  }
 
 }

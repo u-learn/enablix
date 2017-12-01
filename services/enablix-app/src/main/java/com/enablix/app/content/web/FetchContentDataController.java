@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.enablix.app.content.ContentDataManager;
 import com.enablix.app.content.fetch.FetchContentRequest;
 import com.enablix.app.template.service.TemplateManager;
-import com.enablix.app.template.web.TemplateController;
 import com.enablix.commons.constants.AppConstants;
 import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.commons.util.StringUtil;
@@ -42,7 +41,7 @@ import com.enablix.services.util.ContentDataUtil;
 @RequestMapping("data")
 public class FetchContentDataController {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(TemplateController.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(FetchContentDataController.class);
 
 	@Autowired
 	private ContentDataManager dataMgr;

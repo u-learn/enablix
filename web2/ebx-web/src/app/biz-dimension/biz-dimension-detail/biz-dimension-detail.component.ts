@@ -10,6 +10,7 @@ import { ContentTemplateService } from '../../core/content-template.service';
 import { NavigationService } from '../../app-routing/navigation.service';
 import { ContentDeleteButtonComponent } from '../../content-action/content-delete-button/content-delete-button.component';
 import { EditBizDimensionComponent } from '../../biz-dimension/edit-biz-dimension/edit-biz-dimension.component';
+import { SearchBarService } from '../../search-bar/search-bar.service';
 
 @Component({
   selector: 'ebx-biz-dimension-detail',
@@ -30,6 +31,7 @@ export class BizDimensionDetailComponent implements OnInit, AfterViewInit {
               private route: ActivatedRoute, 
               private navService: NavigationService,
               private ctService: ContentTemplateService,
+              private sbService: SearchBarService,
               private dialog: MatDialog) { }
 
   ngOnInit() {
@@ -54,6 +56,7 @@ export class BizDimensionDetailComponent implements OnInit, AfterViewInit {
                   if (contentGrp.contentQId == cQId) {
                     this.record = contentGrp.records.content[0];
                     this.container = container;
+                    this.sbService.setBizDimDetailSearchBar(container, this.record);
                   }
 
                   contentGrp.container = container;

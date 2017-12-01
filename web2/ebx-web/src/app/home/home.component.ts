@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 
 import { AlertService } from '../core/alert/alert.service';
+import { SearchBarService } from '../search-bar/search-bar.service';
 
 @Component({
   selector: 'ebx-home',
@@ -10,9 +11,10 @@ import { AlertService } from '../core/alert/alert.service';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private alertService: AlertService) { }
+  constructor(private alertService: AlertService, private searchBarService: SearchBarService) { }
 
   ngOnInit() {
+    this.searchBarService.setDashboardSearchBar();
   }
 
   success(message: string) { 

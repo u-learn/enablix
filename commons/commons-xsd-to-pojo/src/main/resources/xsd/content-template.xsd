@@ -91,6 +91,7 @@
 		<xs:attribute name="id" type="xs:string" use="required"/>
 		<xs:attribute name="qualifiedId" type="xs:string"/>
 		<xs:attribute name="label" type="xs:string" use="optional"/>
+		<xs:attribute name="singularLabel" type="xs:string" use="optional"/>
 		<xs:attribute name="searchBoost" type="xs:nonNegativeInteger" use="optional" default="1"/>
 	</xs:complexType>
 	
@@ -138,6 +139,7 @@
 				<xs:attribute name="linkContainerQId" type="xs:string"/>
 				<xs:attribute name="linkContentItemId" type="xs:string"/>
 				<xs:attribute name="businessCategory" type="containerBusinessCategoryType"/>
+				<xs:attribute name="color" type="xs:string"/>
 			</xs:extension>
 		</xs:complexContent>
 	</xs:complexType>
@@ -258,6 +260,7 @@
 		<xs:complexContent>
 			<xs:extension base="qualityControlledContentType">
 				<xs:sequence>
+					<xs:element name="desc" type="xs:string" minOccurs="0"/>
 					<xs:element name="contentItem" type="contentItemType" minOccurs="0" maxOccurs="unbounded"/>
 				</xs:sequence>
 			</xs:extension>

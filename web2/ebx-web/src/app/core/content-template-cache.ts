@@ -27,9 +27,15 @@ export class ContentTemplateCache {
     walker.walk(container => {
       
       this.qIdToContainerMap[container.qualifiedId] = container;
+      if (!container.singularLabel) {
+        container.singularLabel = container.label;
+      }
+
+      if (container.refData && !container.color) {
+        container.color = Constants.refDataColor;
+      }
       
       if (!this.isLinkedContainer(container)) {
-        
         
         container.titleItemId = this.getContainerLabelAttrId(container.qualifiedId);
         container.textItemId = this.checkAndGetTextAttrId(container);
@@ -38,11 +44,15 @@ export class ContentTemplateCache {
         if (this.isBusinessContent(container)) {
           
           this.bizContentContainers.push(container);
-          container.color = Constants.bizContentColor;
+          if (!container.color) {
+            container.color = Constants.bizContentColor;
+          }
 
         } else if (this.isBusinessDimension(container)) {
           this.bizDimensionContainers.push(container);
-          container.color = this.getContainerColor(this.index++);
+          if (!container.color) {
+            container.color = this.getContainerColor(this.index++);
+          }
         }
 
       }

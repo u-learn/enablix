@@ -1,7 +1,7 @@
-<div class="dim-card" *ngIf="!isContentRecord" (click)="navToBizDimension()">
+<div class="dim-card" *ngIf="!isBizContent" (click)="navToBizDimension()">
   <div class="card-title">
     <div class="color-block" [style.background]="cardColor"></div>
-    <p>{{title}}</p>
+    <p (click)="navToDimList()">{{title}}</p>
   </div>
   <div class="card-properties">
     <span>{{linkedContentText}}</span>
@@ -9,7 +9,7 @@
   </div>
 </div>
 
-<div class="card with-flex" *ngIf="isContentRecord" (click)="navToBizContent()">
+<div class="card biz-card with-flex" *ngIf="isBizContent" (click)="navToBizContent()">
   <div>
     <div class="cardImg" *ngIf="thumbnailUrl">
       <img *ngIf="thumbnailUrl" [src]="thumbnailUrl" />
@@ -21,8 +21,8 @@
       <img src="/assets/images/icons/no-thumbnail-icon.svg" />
     </div>
     <div class="content">
-      <p class="content-type" [innerHtml]="containerLabel"></p>
-      <p class="card-title" [innerHtml]="title"></p>
+      <p class="content-type" [innerHtml]="containerLabel" (click)="navToDimList()"></p>
+      <p class="card-title" [innerHtml]="title" ellipsis></p>
       <p class="company-properties">
         <span>{{linkedContentText}}</span>
         <span *ngIf="linkedContentCount > 1">&nbsp;&nbsp;+{{linkedContentCount}}</span>

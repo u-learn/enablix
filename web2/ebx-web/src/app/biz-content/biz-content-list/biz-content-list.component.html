@@ -1,0 +1,11 @@
+<ebx-header></ebx-header>
+<div class="container">
+  <div class="content-list-container">
+    <h2 class="content-name">{{container.label}} ({{dataPage?.totalElements}})</h2>
+    <div class="content-cards add-margin">
+      <div class="data-card" *ngFor="let rec of (dataPage ? dataPage.content : [])">
+        <ebx-data-card [containerQId]="container.qualifiedId" [record]="rec"></ebx-data-card>
+      </div>
+    </div>
+  </div>
+</div>
