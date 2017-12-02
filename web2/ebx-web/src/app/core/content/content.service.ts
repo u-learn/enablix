@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter, Output } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 
@@ -18,6 +18,9 @@ import { Constants } from '../../util/constants';
 
 @Injectable()
 export class ContentService {
+
+  @Output() onContentUpdate = new EventEmitter<ContentUpdateEvent>();
+  @Output() onContentDelete = new EventEmitter<ContentDeleteEvent>();
 
   constructor(private contentTemplateService: ContentTemplateService, 
               private contentPreviewService: ContentPreviewService,
@@ -146,7 +149,16 @@ export class ContentService {
         this.contentTemplateService.contentTemplate.id, containerQId);
     }
 
-    return this.http.post(apiUrl, data, {headers: {atActivityOrigin: 'Portal'}});
+    return this.http.post(apiUrl, data, {headers: {atActivityOrigin: 'Portal'}}).map((res: any) => {
+      
+      this.onContentUpdate.emit({
+        new: data.identity ? false : true,
+        record: res.contentRecord,
+        containerQId: containerQId
+      });
+
+      return res;
+    });
   }
 
   getRecordAndChildData(contentQId: string, contentIdentity: string, childSizeLimit: string): Observable<any> {
@@ -167,7 +179,15 @@ export class ContentService {
     let apiUrl = this.apiUrlService.getContentDeleteUrl(
       this.contentTemplateService.contentTemplate.id, contentQId, contentIdentity);
 
-    return this.http.post(apiUrl, {});
+    return this.http.post(apiUrl, {}).map(res => { 
+      
+      this.onContentDelete.emit({
+        containerQId: contentQId,
+        recordIdentity: contentIdentity
+      });
+
+      return res; 
+    });
   }
 
   getAllRecords(containerQId: string, pageSize?: number) {
@@ -188,4 +208,15 @@ export class ContentService {
     return this.dsService.getContainerDataSearchResult(containerQId, searchRequest);
   }
 
+}
+
+export class ContentUpdateEvent {
+  new: boolean;
+  record: any;
+  containerQId: string;
+}
+
+export class ContentDeleteEvent {
+  containerQId: string;
+  recordIdentity: string;
 }

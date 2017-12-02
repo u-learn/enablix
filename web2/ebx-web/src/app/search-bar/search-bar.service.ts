@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 
 import { NavigationService } from '../app-routing/navigation.service';
 import { ContentTemplateService } from '../core/content-template.service';
-import { ContentService } from '../core/content/content.service';
+import { ContentService, ContentDeleteEvent, ContentUpdateEvent } from '../core/content/content.service';
 import { SearchBarData, NavContext, ObjectType, SearchBarItem, NavCtxItem } from '../model/search-bar-data.model';
 import { Container } from '../model/container.model';
 import { LocalDataset } from './local-dataset';
@@ -61,7 +61,12 @@ export class SearchBarService {
               private ctService: ContentTemplateService,
               private contentService: ContentService,
               private biDSBuilder: BoundedItemsDSBuilderService,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute) { 
+    
+    this.contentService.onContentUpdate.subscribe(res => {
+      this.checkAndUpdateDimObjList(res);
+    });
+  }
 
   init() {
 
@@ -136,6 +141,33 @@ export class SearchBarService {
     });
 
     this.bizDimObjListDataset = new LocalDataset("Objects", bizDimObjects);
+  }
+
+  checkAndUpdateDimObjList(contentUpdate: ContentUpdateEvent) {
+    
+    if (contentUpdate && contentUpdate.new) {
+      
+      let container = this.ctService.getContainerByQId(contentUpdate.containerQId);
+      
+      if (container) {
+        
+        if (this.ctService.isBusinessDimension(container)) {
+          
+          let ct = contentUpdate.record;
+
+          let item = new NavCtxItem();
+          item.id = ct.identity;
+          item.label = ct[container.titleItemId];
+          item.color = container.color;
+          item.type = ObjectType.BIZ_DIM_OBJ;
+
+          item.routeParams = [container.qualifiedId, ct.identity];
+          item.data = { container: container, record: ct};
+
+          this.bizDimObjListDataset.data.push(item);
+        }
+      }
+    }
   }
 
   updateSearchBarData(sbData: SearchBarData) {

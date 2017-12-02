@@ -13,21 +13,14 @@ import { AuthService } from '../core/auth/auth.service';
 export class UserIconComponent implements OnInit {
 
   initial: string;
-  constructor(private router: Router, private userService: UserService, private authService: AuthService) { }
+  constructor(private userService: UserService, private authService: AuthService) { }
 
   ngOnInit() {
     this.initial = this.userService.getUserDisplayName().charAt(0).toUpperCase();
   }
 
   logout() {
-    this.authService.logoutUser()
-      .subscribe(
-        resp => {
-          this.router.navigate(['login']);
-      },
-      error => {
-        this.router.navigate(['login']);      
-      });
+    this.authService.logoutUser();
   }
 
 }

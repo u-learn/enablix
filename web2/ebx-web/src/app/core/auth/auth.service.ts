@@ -1,9 +1,11 @@
-import { Injectable, Output, EventEmitter } from '@angular/core';
+import { Injectable, Output, EventEmitter, NgZone } from '@angular/core';
+import { Router } from '@angular/router';
 import { HttpClient, HttpResponse, HttpHeaders } from '@angular/common/http';
 import { Response, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 
+import { BootController } from '../../../boot-control';
 import { ApiUrlService } from '../api-url.service';
 import { UserService } from './user.service';
 
@@ -12,9 +14,15 @@ export class AuthService {
 
   @Output() loginIn: EventEmitter<any> = new EventEmitter();
 
-  constructor(private http: HttpClient, private apiUrlService: ApiUrlService, private userService: UserService) { }
+  constructor(private http: HttpClient,
+    private ngZone: NgZone, 
+    private router: Router, 
+    private apiUrlService: ApiUrlService, 
+    private userService: UserService) { }
 
   loginUser(username: string, password: string, rememberMe: boolean) {
+    
+    this.loginIn.emit(null);
 
   	return this.http.get(this.apiUrlService.getUserUrl(), {headers: this.loginRequestHeaders(username, password, rememberMe)})
                 		.map((res: any) => {
@@ -47,8 +55,7 @@ export class AuthService {
   logoutUser() {
   	
   	this.userService.logoutUser();
-  	localStorage.removeItem('currentUser');
-    localStorage.removeItem('resource-versions');
+  	localStorage.clear();
 
   	this.loginIn.emit(null);
 
@@ -56,12 +63,21 @@ export class AuthService {
   	// HACK: to clear basic auth associated with browser window, 
 	  // update it with a bad credentials
 	  // http://stackoverflow.com/questions/233507/how-to-log-out-user-from-web-site-using-basic-authentication
-  	return this.http.get(this.apiUrlService.getUserUrl(), 
-                         {headers: this.loginRequestHeaders('~~baduser~~', '~~', false)})
-  					.map(res => { 
-  						/* map causing the request to execute and logout user */
-  						return res;
-  					});
+  	this.http.get(this.apiUrlService.getUserUrl(), 
+                         {headers: this.loginRequestHeaders('~~baduser~~', '~~', false)}).map(
+                resp => {
+                  return resp;
+                });
+
+    this.redirectToLogin();
+  }
+
+  redirectToLogin() {
+    
+    // Triggers the reboot in main.ts        
+    this.ngZone.runOutsideAngular(() => BootController.getbootControl().restart());
+
+    this.router.navigate(['login']);
   }
 
   isAuthenticated() {

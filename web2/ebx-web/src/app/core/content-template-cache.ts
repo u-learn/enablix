@@ -194,9 +194,7 @@ export class ContentTemplateCache {
   */
 
   initContainerColors() {
-    this.colors.push("#1e0bbb");
     this.colors.push("#549d19");
-    this.colors.push("#4cca7f");
     this.colors.push("#b81b8d");
     this.colors.push("#a485b7");
     this.colors.push("#907ccc");

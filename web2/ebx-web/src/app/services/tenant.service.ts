@@ -10,7 +10,8 @@ export class TenantService {
 
   tenant: Tenant;
 
-  constructor(private http:HttpClient, private urlService:ApiUrlService) { }
+  constructor(private http:HttpClient, private urlService:ApiUrlService) { 
+  }
 
   loadTenant() : Observable<Tenant> {
     let apiUrl = this.urlService.getTenantUrl();
