@@ -457,8 +457,6 @@
 		<container id="discoveryquestion" label="Discovery Questions" singularLabel="Discovery Question" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Question" type="text" searchBoost="7"/>
 			<contentItem id="desc" label="Description" type="richText" searchBoost="2"/>
-			<contentItem id="file" label="File" type="doc"/>
-			<contentItem id="url" label="URL" type="text"/>				
 			<contentItem id="industries" label="Industries" type="bounded" searchBoost="6">
 				<bounded multivalued="true">
 					<refList>
@@ -529,8 +527,6 @@
 		<container id="faq" label="FAQ" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Question" type="text" searchBoost="7"/>
 			<contentItem id="desc" label="Answer" type="richText" searchBoost="2"/>
-			<contentItem id="file" label="File" type="doc"/>
-			<contentItem id="url" label="URL" type="text"/>				
 			<contentItem id="industries" label="Industries" type="bounded" searchBoost="6">
 				<bounded multivalued="true">
 					<refList>

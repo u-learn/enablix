@@ -64,7 +64,7 @@ export class AuthService {
   	// HACK: to clear basic auth associated with browser window, 
 	  // update it with a bad credentials
 	  // http://stackoverflow.com/questions/233507/how-to-log-out-user-from-web-site-using-basic-authentication
-  	this.http.get(this.apiUrlService.getUserUrl(), 
+  	this.http.get(this.apiUrlService.getLogoutUrl(), 
                          {headers: this.loginRequestHeaders('~~baduser~~', '~~', false)}).subscribe(
                 resp => {
                   console.log("Logout success...");

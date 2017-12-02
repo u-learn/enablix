@@ -1,7 +1,7 @@
 <div *ngIf="contentItem.type == 'TEXT'">
   <p class="label">{{contentItem.label}}</p>
   <p class="text" *ngIf="!editable">{{getValue()}}</p>
-  <p class="text" *ngIf="editable"><input [(ngModel)]="record[contentItem.id]"></p>
+  <p class="text" *ngIf="editable"><input [(ngModel)]="record[contentItem.id]" type="text"></p>
 </div>
 <div *ngIf="contentItem.type == 'RICH_TEXT'">
   <p class="label">{{contentItem.label}}</p>

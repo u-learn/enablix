@@ -7,6 +7,8 @@ import { Pagination, SortCriteria, Direction } from '../model/pagination.model';
 import { DataPage } from '../model/data-page.model';
 import { Constants } from '../util/constants';
 import { AlertService } from '../core/alert/alert.service';
+import { ContentTemplateService } from '../core/content-template.service';
+import { NavigationService } from '../app-routing/navigation.service';
 
 
 @Component({
@@ -20,7 +22,9 @@ export class RecentActivitiesComponent implements OnInit {
   recentActivities: DataPage;
 
   constructor(private actAuditService: ActivityAuditService,
-              private alert: AlertService) { }
+              private ctService: ContentTemplateService,
+              private alert: AlertService,
+              private navService: NavigationService) { }
 
   ngOnInit() {
 
@@ -62,4 +66,37 @@ export class RecentActivitiesComponent implements OnInit {
       + act.activity.containerQId + "/" + act.activity.itemIdentity + "/";
   }
 
+  getContentColor(act: any) : string {
+    let color = null;
+    let container = this.ctService.getContainerByQId(act.activity.containerQId);
+    if (container && this.ctService.isBusinessDimension(container)) {
+      color = container.color;
+    }
+    return color;
+  }
+
+  navToItemDetail(act: any) {
+    
+    let container = this.ctService.getContainerByQId(act.activity.containerQId);
+    
+    if (container) {
+      if (this.ctService.isBusinessDimension(container)) {
+        this.navToDimDetail(container.qualifiedId, act.activity.itemIdentity);
+      } else {
+        this.navToContentDetail(container.qualifiedId, act.activity.itemIdentity);
+      }
+    }
+  }
+
+  navToDimDetail(containerQId: string, recIdentity: string) {
+    if (containerQId && recIdentity) {
+      this.navService.goToDimDetail(containerQId, recIdentity);
+    }
+  }
+
+  navToContentDetail(containerQId: string, recIdentity: string) {
+    if (containerQId && recIdentity) {
+      this.navService.goToContentDetail(containerQId, recIdentity);
+    }
+  }
 }

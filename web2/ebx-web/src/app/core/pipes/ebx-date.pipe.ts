@@ -6,7 +6,7 @@ import { DatePipe } from '@angular/common';
 })
 export class EbxDatePipe implements PipeTransform {
 
-  dateFormat: string = "MMMM d, y h:mm a";
+  dateFormat: string = "MMM d, y h:mm a";
   constructor(private datePipe: DatePipe) {}
 
   transform(value: any, args?: any): any {

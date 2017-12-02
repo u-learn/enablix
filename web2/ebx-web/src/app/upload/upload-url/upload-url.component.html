@@ -3,7 +3,7 @@
   <h1 [hidden]="!previewContent" contenteditable="true">{{urlInfo.title}}</h1>
   <div class="preview-text">
     <img src="/assets/images/icons/globe_earth.svg" />
-    <input (blur)="showPreview()" [(ngModel)]="urlInfo.url"/>
+    <input (blur)="showPreview()" [(ngModel)]="urlInfo.url" type="text"/>
   </div>
   <div [hidden]="!previewContent">
     <div class="preview-img" *ngIf="thumbnailUrl">

@@ -1,7 +1,7 @@
 <div *ngIf="recentActivities">
     <div class="header">
         <h1>Recent</h1>
-        <p>What assets have been uploaded and approved recently by your team mates</p>
+        <p>Your team's recent activity</p>
     </div>
     <div>
       <div class="activity-table">
@@ -19,7 +19,9 @@
                     </p>
                   </div>
                   <div class="content-icon">
-                    <img [src]="getIconUrl(a)" />
+                    <div class="img-cont" [style.background]="getContentColor(a)" (click)="navToItemDetail(a)">
+                      <img [src]="getIconUrl(a)" />
+                    </div>
                   </div>
                 </div>
               </div>

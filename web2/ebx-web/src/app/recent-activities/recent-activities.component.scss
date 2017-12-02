@@ -31,19 +31,28 @@ ebx-recent-activities {
     }
 
     .activity {
-        height: 80px;
+        //height: 80px;
 
         &.inSidebar {
-            height: 103px; //might modify to be responsive
+            //height: 103px; //might modify to be responsive
 
             .content-icon {
                 height: 40px;
                 overflow-y: hidden;
                 padding-left: 8px;
-                img {
+
+                .img-cont {
                     max-width: 64px;
                     border-radius: 2px;
+                    min-height: 40px;
+                    cursor: pointer;
+
+                    img {
+                        max-width: 64px;
+                        border-radius: 2px;
+                    }    
                 }
+                
             }
         }
 

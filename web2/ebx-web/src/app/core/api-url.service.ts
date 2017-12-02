@@ -25,6 +25,8 @@ export class ApiUrlService {
   static POST_BOUNDED_DEF_REF_LIST = "/bounded/d/list/";
   static POST_FILE_UPLOAD = '/doc/upload';
 
+  static GET_LOGOUT = "/logout";
+
   constructor() { }
 
   getAPIUrl(url: string, urlPlaceholders?: { [key: string] : string }) : string {
@@ -43,6 +45,10 @@ export class ApiUrlService {
 
   getUserUrl() : string {
   	return this.getAPIUrl(ApiUrlService.GET_USER);
+  }
+
+  getLogoutUrl() : string {
+    return this.getAPIUrl(ApiUrlService.GET_LOGOUT); 
   }
 
   getDefaultContentTemplateUrl() : string {
