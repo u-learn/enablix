@@ -52,28 +52,40 @@ export class AuthService {
   	return headers;
   }
 
+
+  clearLoginInfo() {
+    this.userService.logoutUser();
+    localStorage.removeItem('currentUser');
+  }
+
   logoutUser() {
   	
-  	this.userService.logoutUser();
-  	localStorage.clear();
-
-  	this.loginIn.emit(null);
-
   	// backend logout logic
   	// HACK: to clear basic auth associated with browser window, 
 	  // update it with a bad credentials
 	  // http://stackoverflow.com/questions/233507/how-to-log-out-user-from-web-site-using-basic-authentication
   	this.http.get(this.apiUrlService.getUserUrl(), 
-                         {headers: this.loginRequestHeaders('~~baduser~~', '~~', false)}).map(
+                         {headers: this.loginRequestHeaders('~~baduser~~', '~~', false)}).subscribe(
                 resp => {
+                  console.log("Logout success...");
+                  this.loginIn.emit(null);
+                  this.clearLoginInfo();
+                  this.redirectToLogin();
                   return resp;
+                }, 
+                err => {
+                  console.log("Logout error ...");
+                  this.loginIn.emit(null);
+                  this.clearLoginInfo();
+                  this.redirectToLogin();
                 });
 
-    this.redirectToLogin();
   }
 
   redirectToLogin() {
     
+    console.log("Rebooting...");
+
     // Triggers the reboot in main.ts        
     this.ngZone.runOutsideAngular(() => BootController.getbootControl().restart());
 
