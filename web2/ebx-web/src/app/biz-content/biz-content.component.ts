@@ -25,6 +25,8 @@ export class BizContentComponent implements OnInit, AfterViewInit {
   @Input() container?: Container;
   @Input() editable?: boolean = false;
 
+  isNewRec: boolean = false;
+
   private sub: any;
 
   private qualityAlerts: any[];
@@ -42,7 +44,7 @@ export class BizContentComponent implements OnInit, AfterViewInit {
   ngOnInit() {
 
     if (!this.record) {
-    
+      
       this.route.params.subscribe(params => {
           
           let containerQId = params['cQId'];
@@ -61,7 +63,7 @@ export class BizContentComponent implements OnInit, AfterViewInit {
                       }, 
                       error => {
                         console.error("Error getting record: " + error);
-                        this.alert.error("Error fetching record details");
+                        this.alert.error("Error fetching record details", error.status);
                       }
                     );
             
@@ -104,6 +106,10 @@ export class BizContentComponent implements OnInit, AfterViewInit {
 
       this.boundedItems = this.container.contentItem.filter(item => item.bounded);
     }
+
+    if (this.record) {
+      this.isNewRec = !this.record.identity;
+    }
   }
 
   publishContent() {
@@ -125,7 +131,7 @@ export class BizContentComponent implements OnInit, AfterViewInit {
               if (error.qualityAlerts) {
                 this.qualityAlerts = error.qualityAlerts;
               } else {
-                this.alert.error("Error saving data.");  
+                this.alert.error("Error saving data.", error.status);  
               }
             }
           );
@@ -168,7 +174,7 @@ export class BizContentComponent implements OnInit, AfterViewInit {
       this.alert.success("Deleted successfully.");
       this.goBackHome();
     }, err => {
-      this.alert.error("Unable to delete. Please try later.");
+      this.alert.error("Unable to delete. Please try later.", err.status);
     });
   }
 
@@ -177,6 +183,9 @@ export class BizContentComponent implements OnInit, AfterViewInit {
   }
 
   cancelEdit() {
+    if (this.isNewRec) {
+      this.goBackHome();
+    }
     this.editable = false;
   }
 

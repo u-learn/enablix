@@ -10,6 +10,10 @@
   .left {
       width: 50%;
       @include vcenterChildren;
+
+      .sb-container {
+        width: 100%;
+      }
   }
 
   .right {
@@ -61,7 +65,7 @@
       h3 {
           // line-height: 20px;
           height: 18px;
-          font-family: $FPLight;
+          font-family: $FPThin;
       }
 
       @media only screen and (max-width: 1072px) {

@@ -58,7 +58,7 @@ export class ContentDeleteButtonComponent implements OnInit {
       this.alert.success("Deleted successfully.");
       this.onDelete.emit(true);
     }, err => {
-      this.alert.error("Unable to delete. Please try later.");
+      this.alert.error("Unable to delete. Please try later.", err.status);
     });
   }
 

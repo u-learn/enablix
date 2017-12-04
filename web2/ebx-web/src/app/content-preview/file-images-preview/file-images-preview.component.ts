@@ -43,7 +43,7 @@ export class FileImagesPreviewComponent implements OnInit {
                 this.activeSlide = this.slides[0];
               },
               err => {
-                this.alert.error("Error fetching preview data");
+                this.alert.error("Error fetching preview data", err.status);
               }
             );
     }

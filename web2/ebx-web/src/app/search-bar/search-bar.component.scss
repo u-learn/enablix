@@ -6,10 +6,14 @@
     position: relative;
     min-width: 586px;
     border-radius: 6px;
-    border: 1px solid #E3EBEF;
+    
     background: $white;
     font-family: $FPThin;
     box-shadow: 0 1px 1px 0 rgba(0,0,0,0.06);
+
+    &.sb-active {
+        border: 1px solid #E3EBEF;
+    }
 
     .input-row {
         min-height: 50px;
@@ -33,21 +37,6 @@
             font-weight: 700;
         }
 
-        input::-webkit-input-placeholder {
-            color: #a4acb7 !important;
-        }
-         
-        input:-moz-placeholder { /* Firefox 18- */
-            color: #a4acb7 !important;  
-        }
-         
-        input::-moz-placeholder {  /* Firefox 19+ */
-            color: #a4acb7 !important;  
-        }
-         
-        input:-ms-input-placeholder {  
-            color: #a4acb7 !important;  
-        }
     }
 
     .selectedTagsHolder {
@@ -84,7 +73,7 @@
         }
 
         .filter-label {
-            min-width: 150px;
+            min-width: 130px;
         }
 
         .pills-container {

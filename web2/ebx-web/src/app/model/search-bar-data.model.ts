@@ -8,6 +8,8 @@ export class SearchBarData {
   filters: NavFilter[] = [];
   datasets: SearchDataset[] = [];
 
+  initialFilterIds: string[] = [];
+
   addFilter(filter: NavFilter) {
     return this.addSearchBarItem(this.filters, filter);
   }
@@ -96,6 +98,8 @@ export class NavCtxItem extends SearchBarItem {
 
 export class NavFilter extends SearchBarItem {
   
+  queryParams?: { [key: string] : string } = {};
+
   addToSearchBarData(sbData: SearchBarData) {
     sbData.addFilter(this);
   }

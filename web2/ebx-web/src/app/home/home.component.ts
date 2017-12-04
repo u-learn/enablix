@@ -22,7 +22,7 @@ export class HomeComponent implements OnInit {
   }
 
   error(message: string) {
-    this.alertService.error(message);
+    this.alertService.error(message, 0);
   }
 
   info(message: string) {

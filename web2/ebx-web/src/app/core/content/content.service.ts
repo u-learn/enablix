@@ -208,6 +208,10 @@ export class ContentService {
     return this.dsService.getContainerDataSearchResult(containerQId, searchRequest);
   }
 
+  getFilteredRecords(containerQId: string, searchRequest: DataSearchRequest) {
+    return this.dsService.getContainerDataSearchResult(containerQId, searchRequest); 
+  }
+
 }
 
 export class ContentUpdateEvent {

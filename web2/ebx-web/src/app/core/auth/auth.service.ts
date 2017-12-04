@@ -56,6 +56,7 @@ export class AuthService {
   clearLoginInfo() {
     this.userService.logoutUser();
     localStorage.removeItem('currentUser');
+    this.loginIn.emit(null);
   }
 
   logoutUser() {
@@ -65,20 +66,21 @@ export class AuthService {
 	  // update it with a bad credentials
 	  // http://stackoverflow.com/questions/233507/how-to-log-out-user-from-web-site-using-basic-authentication
   	this.http.get(this.apiUrlService.getLogoutUrl(), 
-                         {headers: this.loginRequestHeaders('~~baduser~~', '~~', false)}).subscribe(
-                resp => {
-                  console.log("Logout success...");
-                  this.loginIn.emit(null);
-                  this.clearLoginInfo();
-                  this.redirectToLogin();
-                  return resp;
-                }, 
-                err => {
-                  console.log("Logout error ...");
-                  this.loginIn.emit(null);
-                  this.clearLoginInfo();
-                  this.redirectToLogin();
-                });
+          {headers: this.loginRequestHeaders('~~baduser~~', '~~', false)})
+      .subscribe(
+        resp => {
+          console.log("Logout success...");
+          
+          this.clearLoginInfo();
+          this.redirectToLogin();
+          return resp;
+        }, 
+        err => {
+          console.log("Logout error ...");
+          this.loginIn.emit(null);
+          this.clearLoginInfo();
+          this.redirectToLogin();
+        });
 
   }
 

@@ -50,9 +50,9 @@ export class ActivityAuditService {
   }
 
   getTextDescription(act: any) : string {
-    return act.actor.name + " " + this.activityDesc[act.activity.activityType] 
-          + " " + this.ctService.getContainerSingularLabel(act.activity.containerQId) 
-          + " - " + act.activity.itemTitle;
+    return act.actor.name + " " + this.activityDesc[act.activity.activityType] + " " 
+          //+ this.ctService.getContainerSingularLabel(act.activity.containerQId) + " - " 
+          + act.activity.itemTitle;
   }
 
 }

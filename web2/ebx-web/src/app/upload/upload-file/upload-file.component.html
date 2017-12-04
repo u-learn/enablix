@@ -1,13 +1,13 @@
-<h1 contenteditable="true" [(ngModel)]="fileInfo.title"></h1>
+<h1 class="file-title"><span contenteditable="true" [(ngModel)]="fileInfo.title"></span><img src="/assets/images/icons/pencil-grey.svg"/></h1>
 <div class="preview-img" *ngIf="previewImageUrl">
     <img [src]="previewImageUrl" >
 </div>
 <div class="loading" *ngIf="loading">
-  Loading...
+  Uploading...
 </div>
 <div class="preview-tag">
   <ebx-select [formControl]="contentTypeCtrl"
-      headIcon="/assets/images/icons/hash_icon.svg"
+      placeholder="Select content type"
       [options]="contentTypes"></ebx-select>
 </div>
 <div class="actionBtns">

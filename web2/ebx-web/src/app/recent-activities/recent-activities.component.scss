@@ -42,7 +42,7 @@ ebx-recent-activities {
                 padding-left: 8px;
 
                 .img-cont {
-                    max-width: 64px;
+                    width: 64px;
                     border-radius: 2px;
                     min-height: 40px;
                     cursor: pointer;
@@ -60,7 +60,8 @@ ebx-recent-activities {
             &.vertical-align {
                 height: 36px;
             }
-            padding: 22px 0;
+            display: flex;
+            padding: 20px 0 16px 0;
         }
 
         img.user-img {
@@ -86,6 +87,7 @@ ebx-recent-activities {
             line-height: 18px;
             color: #2D2D2D;
             margin-bottom: 10px;
+            height: 36px;
 
             &.large-display {
                 font-size: 16px;

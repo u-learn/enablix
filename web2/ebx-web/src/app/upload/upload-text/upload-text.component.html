@@ -1,12 +1,12 @@
 <div class="upload-asset-popup">
   <input class="asset-text" placeholder="Title" [(ngModel)]="textInfo.title" type="text">
   <div class="preview-text align-top">
-    <img src="/assets/images/icons/note.svg" />
-    <textarea [(ngModel)]="textInfo.text" placeholder="Content"></textarea>
+    <img src="/assets/images/icons/note_icon.svg" />
+    <textarea [(ngModel)]="textInfo.text" placeholder="Text"></textarea>
   </div>
   <div class="preview-tag">
     <ebx-select [formControl]="contentTypeCtrl"
-      headIcon="/assets/images/icons/hash_icon.svg"
+      placeholder="Select content type"
       [options]="contentTypes"></ebx-select>
   </div>
   <div class="actionBtns">

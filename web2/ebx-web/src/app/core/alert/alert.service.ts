@@ -34,26 +34,29 @@ export class AlertService {
     this.alert(AlertType.SUCCESS, message, keepAfterRouteChange);
   }
 
-  error(message: string, keepAfterRouteChange = false) {
-      this.alert(AlertType.ERROR, message, keepAfterRouteChange);
+  error(message: string, statusCode: number, keepAfterRouteChange = false) {
+    if (statusCode != 401) {
+      this.alert(AlertType.ERROR, message, keepAfterRouteChange);  
+    }
+    
   }
 
   info(message: string, keepAfterRouteChange = false) {
-      this.alert(AlertType.INFO, message, keepAfterRouteChange);
+    this.alert(AlertType.INFO, message, keepAfterRouteChange);
   }
 
   warn(message: string, keepAfterRouteChange = false) {
-      this.alert(AlertType.WARNING, message, keepAfterRouteChange);
+    this.alert(AlertType.WARNING, message, keepAfterRouteChange);
   }
 
   alert(type: AlertType, message: string, keepAfterRouteChange = false) {
-      this.keepAfterRouteChange = keepAfterRouteChange;
-      this.subject.next(<Alert>{ type: type, message: message });
+    this.keepAfterRouteChange = keepAfterRouteChange;
+    this.subject.next(<Alert>{ type: type, message: message });
   }
 
   clear() {
-      // clear alerts
-      this.subject.next();
+    // clear alerts
+    this.subject.next();
   }
 
 }

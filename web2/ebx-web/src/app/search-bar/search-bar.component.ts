@@ -66,6 +66,11 @@ export class SearchBarComponent implements OnInit {
     this.doNotHideOnClick = true;
   }
 
+  collapseDatasetItems(ds: SearchDataset) {
+    this.dsItemLimit[ds.getDatasetLabel()] = this.defaultDSItemLimit;
+    this.doNotHideOnClick = true; 
+  }
+
   hideSearchBar() {
     if (!this.doNotHideOnClick) {
       this.showOptions = false;

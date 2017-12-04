@@ -1,6 +1,6 @@
-<div class="search-bar ng-isolate-scope" (clickOutside)="hideSearchBar()">
+<div class="search-bar" [class.sb-active]="showOptions" (clickOutside)="hideSearchBar()">
     <div class="input-row">
-        <img class="search-icon" src="/assets/images/icons/search-grey.svg">
+        <img class="search-icon" [src]="showOptions ? '/assets/images/icons/search-blue.svg' : '/assets/images/icons/search-grey.svg'">
         <!-- inject any tags -->
         <div class="selectedTagsHolder">
             <div class="pills-container" *ngIf="searchBarData && searchBarData.context">
@@ -19,7 +19,7 @@
             </div>
         </div>
         <input type="text" [formControl]="textCtrl"  placeholder="Search" (focus)="showSearchBar()" ng-change="updateFilters()" > 
-        <img class="funnel-icon" src="/assets/images/icons/filter-grey.svg" (click)="showSearchBar()">
+        <img class="funnel-icon" [src]="showOptions ? '/assets/images/icons/filter.svg' : '/assets/images/icons/filter-grey.svg'" (click)="showSearchBar()">
     </div>
     
     <div class="filtered-rows" [hidden]="!showOptions" *ngIf="searchBarData && searchBarData.datasets && searchBarData.datasets.length > 0">
@@ -34,6 +34,9 @@
                     </ng-container>
                     <div *ngIf="(filteredDSData[ds.getDatasetLabel()] | async)?.length > dsItemLimit[ds.getDatasetLabel()]" class="pill selectable roundpill white" (click)="expandDatasetItems(ds)">
                       <span class="pill-label">+{{(filteredDSData[ds.getDatasetLabel()] | async)?.length - dsItemLimit[ds.getDatasetLabel()]}}</span>
+                    </div>
+                    <div *ngIf="dsItemLimit[ds.getDatasetLabel()] > defaultDSItemLimit" class="pill selectable roundpill white" (click)="collapseDatasetItems(ds)">
+                      <span class="pill-label">&lt;&lt;</span>
                     </div>
                 </div>
             </div>

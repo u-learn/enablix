@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Container } from '../../model/container.model';
 import { ContentTemplateService } from '../../core/content-template.service';
 import { SearchBarService } from '../../search-bar/search-bar.service';
+import { FilterMetadata } from '../../core/data-search/filter-metadata.model';
 
 @Component({
   selector: 'ebx-biz-dimension-list',
@@ -14,18 +15,36 @@ import { SearchBarService } from '../../search-bar/search-bar.service';
 export class BizDimensionListComponent implements OnInit {
 
   container: Container;
+  filterMetadata: { [key: string] : FilterMetadata };
+  filters: { [key: string] : any};
 
   constructor(private route: ActivatedRoute, private contentTemplateService: ContentTemplateService,
-    private sbService: SearchBarService) { }
+    private sbService: SearchBarService) { 
+
+  }
 
   ngOnInit() {
+
     this.route.params.subscribe(params => {
+      
       var containerQId = params['cQId'];
+      
       if (containerQId) {
+        
         this.container = this.contentTemplateService.getContainerByQId(containerQId);
-        this.sbService.setBizDimListSearchBar(this.container);
+        this.filterMetadata = this.contentTemplateService.getBoundedFiltermetadata(this.container);
+
+        this.route.queryParams.subscribe(queryParams => {
+          this.filters = this.sbService.buildFiltersFromQueryParams(queryParams);
+          let filterIds = this.sbService.getFilterIdsFromQueryParams(queryParams);
+          
+          this.sbService.setBizDimListSearchBar(this.container, filterIds);
+        });
       }
     });
+
+
+
   }
 
 }

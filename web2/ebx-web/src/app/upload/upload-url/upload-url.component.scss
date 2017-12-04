@@ -11,6 +11,17 @@
   border-radius: 4px;
 }
 
+.url-title {
+  font-family: $FPThin;
+  line-height: 38px;
+  margin-bottom: 24px;
+  font-size: 32px;
+
+  img {
+    margin-left: 8px;
+  }
+}
+
 .asset-text {
     font-family: $FPThin;
     line-height: 38px;

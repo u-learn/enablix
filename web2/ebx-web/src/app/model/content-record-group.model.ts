@@ -7,4 +7,5 @@ export class ContentRecordGroup {
 
   // added on UI
   container: Container;
+  linkContainer: Container;
 }

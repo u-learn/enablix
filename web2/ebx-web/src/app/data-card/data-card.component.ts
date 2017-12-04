@@ -49,7 +49,7 @@ export class DataCardComponent implements OnInit {
                   this.initState();
                 },
                 error => {
-                  this.alert.error("Error fetching record data.");
+                  this.alert.error("Error fetching record data.", error.status);
                 }
               );
       }

@@ -24,7 +24,7 @@ export class RecentContentComponent implements OnInit {
               console.log(result);
             },
             error => {
-              this.alert.error("Error fetching recent content.");
+              this.alert.error("Error fetching recent content.", error.status);
             }
           );
   }

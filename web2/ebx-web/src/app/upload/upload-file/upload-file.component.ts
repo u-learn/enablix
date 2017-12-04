@@ -97,7 +97,7 @@ export class UploadFileComponent implements OnInit {
         this.loading = false;
       },
       err => {
-        this.alert.error("Error uploading file. Please try again later.");
+        this.alert.error("Error uploading file. Please try again later.", err.status);
         this.loading = false;
       });
   }

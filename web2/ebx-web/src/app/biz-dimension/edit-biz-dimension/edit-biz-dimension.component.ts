@@ -39,7 +39,7 @@ export class EditBizDimensionComponent implements OnInit {
       this.contentService.getContentRecord(this.data.containerQId, this.data.recordIdentity).subscribe(res => {
         this.record = res;
       }, err => {
-        this.alert.error("Error fetching record details.");
+        this.alert.error("Error fetching record details.", err.status);
       });
     }
   }
@@ -50,7 +50,7 @@ export class EditBizDimensionComponent implements OnInit {
           this.dialogRef.close(true);
         }, 
         err => {
-          this.alert.error("Error saving data. Please try later.");
+          this.alert.error("Error saving data. Please try later.", err.status);
         }
       );
     

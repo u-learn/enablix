@@ -30,7 +30,7 @@
             <div class="content-types-container">
                 <div *ngFor="let cg of children">
                     <h2>{{cg?.container?.label}} ({{cg.records.totalElements}})</h2>
-                    <div class="seeAll">
+                    <div class="seeAll" (click)="navToAllContent(cg)">
                         <a>See All</a>
                     </div>
                     <div class="cards card-container">

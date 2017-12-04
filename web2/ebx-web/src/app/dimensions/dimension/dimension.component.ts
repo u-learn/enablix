@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation, Input } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material';
 
 import { Constants } from '../../util/constants';
@@ -10,6 +10,7 @@ import { DataPage } from '../../model/data-page.model';
 import { NavigationService } from '../../app-routing/navigation.service';
 import { EditBizDimensionComponent } from '../../biz-dimension/edit-biz-dimension/edit-biz-dimension.component';
 import { AlertService } from '../../core/alert/alert.service';
+import { FilterMetadata } from '../../core/data-search/filter-metadata.model';
 
 const DIM_PAGE_SIZE = 4;
 
@@ -19,11 +20,14 @@ const DIM_PAGE_SIZE = 4;
   styleUrls: ['./dimension.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class DimensionComponent implements OnInit {
+export class DimensionComponent implements OnInit, OnChanges {
 
   @Input() container: Container;
   @Input() showCount?: number = DIM_PAGE_SIZE;
   @Input() showAddAction?: boolean = false;
+
+  @Input() filterMetadata?: { [key: string] : FilterMetadata };
+  @Input() filters?: { [key: string] : any};
   
   data: DataPage;
   remainingCount = 0;
@@ -37,14 +41,20 @@ export class DimensionComponent implements OnInit {
     this.fetchData();
   }
 
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes.filters && !changes.filters.isFirstChange()) {
+      this.fetchData();
+    }
+  }
+
   fetchData() {
     let searchRequest = new DataSearchRequest();
     
     searchRequest.projectedFields = [];
 
-    searchRequest.filterMetadata = {};
+    searchRequest.filterMetadata = this.filterMetadata ? this.filterMetadata : {};
 
-    searchRequest.filters = {};
+    searchRequest.filters = this.filters ? this.filters : {};
 
     searchRequest.pagination = new Pagination();
     searchRequest.pagination.pageNum = 0;
@@ -64,7 +74,7 @@ export class DimensionComponent implements OnInit {
                }
             },
             error => {
-              this.alert.error("Error fetching dimensions. Please try again later."); 
+              this.alert.error("Error fetching dimensions. Please try again later.", error.status); 
             }
           );
   }

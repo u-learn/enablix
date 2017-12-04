@@ -40,7 +40,7 @@ export class BizDimensionDetailComponent implements OnInit, AfterViewInit {
       let cQId = params['cQId'];
       let recIdentity = params['identity'];
 
-      this.contentService.getRecordAndChildData(cQId, recIdentity, "4")
+      this.contentService.getRecordAndChildData(cQId, recIdentity, "3")
           .subscribe(
               res => {
 
@@ -50,13 +50,14 @@ export class BizDimensionDetailComponent implements OnInit, AfterViewInit {
 
                   let container = this.ctService.getContainerByQId(contentGrp.contentQId);
                   if (container.linkContainerQId) {
+                    contentGrp.linkContainer = container;
                     container = this.ctService.getContainerByQId(container.linkContainerQId);
                   }
 
                   if (contentGrp.contentQId == cQId) {
                     this.record = contentGrp.records.content[0];
                     this.container = container;
-                    this.sbService.setBizDimDetailSearchBar(container, this.record);
+                    this.sbService.setBizDimDetailSearchBar(container, this.record, []);
                   }
 
                   contentGrp.container = container;
@@ -99,10 +100,17 @@ export class BizDimensionDetailComponent implements OnInit, AfterViewInit {
               this.record = res;
               this.contentService.decorateRecord(this.container, this.record);
             }, err => {
-              this.alert.error('Error in fetching record details.');
+              this.alert.error('Error in fetching record details.', err.status);
             })
       }
     });
+  }
+
+  navToAllContent(contentGrp: ContentRecordGroup) {
+    let paramId = "sf_" + contentGrp.linkContainer.linkContentItemId;
+    let queryParams: { [key: string] : string } = {};
+    queryParams[paramId] = this.record.identity;
+    this.navService.goToContentList(contentGrp.container.qualifiedId, queryParams);
   }
 
   attach() {

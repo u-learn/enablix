@@ -1,9 +1,10 @@
+<form (submit)="showPreview()">
 <div class="upload-asset-popup">
-  <h1 [hidden]="previewContent">Capture URL</h1>
-  <h1 [hidden]="!previewContent" contenteditable="true">{{urlInfo.title}}</h1>
+  <h1 [hidden]="previewContent" class="url-title">Add URL</h1>
+  <h1 [hidden]="!previewContent" class="url-title"><span contenteditable="true" [(ngModel)]="urlInfo.title" [ngModelOptions]="{standalone: true}"></span><img src="/assets/images/icons/pencil-grey.svg"/></h1>
   <div class="preview-text">
     <img src="/assets/images/icons/globe_earth.svg" />
-    <input (blur)="showPreview()" [(ngModel)]="urlInfo.url" type="text"/>
+    <input [(ngModel)]="urlInfo.url" type="text" name="urlInfo.url"/>
   </div>
   <div [hidden]="!previewContent">
     <div class="preview-img" *ngIf="thumbnailUrl">
@@ -11,7 +12,7 @@
     </div>
     <div class="preview-tag">
       <ebx-select [formControl]="contentTypeCtrl"
-          headIcon="/assets/images/icons/hash_icon.svg"
+          placeholder="Select content type"
           [options]="contentTypes"></ebx-select>
     </div>
     
@@ -28,7 +29,9 @@
     </div> -->
   </div>
   <div class="actionBtns">
-    <button class="action" (click)="captureUrl()">Capture</button>
+    <button class="action" (click)="showPreview()" [hidden]="previewContent">Next</button>
+    <button class="action" (click)="captureUrl()" [hidden]="!previewContent">Add</button>
     <button class="cancel" mat-dialog-close>Cancel</button>
   </div>
 </div>
+</form>

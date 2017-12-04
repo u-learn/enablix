@@ -10,6 +10,7 @@ import { ContentTemplateCache } from './content-template-cache';
 import { Container } from '../model/container.model';
 import { SelectOption } from './select/select.component';
 import { AlertService } from './alert/alert.service';
+import { FilterMetadata, DataType, ConditionOperator } from './data-search/filter-metadata.model';
 
 @Injectable()
 export class ContentTemplateService {
@@ -36,7 +37,7 @@ export class ContentTemplateService {
                      return this.contentTemplate;
                    },
                    error => {
-                     this.alert.error("Error loading content template");
+                     this.alert.error("Error loading content template", error.status);
                    }
                  );
   }
@@ -146,5 +147,23 @@ export class ContentTemplateService {
   getContainerSingularLabel(containerQId: string) : string {
     let container = this.getContainerByQId(containerQId);
     return container ? container.singularLabel : "";
+  }
+
+  getBoundedFiltermetadata(container: Container) : { [key: string] : FilterMetadata } {
+
+    let filterMd: { [key: string] : FilterMetadata } = {};
+    container.contentItem.forEach(ci => {
+          
+      if (ci.type === 'BOUNDED') {
+        let filterId = ci.id;
+        filterMd[filterId] = {
+          field: ci.id + ".id",
+          dataType: DataType.STRING,
+          operator: ConditionOperator.IN
+        };
+      }
+    });
+
+    return filterMd;
   }
 }

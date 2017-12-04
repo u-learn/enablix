@@ -18,8 +18,8 @@ export class NavigationService {
     this.router.navigate(['/portal/content/detail', containerQId, identity]);
   }
 
-  goToContentList(containerQId: string) {
-    this.router.navigate(['/portal/content/list', containerQId]);
+  goToContentList(containerQId: string, queryParams?: { [key: string] : any }) {
+    this.router.navigate(['/portal/content/list', containerQId], { queryParams: queryParams ? queryParams : {}});
   }
 
   goToDimList(containerQId: string) {
@@ -30,12 +30,19 @@ export class NavigationService {
     this.router.navigate(['/portal/dim/detail', containerQId, identity]);
   }
 
-  goToRoute(routePath: string, routeParams: string[]) {
+  goToRoute(routePath: string, routeParams: string[], queryParams?: {[key: string] : string}) {
+    
     let navigateParams = [routePath];
     if (routeParams) {
       routeParams.forEach(param => navigateParams.push(param));
     }
-    this.router.navigate(navigateParams);
+
+    if (queryParams) {
+      this.router.navigate(navigateParams, {queryParams: queryParams});  
+    } else {
+      this.router.navigate(navigateParams);  
+    }
+    
   }
   
 }

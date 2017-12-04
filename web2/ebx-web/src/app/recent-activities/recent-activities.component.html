@@ -11,12 +11,12 @@
               <div class="activity inSidebar">
                 <div>
                   <div class="activity-detail narrow asset-thumbnail">
-                    <p class="description">
+                    <div class="description" ellipsis>
                       {{getTextDescription(a)}}
-                    </p>
-                    <p class="date-modified">
+                    </div>
+                    <div class="date-modified">
                       {{a.modifiedAt | ebxDate}}
-                    </p>
+                    </div>
                   </div>
                   <div class="content-icon">
                     <div class="img-cont" [style.background]="getContentColor(a)" (click)="navToItemDetail(a)">

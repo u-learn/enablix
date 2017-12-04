@@ -184,23 +184,26 @@ export class SearchBarService {
     this.updateSearchBarData(sbData);
   }
 
-  setBizDimListSearchBar(container: Container) {
+  setBizDimListSearchBar(container: Container, queryFilters: string[]) {
     let sbData = new SearchBarData();
     sbData.context = this.buildBizDimListContext(container);
-    sbData.datasets = this.biDSBuilder.buildSearchDatasets(container);
+    sbData.initialFilterIds = queryFilters;
+    sbData.datasets = this.biDSBuilder.buildSearchDatasets(container, sbData);
     this.updateSearchBarData(sbData);
   }
 
-  setBizDimDetailSearchBar(container: Container, record: any) {
+  setBizDimDetailSearchBar(container: Container, record: any, queryFilters: string[]) {
     let sbData = new SearchBarData();
     sbData.context = this.buildBizDimObjectContext(container, record);
+    sbData.initialFilterIds = queryFilters;
     this.updateSearchBarData(sbData);
   }
 
-  setBizContentListSearchBar(container: Container) {
+  setBizContentListSearchBar(container: Container, queryFilters: string[]) {
     let sbData = new SearchBarData();
     sbData.context = this.buildBizContentListNavCtx(container);
-    sbData.datasets = this.biDSBuilder.buildSearchDatasets(container);
+    sbData.initialFilterIds = queryFilters;
+    sbData.datasets = this.biDSBuilder.buildSearchDatasets(container, sbData);
     this.updateSearchBarData(sbData);
   }
   
@@ -220,6 +223,7 @@ export class SearchBarService {
     
     let navPath = '';
     let routeParams = [];
+    let queryParams = {};
 
     let ctxItems = this.searchBarData.context.contextItems;
     for (let i = 0; i < ctxItems.length; i++) {
@@ -227,9 +231,20 @@ export class SearchBarService {
       ctxItems[i].routeParams.forEach(param => routeParams.push(param));
     }
 
+    let filters = this.searchBarData.filters;
+    for (let j = 0; j < filters.length; j++) {
+      let filter = filters[j];
+      for (let prop in filter.queryParams) {
+        if (!queryParams[prop]) {
+          queryParams[prop] = []
+        }
+        queryParams[prop].push(filter.queryParams[prop]);
+      }
+    }
+
     for (let k = 0; k < this.navStates.length; k++) {
       if (this.navStates[k].navPath == navPath) {
-        this.navService.goToRoute(this.navStates[k].routePath, routeParams);
+        this.navService.goToRoute(this.navStates[k].routePath, routeParams, queryParams);
       }
     }
 
@@ -273,6 +288,64 @@ export class SearchBarService {
     return {
       contextItems: [this.buildBizDimObjectItem(bizDimContainer, record)]
     }
+  }
+
+  buildFiltersFromQueryParams(queryParams: any) {
+
+    let fs = {};
+    
+    for (let prop in queryParams) {
+      
+      let filterId = this.getFilterId(prop);
+
+      if (filterId) {
+      
+        let propVal = queryParams[prop];
+        if (typeof propVal === 'string') {
+          fs[filterId] = [propVal];
+        } else {
+          fs[filterId] = propVal;  
+        }
+        
+      }
+    }
+
+    return fs;
+  }
+
+  getFilterIdsFromQueryParams(queryParams: any) {
+
+    let filterIds: string[] = [];
+
+    for (let prop in queryParams) {
+      
+      let filterId = this.getFilterId(prop);
+
+      if (filterId) {
+      
+        let propVal = queryParams[prop];
+        if (typeof propVal === 'string') {
+          
+          filterIds.push(propVal)
+
+        } else if (propVal instanceof Array) {
+          
+          propVal.forEach(val => {
+            filterIds.push(val);
+          });
+        }
+        
+      }
+    }
+
+    return filterIds;
+  }
+  
+  private getFilterId(queryParam: string) {
+    if (queryParam.startsWith("sf_")) {
+      return queryParam.substring(3);
+    }
+    return null;
   }
 
 }

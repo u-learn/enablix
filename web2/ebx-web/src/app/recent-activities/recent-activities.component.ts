@@ -52,7 +52,7 @@ export class RecentActivitiesComponent implements OnInit {
               this.recentActivities = res;
             },
             error => {
-              this.alert.error("Error in fetching recent activities");
+              this.alert.error("Error in fetching recent activities", error.status);
             }
           );
   }
