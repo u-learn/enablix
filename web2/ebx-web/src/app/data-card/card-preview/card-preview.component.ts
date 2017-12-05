@@ -13,12 +13,14 @@ export class CardPreviewComponent implements OnInit {
 
   @Input() record: any;
   @Input() container: Container;
+  @Input() size?: string = 'regular';
 
   cardColor: string;
   text: string;
   thumbnailUrl: string;
 
   isBizDimension: boolean = false;
+
 
   constructor(private ctService: ContentTemplateService) { }
 

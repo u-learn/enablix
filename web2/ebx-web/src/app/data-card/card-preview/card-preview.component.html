@@ -1,4 +1,4 @@
-<div class="card-preview" *ngIf="!isBizDimension">
+<div class="card-preview" [class.small]="size == 'small'" *ngIf="!isBizDimension">
   <div class="cardImg" *ngIf="thumbnailUrl">
     <img *ngIf="thumbnailUrl" [src]="thumbnailUrl" />
   </div>

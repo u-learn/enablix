@@ -39,7 +39,7 @@ export class AuthService {
   initUserService(user: any) {
     this.userService.setUserLoggedIn();
     this.userService.setUsername(user.email);
-    this.userService.setUserDisplayName(user.name);
+    this.userService.setUserDisplayName(user.principal.displayName);
     this.loginIn.emit(user.name);
   }
 

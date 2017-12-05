@@ -10,9 +10,5 @@
     .center-content {
       @include vcenterChildren;
     }
-
-    .asset {
-      @include vcenterChildren; 
-    }
   }
 }

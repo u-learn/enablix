@@ -73,7 +73,7 @@
 			<container id="partnerWhitePaper" label="White Papers" linkContainerQId="whitepaper" linkContentItemId="partners"/>
 			<container id="partnerContent" label="Other Content" linkContainerQId="content" linkContentItemId="partners"/>
 		</container>		
-		<container id="competitor" label="Competitors" singularLabel="Competitor" businessCategory="BUSINESS_DIMENSION">
+		<container id="competitor" label="Competitors" singularLabel="Competitor" businessCategory="BUSINESS_DIMENSION" color="#a62078">
 			<contentItem id="name" label="Competitor Name" type="text" searchBoost="7"/>
 			<contentItem id="shortName" label="Short Name" type="text" searchBoost="7"/>
 			<container id="compArticle" label="Articles" linkContainerQId="article" linkContentItemId="competitors"/>			
@@ -89,7 +89,7 @@
 			<container id="compWhitePaper" label="White Papers" linkContainerQId="whitepaper" linkContentItemId="competitors"/>				
 			<container id="compContent" label="Other Content" linkContainerQId="content" linkContentItemId="competitors"/>
 		</container>					
-		<container id="topic" label="Topics" singularLabel="Topic" businessCategory="BUSINESS_DIMENSION">
+		<container id="topic" label="Topics" singularLabel="Topic" businessCategory="BUSINESS_DIMENSION" color="#70e58f">
 			<contentItem id="name" label="Topic Name" type="text"/>
 			<contentItem id="shortName" label="Short Name" type="text"/>
 			<container id="topicArticle" label="Articles" linkContainerQId="article" linkContentItemId="topics"/>			
