@@ -22,9 +22,7 @@ export class DataCardComponent implements OnInit {
 
   isBizContent = false;
   title: string;
-  text: string;
   containerLabel: string;
-  thumbnailUrl: string;
   linkedContentText: string;
   linkedContentCount: number;
 
@@ -104,15 +102,6 @@ export class DataCardComponent implements OnInit {
     this.navService.goToContentList(this.containerQId);
   }
 
-  getNoPreviewImage() : string {
-    
-    let imgSrc = "/assets/images/icons/file_unknown.svg";
-    
-    if (this.record.__decoration && this.record.__decoration.__noPreviewImgUrl) {
-      imgSrc = this.record.__decoration.__noPreviewImgUrl;
-    } 
-
-    return imgSrc;
-  }
+  
 
 }

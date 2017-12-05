@@ -1,0 +1,47 @@
+@import '~styles/colors.scss';
+@import '~styles/layout.mixin.scss';
+@import '~styles/fonts.scss';
+
+ebx-card-preview {
+
+    .cardDefaultImg, .cardImgText, .cardImg {
+        height: 108px;
+        width: 192px;
+        // padding: 0 16px;
+        
+        @include vcenterChildren;
+        border-radius: 4px 4px 0 0;
+        overflow-y: hidden;
+    }
+
+    .cardDefaultImg {
+        justify-content: center;
+        background: #2C4290;
+
+        img {
+            max-width: 48px;
+            min-width: 48px;
+        }
+    }
+
+    .cardImgText {
+        color: $white;
+        font-family: $FPLight;
+        font-size: 14px;
+        line-height: 18px;
+        padding: 24px 24px;
+        width: 144px; /* 192px - 24px - 24px */
+        height: 60px; /* line */
+        background: #2C4290;
+
+        p {
+            width: 144px; /* 192px - 24px - 24px */
+            height: 60px; /* 108px - 24px - 24px */
+        }
+    }
+
+    .img-cont {
+        height: 108px;
+        width: 192px;
+    }
+}

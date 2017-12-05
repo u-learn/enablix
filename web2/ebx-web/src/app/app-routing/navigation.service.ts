@@ -30,6 +30,10 @@ export class NavigationService {
     this.router.navigate(['/portal/dim/detail', containerQId, identity]);
   }
 
+  goToConsolidateContent() {
+    this.router.navigate(['/portal/cconsol']);
+  }
+
   goToRoute(routePath: string, routeParams: string[], queryParams?: {[key: string] : string}) {
     
     let navigateParams = [routePath];

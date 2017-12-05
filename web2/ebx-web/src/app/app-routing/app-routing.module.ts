@@ -19,7 +19,9 @@ import { NavigationService } from './navigation.service';
 import { BizDimensionListComponent } from '../biz-dimension/biz-dimension-list/biz-dimension-list.component';
 import { BizDimensionDetailComponent } from '../biz-dimension/biz-dimension-detail/biz-dimension-detail.component';
 import { BizDimensionComponent } from '../biz-dimension/biz-dimension.component';
-
+import { ConsolidateContentComponent } from '../consolidate-content/consolidate-content.component';
+import { MyDraftComponent } from '../consolidate-content/my-draft/my-draft.component';
+import { ContentRequestComponent } from '../consolidate-content/content-request/content-request.component';
 
 const routes: Routes = [
   {
@@ -77,6 +79,23 @@ const routes: Routes = [
             {
               path: 'detail/:cQId/:identity',
               component: BizDimensionDetailComponent
+            }
+          ]
+        },
+        {
+          path: 'cconsol',
+          component: ConsolidateContentComponent,
+          resolve: {
+            sbData: SearchBarResolve
+          },
+          children: [
+            {
+              path: '',
+              component: MyDraftComponent
+            },
+            {
+              path: 'pending',
+              component: ContentRequestComponent
             }
           ]
         }

@@ -1,0 +1,15 @@
+<div class="card-preview" *ngIf="!isBizDimension">
+  <div class="cardImg" *ngIf="thumbnailUrl">
+    <img *ngIf="thumbnailUrl" [src]="thumbnailUrl" />
+  </div>
+  <div class="cardImgText" *ngIf="text">
+    <div><p ellipsis [innerHtml]="text"></p></div>
+  </div>
+  <div class="cardDefaultImg" *ngIf="!text && !thumbnailUrl">
+    <img [src]="getNoPreviewImage()" />
+  </div>
+</div>
+<!-- <div class="card-preview" *ngIf="isBizDimension">
+  <div class="img-cont" [style.background]="cardColor">
+  </div>
+</div> -->

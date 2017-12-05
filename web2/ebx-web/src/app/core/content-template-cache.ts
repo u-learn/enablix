@@ -194,17 +194,17 @@ export class ContentTemplateCache {
   */
 
   initContainerColors() {
-    this.colors.push("#549d19");
-    this.colors.push("#b81b8d");
-    this.colors.push("#a485b7");
-    this.colors.push("#907ccc");
-    this.colors.push("#7504ec");
-    this.colors.push("#f7c225");
-    this.colors.push("#29e59e");
-    this.colors.push("#9fb67e");
-    this.colors.push("#c834a6");
-    this.colors.push("#d8439e");
-    this.colors.push("#e680b1");
+    this.colors.push("#e75632");
+    this.colors.push("#7147d3");
+    this.colors.push("#4046ad");
+    this.colors.push("#d0a914");
+    this.colors.push("#a62078");
+    this.colors.push("#70e58f");
+    this.colors.push("#7d64c2");
+    this.colors.push("#926fa9");
+    this.colors.push("#448e14");
+    this.colors.push("#600ce7");
+    this.colors.push("#f1b71b");
     this.colors.push("#2550f2");
     this.colors.push("#ae6893");
     this.colors.push("#dbda1e");

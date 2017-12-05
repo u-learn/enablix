@@ -11,15 +11,7 @@
 
 <div class="card biz-card with-flex" *ngIf="isBizContent" (click)="navToBizContent()">
   <div>
-    <div class="cardImg" *ngIf="thumbnailUrl">
-      <img *ngIf="thumbnailUrl" [src]="thumbnailUrl" />
-    </div>
-    <div class="cardImgText" *ngIf="text">
-      <div><p ellipsis [innerHtml]="text"></p></div>
-    </div>
-    <div class="cardDefaultImg" *ngIf="!text && !thumbnailUrl">
-      <img [src]="getNoPreviewImage()" />
-    </div>
+    <ebx-card-preview *ngIf="record" [record]="record" [container]="container"></ebx-card-preview>
     <div class="content">
       <p class="content-type" [innerHtml]="containerLabel" (click)="navToContentList()"></p>
       <p class="card-title" [innerHtml]="title" ellipsis></p>

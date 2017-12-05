@@ -1,0 +1,38 @@
+@import '~styles/colors.scss';
+@import '~styles/layout.mixin.scss';
+@import '~styles/fonts.scss';
+
+ebx-table {
+    font-family: $FPLight;
+
+    table {
+        th {
+            text-align: left;
+
+            &.text-right {
+                text-align: right;
+            }
+
+            &.text-center {
+                text-align: center;
+            }
+
+            .icon.dropdown {
+                padding: 0 6px;
+                width: 9px;
+                height: 7px;
+                cursor: pointer;
+
+                &.dir-up {
+                    transform: rotate(180deg);
+                }
+            }
+        }
+
+        td, th {
+            padding: 16px 16px 16px 0;
+            border-bottom: 1px solid rgba(179, 38, 38, 0.03);
+        }
+
+    }
+}

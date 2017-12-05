@@ -1,0 +1,75 @@
+@import '~styles/colors.scss';
+@import '~styles/layout.mixin.scss';
+@import '~styles/fonts.scss';
+
+.sub-tabs {
+  border-bottom: 1px solid rgba(179,38,38,.03);
+  padding-bottom: 16px;
+
+  a {
+    font-family: $FPThin;
+    font-size: 1.17em;
+    font-weight: 700;
+    padding: 16px 0;
+    margin: 0 24px 0 0;
+    color: $grey-med;
+
+    &.tab-active {
+      border-bottom: 2px solid $blue-med-20; 
+      color: $black; 
+    }
+  }
+}
+
+.tab-content {
+  padding-top: 40px;
+}
+
+.asset {
+  @include vcenterChildren; 
+
+  .title {
+    
+  }
+
+  ebx-card-preview {
+
+    .card-preview {
+      margin-right: 16px;  
+    }
+
+    .cardDefaultImg, .cardImgText, .cardImg {
+      height: 60px;
+      width: 96px;
+      
+      @include vcenterChildren;
+      border-radius: 4px;
+    }
+
+    .cardDefaultImg {
+
+      img {
+          max-width: 32px;
+          min-width: 32px;
+      }
+    }
+
+    .cardImgText {
+      font-size: 10px;
+      line-height: 14px;
+      padding: 16px 16px;
+      width: 64px; /* 192px - 24px - 24px */
+      height: 60px; /* line */
+
+      p {
+          width: 64px; /* 192px - 24px - 24px */
+          height: 40px; /* 108px - 24px - 24px */
+      }
+    }
+
+    .img-cont {
+        height: 60px;
+        width: 96px;
+    }
+  }
+}

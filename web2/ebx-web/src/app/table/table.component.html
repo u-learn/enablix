@@ -1,0 +1,22 @@
+<table class="datatable">
+  <thead>
+    <tr>
+      <th *ngFor="let col of tableColumns" class="{{col.headerCssClass}}">
+        <span [ngSwitch]="col.dataType">
+          <span *ngSwitchCase="'NUMBER'"><span class="text-right">{{col.heading}}</span></span>
+          <span *ngSwitchDefault>{{col.heading}}</span>
+        </span>
+        <img *ngIf="col.sortProp" class="icon dropdown {{getDirectionClass(col)}}" [src]="sortIcon(col)" (click)="sortData(col)">
+      </th>
+    </tr>
+  </thead>
+  
+  <tbody>
+    <tr *ngIf="!tableData.content || tableData.content.length == 0">
+      <td>No data found</td>
+    </tr>
+    <tr *ngFor="let rec of tableData.content">
+      <ng-template *ngTemplateOutlet="rowTemplate; context: {$implicit: rec}"></ng-template>
+    </tr>
+  </tbody>
+</table>

@@ -1,0 +1,18 @@
+@import '~styles/colors.scss';
+@import '~styles/layout.mixin.scss';
+@import '~styles/fonts.scss';
+
+.table-content {
+
+  table {
+    width: 100%;
+
+    .center-content {
+      @include vcenterChildren;
+    }
+
+    .asset {
+      @include vcenterChildren; 
+    }
+  }
+}

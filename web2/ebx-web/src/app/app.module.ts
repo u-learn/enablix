@@ -1,6 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
+import { NgTemplateOutlet } from '@angular/common';
+import { RouterModule, RouterLink } from '@angular/router';
 import { ClickOutsideModule } from 'ng-click-outside';
 import { MatDialogModule, MatAutocompleteModule, MatFormFieldModule, MatInputModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -56,6 +58,15 @@ import { ContentEmailButtonComponent } from './content-action/content-email-butt
 import { SearchBarService } from './search-bar/search-bar.service';
 import { BizContentListComponent } from './biz-content/biz-content-list/biz-content-list.component';
 import { BoundedItemsDSBuilderService } from './search-bar/bounded-items-dsbuilder.service';
+import { TableComponent } from './table/table.component';
+import { ConsolidateContentComponent } from './consolidate-content/consolidate-content.component';
+import { MyDraftComponent } from './consolidate-content/my-draft/my-draft.component';
+import { ContentRequestComponent } from './consolidate-content/content-request/content-request.component';
+import { CardPreviewComponent } from './data-card/card-preview/card-preview.component';
+import { ConsolidateContentService } from './consolidate-content/consolidate-content.service';
+import { PillComponent } from './pill/pill.component';
+import { TypePillComponent } from './type-pill/type-pill.component';
+import { SortTableComponent } from './table/sort-table/sort-table.component';
 
 @NgModule({
   declarations: [
@@ -97,7 +108,15 @@ import { BoundedItemsDSBuilderService } from './search-bar/bounded-items-dsbuild
     DocDownloadButtonComponent,
     CopyPortalUrlButtonComponent,
     ContentEmailButtonComponent,
-    BizContentListComponent
+    BizContentListComponent,
+    TableComponent,
+    ConsolidateContentComponent,
+    MyDraftComponent,
+    ContentRequestComponent,
+    CardPreviewComponent,
+    PillComponent,
+    TypePillComponent,
+    SortTableComponent
   ],
   imports: [
     BrowserModule,
@@ -106,6 +125,7 @@ import { BoundedItemsDSBuilderService } from './search-bar/bounded-items-dsbuild
     ReactiveFormsModule,
     CoreModule,
     AppRoutingModule,
+    RouterModule,
     ClickOutsideModule,
     MatDialogModule,
     MatAutocompleteModule,
@@ -121,6 +141,7 @@ import { BoundedItemsDSBuilderService } from './search-bar/bounded-items-dsbuild
     TenantService,
     SearchBarService,
     BoundedItemsDSBuilderService,
+    ConsolidateContentService,
     { 
         provide: HTTP_INTERCEPTORS, 
         useClass: NgProgressInterceptor, 

@@ -21,6 +21,7 @@ export class SearchBarComponent implements OnInit {
   dsItemLimit: { [key : string] : number} = {};
 
   textCtrl: FormControl;
+  freeText: string;
 
   searchBarData: SearchBarData;
 
@@ -53,6 +54,7 @@ export class SearchBarComponent implements OnInit {
     
       this.textCtrl.valueChanges.startWith(null).subscribe(
         text => {
+          this.freeText = text;
           this.searchBarData.datasets.forEach(ds => {
             let itemObs = ds.getDataItems(text);
             this.filteredDSData[ds.getDatasetLabel()] = itemObs ? itemObs.share() : itemObs;

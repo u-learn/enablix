@@ -22,24 +22,31 @@
         <img class="funnel-icon" [src]="showOptions ? '/assets/images/icons/filter.svg' : '/assets/images/icons/filter-grey.svg'" (click)="showSearchBar()">
     </div>
     
-    <div class="filtered-rows" [hidden]="!showOptions" *ngIf="searchBarData && searchBarData.datasets && searchBarData.datasets.length > 0">
-        <ng-container *ngFor="let ds of searchBarData.datasets">
-            <div class="filtered-row" *ngIf="(filteredDSData[ds.getDatasetLabel()] | async)?.length > 0">
-                <div class="filter-label"><h4>{{ds.getDatasetLabel()}}</h4></div>
-                <div class="pills-container">
-                    <ng-container *ngFor="let item of filteredDSData[ds.getDatasetLabel()] | async; let i = index">
-                        <div *ngIf="i < dsItemLimit[ds.getDatasetLabel()]" class="pill selectable"  [style.background]="item.color" [class.roundpill]="item.type == 'BIZ_CONTENT' || item.type == 'FILTER'" (click)="addSearchBarItem(item)">
-                          <span class="pill-label">{{item?.label}}</span>
+    <div class="filtered-rows" [hidden]="!showOptions" *ngIf="(searchBarData && searchBarData.datasets && searchBarData.datasets.length > 0) || (freeText && freeText.length > 0)">
+        <ng-container *ngIf="searchBarData && searchBarData.datasets && searchBarData.datasets.length > 0">
+            <ng-container *ngFor="let ds of searchBarData.datasets">
+                <div class="filtered-row" *ngIf="(filteredDSData[ds.getDatasetLabel()] | async)?.length > 0">
+                    <div class="filter-label"><h4>{{ds.getDatasetLabel()}}</h4></div>
+                    <div class="pills-container">
+                        <ng-container *ngFor="let item of filteredDSData[ds.getDatasetLabel()] | async; let i = index">
+                            <div *ngIf="i < dsItemLimit[ds.getDatasetLabel()]" class="pill selectable"  [style.background]="item.color" [class.roundpill]="item.type == 'BIZ_CONTENT' || item.type == 'FILTER'" (click)="addSearchBarItem(item)">
+                              <span class="pill-label">{{item?.label}}</span>
+                            </div>
+                        </ng-container>
+                        <div *ngIf="(filteredDSData[ds.getDatasetLabel()] | async)?.length > dsItemLimit[ds.getDatasetLabel()]" class="pill selectable roundpill white" (click)="expandDatasetItems(ds)">
+                          <span class="pill-label">+{{(filteredDSData[ds.getDatasetLabel()] | async)?.length - dsItemLimit[ds.getDatasetLabel()]}}</span>
                         </div>
-                    </ng-container>
-                    <div *ngIf="(filteredDSData[ds.getDatasetLabel()] | async)?.length > dsItemLimit[ds.getDatasetLabel()]" class="pill selectable roundpill white" (click)="expandDatasetItems(ds)">
-                      <span class="pill-label">+{{(filteredDSData[ds.getDatasetLabel()] | async)?.length - dsItemLimit[ds.getDatasetLabel()]}}</span>
-                    </div>
-                    <div *ngIf="dsItemLimit[ds.getDatasetLabel()] > defaultDSItemLimit" class="pill selectable roundpill white" (click)="collapseDatasetItems(ds)">
-                      <span class="pill-label">&lt;&lt;</span>
+                        <div *ngIf="dsItemLimit[ds.getDatasetLabel()] > defaultDSItemLimit" class="pill selectable roundpill white" (click)="collapseDatasetItems(ds)">
+                          <span class="pill-label">&lt;&lt;</span>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </ng-container>
         </ng-container>
+        <div class="filtered-row" *ngIf="freeText && freeText.length > 0">
+            <div class="freetext-search">
+                Search for "{{freeText}}"
+            </div>
+        </div>
     </div>
 </div>
