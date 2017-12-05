@@ -257,7 +257,7 @@ public class DocumentController {
     		if (template.isTextContainer(container)) {
     			response.sendRedirect(TEXT_CONTENT_IMG);
     		} else {
-    			response.sendError(HttpServletResponse.SC_NOT_FOUND);
+    			response.sendRedirect("/assets/images/icons/one-px.svg");
     		}
     	}
        	
