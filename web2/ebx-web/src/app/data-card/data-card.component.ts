@@ -74,13 +74,8 @@ export class DataCardComponent implements OnInit {
 
       if (this.record.__decoration) {
         let decoration = this.record.__decoration;
-        this.thumbnailUrl = decoration.__thumbnailUrl;
         this.linkedContentText = decoration.__linkedContentText;
         this.linkedContentCount = decoration.__linkedContentCount;
-        
-        if (!this.thumbnailUrl) {
-          this.text = decoration.__textContent;
-        }
       }
       
     }
