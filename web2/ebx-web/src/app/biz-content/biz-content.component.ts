@@ -10,6 +10,7 @@ import { AlertService } from '../core/alert/alert.service';
 import { NavigationService } from '../app-routing/navigation.service';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component'; 
 import { ContentDeleteButtonComponent } from '../content-action/content-delete-button/content-delete-button.component';
+import { ContentWorkflowService } from '../services/content-workflow.service';
 
 @Component({
   selector: 'ebx-biz-content',
@@ -39,6 +40,7 @@ export class BizContentComponent implements OnInit, AfterViewInit {
 
   constructor(private route: ActivatedRoute, private contentService: ContentService,
               private alert: AlertService, private contentTemplate: ContentTemplateService,
+              private contentWFService: ContentWorkflowService,
               private navService: NavigationService, private dialog: MatDialog) { }
 
   ngOnInit() {
@@ -119,8 +121,7 @@ export class BizContentComponent implements OnInit, AfterViewInit {
             result => {
               
               this.editable = false;
-              this.contentService.decorateRecord(
-                this.container, result.contentRecord);
+              this.contentService.decorateRecord(this.container, result.contentRecord);
               this.record = result.contentRecord;
 
               this.alert.success("Saved successfully!");
@@ -179,7 +180,12 @@ export class BizContentComponent implements OnInit, AfterViewInit {
   }
 
   saveDraft() {
-
+    this.contentWFService.submitContent(this.container.qualifiedId, this.record, true, null).subscribe(res => {
+      this.alert.success("Saved successfully!");
+      this.editable = false;
+    }, error => {
+      this.alert.error("Error saving data.", error.status);  
+    });
   }
 
   cancelEdit() {

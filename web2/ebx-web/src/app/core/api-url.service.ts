@@ -24,6 +24,7 @@ export class ApiUrlService {
   static POST_INSERT_CHILD_CONTAINER_DATA = "/content/update/t/:templateId/c/:contentQId/r/:parentIdentity";
   static POST_BOUNDED_DEF_REF_LIST = "/bounded/d/list/";
   static POST_FILE_UPLOAD = '/doc/upload';
+  static POST_SAVE_CONTENT_DRAFT = '/contentwf/savedraft/';
 
   static GET_LOGOUT = "/logout";
 
@@ -129,6 +130,10 @@ export class ApiUrlService {
     return this.getAPIUrl(ApiUrlService.GET_DELETE_CONTENT_RECORD, {
       templateId: templateId, contentQId: contentQId, recordIdentity: recordIdentity
     });
+  }
+
+  postSaveContentDraft() : string {
+    return this.getAPIUrl(ApiUrlService.POST_SAVE_CONTENT_DRAFT);
   }
 
 }

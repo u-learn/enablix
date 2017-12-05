@@ -48,12 +48,12 @@ export class MyDraftComponent implements OnInit {
         sortProp: "currentState.stateName"
       },
       {
-        heading: "Creator",
+        heading: "Created On",
         key: "createdOn",
         sortProp: "createdAt"
       },
       {
-        heading: "Created By",
+        heading: "Creator",
         key: "createdBy",
         sortProp: "createdByName"
       }

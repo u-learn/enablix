@@ -67,6 +67,7 @@ import { ConsolidateContentService } from './consolidate-content/consolidate-con
 import { PillComponent } from './pill/pill.component';
 import { TypePillComponent } from './type-pill/type-pill.component';
 import { SortTableComponent } from './table/sort-table/sort-table.component';
+import { ContentWorkflowService } from './services/content-workflow.service';
 
 @NgModule({
   declarations: [
@@ -142,6 +143,7 @@ import { SortTableComponent } from './table/sort-table/sort-table.component';
     SearchBarService,
     BoundedItemsDSBuilderService,
     ConsolidateContentService,
+    ContentWorkflowService,
     { 
         provide: HTTP_INTERCEPTORS, 
         useClass: NgProgressInterceptor, 
