@@ -1,6 +1,6 @@
 <div *ngIf="url" class="url-asset">
   <div class="embed-rich" *ngIf="type == 'rich'">
-    <div class="embed-heading">{{embedInfo?.title}}</div>
+    <!-- <div class="embed-heading">{{embedInfo?.title}}</div>
     <div class="embed-excerpt">
       <a target="_blank" [href]="navUrl">
         <div class="embed-image" *ngIf="thumbnailUrl">
@@ -8,8 +8,8 @@
         </div>
         <div class="embed-desc">{{embedInfo?.description}}</div>
       </a>
-    </div>
-    <!-- <iframe [src]="url | safeUrl"></iframe> -->
+    </div> -->
+    <iframe [src]="url | safeUrl"></iframe>
   </div>
   <div *ngIf="embedHtml" class="embed-oembed" [innerHtml]="embedHtml | safeHtml"></div>
 </div>
