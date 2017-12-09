@@ -25,6 +25,7 @@ export class ApiUrlService {
   static POST_BOUNDED_DEF_REF_LIST = "/bounded/d/list/";
   static POST_FILE_UPLOAD = '/doc/upload';
   static POST_SAVE_CONTENT_DRAFT = '/contentwf/savedraft/';
+  static POST_BIZ_CONTENT_SEARCH = '/search/bizcontent/';
 
   static GET_LOGOUT = "/logout";
 
@@ -134,6 +135,10 @@ export class ApiUrlService {
 
   postSaveContentDraft() : string {
     return this.getAPIUrl(ApiUrlService.POST_SAVE_CONTENT_DRAFT);
+  }
+
+  postBizContentSearch() : string {
+    return this.getAPIUrl(ApiUrlService.POST_BIZ_CONTENT_SEARCH);
   }
 
 }

@@ -1,6 +1,8 @@
 package com.enablix.analytics.search.es;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 
 import org.elasticsearch.action.ActionFuture;
@@ -12,6 +14,7 @@ import org.elasticsearch.search.SearchHits;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.enablix.analytics.search.SearchClient;
+import com.enablix.commons.util.StringUtil;
 import com.enablix.core.api.ContentDataRecord;
 import com.enablix.core.api.ContentDataRef;
 import com.enablix.core.api.SearchResult;
@@ -108,6 +111,37 @@ public class ElasticSearchClient implements SearchClient {
 	
 	public static interface ResultTx<T> {
 		T transform(SearchHit hit, TemplateFacade template);
+	}
+
+	@Override
+	public SearchResult<ContentDataRecord> searchBizContentRecords(String text, TemplateFacade template, int pageSize,
+			int pageNum, DataView dataView) {
+
+		return executeSearchAndCreateResult(template, pageSize, pageNum, 
+				(hit, templt) -> searchHitTx.toContentDataRecord(hit, templt),
+				buildBizContentSearchRequest(text, template, pageSize, pageNum, dataView));
+	}
+	
+	private SearchRequest buildBizContentSearchRequest(String text, 
+			TemplateFacade template, int pageSize, int pageNum, DataView dataView) {
+		
+		ESDataView esDataView = DataViewUtil.getElasticSearchDataView(dataView);
+		
+		Collection<String> bizContentCollections = new HashSet<>();
+		
+		template.getBizContentContainers().forEach((container) -> {
+			String collectionName = template.getCollectionName(container.getQualifiedId());
+			if (StringUtil.hasText(collectionName)) {
+				bizContentCollections.add(collectionName);
+			}
+		});
+		
+		return ESQueryBuilder.builder(text, template, fieldBuilder)
+				.withPagination(pageSize, pageNum)
+				.withTypeFilter((searchType) -> bizContentCollections.contains(searchType))
+				.withViewScope(esDataView)
+				.build();
+		
 	}
 
 }

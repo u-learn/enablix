@@ -22,6 +22,17 @@
   }
 }
 
+.content-uploading {
+    min-height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: $FPLight;
+    padding: 24px;
+    margin: 24px 0;
+    background: $white;
+}
+
 .asset-text {
     font-family: $FPThin;
     line-height: 38px;

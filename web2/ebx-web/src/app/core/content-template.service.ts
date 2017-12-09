@@ -101,9 +101,8 @@ export class ContentTemplateService {
   }
 
   private containerListToSelectOption(containers: Container[]): SelectOption[] {
-    const options: SelectOption[] = [];
-    this.getConcreteContainers().filter(container => !container.refData)
-        .forEach(container => {
+    let options: SelectOption[] = [];
+    containers.forEach(container => {
           options.push({id: container.qualifiedId, label: container.label});
         });
     return options;

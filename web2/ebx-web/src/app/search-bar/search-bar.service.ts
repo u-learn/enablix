@@ -184,6 +184,16 @@ export class SearchBarService {
     this.updateSearchBarData(sbData);
   }
 
+  setFreetextSearchBar(text: string) {
+    
+    let sbData = new SearchBarData();
+    sbData.context = new NavContext();
+    sbData.freetext = text;
+    sbData.datasets = [this.bizDimListDataset, this.bizDimObjListDataset, this.bizContentListDataset];
+
+    this.updateSearchBarData(sbData);
+  }
+
   setBizDimListSearchBar(container: Container, queryFilters: string[]) {
     let sbData = new SearchBarData();
     sbData.context = this.buildBizDimListContext(container);

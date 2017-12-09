@@ -1,0 +1,13 @@
+<ebx-header></ebx-header>
+<div class="container">
+  <div class="free-results">
+    <div class="header" *ngIf="searchResults">
+        <h1>{{searchResults.numberOfElements}} results found</h1>
+    </div>
+    <div class="main" *ngIf="searchResults">
+      <div class="card" *ngFor="let res of searchResults.content">
+        <ebx-data-card [containerQId]="res.containerQId" [record]="res.record"></ebx-data-card>
+      </div>
+    </div>
+  </div>
+</div>

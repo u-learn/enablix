@@ -6,6 +6,7 @@ import "rxjs/add/operator/share";
 
 import { SearchBarService } from './search-bar.service';
 import { SearchBarData, SearchBarItem, SearchDataset } from '../model/search-bar-data.model';
+import { NavigationService } from '../app-routing/navigation.service';
 
 @Component({
   selector: 'ebx-search-bar',
@@ -27,7 +28,7 @@ export class SearchBarComponent implements OnInit {
 
   filteredDSData: { [key: string] : Observable<SearchBarItem[]>} = {};
 
-  constructor(private sbService: SearchBarService) { 
+  constructor(private sbService: SearchBarService, private navService: NavigationService) { 
     this.textCtrl = new FormControl();
   }
 
@@ -73,6 +74,10 @@ export class SearchBarComponent implements OnInit {
     this.doNotHideOnClick = true; 
   }
 
+  toggleSearchBar() {
+    this.showOptions = !this.showOptions;
+  }
+
   hideSearchBar() {
     if (!this.doNotHideOnClick) {
       this.showOptions = false;
@@ -92,6 +97,17 @@ export class SearchBarComponent implements OnInit {
   removeSearchBarItem(sbItem: SearchBarItem) {
     this.sbService.removeSearchBarItem(sbItem);
     this.doNotHideOnClick = true;
+  }
+
+  searchBizContent() {
+    if (this.freeText) {
+      this.navService.goToFreetextSearch(this.freeText);  
+      this.textCtrl.setValue(null);
+    }
+  }
+
+  clearFreetext() {
+    this.searchBarData.freetext = null;
   }
 
 }

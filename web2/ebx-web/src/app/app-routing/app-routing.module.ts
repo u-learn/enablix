@@ -22,6 +22,7 @@ import { BizDimensionComponent } from '../biz-dimension/biz-dimension.component'
 import { ConsolidateContentComponent } from '../consolidate-content/consolidate-content.component';
 import { MyDraftComponent } from '../consolidate-content/my-draft/my-draft.component';
 import { ContentRequestComponent } from '../consolidate-content/content-request/content-request.component';
+import { FreetextSearchComponent } from '../freetext-search/freetext-search.component';
 
 const routes: Routes = [
   {
@@ -98,6 +99,13 @@ const routes: Routes = [
               component: ContentRequestComponent
             }
           ]
+        },
+        {
+          path: 'search/:text',
+          component: FreetextSearchComponent,
+          resolve: {
+            sbData: SearchBarResolve
+          }
         }
       ],
   },

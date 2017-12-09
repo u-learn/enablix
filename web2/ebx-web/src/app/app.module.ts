@@ -68,6 +68,8 @@ import { PillComponent } from './pill/pill.component';
 import { TypePillComponent } from './type-pill/type-pill.component';
 import { SortTableComponent } from './table/sort-table/sort-table.component';
 import { ContentWorkflowService } from './services/content-workflow.service';
+import { FreetextSearchService } from './services/freetext-search.service';
+import { FreetextSearchComponent } from './freetext-search/freetext-search.component';
 
 @NgModule({
   declarations: [
@@ -117,7 +119,8 @@ import { ContentWorkflowService } from './services/content-workflow.service';
     CardPreviewComponent,
     PillComponent,
     TypePillComponent,
-    SortTableComponent
+    SortTableComponent,
+    FreetextSearchComponent
   ],
   imports: [
     BrowserModule,
@@ -144,6 +147,7 @@ import { ContentWorkflowService } from './services/content-workflow.service';
     BoundedItemsDSBuilderService,
     ConsolidateContentService,
     ContentWorkflowService,
+    FreetextSearchService,
     { 
         provide: HTTP_INTERCEPTORS, 
         useClass: NgProgressInterceptor, 

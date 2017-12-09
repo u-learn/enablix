@@ -1,0 +1,35 @@
+@import '~styles/colors.scss';
+@import '~styles/layout.mixin.scss';
+@import '~styles/fonts.scss';
+
+.free-results {
+
+    .header {
+        h1 {
+            font-family: $FPThin;
+            font-size: 32px;
+        }
+        margin-bottom: 32px;
+    }
+
+    .result {
+
+        h2 {
+            font-family: $FPThin;
+            font-size: 24px;
+            margin-bottom: 32px;    
+        }
+    }
+
+    .main { 
+        border-top: 1px solid rgba(0,0,0, 0.03);
+        display: flex;
+        flex-wrap: wrap;
+        padding-top: 40px;
+
+        .card {
+            margin-right: 24px;
+        }
+    }
+
+}

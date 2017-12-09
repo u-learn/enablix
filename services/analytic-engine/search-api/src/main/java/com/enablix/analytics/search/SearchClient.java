@@ -12,4 +12,5 @@ public interface SearchClient {
 
 	SearchResult<ContentDataRecord> searchAndGetRecords(String text, TemplateFacade template, int pageSize, int pageNum, DataView dataView);
 	
+	SearchResult<ContentDataRecord> searchBizContentRecords(String text, TemplateFacade template, int pageSize, int pageNum, DataView dataView);
 }

@@ -109,4 +109,14 @@ public class SearchServiceImpl implements SearchService {
 		return result;
 	}
 
+	@Override
+	public SearchResult<ContentDataRecord> searchBizContentRecords(String searchText, int pageSize, int pageNum,
+			DataView dataView) {
+		
+		String templateId = ProcessContext.get().getTemplateId();
+		TemplateFacade template = templateMgr.getTemplateFacade(templateId);
+		
+		return searchClient.searchBizContentRecords(searchText, template, pageSize, pageNum, dataView);
+	}
+
 }

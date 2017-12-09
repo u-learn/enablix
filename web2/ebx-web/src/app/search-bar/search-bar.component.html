@@ -1,18 +1,24 @@
 <div class="search-bar" [class.sb-active]="showOptions" (clickOutside)="hideSearchBar()">
     <div class="input-row">
-        <img class="search-icon" [src]="showOptions ? '/assets/images/icons/search-blue.svg' : '/assets/images/icons/search-grey.svg'">
+        <img class="search-icon" [src]="showOptions ? '/assets/images/icons/search-blue.svg' : '/assets/images/icons/search-grey.svg'" (click)="toggleSearchBar()">
         <!-- inject any tags -->
         <div class="selectedTagsHolder">
             <div class="pills-container" *ngIf="searchBarData && searchBarData.context">
-                <div class="pill" *ngFor="let item of searchBarData.context.contextItems" [style.background]="item.color" [class.roundpill]="item.type == 'BIZ_CONTENT'" (click)="addSearchBarItem(item)">
+                <div class="pill" *ngFor="let item of searchBarData.context.contextItems" [style.background]="item.color" [class.roundpill]="item.type == 'BIZ_CONTENT'">
                   <span class="pill-label">{{item?.label}}</span>
                   <a class="remove" (click)="removeSearchBarItem(item)">
                     <img src="/assets/images/icons/close-white.svg">                
                   </a>
                 </div>
-                <div class="pill" *ngFor="let item of searchBarData.filters" [style.background]="item.color" [class.roundpill]="item.type == 'BIZ_CONTENT' || item.type == 'FILTER'" (click)="addSearchBarItem(item)">
+                <div class="pill" *ngFor="let item of searchBarData.filters" [style.background]="item.color" [class.roundpill]="item.type == 'BIZ_CONTENT' || item.type == 'FILTER'">
                   <span class="pill-label">{{item?.label}}</span>
                   <a class="remove" (click)="removeSearchBarItem(item)">
+                    <img src="/assets/images/icons/close-white.svg">                
+                  </a>
+                </div>
+                <div class="pill roundpill" *ngIf="searchBarData.freetext" [style.background]="'#becbd9'">
+                  <span class="pill-label">{{searchBarData.freetext}}</span>
+                  <a class="remove" (click)="clearFreetext()">
                     <img src="/assets/images/icons/close-white.svg">                
                   </a>
                 </div>
@@ -44,7 +50,7 @@
             </ng-container>
         </ng-container>
         <div class="filtered-row" *ngIf="freeText && freeText.length > 0">
-            <div class="freetext-search">
+            <div class="freetext-search" (click)="searchBizContent()">
                 Search for "{{freeText}}"
             </div>
         </div>

@@ -2,8 +2,8 @@
 <div class="preview-img" *ngIf="previewImageUrl">
     <img [src]="previewImageUrl" >
 </div>
-<div class="loading" *ngIf="loading">
-  Uploading...
+<div class="content-uploading" *ngIf="loading">
+  <img src="/assets/images/icons/loading_icon.gif">
 </div>
 <div class="preview-tag">
   <ebx-select [formControl]="contentTypeCtrl"
@@ -11,6 +11,6 @@
       [options]="contentTypes"></ebx-select>
 </div>
 <div class="actionBtns">
-  <button class="action" (click)="captureFile()">Upload</button>
+  <button class="action" (click)="captureFile()">Add</button>
   <button class="cancel" mat-dialog-close>Cancel</button>
 </div>

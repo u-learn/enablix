@@ -15,18 +15,9 @@
           placeholder="Select content type"
           [options]="contentTypes"></ebx-select>
     </div>
-    
-
-    <!-- <div>
-      <mat-form-field floatPlaceholder="never" class="example-full-width">
-        <input matInput placeholder="Type" aria-label="Type" [matAutocomplete]="auto" [formControl]="contentTypeCtrl">
-        <mat-autocomplete #auto="matAutocomplete">
-          <mat-option *ngFor="let type of filteredContentTypes | async" [value]="type.label">
-            <span>{{ type.label }}</span>
-          </mat-option>
-        </mat-autocomplete>
-      </mat-form-field>
-    </div> -->
+  </div>
+  <div class="content-uploading" *ngIf="loadingPreview">
+    <img src="/assets/images/icons/loading_icon.gif">
   </div>
   <div class="actionBtns">
     <button class="action" (click)="showPreview()" [hidden]="previewContent">Next</button>

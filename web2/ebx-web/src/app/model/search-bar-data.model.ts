@@ -7,6 +7,7 @@ export class SearchBarData {
   context: NavContext;
   filters: NavFilter[] = [];
   datasets: SearchDataset[] = [];
+  freetext: string;
 
   initialFilterIds: string[] = [];
 

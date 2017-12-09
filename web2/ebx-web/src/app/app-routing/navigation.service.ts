@@ -34,6 +34,10 @@ export class NavigationService {
     this.router.navigate(['/portal/cconsol']);
   }
 
+  goToFreetextSearch(text: string) {
+    this.router.navigate(['/portal/search', text]);
+  }
+
   goToRoute(routePath: string, routeParams: string[], queryParams?: {[key: string] : string}) {
     
     let navigateParams = [routePath];
