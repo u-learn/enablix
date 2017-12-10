@@ -37,9 +37,7 @@ export class AuthService {
   }
 
   initUserService(user: any) {
-    this.userService.setUserLoggedIn();
-    this.userService.setUsername(user.email);
-    this.userService.setUserDisplayName(user.principal.displayName);
+    this.userService.setUserLoggedIn(user);
     this.loginIn.emit(user.name);
   }
 

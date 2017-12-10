@@ -27,6 +27,7 @@ export class BizContentComponent implements OnInit, AfterViewInit {
   @Input() editable?: boolean = false;
 
   isNewRec: boolean = false;
+  approvalWFRequired: boolean = false;
 
   private sub: any;
 
@@ -44,6 +45,8 @@ export class BizContentComponent implements OnInit, AfterViewInit {
               private navService: NavigationService, private dialog: MatDialog) { }
 
   ngOnInit() {
+
+    //this.approvalWFRequired = this.contentWFService.isApprovalWFRequired();
 
     if (!this.record) {
       
@@ -116,7 +119,13 @@ export class BizContentComponent implements OnInit, AfterViewInit {
 
   publishContent() {
 
-    this.contentService.saveContainerData(this.container.qualifiedId, this.record)
+    if (this.approvalWFRequired) {
+
+      this.submitWFContent(false);
+
+    } else {
+
+      this.contentService.saveContainerData(this.container.qualifiedId, this.record)
         .subscribe(
             result => {
               
@@ -136,6 +145,16 @@ export class BizContentComponent implements OnInit, AfterViewInit {
               }
             }
           );
+    }
+  }
+
+  submitWFContent(draftSave: boolean) {
+    this.contentWFService.submitContent(this.container.qualifiedId, this.record, draftSave, null).subscribe(res => {
+      this.alert.success("Saved successfully!");
+      this.editable = false;
+    }, error => {
+      this.alert.error("Error saving data.", error.status);  
+    });
   }
 
   goBackHome() {
@@ -180,12 +199,7 @@ export class BizContentComponent implements OnInit, AfterViewInit {
   }
 
   saveDraft() {
-    this.contentWFService.submitContent(this.container.qualifiedId, this.record, true, null).subscribe(res => {
-      this.alert.success("Saved successfully!");
-      this.editable = false;
-    }, error => {
-      this.alert.error("Error saving data.", error.status);  
-    });
+    this.submitWFContent(true);
   }
 
   cancelEdit() {
