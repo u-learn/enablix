@@ -60,7 +60,7 @@ export class ContentTagsComponent implements OnInit {
                     id: tagVal.id, 
                     label: tagVal.label, 
                     recordPropId: tagItem.id,
-                    containerQId: tagContainer ? tagContainer.qualifiedId : null;
+                    containerQId: tagContainer ? tagContainer.qualifiedId : null
                   });
               });
           }

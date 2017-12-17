@@ -53,7 +53,7 @@ export class AddContentTagsComponent implements OnInit, AfterViewInit {
                           id: val.id,
                           label: val.label,
                           recordPropId: tagItem.id,
-                          containerQId: container ? container.qualifiedId : null;
+                          containerQId: container ? container.qualifiedId : null
                         };
 
                         return tag;
