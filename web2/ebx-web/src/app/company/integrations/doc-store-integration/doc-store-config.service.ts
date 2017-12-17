@@ -18,7 +18,7 @@ export class DocStoreConfigService {
   saveDocstoreConfig(docstoreConfig: any, dsType: string) {
     
     let docstoreData: any = {
-      key: DocStoreConfigService.DOCUMENT_STORE_CONFIG_KEY_PREFIX + dsType;
+      key: DocStoreConfigService.DOCUMENT_STORE_CONFIG_KEY_PREFIX + dsType,
       config: docstoreConfig
     };
 
