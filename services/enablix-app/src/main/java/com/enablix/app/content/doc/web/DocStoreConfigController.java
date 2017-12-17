@@ -1,5 +1,9 @@
 package com.enablix.app.content.doc.web;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.httpclient.HttpStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.enablix.app.config.ConfigurationCrudService;
+import com.enablix.app.service.CrudResponse;
 import com.enablix.commons.config.TenantDBConfigurationProvider;
 import com.enablix.commons.dms.DMSUtil;
 import com.enablix.commons.dms.DocumentStoreConstants;
@@ -39,7 +44,7 @@ public class DocStoreConfigController {
 	}*/
 	
 	@RequestMapping(value = "/default", method = RequestMethod.GET, produces = "application/json")
-	public Configuration defaultDocStoreConfig() {
+	public Configuration defaultDocStoreConfig(HttpServletRequest req, HttpServletResponse res) {
 		
 		LOGGER.debug("Fetching default doc store config");
 		
@@ -51,11 +56,16 @@ public class DocStoreConfigController {
 				defaultDocStoreConfig.getStringValue(DocumentStoreConstants.DEFAULT_DOC_STORE_CONFIG_PROP)));
 		}
 
+		if (docStoreConfig == null) {
+			res.setStatus(HttpStatus.SC_NO_CONTENT);
+		}
+		
 		return docStoreConfig;
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, value="/config")
-	public void saveConfiguration(@RequestBody Configuration config) {
+	public Configuration saveConfiguration(@RequestBody Configuration config,
+			HttpServletRequest req, HttpServletResponse res) {
 		
 		// create or update config for default document store
 		Configuration defaultDocStoreConfig = new Configuration();
@@ -64,9 +74,11 @@ public class DocStoreConfigController {
 								config.getStringValue(DocumentStoreConstants.DOC_STORE_TYPE_PROP));
 
 		configManager.saveOrUpdate(defaultDocStoreConfig);
-		configManager.saveOrUpdate(config);
+		CrudResponse<Configuration> response = configManager.saveOrUpdate(config);
 		
 		EventUtil.publishEvent(new Event<Configuration>(Events.DOC_STORE_CONFIG_UPDATED, config));
+		
+		return response.getPayload();
 	}
 
 	

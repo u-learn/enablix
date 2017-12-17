@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
 import { AlertService } from '../core/alert/alert.service';
 import { SearchBarService } from '../search-bar/search-bar.service';
@@ -11,7 +12,9 @@ import { SearchBarService } from '../search-bar/search-bar.service';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private alertService: AlertService, private searchBarService: SearchBarService) { }
+  constructor(private alertService: AlertService, 
+    private searchBarService: SearchBarService,
+    private http: HttpClient) { }
 
   ngOnInit() {
     this.searchBarService.setDashboardSearchBar();
@@ -37,4 +40,15 @@ export class HomeComponent implements OnInit {
     this.alertService.clear();
   }
 
+  corsTest() {
+    this.http.post("http://13.126.45.107/api/v1/user/create", {
+      emailId: "cors1@gmail.com",
+      password: "password",
+      name: "Cors Issue"
+    }).subscribe(res => {
+         console.log(res); 
+      }, err => {
+        console.log(err);
+      })
+  }
 }

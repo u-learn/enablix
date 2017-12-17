@@ -1,6 +1,23 @@
+<div class="edit-navbar ng-scope" *ngIf="tableActionConfig">
+  <div class="select-dropdown-option">
+    <select (change)="onMultiSelectChange($event.target.value)">
+      <option value=""></option>
+      <option value="all">All</option>
+      <option value="none">None</option>
+    </select>
+  </div>
+  <div class="divider" *ngIf="availableActions && availableActions.length > 0"></div>
+  <div class="dashboard-buttons" *ngIf="availableActions && availableActions.length > 0">
+    <div class="action-btn btn-with-text" *ngFor="let act of availableActions" (click)="executeAction(act)">
+      <div class="icon small {{act.iconClass}}"></div>
+      <p class="show-me" [class.visible]="act.tempMessage">{{act.tempMessage ? act.tempMessage : act.label}}</p>
+    </div>
+  </div>
+</div>
 <table class="datatable">
   <thead>
     <tr>
+      <th *ngIf="tableActionConfig" class="cbox-cell"></th>
       <th *ngFor="let col of tableColumns" class="{{col.headerCssClass}}">
         <span [ngSwitch]="col.dataType">
           <span *ngSwitchCase="'NUMBER'"><span class="text-right">{{col.heading}}</span></span>
@@ -13,10 +30,19 @@
   
   <tbody>
     <tr *ngIf="!tableData.content || tableData.content.length == 0">
-      <td>No data found</td>
+      <td [attr.colspan]="tableColumns ? tableColumns.length : 1">No data found</td>
     </tr>
-    <tr *ngFor="let rec of tableData.content">
+    <tr *ngFor="let rec of tableData.content; let i = index">
+      <td *ngIf="tableActionConfig" class="cbox-cell">
+        <div class="pretty p-icon p-round" >
+          <input type="checkbox" (change)="onRecordSelectChange($event, rec)" [(ngModel)]="rowSelectOptions[i].checked"/>
+          <div class="state p-primary"><i class="icon mdi mdi-check"></i><label></label></div>
+        </div>
+      </td>
       <ng-template *ngTemplateOutlet="rowTemplate; context: {$implicit: rec}"></ng-template>
     </tr>
   </tbody>
 </table>
+<div class="table-pagination" *ngIf="tableData?.totalPages">
+  <ebx-pagination [totalPages]="tableData.totalPages" [currentPage]="tableData.number" (onPageChange)="setPage($event)"></ebx-pagination>
+</div>

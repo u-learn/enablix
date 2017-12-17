@@ -38,6 +38,10 @@ export class NavigationService {
     this.router.navigate(['/portal/search', text]);
   }
 
+  goToContentRequestDetail(recIdentity: string) {
+    this.router.navigate(['/portal/content/request', recIdentity]);
+  } 
+
   goToRoute(routePath: string, routeParams: string[], queryParams?: {[key: string] : string}) {
     
     let navigateParams = [routePath];

@@ -6,6 +6,7 @@ import 'rxjs/add/operator/startWith';
 import { ContentItem } from '../../model/content-item.model';
 import { ContentTemplateService } from '../../core/content-template.service';
 import { Tag } from '../content-tags.component';
+import { Container } from '../../model/container.model';
 
 @Component({
   selector: 'ebx-add-content-tags',
@@ -46,11 +47,13 @@ export class AddContentTagsComponent implements OnInit, AfterViewInit {
                   this.tagItemValues[tagItem.id] =
                       result.map(val => {
                         
+                        let container = this.getItemContainer(tagItem);
+
                         let tag: Tag = {
                           id: val.id,
                           label: val.label,
                           recordPropId: tagItem.id,
-                          color: this.getItemColor(tagItem)
+                          containerQId: container ? container.qualifiedId : null;
                         };
 
                         return tag;
@@ -78,12 +81,15 @@ export class AddContentTagsComponent implements OnInit, AfterViewInit {
     this.selectContentItem = null;
   }
 
-  getItemColor(item: ContentItem) : string {
-    return this.contentTemplateService.templateCache.getBoundedContentItemColor(item);
+  getItemContainer(item: ContentItem) : Container {
+    return this.contentTemplateService.templateCache.getBoundedItemDatastoreContainer(item);
+  }
+
+  getItemColor(contentItem: ContentItem) : string {
+    return this.contentTemplateService.templateCache.getBoundedContentItemColor(contentItem);
   }
 
   addItemVal(itemVal: any) {
-    console.log(itemVal);
     this.onAddItem.emit(itemVal);
   }
 

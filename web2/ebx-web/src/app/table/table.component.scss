@@ -5,7 +5,43 @@
 ebx-table {
     font-family: $FPLight;
 
+    .edit-navbar {
+        height: 32px;
+        padding-bottom: 24px;
+        display: flex;
+
+        .dashboard-buttons {
+            float: none;
+        }
+
+        .select-dropdown-option {
+            height: 32px;
+            width: 72px;
+            
+            select {
+                height: 32px;
+                width: 100%;
+                border: 1px solid #E3EBEF;
+                -webkit-appearance: none;
+                padding-left: 8px;
+                background-position: right 8px center; 
+                font-family: $FPBlond;
+
+                option {
+                    line-height: 20px;
+
+                    &:before {
+                        content: "\2713 ";
+                        color: black;
+                    }
+                }
+            }
+        }
+    }
+
     table {
+        width: 100%;
+
         th {
             text-align: left;
 
@@ -32,7 +68,24 @@ ebx-table {
         td, th {
             padding: 16px 16px 16px 0;
             border-bottom: 1px solid rgba(179, 38, 38, 0.03);
+
+            >div {
+                display: flex;
+            }
+        }
+
+        .cbox-cell {
+            width: 1px;
+            padding-right: 0;
         }
 
     }
+
+    .table-pagination {
+        padding: 24px 0;
+        align-items: center;
+        justify-content: center;
+        display: flex;
+    }
+    
 }

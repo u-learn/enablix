@@ -29,6 +29,7 @@ import { RichTextInputComponent } from './content/rich-text-input/rich-text-inpu
 import { BoundedInputComponent } from './content/bounded-input/bounded-input.component';
 import { DateInputComponent } from './content/date-input/date-input.component';
 import { ContentStackInputComponent } from './content/content-stack-input/content-stack-input.component';
+import { TextFileComponent } from './file/text-file/text-file.component';
 
 @NgModule({
   imports: [
@@ -73,7 +74,8 @@ import { ContentStackInputComponent } from './content/content-stack-input/conten
     RichTextInputComponent,
     BoundedInputComponent,
     DateInputComponent,
-    ContentStackInputComponent
+    ContentStackInputComponent,
+    TextFileComponent
   ],
   exports: [
     AlertComponent,
@@ -86,7 +88,8 @@ import { ContentStackInputComponent } from './content/content-stack-input/conten
     SafeUrlPipe,
     SafeHtmlPipe,
     ContentEditableDirective,
-    EbxDatePipe
+    EbxDatePipe,
+    TextFileComponent
   ]
 })
 export class CoreModule { }

@@ -212,6 +212,26 @@ export class ContentService {
     return this.dsService.getContainerDataSearchResult(containerQId, searchRequest); 
   }
 
+  attrHasValue(val: any) : boolean {
+    return val && !this.isArrayAndEmpty(val) && !this.isStringAndEmpty(val);
+  }
+
+  isArrayAndEmpty(obj: any) {
+    return this.isArray(obj) && obj.length == 0;
+  }
+
+  isString(obj: any) {
+    return typeof obj === 'string';
+  }
+
+  isStringAndEmpty(obj: any) {
+    return this.isString(obj) && obj.trim().length == 0;
+  }
+
+  isArray(obj: any) {
+    return obj && obj.constructor === Array;
+  }
+
 }
 
 export class ContentUpdateEvent {

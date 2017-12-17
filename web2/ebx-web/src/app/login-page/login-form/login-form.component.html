@@ -11,7 +11,12 @@
 				<div><input type="password" name="password" [(ngModel)]="password" placeholder="Password"></div>
 			</div>
 			<div>
-				<div><input type="checkbox" [checked]="rememberMe" (change)="rememberMe = !rememberMe">Remember Me</div>
+				<div class="pretty p-icon" (change)="onRecordSelectChange($event, rec)">
+          <input type="checkbox" [checked]="rememberMe" (change)="rememberMe = !rememberMe">
+          <div class="state p-primary">
+          	<i class="icon mdi mdi-check"></i><label>Remember Me</label>
+          </div>
+        </div>
 			</div>
 			<div class="input-group">
 				<div class="action-btn"><button type="submit">Login</button></div>

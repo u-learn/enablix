@@ -17,6 +17,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
+import com.enablix.commons.util.StringUtil;
 import com.enablix.commons.util.collection.CollectionUtil;
 import com.enablix.commons.util.concurrent.Events;
 import com.enablix.commons.util.id.IdentityUtil;
@@ -170,6 +171,57 @@ public class EnablixUserService implements UserService, UserDetailsService {
 
 		return newuser;
 	}
+	
+	@Override
+	public UserProfile addOrUpdateUser(UserProfile up) {
+		
+		boolean addUser = false;
+		User user = null;
+		String userIdentity = up.getUserIdentity();
+		
+		if (!StringUtil.isEmpty(userIdentity)) {
+			// editing 
+			user = userRepo.findByIdentity(userIdentity);
+			
+		} else {
+			// add new user
+			addUser = true;
+			user = new User();
+			user.setIdentity(up.getEmail());
+			user.setUserId(up.getEmail());
+
+			String password = UUID.randomUUID().toString().substring(0,8);//system generated default password
+			user.setPassword(password);
+			user.setTenantId(ProcessContext.get().getTenantId());
+			user.setIsPasswordSet(Boolean.FALSE);
+			user.setSystem(Boolean.FALSE);
+			
+			user = userRepo.save(user);
+		}
+		
+		UserProfile modUP = null;
+		String upIdentity = up.getIdentity();
+		
+		if (StringUtil.isEmpty(upIdentity)) {
+			modUP = up;
+		} else {
+			modUP = userProfileRepo.findByIdentity(upIdentity);
+		}
+		
+		modUP.setUserIdentity(user.getIdentity());
+		modUP.setName(up.getName());
+		modUP.setSystemProfile(createSystemProfile(up.getSystemProfile()));
+		modUP.setBusinessProfile(up.getBusinessProfile());
+		
+		modUP = userProfileRepo.save(modUP);
+		
+		if (addUser) {
+			mailService.sendHtmlEmail(user, modUP.getEmail(), "setpassword");
+			EventUtil.publishEvent(new Event<UserProfile>(Events.USER_ADDED, modUP));
+		}
+		
+		return modUP;
+	}
 
 	@Override
 	public User editUser(String userDataJSON) {
@@ -240,6 +292,25 @@ public class EnablixUserService implements UserService, UserDetailsService {
 		}
 		
 		return userSystemProfile;
+	}
+	
+	private UserSystemProfile createSystemProfile(UserSystemProfile systemProfile) {
+		
+		List<Role> roles = new ArrayList<>();
+		
+		List<Role> inRoles = systemProfile.getRoles();
+
+		if (CollectionUtil.isNotEmpty(inRoles)) {
+		
+			List<String> roleArrLst = new ArrayList<>();
+			inRoles.forEach((role) -> roleArrLst.add(role.getIdentity()));
+			
+			roles = roleRepo.findByIdentityIn(roleArrLst);
+		}
+		
+		systemProfile.setRoles(roles);
+		
+		return systemProfile;
 	}
 
 	@Override
@@ -378,5 +449,15 @@ public class EnablixUserService implements UserService, UserDetailsService {
 
 		return user;
 	}
+
+	@Override
+	public Boolean deleteUsers(List<String> userIdentities) {
+		userIdentities.forEach((userIdentity) -> {
+			deleteUser(userIdentity);
+		});
+		return Boolean.TRUE;
+	}
+
+	
 
 }

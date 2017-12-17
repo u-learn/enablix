@@ -39,7 +39,7 @@ export class BizContentListComponent implements OnInit {
 
       if (containerQId) {
 
-        this.container = this.contentTemplateService.getContainerByQId(containerQId);
+        this.container = this.contentTemplateService.getConcreteContainerByQId(containerQId);
         
         this.filterMetadata = this.contentTemplateService.getBoundedFiltermetadata(this.container);
 

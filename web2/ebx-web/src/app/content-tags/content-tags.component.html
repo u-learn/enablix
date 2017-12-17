@@ -1,18 +1,16 @@
-<div class="content-tags-container">
-  <div class="tags">
-    <div class="content-tag" *ngFor="let tag of tags" [style.background]="tag.color">
-        <div class="content">
-          <span>{{tag.label}}</span>
-          <a *ngIf="editing" class="remove" (click)="removeTag(tag)">
-            <img class="" src="/assets/images/icons/close-white.svg">                
-          </a>
-        </div>
+<div class="row with-height" [hidden]="!editing && !hasValue()">
+  <p class="label">Relevance</p>
+  <div class="content-tags-container">
+    <div class="pills-container">
+      <div *ngFor="let tag of tags">
+        <ebx-entity-pill [containerQId]="tag.containerQId" [label]="tag.label" [identity]="tag.id" [navigable]="true" [removable]="editing" (onRemove)="removeTag(tag)"></ebx-entity-pill>
+      </div>
+      <div class="dashboard-buttons small content-tag" *ngIf="editing">
+          <div class="action-btn" (click)="showAddTags()" [hidden]="addTagsVisible">
+              <div class="icon small plus"> </div>
+          </div>
+      </div>
     </div>
-    <div class="dashboard-buttons content-tag" *ngIf="editing">
-        <div class="action-btn" (click)="showAddTags()" [hidden]="addTagsVisible">
-            <div class="icon small plus"> </div>
-        </div>
-    </div>
+    <ebx-add-content-tags [tagItems]="tagItems" [hidden]="!addTagsVisible" (onClose)="hideAddTags()" (onAddItem)="addTag($event)"></ebx-add-content-tags>
   </div>
-  <ebx-add-content-tags [tagItems]="tagItems" [hidden]="!addTagsVisible"></ebx-add-content-tags>
 </div>

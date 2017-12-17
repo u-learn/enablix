@@ -1,6 +1,7 @@
 @import '~styles/colors.scss';
 @import '~styles/layout.mixin.scss';
 @import '~styles/fonts.scss';
+@import '~styles/breakpoint.mixin.scss';
 
 .alert-success {
     background-color: #314290;
@@ -32,19 +33,34 @@
 .alert-container {
     position: fixed;
     bottom: 0;
-    box-shadow: 0 -1px 2px 0 rgba(0,0,0,0.06);
+    /* box-shadow: 0 -1px 2px 0 rgba(0,0,0,0.06); */
     width: 100%;
     z-index: 100;
+    max-width: 1600px;
+    
 }
 
 .alert {
-    width: calc(100% - 84px - 84px);
+    /* width: calc(100% - 84px - 84px); */
     padding: 0 84px;
     
     height: 84px;
     font-family: $FPLight;
     display: flex;
     align-items: center;
+    justify-content: space-between;
+
+    @include breakpoint(md){
+        margin: 0 64px 0 0;
+    }
+    
+    @include breakpoint(lg){
+        margin: 0 96px 0 0;
+    }
+
+    @include breakpoint(xlg){
+        margin: auto;
+    }
 
     img {
         margin-right: 16px;

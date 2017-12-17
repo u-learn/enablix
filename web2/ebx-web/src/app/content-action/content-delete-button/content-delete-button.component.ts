@@ -5,6 +5,7 @@ import { Container } from '../../model/container.model';
 import { ContentService } from '../../core/content/content.service';
 import { AlertService } from '../../core/alert/alert.service';
 import { ConfirmDialogComponent } from '../../confirm-dialog/confirm-dialog.component'; 
+import { ContentWorkflowService } from '../../services/content-workflow.service';
 
 @Component({
   selector: 'ebx-content-delete-button',
@@ -17,11 +18,14 @@ export class ContentDeleteButtonComponent implements OnInit {
   @Input() record: any;
   @Input() container: Container;
   @Input() contentType: string;
+  @Input() crRecord?: any;
 
   @Output() onDelete = new EventEmitter<boolean>();
 
   constructor(private contentService: ContentService,
-              private alert: AlertService, private dialog: MatDialog) { 
+              private alert: AlertService, 
+              private contentWFService: ContentWorkflowService,
+              private dialog: MatDialog) { 
     this.onDelete = new EventEmitter<boolean>();
   }
 
@@ -54,12 +58,26 @@ export class ContentDeleteButtonComponent implements OnInit {
   }
 
   deleteRecord() {
-    this.contentService.deleteContentRecord(this.container.qualifiedId, this.record.identity).subscribe(res => {
-      this.alert.success("Deleted successfully.");
-      this.onDelete.emit(true);
-    }, err => {
-      this.alert.error("Unable to delete. Please try later.", err.status);
-    });
+    
+    if (this.crRecord) {
+
+      this.contentWFService.deleteContentRequest(this.crRecord.identity).subscribe(res => {
+        this.alert.success("Deleted successfully.");
+        this.onDelete.emit(true);  
+      }, err => {
+        this.alert.error("Unable to delete. Please try later.", err.status);
+      });
+
+    } else {
+      
+      this.contentService.deleteContentRecord(this.container.qualifiedId, this.record.identity).subscribe(res => {
+        this.alert.success("Deleted successfully.");
+        this.onDelete.emit(true);
+      }, err => {
+        this.alert.error("Unable to delete. Please try later.", err.status);
+      });  
+    }
+    
   }
 
 }

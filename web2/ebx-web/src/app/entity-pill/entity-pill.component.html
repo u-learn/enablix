@@ -1,0 +1,6 @@
+<div class="pill" [style.background]="color" [class.roundpill]="isBizContent" [class.selectable]="navigable">
+  <span class="pill-label" (click)="navToContentDetail()">{{label}}</span>
+  <a *ngIf="removable" class="remove" (click)="remove()">
+    <img class="" src="/assets/images/icons/close-white.svg">                
+  </a>
+</div>

@@ -4,6 +4,7 @@
 .mat-dialog-container {
   background: #F7F9F9 !important;
   border-radius: 4px !important;
+  max-height: 90vh;
 }
 
 button {

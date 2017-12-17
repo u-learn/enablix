@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="14px" height="14px" viewBox="0 0 14 14" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 47.1 (45422) - http://www.bohemiancoding.com/sketch -->
+    <title>save</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Asset-page" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="File-Uploaded" transform="translate(-578.000000, -32.000000)" fill-rule="nonzero" fill="#1F8AEF">
+            <g id="top_bar" transform="translate(88.000000, 24.000000)">
+                <g id="asset_actions" transform="translate(372.000000, 0.000000)">
+                    <g id="save_btn" transform="translate(106.000000, 0.000000)">
+                        <g id="save" transform="translate(12.000000, 8.000000)">
+                            <path d="M11.4545455,0 L10.1818182,0 L10.1818182,3.81818182 C10.1818182,4.16945455 9.89672727,4.45454545 9.54545455,4.45454545 L3.81818182,4.45454545 C3.46690909,4.45454545 3.18181818,4.16945455 3.18181818,3.81818182 L3.18181818,0 L1.27272727,0 C0.569545455,0 0,0.569545455 0,1.27272727 L0,12.7272727 C0,13.4304545 0.569545455,14 1.27272727,14 L12.7272727,14 C13.4304545,14 14,13.4304545 14,12.7272727 L14,2.54545455 L11.4545455,0 Z M11.4545455,12.7272727 L2.54545455,12.7272727 L2.54545455,8.90909091 C2.54545455,8.20590909 3.115,7.63636364 3.81818182,7.63636364 L10.1818182,7.63636364 C10.885,7.63636364 11.4545455,8.20590909 11.4545455,8.90909091 L11.4545455,12.7272727 Z" id="Shape"></path>
+                            <rect id="Rectangle-path" x="7.63636364" y="0" width="1.27272727" height="3.18181818"></rect>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

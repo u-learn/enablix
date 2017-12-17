@@ -5,6 +5,7 @@ import { Container } from '../model/container.model';
 import { ContentTemplateService } from '../core/content-template.service';
 import { Constants } from '../util/constants';
 import { AddContentTagsComponent } from './add-content-tags/add-content-tags.component';
+import { ContentService } from '../core/content/content.service';
 
 @Component({
   selector: 'ebx-content-tags',
@@ -14,22 +15,34 @@ import { AddContentTagsComponent } from './add-content-tags/add-content-tags.com
 })
 export class ContentTagsComponent implements OnInit {
 
-  @Input() record: any;
+  _record: any;
   @Input() tagItems?: ContentItem[];
   @Input() editing?: boolean = false;
-
-  @ViewChild(AddContentTagsComponent) addContentTagsComp : AddContentTagsComponent;
 
   tags: Tag[] = [];
 
   addTagsVisible: boolean = false;
 
-  constructor(private contentTemplateService: ContentTemplateService) { }
+  constructor(private contentTemplateService: ContentTemplateService,
+              private contentService: ContentService) { }
 
-  ngOnInit() {
+  @Input() 
+  set record(rec: any) {
+    this._record = rec;
+    this.initState();
+  }
 
-    if (this.record) {
-      
+  get record() {
+    return this._record;
+  }
+
+
+  initState() {
+
+    this.tags = [];
+
+    if (this._record) {
+
       if (this.tagItems) {
 
         this.tagItems.forEach(tagItem => {
@@ -38,39 +51,26 @@ export class ContentTagsComponent implements OnInit {
         
           if (tagValues && tagValues[0]) {
         
-            let tagColor = this.contentTemplateService.templateCache
-                .getBoundedContentItemColor(tagItem);
+            let tagContainer = 
+              this.contentTemplateService.templateCache
+                  .getBoundedItemDatastoreContainer(tagItem);
 
             tagValues.forEach(tagVal => {
                 this.tags.push({
                     id: tagVal.id, 
                     label: tagVal.label, 
-                    color: tagColor, 
-                    recordPropId: tagItem.id
+                    recordPropId: tagItem.id,
+                    containerQId: tagContainer ? tagContainer.qualifiedId : null;
                   });
               });
           }
 
         });
       }
-
-      if (this.addContentTagsComp) {
-        this.addContentTagsComp.onAddItem.subscribe(
-            result => {
-              console.log("Event listener...");
-              console.log(result);
-              this.addTag(result);
-            }
-          );
-
-        this.addContentTagsComp.onClose.subscribe(
-            result => {
-              this.addTagsVisible = false;
-            }
-          );
-      }
-
     }
+  }
+
+  ngOnInit() {
   }
 
   removeTag(tag: Tag) {
@@ -86,6 +86,10 @@ export class ContentTagsComponent implements OnInit {
         fromList.splice(index, 1);
       }
     }
+  }
+
+  hasValue() : boolean {
+    return this.contentService.attrHasValue(this.tags);
   }
 
   addTag(tag: Tag) {
@@ -134,12 +138,16 @@ export class ContentTagsComponent implements OnInit {
     this.addTagsVisible = true;
   }
 
+  hideAddTags() {
+    this.addTagsVisible = false;
+  }
+
 }
 
 
 export class Tag {
   id: string;
   label: string;
-  color: string;
   recordPropId: string;
+  containerQId: string;
 }

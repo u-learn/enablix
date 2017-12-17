@@ -51,7 +51,7 @@ public class StateChangeWorkflowManagerImpl implements StateChangeWorkflowManage
 	
 	@SuppressWarnings({ "rawtypes" })
 	@Override
-	public <I extends ActionInput> void start(String workflowName, String actionName, 
+	public <I extends ActionInput> StateChangeRecording start(String workflowName, String actionName, 
 			I actionInput) throws ActionException {
 		
 		StateChangeWorkflowDefinition<?, ?> wfDefinition = factory.getWorkflowDefinition(workflowName);
@@ -62,10 +62,12 @@ public class StateChangeWorkflowManagerImpl implements StateChangeWorkflowManage
 		
 		performAction(actionInput, wfDefinition, recording, actionName);
 		
+		return recording;
+		
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	private void performAction(ActionInput actionInput, 
+	private StateChangeRecording performAction(ActionInput actionInput, 
 			StateChangeWorkflowDefinition<?, ?> wfDefinition,
 			StateChangeRecording recording, String actionName) throws ActionException {
 		
@@ -141,6 +143,8 @@ public class StateChangeWorkflowManagerImpl implements StateChangeWorkflowManage
 			throw t;
 		}
 		
+		return recording;
+		
 	}
 	
 	private void checkAndSetDataSegmentInfo(StateChangeRecording<?> recording, ActionInput actionInput) {
@@ -186,8 +190,9 @@ public class StateChangeWorkflowManagerImpl implements StateChangeWorkflowManage
 		}
 	}
 
+	@SuppressWarnings("rawtypes")
 	@Override
-	public <I extends ActionInput> void executeAction(String workflowName, 
+	public <I extends ActionInput> StateChangeRecording executeAction(String workflowName, 
 			String refObjectIdentity, String action, I actionInput) throws ActionException {
 		
 		StateChangeWorkflowDefinition<?, ?> wfDefinition = factory.getWorkflowDefinition(workflowName);
@@ -200,6 +205,8 @@ public class StateChangeWorkflowManagerImpl implements StateChangeWorkflowManage
 		}
 		
 		performAction(actionInput, wfDefinition, recording, action);
+		
+		return recording;
 	}
 	
 	@SuppressWarnings({ "unused" })

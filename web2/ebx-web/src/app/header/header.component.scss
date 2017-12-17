@@ -5,6 +5,7 @@
 .nav-bar {
   min-height: 72px;
   padding: 8px 40px 0 0;
+  width: 100%;
   @include vcenterChildren;
 
   .left {
@@ -41,6 +42,13 @@
     cursor: pointer;
   }
 
+  &.company {
+    .client-brand {
+      background: none;
+      box-shadow: none;
+    }
+  }
+
   .client-brand {
       @include vcenterChildren;
       height: 48px;
@@ -64,8 +72,11 @@
     
       h3 {
           // line-height: 20px;
-          height: 18px;
+          height: 22px;
           font-family: $FPThin;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
       }
 
       @media only screen and (max-width: 1072px) {
@@ -129,6 +140,10 @@
   .enablix-logo {
     height: 16px;
     margin-right: 24px;
+
+    &.big-logo {
+      height: 40px;
+    }
   }
 
 }

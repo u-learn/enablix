@@ -1,23 +1,27 @@
-import { Component, OnInit, ViewEncapsulation, ViewChildren, QueryList, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ViewChildren, QueryList } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 
 import { ConsolidateContentService } from '../consolidate-content.service';
+import { ContentRequestListComponent } from '../content-request-list.component';
 import { AlertService } from '../../core/alert/alert.service';
 import { DataPage } from '../../model/data-page.model';
-import { TableColumn } from '../../model/table.model';
+import { TableColumn, TableActionConfig, TableAction } from '../../model/table.model';
 import { DataType } from '../../core/data-search/filter-metadata.model';
 import { Pagination, SortCriteria, Direction } from '../../model/pagination.model';
 import { Constants } from '../../util/constants';
 import { TableComponent } from '../../table/table.component';
+import { UserService } from '../../core/auth/user.service';
+import { NavigationService } from '../../app-routing/navigation.service';
+import { ContentWorkflowService } from '../../services/content-workflow.service';
+import { ContentRequestDetail, SimpleActionInput } from '../../model/content-workflow.model';
 
 @Component({
   selector: 'ebx-content-request',
-  templateUrl: './content-request.component.html',
+  templateUrl: '../content-request-list.component.html',
   styleUrls: ['./content-request.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class ContentRequestComponent implements OnInit, AfterViewInit {
-
-  @ViewChildren(TableComponent) dataTables: QueryList<TableComponent>;
+export class ContentRequestComponent extends ContentRequestListComponent implements OnInit {
 
   dataPage: DataPage;
   tableColumns: TableColumn[];
@@ -25,78 +29,63 @@ export class ContentRequestComponent implements OnInit, AfterViewInit {
   filters: {[key: string] : any};
   pagination: Pagination;
 
-  constructor(private ccService: ConsolidateContentService,
-    private alert: AlertService) { }
+  tableActions: ContentRequestActions;
+
+  constructor(public ccService: ConsolidateContentService,
+        public contentWFService: ContentWorkflowService,
+        public alert: AlertService, public user: UserService,
+        public navService: NavigationService) { 
+
+    super(ccService, contentWFService, alert, user, navService);
+    this.tableActions = new ContentRequestActions(this);
+  }
 
   ngOnInit() {
 
-    this.tableColumns = [
-      {
-        heading: "Asset",
-        key: "asset",
-        sortProp: "objectRef.contentTitle"
-      },
-      {
-        heading: "Content Type",
-        key: "contentType",
-        sortProp: "objectRef.contentQId"
-      },
-      {
-        heading: "Status",
-        key: "status",
-        sortProp: "currentState.stateName"
-      },
-      {
-        heading: "Created On",
-        key: "createdOn",
-        sortProp: "createdAt"
-      },
-      {
-        heading: "Creator",
-        key: "createdBy",
-        sortProp: "createdByName"
-      }
-    ];
+    super.initComponent()
 
     this.filters = { requestState: ConsolidateContentService.STATE_PENDING_APPROVAL };
-    this.pagination = new Pagination();
-    this.pagination.pageNum = 0;
-    this.pagination.pageSize = 10;
-    this.pagination.sort = new SortCriteria();
-    this.pagination.sort.direction = Direction.ASC;
-    this.pagination.sort.field = Constants.FLD_CREATED_AT;
 
     this.fetchData();
     
   }
 
-  ngAfterViewInit() {
-    this.dataTables.changes.subscribe((tables : QueryList<TableComponent>) => {
-      let table = tables.first;
-      table.onRefreshData.subscribe(res => {
-        this.fetchData();
-      });
-    })
+}
+
+
+class ContentRequestActions implements TableActionConfig<any> {
+
+  component: ContentRequestComponent;
+
+  actions: TableAction<any>[];
+
+  constructor(comp: ContentRequestComponent) {
+    
+    this.component = comp;
+    this.actions = [
+      {
+        label: "Approve",
+        iconClass: "approve",
+        successMessage: "Approved",
+        execute: (selectedRecords: any[]) => {
+          return this.component.approveRecords(selectedRecords);
+        }
+      },
+      {
+        label: "Reject",
+        iconClass: "reject",
+        successMessage: "Rejected",
+        execute: (selectedRecords: any[]) => {
+          return this.component.rejectRecords(selectedRecords);
+        }
+      }
+    ];
+
   }
 
-  fetchData() {    
-    this.ccService.getContentRequests(this.filters, this.pagination).subscribe(res => {
-      this.dataPage = res;
-    }, error => {
-      this.alert.error("Error fetching pending requests", error.status);
-    });
-  }
-
-  getStateDisplayName(state: string) {
-    return this.ccService.getStateDisplayName(state);
-  }
-
-  getRecordContainer(rec: any) {
-    return this.ccService.getRecordContainer(rec);
-  }
-
-  getDecoratedContentRecord(ccRec: any) {
-    return this.ccService.getDecoratedContentRecord(ccRec);
+  getAvailableActions(selectedRecords: any[]) : TableAction<any>[] {
+    console.log(selectedRecords);
+    return selectedRecords && selectedRecords.length > 0 ? this.actions : [];
   }
 
 }

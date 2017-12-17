@@ -1,0 +1,69 @@
+<div>
+  <div class="sub-section-header">
+    <h2>Third Party Integrations</h2>
+  </div>
+  <ng-container *ngFor="let intg of integrations">
+    <div class="sub-section-content" *ngIf="!intg.editing">
+      <div class="left">
+        <div class="type-header">
+          <h3>{{intg.metadata.tpName}}</h3>
+        </div>
+        <ng-container *ngIf="intg.instance">
+          <div class="sub-info" *ngIf="intg.instance">Last updated at {{intg.instance.modifiedAt | ebxDate}} by {{intg.instance.modifiedByName}}</div>
+          <div class="content-row flex-row" *ngFor="let param of intg.metadata?.params">
+            <div class="param-key">{{param.paramName}}</div>
+            <div class="param-value">
+              <ng-container [ngSwitch]="param.paramType">
+                <ng-container *ngSwitchCase="'TEXT_FILE_CONTENT'">{{intg.instance[param.paramKey]?.name}}</ng-container>
+                <ng-container *ngSwitchDefault>
+                  <ng-container *ngIf="param.paramKey.endsWith('_ENC')">*********</ng-container>
+                  <ng-container *ngIf="!param.paramKey.endsWith('_ENC')">{{intg.instance.config[param.paramKey]}}</ng-container>
+                </ng-container>
+              </ng-container>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+      <div class="right dashboard-buttons small">
+        <div class="action-btn with-border btn-with-text" (click)="editTPIntegration(intg)">
+          <div class="icon small edit"></div>
+          <p class="show-me">Edit</p>
+        </div>
+        <div class="action-btn with-border btn-with-text" *ngIf="intg.instance" (click)="deleteTPIntegration(intg)">
+          <div class="icon small trash"></div>
+          <p class="show-me">Trash</p>
+        </div>
+      </div>
+    </div>
+    <div class="sub-section-content" *ngIf="intg.instance && intg.editing">
+      <div class="left">
+        <h3>{{intg.metadata.tpName}}</h3>
+        <div class="sub-info"></div>
+        <div class="form-input" *ngFor="let param of intg.metadata?.params">
+          <div class="input-label">{{param.paramName}}</div>
+          <div class="input-control">
+            <ng-container [ngSwitch]="param.paramType">
+              <ng-container *ngSwitchCase="'TEXT_FILE_CONTENT'">
+                <ebx-text-file [(ngModel)]="intg.instance.config[param.paramKey]"></ebx-text-file>
+              </ng-container>
+              <ng-container *ngSwitchDefault>
+                <ng-container *ngIf="param.paramKey.endsWith('_ENC')"><input type="password" [(ngModel)]="intg.instance.config[param.paramKey]"></ng-container>
+                <ng-container *ngIf="!param.paramKey.endsWith('_ENC')"><input type="text" [(ngModel)]="intg.instance.config[param.paramKey]"></ng-container>
+              </ng-container>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+      <div class="right dashboard-buttons small">
+        <div class="action-btn with-border btn-with-text" (click)="saveTPIntegration(intg)">
+          <div class="icon small save-blue"></div>
+          <p class="show-me">Save</p>
+        </div>
+        <div class="action-btn with-border btn-with-text" (click)="cancelOperation(intg)">
+          <div class="icon small cancel-blue"></div>
+          <p class="show-me">Cancel</p>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</div>

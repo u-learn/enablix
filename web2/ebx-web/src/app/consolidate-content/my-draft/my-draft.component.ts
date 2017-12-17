@@ -1,106 +1,86 @@
-import { Component, OnInit, ViewEncapsulation, ViewChildren, QueryList, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ViewChildren, QueryList } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 
+import { ContentRequestListComponent } from '../content-request-list.component';
 import { ConsolidateContentService } from '../consolidate-content.service';
 import { AlertService } from '../../core/alert/alert.service';
 import { DataPage } from '../../model/data-page.model';
-import { TableColumn } from '../../model/table.model';
+import { TableColumn, TableActionConfig, TableAction } from '../../model/table.model';
 import { DataType } from '../../core/data-search/filter-metadata.model';
 import { Pagination, SortCriteria, Direction } from '../../model/pagination.model';
+import { ContentRequestDetail, SimpleActionInput } from '../../model/content-workflow.model';
 import { Constants } from '../../util/constants';
 import { TableComponent } from '../../table/table.component';
 import { UserService } from '../../core/auth/user.service';
+import { NavigationService } from '../../app-routing/navigation.service';
+import { ContentWorkflowService } from '../../services/content-workflow.service';
 
 @Component({
   selector: 'ebx-my-draft',
-  templateUrl: './my-draft.component.html',
+  templateUrl: '../content-request-list.component.html',
   styleUrls: ['./my-draft.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class MyDraftComponent implements OnInit {
+export class MyDraftComponent extends ContentRequestListComponent implements OnInit {
 
-  @ViewChildren(TableComponent) dataTables: QueryList<TableComponent>;
+  tableActions: MyDraftActions;
 
-  dataPage: DataPage;
-  tableColumns: TableColumn[];
-
-  filters: {[key: string] : any};
-  pagination: Pagination;
-
-  constructor(private ccService: ConsolidateContentService,
-    private alert: AlertService, private user: UserService) { }
+  constructor(public ccService: ConsolidateContentService,
+        public contentWFService: ContentWorkflowService,
+        public alert: AlertService, public user: UserService,
+        public navService: NavigationService) { 
+    
+    super(ccService, contentWFService, alert, user, navService);
+    this.tableActions = new MyDraftActions(this);
+  }
 
   ngOnInit() {
 
-    this.tableColumns = [
-      {
-        heading: "Asset",
-        key: "asset",
-        sortProp: "objectRef.contentTitle"
-      },
-      {
-        heading: "Content Type",
-        key: "contentType",
-        sortProp: "objectRef.contentQId"
-      },
-      {
-        heading: "Status",
-        key: "status",
-        sortProp: "currentState.stateName"
-      },
-      {
-        heading: "Created On",
-        key: "createdOn",
-        sortProp: "createdAt"
-      },
-      {
-        heading: "Creator",
-        key: "createdBy",
-        sortProp: "createdByName"
-      }
-    ];
+    super.initComponent();
 
     this.filters = { 
       requestState: ConsolidateContentService.STATE_DRAFT,
       createdBy: this.user.getUsername()
     };
-    this.pagination = new Pagination();
-    this.pagination.pageNum = 0;
-    this.pagination.pageSize = 10;
-    this.pagination.sort = new SortCriteria();
-    this.pagination.sort.direction = Direction.ASC;
-    this.pagination.sort.field = Constants.FLD_CREATED_AT;
 
     this.fetchData();
     
   }
 
-  ngAfterViewInit() {
-    this.dataTables.changes.subscribe((tables : QueryList<TableComponent>) => {
-      let table = tables.first;
-      table.onRefreshData.subscribe(res => {
-        this.fetchData();
-      });
-    })
+}
+
+class MyDraftActions implements TableActionConfig<any> {
+
+  component: MyDraftComponent;
+
+  actions: TableAction<any>[];
+
+  constructor(comp: MyDraftComponent) {
+    
+    this.component = comp;
+    this.actions = [
+      {
+        label: "Publish",
+        iconClass: "send-blue",
+        successMessage: "Published",
+        execute: (selectedRecords: any[]) => {
+          return this.component.publishRecords(selectedRecords);
+        }
+      },
+      {
+        label: "Trash",
+        iconClass: "trash",
+        successMessage: "Deleted",
+        execute: (selectedRecords: any[]) => {
+          return this.component.deleteRecords(selectedRecords);
+        }
+      }
+    ];
+
   }
 
-  fetchData() {    
-    this.ccService.getContentRequests(this.filters, this.pagination).subscribe(res => {
-      this.dataPage = res;
-    }, error => {
-      this.alert.error("Error fetching draft content", error.status);
-    });
-  }
-
-  getStateDisplayName(state: string) {
-    return this.ccService.getStateDisplayName(state);
-  }
-
-  getRecordContainer(rec: any) {
-    return this.ccService.getRecordContainer(rec);
-  }
-
-  getDecoratedContentRecord(ccRec: any) {
-    return this.ccService.getDecoratedContentRecord(ccRec);
+  getAvailableActions(selectedRecords: any[]) : TableAction<any>[] {
+    return selectedRecords && selectedRecords.length > 0 ? this.actions : [];
   }
 
 }

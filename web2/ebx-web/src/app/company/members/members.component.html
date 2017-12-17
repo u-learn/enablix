@@ -1,0 +1,9 @@
+<div class="table-content">
+  <ebx-table *ngIf="dataPage" [tableData]="dataPage" [tableColumns]="tableColumns" [(pagination)]="pagination" [tableActionConfig]="tableActions" (onRefreshData)="fetchData()">
+    <ng-template #dataRow let-rec>
+      <td>{{rec.name}}</td>
+      <td>{{rec.email}}</td>
+      <td>{{getUserRoles(rec)}}</td>
+    </ng-template>
+  </ebx-table>
+</div>

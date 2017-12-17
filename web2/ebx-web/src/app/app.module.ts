@@ -70,6 +70,17 @@ import { SortTableComponent } from './table/sort-table/sort-table.component';
 import { ContentWorkflowService } from './services/content-workflow.service';
 import { FreetextSearchService } from './services/freetext-search.service';
 import { FreetextSearchComponent } from './freetext-search/freetext-search.component';
+import { CompanyComponent } from './company/company.component';
+import { MembersComponent } from './company/members/members.component';
+import { IntegrationsComponent } from './company/integrations/integrations.component';
+import { MembersService } from './company/members/members.service';
+import { MemberDetailComponent } from './company/members/member-detail/member-detail.component';
+import { PaginationComponent } from './table/pagination/pagination.component';
+import { TPIntegrationsComponent } from './company/integrations/tpintegrations/tpintegrations.component';
+import { DocStoreIntegrationComponent } from './company/integrations/doc-store-integration/doc-store-integration.component';
+import { DocStoreConfigService } from './company/integrations/doc-store-integration/doc-store-config.service';
+import { ConfigInfoService } from './services/config-info.service';
+import { EntityPillComponent } from './entity-pill/entity-pill.component';
 
 @NgModule({
   declarations: [
@@ -120,7 +131,15 @@ import { FreetextSearchComponent } from './freetext-search/freetext-search.compo
     PillComponent,
     TypePillComponent,
     SortTableComponent,
-    FreetextSearchComponent
+    FreetextSearchComponent,
+    CompanyComponent,
+    MembersComponent,
+    IntegrationsComponent,
+    MemberDetailComponent,
+    PaginationComponent,
+    TPIntegrationsComponent,
+    DocStoreIntegrationComponent,
+    EntityPillComponent
   ],
   imports: [
     BrowserModule,
@@ -148,6 +167,9 @@ import { FreetextSearchComponent } from './freetext-search/freetext-search.compo
     ConsolidateContentService,
     ContentWorkflowService,
     FreetextSearchService,
+    MembersService,
+    DocStoreConfigService,
+    ConfigInfoService,
     { 
         provide: HTTP_INTERCEPTORS, 
         useClass: NgProgressInterceptor, 
@@ -159,7 +181,8 @@ import { FreetextSearchComponent } from './freetext-search/freetext-search.compo
     UploadUrlComponent,
     UploadTextComponent,
     EditBizDimensionComponent,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    MemberDetailComponent
   ],
   bootstrap: [AppComponent]
 })

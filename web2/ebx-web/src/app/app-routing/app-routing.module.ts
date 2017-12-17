@@ -23,6 +23,9 @@ import { ConsolidateContentComponent } from '../consolidate-content/consolidate-
 import { MyDraftComponent } from '../consolidate-content/my-draft/my-draft.component';
 import { ContentRequestComponent } from '../consolidate-content/content-request/content-request.component';
 import { FreetextSearchComponent } from '../freetext-search/freetext-search.component';
+import { CompanyComponent } from '../company/company.component';
+import { MembersComponent } from '../company/members/members.component';
+import { IntegrationsComponent } from '../company/integrations/integrations.component';
 
 const routes: Routes = [
   {
@@ -63,6 +66,10 @@ const routes: Routes = [
             {
               path: 'list/:cQId',
               component: BizContentListComponent
+            },
+            {
+              path: 'request/:crIdentity',
+              component: BizContentComponent
             }
           ]
         },
@@ -97,6 +104,20 @@ const routes: Routes = [
             {
               path: 'pending',
               component: ContentRequestComponent
+            }
+          ]
+        },
+        {
+          path: 'company',
+          component: CompanyComponent,
+          children: [
+            {
+              path: '',
+              component: MembersComponent
+            },
+            {
+              path: 'integrations',
+              component: IntegrationsComponent
             }
           ]
         },

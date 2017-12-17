@@ -22,6 +22,7 @@ export class BoundedInputComponent implements OnInit, ControlValueAccessor {
 
   @Input() record: any;
   @Input() contentItem: ContentItem;
+  @Input() placeholder?: string;
 
   selectCtrl: FormControl;
   options: SelectOption[] = [];
@@ -33,6 +34,10 @@ export class BoundedInputComponent implements OnInit, ControlValueAccessor {
 
   ngOnInit() {
 
+    if (!this.placeholder) {
+      this.placeholder = this.contentItem.label;
+    }
+    
     this.ctService.getBoundedValueList(this.contentItem).subscribe(
         res => {
           this.options = res;

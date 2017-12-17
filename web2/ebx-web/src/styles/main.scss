@@ -6,6 +6,8 @@
 @import 'fonts';
 @import 'buttons';
 
+@import '~pretty-checkbox/src/pretty-checkbox.scss';
+
 
 /* Note: src relative to ./src folder */
 @include font-face("Fakt Pro Blond", "../assets/fonts/FaktPro-Blond", null, null, ttf);
@@ -31,7 +33,7 @@ a{
     color: inherit; 
 }
 
-textarea, input[type="text"], select { 
+textarea, input[type="text"], input[type="password"], select { 
     border:none;
     background-image:none;
     background-color:transparent;
@@ -44,11 +46,11 @@ textarea, input[type="text"], select {
 }
 
 input[type="checkbox"] {
-    margin-right: 4px;
-    width: inherit;
+    width: 16px;
+    height: 16px;
 }
 
-input[type="text"], select, textarea {
+input[type="text"], input[type="password"], select, textarea {
     color: #2D2D2D;
     -webkit-appearance: none;
     background-color: $white;
@@ -60,7 +62,7 @@ input[type="text"], select, textarea {
     }
 }
 
-input[type="text"] {
+input[type="text"], input[type="password"] {
     font-family: $FPLight;
 }
 
@@ -98,6 +100,10 @@ select {
 .container {
     margin-top: 56px;
     padding-bottom: 80px;
+
+    &.small-top-margin {
+        margin-top: 32px;
+    }
 
     @include breakpoint(sm){
         margin-right: 36px;
@@ -430,6 +436,7 @@ body {
   display: flex;
   padding-top: 8px;
   min-height: 26px;
+  flex-wrap: wrap;
 
   .pill {
     margin-bottom: 8px;
@@ -443,7 +450,8 @@ body {
     padding: 0 8px;
     display: flex;
     align-items: center;
-    min-height: 26px;
+    min-height: 28px;
+    font-family: $FPThin;
     
     
     &.roundpill {
@@ -470,8 +478,6 @@ body {
       color: $white;
       height: 16px;
       white-space: nowrap;
-
-      
     }
 
     .remove {
@@ -482,6 +488,104 @@ body {
 
 .with-flex {
     display: flex;
+}
+
+.sub-tabs {
+  border-bottom: 1px solid rgba(179,38,38,.03);
+  padding-bottom: 16px;
+
+  a {
+    font-family: $FPThin;
+    font-size: 1.17em;
+    font-weight: 700;
+    padding: 16px 0;
+    margin: 0 24px 0 0;
+    color: $grey-med;
+
+    &.tab-active {
+      border-bottom: 2px solid $blue-med-20; 
+      color: $black; 
+    }
+  }
+}
+
+.tab-content {
+  padding-top: 40px;
+}
+
+.row-select-cbox {
+    margin-right: 12px;
+}
+
+.pretty.p-round .state label:before, 
+.pretty.p-round .state label:after {
+    background: #FFFFFF;
+}
+
+.pretty .state label:before,
+.pretty .state label:after {
+    border: 1px solid #dee4ea;
+}
+
+.pretty input:checked ~ .state.p-primary label:after, 
+.pretty.p-toggle .state.p-primary label:after {
+    background-color: #1F8AEF !important;
+    border: 1px solid #4584d8;
+}
+
+.pretty input:checked ~ .state.p-primary label:before, 
+.pretty.p-toggle .state.p-primary label:before {
+    border: 1px solid #4584d8;
+}
+
+.pretty.p-icon input:checked ~ .state label:before,
+.pretty.p-icon input:checked ~ .state label:after {
+    border: 1px solid #4584d8;   
+}
+
+.form-input {
+    font-family: $FPLight;
+    margin-bottom: 32px;
+
+    .input-label {
+        color: #000;
+        //font-weight: 700;
+    }
+
+    .input-control {
+        padding-top: 12px;
+
+        >input[type="text"], input[type="password"] {
+            height: 40px;
+            background: $white;
+            box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.06);
+            border-radius: 6px;
+            padding: 0 16px;
+            font-size: 16px;
+            color: #000;
+            width: calc(100% - 32px);
+        }
+
+        >input.ng-invalid.ng-dirty {
+            border-left: 5px solid #d23e41;
+        }
+    }
+
+    .input-error {
+        color: #d23e41;
+        margin-top: 12px;
+    }
+}
+
+.input-group {
+    font-family: $FPLight;
+
+    .group-header {
+        font-weight: 700;
+        font-size: 1.25em;
+        padding: 24px 0;
+        border-top: 1px solid rgba(0, 0, 0, 0.06);
+    }
 }
 
 //@import '../pages/index.scss';

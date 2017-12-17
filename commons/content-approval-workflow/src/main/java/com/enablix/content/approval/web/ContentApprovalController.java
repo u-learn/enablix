@@ -1,5 +1,6 @@
 package com.enablix.content.approval.web;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -29,7 +30,9 @@ import com.enablix.state.change.StateChangeConstants;
 import com.enablix.state.change.StateChangeWorkflowManager;
 import com.enablix.state.change.definition.ActionDefinition;
 import com.enablix.state.change.impl.ActionRegistry;
+import com.enablix.state.change.model.ActionInput;
 import com.enablix.state.change.model.SimpleActionInput;
+import com.enablix.state.change.model.StateChangeRecording;
 
 @RestController
 @RequestMapping("contentwf")
@@ -48,81 +51,123 @@ public class ContentApprovalController {
 	private ActionRegistry<ContentDetail, ContentApproval> contentActionRegistry;
 	
 	@RequestMapping(method = RequestMethod.POST, value="/submit/", consumes = "application/json")
-	public void submitContent(@RequestBody ContentDetail contentDetails) throws ActionException {
+	public StateChangeRecording<?> submitContent(@RequestBody ContentDetail contentDetails) throws ActionException {
 		
 		LOGGER.debug("Content workfow submit request");
 		
-		wfManager.start(ContentApprovalConstants.WORKFLOW_NAME, 
+		return wfManager.start(ContentApprovalConstants.WORKFLOW_NAME, 
 				ContentApprovalConstants.ACTION_SUBMIT, contentDetails);
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, value="/savedraft/", consumes = "application/json")
-	public void saveDraft(@RequestBody ContentDetail contentDetails) throws ActionException {
+	public StateChangeRecording<?> saveDraft(@RequestBody ContentDetail contentDetails) throws ActionException {
 		
 		LOGGER.debug("Content workfow save draft request");
 		
-		wfManager.start(ContentApprovalConstants.WORKFLOW_NAME, 
+		return wfManager.start(ContentApprovalConstants.WORKFLOW_NAME, 
 				ContentApprovalConstants.ACTION_SAVE_DRAFT, contentDetails);
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, value="/approve/", consumes = "application/json")
-	public void approveContent(@RequestBody SimpleActionInput actionInput) throws ActionException {
+	public StateChangeRecording<?> approveContent(@RequestBody SimpleActionInput actionInput) throws ActionException {
 		
 		LOGGER.debug("Content workfow approve request");
 		
-		wfManager.executeAction(ContentApprovalConstants.WORKFLOW_NAME, actionInput.getIdentity(), 
+		return wfManager.executeAction(ContentApprovalConstants.WORKFLOW_NAME, actionInput.getIdentity(), 
 				ContentApprovalConstants.ACTION_APPROVE, actionInput);
 	}
 	
+	@RequestMapping(method = RequestMethod.POST, value="/approve/list/", consumes = "application/json")
+	public List<StateChangeRecording<?>> approveContents(@RequestBody List<SimpleActionInput> actionInput) throws ActionException {
+		LOGGER.debug("Content workfow approve request list");
+		return executeActionOnList(actionInput, (in) -> approveContent(in));
+	}
+	
+	private <I extends ActionInput> List<StateChangeRecording<?>> executeActionOnList(
+			List<I> actionInput, WFAction<I> func) throws ActionException {
+		
+		List<StateChangeRecording<?>> response = new ArrayList<>();
+		
+		for (I in : actionInput) {
+			response.add(func.execute(in));
+		}
+		
+		return response;
+	}
+	
 	@RequestMapping(method = RequestMethod.POST, value="/publish/", consumes = "application/json")
-	public void publishContent(@RequestBody ContentDetail contentDetails) throws ActionException {
+	public StateChangeRecording<?> publishContent(@RequestBody ContentDetail contentDetails) throws ActionException {
 		
 		LOGGER.debug("Content workfow publish request");
 		
 		if (SecurityUtil.currentUserHasAllPermission(PermissionConstants.PERMISSION_VIEW_STUDIO)) {
 			
-			wfManager.executeAction(ContentApprovalConstants.WORKFLOW_NAME, contentDetails.getIdentity(), 
+			return wfManager.executeAction(ContentApprovalConstants.WORKFLOW_NAME, contentDetails.getIdentity(), 
 				ContentApprovalConstants.ACTION_PUBLISH, contentDetails);
 			
 		} else {
-			wfManager.executeAction(ContentApprovalConstants.WORKFLOW_NAME, contentDetails.getIdentity(), 
+			return wfManager.executeAction(ContentApprovalConstants.WORKFLOW_NAME, contentDetails.getIdentity(), 
 					ContentApprovalConstants.ACTION_SUBMIT, contentDetails);
 		}
 	}
 	
+	@RequestMapping(method = RequestMethod.POST, value="/publish/list/", consumes = "application/json")
+	public List<StateChangeRecording<?>> publishContents(@RequestBody List<ContentDetail> contentDetails) throws ActionException {
+		LOGGER.debug("Content workfow publish request list");
+		return executeActionOnList(contentDetails, (in) -> publishContent(in));
+	}
+	
 	@RequestMapping(method = RequestMethod.POST, value="/reject/", consumes = "application/json")
-	public void rejectContent(@RequestBody SimpleActionInput actionInput) throws ActionException {
+	public StateChangeRecording<?> rejectContent(@RequestBody SimpleActionInput actionInput) throws ActionException {
 		
 		LOGGER.debug("Content workfow reject request");
 		
-		wfManager.executeAction(ContentApprovalConstants.WORKFLOW_NAME, actionInput.getIdentity(), 
+		return wfManager.executeAction(ContentApprovalConstants.WORKFLOW_NAME, actionInput.getIdentity(), 
 				ContentApprovalConstants.ACTION_REJECT, actionInput);
 	}
 	
+	@RequestMapping(method = RequestMethod.POST, value="/reject/list/", consumes = "application/json")
+	public List<StateChangeRecording<?>> rejectContents(@RequestBody List<SimpleActionInput> actionInput) throws ActionException {
+		LOGGER.debug("Content workfow reject request list");
+		return executeActionOnList(actionInput, (in) -> rejectContent(in));
+	}
+	
 	@RequestMapping(method = RequestMethod.POST, value="/discard/", consumes = "application/json")
-	public void discardDraftContent(@RequestBody SimpleActionInput actionInput) throws ActionException {
+	public StateChangeRecording<?> discardDraftContent(@RequestBody SimpleActionInput actionInput) throws ActionException {
 		
 		LOGGER.debug("Content workfow discard request");
 		
-		wfManager.executeAction(ContentApprovalConstants.WORKFLOW_NAME, actionInput.getIdentity(), 
+		return wfManager.executeAction(ContentApprovalConstants.WORKFLOW_NAME, actionInput.getIdentity(), 
 				StateChangeConstants.ACTION_DISCARD, actionInput);
 	}
 	
+	@RequestMapping(method = RequestMethod.POST, value="/discard/list/", consumes = "application/json")
+	public List<StateChangeRecording<?>> discardDraftContents(@RequestBody List<SimpleActionInput> actionInput) throws ActionException {
+		LOGGER.debug("Content workfow discard request list");
+		return executeActionOnList(actionInput, (in) -> discardDraftContent(in));
+	}
+	
 	@RequestMapping(method = RequestMethod.POST, value="/withdraw/", consumes = "application/json")
-	public void withdrawContent(@RequestBody SimpleActionInput actionInput) throws ActionException {
+	public StateChangeRecording<?> withdrawContent(@RequestBody SimpleActionInput actionInput) throws ActionException {
 		
 		LOGGER.debug("Content workfow withdraw request");
 		
-		wfManager.executeAction(ContentApprovalConstants.WORKFLOW_NAME, actionInput.getIdentity(), 
+		return wfManager.executeAction(ContentApprovalConstants.WORKFLOW_NAME, actionInput.getIdentity(), 
 				ContentApprovalConstants.ACTION_WITHDRAW, actionInput);
 	}
 	
+	@RequestMapping(method = RequestMethod.POST, value="/withdraw/list/", consumes = "application/json")
+	public List<StateChangeRecording<?>> withdrawContents(@RequestBody List<SimpleActionInput> actionInput) throws ActionException {
+		LOGGER.debug("Content workfow withdraw request list");
+		return executeActionOnList(actionInput, (in) -> withdrawContent(in));
+	}
+	
 	@RequestMapping(method = RequestMethod.POST, value="/edit/", consumes = "application/json")
-	public void editContent(@RequestBody ContentDetail contentDetails) throws ActionException {
+	public StateChangeRecording<?> editContent(@RequestBody ContentDetail contentDetails) throws ActionException {
 		
 		LOGGER.debug("Content workfow reject request");
 		
-		wfManager.executeAction(ContentApprovalConstants.WORKFLOW_NAME, contentDetails.getIdentity(), 
+		return wfManager.executeAction(ContentApprovalConstants.WORKFLOW_NAME, contentDetails.getIdentity(), 
 				ContentApprovalConstants.ACTION_EDIT, contentDetails);
 	}
 	
@@ -149,6 +194,10 @@ public class ContentApprovalController {
 	public Map<String, List<ActionDefinition>> getStateActionMapping() {
 		LOGGER.debug("Fetching state to action mapping");
 		return contentActionRegistry.getStateActionMap();
+	}
+	
+	private interface WFAction<I extends ActionInput> {
+		StateChangeRecording<?> execute(I in) throws ActionException;
 	}
 	
 }

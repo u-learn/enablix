@@ -1,0 +1,8 @@
+<div class="pagination">
+  <div class="page-btn bold"><a (click)="setPage(0)">&lsaquo;&lsaquo;</a></div>
+  <div class="page-btn bold"><a (click)="setPage(currentPage - 1)">&lsaquo;</a></div>
+  <div class="page-btn" [class.active]="currentPage == n" *ngFor="let n of getPageNumbers()">
+    <a (click)="setPage(n)" [innerHtml]="n+1">1</a></div>
+  <div class="page-btn bold"><a (click)="setPage(currentPage + 1)">&rsaquo;</a></div>
+  <div class="page-btn bold"><a (click)="setPage(totalPages - 1)">&rsaquo;&rsaquo;</a></div>
+</div>

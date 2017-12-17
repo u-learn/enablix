@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, Input } from '@angular/core';
 
 import { UserService } from '../core/auth/user.service';
 import { AuthService } from '../core/auth/auth.service';
@@ -13,6 +13,7 @@ import { TenantService } from '../services/tenant.service';
 })
 export class HeaderComponent implements OnInit {
 
+  @Input() type?: string = 'portal'; 
   username: string;
 
   constructor(private userService: UserService, private authService: AuthService,

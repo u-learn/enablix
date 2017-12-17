@@ -1,0 +1,64 @@
+<form #memberForm="ngForm" *ngIf="userProfile">
+<div class="company no-sidebar member-popup">
+  <div class="header">
+    <h1>User Information</h1>
+  </div>
+  <div class="form-input">
+    <div class="input-label">Name</div>
+    <div class="input-control">
+      <input type="text" name="name" id="name" [(ngModel)]="userProfile.name" required #name="ngModel">
+    </div>
+    <div class="input-error" [hidden]="name.valid || name.pristine">
+      Please enter name
+    </div>
+  </div>
+  <div class="form-input">
+    <div class="input-label">Email</div>
+    <div class="input-control"><input type="text" name="email" [(ngModel)]="userProfile.email" #email="ngModel" required email (blur)="checkUserExist()" ngControl="email"></div>
+    <div class="input-error" [hidden]="email.valid || email.pristine">
+      <p [hidden]="!email.errors?.required && !email.errors?.email">Please enter a valid email</p>
+      <p [hidden]="!email.errors?.userexist">User email already registered</p>
+    </div>
+  </div>
+  <div class="input-group">
+    <div class="group-header">System Profile</div>
+    <div class="form-input">
+      <div class="input-label">Roles</div>
+      <div class="input-control">
+        <div class="pretty p-icon p-round" *ngFor="let opt of roleOptions">
+          <input type="checkbox" [(ngModel)]="opt.checked" [ngModelOptions]="{standalone: true}"/>
+          <div class="state p-primary">
+            <i class="icon mdi mdi-check"></i>
+            <label>{{opt.label}}</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-input">
+      <div class="input-label">Preferences</div>
+      <div class="input-control">
+        <div class="pretty p-icon p-round" >
+          <input type="checkbox" name="weeklyDigest" [(ngModel)]="userProfile.systemProfile.sendWeeklyDigest"/>
+          <div class="state p-primary">
+            <i class="icon mdi mdi-check"></i>
+            <label>Send Weekly Digest</label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="input-group" *ngIf="userContainer">
+    <div class="group-header">Business Profile</div>
+    <div class="form-input" *ngFor="let item of userContainer.contentItem">
+      <div class="input-label">{{item.label}}</div>
+      <div class="input-control">
+        <ebx-bounded-input [record]="userProfile.businessProfile.attributes" [contentItem]="item" [(ngModel)]="userProfile.businessProfile.attributes[item.id]" placeholder=" " name="{{item.id}}"></ebx-bounded-input>
+      </div>
+    </div>
+  </div>
+  <div class="actionBtns">
+    <button class="action" (click)="save()" [disabled]="!memberForm.form.valid">Save</button>
+    <button class="cancel" mat-dialog-close>Cancel</button>
+  </div>
+</div>
+</form>

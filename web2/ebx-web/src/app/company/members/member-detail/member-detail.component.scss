@@ -1,0 +1,13 @@
+@import '~styles/colors.scss';
+@import '~styles/layout.mixin.scss';
+@import '~styles/fonts.scss';
+
+.member-popup {
+  
+  .actionBtns {
+
+    button {
+        min-width: 128px;
+    }
+  }
+}

@@ -2,6 +2,7 @@ import { Component, OnInit, ViewEncapsulation, Input } from '@angular/core';
 
 import { EmbedInfoService } from '../../upload/embed-info.service';
 import { EmbedInfo } from '../../model/embed-info.model';
+import { Container } from '../../model/container.model';
 import { ApiUrlService } from '../../core/api-url.service';
 
 @Component({
@@ -13,6 +14,7 @@ import { ApiUrlService } from '../../core/api-url.service';
 export class UrlContentPreviewComponent implements OnInit {
 
   @Input() record: any;
+  @Input() container: Container;
 
   url: string;
   embedInfo: EmbedInfo;
@@ -33,7 +35,7 @@ export class UrlContentPreviewComponent implements OnInit {
     
       if (this.url) {
     
-        this.navUrl = this.apiUrlService.getExtLinkUrl(this.url);
+        this.navUrl = this.apiUrlService.getExtLinkUrl(this.url, this.record.identity, this.container.qualifiedId);
 
         this.embedInfoService.getEmbedInfo(this.url)
             .subscribe(

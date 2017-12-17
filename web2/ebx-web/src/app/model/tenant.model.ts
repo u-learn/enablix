@@ -5,3 +5,17 @@ export class Tenant extends BaseDocumentEntity {
   name: string;
   defaultTemplateId: string;
 }
+
+export class TableAction {
+  
+  label: string;
+  iconClass: string;
+
+}
+
+export interface TableActions<T> {
+  
+  getAvailableActions(selectedRecors: T[]) : TableAction[];
+
+}
+

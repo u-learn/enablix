@@ -31,6 +31,14 @@ button {
     display: flex;
     height: 32px;
 
+    &.small {
+        height: 28px;
+
+        .action-btn {
+            padding: 6px;
+        }
+    }
+
     .action-btn {
         display: flex;
         background: white;
@@ -39,6 +47,11 @@ button {
         box-shadow: 0 1px 1px 0 rgba(0,0,0,0.06);
         border-radius: 4px;
         cursor: pointer;
+        padding: 8px;
+
+        &.with-border {
+            border: 1px solid #E3EBEF;
+        }
 
         &:hover {
             background: #fcfcfc;
@@ -52,7 +65,7 @@ button {
             margin-left: 8px;
         }
 
-        .btn-with-text {
+        &.btn-with-text, .btn-with-text {
             display: flex;
             align-items: center;
         }
@@ -64,6 +77,10 @@ button {
             font-size: 14px;
             color: #1F8AEF;
             text-transform: capitalize;
+
+            &.visible {
+                display: flex;
+            }
         }
 
         &:hover .show-me {
@@ -133,6 +150,22 @@ button {
 
             &.reject {
                 background: url("/assets/images/icons/reject.svg") no-repeat center;
+            }
+
+            &.send-blue {
+                background: url("/assets/images/icons/paper_plane-blue.svg") no-repeat center;
+            }
+
+            &.cancel {
+                background: url("/assets/images/icons/cancel.svg") no-repeat center;
+            }
+
+            &.cancel-blue {
+                background: url("/assets/images/icons/cancel-blue.svg") no-repeat center;
+            }
+
+            &.save-blue {
+                background: url("/assets/images/icons/save-blue.svg") no-repeat center;
             }
         }
     }

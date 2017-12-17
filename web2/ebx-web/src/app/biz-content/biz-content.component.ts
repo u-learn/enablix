@@ -24,10 +24,17 @@ export class BizContentComponent implements OnInit, AfterViewInit {
 
   @Input() record?: any;
   @Input() container?: Container;
-  @Input() editable?: boolean = false;
+  @Input() editing?: boolean = false;
+
+  recordBackup: any;
 
   isNewRec: boolean = false;
   approvalWFRequired: boolean = false;
+  isDraft: boolean = false;
+
+  contentSource: string;
+
+  contentRequest: any;
 
   private sub: any;
 
@@ -46,7 +53,7 @@ export class BizContentComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
 
-    //this.approvalWFRequired = this.contentWFService.isApprovalWFRequired();
+    this.approvalWFRequired = this.contentWFService.isApprovalWFRequired();
 
     if (!this.record) {
       
@@ -72,6 +79,24 @@ export class BizContentComponent implements OnInit, AfterViewInit {
                       }
                     );
             
+          } else {
+
+            let crIdentity = params['crIdentity'];
+            
+            if (crIdentity) {
+            
+              this.contentWFService.getContentRequest(crIdentity).subscribe((res: any) => {
+                this.contentRequest = res;
+                this.container = this.contentTemplate.getConcreteContainerByQId(res.objectRef.contentQId);
+                this.record = res.objectRef.data;
+            
+                this.contentService.decorateRecord(this.container, this.record);
+                this.initState();
+
+              }, err => {
+                this.alert.error("Error fetching record details", err.status);
+              });
+            }
           }
 
       });
@@ -83,8 +108,13 @@ export class BizContentComponent implements OnInit, AfterViewInit {
 
   }
 
-  addRecordActions() {
+  updateRecordLocalCopy(rec: any) {
+    this.record = rec;
+    this.recordBackup = JSON.parse(JSON.stringify(this.record));
+  }
 
+  hasValue(val: any) {
+    return this.contentService.attrHasValue(val);
   }
 
   ngAfterViewInit(): void {
@@ -109,11 +139,16 @@ export class BizContentComponent implements OnInit, AfterViewInit {
                               (this.record.__decoration.__thumbnailUrl || 
                                 this.container.textItemId != item.id) );
 
+      if (this.record.__decoration && this.record.__decoration.__docMetadata) {
+        this.contentSource = this.record.__decoration.__docMetadata.name;
+      }
+
       this.boundedItems = this.container.contentItem.filter(item => item.bounded);
     }
 
     if (this.record) {
       this.isNewRec = !this.record.identity;
+      this.updateRecordLocalCopy(this.record);
     }
   }
 
@@ -129,7 +164,7 @@ export class BizContentComponent implements OnInit, AfterViewInit {
         .subscribe(
             result => {
               
-              this.editable = false;
+              this.editing = false;
               this.contentService.decorateRecord(this.container, result.contentRecord);
               this.record = result.contentRecord;
 
@@ -149,9 +184,10 @@ export class BizContentComponent implements OnInit, AfterViewInit {
   }
 
   submitWFContent(draftSave: boolean) {
-    this.contentWFService.submitContent(this.container.qualifiedId, this.record, draftSave, null).subscribe(res => {
+    this.contentWFService.submitContent(this.container.qualifiedId, this.record, draftSave, null).subscribe((res: any) => {
       this.alert.success("Saved successfully!");
-      this.editable = false;
+      this.editing = false;
+      this.navService.goToContentRequestDetail(res.identity);
     }, error => {
       this.alert.error("Error saving data.", error.status);  
     });
@@ -162,7 +198,7 @@ export class BizContentComponent implements OnInit, AfterViewInit {
   }
 
   editState() {
-    this.editable = true;
+    this.editing = true;
   }
 
   getDeleteConfirmText() : string {
@@ -206,7 +242,8 @@ export class BizContentComponent implements OnInit, AfterViewInit {
     if (this.isNewRec) {
       this.goBackHome();
     }
-    this.editable = false;
+    this.editing = false;
+    this.updateRecordLocalCopy(this.recordBackup);
   }
 
   ngOnDestroy() {

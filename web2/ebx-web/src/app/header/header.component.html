@@ -1,4 +1,22 @@
-<div *ngIf="username != null; then loggedInBlock; else loggedOutBlock"></div>
+<ng-container [ngSwitch]="type">
+  <ng-container *ngSwitchCase="'portal'">
+    <div *ngIf="username != null; then loggedInBlock; else loggedOutBlock"></div>
+  </ng-container>
+  <ng-container *ngSwitchCase="'company'">
+    <div class="nav-bar company">
+      <div class="left">
+        <img class="enablix-logo" src="/assets/images/company/enablix_logo@2x.png" (click)="navToHome()"/>
+        <div class="client-brand" routerLink="/portal/company">
+          <div class="logo"><div class="logo-placeholder"></div></div>
+          <h3 class="brand">{{tenantService.tenant?.name}}</h3>
+        </div>
+      </div>
+      <div class="right">
+        <ebx-user-icon></ebx-user-icon>
+      </div>
+    </div>
+  </ng-container>
+</ng-container>
 <ng-template #loggedInBlock>
   <div class="nav-bar">
     <div class="left">
@@ -13,7 +31,7 @@
         <div class="icon small drafts"></div>
       </button>
       <div class="line"></div>
-      <div class="client-brand">
+      <div class="client-brand" routerLink="/portal/company">
         <div class="logo"><div class="logo-placeholder"></div></div>
         <h3 class="brand">{{tenantService.tenant?.name}}</h3>
       </div>
@@ -23,5 +41,5 @@
   </div>
 </ng-template>
 <ng-template #loggedOutBlock>
-  <div class="login-nav-bar"><div><img class="enablix-logo" src="/assets/images/company/enablix_logo@2x.png"/></div></div>
+  <div class="login-nav-bar"><div><img class="enablix-logo big-logo" src="/assets/images/company/enablix_logo_with_text@2x.png"/></div></div>
 </ng-template>
