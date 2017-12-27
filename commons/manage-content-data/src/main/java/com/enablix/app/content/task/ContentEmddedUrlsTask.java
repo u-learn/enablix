@@ -17,12 +17,12 @@ import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Component;
 
 import com.enablix.app.content.enrich.ContentUrlEnricher;
-import com.enablix.app.content.enrich.EmbeddedUrl;
 import com.enablix.app.template.service.TemplateManager;
 import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.commons.util.collection.CollectionUtil;
 import com.enablix.commons.util.process.ProcessContext;
 import com.enablix.core.api.TemplateFacade;
+import com.enablix.core.content.EmbeddedUrl;
 import com.enablix.core.mongo.content.ContentCrudService;
 import com.enablix.core.mongo.dao.GenericDao;
 import com.enablix.core.mongo.search.ConditionOperator;

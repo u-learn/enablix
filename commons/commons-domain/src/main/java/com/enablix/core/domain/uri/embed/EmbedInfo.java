@@ -122,6 +122,4 @@ public class EmbedInfo extends BaseDocumentEntity {
 				+ audios + ", oembed=" + oembed + "]";
 	}
 	
-	
-	
 }

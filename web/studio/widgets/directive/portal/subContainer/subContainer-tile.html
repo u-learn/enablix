@@ -2,8 +2,8 @@
 	<div class="doc-thumbnail" ng-if="bodyData.thumbnailUrl" flex="none"><img ng-src="{{bodyData.thumbnailUrl}}" ng-click="openRecordDetailWindow(bodyData)"></img></div>
 	<div class="record-data" flex>
 		<div class="head" layout="row">
-			<h2 flex><span ng-if="::!summaryView">{{::bodyData.headingLabel}}</span>
-					<span ng-if="::summaryView" class="content-label" ng-click="navToContentDetail(bodyData.identity)">{{::bodyData.headingLabel}}</span>
+			<h2 flex><span ng-if="::!summaryView" ng-bind-html="::bodyData.headingLabel"></span>
+					<span ng-if="::summaryView" class="content-label" ng-click="navToContentDetail(bodyData.identity)"  ng-bind-html="::bodyData.headingLabel"></span>
 					<span class="content-type" ng-show="::subContainerLabel"> ({{::subContainerLabel}})</span></h2>
 			<div class="dropdown" flex="none">
 				<div class="action-icons bar-action-icons">

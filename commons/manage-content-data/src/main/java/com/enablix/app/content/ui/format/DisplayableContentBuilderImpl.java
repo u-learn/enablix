@@ -1,5 +1,6 @@
 package com.enablix.app.content.ui.format;
 
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -14,14 +15,17 @@ import com.enablix.app.content.ui.DisplayableContentBuilder;
 import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.commons.util.EnvPropertiesUtil;
 import com.enablix.commons.util.StringUtil;
+import com.enablix.commons.util.collection.CollectionUtil;
 import com.enablix.core.api.ContentDataRecord;
 import com.enablix.core.api.TemplateFacade;
 import com.enablix.core.commons.xsdtopojo.ContainerType;
 import com.enablix.core.commons.xsdtopojo.ContentItemType;
+import com.enablix.core.content.EmbeddedUrl;
 import com.enablix.core.ui.DisplayField;
 import com.enablix.core.ui.DisplayableContent;
 import com.enablix.core.ui.DocRef;
 import com.enablix.core.ui.FieldValue;
+import com.enablix.core.ui.Hyperlink;
 import com.enablix.services.util.ContentDataUtil;
 import com.enablix.services.util.TemplateUtil;
 
@@ -53,6 +57,13 @@ public class DisplayableContentBuilderImpl implements DisplayableContentBuilder 
 		dispContent.setRecordIdentity((String) record.getRecord().get(ContentDataConstants.IDENTITY_KEY));
 		dispContent.setTitle(ContentDataUtil.findStudioLabelValue(contentRecord, template, containerQId));
 		dispContent.setPortalUrl(getContentInstanceAccessUrl(dispContent.getContainerQId(), dispContent.getRecordIdentity()));
+		
+		List<EmbeddedUrl> embbedUrls = ContentDataUtil.getEmbeddedUrls(record);
+		if (CollectionUtil.isNotEmpty(embbedUrls)) {
+			EmbeddedUrl embeddedUrl = embbedUrls.get(0);
+			dispContent.setHyperlink(Hyperlink.fromEmbeddedUrl(embeddedUrl));
+		}
+		
 		for (ContentItemType fieldDef : containerDef.getContentItem()) {
 			
 			DisplayField<?> field = fieldBuilder.build(fieldDef, template, contentRecord, ctx);

@@ -8,11 +8,14 @@ import java.util.Map;
 
 import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.commons.util.StringUtil;
+import com.enablix.commons.util.json.JsonUtil;
+import com.enablix.core.api.ContentDataRecord;
 import com.enablix.core.api.ContentDataRef;
 import com.enablix.core.api.TemplateFacade;
 import com.enablix.core.commons.xsdtopojo.ContainerType;
 import com.enablix.core.commons.xsdtopojo.ContentItemClassType;
 import com.enablix.core.commons.xsdtopojo.ContentItemType;
+import com.enablix.core.content.EmbeddedUrl;
 import com.enablix.core.domain.content.ContentAssociation;
 
 public class ContentDataUtil {
@@ -238,6 +241,35 @@ public class ContentDataUtil {
 		}
 		
 		return listValue;
+	}
+
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public static List<EmbeddedUrl> getEmbeddedUrls(ContentDataRecord record) {
+		
+		List<EmbeddedUrl> urls = new ArrayList<>();
+		
+		Object embedUrls = record.getRecord().get(ContentDataConstants.CONTENT_URLS_KEY);
+		
+		if (embedUrls != null && embedUrls instanceof Collection) {
+		
+			Collection<?> urlColl = (Collection<?>) embedUrls;
+			for (Object embedUrl : urlColl) {
+			
+				if (embedUrl instanceof EmbeddedUrl) {
+				
+					urls.add((EmbeddedUrl) embedUrl);
+				
+				} else if (embedUrl instanceof Map) {
+					
+					EmbeddedUrl bean = JsonUtil.jsonToObject((Map) embedUrl, EmbeddedUrl.class);
+					if (bean != null) {
+						urls.add(bean);
+					}
+				}
+			}
+		}
+		
+		return urls;
 	}
 	
 }

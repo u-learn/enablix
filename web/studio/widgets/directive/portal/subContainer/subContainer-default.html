@@ -46,7 +46,7 @@
 					<ebx-doc-context-menu content-record="dataItem"></ebx-doc-context-menu>
 				</span>
 				<span class="single-line" flex>
-					<a ng-click="navToItemDetail(dataItem.containerQId, dataItem.identity)" class="toggle" >{{::dataItem.headingLabel}}</a>
+					<a ng-click="navToItemDetail(dataItem.containerQId, dataItem.identity)" class="toggle" ng-bind-html="::dataItem.headingLabel"></a>
 			    	<!-- <a ng-if="dataItem.hasSubContainers" ng-click="navToItemDetail(dataItem.containerQId, dataItem.identity)" class="detail fa fa-external-link"></a> -->
 			    </span>
 			    <div class="action-icons" flex="none" style='display: none;'>

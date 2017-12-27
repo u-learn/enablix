@@ -6,9 +6,12 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.mapping.event.AbstractMongoEventListener;
 import org.springframework.stereotype.Component;
 
+import com.enablix.app.content.enrich.AuditInfoDateFormatter.FieldCollection;
+import com.enablix.app.content.enrich.AuditInfoDateFormatter.MapFieldCollection;
 import com.enablix.app.content.update.ContentUpdateContext;
 import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.commons.util.process.ProcessContext;
@@ -20,6 +23,9 @@ import com.mongodb.DBObject;
 @Component
 public class AuditInfoEnricher extends AbstractMongoEventListener<BaseDocumentEntity> implements ContentEnricher {
 
+	@Autowired
+	private AuditInfoDateFormatter dateFormatter;
+	
 	@Override
 	public void enrich(ContentUpdateContext updateCtx, 
 			Map<String, Object> content, TemplateFacade contentTemplate) {
@@ -65,7 +71,7 @@ public class AuditInfoEnricher extends AbstractMongoEventListener<BaseDocumentEn
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private void formatAuditDatesInHierarchy(final Map<String, Object> dataMap) {
 		
-		formatAuditDates(new MapFieldCollection(dataMap));
+		dateFormatter.formatAuditDates(new MapFieldCollection(dataMap));
 		
 		for (Map.Entry<String, Object> entry : dataMap.entrySet()) {
 			
@@ -82,18 +88,6 @@ public class AuditInfoEnricher extends AbstractMongoEventListener<BaseDocumentEn
 					}
 				}
 			}
-		}
-	}
-	
-	private void formatAuditDates(FieldCollection fieldSet) {
-		checkAndFormatDateField(fieldSet, ContentDataConstants.CREATED_AT_KEY);
-		checkAndFormatDateField(fieldSet, ContentDataConstants.MODIFIED_AT_KEY);
-	}
-	
-	private void checkAndFormatDateField(FieldCollection fieldSet, String fieldName) {
-		Object obj = fieldSet.get(fieldName);
-		if (obj != null && obj instanceof Long) {
-			fieldSet.put(fieldName, new Date((Long) obj)); 
 		}
 	}
 	
@@ -127,7 +121,7 @@ public class AuditInfoEnricher extends AbstractMongoEventListener<BaseDocumentEn
 	}
 
 	public void onBeforeSave(final BaseDocumentEntity source, final DBObject dbo) {
-		setAuditInfo(new FieldCollection() {
+		setAuditInfo(new AuditInfoDateFormatter.FieldCollection() {
 
 			@Override
 			public void put(String fieldName, Object value) {
@@ -151,31 +145,6 @@ public class AuditInfoEnricher extends AbstractMongoEventListener<BaseDocumentEn
 		
 	}
 	
-	private static interface FieldCollection {
-		
-		public void put(String fieldName, Object value);
-		
-		public Object get(String fieldName);
-	}
 	
-	private static class MapFieldCollection implements FieldCollection {
-		
-		private Map<String, Object> fields;
-		
-		MapFieldCollection(Map<String, Object> fields) {
-			this.fields = fields;
-		}
-		
-		@Override
-		public void put(String fieldName, Object value) {
-			fields.put(fieldName, value);
-		}
-
-		@Override
-		public Object get(String fieldName) {
-			return fields.get(fieldName);
-		}
-		
-	}
 	
 }

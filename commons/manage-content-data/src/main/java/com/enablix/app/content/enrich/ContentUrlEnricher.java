@@ -13,11 +13,11 @@ import com.enablix.app.content.update.ContentUpdateContext;
 import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.commons.util.StringUtil;
 import com.enablix.commons.util.TextLinkifier;
-import com.enablix.commons.util.collection.CollectionUtil;
 import com.enablix.core.api.TemplateFacade;
 import com.enablix.core.commons.xsdtopojo.ContainerType;
 import com.enablix.core.commons.xsdtopojo.ContentItemClassType;
 import com.enablix.core.commons.xsdtopojo.ContentItemType;
+import com.enablix.core.content.EmbeddedUrl;
 import com.enablix.core.domain.uri.embed.EmbedInfo;
 import com.enablix.uri.embed.EmbedService;
 
@@ -60,19 +60,8 @@ public class ContentUrlEnricher implements ContentEnricher {
 			
 			EmbedInfo embedInfo = embedService.getEmbedInfo(url);
 			
-			if (embedInfo != null) {
-			
-				EmbeddedUrl eUrl = new EmbeddedUrl();
-				eUrl.setUrl(url);
-				
-				if (CollectionUtil.isNotEmpty(embedInfo.getImages())) {
-					eUrl.setPreviewImageUrl(
-							embedInfo.getImages().iterator().next().getUrl());
-				}
-
-				eUrl.setType(embedInfo.getOembed() == null ? embedInfo.getType() : embedInfo.getOembed().getType());
-				eUrl.setTitle(embedInfo.getTitle());
-				
+			EmbeddedUrl eUrl = EmbeddedUrl.fromEmbedInfo(embedInfo);
+			if (eUrl != null) {
 				embedUrls.add(eUrl);
 			}
 		});

@@ -22,7 +22,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.enablix.app.content.ContentDataManager;
 import com.enablix.app.content.doc.DocumentManager;
-import com.enablix.app.content.enrich.EmbeddedUrl;
 import com.enablix.app.template.service.TemplateManager;
 import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.commons.dms.api.DocPreviewData;
@@ -37,6 +36,7 @@ import com.enablix.core.api.ContentLengthAwareDocument;
 import com.enablix.core.api.IDocument;
 import com.enablix.core.api.TemplateFacade;
 import com.enablix.core.commons.xsdtopojo.ContainerType;
+import com.enablix.core.content.EmbeddedUrl;
 import com.enablix.core.domain.activity.Activity.ActivityType;
 import com.enablix.core.domain.activity.ActivityChannel.Channel;
 import com.enablix.core.domain.activity.Actor;

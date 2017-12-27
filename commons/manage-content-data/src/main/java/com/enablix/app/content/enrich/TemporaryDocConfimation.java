@@ -23,6 +23,9 @@ public class TemporaryDocConfimation implements ContentEnricher {
 	@Autowired
 	private DocumentManager docManager;
 	
+	@Autowired
+	private AuditInfoDateFormatter dateFormatter;
+	
 	@Override
 	public void enrich(ContentUpdateContext updateCtx, Map<String, Object> content, TemplateFacade contentTemplate) {
 		
@@ -57,7 +60,9 @@ public class TemporaryDocConfimation implements ContentEnricher {
 								docMd = docManager.attachUsingContainerInfo(docMd, contentQId, contentIdentity);
 							}
 							
-							content.put(itemDef.getId(), BeanUtil.beanToMap(docMd));
+							Map<?, ?> beanToMap = BeanUtil.beanToMap(docMd);
+							dateFormatter.formatAuditDates(beanToMap);
+							content.put(itemDef.getId(), beanToMap);
 							
 						} catch (IOException e) {
 							throw new RuntimeException("Unable to attach document", e);

@@ -1,7 +1,7 @@
 <div class="bread-crumbs">
 	<div class="cont">
 		<span ng-repeat="breadcrumbItem in breadcrumbList">
-			<span ng-if="$last">{{breadcrumbItem.label}}</span>
+			<span ng-if="$last" ng-bind-html="breadcrumbItem.label"></span>
 			<a ng-click="navToItem(breadcrumbItem.qualifiedId, breadcrumbItem.identity, breadcrumbItem.enclosureId)" 
 				ng-if="!$last">{{breadcrumbItem.label}}</a>&nbsp;&nbsp;<i ng-if="!$last" class="fa fa-angle-right"></i>
 		</span>

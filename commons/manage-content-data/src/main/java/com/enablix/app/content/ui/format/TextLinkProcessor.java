@@ -48,7 +48,6 @@ public class TextLinkProcessor {
 					linkifiedText.getLinks().forEach((link) -> {
 						Hyperlink hyperlink = new Hyperlink(link.getHref(), link.getTitle(), link.getRawText());
 						links.add(hyperlink);
-						content.setHyperlink(hyperlink);
 					});
 					
 					txtVal.setLinks(links);

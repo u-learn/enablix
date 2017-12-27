@@ -346,7 +346,7 @@ The team at Enablix
 						<table width="100%" border="0" cellspacing="0" cellpadding="0">
 							<tr>
 								<td height="160" style="border: 1px solid #e6e6e6; border-radius: 4px; font-size: 0pt; line-height: 0pt; text-align: center;">
-									#if(${a_dispRecord.doc.thumbnailUrl}) #small_image_link(${a_dispRecord.doc.thumbnailUrl} ${contentUrl} ) #end
+									#if(${a_dispRecord.doc.thumbnailUrl}) #small_image_link(${a_dispRecord.doc.thumbnailUrl} ${contentUrl} ) #elseif(${a_dispRecord.hyperlink.thumbnailUrl}) #small_image_link(${a_dispRecord.hyperlink.thumbnailUrl} ${contentUrl} ) #end
 								</td>
 							</tr>
 							<tr><td>#spacer_row('12')</td></tr>

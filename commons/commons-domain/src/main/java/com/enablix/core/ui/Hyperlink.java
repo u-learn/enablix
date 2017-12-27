@@ -1,5 +1,7 @@
 package com.enablix.core.ui;
 
+import com.enablix.core.content.EmbeddedUrl;
+
 public class Hyperlink {
 
 	private String href;
@@ -7,6 +9,8 @@ public class Hyperlink {
 	private String title;
 	
 	private String rawText;
+	
+	private String thumbnailUrl;
 
 	public Hyperlink(String href, String title, String rawText) {
 		super();
@@ -38,7 +42,19 @@ public class Hyperlink {
 	public void setRawText(String rawText) {
 		this.rawText = rawText;
 	}
-	
-	
+
+	public String getThumbnailUrl() {
+		return thumbnailUrl;
+	}
+
+	public void setThumbnailUrl(String thumbnailUrl) {
+		this.thumbnailUrl = thumbnailUrl;
+	}
+
+	public static Hyperlink fromEmbeddedUrl(EmbeddedUrl embeddedUrl) {
+		Hyperlink link = new Hyperlink(embeddedUrl.getUrl(), embeddedUrl.getTitle(), embeddedUrl.getTitle());
+		link.setThumbnailUrl(embeddedUrl.getPreviewImageUrl());
+		return link;
+	}
 	
 }
