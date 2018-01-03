@@ -1,0 +1,62 @@
+#set ($introContent = $obj.content.get($obj.inputData.get('introType')).get(0))
+#@mail_template('Introduction')
+
+	#spacer_row('15')
+											
+	#mail_opening(${obj.recipientUser.name})
+	
+	#spacer_row('15')
+	
+	Check out #if(${obj.inputData.get('introMaterial')}) ${obj.inputData.get('introMaterial')}#else this introductory collateral#end on ${introContent.title}. 
+	#if ($obj.inputData.get('moreLink'))
+		There are several more on <a href="${obj.url}/app.html#$obj.inputData.get('moreLink')"><span class="link-u" style="color:#004ba1; text-decoration:underline">Enablix</span></a>.
+	#end
+	
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+		<tr>
+			<td class="content-spacing2" style="font-size:0pt; line-height:0pt; text-align:left" width="30"></td>
+			<td>
+				<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="20" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
+
+				#foreach($key in ${obj.content.keySet()})
+				  	#if ($key != $obj.inputData.get('introType'))
+						#set ($contentList = $obj.content.get($key))
+						#foreach($content in $contentList)
+							#set ($contentQId = $content.containerQId)
+							<table width="100%" border="0" cellspacing="0" cellpadding="0">
+								<tr>
+									<td>
+										<table width="100%" border="0" cellspacing="0" cellpadding="0">
+											<tr>
+												<td class="arrow" style="color:#9a9a9a; font-family:Arial,sans-serif, 'OS'; font-size:16px; line-height:20px; text-align:left" width="27">&rarr;</td>
+												<td class="text" style="color:#626262; font-family:Arial,sans-serif, 'OS'; font-size:16px; line-height:20px; text-align:left">
+													#set ($currentNode = $key1)
+													<a href="$obj.url/app.html#/portal/containerlist/$contentQId?atChannel=EMAIL&atContext=CONTENTINTRO&atContextId=$introContent.recordIdentity">
+														<span class="link-u" style="color:#004ba1; text-decoration:underline">$content.containerLabel</span>
+													</a> &gt;
+													<a href="$content.portalUrl?atChannel=EMAIL&atContext=CONTENTINTRO&atContextId=$introContent.recordIdentity">
+														<span class="link-u" style="color:#004ba1; text-decoration:underline">$content.title</span>
+													</a>
+												</td>
+											</tr>
+										</table>
+										<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="7" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
+									</td>
+								</tr>
+							</table>
+						#end
+				  	#end
+				#end
+				
+				<table width="100%" border="0" cellspacing="0" cellpadding="0" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%"><tr><td height="20" class="spacer" style="font-size:0pt; line-height:0pt; text-align:center; width:100%; min-width:100%">&nbsp;</td></tr></table>
+
+			</td>
+			<td class="content-spacing2" style="font-size:0pt; line-height:0pt; text-align:left" width="30"></td>
+		</tr>
+	</table>
+	
+	To check out more content on $introContent.title #generic_link( "#content_portal_url($obj.url $introContent.containerQId $introContent.recordIdentity)?atChannel=EMAIL&atContext=CONTENTINTRO&atContextId=$introContent.recordIdentity" 'click here')
+	
+	#mail_closing('Enablix')
+
+#end
