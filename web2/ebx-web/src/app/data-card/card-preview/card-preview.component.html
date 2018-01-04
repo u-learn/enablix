@@ -3,7 +3,7 @@
     <img *ngIf="thumbnailUrl" [src]="thumbnailUrl" />
   </div>
   <div class="cardImgText" *ngIf="text">
-    <div><p ellipsis [innerHtml]="text"></p></div>
+    <div><p ellipsis ellipsis-resize-detection="window" [innerHtml]="text"></p></div>
   </div>
   <div class="cardDefaultImg" *ngIf="!text && !thumbnailUrl">
     <img [src]="getNoPreviewImage()" />

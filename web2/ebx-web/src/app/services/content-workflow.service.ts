@@ -1,18 +1,101 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs/Observable';
 
 import { ApiUrlService } from '../core/api-url.service';
 import { UserService } from '../core/auth/user.service';
 import { Permissions } from '../model/permissions.model';
 import { ContentRequestDetail, SimpleActionInput } from '../model/content-workflow.model';
+import { FilterMetadata, DataType, ConditionOperator } from '../core/data-search/filter-metadata.model';
 
 @Injectable()
 export class ContentWorkflowService {
 
-  static VIEW_STUDIO
+  static contentRequestDomain = "com.enablix.content.approval.model.ContentApproval";
+  static filterMetadata: { [key: string] : FilterMetadata} = {
+     "contentIdentity" : {
+       "field" : "objectRef.data.identity",
+       "operator" : ConditionOperator.EQ,
+       "dataType" : DataType.STRING
+     },
+     "contentQId" : {
+       "field" : "objectRef.contentQId",
+       "operator" : ConditionOperator.EQ,
+       "dataType" : DataType.STRING
+     },
+     "requestState" : {
+       "field" : "currentState.stateName",
+       "operator" : ConditionOperator.EQ,
+       "dataType" : DataType.STRING
+     },
+     "requestStateNot" : {
+       "field" : "currentState.stateName",
+       "operator" : ConditionOperator.NOT_EQ,
+       "dataType" : DataType.STRING
+     },
+     "requestStateNotIn" : {
+       "field" : "currentState.stateName",
+       "operator" : ConditionOperator.NOT_IN,
+       "dataType" : DataType.STRING
+     },
+     "refObjectNE" : {
+       "field" : "objectRef.identity",
+       "operator" : ConditionOperator.NOT_EQ,
+       "dataType" : DataType.STRING
+     },
+     "createdBy" : {
+       "field" : "createdBy",
+       "operator" : ConditionOperator.EQ,
+       "dataType" : DataType.STRING
+     }
+  };
+
+  static ACTION_SAVE_DRAFT = "SAVE_DRAFT";
+  static ACTION_REJECT = "REJECT";
+  static ACTION_APPROVE = "APPROVE";
+  static ACTION_EDIT = "EDIT";
+  static ACTION_VIEW_DETAILS = "VIEW_DETAILS";
+  static ACTION_WITHDRAW = "WITHDRAW";
+  static ACTION_PUBLISH = "PUBLISH";
+  static ACTION_DISCARD = "DISCARD";
+   
+  static STATE_DRAFT = "DRAFT";
+  static STATE_PUBLISHED = "PUBLISHED";
+  static STATE_PENDING_APPROVAL = "PENDING_APPROVAL";
+  static STATE_WITHDRAWN = "WITHDRAWN";
+  static STATE_APPROVED = "APPROVED";
+  static STATE_REJECTED = "REJECTED";
+
+  stateDisplayText = {};
+  stateActionMap: any;
 
   constructor(private http: HttpClient, private apiUrlService: ApiUrlService,
-        private user: UserService) { }
+        private user: UserService) { 
+
+    this.stateDisplayText[ContentWorkflowService.STATE_DRAFT] = "Draft";
+    this.stateDisplayText[ContentWorkflowService.STATE_PUBLISHED] = "Published";
+    this.stateDisplayText[ContentWorkflowService.STATE_PENDING_APPROVAL] = "Pending";
+    this.stateDisplayText[ContentWorkflowService.STATE_WITHDRAWN] = "Withdrawn";
+    this.stateDisplayText[ContentWorkflowService.STATE_APPROVED] = "Approved";
+    this.stateDisplayText[ContentWorkflowService.STATE_REJECTED] = "Rejected";
+
+  }
+
+  init() : Observable<any> {
+
+    if (!this.stateActionMap) {
+      
+      let apiUrl = this.apiUrlService.getContentWFStateActionMapUrl();
+      
+      return this.http.get<any>(apiUrl).map(res => {
+        this.stateActionMap = res;
+        return res;
+      });  
+    }
+
+    return Observable.of(this.stateActionMap);
+    
+  }
 
   submitContent(contentQId: string, rec: any, saveAsDraft: boolean, notes: any) {
     
@@ -128,6 +211,54 @@ export class ContentWorkflowService {
 
   isApprovalWFRequired() : boolean {
     return !this.user.userHasPermission(Permissions.PUBLISH_CONTENT);
+  }
+
+  isActionAllowed(actionName: string, crRecord: any) : boolean {
+         
+    if (crRecord) {
+      
+      if ((actionName == ContentWorkflowService.ACTION_WITHDRAW 
+             || actionName == ContentWorkflowService.ACTION_DISCARD)
+          && this.user.getUserIdentity() != crRecord.createdBy) {
+        return false;
+      }
+    
+      let nextActions = this.stateActionMap[crRecord.currentState.stateName];
+       
+      if (nextActions) {
+        
+        for (let i = 0; i < nextActions.length; i++) {
+        
+          let nextAction =  nextActions[i];
+          if (nextAction.actionName == actionName) {
+            
+            if (actionName == ContentWorkflowService.ACTION_EDIT 
+                && this.user.getUserIdentity() == crRecord.createdBy) {
+              return true;
+            }
+            
+            if (!this.user.userHasAllPermissions(nextAction.requiredPermissions)) {
+              return false;
+            }
+              
+            return true;
+          }
+        }
+      }
+    }
+     
+    return false;
+  }
+
+  isActionAllowedForAllRecords(actionName: string, crRecords: any[]) : boolean {
+
+    for (let i = 0; i < crRecords.length; i++) {
+      if (!this.isActionAllowed(actionName, crRecords[i])) {
+        return false;
+      }
+    }
+
+    return true;
   }
 
 }

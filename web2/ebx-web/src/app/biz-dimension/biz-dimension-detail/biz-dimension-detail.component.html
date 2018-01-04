@@ -11,10 +11,7 @@
                 <div class="icon small attach"></div>
                 <p class="show-me">Attach</p>
             </div>
-            <div class="action-btn add-padding" (click)="email()">
-                <div class="icon small email"></div>
-                <p class="show-me">Email</p>
-            </div>
+            <ebx-content-email-button class="action-btn" [container]="container" [record]="record" ></ebx-content-email-button>
             <ebx-content-delete-button class="action-btn add-padding" [container]="container" [record]="record" contentType="Dimension"></ebx-content-delete-button>
             <!-- <div class="divider"></div>
             <button class="circle icon-btn" ng-click="goToFunnelView()">
@@ -25,7 +22,7 @@
             </button> -->
         </div>
     </div>
-    <div class="main">
+    <div class="main" *ngIf="!noChildren">
         <div>
             <div class="content-types-container">
                 <div *ngFor="let cg of children">
@@ -41,5 +38,9 @@
                 </div>
             </div>
         </div>
+        
+    </div>
+    <div [hidden]="!noChildren" class="no-data">
+        <div>Oops. Looks like this object has no content. We have made a note of this and will be sharing this feedback.</div>
     </div>
 </div>

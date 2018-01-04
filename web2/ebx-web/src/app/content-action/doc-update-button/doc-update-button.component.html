@@ -1,0 +1,5 @@
+<form #fileForm><input #fileInput type="file" class="native-file-input" (change)="onFileSelect($event)" [hidden]="true"></form>
+<div class="btn-with-text" (click)="openFileBrowser()">
+  <div class="icon small upload-btn"></div>
+  <p class="show-me">Upload</p>
+</div>

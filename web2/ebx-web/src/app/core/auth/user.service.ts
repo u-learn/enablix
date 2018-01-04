@@ -33,6 +33,10 @@ export class UserService {
   	return this.user ? this.user.email : null;
   }
 
+  getUserIdentity() {
+    return this.user ? this.user.principal.userProfile.identity : null;
+  }
+
   userHasPermission(checkPerm: string) {
     
     if (this.user) {     

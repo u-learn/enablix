@@ -106,6 +106,11 @@ export class ContentService {
         decoration.__thumbnailUrl = "/assets/images/icons/text-icon.png";
       }
     }
+
+    if (container.titleItemId) {
+      dataRecord.__title = dataRecord[container.titleItemId];
+    }
+
   }
 
   getFileExtension(filename: string) : string {

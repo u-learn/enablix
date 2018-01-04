@@ -14,7 +14,7 @@
     <ebx-card-preview *ngIf="record" [record]="record" [container]="container"></ebx-card-preview>
     <div class="content">
       <p class="content-type" [innerHtml]="containerLabel" (click)="navToContentList()"></p>
-      <p class="card-title" [innerHtml]="title" ellipsis></p>
+      <p class="card-title" [innerHtml]="title" ellipsis ellipsis-resize-detection="window"></p>
       <p class="company-properties">
         <span>{{linkedContentText}}</span>
         <span *ngIf="linkedContentCount > 1">&nbsp;&nbsp;+{{linkedContentCount}}</span>

@@ -39,7 +39,7 @@ export class MyDraftComponent extends ContentRequestListComponent implements OnI
     super.initComponent();
 
     this.filters = { 
-      requestState: ConsolidateContentService.STATE_DRAFT,
+      requestState: ContentWorkflowService.STATE_DRAFT,
       createdBy: this.user.getUsername()
     };
 
@@ -53,34 +53,43 @@ class MyDraftActions implements TableActionConfig<any> {
 
   component: MyDraftComponent;
 
-  actions: TableAction<any>[];
+  publishAction: TableAction<any> = {
+    label: "Publish",
+    iconClass: "send-blue",
+    successMessage: "Published",
+    execute: (selectedRecords: any[]) => {
+      return this.component.publishRecords(selectedRecords);
+    }
+  };
+
+  discardAction: TableAction<any> = {
+    label: "Trash",
+    iconClass: "trash",
+    successMessage: "Deleted",
+    execute: (selectedRecords: any[]) => {
+      return this.component.deleteRecords(selectedRecords);
+    }
+  };
 
   constructor(comp: MyDraftComponent) {
-    
     this.component = comp;
-    this.actions = [
-      {
-        label: "Publish",
-        iconClass: "send-blue",
-        successMessage: "Published",
-        execute: (selectedRecords: any[]) => {
-          return this.component.publishRecords(selectedRecords);
-        }
-      },
-      {
-        label: "Trash",
-        iconClass: "trash",
-        successMessage: "Deleted",
-        execute: (selectedRecords: any[]) => {
-          return this.component.deleteRecords(selectedRecords);
-        }
-      }
-    ];
-
   }
 
   getAvailableActions(selectedRecords: any[]) : TableAction<any>[] {
-    return selectedRecords && selectedRecords.length > 0 ? this.actions : [];
+    
+    let actions: TableAction<any>[] = [];
+    
+    if (this.component.contentWFService.isActionAllowedForAllRecords(
+      ContentWorkflowService.ACTION_PUBLISH, selectedRecords)) {
+      actions.push(this.publishAction);
+    }
+
+    if (this.component.contentWFService.isActionAllowedForAllRecords(
+      ContentWorkflowService.ACTION_DISCARD, selectedRecords)) {
+      actions.push(this.discardAction);
+    }
+
+    return selectedRecords && selectedRecords.length > 0 ? actions : [];
   }
 
 }

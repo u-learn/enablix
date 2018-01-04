@@ -15,6 +15,7 @@ import { ContentTemplateResolve } from './content-template.resolve';
 import { ResourceVersionResolve } from './resource-version.resolve';
 import { TenantResolve } from './tenant.resolve';
 import { SearchBarResolve } from './search-bar.resolve';
+import { ContentWFResolve } from './content-wf.resolve';
 import { NavigationService } from './navigation.service';
 import { BizDimensionListComponent } from '../biz-dimension/biz-dimension-list/biz-dimension-list.component';
 import { BizDimensionDetailComponent } from '../biz-dimension/biz-dimension-detail/biz-dimension-detail.component';
@@ -52,7 +53,8 @@ const routes: Routes = [
         {
           path: 'content',
           resolve: {
-            sbData: SearchBarResolve
+            sbData: SearchBarResolve,
+            cwData: ContentWFResolve
           },
           children: [
             {
@@ -94,7 +96,8 @@ const routes: Routes = [
           path: 'cconsol',
           component: ConsolidateContentComponent,
           resolve: {
-            sbData: SearchBarResolve
+            sbData: SearchBarResolve,
+            cwData: ContentWFResolve
           },
           children: [
             {
@@ -155,6 +158,7 @@ const routes: Routes = [
     ResourceVersionResolve,
     TenantResolve,
     SearchBarResolve,
+    ContentWFResolve,
     NavigationService
   ],
   exports: [

@@ -14,4 +14,5 @@ export class Container extends BaseContainer {
   color: string;
   titleItemId: string;
   textItemId: string;
+  docItemId: string;
 }

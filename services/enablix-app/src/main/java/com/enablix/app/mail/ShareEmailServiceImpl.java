@@ -1,5 +1,7 @@
 package com.enablix.app.mail;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,8 @@ import com.enablix.app.content.ui.DisplayableContentBuilder;
 import com.enablix.app.content.ui.format.TextLinkProcessor;
 import com.enablix.app.mail.web.EmailData;
 import com.enablix.app.template.service.TemplateManager;
+import com.enablix.commons.util.StringUtil;
+import com.enablix.commons.util.collection.CollectionUtil;
 import com.enablix.commons.util.process.ProcessContext;
 import com.enablix.core.api.ContentDataRecord;
 import com.enablix.core.api.ContentDataRef;
@@ -69,17 +73,31 @@ public class ShareEmailServiceImpl implements ShareEmailService {
 	
 			DisplayableContent displayableContent = contentBuilder.build(template, dataRecord, ctx);
 	
-			docUrlPopulator.populateUnsecureUrl(displayableContent, data.getEmailId());
-			textLinkProcessor.process(displayableContent, template, data.getEmailId());
-	
-			ShareContentVelocityInput mailInput = mailInputBuilder.build(
-					data.getEmailId(), displayableContent, data.getEmailCustomContent(), view);
-	
-			emailSent = mailService.sendHtmlEmail(mailInput, data.getEmailId(), "shareContent");
-	
-			// Audit content sharing
-			ActivityLogger.auditContentShare(templateId, displayableContent, data.getEmailId(),
-					ShareMedium.WEB, Channel.EMAIL, mailInput.getIdentity(), displayableContent.getTitle());
+			List<String> emailIds = new ArrayList<>();
+			
+			if (StringUtil.hasText(data.getEmailId())) {
+				emailIds.add(data.getEmailId());
+			}
+			
+			if (CollectionUtil.isNotEmpty(data.getEmailIds())) {
+				emailIds.addAll(data.getEmailIds());
+			}
+			
+			for (String emailId : emailIds) {
+				
+				docUrlPopulator.populateUnsecureUrl(displayableContent, emailId);
+				textLinkProcessor.process(displayableContent, template, emailId);
+		
+				ShareContentVelocityInput mailInput = mailInputBuilder.build(
+						emailId, displayableContent, data.getEmailCustomContent(), view);
+		
+				emailSent = mailService.sendHtmlEmail(mailInput, emailId, "shareContent");
+		
+				// Audit content sharing
+				ActivityLogger.auditContentShare(templateId, displayableContent, emailId,
+						ShareMedium.WEB, Channel.EMAIL, mailInput.getIdentity(), 
+						displayableContent.getTitle());
+			}
 		}
 		
 		return emailSent;

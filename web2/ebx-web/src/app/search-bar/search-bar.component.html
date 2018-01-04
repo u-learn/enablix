@@ -1,6 +1,6 @@
 <div class="search-bar" [class.sb-active]="showOptions" (clickOutside)="hideSearchBar()">
     <div class="input-row">
-        <img class="search-icon" [src]="showOptions ? '/assets/images/icons/search-blue.svg' : '/assets/images/icons/search-grey.svg'" (click)="toggleSearchBar()">
+        <img class="search-icon" [src]="showOptions ? '/assets/images/icons/search-blue.svg' : '/assets/images/icons/search-grey.svg'">
         <!-- inject any tags -->
         <div class="selectedTagsHolder">
             <div class="pills-container" *ngIf="searchBarData && searchBarData.context">
@@ -25,7 +25,7 @@
             </div>
         </div>
         <input type="text" [formControl]="textCtrl"  placeholder="Search" (focus)="showSearchBar()" ng-change="updateFilters()" > 
-        <img class="funnel-icon" [src]="showOptions ? '/assets/images/icons/filter.svg' : '/assets/images/icons/filter-grey.svg'" (click)="showSearchBar()">
+        <img class="funnel-icon" [src]="showOptions ? '/assets/images/icons/filter.svg' : '/assets/images/icons/filter-grey.svg'" (click)="toggleSearchBar()">
     </div>
     
     <div class="filtered-rows" [hidden]="!showOptions" *ngIf="(searchBarData && searchBarData.datasets && searchBarData.datasets.length > 0) || (freeText && freeText.length > 0)">

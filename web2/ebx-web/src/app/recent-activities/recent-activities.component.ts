@@ -62,8 +62,8 @@ export class RecentActivitiesComponent implements OnInit {
   }
 
   getIconUrl(act: any) : string {
-    return environment.baseAPIUrl + "/doc/icon/r/" 
-      + act.activity.containerQId + "/" + act.activity.itemIdentity + "/";
+    return environment.baseAPIUrl + (act.activity.docIdentity ? ("/doc/icon/d/" + act.activity.docIdentity + "/") :
+      ("/doc/icon/r/" + act.activity.containerQId + "/" + act.activity.itemIdentity + "/"));
   }
 
   getContentColor(act: any) : string {

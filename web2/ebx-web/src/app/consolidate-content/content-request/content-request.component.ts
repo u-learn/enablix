@@ -44,7 +44,7 @@ export class ContentRequestComponent extends ContentRequestListComponent impleme
 
     super.initComponent()
 
-    this.filters = { requestState: ConsolidateContentService.STATE_PENDING_APPROVAL };
+    this.filters = { requestState: ContentWorkflowService.STATE_PENDING_APPROVAL };
 
     this.fetchData();
     
@@ -59,33 +59,56 @@ class ContentRequestActions implements TableActionConfig<any> {
 
   actions: TableAction<any>[];
 
-  constructor(comp: ContentRequestComponent) {
-    
-    this.component = comp;
-    this.actions = [
-      {
-        label: "Approve",
-        iconClass: "approve",
-        successMessage: "Approved",
-        execute: (selectedRecords: any[]) => {
-          return this.component.approveRecords(selectedRecords);
-        }
-      },
-      {
-        label: "Reject",
-        iconClass: "reject",
-        successMessage: "Rejected",
-        execute: (selectedRecords: any[]) => {
-          return this.component.rejectRecords(selectedRecords);
-        }
-      }
-    ];
+  approveAction: TableAction<any> = {
+    label: "Approve",
+    iconClass: "approve",
+    successMessage: "Approved",
+    execute: (selectedRecords: any[]) => {
+      return this.component.approveRecords(selectedRecords);
+    }
+  };
 
+  rejectAction: TableAction<any> = {
+    label: "Reject",
+    iconClass: "reject",
+    successMessage: "Rejected",
+    execute: (selectedRecords: any[]) => {
+      return this.component.rejectRecords(selectedRecords);
+    }
+  }
+
+  withdrawAction: TableAction<any> = {
+    label: "Withdraw",
+    iconClass: "withdraw",
+    successMessage: "Withdrawn",
+    execute: (selectedRecords: any[]) => {
+      return this.component.withdrawRecords(selectedRecords);
+    }
+  }
+
+  constructor(comp: ContentRequestComponent) {
+    this.component = comp;
   }
 
   getAvailableActions(selectedRecords: any[]) : TableAction<any>[] {
-    console.log(selectedRecords);
-    return selectedRecords && selectedRecords.length > 0 ? this.actions : [];
+    let actions: TableAction<any>[] = [];
+    
+    if (this.component.contentWFService.isActionAllowedForAllRecords(
+          ContentWorkflowService.ACTION_APPROVE, selectedRecords)) {
+      actions.push(this.approveAction);
+    }
+
+    if (this.component.contentWFService.isActionAllowedForAllRecords(
+          ContentWorkflowService.ACTION_REJECT, selectedRecords)) {
+      actions.push(this.rejectAction);
+    }
+
+    if (this.component.contentWFService.isActionAllowedForAllRecords(
+          ContentWorkflowService.ACTION_WITHDRAW, selectedRecords)) {
+      actions.push(this.withdrawAction);
+    }
+
+    return selectedRecords && selectedRecords.length > 0 ? actions : [];
   }
 
 }

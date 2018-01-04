@@ -25,6 +25,7 @@ export class BizDimensionDetailComponent implements OnInit, AfterViewInit {
   record: any;
   container: Container;
   children: ContentRecordGroup[] = [];
+  noChildren: boolean = false;
 
   constructor(private contentService: ContentService,
               private alert: AlertService,
@@ -67,6 +68,7 @@ export class BizDimensionDetailComponent implements OnInit, AfterViewInit {
                 }
 
                 this.children = res.filter(cg => cg.contentQId != cQId);
+                this.noChildren = (!this.children || this.children.length == 0);
               }
             );
     });

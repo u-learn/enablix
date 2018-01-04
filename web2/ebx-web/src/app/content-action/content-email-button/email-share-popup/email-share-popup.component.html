@@ -1,0 +1,23 @@
+<form #Form="ngForm">
+<div class="popup-wrapper">
+  <div class="header">
+    <h1>Email</h1>
+  </div>
+  <div class="form-input compact">
+    <div class="input-control">
+      <ebx-select [formControl]="membersCtrl"
+            placeholder="Email Id"
+            [options]="members" [multi]="true"></ebx-select>
+    </div>
+  </div>
+  <div class="form-input compact">
+    <div class="input-control">
+      <textarea placeholder="Message (optional)" name="message" [(ngModel)]="message"></textarea>
+    </div>
+  </div>
+  <div class="actionBtns">
+    <button class="action" (click)="send()">Send</button>
+    <button class="cancel" mat-dialog-close>Cancel</button>
+  </div>
+</div>
+</form>

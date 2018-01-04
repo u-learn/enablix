@@ -32,8 +32,6 @@ export class BizContentComponent implements OnInit, AfterViewInit {
   approvalWFRequired: boolean = false;
   isDraft: boolean = false;
 
-  contentSource: string;
-
   contentRequest: any;
 
   private sub: any;
@@ -44,7 +42,8 @@ export class BizContentComponent implements OnInit, AfterViewInit {
   boundedItems: ContentItem[];
   title: string;
 
-  addnActions: RecordAction[] = [];
+  enableApproveAction = false;
+  enableRejectAction = false;
 
   constructor(private route: ActivatedRoute, private contentService: ContentService,
               private alert: AlertService, private contentTemplate: ContentTemplateService,
@@ -84,15 +83,11 @@ export class BizContentComponent implements OnInit, AfterViewInit {
             let crIdentity = params['crIdentity'];
             
             if (crIdentity) {
-            
+
               this.contentWFService.getContentRequest(crIdentity).subscribe((res: any) => {
                 this.contentRequest = res;
                 this.container = this.contentTemplate.getConcreteContainerByQId(res.objectRef.contentQId);
-                this.record = res.objectRef.data;
-            
-                this.contentService.decorateRecord(this.container, this.record);
-                this.initState();
-
+                this.initContentRequest();
               }, err => {
                 this.alert.error("Error fetching record details", err.status);
               });
@@ -106,6 +101,21 @@ export class BizContentComponent implements OnInit, AfterViewInit {
       this.initState();
     }
 
+  }
+
+  initContentRequest() {
+
+    this.record = this.contentRequest.objectRef.data;
+    this.isDraft = this.contentRequest.currentState.stateName == 'DRAFT';
+
+    this.enableApproveAction = this.contentWFService.isActionAllowed(
+      ContentWorkflowService.ACTION_APPROVE, this.contentRequest);
+
+    this.enableRejectAction = this.contentWFService.isActionAllowed(
+      ContentWorkflowService.ACTION_REJECT, this.contentRequest);
+    
+    this.contentService.decorateRecord(this.container, this.record);
+    this.initState();
   }
 
   updateRecordLocalCopy(rec: any) {
@@ -139,17 +149,18 @@ export class BizContentComponent implements OnInit, AfterViewInit {
                               (this.record.__decoration.__thumbnailUrl || 
                                 this.container.textItemId != item.id) );
 
-      if (this.record.__decoration && this.record.__decoration.__docMetadata) {
-        this.contentSource = this.record.__decoration.__docMetadata.name;
-      }
-
       this.boundedItems = this.container.contentItem.filter(item => item.bounded);
     }
 
     if (this.record) {
-      this.isNewRec = !this.record.identity;
+      this.isNewRec = !this.record.identity && (!this.contentRequest);
       this.updateRecordLocalCopy(this.record);
     }
+  }
+
+  onContentUpdate() {
+    this.contentService.decorateRecord(this.container, this.record);
+    this.record = JSON.parse(JSON.stringify(this.record));
   }
 
   publishContent() {
@@ -157,6 +168,10 @@ export class BizContentComponent implements OnInit, AfterViewInit {
     if (this.approvalWFRequired) {
 
       this.submitWFContent(false);
+
+    } else if (this.isDraft) {
+
+      this.publishWFContent();
 
     } else {
 
@@ -185,11 +200,28 @@ export class BizContentComponent implements OnInit, AfterViewInit {
 
   submitWFContent(draftSave: boolean) {
     this.contentWFService.submitContent(this.container.qualifiedId, this.record, draftSave, null).subscribe((res: any) => {
-      this.alert.success("Saved successfully!");
-      this.editing = false;
-      this.navService.goToContentRequestDetail(res.identity);
+      this.processWFResponse(res);
     }, error => {
       this.alert.error("Error saving data.", error.status);  
+    });
+  }
+
+  processWFResponse(res: any) {
+    this.alert.success("Saved successfully!");
+    this.editing = false;
+    this.contentRequest = res;
+
+    this.initContentRequest();
+    this.navService.goToContentRequestDetail(res.objectRef.identity);
+  }
+
+  publishWFContent() {
+    this.contentWFService.publishContentRequest(this.contentRequest.objectRef.identity, this.container.qualifiedId, this.record, null).subscribe((res: any) => {
+      this.alert.success("Saved successfully!");
+      this.navService.goToContentDetail(
+                this.container.qualifiedId, res.objectRef.data.identity);
+    }, error => {
+      this.alert.error("Error publishing data.", error.status);  
     });
   }
 

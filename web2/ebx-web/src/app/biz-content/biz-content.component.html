@@ -11,11 +11,16 @@
                 <p class="show-me">Edit</p>
             </div>
             <ebx-content-delete-button class="action-btn" [container]="container" [record]="record" contentType="Asset" [crRecord]="contentRequest"></ebx-content-delete-button>
-            <div class="divider"></div>
+            <div class="divider" *ngIf="!contentRequest"></div>
             <ebx-content-email-button *ngIf="!contentRequest" class="action-btn" [container]="container" [record]="record" ></ebx-content-email-button>
             <div class="divider"></div>
             <ebx-copy-portal-url-button *ngIf="!contentRequest" class="action-btn" [container]="container" [record]="record"></ebx-copy-portal-url-button>
             <ebx-doc-download-button *ngIf="record?.__decoration?.__docMetadata" class="action-btn" [container]="container" [record]="record"></ebx-doc-download-button>
+            <ng-container *ngIf="contentRequest && !isDraft && !editing && (enableApproveAction || enableRejectAction)">
+              <div class="divider"></div>
+              <ebx-content-req-approve-button *ngIf="enableApproveAction" class="action-btn" [container]="container" [crRecord]="contentRequest"></ebx-content-req-approve-button>
+              <ebx-content-req-reject-button *ngIf="enableRejectAction" class="action-btn" [container]="container" [crRecord]="contentRequest"></ebx-content-req-reject-button>
+            </ng-container>
         </div>
     </div>
 
@@ -43,11 +48,14 @@
     <div class="assets-container flex-row" *ngIf="record">
       <div class="left">
           <h1 *ngIf="editing" contenteditable="true" class="editable" [(ngModel)]="record[container.titleItemId]"></h1>
-          <h1 *ngIf="!editing">{{record.__title}}</h1>
-          <p class="label">Last updated {{record.modifiedAt | ebxDate}}</p>
-          <div class="row" *ngIf="contentSource">
+          <h1 *ngIf="!editing" [innerHtml]="record[container.titleItemId]"></h1>
+          <p class="label">Last updated {{(contentRequest ? contentRequest.modifiedAt : record.modifiedAt) | ebxDate}}</p>
+          <div class="row" *ngIf="record?.__decoration?.__docMetadata?.name || (container.docItemId && editing)">
               <p class="label">Source</p>
-              <div class="text">{{contentSource}}</div>
+              <div class="text">{{record?.__decoration?.__docMetadata?.name}}</div>
+              <div class="dashboard-buttons" *ngIf="editing">
+                <ebx-doc-update-button class="action-btn" [container]="container" [record]="record" (onDocUpdate)="onContentUpdate()"></ebx-doc-update-button>
+              </div>
           </div>
           <ng-container *ngFor="let item of inputItems">
             <div class="row" [hidden]="!editing && !hasValue(record[item.id])">

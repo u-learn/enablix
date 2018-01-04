@@ -92,31 +92,37 @@ export class ContentRequestListComponent {
 
     let requestList: ContentRequestDetail[] = this.txToContentRequestDetail(selectedRecords);
 
-    return this.contentWFService.publishContentRequestList(requestList).map(res => {
+    let response = this.contentWFService.publishContentRequestList(requestList).share();
+    response.subscribe(res => {
         this.alert.success("Content published successfully.");
         this.fetchData();
       }, err => {
         this.alert.error("Unable to publish. Please try later.", err.status);
       });
+
+    return response;
   }
 
   deleteRecords(selectedRecords: any[]) : Observable<any> {
 
     let requestList: SimpleActionInput[] = this.txToSimpleActionInput(selectedRecords);
 
-    return this.contentWFService.deleteContentRequestList(requestList).map(res => {
+    let response = this.contentWFService.deleteContentRequestList(requestList).share();
+    response.subscribe(res => {
         this.alert.success("Content deleted.");
         this.fetchData();
       }, err => {
         this.alert.error("Unable to delete. Please try later.", err.status);
       });
+
+    return response;
   }
 
   approveRecords(selectedRecords: any[]) : Observable<any> {
 
     let requestList: SimpleActionInput[] = this.txToSimpleActionInput(selectedRecords);
 
-    let response = this.contentWFService.approveContentRequestList(requestList);
+    let response = this.contentWFService.approveContentRequestList(requestList).share();
     response.subscribe(res => {
         this.alert.success("Content approved.");
         this.fetchData();
@@ -131,13 +137,32 @@ export class ContentRequestListComponent {
 
     let requestList: SimpleActionInput[] = this.txToSimpleActionInput(selectedRecords);
 
-    return this.contentWFService.deleteContentRequestList(requestList).map(res => {
+    let response = this.contentWFService.rejectContentRequestList(requestList).share();
+    response.subscribe(res => {
         this.alert.success("Content rejected.");
         this.fetchData();
         return res;
       }, err => {
         this.alert.error("Unable to reject. Please try later.", err.status);
       });
+
+    return response;
+  }
+
+  withdrawRecords(selectedRecords: any[]) : Observable<any> {
+    
+    let requestList: SimpleActionInput[] = this.txToSimpleActionInput(selectedRecords);
+
+    let response = this.contentWFService.withdrawContentRequestList(requestList).share();
+    response.subscribe(res => {
+        this.alert.success("Content request withdrawn.");
+        this.fetchData();
+        return res;
+      }, err => {
+        this.alert.error("Unable to withdraw requests. Please try later.", err.status);
+      });
+
+    return response;
   }
 
   txToSimpleActionInput(selectedRecords: any[]) : SimpleActionInput[] {

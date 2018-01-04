@@ -29,6 +29,8 @@ export class UploadFileComponent implements OnInit {
   filename: string;
   fileInfo: FileUploadInfo;
 
+  newContent: boolean = true;
+
   constructor(private dialogRef: MatDialogRef<UploadFileComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any,
               private fileService: FileService, private alert: AlertService,
@@ -39,14 +41,14 @@ export class UploadFileComponent implements OnInit {
 
   ngOnInit() {
     
-    // this.fileInput.nativeElement.click();
-    
     if (!this.data.file) {
 
       this.dialogRef.close();
 
     } else {
       
+      this.newContent = !this.data.updateOperation;
+
       this.fileInfo = new FileUploadInfo();
       this.fileInfo.title = this.data.file.name;
       this.uploadFile();
@@ -106,5 +108,9 @@ export class UploadFileComponent implements OnInit {
     this.newContentService.captureFileContent(this.fileInfo);
     this.navService.goToNewContentEdit(this.fileInfo.containerQId);
     this.dialogRef.close();
+  }
+
+  updateFile() {
+    this.dialogRef.close(this.fileInfo);
   }
 }

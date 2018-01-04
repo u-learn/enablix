@@ -29,6 +29,15 @@
         padding-top: 56px;
 
     }
+    
+    .no-data {
+        border-top: 1px solid rgba(0,0,0,0.03);
+        padding-top: 32px;
+        font-family: $FPLight;
+        font-size: 16px;
+        color: $grey-dark;
+        line-height: 17px;
+    }
 
     .card.with-flex{
         justify-content: flex-start!important;

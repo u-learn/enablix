@@ -12,7 +12,7 @@ import { AlertService } from '../../core/alert/alert.service';
 })
 export class FileImagesPreviewComponent implements OnInit {
 
-  @Input() record: any;
+  _record: any;
 
   activeSlide: Slide;
   slides: Slide[] = [];
@@ -22,8 +22,22 @@ export class FileImagesPreviewComponent implements OnInit {
     this.activeSlide = new Slide();
   }
 
+  @Input()
+  set record(rec: any) {
+    this._record = rec;
+    this.initPreview();
+  }
+
+  get record() {
+    return this._record;
+  }
+
   ngOnInit() {
 
+  }
+
+  initPreview() {
+    
     if (this.record.__decoration && this.record.__decoration.__docMetadata 
           && this.record.__decoration.__docMetadata.identity) {
       
@@ -47,7 +61,6 @@ export class FileImagesPreviewComponent implements OnInit {
               }
             );
     }
-
   }
 
   selectSlide(indx: number) {

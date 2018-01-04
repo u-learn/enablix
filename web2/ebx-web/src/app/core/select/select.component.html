@@ -8,8 +8,11 @@
                 <img src="/assets/images/icons/close-white.svg">                
               </a>
             </div>
+            <input #textInput class="text-input" type="text" [placeholder]="placeholder" (focus)="showOptions()" [formControl]="selectCtrl"> 
         </div>
-        <input #textInput class="text-input" type="text" [placeholder]="placeholder" (focus)="showOptions()" [formControl]="selectCtrl"> 
+        <ng-container *ngIf="!multi">
+            <input #textInput class="text-input" type="text" [placeholder]="placeholder" (focus)="showOptions()" [formControl]="selectCtrl"> 
+        </ng-container>
     </div>
     <div class="option-rows" [hidden]="!optionsVisible">
         <div class="option-row" *ngFor="let opt of filteredOptions | async" (click)="updateSelection(opt)">

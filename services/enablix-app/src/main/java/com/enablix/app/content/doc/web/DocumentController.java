@@ -23,7 +23,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.enablix.app.content.ContentDataManager;
 import com.enablix.app.content.doc.DocumentManager;
 import com.enablix.app.template.service.TemplateManager;
-import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.commons.dms.api.DocPreviewData;
 import com.enablix.commons.dms.api.Document;
 import com.enablix.commons.dms.api.DocumentMetadata;
@@ -51,6 +50,8 @@ import com.enablix.services.util.DataViewUtil;
 @RestController
 @RequestMapping("doc")
 public class DocumentController {
+
+	private static final String ONE_PX_SVG = "/assets/images/icons/one-px.svg";
 
 	private static final String TEXT_CONTENT_IMG = "/assets/images/icons/text-icon.png";
 	
@@ -217,7 +218,7 @@ public class DocumentController {
    	}
     
     @RequestMapping(value = "/icon/r/{contentQId}/{recIdentity}/", method = {RequestMethod.GET})
-   	public void getPreviewDataIcon(HttpServletRequest request,
+   	public void getRecordPreviewIcon(HttpServletRequest request,
                HttpServletResponse response, 
                @PathVariable String contentQId,
                @PathVariable String recIdentity ) throws IOException {
@@ -257,8 +258,30 @@ public class DocumentController {
     		if (template.isTextContainer(container)) {
     			response.sendRedirect(TEXT_CONTENT_IMG);
     		} else {
-    			response.sendRedirect("/assets/images/icons/one-px.svg");
+    			response.sendRedirect(ONE_PX_SVG);
     		}
+    	}
+       	
+   	}
+
+    @RequestMapping(value = "/icon/d/{docIdentity}/", method = {RequestMethod.GET})
+   	public void getDocPreviewDataIcon(HttpServletRequest request,
+               HttpServletResponse response, 
+               @PathVariable String docIdentity) throws IOException {
+       	
+    	boolean iconFound = false;
+    	
+		if (StringUtil.hasText(docIdentity)) {
+		
+			IDocument part = previewService.getDocSmallThumbnail(docIdentity);
+			if (part != null) {
+				sendDownloadResponse(response, part);
+				iconFound = true;
+			} 
+		}
+    	
+    	if (!iconFound) {
+   			response.sendRedirect(ONE_PX_SVG);
     	}
        	
    	}
@@ -266,7 +289,7 @@ public class DocumentController {
     @SuppressWarnings("unchecked")
 	public String findUrlPreviewImageUrl(Map<String, Object> record) {
 		
-    	Object urls = record.get(ContentDataConstants.CONTENT_URLS_KEY);
+    	Object urls = ContentDataUtil.getEmbeddedUrls(record);
 		
 		if (urls != null) {
 			List<EmbeddedUrl> urlList = (List<EmbeddedUrl>) urls;

@@ -38,7 +38,7 @@ export class ContentTemplateCache {
       if (!this.isLinkedContainer(container)) {
         
         container.titleItemId = this.getContainerLabelAttrId(container.qualifiedId);
-        container.textItemId = this.checkAndGetTextAttrId(container);
+        this.checkAndSetContentTypeItemIds(container);
         this.concreteContainers.push(container);
 
         if (this.isBusinessContent(container)) {
@@ -80,7 +80,7 @@ export class ContentTemplateCache {
     return 'BUSINESS_CONTENT' == container.businessCategory;
   }
 
-  checkAndGetTextAttrId(container: Container) {
+  checkAndSetContentTypeItemIds(container: Container) {
     
     var descItemId = null;
     
@@ -94,11 +94,12 @@ export class ContentTemplateCache {
       if (contentItem.type == 'DOC') {
         // this is a doc item type, nullify item id 
         descItemId = null;
+        container.docItemId = contentItem.id;
         break;
       }
     }
 
-    return descItemId;
+    container.textItemId = descItemId;
   }
 
   getContainerLabelAttrId(containerQId: string) : string {

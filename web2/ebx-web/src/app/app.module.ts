@@ -81,6 +81,11 @@ import { DocStoreIntegrationComponent } from './company/integrations/doc-store-i
 import { DocStoreConfigService } from './company/integrations/doc-store-integration/doc-store-config.service';
 import { ConfigInfoService } from './services/config-info.service';
 import { EntityPillComponent } from './entity-pill/entity-pill.component';
+import { DocUpdateButtonComponent } from './content-action/doc-update-button/doc-update-button.component';
+import { ContentReqApproveButtonComponent } from './content-action/content-req-approve-button/content-req-approve-button.component';
+import { ContentReqRejectButtonComponent } from './content-action/content-req-reject-button/content-req-reject-button.component';
+import { EmailSharePopupComponent } from './content-action/content-email-button/email-share-popup/email-share-popup.component';
+import { ContentShareService } from './services/content-share.service';
 
 @NgModule({
   declarations: [
@@ -139,7 +144,11 @@ import { EntityPillComponent } from './entity-pill/entity-pill.component';
     PaginationComponent,
     TPIntegrationsComponent,
     DocStoreIntegrationComponent,
-    EntityPillComponent
+    EntityPillComponent,
+    DocUpdateButtonComponent,
+    ContentReqApproveButtonComponent,
+    ContentReqRejectButtonComponent,
+    EmailSharePopupComponent
   ],
   imports: [
     BrowserModule,
@@ -170,6 +179,7 @@ import { EntityPillComponent } from './entity-pill/entity-pill.component';
     MembersService,
     DocStoreConfigService,
     ConfigInfoService,
+    ContentShareService,
     { 
         provide: HTTP_INTERCEPTORS, 
         useClass: NgProgressInterceptor, 
@@ -182,7 +192,8 @@ import { EntityPillComponent } from './entity-pill/entity-pill.component';
     UploadTextComponent,
     EditBizDimensionComponent,
     ConfirmDialogComponent,
-    MemberDetailComponent
+    MemberDetailComponent,
+    EmailSharePopupComponent
   ],
   bootstrap: [AppComponent]
 })

@@ -67,4 +67,9 @@ export class MembersService {
     return this.http.post(apiUrl, { identities: userProfileIdentities });
   }
 
+  getAllMembers() {
+    let apiUrl = this.urlService.getAllMembersUrl();
+    return this.http.get(apiUrl);
+  }
+
 }

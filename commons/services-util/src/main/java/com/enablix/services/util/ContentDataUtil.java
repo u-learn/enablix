@@ -243,12 +243,17 @@ public class ContentDataUtil {
 		return listValue;
 	}
 
-	@SuppressWarnings({ "rawtypes", "unchecked" })
+	
 	public static List<EmbeddedUrl> getEmbeddedUrls(ContentDataRecord record) {
+		return getEmbeddedUrls(record.getRecord());
+	}
+
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public static List<EmbeddedUrl> getEmbeddedUrls(Map<String, Object> record) {
 		
 		List<EmbeddedUrl> urls = new ArrayList<>();
 		
-		Object embedUrls = record.getRecord().get(ContentDataConstants.CONTENT_URLS_KEY);
+		Object embedUrls = record.get(ContentDataConstants.CONTENT_URLS_KEY);
 		
 		if (embedUrls != null && embedUrls instanceof Collection) {
 		

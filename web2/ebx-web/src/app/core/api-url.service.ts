@@ -21,6 +21,10 @@ export class ApiUrlService {
   static GET_DEFAULT_DOCSTORE_CONFIG = "/docstore/default";
   static GET_CONFIG_INFO = "/config/:configKey/";
 
+  static GET_CONTENT_WF_STATE_ACTION_MAP = "/contentwf/actionmap/";
+
+  static GET_ALL_MEMBERS = "/systemuser";
+
   static POST_FOR_DATA_SEARCH = "/data/search/t/:domainType/";
   static POST_FOR_CONTAINER_DATA_SEARCH = "/data/search/cq/:containerQId/";
 
@@ -52,7 +56,9 @@ export class ApiUrlService {
 
   static POST_SAVE_DOCSTORE_CONFIG = "/docstore/config";
   static POST_SAVE_CONFIG_INFO = "/config/save";
-  static POST_DELETE_CONFIG_INFO = "/config/delete/:configIdentity/"
+  static POST_DELETE_CONFIG_INFO = "/config/delete/:configIdentity/";
+
+  static POST_SHARE_BY_EMAIL_URL = "/email/sharecontent";
  
   static GET_LOGOUT = "/logout";
 
@@ -182,6 +188,14 @@ export class ApiUrlService {
     return this.getAPIUrl(ApiUrlService.GET_CONFIG_INFO, { configKey: configKey });
   }
 
+  getContentWFStateActionMapUrl() {
+    return this.getAPIUrl(ApiUrlService.GET_CONTENT_WF_STATE_ACTION_MAP);
+  }
+
+  getAllMembersUrl() {
+    return this.getAPIUrl(ApiUrlService.GET_ALL_MEMBERS);
+  }
+
   postCheckUserExistUrl() : string {
     return this.getAPIUrl(ApiUrlService.POST_CHECK_USER_EXIST);
   }
@@ -260,6 +274,10 @@ export class ApiUrlService {
 
   postDeleteConfigInfoUrl(configIdentity: string) : string {
     return this.getAPIUrl(ApiUrlService.POST_DELETE_CONFIG_INFO, { configIdentity:  configIdentity });
+  }
+
+  postShareByEmailUrl() : string {
+    return this.getAPIUrl(ApiUrlService.POST_SHARE_BY_EMAIL_URL);
   }
 
 }

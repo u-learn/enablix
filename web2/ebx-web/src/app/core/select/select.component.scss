@@ -11,7 +11,7 @@
   box-shadow: 0 1px 1px 0 rgba(0,0,0,0.06);
 
   .input-row {
-    height: 42px;
+    min-height: 42px;
     display: flex;
     padding: 0 12px;
 
@@ -24,9 +24,13 @@
       flex-grow: 1; 
     }
 
+    input[type="text"] {
+      width: inherit;
+    }
+
     .pills-container {
       display: flex;
-      padding: 8px 0;
+      padding: 8px 0 0 0;
 
       .pill {
         margin-right: 8px;

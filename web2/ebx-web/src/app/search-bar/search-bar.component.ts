@@ -76,6 +76,7 @@ export class SearchBarComponent implements OnInit {
 
   toggleSearchBar() {
     this.showOptions = !this.showOptions;
+    console.log("search bar show: " + this.showOptions);
   }
 
   hideSearchBar() {

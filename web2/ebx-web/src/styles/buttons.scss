@@ -27,7 +27,6 @@ button {
 }
 
 .dashboard-buttons {
-    float: right;
     display: flex;
     height: 32px;
 
@@ -130,6 +129,10 @@ button {
 
             &.download {
                 background: url("/assets/images/icons/download.svg") no-repeat center;
+            }
+            
+            &.upload-btn {
+                background: url("/assets/images/icons/upload.svg") no-repeat center;
             }
 
             &.website {

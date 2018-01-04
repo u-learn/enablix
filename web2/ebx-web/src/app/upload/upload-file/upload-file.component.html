@@ -1,16 +1,17 @@
-<h1 class="file-title"><span contenteditable="true" [(ngModel)]="fileInfo.title"></span><img src="/assets/images/icons/pencil-grey.svg"/></h1>
+<h1 class="file-title" *ngIf="newContent"><span contenteditable="true" [(ngModel)]="fileInfo.title"></span><img src="/assets/images/icons/pencil-grey.svg"/></h1>
 <div class="preview-img" *ngIf="previewImageUrl">
     <img [src]="previewImageUrl" >
 </div>
 <div class="content-uploading" *ngIf="loading">
   <img src="/assets/images/icons/loading_icon.gif">
 </div>
-<div class="preview-tag">
+<div *ngIf="newContent" class="preview-tag">
   <ebx-select [formControl]="contentTypeCtrl"
       placeholder="Select content type"
       [options]="contentTypes"></ebx-select>
 </div>
 <div class="actionBtns">
-  <button class="action" (click)="captureFile()">Add</button>
+  <button class="action" *ngIf="newContent" (click)="captureFile()">Add</button>
+  <button class="action" *ngIf="!newContent" (click)="updateFile()">Update</button>
   <button class="cancel" mat-dialog-close>Cancel</button>
 </div>
