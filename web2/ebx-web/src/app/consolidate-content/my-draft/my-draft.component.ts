@@ -40,7 +40,7 @@ export class MyDraftComponent extends ContentRequestListComponent implements OnI
 
     this.filters = { 
       requestState: ContentWorkflowService.STATE_DRAFT,
-      createdBy: this.user.getUserIdentity();
+      createdBy: this.user.getUserIdentity()
     };
 
     this.fetchData();
