@@ -30,6 +30,7 @@ import { BoundedInputComponent } from './content/bounded-input/bounded-input.com
 import { DateInputComponent } from './content/date-input/date-input.component';
 import { ContentStackInputComponent } from './content/content-stack-input/content-stack-input.component';
 import { TextFileComponent } from './file/text-file/text-file.component';
+import { AccessDirective } from './auth/access.directive';
 
 @NgModule({
   imports: [
@@ -75,7 +76,8 @@ import { TextFileComponent } from './file/text-file/text-file.component';
     BoundedInputComponent,
     DateInputComponent,
     ContentStackInputComponent,
-    TextFileComponent
+    TextFileComponent,
+    AccessDirective
   ],
   exports: [
     AlertComponent,
@@ -89,7 +91,8 @@ import { TextFileComponent } from './file/text-file/text-file.component';
     SafeHtmlPipe,
     ContentEditableDirective,
     EbxDatePipe,
-    TextFileComponent
+    TextFileComponent,
+    AccessDirective
   ]
 })
 export class CoreModule { }

@@ -99,7 +99,9 @@ export class ContentWorkflowService {
 
   submitContent(contentQId: string, rec: any, saveAsDraft: boolean, notes: any) {
     
-    let uri = this.apiUrlService.postSaveContentDraft();
+    let uri = saveAsDraft ? this.apiUrlService.postSaveContentDraft() : 
+                this.apiUrlService.postSubmitContentRequestUrl();
+                
     let addRequest = !rec.identity;
 
     if (rec.__decoration) {

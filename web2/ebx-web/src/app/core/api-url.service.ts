@@ -36,6 +36,7 @@ export class ApiUrlService {
   static POST_BIZ_CONTENT_SEARCH = '/search/bizcontent/';
   
   static POST_SAVE_CONTENT_DRAFT = '/contentwf/savedraft/';
+  static POST_SUBMIT_CONTENT_REQUEST = "/contentwf/submit/";
   static POST_DISCARD_CONTENT_REQUEST = "/contentwf/discard/";
   static POST_PUBLISH_CONTENT_REQUEST = "/contentwf/publish/";
   static POST_APPROVE_CONTENT_REQUEST = "/contentwf/approve/";
@@ -202,6 +203,10 @@ export class ApiUrlService {
 
   postDiscardContentRequestUrl() : string {
     return this.getAPIUrl(ApiUrlService.POST_DISCARD_CONTENT_REQUEST);
+  }
+
+  postSubmitContentRequestUrl() : string {
+    return this.getAPIUrl(ApiUrlService.POST_SUBMIT_CONTENT_REQUEST);
   }
 
   postSaveContentDraft() : string {

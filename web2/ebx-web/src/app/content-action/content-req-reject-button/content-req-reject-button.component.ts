@@ -18,7 +18,7 @@ export class ContentReqRejectButtonComponent implements OnInit {
   @Input() container: Container;
   @Input() crRecord?: any;
 
-  @Output() onReject = new EventEmitter<boolean>();
+  @Output() onReject = new EventEmitter<any>();
 
   constructor(private contentService: ContentService,
               private alert: AlertService, 
@@ -27,13 +27,13 @@ export class ContentReqRejectButtonComponent implements OnInit {
   ngOnInit() {
   }
 
-  approveRecord() {
+  rejectRecord() {
     
     if (this.crRecord) {
 
-      this.contentWFService.rejectContentRequest(this.crRecord.identity, null).subscribe(res => {
-        this.alert.success("Content rejected.");
-        this.onReject.emit(true);  
+      this.contentWFService.rejectContentRequest(this.crRecord.objectRef.identity, null).subscribe(res => {
+        this.alert.success("Content rejected.", true);
+        this.onReject.emit(res);  
       }, err => {
         this.alert.error("Unable to reject. Please try later.", err.status);
       });

@@ -1,87 +1,90 @@
-  <div class="assets-navbar">
-    <div (click)="goBackHome()">
-        <button class="circle icon-btn">
-            <div class="icon small back"></div>
-        </button>
-    </div>
-    <div *ngIf="!editing">
-        <div class="dashboard-buttons">
-            <div class="action-btn add-padding" (click)="editState()">
+<div class="assets-navbar">
+  <div (click)="goBackHome()">
+      <button class="circle icon-btn">
+          <div class="icon small back"></div>
+      </button>
+  </div>
+  <div *ngIf="!editing">
+      <div class="dashboard-buttons">
+          <ng-container *ebxAccess="'VIEW_STUDIO|SUGGEST_CONTENT'">
+            <div *ngIf="enableEditAction" class="action-btn add-padding" (click)="editState()">
                 <div class="icon small edit"></div>
                 <p class="show-me">Edit</p>
             </div>
-            <ebx-content-delete-button class="action-btn" [container]="container" [record]="record" contentType="Asset" [crRecord]="contentRequest"></ebx-content-delete-button>
-            <div class="divider" *ngIf="!contentRequest"></div>
-            <ebx-content-email-button *ngIf="!contentRequest" class="action-btn" [container]="container" [record]="record" ></ebx-content-email-button>
-            <div class="divider"></div>
+          </ng-container>
+          <ebx-content-delete-button *ngIf="enableDelAction" class="button-wrap" [container]="container" [record]="record" contentType="Asset" [crRecord]="contentRequest"></ebx-content-delete-button>
+          <div class="btn-set" *ngIf="!contentRequest">
+            <ebx-content-email-button [container]="container" [record]="record" ></ebx-content-email-button>
+          </div>
+          <div class="btn-set" *ngIf="contentRequest && !isDraft && !editing && (enableApproveAction || enableRejectAction)">
+            <ebx-content-req-approve-button *ngIf="enableApproveAction" class="action-btn" [container]="container" [crRecord]="contentRequest" (onApprove)="goToContentDetailForRequest($event)"></ebx-content-req-approve-button>
+            <ebx-content-req-reject-button *ngIf="enableRejectAction" class="action-btn" [container]="container" [crRecord]="contentRequest" (onReject)="onReject($event)"></ebx-content-req-reject-button>
+          </div>
+          <div class="btn-set">
             <ebx-copy-portal-url-button *ngIf="!contentRequest" class="action-btn" [container]="container" [record]="record"></ebx-copy-portal-url-button>
             <ebx-doc-download-button *ngIf="record?.__decoration?.__docMetadata" class="action-btn" [container]="container" [record]="record"></ebx-doc-download-button>
-            <ng-container *ngIf="contentRequest && !isDraft && !editing && (enableApproveAction || enableRejectAction)">
-              <div class="divider"></div>
-              <ebx-content-req-approve-button *ngIf="enableApproveAction" class="action-btn" [container]="container" [crRecord]="contentRequest"></ebx-content-req-approve-button>
-              <ebx-content-req-reject-button *ngIf="enableRejectAction" class="action-btn" [container]="container" [crRecord]="contentRequest"></ebx-content-req-reject-button>
-            </ng-container>
-        </div>
-    </div>
+          </div>
+      </div>
+  </div>
 
-    <div *ngIf="editing">
-        <div class="publish-buttons">
-            <button class="publish-btn" (click)="publishContent()">
-                <div class="icon small send"></div>
-                <p class="btn-text">Publish</p>
-            </button>
-            <button class="publish-btn" *ngIf="isNewRec || isDraft" (click)="saveDraft()">
-                <div class="icon small save"></div>
-                <p class="btn-text">Save as Draft</p>
-            </button>
-            <button class="publish-btn white" (click)="cancelEdit()">
-                <div class="icon small cancel"></div>
-                <p class="btn-text">Cancel</p>
-            </button>
-        </div>
-    </div>
-    <div class="far-right">
-        <ebx-user-icon></ebx-user-icon>
-    </div>
+  <div *ngIf="editing">
+      <div class="publish-buttons">
+          <button class="publish-btn" (click)="publishContent()">
+              <div class="icon small send"></div>
+              <p class="btn-text">Publish</p>
+          </button>
+          <button class="publish-btn" *ngIf="isNewRec || isDraft" (click)="saveDraft()">
+              <div class="icon small save"></div>
+              <p class="btn-text">Save as Draft</p>
+          </button>
+          <button class="publish-btn white" (click)="cancelEdit()">
+              <div class="icon small cancel"></div>
+              <p class="btn-text">Cancel</p>
+          </button>
+      </div>
   </div>
-  <div class="container">
-    <div class="assets-container flex-row" *ngIf="record">
-      <div class="left">
-          <h1 *ngIf="editing" contenteditable="true" class="editable" [(ngModel)]="record[container.titleItemId]"></h1>
-          <h1 *ngIf="!editing" [innerHtml]="record[container.titleItemId]"></h1>
-          <p class="label">Last updated {{(contentRequest ? contentRequest.modifiedAt : record.modifiedAt) | ebxDate}}</p>
-          <div class="row" *ngIf="record?.__decoration?.__docMetadata?.name || (container.docItemId && editing)">
-              <p class="label">Source</p>
-              <div class="text">{{record?.__decoration?.__docMetadata?.name}}</div>
-              <div class="dashboard-buttons" *ngIf="editing">
-                <ebx-doc-update-button class="action-btn" [container]="container" [record]="record" (onDocUpdate)="onContentUpdate()"></ebx-doc-update-button>
-              </div>
-          </div>
-          <ng-container *ngFor="let item of inputItems">
-            <div class="row" [hidden]="!editing && !hasValue(record[item.id])">
-                <ebx-content-item [record]="record" [contentItem]="item" [editable]="editing"></ebx-content-item>
+  <div class="far-right">
+      <ebx-user-icon></ebx-user-icon>
+  </div>
+</div>
+<div class="container">
+  <div class="assets-container flex-row" *ngIf="record">
+    <div class="left">
+        <h1 *ngIf="editing" contenteditable="true" class="editable" [(ngModel)]="record[container.titleItemId]"></h1>
+        <h1 *ngIf="!editing" [innerHtml]="record[container.titleItemId]"></h1>
+        <p class="label">Last updated {{(contentRequest ? contentRequest.modifiedAt : record.modifiedAt) | ebxDate}}</p>
+        <div class="row" *ngIf="record?.__decoration?.__docMetadata?.name || (container.docItemId && editing)">
+            <p class="label">Source</p>
+            <div class="text">{{record?.__decoration?.__docMetadata?.name}}</div>
+            <div class="dashboard-buttons" *ngIf="editing">
+              <ebx-doc-update-button class="action-btn" [container]="container" [record]="record" (onDocUpdate)="onContentUpdate()"></ebx-doc-update-button>
             </div>
-          </ng-container>
-          <div class="row">
-              <p class="label">Content Type</p>
-              <div class="tags-container">
-                <ebx-type-pill [containerQId]="container?.qualifiedId" [navigable]="true"></ebx-type-pill>
-              </div>
+        </div>
+        <ng-container *ngFor="let item of inputItems">
+          <div class="row" [hidden]="!editing && !hasValue(record[item.id])">
+              <ebx-content-item [record]="record" [contentItem]="item" [editable]="editing"></ebx-content-item>
           </div>
-          <ebx-content-tags [record]="record" [tagItems]="boundedItems" [editing]="editing"></ebx-content-tags>
-          <!-- <div class="row with-height">
-              <p class="label">Properties</p>
-              <div class="sectors-container">
-                  <div class="dashboard-buttons no-float">
-                      <div class="action-btn">
-                          <div class="icon small plus"></div>
-                      </div>
-                  </div>
-              </div>
-          </div> -->
-      </div>
-      <div class="right">
-          <ebx-content-preview [record]="record" [container]="container" [editing]="editing"></ebx-content-preview>
-      </div>
+        </ng-container>
+        <div class="row">
+            <p class="label">Content Type</p>
+            <div class="tags-container">
+              <ebx-type-pill [containerQId]="container?.qualifiedId" [navigable]="true"></ebx-type-pill>
+            </div>
+        </div>
+        <ebx-content-tags [record]="record" [tagItems]="boundedItems" [editing]="editing"></ebx-content-tags>
+        <!-- <div class="row with-height">
+            <p class="label">Properties</p>
+            <div class="sectors-container">
+                <div class="dashboard-buttons no-float">
+                    <div class="action-btn">
+                        <div class="icon small plus"></div>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+    </div>
+    <div class="right">
+        <ebx-content-preview [record]="record" [container]="container" [editing]="editing"></ebx-content-preview>
     </div>
   </div>
+</div>

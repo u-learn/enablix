@@ -42,6 +42,9 @@ export class BizContentComponent implements OnInit, AfterViewInit {
   boundedItems: ContentItem[];
   title: string;
 
+  enableEditAction = true;
+  enableDelAction = true;
+
   enableApproveAction = false;
   enableRejectAction = false;
 
@@ -113,6 +116,12 @@ export class BizContentComponent implements OnInit, AfterViewInit {
 
     this.enableRejectAction = this.contentWFService.isActionAllowed(
       ContentWorkflowService.ACTION_REJECT, this.contentRequest);
+
+    this.enableEditAction = this.contentWFService.isActionAllowed(
+      ContentWorkflowService.ACTION_EDIT, this.contentRequest);
+
+    this.enableDelAction = this.contentWFService.isActionAllowed(
+      ContentWorkflowService.ACTION_DISCARD, this.contentRequest);
     
     this.contentService.decorateRecord(this.container, this.record);
     this.initState();
@@ -198,8 +207,19 @@ export class BizContentComponent implements OnInit, AfterViewInit {
     }
   }
 
+  goToContentDetailForRequest(res: any) {
+    this.navService.goToContentDetail(
+      this.container.qualifiedId, res.objectRef.data.identity);
+  }
+
+  onReject(res: any) {
+    this.processWFResponse(res);
+  }
+
   submitWFContent(draftSave: boolean) {
     this.contentWFService.submitContent(this.container.qualifiedId, this.record, draftSave, null).subscribe((res: any) => {
+      this.alert.success("Saved successfully!");
+      this.editing = false;
       this.processWFResponse(res);
     }, error => {
       this.alert.error("Error saving data.", error.status);  
@@ -207,8 +227,7 @@ export class BizContentComponent implements OnInit, AfterViewInit {
   }
 
   processWFResponse(res: any) {
-    this.alert.success("Saved successfully!");
-    this.editing = false;
+    
     this.contentRequest = res;
 
     this.initContentRequest();
@@ -218,8 +237,7 @@ export class BizContentComponent implements OnInit, AfterViewInit {
   publishWFContent() {
     this.contentWFService.publishContentRequest(this.contentRequest.objectRef.identity, this.container.qualifiedId, this.record, null).subscribe((res: any) => {
       this.alert.success("Saved successfully!");
-      this.navService.goToContentDetail(
-                this.container.qualifiedId, res.objectRef.data.identity);
+      this.goToContentDetailForRequest(res);
     }, error => {
       this.alert.error("Error publishing data.", error.status);  
     });

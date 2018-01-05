@@ -38,6 +38,24 @@ button {
         }
     }
 
+    .button-wrap {
+        .action-btn {
+            margin-left: 8px;
+        }
+    }
+
+    .btn-set {
+        display: flex;
+
+        &::before {
+            content: "";
+            height: 32px;
+            width: 1px;
+            background: rgba(0, 0, 0, 0.03);
+            margin: 0 16px;
+        }
+    }
+
     .action-btn {
         display: flex;
         background: white;

@@ -18,7 +18,7 @@ export class ContentReqApproveButtonComponent implements OnInit {
   @Input() container: Container;
   @Input() crRecord?: any;
 
-  @Output() onApprove = new EventEmitter<boolean>();
+  @Output() onApprove = new EventEmitter<any>();
 
   constructor(private contentService: ContentService,
               private alert: AlertService, 
@@ -31,9 +31,9 @@ export class ContentReqApproveButtonComponent implements OnInit {
     
     if (this.crRecord) {
 
-      this.contentWFService.approveContentRequest(this.crRecord.identity, null).subscribe(res => {
-        this.alert.success("Content approved.");
-        this.onApprove.emit(true);  
+      this.contentWFService.approveContentRequest(this.crRecord.objectRef.identity, null).subscribe(res => {
+        this.alert.success("Content approved.", true);
+        this.onApprove.emit(res);  
       }, err => {
         this.alert.error("Unable to approve. Please try later.", err.status);
       });

@@ -34,7 +34,7 @@ export class UserService {
   }
 
   getUserIdentity() {
-    return this.user ? this.user.principal.userProfile.identity : null;
+    return this.user ? this.user.principal.user.identity : null;
   }
 
   userHasPermission(checkPerm: string) {
