@@ -90,6 +90,10 @@ class SimplePermissionCheck implements PermissionCheck {
 
   check(user: any) : boolean {
 
+    if (!this.perm || this.perm.trim().length == 0) {
+      return true;
+    }
+
     if (user && user.authorities) {
              
        var permissions = user.authorities;

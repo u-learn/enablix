@@ -217,13 +217,26 @@ export class BizContentComponent implements OnInit, AfterViewInit {
   }
 
   submitWFContent(draftSave: boolean) {
-    this.contentWFService.submitContent(this.container.qualifiedId, this.record, draftSave, null).subscribe((res: any) => {
-      this.alert.success("Saved successfully!");
-      this.editing = false;
-      this.processWFResponse(res);
-    }, error => {
-      this.alert.error("Error saving data.", error.status);  
-    });
+    
+    if (this.isDraft && draftSave) {
+      // record edit action
+      this.contentWFService.editContentRequest(this.contentRequest.objectRef.identity, this.container.qualifiedId, this.record, null).subscribe((res: any) => {
+        this.alert.success("Saved successfully!");
+        this.editing = false;
+        this.processWFResponse(res);
+      }, error => {
+        this.alert.error("Error saving data.", error.status);  
+      });
+
+    } else {
+      this.contentWFService.submitContent(this.container.qualifiedId, this.record, draftSave, null).subscribe((res: any) => {
+        this.alert.success("Saved successfully!");
+        this.editing = false;
+        this.processWFResponse(res);
+      }, error => {
+        this.alert.error("Error saving data.", error.status);  
+      });
+    }
   }
 
   processWFResponse(res: any) {

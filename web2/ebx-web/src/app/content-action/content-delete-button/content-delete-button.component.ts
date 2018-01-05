@@ -61,7 +61,7 @@ export class ContentDeleteButtonComponent implements OnInit {
     
     if (this.crRecord) {
 
-      this.contentWFService.deleteContentRequest(this.crRecord.identity).subscribe(res => {
+      this.contentWFService.deleteContentRequest(this.crRecord.objectRef.identity).subscribe(res => {
         this.alert.success("Deleted successfully.");
         this.onDelete.emit(true);  
       }, err => {
