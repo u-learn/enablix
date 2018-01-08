@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<contentTemplate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.26" id="haystax_enterprise" xsi:noNamespaceSchemaLocation="../../xsd/content-template.xsd">
+<contentTemplate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.27" id="haystax_enterprise" xsi:noNamespaceSchemaLocation="../../xsd/content-template.xsd">
 	<dataDefinition>
 		<container id="product" label="Products" businessCategory="BUSINESS_DIMENSION">
 			<contentItem id="name" label="Name" type="text" searchBoost="7"/>
@@ -265,7 +265,8 @@
 			<container id="custSalesDeck" label="Presentations" linkContainerQId="salesDeck" linkContentItemId="customers"/>
 			<container id="custPress" label="Press" linkContainerQId="press" linkContentItemId="customers"/>
 			<container id="custPMPlaybook" label="Program Management Playbooks" linkContainerQId="pmplaybook" linkContentItemId="customers"/>							
-			<container id="custProposal" label="Proposals" linkContainerQId="proposal" linkContentItemId="customers"/>												
+			<container id="custProposal" label="Proposals" linkContainerQId="proposal" linkContentItemId="customers"/>							
+			<container id="custPROV" label="Proof of Value" linkContainerQId="prov" linkContentItemId="customers"/>														
 			<container id="opportunity" label="Sales Opportunities">
 				<contentItem id="title" label="Opportunity Title" type="text" searchBoost="7"/>
 				<contentItem id="id" label="Opportunity ID" type="text" searchBoost="7"/>
@@ -2836,6 +2837,17 @@
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="file" label="File" type="doc"/>
 			<contentItem id="desc" label="Description" type="richText"/>
+			<contentItem id="customers" label="Customer" type="bounded">
+				<bounded>
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>customer</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>			
 			<contentItem id="solutions" label="Solutions" type="bounded">
 				<bounded multivalued="true">
 					<refList>
@@ -5394,6 +5406,7 @@
 			<container labelQualifiedId="prov.title">
 				<listViewConfig>
 					<hideContentItem id="desc"/>
+					<hideContentItem id="customers"/>					
 					<hideContentItem id="products"/>
 					<hideContentItem id="solutions"/>
 					<hideContentItem id="apps"/>
