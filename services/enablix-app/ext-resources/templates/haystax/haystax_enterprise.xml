@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<contentTemplate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.27" id="haystax_enterprise" xsi:noNamespaceSchemaLocation="../../xsd/content-template.xsd">
+<contentTemplate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.28" id="haystax_enterprise" xsi:noNamespaceSchemaLocation="../../xsd/content-template.xsd">
 	<dataDefinition>
 		<container id="product" label="Products" businessCategory="BUSINESS_DIMENSION">
 			<contentItem id="name" label="Name" type="text" searchBoost="7"/>
@@ -266,116 +266,7 @@
 			<container id="custPress" label="Press" linkContainerQId="press" linkContentItemId="customers"/>
 			<container id="custPMPlaybook" label="Program Management Playbooks" linkContainerQId="pmplaybook" linkContentItemId="customers"/>							
 			<container id="custProposal" label="Proposals" linkContainerQId="proposal" linkContentItemId="customers"/>							
-			<container id="custPROV" label="Proof of Value" linkContainerQId="prov" linkContentItemId="customers"/>														
-			<container id="opportunity" label="Sales Opportunities">
-				<contentItem id="title" label="Opportunity Title" type="text" searchBoost="7"/>
-				<contentItem id="id" label="Opportunity ID" type="text" searchBoost="7"/>
-				<contentItem id="desc" label="Description" type="text" searchBoost="2"/>				
-				<contentItem id="oppPreSalesMember" label="Pre-Sales Team" type="bounded" searchBoost="6">
-					<bounded multivalued="true">
-						<refList>
-							<datastore location="TENANT_DB">
-								<storeId>ebx_user_profile</storeId>
-								<dataId>identity</dataId>
-								<dataLabel>name</dataLabel>
-							</datastore>
-						</refList>
-					</bounded>
-				</contentItem>
-				<contentItem id="oppStatus" label="Opportunity Status" type="bounded" searchBoost="6">
-					<bounded multivalued="true">
-						<refList>
-							<datastore>
-								<storeId>opportunityStatus</storeId>
-								<dataId>identity</dataId>
-								<dataLabel>oppStatusName</dataLabel>
-							</datastore>
-						</refList>
-					</bounded>
-				</contentItem>
-				<contentItem id="oppProducts" label="Products" type="bounded" searchBoost="6">
-					<bounded multivalued="true">
-						<refList>
-							<datastore hyperlink="true">
-								<storeId>product</storeId>
-								<dataId>identity</dataId>
-								<dataLabel>shortName</dataLabel>
-							</datastore>
-						</refList>
-					</bounded>
-				</contentItem>
-				<contentItem id="oppSolutions" label="Solutions" type="bounded" searchBoost="6">
-					<bounded multivalued="true">
-						<refList>
-							<datastore hyperlink="true">
-								<storeId>solution</storeId>
-								<dataId>identity</dataId>
-								<dataLabel>shortName</dataLabel>
-							</datastore>
-						</refList>
-					</bounded>
-				</contentItem>
-				<contentItem id="oppCompetitors" label="Competitors" type="bounded" searchBoost="6">
-					<bounded multivalued="true">
-						<refList>
-							<datastore hyperlink="true">
-								<storeId>competitor</storeId>
-								<dataId>identity</dataId>
-								<dataLabel>shortName</dataLabel>
-							</datastore>
-						</refList>
-					</bounded>
-				</contentItem>
-				<contentItem id="oppPartners" label="Partners" type="bounded" searchBoost="6">
-					<bounded multivalued="true">
-						<refList>
-							<datastore hyperlink="true">
-								<storeId>partner</storeId>
-								<dataId>identity</dataId>
-								<dataLabel>shortName</dataLabel>
-							</datastore>
-						</refList>
-					</bounded>
-				</contentItem>
-				<contentItem id="oppRegions" label="Regions" type="bounded" searchBoost="6">
-					<bounded multivalued="true">
-						<refList>
-							<datastore>
-								<storeId>regions</storeId>
-								<dataId>identity</dataId>
-								<dataLabel>name</dataLabel>
-							</datastore>
-						</refList>
-					</bounded>
-				</contentItem>
-				<contentItem id="oppIndustry" label="Industry" type="bounded" searchBoost="6">
-					<bounded multivalued="true">
-						<refList>
-							<datastore>
-								<storeId>industry</storeId>
-								<dataId>identity</dataId>
-								<dataLabel>name</dataLabel>
-							</datastore>
-						</refList>
-					</bounded>
-				</contentItem>
-				<contentItem id="visibility" label="Visibility" type="bounded">
-					<bounded multivalued="true">
-						<refList>
-							<datastore>
-								<storeId>contentVisibilityType</storeId>
-								<dataId>identity</dataId>
-								<dataLabel>visibilityType</dataLabel>
-							</datastore>
-						</refList>
-					</bounded>
-				</contentItem>					
-				<container id="oppSalesDeck" label="Presentations" linkContainerQId="salesDeck" linkContentItemId="opportunities"/>				
-				<container id="oppPOC" label="Proof of Concepts" linkContainerQId="poc" linkContentItemId="opportunities"/>
-				<container id="oppProposal" label="Proposals" linkContainerQId="proposal" linkContentItemId="opportunities"/>
-				<container id="oppWinLoss" label="Win Loss Analysis" linkContainerQId="winloss" linkContentItemId="opportunities"/>
-				<container id="oppContent" label="Other Content" linkContainerQId="content" linkContentItemId="opportunities"/>
-			</container>			
+			<container id="custPROV" label="Proof of Value" linkContainerQId="prov" linkContentItemId="customers"/>															
 			<container id="custTestimonial" label="Testimonials" linkContainerQId="testimonial" linkContentItemId="customers"/>			
 			<container id="custVideo" label="Videos" linkContainerQId="video" linkContentItemId="customers"/>			
 			<container id="custWhitePaper" label="White Papers" linkContainerQId="whitepaper" linkContentItemId="customers"/>			
@@ -2331,17 +2222,6 @@
 					</refList>
 				</bounded>
 			</contentItem>			
-			<contentItem id="opportunities" label="Sales Opportunity" type="bounded">
-				<bounded>
-					<refList>
-						<datastore hyperlink="true">
-							<storeId>customer.opportunity</storeId>
-							<dataId>identity</dataId>
-							<dataLabel>title</dataLabel>
-						</datastore>
-					</refList>
-				</bounded>
-			</contentItem>
 			<contentItem id="topics" label="Topics" type="bounded">
 				<bounded>
 					<refList>
@@ -2442,17 +2322,6 @@
 							<storeId>customer</storeId>
 							<dataId>identity</dataId>
 							<dataLabel>shortName</dataLabel>
-						</datastore>
-					</refList>
-				</bounded>
-			</contentItem>
-			<contentItem id="opportunities" label="Sales Opportunity" type="bounded">
-				<bounded>
-					<refList>
-						<datastore hyperlink="true">
-							<storeId>customer.opportunity</storeId>
-							<dataId>identity</dataId>
-							<dataLabel>title</dataLabel>
 						</datastore>
 					</refList>
 				</bounded>
@@ -2727,17 +2596,6 @@
 					</refList>
 				</bounded>
 			</contentItem>
-			<contentItem id="opportunities" label="Sales Opportunity" type="bounded">
-				<bounded>
-					<refList>
-						<datastore hyperlink="true">
-							<storeId>customer.opportunity</storeId>
-							<dataId>identity</dataId>
-							<dataLabel>title</dataLabel>
-						</datastore>
-					</refList>
-				</bounded>
-			</contentItem>
 			<contentItem id="products" label="Products" type="bounded">
 				<bounded multivalued="true">
 					<refList>
@@ -2935,7 +2793,13 @@
 	      				</datastore>
 	      			</refList>
 	      		</bounded>
-      		</contentItem>			
+      		</contentItem>	
+			<container id="provcontent" label="POV Content">
+				<contentItem id="title" label="Title" type="text"/>
+				<contentItem id="file" label="File" type="doc"/>
+				<contentItem id="url" label="URL" type="text"/>
+				<contentItem id="desc" label="Description" type="richText" searchBoost="2"/>
+			</container>	      				
 		</container>		
 		<container id="proposal" label="Proposals" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
@@ -2959,17 +2823,6 @@
 							<storeId>customer</storeId>
 							<dataId>identity</dataId>
 							<dataLabel>shortName</dataLabel>
-						</datastore>
-					</refList>
-				</bounded>
-			</contentItem>
-			<contentItem id="opportunities" label="Sales Opportunity" type="bounded">
-				<bounded>
-					<refList>
-						<datastore hyperlink="true">
-							<storeId>customer.opportunity</storeId>
-							<dataId>identity</dataId>
-							<dataLabel>title</dataLabel>
 						</datastore>
 					</refList>
 				</bounded>
@@ -4166,17 +4019,6 @@
 			</contentItem>
 			<contentItem id="file" label="File" type="doc"/>
 			<contentItem id="desc" label="Description" type="richText"/>
-			<contentItem id="opportunities" label="Sales Opportunity" type="bounded" searchBoost="6">
-				<bounded>
-					<refList>
-						<datastore hyperlink="true">
-							<storeId>customer.opportunity</storeId>
-							<dataId>identity</dataId>
-							<dataLabel>title</dataLabel>
-						</datastore>
-					</refList>
-				</bounded>
-			</contentItem>
 			<contentItem id="competitors" label="Competitors" type="bounded">
 				<bounded multivalued="true">
 					<refList>
@@ -4581,17 +4423,6 @@
 							<storeId>customer</storeId>
 							<dataId>identity</dataId>
 							<dataLabel>shortName</dataLabel>
-						</datastore>
-					</refList>
-				</bounded>
-			</contentItem>
-			<contentItem id="opportunities" label="Sales Opportunity" type="bounded">
-				<bounded>
-					<refList>
-						<datastore hyperlink="true">
-							<storeId>customer.opportunity</storeId>
-							<dataId>identity</dataId>
-							<dataLabel>title</dataLabel>
 						</datastore>
 					</refList>
 				</bounded>
@@ -5369,7 +5200,6 @@
 				<listViewConfig>
 					<hideContentItem id="summary"/>
 					<hideContentItem id="customers"/>
-					<hideContentItem id="opportunities"/>
 					<hideContentItem id="products"/>
 					<hideContentItem id="solutions"/>
 					<hideContentItem id="apps"/>
@@ -5424,6 +5254,21 @@
 		<contentUIDef qualifiedId="prov.desc">
 			<text type="long"/>
 		</contentUIDef>
+		<contentUIDef qualifiedId="prov.provcontent">
+			<container labelQualifiedId="prov.provcontent.title">
+				<listViewConfig>
+					<hideContentItem id="file"/>
+					<hideContentItem id="url"/>									
+					<hideContentItem id="desc"/>
+				</listViewConfig>
+				<portalConfig>
+					<headingContentItem id="title"/>
+				</portalConfig>
+			</container>
+		</contentUIDef>
+		<contentUIDef qualifiedId="prov.provcontent.desc">
+			<text type="long"/>
+		</contentUIDef>
 		<contentUIDef qualifiedId="positioning">
 			<container labelQualifiedId="positioning.title">
 				<listViewConfig>
@@ -5451,7 +5296,6 @@
 					<hideContentItem id="products"/>
 					<hideContentItem id="solutions"/>
 					<hideContentItem id="customers"/>
-					<hideContentItem id="opportunities"/>					
 					<hideContentItem id="partners"/>
 					<hideContentItem id="industries"/>										
 					<hideContentItem id="topics"/>
@@ -5523,7 +5367,6 @@
 					<hideContentItem id="file"/>
 					<hideContentItem id="type"/>
 					<hideContentItem id="customers"/>
-					<hideContentItem id="opportunities"/>
 					<hideContentItem id="products"/>
 					<hideContentItem id="solutions"/>
 					<hideContentItem id="apps"/>
@@ -5689,7 +5532,6 @@
 				<listViewConfig>
 					<hideContentItem id="file"/>
 					<hideContentItem id="desc"/>					
-					<hideContentItem id="opportunities"/>			
 					<hideContentItem id="products"/>				
 					<hideContentItem id="solutions"/>
 					<hideContentItem id="apps"/>
@@ -5811,7 +5653,6 @@
 					<hideContentItem id="industries"/>										
 					<hideContentItem id="analysts"/>
 					<hideContentItem id="customers"/>
-					<hideContentItem id="opportunities"/>										
 					<hideContentItem id="topics"/>
 					<hideContentItem id="visibility"/>					
 				</listViewConfig>
@@ -6087,7 +5928,6 @@
 					<hideContentItem id="products"/>
 					<hideContentItem id="solutions"/>
 					<hideContentItem id="customers"/>
-					<hideContentItem id="opportunities"/>					
 					<hideContentItem id="apps"/>
 					<hideContentItem id="competitors"/>										
 					<hideContentItem id="partners"/>
