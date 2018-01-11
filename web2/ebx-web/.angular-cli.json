@@ -11,7 +11,7 @@
         "assets",
         "favicon.ico"
       ],
-      "index": "index.html",
+      "index": "app2.html",
       "main": "main.ts",
       "polyfills": "polyfills.ts",
       "test": "test.ts",

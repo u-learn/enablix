@@ -20,7 +20,7 @@ export class SetPasswordComponent implements OnInit {
   confirmPassword: string;
 
   returnUrl: string;
-  passwordUpdate = false;
+  passwordUpdated = false;
 
   constructor(private authService: AuthService, private alert: AlertService,
       private navService: NavigationService, private router: Router, 
