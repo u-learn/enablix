@@ -53,6 +53,10 @@ ebx-card-preview {
           
           @include vcenterChildren;
           border-radius: 4px;
+
+          img {
+            max-width: 96px;
+          }
         }
 
         .cardDefaultImg {
