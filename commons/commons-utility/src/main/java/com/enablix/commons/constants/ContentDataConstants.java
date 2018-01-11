@@ -44,4 +44,5 @@ public class ContentDataConstants {
 
 	
 	public static final String RICH_TEXT_FIELD_SUFFIX = "_rt";
+	public static final Object CONTENT_TYPE_KEY = "contentType";
 }

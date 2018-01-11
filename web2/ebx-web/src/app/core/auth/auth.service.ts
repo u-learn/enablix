@@ -42,11 +42,16 @@ export class AuthService {
   }
 
   private loginRequestHeaders(username: string, password: string, rememberMe: boolean): HttpHeaders {
+
   	let headers = new HttpHeaders();
-  	headers = headers.append("Authorization", "Basic " + btoa(username + ":" + password));
-    if (rememberMe) {
-      headers = headers.append("remember-me", "true");
+  	
+    if (username) {
+      headers = headers.append("Authorization", "Basic " + btoa(username + ":" + password));
+      if (rememberMe) {
+        headers = headers.append("remember-me", "true");
+      }
     }
+
   	return headers;
   }
 
@@ -94,6 +99,22 @@ export class AuthService {
 
   isAuthenticated() {
   	return this.userService.isUserLoggedIn();
+  }
+
+  resetPassword(emailId: string) {
+    let apiUrl = this.apiUrlService.postResetPasswordUrl();
+    return this.http.post(apiUrl, emailId);
+  }
+
+  setPassword(pwd: string) {
+    let data: any = {
+      id: this.userService.getUserAccountId(),
+      password: pwd,
+      isPasswordSet: true
+    };
+
+    let apiUrl = this.apiUrlService.postSetPasswordUrl();
+    return this.http.post(apiUrl, data);
   }
 
 }

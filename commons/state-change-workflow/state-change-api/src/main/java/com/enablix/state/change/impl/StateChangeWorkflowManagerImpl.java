@@ -99,7 +99,7 @@ public class StateChangeWorkflowManagerImpl implements StateChangeWorkflowManage
 	
 			// execute action
 			StateChangeAction action = actionConfig.getAction();
-			ActionResult actionResult = action.execute(actionInput, recording.getObjectRef());
+			ActionResult actionResult = action.execute(actionInput, recording.getObjectRef(), recording);
 			
 			if (StateChangeConstants.ACTION_DISCARD.equals(actionName)) {
 			

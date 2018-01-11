@@ -1,7 +1,8 @@
 import { Component, OnInit, ViewEncapsulation, ViewChildren, QueryList } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import { Router, ActivatedRoute } from '@angular/router';
 
-import { ContentRequestListComponent } from '../content-request-list.component';
+import { ContentRequestListComponent, ContentRequestActions } from '../content-request-list.component';
 import { ConsolidateContentService } from '../consolidate-content.service';
 import { AlertService } from '../../core/alert/alert.service';
 import { DataPage } from '../../model/data-page.model';
@@ -23,15 +24,20 @@ import { ContentWorkflowService } from '../../services/content-workflow.service'
 })
 export class MyDraftComponent extends ContentRequestListComponent implements OnInit {
 
-  tableActions: MyDraftActions;
+  tableActions: ContentRequestActions;
 
   constructor(public ccService: ConsolidateContentService,
         public contentWFService: ContentWorkflowService,
         public alert: AlertService, public user: UserService,
-        public navService: NavigationService) { 
+        public navService: NavigationService, public router: Router) { 
     
-    super(ccService, contentWFService, alert, user, navService);
-    this.tableActions = new MyDraftActions(this);
+    super(ccService, contentWFService, alert, user, navService, router);
+    
+    this.tableActions = 
+        new ContentRequestActions(this, [
+                ContentWorkflowService.ACTION_PUBLISH, 
+                ContentWorkflowService.ACTION_DISCARD
+              ]);
   }
 
   ngOnInit() {
@@ -45,51 +51,6 @@ export class MyDraftComponent extends ContentRequestListComponent implements OnI
 
     this.fetchData();
     
-  }
-
-}
-
-class MyDraftActions implements TableActionConfig<any> {
-
-  component: MyDraftComponent;
-
-  publishAction: TableAction<any> = {
-    label: "Publish",
-    iconClass: "send-blue",
-    successMessage: "Published",
-    execute: (selectedRecords: any[]) => {
-      return this.component.publishRecords(selectedRecords);
-    }
-  };
-
-  discardAction: TableAction<any> = {
-    label: "Trash",
-    iconClass: "trash",
-    successMessage: "Deleted",
-    execute: (selectedRecords: any[]) => {
-      return this.component.deleteRecords(selectedRecords);
-    }
-  };
-
-  constructor(comp: MyDraftComponent) {
-    this.component = comp;
-  }
-
-  getAvailableActions(selectedRecords: any[]) : TableAction<any>[] {
-    
-    let actions: TableAction<any>[] = [];
-    
-    if (this.component.contentWFService.isActionAllowedForAllRecords(
-      ContentWorkflowService.ACTION_PUBLISH, selectedRecords)) {
-      actions.push(this.publishAction);
-    }
-
-    if (this.component.contentWFService.isActionAllowedForAllRecords(
-      ContentWorkflowService.ACTION_DISCARD, selectedRecords)) {
-      actions.push(this.discardAction);
-    }
-
-    return selectedRecords && selectedRecords.length > 0 ? actions : [];
   }
 
 }

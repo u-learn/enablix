@@ -34,7 +34,15 @@ export class UserService {
   }
 
   getUserIdentity() {
-    return this.user ? this.user.principal.user.identity : null;
+    return this.user ? this.user.principal.user.userId : null;
+  }
+
+  getUserAccountId() {
+    return this.user ? this.user.principal.user.id : null;
+  }
+
+  isPasswordSet() : boolean {
+    return this.user ? this.user.principal.user.isPasswordSet : false;
   }
 
   userHasPermission(checkPerm: string) {

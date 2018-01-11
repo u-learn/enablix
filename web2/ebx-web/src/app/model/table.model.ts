@@ -17,9 +17,18 @@ export class TableAction<T> {
   iconClass: string;
   successMessage?: string;
 
+  confirmConfig?: ActionConfirmConfig<T>;
+
   execute: (selectedRecs: T[]) => Observable<any>;
 }
 
 export interface TableActionConfig<T> {
   getAvailableActions(selectedRecords: T[]) : TableAction<T>[];
+}
+
+export class ActionConfirmConfig<T> {
+  title: string;
+  okLabel: string;
+  cancelLabel: string;
+  confirmMsg: (selectedRecs: T[]) => string;
 }

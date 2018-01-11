@@ -1,16 +1,21 @@
 package com.enablix.content.approval.action;
 
+import java.util.Calendar;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.enablix.app.content.ContentDataManager;
 import com.enablix.app.content.update.UpdateContentRequest;
 import com.enablix.app.content.update.UpdateContentResponse;
+import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.commons.util.process.ProcessContext;
 import com.enablix.content.approval.ContentApprovalConstants;
 import com.enablix.content.approval.model.ContentDetail;
 import com.enablix.state.change.ActionException;
 import com.enablix.state.change.model.GenericActionResult;
 import com.enablix.state.change.model.SimpleActionInput;
+import com.enablix.state.change.model.StateChangeRecording;
 
 public class ApproveAction extends BaseContentAction<SimpleActionInput, Boolean> {
 
@@ -27,13 +32,20 @@ public class ApproveAction extends BaseContentAction<SimpleActionInput, Boolean>
 	}
 
 	@Override
-	public GenericActionResult<ContentDetail, Boolean> execute(SimpleActionInput actionData, ContentDetail objectRef)
+	public GenericActionResult<ContentDetail, Boolean> execute(
+				SimpleActionInput actionData, ContentDetail objectRef, 
+				StateChangeRecording<ContentDetail> recording)
 			throws ActionException {
 		
 		String templateId = ProcessContext.get().getTemplateId();
 		
+		Map<String, Object> record = objectRef.getData();
+		record.put(ContentDataConstants.CREATED_AT_KEY, Calendar.getInstance().getTime());
+		record.put(ContentDataConstants.CREATED_BY_KEY, recording.getCreatedBy());
+		record.put(ContentDataConstants.CREATED_BY_NAME_KEY, recording.getCreatedByName());
+		
 		UpdateContentResponse updatedData = dataMgr.saveData(new UpdateContentRequest(templateId, 
-				objectRef.getParentIdentity(), objectRef.getContentQId(), objectRef.getData()));
+				objectRef.getParentIdentity(), objectRef.getContentQId(), record));
 
 		// TODO: handle quality alerts
 		objectRef.setData(updatedData.getContentRecord());

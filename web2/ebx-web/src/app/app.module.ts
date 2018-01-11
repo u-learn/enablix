@@ -86,6 +86,14 @@ import { ContentReqApproveButtonComponent } from './content-action/content-req-a
 import { ContentReqRejectButtonComponent } from './content-action/content-req-reject-button/content-req-reject-button.component';
 import { EmailSharePopupComponent } from './content-action/content-email-button/email-share-popup/email-share-popup.component';
 import { ContentShareService } from './services/content-share.service';
+import { AppUrlMapperComponent } from './app-url-mapper/app-url-mapper.component';
+import { ContainerListUrlMapperComponent } from './container-list-url-mapper/container-list-url-mapper.component';
+import { ContainerDetailUrlMapperComponent } from './container-detail-url-mapper/container-detail-url-mapper.component';
+import { InfiniteScrollerDirective } from './directives/infinite-scroller.directive';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { SetPasswordComponent } from './set-password/set-password.component';
+import { MyContentRequestComponent } from './consolidate-content/my-content-request/my-content-request.component';
+import { AllDimensionsComponent } from './all-dimensions/all-dimensions.component';
 
 @NgModule({
   declarations: [
@@ -148,7 +156,15 @@ import { ContentShareService } from './services/content-share.service';
     DocUpdateButtonComponent,
     ContentReqApproveButtonComponent,
     ContentReqRejectButtonComponent,
-    EmailSharePopupComponent
+    EmailSharePopupComponent,
+    AppUrlMapperComponent,
+    ContainerListUrlMapperComponent,
+    ContainerDetailUrlMapperComponent,
+    InfiniteScrollerDirective,
+    ForgotPasswordComponent,
+    SetPasswordComponent,
+    MyContentRequestComponent,
+    AllDimensionsComponent
   ],
   imports: [
     BrowserModule,

@@ -73,14 +73,14 @@ public class ActivityLogger {
 	}
 	
 	public static void auditContentActivity(ActivityType activityType,
-			ContentDataRef dataRef, ContainerType containerType) {
+			ContentDataRef dataRef, ContainerType containerType, Actor actor) {
 		Channel channel = ActivityTrackingContext.get().getActivityChannel(Channel.WEB);
-		auditContentActivity(activityType, dataRef, containerType, channel);
+		auditContentActivity(activityType, dataRef, containerType, channel, actor);
 	}
 	
 	public static void auditContentActivity(ActivityType activityType,
 			ContentDataRef dataRef, ContainerType containerType, 
-			ActivityChannel.Channel activityChannel) {
+			ActivityChannel.Channel activityChannel, Actor actor) {
 		
 		ContentActivity contentActvy = new ContentActivity(dataRef.getInstanceIdentity(), 
 				dataRef.getContainerQId(), containerType, activityType, dataRef.getTitle());
@@ -92,7 +92,7 @@ public class ActivityLogger {
 		contentActvy.setContextName(atCtx.getActivityContextName());
 		contentActvy.setContextTerm(atCtx.getActivityContextTerm());
 		
-		auditContentActivity(contentActvy, activityChannel);
+		auditContentActivity(contentActvy, activityChannel, actor);
 	}
 	
 	public static void auditContentPortalURLCopied(ContentDataRef dataRef,
@@ -115,13 +115,21 @@ public class ActivityLogger {
 	
 	public static void auditContentActivity(ContentActivity contentActvy, 
 			ActivityChannel.Channel activityChannel) {
+		auditContentActivity(contentActvy, activityChannel, null);
+	}
+	
+	public static void auditContentActivity(ContentActivity contentActvy, 
+			ActivityChannel.Channel activityChannel, Actor actor) {
 		
 		ProcessContext pc = ProcessContext.get();
 		
 		ActivityAudit activity = new ActivityAudit();
 		activity.setActivity(contentActvy);
 		
-		RegisteredActor actor = new RegisteredActor(pc.getUserId(), pc.getUserDisplayName());
+		if (actor == null) {
+			actor = new RegisteredActor(pc.getUserId(), pc.getUserDisplayName());
+		}
+		
 		activity.setActor(actor);
 		
 		activity.setChannel(new ActivityChannel(activityChannel));
@@ -189,7 +197,7 @@ public class ActivityLogger {
 		ContentActivity contentActvy = new ContentAccessActivity(dataRef.getInstanceIdentity(), 
 				dataRef.getContainerQId(), containerType, dataRef.getTitle());
 		
-		auditContentActivity(contentActvy, channel);
+		auditContentActivity(contentActvy, channel, null);
 	}
 	
 	public static void auditContentAccess(ContentDataRef dataRef,
@@ -198,7 +206,7 @@ public class ActivityLogger {
 		ContentActivity contentActvy = new ContentAccessActivity(dataRef.getInstanceIdentity(), 
 				dataRef.getContainerQId(), containerType, contextName, contextId, contextTerm, dataRef.getTitle());
 		
-		auditContentActivity(contentActvy, channel);
+		auditContentActivity(contentActvy, channel, null);
 	}
 
 	public static void auditExternalLinkAccess(String url, String contentIdentity, 

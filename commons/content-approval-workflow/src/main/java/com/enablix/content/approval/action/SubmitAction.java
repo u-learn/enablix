@@ -4,6 +4,7 @@ import com.enablix.content.approval.ContentApprovalConstants;
 import com.enablix.content.approval.model.ContentDetail;
 import com.enablix.state.change.ActionException;
 import com.enablix.state.change.model.GenericActionResult;
+import com.enablix.state.change.model.StateChangeRecording;
 
 public class SubmitAction extends ContentSaveAction {
 
@@ -13,7 +14,9 @@ public class SubmitAction extends ContentSaveAction {
 	}
 
 	@Override
-	public GenericActionResult<ContentDetail, Boolean> execute(ContentDetail actionData, ContentDetail objectRef)
+	public GenericActionResult<ContentDetail, Boolean> execute(
+				ContentDetail actionData, ContentDetail objectRef, 
+				StateChangeRecording<ContentDetail> recording)
 			throws ActionException {
 		
 		if (objectRef == null) {

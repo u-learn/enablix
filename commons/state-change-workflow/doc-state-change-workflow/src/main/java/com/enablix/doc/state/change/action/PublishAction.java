@@ -10,6 +10,7 @@ import com.enablix.doc.state.change.model.DocInfo;
 import com.enablix.doc.state.change.model.PublishInfo;
 import com.enablix.state.change.ActionException;
 import com.enablix.state.change.StateChangeAction;
+import com.enablix.state.change.model.StateChangeRecording;
 
 public class PublishAction implements StateChangeAction<DocInfo, PublishInfo, Boolean, DocActionResult<Boolean>> {
 
@@ -22,7 +23,8 @@ public class PublishAction implements StateChangeAction<DocInfo, PublishInfo, Bo
 	}
 
 	@Override
-	public DocActionResult<Boolean> execute(PublishInfo pubInfo, DocInfo objectRef) throws ActionException {
+	public DocActionResult<Boolean> execute(PublishInfo pubInfo, DocInfo objectRef, 
+			StateChangeRecording<DocInfo> recording) throws ActionException {
 		
 		try {
 		

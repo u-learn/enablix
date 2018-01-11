@@ -10,4 +10,7 @@
       </div>
     </div>
   </div>
+  <div class="table-pagination" *ngIf="searchResults?.totalPages > 1">
+    <ebx-pagination [totalPages]="searchResults.totalPages" [currentPage]="searchResults.currentPage" (onPageChange)="setPage($event)"></ebx-pagination>
+  </div>
 </div>

@@ -1,11 +1,13 @@
 import { Component, OnInit, ViewEncapsulation, Inject, ViewChild } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { FormControl } from '@angular/forms';
 
 import { AlertService } from '../../../core/alert/alert.service';
 import { MembersService } from '../members.service';
 import { UserProfile, UserBusinessProfile, UserSystemProfile } from '../../../model/user.model';
 import { Container } from '../../../model/container.model';
 import { ContentTemplateService } from '../../../core/content-template.service';
+import { SelectOption } from '../../../core/select/select.component';
 
 @Component({
   selector: 'ebx-member-detail',
@@ -21,15 +23,23 @@ export class MemberDetailComponent implements OnInit {
   userProfile: UserProfile;
   allRoles: any[];
 
-  roleOptions: CheckboxOption[];
+  roleOptions: SelectOption[];
   userContainer: Container;
+
+  headerLabel: string = "Edit User";
+  saveLabel: string = "Save";
+
+  systemRoleCtrl: FormControl;
 
   constructor(
     private membersService: MembersService,
     private alert: AlertService,
     private ctService: ContentTemplateService,
     private dialogRef: MatDialogRef<MemberDetailComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any) { }
+    @Inject(MAT_DIALOG_DATA) public data: any) { 
+
+      this.systemRoleCtrl = new FormControl();
+  }
 
   ngOnInit() {
     
@@ -41,6 +51,9 @@ export class MemberDetailComponent implements OnInit {
       this.userProfile.businessProfile = new UserBusinessProfile();
       this.userProfile.businessProfile.attributes = {};
       this.userProfile.systemProfile = new UserSystemProfile();
+      
+      this.headerLabel = "Add User";
+      this.saveLabel = "Add";
 
     } else {
       
@@ -53,14 +66,18 @@ export class MemberDetailComponent implements OnInit {
         }
 
         if (!this.userProfile.businessProfile) {
+          
           this.userProfile.businessProfile = new UserBusinessProfile();
+          this.userProfile.businessProfile.attributes = {};
+
+        } else if (!this.userProfile.businessProfile.attributes) {
           this.userProfile.businessProfile.attributes = {};
         }
 
         this.updateRoleOptions();
 
       }, err => {
-        this.alert.error("Error getting member details. Please try later.", err.status);
+        this.alert.error("Error getting user details. Please try later.", err.status);
         this.dialogRef.close();
       });
     }
@@ -72,9 +89,8 @@ export class MemberDetailComponent implements OnInit {
       
       this.allRoles.forEach(role => {
         this.roleOptions.push({
-          value: role.identity,
-          label: role.roleName,
-          checked: false
+          id: role.identity,
+          label: role.roleName
         });
       });
 
@@ -89,17 +105,17 @@ export class MemberDetailComponent implements OnInit {
     
     if (this.allRoles && this.userProfile && this.userProfile.systemProfile 
           && this.userProfile.systemProfile.roles) {
-      
-      this.userProfile.systemProfile.roles.forEach(role => {
-        
-        for (let i = 0; i < this.roleOptions.length; i++) {
-          if (this.roleOptions[i].value === role.identity) {
-            this.roleOptions[i].checked = true;
-            break;
-          }
-        }
+    
+      let selectedRoles: SelectOption[] = [];
 
+      this.userProfile.systemProfile.roles.forEach(role => {
+        selectedRoles.push({
+          id: role.identity,
+          label: role.roleName
+        });
       });
+
+      this.systemRoleCtrl.setValue(selectedRoles);
 
     }
   }
@@ -111,15 +127,11 @@ export class MemberDetailComponent implements OnInit {
     }
 
     let roles: any[] = [];
-    if (this.roleOptions) {
-      for (let i = 0; i < this.roleOptions.length; i++) {
-        if (this.roleOptions[i].checked) {
-          roles.push({
-            identity: this.allRoles[i].identity
-          });
-        }
-      }
-    }
+    this.systemRoleCtrl.value.forEach(role => {
+      roles.push({
+        identity: role.id
+      });
+    });
 
     if (!this.userProfile.systemProfile) {
       this.userProfile.systemProfile = new UserSystemProfile();
@@ -132,19 +144,19 @@ export class MemberDetailComponent implements OnInit {
     if (this.newUserOper) {
       
       this.membersService.addMember(this.userProfile).subscribe(res => {
-        this.alert.success("Member added successfully.");
+        this.alert.success("User added successfully.");
         this.dialogRef.close(true);
       }, err => {
-        this.alert.error("Error adding member. Please try later.", err.status);
+        this.alert.error("Error adding user. Please try later.", err.status);
       });  
 
     } else {
       
       this.membersService.updateMember(this.userProfile).subscribe(res => {
-        this.alert.success("Member updated successfully.");
+        this.alert.success("User updated successfully.");
         this.dialogRef.close(true);
       }, err => {
-        this.alert.error("Error updating member. Please try later.", err.status);
+        this.alert.error("Error updating user. Please try later.", err.status);
       });
     }
     

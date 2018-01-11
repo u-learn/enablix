@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 
 import { FreetextSearchService } from '../services/freetext-search.service';
 import { AlertService } from '../core/alert/alert.service';
@@ -15,8 +15,12 @@ export class FreetextSearchComponent implements OnInit {
 
   searchResults: any;
 
+  pageNum: number = 0;
+  pageSize: number = 20;
+
   constructor(private route: ActivatedRoute, private textSearch: FreetextSearchService,
-              private alert: AlertService, private sbService: SearchBarService) { }
+              private alert: AlertService, private sbService: SearchBarService,
+              private router: Router) { }
 
   ngOnInit() {
 
@@ -29,10 +33,10 @@ export class FreetextSearchComponent implements OnInit {
 
         this.route.queryParams.subscribe(queryParams => {
           
-          let pageNum = queryParams['pageNum'] || 0;
-          let pageSize = queryParams['pageSize'] || 20;
+          this.pageNum = queryParams['pageNum'] || 0;
+          this.pageSize = queryParams['pageSize'] || 20;
           
-          this.textSearch.searchBizContent(searchText, pageNum, pageSize).subscribe(res => {
+          this.textSearch.searchBizContent(searchText, this.pageNum, this.pageSize).subscribe(res => {
               this.searchResults = res;
             }, err => {
               this.alert.error("Unable to search. Please try later.", err.statusCode);
@@ -43,6 +47,17 @@ export class FreetextSearchComponent implements OnInit {
         this.sbService.setFreetextSearchBar(searchText);
       }
     });
+  }
+
+  setPage(pageNum: number) {
+    // Object.assign is used as apparently 
+    // you cannot add properties to snapshot query params
+    const queryParams: Params = Object.assign({}, this.route.snapshot.queryParams);
+
+    // Do sth about the params
+    queryParams['pageNum'] = pageNum;
+
+    this.router.navigate([], { queryParams: queryParams });
   }
 
 }

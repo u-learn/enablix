@@ -1,8 +1,11 @@
+@import '~styles/fonts.scss';
+
 .pagination {
 
   display: flex;
   justify-content: center;
   align-content: center;
+  font-family: $FPLight;
 
   .page-btn {
     background: #FFFFFF;

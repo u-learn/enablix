@@ -14,9 +14,12 @@
 				<div class="pretty p-icon">
           <input type="checkbox" [checked]="rememberMe" (change)="rememberMe = !rememberMe">
           <div class="state p-primary">
-          	<i class="icon mdi mdi-check"></i><label>Remember Me</label>
+          	<i class="icon mdi mdi-check"></i><label class="text">Remember Me</label>
           </div>
         </div>
+			</div>
+			<div class="input-group">
+				<div class="link text right"><a routerLink="/forgotpassword">forgot password?</a></div>
 			</div>
 			<div class="input-group">
 				<div class="action-btn"><button type="submit">Login</button></div>

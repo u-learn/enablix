@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewEncapsulation, Input, ViewChildren, AfterViewInit, QueryList } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatDialog, MatDialogRef } from '@angular/material';
+import { Location } from '@angular/common';
 
 import { Container } from '../model/container.model';
 import { ContentItem } from '../model/content-item.model';
@@ -48,12 +49,18 @@ export class BizContentComponent implements OnInit, AfterViewInit {
   enableApproveAction = false;
   enableRejectAction = false;
 
+  returnUrl: string;
+
   constructor(private route: ActivatedRoute, private contentService: ContentService,
               private alert: AlertService, private contentTemplate: ContentTemplateService,
-              private contentWFService: ContentWorkflowService,
-              private navService: NavigationService, private dialog: MatDialog) { }
+              private contentWFService: ContentWorkflowService, private loc: Location,
+              private navService: NavigationService, private dialog: MatDialog,
+              private router: Router) { }
 
   ngOnInit() {
+
+    // get return url from route parameters or default to '/'
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
 
     this.approvalWFRequired = this.contentWFService.isApprovalWFRequired();
 
@@ -174,36 +181,39 @@ export class BizContentComponent implements OnInit, AfterViewInit {
 
   publishContent() {
 
-    if (this.approvalWFRequired) {
-
-      this.submitWFContent(false);
-
-    } else if (this.isDraft) {
+    if (this.isDraft) {
 
       this.publishWFContent();
 
     } else {
 
-      this.contentService.saveContainerData(this.container.qualifiedId, this.record)
-        .subscribe(
-            result => {
-              
-              this.editing = false;
-              this.contentService.decorateRecord(this.container, result.contentRecord);
-              this.record = result.contentRecord;
+      if (this.contentRequest) {
+        
+        this.submitWFContent(false, true);
 
-              this.alert.success("Saved successfully!");
-              this.navService.goToContentDetail(
-                this.container.qualifiedId, result.contentRecord.identity);
-            },
-            error => {
-              if (error.qualityAlerts) {
-                this.qualityAlerts = error.qualityAlerts;
-              } else {
-                this.alert.error("Error saving data.", error.status);  
+      } else {
+
+        this.contentService.saveContainerData(this.container.qualifiedId, this.record)
+          .subscribe(
+              result => {
+                
+                this.editing = false;
+                this.contentService.decorateRecord(this.container, result.contentRecord);
+                this.record = result.contentRecord;
+
+                this.alert.success("Saved successfully!");
+                this.navService.goToContentDetail(
+                  this.container.qualifiedId, result.contentRecord.identity);
+              },
+              error => {
+                if (error.qualityAlerts) {
+                  this.qualityAlerts = error.qualityAlerts;
+                } else {
+                  this.alert.error("Error saving data.", error.status);  
+                }
               }
-            }
-          );
+            );
+      }
     }
   }
 
@@ -216,9 +226,9 @@ export class BizContentComponent implements OnInit, AfterViewInit {
     this.processWFResponse(res);
   }
 
-  submitWFContent(draftSave: boolean) {
+  submitWFContent(draftSave: boolean, editContentRequest: boolean = false) {
     
-    if (this.isDraft && draftSave) {
+    if ((this.isDraft && draftSave) || editContentRequest) {
       // record edit action
       this.contentWFService.editContentRequest(this.contentRequest.objectRef.identity, this.container.qualifiedId, this.record, null).subscribe((res: any) => {
         this.alert.success("Saved successfully!");
@@ -249,15 +259,24 @@ export class BizContentComponent implements OnInit, AfterViewInit {
 
   publishWFContent() {
     this.contentWFService.publishContentRequest(this.contentRequest.objectRef.identity, this.container.qualifiedId, this.record, null).subscribe((res: any) => {
-      this.alert.success("Saved successfully!");
-      this.goToContentDetailForRequest(res);
+
+      this.alert.success("Published successfully!");
+
+      if (this.approvalWFRequired) {
+        this.editing = false;
+        this.processWFResponse(res);
+      } else {
+        this.goToContentDetailForRequest(res);  
+      }
+      
     }, error => {
       this.alert.error("Error publishing data.", error.status);  
     });
   }
 
   goBackHome() {
-    this.navService.goToPortalHome();
+    //this.navService.goToPortalHome();
+    this.router.navigateByUrl(this.returnUrl);
   }
 
   editState() {

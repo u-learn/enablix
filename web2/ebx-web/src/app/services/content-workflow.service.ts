@@ -74,7 +74,7 @@ export class ContentWorkflowService {
 
     this.stateDisplayText[ContentWorkflowService.STATE_DRAFT] = "Draft";
     this.stateDisplayText[ContentWorkflowService.STATE_PUBLISHED] = "Published";
-    this.stateDisplayText[ContentWorkflowService.STATE_PENDING_APPROVAL] = "Pending";
+    this.stateDisplayText[ContentWorkflowService.STATE_PENDING_APPROVAL] = "Pending Approval";
     this.stateDisplayText[ContentWorkflowService.STATE_WITHDRAWN] = "Withdrawn";
     this.stateDisplayText[ContentWorkflowService.STATE_APPROVED] = "Approved";
     this.stateDisplayText[ContentWorkflowService.STATE_REJECTED] = "Rejected";
@@ -206,6 +206,10 @@ export class ContentWorkflowService {
       "notes": notes,
       "data": rec
     };
+
+    if (rec.__decoration) {
+      delete rec['__decoration'];
+    }
     
     let apiUrl = this.apiUrlService.postEditContentRequestUrl();
     return this.http.post(apiUrl, contentDetail); 
@@ -223,6 +227,12 @@ export class ContentWorkflowService {
              || actionName == ContentWorkflowService.ACTION_DISCARD)
           && this.user.getUserIdentity() != crRecord.createdBy) {
         return false;
+      }
+
+      if ((actionName == ContentWorkflowService.ACTION_PUBLISH)
+            && crRecord.currentState.stateName == ContentWorkflowService.STATE_DRAFT
+            && crRecord.createdBy == this.user.getUserIdentity()) {
+        return true;
       }
     
       let nextActions = this.stateActionMap[crRecord.currentState.stateName];

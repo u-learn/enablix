@@ -276,5 +276,22 @@ public class ContentDataUtil {
 		
 		return urls;
 	}
-	
+
+
+	public static boolean isDocContentTypeImage(Map<String, Object> docRecord) {
+		if (docRecord != null) {
+			String contentType = (String) docRecord.get(ContentDataConstants.CONTENT_TYPE_KEY);
+			return isImageContentType(contentType);
+		}
+		return false;
+	}
+
+
+	public static boolean isImageContentType(String contentType) {
+		if (StringUtil.hasText(contentType)) {
+			return contentType.toLowerCase().contains("image");
+		}
+		return false;
+	}
+
 }

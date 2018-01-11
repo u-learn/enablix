@@ -1,6 +1,7 @@
 <div class="header">
   <h1>Dimensions</h1>
-  <p class="subheader">These are your company's main objects within titled dimensions. You may add or remove object as much as you'd like.</p>
+  <p class="subheader">These are your company's business dimensions. Browse these dimensions and their objects to find content.</p>
+  <div *ngIf="dims != 'all'"><a class="cta-link" routerLink="/portal/alldims">See All</a></div>
 </div>
 <div class="main">
   <div class="dimension-cards">

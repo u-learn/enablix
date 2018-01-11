@@ -7,7 +7,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 
-public abstract class BaseAuditedEntity extends BaseEntity {
+public abstract class BaseAuditedEntity extends BaseEntity implements AuditInfoAware {
 
 	@CreatedDate
 	protected Date createdAt;

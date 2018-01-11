@@ -108,7 +108,7 @@ public class ApplicationInit extends WebMvcAutoConfigurationAdapter {
 
 		if (!StringUtil.isEmpty(externalUIAssets)) {
 
-			final String[] paths = externalUIAssets.split(",");
+			final String[] paths = externalUIAssets.split(";");
 
 			for (final String path : paths) {
 				resourcePath = "file:" + path;

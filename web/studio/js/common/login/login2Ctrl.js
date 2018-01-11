@@ -7,16 +7,24 @@ enablix.studioApp.controller('Login2Controller',
 		$scope.credentials = {};
 				
 		var authCallback = function() {
+			
 			if ($rootScope.authenticated) {
+			
 				var currentUser = AuthorizationService.getCurrentUser();
-				if(currentUser.isPasswordSet){
-						var previousURL = decodeURIComponent(window.location.href);
-						if(previousURL.indexOf("redirect") > 0){ 
-							previousURL = previousURL.substring(previousURL.indexOf("redirect#")+"redirect#".length);
-							window.location.href = previousURL;
-						}
-						else
-							StateUpdateService.goToApp();	
+				
+				if (currentUser.isPasswordSet) {
+						
+					var previousURL = decodeURIComponent(window.location.href);
+					var redirectIndx = previousURL.indexOf("redirect");
+					
+					if (redirectIndx > 0) { 
+						previousURL = previousURL.substring(redirectIndx + "redirect#".length);
+						previousURL = StateUpdateService.checkAndMapCorrectApp(previousURL);
+						window.location.href = previousURL;
+					} else {
+						StateUpdateService.goToApp();
+					}
+					
 				} else {
 					StateUpdateService.goToAppSetPassword(currentUser.id);
 				}

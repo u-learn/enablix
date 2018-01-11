@@ -94,7 +94,7 @@ export class MembersComponent implements OnInit {
     
     let dialogRef = this.dialog.open(MemberDetailComponent, {
         width: '640px',
-        height: '90vh',
+        maxHeight: '90vh',
         disableClose: true,
         data: { newRecord: true }
       });
@@ -141,10 +141,10 @@ export class MembersComponent implements OnInit {
     let sub = this.membersService.deleteMembers(identities).share();
     
     sub.subscribe(res => {
-      this.alert.success("Members deleted successfully.");
+      this.alert.success("User(s) deleted successfully.");
       this.fetchData();
     }, err => {
-      this.alert.error("Unable to delete members. Please try later.", err.status);
+      this.alert.error("Unable to delete user(s). Please try later.", err.status);
     });
     
     return sub;
@@ -165,31 +165,47 @@ class MembersTableActions implements TableActionConfig<UserProfile> {
     this.component = comp;
 
     this.addAction = {
-        label: "Add",
+        label: "Add User",
         iconClass: "plus",
         successMessage: "Added",
-        execute: (selectedRecords: UserProfile[]) => {
-          return this.component.addMember(selectedRecords);
-        }
+        execute: this.component.addMember.bind(this.component)
       };
 
     this.delAction = {
-        label: "Trash",
+        label: "Remove User",
         iconClass: "trash",
         successMessage: "Deleted",
-        execute: (selectedRecords: UserProfile[]) => {
-          return this.component.deleteMembers(selectedRecords);
-        }
+        confirmConfig: {
+          title: "Delete User(s)",
+          confirmMsg: this.deleteConfirmMsg,
+          okLabel: "Proceed",
+          cancelLabel: "Cancel"
+        },
+        execute: this.component.deleteMembers.bind(this.component)
       };
 
 
     this.editAction = {
-        label: "Edit",
+        label: "Edit User",
         iconClass: "edit",
-        execute: (selectedRecords: UserProfile[]) => {
-          return this.component.editMember(selectedRecords);
-        }
+        execute: this.component.editMember.bind(this.component)
       };
+
+  }
+
+  deleteConfirmMsg(selectedRecs: UserProfile[]) : string {
+    
+    if (selectedRecs.length == 1) {
+    
+      return "You are about to remove user " + selectedRecs[0].name 
+          + ". You cannot undo this operation. Would you like to proceed?";
+
+    } else {
+
+      return "You are about to remove multiple users. "
+          + "You cannot undo this operation. Would you like to proceed?";
+
+    }
 
   }
 

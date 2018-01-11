@@ -1,7 +1,9 @@
 import { Component, OnInit, ViewEncapsulation, Input, ContentChild, TemplateRef, EventEmitter, Output } from '@angular/core';
+import { MatDialog, MatDialogRef } from '@angular/material';
 
 import { TableColumn, TableActionConfig, TableAction } from '../model/table.model';
 import { Pagination, Direction } from '../model/pagination.model';
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'ebx-table',
@@ -25,7 +27,7 @@ export class TableComponent implements OnInit {
 
   rowSelectOptions: RowSelectOption[];
 
-  constructor() { }
+  constructor(private dialog: MatDialog) { }
 
   ngOnInit() {
     this.clearSelection();
@@ -75,6 +77,7 @@ export class TableComponent implements OnInit {
 
     this.pagination.sort.field = col.sortProp;
     this.pagination.sort.direction = sortDir;
+    this.pagination.pageNum = 0;
 
     this.clearSelection();
 
@@ -154,8 +157,38 @@ export class TableComponent implements OnInit {
 
     if (act) {
 
-      act.execute(this.selectedRecords).subscribe(res => {
+      if (act.confirmConfig) {
+        
+        let dialogRef = this.dialog.open(ConfirmDialogComponent, {
+          width: '624px',
+          disableClose: true,
+          data: { 
+            title: act.confirmConfig.title,
+            text: act.confirmConfig.confirmMsg(this.selectedRecords),
+            confirmLabel: act.confirmConfig.okLabel,
+            cancelLabel: act.confirmConfig.cancelLabel
+          }
+        });
 
+        dialogRef.afterClosed().subscribe(res => {
+          if (res) {
+            this.runAction(act);
+          }
+        });
+
+      } else {
+        this.runAction(act);
+      }
+      
+    }
+
+
+  }
+
+  runAction(act: TableAction<any>) {
+    act.execute(this.selectedRecords).subscribe(res => {
+
+      if (res) {
         this.clearSelection();
 
         if (act.successMessage) {
@@ -164,9 +197,9 @@ export class TableComponent implements OnInit {
             act['tempMessage'] = null;
           }, 4000);
         }
+      }
 
-      });
-    }
+    });
   }
 
   clearSelection() {

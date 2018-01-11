@@ -18,14 +18,33 @@ export class AuthGuard implements CanActivate {
   		return true;
   	}
 
+    if (this.initFromLocalstorage()) {
+      
+      return true;
+
+    } else {
+
+      return this.authService.loginUser(null, null, null).map(res => {
+        if (this.initFromLocalstorage()) {
+          return true;
+        }
+        this.router.navigate(['login'], { queryParams: {returnUrl: state.url} });
+        return false;
+      });
+    }
+    
+  }
+
+  private initFromLocalstorage() : boolean {
+    
     let userJSON = localStorage.getItem('currentUser');
+    
     if (userJSON != null) {
       let currentUser = JSON.parse(userJSON);
       this.authService.initUserService(currentUser);
       return true;
     }
 
-  	this.router.navigate(['login'], { queryParams: {returnUrl: state.url} });
     return false;
   }
 }

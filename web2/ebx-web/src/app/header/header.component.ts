@@ -4,6 +4,7 @@ import { UserService } from '../core/auth/user.service';
 import { AuthService } from '../core/auth/auth.service';
 import { NavigationService } from '../app-routing/navigation.service';
 import { TenantService } from '../services/tenant.service';
+import { Permissions } from '../model/permissions.model';
 
 @Component({
   selector: 'ebx-header',
@@ -36,6 +37,12 @@ export class HeaderComponent implements OnInit {
 
   navToHome() {
     this.navService.goToPortalHome();
+  }
+
+  navToCompanyPage() {
+    if (this.userService.userHasPermission(Permissions.COMPANY_DETAILS)) {
+      this.navService.goToCompanyPage();  
+    }
   }
 
 }

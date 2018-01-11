@@ -12,6 +12,7 @@ import com.enablix.state.change.ActionException;
 import com.enablix.state.change.StateChangeConstants;
 import com.enablix.state.change.model.GenericActionResult;
 import com.enablix.state.change.model.SimpleActionInput;
+import com.enablix.state.change.model.StateChangeRecording;
 
 public class DiscardAction extends BaseContentAction<SimpleActionInput, Boolean> {
 
@@ -30,7 +31,9 @@ public class DiscardAction extends BaseContentAction<SimpleActionInput, Boolean>
 	}
 
 	@Override
-	public GenericActionResult<ContentDetail, Boolean> execute(SimpleActionInput actionData, ContentDetail objectRef)
+	public GenericActionResult<ContentDetail, Boolean> execute(
+				SimpleActionInput actionData, ContentDetail objectRef, 
+				StateChangeRecording<ContentDetail> recording)
 			throws ActionException {
 		
 		try {

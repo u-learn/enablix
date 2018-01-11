@@ -188,6 +188,10 @@ button {
             &.save-blue {
                 background: url("/assets/images/icons/save-blue.svg") no-repeat center;
             }
+
+            &.withdraw {
+                background: url("/assets/images/icons/undo.svg") no-repeat center;   
+            }
         }
     }
 

@@ -2,11 +2,14 @@
   <ng-container *ngSwitchCase="'portal'">
     <div *ngIf="username != null; then loggedInBlock; else loggedOutBlock"></div>
   </ng-container>
+  <ng-container *ngSwitchCase="'empty'">
+    <div *ngIf="1==1; then loggedOutBlock"></div>
+  </ng-container>
   <ng-container *ngSwitchCase="'company'">
     <div class="nav-bar company">
       <div class="left">
         <img class="enablix-logo" src="/assets/images/company/enablix_logo@2x.png" (click)="navToHome()"/>
-        <div class="client-brand" routerLink="/portal/company">
+        <div class="client-brand" (click)="navToCompanyPage()">
           <div class="logo"><div class="logo-placeholder"></div></div>
           <h3 class="brand">{{tenantService.tenant?.name}}</h3>
         </div>
@@ -31,7 +34,7 @@
         <div class="icon small drafts"></div>
       </button>
       <div class="line"></div>
-      <div class="client-brand" routerLink="/portal/company">
+      <div class="client-brand" (click)="navToCompanyPage()">
         <div class="logo"><div class="logo-placeholder"></div></div>
         <h3 class="brand">{{tenantService.tenant?.name}}</h3>
       </div>

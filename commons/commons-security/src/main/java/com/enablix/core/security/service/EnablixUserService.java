@@ -23,6 +23,7 @@ import com.enablix.commons.util.concurrent.Events;
 import com.enablix.commons.util.id.IdentityUtil;
 import com.enablix.commons.util.json.JsonUtil;
 import com.enablix.commons.util.process.ProcessContext;
+import com.enablix.core.api.WebPortal;
 import com.enablix.core.domain.security.authorization.Role;
 import com.enablix.core.domain.security.authorization.UserBusinessProfile;
 import com.enablix.core.domain.security.authorization.UserProfile;
@@ -71,6 +72,7 @@ public class EnablixUserService implements UserService, UserDetailsService {
 		Tenant tenant = tenantRepo.findByTenantId(user.getTenantId());
 
 		String templateId = tenant == null ? "" : tenant.getDefaultTemplateId();
+		String portal = tenant == null ? WebPortal.defaultPortal().getName() : tenant.getPortal();
 		
 		try {
 			// set up process context to fetch user roles from tenant specific database
@@ -83,7 +85,7 @@ public class EnablixUserService implements UserService, UserDetailsService {
 			ProcessContext.clear();
 		}
 
-		return new LoggedInUser(user, templateId, userProfile.getSystemProfile().getRoles(), userProfile);
+		return new LoggedInUser(user, templateId, userProfile.getSystemProfile().getRoles(), userProfile, portal);
 	}
 
 	@Override
@@ -340,16 +342,18 @@ public class EnablixUserService implements UserService, UserDetailsService {
 		private UserProfile userProfile;
 		private User user;
 		private String templateId;
+		private String portal;
 		private Collection<GrantedAuthority> auths;
 
 		private LoggedInUser() {
 			// for ORM
 		}
 		
-		private LoggedInUser(User user, String templateId, List<Role> roles, UserProfile userProfile) {
+		private LoggedInUser(User user, String templateId, List<Role> roles, UserProfile userProfile, String portal) {
 			this.user = user;
 			this.templateId = templateId;
 			this.userProfile = userProfile;
+			this.portal = portal;
 			initAuthorities(roles);
 		}
 
@@ -422,6 +426,10 @@ public class EnablixUserService implements UserService, UserDetailsService {
 			return userProfile;
 		}
 
+		public String getPortal() {
+			return portal;
+		}
+
 	}
 
 	@Override
@@ -442,8 +450,8 @@ public class EnablixUserService implements UserService, UserDetailsService {
 			UserProfile usrProfile = provider.getGuestUserProfile(guestUser);
 			if (guestUser != null) {
 				// Adding the role as null for the guest user
-				user = new LoggedInUser(guestUser, 
-						null, null, usrProfile);
+				user = new LoggedInUser(guestUser, null, null, usrProfile, 
+						WebPortal.defaultPortal().getName());
 			}
 		}
 

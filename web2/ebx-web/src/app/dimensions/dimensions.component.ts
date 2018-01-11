@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, Input } from '@angular/core';
 
 import { ContentTemplateService } from '../core/content-template.service';
 import { Container } from '../model/container.model';
@@ -12,14 +12,20 @@ import { NavigationService } from '../app-routing/navigation.service';
 })
 export class DimensionsComponent implements OnInit {
 
+  @Input() dims?: string = "portal-home";
+
   dimContainers: Container[];
 
   constructor(private contentTemplateService: ContentTemplateService,
               private navService: NavigationService) { }
 
   ngOnInit() {
-    this.dimContainers = this.contentTemplateService.getPortalDimensionContainers();
-    console.log(this.dimContainers);
+    if (this.dims === "all") {
+      this.dimContainers = this.contentTemplateService.templateCache.bizDimensionContainers;
+    } else {
+      this.dimContainers = this.contentTemplateService.getPortalDimensionContainers();  
+    }
+    
   }
 
   

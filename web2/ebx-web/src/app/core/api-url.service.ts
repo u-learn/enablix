@@ -61,6 +61,8 @@ export class ApiUrlService {
 
   static POST_SHARE_BY_EMAIL_URL = "/email/sharecontent";
  
+  static POST_RESET_PASSWORD_URL = "/resetpassword";
+  static POST_SET_PASSWORD_URL = "/systemuserchangepwd";
   static GET_LOGOUT = "/logout";
 
   constructor() { }
@@ -285,4 +287,11 @@ export class ApiUrlService {
     return this.getAPIUrl(ApiUrlService.POST_SHARE_BY_EMAIL_URL);
   }
 
+  postResetPasswordUrl() : string {
+    return this.getAPIUrl(ApiUrlService.POST_RESET_PASSWORD_URL);
+  }
+
+  postSetPasswordUrl() : string {
+    return this.getAPIUrl(ApiUrlService.POST_SET_PASSWORD_URL);
+  }
 }

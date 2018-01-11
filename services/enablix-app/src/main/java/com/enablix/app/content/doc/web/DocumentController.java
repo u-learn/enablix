@@ -23,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.enablix.app.content.ContentDataManager;
 import com.enablix.app.content.doc.DocumentManager;
 import com.enablix.app.template.service.TemplateManager;
+import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.commons.dms.api.DocPreviewData;
 import com.enablix.commons.dms.api.Document;
 import com.enablix.commons.dms.api.DocumentMetadata;
@@ -234,16 +235,27 @@ public class DocumentController {
 
     	if (CollectionUtil.isNotEmpty(contentRecord)) {
     		
-			String docIdentity = ContentDataUtil.findDocIdentity(contentRecord, container);
+    		Map<String, Object> docRecord = ContentDataUtil.findDocRecord(contentRecord, container, template);
     		
-    		if (StringUtil.hasText(docIdentity)) {
-    		
-    			IDocument part = previewService.getDocSmallThumbnail(docIdentity);
-    			if (part != null) {
-    				sendDownloadResponse(response, part);
+    		if (docRecord != null) {
+    			
+    			String docIdentity = (String) docRecord.get(ContentDataConstants.IDENTITY_KEY);
+    			
+    			if (StringUtil.hasText(docIdentity)) {
+    				IDocument part = previewService.getDocSmallThumbnail(docIdentity);
+        			if (part != null) {
+        				sendDownloadResponse(response, part);
+        				iconFound = true;
+        			}
+    			}
+    			
+    			if (!iconFound && ContentDataUtil.isDocContentTypeImage(docRecord)) {
+    				downloadAction(request, response, docIdentity, null, null, null, null, null);
     				iconFound = true;
-    			} 
-    		} else {
+    			}
+    		}
+    		
+			if (!iconFound) {
     			// check url
     			String previewImgUrl = findUrlPreviewImageUrl(contentRecord);
     			if (StringUtil.hasText(previewImgUrl)) {
@@ -263,7 +275,7 @@ public class DocumentController {
     	}
        	
    	}
-
+    
     @RequestMapping(value = "/icon/d/{docIdentity}/", method = {RequestMethod.GET})
    	public void getDocPreviewDataIcon(HttpServletRequest request,
                HttpServletResponse response, 
@@ -277,7 +289,15 @@ public class DocumentController {
 			if (part != null) {
 				sendDownloadResponse(response, part);
 				iconFound = true;
-			} 
+			}
+			
+			if (!iconFound) {
+				Document<DocumentMetadata> doc = docManager.load(docIdentity);
+				if (doc != null && ContentDataUtil.isImageContentType(doc.getMetadata().getContentType())) {
+					sendDownloadResponse(response, doc);
+					iconFound = true;
+				}
+			}
 		}
     	
     	if (!iconFound) {

@@ -2,6 +2,8 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { AuthService } from '../../core/auth/auth.service';
+import { UserService } from '../../core/auth/user.service';
+import { AlertService } from '../../core/alert/alert.service';
 
 @Component({
   selector: 'ebx-login-form',
@@ -19,7 +21,8 @@ export class LoginFormComponent implements OnInit {
   invalidCredentials: boolean
   loginSuccess: boolean = false;
 
-  constructor(private authService: AuthService, private router: Router, private route: ActivatedRoute) {
+  constructor(private authService: AuthService, private router: Router, 
+    private route: ActivatedRoute, private alert: AlertService, private user: UserService) {
   	this.username = "";
   	this.password = "";
     this.invalidCredentials = false;
@@ -40,14 +43,20 @@ export class LoginFormComponent implements OnInit {
     this.authService.loginUser(this.username, this.password, this.rememberMe)
   	  .subscribe(
   			data => {
+          
           this.loginSuccess = true;
-  				this.router.navigateByUrl(this.returnUrl);		
+          
+          if (!this.user.isPasswordSet()) {
+            this.router.navigate(['setpassword'], { queryParams: {returnUrl: this.returnUrl} });
+          } else {
+  				  this.router.navigateByUrl(this.returnUrl);
+          }
   			},
   			error => {
   				if (error.status == 401) {
             this.invalidCredentials = true;
           } else {
-            // TODO: alert server error
+            this.alert.error("Error in login. Please try again later.", error.status);
           }
   			}
   		);

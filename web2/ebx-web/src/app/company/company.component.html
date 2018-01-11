@@ -1,9 +1,9 @@
 <ebx-header type="company"></ebx-header>
 <div class="container small-top-margin flex-row">
   <div class="company no-sidebar">
-    <div class="main">
+    <div class="main" *ebxAccess="'VIEW_STUDIO'" >
       <div class="sub-tabs">
-        <a routerLink="/portal/company" routerLinkActive="tab-active" [routerLinkActiveOptions]="{ exact: true }">Members</a>
+        <a routerLink="/portal/company" routerLinkActive="tab-active" [routerLinkActiveOptions]="{ exact: true }">Users</a>
         <a routerLink="/portal/company/integrations" routerLinkActive="tab-active">Integrations</a>
       </div>
       <div class="tab-content">

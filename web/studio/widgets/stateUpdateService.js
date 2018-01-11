@@ -66,14 +66,16 @@ enablix.studioApp.factory('StateUpdateService',
 	 		};
 	 		
 	 		var goToLogin = function(previousUrl) {
-				if(previousUrl.lastIndexOf("#") > 0 && previousUrl.substring(previousUrl.lastIndexOf("#") + 1, previousUrl.length).length > 7)
+				
+	 			if(previousUrl.lastIndexOf("#") > 0 && previousUrl.substring(previousUrl.lastIndexOf("#") + 1, previousUrl.length).length > 7) {
 					//if previous URL is other than logout
 					$window.location.href = $location.protocol() + "://" + $location.host() 
  											+ ":" + $location.port() + TenantInfoService.getTenantContextUrl() 
  											+ "/login.html#/login#" +"redirect#" + encodeURIComponent(previousUrl);
-				else
+				} else {
 					$window.location.href = $location.protocol() + "://" + $location.host() 
  											+ ":" + $location.port() + TenantInfoService.getTenantContextUrl() + "/login.html#/login";
+				}
 											
 	 		};
 	 		
@@ -84,8 +86,16 @@ enablix.studioApp.factory('StateUpdateService',
 	 		};
 	 		
 	 		var goToApp = function() {
-	 			$window.location.href = $location.protocol() + "://" + $location.host() + ":" + $location.port() 
-	 									 + "/app.html#/portal/home";
+	 			
+	 			var portal = enablix.loggedInUser ? enablix.loggedInUser.portal : "v1";
+	 			
+	 			if (portal === "v2") {
+	 				$window.location.href = $location.protocol() + "://" + $location.host() + ":" + $location.port() 
+	 									 + "/app2.html";
+	 			} else {
+	 				$window.location.href = $location.protocol() + "://" + $location.host() + ":" + $location.port() 
+					 + "/app1.html#/portal/home";
+	 			}
 	 		};
 	 		
 			var goToForgotPasswordPage = function(){
@@ -406,6 +416,16 @@ enablix.studioApp.factory('StateUpdateService',
 	 			$state.go(_stateName, _stateParams);
 	 		};
 	 		
+	 		var checkAndMapCorrectApp = function(_url) {
+	 			var portal = enablix.loggedInUser ? enablix.loggedInUser.portal : "v1";
+	 			if (portal === "v2") {
+	 				_url = _url.replace("app.html", "app2.html");
+	 			} else {
+	 				_url = _url.replace("app.html", "app1.html");
+	 			}
+	 			return _url;
+	 		}
+	 		
 	 		return {
 	 			goToApp: goToApp,
 	 			goToAppSetPassword: goToAppSetPassword,
@@ -470,7 +490,8 @@ enablix.studioApp.factory('StateUpdateService',
 				goToTPIntConfigList: goToTPIntConfigList,
 				goToState: goToState,
 				setStateChangeActivityContext: setStateChangeActivityContext,
-				windowBack: windowBack
+				windowBack: windowBack,
+				checkAndMapCorrectApp: checkAndMapCorrectApp
 	 		};
 	 	}
 	 ]);

@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewEncapsulation, ViewChildren, QueryList, AfterViewInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import { Router, ActivatedRoute } from '@angular/router';
 
 import { ConsolidateContentService } from './consolidate-content.service';
 import { DataPage } from '../model/data-page.model';
@@ -25,7 +26,7 @@ export class ContentRequestListComponent {
   constructor(public ccService: ConsolidateContentService,
         public contentWFService: ContentWorkflowService,
         public alert: AlertService, public user: UserService,
-        public navService: NavigationService) {
+        public navService: NavigationService, public router: Router) {
 
   }
 
@@ -33,7 +34,7 @@ export class ContentRequestListComponent {
     
     this.tableColumns = [
       {
-        heading: "Asset",
+        heading: "Content Asset",
         key: "asset",
         sortProp: "objectRef.contentTitle"
       },
@@ -94,7 +95,7 @@ export class ContentRequestListComponent {
 
     let response = this.contentWFService.publishContentRequestList(requestList).share();
     response.subscribe(res => {
-        this.alert.success("Content published successfully.");
+        this.alert.success("Content Asset published successfully.");
         this.fetchData();
       }, err => {
         this.alert.error("Unable to publish. Please try later.", err.status);
@@ -186,7 +187,90 @@ export class ContentRequestListComponent {
   }
 
   navToContentRequest(rec: any) {
-    this.navService.goToContentRequestDetail(rec.objectRef.identity);
+    this.navService.goToContentRequestDetail(rec.objectRef.identity, this.router.url);
+  }
+
+}
+
+export class ContentRequestActions implements TableActionConfig<any> {
+
+  component: ContentRequestListComponent;
+  allActions: { [key: string]: TableAction<any> } = {};
+
+  actionOptions: string[] = [];
+
+  constructor(comp: ContentRequestListComponent, actionOptions: string[]) {
+    
+    this.component = comp;
+    this.actionOptions = actionOptions;
+
+    this.allActions[ContentWorkflowService.ACTION_APPROVE] = {
+      label: "Approve",
+      iconClass: "approve",
+      successMessage: "Approved",
+      execute: this.component.approveRecords.bind(this.component)
+    }
+
+    this.allActions[ContentWorkflowService.ACTION_REJECT] = {
+      label: "Reject",
+      iconClass: "reject",
+      successMessage: "Rejected",
+      execute: this.component.rejectRecords.bind(this.component)
+    }
+
+    this.allActions[ContentWorkflowService.ACTION_WITHDRAW] = {
+      label: "Withdraw",
+      iconClass: "withdraw",
+      successMessage: "Withdrawn",
+      execute: this.component.withdrawRecords.bind(this.component)
+    }
+
+    this.allActions[ContentWorkflowService.ACTION_DISCARD] = {
+      label: "Delete",
+      iconClass: "trash",
+      successMessage: "Deleted",
+      execute: this.component.deleteRecords.bind(this.component),
+      confirmConfig: {
+        title: "Delete Asset",
+        confirmMsg: this.getDeleteConfirmText,
+        okLabel: "Delete Asset",
+        cancelLabel: "No, keep it."
+      }
+    }
+
+    this.allActions[ContentWorkflowService.ACTION_PUBLISH] = {
+      label: "Publish",
+      iconClass: "send-blue",
+      successMessage: "Published",
+      execute: this.component.publishRecords.bind(this.component)
+    }
+  }
+
+  getDeleteConfirmText(selRecords: any[]) : string {
+    if (selRecords.length == 1) {
+      return "You are about to delete '" + selRecords[0].objectRef.contentTitle 
+        + "' asset.<br>You won't be able to restore it. Would you like to proceed?";
+    } else {
+      return "You are about to delete multiple records."
+        + "<br>You won't be able to restore it. Would you like to proceed?"; 
+    }
+  }
+
+  getAvailableActions(selectedRecords: any[]) : TableAction<any>[] {
+    
+    let actions: TableAction<any>[] = [];
+    
+    this.actionOptions.forEach(actionName => {
+      if (this.component.contentWFService.isActionAllowedForAllRecords(
+            actionName, selectedRecords)) {
+        let action = this.allActions[actionName];
+        if (action) {
+          actions.push(action);
+        }
+      }  
+    });
+    
+    return selectedRecords && selectedRecords.length > 0 ? actions : [];
   }
 
 }

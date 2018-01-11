@@ -2,14 +2,14 @@
 <div class="container flex-row">
   <div class="company no-sidebar">
     <div class="header">
-      <h1>Consolidate Content</h1>
-      <p class="subheader no-bottom-padding">See and consolidate assets from your marketing team<br>
-        or assets that need some quality check.</p>
+      <h1>Content Manager</h1>
+      <p class="subheader no-bottom-padding">Manager your drafts, content requests, quality issues <br>and other content asset tasks here.</p>
     </div>
     <div class="main consolidate-content">
       <div class="sub-tabs">
         <a routerLink="/portal/cconsol" routerLinkActive="tab-active" [routerLinkActiveOptions]="{ exact: true }">My Drafts</a>
-        <a *ebxAccess="'MANAGE_CONTENT_REQUEST'" routerLink="/portal/cconsol/pending" routerLinkActive="tab-active">Pending</a>
+        <a *ebxAccess="'MANAGE_CONTENT_REQUEST'" routerLink="/portal/cconsol/requests" routerLinkActive="tab-active">Requests</a>
+        <a routerLink="/portal/cconsol/myrequests" routerLinkActive="tab-active">My Requests</a>
       </div>
       <div class="tab-content">
         <router-outlet></router-outlet>

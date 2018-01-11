@@ -27,8 +27,19 @@ import { FreetextSearchComponent } from '../freetext-search/freetext-search.comp
 import { CompanyComponent } from '../company/company.component';
 import { MembersComponent } from '../company/members/members.component';
 import { IntegrationsComponent } from '../company/integrations/integrations.component';
+import { AppUrlMapperComponent } from '../app-url-mapper/app-url-mapper.component';
+import { ContainerListUrlMapperComponent } from '../container-list-url-mapper/container-list-url-mapper.component';
+import { ContainerDetailUrlMapperComponent } from '../container-detail-url-mapper/container-detail-url-mapper.component';
+import { ForgotPasswordComponent } from '../forgot-password/forgot-password.component';
+import { SetPasswordComponent } from '../set-password/set-password.component';
+import { MyContentRequestComponent } from '../consolidate-content/my-content-request/my-content-request.component';
+import { AllDimensionsComponent } from '../all-dimensions/all-dimensions.component';
 
 const routes: Routes = [
+  {
+    path: 'app2.html',
+    component: AppUrlMapperComponent
+  },
   {
     path: '',
     redirectTo: '/portal',
@@ -49,6 +60,31 @@ const routes: Routes = [
           resolve: {
             sbData: SearchBarResolve
           }
+        },
+        {
+          // mapping from old application "#/portal/home"
+          path: 'home',
+          redirectTo: '/portal'
+        },
+        {
+          path: "alldims",
+          component: AllDimensionsComponent
+        },
+        {
+          // mapping from old application "#/portal/containerlist/:cQId"
+          path: 'containerlist/:cQId',
+          component: ContainerListUrlMapperComponent
+        },
+        {
+          // mapping from old application "#/portal/container/:cQId/:recordIdentity"
+          path: 'container/:cQId/:recordIdentity',
+          component: ContainerDetailUrlMapperComponent
+        },
+        {
+          // mapping from old application "#/portal/container/:cQId/:recordIdentity/c/single/:containerQId"
+          // this and above url point to same page
+          path: 'container/:cQId/:recordIdentity/c/single/:containerQId/',
+          component: ContainerDetailUrlMapperComponent
         },
         {
           path: 'content',
@@ -105,8 +141,12 @@ const routes: Routes = [
               component: MyDraftComponent
             },
             {
-              path: 'pending',
+              path: 'requests',
               component: ContentRequestComponent
+            },
+            {
+              path: 'myrequests',
+              component: MyContentRequestComponent
             }
           ]
         },
@@ -136,6 +176,25 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginPageComponent
+  },
+  {
+    path: "forgotpassword",
+    component: ForgotPasswordComponent
+  },
+  {
+    path: "setpassword",
+    canActivate: [AuthGuard],
+    children: [
+      {
+        path: '',
+        component: SetPasswordComponent
+      },
+      {
+        // for compatibility with the old application where url container user id
+        path: ":userId",
+        component: SetPasswordComponent
+      }
+    ]
   },
   {
     path: '**',

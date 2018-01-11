@@ -14,8 +14,8 @@ export class NavigationService {
     this.router.navigate(['/portal/content/new', containerQId]);
   }
 
-  goToContentDetail(containerQId: string, identity: string) {
-    this.router.navigate(['/portal/content/detail', containerQId, identity]);
+  goToContentDetail(containerQId: string, identity: string, returnUrl: string = "/") {
+    this.router.navigate(['/portal/content/detail', containerQId, identity], {queryParams : {returnUrl: returnUrl}});
   }
 
   goToContentList(containerQId: string, queryParams?: { [key: string] : any }) {
@@ -38,9 +38,13 @@ export class NavigationService {
     this.router.navigate(['/portal/search', text]);
   }
 
-  goToContentRequestDetail(recIdentity: string) {
-    this.router.navigate(['/portal/content/request', recIdentity]);
+  goToContentRequestDetail(recIdentity: string, returnUrl: string = "/") {
+    this.router.navigate(['/portal/content/request', recIdentity], {queryParams: {returnUrl : returnUrl}});
   } 
+
+  goToCompanyPage() {
+    this.router.navigate(['/portal/company']);
+  }
 
   goToRoute(routePath: string, routeParams: string[], queryParams?: {[key: string] : string}) {
     
