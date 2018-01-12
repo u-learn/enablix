@@ -2,6 +2,7 @@ import { Component, OnInit, ViewEncapsulation, Input, EventEmitter, Output } fro
 
 import { ContentTemplateService } from '../core/content-template.service';
 import { NavigationService } from '../app-routing/navigation.service';
+import { Constants } from '../util/constants';
 
 @Component({
   selector: 'ebx-entity-pill',
@@ -31,6 +32,8 @@ export class EntityPillComponent implements OnInit {
       this.color = container.color;
       this.isBizContent = this.ctService.isBusinessContent(container);
       this.isBizDim = this.ctService.isBusinessDimension(container);
+    } else {
+      this.color = Constants.defaultTypeColor;
     }
   }
 

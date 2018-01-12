@@ -1,15 +1,20 @@
 <div *ngIf="url" class="url-asset">
   <div class="embed-rich" *ngIf="type == 'rich'">
-    <div class="embed-heading">{{embedInfo?.title}}</div>
-    <div class="embed-excerpt">
-      <a target="_blank" [href]="navUrl">
-        <div class="embed-image" *ngIf="thumbnailUrl">
-          <img [src]="thumbnailUrl">
-        </div>
-        <div class="embed-desc">{{embedInfo?.description}}</div>
-      </a>
-    </div>
-    <!-- <iframe [src]="url | safeUrl"></iframe> -->
+    <object [data]="url | safeUrl" type="text/html">
+      <!-- trying embedding, else alternate option of showing card -->
+      <div class="embed-card">
+        <a target="_blank" [href]="navUrl">
+          <div class="embed-image" *ngIf="thumbnailUrl">
+            <img [src]="thumbnailUrl">
+          </div>
+          <div class="embed-card-text">
+            <h3>{{embedInfo?.title}}</h3>
+            <div class="embed-desc">{{embedInfo?.description}}</div>
+            <p class="fav"><img class="favicon" *ngIf="embedInfo?.favicon?.url" onerror="this.src='/assets/images/icons/broken.jpg'" [src]="embedInfo.favicon.url">{{embedInfo?.site}}</p>
+          </div>
+        </a>
+      </div>
+    </object>
   </div>
   <div *ngIf="embedHtml" class="embed-oembed" [innerHtml]="embedHtml | safeHtml"></div>
 </div>

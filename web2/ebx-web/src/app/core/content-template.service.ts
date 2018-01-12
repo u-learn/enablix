@@ -47,8 +47,9 @@ export class ContentTemplateService {
   }
 
   getConcreteContainerByQId(containerQId: string) : Container {
+    console.log("container qid = " + containerQId);
     let container = this.getContainerByQId(containerQId);
-    if (container.linkContainerQId) {
+    if (container && container.linkContainerQId) {
       container = this.getContainerByQId(container.linkContainerQId);
     }
     return container;

@@ -10,7 +10,7 @@
 
   .embed-rich {
 
-    iframe {
+    iframe, object {
       border: 0;
       min-height: 75vh;
       width: 100%;
@@ -25,24 +25,45 @@
       border-bottom: 1px solid rgba(0,0,0,0.03);
     }
 
-    .embed-excerpt {
+    .embed-image {
+      
+      text-align: center;
 
-      .embed-image {
-        
-        padding: 14px 0;
-        text-align: center;
-
-        img {
-          max-width: 100%;
-        }
+      img {
+        width: 100%;
       }
+    }
+
+    .embed-card-text {
+
+      padding: 16px 0;
+      border-bottom: 1px solid rgba(0,0,0,0.03);   
+
+      h3 {
+        font-family: $FPLight;
+      }
+
+      
 
       .embed-desc {
         font-family: $FPLight;
         color: $black;
-        font-size: 14px;
+        font-size: 16px;
         padding: 14px 0;
-        border-bottom: 1px solid rgba(0,0,0,0.03);   
+        
+      }
+
+      .fav {
+        font-family: $FPLight;
+        font-size: 12px;
+        text-transform: uppercase;
+      }
+
+      .favicon {
+        width: 12px;
+        height: 12px;
+        margin-right: 5px;
+        vertical-align: top;
       }
     }
   }
