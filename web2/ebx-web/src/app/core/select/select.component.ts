@@ -27,6 +27,8 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
   @Input() placeholder?: string = "";
   @Input() pillsColor?: string;
 
+  @Input() allowNewEntry: boolean = false;
+
   @ViewChild("textInput") textInput;
 
   optionsVisible: boolean;
@@ -40,15 +42,49 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
   constructor(private renderer: Renderer2) { 
     this.optionsVisible = false;
     this.selectCtrl = new FormControl();
-    this.filteredOptions = this.selectCtrl.valueChanges.startWith(null)
-        .map(ct => ct ? this.filterOptions(ct) : this.options);
+
+    let sub = this.selectCtrl.valueChanges.startWith(null);
+    this.filteredOptions = sub.map(ct => ct ? this.filterOptions(ct) : this.options);
+    
   }
 
   @Input() 
   set options(opts: SelectOption[]) {
     this._options = opts;
-    this.filteredOptions = this.selectCtrl.valueChanges.startWith(null)
-        .map(ct => ct ? this.filterOptions(ct) : this._options);
+    
+    let sub = this.selectCtrl.valueChanges.startWith(null).share();
+    this.filteredOptions = sub.map(ct => ct ? this.filterOptions(ct) : this._options);
+    
+    // if (this.allowNewEntry) {
+    //   sub.subscribe((ct: string) => {
+    //     if (ct && ct.endsWith(" ")) {
+    //       this.addSelectedOption([{id: ct.trim(), label: ct.trim()}]);
+    //     }
+    //   });
+    // }
+
+  }
+
+  onBlur() {
+    //console.log("focus lost - " + this.selectCtrl.value);
+    
+    if (this.allowNewEntry) {
+    
+      setTimeout(() => {
+        //console.log("focus timeout - " + this.selectCtrl.value);
+        
+        let ct = this.selectCtrl.value;
+        if (ct && ct.trim().length > 1) {
+        
+          let opt: SelectOption = {id: ct.trim(), label: ct.trim()};
+          if (!this.selectedOptionsContain(opt)) {
+            this.selected.push(opt);
+            this.selectCtrl.setValue(null, {emitEvent: false});
+          } 
+        }
+      }, 300);  
+    }
+    
   }
 
   get options() : SelectOption[] {
@@ -94,6 +130,8 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
             this.selected.push(opt);
           }  
         });
+
+        this.selectCtrl.setValue(null);
         
       } else {
         let opt: SelectOption = opts[0];
@@ -134,8 +172,9 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
   }
 
   updateSelection(opt: SelectOption) {
+    //console.log("update selection: " + opt.label);
     this.addSelectedOption([opt]);
-    this.hideOptions();
+    //this.hideOptions();
   }
 
   filterOptions(ct: string) {

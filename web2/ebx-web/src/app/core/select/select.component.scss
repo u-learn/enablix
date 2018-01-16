@@ -25,12 +25,13 @@
     }
 
     input[type="text"] {
-      width: inherit;
+      max-width: inherit;
     }
 
     .pills-container {
       display: flex;
       padding: 8px 0 0 0;
+      width: 100%;
 
       .pill {
         margin-right: 8px;
@@ -49,6 +50,10 @@
           cursor: pointer;
         }
       }
+
+      input[type="text"] {
+        padding-bottom: 4px;
+      }
     }
 
   }
@@ -64,7 +69,9 @@
     margin-top: -4px;
     margin-left: -1px;
     margin-bottom: 24px;
-    border: 1px solid #E3EBEF;
+    border-left: 1px solid #E3EBEF;
+    border-right: 1px solid #E3EBEF;
+    border-bottom: 1px solid #E3EBEF;
     border-top: 1px solid rgba(227,235,239, 0.5);
     max-height: 220px;
     overflow-y: auto;

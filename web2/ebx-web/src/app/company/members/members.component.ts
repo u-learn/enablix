@@ -116,7 +116,7 @@ export class MembersComponent implements OnInit {
       let userProfile = selectedMembers[0];
       let dialogRef = this.dialog.open(MemberDetailComponent, {
           width: '640px',
-          height: '90vh',
+          maxHeight: '90vh',
           disableClose: true,
           data: { newRecord: false, profileIdentity: userProfile.identity }
         });

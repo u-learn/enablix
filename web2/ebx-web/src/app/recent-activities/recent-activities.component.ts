@@ -33,8 +33,7 @@ export class RecentActivitiesComponent implements OnInit {
         "CONTENT_ADD",
         "CONTENT_UPDATE",
         "DOC_DOWNLOAD",
-        "CONTENT_SUGGEST_APPROVED",
-        "CONTENT_SUGGEST_REJECT"
+        "CONTENT_SUGGEST_APPROVED"
       ]
     };
 

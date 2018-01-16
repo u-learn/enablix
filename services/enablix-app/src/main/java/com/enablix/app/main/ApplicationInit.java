@@ -121,7 +121,7 @@ public class ApplicationInit extends WebMvcAutoConfigurationAdapter {
 				.setCachePeriod(cachePeriod)
 				.resourceChain(false)
 				.addResolver(customResourceResolver())
-				.addResolver(new EnablixPathResourceResolver());
+				.addResolver(new DefaultResourceResolver());
 	}
 
 	// see https://stackoverflow.com/questions/27381781/java-spring-boot-how-to-map-my-my-app-root-to-index-html

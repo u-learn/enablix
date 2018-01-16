@@ -44,7 +44,9 @@ export class ContentRequestComponent extends ContentRequestListComponent impleme
 
     super.initComponent()
 
-    this.filters = { requestState: ContentWorkflowService.STATE_PENDING_APPROVAL };
+    this.filters = { };
+    
+    this.pagination.sort.direction = Direction.DESC;
 
     this.fetchData();
     
