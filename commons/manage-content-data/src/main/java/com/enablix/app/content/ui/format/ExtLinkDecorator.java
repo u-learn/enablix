@@ -3,19 +3,22 @@ package com.enablix.app.content.ui.format;
 import com.enablix.app.content.share.SharedContentUrlCreator;
 import com.enablix.commons.util.EnvPropertiesUtil;
 import com.enablix.commons.util.TextLinkifier.LinkDecorator;
+import com.enablix.core.domain.activity.ActivityChannel.Channel;
 
-public class EmailExtLinkDecorator implements LinkDecorator {
+public class ExtLinkDecorator implements LinkDecorator {
 
 	private SharedContentUrlCreator urlCreator;
 	private String sharedWithEmail;
 	private String contentIdentity;
+	private Channel channel;
 	
-	public EmailExtLinkDecorator(SharedContentUrlCreator urlCreator, String sharedWithEmail, 
-			String contentIdentity) {
+	public ExtLinkDecorator(SharedContentUrlCreator urlCreator, String sharedWithEmail, 
+			String contentIdentity, Channel channel) {
 		super();
 		this.urlCreator = urlCreator;
 		this.sharedWithEmail = sharedWithEmail;
 		this.contentIdentity = contentIdentity;
+		this.channel = channel;
 	}
 
 	@Override
@@ -25,7 +28,7 @@ public class EmailExtLinkDecorator implements LinkDecorator {
 	}
 
 	private String getExtLinkUrl(String url, String contentItemQId) {
-		return "/xlink?u=" + url + "&cId=" + contentIdentity + "&cQId=" + contentItemQId + "&atChannel=EMAIL";
+		return "/xlink?u=" + url + "&cId=" + contentIdentity + "&cQId=" + contentItemQId + "&atChannel=" + channel.name();
 	}
 
 	@Override

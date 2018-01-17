@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.enablix.app.content.ui.DisplayContext;
 import com.enablix.app.template.service.TemplateManager;
 import com.enablix.commons.util.PermissionConstants;
 import com.enablix.commons.util.concurrent.Events;
@@ -84,6 +85,8 @@ public class NotificationManagerImpl implements NotificationManager {
 			List<UserProfile> userprofiles = userProfileRepo.findBySystemProfile_RolesIn(adminRoles);
 			
 			ContentApprovalEmailVelocityInput<ContentDetail> emailInput = null;
+			DisplayContext ctx = new DisplayContext();
+			
 			for (UserProfile userProfile : userprofiles) {
 				
 				// exclude the user who has submitted the request.
@@ -104,7 +107,7 @@ public class NotificationManagerImpl implements NotificationManager {
 						emailInput.setRecipientUser(userProfile);
 						emailInput.setRecipientUserId(userProfile.getEmail());
 						
-						inputBuilder.prepareContentForEmailToUser(emailInput, userProfile.getEmail());
+						inputBuilder.prepareContentForEmailToUser(emailInput, userProfile.getEmail(), ctx);
 						
 						mailService.sendHtmlEmail(emailInput, userProfile.getEmail(), 
 								ContentApprovalConstants.TEMPLATE_PORTAL_REQ_ADMIN_NOTIF);
@@ -149,7 +152,6 @@ public class NotificationManagerImpl implements NotificationManager {
 		
 		mailService.sendHtmlEmail(emailInput, recipientUserId, 
 				ContentApprovalConstants.TEMPLATE_PORTAL_REQ_REJECT_NOTIF);
-		
 		
 	}
 	

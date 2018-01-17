@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.enablix.app.content.ui.DisplayContext;
 import com.enablix.app.content.ui.DisplayableContentService;
 import com.enablix.app.mail.web.EmailRequest;
 import com.enablix.app.mail.web.EmailRequest.Recipient;
@@ -61,12 +62,12 @@ public class SelectedContentEmailInputBuilder extends AbstractEmailVelocityInput
 	}
 	
 	@Override
-	public void processInputForRecipient(Recipient recipient, SelectedContentMailInput input, DataView dataView) {
+	public void processInputForRecipient(Recipient recipient, SelectedContentMailInput input, DataView dataView, DisplayContext ctx) {
 		
-		super.processInputForRecipient(recipient, input, dataView);
+		super.processInputForRecipient(recipient, input, dataView, ctx);
 		
 		for (Map.Entry<String, List<DisplayableContent>> dcEntry : input.getContent().entrySet()) {
-			dcEntry.getValue().forEach((dc) -> dcService.postProcessDisplayableContent(dc, recipient.getEmailId()));
+			dcEntry.getValue().forEach((dc) -> dcService.postProcessDisplayableContent(dc, recipient.getEmailId(), ctx));
 		}
 		
 	}

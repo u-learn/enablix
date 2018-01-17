@@ -71,8 +71,8 @@ public class NotificationTemplateInputBuilder {
 		}
 		
 		if (!StringUtil.isEmpty(recipientEmailId)) {
-			docUrlPopulator.populateUnsecureUrl(displayableContent, recipientEmailId);
-			textLinkProcessor.process(displayableContent, template, recipientEmailId);
+			docUrlPopulator.populateUnsecureUrl(displayableContent, recipientEmailId, ctx);
+			textLinkProcessor.process(displayableContent, template, recipientEmailId, ctx);
 		}
 		
 		return input;
@@ -84,12 +84,12 @@ public class NotificationTemplateInputBuilder {
 		return build(actionName, in, contentRequest, recipientUserId, null, view);
 	}
 	
-	public void prepareContentForEmailToUser(ContentApprovalEmailVelocityInput<?> velocityInput, String emailTo) {
+	public void prepareContentForEmailToUser(ContentApprovalEmailVelocityInput<?> velocityInput, String emailTo, DisplayContext ctx) {
 		
 		TemplateFacade template = templateManager.getTemplateFacade(ProcessContext.get().getTemplateId());
 		
-		docUrlPopulator.populateUnsecureUrl(velocityInput.getContentData(), emailTo);
-		textLinkProcessor.process(velocityInput.getContentData(), template, emailTo);
+		docUrlPopulator.populateUnsecureUrl(velocityInput.getContentData(), emailTo, ctx);
+		textLinkProcessor.process(velocityInput.getContentData(), template, emailTo, ctx);
 	}
 	
 }

@@ -10,4 +10,8 @@ public class HubspotConstants {
 
 	public static final String DOWNLOAD_ACTION_LABEL = "Download";
 	
+	public static final String HUBSPOT_CONFIG_KEY = "HUBSPOT_CONFIG";
+	public static final String HUBSPOT_CK_CONFIG_KEY = "CK_CONFIG";
+
+	
 }

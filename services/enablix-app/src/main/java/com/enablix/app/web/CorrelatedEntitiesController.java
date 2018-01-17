@@ -108,8 +108,8 @@ public class CorrelatedEntitiesController {
 		for (ContentDataRecord record : correlatedEntities) {
 			DisplayableContent dispRecord = contentBuilder.build(template, record, ctx);
 			// TODO: correct the usage of email address below
-			docUrlPopulator.populateUnsecureUrl(dispRecord, "support@enablix.com");
-			textLinkProcessor.process(dispRecord, template, "support@enablix.com");
+			docUrlPopulator.populateUnsecureUrl(dispRecord, "support@enablix.com", ctx);
+			textLinkProcessor.process(dispRecord, template, "support@enablix.com", ctx);
 			displayRecords.add(dispRecord);
 		}
 		

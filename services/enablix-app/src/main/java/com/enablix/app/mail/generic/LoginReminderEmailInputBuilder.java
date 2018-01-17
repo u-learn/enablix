@@ -3,6 +3,7 @@ package com.enablix.app.mail.generic;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.enablix.app.content.ui.DisplayContext;
 import com.enablix.app.mail.web.EmailRequest;
 import com.enablix.app.mail.web.EmailRequest.Recipient;
 import com.enablix.commons.util.process.ProcessContext;
@@ -28,7 +29,7 @@ public class LoginReminderEmailInputBuilder extends AbstractEmailVelocityInputBu
 	}
 	
 	@Override
-	public void processInputForRecipient(Recipient recipient, LoginReminderMailInput input, DataView dataView) {
+	public void processInputForRecipient(Recipient recipient, LoginReminderMailInput input, DataView dataView, DisplayContext ctx) {
 		
 		User user = userRepo.findByUserIdAndTenantId(recipient.getEmailId(), ProcessContext.get().getTenantId());
 		if (user != null) {
@@ -37,7 +38,7 @@ public class LoginReminderEmailInputBuilder extends AbstractEmailVelocityInputBu
 			throw new IllegalArgumentException("Invalid user id [" + recipient.getEmailId() + "]");
 		}
 
-		super.processInputForRecipient(recipient, input, dataView);
+		super.processInputForRecipient(recipient, input, dataView, ctx);
 		
 	}
 

@@ -56,7 +56,8 @@ public class DisplayableContentBuilderImpl implements DisplayableContentBuilder 
 		dispContent.setContainerLabel(containerDef.getLabel());
 		dispContent.setRecordIdentity((String) record.getRecord().get(ContentDataConstants.IDENTITY_KEY));
 		dispContent.setTitle(ContentDataUtil.findStudioLabelValue(contentRecord, template, containerQId));
-		dispContent.setPortalUrl(getContentInstanceAccessUrl(dispContent.getContainerQId(), dispContent.getRecordIdentity()));
+		dispContent.setPortalUrl(getContentInstanceAccessUrl(
+				dispContent.getContainerQId(), dispContent.getRecordIdentity(), ctx));
 		
 		List<EmbeddedUrl> embbedUrls = ContentDataUtil.getEmbeddedUrls(record);
 		if (CollectionUtil.isNotEmpty(embbedUrls)) {
@@ -82,16 +83,23 @@ public class DisplayableContentBuilderImpl implements DisplayableContentBuilder 
 		return dispContent;
 	}
 	
-	private String getContentInstanceAccessUrl(String containerQId, String contentIdentity) {
+	private String getContentInstanceAccessUrl(String containerQId, String contentIdentity, DisplayContext ctx) {
 		
 		if (StringUtil.isEmpty(containerQId) || StringUtil.isEmpty(contentIdentity)) {
 			LOGGER.error("Error creating access url. [containerQId={}, contentIdentity={}]", containerQId, contentIdentity);
 			return "";
 		} 
 		
-		return EnvPropertiesUtil.getProperties().getServerUrl() + 
+		String url = EnvPropertiesUtil.getProperties().getServerUrl() + 
 				containerInstanceUrl.replaceAll(":containerQId", containerQId)
 									.replaceAll(":contentIdentity", contentIdentity);
+		
+		String params = ctx.trackingParamsString();
+		if (StringUtil.hasText(params)) {
+			url = url + "?" + params;
+		}
+		
+		return url;
 	}
 
 }

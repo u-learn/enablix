@@ -74,7 +74,7 @@ public class SearchServiceImpl implements SearchService {
 	
 	@Override
 	public SearchResult<DisplayableContent> searchAndGetResultAsDisplayContent(
-			String searchText, int pageSize, int pageNum, DataView dataView) {
+			String searchText, int pageSize, int pageNum, DataView dataView, DisplayContext ctx) {
 		
 		String templateId = ProcessContext.get().getTemplateId();
 		TemplateFacade template = templateMgr.getTemplateFacade(templateId);
@@ -86,14 +86,14 @@ public class SearchServiceImpl implements SearchService {
 		
 		if (searchResult != null) {
 			
-			DisplayContext ctx = new DisplayContext();
+			ctx = ctx == null ? new DisplayContext() : ctx;
 			
 			for (ContentDataRecord dataRec : searchResult.getContent()) {
 				
 				DisplayableContent resultItem = dsContentBuilder.build(template, dataRec, ctx);
 				
 				if (resultItem != null) {
-					docUrlPopulator.populateSecureUrl(resultItem);
+					docUrlPopulator.populateSecureUrl(resultItem, ctx);
 					content.add(resultItem);
 				}
 			}

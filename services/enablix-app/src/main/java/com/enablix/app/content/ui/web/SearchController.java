@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.enablix.app.content.ui.DisplayContext;
 import com.enablix.app.content.ui.NavigableContent;
 import com.enablix.app.content.ui.search.SearchService;
 import com.enablix.commons.constants.AppConstants;
@@ -85,8 +86,9 @@ public class SearchController {
 		}
 		
 		DataView dataView = dataSegmentService.getDataViewForUserId(ProcessContext.get().getUserId());
+		DisplayContext ctx = new DisplayContext();
 		SearchResult<DisplayableContent> searchResult = 
-				searchService.searchAndGetResultAsDisplayContent(searchText, sizeInt, pageInt, dataView);
+				searchService.searchAndGetResultAsDisplayContent(searchText, sizeInt, pageInt, dataView, ctx);
 		
 		ActivityLogger.auditActivity(new SearchActivity(searchText, 
 				searchResult.getCurrentPage(), searchResult.getNumberOfElements()));

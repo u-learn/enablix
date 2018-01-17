@@ -12,8 +12,11 @@ public interface DisplayableContentService {
 	
 	List<DisplayableContent> getDisplayableContent(String contentQId, List<String> contentIdentities, DataView view);
 
-	void postProcessDisplayableContent(DisplayableContent dispRecord, String sharedWithEmailId);
+	DisplayableContent convertToDisplayableContent(String contentQId, Map<String, Object> record, DisplayContext ctx);
 
-	DisplayableContent convertToDisplayableContent(String contentQId, Map<String, Object> record);
+	DisplayableContent getDisplayableContent(String contentQId, String contentIdentity, DataView view,
+			DisplayContext ctx);
+
+	void postProcessDisplayableContent(DisplayableContent dispRecord, String sharedWithEmailId, DisplayContext ctx);
 	
 }

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import com.enablix.app.content.ui.DisplayContext;
 import com.enablix.commons.util.EnvPropertiesUtil;
 import com.enablix.core.ui.DisplayableContent;
 import com.enablix.core.ui.DocRef;
@@ -20,37 +21,37 @@ public class DocUnsecureAccessUrlPopulator {
 	@Autowired
 	private SharedContentUrlCreator urlCreator;
 	
-	public void populateUnsecureUrl(DisplayableContent content, String sharedWithEmail) {
+	public void populateUnsecureUrl(DisplayableContent content, String sharedWithEmail, DisplayContext ctx) {
 		
 		DocRef contentDoc = content.getDoc();
 		
 		if (contentDoc != null) {
 			
 			String shareableUrl = urlCreator.createShareableUrl(
-					getActualDocDownloadUrl(contentDoc.getDocIdentity()), sharedWithEmail, true);
+					getActualDocDownloadUrl(contentDoc.getDocIdentity(), ctx), sharedWithEmail, true);
 			contentDoc.setAccessUrl(EnvPropertiesUtil.getProperties().getServerUrl() + shareableUrl);
 			
 			String shareableThmbUrl = urlCreator.createShareableUrl(
-					getActualDocThumbnailUrl(contentDoc.getDocIdentity()), sharedWithEmail, true);
+					getActualDocThumbnailUrl(contentDoc.getDocIdentity(), ctx), sharedWithEmail, true);
 			contentDoc.setThumbnailUrl(EnvPropertiesUtil.getProperties().getServerUrl() + shareableThmbUrl);
 		}
 		
 	}
 	
-	public String getActualDocDownloadUrl(String docIdentity) {
-		return docDownloadUrl.replaceAll(":docIdentity", docIdentity);
+	public String getActualDocDownloadUrl(String docIdentity, DisplayContext ctx) {
+		return ctx.appendTrackingParams(docDownloadUrl.replaceAll(":docIdentity", docIdentity));
 	}
 	
-	public String getActualDocThumbnailUrl(String docIdentity) {
-		return docThumbnailUrl.replaceAll(":docIdentity", docIdentity);
+	public String getActualDocThumbnailUrl(String docIdentity, DisplayContext ctx) {
+		return ctx.appendTrackingParams(docThumbnailUrl.replaceAll(":docIdentity", docIdentity));
 	}
 	
-	public void populateSecureUrl(DisplayableContent content) {
+	public void populateSecureUrl(DisplayableContent content, DisplayContext ctx) {
 		
 		DocRef contentDoc = content.getDoc();
 		
 		if (contentDoc != null) {
-			String shareableUrl = getActualDocDownloadUrl(contentDoc.getDocIdentity());
+			String shareableUrl = getActualDocDownloadUrl(contentDoc.getDocIdentity(), ctx);
 			contentDoc.setAccessUrl(EnvPropertiesUtil.getProperties().getServerUrl() + shareableUrl);
 		}
 		

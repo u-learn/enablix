@@ -4,6 +4,7 @@ import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.enablix.app.content.ui.DisplayContext;
 import com.enablix.app.mail.web.EmailRequest;
 import com.enablix.app.mail.web.EmailRequest.Recipient;
 import com.enablix.core.mail.velocity.VelocityTemplateInputResolver;
@@ -17,7 +18,7 @@ public abstract class AbstractEmailVelocityInputBuilder<T extends BasicEmailVelo
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
-	public void processInputForRecipient(Recipient recipient, T input, DataView dataView) {
+	public void processInputForRecipient(Recipient recipient, T input, DataView dataView, DisplayContext ctx) {
 		
 		input.setRecipientUserId(recipient.getEmailId());
 

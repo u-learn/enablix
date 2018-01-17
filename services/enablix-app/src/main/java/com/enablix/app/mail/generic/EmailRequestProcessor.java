@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.enablix.app.content.ui.DisplayContext;
 import com.enablix.app.mail.web.EmailRequest;
 import com.enablix.app.mail.web.EmailRequest.Recipient;
 import com.enablix.core.domain.security.authorization.UserProfile;
@@ -35,10 +36,11 @@ public class EmailRequestProcessor {
 		
 		DataView dataView = DataViewUtil.allDataView();
 		Object velocityInput = builder.build(request, dataView);
-		
+
+		DisplayContext ctx = new DisplayContext();
 		for (Recipient recipient : request.getRecipients()) {
 			
-			builder.processInputForRecipient(recipient, velocityInput, dataView);
+			builder.processInputForRecipient(recipient, velocityInput, dataView, ctx);
 			
 			if (velocityInput instanceof RecipientUserAware) {
 				

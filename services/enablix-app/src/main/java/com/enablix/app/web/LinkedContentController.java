@@ -454,8 +454,8 @@ public class LinkedContentController {
 			
 			DisplayableContent dispRecord = contentBuilder.build(template, record, ctx);
 			
-			docUrlPopulator.populateUnsecureUrl(dispRecord, userEmailId);
-			textLinkProcessor.process(dispRecord, template, userEmailId);
+			docUrlPopulator.populateUnsecureUrl(dispRecord, userEmailId, ctx);
+			textLinkProcessor.process(dispRecord, template, userEmailId, ctx);
 			displayRecords.add(dispRecord);
 		}
 		

@@ -37,7 +37,7 @@ public class DisplayableContentServiceImpl implements DisplayableContentService 
 	private TextLinkProcessor textLinkProcessor;
 	
 	@Override
-	public DisplayableContent getDisplayableContent(String contentQId, String contentIdentity, DataView view) {
+	public DisplayableContent getDisplayableContent(String contentQId, String contentIdentity, DataView view, DisplayContext ctx) {
 		
 		String templateId = ProcessContext.get().getTemplateId();
 		TemplateFacade template = templateMgr.getTemplateFacade(templateId);
@@ -49,30 +49,31 @@ public class DisplayableContentServiceImpl implements DisplayableContentService 
 
 		if (record != null && !record.isEmpty()) {
 			
-			displayableContent = convertToDisplayableContent(contentQId, template, record);
+			displayableContent = convertToDisplayableContent(contentQId, template, record, ctx);
 		}
 		
 		return displayableContent;
 	}
+	
+	@Override
+	public DisplayableContent getDisplayableContent(String contentQId, String contentIdentity, DataView view) {
+		return getDisplayableContent(contentQId, contentIdentity, view, new DisplayContext());
+	}
 
 	private DisplayableContent convertToDisplayableContent(String contentQId,
-			TemplateFacade template, Map<String, Object> record) {
+			TemplateFacade template, Map<String, Object> record, DisplayContext ctx) {
 
 		ContentDataRecord dataRecord = new ContentDataRecord(template.getId(), contentQId, record);
-
-		DisplayContext ctx = new DisplayContext();
-
 		return contentBuilder.build(template, dataRecord, ctx);
-
 	}
 	
 	@Override
-	public DisplayableContent convertToDisplayableContent(String contentQId, Map<String, Object> record) {
+	public DisplayableContent convertToDisplayableContent(String contentQId, Map<String, Object> record, DisplayContext ctx) {
 		
 		String templateId = ProcessContext.get().getTemplateId();
 		TemplateFacade template = templateMgr.getTemplateFacade(templateId);
 		
-		return convertToDisplayableContent(contentQId, template, record);
+		return convertToDisplayableContent(contentQId, template, record, ctx);
 	}
 
 	@Override
@@ -91,13 +92,13 @@ public class DisplayableContentServiceImpl implements DisplayableContentService 
 	}
 	
 	@Override
-	public void postProcessDisplayableContent(DisplayableContent dispRecord, String sharedWithEmailId) {
+	public void postProcessDisplayableContent(DisplayableContent dispRecord, String sharedWithEmailId, DisplayContext ctx) {
 		
 		String templateId = ProcessContext.get().getTemplateId();
 		TemplateFacade template = templateMgr.getTemplateFacade(templateId);
 		
-		docUrlPopulator.populateUnsecureUrl(dispRecord, sharedWithEmailId);
-		textLinkProcessor.process(dispRecord, template, sharedWithEmailId);
+		docUrlPopulator.populateUnsecureUrl(dispRecord, sharedWithEmailId, ctx);
+		textLinkProcessor.process(dispRecord, template, sharedWithEmailId, ctx);
 		
 	}
 

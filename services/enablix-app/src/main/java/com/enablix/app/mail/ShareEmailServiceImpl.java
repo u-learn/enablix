@@ -85,8 +85,8 @@ public class ShareEmailServiceImpl implements ShareEmailService {
 			
 			for (String emailId : emailIds) {
 				
-				docUrlPopulator.populateUnsecureUrl(displayableContent, emailId);
-				textLinkProcessor.process(displayableContent, template, emailId);
+				docUrlPopulator.populateUnsecureUrl(displayableContent, emailId, ctx);
+				textLinkProcessor.process(displayableContent, template, emailId, ctx);
 		
 				ShareContentVelocityInput mailInput = mailInputBuilder.build(
 						emailId, displayableContent, data.getEmailCustomContent(), view);

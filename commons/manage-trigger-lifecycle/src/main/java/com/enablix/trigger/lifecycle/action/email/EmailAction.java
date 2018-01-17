@@ -204,8 +204,8 @@ public class EmailAction implements CheckpointAction<ContentChange, EmailActionT
 							
 							DisplayableContent displayableContent = dcEntry.getValue();
 							
-							docUrlPopulator.populateUnsecureUrl(displayableContent, emailId);
-							textLinkProcessor.process(displayableContent, template, emailId);
+							docUrlPopulator.populateUnsecureUrl(displayableContent, emailId, ctx);
+							textLinkProcessor.process(displayableContent, template, emailId, ctx);
 							
 							userEmailContent.add(displayableContent);
 						}

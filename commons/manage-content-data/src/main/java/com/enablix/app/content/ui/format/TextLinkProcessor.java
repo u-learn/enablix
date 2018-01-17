@@ -7,11 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.enablix.app.content.share.SharedContentUrlCreator;
+import com.enablix.app.content.ui.DisplayContext;
 import com.enablix.commons.util.QIdUtil;
 import com.enablix.commons.util.TextLinkifier;
 import com.enablix.commons.util.TextLinkifier.LinkifiedOutput;
 import com.enablix.commons.util.collection.CollectionUtil;
 import com.enablix.core.api.TemplateFacade;
+import com.enablix.core.domain.activity.ActivityChannel.Channel;
 import com.enablix.core.ui.DisplayField;
 import com.enablix.core.ui.DisplayableContent;
 import com.enablix.core.ui.FieldValue;
@@ -24,10 +26,12 @@ public class TextLinkProcessor {
 	@Autowired
 	private SharedContentUrlCreator urlCreator;
 	
-	public void process(DisplayableContent content, TemplateFacade template, String sharedWithEmail) {
+	public void process(DisplayableContent content, TemplateFacade template, String sharedWithEmail, DisplayContext ctx) {
 		
-		EmailExtLinkDecorator linkDecorator = new EmailExtLinkDecorator(
-				urlCreator, sharedWithEmail, content.getRecordIdentity());
+		Channel channel = ctx == null || ctx.getDisplayChannel() == null ? Channel.EMAIL : ctx.getDisplayChannel();
+		
+		ExtLinkDecorator linkDecorator = new ExtLinkDecorator(
+				urlCreator, sharedWithEmail, content.getRecordIdentity(), channel);
 		
 		for (DisplayField<?> field : content.getFields()) {
 			

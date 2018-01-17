@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.enablix.app.content.ui.DisplayContext;
 import com.enablix.app.mail.web.EmailRequest;
 import com.enablix.app.mail.web.EmailRequest.Recipient;
 import com.enablix.app.report.activity.metric.ActivityMetricService;
@@ -88,7 +89,8 @@ public class ActivityMetricMailInputBuilder extends AbstractEmailVelocityInputBu
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
-	public void processInputForRecipient(Recipient recipient, ActivityMetricMailInput input, DataView dataView) {
+	public void processInputForRecipient(Recipient recipient, 
+			ActivityMetricMailInput input, DataView dataView, DisplayContext ctx) {
 		
 		input.setRecipientUserId(recipient.getEmailId());
 
