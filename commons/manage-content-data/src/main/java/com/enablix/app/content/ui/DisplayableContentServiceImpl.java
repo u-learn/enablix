@@ -49,14 +49,30 @@ public class DisplayableContentServiceImpl implements DisplayableContentService 
 
 		if (record != null && !record.isEmpty()) {
 			
-			ContentDataRecord dataRecord = new ContentDataRecord(templateId, contentQId, record);
-	
-			DisplayContext ctx = new DisplayContext();
-	
-			displayableContent = contentBuilder.build(template, dataRecord, ctx);
+			displayableContent = convertToDisplayableContent(contentQId, template, record);
 		}
 		
 		return displayableContent;
+	}
+
+	private DisplayableContent convertToDisplayableContent(String contentQId,
+			TemplateFacade template, Map<String, Object> record) {
+
+		ContentDataRecord dataRecord = new ContentDataRecord(template.getId(), contentQId, record);
+
+		DisplayContext ctx = new DisplayContext();
+
+		return contentBuilder.build(template, dataRecord, ctx);
+
+	}
+	
+	@Override
+	public DisplayableContent convertToDisplayableContent(String contentQId, Map<String, Object> record) {
+		
+		String templateId = ProcessContext.get().getTemplateId();
+		TemplateFacade template = templateMgr.getTemplateFacade(templateId);
+		
+		return convertToDisplayableContent(contentQId, template, record);
 	}
 
 	@Override
