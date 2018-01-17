@@ -76,6 +76,11 @@
             min-width: 130px;
             color: $grey-dark;
             font-weight: 400;
+            font-family: $FPLight;
+
+            h4 {
+                font-weight: 400;
+            }
         }
 
         .pills-container {

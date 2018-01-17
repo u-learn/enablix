@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewEncapsulation, Input } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { ContentTemplateService } from '../core/content-template.service';
 import { ContentService } from '../core/content/content.service';
@@ -31,7 +32,8 @@ export class DataCardComponent implements OnInit {
   constructor(
     private contentTemplateService: ContentTemplateService, 
     private contentService: ContentService,
-    private alert: AlertService, private navService: NavigationService) { }
+    private alert: AlertService, private navService: NavigationService,
+    private router: Router) { }
 
   ngOnInit() {
     
@@ -82,7 +84,7 @@ export class DataCardComponent implements OnInit {
   }
 
   navToBizContent() {
-    this.navService.goToContentDetail(this.containerQId, this.recordIdentity);
+    this.navService.goToContentDetail(this.containerQId, this.recordIdentity, this.router.url);
   }
 
   navToBizDimension() {
