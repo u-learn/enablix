@@ -22,7 +22,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.annotation.Order;
-import org.springframework.http.server.ServletServerHttpRequest;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
@@ -159,7 +158,7 @@ public class HubspotAuthFilter extends OncePerRequestFilter {
 			if (hubspotSignature != null) {
 				
 				String body = IOUtils.toString(getReader());
-				String url = new ServletServerHttpRequest(request).getURI().toString();
+				String url = getFullURL();
 				String method = request.getMethod();
 				String base = appKey + method + url + body;
 				
@@ -176,6 +175,18 @@ public class HubspotAuthFilter extends OncePerRequestFilter {
 			
 			return false;
 		}
+		
+		private String getFullURL() {
+		    StringBuffer requestURL = request.getRequestURL();
+		    String queryString = request.getQueryString();
+
+		    if (queryString == null) {
+		        return requestURL.toString();
+		    } else {
+		        return requestURL.append('?').append(queryString).toString();
+		    }
+		}
+
 
 		@Override
 	    public String getHeader(String name) {
