@@ -58,7 +58,7 @@ public class DisplayContext {
 		
 		if (!allParams.isEmpty()) {
 			
-			StringBuffer params = new StringBuffer();
+			StringBuilder params = new StringBuilder();
 			
 			boolean first = true;
 			

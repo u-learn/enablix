@@ -1,6 +1,8 @@
 package com.enablix.core.security;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashSet;
@@ -14,11 +16,13 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.annotation.Order;
+import org.springframework.http.server.ServletServerHttpRequest;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
@@ -30,6 +34,7 @@ import com.enablix.commons.util.web.TenantInfo;
 import com.enablix.commons.util.web.WebUtils;
 import com.enablix.core.security.hubspot.HubspotAuthToken;
 import com.enablix.core.security.hubspot.repo.HubspotAuthTokenRepository;
+import com.google.common.hash.Hashing;
 
 @Component
 @Order(-1000)
@@ -57,15 +62,6 @@ public class HubspotAuthFilter extends OncePerRequestFilter {
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
 
-		// TODO: Validate hubspot request
-		// TODO: if invalid then send 401 response
-		// TODO: Get OAuth2 token for hubspot request
-		
-		LOGGER.debug("Hubspot signature: {}", request.getHeader("X-HubSpot-Signature"));
-		LOGGER.debug("URI: {}", request.getRequestURI());
-		LOGGER.debug("Http method: {}", request.getMethod());
-		LOGGER.debug("Query string: {}", request.getQueryString());
-		
 		String requestURI = request.getRequestURI();
 		TenantInfo tenantInfo = WebUtils.getTenantInfoFromUrl(request);
 
@@ -87,11 +83,18 @@ public class HubspotAuthFilter extends OncePerRequestFilter {
 		
 		LOGGER.debug("OAuth2 token found for hubspot integration");
 		
-		//String hubspotAppKey = authToken.getHubspotAppKey();
-		
-		// TODO: validate request using hubspot app key
 		String oauth2Token = authToken.getOauth2AccessToken();
 		HubspotHttpRequest hubspotRequest = new HubspotHttpRequest(request, oauth2Token);
+		
+		try {
+			if (!hubspotRequest.validateHubspotSignature(authToken.getHubspotAppKey())) {
+				response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid hubspot signature");
+				return;
+			}
+		} catch (NoSuchAlgorithmException e) {
+			throw new ServletException(e);
+		}
+		
 		filterChain.doFilter(hubspotRequest, response);
 
 	}
@@ -119,10 +122,13 @@ public class HubspotAuthFilter extends OncePerRequestFilter {
 		private String bearerHeader;
 		private Enumeration<String> authHeaderEnum;
 		private Enumeration<String> allHeadersEnum;
+		private HttpServletRequest request;
 		
 		public HubspotHttpRequest(HttpServletRequest request, String oauth2Token) {
 			
 			super(request);
+			
+			this.request = request;
 			
 			this.bearerHeader = SecurityConstant.BEARER_TOKEN + " " + oauth2Token;
 			
@@ -140,6 +146,35 @@ public class HubspotAuthFilter extends OncePerRequestFilter {
 			}
 			
 			allHeadersEnum = new Vector<String>(headers).elements();
+		}
+
+		public boolean validateHubspotSignature(String appKey) throws IOException, NoSuchAlgorithmException {
+			
+			
+			
+			String hubspotSignature = super.getHeader("X-HubSpot-Signature");
+			
+			LOGGER.debug("Hubspot signature: {}", hubspotSignature);
+			
+			if (hubspotSignature != null) {
+				
+				String body = IOUtils.toString(getReader());
+				String url = new ServletServerHttpRequest(request).getURI().toString();
+				String method = request.getMethod();
+				String base = appKey + method + url + body;
+				
+				LOGGER.debug("URI: {}", url);
+				LOGGER.debug("Http method: {}", method);
+				LOGGER.debug("Body: {}", body);
+				
+				String hash = Hashing.sha256().hashString(base, StandardCharsets.UTF_8).toString();
+				
+				LOGGER.debug("Hash: {}", hash);
+			
+				return hubspotSignature.equals(hash);
+			}
+			
+			return false;
 		}
 
 		@Override
