@@ -29,6 +29,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.util.ContentCachingRequestWrapper;
 
+import com.enablix.commons.util.EnvironmentProperties;
 import com.enablix.commons.util.web.TenantInfo;
 import com.enablix.commons.util.web.WebUtils;
 import com.enablix.core.security.hubspot.HubspotAuthToken;
@@ -40,6 +41,9 @@ import com.google.common.hash.Hashing;
 public class HubspotAuthFilter extends OncePerRequestFilter {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(HubspotAuthFilter.class);
+	
+	@Autowired
+	private EnvironmentProperties envProps;
 	
 	@Autowired
 	private HubspotAuthTokenRepository authTokenRepo;
@@ -86,7 +90,7 @@ public class HubspotAuthFilter extends OncePerRequestFilter {
 		HubspotHttpRequest hubspotRequest = new HubspotHttpRequest(request, oauth2Token);
 		
 		try {
-			if (!hubspotRequest.validateHubspotSignature(authToken.getHubspotAppKey())) {
+			if (!hubspotRequest.validateHubspotSignature(authToken.getHubspotAppKey(), envProps.getServerUrl())) {
 				response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid hubspot signature");
 				return;
 			}
@@ -147,7 +151,7 @@ public class HubspotAuthFilter extends OncePerRequestFilter {
 			allHeadersEnum = new Vector<String>(headers).elements();
 		}
 
-		public boolean validateHubspotSignature(String appKey) throws IOException, NoSuchAlgorithmException {
+		public boolean validateHubspotSignature(String appKey, String serverUrl) throws IOException, NoSuchAlgorithmException {
 			
 			
 			
@@ -158,7 +162,7 @@ public class HubspotAuthFilter extends OncePerRequestFilter {
 			if (hubspotSignature != null) {
 				
 				String body = IOUtils.toString(getReader());
-				String url = getFullURL();
+				String url = getFullURL(serverUrl);
 				String method = request.getMethod();
 				String base = appKey + method + url + body;
 				
@@ -176,22 +180,11 @@ public class HubspotAuthFilter extends OncePerRequestFilter {
 			return false;
 		}
 		
-		private String getFullURL() {
-			
-			final String scheme = request.getScheme();
-			final int port = request.getServerPort();
+		private String getFullURL(String serverUrl) {
 			
 			final StringBuilder url = new StringBuilder(256);
 			
-			url.append(scheme);
-			url.append("://");
-			url.append(request.getServerName());
-			
-			if (!(("http".equals(scheme) && (port == 0 || port == 80)) 
-					|| ("https".equals(scheme) && port == 443))) {
-				url.append(':');
-				url.append(port);
-			}
+			url.append(serverUrl);
 			
 			url.append(request.getRequestURI());
 			
