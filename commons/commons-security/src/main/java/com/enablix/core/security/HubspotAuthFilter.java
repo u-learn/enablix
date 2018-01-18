@@ -177,14 +177,33 @@ public class HubspotAuthFilter extends OncePerRequestFilter {
 		}
 		
 		private String getFullURL() {
-		    StringBuffer requestURL = request.getRequestURL();
-		    String queryString = request.getQueryString();
-
-		    if (queryString == null) {
-		        return requestURL.toString();
-		    } else {
-		        return requestURL.append('?').append(queryString).toString();
-		    }
+			
+			final String scheme = request.getScheme();
+			final int port = request.getServerPort();
+			
+			final StringBuilder url = new StringBuilder(256);
+			
+			url.append(scheme);
+			url.append("://");
+			url.append(request.getServerName());
+			
+			if (!(("http".equals(scheme) && (port == 0 || port == 80)) 
+					|| ("https".equals(scheme) && port == 443))) {
+				url.append(':');
+				url.append(port);
+			}
+			
+			url.append(request.getRequestURI());
+			
+			final String qs = request.getQueryString();
+			
+			if (qs != null) {
+				url.append('?');
+				url.append(qs);
+			}
+			
+			final String result = url.toString();
+			return result;
 		}
 
 
