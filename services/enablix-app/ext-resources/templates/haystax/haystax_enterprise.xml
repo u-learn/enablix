@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<contentTemplate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.29" id="haystax_enterprise" xsi:noNamespaceSchemaLocation="../../xsd/content-template.xsd">
+<contentTemplate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.30" id="haystax_enterprise" xsi:noNamespaceSchemaLocation="../../xsd/content-template.xsd">
 	<dataDefinition>
 		<container id="product" label="Products" businessCategory="BUSINESS_DIMENSION">
 			<contentItem id="name" label="Name" type="text" searchBoost="7"/>
@@ -3981,10 +3981,22 @@
 	      		</bounded>
       		</contentItem>				
 		</container>			
-		<container id="lunchandlearn" label="Lunch and Learn" businessCategory="BUSINESS_CONTENT">
+		<container id="lunchandlearn" label="Company Briefings" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text" searchBoost="7"/>
 			<contentItem id="url" label="URL" type="text"/>			
 			<contentItem id="file" label="File" type="doc"/>
+			<contentItem id="briefingdate" label="Briefing Date" type="dateTime"/>			
+			<contentItem id="type" label="Briefing Type" type="bounded">
+				<bounded>
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>briefingType</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>title</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>			
 			<contentItem id="summary" label="Description" type="richText" searchBoost="2"/>
 			<contentItem id="products" label="Products" type="bounded">
 				<bounded multivalued="true">
@@ -4433,6 +4445,9 @@
 			<contentItem id="ratingName" label="Rating" type="text"/>
 			<contentItem id="desc" label="Description" type="text"/>
 		</container>
+		<container id="briefingType" label="Briefing Type" refData="true">
+			<contentItem id="title" label="Title" type="text"/>
+		</container>				
 		<container id="buyerTitle" label="Buyer Title" refData="true">
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="shortTitle" label="Short Title" type="text"/>	
@@ -5632,6 +5647,8 @@
 				<listViewConfig>
 					<hideContentItem id="file"/>
 					<hideContentItem id="url"/>
+					<hideContentItem id="briefingdate"/>
+					<hideContentItem id="type"/>					
 					<hideContentItem id="summary"/>
 					<hideContentItem id="products"/>				
 					<hideContentItem id="solutions"/>
@@ -5650,7 +5667,14 @@
 		</contentUIDef>
 		<contentUIDef qualifiedId="lunchandlearn.summary">
 			<text type="long"/>
-		</contentUIDef>		
+		</contentUIDef>
+		<contentUIDef qualifiedId="briefingType">
+			<container labelQualifiedId="briefingType.title">
+				<portalConfig>
+					<headingContentItem id="title"/>
+				</portalConfig>
+			</container>
+		</contentUIDef>				
 		<contentUIDef qualifiedId="pricingtemplate">
 			<container labelQualifiedId="pricingtemplate.title">
 				<listViewConfig>
