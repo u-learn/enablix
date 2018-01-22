@@ -6,6 +6,7 @@ import java.util.Map;
 
 import com.enablix.commons.content.ContentParser;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -65,6 +66,7 @@ public class JsonUtil {
 	
 	public static <T> T jsonToObject(Map<String, Object> json, Class<T> objectType) {
 		final ObjectMapper mapper = new ObjectMapper();
+		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 		return mapper.convertValue(json, objectType);
 	}
 
