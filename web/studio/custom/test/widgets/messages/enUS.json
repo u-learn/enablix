@@ -1,6 +1,7 @@
 {
 	"app.name" : "",
-	
+	"portal.home.reco.header": "Recommended Content",
+		
 	"content.approval.status.PENDING_APPROVAL" : "Pending Approval",
 	"content.approval.status.REJECTED" : "Rejected",
 	"content.approval.status.APPROVED" : "Approved",

@@ -1,6 +1,6 @@
 <ul>
 	<li ng-repeat="reco in recoList | limitTo: (recoShowLimit || recoList.length)">
-		<eb-nav-link hide-hierarchy="false" nav-link="reco"></eb-nav-link>
+		<eb-nav-link hide-hierarchy="hideHierarchy" nav-link="reco"></eb-nav-link>
 	</li>
 	<li class="ql-view-more" ng-if="recoList.length > recoShowLimit">
 		<a ng-click="clearShowLimit()" class="more-link">View More<i class="fa fa-arrow-circle-right"></i></a>
