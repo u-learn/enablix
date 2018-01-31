@@ -222,13 +222,14 @@ enablix.studioApp.factory('LocationUtil',
 				$location.search(newParams);
 			}
 			
-			var createExtLinkUrl = function(_url, _linkParams) {
+			var createExtLinkUrl = function(_url, _linkParams, _relativeUrl) {
 				
-				var url = encodeURIComponent(_url);
-				url = $location.protocol() + "://"
-						+ $location.host() + ":"
-						+ $location.port() + "/xlink?u="
-						+ url;
+				_url = encodeURIComponent(_url);
+				
+				var url = _relativeUrl ? "" : ($location.protocol() 
+						+ "://" + $location.host() + ":" + $location.port());
+				
+				url += "/xlink?u=" + _url;
 	
 				if (_linkParams) {
 					angular.forEach(_linkParams, function(value, key) {
@@ -242,11 +243,16 @@ enablix.studioApp.factory('LocationUtil',
 				
 				return url;
 			}
+			
+			var createRelativeExtLinkUrl = function(_url, _linkParams) {
+				return createExtLinkUrl(_url, _linkParams, true);
+			}
 	 		
 	 		return {
 	 			readUrlSearchFilters: readUrlSearchFilters,
 				updateUrlSearchFilters: updateUrlSearchFilters,
-				createExtLinkUrl: createExtLinkUrl
+				createExtLinkUrl: createExtLinkUrl,
+				createRelativeExtLinkUrl: createRelativeExtLinkUrl
 	 		};
 	 	}
 	 ]);

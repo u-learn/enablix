@@ -20,6 +20,7 @@ import com.enablix.core.domain.activity.ContentActivity;
 import com.enablix.core.domain.activity.ContentActivity.ContainerType;
 import com.enablix.core.domain.activity.ContentConnActivity;
 import com.enablix.core.domain.activity.ContentDownldURLCopy;
+import com.enablix.core.domain.activity.ContentExtLinkURLCopy;
 import com.enablix.core.domain.activity.ContentPortalURLCopy;
 import com.enablix.core.domain.activity.ContentShareActivity;
 import com.enablix.core.domain.activity.ContentShareActivity.ShareMedium;
@@ -234,6 +235,15 @@ public class ActivityLogger {
 		activity.setItemTitle(contentConn.getConnectionName());
 		
 		auditActivity(activity);
+	}
+
+	public static void auditContentExtLinkURLCopied(ContentDataRef dataRef,
+			ContainerType containerType, Channel channel) {
+		
+		ContentActivity contentActvy = new ContentExtLinkURLCopy(dataRef.getInstanceIdentity(), 
+				dataRef.getContainerQId(), containerType, dataRef.getTitle());
+		
+		auditContentActivity(contentActvy, channel);
 	}
 
 }

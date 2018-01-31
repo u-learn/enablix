@@ -96,6 +96,7 @@ enablix.serviceURL = {
 	"shareOptsPortalAudit" : enablix.domainName + "/shareOptions/portalURLCopyAudit/",
 	"shareOptsDocDownloadAudit" : enablix.domainName + "/shareOptions/downldDocURLCopyAudit/",
 	"getShareableDocUrl" : enablix.domainName + "/shareOptions/shareableDocUrl/",
+	"getShareableLinkUrl" : enablix.domainName + "/shareOptions/shareableLinkUrl/",
 	"loadResourceVersions" : enablix.domainName + "/version/all/",
 	"getSlackCode" : "https://slack.com/oauth/authorize?scope=chat:write:user,channels:read&client_id=",
 	"getSlackAppDtls" : enablix.domainName + "/slack/getSlackAppDtls/",

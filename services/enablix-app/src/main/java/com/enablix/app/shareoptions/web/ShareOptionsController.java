@@ -35,15 +35,19 @@ public class ShareOptionsController {
 
 	@RequestMapping(method = RequestMethod.POST, value = "/downldDocURLCopyAudit/")
 	public @ResponseBody Boolean auditDocUrlCopy(@RequestBody ContentAuditRequest request) {
+		
 		try	{
+			
 			String templateId = ProcessContext.get().getTemplateId();
 			ContentDataRef dataRef = ContentDataRef.createContentRef(templateId, request.getContainerQId(), 
 					request.getInstanceIdentity(), request.getItemTitle());
+			
 			ActivityLogger.auditContentDownldURLCopied(dataRef, ContentActivity.ContainerType.CONTENT, Channel.WEB);
+			
 			return true;
-		}
-		catch(Exception e) {
-			LOGGER.error("Error Saving the Audit Data for the Activity :: Portal URL Copied",e);
+			
+		} catch(Exception e) {
+			LOGGER.error("Error Saving the Audit Data for the Activity :: Doc Download URL Copied",e);
 			return false;
 		}
 	}
@@ -59,6 +63,39 @@ public class ShareOptionsController {
 		auditDocUrlCopy(request.getAuditRequest());
 		
 		return serverUrl + shareableUrl;
+	}
+	
+	@RequestMapping(method = RequestMethod.POST, value = "/shareableLinkUrl/", produces="application/json")
+	public ShareableUrlResponse getShareableLinkUrl(@RequestBody ShareableUrlRequest request) {
+		
+		String serverUrl = EnvPropertiesUtil.getProperties().getServerUrl();
+		String userId = ProcessContext.get().getUserId();
+		
+		String shareableUrl = shareableUrlCreator.createShareableUrl(request.getUrl(), userId, true);
+		
+		auditDocUrlCopy(request.getAuditRequest());
+		
+		return new ShareableUrlResponse(serverUrl + shareableUrl);
+	}
+	
+	@RequestMapping(method = RequestMethod.POST, value = "/extLinkURLCopyAudit/")
+	public @ResponseBody Boolean auditExtLinkUrlCopy(@RequestBody ContentAuditRequest request) {
+		
+		try	{
+		
+			String templateId = ProcessContext.get().getTemplateId();
+			
+			ContentDataRef dataRef = ContentDataRef.createContentRef(templateId, request.getContainerQId(), 
+					request.getInstanceIdentity(), request.getItemTitle());
+			
+			ActivityLogger.auditContentExtLinkURLCopied(dataRef, ContentActivity.ContainerType.CONTENT, Channel.WEB);
+			
+			return true;
+			
+		} catch(Exception e) {
+			LOGGER.error("Error Saving the Audit Data for the Activity :: Portal URL Copied",e);
+			return false;
+		}
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/portalURLCopyAudit/")
@@ -112,6 +149,26 @@ public class ShareOptionsController {
 
 		public void setAuditRequest(ContentAuditRequest auditRequest) {
 			this.auditRequest = auditRequest;
+		}
+		
+	}
+	
+	public static class ShareableUrlResponse {
+		
+		private String shareableUrl;
+		
+		public ShareableUrlResponse() { }
+
+		public ShareableUrlResponse(String shareableUrl) {
+			this.shareableUrl = shareableUrl;
+		}
+
+		public String getShareableUrl() {
+			return shareableUrl;
+		}
+
+		public void setShareableUrl(String shareableUrl) {
+			this.shareableUrl = shareableUrl;
 		}
 		
 	}

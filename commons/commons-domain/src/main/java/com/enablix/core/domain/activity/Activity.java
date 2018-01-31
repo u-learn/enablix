@@ -20,6 +20,7 @@ public abstract class Activity {
 		CONTENT_SUGGEST_VIEW(Category.CONTENT, "Content Request Viewed"),
 		CONTENT_PORTAL_URL_COPIED(Category.CONTENT, "Content Portal URL Copied"), 
 		CONTENT_DOWNLD_URL_COPIED(Category.CONTENT, "Content Download URL Copied"),
+		CONTENT_EXT_LINK_URL_COPIED(Category.CONTENT, "Content External Link URL Copied"),
 		
 		/* Account related activities */
 		LOGIN(Category.USER_ACCOUNT, "Login"), LOGOUT(Category.USER_ACCOUNT, "Logout"), 

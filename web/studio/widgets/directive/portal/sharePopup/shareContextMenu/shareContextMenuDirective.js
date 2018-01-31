@@ -1,6 +1,6 @@
-enablix.studioApp.directive('ebxShareContextMenu',['RESTService','Notification',
-	'shareContentModalWindow','$window','$location','$state','StateUpdateService',
-	function(RESTService,Notification,shareContentModalWindow,$window,$location,$state,StateUpdateService) {
+enablix.studioApp.directive('ebxShareContextMenu', [
+			 'RESTService','Notification','shareContentModalWindow','$window','$location','$state','StateUpdateService','LocationUtil',
+	function (RESTService,  Notification,  shareContentModalWindow,  $window,  $location,  $state,  StateUpdateService,  LocationUtil ) {
 	return {
 		restrict: 'E',
 		scope : {
@@ -58,6 +58,35 @@ enablix.studioApp.directive('ebxShareContextMenu',['RESTService','Notification',
 						Notification.error({message: "Error getting download URL", delay: enablix.errorMsgShowTime});
 					}, null);
 				
+			}
+			
+			scope.copyLinkUrl = function(_url, _contentIdentity, _contentName) {
+				
+				var linkParams = {
+					cId: _contentIdentity,
+					cQId: scope.contentQId,
+					atContext: "COPYNSHARE"
+				}
+				
+				var linkURL = LocationUtil.createRelativeExtLinkUrl(_url, linkParams);
+				
+				var auditRequest = {
+					"containerQId" : scope.contentQId,
+					"instanceIdentity" : _contentIdentity,
+					"itemTitle" : _contentName
+				};
+				
+				var request = {
+					"url" : linkURL,
+					"auditRequest" : auditRequest
+				};
+				
+				RESTService.postForDataSync("getShareableLinkUrl", {}, request, null, function(data) {
+					copyToClipboard(data.shareableUrl);
+					Notification.primary({message: "Link URL is copied",  delay: 3000});
+				}, function(data){
+					Notification.error({message: "Error getting link URL", delay: enablix.errorMsgShowTime});
+				}, null);
 			}
 			
 			function copyToClipboard(textToCopy){
