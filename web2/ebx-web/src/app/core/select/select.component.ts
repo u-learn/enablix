@@ -80,6 +80,7 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
           if (!this.selectedOptionsContain(opt)) {
             this.selected.push(opt);
             this.selectCtrl.setValue(null, {emitEvent: false});
+            this.onChange(this.selected);
           } 
         }
       }, 300);  
