@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<contentTemplate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="eoriginal_enterprise" version="1.21" xsi:noNamespaceSchemaLocation="../xsd/content-template.xsd">
+<contentTemplate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="eoriginal_enterprise" version="1.22" xsi:noNamespaceSchemaLocation="../xsd/content-template.xsd">
 	<dataDefinition>
 		<container id="solution" label="Solutions" businessCategory="BUSINESS_DIMENSION">
 			<contentItem id="name" label="Name" type="text" searchBoost="7"/>
@@ -8,12 +8,16 @@
 			<container id="solBattleCard" label="Battle Cards" linkContainerQId="battlecard" linkContentItemId="solutions"/>
 			<container id="solBlog" label="Blogs" linkContainerQId="blog" linkContentItemId="solutions"/>			
 			<container id="solCaseStudy" label="Case Studies" linkContainerQId="casestudy" linkContentItemId="solutions"/>
+			<container id="solCompPricing" label="Competitor Pricing" linkContainerQId="competitorpricing" linkContentItemId="solutions"/>						
+			<container id="solCompProfile" label="Competitor Profile" linkContainerQId="competitorprofile" linkContentItemId="solutions"/>			
 			<container id="solCustSuccessStory" label="Customer Success Stories" linkContainerQId="successstory" linkContentItemId="solutions"/>			
 			<container id="solDataSheet" label="Data Sheet" linkContainerQId="datasheet" linkContentItemId="solutions"/>
 			<container id="solDiscQuestion" label="Discovery Questions" linkContainerQId="discoveryquestion" linkContentItemId="solutions"/>
 			<container id="solEvent" label="Events" linkContainerQId="event" linkContentItemId="solutions"/>							
+			<container id="solFAQ" label="FAQ" linkContainerQId="faq" linkContentItemId="solutions"/>																
 			<container id="solFeatureSheet" label="Feature Sheets" linkContainerQId="featuresheet" linkContentItemId="solutions"/>										
 			<container id="solImpSlide" label="Important Slides" linkContainerQId="importantslide" linkContentItemId="solutions"/>											
+			<container id="solKnowledgeCard" label="Knowledge Card" linkContainerQId="knowledgecard" linkContentItemId="solutions"/>														
 			<container id="solPresentation" label="Presentations" linkContainerQId="presentation" linkContentItemId="solutions"/>			
 			<container id="solPress" label="Press" linkContainerQId="press" linkContentItemId="solutions"/>									
 			<container id="solPOCs" label="Proof of Concepts" linkContainerQId="poc" linkContentItemId="solutions"/>			
@@ -48,12 +52,16 @@
 			<container id="indBattleCard" label="Battle Cards" linkContainerQId="battlecard" linkContentItemId="industries"/>
 			<container id="indBlog" label="Blogs" linkContainerQId="blog" linkContentItemId="industries"/>			
 			<container id="indCaseStudy" label="Case Studies" linkContainerQId="casestudy" linkContentItemId="industries"/>
+			<container id="indCompPricing" label="Competitor Pricing" linkContainerQId="competitorpricing" linkContentItemId="industries"/>									
+			<container id="indCompProfile" label="Competitor Profile" linkContainerQId="competitorprofile" linkContentItemId="industries"/>						
 			<container id="indCustSuccessStory" label="Customer Success Stories" linkContainerQId="successstory" linkContentItemId="industries"/>						
 			<container id="indDataSheet" label="Data Sheet" linkContainerQId="datasheet" linkContentItemId="industries"/>						
 			<container id="indDiscQuestion" label="Discovery Questions" linkContainerQId="discoveryquestion" linkContentItemId="industries"/>
 			<container id="indEvent" label="Events" linkContainerQId="event" linkContentItemId="industries"/>							
+			<container id="indFAQ" label="FAQ" linkContainerQId="faq" linkContentItemId="industries"/>																			
 			<container id="indFeatureSheet" label="Feature Sheets" linkContainerQId="featuresheet" linkContentItemId="industries"/>													
 			<container id="indImpSlide" label="Important Slides" linkContainerQId="importantslide" linkContentItemId="industries"/>											
+			<container id="indKnowledgeCard" label="Knowledge Card" linkContainerQId="knowledgecard" linkContentItemId="industries"/>																	
 			<container id="indPresentation" label="Presentations" linkContainerQId="presentation" linkContentItemId="industries"/>			
 			<container id="indPress" label="Press" linkContainerQId="press" linkContentItemId="industries"/>
 			<container id="indPOCs" label="Proof of Concepts" linkContainerQId="poc" linkContentItemId="industries"/>						
@@ -73,14 +81,29 @@
 		<container id="competitor" label="Competitors" businessCategory="BUSINESS_DIMENSION">
 			<contentItem id="name" label="Competitor Name" type="text" searchBoost="7"/>
 			<contentItem id="shortName" label="Short Name" type="text" searchBoost="7"/>
+			<contentItem id="relIndustries" label="Related Industries" type="bounded" searchBoost="4">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>industry</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>						
 			<container id="compArticle" label="Articles" linkContainerQId="article" linkContentItemId="competitors"/>			
 			<container id="compBattleCard" label="Battle Cards" linkContainerQId="battlecard" linkContentItemId="competitors"/>			
 			<container id="compBlog" label="Blogs" linkContainerQId="blog" linkContentItemId="competitors"/>			
 			<container id="compCaseStudy" label="Case Studies" linkContainerQId="casestudy" linkContentItemId="competitors"/>
+			<container id="compCompPricing" label="Competitor Pricing" linkContainerQId="competitorpricing" linkContentItemId="competitors"/>									
+			<container id="compCompProfile" label="Competitor Profile" linkContainerQId="competitorprofile" linkContentItemId="competitors"/>										
 			<container id="compCustSuccessStory" label="Customer Success Stories" linkContainerQId="successstory" linkContentItemId="competitors"/>						
 			<container id="compDiscQuestion" label="Discovery Questions" linkContainerQId="discoveryquestion" linkContentItemId="competitors"/>
 			<container id="compEvent" label="Events" linkContainerQId="event" linkContentItemId="competitors"/>
+			<container id="compFAQ" label="FAQ" linkContainerQId="faq" linkContentItemId="competitors"/>																
 			<container id="compFeatureSheet" label="Feature Sheets" linkContainerQId="featuresheet" linkContentItemId="competitors"/>				
+			<container id="compKnowledgeCard" label="Knowledge Card" linkContainerQId="knowledgecard" linkContentItemId="competitors"/>																	
 			<container id="compPresentation" label="Presentations" linkContainerQId="presentation" linkContentItemId="competitors"/>						
 			<container id="comPress" label="Press" linkContainerQId="press" linkContentItemId="competitors"/>
 			<container id="compPOCs" label="Proof of Concepts" linkContainerQId="poc" linkContentItemId="competitors"/>						
@@ -114,13 +137,17 @@
 			<container id="partnerArticle" label="Article" linkContainerQId="article" linkContentItemId="partners"/>			
 			<container id="partnerBattleCard" label="Battle Cards" linkContainerQId="battlecard" linkContentItemId="partners"/>			
 			<container id="partnerBlog" label="Blogs" linkContainerQId="blog" linkContentItemId="partners"/>																		
-			<container id="partnerCaseStudy" label="Case Studies" linkContainerQId="casestudy" linkContentItemId="partners"/>
+			<container id="partnerCaseStudy" label="Case Studies" linkContainerQId="casestudy" linkContentItemId="partners"/>			
+			<container id="partnerCompPricing" label="Competitor Pricing" linkContainerQId="competitorpricing" linkContentItemId="partners"/>												
+			<container id="partnerCompProfile" label="Competitor Profile" linkContainerQId="competitorprofile" linkContentItemId="partners"/>										
 			<container id="partnerCustSuccessStory" label="Customer Success Stories" linkContainerQId="successstory" linkContentItemId="partners"/>			
 			<container id="partnerDataSheet" label="Data Sheet" linkContainerQId="datasheet" linkContentItemId="partners"/>
 			<container id="partnerDiscQuestion" label="Discovery Questions" linkContainerQId="discoveryquestion" linkContentItemId="partners"/>
 			<container id="partnerEvent" label="Events" linkContainerQId="event" linkContentItemId="partners"/>
+			<container id="partnerFAQ" label="FAQ" linkContainerQId="faq" linkContentItemId="partners"/>																
 			<container id="partnerFeatureSheet" label="Feature Sheets" linkContainerQId="featuresheet" linkContentItemId="partners"/>				
 			<container id="partnerImpSlide" label="Important Slides" linkContainerQId="importantslide" linkContentItemId="partners"/>											
+			<container id="partnerKnowledgeCard" label="Knowledge Card" linkContainerQId="knowledgecard" linkContentItemId="partners"/>																	
 			<container id="partnerPresentation" label="Presentations" linkContainerQId="presentation" linkContentItemId="partners"/>						
 			<container id="partnerPress" label="Press" linkContainerQId="press" linkContentItemId="partners"/>									
 			<container id="partnerPOCs" label="Proof of Concepts" linkContainerQId="poc" linkContentItemId="partners"/>						
@@ -155,6 +182,8 @@
 			<container id="analystBlog" label="Blogs" linkContainerQId="blog" linkContentItemId="analysts"/>
 			<container id="analystCustSuccessStory" label="Customer Success Stories" linkContainerQId="successstory" linkContentItemId="analysts"/>						
 			<container id="analystEvent" label="Events" linkContainerQId="event" linkContentItemId="analysts"/>
+			<container id="analystFAQ" label="FAQ" linkContainerQId="faq" linkContentItemId="analysts"/>																
+			<container id="analystKnowledgeCard" label="Knowledge Card" linkContainerQId="knowledgecard" linkContentItemId="analysts"/>																	
 			<container id="analystPresentation" label="Presentations" linkContainerQId="presentation" linkContentItemId="analysts"/>						
 			<container id="analystPress" label="Press" linkContainerQId="press" linkContentItemId="analysts"/>									
 			<container id="analystProposal" label="Proposals" linkContainerQId="proposal" linkContentItemId="analysts"/>			
@@ -292,10 +321,14 @@
 			<container id="topicArticle" label="Articles" linkContainerQId="article" linkContentItemId="topics"/>			
 			<container id="topicBlog" label="Blogs" linkContainerQId="blog" linkContentItemId="topics"/>
 			<container id="topicCaseStudy" label="Case Studies" linkContainerQId="casestudy" linkContentItemId="topics"/>
+			<container id="topicCompPricing" label="Competitor Pricing" linkContainerQId="competitorpricing" linkContentItemId="topics"/>												
+			<container id="topicCompProfile" label="Competitor Profile" linkContainerQId="competitorprofile" linkContentItemId="topics"/>										
 			<container id="topicCustSuccessStory" label="Customer Success Stories" linkContainerQId="successstory" linkContentItemId="topics"/>
 			<container id="topicDiscQuestion" label="Discovery Questions" linkContainerQId="discoveryquestion" linkContentItemId="topics"/>			
 			<container id="topicEvent" label="Events" linkContainerQId="event" linkContentItemId="topics"/>	
+			<container id="topicFAQ" label="FAQ" linkContainerQId="faq" linkContentItemId="topics"/>																
 			<container id="topicFeatureSheet" label="Feature Sheets" linkContainerQId="featuresheet" linkContentItemId="topics"/>				
+			<container id="topicKnowledgeCard" label="Knowledge Card" linkContainerQId="knowledgecard" linkContentItemId="topics"/>																	
 			<container id="topicImpSlide" label="Important Slides" linkContainerQId="importantslide" linkContentItemId="topics"/>											
 			<container id="topicPresentation" label="Presentations" linkContainerQId="presentation" linkContentItemId="topics"/>						
 			<container id="topicPress" label="Press" linkContainerQId="press" linkContentItemId="topics"/>						
@@ -673,6 +706,172 @@
 				</bounded>
 			</contentItem>										
 		</container>
+		<container id="competitorpricing" label="Competitor Pricing" businessCategory="BUSINESS_CONTENT">
+			<contentItem id="title" label="Title" type="text"/>
+			<contentItem id="file" label="File" type="doc"/>
+			<contentItem id="url" label="URL" type="text"/>			
+			<contentItem id="desc" label="Description" type="richText" searchBoost="2"/>
+			<contentItem id="competitors" label="Competitors" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>competitor</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>						
+			<contentItem id="solutions" label="Solutions" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>solution</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="industries" label="Industries" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>industry</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>			
+			<contentItem id="partners" label="Partners" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>partner</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="topics" label="Topics" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>topic</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="tags" label="Business Tags" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>businessTag</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>tagName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>						
+			<contentItem id="access" label="Access" type="bounded">
+				<bounded multivalued="false">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>accessType</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>name</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>										
+		</container>				
+		<container id="competitorprofile" label="Competitor Profile" businessCategory="BUSINESS_CONTENT">
+			<contentItem id="title" label="Title" type="text"/>
+			<contentItem id="file" label="File" type="doc"/>
+			<contentItem id="url" label="URL" type="text"/>			
+			<contentItem id="desc" label="Description" type="richText" searchBoost="2"/>
+			<contentItem id="competitors" label="Competitors" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>competitor</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>						
+			<contentItem id="solutions" label="Solutions" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>solution</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="industries" label="Industries" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>industry</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>			
+			<contentItem id="partners" label="Partners" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>partner</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="topics" label="Topics" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>topic</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="tags" label="Business Tags" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>businessTag</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>tagName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>						
+			<contentItem id="access" label="Access" type="bounded">
+				<bounded multivalued="false">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>accessType</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>name</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>										
+		</container>		
 		<container id="ppttemplate" label="Corporate PPT Templates" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="desc" label="Description" type="richText"/>
@@ -1049,6 +1248,98 @@
 				</contentItem>				
 			</container>
 		</container>			
+		<container id="faq" label="FAQ" businessCategory="BUSINESS_CONTENT">
+			<contentItem id="title" label="Question" type="text" searchBoost="6"/>
+			<contentItem id="desc" label="Answer" type="richText" searchBoost="2"/>
+			<contentItem id="solutions" label="Solutions" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>solution</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="industries" label="Industries" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>industry</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>			
+			<contentItem id="competitors" label="Competitors" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>competitor</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="partners" label="Partners" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>partner</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="analysts" label="Analysts" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>analyst</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>						
+			<contentItem id="topics" label="Topics" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>topic</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>			
+			<contentItem id="tags" label="Business Tags" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>businessTag</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>tagName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>	
+			<contentItem id="access" label="Access" type="bounded">
+				<bounded multivalued="false">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>accessType</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>name</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>													
+		</container>				
 		<container id="featuresheet" label="Feature Sheets" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="file" label="File" type="doc"/>
@@ -1212,7 +1503,90 @@
 					</refList>
 				</bounded>
 			</contentItem>													
-		</container>				
+		</container>	
+		<container id="knowledgecard" label="Knowledge Card">
+			<contentItem id="title" label="Title" type="text"/>
+			<contentItem id="desc" label="Description" type="richText"/>			
+			<contentItem id="file" label="File" type="doc"/>
+			<contentItem id="url" label="URL" type="text"/>						
+			<contentItem id="solutions" label="Solutions" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>solution</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="industries" label="Industries" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>industry</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>				
+			<contentItem id="partners" label="Partners" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>partner</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>
+			<contentItem id="topics" label="Topics" type="bounded">
+				<bounded>
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>topic</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>	
+			<contentItem id="analysts" label="Analysts" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>analyst</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>shortName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>								
+			<contentItem id="tags" label="Business Tags" type="bounded">
+				<bounded multivalued="true">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>businessTag</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>tagName</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>	
+			<contentItem id="access" label="Access" type="bounded">
+				<bounded multivalued="false">
+					<refList>
+						<datastore hyperlink="true">
+							<storeId>accessType</storeId>
+							<dataId>identity</dataId>
+							<dataLabel>name</dataLabel>
+						</datastore>
+					</refList>
+				</bounded>
+			</contentItem>													
+		</container>						
 		<container id="press" label="Press Releases" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text" searchBoost="7"/>
 			<contentItem id="file" label="File" type="doc"/>			
@@ -2645,12 +3019,16 @@
 			<container id="tagBattleCard" label="Battle Cards" linkContainerQId="battlecard" linkContentItemId="tags"/>			
 			<container id="tagBlog" label="Blogs" linkContainerQId="blog" linkContentItemId="tags"/>			
 			<container id="tagCaseStudy" label="Case Studies" linkContainerQId="casestudy" linkContentItemId="tags"/>			
+			<container id="tagCompPricing" label="Competitor Pricing" linkContainerQId="competitorpricing" linkContentItemId="tags"/>												
+			<container id="tagCompProfile" label="Competitor Profile" linkContainerQId="competitorprofile" linkContentItemId="tags"/>										
 			<container id="tagCustSuccessStory" label="Customer Success Stories" linkContainerQId="successstory" linkContentItemId="tags"/>						
 			<container id="tagDataSheet" label="Data Sheets" linkContainerQId="datasheet" linkContentItemId="tags"/>												
 			<container id="tagDiscQuestion" label="Discovery Questions" linkContainerQId="discoveryquestion" linkContentItemId="tags"/>			
 			<container id="tagEvent" label="Events" linkContainerQId="event" linkContentItemId="tags"/>			
+			<container id="tagFAQ" label="FAQ" linkContainerQId="faq" linkContentItemId="tags"/>																
 			<container id="tagFeatureSheet" label="Feature Sheets" linkContainerQId="featuresheet" linkContentItemId="tags"/>			
 			<container id="tagImpSlide" label="Important Slides" linkContainerQId="importantslide" linkContentItemId="tags"/>			
+			<container id="tagKnowledgeCard" label="Knowledge Card" linkContainerQId="knowledgecard" linkContentItemId="tags"/>																	
 			<container id="tagPress" label="Press" linkContainerQId="press" linkContentItemId="tags"/>												
 			<container id="tagPresentation" label="Presentations" linkContainerQId="presentation" linkContentItemId="tags"/>			
 			<container id="tagProposal" label="Proposals" linkContainerQId="proposal" linkContentItemId="tags"/>
@@ -2747,12 +3125,16 @@
 					<childContainer id="battlecard"/>
 					<childContainer id="blog"/>
 					<childContainer id="casestudy"/>
+					<childContainer id="competitorpricing"/>
+					<childContainer id="competitorprofile"/>										
 					<childContainer id="ppttemplate"/>					
 					<childContainer id="successstory"/>										
 					<childContainer id="datasheet"/>	
 					<childContainer id="discoveryquestion"/>
+					<childContainer id="faq"/>						
 					<childContainer id="featuresheet"/>	
-					<childContainer id="importantslide"/>										
+					<childContainer id="importantslide"/>
+					<childContainer id="knowledgecard"/>																
 					<childContainer id="press"/>																				
 					<childContainer id="presentation"/>	
 					<childContainer id="poc"/>						
@@ -2866,6 +3248,27 @@
 		<contentUIDef qualifiedId="event.eventcontent.desc">
 			<text type="long"/>
 		</contentUIDef>
+		<contentUIDef qualifiedId="faq">
+			<container labelQualifiedId="faq.title">
+				<listViewConfig>
+					<hideContentItem id="desc"/>										
+					<hideContentItem id="solutions"/>
+					<hideContentItem id="industries"/>					
+					<hideContentItem id="competitors"/>
+					<hideContentItem id="partners"/>
+					<hideContentItem id="analysts"/>					
+					<hideContentItem id="topics"/>	
+					<hideContentItem id="tags"/>
+					<hideContentItem id="access"/>														
+				</listViewConfig>
+				<portalConfig>
+					<headingContentItem id="title"/>
+				</portalConfig>
+			</container>
+		</contentUIDef>		
+		<contentUIDef qualifiedId="faq.desc">
+			<text type="long"/>
+		</contentUIDef>			
 		<contentUIDef qualifiedId="featuresheet">
 			<container labelQualifiedId="featuresheet.title">
 				<listViewConfig>
@@ -2906,7 +3309,30 @@
 		</contentUIDef>
 		<contentUIDef qualifiedId="importantslide.desc">
 			<text type="long"/>
-		</contentUIDef>				
+		</contentUIDef>	
+		<contentUIDef qualifiedId="knowledgecard">
+			<container labelQualifiedId="knowledgecard.title">
+				<listViewConfig>
+					<hideContentItem id="desc"/>
+					<hideContentItem id="file"/>
+					<hideContentItem id="url"/>																				
+					<hideContentItem id="solutions"/>
+					<hideContentItem id="industries"/>					
+					<hideContentItem id="competitors"/>
+					<hideContentItem id="partners"/>
+					<hideContentItem id="analysts"/>					
+					<hideContentItem id="topics"/>	
+					<hideContentItem id="tags"/>
+					<hideContentItem id="access"/>														
+				</listViewConfig>
+				<portalConfig>
+					<headingContentItem id="title"/>
+				</portalConfig>
+			</container>
+		</contentUIDef>		
+		<contentUIDef qualifiedId="knowledgecard.desc">
+			<text type="long"/>
+		</contentUIDef>						
 		<contentUIDef qualifiedId="topic">
 			<container labelQualifiedId="topic.name">
 				<listViewConfig>
@@ -2993,6 +3419,48 @@
 		<contentUIDef qualifiedId="casestudy.highlights">
 			<text type="long"/>
 		</contentUIDef>
+		<contentUIDef qualifiedId="competitorpricing">
+			<container labelQualifiedId="competitorpricing.title">
+				<listViewConfig>
+					<hideContentItem id="desc"/>
+					<hideContentItem id="file"/>
+					<hideContentItem id="solutions"/>					
+					<hideContentItem id="industries"/>					
+					<hideContentItem id="competitors"/>					
+					<hideContentItem id="partners"/>					
+					<hideContentItem id="topics"/>		
+					<hideContentItem id="tags"/>	
+					<hideContentItem id="access"/>																																					
+				</listViewConfig>
+				<portalConfig>
+					<headingContentItem id="title"/>
+				</portalConfig>
+			</container>
+		</contentUIDef>
+		<contentUIDef qualifiedId="competitorpricing.desc">
+			<text type="long"/>
+		</contentUIDef>
+		<contentUIDef qualifiedId="competitorprofile">
+			<container labelQualifiedId="competitorprofile.title">
+				<listViewConfig>
+					<hideContentItem id="desc"/>
+					<hideContentItem id="file"/>
+					<hideContentItem id="solutions"/>					
+					<hideContentItem id="industries"/>					
+					<hideContentItem id="competitors"/>					
+					<hideContentItem id="partners"/>					
+					<hideContentItem id="topics"/>		
+					<hideContentItem id="tags"/>	
+					<hideContentItem id="access"/>																																					
+				</listViewConfig>
+				<portalConfig>
+					<headingContentItem id="title"/>
+				</portalConfig>
+			</container>
+		</contentUIDef>
+		<contentUIDef qualifiedId="competitorprofile.desc">
+			<text type="long"/>
+		</contentUIDef>				
 		<contentUIDef qualifiedId="ppttemplate">
 			<container labelQualifiedId="ppttemplate.title">
 				<listViewConfig>
@@ -3461,13 +3929,17 @@
 					<childContainer id="battlecard"/>
 					<childContainer id="blog"/>
 					<childContainer id="casestudy"/>
+					<childContainer id="competitorpricing"/>
+					<childContainer id="competitorprofile"/>										
 					<childContainer id="ppttemplate"/>
 					<childContainer id="successstory"/>										
 					<childContainer id="datasheet"/>
 					<childContainer id="discoveryquestion"/>
-					<childContainer id="event"/>										
+					<childContainer id="event"/>							
+					<childContainer id="faq"/>													
 					<childContainer id="featuresheet"/>					
-					<childContainer id="importantslide"/>					
+					<childContainer id="importantslide"/>	
+					<childContainer id="knowledgecard"/>														
 					<childContainer id="presentation"/>		
 					<childContainer id="press"/>
 					<childContainer id="poc"/>					
