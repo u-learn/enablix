@@ -22,6 +22,8 @@ public class DateUtil {
 	
 	private static final String ISO8601_DATETIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ss'Z'";
 	
+	private static final String LONG_DATE_FORMAT = "yyyy-MM-dd";
+	
 	private static final ThreadLocal<SimpleDateFormat> ISO8601DateTimeFormat = 
 		new ThreadLocal<SimpleDateFormat>() {
 			protected SimpleDateFormat initialValue() {
@@ -39,6 +41,16 @@ public class DateUtil {
 				return df;
 			}
 		};
+	
+	private static final ThreadLocal<SimpleDateFormat> LongDateFormat = 
+			new ThreadLocal<SimpleDateFormat>() {
+				protected SimpleDateFormat initialValue() {
+					SimpleDateFormat df = new SimpleDateFormat(LONG_DATE_FORMAT);
+					df.setTimeZone(TimeZone.getTimeZone("UTC"));
+					return df;
+				}
+			};
+		
 		
 	
 	public static Date checkAndParseJsonDate(Object date) throws ParseException {
@@ -220,6 +232,11 @@ public class DateUtil {
 	
 	public static String dateToUTCiso8601String(Date date) {
 		SimpleDateFormat dateFormat = ISO8601DateTimeFormat.get();
+		return dateFormat.format(date);
+	}
+	
+	public static String dateToLongDateString(Date date) {
+		SimpleDateFormat dateFormat = LongDateFormat.get();
 		return dateFormat.format(date);
 	}
 	

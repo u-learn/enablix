@@ -14,5 +14,14 @@ public interface ActivityAuditRepository extends BaseMongoRepository<ActivityAud
 	List<ActivityAudit> findByActivityContextNameAndActivityTypeAndCreatedAtBetween(
 			String contextName, String activityType, Date startDate, Date endDate);
 
+	@Query(value = "{'activity.activityType' : 'CONTENT_ACCESS', 'activity.itemIdentity' : ?0, 'actor.userId': ?1, 'activityTime' : {$gte : ?2, $lt: ?3} }", count = true)
+	Long countContentAccessByUserBetweenDates(String recIdentity, String userId, Date startDate, Date endDate);
+
+	@Query(value = "{'activity.activityType' : 'CONTENT_ACCESS', 'activity.containerQId' : ?0, 'actor.userId': { $in: ?1}, 'activityTime' : {$gte : ?2, $lt: ?3} }", count = true)
+	Long countContentTypeAccessByUsersBetweenDates(String containerQId, List<String> userIds, Date startDate, Date endDate);
+
+	@Query(value = "{'activity.activityType' : 'CONTENT_ACCESS', 'activity.itemIdentity' : ?0, 'actor.userId': { $in: ?1}, 'activityTime' : {$gte : ?2, $lt: ?3} }", count = true)
+	Long countContentAccessByUsersBetweenDates(String contentIdentity, List<String> userIds, Date startDate, Date endDate);
+
 }
 

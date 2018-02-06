@@ -16,5 +16,10 @@ enablix.studioApp.controller('PortalRecoCtrl',
 		var recoPref = UserPreferenceService.getPrefByKey("portal.recommendation");
 		if (!isNullOrUndefined(recoPref)) {
 			$scope.hideHierarchy = recoPref.config["hideHierarchyInNavLinks"];
+			
+			var showAllRecords = recoPref.config["showAllRecords"];
+			if (showAllRecords) {
+				$scope.recoShowLimit = 999; // set a high value for limit 
+			}
 		}
 	}]);

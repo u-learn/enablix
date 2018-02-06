@@ -18,5 +18,7 @@
   	<module>correlation-api</module>
   	<module>manage-correlation-data</module>
   	<module>info-detection</module>
+  	<module>bayesian-analytic-api</module>
+  	<module>bayesian-analytic-impl</module>
   </modules>
 </project>

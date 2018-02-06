@@ -8,5 +8,6 @@
 	<module>services-parent</module>
 	<module>enablix-app</module>
 	<module>analytic-engine</module>
+	<module>analytics-app</module>
   </modules>
 </project>

@@ -19,4 +19,9 @@ echo -----------------Deploying enablix------------------------
 call mvn -f ../services/enablix-app/pom.xml clean install -DskipTests -P deployment
 echo Exit Code = %ERRORLEVEL%
 if not "%ERRORLEVEL%" == "0" pause /b ELSE echo Dependencies in enablix installed.
+
+echo -----------------Deploying analytics app------------------------
+call mvn -f ../services/analytics-app/pom.xml clean install -DskipTests -P deployment
+echo Exit Code = %ERRORLEVEL%
+if not "%ERRORLEVEL%" == "0" pause /b ELSE echo Dependencies in enablix anlytics app installed.
  

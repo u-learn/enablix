@@ -1,0 +1,2 @@
+set PATH=./lib/lib_win64;%PATH%
+java -DbaseDir=. -DdataDir=./../../ext-resources -Dlog4j.configuration=file:"./config/properties/log4j.properties" -Djava.library.path=./lib/lib_win64/ -jar enablix-app-1.0-SNAPSHOT.jar --server.port=8114

@@ -5,6 +5,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.scheduling.annotation.SchedulingConfigurer;
 import org.springframework.scheduling.config.CronTask;
 import org.springframework.scheduling.config.ScheduledTaskRegistrar;
@@ -14,6 +15,7 @@ import com.enablix.core.domain.scheduler.SchedulerConfig;
 import com.enablix.scheduler.repo.SchedulerConfigRepository;
 
 @Component
+@ConditionalOnProperty(name="task.scheduler.enabled", matchIfMissing=true)
 public class SpringTaskScheduler implements SchedulingConfigurer {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(SpringTaskScheduler.class);

@@ -14,3 +14,7 @@ mvn clean install -DskipTests
 
 echo "-----------------Deploying enablix------------------------"
 mvn -f ../services/enablix-app/pom.xml clean install -DskipTests -P deployment
+
+
+echo "-----------------Deploying enablix analytics app------------------------"
+mvn -f ../services/analytics-app/pom.xml clean install -DskipTests -P deployment
