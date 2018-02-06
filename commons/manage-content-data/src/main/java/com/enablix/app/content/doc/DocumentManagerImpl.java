@@ -133,7 +133,9 @@ public class DocumentManagerImpl implements DocumentManager {
 		
 		docMD = docRepo.save(docMD);
 		
-		docMD = docPreviewService.createPreview(docMD);
+		if (generatePreview) {
+			docMD = docPreviewService.createPreview(docMD);
+		}
 		
 		EventUtil.publishEvent(new Event<DocumentMetadata>(Events.DOCUMENT_UPLOADED, docMD));
 		
