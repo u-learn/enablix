@@ -41,6 +41,7 @@ public class TemplateWrapper implements TemplateFacade {
 	private Map<String, ContentItemType> containerDataSegmentAttrMap;
 	private Map<String, QualityRuleType> qualityRuleConfigMap;
 	private Map<String, List<String>> containerQualityRuleIdMap;
+	private Map<String, List<ContainerType>> containerLinkedFrom;
 	
 	private List<ContainerType> bizDimContainers;
 	private List<ContainerType> bizContentContainers;
@@ -113,6 +114,7 @@ public class TemplateWrapper implements TemplateFacade {
 		this.collectionNameContainerMap = new HashMap<>();
 		this.containerDataSegmentAttrMap = new HashMap<>();
 		this.containerQualityRuleIdMap = new HashMap<>();
+		this.containerLinkedFrom = new HashMap<>();
 		
 		this.bizDimContainers = new ArrayList<>();
 		this.bizContentContainers = new ArrayList<>();
@@ -141,6 +143,11 @@ public class TemplateWrapper implements TemplateFacade {
 				
 				if (!TemplateUtil.isLinkedContainer(container) && container.isReferenceable()) {
 					collectionNameContainerMap.put(collectionName, container);
+				}
+				
+				if (TemplateUtil.isLinkedContainer(container)) {
+					CollectionUtil.addToMappedListValue(container.getLinkContainerQId(), 
+							container, containerLinkedFrom, () -> new ArrayList<>());
 				}
 				
 				if (container.getBusinessCategory() == ContainerBusinessCategoryType.BUSINESS_CONTENT) {
@@ -333,6 +340,11 @@ public class TemplateWrapper implements TemplateFacade {
 	@Override
 	public List<ContainerType> getBizDimContainers() {
 		return this.bizDimContainers;
+	}
+
+	@Override
+	public List<ContainerType> getLinkedFromContainers(String forContainerQId) {
+		return containerLinkedFrom.get(forContainerQId);
 	}
 	
 }

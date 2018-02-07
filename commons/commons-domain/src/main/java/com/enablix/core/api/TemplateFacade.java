@@ -44,5 +44,7 @@ public interface TemplateFacade {
 	List<ContainerType> getBizContentContainers();
 	
 	List<ContainerType> getBizDimContainers();
+	
+	List<ContainerType> getLinkedFromContainers(String forContainerQId);
 
 }
