@@ -34,7 +34,7 @@ public class PeerUsersResolver {
 			SearchFilter filter = new StringFilter("identity", user.getIdentity(), ConditionOperator.NOT_EQ);
 			
 			// TODO: make it configurable per tenant
-			String bizRoleAttr = "businessRole";
+			String bizRoleAttr = "role";
 			
 			Object userBizRoles = bizAttrs.get(bizRoleAttr);
 	
