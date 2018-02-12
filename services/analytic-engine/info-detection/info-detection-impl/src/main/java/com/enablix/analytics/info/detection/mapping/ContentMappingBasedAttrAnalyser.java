@@ -24,6 +24,7 @@ import com.enablix.content.mapper.ContentSource;
 import com.enablix.content.mapper.EnablixContent;
 import com.enablix.content.mapper.ExternalContent;
 import com.enablix.core.api.TemplateFacade;
+import com.enablix.core.commons.xsdtopojo.ContainerType;
 
 public class ContentMappingBasedAttrAnalyser extends BaseInfoAnalyser {
 	
@@ -34,6 +35,9 @@ public class ContentMappingBasedAttrAnalyser extends BaseInfoAnalyser {
 	
 	@Autowired
 	private TemplateManager templateMgr;
+	
+	@Autowired
+	private SimpleInfoMapper simpleMapper;
 	
 	@Override
 	protected List<Opinion> analyseInfo(InfoDetectionContext ctx) {
@@ -54,23 +58,32 @@ public class ContentMappingBasedAttrAnalyser extends BaseInfoAnalyser {
 			ExternalContent content = new ExternalContent(contentSource, typeOp.getContainerQId(), data);
 			ContentMapper mapper = mapperRegistry.getMapper(content);
 			
+			EnablixContent enablixContent = null;
+					
 			if (mapper == null) {
 				
-				LOGGER.info("No mapper found for [{}], content [{}]", content.getContentSource(), content.getContentQId());
+				LOGGER.info("No mapper found for [{}], content [{}]. Trying simple mapper.", 
+						content.getContentSource(), content.getContentQId());
+			
+				ContainerType container = template.getContainerDefinition(typeOp.getContainerQId());
+				if (container != null) {
+					enablixContent = simpleMapper.transformToEnablixContent(container, content, template);
+				}
 				
 			} else {
 				
-				EnablixContent enablixContent = mapper.transformToEnablixContent(content, template);
+				enablixContent = mapper.transformToEnablixContent(content, template);
 				
-				if (enablixContent != null) {
+			}
+			
+			if (enablixContent != null) {
+				
+				for (Map.Entry<String, Object> entry : enablixContent.getData().entrySet()) {
 					
-					for (Map.Entry<String, Object> entry : enablixContent.getData().entrySet()) {
-						
-						TypeAttrOpinion typeAttrOp = new TypeAttrOpinion(typeOp.getContainerQId(), 
-								entry.getKey(), entry.getValue(), name(), typeOp.getConfidence());
-						
-						opinions.add(typeAttrOp);
-					}
+					TypeAttrOpinion typeAttrOp = new TypeAttrOpinion(typeOp.getContainerQId(), 
+							entry.getKey(), entry.getValue(), name(), typeOp.getConfidence());
+					
+					opinions.add(typeAttrOp);
 				}
 			}
 		}

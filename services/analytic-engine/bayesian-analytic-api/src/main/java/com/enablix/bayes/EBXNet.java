@@ -27,6 +27,19 @@ import norsys.netica.Streamer;
  */
 public class EBXNet {
 
+	public static class States {
+		public static final String TRUE = "true";
+		public static final String FALSE = "false";
+		public static final String[] BOOLS = { TRUE, FALSE };
+		
+		public static final String HIGH = "high";
+		public static final String LOW = "low";
+		public static final String NO = "no";
+		public static final String[] HIGH_LOW_STATES = {
+				HIGH, LOW, NO
+		};
+	}
+		
 	private static Environ env;
 
 	static {
@@ -87,10 +100,6 @@ public class EBXNet {
 		}
 	}
 
-	public static final String TRUE = "true";
-	public static final String FALSE = "false";
-	public static final String[] BOOLS = { TRUE, FALSE };
-
 	public EBXLink link(final EBXNode from, final EBXNode to) {
 		EBXLink link = new EBXLink(from, to);
 		EdgeKey key = new EdgeKey(from.getName(), to.getName());
@@ -127,12 +136,12 @@ public class EBXNet {
 	public class EBXBoolNode extends EBXCategoricalNode {
 
 		public EBXBoolNode(final String name, final String title) {
-			super(name, title, BOOLS);
+			super(name, title, States.BOOLS);
 		}
 
 		public float getProbability() {
 			try {
-				return n.getBelief(TRUE);
+				return n.getBelief(States.TRUE);
 			} catch (NeticaException e) {
 				throw new RuntimeException(e);
 			}
@@ -148,9 +157,23 @@ public class EBXNet {
 			return this;
 		}
 	}
+	
+	public class EBXHighLowNode extends EBXCategoricalNode {
+		
+		public EBXHighLowNode(final String name, final String title) {
+			super(name, title, States.HIGH_LOW_STATES);
+		}
+		
+	}
 
 	public EBXBoolNode createBoolNode(String name, String title) {
 		EBXBoolNode node = new EBXBoolNode(name, title);
+		nodes.put(name, node);
+		return node;
+	}
+	
+	public EBXHighLowNode createHighLowNode(String name, String title) {
+		EBXHighLowNode node = new EBXHighLowNode(name, title);
 		nodes.put(name, node);
 		return node;
 	}
@@ -228,6 +251,11 @@ public class EBXNet {
 			} catch (NeticaException e) {
 				throw new RuntimeException(e);
 			}
+		}
+
+		@Override
+		public Collection<String> getStates() {
+			return states;
 		}
 
 	}

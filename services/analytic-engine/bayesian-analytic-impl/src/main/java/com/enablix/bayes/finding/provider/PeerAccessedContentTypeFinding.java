@@ -55,7 +55,7 @@ public class PeerAccessedContentTypeFinding extends AbstractPeerFinding implemen
 					qIds, peersUserIds, 
 					ctx.getAdjustedRunAsDate(lookback), ctx.getRunAsDate());
 			
-			finding = count != null && count > 0 ? EBXNet.TRUE : EBXNet.FALSE;
+			finding = count != null && count > 0 ? EBXNet.States.TRUE : EBXNet.States.FALSE;
 		}
 		
 		return finding;

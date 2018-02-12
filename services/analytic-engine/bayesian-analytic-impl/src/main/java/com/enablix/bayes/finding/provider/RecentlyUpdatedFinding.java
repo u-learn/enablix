@@ -38,7 +38,7 @@ public class RecentlyUpdatedFinding implements NodeFindingProvider {
 			Calendar createdAtCal = Calendar.getInstance();
 			createdAtCal.setTime(contentCreatedAt);
 			
-			finding = lookbackDate.before(createdAtCal) ? EBXNet.TRUE : EBXNet.FALSE;
+			finding = lookbackDate.before(createdAtCal) ? EBXNet.States.TRUE : EBXNet.States.FALSE;
 		}
 		
 		return finding;

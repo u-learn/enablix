@@ -475,4 +475,43 @@ public class TemplateUtil {
 		return false;
 	}
 	
+	public static ContentItemType getDocItemType(ContainerType container) {
+		
+		ContentItemType docItem = null;
+		
+		if (container != null) {
+			
+			for (ContentItemType itemType : container.getContentItem()) {
+				
+				if (itemType.getType() == ContentItemClassType.DOC) {
+					docItem = itemType;
+					break;
+				}
+			}
+		}
+		
+		return docItem;
+	}
+
+
+	public static String getDescAttribute(ContainerType container) {
+		
+		String descAttrId = null;
+		
+		if (container != null) {
+		
+			for (ContentItemType itemType : container.getContentItem()) {
+			
+				if (itemType.getType() == ContentItemClassType.RICH_TEXT) {
+					descAttrId = itemType.getId();
+					break;
+				} else if (itemType.getId().equalsIgnoreCase("desc")) {
+					descAttrId = itemType.getId();
+				}
+			}
+		}
+		
+		return descAttrId;
+	}
+	
 }

@@ -22,7 +22,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 
 import com.enablix.app.template.service.TemplateManager;
 import com.enablix.bayes.content.ContentBayesNet;
@@ -222,7 +221,9 @@ public class BayesServiceImpl implements BayesService {
 											container.getLabel(), recIdentity, title, relevance);
 									
 									for (EBXNode node : net.getNodes()) {
-										info.nodeRelevance.put(node.getName(), node.getBelief(EBXNet.TRUE));
+										for (String state : node.getStates()) {
+											info.nodeRelevance.put(nodeStateKey(node.getName(), state), node.getBelief(state));
+										}
 									}
 									
 									recRelevance.add(info);
@@ -256,6 +257,10 @@ public class BayesServiceImpl implements BayesService {
 			
 		}
 		
+	}
+	
+	private static String nodeStateKey(String nodeName, String state) {
+		return nodeName + "-" + state;
 	}
 	
 	public static final class RelevanceInfo {
@@ -345,21 +350,49 @@ public class BayesServiceImpl implements BayesService {
 	
 	public static class RelevanceInfoFieldExtractor implements FieldExtractor<RelevanceInfo>, FlatFileHeaderCallback {
 
-		private static final String[] NODE_LIST = { 
-				ContentBayesNet.IS_NEW_CONTENT_NN, 
-				ContentBayesNet.IS_RECENTLY_UPDT_CONTENT_NN,
-				ContentBayesNet.IS_CONTENT_UPDT_AFTER_ACCESS_NN,
-				ContentBayesNet.IS_RECENT_CONTENT_NN,
-				ContentBayesNet.PEER_ACCESSED_CONTENT_NN,
-				ContentBayesNet.PEER_ACCESSED_CONTENT_TYPE_NN,
-				ContentBayesNet.IS_POPULAR_AMONG_PEERS_NN,
+		private static class LogNode {
+			
+			private String name;
+			private String[] states;
+
+			public LogNode(String name, String[] states) {
+				super();
+				this.name = name;
+				this.states = states;
+			}
+
+			@Override
+			public String toString() {
+				return "LogNode [name=" + name + "]";
+			}
+			
+			
+		}
+		
+		private static final LogNode[] NODE_LIST = { 
+				new LogNode(ContentBayesNet.IS_NEW_CONTENT_NN, EBXNet.States.BOOLS), 
+				new LogNode(ContentBayesNet.IS_RECENTLY_UPDT_CONTENT_NN, EBXNet.States.BOOLS),
+				new LogNode(ContentBayesNet.IS_CONTENT_UPDT_AFTER_ACCESS_NN, EBXNet.States.BOOLS),
+				new LogNode(ContentBayesNet.IS_RECENT_CONTENT_NN, EBXNet.States.BOOLS),
+				new LogNode(ContentBayesNet.PEER_ACCESSED_CONTENT_NN,EBXNet.States.HIGH_LOW_STATES),
+				new LogNode(ContentBayesNet.PEER_ACCESSED_CONTENT_TYPE_NN, EBXNet.States.HIGH_LOW_STATES),
+				new LogNode(ContentBayesNet.IS_POPULAR_AMONG_PEERS_NN, EBXNet.States.BOOLS)
 		};
 		
 
 		@Override
 		public void writeHeader(Writer writer) throws IOException {
+			
+			StringBuilder nodeList = new StringBuilder();
+			
+			for (LogNode node : NODE_LIST) {
+				for (String state : node.states) {
+					nodeList.append(nodeStateKey(node.name, state)).append(",");
+				}
+			}
+			
 			writer.write("User Id,Content Type,Content Identity,Content Title, Relevance," 
-							+ StringUtils.arrayToCommaDelimitedString(NODE_LIST));
+							+ nodeList.toString());
 		}
 
 		@Override
@@ -373,12 +406,18 @@ public class BayesServiceImpl implements BayesService {
 			propValues.add(item.getContentTitle());
 			propValues.add(item.getRelevance());
 			
-			for (String nodeName : NODE_LIST) {
-				propValues.add(item.nodeRelevance.get(nodeName));
+			for (LogNode nodeName : NODE_LIST) {
+				for (String state : nodeName.states) {
+					propValues.add(item.nodeRelevance.get(nodeStateKey(nodeName.name, state)));
+				}
 			}
 			
 			return propValues.toArray();
 		}
+		
+	}
+	
+	public static class QuotedDelimitedLineAggregator<T> extends DelimitedLineAggregator<T> {
 		
 	}
 	

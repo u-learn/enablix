@@ -43,26 +43,27 @@ public class ContentUpdtAfterAccessFinding implements NodeFindingProvider {
 		
 		if (contentModifiedAt != null) {
 			
-			Calendar createdAtCal = Calendar.getInstance();
-			createdAtCal.setTime(contentModifiedAt);
+			Calendar modifiedAtCal = Calendar.getInstance();
+			modifiedAtCal.setTime(contentModifiedAt);
 			
-			if (recentLookbackDate.before(createdAtCal)) {
+			if (recentLookbackDate.before(modifiedAtCal)) {
 				
 				// check if user access if before it was updated
 				Calendar accessLookbackDate = Calendar.getInstance();
-				accessLookbackDate.setTime(recentLookbackDate.getTime());
+				accessLookbackDate.setTime(contentModifiedAt);
 				accessLookbackDate.add(Calendar.DAY_OF_YEAR, -lookback);
 				
 				String recIdentity = ContentDataUtil.getRecordIdentity(dataRec.getRecord());
 
 				Long count = auditRepo.countContentAccessByUserBetweenDates(
 						recIdentity, user.getEmail(), 
-						accessLookbackDate.getTime(), ctx.getRunAsDate());
+						accessLookbackDate.getTime(), recentLookbackDate.getTime()
+						);
 				
-				finding = (count != null && count > 0) ? EBXNet.TRUE : EBXNet.FALSE;
+				finding = (count != null && count > 0) ? EBXNet.States.TRUE : EBXNet.States.FALSE;
 				
 			} else {
-				finding = EBXNet.FALSE;
+				finding = EBXNet.States.FALSE;
 			}
 		}
 		

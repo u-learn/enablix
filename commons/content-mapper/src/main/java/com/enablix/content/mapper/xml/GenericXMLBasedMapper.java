@@ -45,6 +45,12 @@ public class GenericXMLBasedMapper implements ContentMapper {
 					+ content.getContentSource() + "] :: content [" + content.getContentQId() + "]");
 		}
 		
+		return tranformUsingMapping(content, template, contentMapping);
+	}
+
+	public EnablixContent tranformUsingMapping(ExternalContent content, TemplateFacade template,
+			ContentContainerMappingType contentMapping) {
+		
 		EnablixContent ebxContent = new EnablixContent(
 				new HashMap<String, Object>(), content.getContentQId(), template.getId());
 		

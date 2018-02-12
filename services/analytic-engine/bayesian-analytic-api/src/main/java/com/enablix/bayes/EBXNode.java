@@ -1,5 +1,7 @@
 package com.enablix.bayes;
 
+import java.util.Collection;
+
 import norsys.netica.Node;
 
 public interface EBXNode {
@@ -15,6 +17,8 @@ public interface EBXNode {
 	void linkFrom(EBXNode node);
 
 	void setCPTable(float[] props);
+	
+	Collection<String> getStates();
 	
 	float getBelief(String state);
 }

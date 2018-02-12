@@ -42,7 +42,7 @@ public class NewContentFindingProvider implements NodeFindingProvider {
 			createdAtCal.setTime(contentCreatedAt);
 			
 			LOGGER.debug("Comparing dates: {} v/s {} - {}", contentCreatedAt, cal.getTime(), cal.before(createdAtCal));
-			finding = cal.before(createdAtCal) ? EBXNet.TRUE : EBXNet.FALSE;
+			finding = cal.before(createdAtCal) ? EBXNet.States.TRUE : EBXNet.States.FALSE;
 		}
 		
 		return finding;

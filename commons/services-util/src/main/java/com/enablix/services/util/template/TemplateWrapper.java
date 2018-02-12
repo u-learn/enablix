@@ -33,6 +33,7 @@ public class TemplateWrapper implements TemplateFacade {
 	private ContentTemplate template;
 	
 	private Map<String, ContainerType> containerQIdMap;
+	private Map<String, ContainerType> concreteContainerLabelMap;
 	private Map<String, String> qIdCollectionMap;
 	private Map<String, String> containerPortalLabelAttrIdMap;
 	private Map<String, String> containerStudioLabelAttrIdMap;
@@ -108,6 +109,7 @@ public class TemplateWrapper implements TemplateFacade {
 	private void initContainerCache() {
 		
 		this.containerQIdMap = new HashMap<>();
+		this.concreteContainerLabelMap = new HashMap<>();
 		this.qIdCollectionMap = new HashMap<>();
 		this.containerPortalLabelAttrIdMap = new HashMap<>();
 		this.containerStudioLabelAttrIdMap = new HashMap<>();
@@ -141,13 +143,17 @@ public class TemplateWrapper implements TemplateFacade {
 				containerStudioLabelAttrIdMap.put(containerQId, 
 						TemplateUtil.getStudioLabelAttributeId(template, containerQId));
 				
-				if (!TemplateUtil.isLinkedContainer(container) && container.isReferenceable()) {
+				boolean isLinkedContainer = TemplateUtil.isLinkedContainer(container);
+				
+				if (!isLinkedContainer && container.isReferenceable()) {
 					collectionNameContainerMap.put(collectionName, container);
 				}
 				
-				if (TemplateUtil.isLinkedContainer(container)) {
+				if (isLinkedContainer) {
 					CollectionUtil.addToMappedListValue(container.getLinkContainerQId(), 
 							container, containerLinkedFrom, () -> new ArrayList<>());
+				} else {
+					concreteContainerLabelMap.put(container.getLabel().toLowerCase(), container);
 				}
 				
 				if (container.getBusinessCategory() == ContainerBusinessCategoryType.BUSINESS_CONTENT) {
@@ -345,6 +351,11 @@ public class TemplateWrapper implements TemplateFacade {
 	@Override
 	public List<ContainerType> getLinkedFromContainers(String forContainerQId) {
 		return containerLinkedFrom.get(forContainerQId);
+	}
+
+	@Override
+	public ContainerType getContainerByLabel(String containerLabel) {
+		return containerLabel == null ? null : concreteContainerLabelMap.get(containerLabel.toLowerCase());
 	}
 	
 }

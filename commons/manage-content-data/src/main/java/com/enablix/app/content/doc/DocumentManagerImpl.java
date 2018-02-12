@@ -131,6 +131,7 @@ public class DocumentManagerImpl implements DocumentManager {
 		
 		DocumentMetadata docMD = ds.save(doc, contentPath);
 		
+		docMD.setPreviewStatus(PreviewStatus.PENDING); 
 		docMD = docRepo.save(docMD);
 		
 		if (generatePreview) {

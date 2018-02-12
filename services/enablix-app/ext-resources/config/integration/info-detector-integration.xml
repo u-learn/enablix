@@ -74,9 +74,15 @@
 	
 	<int:service-activator id="contentMappingAnalyserActivator" 
 						   input-channel="content-mapping-attr-analyser-channel"
-						   output-channel="mongo-linked-cont-analyser-channel"
+						   output-channel="doc-attr-analyser-channel"
 						   requires-reply="true"
 						   ref="contentMappingAttrAnalyser" method="analyse"/>
+						   
+	<int:service-activator id="docAttrAnalyserActivator"
+	   					   input-channel="doc-attr-analyser-channel"
+						   output-channel="mongo-linked-cont-analyser-channel"
+						   requires-reply="true"
+						   ref="docAttrAnalyser" method="analyse"/>
 	
 	<int:service-activator id="mongoLinkContAnalyserActivator" 
 						   input-channel="mongo-linked-cont-analyser-channel"
@@ -110,6 +116,7 @@
 	<bean id="infoTypeAnalyser" class="com.enablix.analytics.info.detection.impl.InfoTypeAnalyser">
 		<property name="infoTypeResolvers">
 			<list>
+				<ref bean="ebxTypenameInfoTypeResolver"/>
 				<ref bean="wpPostInfoTypeResolver"/>
 				<ref bean="urlPatternBasedInfoTypeResolver"/>
 				<ref bean="defaultInfoTypeResolver"/>
@@ -120,10 +127,13 @@
 	<bean id="wpPostInfoTypeResolver" class="com.enablix.wordpress.info.detection.WPPostInfoTypeAnalyser"/>
 	<bean id="defaultInfoTypeResolver" class="com.enablix.analytics.info.detection.impl.DefaultInfoTypeResolver"/>
 	<bean id="urlPatternBasedInfoTypeResolver" class="com.enablix.analytics.info.detection.impl.InfoLinkPatternBasedTypeResolver"/>
+	<bean id="ebxTypenameInfoTypeResolver" class="com.enablix.analytics.info.detection.impl.TypeNameInfoResolver"/>
 	
 	<bean id="infoTagAliasEnricher" class="com.enablix.analytics.info.detection.impl.InfoTagAliasEnricher"/>
 	
 	<bean id="contentMappingAttrAnalyser" class="com.enablix.analytics.info.detection.mapping.ContentMappingBasedAttrAnalyser"/>
+	
+	<bean id="docAttrAnalyser" class="com.enablix.analytics.info.detection.impl.DocAttrAnalyser"/>
 	
 	<bean id="mongoLinkContainerAnalyser" class="com.enablix.analytics.info.detection.mongo.MongoLookupLinkAnalyser"/>
 	

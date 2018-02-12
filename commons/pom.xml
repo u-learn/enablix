@@ -45,5 +45,6 @@
 	<module>manage-content-template-api</module>
 	<module>hubspot-integration</module>
 	<module>uri-embed</module>
+	<module>mail-integration</module>
   </modules>
 </project>

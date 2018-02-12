@@ -33,7 +33,8 @@ public class DiskDocumentStore implements DocumentStore<DiskDocumentMetadata, Di
 	@Autowired
 	private ArchiveDocumentService archiveService;
 	
-	private DocumentBuilder<DiskDocumentMetadata, DiskDocument> docBuilder = new DiskDocumentBuilder();
+	@Autowired
+	private DiskDocumentBuilder docBuilder;
 	
 	@Override
 	public DiskDocumentMetadata save(DiskDocument document, String contentPath) throws IOException {

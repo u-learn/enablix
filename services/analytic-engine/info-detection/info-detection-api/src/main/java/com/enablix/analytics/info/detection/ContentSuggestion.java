@@ -18,7 +18,7 @@ public class ContentSuggestion extends Opinion {
 	public ContentRecord getContent() {
 		return content;
 	}
-
+	
 	@Override
 	public String toString() {
 		return "ContentSuggestion [content=" + content + "]";

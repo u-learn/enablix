@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<contentMapping id="Email-Message" name="Email message content mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../xsd/content-mapping.xsd">
+	
+	<container qualifiedId="content">
+		<sourceId>id</sourceId>
+		<contentItemMappings>
+			<itemMapping itemId="title">title</itemMapping>
+			<itemMapping itemId="summary">desc</itemMapping>
+		</contentItemMappings>
+	</container>
+
+</contentMapping>

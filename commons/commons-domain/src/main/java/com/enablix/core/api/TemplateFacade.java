@@ -47,4 +47,6 @@ public interface TemplateFacade {
 	
 	List<ContainerType> getLinkedFromContainers(String forContainerQId);
 
+	ContainerType getContainerByLabel(String containerLabel);
+
 }

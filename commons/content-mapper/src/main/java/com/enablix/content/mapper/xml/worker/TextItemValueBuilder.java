@@ -24,7 +24,8 @@ public class TextItemValueBuilder implements ContentItemValueBuilder<String> {
 
 	@Override
 	public boolean canHandle(ContentItemType contentItem) {
-		return contentItem.getType() == ContentItemClassType.TEXT;
+		return contentItem.getType() == ContentItemClassType.TEXT 
+				|| contentItem.getType() == ContentItemClassType.RICH_TEXT;
 	}
 
 	

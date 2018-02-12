@@ -2,6 +2,7 @@ package com.enablix.bayes.content;
 
 import com.enablix.bayes.EBXNet;
 import com.enablix.bayes.EBXNet.EBXBoolNode;
+import com.enablix.bayes.EBXNet.EBXHighLowNode;
 
 public class ContentBayesNet {
 
@@ -75,12 +76,12 @@ public class ContentBayesNet {
 		EBXBoolNode isPopularAmongPeers = net.createBoolNode(IS_POPULAR_AMONG_PEERS_NN, IS_POPULAR_AMONG_PEERS_NT);
 		
 		// New Content 
-		EBXBoolNode accessedByPeer = net.createBoolNode(PEER_ACCESSED_CONTENT_NN, PEER_ACCESSED_CONTENT_NT);
+		EBXHighLowNode accessedByPeer = net.createHighLowNode(PEER_ACCESSED_CONTENT_NN, PEER_ACCESSED_CONTENT_NT);
 		accessedByPeer.setCPTable(bayesCPTables.getPeerAccessedContentCPT());
 		isPopularAmongPeers.linkFrom(accessedByPeer);
 		
 		// Recent Updated content
-		EBXBoolNode peerAccessContentType = net.createBoolNode(PEER_ACCESSED_CONTENT_TYPE_NN, PEER_ACCESSED_CONTENT_TYPE_NT);
+		EBXHighLowNode peerAccessContentType = net.createHighLowNode(PEER_ACCESSED_CONTENT_TYPE_NN, PEER_ACCESSED_CONTENT_TYPE_NT);
 		peerAccessContentType.setCPTable(bayesCPTables.getPeerAccessedContentTypeCPT());
 		isPopularAmongPeers.linkFrom(peerAccessContentType);
 		
