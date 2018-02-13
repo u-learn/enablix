@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Query;
@@ -18,6 +20,8 @@ import com.mongodb.DBCollection;
 
 public abstract class AbstractPeerFinding implements NodeFindingProvider {
 
+	private static final Logger LOGGER = LoggerFactory.getLogger(AbstractPeerFinding.class);
+	
 	@Autowired
 	private PeerUsersResolver peerResolver;
 	
@@ -51,6 +55,8 @@ public abstract class AbstractPeerFinding implements NodeFindingProvider {
 			peerUsers.put(user.getEmail(), peers);
 		}
 		
+		LOGGER.debug("Peers for {} are [{}]", user.getEmail(), peers);
+		
 		return peers;
 	}
 	
@@ -65,8 +71,12 @@ public abstract class AbstractPeerFinding implements NodeFindingProvider {
 			
 			Query query = queryCriteria(ctx, dataRec, peersUserIds);
 			
+			LOGGER.debug("Query: {}", query);
+			
 			DBCollection collection = mongoTemplate.getCollection("ebx_activity_audit");
 			List<?> distinctUsers = collection.distinct("actor.userId", query.getQueryObject());
+			
+			LOGGER.debug("Distinct users: {}", distinctUsers);
 			
 			if (CollectionUtil.isNotEmpty(distinctUsers)) {
 				
