@@ -54,7 +54,7 @@ public class PeerAccessedContentTypeFinding extends AbstractPeerFinding implemen
 				.and("activity.itemIdentity").ne(recIdentity)
 				.and("activity.containerQId").in(qIds)
 				.and("actor.userId").in(peersUserIds)
-				.and("activityTime").gte(ctx.getAdjustedRunAsDate(lookback)).lt(ctx.getRunAsDate());
+				.and("activityTime").gte(ctx.getAdjustedRunAsDate(-lookback)).lt(ctx.getRunAsDate());
 		
 		Query query = Query.query(criteria);
 		return query;

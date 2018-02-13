@@ -34,7 +34,7 @@ public class PeerAccessedContentFinding extends AbstractPeerFinding  implements 
 		Criteria criteria = Criteria.where("activity.activityType").is("CONTENT_ACCESS")
 				.and("activity.itemIdentity").is(recIdentity)
 				.and("actor.userId").in(peersUserIds)
-				.and("activityTime").gte(ctx.getAdjustedRunAsDate(lookback)).lt(ctx.getRunAsDate());
+				.and("activityTime").gte(ctx.getAdjustedRunAsDate(-lookback)).lt(ctx.getRunAsDate());
 		
 		Query query = Query.query(criteria);
 		return query;
