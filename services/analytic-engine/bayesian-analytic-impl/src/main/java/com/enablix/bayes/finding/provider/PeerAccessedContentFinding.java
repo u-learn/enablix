@@ -2,48 +2,42 @@ package com.enablix.bayes.finding.provider;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Component;
 
-import com.enablix.bayes.EBXNet;
 import com.enablix.bayes.ExecutionContext;
 import com.enablix.bayes.InitializationContext;
 import com.enablix.bayes.content.ContentBayesNet;
 import com.enablix.bayes.finding.NodeFindingProvider;
-import com.enablix.commons.util.collection.CollectionUtil;
 import com.enablix.core.api.ContentDataRecord;
-import com.enablix.core.domain.security.authorization.UserProfile;
-import com.enablix.core.mongo.audit.repo.ActivityAuditRepository;
 import com.enablix.services.util.ContentDataUtil;
 
 @Component
 public class PeerAccessedContentFinding extends AbstractPeerFinding  implements NodeFindingProvider {
 
-	@Autowired
-	private ActivityAuditRepository auditRepo;
-	
 	@Value("${bayes.peers.content.access.finding.lookback:2}")
 	private int lookback;
 	
-	@Override
-	public String getFinding(ExecutionContext ctx, UserProfile user, ContentDataRecord dataRec) {
+	@Value("${bayes.peers.content.access.finding.high.cutoff.percent:40}")
+	private float highCutoffPercent;
+	
+	protected float getHighCutoffPercent() {
+		return highCutoffPercent;
+	}
+
+	protected Query queryCriteria(ExecutionContext ctx, ContentDataRecord dataRec, List<String> peersUserIds) {
 		
-		String finding = null;
+		String recIdentity = ContentDataUtil.getRecordIdentity(dataRec.getRecord());
 		
-		List<String> peersUserIds = getPeersUserIds(ctx, user);
+		Criteria criteria = Criteria.where("activity.activityType").is("CONTENT_ACCESS")
+				.and("activity.itemIdentity").is(recIdentity)
+				.and("actor.userId").in(peersUserIds)
+				.and("activityTime").gte(ctx.getAdjustedRunAsDate(lookback)).lt(ctx.getRunAsDate());
 		
-		if (!CollectionUtil.isEmpty(peersUserIds)) {
-			
-			String recIdentity = ContentDataUtil.getRecordIdentity(dataRec.getRecord());
-			
-			Long count = auditRepo.countContentAccessByUsersBetweenDates(
-					recIdentity, peersUserIds, ctx.getAdjustedRunAsDate(lookback), ctx.getRunAsDate());
-			
-			finding = count != null && count > 0 ? EBXNet.States.TRUE : EBXNet.States.FALSE;
-		}
-		
-		return finding;
+		Query query = Query.query(criteria);
+		return query;
 	}
 
 	@Override
