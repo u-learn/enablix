@@ -57,8 +57,7 @@ public class ContentUpdtAfterAccessFinding implements NodeFindingProvider {
 
 				Long count = auditRepo.countContentAccessByUserBetweenDates(
 						recIdentity, user.getEmail(), 
-						accessLookbackDate.getTime(), recentLookbackDate.getTime()
-						);
+						accessLookbackDate.getTime(), modifiedAtCal.getTime());
 				
 				finding = (count != null && count > 0) ? EBXNet.States.TRUE : EBXNet.States.FALSE;
 				

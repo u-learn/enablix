@@ -387,11 +387,11 @@ public class BayesServiceImpl implements BayesService {
 			
 			for (LogNode node : NODE_LIST) {
 				for (String state : node.states) {
-					nodeList.append(nodeStateKey(node.name, state)).append(",");
+					nodeList.append(enclosedInQuotes(nodeStateKey(node.name, state))).append(",");
 				}
 			}
 			
-			writer.write("User Id,Content Type,Content Identity,Content Title, Relevance," 
+			writer.write("\"User Id\",\"Content Type\",\"Content Identity\",\"Content Title\",\"Relevance\"," 
 							+ nodeList.toString());
 		}
 
@@ -400,19 +400,23 @@ public class BayesServiceImpl implements BayesService {
 			
 			List<Object> propValues = new ArrayList<>(5 + NODE_LIST.length);
 			
-			propValues.add(item.getUserId());
-			propValues.add(item.getContainerLabel());
-			propValues.add(item.getContentIdentity());
-			propValues.add(item.getContentTitle());
-			propValues.add(item.getRelevance());
+			propValues.add(enclosedInQuotes(item.getUserId()));
+			propValues.add(enclosedInQuotes(item.getContainerLabel()));
+			propValues.add(enclosedInQuotes(item.getContentIdentity()));
+			propValues.add(enclosedInQuotes(item.getContentTitle()));
+			propValues.add(enclosedInQuotes(item.getRelevance()));
 			
 			for (LogNode nodeName : NODE_LIST) {
 				for (String state : nodeName.states) {
-					propValues.add(item.nodeRelevance.get(nodeStateKey(nodeName.name, state)));
+					propValues.add(enclosedInQuotes(item.nodeRelevance.get(nodeStateKey(nodeName.name, state))));
 				}
 			}
 			
 			return propValues.toArray();
+		}
+		
+		private String enclosedInQuotes(Object obj) {
+			return obj == null ? "\"\"" : ("\"" + String.valueOf(obj) + "\"");
 		}
 		
 	}
