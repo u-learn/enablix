@@ -21,6 +21,10 @@ public interface InfoDetectionConfiguration {
 		return new HashMap<>();
 	}
 	
+	default public boolean isSaveAsDraft() {
+		return false;
+	}
+	
 	InfoDetectionConfiguration NO_CONFIG = new InfoDetectionConfiguration() { };
 	
 }

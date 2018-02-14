@@ -23,6 +23,7 @@ import com.enablix.analytics.info.detection.SimpleInfoTag;
 import com.enablix.analytics.info.detection.TaggedInfo;
 import com.enablix.commons.util.StringUtil;
 import com.enablix.core.api.DocAttachment;
+import com.enablix.core.mail.utility.MailConstants;
 
 public class MailInfo implements Information, EnablixContentTypeAware, DocAwareInfo, TaggedInfo {
 
@@ -48,7 +49,7 @@ public class MailInfo implements Information, EnablixContentTypeAware, DocAwareI
 
 	@Override
 	public String type() {
-		return "Message";
+		return MailConstants.MAIL_INFO_TYPE;
 	}
 
 	@Override
@@ -91,30 +92,7 @@ public class MailInfo implements Information, EnablixContentTypeAware, DocAwareI
 			
 			MimeMultipart multiPartContent = (MimeMultipart) content;
 			
-			int parts = multiPartContent.getCount();
-			
-			for (int i = 0; i < parts; i++) {
-				
-				MimeBodyPart bodyPart = (MimeBodyPart) multiPartContent.getBodyPart(i);
-				
-				if (Part.ATTACHMENT.equalsIgnoreCase(bodyPart.getDisposition())) {
-					
-					if (mailInfo.attachments == null) {
-						mailInfo.attachments = new ArrayList<>();
-					}
-					
-					DocAttachment attachment = new DocAttachment();
-					attachment.setFilename(bodyPart.getFileName());
-					attachment.setInputStream(bodyPart.getInputStream());
-					
-					String contentType = bodyPart.getContentType();
-					contentType = contentType == null ? contentType : contentType.toLowerCase();
-					attachment.setContentType(contentType);
-					
-					mailInfo.attachments.add(attachment);
-					
-				} 
-			}
+			addAttachmentsFromMultipart(mailInfo, multiPartContent);
 			
 			textContent = getTextContentFromMultipart(multiPartContent);
 			
@@ -128,6 +106,42 @@ public class MailInfo implements Information, EnablixContentTypeAware, DocAwareI
 		mailInfo.infoData.put("subject", msg.getSubject());
 		
 		return mailInfo;
+	}
+	
+	private static void addAttachmentsFromMultipart(MailInfo mailInfo, 
+			MimeMultipart multiPartContent) throws MessagingException, IOException {
+		
+		int parts = multiPartContent.getCount();
+		
+		for (int i = 0; i < parts; i++) {
+			
+			MimeBodyPart bodyPart = (MimeBodyPart) multiPartContent.getBodyPart(i);
+			
+			if (Part.ATTACHMENT.equalsIgnoreCase(bodyPart.getDisposition())) {
+				
+				if (mailInfo.attachments == null) {
+					mailInfo.attachments = new ArrayList<>();
+				}
+				
+				DocAttachment attachment = new DocAttachment();
+				attachment.setFilename(bodyPart.getFileName());
+				attachment.setInputStream(bodyPart.getInputStream());
+				
+				String contentType = bodyPart.getContentType();
+				contentType = contentType == null ? contentType : contentType.toLowerCase();
+				attachment.setContentType(contentType);
+				
+				mailInfo.attachments.add(attachment);
+				
+			} else if (bodyPart.isMimeType("multipart/*")) {
+				
+				Object partContent = bodyPart.getContent();
+				
+				if (partContent instanceof MimeMultipart) {
+					addAttachmentsFromMultipart(mailInfo, (MimeMultipart) partContent);
+				}
+			}
+		}
 	}
 	
 	private static String getTextContentFromMultipart(

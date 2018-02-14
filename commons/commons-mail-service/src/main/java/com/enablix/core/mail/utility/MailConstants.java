@@ -29,5 +29,7 @@ public class MailConstants {
 	public static final String CONTENT_FEEDER_INBOX_CONFIG_KEY = "integration.content.feeder.inbox";
 	public static final String MAIL_IMPORT_ACTVY_CTX = "MAIL_IMPORT";
 	public static final Object MAIL_FROM_PROP = "mail.from";
+	public static final String MAIL_INFO_DETECT_PROPERTIES_CONFIG_KEY = "mail.info.detect.properties";
+	public static final String MAIL_INFO_TYPE = "MailMessage";
 	
 }

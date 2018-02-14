@@ -37,13 +37,12 @@ public class DefaultInfoDetector implements InfoDetector {
 		if (configProvider == null) {
 			
 			LOGGER.warn("No info detection configuration provider defined for info type [{}]", info.type());
-			config = InfoDetectionConfiguration.NO_CONFIG;
 			
 		} else {
 			config = configProvider.getConfiguration();
 		}
 		
-		return config;
+		return config == null ? InfoDetectionConfiguration.NO_CONFIG : config;
 	}
 
 	@Override

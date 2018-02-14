@@ -41,6 +41,7 @@
 	<int:header-enricher input-channel="info-detect-request-channel" output-channel="info-type-analyser-channel">
 		<int:header name="checkInfoAlreadyExist" expression="payload.isSaveContentRecord()"/>
 		<int:header name="saveContentRecord" expression="payload.isSaveContentRecord()"/>
+		<int:header name="saveAsDraft" expression="payload.getInfoDetectionConfig().isSaveAsDraft()"/>
 		<int:header name="infoType" expression="payload.getInformation().type()"/>
 	</int:header-enricher>
 				 

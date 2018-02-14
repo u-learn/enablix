@@ -1,12 +1,17 @@
 package com.enablix.task.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
+import com.enablix.commons.constants.AppConstants;
 import com.enablix.core.domain.scheduler.TaskConfig;
 import com.enablix.task.RunnableTask;
 import com.enablix.task.TaskContext;
@@ -55,6 +60,14 @@ public class SimpleTaskExecutor implements TaskExecutor {
 		}
 		
 		taskListenerRegistry.runAfterExecutionListeners(taskContext, taskConfig);
+	}
+	
+	public void loginSystemUser() {
+		
+		Authentication auth = new UsernamePasswordAuthenticationToken(
+				AppConstants.SYSTEM_USER_ID, null, new ArrayList<>());
+		
+		SecurityContextHolder.getContext().setAuthentication(auth);
 	}
 	
 }

@@ -1,4 +1,4 @@
-package com.enablix.wordpress.integration;
+package com.enablix.mail.info;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,10 +14,11 @@ import com.enablix.analytics.info.detection.SimpleInfoTag;
 import com.enablix.commons.config.ConfigurationUtil;
 import com.enablix.commons.util.collection.CollectionUtil;
 import com.enablix.core.domain.config.Configuration;
+import com.enablix.core.mail.utility.MailConstants;
 
-public class WPIntegrationProperties implements InfoDetectionConfiguration {
+public class MailInfoDetectionProperties implements InfoDetectionConfiguration {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(WPIntegrationProperties.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(MailInfoDetectionProperties.class);
 	
 	/*
 	 * This class is stored in Configuration as a value. So any changes to the property
@@ -27,17 +28,6 @@ public class WPIntegrationProperties implements InfoDetectionConfiguration {
 	
 	// default container QId to use in case no other resolution strategy works
 	private String defaultContentTypeQId;
-	
-	// Wordpress Category Id to Container QId mapping to identify the enablix type
-	// based on the category of the post
-	private Map<String, String> wpCatToContQId;
-	
-	// Container QId to its attribute which should be looked-up to match post-slug
-	private Map<String, String> contQIdToSlugMatchAttrId;
-	
-	// Wordpress Post url pattern to Container QId mapping to identify the enablix type
-	// based on the url of the post 
-	private Map<String, String> linkPatternToContQId;
 	
 	private Map<String, List<String>> tagAliasMapping;
 	
@@ -55,31 +45,6 @@ public class WPIntegrationProperties implements InfoDetectionConfiguration {
 	
 	public void setDefaultContentTypeQId(String defaultContentTypeQId) {
 		this.defaultContentTypeQId = defaultContentTypeQId;
-	}
-	
-	public Map<String, String> getWpCatToContQId() {
-		return wpCatToContQId;
-	}
-	
-	public void setWpCatToContQId(Map<String, String> wpCatToContQId) {
-		this.wpCatToContQId = wpCatToContQId;
-	}
-	
-	public Map<String, String> getContQIdToSlugMatchAttrId() {
-		return contQIdToSlugMatchAttrId;
-	}
-	
-	public void setContQIdToSlugMatchAttrId(Map<String, String> contQIdToSlugMatchAttrId) {
-		this.contQIdToSlugMatchAttrId = contQIdToSlugMatchAttrId;
-	}
-	
-	@Override
-	public Map<String, String> getLinkPatternToContQId() {
-		return linkPatternToContQId;
-	}
-
-	public void setLinkPatternToContQId(Map<String, String> linkPatternToContQId) {
-		this.linkPatternToContQId = linkPatternToContQId;
 	}
 	
 	public Map<String, List<String>> getTagAliasMapping() {
@@ -104,28 +69,28 @@ public class WPIntegrationProperties implements InfoDetectionConfiguration {
 		this.saveAsDraft = saveAsDraft;
 	}
 
-	public static WPIntegrationProperties getFromConfiguration() {
+	public static MailInfoDetectionProperties getFromConfiguration() {
 		
-		WPIntegrationProperties props = null;
+		MailInfoDetectionProperties props = null;
 		
-		Configuration config = ConfigurationUtil.getConfig(WordpressConstants.WP_INTEGRATION_PROPERTIES_CONFIG_KEY);
+		Configuration config = ConfigurationUtil.getConfig(MailConstants.MAIL_INFO_DETECT_PROPERTIES_CONFIG_KEY);
 		
 		if (config != null) {
 		
 			Object propsObj = config.getConfig().get("properties");
-			if (propsObj instanceof WPIntegrationProperties) {
-				props = (WPIntegrationProperties) propsObj;
+			if (propsObj instanceof MailInfoDetectionProperties) {
+				props = (MailInfoDetectionProperties) propsObj;
 				initTagAliases(props);
 			}
 			
 		} else {
-			LOGGER.warn("Wordpress Integration Properties not found");
+			LOGGER.warn("Mail Info Detect Properties not found");
 		}
 		
 		return props;
 	}
 
-	private static void initTagAliases(WPIntegrationProperties props) {
+	private static void initTagAliases(MailInfoDetectionProperties props) {
 		
 		props.tagAliases = new HashMap<String, List<InfoTag>>();
 		

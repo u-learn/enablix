@@ -25,14 +25,17 @@ import com.enablix.analytics.info.detection.InfoDetector;
 import com.enablix.commons.config.ConfigurationUtil;
 import com.enablix.commons.util.date.DateUtil;
 import com.enablix.commons.util.id.IdentityUtil;
+import com.enablix.commons.util.process.ProcessContext;
 import com.enablix.commons.util.tenant.TenantUtil;
 import com.enablix.core.activity.audit.ActivityTrackingConstants;
 import com.enablix.core.activity.audit.ActivityTrackingContext;
 import com.enablix.core.domain.activity.ActivityChannel;
 import com.enablix.core.domain.config.Configuration;
+import com.enablix.core.domain.security.authorization.UserProfile;
 import com.enablix.core.mail.receive.MailProcessor;
 import com.enablix.core.mail.receive.MailReader;
 import com.enablix.core.mail.utility.MailConstants;
+import com.enablix.core.security.auth.repo.UserProfileRepository;
 import com.enablix.mail.info.MailInfo;
 import com.enablix.task.PerTenantTask;
 import com.enablix.task.Task;
@@ -49,6 +52,9 @@ public class MailFeederTask implements Task {
 	
 	@Autowired
 	private InfoDetector infoDetector;
+	
+	@Autowired
+	private UserProfileRepository userProfileRepo;
 	
 	@Override
 	public void run(TaskContext context) {
@@ -100,7 +106,36 @@ public class MailFeederTask implements Task {
 					mailProperties.putAll(configProps);
 					
 					MailInfoProcessor msgProcessor = new MailInfoProcessor(mailboxUser);
-					mailReader.readMails(mailProperties, searchTerm, msgProcessor);
+					
+					UserProfile userProfile = userProfileRepo.findByEmail(mailFrom.toLowerCase());
+					ProcessContext tempProcessCtx = null;
+					
+					try {
+					
+						if (userProfile != null) {
+							
+							tempProcessCtx = ProcessContext.get();
+							
+							ProcessContext.clear();
+							
+							ProcessContext.initialize(userProfile.getEmail(), userProfile.getName(), 
+									tenantId, tempProcessCtx.getTemplateId(), tempProcessCtx.getClientId());
+						}
+						
+						mailReader.readMails(mailProperties, searchTerm, msgProcessor);
+					
+					} finally {
+
+						if (tempProcessCtx != null) {
+							ProcessContext.clear();
+							
+							// reset to original values
+							ProcessContext.initialize(tempProcessCtx.getUserId(), 
+									tempProcessCtx.getUserDisplayName(), 
+									tempProcessCtx.getTenantId(), tempProcessCtx.getTemplateId(), 
+									tempProcessCtx.getClientId());
+						}
+					}
 					
 					Date lastReceivedMailDate = msgProcessor.getLastReceivedMailDate();
 					
