@@ -47,7 +47,9 @@
 
         .row {
             .dashboard-buttons {
-                margin-top: 8px;
+                &.margin-top {
+                    margin-top: 8px;
+                }
             }
         }
         

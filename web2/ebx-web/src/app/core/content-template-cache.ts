@@ -55,6 +55,10 @@ export class ContentTemplateCache {
           }
         }
 
+        if (!container.color) {
+          container.color = Constants.defaultTypeColor;
+        }
+
       }
 
     });

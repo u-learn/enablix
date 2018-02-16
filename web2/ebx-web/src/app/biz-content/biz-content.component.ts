@@ -201,7 +201,10 @@ export class BizContentComponent implements OnInit, AfterViewInit {
                 this.contentService.decorateRecord(this.container, result.contentRecord);
                 this.record = result.contentRecord;
 
-                this.alert.success("Saved successfully!");
+                let successMsg = this.isNewRec ? "Content Asset added successfully." :
+                                  "Content Asset updated successfully.";
+                                  
+                this.alert.success(successMsg, true);
                 this.navService.goToContentDetail(
                   this.container.qualifiedId, result.contentRecord.identity);
               },

@@ -11,11 +11,21 @@ import { Container } from '../model/container.model';
 })
 export class ContentPreviewComponent implements OnInit {
 
-  @Input() record: any;
+  _record: any;
   @Input() container: Container;
   @Input() editing: boolean = false;
 
   previewType: string;
+
+  get record() : any {
+    return this._record;
+  }
+
+  @Input() 
+  set record(rec : any) {
+    this._record = rec;
+    this.ngOnInit();
+  }
 
   constructor(private contentPreviewService: ContentPreviewService) { }
 

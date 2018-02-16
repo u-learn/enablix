@@ -56,7 +56,7 @@
         <div class="row" *ngIf="record?.__decoration?.__docMetadata?.name || (container.docItemId && editing)">
             <p class="label">Source</p>
             <div class="text">{{record?.__decoration?.__docMetadata?.name}}</div>
-            <div class="dashboard-buttons" *ngIf="editing">
+            <div class="dashboard-buttons margin-top" *ngIf="editing">
               <ebx-doc-update-button class="action-btn" [container]="container" [record]="record" (onDocUpdate)="onContentUpdate()"></ebx-doc-update-button>
             </div>
         </div>
