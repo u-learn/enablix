@@ -5,7 +5,8 @@ enablix.studioApp.directive('ebDocDownload', [
 				restrict : 'E',
 				scope : {
 					docValue : '=',
-					actionLabel : "@"
+					actionLabel : "@",
+					parentRecord : '=?'
 				},
 				link: function(scope, element, attrs) {
 					var params = { };

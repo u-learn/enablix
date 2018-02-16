@@ -1,7 +1,7 @@
 enablix.studioApp.factory('ContentUtil', 
 	[
-	 			'RESTService', 'ContentTemplateService', 'DocPreviewService', 'StateUpdateService', 'ContentTemplateService',
-	 	function(RESTService,   ContentTemplateService,   DocPreviewService,   StateUpdateService,   ContentTemplateService) {
+	 			'RESTService', 'ContentTemplateService', 'DocPreviewService', 'StateUpdateService', 'ContentTemplateService', 'UserPreferenceService',
+	 	function(RESTService,   ContentTemplateService,   DocPreviewService,   StateUpdateService,   ContentTemplateService,   UserPreferenceService) {
 	 		
 			var resolveContainerInstanceLabel = function(_containerDef, _instanceData) {
 				
@@ -51,7 +51,7 @@ enablix.studioApp.factory('ContentUtil',
 				return findLabelValue(portalLabelAttrId, _containerDef, _instanceData);
 			};
 			
-			var decorateData = function(_containerDef, _dataRecord, _processHyperlink) {
+			var decorateData = function(_containerDef, _dataRecord, _processHyperlink, _processIndicators) {
 				
 				if (_dataRecord && _dataRecord.__associations && _dataRecord.__associations.parent) {
 					_dataRecord.parentIdentity = _dataRecord.__associations.parent.recordIdentity;
@@ -107,6 +107,55 @@ enablix.studioApp.factory('ContentUtil',
 					if (_dataRecord.__urls && _dataRecord.__urls.length > 0) {
 						_dataRecord.thumbnailUrl = _dataRecord.__urls[0].previewImageUrl;
 					}
+				}
+				
+				if (_processIndicators) {
+					processIndicators(_dataRecord, _containerDef);
+				}
+				
+			}
+			
+			var processIndicators = function(_dataRecord, _containerDef) {
+				
+				var indicatorsConfig = UserPreferenceService.getPrefByKey('ui.content.indicators');
+				
+				if (indicatorsConfig) {
+				
+					var allIndConfigs = {};
+					var globalIndConfig = indicatorsConfig.config["GLOBAL"];
+					
+					if (globalIndConfig) {
+					
+						angular.forEach(globalIndConfig, function(indConfig) {
+							allIndConfigs[indConfig.id] = indConfig;
+						});
+					}
+					
+					var contIndConfig = indicatorsConfig.config[_containerDef.qualifiedId];
+					if (contIndConfig) {
+						angular.forEach(contIndConfig, function(indConfig) {
+							allIndConfigs[indConfig.id] = indConfig;
+						});
+					}
+					
+					_dataRecord.__indicators = {};
+					var rec = _dataRecord; // for indicators expression evaluation
+					
+					angular.forEach(allIndConfigs, function(indctrConfig, indctrId) {
+						
+						var indctrVal = eval(indctrConfig.value);
+						
+						var indctrValueList = _dataRecord.__indicators[indctrConfig.type];
+						if (isNullOrUndefined(indctrValueList)) {
+							indctrValueList = [];
+							_dataRecord.__indicators[indctrConfig.type] = indctrValueList;
+						}
+						
+						indctrValueList.push({
+							value: indctrVal,
+							config: indctrConfig
+						});
+					});
 				}
 			}
 			

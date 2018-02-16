@@ -21,6 +21,8 @@ public class NavigableContent {
 
 	private Map<String, Object> docDetails;
 	
+	private Map<String, Object> recordData;
+	
 	public NavigableContent(String qualifiedId, String identity, String label, String containerLabel) {
 		super();
 		this.qualifiedId = qualifiedId;
@@ -92,6 +94,14 @@ public class NavigableContent {
 	
 	public Map<String, Object> getDocDetails() {
 		return docDetails;
+	}
+	
+	public Map<String, Object> getRecordData() {
+		return recordData;
+	}
+
+	public void setRecordData(Map<String, Object> recordData) {
+		this.recordData = recordData;
 	}
 
 	public String toPath(String pathSeparator) {

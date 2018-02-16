@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
 
+import com.enablix.commons.dms.api.BasicDocInfo;
 import com.enablix.commons.dms.api.BasicDocument;
 import com.enablix.commons.dms.api.Document;
 import com.enablix.commons.dms.api.DocumentBuilder;
@@ -124,7 +125,14 @@ public class DiskDocumentStore implements DocumentStore<DiskDocumentMetadata, Di
 		}
 		
 		if (newFile.exists()) {
-			archiveService.archiveDocument(docMetadata);
+			
+			BasicDocInfo newFileDummyInfo = new BasicDocInfo();
+			newFileDummyInfo.setContentLength(docMetadata.getContentLength());
+			newFileDummyInfo.setContentType(docMetadata.getContentType());
+			newFileDummyInfo.setLocation(newLoc);
+			newFileDummyInfo.setName(docMetadata.getName());
+			
+			archiveService.archiveDocument(newFileDummyInfo);
 		}
 		
 		// move the file

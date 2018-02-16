@@ -1,6 +1,6 @@
 enablix.studioApp.controller('PortalNavLinkCtrl',
-			['$scope', 'StateUpdateService', '$stateParams', 'ContentTemplateService',
-    function ($scope,   StateUpdateService,   $stateParams,   ContentTemplateService) {
+			['$scope', 'StateUpdateService', '$stateParams', 'ContentTemplateService', 'ContentUtil',
+    function ($scope,   StateUpdateService,   $stateParams,   ContentTemplateService,   ContentUtil) {
 		
 		var navLink = $scope.navLink;
 		
@@ -30,7 +30,16 @@ enablix.studioApp.controller('PortalNavLinkCtrl',
 				
 				var isLastLink = isNullOrUndefined(navContentPointer.next);
 				if (!$scope.hideHierarchy || isLastLink) {
+
 					$scope.navLinkArr.push(navContentPointer);
+	
+					if (navLink.recordData && isLastLink) {
+						var containerDef = ContentTemplateService.getContainerDefinition(
+								enablix.template, navContentPointer.qualifiedId);
+						if (containerDef) {
+							ContentUtil.decorateData(containerDef, navLink.recordData, false, true);
+						}
+					}
 				}
 				
 				navContentPointer.previous = previousItem;

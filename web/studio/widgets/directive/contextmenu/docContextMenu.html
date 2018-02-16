@@ -3,7 +3,7 @@
 <span class="dropdown-menu-cont">
 <ul ng-if="contentRecord.downloadDocIdentity" id="{{contentRecord.identity}}" class="dropdown-menu dropdown-menu-left" role="menu" aria-labelledby="recActionBtn">
 	<li role="presentation">
-		<eb-doc-download class="menuItem" doc-value="contentRecord.downloadDocIdentity" action-label="Download"></eb-doc-download>
+		<eb-doc-download class="menuItem" doc-value="contentRecord.downloadDocIdentity" action-label="Download" parent-record="contentRecord"></eb-doc-download>
 	</li>
 	<li ng-if="hasPreviewOption" role="presentation" class="divider"></li>
 	<li role="presentation">

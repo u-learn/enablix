@@ -11,7 +11,7 @@ enablix.studioApp.controller('PortalCntnrBodyCtrl',
 			_dataRecord.headingLabel = ContentUtil.resolveContainerInstancePortalLabel(
 										_containerDef, _dataRecord);
 			
-			ContentUtil.decorateData(_containerDef, _dataRecord, true);
+			ContentUtil.decorateData(_containerDef, _dataRecord, true, true);
 		}
 		
 		if ($stateParams.containerQId === $stateParams.subContainerQId) {

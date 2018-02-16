@@ -2,7 +2,7 @@
 	<a ng-if="$last" ng-click="navToContent(navItem)" ng-bind-html="navItem.label"></a>
 	<i ng-if="!$last" class="fa fa-angle-right nav-separator"></i>
 	<span ng-if="$last && showDocLink && navItem.docIdentity && navItem.docIdentity != null">
-		<eb-doc-download doc-value="navItem.docIdentity"></eb-doc-download>
+		<eb-doc-download doc-value="navItem.docIdentity" parent-record="navItem.recordData"></eb-doc-download>
 		<eb-record-preview-action doc-identity="navItem.docIdentity" doc-metadata="navItem.docDetails"
 				record-identity="navItem.identity" container-q-id="navItem.qualifiedId"></eb-record-preview-action>
 	</span>
