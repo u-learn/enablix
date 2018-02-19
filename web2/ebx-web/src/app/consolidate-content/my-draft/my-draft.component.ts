@@ -15,6 +15,7 @@ import { TableComponent } from '../../table/table.component';
 import { UserService } from '../../core/auth/user.service';
 import { NavigationService } from '../../app-routing/navigation.service';
 import { ContentWorkflowService } from '../../services/content-workflow.service';
+import { ContentTemplateService } from '../../../app/core/content-template.service';
 
 @Component({
   selector: 'ebx-my-draft',
@@ -28,10 +29,12 @@ export class MyDraftComponent extends ContentRequestListComponent implements OnI
 
   constructor(public ccService: ConsolidateContentService,
         public contentWFService: ContentWorkflowService,
-        public alert: AlertService, public user: UserService,
+        public alert: AlertService, 
+        public ctService: ContentTemplateService,
+        public user: UserService,
         public navService: NavigationService, public router: Router) { 
     
-    super(ccService, contentWFService, alert, user, navService, router);
+    super(ccService, contentWFService, ctService, alert, user, navService, router);
     
     this.tableActions = 
         new ContentRequestActions(this, [

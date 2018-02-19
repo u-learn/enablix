@@ -1,12 +1,38 @@
 enablix.studioApp.controller('DownloadCtrl', 
-			['$scope', '$state', 'ConfirmationModalWindow',
-    function ($scope,   $state,   ConfirmationModalWindow) {
+			['$scope', '$state', 'ConfirmationModalWindow', 'InfoModalWindow',
+    function ($scope,   $state,   ConfirmationModalWindow,   InfoModalWindow) {
     	
 		$scope.downloadFile = function($event) {
 			
 			var continueDownload = true;
 			
 			if ($scope.parentRecord && $scope.parentRecord.__indicators 
+					&& $scope.parentRecord.__indicators["DOWNLOAD_MSG"]) {
+				
+				var downloadMsgs = $scope.parentRecord.__indicators["DOWNLOAD_MSG"];
+				
+				if (downloadMsgs && downloadMsgs.length > 0) {
+					
+					for (var i = 0; i < downloadMsgs.length; i++) {
+						
+						var downloadMsg = downloadMsgs[i];
+						
+						if (downloadMsg.value) {
+							
+							continueDownload = false;
+							
+							var infoModal = InfoModalWindow.showInfoWindow("Information", downloadMsg.config.message);
+							
+							infoModal.result.then(function() {
+								goDownload($event);
+							});
+							
+							break;
+						}
+					}
+				}
+				
+			} else if ($scope.parentRecord && $scope.parentRecord.__indicators 
 					&& $scope.parentRecord.__indicators["DOWNLOAD_PROMPT"]) {
 				
 				var downloadPrompts = $scope.parentRecord.__indicators["DOWNLOAD_PROMPT"];
@@ -36,7 +62,7 @@ enablix.studioApp.controller('DownloadCtrl',
 					}
 				}
 				
-			}
+			} 
 			
 		    if (continueDownload) {
 		    	goDownload($event);

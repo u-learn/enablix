@@ -15,6 +15,7 @@ import { UserService } from '../../core/auth/user.service';
 import { NavigationService } from '../../app-routing/navigation.service';
 import { ContentWorkflowService } from '../../services/content-workflow.service';
 import { ContentRequestDetail, SimpleActionInput } from '../../model/content-workflow.model';
+import { ContentTemplateService } from '../../../app/core/content-template.service';
 
 @Component({
   selector: 'ebx-content-request',
@@ -28,10 +29,11 @@ export class ContentRequestComponent extends ContentRequestListComponent impleme
 
   constructor(public ccService: ConsolidateContentService,
         public contentWFService: ContentWorkflowService,
+        public ctService: ContentTemplateService,
         public alert: AlertService, public user: UserService,
         public navService: NavigationService, public router: Router) { 
 
-    super(ccService, contentWFService, alert, user, navService, router);
+    super(ccService, contentWFService, ctService, alert, user, navService, router);
     this.tableActions = 
         new ContentRequestActions(this, [
                 ContentWorkflowService.ACTION_APPROVE, 
@@ -44,7 +46,9 @@ export class ContentRequestComponent extends ContentRequestListComponent impleme
 
     super.initComponent()
 
-    this.filters = { };
+    this.filters = { 
+      requestStateNotIn: [ ContentWorkflowService.STATE_DRAFT, ContentWorkflowService.STATE_PUBLISHED]
+    };
     
     this.pagination.sort.direction = Direction.DESC;
 

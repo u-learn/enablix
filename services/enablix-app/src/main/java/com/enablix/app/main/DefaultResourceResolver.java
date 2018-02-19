@@ -18,7 +18,8 @@ public class DefaultResourceResolver extends EnablixPathResourceResolver {
 			return resource;
 		}
 		
-		if (requestPath.toLowerCase().startsWith("portal")) {
+		String lowerReqPath = requestPath.toLowerCase();
+		if (lowerReqPath.startsWith("portal") || lowerReqPath.startsWith("login")) {
 			resource = super.resolveResource(request, "/app2.html", locations, chain);
 			if (resource != null) {
 				return resource;

@@ -14,6 +14,7 @@ import { TableComponent } from '../table/table.component';
 import { UserService } from '../core/auth/user.service';
 import { NavigationService } from '../app-routing/navigation.service';
 import { ContentWorkflowService } from '../services/content-workflow.service';
+import { ContentTemplateService } from '../../app/core/content-template.service';
 
 export class ContentRequestListComponent {
   
@@ -25,6 +26,7 @@ export class ContentRequestListComponent {
 
   constructor(public ccService: ConsolidateContentService,
         public contentWFService: ContentWorkflowService,
+        public ctService: ContentTemplateService,
         public alert: AlertService, public user: UserService,
         public navService: NavigationService, public router: Router) {
 
@@ -187,7 +189,10 @@ export class ContentRequestListComponent {
   }
 
   navToContentRequest(rec: any) {
-    this.navService.goToContentRequestDetail(rec.objectRef.identity, this.router.url);
+    let cntnr = this.ctService.getContainerByQId(rec.objectRef.contentQId);
+    if (this.ctService.isBusinessContent(cntnr)) {
+      this.navService.goToContentRequestDetail(rec.objectRef.identity, this.router.url);
+    }
   }
 
 }

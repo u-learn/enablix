@@ -5,6 +5,7 @@ import { ContentTemplateService } from '../../core/content-template.service';
 import { Container } from '../../model/container.model';
 import { ContentService } from '../../core/content/content.service';
 import { AlertService } from '../../core/alert/alert.service';
+import { ContentWorkflowService } from '../../services/content-workflow.service';
 
 @Component({
   selector: 'ebx-edit-biz-dimension',
@@ -17,10 +18,13 @@ export class EditBizDimensionComponent implements OnInit {
   container: Container;
   record: any;
 
+  approvalWFRequired: boolean;
+
   constructor(
     private ctService: ContentTemplateService,
     private contentService: ContentService,
     private alert: AlertService,
+    private cwService: ContentWorkflowService,
     private dialogRef: MatDialogRef<EditBizDimensionComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
 
@@ -29,6 +33,8 @@ export class EditBizDimensionComponent implements OnInit {
   ngOnInit() {
     
     this.container = this.ctService.getContainerByQId(this.data.containerQId);
+
+    this.approvalWFRequired = this.cwService.isApprovalWFRequired();
 
     if (this.data.newRecord) {
       
@@ -45,15 +51,31 @@ export class EditBizDimensionComponent implements OnInit {
   }
 
   save() {
-    this.contentService.saveContainerData(this.container.qualifiedId, this.record).subscribe(
+
+    if (this.approvalWFRequired) {
+
+      this.cwService.submitContent(this.container.qualifiedId, this.record, false, null).subscribe(
         res => {
+          this.alert.success("Dimension update request accepted.", true);
           this.dialogRef.close(true);
         }, 
         err => {
           this.alert.error("Error saving data. Please try later.", err.status);
         }
       );
-    
+
+    } else {
+      
+      this.contentService.saveContainerData(this.container.qualifiedId, this.record).subscribe(
+        res => {
+          this.alert.success("Dimension updated successfully.", true);
+          this.dialogRef.close(true);
+        }, 
+        err => {
+          this.alert.error("Error saving data. Please try later.", err.status);
+        }
+      );
+    }
   }
 
 }

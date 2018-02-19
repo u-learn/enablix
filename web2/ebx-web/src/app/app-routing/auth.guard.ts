@@ -18,20 +18,13 @@ export class AuthGuard implements CanActivate {
   		return true;
   	}
 
-    if (this.initFromLocalstorage()) {
-      
-      return true;
-
-    } else {
-
-      return this.authService.loginUser(null, null, null).map(res => {
+    return this.authService.loginUser(null, null, null).map(res => {
         if (this.initFromLocalstorage()) {
           return true;
         }
         this.router.navigate(['login'], { queryParams: {returnUrl: state.url} });
         return false;
       });
-    }
     
   }
 
