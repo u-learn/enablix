@@ -66,7 +66,8 @@ enablix.studioApp.factory('ReportService',
 										}
 									});
 									
-									enablix.reports.push(cannedRptDef);
+									// insert after the base report
+									enablix.reports.splice(i + 1, 0, cannedRptDef);
 									
 									break;
 								}
