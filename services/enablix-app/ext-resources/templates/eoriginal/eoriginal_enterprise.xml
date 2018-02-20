@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<contentTemplate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="eoriginal_enterprise" version="1.27" xsi:noNamespaceSchemaLocation="../xsd/content-template.xsd">
+<contentTemplate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="eoriginal_enterprise" version="1.28" xsi:noNamespaceSchemaLocation="../xsd/content-template.xsd">
 	<dataDefinition>
 		<container id="solution" label="Solutions" businessCategory="BUSINESS_DIMENSION">
 			<contentItem id="name" label="Name" type="text" searchBoost="7"/>
@@ -4020,6 +4020,29 @@
 			</container>
 		</contentUIDef>
 		<contentUIDef qualifiedId="whitepaper.summary">
+			<text type="long"/>
+		</contentUIDef>
+		<contentUIDef qualifiedId="persona">
+			<container labelQualifiedId="persona.title">
+				<listViewConfig>
+					<hideContentItem id="file"/>
+					<hideContentItem id="url"/>					
+					<hideContentItem id="desc"/>
+					<hideContentItem id="solutions"/>
+					<hideContentItem id="industries"/>					
+					<hideContentItem id="competitors"/>					
+					<hideContentItem id="partners"/>
+					<hideContentItem id="analysts"/>					
+					<hideContentItem id="topics"/>
+					<hideContentItem id="tags"/>
+					<hideContentItem id="access"/>																								
+				</listViewConfig>
+				<portalConfig>
+					<headingContentItem id="title"/>
+				</portalConfig>
+			</container>
+		</contentUIDef>
+		<contentUIDef qualifiedId="persona.desc">
 			<text type="long"/>
 		</contentUIDef>
 		<contentUIDef qualifiedId="presentation">
