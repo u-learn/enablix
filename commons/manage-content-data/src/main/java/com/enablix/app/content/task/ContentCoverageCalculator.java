@@ -12,15 +12,18 @@ import org.springframework.stereotype.Component;
 
 import com.enablix.app.content.summary.repo.ContentCoverageRepository;
 import com.enablix.app.content.task.coverage.ContentItemCoverageResolver;
+import com.enablix.app.content.task.coverage.ContentStackCoverageResolver;
 import com.enablix.app.content.task.coverage.LinkedContainerCoverageResolver;
 import com.enablix.app.content.task.coverage.SubContainerCoverageResolver;
 import com.enablix.app.report.util.ReportUtil;
 import com.enablix.app.template.service.TemplateManager;
 import com.enablix.commons.constants.ContentDataConstants;
+import com.enablix.commons.util.collection.CollectionUtil;
 import com.enablix.commons.util.process.ProcessContext;
 import com.enablix.core.api.ContentDataRecord;
 import com.enablix.core.api.TemplateFacade;
 import com.enablix.core.commons.xsdtopojo.ContainerType;
+import com.enablix.core.commons.xsdtopojo.ContentItemClassType;
 import com.enablix.core.commons.xsdtopojo.ContentItemType;
 import com.enablix.core.domain.content.summary.ContentCoverage;
 import com.enablix.core.mongo.content.ContentCrudService;
@@ -52,6 +55,9 @@ public class ContentCoverageCalculator implements Task {
 	
 	@Autowired
 	private LinkedContainerCoverageResolver linkedContCoverageResolver;
+	
+	@Autowired
+	private ContentStackCoverageResolver contentStackCoverageResolver;
 	
 	@Autowired
 	private ContentCoverageRepository contentCoverageRepo;
@@ -99,6 +105,15 @@ public class ContentCoverageCalculator implements Task {
 					ContentDataRecord dataRecord = new ContentDataRecord(templateId, containerQId, record);
 					
 					for (ContentItemType itemType : container.getContentItem()) {
+						
+						if (itemType.getType() == ContentItemClassType.CONTENT_STACK) {
+						
+							Map<String, Long> stackStats = contentStackCoverageResolver.getContentStats(itemType, record);
+							if (CollectionUtil.isNotEmpty(stackStats)) {
+								stackStats.entrySet().forEach((entry) -> contentCoverage.addCoverageStat(entry.getKey(), entry.getValue()));
+							}
+						}
+						
 						long count = contentItemCoverageResolver.getCount(itemType, record);
 						contentCoverage.addCoverageStat(itemType.getQualifiedId(), count);
 					}

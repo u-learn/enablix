@@ -19,10 +19,12 @@ enablix.studioApp.factory('ContentCoverageReportDef',
 							 },
 					init: function($scope) {
 						
+						var reportDef = this;
+						
 						$scope.$watch('dispatch', function(newValue, oldValue) {
 							if (newValue !== oldValue && !isNullOrUndefined(newValue)) {
 								$scope.dispatch.on("click", function(e) {
-									if (e.value != 0) { // if there are any records, then nav to list page
+									if (e.value != 0 && !reportDef.options.stopDrilldown) { // if there are any records, then nav to list page
 										ContentUtil.navToTileBasedSubContainerList(
 												e.data.contentQId, e.data.subContainerQId, e.data.recordIdentity);
 									}
@@ -205,8 +207,9 @@ enablix.studioApp.factory('ContentCoverageReportDef',
 								var contDef = ContentTemplateService.getConcreteContainerDefinition(enablix.template, stat.itemId);
 								
 								if (!isNullOrUndefined(contDef) && // below check is to remove data items which do not belong to selected content type
-										(!reportDef.options.restrictedXLabels || reportDef.options.restrictedXLabels.length == 0
-												|| reportDef.options.restrictedXLabels.indexOf(contDef.label) > -1)) {
+										((!reportDef.options.restrictedXLabels || reportDef.options.restrictedXLabels.length == 0
+													|| reportDef.options.restrictedXLabels.indexOf(contDef.label) > -1) 
+											|| reportDef.options.fillEmptyAsZero)) {
 									// x, y, value, category are required for the heatmap chart to display
 									reportData.push({
 										y: dataRecord.recordTitle,
@@ -241,6 +244,52 @@ enablix.studioApp.factory('ContentCoverageReportDef',
 			/** =========================================== Content coverage report end ================================= **/
 	
 			enablix.reports.push(contentCoverageReport);
+			
+			/*var spContentCoverageReport = angular.copy(contentCoverageReport);
+			spContentCoverageReport.id = "sp-content-coverage-report";
+			spContentCoverageReport.name = "Sales Playbook Content Coverage";
+			spContentCoverageReport.heading = "Sales Playbook Content Coverage";
+			
+			for (var i = 0; i < spContentCoverageReport.filters.length; i++) {
+				
+				var filterDef = spContentCoverageReport.filters[i];
+				
+				if (filterDef.id == 'contentQIdIn') {
+					
+					filterDef.type = 'pre-defined';
+					var preDefinedValue = [{id: 'product', label: 'Products'}]
+					
+					filterDef.masterList = function() { // This must return a promise
+						
+						var deferred = $q.defer();
+						deferred.resolve(preDefinedValue);
+						
+						return deferred.promise;
+					};
+					
+					filterDef.validateBeforeSubmit = function(_selValues) {
+						return true;
+					};
+					
+					filterDef.filterValueTransformer = function(_selectedValues) {
+						
+						var returnVal = [];
+						
+						angular.forEach(preDefinedValue, function(val) {
+							returnVal.push(val.id);
+						});
+						
+						return returnVal;
+					};
+					
+					filterDef.defaultValue = function() {
+						return preDefinedValue;
+					};
+					
+				}
+			}
+			
+			enablix.reports.push(spContentCoverageReport);*/
 		}
 	
 		return {

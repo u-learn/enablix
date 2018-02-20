@@ -109,11 +109,36 @@ enablix.studioApp.factory('ContentTemplateService',
 								break;
 							}
 							
+						}
+						
+						if (!matchFound) {
+							
+							if (!isNullOrUndefined(elemDataDef) && elemDataDef.contentItem
+									&& k < (elemQIdArr.length - 1)) { // there is still next level to match
+								
+								// if match not found check if it is a content stack
+								for (var j in elemDataDef.contentItem) {
+									
+									var itemDef = elemDataDef.contentItem[j];
+									
+									if (itemDef.id == nextCntnrId) {
+										if (itemDef.type == 'CONTENT_STACK') {
+											matchFound = true;
+											elemDataDef = getContainerDefinition(_template, elemQIdArr[k+1]);
+											break;
+										}
+									}
+								}
+								
+							} 
+							
 							if (!matchFound) {
 								elemDataDef = undefined;
 							}
 							
+							break;
 						}
+						
 					}
 				
 					CacheService.put(cacheKey, elemDataDef);

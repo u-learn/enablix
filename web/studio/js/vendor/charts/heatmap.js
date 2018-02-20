@@ -32,6 +32,7 @@ angular.module("heatmap", []).directive("heatmap",
 					breaks: null,
 					valueText: true,
 					categorize: false,
+					fillEmptyAsZero: false,
 					restrictedXLabels: []
 				};
 
@@ -62,7 +63,6 @@ angular.module("heatmap", []).directive("heatmap",
 					})
 					
 					scope.dispatch.on("mousemove", function(e) {
-						console.log(d3.event);
 						return tooltip.style("top", (d3.event.layerY - 10) + "px").style("left", (d3.event.layerX + 10) + "px");
 					})
 					
@@ -184,10 +184,41 @@ angular.module("heatmap", []).directive("heatmap",
 					
 					x.sort();
 					
+					var dataMatrix = [];
+					for (var d = 0; d < x.length; d++) {
+						dataMatrix[d] = new Array(yc.length);
+					}
+					
+					var allData = [];
 					// populate x and y index on data
 					for (var d = 0; d < scope.data.length; d++) {
-						scope.data[d].xIndex = x.indexOf(scope.data[d].x);
-						scope.data[d].yIndex = yc.indexOf(getCategory(scope.data[d]) + "-" + scope.data[d].y);
+						
+						var xIndx = x.indexOf(scope.data[d].x);
+						
+						if (xIndx >= 0) {
+							scope.data[d].xIndex = x.indexOf(scope.data[d].x);
+							scope.data[d].yIndex = yc.indexOf(getCategory(scope.data[d]) + "-" + scope.data[d].y);
+							dataMatrix[scope.data[d].xIndex][scope.data[d].yIndex] = 1;
+							allData.push(scope.data[d]);
+						}
+						
+					}
+					
+					if (options.fillEmptyAsZero) {
+						for (var m = 0; m < dataMatrix.length; m++) {
+							for (var n = 0; n < dataMatrix[m].length; n++) {
+								if (!dataMatrix[m][n] && !yc[n].startsWith("category")) {
+									// push zero data 
+									allData.push({
+										x: x[m], // labels
+										y: y[n], // labels
+										value: 0,
+										xIndex: m,
+										yIndex: n
+									});
+								}
+							}
+						}
 					}
 					
 					// populate index for no data found
@@ -247,7 +278,7 @@ angular.module("heatmap", []).directive("heatmap",
 					var maxY = 0;
 					
 					var cards = svg.selectAll(".hm-square")
-						.data(scope.data);
+						.data(allData);
 
 					var cardsG = cards.enter().append("g");
 					
