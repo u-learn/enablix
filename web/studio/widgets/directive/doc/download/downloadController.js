@@ -21,7 +21,7 @@ enablix.studioApp.controller('DownloadCtrl',
 							
 							continueDownload = false;
 							
-							var infoModal = InfoModalWindow.showInfoWindow("Information", downloadMsg.config.message);
+							var infoModal = InfoModalWindow.showInfoWindow("Information", downloadMsg.config.message, 'sm');
 							
 							infoModal.result.then(function() {
 								goDownload($event);

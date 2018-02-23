@@ -1719,6 +1719,11 @@ eb-table .block .flex .bar-action-icons {
 
 .modal-title {
 	font-weight: 400;
+	text-transform: none;
+}
+
+.modal-sm {
+	width: 400px;
 }
 
 .sub-container-more-link {
