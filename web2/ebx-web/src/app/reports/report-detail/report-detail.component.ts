@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewEncapsulation, Input } from '@angular/core';
+import { NvD3Component } from 'ng2-nvd3';
 
 import { ReportConfig } from '../model/report-config.model';
 import { DataFiltersOptions, DataFiltersConfig } from '../../core/data-filters/data-filters.model';

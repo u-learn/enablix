@@ -171,7 +171,7 @@ export class DataFiltersComponent implements OnInit {
     return filterVals;
   }
 
-  saveAsSystemDefault(saveFn) {
+  saveAsSystemDefault() {
         
     if (this.options.prefValuesKey) {
       

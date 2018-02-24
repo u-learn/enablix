@@ -6,7 +6,7 @@
     <div class="heading">
       <h2>{{reportConfig.heading}}</h2>
     </div>
-    <ng-container *ngIf="reportConfig.type == 'MULTILINE' || reportConfig.type == 'HORIZONTAL_BAR'">
+    <ng-container *ngIf="(reportConfig.type == 'MULTILINE' || reportConfig.type == 'HORIZONTAL_BAR')">
       <nvd3 [options]="reportConfig.chartOptions" [data]="chartData"></nvd3>
     </ng-container>
     <ng-container *ngIf="reportConfig.type == 'HEATMAP'">

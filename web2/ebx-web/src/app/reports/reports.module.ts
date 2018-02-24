@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule, RouterLink } from '@angular/router';
-import { NvD3Component } from 'ng2-nvd3';
+import { NvD3Component, NvD3Module } from 'ng2-nvd3';
 
 import 'd3';
 import 'nvd3';
@@ -19,7 +19,8 @@ import { HeatmapChartComponent } from './heatmap-chart/heatmap-chart.component';
   imports: [
     CoreModule,
     RouterModule,
-    BrowserModule
+    BrowserModule,
+    NvD3Module
   ],
   providers: [
     ReportService,
@@ -30,7 +31,6 @@ import { HeatmapChartComponent } from './heatmap-chart/heatmap-chart.component';
   declarations: [
     ReportsHomeComponent,
     ReportDetailComponent,
-    NvD3Component,
     HeatmapChartComponent
   ],
   exports: [
