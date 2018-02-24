@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { UserService } from '../core/auth/user.service';
-import { AuthService } from '../core/auth/auth.service';
+import { UserService } from '../auth/user.service';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'ebx-user-icon',

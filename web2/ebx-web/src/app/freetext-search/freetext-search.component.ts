@@ -3,7 +3,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 
 import { FreetextSearchService } from '../services/freetext-search.service';
 import { AlertService } from '../core/alert/alert.service';
-import { SearchBarService } from '../search-bar/search-bar.service';
+import { SearchBarService } from '../core/search-bar/search-bar.service';
 
 @Component({
   selector: 'ebx-freetext-search',

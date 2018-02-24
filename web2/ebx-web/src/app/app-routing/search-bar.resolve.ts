@@ -3,7 +3,7 @@ import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/r
 import { Observable } from 'rxjs/Observable';
 
 import { SearchBarData } from '../model/search-bar-data.model';
-import { SearchBarService } from '../search-bar/search-bar.service';
+import { SearchBarService } from '../core/search-bar/search-bar.service';
 
 @Injectable()
 export class SearchBarResolve implements Resolve<SearchBarData> {

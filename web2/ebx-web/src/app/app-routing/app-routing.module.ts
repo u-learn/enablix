@@ -16,6 +16,7 @@ import { ResourceVersionResolve } from './resource-version.resolve';
 import { TenantResolve } from './tenant.resolve';
 import { SearchBarResolve } from './search-bar.resolve';
 import { ContentWFResolve } from './content-wf.resolve';
+import { UserPreferenceResolve } from './user-prefs.resolve';
 import { NavigationService } from './navigation.service';
 import { BizDimensionListComponent } from '../biz-dimension/biz-dimension-list/biz-dimension-list.component';
 import { BizDimensionDetailComponent } from '../biz-dimension/biz-dimension-detail/biz-dimension-detail.component';
@@ -27,13 +28,15 @@ import { FreetextSearchComponent } from '../freetext-search/freetext-search.comp
 import { CompanyComponent } from '../company/company.component';
 import { MembersComponent } from '../company/members/members.component';
 import { IntegrationsComponent } from '../company/integrations/integrations.component';
-import { AppUrlMapperComponent } from '../app-url-mapper/app-url-mapper.component';
+import { AppUrlMapperComponent } from './app-url-mapper/app-url-mapper.component';
 import { ContainerListUrlMapperComponent } from '../container-list-url-mapper/container-list-url-mapper.component';
 import { ContainerDetailUrlMapperComponent } from '../container-detail-url-mapper/container-detail-url-mapper.component';
 import { ForgotPasswordComponent } from '../forgot-password/forgot-password.component';
 import { SetPasswordComponent } from '../set-password/set-password.component';
 import { MyContentRequestComponent } from '../consolidate-content/my-content-request/my-content-request.component';
 import { AllDimensionsComponent } from '../all-dimensions/all-dimensions.component';
+import { ReportsHomeComponent } from '../reports/reports-home/reports-home.component';
+
 
 const routes: Routes = [
   {
@@ -51,7 +54,8 @@ const routes: Routes = [
       resolve: {
         contentTemplate: ContentTemplateResolve,
         resourceVersions: ResourceVersionResolve,
-        tenant: TenantResolve
+        tenant: TenantResolve,
+        userPrefs: UserPreferenceResolve
       },
       children: [
         {
@@ -170,6 +174,14 @@ const routes: Routes = [
           resolve: {
             sbData: SearchBarResolve
           }
+        },
+        {
+          path: 'reports',
+          component: ReportsHomeComponent
+        },
+        {
+          path: 'reports/d/:reportId',
+          component: ReportsHomeComponent
         }
       ],
   },
@@ -210,7 +222,9 @@ const routes: Routes = [
         { enableTracing: true }
       )
   ],
-  declarations: [],
+  declarations: [
+    AppUrlMapperComponent
+  ],
   providers: [
     AuthGuard,
     ContentTemplateResolve,
@@ -218,10 +232,12 @@ const routes: Routes = [
     TenantResolve,
     SearchBarResolve,
     ContentWFResolve,
+    UserPreferenceResolve,
     NavigationService
   ],
   exports: [
-  	RouterModule
+  	RouterModule,
+    AppUrlMapperComponent
   ]
 })
 export class AppRoutingModule { }

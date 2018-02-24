@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 
-import { ApiUrlService } from '../core/api-url.service';
-import { EmbedInfo } from '../model/embed-info.model';
-import { EmbeddedUrl } from '../model/embedded-url.model';
+import { ApiUrlService } from '../api-url.service';
+import { EmbedInfo } from '../../model/embed-info.model';
+import { EmbeddedUrl } from '../../model/embedded-url.model';
 
 @Injectable()
 export class EmbedInfoService {

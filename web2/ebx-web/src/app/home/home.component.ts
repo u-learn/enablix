@@ -2,7 +2,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { AlertService } from '../core/alert/alert.service';
-import { SearchBarService } from '../search-bar/search-bar.service';
+import { SearchBarService } from '../core/search-bar/search-bar.service';
 
 @Component({
   selector: 'ebx-home',

@@ -244,52 +244,7 @@ enablix.studioApp.factory('ContentCoverageReportDef',
 			/** =========================================== Content coverage report end ================================= **/
 	
 			enablix.reports.push(contentCoverageReport);
-			
-			/*var spContentCoverageReport = angular.copy(contentCoverageReport);
-			spContentCoverageReport.id = "sp-content-coverage-report";
-			spContentCoverageReport.name = "Sales Playbook Content Coverage";
-			spContentCoverageReport.heading = "Sales Playbook Content Coverage";
-			
-			for (var i = 0; i < spContentCoverageReport.filters.length; i++) {
-				
-				var filterDef = spContentCoverageReport.filters[i];
-				
-				if (filterDef.id == 'contentQIdIn') {
-					
-					filterDef.type = 'pre-defined';
-					var preDefinedValue = [{id: 'product', label: 'Products'}]
-					
-					filterDef.masterList = function() { // This must return a promise
-						
-						var deferred = $q.defer();
-						deferred.resolve(preDefinedValue);
-						
-						return deferred.promise;
-					};
-					
-					filterDef.validateBeforeSubmit = function(_selValues) {
-						return true;
-					};
-					
-					filterDef.filterValueTransformer = function(_selectedValues) {
-						
-						var returnVal = [];
-						
-						angular.forEach(preDefinedValue, function(val) {
-							returnVal.push(val.id);
-						});
-						
-						return returnVal;
-					};
-					
-					filterDef.defaultValue = function() {
-						return preDefinedValue;
-					};
-					
-				}
-			}
-			
-			enablix.reports.push(spContentCoverageReport);*/
+		
 		}
 	
 		return {

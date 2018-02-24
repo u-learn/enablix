@@ -5,7 +5,7 @@ import { environment } from '../../../environments/environment';
 import { Container } from '../../model/container.model';
 import { ContentService } from '../../core/content/content.service';
 import { AlertService } from '../../core/alert/alert.service';
-import { UploadFileComponent } from '../../upload/upload-file/upload-file.component';
+import { UploadFileComponent } from '../../core/upload/upload-file/upload-file.component';
 import { FileUploadInfo } from '../../model/upload-info.model';
 
 @Component({

@@ -1,11 +1,11 @@
 import { Injectable, Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { NavigationService } from '../app-routing/navigation.service';
-import { ContentTemplateService } from '../core/content-template.service';
-import { ContentService, ContentDeleteEvent, ContentUpdateEvent } from '../core/content/content.service';
-import { SearchBarData, NavContext, ObjectType, SearchBarItem, NavCtxItem } from '../model/search-bar-data.model';
-import { Container } from '../model/container.model';
+import { NavigationService } from '../../app-routing/navigation.service';
+import { ContentTemplateService } from '../content-template.service';
+import { ContentService, ContentDeleteEvent, ContentUpdateEvent } from '../content/content.service';
+import { SearchBarData, NavContext, ObjectType, SearchBarItem, NavCtxItem } from '../../model/search-bar-data.model';
+import { Container } from '../../model/container.model';
 import { LocalDataset } from './local-dataset';
 import { BoundedItemsDSBuilderService } from './bounded-items-dsbuilder.service';
 

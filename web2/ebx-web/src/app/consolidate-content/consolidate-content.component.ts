@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 
-import { SearchBarService } from '../search-bar/search-bar.service';
+import { SearchBarService } from '../core/search-bar/search-bar.service';
 
 @Component({
   selector: 'ebx-consolidate-content',

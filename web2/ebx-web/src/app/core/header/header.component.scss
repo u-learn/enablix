@@ -52,11 +52,11 @@
   .client-brand {
       @include vcenterChildren;
       height: 48px;
-      width: 227px;
+      max-width: 227px;
       background: $white;
       box-shadow: 0 1px 1px 0 rgba(0,0,0,0.06);
       border-radius: 4px;
-      padding-right: 8px;
+      padding-right: 16px;
       cursor: pointer;
 
       .logo {
@@ -68,6 +68,10 @@
             background-color: #2C4290;
             border-radius: 4px;
           }
+      }
+
+      &.full-width {
+        max-width: 100%;
       }
     
       h3 {

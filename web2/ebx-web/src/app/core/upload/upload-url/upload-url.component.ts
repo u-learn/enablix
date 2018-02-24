@@ -3,13 +3,13 @@ import { FormControl } from '@angular/forms';
 import { MatDialogRef } from '@angular/material';
 
 import { EmbedInfoService } from '../embed-info.service';
-import { EmbedInfo } from '../../model/embed-info.model';
-import { SelectOption } from '../../core/select/select.component';
-import { ContentTemplateService } from '../../core/content-template.service';
-import { ContentService } from '../../core/content/content.service';
-import { UrlCaptureInfo } from '../../model/upload-info.model';
-import { NewContentService } from '../../core/content/new-content.service';
-import { NavigationService } from '../../app-routing/navigation.service';
+import { EmbedInfo } from '../../../model/embed-info.model';
+import { SelectOption } from '../../select/select.component';
+import { ContentTemplateService } from '../../content-template.service';
+import { ContentService } from '../../content/content.service';
+import { UrlCaptureInfo } from '../../../model/upload-info.model';
+import { NewContentService } from '../../content/new-content.service';
+import { NavigationService } from '../../../app-routing/navigation.service';
 
 @Component({
   selector: 'ebx-upload-url',

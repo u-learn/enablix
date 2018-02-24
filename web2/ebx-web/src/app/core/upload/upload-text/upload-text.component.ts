@@ -2,11 +2,11 @@ import { Component, OnInit, ViewEncapsulation, Inject } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
 import { FormControl } from '@angular/forms';
 
-import { TextInfo } from '../../model/upload-info.model';
-import { SelectOption } from '../../core/select/select.component';
-import { ContentTemplateService } from '../../core/content-template.service';
-import { NewContentService } from '../../core/content/new-content.service';
-import { NavigationService } from '../../app-routing/navigation.service';
+import { TextInfo } from '../../../model/upload-info.model';
+import { SelectOption } from '../../select/select.component';
+import { ContentTemplateService } from '../../content-template.service';
+import { NewContentService } from '../../content/new-content.service';
+import { NavigationService } from '../../../app-routing/navigation.service';
 
 @Component({
   selector: 'ebx-upload-text',

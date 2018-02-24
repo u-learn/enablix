@@ -248,6 +248,12 @@ body {
     margin-left: 80px;
     display: none;
 
+    &.leftbar {
+        float: none;
+        margin-left: 0;
+        margin-right: 40px;
+    }
+
     &.toRight {
         float: left;
         margin-left: 0;
@@ -501,6 +507,7 @@ body {
     padding: 16px 0;
     margin: 0 24px 0 0;
     color: $grey-med;
+    cursor: pointer;
 
     &.tab-active {
       border-bottom: 2px solid $blue-med-20; 

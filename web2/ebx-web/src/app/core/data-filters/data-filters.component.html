@@ -1,0 +1,24 @@
+<div class="data-filters">
+  <div class="header">
+    <h3>{{options.heading}}</h3>
+  </div>
+  <div class="form-input compact" *ngFor="let filter of filters" [hidden]="filter.type == 'pre-defined'">
+    <div class="input-label">{{filter.name}}</div>
+    <div class="input-control">
+      <ebx-select *ngIf="filter.type == 'multi-select'" 
+            [options]="filterOptions[filter.id]" [multi]="!filter.options || !filter.options.singleSelect" [(ngModel)]="filterValues[filter.id]"></ebx-select>
+    </div>
+    <div class="input-error" [hidden]="!filterErrMessages[filter.id]">{{filterErrMessages[filter.id]}}</div>
+  </div>
+  <div class="publish-buttons">
+      <button class="publish-btn white" (click)="saveAsSystemDefault()">
+          <p class="btn-text">Save Default</p>
+      </button>
+      <button class="publish-btn white" (click)="resetAction()">
+          <p class="btn-text">Reset</p>
+      </button>
+      <button class="publish-btn" (click)="searchAction()">
+          <p class="btn-text">Go</p>
+      </button>
+  </div>
+</div>

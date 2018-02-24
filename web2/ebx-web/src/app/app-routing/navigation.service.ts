@@ -10,6 +10,14 @@ export class NavigationService {
     this.router.navigate(['/portal']);
   }
 
+  goToReportsHome() {
+    this.router.navigate(['/portal/reports']); 
+  }
+
+  goToContentConsolidate() {
+    this.router.navigate(['/portal/cconsol']);  
+  }
+
   goToNewContentEdit(containerQId: string) : void {
     this.router.navigate(['/portal/content/new', containerQId]);
   }
@@ -44,6 +52,10 @@ export class NavigationService {
 
   goToCompanyPage() {
     this.router.navigate(['/portal/company']);
+  }
+
+  goToReport(reportId: string) {
+    this.router.navigate(['/portal/reports/d', reportId]);
   }
 
   goToRoute(routePath: string, routeParams: string[], queryParams?: {[key: string] : string}) {

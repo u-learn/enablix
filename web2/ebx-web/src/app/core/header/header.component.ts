@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewEncapsulation, Input } from '@angular/core';
 
-import { UserService } from '../core/auth/user.service';
-import { AuthService } from '../core/auth/auth.service';
-import { NavigationService } from '../app-routing/navigation.service';
-import { TenantService } from '../services/tenant.service';
-import { Permissions } from '../model/permissions.model';
+import { UserService } from '../auth/user.service';
+import { AuthService } from '../auth/auth.service';
+import { NavigationService } from '../../app-routing/navigation.service';
+import { TenantService } from '../../services/tenant.service';
+import { Permissions } from '../../model/permissions.model';
 
 @Component({
   selector: 'ebx-header',
@@ -37,6 +37,14 @@ export class HeaderComponent implements OnInit {
 
   navToHome() {
     this.navService.goToPortalHome();
+  }
+
+  navToReports() {
+    this.navService.goToReportsHome(); 
+  }
+
+  navToCConsol() {
+    this.navService.goToContentConsolidate(); 
   }
 
   navToCompanyPage() {

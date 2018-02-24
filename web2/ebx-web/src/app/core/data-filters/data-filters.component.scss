@@ -1,0 +1,17 @@
+@import '~styles/colors.scss';
+@import '~styles/layout.mixin.scss';
+@import '~styles/fonts.scss';
+
+.data-filters {
+
+  width: 100%;
+
+  .header {
+    font-family: $FPThin;
+  }
+
+  .publish-buttons {
+    margin-top: 32px;
+    justify-content: flex-start;
+  }
+}

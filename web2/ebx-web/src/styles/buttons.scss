@@ -260,6 +260,7 @@ button {
         p.btn-text {
             height: 16px;
             font-size: 16px;
+            white-space: nowrap;
         }
 
         .icon {
@@ -311,5 +312,9 @@ button {
 
     .plus {
         background: url("/assets/images/icons/plus.svg") no-repeat center; 
+    }
+
+    .insights {
+        background: url("/assets/images/icons/bar_chart.svg") no-repeat center;   
     }
 }

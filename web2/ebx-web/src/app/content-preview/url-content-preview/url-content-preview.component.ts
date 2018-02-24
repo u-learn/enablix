@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewEncapsulation, Input } from '@angular/core';
 
-import { EmbedInfoService } from '../../upload/embed-info.service';
+import { EmbedInfoService } from '../../core/upload/embed-info.service';
 import { EmbedInfo } from '../../model/embed-info.model';
 import { Container } from '../../model/container.model';
 import { ApiUrlService } from '../../core/api-url.service';

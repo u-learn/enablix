@@ -12,11 +12,8 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { CoreModule } from './core/core.module';
 import { ContentEditableDirective } from './core/directives/content-editable/content-editable.directive';
-import { AppRoutingModule } from './app-routing/app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
-import { HeaderComponent } from './header/header.component';
-import { FooterComponent } from './footer/footer.component';
 import { LoginPageComponent } from './login-page/login-page.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { LoginFormComponent } from './login-page/login-form/login-form.component';
@@ -26,14 +23,8 @@ import { RecentActivitiesComponent } from './recent-activities/recent-activities
 import { RecentContentComponent } from './recent-content/recent-content.component';
 import { DimensionComponent } from './dimensions/dimension/dimension.component';
 import { RecentContentService } from './recent-content/recent-content.service';
-import { SearchBarComponent } from './search-bar/search-bar.component';
-import { UploadButtonComponent } from './upload-button/upload-button.component';
-import { UserIconComponent } from './user-icon/user-icon.component';
+
 import { DataCardComponent } from './data-card/data-card.component';
-import { UploadFileComponent } from './upload/upload-file/upload-file.component';
-import { UploadUrlComponent } from './upload/upload-url/upload-url.component';
-import { UploadTextComponent } from './upload/upload-text/upload-text.component';
-import { EmbedInfoService } from './upload/embed-info.service';
 import { NewContentEditComponent } from './new-content-edit/new-content-edit.component';
 import { ContentPreviewComponent } from './content-preview/content-preview.component';
 import { UrlContentPreviewComponent } from './content-preview/url-content-preview/url-content-preview.component';
@@ -55,9 +46,7 @@ import { ContentDeleteButtonComponent } from './content-action/content-delete-bu
 import { DocDownloadButtonComponent } from './content-action/doc-download-button/doc-download-button.component';
 import { CopyPortalUrlButtonComponent } from './content-action/copy-portal-url-button/copy-portal-url-button.component';
 import { ContentEmailButtonComponent } from './content-action/content-email-button/content-email-button.component';
-import { SearchBarService } from './search-bar/search-bar.service';
 import { BizContentListComponent } from './biz-content/biz-content-list/biz-content-list.component';
-import { BoundedItemsDSBuilderService } from './search-bar/bounded-items-dsbuilder.service';
 import { TableComponent } from './table/table.component';
 import { ConsolidateContentComponent } from './consolidate-content/consolidate-content.component';
 import { MyDraftComponent } from './consolidate-content/my-draft/my-draft.component';
@@ -86,7 +75,6 @@ import { ContentReqApproveButtonComponent } from './content-action/content-req-a
 import { ContentReqRejectButtonComponent } from './content-action/content-req-reject-button/content-req-reject-button.component';
 import { EmailSharePopupComponent } from './content-action/content-email-button/email-share-popup/email-share-popup.component';
 import { ContentShareService } from './services/content-share.service';
-import { AppUrlMapperComponent } from './app-url-mapper/app-url-mapper.component';
 import { ContainerListUrlMapperComponent } from './container-list-url-mapper/container-list-url-mapper.component';
 import { ContainerDetailUrlMapperComponent } from './container-detail-url-mapper/container-detail-url-mapper.component';
 import { InfiniteScrollerDirective } from './directives/infinite-scroller.directive';
@@ -94,13 +82,13 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 import { SetPasswordComponent } from './set-password/set-password.component';
 import { MyContentRequestComponent } from './consolidate-content/my-content-request/my-content-request.component';
 import { AllDimensionsComponent } from './all-dimensions/all-dimensions.component';
+import { AppRoutingModule } from './app-routing/app-routing.module';
+import { ReportsModule } from './reports/reports.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    HeaderComponent,
-    FooterComponent,
     LoginPageComponent,
     PageNotFoundComponent,
     LoginFormComponent,
@@ -109,13 +97,7 @@ import { AllDimensionsComponent } from './all-dimensions/all-dimensions.componen
     RecentActivitiesComponent,
     RecentContentComponent,
     DimensionComponent,
-    SearchBarComponent,
-    UploadButtonComponent,
-    UserIconComponent,
     DataCardComponent,
-    UploadFileComponent,
-    UploadUrlComponent,
-    UploadTextComponent,
     NewContentEditComponent,
     ContentPreviewComponent,
     UrlContentPreviewComponent,
@@ -157,7 +139,6 @@ import { AllDimensionsComponent } from './all-dimensions/all-dimensions.componen
     ContentReqApproveButtonComponent,
     ContentReqRejectButtonComponent,
     EmailSharePopupComponent,
-    AppUrlMapperComponent,
     ContainerListUrlMapperComponent,
     ContainerDetailUrlMapperComponent,
     InfiniteScrollerDirective,
@@ -172,23 +153,21 @@ import { AllDimensionsComponent } from './all-dimensions/all-dimensions.componen
     FormsModule,
     ReactiveFormsModule,
     CoreModule,
-    AppRoutingModule,
     RouterModule,
+    AppRoutingModule,
     ClickOutsideModule,
     MatDialogModule,
     MatAutocompleteModule,
     MatFormFieldModule,
     MatInputModule,
     EllipsisModule,
-    NgProgressModule
+    NgProgressModule,
+    ReportsModule
   ],
   providers: [
     RecentContentService,
-    EmbedInfoService,
     ActivityAuditService,
     TenantService,
-    SearchBarService,
-    BoundedItemsDSBuilderService,
     ConsolidateContentService,
     ContentWorkflowService,
     FreetextSearchService,
@@ -203,9 +182,6 @@ import { AllDimensionsComponent } from './all-dimensions/all-dimensions.componen
     }
   ],
   entryComponents: [
-    UploadFileComponent,
-    UploadUrlComponent,
-    UploadTextComponent,
     EditBizDimensionComponent,
     ConfirmDialogComponent,
     MemberDetailComponent,

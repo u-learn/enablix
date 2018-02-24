@@ -1,0 +1,25 @@
+@import '~styles/colors.scss';
+@import '~styles/layout.mixin.scss';
+@import '~styles/fonts.scss';
+
+.report-detail {
+
+  display: flex;
+  flex-direction: row;
+  
+  .report-filters {
+    flex: 1 1 100%;
+    max-width: 25%;
+    margin-right: 40px;
+  }
+
+  .report-data {
+    width: 100%;
+
+    .heading {
+      font-family: $FPThin;
+      margin-bottom: 40px;
+    }
+  }
+
+}

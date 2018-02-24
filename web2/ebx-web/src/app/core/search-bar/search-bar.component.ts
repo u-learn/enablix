@@ -5,8 +5,8 @@ import { FormControl } from '@angular/forms';
 import "rxjs/add/operator/share";
 
 import { SearchBarService } from './search-bar.service';
-import { SearchBarData, SearchBarItem, SearchDataset } from '../model/search-bar-data.model';
-import { NavigationService } from '../app-routing/navigation.service';
+import { SearchBarData, SearchBarItem, SearchDataset } from '../../model/search-bar-data.model';
+import { NavigationService } from '../../app-routing/navigation.service';
 
 @Component({
   selector: 'ebx-search-bar',

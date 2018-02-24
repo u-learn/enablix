@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 
-import { Container } from '../model/container.model';
-import { SearchDataset, NavFilter, ObjectType } from '../model/search-bar-data.model';
-import { ContentTemplateService } from '../core/content-template.service';
-import { Constants } from '../util/constants';
+import { Container } from '../../model/container.model';
+import { SearchDataset, NavFilter, ObjectType } from '../../model/search-bar-data.model';
+import { ContentTemplateService } from '../content-template.service';
+import { Constants } from '../../util/constants';
 import { LocalDataset } from './local-dataset';
-import { SearchBarData } from '../model/search-bar-data.model';
+import { SearchBarData } from '../../model/search-bar-data.model';
 
 @Injectable()
 export class BoundedItemsDSBuilderService {

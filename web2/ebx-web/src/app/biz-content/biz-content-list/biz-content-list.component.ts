@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 
 import { Container } from '../../model/container.model';
 import { ContentTemplateService } from '../../core/content-template.service';
-import { SearchBarService } from '../../search-bar/search-bar.service';
+import { SearchBarService } from '../../core/search-bar/search-bar.service';
 import { ContentService } from '../../core/content/content.service';
 import { DataPage } from '../../model/data-page.model';
 import { AlertService } from '../../core/alert/alert.service';

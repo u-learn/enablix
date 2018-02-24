@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { ContentTemplateService } from '../content-template.service';
 import { NewContent } from '../../model/new-content.model';
 import { UrlCaptureInfo, FileUploadInfo, TextInfo } from '../../model/upload-info.model';
-import { EmbedInfoService } from '../../upload/embed-info.service';
+import { EmbedInfoService } from '../upload/embed-info.service';
 import { EmbedInfo } from '../../model/embed-info.model';
 import { ContentItem } from '../../model/content-item.model';
 

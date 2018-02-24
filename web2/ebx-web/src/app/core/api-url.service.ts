@@ -24,6 +24,11 @@ export class ApiUrlService {
   static GET_CONTENT_WF_STATE_ACTION_MAP = "/contentwf/actionmap/";
 
   static GET_ALL_MEMBERS = "/systemuser";
+  static GET_APP_USER_PREFS = "/userpref/applicable";
+
+  static GET_ACTIVITY_METRIC_TYPES = "/report/getactivitymetrices";
+  static GET_ACTIVITY_TREND_DATA = "/activitytrend";
+  static GET_ACTIVITY_METRIC_SUMMARY = "/report/activitymetric";
 
   static POST_FOR_DATA_SEARCH = "/data/search/t/:domainType/";
   static POST_FOR_CONTAINER_DATA_SEARCH = "/data/search/cq/:containerQId/";
@@ -63,6 +68,10 @@ export class ApiUrlService {
  
   static POST_RESET_PASSWORD_URL = "/resetpassword";
   static POST_SET_PASSWORD_URL = "/systemuserchangepwd";
+
+  static POST_SAVE_AS_USER_PREF = "/userpref/saveasuserpref";
+  static POST_SAVE_AS_SYSTEM_PREF = "/userpref/saveasyspref";
+
   static GET_LOGOUT = "/logout";
 
   constructor() { }
@@ -199,6 +208,22 @@ export class ApiUrlService {
     return this.getAPIUrl(ApiUrlService.GET_ALL_MEMBERS);
   }
 
+  getApplicableUserPrefsUrl() {
+    return this.getAPIUrl(ApiUrlService.GET_APP_USER_PREFS); 
+  }
+
+  getActivityMetricTypesUrl() {
+    return this.getAPIUrl(ApiUrlService.GET_ACTIVITY_METRIC_TYPES);   
+  }
+
+  getActivityTrendDataUrl() {
+    return this.getAPIUrl(ApiUrlService.GET_ACTIVITY_TREND_DATA); 
+  }
+
+  getActivityMetricSummaryUrl() {
+    return this.getAPIUrl(ApiUrlService.GET_ACTIVITY_METRIC_SUMMARY); 
+  }
+
   postCheckUserExistUrl() : string {
     return this.getAPIUrl(ApiUrlService.POST_CHECK_USER_EXIST);
   }
@@ -293,5 +318,13 @@ export class ApiUrlService {
 
   postSetPasswordUrl() : string {
     return this.getAPIUrl(ApiUrlService.POST_SET_PASSWORD_URL);
+  }
+
+  postSaveAsUserPrefUrl() : string {
+    return this.getAPIUrl(ApiUrlService.POST_SAVE_AS_USER_PREF); 
+  }
+
+  postSaveAsSystemPrefUrl() : string {
+    return this.getAPIUrl(ApiUrlService.POST_SAVE_AS_SYSTEM_PREF); 
   }
 }

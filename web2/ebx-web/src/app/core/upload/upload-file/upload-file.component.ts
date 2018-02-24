@@ -2,14 +2,14 @@ import { Component, OnInit, ViewEncapsulation, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { FormControl } from '@angular/forms';
 
-import { SelectOption } from '../../core/select/select.component';
-import { FileService } from '../../core/file/file.service';
-import { AlertService } from '../../core/alert/alert.service';
-import { ContentPreviewService } from '../../core/content/content-preview.service';
-import { ContentTemplateService } from '../../core/content-template.service';
-import { NewContentService } from '../../core/content/new-content.service';
-import { FileUploadInfo } from '../../model/upload-info.model';
-import { NavigationService } from '../../app-routing/navigation.service';
+import { SelectOption } from '../../select/select.component';
+import { FileService } from '../../file/file.service';
+import { AlertService } from '../../alert/alert.service';
+import { ContentPreviewService } from '../../content/content-preview.service';
+import { ContentTemplateService } from '../../content-template.service';
+import { NewContentService } from '../../content/new-content.service';
+import { FileUploadInfo } from '../../../model/upload-info.model';
+import { NavigationService } from '../../../app-routing/navigation.service';
 
 @Component({
   selector: 'ebx-upload-file',

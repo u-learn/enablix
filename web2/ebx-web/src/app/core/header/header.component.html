@@ -9,9 +9,22 @@
     <div class="nav-bar company">
       <div class="left">
         <img class="enablix-logo" src="/assets/images/company/enablix_logo@2x.png" (click)="navToHome()"/>
-        <div class="client-brand" (click)="navToCompanyPage()">
+        <div class="client-brand full-width" (click)="navToCompanyPage()">
           <div class="logo"><div class="logo-placeholder"></div></div>
           <h3 class="brand">{{tenantService.tenant?.name}}</h3>
+        </div>
+      </div>
+      <div class="right">
+        <ebx-user-icon></ebx-user-icon>
+      </div>
+    </div>
+  </ng-container>
+  <ng-container *ngSwitchCase="'reports'">
+    <div class="nav-bar company">
+      <div class="left">
+        <img class="enablix-logo" src="/assets/images/company/enablix_logo@2x.png" (click)="navToHome()"/>
+        <div class="client-brand">
+          <h3 class="brand">Insights</h3>
         </div>
       </div>
       <div class="right">
@@ -30,7 +43,7 @@
     </div>
     <div class="right">
       <ebx-upload-button></ebx-upload-button>
-      <button routerLink="/portal/cconsol" class="circle icon-btn">
+      <button (click)="navToCConsol()" class="circle icon-btn">
         <div class="icon small drafts"></div>
       </button>
       <div class="line"></div>
@@ -39,6 +52,9 @@
         <h3 class="brand">{{tenantService.tenant?.name}}</h3>
       </div>
       <div class="line"></div>
+      <button (click)="navToReports()" class="circle icon-btn">
+        <div class="icon small insights"></div>
+      </button>
       <ebx-user-icon></ebx-user-icon>
     </div>
   </div>

@@ -10,7 +10,7 @@ import { ContentTemplateService } from '../../core/content-template.service';
 import { NavigationService } from '../../app-routing/navigation.service';
 import { ContentDeleteButtonComponent } from '../../content-action/content-delete-button/content-delete-button.component';
 import { EditBizDimensionComponent } from '../../biz-dimension/edit-biz-dimension/edit-biz-dimension.component';
-import { SearchBarService } from '../../search-bar/search-bar.service';
+import { SearchBarService } from '../../core/search-bar/search-bar.service';
 
 @Component({
   selector: 'ebx-biz-dimension-detail',
