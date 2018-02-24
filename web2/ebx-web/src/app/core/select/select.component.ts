@@ -160,7 +160,12 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
     this.optionsVisible = false;
   }
 
-  showOptions() {
+  showOptions(clearText?: boolean) {
+    
+    if (clearText) {
+      this.selectCtrl.setValue(null);
+    }
+
     if (this.options && this.options.length > 0) {
       this.optionsVisible = true;
     }
@@ -175,7 +180,9 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
   updateSelection(opt: SelectOption) {
     //console.log("update selection: " + opt.label);
     this.addSelectedOption([opt]);
-    //this.hideOptions();
+    if (!this.multi) {
+      this.hideOptions();
+    }
   }
 
   filterOptions(ct: string) {

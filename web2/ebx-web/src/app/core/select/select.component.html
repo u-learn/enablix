@@ -11,7 +11,7 @@
             <input #textInput class="text-input" type="text" [placeholder]="placeholder" (focus)="showOptions()" [formControl]="selectCtrl" (blur)="onBlur()"> 
         </div>
         <ng-container *ngIf="!multi">
-            <input #textInput class="text-input" type="text" [placeholder]="placeholder" (focus)="showOptions()" [formControl]="selectCtrl" (blur)="onBlur()"> 
+            <input #textInput class="text-input" type="text" [placeholder]="placeholder" (focus)="showOptions(true)" [formControl]="selectCtrl" (blur)="onBlur()"> 
         </ng-container>
     </div>
     <div class="option-rows" [hidden]="!optionsVisible">

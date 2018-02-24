@@ -11,6 +11,7 @@ import { Container } from '../model/container.model';
 import { SelectOption } from './select/select.component';
 import { AlertService } from './alert/alert.service';
 import { FilterMetadata, DataType, ConditionOperator } from './data-search/filter-metadata.model';
+import { Utility } from '../util/utility';
 
 @Injectable()
 export class ContentTemplateService {
@@ -43,11 +44,25 @@ export class ContentTemplateService {
   }
 
   getContainerByQId(containerQId: string) : Container {
-    return this.templateCache.getContainerByQId(containerQId);
+    
+    let container = this.templateCache.getContainerByQId(containerQId);
+
+    if (!container) {
+      // check if parent is a content stack
+      let stackItemQId = Utility.getParentQId(containerQId);
+      if (stackItemQId) {
+        let stackItem = this.templateCache.contentStackQIdMap[stackItemQId];
+        if (stackItem) {
+          let stackRecordQId = containerQId.substr(stackItemQId.length + 1);
+          container = this.templateCache.getContainerByQId(stackRecordQId);
+        }
+      }
+    }
+    
+    return container;
   }
 
   getConcreteContainerByQId(containerQId: string) : Container {
-    console.log("container qid = " + containerQId);
     let container = this.getContainerByQId(containerQId);
     if (container && container.linkContainerQId) {
       container = this.getContainerByQId(container.linkContainerQId);

@@ -13,6 +13,8 @@ export class ContentTemplateCache {
   bizContentContainers: Container[] = [];
   bizDimensionContainers: Container[] = [];
 
+  contentStackQIdMap = {};
+
   private index = 0;
   colors = [];
 
@@ -91,7 +93,8 @@ export class ContentTemplateCache {
     for (let i = 0; i < container.contentItem.length; i++) {
     
       let contentItem = container.contentItem[i];
-      if (contentItem.type == 'RICH_TEXT' && contentItem.id != container.titleItemId) {
+      if (contentItem.type == 'RICH_TEXT' && contentItem.id != container.titleItemId
+            && !container.docItemId) {
         descItemId = contentItem.id;
       } 
 
@@ -99,7 +102,10 @@ export class ContentTemplateCache {
         // this is a doc item type, nullify item id 
         descItemId = null;
         container.docItemId = contentItem.id;
-        break;
+      }
+
+      if (contentItem.type == 'CONTENT_STACK') {
+        this.contentStackQIdMap[contentItem.qualifiedId] = contentItem;
       }
     }
 
