@@ -191,6 +191,10 @@ export class BizContentComponent implements OnInit, AfterViewInit {
         
         this.submitWFContent(false, true);
 
+      } else if (this.approvalWFRequired) {
+
+        this.submitWFContent(false, false);
+
       } else {
 
         this.contentService.saveContainerData(this.container.qualifiedId, this.record)

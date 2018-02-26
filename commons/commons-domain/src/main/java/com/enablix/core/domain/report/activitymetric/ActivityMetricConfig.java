@@ -7,6 +7,15 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import com.enablix.commons.constants.AppConstants;
 import com.enablix.core.domain.BaseDocumentEntity;
 
+/**
+ * @deprecated The metrics are not stored in db now. 
+ * Use (@link #ActivityMetricType}.
+ * 
+ * @see #com.enablix.commons.constants.AppConstants.MetricType
+ * @author dluthra
+ *
+ */
+@Deprecated
 @Document(collection = AppConstants.ACTIVITY_METRIC_CONFIG)
 public class ActivityMetricConfig extends BaseDocumentEntity {
 

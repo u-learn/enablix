@@ -14,9 +14,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.enablix.app.report.activity.metric.ActivityMetricConfigRepository;
 import com.enablix.app.report.activity.metric.ActivityMetricService;
-import com.enablix.core.domain.report.activitymetric.ActivityMetricConfig;
+import com.enablix.core.domain.report.activitymetric.ActivityMetricType;
 
 @RestController
 @RequestMapping("report")
@@ -27,9 +26,6 @@ public class ActivityMetricController {
 	@Autowired
 	private ActivityMetricService activityMetric;
 
-	@Autowired
-	private ActivityMetricConfigRepository activityMetricConfRepo;
-	
 	@RequestMapping(method = RequestMethod.GET, value="/activitymetric")
 	public HashMap<String, Object> getAggregatedActivityMetrices(@RequestParam("activityMetricTime") String date) {
 		try{
@@ -47,13 +43,7 @@ public class ActivityMetricController {
 	}
 	
 	@RequestMapping(value = "/getactivitymetrices", method = RequestMethod.GET, produces = "application/json")
-	public List<ActivityMetricConfig> getActivityMetricesTypes() {
-		try{
-			return activityMetricConfRepo.findAll();
-		}
-		catch(Exception e){
-			LOGGER.error(" Error Retrieving the list of Metrics Config ",e);
-			return null;
-		}
+	public List<ActivityMetricType> getActivityMetricesTypes() {
+		return ActivityMetricType.getAllTypes();
 	}
 }

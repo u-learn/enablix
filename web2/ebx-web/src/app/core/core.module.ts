@@ -5,6 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ClickOutsideModule } from 'ng-click-outside';
 import { RouterModule, RouterLink } from '@angular/router';
+import { MatDialogModule } from '@angular/material';
 
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
@@ -54,7 +55,8 @@ import { EbxDateTimezonePipe } from './pipes/ebx-date-timezone.pipe';
     FormsModule,
     ReactiveFormsModule,
     ClickOutsideModule,
-    RouterModule
+    RouterModule,
+    MatDialogModule
   ],
   providers: [
     AlertService,

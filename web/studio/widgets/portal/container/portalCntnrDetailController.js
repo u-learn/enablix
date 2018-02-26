@@ -9,6 +9,13 @@ enablix.studioApp.controller('PortalCntnrDetailCtrl',
 		$scope.instanceIdentity = $stateParams.elementIdentity;
 		$scope.hasContentStack = false;
 		
+		if ($scope.containerQId) {
+			var containerDef = ContentTemplateService.getContainerDefinition(enablix.template, $scope.containerQId);
+			if (ContentTemplateService.isLinkedContainer(containerDef)) {
+				$scope.containerQId = containerDef.linkContainerQId;
+			}
+		}
+		
 		$scope.groupByQId = $stateParams.gbQId;
 		
 		var enclosureId = $stateParams.enclosureId;

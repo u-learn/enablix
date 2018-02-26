@@ -13,30 +13,24 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.enablix.app.report.activity.metric.ActivityMetricConfigRepository;
 import com.enablix.app.report.activity.metric.MetricStatsCalculator;
 import com.enablix.app.report.activity.metric.MetricStatsCalculatorFactory;
 import com.enablix.commons.constants.AppConstants;
 import com.enablix.commons.constants.AppConstants.ActivityTrend;
 import com.enablix.commons.util.date.DateUtil;
-import com.enablix.core.domain.report.activitymetric.ActivityMetricConfig;
+import com.enablix.core.domain.report.activitymetric.ActivityMetricType;
 import com.enablix.core.domain.report.activitymetric.MetricStats;
 
 @Component
 public class ActivityTrendServiceImpl implements ActivityTrendService {
 
 	@Autowired
-	private ActivityMetricConfigRepository activityMetricRepo;
-
-	@Autowired
 	private MetricStatsCalculatorFactory metricCalcFactory;
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(ActivityTrendServiceImpl.class);
 
-	@Override
-	public List<ActivityMetricConfig> getActivityMetricConfig() {
-		List<ActivityMetricConfig> activityMetrices = activityMetricRepo.findAll();
-		return activityMetrices;
+	public List<ActivityMetricType> getActivityMetricConfig() {
+		return ActivityMetricType.getAllTypes();
 	}
 
 	@Override

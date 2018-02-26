@@ -100,7 +100,7 @@ export class DataFiltersComponent implements OnInit {
 
         let errMsg = "";
         errors.forEach((err) => {
-          errMsg += err.message + "</br>"
+          errMsg += err.message + "\n "
         });
 
         this.filterErrMessages[filter.id] = errMsg;
