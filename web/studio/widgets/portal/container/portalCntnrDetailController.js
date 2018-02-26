@@ -168,7 +168,7 @@ enablix.studioApp.controller('PortalCntnrDetailCtrl',
 		if (isNullOrUndefined(enclosureId)) {
 			
 			var containerDef = ContentTemplateService.getContainerDefinition(
-									enablix.template, $stateParams.containerQId);
+									enablix.template, $scope.containerQId);
 		
 			$scope.hasContentStack = ContentTemplateService.hasContentStackConfigItem(containerDef);
 			
