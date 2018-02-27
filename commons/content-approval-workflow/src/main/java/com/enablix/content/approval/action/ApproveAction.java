@@ -1,6 +1,5 @@
 package com.enablix.content.approval.action;
 
-import java.util.Calendar;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.enablix.app.content.ContentDataManager;
 import com.enablix.app.content.update.UpdateContentRequest;
 import com.enablix.app.content.update.UpdateContentResponse;
-import com.enablix.commons.constants.ContentDataConstants;
+import com.enablix.commons.util.SudoExecutor;
 import com.enablix.commons.util.process.ProcessContext;
 import com.enablix.content.approval.ContentApprovalConstants;
 import com.enablix.content.approval.model.ContentDetail;
@@ -40,15 +39,16 @@ public class ApproveAction extends BaseContentAction<SimpleActionInput, Boolean>
 		String templateId = ProcessContext.get().getTemplateId();
 		
 		Map<String, Object> record = objectRef.getData();
-		record.put(ContentDataConstants.CREATED_AT_KEY, Calendar.getInstance().getTime());
-		record.put(ContentDataConstants.CREATED_BY_KEY, recording.getCreatedBy());
-		record.put(ContentDataConstants.CREATED_BY_NAME_KEY, recording.getCreatedByName());
-		
-		UpdateContentResponse updatedData = dataMgr.saveData(new UpdateContentRequest(templateId, 
-				objectRef.getParentIdentity(), objectRef.getContentQId(), record));
 
-		// TODO: handle quality alerts
-		objectRef.setData(updatedData.getContentRecord());
+		SudoExecutor.runAsUser(recording.getCreatedBy(), recording.getCreatedByName(), () -> {
+
+			UpdateContentResponse updatedData = dataMgr.saveData(new UpdateContentRequest(templateId, 
+					objectRef.getParentIdentity(), objectRef.getContentQId(), record));
+
+			// TODO: handle quality alerts
+			objectRef.setData(updatedData.getContentRecord());
+
+		});
 		
 		return new GenericActionResult<ContentDetail, Boolean>(objectRef, Boolean.TRUE);
 	}
