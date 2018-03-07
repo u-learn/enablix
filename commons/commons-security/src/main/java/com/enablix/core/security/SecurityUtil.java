@@ -177,4 +177,10 @@ public class SecurityUtil {
 		SecurityContextHolder.getContext().setAuthentication(auth);
 	}
 	
+	public static void loginUser(UserDetails userDetails) {
+		Authentication auth = new UsernamePasswordAuthenticationToken(
+				userDetails, userDetails.getPassword(), userDetails.getAuthorities());
+		SecurityContextHolder.getContext().setAuthentication(auth);
+	}
+	
 }

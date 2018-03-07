@@ -83,7 +83,7 @@ public class DirectoryWatchBuilder {
 			                
 			            	WatchKey watchKey = fileSystemWatchService.take();
 			            	
-			                for(WatchEvent<?> event: watchKey.pollEvents()){
+			                for (WatchEvent<?> event: watchKey.pollEvents()) {
 			                
 			                	WatchEvent.Kind<?> eventKind = event.kind();
 			 
@@ -113,7 +113,7 @@ public class DirectoryWatchBuilder {
 			                
 			                boolean isReset = watchKey.reset();
 
-			                if(!isReset) {
+			                if (!isReset) {
 			                    break;
 			                }
 			                

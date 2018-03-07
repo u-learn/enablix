@@ -102,6 +102,7 @@ public class MailServiceImpl implements MailService {
 		switch (scenario) {
 		case MailConstants.SCENARIO_SET_PASSWORD:
 		case MailConstants.SCENARIO_RESET_PASSWORD:
+		case MailConstants.SCENARIO_USER_SIGNUP:
 		case MailConstants.SCENARIO_PASSWORD_CONFIRMATION:
 			User user = (User) objectTobeMerged;
 			objectTobeMerged = newUserScenarioInputBuilder.build(emailid,user.getPassword());

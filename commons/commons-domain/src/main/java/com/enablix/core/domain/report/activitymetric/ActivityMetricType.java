@@ -32,6 +32,11 @@ public class ActivityMetricType {
 	public void setMetricName(String metricName) {
 		this.metricName = metricName;
 	}
+	
+	@Override
+	public String toString() {
+		return "ActivityMetricType [metricCode=" + metricCode + ", metricName=" + metricName + "]";
+	}
 
 	private static List<ActivityMetricType> allTypes;
 	

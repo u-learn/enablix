@@ -176,6 +176,14 @@ public class EnablixUserService implements UserService, UserDetailsService {
 	
 	@Override
 	public UserProfile addOrUpdateUser(UserProfile up) {
+		return addOrUpdateUser(up, null, "setpassword");
+	}	
+	
+	public UserProfile signupUser(UserProfile up, String password) {
+		return addOrUpdateUser(up, password, "usersignup");
+	}
+	
+	public UserProfile addOrUpdateUser(UserProfile up, String password, String mailScenario) {
 		
 		boolean addUser = false;
 		User user = null;
@@ -192,10 +200,17 @@ public class EnablixUserService implements UserService, UserDetailsService {
 			user.setIdentity(up.getEmail());
 			user.setUserId(up.getEmail());
 
-			String password = UUID.randomUUID().toString().substring(0,8);//system generated default password
+			boolean passwordSet = false;
+			
+			if (StringUtil.hasText(password)) {
+				passwordSet = true; 
+			} else {
+				password = UUID.randomUUID().toString().substring(0,8); //system generated default password
+			}
+			
 			user.setPassword(password);
 			user.setTenantId(ProcessContext.get().getTenantId());
-			user.setIsPasswordSet(Boolean.FALSE);
+			user.setIsPasswordSet(passwordSet);
 			user.setSystem(Boolean.FALSE);
 			
 			user = userRepo.save(user);
@@ -218,7 +233,7 @@ public class EnablixUserService implements UserService, UserDetailsService {
 		modUP = userProfileRepo.save(modUP);
 		
 		if (addUser) {
-			mailService.sendHtmlEmail(user, modUP.getEmail(), "setpassword");
+			mailService.sendHtmlEmail(user, modUP.getEmail(), mailScenario);
 			EventUtil.publishEvent(new Event<UserProfile>(Events.USER_ADDED, modUP));
 		}
 		

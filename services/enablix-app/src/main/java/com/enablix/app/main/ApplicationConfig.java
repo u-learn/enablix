@@ -12,6 +12,7 @@ import com.enablix.app.corr.rule.processor.ItemUserCorrelationRuleProcessor;
 import com.enablix.app.play.definition.PlayDefinitionProcessor;
 import com.enablix.app.template.provider.TemplateFileProcessor;
 import com.enablix.app.trigger.rule.TriggerLifecycleRuleProcessor;
+import com.enablix.commons.constants.AppConstants;
 import com.enablix.commons.util.StringUtil;
 import com.enablix.content.mapping.ContentMappingFileProcessor;
 import com.enablix.refdata.xls.loader.XLSRefdataProcessor;
@@ -21,8 +22,6 @@ import com.enablix.util.data.loader.TenantSpecificFileBasedDataLoader;
 @Configuration
 public class ApplicationConfig {
 
-	private static final String TEMPLATES_DIR = "templates";
-	
 	private static final String[] TEMPLATE_FILE_EXTN = {"xml"};
 	
 	private static final String REFDATA_DIR = "refdata";
@@ -67,7 +66,7 @@ public class ApplicationConfig {
 	
 	@Bean
 	public FileBasedDataLoader templateFilesLoader() {
-		String templatesBaseDir = getDataDirPath() + File.separator + TEMPLATES_DIR;
+		String templatesBaseDir = getDataDirPath() + File.separator + AppConstants.TEMPLATES_DIR;
 		return new TenantSpecificFileBasedDataLoader(templatesBaseDir, TEMPLATE_FILE_EXTN, templateFileProcessor());
 	}
 	

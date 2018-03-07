@@ -77,6 +77,10 @@
 			opacity: 0.5;
 		}
 		
+		.invite .appinfo.small {
+			font-size: 0.8em;
+		} 
+		
 		.invite .appinfo div {
 			padding-right: 0;
 		}
@@ -99,7 +103,7 @@
 		    width: 100%;
 		}
 		
-		.inviteform button {
+		.inviteform .btn {
 			padding: 0.65em 0.5em 0.6em 0.5em;
 		    background: #1f89ef;
 		    /** font-family: FaktPro-Medium;   **/
@@ -109,6 +113,11 @@
 		    border-radius: 4px;
 		    border: 1px solid #1f89ef;
 		    width: 100%;
+		}
+		
+		.inviteform button.ctaBtnInverse {
+			background: #fff;
+			color: #1f89ef;
 		}
 		
 		.inviteform .formcontrol {
@@ -245,7 +254,7 @@
 			}
 			
 			.inviteform .submitbtn {
-				width: 40%;
+				width: 50%;
 			}	
 			
 			.ttmpersondetail {
@@ -308,20 +317,21 @@
 			<div class="caption">The easiest way for marketing to enable sales and get results</div>
 			<div class="inviteform row" ng-controller="InviteRequestController">
 				<form name="modalForm">
-					<div class="formcontrol col-md-7 emailinput">
+					<!-- <div class="formcontrol col-md-7 emailinput">
 						<input  name="email" placeholder="Email address" ng-model="contactUsForm.email" ng-blur="modalForm.email.$valid" ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,5})$/" required>
 						<div ng-messages="modalForm.email.$error" ng-if="modalForm.email.$touched" role="alert">
 							<div ng-message="required" class="error">Please enter email address</div>
 							<div ng-message="pattern" class="error">Please enter a valid email address</div>      
 						</div>
-					</div>
-					<div class="formcontrol col-md-5 submitbtn"><button name="inviteBtn" ng-click="submitContactUs()">Request Invitation</button></div>
+					</div> -->
+					<div class="formcontrol col-md-5 submitbtn"><a name="signupBtn" class="btn" href="/register.html">Start Free Trial</a><div class="appinfo small">No Credit Card required.</div></div>
+					<div class="formcontrol col-md-5 submitbtn"><button name="inviteBtn" class="btn ctaBtnInverse" ng-click="submitContactUs()">Request Demo</button><div class="appinfo small">We are working with beta customers through our web platform.</div></div>
 				</form>
 			</div>
-			<div class="appinfo row">
+			<!-- <div class="appinfo row">
 				<div class="col-md-8">We are working with beta customers through our web platform.</div>
 				<div class="col-md-4"></div>
-			</div>
+			</div> -->
 		</div>
 		<div class="preview col-md-6">
 			<img src="./assets/asset.png"></img>

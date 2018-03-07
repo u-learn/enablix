@@ -1,9 +1,8 @@
 package com.enablix.app.content.update;
 
-import java.util.Collection;
-
 import org.springframework.stereotype.Component;
 
+import com.enablix.commons.exception.AppError;
 import com.enablix.commons.validate.Validator;
 
 @Component
@@ -18,7 +17,7 @@ public class UpdateContentRequestValidator implements Validator<UpdateContentReq
 	//private TemplateManager templateMgr;
 	
 	@Override
-	public Collection<Error> validate(UpdateContentRequest t) {
+	public AppError validate(UpdateContentRequest t) {
 		// TODO Auto-generated method stub
 		return null;
 	}

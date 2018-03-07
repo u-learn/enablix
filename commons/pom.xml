@@ -46,5 +46,6 @@
 	<module>hubspot-integration</module>
 	<module>uri-embed</module>
 	<module>mail-integration</module>
+	<module>tenant-mgmt</module>
   </modules>
 </project>

@@ -1,0 +1,31 @@
+#@mail_template('Welcome')
+
+	#spacer_row('15')
+											
+	#mail_opening(${obj.recipientUser.name})
+	
+	#spacer_row('15')
+	
+	Welcome to #tenant_portal_link().
+	<br />	
+	<br />
+	Your User ID is your email address ${obj.recipientUser.email} <br /> 
+	
+	#spacer_double_row('20','10')
+
+	#@action_button_table()
+		#@action_button_cell('200')
+			#action_button('Login' "${obj.url}/app.html#/portal/home")
+		#end
+	#end
+	
+	#spacer_double_row('20','10')
+	
+	#tenant_portal_link() is a sales enablement platform that helps organizations capture, organize and distribute sales, product and marketing collateral.
+	<br />
+	<br />											
+	Have any questions or feedback? You can reply to this email.
+	
+	#mail_closing($obj.tenant.name)
+
+#end

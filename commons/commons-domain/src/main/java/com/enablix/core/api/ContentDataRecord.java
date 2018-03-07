@@ -11,6 +11,11 @@ public class ContentDataRecord implements ContentRecord {
 	private String containerQId;
 
 	private Map<String, Object> record;
+	
+	@SuppressWarnings("unused")
+	private ContentDataRecord() {
+		// for ORM
+	}
 
 	public ContentDataRecord(String templateId, String containerQId, Map<String, Object> record) {
 

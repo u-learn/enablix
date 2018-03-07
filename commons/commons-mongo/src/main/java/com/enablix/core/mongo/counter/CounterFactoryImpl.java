@@ -23,11 +23,11 @@ import com.enablix.core.api.OrderAware;
 import com.enablix.core.domain.tenant.Tenant;
 import com.enablix.core.mongo.counter.repo.CounterDataRepository;
 import com.enablix.core.mongo.util.MultiTenantExecutor;
-import com.enablix.core.mongo.util.MultiTenantExecutor.TenantTask;
 import com.enablix.core.system.repo.TenantRepository;
+import com.enablix.tenant.TenantSetupTask;
 
 @Component
-public class CounterFactoryImpl implements CounterFactory, ApplicationListener<MappingContextEvent<?, ?>> {
+public class CounterFactoryImpl implements CounterFactory, ApplicationListener<MappingContextEvent<?, ?>>, TenantSetupTask {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(CounterFactoryImpl.class);
 	
@@ -76,28 +76,8 @@ public class CounterFactoryImpl implements CounterFactory, ApplicationListener<M
 				
 				List<Tenant> tenants = tenantRepo.findAll();
 				
-				MultiTenantExecutor.executeForEachTenant(tenants, new TenantTask() {
-					
-					@Override
-					public void execute() {
-						
-						// check whether a counter exists for this class
-						CounterData counterData = counterRepo.findByCounterName(counterName);
-						
-						if (counterData == null) {
-							
-							LOGGER.info("Creating counter [{}] for tenant [{}]", 
-									counterName, ProcessContext.get().getTenantId());
-							
-							counterData = new CounterData();
-							counterData.setCounterName(counterName);
-							counterData.setCurrentValue(0);
-							
-							counterRepo.save(counterData);
-						}
-						
-					}
-					
+				MultiTenantExecutor.executeForEachTenant(tenants, () -> {
+					checkAndCreateCounter(counterName);
 				});
 				
 				counterNameToEntityClazz.put(counterName, entityClazz);
@@ -106,4 +86,39 @@ public class CounterFactoryImpl implements CounterFactory, ApplicationListener<M
 		}
 		
 	}
+	
+	private void checkAndCreateCounter(String counterName) {
+	
+		// check whether a counter exists for this class
+		CounterData counterData = counterRepo.findByCounterName(counterName);
+		
+		if (counterData == null) {
+			
+			LOGGER.info("Creating counter [{}] for tenant [{}]", 
+					counterName, ProcessContext.get().getTenantId());
+			
+			counterData = new CounterData();
+			counterData.setCounterName(counterName);
+			counterData.setCurrentValue(0);
+			
+			counterRepo.save(counterData);
+		}
+	}
+
+	@Override
+	public void execute(Tenant tenant) throws Exception {
+		
+		counterNameToEntityClazz.keySet().forEach((counterName) -> {
+			checkAndCreateCounter(counterName);
+		});
+		
+	}
+
+	@Override
+	public float executionOrder() {
+		return TenantSetupTask.MAX_EXEC_ORDER;
+	}
+	
+	
+	
 }

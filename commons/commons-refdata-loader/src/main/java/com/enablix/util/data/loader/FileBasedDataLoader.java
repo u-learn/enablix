@@ -25,10 +25,13 @@ public class FileBasedDataLoader implements ApplicationListener<ContextRefreshed
 
 	private DataFileProcessor dataFileProcessor;
 	
+	private Set<String> dirWatchList;
+	
 	public FileBasedDataLoader(String dataDirectory, String[] fileExtns, DataFileProcessor fileProcessor) {
 		this.dataDirectory = dataDirectory;
 		this.fileExtensions = fileExtns;
 		this.dataFileProcessor = fileProcessor;
+		this.dirWatchList = new HashSet<>();
 	}
 	
 	@Override
@@ -57,6 +60,12 @@ public class FileBasedDataLoader implements ApplicationListener<ContextRefreshed
 			createWatch(tenantDataDir);
 		}
 		
+		// create a watch on the base directory
+		DirectoryWatchBuilder
+			.createDirectoryWatch(dataDirectory, new NewSubDirectoryCallback())
+			.forFiles((dir, filename) -> true) // accept all
+			.build();
+		
 	}
 
 	protected void loadDataFile(File dataFile) {
@@ -77,22 +86,27 @@ public class FileBasedDataLoader implements ApplicationListener<ContextRefreshed
 	
 	private void createWatch(String templateDir) {
 		
-		FilenameFilter fileFilter = new FilenameFilter() {
-			@Override
-			public boolean accept(File dir, String name) {
-				for (String fileExtn : fileExtensions) {
-					if (name.endsWith(fileExtn)) {
-						return true;
+		if (!dirWatchList.contains(templateDir)) {
+			
+			FilenameFilter fileFilter = new FilenameFilter() {
+				@Override
+				public boolean accept(File dir, String name) {
+					for (String fileExtn : fileExtensions) {
+						if (name.endsWith(fileExtn)) {
+							return true;
+						}
 					}
+					return false;
 				}
-				return false;
-			}
-		};
-		
-		DirectoryWatchBuilder
-			.createDirectoryWatch(templateDir, new UploadDataCallback())
-			.forFiles(fileFilter)
-			.build();
+			};
+			
+			DirectoryWatchBuilder
+				.createDirectoryWatch(templateDir, new UploadDataCallback())
+				.forFiles(fileFilter)
+				.build();
+			
+			dirWatchList.add(templateDir);
+		}
 	}
 
 	private class UploadDataCallback implements FileCreateOrUpdateCallback {
@@ -108,6 +122,21 @@ public class FileBasedDataLoader implements ApplicationListener<ContextRefreshed
 			loadDataFile(fileName);
 		}
 		
+	}
+	
+	private class NewSubDirectoryCallback implements FileCreateOrUpdateCallback {
+		
+		@Override
+		public void onFileCreated(File fileName) {
+			if (fileName.isDirectory()) {
+				createWatch(fileName.getAbsolutePath());
+			}
+		}
+
+		@Override
+		public void onFileUpdated(File fileName) {
+			// do nothing
+		}
 	}
 	
 }

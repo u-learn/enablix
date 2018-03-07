@@ -1,9 +1,9 @@
 package com.enablix.commons.validate;
 
-import java.util.Collection;
+import com.enablix.commons.exception.AppError;
 
 public interface Validator<T> {
 
-	Collection<Error> validate(T t);
+	 AppError validate(T input);
 	
 }
