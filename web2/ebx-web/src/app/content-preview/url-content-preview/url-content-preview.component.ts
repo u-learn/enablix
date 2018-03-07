@@ -44,7 +44,8 @@ export class UrlContentPreviewComponent implements OnInit {
                   this.embedInfo = result;
                   this.type = this.embedInfoService.getEmbedInfoType(this.embedInfo);
 
-                  if (this.type != 'rich' && this.embedInfo.oembed && this.embedInfo.oembed) {
+                  if (this.type != 'rich' && this.type != 'link' 
+                      && this.embedInfo.oembed && this.embedInfo.oembed.html) {
                     this.embedHtml = this.embedInfo.oembed.html;
 
                   } else {

@@ -1,5 +1,5 @@
 <div *ngIf="url" class="url-asset">
-  <div class="embed-rich" *ngIf="type == 'rich'">
+  <div class="embed-rich" *ngIf="type == 'rich' || type == 'link'">
     <object [data]="url | safeUrl" type="text/html">
       <!-- trying embedding, else alternate option of showing card -->
       <div class="embed-card">

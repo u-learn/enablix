@@ -13,6 +13,7 @@ export class AppUrlMapperComponent implements OnInit {
 
   ngOnInit() {
     console.log("Url fragment: " + this.route.snapshot.fragment);
+    console.log("Url params: " + this.route.snapshot.queryParams);
     let urlFragment = this.route.snapshot.fragment;
     this.router.navigateByUrl(urlFragment ? urlFragment : '');
   }

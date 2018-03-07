@@ -1,8 +1,11 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Router, ActivatedRoute } from '@angular/router';
 
 import { AlertService } from '../core/alert/alert.service';
 import { SearchBarService } from '../core/search-bar/search-bar.service';
+import { AppMessageService } from '../core/app-message/app-message.service';
+import { AppIntroMsgComponent } from '../core/app-message/app-intro-msg/app-intro-msg.component';
 
 @Component({
   selector: 'ebx-home',
@@ -14,10 +17,17 @@ export class HomeComponent implements OnInit {
 
   constructor(private alertService: AlertService, 
     private searchBarService: SearchBarService,
-    private http: HttpClient) { }
+    private http: HttpClient, private route: ActivatedRoute,
+    private appMsgService: AppMessageService) { }
 
   ngOnInit() {
     this.searchBarService.setDashboardSearchBar();
+    var newSignup = this.route.snapshot.queryParams["ns"];
+    if (newSignup === "1") {
+      setTimeout(() => {
+        this.appMsgService.show(AppIntroMsgComponent);
+      });
+    }
   }
 
   success(message: string) { 

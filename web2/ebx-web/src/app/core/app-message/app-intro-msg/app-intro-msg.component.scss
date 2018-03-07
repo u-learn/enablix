@@ -1,0 +1,39 @@
+@import '~styles/colors.scss';
+@import '~styles/layout.mixin.scss';
+@import '~styles/fonts.scss';
+
+.intro-msg {
+  font-family: $FPLight;
+  color: #808C9B;
+
+  .title {
+    margin-bottom: 16px; 
+    font-family: $FPLight;
+    font-weight: 600;
+    font-size: 18px;
+  }
+
+  .msg-content {
+    font-size: 14px;
+    line-height: 20px;
+    margin-bottom: 16px;
+
+    ul {
+      margin: 12px 12px 12px 20px;
+      li {
+        margin-bottom: 8px;
+        font-size: 20px;
+        span {
+          font-size: 14px;
+        }
+      }
+    }
+  }
+
+  .actionBtns {
+    button {
+      margin-right: 12px;
+    }
+    
+  }
+}

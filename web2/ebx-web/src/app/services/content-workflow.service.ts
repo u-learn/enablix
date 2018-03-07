@@ -134,6 +134,11 @@ export class ContentWorkflowService {
   }
 
   publishContentRequest(refObjIdentity: string, contentQId: string, rec: any, notes: string) {
+    
+    if (rec.__decoration) {
+      delete rec['__decoration'];
+    }
+
     var contentDetail = {
       "identity": refObjIdentity,
       "contentQId": contentQId,
@@ -146,6 +151,13 @@ export class ContentWorkflowService {
   }
 
   publishContentRequestList(requestList: ContentRequestDetail[]) {
+    
+    requestList.forEach((item) => {
+      if (item.data.__decoration) {
+        delete item.data['__decoration'];
+      }
+    })
+
     let apiUrl = this.apiUrlService.postPublishContentRequestListUrl();
     return this.http.post(apiUrl, requestList);
   }

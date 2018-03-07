@@ -66,6 +66,8 @@ export class DataFiltersComponent implements OnInit {
 
       this.initSearchFilters();
 
+      this.filterValuesBackup = cloneDeep(this.filterValues);
+
       if (this.options.searchOnLoad) {
         this.searchAction();
       }
@@ -157,6 +159,9 @@ export class DataFiltersComponent implements OnInit {
   }
 
   resetAction() {
+    if (this.filterValuesBackup) {
+      this.filterValues = cloneDeep(this.filterValuesBackup);
+    }
     this.onReset.emit();
   }
 

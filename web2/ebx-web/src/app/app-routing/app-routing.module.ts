@@ -68,7 +68,10 @@ const routes: Routes = [
         {
           // mapping from old application "#/portal/home"
           path: 'home',
-          redirectTo: '/portal'
+          component: HomeComponent,
+          resolve: {
+            sbData: SearchBarResolve
+          }
         },
         {
           path: "alldims",

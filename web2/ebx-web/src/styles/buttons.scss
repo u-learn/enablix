@@ -318,3 +318,17 @@ button {
         background: url("/assets/images/icons/bar_chart.svg") no-repeat center;   
     }
 }
+
+.actionBtns {
+
+    button {
+        min-width: 128px;
+        padding: 0 16px;
+    }
+
+    &.small {
+        button {
+            height: 40px;
+        }
+    }
+}

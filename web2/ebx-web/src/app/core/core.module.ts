@@ -47,6 +47,8 @@ import { BoundedItemsDSBuilderService } from './search-bar/bounded-items-dsbuild
 import { DataFiltersComponent } from './data-filters/data-filters.component';
 import { UserPreferenceService } from './user-preference.service';
 import { EbxDateTimezonePipe } from './pipes/ebx-date-timezone.pipe';
+import { AppMessageService } from './app-message/app-message.service';
+import { AppIntroMsgComponent } from './app-message/app-intro-msg/app-intro-msg.component';
 
 @NgModule({
   imports: [
@@ -76,6 +78,7 @@ import { EbxDateTimezonePipe } from './pipes/ebx-date-timezone.pipe';
     BoundedItemsDSBuilderService,
     UserPreferenceService,
     EbxDateTimezonePipe,
+    AppMessageService,
   	{
   	  provide: HTTP_INTERCEPTORS,
       useClass: HttpErrorInterceptor,
@@ -91,6 +94,7 @@ import { EbxDateTimezonePipe } from './pipes/ebx-date-timezone.pipe';
     UploadFileComponent,
     UploadUrlComponent,
     UploadTextComponent,
+    AppIntroMsgComponent
   ],
   declarations: [
     HeaderComponent,
@@ -100,6 +104,7 @@ import { EbxDateTimezonePipe } from './pipes/ebx-date-timezone.pipe';
     UploadFileComponent,
     UploadUrlComponent,
     UploadTextComponent,
+    AppIntroMsgComponent,
     SearchBarComponent,
     AlertComponent,
     SelectComponent,
@@ -115,7 +120,8 @@ import { EbxDateTimezonePipe } from './pipes/ebx-date-timezone.pipe';
     TextFileComponent,
     AccessDirective,
     DataFiltersComponent,
-    EbxDateTimezonePipe
+    EbxDateTimezonePipe,
+    AppIntroMsgComponent
   ],
   exports: [
     HeaderComponent,
