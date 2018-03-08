@@ -1,5 +1,6 @@
 #set ($introContent = $obj.content.get($obj.inputData.get('introType')).get(0))
-#@mail_template('Introduction')
+#set ($introHeading = "#if($obj.inputData.get('introHeading'))$obj.inputData.get('introHeading')#{else}Introduction#end")
+#@mail_template(${introHeading})
 
 	#spacer_row('15')
 											
@@ -7,7 +8,7 @@
 	
 	#spacer_row('15')
 	
-	Check out #if(${obj.inputData.get('introMaterial')}) ${obj.inputData.get('introMaterial')}#else this introductory collateral#end on ${introContent.title}. 
+	Check out #if(${obj.inputData.get('introMaterial')}) ${obj.inputData.get('introMaterial')}#else this introductory collateral on#end ${introContent.title}. 
 	#if ($obj.inputData.get('moreLink'))
 		There are several more on <a href="${obj.url}/app.html#$obj.inputData.get('moreLink')"><span class="link-u" style="color:#004ba1; text-decoration:underline">Enablix</span></a>.
 	#end
