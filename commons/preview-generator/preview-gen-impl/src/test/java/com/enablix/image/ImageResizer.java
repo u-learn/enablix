@@ -10,6 +10,8 @@ import javax.imageio.ImageIO;
 
 import org.imgscalr.Scalr;
 
+import net.coobird.thumbnailator.Thumbnails;
+
 public class ImageResizer {
 
 	public static BufferedImage createThumb(BufferedImage in, int w, int h) {
@@ -33,19 +35,18 @@ public class ImageResizer {
     }
 
     public static void main(String args[]) throws Exception {
-        for (String in : args) {
-            BufferedImage inImg = ImageIO.read(Files.newInputStream(Paths.get(in)));
-			BufferedImage bi = createThumb(
-                inImg,
-                450, 450);
-            String ext = in.substring(in.lastIndexOf(".")+1);
-            String out = in.replaceFirst(".([a-z]+)$", "_thumb." + ext);
-            String out1 = in.replaceFirst(".([a-z]+)$", "_thumb1." + ext);
-            System.err.println(in + " --> " + out);
-            BufferedImage outImg = Scalr.resize(bi, 300, 300);
-            ImageIO.write(bi, ext, Files.newOutputStream(Paths.get(out)));
-            ImageIO.write(outImg, ext, Files.newOutputStream(Paths.get(out1)));
-        }
+        String in = "D:/enablix/filestorage/enablixmaster//tmp/preview/f1c05d18-14bb-4cd7-91b1-30cd391db67c-1.png";
+        BufferedImage inImg = ImageIO.read(Files.newInputStream(Paths.get(in)));
+		BufferedImage bi = createThumb(inImg, 320, 320);
+        String ext = in.substring(in.lastIndexOf(".")+1);
+        String out = in.replaceFirst(".([a-z]+)$", "_thumb." + ext);
+        String out1 = in.replaceFirst(".([a-z]+)$", "_thumb1." + ext);
+        String out2 = in.replaceFirst(".([a-z]+)$", "_thumb2." + ext);
+        System.err.println(in + " --> " + out);
+        BufferedImage outImg = Scalr.resize(bi, Scalr.Method.ULTRA_QUALITY, Scalr.Mode.FIT_TO_WIDTH, 320, 320);
+        Thumbnails.of(inImg).size(240, 240).toFile(out2);
+        ImageIO.write(bi, ext, Files.newOutputStream(Paths.get(out)));
+        ImageIO.write(outImg, ext, Files.newOutputStream(Paths.get(out1)));
     }
 	
 }

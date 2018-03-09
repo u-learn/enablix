@@ -242,7 +242,7 @@ public class DocumentController {
     			String docIdentity = (String) docRecord.get(ContentDataConstants.IDENTITY_KEY);
     			
     			if (StringUtil.hasText(docIdentity)) {
-    				IDocument part = previewService.getDocSmallThumbnail(docIdentity);
+    				IDocument part = previewService.getDocIcon(docIdentity);
         			if (part != null) {
         				sendDownloadResponse(response, part);
         				iconFound = true;

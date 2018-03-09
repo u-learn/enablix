@@ -135,4 +135,15 @@ public class DocPreviewServiceImpl implements DocPreviewService {
 		return getThumbnail(docIdentity, (docPD) -> docPD.getLargeThumbnail());
 	}
 	
+	@Override
+	public IDocument getDocIcon(String docIdentity) throws IOException {
+		
+		return getThumbnail(docIdentity, (docPD) -> { 
+				if (docPD.getIcon() != null) {
+					return docPD.getIcon();
+				}
+				return docPD.getSmallThumbnail();
+			});
+	}
+	
 }

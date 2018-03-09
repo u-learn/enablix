@@ -84,6 +84,8 @@ import { MyContentRequestComponent } from './consolidate-content/my-content-requ
 import { AllDimensionsComponent } from './all-dimensions/all-dimensions.component';
 import { AppRoutingModule } from './app-routing/app-routing.module';
 import { ReportsModule } from './reports/reports.module';
+import { CopyLinkUrlButtonComponent } from './content-action/copy-link-url-button/copy-link-url-button.component';
+import { OpenUrlButtonComponent } from './content-action/open-url-button/open-url-button.component';
 
 @NgModule({
   declarations: [
@@ -145,7 +147,9 @@ import { ReportsModule } from './reports/reports.module';
     ForgotPasswordComponent,
     SetPasswordComponent,
     MyContentRequestComponent,
-    AllDimensionsComponent
+    AllDimensionsComponent,
+    CopyLinkUrlButtonComponent,
+    OpenUrlButtonComponent
   ],
   imports: [
     BrowserModule,

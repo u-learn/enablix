@@ -20,6 +20,8 @@ public abstract class DocPreviewData extends BaseDocumentEntity {
 	
 	private DocInfo largeThumbnail;
 	
+	private DocInfo icon;
+	
 	private PreviewType type;
 	
 	public DocPreviewData(PreviewType type) {
@@ -48,6 +50,14 @@ public abstract class DocPreviewData extends BaseDocumentEntity {
 
 	public void setLargeThumbnail(DocInfo lThumbnail) {
 		this.largeThumbnail = lThumbnail;
+	}
+	
+	public DocInfo getIcon() {
+		return icon;
+	}
+
+	public void setIcon(DocInfo icon) {
+		this.icon = icon;
 	}
 
 	public PreviewType getType() {

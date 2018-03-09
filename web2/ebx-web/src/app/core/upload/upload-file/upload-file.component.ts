@@ -92,7 +92,7 @@ export class UploadFileComponent implements OnInit {
 
         let previewHandler = this.contentPreviewService.getPreviewHandler(record);
         if (previewHandler != null) {
-          this.previewImageUrl = previewHandler.smallThumbnailUrl(record);
+          this.previewImageUrl = previewHandler.largeThumbnailUrl(record);
           this.fileInfo.thumbnailUrl = this.previewImageUrl;
         }
 

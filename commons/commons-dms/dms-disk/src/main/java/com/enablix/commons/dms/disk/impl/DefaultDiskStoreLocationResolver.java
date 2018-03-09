@@ -3,6 +3,8 @@ package com.enablix.commons.dms.disk.impl;
 import java.io.File;
 import java.io.IOException;
 
+import javax.annotation.PostConstruct;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -35,6 +37,20 @@ public class DefaultDiskStoreLocationResolver implements DiskStoreLocationResolv
 		}
 		
 		return docFolderPath + "/" + metadata.getName();
+	}
+	
+	@PostConstruct
+	public void init() throws IOException {
+		
+		File tmpFolder = new File(getSystemTempFolder());
+		
+		if (!tmpFolder.exists()) {
+			boolean dirCreated = tmpFolder.mkdirs();
+			if (!dirCreated) {
+				throw new IOException("Unable to create folder structure: " + tmpFolder.getPath());
+			}
+		}
+
 	}
 
 	@Override

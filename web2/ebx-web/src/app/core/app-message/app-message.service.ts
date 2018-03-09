@@ -11,6 +11,7 @@ export class AppMessageService {
     
     let mtCfg: MatDialogConfig = config ? config : {
       width: '624px',
+      panelClass: 'white-dialog',
       hasBackdrop: false
     };
 

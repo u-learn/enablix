@@ -8,6 +8,10 @@ export class ImagePreviewHandler implements ContentPreviewHandler {
     return environment.baseAPIUrl + "/doc/preview/" + dataRecord.__decoration.__docMetadata.identity;
   }
 
+  largeThumbnailUrl(dataRecord: any) : string {
+    return this.smallThumbnailUrl(dataRecord);
+  }
+
   canHandle(dataRecord: any) : boolean {
     return dataRecord.__decoration && dataRecord.__decoration.__docMetadata 
             && dataRecord.__decoration.__docMetadata.contentType

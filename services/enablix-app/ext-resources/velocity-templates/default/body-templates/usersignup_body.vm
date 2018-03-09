@@ -1,30 +1,37 @@
 #@mail_template('Welcome')
 
 	#spacer_row('15')
-											
-	#mail_opening(${obj.recipientUser.name})
+	
+	<div class="h2" style="color:#0e2a49; font-family:Arial,sans-serif, 'OS'; font-size:20px; line-height:20px; text-align:left; font-weight:bold">
+		Welcome to Enablix, ${obj.recipientUser.name}!
+	</div>										
 	
 	#spacer_row('15')
 	
-	Welcome to #tenant_portal_link().
-	<br />	
-	<br />
-	Your User ID is your email address ${obj.recipientUser.email} <br /> 
+	You’re on your way to building a centralized and trusted source of knowledge for your customer facing teams. Your user id is ${obj.recipientUser.email} <br /> 
 	
 	#spacer_double_row('20','10')
 
+	<div><b>What's next?</b></div>
+	
+	<ul>
+		<li><span>You can start uploading content. You can add files, capture URLs or even add text.</span></li>
+		<li><span>Invite your team members to Enablix to meet their content needs.</span></li>
+	</ul>
+
+	#spacer_row('15')
+
 	#@action_button_table()
 		#@action_button_cell('200')
-			#action_button('Login' "${obj.url}/app.html#/portal/home")
+			#action_button('Go to Enablix' "${obj.url}/app.html#/portal/home")
 		#end
 	#end
 	
 	#spacer_double_row('20','10')
 	
-	#tenant_portal_link() is a sales enablement platform that helps organizations capture, organize and distribute sales, product and marketing collateral.
-	<br />
+	<div><b>Need Help?</b></div>
 	<br />											
-	Have any questions or feedback? You can reply to this email.
+	We’re here to help you! Simply reply to this email.
 	
 	#mail_closing($obj.tenant.name)
 

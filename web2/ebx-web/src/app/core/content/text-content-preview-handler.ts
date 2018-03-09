@@ -6,6 +6,10 @@ export class TextContentPreviewHandler implements ContentPreviewHandler {
     return "";
   }
 
+  largeThumbnailUrl(dataRecord: any) : string {
+    return "";
+  }
+
   canHandle(dataRecord: any) : boolean {
     return dataRecord.__decoration && dataRecord.__decoration.__textContent;
   }

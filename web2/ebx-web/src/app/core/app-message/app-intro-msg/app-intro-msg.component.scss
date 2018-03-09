@@ -6,11 +6,29 @@
   font-family: $FPLight;
   color: #808C9B;
 
+  .logo {
+    padding-bottom: 16px;
+    display: flex;
+    justify-content: center;
+    img {
+      height: 32px;
+    }
+  }
+
+  .top-border {
+    padding-top: 16px;
+    border-top: 2px solid #dcddde;
+  }
+
   .title {
-    margin-bottom: 16px; 
+    margin-bottom: 8px; 
     font-family: $FPLight;
     font-weight: 600;
     font-size: 18px;
+  }
+
+  p, .subinfo {
+    margin-bottom: 16px;
   }
 
   .msg-content {
@@ -18,22 +36,13 @@
     line-height: 20px;
     margin-bottom: 16px;
 
-    ul {
-      margin: 12px 12px 12px 20px;
-      li {
-        margin-bottom: 8px;
-        font-size: 20px;
-        span {
-          font-size: 14px;
-        }
-      }
+    .title {
+      font-size: 16px;
     }
   }
 
   .actionBtns {
-    button {
-      margin-right: 12px;
-    }
-    
+    display: flex;
+    justify-content: flex-end;
   }
 }

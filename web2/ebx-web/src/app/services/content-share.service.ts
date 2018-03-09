@@ -22,4 +22,30 @@ export class ContentShareService {
     return this.http.post(apiUrl, shareData);
   }
 
+  getShareableLink(url: string, contentQId: string, contentIdentity, contentTitle: string) {
+    
+    let apiUrl = this.apiUrlService.postFetchShareLinkUrl();
+    
+    let linkUrl = this.apiUrlService.getExtLinkUrl(url, contentIdentity, contentQId);
+    
+    var linkParams = {
+      cId: contentIdentity,
+      cQId: contentQId,
+      atContext: "COPYNSHARE"
+    }
+    
+    var auditRequest = {
+      "containerQId" : contentQId,
+      "instanceIdentity" : contentIdentity,
+      "itemTitle" : contentTitle
+    }
+    
+    var request = {
+      "url" : linkUrl,
+      "auditRequest" : auditRequest
+    }
+
+    return this.http.post(apiUrl, request);
+  }
+
 }

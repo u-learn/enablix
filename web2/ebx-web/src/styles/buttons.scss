@@ -156,6 +156,14 @@ button {
             &.website {
                 background: url("/assets/images/icons/globe.svg") no-repeat center;
             }
+            
+            &.copy-link {
+                background: url("/assets/images/icons/link-blue.svg") no-repeat center;
+            }
+
+            &.openurl {
+                background: url("/assets/images/icons/open-link.svg") no-repeat center;   
+            }
 
             &.move {
                 background: url("/assets/images/icons/move.svg") no-repeat center;

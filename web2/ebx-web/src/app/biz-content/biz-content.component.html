@@ -23,6 +23,10 @@
           <div class="btn-set">
             <ebx-copy-portal-url-button *ngIf="!contentRequest" class="action-btn" [container]="container" [record]="record"></ebx-copy-portal-url-button>
             <ebx-doc-download-button *ngIf="record?.__decoration?.__docMetadata" class="action-btn" [container]="container" [record]="record"></ebx-doc-download-button>
+            <ng-container *ngIf="record?.__urls?.length > 0">
+              <ebx-copy-link-url-button  class="action-btn" [container]="container" [record]="record"></ebx-copy-link-url-button>
+              <ebx-open-url-button class="action-btn" [container]="container" [record]="record"></ebx-open-url-button>
+            </ng-container>
           </div>
       </div>
   </div>

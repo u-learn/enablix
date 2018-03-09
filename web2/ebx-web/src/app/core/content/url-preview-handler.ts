@@ -11,6 +11,10 @@ export class UrlPreviewHandler implements ContentPreviewHandler {
     return "";
   }
 
+  largeThumbnailUrl(dataRecord: any) : string {
+    return this.smallThumbnailUrl(dataRecord);
+  }
+
   canHandle(dataRecord: any) : boolean {
     return dataRecord.__urls && dataRecord.__urls.length > 0;
   }

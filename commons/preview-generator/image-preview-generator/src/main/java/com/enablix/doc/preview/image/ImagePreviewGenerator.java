@@ -61,24 +61,33 @@ public class ImagePreviewGenerator implements DocPreviewGenerator {
 
 			DocInfo firstImage = convertedDocInfo.get(0);
 			
-			ThumbnailBuilder tnBuilder = thumbnailBuilderFactory.getBuilder(PREVIEW_FORMAT);
-			
-			if (tnBuilder == null) {
-				LOGGER.error("Thumbnail builder not found for format [{}]", PREVIEW_FORMAT);
-				throw new IllegalStateException("Thumbnail builder not found for format [" + PREVIEW_FORMAT + "]");
-			}
-			
-			DocInfo sThumbnail = tnBuilder.createAndSaveThumbnail(ThumbnailSize.SMALL, firstImage, sourceDocStore, previewDocStore);
-			previewData.setSmallThumbnail(sThumbnail);
-			
-			DocInfo lThumbnail = tnBuilder.createAndSaveThumbnail(ThumbnailSize.LARGE, firstImage, sourceDocStore, previewDocStore);
-			previewData.setLargeThumbnail(lThumbnail);
+			generateThumbnails(previewDocStore, previewData, firstImage);
 			
 		} else {
 			LOGGER.error("Unable to generate preview images for document [{}]", docMetadata.getName());
 		}
 			
 		return previewData;
+	}
+
+	public void generateThumbnails(DocumentStore<?, ?> previewDocStore, DocPreviewData previewData, DocInfo firstImage)
+			throws IOException {
+		
+		ThumbnailBuilder tnBuilder = thumbnailBuilderFactory.getBuilder(PREVIEW_FORMAT);
+		
+		if (tnBuilder == null) {
+			LOGGER.error("Thumbnail builder not found for format [{}]", PREVIEW_FORMAT);
+			throw new IllegalStateException("Thumbnail builder not found for format [" + PREVIEW_FORMAT + "]");
+		}
+		
+		DocInfo icon = tnBuilder.createAndSaveThumbnail(ThumbnailSize.ICON, firstImage, previewDocStore, previewDocStore);
+		previewData.setIcon(icon);
+		
+		DocInfo sThumbnail = tnBuilder.createAndSaveThumbnail(ThumbnailSize.SMALL, firstImage, previewDocStore, previewDocStore);
+		previewData.setSmallThumbnail(sThumbnail);
+		
+		DocInfo lThumbnail = tnBuilder.createAndSaveThumbnail(ThumbnailSize.LARGE, firstImage, previewDocStore, previewDocStore);
+		previewData.setLargeThumbnail(lThumbnail);
 	}
 
 	

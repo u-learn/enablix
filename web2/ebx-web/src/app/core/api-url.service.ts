@@ -9,7 +9,7 @@ export class ApiUrlService {
   static GET_ALL_RESOURCE_VERSIONS = "/version/all/";
   static GET_CONTENT_RECORD = "/data/t/:templateId/c/:contentQId/d/:recordIdentity";
   static GET_EMBED_INFO = "/urlembed/fetch/";
-  static GET_EXT_LINK_URL = "/xlink?u=:url&cId=:cId&cQId=:cQId";
+  static GET_EXT_LINK_URL = "/xlink?u=:url&cId=:cId&cQId=:cQId&atChannel=:atChannel";
   static GET_BOUNDED_REF_LIST = "/bounded/list/:templateId/:contentItemQId/";
   static GET_DOC_PREVIEW_DATA = "/doc/pd/:docIdentity";
   static GET_RECORD_AND_CHILDREN = "/data/rnc/c/:contentQId/r/:contentIdentity";
@@ -65,6 +65,8 @@ export class ApiUrlService {
   static POST_DELETE_CONFIG_INFO = "/config/delete/:configIdentity/";
 
   static POST_SHARE_BY_EMAIL_URL = "/email/sharecontent";
+  static POST_FETCH_SHARE_LINK_URL = "/shareOptions/shareableLinkUrl/";
+  static POST_FETCH_SHARE_DOC_URL = "/shareOptions/shareableDocUrl/";
  
   static POST_RESET_PASSWORD_URL = "/resetpassword";
   static POST_SET_PASSWORD_URL = "/systemuserchangepwd";
@@ -141,8 +143,8 @@ export class ApiUrlService {
     return this.getAPIUrl(ApiUrlService.GET_EMBED_INFO);
   }
 
-  getExtLinkUrl(url: string, cIdentity: string, cQId: string) : string {
-    return this.getAPIUrl(ApiUrlService.GET_EXT_LINK_URL, { url: url, cId: cIdentity, cQId: cQId });
+  getExtLinkUrl(url: string, cIdentity: string, cQId: string, atChannel: string = 'WEB') : string {
+    return this.getAPIUrl(ApiUrlService.GET_EXT_LINK_URL, { url: url, cId: cIdentity, cQId: cQId, atChannel: atChannel});
   }
 
   getBoundedRefListUrl(templateId: string, contentItemQId) : string {
@@ -326,5 +328,13 @@ export class ApiUrlService {
 
   postSaveAsSystemPrefUrl() : string {
     return this.getAPIUrl(ApiUrlService.POST_SAVE_AS_SYSTEM_PREF); 
+  }
+
+  postFetchShareLinkUrl() : string {
+    return this.getAPIUrl(ApiUrlService.POST_FETCH_SHARE_LINK_URL);
+  }
+
+  postFetchShareDocUrl() : string {
+    return this.getAPIUrl(ApiUrlService.POST_FETCH_SHARE_DOC_URL);
   }
 }

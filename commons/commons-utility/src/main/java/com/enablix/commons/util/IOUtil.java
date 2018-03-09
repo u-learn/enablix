@@ -32,13 +32,14 @@ public class IOUtil {
 	}
 	
 	public static Map<String, Object> getImageProperties(BufferedImage bim) {
+		return getImageProperties(bim.getWidth(), bim.getHeight());
+	}
+	
+	public static Map<String, Object> getImageProperties(int width, int height) {
 
-		int imageH = bim.getHeight();
-		int imageW = bim.getWidth();
-		
 		Map<String, Object> imageProp = new HashMap<>();
-		imageProp.put("width", imageW);
-		imageProp.put("height", imageH);
+		imageProp.put("width", width);
+		imageProp.put("height", height);
 		
 		return imageProp;
 	}
