@@ -78,9 +78,9 @@ export class ApiUrlService {
 
   constructor() { }
 
-  getAPIUrl(url: string, urlPlaceholders?: { [key: string] : string }) : string {
+  getAPIUrl(url: string, urlPlaceholders?: { [key: string] : string }, prefixBaseAPIUrl: boolean = true) : string {
 
-  	let finalUrl = environment.baseAPIUrl + url;
+  	let finalUrl = prefixBaseAPIUrl ? environment.baseAPIUrl + url : url;
   	
   	if (urlPlaceholders != null) {
   	  for (const prop in urlPlaceholders) {
@@ -144,7 +144,11 @@ export class ApiUrlService {
   }
 
   getExtLinkUrl(url: string, cIdentity: string, cQId: string, atChannel: string = 'WEB') : string {
-    return this.getAPIUrl(ApiUrlService.GET_EXT_LINK_URL, { url: url, cId: cIdentity, cQId: cQId, atChannel: atChannel});
+    return this.getAPIUrl(ApiUrlService.GET_EXT_LINK_URL, { url: encodeURIComponent(url), cId: cIdentity, cQId: cQId, atChannel: atChannel});
+  }
+
+  getShareExtLinkUrl(url: string, cIdentity: string, cQId: string, atChannel: string = 'WEB') : string {
+    return this.getAPIUrl(ApiUrlService.GET_EXT_LINK_URL, { url: encodeURIComponent(url), cId: cIdentity, cQId: cQId, atChannel: atChannel}, false);
   }
 
   getBoundedRefListUrl(templateId: string, contentItemQId) : string {

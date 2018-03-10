@@ -28,16 +28,30 @@ export class CopyLinkUrlButtonComponent implements OnInit {
     if (this.record.__urls && this.record.__urls.length > 0) {
     
       let url = this.record.__urls[0].url;
-      let navUrl = this.apiUrlService.getExtLinkUrl(url, this.record.identity, this.container.qualifiedId);
-      let copyUrl = window.location.protocol + "//" + window.location.host + navUrl;
+      let navUrl = this.apiUrlService.getShareExtLinkUrl(url, this.record.identity, this.container.qualifiedId);
+      let apiUrl = this.apiUrlService.postFetchShareLinkUrl();
 
-      Utility.copyToClipboard(copyUrl);
+      var auditRequest = {
+        "containerQId" : this.container.qualifiedId,
+        "instanceIdentity" : this.record.identity,
+        "itemTitle" : this.record._title
+      };
       
-      this.buttonText = "Copied to Clipboard";
+      var request = {
+        "url" : navUrl,
+        "auditRequest" : auditRequest
+      };
+
+      Utility.syncPostAjaxCall(apiUrl, request, (res: any) => {
+          
+          Utility.copyToClipboard(res.shareableUrl);
       
-      setTimeout(() => {
-        this.buttonText = "Copy Url";
-      }, 4000);
+          this.buttonText = "Copied to Clipboard";
+          
+          setTimeout(() => {
+            this.buttonText = "Copy Url";
+          }, 4000);
+      });
 
     }
   }

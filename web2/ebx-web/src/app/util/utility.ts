@@ -50,4 +50,19 @@ export class Utility {
     return parentQId;
   }
 
+  static syncPostAjaxCall(url: string, data: any, callback: (responseText: string) => void) {
+    
+    var xhttp = new XMLHttpRequest();
+    
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        callback(JSON.parse(this.responseText));
+      }
+    };
+
+    xhttp.open("POST", url, false);
+    xhttp.setRequestHeader("Content-type", "application/json");
+    xhttp.send(JSON.stringify(data));
+  }
+
 }
