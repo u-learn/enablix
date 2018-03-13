@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<contentTemplate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.32" id="haystax_enterprise" xsi:noNamespaceSchemaLocation="../../xsd/content-template.xsd">
+<contentTemplate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.33" id="haystax_enterprise" xsi:noNamespaceSchemaLocation="../../xsd/content-template.xsd">
 	<dataDefinition>
 		<container id="product" label="Products" businessCategory="BUSINESS_DIMENSION">
 			<contentItem id="name" label="Name" type="text" searchBoost="7"/>
@@ -3772,7 +3772,8 @@
 		</container>
 		<container id="webinar" label="Webinars" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
-			<contentItem id="url" label="URL" type="text"/>					
+			<contentItem id="url" label="URL" type="text"/>
+			<contentItem id="webinardate" label="Webinar Date" type="dateTime"/>								
 			<contentItem id="desc" label="Description" type="richText"/>			
 			<contentItem id="products" label="Products" type="bounded">
 				<bounded multivalued="true">
@@ -5620,6 +5621,7 @@
 				<listViewConfig>
 					<hideContentItem id="desc"/>
 					<hideContentItem id="url"/>
+					<hideContentItem id="webinardate"/>					
 					<hideContentItem id="customers"/>
 					<hideContentItem id="products"/>
 					<hideContentItem id="solutions"/>
