@@ -10,6 +10,12 @@
 				<td>${obj.name}</td>
 			</tr>
 			#end
+			#if ($obj.companyName)
+			<tr>
+				<td>Company Name:</td>
+				<td>${obj.companyName}</td>
+			</tr>
+			#end
 			<tr>
 				<td>Email:</td>
 				<td>${obj.email}</td>

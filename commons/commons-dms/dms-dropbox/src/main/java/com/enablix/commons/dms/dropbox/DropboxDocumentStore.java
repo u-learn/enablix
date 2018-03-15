@@ -17,6 +17,9 @@ import com.dropbox.core.v2.files.FileMetadata;
 import com.dropbox.core.v2.files.GetMetadataErrorException;
 import com.dropbox.core.v2.files.LookupError;
 import com.dropbox.core.v2.files.Metadata;
+import com.dropbox.core.v2.files.MoveV2Builder;
+import com.dropbox.core.v2.files.RelocationErrorException;
+import com.dropbox.core.v2.files.RelocationResult;
 import com.dropbox.core.v2.files.WriteMode;
 import com.enablix.commons.dms.api.AbstractDocumentStore;
 import com.enablix.commons.dms.api.BasicDocument;
@@ -206,7 +209,19 @@ public class DropboxDocumentStore extends AbstractDocumentStore<DropboxDocumentM
         	String oldLoc = docMetadata.getLocation();
         	
         	LOGGER.debug("Moving file from: {}, to: {}", oldLoc, newFileLoc);
-			Metadata dbxFileEntry = client.files().move(oldLoc, newFileLoc);
+			
+        	Metadata dbxFileEntry = null;
+        	
+	        try {
+	        	MoveV2Builder moveV2Builder = client.files().moveV2Builder(oldLoc, newFileLoc);
+				moveV2Builder.withAutorename(true);
+				RelocationResult result = moveV2Builder.start();
+				
+				dbxFileEntry = result.getMetadata();
+				
+        	} catch (RelocationErrorException ree) {
+        		LOGGER.error("Error moving file, " + oldLoc + " to " + newFileLoc, ree);
+        	}
         	
 			if (dbxFileEntry == null) {
 				// move command may have failed because of existing file with same name
@@ -245,12 +260,12 @@ public class DropboxDocumentStore extends AbstractDocumentStore<DropboxDocumentM
 		Metadata newLocFile = null;
 		
 		String archiveFileLoc = newFileLoc + "." + System.currentTimeMillis();
-		Metadata archivedFile = client.files().move(newFileLoc, archiveFileLoc);
+		Metadata archivedFile = client.files().moveV2(newFileLoc, archiveFileLoc).getMetadata();
 		
 		if (archivedFile != null) {
 			
-			newLocFile = client.files().move(oldLoc, newFileLoc);
-			client.files().delete(archiveFileLoc);
+			newLocFile = client.files().moveV2(oldLoc, newFileLoc).getMetadata();
+			client.files().deleteV2(archiveFileLoc).getMetadata();
 			
 		} else {
 			throw new IOException("Unable to archive existing file: " + newFileLoc);
@@ -285,7 +300,7 @@ public class DropboxDocumentStore extends AbstractDocumentStore<DropboxDocumentM
 			
         	logLinkedAccountName(client);
         	
-        	client.files().delete(docMetadata.getLocation());
+        	client.files().deleteV2(docMetadata.getLocation());
         	
         	LOGGER.debug("File [{}] deleted from dropbox", docMetadata.getLocation());
 	        

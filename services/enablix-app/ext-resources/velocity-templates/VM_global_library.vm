@@ -9,6 +9,14 @@ $a_siteUrl/app.html#/portal/container/$a_containerQId/$a_contentIdentity/c/singl
 
 
 #macro( action_button_with_padding $a_btnText $a_btnUrl $a_btnPadding)
+	#action_button_with_padding( $a_btnText $a_btnUrl $a_btnPadding '#0e2a49')
+#end
+
+#macro( action_button_v2 $a_btnText $a_btnUrl )
+	#action_button_with_padding( $a_btnText $a_btnUrl '42' '#1F8AEF')
+#end
+
+#macro( action_button_with_padding_color $a_btnText $a_btnUrl $a_btnPadding $a_btnColor)
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 	<tr>
 		<td>

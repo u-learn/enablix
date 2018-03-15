@@ -78,7 +78,6 @@
     z-index: 100;
 
     .option-row {
-      margin: 0 16px;
       height: 40px;
       display: flex;
       align-items: center;
@@ -88,8 +87,12 @@
           border-bottom: 1px solid rgba(227,235,239, 0.5);
       }
 
-      .option-label {
+      &:hover {
+        background: #E3EBEF;
+      }
 
+      .option-label {
+        margin: 0 16px;
       }
 
     }

@@ -1,73 +1,85 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Enablix - Thank You!</title>
+	<title>Enablix - Sign-up</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="keywords" content="Sales Enablement,Sales Portal,Marketing Portal,Marketing Content Management">
 	<link rel="icon" type="image/png" href="/favicon.png">
 	<link href="./css/bootstrap.min.css" rel="stylesheet" type="text/css">
+	<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900" rel="stylesheet">
 	<style>
-		@font-face {
-			font-family: Circular;
-			src: url("./fonts/CircularAirPro-Book.otf") format("opentype");
-		}
 		
-		@font-face {
-			font-family: FaktPro-Light;
-			src: url("./fonts/FaktPro-Light.ttf") format("truetype");
-		}
-		
-		@font-face {
-			font-family: FaktPro-Blond;
-			src: url("./fonts/FaktPro-Blond.otf") format("opentype");
-		}
-		
-		@font-face {
-			font-family: FaktPro-Medium;
-			src: url("./fonts/FaktPro-Medium.ttf") format("truetype");
-		}
-
 		.header {
-			font-family: FaktPro-Blond;
-			font-weight: bold;
-			font-size: 1.3em;
+			font-family: 'Roboto', sans-serif;
+			padding: 2% 5% 2% 5%;
 		}
 		
 		.logo {
 			text-align: center;
-			margin-top: 5%;
+		}
+		
+		.logo img {
+			height: 3em;
 		}
 		
 		.main {
+			display: flex;
+			justify-content: center;
+		}
+		
+		.thankyou {
+			width: 100%;
+			padding: 4%;
+			background: #FFF;
+			border-radius: 4px;
 			text-align: center;
-			margin: 5%;
 		}
 		
-		.main h1 {
-			font-size: 2em;
-			font-family: "FaktPro-Light";
-			font-weight: bold;
+		.thankyou .heading {
+			font-family: 'Roboto', sans-serif;
+			font-size: 1.75em; 
+			font-weight : bold; 
+			margin-bottom: 16px;
 		}
 		
-		.main h2 {
+		.thankyou .caption {
 			font-size: 1.25em;
-			font-family: "FaktPro-Light";
-			font-weight: bold;
+			font-family: 'Roboto', sans-serif;
+			padding-top: 2%;
+			margin-bottom: 40px;
 		}
 		
-		.footer {
-			font-family: FaktPro-Blond;
-			font-weight: bold;
-			text-align: center;
-			position: fixed;
-		    bottom: 5%;
-		    width: 100%;
-		    text-align: center;
-		    max-width: 1244px;
+		.btn {
+			padding: 0.65em 2em 0.6em 2em;
+		    background: #1f89ef;
+			font-family: 'Roboto', sans-serif;
+		    font-weight: bold;
+		    color: #fff;
+		    border-radius: 4px;
+		    border: 1px solid #1f89ef;
 		}
 		
-		.main .row {
-			position: relative;
+		.btn:hover {
+			background: #44A1F8;
+			color: #fff;
+		}
+		
+		body {
+			font-size: 10px;
+			background: #F7F9F9;
+		}
+		
+		@media (min-width: 992px) {
+		
+			body {
+				font-size: 12px;
+			}
+		
+			.thankyou {
+				max-width: 480px;
+				padding: 3%;
+			}
+			
 		}
 		
 		.centercontainer {
@@ -79,26 +91,22 @@
 		.logotext {
 			margin-left: -5px;
 		}
-
+		
 	</style>
-
 </head>
-<body>
+<body class="mobile-align">
 <div class="centercontainer">
 	<div class="header"><!-- header -->
 		<div class="logo"><!-- Logo -->
-			<a href="/"><img src="./assets/logo.png"></img></a>
-			<span class="logotext">enablix</span>
+			<a href="/"><img src="/img/enablix_logo_with_text@2x.png"></img></a>
 		</div>
 	</div>
 	<div class="main">
-		<div class="row">
-			<h1>Thank you!</h1>
-			<h2>Thank you for your interest. You will be hearing from us soon.</h2>
+		<div class="thankyou">
+			<div class="heading mobile-align">Thanks for your request</div>
+			<div class="caption">Demo request is submitted successfully. You should be hearing from us shortly.</div>
+			<div class="submitbtn"><a class="btn" href="https://enablix.wordpress.com/">Go to Enablix Blog</a></div>
 		</div>
-	</div>
-	<div class="footer">
-		<div>All rights reserved to Enablix LLC &copy; 2018</div>
 	</div>
 </div>
 <script>

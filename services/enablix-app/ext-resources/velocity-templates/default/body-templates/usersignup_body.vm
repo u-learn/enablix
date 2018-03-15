@@ -2,7 +2,7 @@
 
 	#spacer_row('15')
 	
-	<div class="h2" style="color:#0e2a49; font-family:Arial,sans-serif, 'OS'; font-size:20px; line-height:20px; text-align:left; font-weight:bold">
+	<div class="h2" style="font-family:Arial,sans-serif, 'OS'; font-size:20px; line-height:20px; text-align:left;">
 		Welcome to Enablix, ${obj.recipientUser.name}!
 	</div>										
 	
@@ -23,7 +23,7 @@
 
 	#@action_button_table()
 		#@action_button_cell('200')
-			#action_button('Go to Enablix' "${obj.url}/app.html#/portal/home")
+			#action_button_v2('Go to Enablix' "${obj.url}/app.html#/portal/home")
 		#end
 	#end
 	
