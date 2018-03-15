@@ -6,7 +6,7 @@
 		Welcome to Enablix, ${obj.recipientUser.name}!
 	</div>										
 	
-	#spacer_row('15')
+	#spacer_row('20')
 	
 	You’re on your way to building a centralized and trusted source of knowledge for your customer facing teams. Your user id is ${obj.recipientUser.email} <br /> 
 	

@@ -233,7 +233,7 @@ public class EnablixUserService implements UserService, UserDetailsService {
 		modUP = userProfileRepo.save(modUP);
 		
 		if (addUser) {
-			mailService.sendHtmlEmail(user, modUP.getEmail(), "usersignup");
+			mailService.sendHtmlEmail(user, modUP.getEmail(), mailScenario);
 			EventUtil.publishEvent(new Event<UserProfile>(Events.USER_ADDED, modUP));
 		}
 		
