@@ -21,7 +21,6 @@ export class RecentContentComponent implements OnInit {
         .subscribe(
             result => {
               this.data = result;
-              console.log(result);
             },
             error => {
               this.alert.error("Error fetching recent content.", error.status);

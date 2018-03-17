@@ -19,6 +19,7 @@ import com.enablix.app.content.ui.nav.NavigationPathService;
 import com.enablix.app.content.ui.peers.PeerContentService;
 import com.enablix.app.content.ui.reco.RecommendedContentService;
 import com.enablix.commons.util.process.ProcessContext;
+import com.enablix.core.api.ContentDataRef;
 import com.enablix.core.mongo.search.service.SearchRequest;
 import com.enablix.data.segment.DataSegmentService;
 import com.enablix.data.view.DataView;
@@ -54,6 +55,13 @@ public class NavigableContentController {
 		WebRecommendationRequest request = new WebRecommendationRequest();
 		DataView userDataView = dataSegmentService.getDataViewForUserId(ProcessContext.get().getUserId());
 		return recoService.getRecommendedContent(request, userDataView);
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, value="/rlvreco")
+	public List<ContentDataRef> relevantRecommendedContent() {
+		WebRecommendationRequest request = new WebRecommendationRequest();
+		DataView userDataView = dataSegmentService.getDataViewForUserId(ProcessContext.get().getUserId());
+		return recoService.getAIRecommendedContent(request, userDataView);
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value="/reco/{containerQId}/{contentIdentity}/")

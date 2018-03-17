@@ -10,6 +10,7 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.stereotype.Component;
 
 import com.enablix.commons.util.collection.CollectionUtil;
+import com.enablix.core.domain.security.authorization.UserBusinessProfile;
 import com.enablix.core.domain.security.authorization.UserProfile;
 import com.enablix.core.mongo.dao.GenericDao;
 import com.enablix.core.mongo.search.ConditionOperator;
@@ -27,7 +28,8 @@ public class PeerUsersResolver {
 	@SuppressWarnings("unchecked")
 	public List<String> getPeerUserIds(UserProfile user) {
 		
-		Map<String, Object> bizAttrs = user.getBusinessProfile().getAttributes();
+		UserBusinessProfile businessProfile = user.getBusinessProfile();
+		Map<String, Object> bizAttrs = businessProfile == null ? null : businessProfile.getAttributes();
 		
 		if (!CollectionUtil.isEmpty(bizAttrs)) {
 			

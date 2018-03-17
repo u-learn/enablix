@@ -1,5 +1,6 @@
 package com.enablix.data.segment;
 
+import com.enablix.core.domain.security.authorization.UserProfile;
 import com.enablix.core.domain.segment.DataSegment;
 import com.enablix.data.view.DataView;
 
@@ -12,5 +13,7 @@ public interface DataSegmentService {
 	DataView buildDataView(DataSegment ds);
 
 	void save(DataSegment ds);
+
+	DataView createDataViewForUser(UserProfile userProfile);
 	
 }

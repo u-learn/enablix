@@ -50,7 +50,8 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 				"com.enablix.user.pref.repo",
 				"com.enablix.core.mq.repo",
 				"com.enablix.content.quality.repo",
-				"com.enablix.uri.embed.repo"})
+				"com.enablix.uri.embed.repo",
+				"com.enablix.core.mongo.repo"})
 public class AnalyticsAppInit {
 
 	public static void main(String[] args) {

@@ -16,7 +16,7 @@ export class OpenUrlButtonComponent implements OnInit {
   @Input() record: any;
   @Input() container: Container;
 
-  buttonText = "Open Url";
+  buttonText = "Open URL";
 
   constructor(private route: ActivatedRoute, private apiUrlService: ApiUrlService) { }
 

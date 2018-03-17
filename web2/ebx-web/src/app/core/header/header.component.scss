@@ -1,31 +1,87 @@
 @import '~styles/colors.scss';
 @import '~styles/layout.mixin.scss';
+@import '~styles/breakpoint.mixin';
 @import '~styles/fonts.scss';
 
 .nav-bar {
   min-height: 72px;
-  padding: 8px 40px 0 0;
+  padding: 8px 0 0 0;
   width: 100%;
   @include vcenterChildren;
 
   .left {
-      width: 50%;
       @include vcenterChildren;
+
+      @include breakpoint(sm){
+        width: 36px;
+      }
+      
+      @include breakpoint(md){
+        width: 48px;
+      }
 
       .sb-container {
         width: 100%;
       }
   }
 
+  .center1 {
+    display: flex;
+    justify-content: space-between;
+    @include vcenterChildren;
+
+    @include breakpoint(md) {
+        width: calc(100% - 48px - 344px - 80px);
+    }
+  }
+
+  .center2 {
+    @include vcenterChildren;
+    display: flex;
+    width: 80px;
+    justify-content: flex-end;
+  }
+
+  .center3 {
+    @include vcenterChildren;
+    display: flex;
+    width: 296px;
+    justify-content: space-between;
+
+    .center-sub {
+      display: flex;
+    }
+
+    .center-rt {
+      width: 102px;
+    }
+  }
+
   .right {
       @include vcenterChildren;
-      width: 50%;
       justify-content: flex-end;
+
+      @include breakpoint(sm){
+        width: 36px;
+      }
+      
+      @include breakpoint(md){
+        width: 48px;
+      }
+  }
+
+  .rpt-heading {
+    @include vcenterChildren;
+    display: flex;
+    font-family: $FPThin;
+    .title {
+      margin-left: 8px;
+    }
   }
 
   .line {
-    opacity: 0.03;
-    background: $black;
+    /* opacity: 0.03; */
+    background: rgba(0,0,0,.03);
     width: 1px;
     height: 32px;
     margin-right: 16px;
@@ -46,13 +102,17 @@
     .client-brand {
       background: none;
       box-shadow: none;
+
+      .logo {
+          padding: 8px 8px 8px 0;
+      }
     }
   }
 
   .client-brand {
       @include vcenterChildren;
       height: 48px;
-      max-width: 227px;
+      max-width: 176px;
       background: $white;
       box-shadow: 0 1px 1px 0 rgba(0,0,0,0.06);
       border-radius: 4px;

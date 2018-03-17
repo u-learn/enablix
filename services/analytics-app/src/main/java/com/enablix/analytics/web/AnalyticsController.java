@@ -37,6 +37,10 @@ public class AnalyticsController {
 	
 	public static class BayesExecRequest {
 		
+		public enum RecorderType {
+			CSV, DB
+		}
+		
 		private List<String> forTenants;
 		
 		private List<String> forUsers;
@@ -44,6 +48,8 @@ public class AnalyticsController {
 		private Date runAsStartDate;
 		
 		private Date runAsEndDate;
+		
+		private RecorderType recorderType = RecorderType.CSV;
 		
 		public Date getRunAsStartDate() {
 			return runAsStartDate;
@@ -77,6 +83,14 @@ public class AnalyticsController {
 		
 		public void setForUsers(List<String> forUsers) {
 			this.forUsers = forUsers;
+		}
+
+		public RecorderType getRecorderType() {
+			return recorderType;
+		}
+
+		public void setRecorderType(RecorderType recorderType) {
+			this.recorderType = recorderType;
 		}
 
 		@Override

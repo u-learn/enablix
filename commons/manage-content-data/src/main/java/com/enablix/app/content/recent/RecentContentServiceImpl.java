@@ -161,5 +161,4 @@ public class RecentContentServiceImpl implements RecentContentService {
 		return new PageImpl<>(recentList, pageable, contentPage.getTotalElements());
 	}
 	
-
 }

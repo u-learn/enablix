@@ -86,6 +86,8 @@ import { AppRoutingModule } from './app-routing/app-routing.module';
 import { ReportsModule } from './reports/reports.module';
 import { CopyLinkUrlButtonComponent } from './content-action/copy-link-url-button/copy-link-url-button.component';
 import { OpenUrlButtonComponent } from './content-action/open-url-button/open-url-button.component';
+import { RecoContentComponent } from './reco-content/reco-content.component';
+import { RecoContentService } from './reco-content/reco-content.service';
 
 @NgModule({
   declarations: [
@@ -149,7 +151,8 @@ import { OpenUrlButtonComponent } from './content-action/open-url-button/open-ur
     MyContentRequestComponent,
     AllDimensionsComponent,
     CopyLinkUrlButtonComponent,
-    OpenUrlButtonComponent
+    OpenUrlButtonComponent,
+    RecoContentComponent
   ],
   imports: [
     BrowserModule,
@@ -179,6 +182,7 @@ import { OpenUrlButtonComponent } from './content-action/open-url-button/open-ur
     DocStoreConfigService,
     ConfigInfoService,
     ContentShareService,
+    RecoContentService,
     { 
         provide: HTTP_INTERCEPTORS, 
         useClass: NgProgressInterceptor, 

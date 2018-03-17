@@ -66,6 +66,10 @@ button {
         cursor: pointer;
         padding: 8px;
 
+        .action-btn {
+            padding: 0;
+        }
+
         &.with-border {
             border: 1px solid #E3EBEF;
         }

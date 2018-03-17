@@ -20,6 +20,7 @@ export class ApiUrlService {
   static GET_MEMBER_PROFILE = "/d/user/:userIdentity/"
   static GET_DEFAULT_DOCSTORE_CONFIG = "/docstore/default";
   static GET_CONFIG_INFO = "/config/:configKey/";
+  static GET_RECO_CONTENT = "/navcontent/rlvreco";
 
   static GET_CONTENT_WF_STATE_ACTION_MAP = "/contentwf/actionmap/";
 
@@ -228,6 +229,10 @@ export class ApiUrlService {
 
   getActivityMetricSummaryUrl() {
     return this.getAPIUrl(ApiUrlService.GET_ACTIVITY_METRIC_SUMMARY); 
+  }
+
+  getRecoContentUrl() : string {
+    return this.getAPIUrl(ApiUrlService.GET_RECO_CONTENT);
   }
 
   postCheckUserExistUrl() : string {

@@ -16,7 +16,7 @@ export class CopyLinkUrlButtonComponent implements OnInit {
   @Input() record: any;
   @Input() container: Container;
 
-  buttonText = "Copy Url";
+  buttonText = "Copy URL";
 
   constructor(private route: ActivatedRoute, private apiUrlService: ApiUrlService) { }
 
@@ -49,7 +49,7 @@ export class CopyLinkUrlButtonComponent implements OnInit {
           this.buttonText = "Copied to Clipboard";
           
           setTimeout(() => {
-            this.buttonText = "Copy Url";
+            this.buttonText = "Copy URL";
           }, 4000);
       });
 

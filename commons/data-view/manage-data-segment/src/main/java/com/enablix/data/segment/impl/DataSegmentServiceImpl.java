@@ -39,7 +39,8 @@ public class DataSegmentServiceImpl implements DataSegmentService {
 		return createDataViewForUser(userProfile);
 	}
 
-	private DataView createDataViewForUser(UserProfile userProfile) {
+	@Override
+	public DataView createDataViewForUser(UserProfile userProfile) {
 		
 		TemplateFacade template = templateManager.getTemplateFacade(ProcessContext.get().getTemplateId());
 		return dataViewBuilder.createDataView(userProfile.getSystemProfile().getDataSegment(), template);

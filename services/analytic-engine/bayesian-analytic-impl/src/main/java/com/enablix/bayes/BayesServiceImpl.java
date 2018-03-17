@@ -1,47 +1,38 @@
 package com.enablix.bayes;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.Writer;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.batch.item.file.FlatFileHeaderCallback;
-import org.springframework.batch.item.file.FlatFileItemWriter;
-import org.springframework.batch.item.file.transform.DelimitedLineAggregator;
-import org.springframework.batch.item.file.transform.FieldExtractor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.FileSystemResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import com.enablix.app.template.service.TemplateManager;
-import com.enablix.bayes.content.ContentBayesNet;
 import com.enablix.bayes.finding.NodeFindingProvider;
 import com.enablix.bayes.finding.NodeFindingProviderFactory;
 import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.commons.util.StringUtil;
 import com.enablix.commons.util.collection.CollectionUtil;
-import com.enablix.commons.util.date.DateUtil;
 import com.enablix.commons.util.process.ProcessContext;
 import com.enablix.core.api.ContentDataRecord;
 import com.enablix.core.api.TemplateFacade;
 import com.enablix.core.commons.xsdtopojo.ContainerType;
+import com.enablix.core.domain.content.UserContentRelevance;
 import com.enablix.core.domain.security.authorization.UserProfile;
 import com.enablix.core.mongo.content.ContentCrudService;
 import com.enablix.core.mongo.util.MultiTenantExecutor;
 import com.enablix.core.mongo.util.MultiTenantExecutor.TenantTask;
 import com.enablix.core.mongo.view.MongoDataView;
 import com.enablix.core.security.auth.repo.UserProfileRepository;
+import com.enablix.data.segment.DataSegmentService;
+import com.enablix.data.view.DataView;
 import com.enablix.services.util.ContentDataUtil;
+import com.enablix.services.util.DataViewUtil;
 
 import norsys.netica.NeticaException;
 
@@ -50,9 +41,6 @@ public class BayesServiceImpl implements BayesService {
 	
 	private static Logger LOGGER = LoggerFactory.getLogger(BayesServiceImpl.class);
 
-	@Value("${bayes.output.dir}")
-	private String outputDir;
-	
 	@Autowired
 	private NodeFindingProviderFactory providerFactory;
 	
@@ -65,8 +53,11 @@ public class BayesServiceImpl implements BayesService {
 	@Autowired
 	private UserProfileRepository userProfileRepo;
 	
+	@Autowired
+	private DataSegmentService dataSegmentService;
+	
 	@Override
-	public void runBatch(ExecutionContext ctx, EBXNet net) throws Exception {
+	public void runBatch(ExecutionContext ctx, EBXNet net, RelevanceRecorder recorder) throws Exception {
 		
 		// Initialize finding providers
 		for (EBXNode node : net.getNodes()) {
@@ -89,56 +80,47 @@ public class BayesServiceImpl implements BayesService {
 		LOGGER.debug("{}", net);
 		
 		MultiTenantExecutor.executeForEachTenant(ctx.getExecuteForTenants(), 
-					new RelevanceCalculator(net, ctx));
+					new RelevanceCalculator(net, ctx, recorder));
 		
 	}
 	
-	private FlatFileItemWriter<RelevanceInfo> createItemWriter(ExecutionContext ctx) {
-		
-		FlatFileItemWriter<RelevanceInfo> csvWriter = new FlatFileItemWriter<>();
-		
-		DelimitedLineAggregator<RelevanceInfo> lineAggregator = new DelimitedLineAggregator<>();
-		RelevanceInfoFieldExtractor fieldExtractor = new RelevanceInfoFieldExtractor();
-		
-		lineAggregator.setFieldExtractor(fieldExtractor);
-		csvWriter.setLineAggregator(lineAggregator);
-		
-		String outFile = outputDir + File.separator + "content-bayes-" 
-				+ ProcessContext.get().getTenantId() + "-"
-				+ DateUtil.dateToLongDateString(ctx.getRunAsDate()) + "-" 
-				+ Calendar.getInstance().getTimeInMillis() + ".csv";
-		
-		csvWriter.setResource(new FileSystemResource(outFile));
-		
-		csvWriter.setHeaderCallback(fieldExtractor);
-		
-		return csvWriter;
-	}
-
 	public class RelevanceCalculator implements TenantTask {
 
 		private EBXNet net;
 		private ExecutionContext ctx;
+		private RelevanceRecorder recorder;
 		
-		public RelevanceCalculator(EBXNet net, ExecutionContext ctx) {
+		public RelevanceCalculator(EBXNet net, ExecutionContext ctx, RelevanceRecorder recorder) {
 			super();
 			this.net = net;
 			this.ctx = ctx;
+			this.recorder = recorder;
 		}
 
 		@Override
 		public void execute() {
 			
-			FlatFileItemWriter<RelevanceInfo> itemWriter = createItemWriter(ctx);
-			
 			try {
 				
-				itemWriter.open(new org.springframework.batch.item.ExecutionContext());
+				recorder.open(ctx);
 				
+				String tenantId = ProcessContext.get().getTenantId();
 				String templateId = ProcessContext.get().getTemplateId();
+				
 				TemplateFacade template = templateMgr.getTemplateFacade(templateId);
 				
-				for (ContainerType container : template.getBizContentContainers()) {
+				if (template == null) {
+					LOGGER.error("No template [{}] found for tenant [{}]", templateId, tenantId);
+					return;
+				}
+				
+				List<ContainerType> bizContentContainers = template.getBizContentContainers();
+				if (CollectionUtil.isEmpty(bizContentContainers)) {
+					LOGGER.error("No business content containers found for template [{}]", templateId);
+					return;
+				}
+				
+				for (ContainerType container : bizContentContainers) {
 					
 					String contentQId = container.getQualifiedId();
 					String collectionName = template.getCollectionName(contentQId);
@@ -160,7 +142,7 @@ public class BayesServiceImpl implements BayesService {
 							
 							LOGGER.debug("Running bayes net for: contentQId - {}, identity - {}, title - {}", contentQId, recIdentity, title);
 							
-							List<RelevanceInfo> recRelevance = new ArrayList<>();
+							List<UserContentRelevance> recRelevance = new ArrayList<>();
 							
 							int userPageNo = 0;
 							Page<UserProfile> userPage = null;
@@ -178,53 +160,15 @@ public class BayesServiceImpl implements BayesService {
 								
 								for (UserProfile user : userPage) {
 									
-									try {
-										
-										net.getNet().retractFindings();
-										
-									} catch (NeticaException e1) {
-										throw new RuntimeException("Unable to retract findings", e1);
+									DataView dataView = dataSegmentService.createDataViewForUser(user);
+									MongoDataView mongoDataView = DataViewUtil.getMongoDataView(dataView);
+									if (mongoDataView != null && !mongoDataView.isRecordVisible(collectionName, rec)) {
+										// ignore as user does not have access to this record
+										continue;
 									}
 									
-									// calculate and set finding for this user and data record
-									LOGGER.debug("Setting findings for user - {}", user.getEmail());
-									
-									for (EBXNode node : net.getNodes()) {
-										
-										NodeFindingProvider findingProvider = providerFactory.getFindingProvider(node.getName());
-										
-										if (findingProvider != null) {
-	
-											String finding = findingProvider.getFinding(ctx, user, dataRec);
-											
-											if (StringUtil.hasText(finding)) {
-												
-												LOGGER.debug("Finding {} - {}", node.getName(), finding);
-											
-												try {
-													node.getNode().finding().enterState(finding);
-												} catch (NeticaException e) {
-													throw new RuntimeException("Unable to set finding [" + finding 
-															+ "] for node [" + node.getName() + "]", e);
-												}
-											}
-	
-										}
-									}
-									
-									// not find out the relevance score
-									float relevance = net.getProbability();
-									
-									// LOGGER.debug("Bayes net: {}", net);
-									
-									RelevanceInfo info = new RelevanceInfo(user.getEmail(), contentQId, 
-											container.getLabel(), recIdentity, title, relevance);
-									
-									for (EBXNode node : net.getNodes()) {
-										for (String state : node.getStates()) {
-											info.nodeRelevance.put(nodeStateKey(node.getName(), state), node.getBelief(state));
-										}
-									}
+									UserContentRelevance info = calculateRelevance(container, contentQId, dataRec,
+											recIdentity, title, user);
 									
 									recRelevance.add(info);
 									
@@ -238,7 +182,7 @@ public class BayesServiceImpl implements BayesService {
 							
 							// write the results
 							try {
-								itemWriter.write(recRelevance);
+								recorder.write(recRelevance, dataRec);
 							} catch (Exception e) {
 								LOGGER.error("Error writing relevance results", e);
 								throw new RuntimeException(e);
@@ -252,176 +196,60 @@ public class BayesServiceImpl implements BayesService {
 				}
 				
 			} finally {
-				itemWriter.close();
+				recorder.close();
 			}
 			
 		}
-		
-	}
-	
-	private static String nodeStateKey(String nodeName, String state) {
-		return nodeName + "-" + state;
-	}
-	
-	public static final class RelevanceInfo {
-		
-		private String userId;
-		
-		private String contentQId;
-		
-		private String containerLabel;
-		
-		private String contentIdentity;
-		
-		private String contentTitle;
-		
-		private float relevance;
-		
-		private Map<String, Float> nodeRelevance;
 
-		public RelevanceInfo(String userId, String contentQId, String containerLabel, 
-				String contentIdentity, String contentTitle, float relevance) {
-			super();
-			this.userId = userId;
-			this.contentQId = contentQId;
-			this.containerLabel = containerLabel;
-			this.contentIdentity = contentIdentity;
-			this.contentTitle = contentTitle;
-			this.relevance = relevance;
-			this.nodeRelevance = new HashMap<>();
-		}
-		
-		public String getUserId() {
-			return userId;
-		}
-
-		public void setUserId(String userId) {
-			this.userId = userId;
-		}
-
-		public String getContentQId() {
-			return contentQId;
-		}
-
-		public void setContentQId(String contentQId) {
-			this.contentQId = contentQId;
-		}
-		
-		public String getContainerLabel() {
-			return containerLabel;
-		}
-
-		public void setContainerLabel(String containerLabel) {
-			this.containerLabel = containerLabel;
-		}
-
-		public String getContentIdentity() {
-			return contentIdentity;
-		}
-
-		public void setContentIdentity(String contentIdentity) {
-			this.contentIdentity = contentIdentity;
-		}
-
-		public String getContentTitle() {
-			return contentTitle;
-		}
-
-		public void setContentTitle(String contentTitle) {
-			this.contentTitle = contentTitle;
-		}
-
-		public float getRelevance() {
-			return relevance;
-		}
-
-		public void setRelevance(float relevance) {
-			this.relevance = relevance;
-		}
-
-		@Override
-		public String toString() {
-			return "RelevanceInfo [userId=" + userId + ", contentQId=" + contentQId + ", containerLabel="
-					+ containerLabel + ", contentIdentity=" + contentIdentity + ", contentTitle=" + contentTitle
-					+ ", relevance=" + relevance + "]";
-		}
-
-	}
-	
-	public static class RelevanceInfoFieldExtractor implements FieldExtractor<RelevanceInfo>, FlatFileHeaderCallback {
-
-		private static class LogNode {
+		private UserContentRelevance calculateRelevance(ContainerType container, String contentQId,
+				ContentDataRecord dataRec, String recIdentity, String title, UserProfile user) {
 			
-			private String name;
-			private String[] states;
-
-			public LogNode(String name, String[] states) {
-				super();
-				this.name = name;
-				this.states = states;
-			}
-
-			@Override
-			public String toString() {
-				return "LogNode [name=" + name + "]";
+			try {
+				
+				net.getNet().retractFindings();
+				
+			} catch (NeticaException e1) {
+				throw new RuntimeException("Unable to retract findings", e1);
 			}
 			
+			// calculate and set finding for this user and data record
+			LOGGER.debug("Setting findings for user - {}", user.getEmail());
 			
-		}
-		
-		private static final LogNode[] NODE_LIST = { 
-				new LogNode(ContentBayesNet.IS_NEW_CONTENT_NN, EBXNet.States.BOOLS), 
-				new LogNode(ContentBayesNet.IS_RECENTLY_UPDT_CONTENT_NN, EBXNet.States.BOOLS),
-				new LogNode(ContentBayesNet.IS_CONTENT_UPDT_AFTER_ACCESS_NN, EBXNet.States.BOOLS),
-				new LogNode(ContentBayesNet.IS_RECENT_CONTENT_NN, EBXNet.States.BOOLS),
-				new LogNode(ContentBayesNet.PEER_ACCESSED_CONTENT_NN,EBXNet.States.HIGH_LOW_STATES),
-				new LogNode(ContentBayesNet.PEER_ACCESSED_CONTENT_TYPE_NN, EBXNet.States.HIGH_LOW_STATES),
-				new LogNode(ContentBayesNet.IS_POPULAR_AMONG_PEERS_NN, EBXNet.States.BOOLS)
-		};
-		
+			for (EBXNode node : net.getNodes()) {
+				
+				NodeFindingProvider findingProvider = providerFactory.getFindingProvider(node.getName());
+				
+				if (findingProvider != null) {
 
-		@Override
-		public void writeHeader(Writer writer) throws IOException {
-			
-			StringBuilder nodeList = new StringBuilder();
-			
-			for (LogNode node : NODE_LIST) {
-				for (String state : node.states) {
-					nodeList.append(enclosedInQuotes(nodeStateKey(node.name, state))).append(",");
+					String finding = findingProvider.getFinding(ctx, user, dataRec);
+					
+					if (StringUtil.hasText(finding)) {
+						
+						LOGGER.debug("Finding {} - {}", node.getName(), finding);
+					
+						try {
+							node.getNode().finding().enterState(finding);
+						} catch (NeticaException e) {
+							throw new RuntimeException("Unable to set finding [" + finding 
+									+ "] for node [" + node.getName() + "]", e);
+						}
+					}
+
 				}
 			}
 			
-			writer.write("\"User Id\",\"Content Type\",\"Content Identity\",\"Content Title\",\"Relevance\"," 
-							+ nodeList.toString());
-		}
-
-		@Override
-		public Object[] extract(RelevanceInfo item) {
+			UserContentRelevance info = new UserContentRelevance(user.getEmail(), contentQId, 
+					container.getLabel(), recIdentity, title, container.getBusinessCategory(), 
+					net.getProbability(), ctx.getRunAsDate());
 			
-			List<Object> propValues = new ArrayList<>(5 + NODE_LIST.length);
-			
-			propValues.add(enclosedInQuotes(item.getUserId()));
-			propValues.add(enclosedInQuotes(item.getContainerLabel()));
-			propValues.add(enclosedInQuotes(item.getContentIdentity()));
-			propValues.add(enclosedInQuotes(item.getContentTitle()));
-			propValues.add(enclosedInQuotes(item.getRelevance()));
-			
-			for (LogNode nodeName : NODE_LIST) {
-				for (String state : nodeName.states) {
-					propValues.add(enclosedInQuotes(item.nodeRelevance.get(nodeStateKey(nodeName.name, state))));
+			for (EBXNode node : net.getNodes()) {
+				for (String state : node.getStates()) {
+					info.addNodeRelevance(node.getName(), state, node.getBelief(state));
 				}
 			}
 			
-			return propValues.toArray();
+			return info;
 		}
-		
-		private String enclosedInQuotes(Object obj) {
-			return obj == null ? "\"\"" : ("\"" + String.valueOf(obj) + "\"");
-		}
-		
-	}
-	
-	public static class QuotedDelimitedLineAggregator<T> extends DelimitedLineAggregator<T> {
 		
 	}
 	
