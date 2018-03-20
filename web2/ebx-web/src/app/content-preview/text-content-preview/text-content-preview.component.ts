@@ -20,4 +20,10 @@ export class TextContentPreviewComponent implements OnInit {
 
   }
 
+  getValue() {
+    let pt = this.record[this.container.textItemId];
+    let rt = this.record[this.container.textItemId + '_rt'];
+    return rt ? rt : pt;
+  }
+
 }

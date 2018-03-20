@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewEncapsulation, Input, ViewChild } from '@angular/core';
-import { MatDialog, MatDialogRef } from '@angular/material';
 import { environment } from '../../../environments/environment';
 
 import { Container } from '../../model/container.model';
 import { ContentService } from '../../core/content/content.service';
 import { AlertService } from '../../core/alert/alert.service';
+import { ApiUrlService } from '../../core/api-url.service';
 
 @Component({
   selector: 'ebx-doc-download-button',
@@ -21,14 +21,13 @@ export class DocDownloadButtonComponent implements OnInit {
 
   downloadUrl: string;
 
-  constructor(private alert: AlertService, private dialog: MatDialog) { }
+  constructor(private alert: AlertService, private apiUrlService: ApiUrlService) { }
 
   @Input()
   set record(rec: any) {
     this._record = rec;
     if (rec) {
-      this.downloadUrl = environment.baseAPIUrl + "/doc/download/" 
-        + this._record.__decoration.__docMetadata.identity + "?atChannel=WEB";
+      this.downloadUrl = this.apiUrlService.getDocDownloadUrl(this._record.__decoration.__docMetadata.identity) + "?atChannel=WEB";
     }
   }
 

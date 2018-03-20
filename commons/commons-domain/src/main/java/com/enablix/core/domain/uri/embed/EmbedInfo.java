@@ -30,6 +30,8 @@ public class EmbedInfo extends BaseDocumentEntity {
 	private List<Audio> audios;
 	
 	private OEmbed oembed;
+	
+	private Boolean iframeEmbeddable;
 
 	public String getType() {
 		return type;
@@ -115,6 +117,14 @@ public class EmbedInfo extends BaseDocumentEntity {
 		return "error".equals(getType());
 	}
 	
+	public Boolean getIframeEmbeddable() {
+		return iframeEmbeddable;
+	}
+
+	public void setIframeEmbeddable(Boolean iframeEmbeddable) {
+		this.iframeEmbeddable = iframeEmbeddable;
+	}
+
 	@Override
 	public String toString() {
 		return "EmbedInfo [type=" + type + ", url=" + url + ", site=" + site + ", title=" + title + ", description="

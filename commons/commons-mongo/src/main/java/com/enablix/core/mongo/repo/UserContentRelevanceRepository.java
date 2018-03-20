@@ -10,5 +10,7 @@ import com.enablix.core.mongo.repository.BaseMongoRepository;
 public interface UserContentRelevanceRepository extends BaseMongoRepository<UserContentRelevance> {
 
 	List<UserContentRelevance> findByUserIdAndLatestTrue(String userId, Pageable pageable);
+
+	Long deleteByContentIdentity(String contentIdentity);
 	
 }

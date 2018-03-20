@@ -27,11 +27,19 @@ export class EntityPillComponent implements OnInit {
   constructor(private ctService: ContentTemplateService, private navService: NavigationService) { }
 
   ngOnInit() {
-    let container = this.ctService.getConcreteContainerByQId(this.containerQId);
-    if (container) {
-      this.color = container.color;
-      this.isBizContent = this.ctService.isBusinessContent(container);
-      this.isBizDim = this.ctService.isBusinessDimension(container);
+    
+    if (this.containerQId) {
+      
+      let container = this.ctService.getConcreteContainerByQId(this.containerQId);
+      
+      if (container) {
+        this.color = container.color;
+        this.isBizContent = this.ctService.isBusinessContent(container);
+        this.isBizDim = this.ctService.isBusinessDimension(container);
+      } else {
+        this.color = Constants.defaultTypeColor;
+      }
+
     } else {
       this.color = Constants.defaultTypeColor;
     }

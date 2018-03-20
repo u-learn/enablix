@@ -89,6 +89,7 @@ export class ContentTemplateCache {
   checkAndSetContentTypeItemIds(container: Container) {
     
     var descItemId = null;
+    var textItemDef = null;
     
     for (let i = 0; i < container.contentItem.length; i++) {
     
@@ -96,11 +97,13 @@ export class ContentTemplateCache {
       if (contentItem.type == 'RICH_TEXT' && contentItem.id != container.titleItemId
             && !container.docItemId) {
         descItemId = contentItem.id;
+        textItemDef = contentItem;
       } 
 
       if (contentItem.type == 'DOC') {
         // this is a doc item type, nullify item id 
         descItemId = null;
+        textItemDef = null;
         container.docItemId = contentItem.id;
       }
 
@@ -110,6 +113,7 @@ export class ContentTemplateCache {
     }
 
     container.textItemId = descItemId;
+    container.textItemDef = textItemDef;
   }
 
   getContainerLabelAttrId(containerQId: string) : string {

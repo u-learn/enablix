@@ -1,3 +1,1 @@
-<p>
-  rich-text-input works!
-</p>
+<quill-editor [formControl]="textCtrl" [modules]="quillModules" (onContentChanged)="contentChange($event)"></quill-editor>

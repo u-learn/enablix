@@ -65,6 +65,11 @@ public class ShareOptionsController {
 		return serverUrl + shareableUrl;
 	}
 	
+	@RequestMapping(method = RequestMethod.POST, value = "/shareableDocUrlv2/", produces="application/json")
+	public ShareableUrlResponse getShareableDocUrlV2(@RequestBody ShareableUrlRequest request) {
+		return new ShareableUrlResponse(getShareableDocUrl(request));
+	}
+	
 	@RequestMapping(method = RequestMethod.POST, value = "/shareableLinkUrl/", produces="application/json")
 	public ShareableUrlResponse getShareableLinkUrl(@RequestBody ShareableUrlRequest request) {
 		

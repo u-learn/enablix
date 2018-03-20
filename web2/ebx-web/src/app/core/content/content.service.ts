@@ -64,7 +64,7 @@ export class ContentService {
         
         // if rich text item but rich text version of field does not exist, 
         // then set it equal to the plain text value
-        if (dataRecord[item.id + "_rt"]) {
+        if (!dataRecord[item.id + "_rt"]) {
           dataRecord[item.id + "_rt"] = dataRecord[item.id];
         }
       }

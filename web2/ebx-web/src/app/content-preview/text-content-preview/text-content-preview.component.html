@@ -1,6 +1,11 @@
 <div class="text-preview">
-  <div *ngIf="!editing; else editableText">{{record[container.textItemId]}}</div>
+  <div class="plaintext" *ngIf="!editing; else editableText" [innerHtml]="getValue()"></div>
   <ng-template #editableText>
-    <div contenteditable="true" [(ngModel)]="record[container.textItemId]"></div>
+    <ng-container *ngIf="container.textItemDef.type == 'RICH_TEXT'; else editablePlainText">
+      <ebx-rich-text-input [record]="record" [contentItem]="container.textItemDef" [(ngModel)]="record[container.textItemId + '_rt']"></ebx-rich-text-input>
+    </ng-container>
+  </ng-template>
+  <ng-template #editablePlainText>
+    <div class="plaintext" contenteditable="true" [(ngModel)]="record[container.textItemId]"></div>
   </ng-template>
 </div>

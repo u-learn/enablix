@@ -1173,6 +1173,7 @@
 		</container>	
 		<container id="demoscript" label="Demo Scripts" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
+			<contentItem id="shortTitle" label="Short Title" type="text"/>
 			<contentItem id="desc" label="Description" type="richText" searchBoost="1"/>			
 			<contentItem id="file" label="File" type="doc"/>			
 			<contentItem id="experts" label="Experts" type="bounded" searchBoost="5">

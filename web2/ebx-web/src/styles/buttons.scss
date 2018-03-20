@@ -161,6 +161,10 @@ button {
                 background: url("/assets/images/icons/globe.svg") no-repeat center;
             }
             
+            &.copy-doc {
+                background: url("/assets/images/icons/copy-download.svg") no-repeat center;
+            }
+
             &.copy-link {
                 background: url("/assets/images/icons/link-blue.svg") no-repeat center;
             }
@@ -343,4 +347,8 @@ button {
             height: 40px;
         }
     }
+}
+
+.ql-toolbar button {
+    box-shadow: none;
 }

@@ -15,6 +15,9 @@ public class EmbedServiceImpl implements EmbedService {
 	@Autowired
 	private EmbedInfoProvider provider;
 	
+	@Autowired
+	private IFrameTester iframeTester;
+	
 	@Override
 	public EmbedInfo getEmbedInfo(String url) {
 		
@@ -33,6 +36,12 @@ public class EmbedServiceImpl implements EmbedService {
 				}
 			}
 			
+		} else {
+			
+			if (embedInfo.getIframeEmbeddable() == null) {
+				embedInfo.setIframeEmbeddable(iframeTester.checkIFrameEmbeddable(url));
+				localCache.put(url, embedInfo);
+			}
 		}
 		
 		return embedInfo;

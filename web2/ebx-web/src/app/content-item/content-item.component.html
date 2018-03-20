@@ -1,10 +1,27 @@
-<div *ngIf="contentItem.type == 'TEXT'">
+<div class="content-item">
   <p class="label">{{contentItem.label}}</p>
   <p class="text" *ngIf="!editable" [innerHtml]="getValue()"></p>
-  <p class="text" *ngIf="editable"><input [(ngModel)]="record[contentItem.id]" type="text"></p>
-</div>
-<div *ngIf="contentItem.type == 'RICH_TEXT'">
-  <p class="label">{{contentItem.label}}</p>
-  <p class="text" *ngIf="!editable">{{getValue()}}</p>
-  <p class="text" *ngIf="editable"><textarea [(ngModel)]="record[contentItem.id]" row="4"></textarea>
+  <div class="text" *ngIf="editable" [ngSwitch]="contentItem.type">
+    <div *ngSwitchCase="'TEXT'">
+      <ebx-text-input [record]="record" [contentItem]="contentItem" [(ngModel)]="record[contentItem.id]"></ebx-text-input>
+    </div>
+    <div *ngSwitchCase="'NUMERIC'">
+      <ebx-text-input [record]="record" [contentItem]="contentItem" [(ngModel)]="record[contentItem.id]"></ebx-text-input>
+    </div>
+    <div *ngSwitchCase="'DOC'">
+      Doc Input
+    </div>
+    <div *ngSwitchCase="'BOUNDED'">
+      <ebx-bounded-input [record]="record" [contentItem]="contentItem" [(ngModel)]="record[contentItem.id]"></ebx-bounded-input>
+    </div>
+    <div *ngSwitchCase="'DATE_TIME'">
+      <ebx-date-input [record]="record" [contentItem]="contentItem" [(ngModel)]="record[contentItem.id]"></ebx-date-input>
+    </div>
+    <div *ngSwitchCase="'CONTENT_STACK'">
+      <ebx-content-stack-input [record]="record" [contentItem]="contentItem" [(ngModel)]="record[contentItem.id]"></ebx-content-stack-input>
+    </div>
+    <div *ngSwitchCase="'RICH_TEXT'">
+      <ebx-rich-text-input [record]="record" [contentItem]="contentItem" [(ngModel)]="record[contentItem.id + '_rt']"></ebx-rich-text-input>
+    </div>
+  </div>
 </div>

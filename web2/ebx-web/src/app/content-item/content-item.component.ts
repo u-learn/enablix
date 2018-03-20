@@ -20,7 +20,18 @@ export class ContentItemComponent implements OnInit {
   }
 
   getValue() : any {
-    return this.record[this.contentItem.id];
+    
+    switch(this.contentItem.type) {
+
+      case 'RICH_TEXT': 
+        let pt = this.record[this.contentItem.id];
+        let rt = this.record[this.contentItem.id + '_rt'];
+        return rt ? rt : pt;
+    
+      default:
+        return this.record[this.contentItem.id];
+    }
+    
   }
 
 }

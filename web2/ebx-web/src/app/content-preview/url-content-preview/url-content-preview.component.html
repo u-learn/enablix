@@ -1,20 +1,20 @@
 <div *ngIf="url" class="url-asset">
   <div class="embed-rich" *ngIf="type == 'rich' || type == 'link'">
-    <object [data]="url | safeUrl" type="text/html">
-      <!-- trying embedding, else alternate option of showing card -->
-      <div class="embed-card">
-        <a target="_blank" [href]="navUrl">
-          <div class="embed-image" *ngIf="thumbnailUrl">
-            <img [src]="thumbnailUrl">
-          </div>
-          <div class="embed-card-text">
-            <h3>{{embedInfo?.title}}</h3>
-            <div class="embed-desc">{{embedInfo?.description}}</div>
-            <p class="fav"><img class="favicon" *ngIf="embedInfo?.favicon?.url" onerror="this.src='/assets/images/icons/broken.jpg'" [src]="embedInfo.favicon.url">{{embedInfo?.site}}</p>
-          </div>
-        </a>
-      </div>
-    </object>
+    <iframe [src]="url | safeUrl" sandbox="allow-scripts allow-popups allow-forms allow-pointer-lock allow-same-origin" *ngIf="!iframeNotSupported">
+      <a target="_blank" [href]="navUrl">Your browser does not support iFrame</a>
+    </iframe>
+    <div class="embed-card" *ngIf="iframeNotSupported">
+      <a target="_blank" [href]="navUrl">
+        <div class="embed-image" *ngIf="thumbnailUrl">
+          <img [src]="thumbnailUrl">
+        </div>
+        <div class="embed-card-text">
+          <h3>{{embedInfo?.title}}</h3>
+          <div class="embed-desc">{{embedInfo?.description}}</div>
+          <p class="fav"><img class="favicon" *ngIf="embedInfo?.favicon?.url" onerror="this.src='/assets/images/icons/broken.jpg'" [src]="embedInfo.favicon.url">{{embedInfo?.site}}</p>
+        </div>
+      </a>
+    </div>
   </div>
   <div *ngIf="embedHtml" class="embed-oembed" [innerHtml]="embedHtml | safeHtml"></div>
 </div>

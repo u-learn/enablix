@@ -712,4 +712,27 @@ body {
   }
 }
 
+.ql-container {
+    line-height: 18px;
+    min-height: 72px;
+    font-size: 14px;
+    font-family: $FPLight;
+    background: $white;
+}
+
+.content-item, .text-preview {
+    .ql-toolbar.ql-snow, .ql-container.ql-snow {
+        border: 0px;
+    }
+
+    .ql-snow .ql-stroke {
+        stroke: $grey-dark;
+    }
+
+    .ql-snow .ql-fill, .ql-snow .ql-stroke.ql-fill {
+        fill: $grey-dark;
+    }
+}
+
+
 //@import '../pages/index.scss';

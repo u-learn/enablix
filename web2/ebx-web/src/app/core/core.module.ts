@@ -6,6 +6,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ClickOutsideModule } from 'ng-click-outside';
 import { RouterModule, RouterLink } from '@angular/router';
 import { MatDialogModule } from '@angular/material';
+import { QuillModule } from 'ngx-quill';
 
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
@@ -58,7 +59,8 @@ import { AppIntroMsgComponent } from './app-message/app-intro-msg/app-intro-msg.
     ReactiveFormsModule,
     ClickOutsideModule,
     RouterModule,
-    MatDialogModule
+    MatDialogModule,
+    QuillModule
   ],
   providers: [
     AlertService,

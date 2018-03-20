@@ -1,4 +1,5 @@
 import { BaseContainer } from './base-container.model';
+import { ContentItem } from './content-item.model';
 
 export class Container extends BaseContainer {
   
@@ -15,4 +16,5 @@ export class Container extends BaseContainer {
   titleItemId: string;
   textItemId: string;
   docItemId: string;
+  textItemDef: ContentItem;
 }

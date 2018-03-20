@@ -88,6 +88,7 @@ import { CopyLinkUrlButtonComponent } from './content-action/copy-link-url-butto
 import { OpenUrlButtonComponent } from './content-action/open-url-button/open-url-button.component';
 import { RecoContentComponent } from './reco-content/reco-content.component';
 import { RecoContentService } from './reco-content/reco-content.service';
+import { CopyDownloadUrlButtonComponent } from './content-action/copy-download-url-button/copy-download-url-button.component';
 
 @NgModule({
   declarations: [
@@ -152,7 +153,8 @@ import { RecoContentService } from './reco-content/reco-content.service';
     AllDimensionsComponent,
     CopyLinkUrlButtonComponent,
     OpenUrlButtonComponent,
-    RecoContentComponent
+    RecoContentComponent,
+    CopyDownloadUrlButtonComponent
   ],
   imports: [
     BrowserModule,

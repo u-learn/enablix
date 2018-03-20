@@ -10,6 +10,7 @@ export class EmbedInfo extends BaseDocumentEntity {
   videos: Video[];
   audios: Audio[];
   oembed: OEmbed;
+  iframeEmbeddable: boolean;
 }
 
 export class Image {

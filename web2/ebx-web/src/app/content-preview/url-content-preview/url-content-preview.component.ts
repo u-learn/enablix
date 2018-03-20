@@ -23,6 +23,7 @@ export class UrlContentPreviewComponent implements OnInit {
   embedHtml: string;
   thumbnailUrl: string;
   navUrl: string;
+  iframeNotSupported: string;
 
   constructor(private embedInfoService: EmbedInfoService,
               private apiUrlService: ApiUrlService) { }
@@ -43,6 +44,7 @@ export class UrlContentPreviewComponent implements OnInit {
                   
                   this.embedInfo = result;
                   this.type = this.embedInfoService.getEmbedInfoType(this.embedInfo);
+                  this.iframeNotSupported = !this.embedInfo.iframeEmbeddable;
 
                   if (this.type != 'rich' && this.type != 'link' 
                       && this.embedInfo.oembed && this.embedInfo.oembed.html) {

@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -21,19 +22,24 @@ import org.springframework.web.util.UriTemplate;
 import com.enablix.core.domain.uri.embed.EmbedInfo;
 import com.enablix.uri.embed.service.EmbedException;
 import com.enablix.uri.embed.service.EmbedInfoProvider;
+import com.enablix.uri.embed.service.IFrameTester;
 
 @Component
 public class EmbedRocks implements EmbedInfoProvider {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(EmbedRocks.class);
 
+	@Autowired
+	private RestTemplate restTemplate;
+	
+	@Autowired
+	private IFrameTester iframeTester;
+	
 	@Value("${embed.rocks.api.url}")
 	private String apiUrl;
 	
 	@Value("${embed.rocks.api.key}")
 	private String apiKey;
-	
-	private RestTemplate restTemplate = new RestTemplate();
 	
 	@Override
 	public EmbedInfo fetchEmbedInfo(String url) {
@@ -61,7 +67,10 @@ public class EmbedRocks implements EmbedInfoProvider {
 			throw new EmbedException("Error calling embed.rocks");
 		}
 		
-		return response.getBody();
+		EmbedInfo embedInfo = response.getBody();
+		embedInfo.setIframeEmbeddable(iframeTester.checkIFrameEmbeddable(url));
+		
+		return embedInfo;
 	}
 	
 	public static void main(String[] args) throws URISyntaxException {
