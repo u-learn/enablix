@@ -23,7 +23,7 @@ export class UrlContentPreviewComponent implements OnInit {
   embedHtml: string;
   thumbnailUrl: string;
   navUrl: string;
-  iframeNotSupported: string;
+  iframeNotSupported: boolean;
 
   constructor(private embedInfoService: EmbedInfoService,
               private apiUrlService: ApiUrlService) { }
