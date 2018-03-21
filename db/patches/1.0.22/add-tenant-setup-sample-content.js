@@ -872,7 +872,10 @@ var contentList = [
 	    	"identity" : "8caab6ef-95d7-4701-a765-5894b59dc60f",
 	    	"title" : "Defining, Supporting, and Managing Your Best Practices Sales Process with The Six Boxes Approach",
 	        "desc" : "Organizations create several white paper and leverage external white papers for reference. This external white paper is captured as a URL in Enablix. This is a sample asset. Feel free to update or delete this asset.",
-	        "url" : "http://www.sixboxes.com/_customelements/uploadedResources/101039_SixBoxesSalesPerformance.pdf",
+	        "file" : {
+	        	"location" : "101039_SixBoxesSalesPerformance.pdf", 
+	            "contentType" : "application/pdf"
+	        },
 	        "solutions" : [
 	        	{
 	        		"id" : "0072f55a-6170-4e25-8618-0d69b8fd4654", 

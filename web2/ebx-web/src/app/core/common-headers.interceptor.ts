@@ -19,7 +19,7 @@ export class CommonHeadersInterceptor implements HttpInterceptor {
 
     // add resource version for checking on backend
     let resourceVersionsJSON = localStorage.getItem('resource-versions');
-    console.log("resource version from localstorage: " + resourceVersionsJSON);
+    //console.log("resource version from localstorage: " + resourceVersionsJSON);
 
     if (resourceVersionsJSON != null) {
 

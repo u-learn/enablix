@@ -221,8 +221,8 @@ const routes: Routes = [
   imports: [
     CommonModule,
     RouterModule.forRoot(
-        routes,
-        { enableTracing: true }
+        routes
+        /*,{ enableTracing: true }*/
       )
   ],
   declarations: [

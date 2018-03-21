@@ -16,5 +16,9 @@
       </a>
     </div>
   </div>
+  <div class="embed-rich" *ngIf="type == 'pdf'">
+    <object [data]="url | safeUrl" type="application/pdf">
+    </object>
+  </div>
   <div *ngIf="embedHtml" class="embed-oembed" [innerHtml]="embedHtml | safeHtml"></div>
 </div>

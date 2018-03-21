@@ -90,7 +90,7 @@ export class ApiUrlService {
   	  }
   	}
 
-  	console.log("Endpoint URL: " + finalUrl);
+  	//console.log("Endpoint URL: " + finalUrl);
   	return finalUrl;
   }
 
