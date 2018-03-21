@@ -5,7 +5,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
-import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import com.enablix.commons.util.StringUtil;
@@ -27,7 +26,7 @@ public class IFrameTester {
 			String xFrameOptions = response.getFirst("X-Frame-Options");
 			return !StringUtil.hasText(xFrameOptions);
 			
-		} catch (HttpClientErrorException e) {
+		} catch (Throwable e) {
 			return true;
 		}
 	}
