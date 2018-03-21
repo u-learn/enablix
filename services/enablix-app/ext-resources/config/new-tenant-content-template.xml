@@ -271,7 +271,8 @@
 						</datastore>
 					</refList>
 				</bounded>
-			</contentItem>		</container>			
+			</contentItem>		
+		</container>			
 		<container id="datasheet" label="Data Sheets" singularLabel="Data Sheet" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="file" label="File" type="doc"/>
@@ -560,7 +561,8 @@
 						</datastore>
 					</refList>
 				</bounded>
-			</contentItem>		</container>			
+			</contentItem>		
+		</container>			
 		<container id="presentation" label="Presentations" singularLabel="Presentation" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text" searchBoost="7"/>
 			<contentItem id="file" label="File" type="doc"/>
@@ -609,7 +611,8 @@
 						</datastore>
 					</refList>
 				</bounded>
-			</contentItem>		</container>
+			</contentItem>		
+		</container>
 		<container id="proposal" label="Proposals" singularLabel="Proposal" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="file" label="File" type="doc"/>	
@@ -756,7 +759,8 @@
 						</datastore>
 					</refList>
 				</bounded>
-			</contentItem>		</container>			
+			</contentItem>		
+		</container>			
 		<container id="content" label="Other Content" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="file" label="File" type="doc"/>
@@ -860,7 +864,7 @@
 			</text>
 		</contentUIDef>		
 		<contentUIDef qualifiedId="integration">
-			<container labelQualifiedId="industry.shortName"/>
+			<container labelQualifiedId="integration.shortName"/>
 		</contentUIDef>			
 		<contentUIDef qualifiedId="integration.shortName">
 			<text type="short">

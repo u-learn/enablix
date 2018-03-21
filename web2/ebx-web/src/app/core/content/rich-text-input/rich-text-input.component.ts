@@ -30,13 +30,13 @@ export class RichTextInputComponent implements OnInit, ControlValueAccessor {
     this.textCtrl = new FormControl();
     this.quillModules = {
       toolbar: [
-        ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+        ['bold'/*, 'italic', 'underline', 'strike'*/],        // toggled buttons
         //['blockquote', 'code-block'],
 
         //[{ 'header': 1 }, { 'header': 2 }],               // custom button values
         [{ 'list': 'ordered'}, { 'list': 'bullet' }],
         //[{ 'script': 'sub'}, { 'script': 'super' }],      // superscript/subscript
-        [{ 'indent': '-1'}, { 'indent': '+1' }]          // outdent/indent
+        //[{ 'indent': '-1'}, { 'indent': '+1' }]           // outdent/indent
         //[{ 'direction': 'rtl' }],                         // text direction
 
         //[{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown

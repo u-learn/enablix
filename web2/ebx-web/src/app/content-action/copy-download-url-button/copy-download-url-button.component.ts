@@ -16,7 +16,7 @@ export class CopyDownloadUrlButtonComponent implements OnInit {
   @Input() record: any;
   @Input() container: Container;
 
-  buttonText = "Copy Download URL";
+  buttonText = "Copy File URL";
 
   constructor(private route: ActivatedRoute, private apiUrlService: ApiUrlService) { }
 
@@ -49,7 +49,7 @@ export class CopyDownloadUrlButtonComponent implements OnInit {
           this.buttonText = "Copied to Clipboard";
           
           setTimeout(() => {
-            this.buttonText = "Copy Download URL";
+            this.buttonText = "Copy File URL";
           }, 4000);
       });
 

@@ -4,6 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
+import 'rxjs/add/observable/of';
 
 @Injectable()
 export class HttpErrorInterceptor implements HttpInterceptor {
@@ -20,7 +21,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
             if (err.status == 401 && !this.router.url.startsWith('/login')
                     && !req.url.endsWith('/logout')) {
                 this.router.navigate(['login'], { queryParams: {returnUrl: this.router.url} });
-                return null;
+                return Observable.of(err);
             }
 
             if (err.error instanceof Error) {

@@ -18,7 +18,7 @@ export class CopyPortalUrlButtonComponent implements OnInit {
   @Input() record: any;
   @Input() container: Container;
 
-  buttonText = "Copy Portal URL";
+  buttonText = "Copy Asset URL";
 
   constructor(private route: ActivatedRoute, private location: Location) { }
 
@@ -35,7 +35,7 @@ export class CopyPortalUrlButtonComponent implements OnInit {
     this.buttonText = "Copied to Clipboard";
     
     setTimeout(() => {
-      this.buttonText = "Copy Portal URL";
+      this.buttonText = "Copy Asset URL";
     }, 4000);
   }
 

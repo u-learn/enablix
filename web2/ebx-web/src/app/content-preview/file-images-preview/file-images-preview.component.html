@@ -1,6 +1,6 @@
 <div class="file-preview">
-  <div class="active-slide" *ngIf="activeSlide.url">
-    <img class="slide" [src]="activeSlide.url" />
+  <div class="active-slide" *ngFor="let s of slides" [hidden]="s.id !== activeSlide.id">
+    <img class="slide" [src]="s.url" />
   </div>
   <div class="all-slides">
     <div class="mini-slide" [class.active]="s.id == activeSlide.id" *ngFor="let s of slides; let indx = index" (click)="selectSlide(indx)" >

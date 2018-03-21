@@ -23,8 +23,8 @@
           <div class="btn-set">
             <ebx-copy-portal-url-button *ngIf="!contentRequest" class="action-btn" [container]="container" [record]="record"></ebx-copy-portal-url-button>
             <ng-container *ngIf="record?.__decoration?.__docMetadata">
-              <ebx-doc-download-button class="action-btn" [container]="container" [record]="record"></ebx-doc-download-button>
               <ebx-copy-download-url-button class="action-btn" [container]="container" [record]="record"></ebx-copy-download-url-button>
+              <ebx-doc-download-button class="action-btn" [container]="container" [record]="record"></ebx-doc-download-button>
             </ng-container>
             <ng-container *ngIf="record?.__urls?.length > 0">
               <ebx-copy-link-url-button  class="action-btn" [container]="container" [record]="record"></ebx-copy-link-url-button>
@@ -61,7 +61,7 @@
         <h1 *ngIf="!editing" [innerHtml]="record[container.titleItemId]"></h1>
         <p class="label">Last updated {{(contentRequest ? contentRequest.modifiedAt : record.modifiedAt) | ebxDate}}</p>
         <div class="row" *ngIf="record?.__decoration?.__docMetadata?.name || (container.docItemId && editing)">
-            <p class="label">Source</p>
+            <p class="label">File</p>
             <div class="text">{{record?.__decoration?.__docMetadata?.name}}</div>
             <div class="dashboard-buttons margin-top" *ngIf="editing">
               <ebx-doc-update-button class="action-btn" [container]="container" [record]="record" (onDocUpdate)="onContentUpdate()"></ebx-doc-update-button>

@@ -17,7 +17,7 @@
       <p class="card-title" [innerHtml]="title" ellipsis ellipsis-resize-detection="window"></p>
       <p class="company-properties">
         <span>{{linkedContentText}}</span>
-        <span *ngIf="linkedContentCount > 1">&nbsp;&nbsp;+{{linkedContentCount}}</span>
+        <span *ngIf="linkedContentCount > 1">&nbsp;&nbsp;+{{linkedContentCount - 1}}</span>
       </p>
     </div>
   </div>

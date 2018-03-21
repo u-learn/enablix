@@ -7,7 +7,7 @@
     textarea, .plaintext, .ql-editor {
         border-radius: 4px;
         background: $white;
-        height: 340px;
+        min-height: 340px;
         box-shadow: 0 1px 1px 0 rgba(0,0,0,0.06);
         padding: 21px 32px;
 

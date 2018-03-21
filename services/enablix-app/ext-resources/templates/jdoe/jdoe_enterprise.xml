@@ -1,0 +1,1086 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentTemplate id="jdoe_enterprise" version="1.4">
+    <dataDefinition>
+        <container businessCategory="BUSINESS_DIMENSION" color="#4046ad" id="solution" qualifiedId="solution" label="Solutions" singularLabel="Solution">
+            <contentItem type="text" id="name" qualifiedId="solution.name" label="Name" searchBoost="7"/>
+            <contentItem type="text" id="shortName" qualifiedId="solution.shortName" label="Short Name" searchBoost="7"/>
+            <container linkContainerQId="article" linkContentItemId="solutions" id="solArticle" qualifiedId="solution.solArticle" label="News Article"/>
+            <container linkContainerQId="battlecard" linkContentItemId="solutions" id="solBattleCard" qualifiedId="solution.solBattleCard" label="Battle Cards"/>
+            <container linkContainerQId="blog" linkContentItemId="solutions" id="solBlog" qualifiedId="solution.solBlog" label="Blogs"/>
+            <container linkContainerQId="casestudy" linkContentItemId="solutions" id="solCaseStudy" qualifiedId="solution.solCaseStudy" label="Case Studies"/>
+            <container linkContainerQId="datasheet" linkContentItemId="solutions" id="solDataSheet" qualifiedId="solution.solDataSheet" label="Data Sheet"/>
+            <container linkContainerQId="discoveryquestion" linkContentItemId="solutions" id="solDiscQuestion" qualifiedId="solution.solDiscQuestion" label="Discovery Questions"/>
+            <container linkContainerQId="faq" linkContentItemId="solutions" id="solFAQ" qualifiedId="solution.solFAQ" label="FAQ"/>
+            <container linkContainerQId="image" linkContentItemId="solutions" id="solImage" qualifiedId="solution.solImage" label="Images"/>
+            <container linkContainerQId="importantslide" linkContentItemId="solutions" id="solImpSlide" qualifiedId="solution.solImpSlide" label="Important Slides"/>
+            <container linkContainerQId="presentation" linkContentItemId="solutions" id="solPresentation" qualifiedId="solution.solPresentation" label="Presentations"/>
+            <container linkContainerQId="press" linkContentItemId="solutions" id="solPress" qualifiedId="solution.solPress" label="Press"/>
+            <container linkContainerQId="proposal" linkContentItemId="solutions" id="solProposal" qualifiedId="solution.solProposal" label="Proposals"/>
+            <container linkContainerQId="video" linkContentItemId="solutions" id="solVideo" qualifiedId="solution.solVideo" label="Videos"/>
+            <container linkContainerQId="whitepaper" linkContentItemId="solutions" id="solWhitePaper" qualifiedId="solution.solWhitePaper" label="White Papers"/>
+            <container linkContainerQId="content" linkContentItemId="solutions" id="solContent" qualifiedId="solution.solContent" label="Other Content"/>
+        </container>
+        <container businessCategory="BUSINESS_DIMENSION" color="#e75632" id="integration" qualifiedId="integration" label="Integrations" singularLabel="Integration">
+            <contentItem type="text" id="name" qualifiedId="integration.name" label="Name" searchBoost="7"/>
+            <contentItem type="text" id="shortName" qualifiedId="integration.shortName" label="Short Name" searchBoost="7"/>
+            <container linkContainerQId="article" linkContentItemId="integrations" id="intArticle" qualifiedId="integration.intArticle" label="News Article"/>
+            <container linkContainerQId="battlecard" linkContentItemId="integrations" id="intBattleCard" qualifiedId="integration.intBattleCard" label="Battle Cards"/>
+            <container linkContainerQId="blog" linkContentItemId="integrations" id="intBlog" qualifiedId="integration.intBlog" label="Blogs"/>
+            <container linkContainerQId="casestudy" linkContentItemId="integrations" id="intCaseStudy" qualifiedId="integration.intCaseStudy" label="Case Studies"/>
+            <container linkContainerQId="datasheet" linkContentItemId="integrations" id="intDataSheet" qualifiedId="integration.intDataSheet" label="Data Sheet"/>
+            <container linkContainerQId="discoveryquestion" linkContentItemId="integrations" id="intDiscQuestion" qualifiedId="integration.intDiscQuestion" label="Discovery Questions"/>
+            <container linkContainerQId="faq" linkContentItemId="integrations" id="intFAQ" qualifiedId="integration.intFAQ" label="FAQ"/>
+            <container linkContainerQId="image" linkContentItemId="integrations" id="intImage" qualifiedId="integration.intImage" label="Images"/>
+            <container linkContainerQId="importantslide" linkContentItemId="integrations" id="intImpSlide" qualifiedId="integration.intImpSlide" label="Important Slides"/>
+            <container linkContainerQId="press" linkContentItemId="integrations" id="intPress" qualifiedId="integration.intPress" label="Press"/>
+            <container linkContainerQId="presentation" linkContentItemId="integrations" id="intPresentation" qualifiedId="integration.intPresentation" label="Presentations"/>
+            <container linkContainerQId="proposal" linkContentItemId="integrations" id="intProposal" qualifiedId="integration.intProposal" label="Proposals"/>
+            <container linkContainerQId="video" linkContentItemId="integrations" id="intVideo" qualifiedId="integration.intVideo" label="Videos"/>
+            <container linkContainerQId="whitepaper" linkContentItemId="integrations" id="intWhitePaper" qualifiedId="integration.intWhitePaper" label="White Papers"/>
+            <container linkContainerQId="content" linkContentItemId="integrations" id="intContent" qualifiedId="integration.intContent" label="Other Content"/>
+        </container>
+        <container businessCategory="BUSINESS_DIMENSION" color="#7147d3" id="product" qualifiedId="product" label="Products" singularLabel="Product">
+            <contentItem type="text" id="name" qualifiedId="product.name" label="Name" searchBoost="7"/>
+            <contentItem type="text" id="shortName" qualifiedId="product.shortName" label="Short Name" searchBoost="7"/>
+            <container linkContainerQId="article" linkContentItemId="products" id="prodArticle" qualifiedId="product.prodArticle" label="News Article"/>
+            <container linkContainerQId="battlecard" linkContentItemId="products" id="prodBattleCard" qualifiedId="product.prodBattleCard" label="Battle Cards"/>
+            <container linkContainerQId="blog" linkContentItemId="products" id="prodBlog" qualifiedId="product.prodBlog" label="Blogs"/>
+            <container linkContainerQId="casestudy" linkContentItemId="products" id="prodCaseStudy" qualifiedId="product.prodCaseStudy" label="Case Studies"/>
+            <container linkContainerQId="datasheet" linkContentItemId="products" id="prodDataSheet" qualifiedId="product.prodDataSheet" label="Data Sheet"/>
+            <container linkContainerQId="discoveryquestion" linkContentItemId="products" id="prodDiscQuestion" qualifiedId="product.prodDiscQuestion" label="Discovery Questions"/>
+            <container linkContainerQId="faq" linkContentItemId="products" id="prodFAQ" qualifiedId="product.prodFAQ" label="FAQ"/>
+            <container linkContainerQId="image" linkContentItemId="products" id="prodImage" qualifiedId="product.prodImage" label="Images"/>
+            <container linkContainerQId="importantslide" linkContentItemId="products" id="prodImpSlide" qualifiedId="product.prodImpSlide" label="Important Slides"/>
+            <container linkContainerQId="press" linkContentItemId="products" id="prodPress" qualifiedId="product.prodPress" label="Press"/>
+            <container linkContainerQId="presentation" linkContentItemId="products" id="prodPresentation" qualifiedId="product.prodPresentation" label="Presentations"/>
+            <container linkContainerQId="proposal" linkContentItemId="products" id="prodProposal" qualifiedId="product.prodProposal" label="Proposals"/>
+            <container linkContainerQId="video" linkContentItemId="products" id="prodVideo" qualifiedId="product.prodVideo" label="Videos"/>
+            <container linkContainerQId="whitepaper" linkContentItemId="products" id="prodWhitePaper" qualifiedId="product.prodWhitePaper" label="White Papers"/>
+            <container linkContainerQId="content" linkContentItemId="products" id="prodContent" qualifiedId="product.prodContent" label="Other Content"/>
+        </container>
+        <container businessCategory="BUSINESS_DIMENSION" color="#70e58f" id="topic" qualifiedId="topic" label="Topics" singularLabel="Topic">
+            <contentItem type="text" id="name" qualifiedId="topic.name" label="Topic Name"/>
+            <contentItem type="text" id="shortName" qualifiedId="topic.shortName" label="Short Name"/>
+            <container linkContainerQId="article" linkContentItemId="topics" id="topicArticle" qualifiedId="topic.topicArticle" label="Articles"/>
+            <container linkContainerQId="blog" linkContentItemId="topics" id="topicBlog" qualifiedId="topic.topicBlog" label="Blogs"/>
+            <container linkContainerQId="casestudy" linkContentItemId="topics" id="topicCaseStudy" qualifiedId="topic.topicCaseStudy" label="Case Studies"/>
+            <container linkContainerQId="discoveryquestion" linkContentItemId="topics" id="topicDiscQuestion" qualifiedId="topic.topicDiscQuestion" label="Discovery Questions"/>
+            <container linkContainerQId="faq" linkContentItemId="topics" id="topicFAQ" qualifiedId="topic.topicFAQ" label="FAQ"/>
+            <container linkContainerQId="image" linkContentItemId="topics" id="topicImage" qualifiedId="topic.topicImage" label="Images"/>
+            <container linkContainerQId="importantslide" linkContentItemId="topics" id="topicImpSlide" qualifiedId="topic.topicImpSlide" label="Important Slides"/>
+            <container linkContainerQId="presentation" linkContentItemId="topics" id="topicPresentation" qualifiedId="topic.topicPresentation" label="Presentations"/>
+            <container linkContainerQId="press" linkContentItemId="topics" id="topicPress" qualifiedId="topic.topicPress" label="Press"/>
+            <container linkContainerQId="proposal" linkContentItemId="topics" id="topicProposal" qualifiedId="topic.topicProposal" label="Proposals"/>
+            <container linkContainerQId="video" linkContentItemId="topics" id="topicVideo" qualifiedId="topic.topicVideo" label="Videos"/>
+            <container linkContainerQId="whitepaper" linkContentItemId="topics" id="topicWhitePaper" qualifiedId="topic.topicWhitePaper" label="White Papers"/>
+            <container linkContainerQId="content" linkContentItemId="topics" id="topicContent" qualifiedId="topic.topicContent" label="Other Content"/>
+        </container>
+        <container businessCategory="BUSINESS_CONTENT" id="article" qualifiedId="article" label="Articles" singularLabel="Article">
+            <contentItem type="text" id="title" qualifiedId="article.title" label="Title" searchBoost="7"/>
+            <contentItem type="doc" id="file" qualifiedId="article.file" label="File"/>
+            <contentItem type="text" id="url" qualifiedId="article.url" label="URL"/>
+            <contentItem type="richText" id="desc" qualifiedId="article.desc" label="Description" searchBoost="2"/>
+            <contentItem type="bounded" id="solutions" qualifiedId="article.solutions" label="Solutions" searchBoost="6">
+                <bounded multivalued="true">
+                    <refList>
+                        <datastore hyperlink="true">
+                            <storeId>solution</storeId>
+                            <dataId>identity</dataId>
+                            <dataLabel>shortName</dataLabel>
+                        </datastore>
+                    </refList>
+                </bounded>
+            </contentItem>
+            <contentItem type="bounded" id="integrations" qualifiedId="article.integrations" label="Integrations" searchBoost="6">
+                <bounded multivalued="true">
+                    <refList>
+                        <datastore hyperlink="true">
+                            <storeId>integration</storeId>
+                            <dataId>identity</dataId>
+                            <dataLabel>shortName</dataLabel>
+                        </datastore>
+                    </refList>
+                </bounded>
+            </contentItem>
+            <contentItem type="bounded" id="products" qualifiedId="article.products" label="Products" searchBoost="6">
+                <bounded multivalued="true">
+                    <refList>
+                        <datastore hyperlink="true">
+                            <storeId>product</storeId>
+                            <dataId>identity</dataId>
+                            <dataLabel>shortName</dataLabel>
+                        </datastore>
+                    </refList>
+                </bounded>
+            </contentItem>
+            <contentItem type="bounded" id="topics" qualifiedId="article.topics" label="Topics" searchBoost="6">
+                <bounded>
+                    <refList>
+                        <datastore hyperlink="true">
+                            <storeId>topic</storeId>
+                            <dataId>identity</dataId>
+                            <dataLabel>shortName</dataLabel>
+                        </datastore>
+                    </refList>
+                </bounded>
+            </contentItem>
+        </container>
+        <container businessCategory="BUSINESS_CONTENT" id="battlecard" qualifiedId="battlecard" label="Battle Cards" singularLabel="Battle Card">
+            <contentItem type="text" id="title" qualifiedId="battlecard.title" label="Title"/>
+            <contentItem type="doc" id="file" qualifiedId="battlecard.file" label="File"/>
+            <contentItem type="text" id="url" qualifiedId="battlecard.url" label="URL"/>
+            <contentItem type="richText" id="desc" qualifiedId="battlecard.desc" label="Description"/>
+            <contentItem type="bounded" id="solutions" qualifiedId="battlecard.solutions" label="Solutions" searchBoost="6">
+                <bounded multivalued="true">
+                    <refList>
+                        <datastore hyperlink="true">
+                            <storeId>solution</storeId>
+                            <dataId>identity</dataId>
+                            <dataLabel>shortName</dataLabel>
+                        </datastore>
+                    </refList>
+                </bounded>
+            </contentItem>
+            <contentItem type="bounded" id="integrations" qualifiedId="battlecard.integrations" label="Integrations" searchBoost="6">
+                <bounded multivalued="true">
+                    <refList>
+                        <datastore hyperlink="true">
+                            <storeId>integration</storeId>
+                            <dataId>identity</dataId>
+                            <dataLabel>shortName</dataLabel>
+                        </datastore>
+                    </refList>
+                </bounded>
+            </contentItem>
+            <contentItem type="bounded" id="products" qualifiedId="battlecard.products" label="Products" searchBoost="6">
+                <bounded multivalued="true">
+                    <refList>
+                        <datastore hyperlink="true">
+                            <storeId>product</storeId>
+                            <dataId>identity</dataId>
+                            <dataLabel>shortName</dataLabel>
+                        </datastore>
+                    </refList>
+                </bounded>
+            </contentItem>
+            <contentItem type="bounded" id="topics" qualifiedId="battlecard.topics" label="Topics" searchBoost="6">
+                <bounded>
+                    <refList>
+                        <datastore hyperlink="true">
+                            <storeId>topic</storeId>
+                            <dataId>identity</dataId>
+                            <dataLabel>shortName</dataLabel>
+                        </datastore>
+                    </refList>
+                </bounded>
+            </contentItem>
+        </container>
+        <container businessCategory="BUSINESS_CONTENT" id="blog" qualifiedId="blog" label="Blogs" singularLabel="Blog">
+            <contentItem type="text" id="title" qualifiedId="blog.title" label="Title"/>
+            <contentItem type="doc" id="file" qualifiedId="blog.file" label="File"/>
+            <contentItem type="text" id="url" qualifiedId="blog.url" label="URL"/>
+            <contentItem type="richText" id="desc" qualifiedId="blog.desc" label="Description" searchBoost="2"/>
+            <contentItem type="bounded" id="solutions" qualifiedId="blog.solutions" label="Solutions" searchBoost="6">
+                <bounded multivalued="true">
+                    <refList>
+                        <datastore hyperlink="true">
+                            <storeId>solution</storeId>
+                            <dataId>identity</dataId>
+                            <dataLabel>shortName</dataLabel>
+                        </datastore>
+                    </refList>
+                </bounded>
+            </contentItem>
+            <contentItem type="bounded" id="integrations" qualifiedId="blog.integrations" label="Integrations" searchBoost="6">
+                <bounded multivalued="true">
+                    <refList>
+                        <datastore hyperlink="true">
+                            <storeId>integration</storeId>
+                            <dataId>identity</dataId>
+                            <dataLabel>shortName</dataLabel>
+                        </datastore>
+                    </refList>
+                </bounded>
+            </contentItem>
+            <contentItem type="bounded" id="products" qualifiedId="blog.products" label="Products" searchBoost="6">
+                <bounded multivalued="true">
+                    <refList>
+                        <datastore hyperlink="true">
+                            <storeId>product</storeId>
+                            <dataId>identity</dataId>
+                            <dataLabel>shortName</dataLabel>
+                        </datastore>
+                    </refList>
+                </bounded>
+            </contentItem>
+            <contentItem type="bounded" id="topics" qualifiedId="blog.topics" label="Topics" searchBoost="6">
+                <bounded>
+                    <refList>
+                        <datastore hyperlink="true">
+                            <storeId>topic</storeId>
+                            <dataId>identity</dataId>
+                            <dataLabel>shortName</dataLabel>
+                        </datastore>
+                    </refList>
+                </bounded>
+            </contentItem>
+        </container>
+        <container businessCategory="BUSINESS_CONTENT" id="casestudy" qualifiedId="casestudy" label="Case Studies" singularLabel="Case Study">
+            <contentItem type="text" id="title" qualifiedId="casestudy.title" label="Title"/>
+            <contentItem type="doc" id="file" qualifiedId="casestudy.file" label="File"/>
+            <contentItem type="text" id="url" qualifiedId="casestudy.url" label="URL"/>
+            <contentItem type="richText" id="desc" qualifiedId="casestudy.desc" label="Description" searchBoost="2"/>
+            <contentItem type="bounded" id="solutions" qualifiedId="casestudy.solutions" label="Solutions" searchBoost="6">
+                <bounded multivalued="true">
+                    <refList>
+                        <datastore hyperlink="true">
+                            <storeId>solution</storeId>
+                            <dataId>identity</dataId>
+                            <dataLabel>shortName</dataLabel>
+                        </datastore>
+                    </refList>
+                </bounded>
+            </contentItem>
+            <contentItem type="bounded" id="integrations" qualifiedId="casestudy.integrations" label="Integrations" searchBoost="6">
+                <bounded multivalued="true">
+                    <refList>
+                        <datastore hyperlink="true">
+                            <storeId>integration</storeId>
+                            <dataId>identity</dataId>
+                            <dataLabel>shortName</dataLabel>
+                        </datastore>
+                    </refList>
+                </bounded>
+            </contentItem>
+            <contentItem type="bounded" id="products" qualifiedId="casestudy.products" label="Products" searchBoost="6">
+                <bounded multivalued="true">
+                    <refList>
+                        <datastore hyperlink="true">
+                            <storeId>product</storeId>
+                            <dataId>identity</dataId>
+                            <dataLabel>shortName</dataLabel>
+                        </datastore>
+                    </refList>
+                </bounded>
+            </contentItem>
+            <contentItem type="bounded" id="topics" qualifiedId="casestudy.topics" label="Topics" searchBoost="6">
+                <bounded>
+                    <refList>
+                        <datastore hyperlink="true">
+                            <storeId>topic</storeId>
+                            <dataId>identity</dataId>
+                            <dataLabel>shortName</dataLabel>
+                        </datastore>
+                    </refList>
+                </bounded>
+            </contentItem>
+        </container>
+        <container businessCategory="BUSINESS_CONTENT" id="datasheet" qualifiedId="datasheet" label="Data Sheets" singularLabel="Data Sheet">
+            <contentItem type="text" id="title" qualifiedId="datasheet.title" label="Title"/>
+            <contentItem type="doc" id="file" qualifiedId="datasheet.file" label="File"/>
+            <contentItem type="text" id="url" qualifiedId="datasheet.url" label="URL"/>
+            <contentItem type="richText" id="desc" qualifiedId="datasheet.desc" label="Description" searchBoost="2"/>
+            <contentItem type="bounded" id="solutions" qualifiedId="datasheet.solutions" label="Solutions" searchBoost="6">
+                <bounded multivalued="true">
+                    <refList>
+                        <datastore hyperlink="true">
+                            <storeId>solution</storeId>
+                            <dataId>identity</dataId>
+                            <dataLabel>shortName</dataLabel>
+                        </datastore>
+                    </refList>
+                </bounded>
+            </contentItem>
+            <contentItem type="bounded" id="integrations" qualifiedId="datasheet.integrations" label="Integrations" searchBoost="6">
+                <bounded multivalued="true">
+                    <refList>
+                        <datastore hyperlink="true">
+                            <storeId>integration</storeId>
+                            <dataId>identity</dataId>
+                            <dataLabel>shortName</dataLabel>
+                        </datastore>
+                    </refList>
+                </bounded>
+            </contentItem>
+            <contentItem type="bounded" id="products" qualifiedId="datasheet.products" label="Products" searchBoost="6">
+                <bounded multivalued="true">
+                    <refList>
+                        <datastore hyperlink="true">
+                            <storeId>product</storeId>
+                            <dataId>identity</dataId>
+                            <dataLabel>shortName</dataLabel>
+                        </datastore>
+                    </refList>
+                </bounded>
+            </contentItem>
+            <contentItem type="bounded" id="topics" qualifiedId="datasheet.topics" label="Topics" searchBoost="6">
+                <bounded>
+                    <refList>
+                        <datastore hyperlink="true">
+                            <storeId>topic</storeId>
+                            <dataId>identity</dataId>
+                            <dataLabel>shortName</dataLabel>
+                        </datastore>
+                    </refList>
+                </bounded>
+            </contentItem>
+        </container>
+        <container businessCategory="BUSINESS_CONTENT" id="discoveryquestion" qualifiedId="discoveryquestion" label="Discovery Questions" singularLabel="Discovery Question">
+            <contentItem type="text" id="title" qualifiedId="discoveryquestion.title" label="Question" searchBoost="7"/>
+            <contentItem type="richText" id="desc" qualifiedId="discoveryquestion.desc" label="Description" searchBoost="2"/>
+            <contentItem type="bounded" id="solutions" qualifiedId="discoveryquestion.solutions" label="Solutions" searchBoost="6">
+                <bounded multivalued="true">
+                    <refList>
+                        <datastore hyperlink="true">
+                            <storeId>solution</storeId>
+                            <dataId>identity</dataId>
+                            <dataLabel>shortName</dataLabel>
+                        </datastore>
+                    </refList>
+                </bounded>
+            </contentItem>
+            <contentItem type="bounded" id="integrations" qualifiedId="discoveryquestion.integrations" label="Integrations" searchBoost="6">
+                <bounded multivalued="true">
+                    <refList>
+                        <datastore hyperlink="true">
+                            <storeId>integration</storeId>
+                            <dataId>identity</dataId>
+                            <dataLabel>shortName</dataLabel>
+                        </datastore>
+                    </refList>
+                </bounded>
+            </contentItem>
+            <contentItem type="bounded" id="products" qualifiedId="discoveryquestion.products" label="Products" searchBoost="6">
+                <bounded multivalued="true">
+                    <refList>
+                        <datastore hyperlink="true">
+                            <storeId>product</storeId>
+                            <dataId>identity</dataId>
+                            <dataLabel>shortName</dataLabel>
+                        </datastore>
+                    </refList>
+                </bounded>
+            </contentItem>
+            <contentItem type="bounded" id="topics" qualifiedId="discoveryquestion.topics" label="Topics" searchBoost="6">
+                <bounded>
+                    <refList>
+                        <datastore hyperlink="true">
+                            <storeId>topic</storeId>
+                            <dataId>identity</dataId>
+                            <dataLabel>shortName</dataLabel>
+                        </datastore>
+                    </refList>
+                </bounded>
+            </contentItem>
+        </container>
+        <container businessCategory="BUSINESS_CONTENT" id="faq" qualifiedId="faq" label="FAQ">
+            <contentItem type="text" id="title" qualifiedId="faq.title" label="Question" searchBoost="7"/>
+            <contentItem type="richText" id="desc" qualifiedId="faq.desc" label="Answer" searchBoost="2"/>
+            <contentItem type="bounded" id="solutions" qualifiedId="faq.solutions" label="Solutions" searchBoost="6">
+                <bounded multivalued="true">
+                    <refList>
+                        <datastore hyperlink="true">
+                            <storeId>solution</storeId>
+                            <dataId>identity</dataId>
+                            <dataLabel>shortName</dataLabel>
+                        </datastore>
+                    </refList>
+                </bounded>
+            </contentItem>
+            <contentItem type="bounded" id="integrations" qualifiedId="faq.integrations" label="Integrations" searchBoost="6">
+                <bounded multivalued="true">
+                    <refList>
+                        <datastore hyperlink="true">
+                            <storeId>integration</storeId>
+                            <dataId>identity</dataId>
+                            <dataLabel>shortName</dataLabel>
+                        </datastore>
+                    </refList>
+                </bounded>
+            </contentItem>
+            <contentItem type="bounded" id="products" qualifiedId="faq.products" label="Products" searchBoost="6">
+                <bounded multivalued="true">
+                    <refList>
+                        <datastore hyperlink="true">
+                            <storeId>product</storeId>
+                            <dataId>identity</dataId>
+                            <dataLabel>shortName</dataLabel>
+                        </datastore>
+                    </refList>
+                </bounded>
+            </contentItem>
+            <contentItem type="bounded" id="topics" qualifiedId="faq.topics" label="Topics" searchBoost="6">
+                <bounded>
+                    <refList>
+                        <datastore hyperlink="true">
+                            <storeId>topic</storeId>
+                            <dataId>identity</dataId>
+                            <dataLabel>shortName</dataLabel>
+                        </datastore>
+                    </refList>
+                </bounded>
+            </contentItem>
+        </container>
+        <container businessCategory="BUSINESS_CONTENT" id="image" qualifiedId="image" label="Images" singularLabel="Image">
+            <contentItem type="text" id="title" qualifiedId="image.title" label="Title"/>
+            <contentItem type="doc" id="file" qualifiedId="image.file" label="File"/>
+            <contentItem type="text" id="url" qualifiedId="image.url" label="URL"/>
+            <contentItem type="richText" id="desc" qualifiedId="image.desc" label="Description"/>
+            <contentItem type="bounded" id="solutions" qualifiedId="image.solutions" label="Solutions" searchBoost="6">
+                <bounded multivalued="true">
+                    <refList>
+                        <datastore hyperlink="true">
+                            <storeId>solution</storeId>
+                            <dataId>identity</dataId>
+                            <dataLabel>shortName</dataLabel>
+                        </datastore>
+                    </refList>
+                </bounded>
+            </contentItem>
+            <contentItem type="bounded" id="integrations" qualifiedId="image.integrations" label="Integrations" searchBoost="6">
+                <bounded multivalued="true">
+                    <refList>
+                        <datastore hyperlink="true">
+                            <storeId>integration</storeId>
+                            <dataId>identity</dataId>
+                            <dataLabel>shortName</dataLabel>
+                        </datastore>
+                    </refList>
+                </bounded>
+            </contentItem>
+            <contentItem type="bounded" id="products" qualifiedId="image.products" label="Products" searchBoost="6">
+                <bounded multivalued="true">
+                    <refList>
+                        <datastore hyperlink="true">
+                            <storeId>product</storeId>
+                            <dataId>identity</dataId>
+                            <dataLabel>shortName</dataLabel>
+                        </datastore>
+                    </refList>
+                </bounded>
+            </contentItem>
+            <contentItem type="bounded" id="topics" qualifiedId="image.topics" label="Topics" searchBoost="6">
+                <bounded>
+                    <refList>
+                        <datastore hyperlink="true">
+                            <storeId>topic</storeId>
+                            <dataId>identity</dataId>
+                            <dataLabel>shortName</dataLabel>
+                        </datastore>
+                    </refList>
+                </bounded>
+            </contentItem>
+        </container>
+        <container businessCategory="BUSINESS_CONTENT" id="importantslide" qualifiedId="importantslide" label="Important Slides" singularLabel="Important Slide">
+            <contentItem type="text" id="title" qualifiedId="importantslide.title" label="Title"/>
+            <contentItem type="doc" id="file" qualifiedId="importantslide.file" label="File"/>
+            <contentItem type="richText" id="desc" qualifiedId="importantslide.desc" label="Description"/>
+            <contentItem type="bounded" id="solutions" qualifiedId="importantslide.solutions" label="Solutions" searchBoost="6">
+                <bounded multivalued="true">
+                    <refList>
+                        <datastore hyperlink="true">
+                            <storeId>solution</storeId>
+                            <dataId>identity</dataId>
+                            <dataLabel>shortName</dataLabel>
+                        </datastore>
+                    </refList>
+                </bounded>
+            </contentItem>
+            <contentItem type="bounded" id="integrations" qualifiedId="importantslide.integrations" label="Integrations" searchBoost="6">
+                <bounded multivalued="true">
+                    <refList>
+                        <datastore hyperlink="true">
+                            <storeId>integration</storeId>
+                            <dataId>identity</dataId>
+                            <dataLabel>shortName</dataLabel>
+                        </datastore>
+                    </refList>
+                </bounded>
+            </contentItem>
+            <contentItem type="bounded" id="products" qualifiedId="importantslide.products" label="Products" searchBoost="6">
+                <bounded multivalued="true">
+                    <refList>
+                        <datastore hyperlink="true">
+                            <storeId>product</storeId>
+                            <dataId>identity</dataId>
+                            <dataLabel>shortName</dataLabel>
+                        </datastore>
+                    </refList>
+                </bounded>
+            </contentItem>
+            <contentItem type="bounded" id="topics" qualifiedId="importantslide.topics" label="Topics" searchBoost="6">
+                <bounded>
+                    <refList>
+                        <datastore hyperlink="true">
+                            <storeId>topic</storeId>
+                            <dataId>identity</dataId>
+                            <dataLabel>shortName</dataLabel>
+                        </datastore>
+                    </refList>
+                </bounded>
+            </contentItem>
+        </container>
+        <container businessCategory="BUSINESS_CONTENT" id="press" qualifiedId="press" label="Press Releases" singularLabel="Press Release">
+            <contentItem type="text" id="title" qualifiedId="press.title" label="Title" searchBoost="7"/>
+            <contentItem type="doc" id="file" qualifiedId="press.file" label="File"/>
+            <contentItem type="text" id="url" qualifiedId="press.url" label="URL"/>
+            <contentItem type="richText" id="desc" qualifiedId="press.desc" label="Description" searchBoost="2"/>
+            <contentItem type="bounded" id="solutions" qualifiedId="press.solutions" label="Solutions" searchBoost="6">
+                <bounded multivalued="true">
+                    <refList>
+                        <datastore hyperlink="true">
+                            <storeId>solution</storeId>
+                            <dataId>identity</dataId>
+                            <dataLabel>shortName</dataLabel>
+                        </datastore>
+                    </refList>
+                </bounded>
+            </contentItem>
+            <contentItem type="bounded" id="integrations" qualifiedId="press.integrations" label="Integrations" searchBoost="6">
+                <bounded multivalued="true">
+                    <refList>
+                        <datastore hyperlink="true">
+                            <storeId>integration</storeId>
+                            <dataId>identity</dataId>
+                            <dataLabel>shortName</dataLabel>
+                        </datastore>
+                    </refList>
+                </bounded>
+            </contentItem>
+            <contentItem type="bounded" id="products" qualifiedId="press.products" label="Products" searchBoost="6">
+                <bounded multivalued="true">
+                    <refList>
+                        <datastore hyperlink="true">
+                            <storeId>product</storeId>
+                            <dataId>identity</dataId>
+                            <dataLabel>shortName</dataLabel>
+                        </datastore>
+                    </refList>
+                </bounded>
+            </contentItem>
+            <contentItem type="bounded" id="topics" qualifiedId="press.topics" label="Topics" searchBoost="6">
+                <bounded>
+                    <refList>
+                        <datastore hyperlink="true">
+                            <storeId>topic</storeId>
+                            <dataId>identity</dataId>
+                            <dataLabel>shortName</dataLabel>
+                        </datastore>
+                    </refList>
+                </bounded>
+            </contentItem>
+        </container>
+        <container businessCategory="BUSINESS_CONTENT" id="presentation" qualifiedId="presentation" label="Presentations" singularLabel="Presentation">
+            <contentItem type="text" id="title" qualifiedId="presentation.title" label="Title" searchBoost="7"/>
+            <contentItem type="doc" id="file" qualifiedId="presentation.file" label="File"/>
+            <contentItem type="text" id="url" qualifiedId="presentation.url" label="URL"/>
+            <contentItem type="richText" id="desc" qualifiedId="presentation.desc" label="Description" searchBoost="2"/>
+            <contentItem type="bounded" id="solutions" qualifiedId="presentation.solutions" label="Solutions" searchBoost="6">
+                <bounded multivalued="true">
+                    <refList>
+                        <datastore hyperlink="true">
+                            <storeId>solution</storeId>
+                            <dataId>identity</dataId>
+                            <dataLabel>shortName</dataLabel>
+                        </datastore>
+                    </refList>
+                </bounded>
+            </contentItem>
+            <contentItem type="bounded" id="integrations" qualifiedId="presentation.integrations" label="Integrations" searchBoost="6">
+                <bounded multivalued="true">
+                    <refList>
+                        <datastore hyperlink="true">
+                            <storeId>integration</storeId>
+                            <dataId>identity</dataId>
+                            <dataLabel>shortName</dataLabel>
+                        </datastore>
+                    </refList>
+                </bounded>
+            </contentItem>
+            <contentItem type="bounded" id="products" qualifiedId="presentation.products" label="Products" searchBoost="6">
+                <bounded multivalued="true">
+                    <refList>
+                        <datastore hyperlink="true">
+                            <storeId>product</storeId>
+                            <dataId>identity</dataId>
+                            <dataLabel>shortName</dataLabel>
+                        </datastore>
+                    </refList>
+                </bounded>
+            </contentItem>
+            <contentItem type="bounded" id="topics" qualifiedId="presentation.topics" label="Topics" searchBoost="6">
+                <bounded>
+                    <refList>
+                        <datastore hyperlink="true">
+                            <storeId>topic</storeId>
+                            <dataId>identity</dataId>
+                            <dataLabel>shortName</dataLabel>
+                        </datastore>
+                    </refList>
+                </bounded>
+            </contentItem>
+        </container>
+        <container businessCategory="BUSINESS_CONTENT" id="proposal" qualifiedId="proposal" label="Proposals" singularLabel="Proposal">
+            <contentItem type="text" id="title" qualifiedId="proposal.title" label="Title"/>
+            <contentItem type="doc" id="file" qualifiedId="proposal.file" label="File"/>
+            <contentItem type="text" id="url" qualifiedId="proposal.url" label="URL"/>
+            <contentItem type="richText" id="desc" qualifiedId="proposal.desc" label="Description" searchBoost="2"/>
+            <contentItem type="bounded" id="solutions" qualifiedId="proposal.solutions" label="Solutions" searchBoost="6">
+                <bounded multivalued="true">
+                    <refList>
+                        <datastore hyperlink="true">
+                            <storeId>solution</storeId>
+                            <dataId>identity</dataId>
+                            <dataLabel>shortName</dataLabel>
+                        </datastore>
+                    </refList>
+                </bounded>
+            </contentItem>
+            <contentItem type="bounded" id="integrations" qualifiedId="proposal.integrations" label="Integrations" searchBoost="6">
+                <bounded multivalued="true">
+                    <refList>
+                        <datastore hyperlink="true">
+                            <storeId>integration</storeId>
+                            <dataId>identity</dataId>
+                            <dataLabel>shortName</dataLabel>
+                        </datastore>
+                    </refList>
+                </bounded>
+            </contentItem>
+            <contentItem type="bounded" id="products" qualifiedId="proposal.products" label="Products" searchBoost="6">
+                <bounded multivalued="true">
+                    <refList>
+                        <datastore hyperlink="true">
+                            <storeId>product</storeId>
+                            <dataId>identity</dataId>
+                            <dataLabel>shortName</dataLabel>
+                        </datastore>
+                    </refList>
+                </bounded>
+            </contentItem>
+            <contentItem type="bounded" id="topics" qualifiedId="proposal.topics" label="Topics" searchBoost="6">
+                <bounded>
+                    <refList>
+                        <datastore hyperlink="true">
+                            <storeId>topic</storeId>
+                            <dataId>identity</dataId>
+                            <dataLabel>shortName</dataLabel>
+                        </datastore>
+                    </refList>
+                </bounded>
+            </contentItem>
+        </container>
+        <container businessCategory="BUSINESS_CONTENT" id="video" qualifiedId="video" label="Videos" singularLabel="Video">
+            <contentItem type="text" id="title" qualifiedId="video.title" label="Title"/>
+            <contentItem type="doc" id="file" qualifiedId="video.file" label="File"/>
+            <contentItem type="text" id="url" qualifiedId="video.url" label="URL"/>
+            <contentItem type="richText" id="desc" qualifiedId="video.desc" label="Description"/>
+            <contentItem type="bounded" id="solutions" qualifiedId="video.solutions" label="Solutions" searchBoost="6">
+                <bounded multivalued="true">
+                    <refList>
+                        <datastore hyperlink="true">
+                            <storeId>solution</storeId>
+                            <dataId>identity</dataId>
+                            <dataLabel>shortName</dataLabel>
+                        </datastore>
+                    </refList>
+                </bounded>
+            </contentItem>
+            <contentItem type="bounded" id="integrations" qualifiedId="video.integrations" label="Integrations" searchBoost="6">
+                <bounded multivalued="true">
+                    <refList>
+                        <datastore hyperlink="true">
+                            <storeId>integration</storeId>
+                            <dataId>identity</dataId>
+                            <dataLabel>shortName</dataLabel>
+                        </datastore>
+                    </refList>
+                </bounded>
+            </contentItem>
+            <contentItem type="bounded" id="products" qualifiedId="video.products" label="Products" searchBoost="6">
+                <bounded multivalued="true">
+                    <refList>
+                        <datastore hyperlink="true">
+                            <storeId>product</storeId>
+                            <dataId>identity</dataId>
+                            <dataLabel>shortName</dataLabel>
+                        </datastore>
+                    </refList>
+                </bounded>
+            </contentItem>
+            <contentItem type="bounded" id="topics" qualifiedId="video.topics" label="Topics" searchBoost="6">
+                <bounded>
+                    <refList>
+                        <datastore hyperlink="true">
+                            <storeId>topic</storeId>
+                            <dataId>identity</dataId>
+                            <dataLabel>shortName</dataLabel>
+                        </datastore>
+                    </refList>
+                </bounded>
+            </contentItem>
+        </container>
+        <container businessCategory="BUSINESS_CONTENT" id="whitepaper" qualifiedId="whitepaper" label="White Papers" singularLabel="White Paper">
+            <contentItem type="text" id="title" qualifiedId="whitepaper.title" label="Title"/>
+            <contentItem type="doc" id="file" qualifiedId="whitepaper.file" label="File"/>
+            <contentItem type="text" id="url" qualifiedId="whitepaper.url" label="URL"/>
+            <contentItem type="richText" id="desc" qualifiedId="whitepaper.desc" label="Description" searchBoost="2"/>
+            <contentItem type="bounded" id="solutions" qualifiedId="whitepaper.solutions" label="Solutions" searchBoost="6">
+                <bounded multivalued="true">
+                    <refList>
+                        <datastore hyperlink="true">
+                            <storeId>solution</storeId>
+                            <dataId>identity</dataId>
+                            <dataLabel>shortName</dataLabel>
+                        </datastore>
+                    </refList>
+                </bounded>
+            </contentItem>
+            <contentItem type="bounded" id="integrations" qualifiedId="whitepaper.integrations" label="Integrations" searchBoost="6">
+                <bounded multivalued="true">
+                    <refList>
+                        <datastore hyperlink="true">
+                            <storeId>integration</storeId>
+                            <dataId>identity</dataId>
+                            <dataLabel>shortName</dataLabel>
+                        </datastore>
+                    </refList>
+                </bounded>
+            </contentItem>
+            <contentItem type="bounded" id="products" qualifiedId="whitepaper.products" label="Products" searchBoost="6">
+                <bounded multivalued="true">
+                    <refList>
+                        <datastore hyperlink="true">
+                            <storeId>product</storeId>
+                            <dataId>identity</dataId>
+                            <dataLabel>shortName</dataLabel>
+                        </datastore>
+                    </refList>
+                </bounded>
+            </contentItem>
+            <contentItem type="bounded" id="topics" qualifiedId="whitepaper.topics" label="Topics" searchBoost="6">
+                <bounded>
+                    <refList>
+                        <datastore hyperlink="true">
+                            <storeId>topic</storeId>
+                            <dataId>identity</dataId>
+                            <dataLabel>shortName</dataLabel>
+                        </datastore>
+                    </refList>
+                </bounded>
+            </contentItem>
+        </container>
+        <container businessCategory="BUSINESS_CONTENT" id="content" qualifiedId="content" label="Other Content">
+            <contentItem type="text" id="title" qualifiedId="content.title" label="Title"/>
+            <contentItem type="doc" id="file" qualifiedId="content.file" label="File"/>
+            <contentItem type="text" id="url" qualifiedId="content.url" label="URL"/>
+            <contentItem type="richText" id="desc" qualifiedId="content.desc" label="Description"/>
+            <contentItem type="bounded" id="solutions" qualifiedId="content.solutions" label="Solutions" searchBoost="6">
+                <bounded multivalued="true">
+                    <refList>
+                        <datastore hyperlink="true">
+                            <storeId>solution</storeId>
+                            <dataId>identity</dataId>
+                            <dataLabel>shortName</dataLabel>
+                        </datastore>
+                    </refList>
+                </bounded>
+            </contentItem>
+            <contentItem type="bounded" id="integrations" qualifiedId="content.integrations" label="Integrations" searchBoost="6">
+                <bounded multivalued="true">
+                    <refList>
+                        <datastore hyperlink="true">
+                            <storeId>integration</storeId>
+                            <dataId>identity</dataId>
+                            <dataLabel>shortName</dataLabel>
+                        </datastore>
+                    </refList>
+                </bounded>
+            </contentItem>
+            <contentItem type="bounded" id="products" qualifiedId="content.products" label="Products" searchBoost="6">
+                <bounded multivalued="true">
+                    <refList>
+                        <datastore hyperlink="true">
+                            <storeId>product</storeId>
+                            <dataId>identity</dataId>
+                            <dataLabel>shortName</dataLabel>
+                        </datastore>
+                    </refList>
+                </bounded>
+            </contentItem>
+            <contentItem type="bounded" id="topics" qualifiedId="content.topics" label="Topics" searchBoost="6">
+                <bounded>
+                    <refList>
+                        <datastore hyperlink="true">
+                            <storeId>topic</storeId>
+                            <dataId>identity</dataId>
+                            <dataLabel>shortName</dataLabel>
+                        </datastore>
+                    </refList>
+                </bounded>
+            </contentItem>
+        </container>
+        <container refData="true" id="businessRole" qualifiedId="businessRole" label="Business Roles" singularLabel="Business Role">
+            <contentItem type="text" id="roleName" qualifiedId="businessRole.roleName" label="Role"/>
+        </container>
+        <container refData="true" id="user" qualifiedId="user" label="Users">
+            <contentItem type="bounded" id="role" qualifiedId="user.role" label="Business Roles">
+                <bounded>
+                    <refList>
+                        <datastore>
+                            <storeId>businessRole</storeId>
+                            <dataId>identity</dataId>
+                            <dataLabel>roleName</dataLabel>
+                        </datastore>
+                    </refList>
+                </bounded>
+            </contentItem>
+        </container>
+        <userProfileRef>
+            <containerQId>user</containerQId>
+            <emailAttributeId>email</emailAttributeId>
+        </userProfileRef>
+    </dataDefinition>
+    <uiDefinition>
+        <contentUIDef qualifiedId="~root~">
+            <container>
+                <enclosure id="collateral" label="Collateral">
+                    <childContainer id="article"/>
+                    <childContainer id="battlecard"/>
+                    <childContainer id="blog"/>
+                    <childContainer id="casestudy"/>
+                    <childContainer id="datasheet"/>
+                    <childContainer id="discoveryquestion"/>
+                    <childContainer id="faq"/>
+                    <childContainer id="image"/>
+                    <childContainer id="importantslide"/>
+                    <childContainer id="press"/>
+                    <childContainer id="presentation"/>
+                    <childContainer id="proposal"/>
+                    <childContainer id="video"/>
+                    <childContainer id="whitepaper"/>
+                    <childContainer id="content"/>
+                </enclosure>
+            </container>
+        </contentUIDef>
+        <contentUIDef qualifiedId="solution">
+            <container labelQualifiedId="solution.shortName"/>
+        </contentUIDef>
+        <contentUIDef qualifiedId="solution.shortName">
+            <text type="short">
+                <autoPopulate>
+                    <refContentItem itemId="name"/>
+                </autoPopulate>
+            </text>
+        </contentUIDef>
+        <contentUIDef qualifiedId="integration">
+            <container labelQualifiedId="integration.shortName"/>
+        </contentUIDef>
+        <contentUIDef qualifiedId="integration.shortName">
+            <text type="short">
+                <autoPopulate>
+                    <refContentItem itemId="name"/>
+                </autoPopulate>
+            </text>
+        </contentUIDef>
+        <contentUIDef qualifiedId="topic">
+            <container labelQualifiedId="topic.name">
+                <portalConfig>
+                    <headingContentItem id="name"/>
+                </portalConfig>
+            </container>
+        </contentUIDef>
+        <contentUIDef qualifiedId="topic.shortName">
+            <text type="short">
+                <autoPopulate>
+                    <refContentItem itemId="name"/>
+                </autoPopulate>
+            </text>
+        </contentUIDef>
+        <contentUIDef qualifiedId="product">
+            <container labelQualifiedId="product.shortName"/>
+        </contentUIDef>
+        <contentUIDef qualifiedId="product.shortName">
+            <text type="short">
+                <autoPopulate>
+                    <refContentItem itemId="name"/>
+                </autoPopulate>
+            </text>
+        </contentUIDef>
+        <contentUIDef qualifiedId="article">
+            <container labelQualifiedId="article.title">
+                <portalConfig>
+                    <headingContentItem id="title"/>
+                </portalConfig>
+            </container>
+        </contentUIDef>
+        <contentUIDef qualifiedId="article.desc">
+            <text type="long"/>
+        </contentUIDef>
+        <contentUIDef qualifiedId="battlecard">
+            <container labelQualifiedId="battlecard.title">
+                <portalConfig>
+                    <headingContentItem id="title"/>
+                </portalConfig>
+            </container>
+        </contentUIDef>
+        <contentUIDef qualifiedId="battlecard.desc">
+            <text type="long"/>
+        </contentUIDef>
+        <contentUIDef qualifiedId="blog">
+            <container labelQualifiedId="blog.title">
+                <portalConfig>
+                    <headingContentItem id="title"/>
+                </portalConfig>
+            </container>
+        </contentUIDef>
+        <contentUIDef qualifiedId="blog.desc">
+            <text type="long"/>
+        </contentUIDef>
+        <contentUIDef qualifiedId="casestudy">
+            <container labelQualifiedId="casestudy.title">
+                <portalConfig>
+                    <headingContentItem id="title"/>
+                </portalConfig>
+            </container>
+        </contentUIDef>
+        <contentUIDef qualifiedId="casestudy.desc">
+            <text type="long"/>
+        </contentUIDef>
+        <contentUIDef qualifiedId="datasheet">
+            <container labelQualifiedId="datasheet.title">
+                <portalConfig>
+                    <headingContentItem id="title"/>
+                </portalConfig>
+            </container>
+        </contentUIDef>
+        <contentUIDef qualifiedId="datasheet.desc">
+            <text type="long"/>
+        </contentUIDef>
+        <contentUIDef qualifiedId="discoveryquestion">
+            <container labelQualifiedId="discoveryquestion.title">
+                <portalConfig>
+                    <headingContentItem id="title"/>
+                </portalConfig>
+            </container>
+        </contentUIDef>
+        <contentUIDef qualifiedId="discoveryquestion.desc">
+            <text type="long"/>
+        </contentUIDef>
+        <contentUIDef qualifiedId="faq">
+            <container labelQualifiedId="faq.title">
+                <portalConfig>
+                    <headingContentItem id="title"/>
+                </portalConfig>
+            </container>
+        </contentUIDef>
+        <contentUIDef qualifiedId="faq.desc">
+            <text type="long"/>
+        </contentUIDef>
+        <contentUIDef qualifiedId="image">
+            <container labelQualifiedId="image.title">
+                <portalConfig>
+                    <headingContentItem id="title"/>
+                </portalConfig>
+            </container>
+        </contentUIDef>
+        <contentUIDef qualifiedId="image.desc">
+            <text type="long"/>
+        </contentUIDef>
+        <contentUIDef qualifiedId="importantslide">
+            <container labelQualifiedId="importantslide.title">
+                <portalConfig>
+                    <headingContentItem id="title"/>
+                </portalConfig>
+            </container>
+        </contentUIDef>
+        <contentUIDef qualifiedId="importantslide.desc">
+            <text type="long"/>
+        </contentUIDef>
+        <contentUIDef qualifiedId="press">
+            <container labelQualifiedId="press.title">
+                <portalConfig>
+                    <headingContentItem id="title"/>
+                </portalConfig>
+            </container>
+        </contentUIDef>
+        <contentUIDef qualifiedId="press.desc">
+            <text type="long"/>
+        </contentUIDef>
+        <contentUIDef qualifiedId="presentation">
+            <container labelQualifiedId="presentation.title">
+                <portalConfig>
+                    <headingContentItem id="title"/>
+                </portalConfig>
+            </container>
+        </contentUIDef>
+        <contentUIDef qualifiedId="presentation.desc">
+            <text type="long"/>
+        </contentUIDef>
+        <contentUIDef qualifiedId="proposal">
+            <container labelQualifiedId="proposal.title">
+                <portalConfig>
+                    <headingContentItem id="title"/>
+                </portalConfig>
+            </container>
+        </contentUIDef>
+        <contentUIDef qualifiedId="proposal.desc">
+            <text type="long"/>
+        </contentUIDef>
+        <contentUIDef qualifiedId="video">
+            <container labelQualifiedId="video.title"/>
+        </contentUIDef>
+        <contentUIDef qualifiedId="video.desc">
+            <text type="long"/>
+        </contentUIDef>
+        <contentUIDef qualifiedId="whitepaper">
+            <container labelQualifiedId="whitepaper.title">
+                <portalConfig>
+                    <headingContentItem id="title"/>
+                </portalConfig>
+            </container>
+        </contentUIDef>
+        <contentUIDef qualifiedId="whitepaper.desc">
+            <text type="long"/>
+        </contentUIDef>
+        <contentUIDef qualifiedId="content">
+            <container labelQualifiedId="content.title">
+                <portalConfig>
+                    <headingContentItem id="title"/>
+                </portalConfig>
+            </container>
+        </contentUIDef>
+        <contentUIDef qualifiedId="content.desc">
+            <text type="long"/>
+        </contentUIDef>
+    </uiDefinition>
+    <portalUIDefinition>
+        <topNavigation>
+            <itemContainers>
+                <itemContainer qualifiedId="solution"/>
+                <itemContainer qualifiedId="integration"/>
+                <itemContainer qualifiedId="product"/>
+                <itemContainer qualifiedId="topic"/>
+            </itemContainers>
+            <enclosures>
+                <enclosure id="collateral" label="Collateral">
+                    <childContainer id="article"/>
+                    <childContainer id="battlecard"/>
+                    <childContainer id="blog"/>
+                    <childContainer id="casestudy"/>
+                    <childContainer id="datasheet"/>
+                    <childContainer id="discoveryquestion"/>
+                    <childContainer id="faq"/>
+                    <childContainer id="image"/>
+                    <childContainer id="importantslide"/>
+                    <childContainer id="press"/>
+                    <childContainer id="presentation"/>
+                    <childContainer id="proposal"/>
+                    <childContainer id="video"/>
+                    <childContainer id="whitepaper"/>
+                    <childContainer id="content"/>
+                </enclosure>
+            </enclosures>
+        </topNavigation>
+    </portalUIDefinition>
+</contentTemplate>
