@@ -2,6 +2,8 @@ package com.enablix.tenant.impl;
 
 import java.util.List;
 
+import javax.annotation.PostConstruct;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -16,11 +18,16 @@ import com.mongodb.DBCursor;
 @Component
 public class TenantDBSetup implements TenantSetupTask {
 
-	@Value("${new.tenant.copy.collections:ebx_role}")
+	@Value("#{'${new.tenant.copy.collections:ebx_role,ebx_embed_info}'.split(',')}")
 	private List<String> copyCollections;
 	
 	@Autowired
 	private MongoTemplate mongoTemplate;
+	
+	@PostConstruct
+	public void init() {
+		System.out.println(copyCollections);
+	}
 	
 	@Override
 	public void execute(Tenant tenant) throws Exception {

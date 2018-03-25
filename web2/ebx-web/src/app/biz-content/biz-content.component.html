@@ -4,57 +4,62 @@
           <div class="icon small back"></div>
       </button>
   </div>
-  <div *ngIf="!editing">
-      <div class="dashboard-buttons">
-          <ng-container *ebxAccess="'VIEW_STUDIO|SUGGEST_CONTENT'">
-            <div *ngIf="enableEditAction" class="action-btn add-padding" (click)="editState()">
-                <div class="icon small edit"></div>
-                <p class="show-me">Edit</p>
+  <ng-container *ngIf="record">
+    <div *ngIf="!editing">
+        <div class="dashboard-buttons">
+            <ng-container *ebxAccess="'VIEW_STUDIO|SUGGEST_CONTENT'">
+              <div *ngIf="enableEditAction" class="action-btn add-padding" (click)="editState()">
+                  <div class="icon small edit"></div>
+                  <p class="show-me">Edit</p>
+              </div>
+            </ng-container>
+            <ebx-content-delete-button *ngIf="enableDelAction" class="button-wrap" [container]="container" [record]="record" contentType="Asset" [crRecord]="contentRequest"></ebx-content-delete-button>
+            <div class="btn-set" *ngIf="!contentRequest">
+              <ebx-content-email-button [container]="container" [record]="record" ></ebx-content-email-button>
             </div>
-          </ng-container>
-          <ebx-content-delete-button *ngIf="enableDelAction" class="button-wrap" [container]="container" [record]="record" contentType="Asset" [crRecord]="contentRequest"></ebx-content-delete-button>
-          <div class="btn-set" *ngIf="!contentRequest">
-            <ebx-content-email-button [container]="container" [record]="record" ></ebx-content-email-button>
-          </div>
-          <div class="btn-set" *ngIf="contentRequest && !isDraft && !editing && (enableApproveAction || enableRejectAction)">
-            <ebx-content-req-approve-button *ngIf="enableApproveAction" class="action-btn" [container]="container" [crRecord]="contentRequest" (onApprove)="goToContentDetailForRequest($event)"></ebx-content-req-approve-button>
-            <ebx-content-req-reject-button *ngIf="enableRejectAction" class="action-btn" [container]="container" [crRecord]="contentRequest" (onReject)="onReject($event)"></ebx-content-req-reject-button>
-          </div>
-          <div class="btn-set">
-            <ebx-copy-portal-url-button *ngIf="!contentRequest" class="action-btn" [container]="container" [record]="record"></ebx-copy-portal-url-button>
-            <ng-container *ngIf="record?.__decoration?.__docMetadata">
-              <ebx-copy-download-url-button class="action-btn" [container]="container" [record]="record"></ebx-copy-download-url-button>
-              <ebx-doc-download-button class="action-btn" [container]="container" [record]="record"></ebx-doc-download-button>
-            </ng-container>
-            <ng-container *ngIf="record?.__urls?.length > 0">
-              <ebx-copy-link-url-button  class="action-btn" [container]="container" [record]="record"></ebx-copy-link-url-button>
-              <ebx-open-url-button class="action-btn" [container]="container" [record]="record"></ebx-open-url-button>
-            </ng-container>
-          </div>
-      </div>
-  </div>
+            <div class="btn-set" *ngIf="contentRequest && !isDraft && !editing && (enableApproveAction || enableRejectAction)">
+              <ebx-content-req-approve-button *ngIf="enableApproveAction" class="action-btn" [container]="container" [crRecord]="contentRequest" (onApprove)="goToContentDetailForRequest($event)"></ebx-content-req-approve-button>
+              <ebx-content-req-reject-button *ngIf="enableRejectAction" class="action-btn" [container]="container" [crRecord]="contentRequest" (onReject)="onReject($event)"></ebx-content-req-reject-button>
+            </div>
+            <div class="btn-set">
+              <ebx-copy-portal-url-button *ngIf="!contentRequest" class="action-btn" [container]="container" [record]="record"></ebx-copy-portal-url-button>
+              <ng-container *ngIf="record?.__decoration?.__docMetadata">
+                <ebx-copy-download-url-button class="action-btn" [container]="container" [record]="record"></ebx-copy-download-url-button>
+                <ebx-doc-download-button class="action-btn" [container]="container" [record]="record"></ebx-doc-download-button>
+              </ng-container>
+              <ng-container *ngIf="record?.__urls?.length > 0">
+                <ebx-copy-link-url-button  class="action-btn" [container]="container" [record]="record"></ebx-copy-link-url-button>
+                <ebx-open-url-button class="action-btn" [container]="container" [record]="record"></ebx-open-url-button>
+              </ng-container>
+            </div>
+        </div>
+    </div>
 
-  <div *ngIf="editing">
-      <div class="publish-buttons">
-          <button class="publish-btn" (click)="publishContent()">
-              <div class="icon small send"></div>
-              <p class="btn-text">Publish</p>
-          </button>
-          <button class="publish-btn" *ngIf="isNewRec || isDraft" (click)="saveDraft()">
-              <div class="icon small save"></div>
-              <p class="btn-text">Save as Draft</p>
-          </button>
-          <button class="publish-btn white" (click)="cancelEdit()">
-              <div class="icon small cancel"></div>
-              <p class="btn-text">Cancel</p>
-          </button>
-      </div>
-  </div>
+    <div *ngIf="editing">
+        <div class="publish-buttons">
+            <button class="publish-btn" (click)="publishContent()">
+                <div class="icon small send"></div>
+                <p class="btn-text">Publish</p>
+            </button>
+            <button class="publish-btn" *ngIf="isNewRec || isDraft" (click)="saveDraft()">
+                <div class="icon small save"></div>
+                <p class="btn-text">Save as Draft</p>
+            </button>
+            <button class="publish-btn white" (click)="cancelEdit()">
+                <div class="icon small cancel"></div>
+                <p class="btn-text">Cancel</p>
+            </button>
+        </div>
+    </div>
+  </ng-container>
   <div class="far-right">
       <ebx-user-icon></ebx-user-icon>
   </div>
 </div>
 <div class="container">
+  <div [hidden]="!recordNotFound" class="no-data">
+      <div>Oops. This asset was deleted and is no longer available on Enablix.</div>
+  </div>
   <div class="assets-container flex-row" *ngIf="record">
     <div class="left">
         <h1 *ngIf="editing" contenteditable="true" class="editable" [(ngModel)]="record[container.titleItemId]"></h1>

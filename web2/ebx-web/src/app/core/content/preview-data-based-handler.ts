@@ -3,7 +3,7 @@ import { environment } from '../../../environments/environment';
 import { ContentPreviewHandler } from './content-preview-handler';
 
 export class PreviewDataBasedHandler implements ContentPreviewHandler {
-  
+
   smallThumbnailUrl(dataRecord: any) : string {
     return environment.baseAPIUrl + "/doc/sthmbnl/" + dataRecord.__decoration.__docMetadata.identity + "/";
   }

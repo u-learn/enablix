@@ -42,7 +42,8 @@ public class DocPreviewGenEventListener {
 					String docIdentity = (String) fileMdMap.get(ContentDataConstants.IDENTITY_KEY);
 					
 					DocumentMetadata docMetadata = docManager.getDocumentMetadata(docIdentity);
-					if (docMetadata != null && docMetadata.getPreviewStatus() != PreviewStatus.AVAILABLE) {
+					if (docMetadata != null && docMetadata.getPreviewStatus() != PreviewStatus.AVAILABLE
+							&& docMetadata.getPreviewStatus() != PreviewStatus.NOT_SUPPORTED) {
 						previewService.createPreview(docMetadata);				
 					}
 				}

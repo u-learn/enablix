@@ -10,3 +10,7 @@
 <div *ngIf="previewType == 'text'">
   <ebx-text-content-preview [record]="record" [container]="container" [editing]="editing"></ebx-text-content-preview>
 </div>
+<div class="file-default" *ngIf="previewType == 'file-default'">
+  <div class="file-img"><img [src]="getDefaultFileImg()"></div>
+  <div class="info">Preview is not available for this asset.</div>
+</div>

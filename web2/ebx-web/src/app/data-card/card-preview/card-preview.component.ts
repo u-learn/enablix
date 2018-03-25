@@ -50,4 +50,8 @@ export class CardPreviewComponent implements OnInit {
     return imgSrc;
   }
 
+  isNoPreviewImage() : boolean {
+    return this.thumbnailUrl && this.thumbnailUrl.endsWith(".svg");
+  }
+
 }

@@ -114,6 +114,10 @@ public class SampleContentCreator implements TenantSetupTask {
 				
 				String fileLoc = (String) fileInfo.get("location");
 				String contentType = (String) fileInfo.get("contentType");
+				
+				Boolean generatePreview = (Boolean) fileInfo.get("generatePreview");
+				generatePreview = generatePreview == null ? Boolean.FALSE : generatePreview;
+				
 				String absFilePath = sampleContentLocation + File.separator + fileLoc;
 				String docQId = docItemType.getQualifiedId();
 				String contentIdentity = ContentDataUtil.getRecordIdentity(record);
@@ -131,7 +135,8 @@ public class SampleContentCreator implements TenantSetupTask {
 		        		docManager.buildDocument(fis, file.getName(),
 		        				contentType, docQId, file.length(), null, false);
 		        
-		        DocumentMetadata docMd = docManager.saveUsingContainerInfo(document, container.getQualifiedId(), null, true);
+		        DocumentMetadata docMd = docManager.saveUsingContainerInfo(
+		        		document, container.getQualifiedId(), null, generatePreview);
 		        
 		        ActivityLogger.auditDocActivity(ActivityType.DOC_UPLOAD, docQId, contentIdentity, 
 		        		docMd.getIdentity(), Channel.SYSTEM, null, null, null, null, title);

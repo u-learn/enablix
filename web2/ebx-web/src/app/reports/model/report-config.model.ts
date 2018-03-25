@@ -7,6 +7,7 @@ export class ReportConfig {
   id: string;
   name: string;
   heading: string;
+  subheading: string;
   type: string;
   init: () => void;
   options: { [key: string]: any };

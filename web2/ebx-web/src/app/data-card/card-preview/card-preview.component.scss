@@ -14,9 +14,9 @@ ebx-card-preview {
         overflow-y: hidden;
     }
 
-    .cardDefaultImg {
+    .cardDefaultImg, .cardImg.no-thmbnl {
         justify-content: center;
-        background: #2C4290;
+        background: $blue-med-5;
 
         img {
             max-width: 48px;
@@ -59,7 +59,7 @@ ebx-card-preview {
           }
         }
 
-        .cardDefaultImg {
+        .cardDefaultImg, .cardImg.no-thmbnl {
 
           img {
               max-width: 32px;

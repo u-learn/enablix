@@ -32,7 +32,7 @@ export class AlertComponent implements OnInit {
       if (alert.type == AlertType.SUCCESS) {
         setTimeout(() => {
           this.removeAlert(alert);
-        }, 4000);
+        }, 5000);
       }
     });
   }

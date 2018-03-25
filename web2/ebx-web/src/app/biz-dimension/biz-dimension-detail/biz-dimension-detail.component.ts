@@ -115,14 +115,6 @@ export class BizDimensionDetailComponent implements OnInit, AfterViewInit {
     this.navService.goToContentList(contentGrp.container.qualifiedId, queryParams);
   }
 
-  attach() {
-
-  }
-
-  email() {
-
-  }
-
   goBackHome() {
     this.navService.goToPortalHome();
   }

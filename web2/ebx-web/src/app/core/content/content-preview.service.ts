@@ -20,6 +20,7 @@ export class ContentPreviewService {
     this.previewHandlers.push(new PreviewDataBasedHandler());
     this.previewHandlers.push(new UrlPreviewHandler());
     this.previewHandlers.push(new TextContentPreviewHandler());
+    this.previewHandlers.push(new NoPreviewHandler());
   }
 
   getPreviewHandler(dataRecord: any) : ContentPreviewHandler {
@@ -41,4 +42,45 @@ export class ContentPreviewService {
     return this.http.get(apiUrl);
   }
 
+}
+
+class NoPreviewHandler implements ContentPreviewHandler {
+
+
+  getNoPreviewImgUrl(docMetadata: any) : string {
+    let imgUrl = "/assets/images/icons/file_unknown.svg";
+    let filename = docMetadata.name;
+    let fileExt = this.getFileExtension(filename);
+    if (fileExt) {
+      imgUrl = "/assets/images/icons/file_" + fileExt + ".svg";
+    }
+    return imgUrl;
+  }
+
+  getFileExtension(filename: string) : string {
+    var a = filename.split(".");
+    if (a.length === 1 || ( a[0] === "" && a.length === 2 )) {
+        return null;
+    }
+    return a.pop().toLowerCase();
+  }
+
+  smallThumbnailUrl(dataRecord: any) : string {
+    if (dataRecord.__decoration && dataRecord.__decoration.__docMetadata) {
+      return this.getNoPreviewImgUrl(dataRecord.__decoration.__docMetadata);
+    }
+    return null;
+  }
+
+  largeThumbnailUrl(dataRecord: any) : string {
+    return this.smallThumbnailUrl(dataRecord);
+  }
+
+  canHandle(dataRecord: any) : boolean {
+    return dataRecord.__decoration && dataRecord.__decoration.__docMetadata;
+  }
+
+  type() : string {
+    return 'file-default';
+  }
 }

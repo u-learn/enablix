@@ -4,3 +4,7 @@
 /**/.project
 /**/.DS_Store
 /web2/ebx-web/package-lock.json
+/services/enablix-app/ext-resources/templates/cena/cena_enterprise.xml
+/services/enablix-app/ext-resources/templates/dxl/dxl_enterprise.xml
+/services/enablix-app/ext-resources/templates/mac/mac_enterprise.xml
+/services/enablix-app/ext-resources/templates/marlon/marlon_enterprise.xml

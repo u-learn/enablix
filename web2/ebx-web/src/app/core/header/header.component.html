@@ -65,7 +65,7 @@
       <div class="center-sub">
         <div class="client-brand" (click)="navToCompanyPage()">  
           <div class="logo"><div class="logo-placeholder"></div></div>
-          <h3 class="brand">{{tenantService.tenant?.name}}</h3>
+          <h3 class="brand" [title]="tenantService.tenant?.name">{{tenantService.tenant?.name}}</h3>
         </div>
       </div>
       <div class="center-sub center-rt">

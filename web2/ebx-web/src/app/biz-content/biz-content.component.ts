@@ -51,6 +51,8 @@ export class BizContentComponent implements OnInit, AfterViewInit {
 
   returnUrl: string;
 
+  recordNotFound: boolean = false;
+
   constructor(private route: ActivatedRoute, private contentService: ContentService,
               private alert: AlertService, private contentTemplate: ContentTemplateService,
               private contentWFService: ContentWorkflowService, private loc: Location,
@@ -78,9 +80,17 @@ export class BizContentComponent implements OnInit, AfterViewInit {
             this.contentService.getContentRecord(containerQId, recordIdentity)
                   .subscribe(
                       result => {
+                        
                         this.record = result;
-                        this.contentService.decorateRecord(this.container, this.record);
-                        this.initState();
+                        
+                        if (this.record.identity) {
+                          this.contentService.decorateRecord(this.container, this.record);
+                          this.initState();  
+                        } else {
+                          this.record = null;
+                          this.recordNotFound = true;
+                        }
+                        
                       }, 
                       error => {
                         console.error("Error getting record: " + error);
@@ -246,8 +256,11 @@ export class BizContentComponent implements OnInit, AfterViewInit {
       });
 
     } else {
+
       this.contentWFService.submitContent(this.container.qualifiedId, this.record, draftSave, null).subscribe((res: any) => {
-        this.alert.success("Saved successfully!");
+        let alertMsg = draftSave ? "Saved successfully." :
+            "Content Asset Add/Update request has been submitted for approval. The asset will be published once approved. And you will receive notification on approval.";
+        this.alert.success(alertMsg, true);
         this.editing = false;
         this.processWFResponse(res);
       }, error => {

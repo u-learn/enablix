@@ -22,6 +22,8 @@ export class ReportDetailComponent implements OnInit {
   reportData: any;
   chartData: any;
 
+  lastUsedFilters: any;
+
   @Input() 
   set reportConfig(rptCfg: ReportConfig) {
     
@@ -58,6 +60,7 @@ export class ReportDetailComponent implements OnInit {
 
   fetchData(filters: any) {
     
+    this.lastUsedFilters = filters;
     Utility.removeNullProperties(filters.dataFilters);
 
     this.reportConfig.dataProvider.fetchData(filters.dataFilters).subscribe((data) => {

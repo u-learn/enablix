@@ -1,5 +1,6 @@
 package com.enablix.app.content.web;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -235,7 +236,7 @@ public class FetchContentDataController {
 				ContainerType.CONTENT, channel, atContext, atContextId, atContextTerm);
 		}
 		
-		return data;
+		return data == null ? new HashMap<>() : data;
 	}
 	
 	private Object fetchData(FetchContentRequest request, DataView view) {

@@ -1,11 +1,14 @@
 <div class="report-detail">
-  <div class="report-filters">
-    <ebx-data-filters [config]="dataFiltersConfig" (onSearch)="fetchData($event)"></ebx-data-filters>
-  </div>
-  <div class="report-data" *ngIf="reportData">
+  <div class="report-left">
     <div class="heading">
       <h2>{{reportConfig.heading}}</h2>
+      <p class="sub-heading" [hidden]="!reportConfig.subheading">{{reportConfig.subheading}}</p>
     </div>
+    <div class="report-filters">
+      <ebx-data-filters [config]="dataFiltersConfig" (onSearch)="fetchData($event)"></ebx-data-filters>
+    </div>
+  </div>
+  <div class="report-data" *ngIf="reportData">
     <ng-container *ngIf="(reportConfig.type == 'MULTILINE' || reportConfig.type == 'HORIZONTAL_BAR')">
       <nvd3 [options]="reportConfig.chartOptions" [data]="chartData"></nvd3>
     </ng-container>

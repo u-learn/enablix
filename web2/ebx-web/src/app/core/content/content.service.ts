@@ -92,14 +92,6 @@ export class ContentService {
       }
     }
 
-    if (!decoration.__thumbnailUrl && decoration.__docMetadata) {
-      let filename = decoration.__docMetadata.name;
-      let fileExt = this.getFileExtension(filename);
-      if (fileExt) {
-        decoration.__noPreviewImgUrl = "/assets/images/icons/file_" + fileExt + ".svg";
-      }
-    }
-
     if (container.textItemId) {
       decoration.__textContent = dataRecord[container.textItemId];
       if (!decoration.__textContent) {
@@ -111,14 +103,6 @@ export class ContentService {
       dataRecord.__title = dataRecord[container.titleItemId];
     }
 
-  }
-
-  getFileExtension(filename: string) : string {
-    var a = filename.split(".");
-    if (a.length === 1 || ( a[0] === "" && a.length === 2 )) {
-        return null;
-    }
-    return a.pop().toLowerCase();
   }
 
   addLinkedContent(dataRecord: any, linkedContentProp: string) {

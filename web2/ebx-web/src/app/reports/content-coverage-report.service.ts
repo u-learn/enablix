@@ -158,7 +158,8 @@ export class ContentCoverageReportService implements ReportDataProvider {
     
     // change heading
     if (data.length > 0) {
-      this.reportConfig.heading = this.reportConfig.name + " (As of " + this.dateTimezonePipe.transform(data[0].asOfDate) + ")";
+      this.reportConfig.heading = this.reportConfig.name;
+      this.reportConfig.subheading = "As of " + this.dateTimezonePipe.transform(data[0].asOfDate);
     }
     
     data.forEach((dataRecord) => {

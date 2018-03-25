@@ -8,10 +8,20 @@
 
   .header {
     font-family: $FPThin;
+    margin-bottom: 24px;
   }
 
   .publish-buttons {
     margin-top: 32px;
     justify-content: flex-start;
+  }
+
+  .form-input {
+
+    .input-label {
+      font-family: $FPLight;
+      font-size: 14px;
+      color: $grey-dark;
+    }
   }
 }

@@ -41,25 +41,29 @@ export class FileImagesPreviewComponent implements OnInit {
     if (this.record.__decoration && this.record.__decoration.__docMetadata 
           && this.record.__decoration.__docMetadata.identity) {
       
-      const docMdIdentity = this.record.__decoration.__docMetadata.identity;
-      
-      this.contentPreviewService.getFilePreviewData(docMdIdentity)
-          .subscribe(
-              res => {
-                this.slides = [];
-                for (let i = 0; i < res.parts.length; i++) {
-                  this.slides.push({
-                    id: i,
-                    url: environment.baseAPIUrl + "/doc/pdp/" + docMdIdentity + "/" + i + "/"
-                  })
-                }
+      if (this.record.__decoration.__docMetadata.previewStatus == 'AVAILABLE') {
 
-                this.activeSlide = this.slides[0];
-              },
-              err => {
-                this.alert.error("Error fetching preview data", err.status);
-              }
-            );
+        const docMdIdentity = this.record.__decoration.__docMetadata.identity;
+        
+        this.contentPreviewService.getFilePreviewData(docMdIdentity)
+            .subscribe(
+                res => {
+                  this.slides = [];
+                  for (let i = 0; i < res.parts.length; i++) {
+                    this.slides.push({
+                      id: i,
+                      url: environment.baseAPIUrl + "/doc/pdp/" + docMdIdentity + "/" + i + "/"
+                    })
+                  }
+
+                  this.activeSlide = this.slides[0];
+                },
+                err => {
+                  this.alert.error("Error fetching preview data", err.status);
+                }
+              );
+      }
+      
     }
   }
 

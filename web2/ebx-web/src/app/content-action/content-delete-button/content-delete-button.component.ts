@@ -38,6 +38,11 @@ export class ContentDeleteButtonComponent implements OnInit {
               + "You won't be able to restore it. Would you like to proceed?";
   }
 
+  getDeletedAlertText() : string {
+    return this.contentType == "Asset" ? "Content Asset deleted successfully." :
+              "Dimension deleted successfully";
+  }
+
   deletePrompt() {
     let dialogRef = this.dialog.open(ConfirmDialogComponent, {
         width: '624px',
@@ -71,7 +76,7 @@ export class ContentDeleteButtonComponent implements OnInit {
     } else {
       
       this.contentService.deleteContentRecord(this.container.qualifiedId, this.record.identity).subscribe(res => {
-        this.alert.success("Deleted successfully.");
+        this.alert.success(this.getDeletedAlertText(), true);
         this.onDelete.emit(true);
       }, err => {
         this.alert.error("Unable to delete. Please try later.", err.status);
