@@ -16,7 +16,7 @@
 		<heatmap class="hm-chart" data="data" dispatch="$parent.dispatch" options="reportDef.options"></heatmap>
 	</div>
 	<div class="cont" id="tabularReport" ng-if="reportDef.type == 'TABULAR'">
-		<ebx-tabular-report data="data" dispatch="$parent.dispatch" options="reportDef.options" columndetails="reportDef.columndetails"></ebx-tabular-report>
+		<ebx-tabular-report data="data" dispatch="$parent.dispatch" options="reportDef.options" columndetails="reportDef.columndetails" pagination-info="pagingInfo" set-page-fn="setPage"></ebx-tabular-report>
 	</div>
 	<div class="cont" ng-if="reportDef.type == 'MULTILINE'" id="multilinechart">
 		<ebx-multi-line-chart data="data" columndetails="reportDef.columndetails"  filter-values="reportFilterValues" ></ebx-multi-line-chart>

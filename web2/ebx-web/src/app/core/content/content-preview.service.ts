@@ -46,12 +46,17 @@ export class ContentPreviewService {
 
 class NoPreviewHandler implements ContentPreviewHandler {
 
+  supportedExts: string[] = [
+    "doc", "docx", "gdoc", "gsheet", "gslides", "pdf", "pps", 
+    "ppt", "pptx", "rtf", "txt", "xls", "xlsx", "xml"
+  ];
 
   getNoPreviewImgUrl(docMetadata: any) : string {
-    let imgUrl = "/assets/images/icons/file_unknown.svg";
+    let imgUrl = docMetadata.name ? "/assets/images/icons/file.svg" :
+                  "/assets/images/icons/file_unknown.svg";
     let filename = docMetadata.name;
     let fileExt = this.getFileExtension(filename);
-    if (fileExt) {
+    if (fileExt && this.supportedExts.includes(fileExt)) {
       imgUrl = "/assets/images/icons/file_" + fileExt + ".svg";
     }
     return imgUrl;

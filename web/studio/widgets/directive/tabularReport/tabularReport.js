@@ -8,7 +8,9 @@ enablix.studioApp.directive('ebxTabularReport', [
 			scope: {
 				data: "=",
 				columndetails: "=?",
-				dispatch: "=?"
+				dispatch: "=?",
+				paginationInfo: "=?",
+				setPageFn: "=?"
 			},
 			transclude: false,
 			link: function(scope, element, attrs) {
@@ -16,7 +18,7 @@ enablix.studioApp.directive('ebxTabularReport', [
 				
 				 function render(data) {
 						d3.selectAll("table").remove();
-						var table = d3.select(element[0]).append('table').attr("class", "tabReporttable datatable");
+						var table = d3.select(".dataTbl").append('table').attr("class", "tabReporttable datatable");
 						var thead = table.append('thead');
 						var	tbody = table.append('tbody');
 
@@ -43,9 +45,13 @@ enablix.studioApp.directive('ebxTabularReport', [
 						  .enter()
 						  .append('td').attr('class', 'tabReporttd')
 						    .text(function (d) { return d.value; });
-
 					}
 
+				scope.setPage = function(pageNo) {
+					if (scope.setPageFn) {
+						scope.setPageFn(pageNo);
+					}
+				}
 				
 				scope.$watch("data", function() {
 					render(scope.data);

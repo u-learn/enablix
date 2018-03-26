@@ -6,12 +6,16 @@ enablix.studioApp.controller('ReportDetailCtrl',
 		$scope.data = [];
 		$scope.reportFilterValues = {};
 		
+		var lastUsedFilters = null;
+		
 		$scope.writeDownloadLink = function(){
 			$scope.reportDef.downloadReport();
 		};
 
 	    
-		var fetchReportData = function(_filterValues) {
+		var fetchReportData = function(_filterValues, _pageNum) {
+			
+			lastUsedFilters = angular.copy(_filterValues);
 			
 			// remove search keys with null values as those get treated as null value on back end
 			removeNullProperties(_filterValues);
@@ -23,6 +27,7 @@ enablix.studioApp.controller('ReportDetailCtrl',
 				
 				if (data.content) { // check if it is a response with pagination data
 					$scope.data = data.content;
+					$scope.pagingInfo = data;
 				}
 				
 				if ($scope.reportDef.dataTransformer) {
@@ -31,7 +36,7 @@ enablix.studioApp.controller('ReportDetailCtrl',
 				
 			}, function(errorData) {
 				Notification.error({message: "Error in retrieving report data", delay: enablix.errorMsgShowTime});
-			});
+			}, _pageNum);
 		}
 		
 		if ($scope.reportDef) {
@@ -46,6 +51,10 @@ enablix.studioApp.controller('ReportDetailCtrl',
 				fetchReportData(_filterValues);
 			};
 			
+		}
+		
+		$scope.setPage = function(pageNo) {
+			fetchReportData(lastUsedFilters, pageNo);
 		}
 				
 	}

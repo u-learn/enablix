@@ -1,2 +1,7 @@
-<div></div>
+<div>
+<div class="dataTbl"></div>
+<div class="text-center" ng-if="paginationInfo && data.length > 0" style="padding: 0.75em 1.25em;">
+	<eb-pagination current-page="paginationInfo.number" total-pages="paginationInfo.totalPages" set-page-fn="setPage"/>
+</div>
+</div>
 
