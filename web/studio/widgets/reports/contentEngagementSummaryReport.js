@@ -261,7 +261,7 @@ enablix.studioApp.factory('ContentEngagementReport',
 					fetchData: function(_dataFilters, _onSuccess, _onError, _pageNum) {
 						pageNum = _pageNum || 0;
 						_onSuccess(getReportData());
-					} 
+					}
 			};
 			enablix.reports.push(contentEngagementRpt);
 		}

@@ -37,6 +37,19 @@ enablix.studioApp.controller('ReportDetailCtrl',
 			}, function(errorData) {
 				Notification.error({message: "Error in retrieving report data", delay: enablix.errorMsgShowTime});
 			}, _pageNum);
+			
+			
+			// fetch summary info
+			if ($scope.reportDef.fetchSummaryInfo) {
+				
+				$scope.reportDef.fetchSummaryInfo(_filterValues, function(data) {
+					
+					$scope.summaryInfo = data;
+					
+				}, function(errorData) {
+					Notification.error({message: "Error in retrieving summary data", delay: enablix.errorMsgShowTime});
+				});
+			}
 		}
 		
 		if ($scope.reportDef) {
@@ -51,6 +64,10 @@ enablix.studioApp.controller('ReportDetailCtrl',
 				fetchReportData(_filterValues);
 			};
 			
+		}
+		
+		if (!$scope.reportDef.filters) {
+			fetchReportData({});
 		}
 		
 		$scope.setPage = function(pageNo) {

@@ -2,6 +2,16 @@
 	<div class="head">
 		<h2>{{reportDef.heading}}</h2>
 	</div>
+	<div class="cont" ng-show="summaryInfo" style="border-bottom: none;">
+		<table class="infotable">
+			<tbody>
+				<tr ng-repeat="(key, value) in summaryInfo">
+					<th>{{key}}:</th>
+					<td>{{value}}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
 	<div class="data-filter-cont" ng-if="reportDef.filters">
 		<ebx-data-filters heading="Filter" filters="reportDef.filters" filter-values="reportFilterValues" 
 			search-label="Go" on-search="onReportSearch" pref-values-key="reportDefaultFiltersPrefKey" search-on-page-load="true"/>
@@ -20,5 +30,8 @@
 	</div>
 	<div class="cont" ng-if="reportDef.type == 'MULTILINE'" id="multilinechart">
 		<ebx-multi-line-chart data="data" columndetails="reportDef.columndetails"  filter-values="reportFilterValues" ></ebx-multi-line-chart>
+	</div>
+	<div class="cont" ng-if="reportDef.type == 'NV_LINECHART'" id="nvlinechart">
+		<div><nvd3 options="reportDef.chartOptions" data="data" config="{refreshDataOnly: false}" class="with-3d-shadow with-transitions"></nvd3></div>
 	</div>
 </div>

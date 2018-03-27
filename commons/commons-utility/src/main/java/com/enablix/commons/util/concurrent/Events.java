@@ -18,5 +18,6 @@ public final class Events {
 	
 	public static final String DOC_STORE_CONFIG_UPDATED = "DOC_STORE_CONFIG_UPDATED";
 	public static final String USER_ADDED = "USER_ADDED";
+	public static final String SEND_EMAIL = "SEND_EMAIL";
 	
 }

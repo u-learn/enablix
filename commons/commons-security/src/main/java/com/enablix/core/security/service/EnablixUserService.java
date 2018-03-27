@@ -30,6 +30,7 @@ import com.enablix.core.domain.security.authorization.UserProfile;
 import com.enablix.core.domain.security.authorization.UserSystemProfile;
 import com.enablix.core.domain.tenant.Tenant;
 import com.enablix.core.domain.user.User;
+import com.enablix.core.mail.entities.MailEvent;
 import com.enablix.core.mail.service.MailService;
 import com.enablix.core.mail.utility.MailConstants;
 import com.enablix.core.mq.Event;
@@ -233,7 +234,8 @@ public class EnablixUserService implements UserService, UserDetailsService {
 		modUP = userProfileRepo.save(modUP);
 		
 		if (addUser) {
-			mailService.sendHtmlEmail(user, modUP.getEmail(), mailScenario);
+			//mailService.sendHtmlEmail(user, modUP.getEmail(), mailScenario);
+			EventUtil.publishEvent(new Event<MailEvent>(Events.SEND_EMAIL, new MailEvent(user, modUP.getEmail(), mailScenario)));
 			EventUtil.publishEvent(new Event<UserProfile>(Events.USER_ADDED, modUP));
 		}
 		

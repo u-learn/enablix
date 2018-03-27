@@ -17,12 +17,14 @@ import org.springframework.stereotype.Service;
 import com.enablix.commons.util.DefaultAESParameterProvider;
 import com.enablix.commons.util.EncryptionUtil;
 import com.enablix.commons.util.StringUtil;
+import com.enablix.commons.util.concurrent.Events;
 import com.enablix.commons.util.process.ProcessContext;
 import com.enablix.core.domain.config.EmailConfiguration;
 import com.enablix.core.domain.config.SMTPConfiguration;
 import com.enablix.core.domain.config.TemplateConfiguration;
 import com.enablix.core.domain.tenant.Tenant;
 import com.enablix.core.domain.user.User;
+import com.enablix.core.mail.entities.MailEvent;
 import com.enablix.core.mail.entities.ShareEmailClientDtls;
 import com.enablix.core.mail.utility.MailConstants;
 import com.enablix.core.mail.utility.MailUtility;
@@ -30,6 +32,7 @@ import com.enablix.core.mail.velocity.NewUserScenarioInputBuilder;
 import com.enablix.core.mongo.config.repo.EmailConfigRepo;
 import com.enablix.core.mongo.config.repo.SMTPConfigRepo;
 import com.enablix.core.mongo.config.repo.TemplateConfigRepo;
+import com.enablix.core.mq.EventSubscription;
 import com.enablix.core.system.repo.TenantRepository;
 
 @Service
@@ -85,6 +88,13 @@ public class MailServiceImpl implements MailService {
 		defaultEmailConfig.setSmtp(server);
 		defaultEmailConfig.setPort(port);
 		defaultEmailConfig.setPersonalName(emailId);
+	}
+	
+	@EventSubscription(eventName = Events.SEND_EMAIL)
+	public void handleEmailEvent(MailEvent mail) {
+		if (mail != null) {
+			sendHtmlEmail(mail.getMailTemplateInput(), mail.getToEmailId(), mail.getMailScenario());
+		}
 	}
 	
 	@Override
