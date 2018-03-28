@@ -21,12 +21,14 @@ export class ApiUrlService {
   static GET_MEMBER_PROFILE = "/d/user/:userIdentity/"
   static GET_DEFAULT_DOCSTORE_CONFIG = "/docstore/default";
   static GET_CONFIG_INFO = "/config/:configKey/";
-  static GET_RECO_CONTENT = "/navcontent/rlvreco";
+  static GET_RECO_CONTENT = "/navcontent/rlvreco?pageSize=:pageSize&pageNo=:pageNo";
 
   static GET_CONTENT_WF_STATE_ACTION_MAP = "/contentwf/actionmap/";
 
   static GET_ALL_MEMBERS = "/systemuser";
   static GET_APP_USER_PREFS = "/userpref/applicable";
+
+  static GET_AUDIT_ACTIVITY_TYPES = "/getAuditConfiguration/getAuditActivityTypes";
 
   static GET_ACTIVITY_METRIC_TYPES = "/report/getactivitymetrices";
   static GET_ACTIVITY_TREND_DATA = "/activitytrend";
@@ -240,8 +242,13 @@ export class ApiUrlService {
     return this.getAPIUrl(ApiUrlService.GET_ACTIVITY_METRIC_SUMMARY); 
   }
 
-  getRecoContentUrl() : string {
-    return this.getAPIUrl(ApiUrlService.GET_RECO_CONTENT);
+  getRecoContentUrl(pageSize: number, pageNo: number) : string {
+    return this.getAPIUrl(ApiUrlService.GET_RECO_CONTENT, 
+          { pageSize: String(pageSize), pageNo: String(pageNo)});
+  }
+
+  getAuditActivityTypesUrl() : string {
+    return this.getAPIUrl(ApiUrlService.GET_AUDIT_ACTIVITY_TYPES);
   }
 
   postCheckUserExistUrl() : string {

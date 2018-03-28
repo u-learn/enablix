@@ -14,6 +14,7 @@ import { ActivitySummaryReportService } from './activity-summary-report.service'
 import { ActivityTrendReportService } from './activity-trend-report.service';
 import { ReportDetailComponent } from './report-detail/report-detail.component';
 import { HeatmapChartComponent } from './heatmap-chart/heatmap-chart.component';
+import { ActivityAuditComponent } from './activity-audit/activity-audit.component';
 
 @NgModule({
   imports: [
@@ -31,7 +32,8 @@ import { HeatmapChartComponent } from './heatmap-chart/heatmap-chart.component';
   declarations: [
     ReportsHomeComponent,
     ReportDetailComponent,
-    HeatmapChartComponent
+    HeatmapChartComponent,
+    ActivityAuditComponent
   ],
   exports: [
     ReportsHomeComponent

@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -86,17 +87,20 @@ public class HubspotController {
 		WebRecommendationRequest recoRequest = new WebRecommendationRequest();
 		RecommendationContext recoCtx = recoCtxBuilder.build(recoRequest);
 
-		List<ContentDataRef> recommendations = recoEngine.getRecommendations(recoCtx, dataView);
+		Page<ContentDataRef> recommendations = recoEngine.getRecommendations(recoCtx, dataView);
 		
 		List<HubspotContent> hbContentList = new ArrayList<>();
 		
 		long objectId = 0;
 		
-		for (ContentDataRef contentRef : recommendations) {
-			
-			HubspotContent hubspotContent = getHubspotContent(contentRef, dataView, template, userEmail, ++objectId);
-			if (hubspotContent != null) {
-				hbContentList.add(hubspotContent);
+		if (recommendations != null) {
+		
+			for (ContentDataRef contentRef : recommendations) {
+				
+				HubspotContent hubspotContent = getHubspotContent(contentRef, dataView, template, userEmail, ++objectId);
+				if (hubspotContent != null) {
+					hbContentList.add(hubspotContent);
+				}
 			}
 		}
 		

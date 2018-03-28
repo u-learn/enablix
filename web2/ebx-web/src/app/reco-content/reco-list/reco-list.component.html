@@ -1,0 +1,16 @@
+<ebx-header></ebx-header>
+<div class="container">
+  <div class="free-results">
+    <div class="header" *ngIf="recoList">
+        <h1>{{recoList.totalElements}} recommendations</h1>
+    </div>
+    <div class="main" *ngIf="recoList">
+      <div class="card" *ngFor="let rec of recoList.content">
+        <ebx-data-card [containerQId]="rec.containerQId" [recordIdentity]="rec.instanceIdentity"></ebx-data-card>
+      </div>
+    </div>
+  </div>
+  <div class="table-pagination" *ngIf="recoList?.totalPages > 1">
+    <ebx-pagination [totalPages]="recoList.totalPages" [currentPage]="recoList.number" (onPageChange)="setPage($event)"></ebx-pagination>
+  </div>
+</div>

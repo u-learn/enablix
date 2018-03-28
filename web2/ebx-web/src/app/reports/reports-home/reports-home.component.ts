@@ -27,10 +27,6 @@ export class ReportsHomeComponent implements OnInit {
     this.reportService.init();
     this.reports = this.reportService.getReports();
 
-    if (this.reports && this.reports.length > 0) {
-      this.selectedRpt = this.reports[0];
-    }
-
     this.route.params.subscribe(params => {
       
       let rptId = params['reportId'];

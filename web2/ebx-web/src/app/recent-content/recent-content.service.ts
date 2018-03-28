@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { Constants } from '../util/constants';
 import { DataSearchService } from '../core/data-search/data-search.service';
 import { DataSearchRequest } from '../core/data-search/data-search-request.model';
-import { Pagination, Direction, SortCriteria } from '../model/pagination.model';
+import { Pagination, Direction, SortCriteria } from '../core/model/pagination.model';
 import { DataPage } from '../model/data-page.model';
 import { DataType, ConditionOperator } from '../core/data-search/filter-metadata.model';
 import { ContentTemplateService } from '../core/content-template.service';

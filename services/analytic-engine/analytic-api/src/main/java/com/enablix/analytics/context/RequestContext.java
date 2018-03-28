@@ -8,4 +8,8 @@ public interface RequestContext {
 	
 	String contentIdentity();
 	
+	int pageSize();
+	
+	int pageNo();
+	
 }

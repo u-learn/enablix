@@ -9,7 +9,7 @@ import { ContentService } from '../core/content/content.service';
 import { ContentTemplateService } from '../core/content-template.service'; 
 import { AlertService } from '../core/alert/alert.service';
 import { NavigationService } from '../app-routing/navigation.service';
-import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component'; 
+import { ConfirmDialogComponent } from '../core/confirm-dialog/confirm-dialog.component'; 
 import { ContentDeleteButtonComponent } from '../content-action/content-delete-button/content-delete-button.component';
 import { ContentWorkflowService } from '../services/content-workflow.service';
 

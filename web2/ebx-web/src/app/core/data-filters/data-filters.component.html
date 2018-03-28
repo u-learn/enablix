@@ -11,7 +11,7 @@
     <div class="input-error" [hidden]="!filterErrMessages[filter.id]">{{filterErrMessages[filter.id]}}</div>
   </div>
   <div class="publish-buttons">
-      <button class="publish-btn white" (click)="saveAsSystemDefault()">
+      <button *ngIf="options.prefValuesKey" class="publish-btn white" (click)="saveAsSystemDefault()">
           <p class="btn-text">Save Default</p>
       </button>
       <button class="publish-btn white" (click)="resetAction()">

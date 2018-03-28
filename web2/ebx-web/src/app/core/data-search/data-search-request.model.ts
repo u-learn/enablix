@@ -1,5 +1,5 @@
 import { FilterMetadata } from './filter-metadata.model';
-import { Pagination } from '../../model/pagination.model';
+import { Pagination } from '../model/pagination.model';
 
 export class DataSearchRequest {
 

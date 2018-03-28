@@ -7,7 +7,7 @@ export class DataFilter {
   options: { [key: string]: any };
   masterList: () => Observable<any>;
   defaultValue: () => any;
-  validator: DataFilterValidator
+  validator?: DataFilterValidator
   valueTx: DataFilterValueTx 
 }
 

@@ -5,6 +5,8 @@ import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 
 import com.enablix.analytics.recommendation.RecommendationContext;
 import com.enablix.analytics.recommendation.RecommendationEngine;
@@ -25,7 +27,7 @@ public class PreRecordedRecommendationEngine implements RecommendationEngine {
 	private RecommendationRepository repo;
 	
 	@Override
-	public List<ContentDataRef> getRecommendations(RecommendationContext request, DataView dataView) {
+	public Page<ContentDataRef> getRecommendations(RecommendationContext request, DataView dataView) {
 		
 		List<ContentDataRef> recoContent = new ArrayList<>();
 		Collection<Recommendation> recommendations = null;
@@ -74,7 +76,7 @@ public class PreRecordedRecommendationEngine implements RecommendationEngine {
 			}
 		}
 		
-		return recoContent;
+		return new PageImpl<ContentDataRef>(recoContent);
 	}
 
 	private Collection<Recommendation> contentSpecificRecommendations(String userId, String templateId,

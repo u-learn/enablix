@@ -78,7 +78,7 @@
     z-index: 100;
 
     .option-row {
-      height: 40px;
+      min-height: 40px;
       display: flex;
       align-items: center;
       cursor: pointer;
@@ -92,7 +92,7 @@
       }
 
       .option-label {
-        margin: 0 16px;
+        margin: 8px 16px;
       }
 
     }

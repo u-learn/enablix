@@ -1,0 +1,36 @@
+@import '~styles/colors.scss';
+@import '~styles/layout.mixin.scss';
+@import '~styles/fonts.scss';
+
+.report-detail {
+
+  display: flex;
+  flex-direction: row;
+  
+  .report-left {
+    flex: 1 1 100%;
+    max-width: 25%;
+    margin-right: 40px;
+  }
+
+  .report-data {
+    width: 100%;
+  }
+
+  .heading {
+    
+    font-family: $FPThin;
+    margin-bottom: 24px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.03);
+    padding-bottom: 16px;
+    
+    .sub-heading {
+      font-family: $FPLight;
+      font-size: 14px;
+      color: #808C9B;
+      line-height: 17px;
+      padding-top: 16px;
+    }
+  }
+
+}

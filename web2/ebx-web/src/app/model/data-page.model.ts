@@ -1,4 +1,4 @@
-import { Direction } from './pagination.model';
+import { Direction } from '../core/model/pagination.model';
 
 export class DataPage {
   content: any[];

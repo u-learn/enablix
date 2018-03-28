@@ -1,5 +1,5 @@
 <h1 class="file-title" *ngIf="newContent"><span contenteditable="true" [(ngModel)]="fileInfo.title"></span><img src="/assets/images/icons/pencil-grey.svg"/></h1>
-<div class="preview-img" *ngIf="previewImageUrl">
+<div class="preview-img" *ngIf="previewImageUrl" [class.file-default]="isFileDefaultImage()">
     <img [src]="previewImageUrl" >
 </div>
 <div class="content-uploading" *ngIf="loading">

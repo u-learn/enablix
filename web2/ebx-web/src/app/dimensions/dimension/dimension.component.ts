@@ -5,7 +5,7 @@ import { Constants } from '../../util/constants';
 import { Container } from '../../model/container.model';
 import { DataSearchService } from '../../core/data-search/data-search.service';
 import { DataSearchRequest } from '../../core/data-search/data-search-request.model';
-import { Pagination, Direction, SortCriteria } from '../../model/pagination.model';
+import { Pagination, Direction, SortCriteria } from '../../core/model/pagination.model';
 import { DataPage } from '../../model/data-page.model';
 import { NavigationService } from '../../app-routing/navigation.service';
 import { EditBizDimensionComponent } from '../../biz-dimension/edit-biz-dimension/edit-biz-dimension.component';

@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { ContentTemplateService } from '../core/content-template.service';
 
 @Injectable()
 export class NavigationService {
 
-  constructor(private router: Router, private route: ActivatedRoute) { }
+  constructor(private router: Router, private route: ActivatedRoute,
+              private ctService: ContentTemplateService) { }
 
   goToPortalHome() {
     this.router.navigate(['/portal']);
@@ -36,6 +38,23 @@ export class NavigationService {
 
   goToDimDetail(containerQId: string, identity: string) {
     this.router.navigate(['/portal/dim/detail', containerQId, identity]);
+  }
+
+  goToRecordDetail(containerQId: string, identity: string, returnUrl: string = "/") {
+
+    let container = this.ctService.getContainerByQId(containerQId);
+    
+    if (container) {
+      
+      if (this.ctService.isBusinessContent(container)) {
+        this.goToContentDetail(containerQId, identity, returnUrl);
+      }
+
+      if (this.ctService.isBusinessDimension(container)) {
+        this.goToDimDetail(containerQId, identity);
+      }
+
+    }
   }
 
   goToConsolidateContent() {

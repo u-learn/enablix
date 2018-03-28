@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.enablix.analytics.recommendation.builder.web.WebRecommendationRequest;
@@ -58,8 +59,14 @@ public class NavigableContentController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value="/rlvreco")
-	public List<ContentDataRef> relevantRecommendedContent() {
+	public Page<ContentDataRef> relevantRecommendedContent(
+			@RequestParam(defaultValue = "5") int pageSize,
+			@RequestParam(defaultValue = "0") int pageNo) {
+		
 		WebRecommendationRequest request = new WebRecommendationRequest();
+		request.setPageSize(pageSize);
+		request.setPageNo(pageNo);
+		
 		DataView userDataView = dataSegmentService.getDataViewForUserId(ProcessContext.get().getUserId());
 		return recoService.getAIRecommendedContent(request, userDataView);
 	}

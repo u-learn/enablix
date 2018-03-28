@@ -36,7 +36,9 @@ import { SetPasswordComponent } from '../set-password/set-password.component';
 import { MyContentRequestComponent } from '../consolidate-content/my-content-request/my-content-request.component';
 import { AllDimensionsComponent } from '../all-dimensions/all-dimensions.component';
 import { ReportsHomeComponent } from '../reports/reports-home/reports-home.component';
-
+import { RecoListComponent } from '../reco-content/reco-list/reco-list.component';
+import { ActivityAuditComponent } from '../reports/activity-audit/activity-audit.component';
+import { AuditActivityResolve } from './audit-activity.resolve';
 
 const routes: Routes = [
   {
@@ -179,8 +181,24 @@ const routes: Routes = [
           }
         },
         {
+          path: 'reco/list',
+          component: RecoListComponent,
+          resolve: {
+            sbData: SearchBarResolve
+          }
+        },
+        {
           path: 'reports',
-          component: ReportsHomeComponent
+          component: ReportsHomeComponent,
+          children: [
+            {
+              path: '',
+              component: ActivityAuditComponent,
+              resolve: {
+                actTypes: AuditActivityResolve
+              }
+            }
+          ]
         },
         {
           path: 'reports/d/:reportId',
@@ -236,6 +254,7 @@ const routes: Routes = [
     SearchBarResolve,
     ContentWFResolve,
     UserPreferenceResolve,
+    AuditActivityResolve,
     NavigationService
   ],
   exports: [

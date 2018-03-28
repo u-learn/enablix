@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { environment } from '../../environments/environment';
 
-import { ActivityAuditService } from '../services/activity-audit.service';
+import { ActivityAuditService } from '../core/activity-audit.service';
 import { FilterMetadata, DataType, ConditionOperator } from '../core/data-search/filter-metadata.model';
-import { Pagination, SortCriteria, Direction } from '../model/pagination.model';
+import { Pagination, SortCriteria, Direction } from '../core/model/pagination.model';
 import { DataPage } from '../model/data-page.model';
 import { Constants } from '../util/constants';
 import { AlertService } from '../core/alert/alert.service';

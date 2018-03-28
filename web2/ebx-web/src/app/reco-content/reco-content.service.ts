@@ -9,8 +9,8 @@ export class RecoContentService {
 
   constructor(private http: HttpClient, private apiUrlService: ApiUrlService) { }
 
-  fetchRecoContent() : Observable<any> {
-    let apiUrl = this.apiUrlService.getRecoContentUrl();
+  fetchRecoContent(pageSize: number = 5, pageNo: number = 0) : Observable<any> {
+    let apiUrl = this.apiUrlService.getRecoContentUrl(pageSize, pageNo);
     return this.http.get(apiUrl);
   }
 

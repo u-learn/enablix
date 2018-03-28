@@ -20,7 +20,7 @@ export class RecoContentComponent implements OnInit {
     this.recoContentService.fetchRecoContent()
         .subscribe(
             result => {
-              this.recoList = result;
+              this.recoList = result.content;
             },
             error => {
               this.alert.error("Error fetching recommended content.", error.status);

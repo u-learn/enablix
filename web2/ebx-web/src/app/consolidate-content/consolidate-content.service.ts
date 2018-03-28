@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { DataSearchService } from '../core/data-search/data-search.service';
 import { DataSearchRequest } from '../core/data-search/data-search-request.model';
 import { FilterMetadata, DataType, ConditionOperator } from '../core/data-search/filter-metadata.model';
-import { Pagination, SortCriteria, Direction } from '../model/pagination.model';
+import { Pagination, SortCriteria, Direction } from '../core/model/pagination.model';
 import { ContentTemplateService } from '../core/content-template.service';
 import { ContentService } from '../core/content/content.service';
 import { ContentWorkflowService } from '../services/content-workflow.service';

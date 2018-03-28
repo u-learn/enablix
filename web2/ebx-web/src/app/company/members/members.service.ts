@@ -6,7 +6,7 @@ import { ApiUrlService } from '../../core/api-url.service';
 import { DataSearchService } from '../../core/data-search/data-search.service';
 import { DataSearchRequest } from '../../core/data-search/data-search-request.model';
 import { FilterMetadata, DataType, ConditionOperator } from '../../core/data-search/filter-metadata.model';
-import { Pagination, SortCriteria, Direction } from '../../model/pagination.model';
+import { Pagination, SortCriteria, Direction } from '../../core/model/pagination.model';
 import { UserProfile } from '../../model/user.model';
 
 @Injectable()

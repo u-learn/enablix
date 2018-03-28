@@ -9,7 +9,7 @@ import { DataPage } from '../../model/data-page.model';
 import { AlertService } from '../../core/alert/alert.service';
 import { FilterMetadata } from '../../core/data-search/filter-metadata.model';
 import { DataSearchRequest } from '../../core/data-search/data-search-request.model';
-import { Pagination, SortCriteria, Direction } from '../../model/pagination.model';
+import { Pagination, SortCriteria, Direction } from '../../core/model/pagination.model';
 import { Constants } from '../../util/constants';
 
 @Component({

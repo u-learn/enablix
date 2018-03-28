@@ -38,16 +38,13 @@ import { TextContentPreviewComponent } from './content-preview/text-content-prev
 import { BizDimensionDetailComponent } from './biz-dimension/biz-dimension-detail/biz-dimension-detail.component';
 import { BizDimensionListComponent } from './biz-dimension/biz-dimension-list/biz-dimension-list.component';
 import { BizDimensionComponent } from './biz-dimension/biz-dimension.component';
-import { ActivityAuditService } from './services/activity-audit.service';
 import { TenantService } from './services/tenant.service';
 import { EditBizDimensionComponent } from './biz-dimension/edit-biz-dimension/edit-biz-dimension.component';
-import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 import { ContentDeleteButtonComponent } from './content-action/content-delete-button/content-delete-button.component';
 import { DocDownloadButtonComponent } from './content-action/doc-download-button/doc-download-button.component';
 import { CopyPortalUrlButtonComponent } from './content-action/copy-portal-url-button/copy-portal-url-button.component';
 import { ContentEmailButtonComponent } from './content-action/content-email-button/content-email-button.component';
 import { BizContentListComponent } from './biz-content/biz-content-list/biz-content-list.component';
-import { TableComponent } from './table/table.component';
 import { ConsolidateContentComponent } from './consolidate-content/consolidate-content.component';
 import { MyDraftComponent } from './consolidate-content/my-draft/my-draft.component';
 import { ContentRequestComponent } from './consolidate-content/content-request/content-request.component';
@@ -55,7 +52,6 @@ import { CardPreviewComponent } from './data-card/card-preview/card-preview.comp
 import { ConsolidateContentService } from './consolidate-content/consolidate-content.service';
 import { PillComponent } from './pill/pill.component';
 import { TypePillComponent } from './type-pill/type-pill.component';
-import { SortTableComponent } from './table/sort-table/sort-table.component';
 import { ContentWorkflowService } from './services/content-workflow.service';
 import { FreetextSearchService } from './services/freetext-search.service';
 import { FreetextSearchComponent } from './freetext-search/freetext-search.component';
@@ -64,7 +60,6 @@ import { MembersComponent } from './company/members/members.component';
 import { IntegrationsComponent } from './company/integrations/integrations.component';
 import { MembersService } from './company/members/members.service';
 import { MemberDetailComponent } from './company/members/member-detail/member-detail.component';
-import { PaginationComponent } from './table/pagination/pagination.component';
 import { TPIntegrationsComponent } from './company/integrations/tpintegrations/tpintegrations.component';
 import { DocStoreIntegrationComponent } from './company/integrations/doc-store-integration/doc-store-integration.component';
 import { DocStoreConfigService } from './company/integrations/doc-store-integration/doc-store-config.service';
@@ -89,6 +84,7 @@ import { OpenUrlButtonComponent } from './content-action/open-url-button/open-ur
 import { RecoContentComponent } from './reco-content/reco-content.component';
 import { RecoContentService } from './reco-content/reco-content.service';
 import { CopyDownloadUrlButtonComponent } from './content-action/copy-download-url-button/copy-download-url-button.component';
+import { RecoListComponent } from './reco-content/reco-list/reco-list.component';
 
 @NgModule({
   declarations: [
@@ -117,26 +113,22 @@ import { CopyDownloadUrlButtonComponent } from './content-action/copy-download-u
     BizDimensionListComponent,
     BizDimensionComponent,
     EditBizDimensionComponent,
-    ConfirmDialogComponent,
     ContentDeleteButtonComponent,
     DocDownloadButtonComponent,
     CopyPortalUrlButtonComponent,
     ContentEmailButtonComponent,
     BizContentListComponent,
-    TableComponent,
     ConsolidateContentComponent,
     MyDraftComponent,
     ContentRequestComponent,
     CardPreviewComponent,
     PillComponent,
     TypePillComponent,
-    SortTableComponent,
     FreetextSearchComponent,
     CompanyComponent,
     MembersComponent,
     IntegrationsComponent,
     MemberDetailComponent,
-    PaginationComponent,
     TPIntegrationsComponent,
     DocStoreIntegrationComponent,
     EntityPillComponent,
@@ -154,7 +146,8 @@ import { CopyDownloadUrlButtonComponent } from './content-action/copy-download-u
     CopyLinkUrlButtonComponent,
     OpenUrlButtonComponent,
     RecoContentComponent,
-    CopyDownloadUrlButtonComponent
+    CopyDownloadUrlButtonComponent,
+    RecoListComponent
   ],
   imports: [
     BrowserModule,
@@ -175,7 +168,6 @@ import { CopyDownloadUrlButtonComponent } from './content-action/copy-download-u
   ],
   providers: [
     RecentContentService,
-    ActivityAuditService,
     TenantService,
     ConsolidateContentService,
     ContentWorkflowService,
@@ -193,7 +185,6 @@ import { CopyDownloadUrlButtonComponent } from './content-action/copy-download-u
   ],
   entryComponents: [
     EditBizDimensionComponent,
-    ConfirmDialogComponent,
     MemberDetailComponent,
     EmailSharePopupComponent
   ],

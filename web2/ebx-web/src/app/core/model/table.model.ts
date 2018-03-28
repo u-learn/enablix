@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs/Observable';
 
-import { DataType } from '../core/data-search/filter-metadata.model';
+import { DataType } from '../data-search/filter-metadata.model';
 
 export class TableColumn {
   heading: string;

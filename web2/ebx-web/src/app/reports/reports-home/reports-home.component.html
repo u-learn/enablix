@@ -3,12 +3,16 @@
   <div class="company no-sidebar">
     <div class="main">
       <div class="sub-tabs">
+        <a routerLink="/portal/reports" routerLinkActive="tab-active" [routerLinkActiveOptions]="{ exact: true }">All Activity</a>
         <ng-container *ngFor="let rpt of reports">
-          <a [class.tab-active]="rpt.id == selectedRpt.id" (click)=navToReport(rpt)>{{rpt.name}}</a>
+          <a [class.tab-active]="rpt.id == selectedRpt?.id" (click)=navToReport(rpt)>{{rpt.name}}</a>
         </ng-container>
       </div>
-      <div class="tab-content">
+      <div class="tab-content" *ngIf="selectedRpt">
         <ebx-report-detail [reportConfig]="selectedRpt"></ebx-report-detail>
+      </div>
+      <div class="tab-content" *ngIf="!selectedRpt">
+        <router-outlet></router-outlet>
       </div>
     </div>
   </div>

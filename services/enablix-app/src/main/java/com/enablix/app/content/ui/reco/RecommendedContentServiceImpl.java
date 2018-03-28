@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -62,37 +63,40 @@ public class RecommendedContentServiceImpl implements RecommendedContentService 
 		
 		RecommendationContext recoCtx = recoCtxBuilder.build(request);
 		
-		List<ContentDataRef> recommendations = recoEngine.getRecommendations(recoCtx, dataView);
+		Page<ContentDataRef> recommendations = recoEngine.getRecommendations(recoCtx, dataView);
 		
 		List<NavigableContent> navRecos = new ArrayList<>();
 		
-		for (ContentDataRef reco : recommendations) {
-			NavigableContent navReco = navContentBuilder.build(reco, labelResolver);
-			if (navReco != null) {
-				navRecos.add(navReco);
+		if (recommendations != null) {
+			
+			for (ContentDataRef reco : recommendations) {
+				NavigableContent navReco = navContentBuilder.build(reco, labelResolver);
+				if (navReco != null) {
+					navRecos.add(navReco);
+				}
 			}
+			
 		}
 		
 		return navRecos;
 	}
 
 	@Override
-	public List<ContentDataRef> getAIRecommendedContent(WebRecommendationRequest request, DataView dataView) {
+	public Page<ContentDataRef> getAIRecommendedContent(WebRecommendationRequest request, DataView dataView) {
 		
 		RecommendationContext recoCtx = recoCtxBuilder.build(request);
 		
-		List<ContentDataRef> recommendations = relevanceEngine.getRecommendations(recoCtx, dataView);
+		Page<ContentDataRef> recommendations = relevanceEngine.getRecommendations(recoCtx, dataView);
 		
 		if (CollectionUtil.isEmpty(recommendations)) {
 			// return the recent content
-			List<ContentDataRef> recentContent = recentContent(dataView);
-			return recentContent == null ? new ArrayList<>() : recentContent;
+			return recentContent(request, dataView);
 		}
 		
 		return recommendations;
 	}
 	
-	private List<ContentDataRef> recentContent(DataView dataView) {
+	private Page<ContentDataRef> recentContent(WebRecommendationRequest request, DataView dataView) {
 		
 		TemplateFacade template = templateMgr.getTemplateFacade(ProcessContext.get().getTemplateId());
 		
@@ -100,16 +104,21 @@ public class RecommendedContentServiceImpl implements RecommendedContentService 
 				.map(ContainerType::getQualifiedId).collect(Collectors.toList());
 		
 		Criteria criteria = Criteria.where("obsolete").is(false).and("data.containerQId").in(contentContQIds);
-		Pageable pageable = new PageRequest(0, 5, new Sort(Direction.DESC, ContentDataConstants.CREATED_AT_KEY));
+		Pageable pageable = new PageRequest(request.getPageNo(), request.getPageSize(), 
+				new Sort(Direction.DESC, ContentDataConstants.CREATED_AT_KEY));
 		
 		Page<RecentData> page = dao.findByCriteria(criteria, RecentData.class, pageable, DataViewUtil.getMongoDataView(dataView));
 		List<RecentData> records = page.getContent();
 		
+		List<ContentDataRef> contentList = null;
+		
 		if (CollectionUtil.isNotEmpty(records)) {
-			return records.stream().map(RecentData::getData).collect(Collectors.toList());
+			contentList = records.stream().map(RecentData::getData).collect(Collectors.toList());
+		} else {
+			contentList = new ArrayList<>();
 		}
 		
-		return null;
+		return new PageImpl<ContentDataRef>(contentList, pageable, page.getTotalElements());
 	}
 
 }

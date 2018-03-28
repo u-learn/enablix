@@ -4,7 +4,7 @@ import { MatDialog, MatDialogRef } from '@angular/material';
 import { Container } from '../../model/container.model';
 import { ContentService } from '../../core/content/content.service';
 import { AlertService } from '../../core/alert/alert.service';
-import { ConfirmDialogComponent } from '../../confirm-dialog/confirm-dialog.component'; 
+import { ConfirmDialogComponent } from '../../core/confirm-dialog/confirm-dialog.component'; 
 import { ContentWorkflowService } from '../../services/content-workflow.service';
 
 @Component({

@@ -14,6 +14,8 @@ public class WebRequestContextBuilder<T extends WebContentRequest> implements Re
 		
 		webRequestContext.setContainerQId(request.getContainerQId());
 		webRequestContext.setContentIdentity(request.getContentIdentity());
+		webRequestContext.setPageSize(request.getPageSize());
+		webRequestContext.setPageNo(request.getPageNo());
 		
 		return webRequestContext;
 	}
@@ -25,6 +27,10 @@ public class WebRequestContextBuilder<T extends WebContentRequest> implements Re
 		private String containerQId;
 		
 		private String contentIdentity;
+		
+		private int pageSize;
+		
+		private int pageNo;
 		
 		public WebRequestContext(String templateId) {
 			super();
@@ -52,7 +58,33 @@ public class WebRequestContextBuilder<T extends WebContentRequest> implements Re
 		public void setContentIdentity(String contentIdentity) {
 			this.contentIdentity = contentIdentity;
 		}
-		
+
+		public int getPageSize() {
+			return pageSize;
+		}
+
+		public void setPageSize(int pageSize) {
+			this.pageSize = pageSize;
+		}
+
+		public int getPageNo() {
+			return pageNo;
+		}
+
+		public void setPageNo(int pageNo) {
+			this.pageNo = pageNo;
+		}
+
+		@Override
+		public int pageSize() {
+			return getPageSize();
+		}
+
+		@Override
+		public int pageNo() {
+			return getPageNo();
+		}
+
 	}
 	
 }

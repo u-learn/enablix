@@ -15,6 +15,10 @@ import { UploadButtonComponent } from './upload-button/upload-button.component';
 import { UploadFileComponent } from './upload/upload-file/upload-file.component';
 import { UploadUrlComponent } from './upload/upload-url/upload-url.component';
 import { UploadTextComponent } from './upload/upload-text/upload-text.component';
+import { TableComponent } from './table/table.component';
+import { SortTableComponent } from './table/sort-table/sort-table.component';
+import { PaginationComponent } from './table/pagination/pagination.component';
+import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 import { EmbedInfoService } from './upload/embed-info.service';
 import { SearchBarComponent } from './search-bar/search-bar.component';
 import { ApiUrlService } from './api-url.service';
@@ -50,6 +54,7 @@ import { UserPreferenceService } from './user-preference.service';
 import { EbxDateTimezonePipe } from './pipes/ebx-date-timezone.pipe';
 import { AppMessageService } from './app-message/app-message.service';
 import { AppIntroMsgComponent } from './app-message/app-intro-msg/app-intro-msg.component';
+import { ActivityAuditService } from './activity-audit.service';
 
 @NgModule({
   imports: [
@@ -81,6 +86,7 @@ import { AppIntroMsgComponent } from './app-message/app-intro-msg/app-intro-msg.
     UserPreferenceService,
     EbxDateTimezonePipe,
     AppMessageService,
+    ActivityAuditService,
   	{
   	  provide: HTTP_INTERCEPTORS,
       useClass: HttpErrorInterceptor,
@@ -96,12 +102,17 @@ import { AppIntroMsgComponent } from './app-message/app-intro-msg/app-intro-msg.
     UploadFileComponent,
     UploadUrlComponent,
     UploadTextComponent,
-    AppIntroMsgComponent
+    AppIntroMsgComponent,
+    ConfirmDialogComponent
   ],
   declarations: [
     HeaderComponent,
     FooterComponent,
     UserIconComponent,
+    TableComponent,
+    SortTableComponent,
+    PaginationComponent,
+    ConfirmDialogComponent,
     UploadButtonComponent,
     UploadFileComponent,
     UploadUrlComponent,
@@ -129,6 +140,10 @@ import { AppIntroMsgComponent } from './app-message/app-intro-msg/app-intro-msg.
     HeaderComponent,
     FooterComponent,
     UserIconComponent,
+    TableComponent,
+    SortTableComponent,
+    PaginationComponent,
+    ConfirmDialogComponent,
     AlertComponent,
     SelectComponent,
     TextInputComponent,
