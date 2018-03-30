@@ -29,7 +29,7 @@ export class ContentService {
 
   getContentRecord(containerQId: string, contentIdentity: string, atChannel?: string) : Observable<any> {
     let templateId = this.contentTemplateService.contentTemplate.id;
-    let apiUrl = this.apiUrlService.getContentRecordUrl(templateId, containerQId, contentIdentity, atChannel);
+    let apiUrl = this.apiUrlService.getContentRecordUrl(templateId, containerQId, contentIdentity);
     let options = {};
     if (atChannel) {
       options.headers = { atChannel: atChannel};
