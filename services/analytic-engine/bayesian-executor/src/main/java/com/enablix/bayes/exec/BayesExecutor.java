@@ -1,4 +1,4 @@
-package com.enablix.analytics.app;
+package com.enablix.bayes.exec;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -8,10 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import com.enablix.analytics.web.AnalyticsController.BayesExecRequest;
 import com.enablix.bayes.BayesService;
-import com.enablix.bayes.CsvRelevanceRecorder;
-import com.enablix.bayes.DBRelevanceRecorder;
 import com.enablix.bayes.ExecutionContext;
 import com.enablix.bayes.RelevanceRecorder;
 import com.enablix.bayes.content.ContentBayesNet;

@@ -1,4 +1,4 @@
-package com.enablix.bayes;
+package com.enablix.bayes.exec;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.stereotype.Component;
 
+import com.enablix.bayes.ExecutionContext;
+import com.enablix.bayes.RelevanceRecorder;
 import com.enablix.core.api.ContentDataRecord;
 import com.enablix.core.domain.content.UserContentRelevance;
 import com.enablix.core.mongo.MongoUtil;

@@ -1,4 +1,4 @@
-package com.enablix.bayes;
+package com.enablix.bayes.exec;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,6 +13,9 @@ import org.springframework.batch.item.file.transform.DelimitedLineAggregator;
 import org.springframework.batch.item.file.transform.FieldExtractor;
 import org.springframework.core.io.FileSystemResource;
 
+import com.enablix.bayes.EBXNet;
+import com.enablix.bayes.ExecutionContext;
+import com.enablix.bayes.RelevanceRecorder;
 import com.enablix.bayes.content.ContentBayesNet;
 import com.enablix.commons.util.date.DateUtil;
 import com.enablix.commons.util.process.ProcessContext;

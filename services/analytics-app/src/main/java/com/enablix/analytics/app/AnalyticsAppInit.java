@@ -4,11 +4,17 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.data.elasticsearch.ElasticsearchAutoConfiguration;
 import org.springframework.boot.autoconfigure.data.elasticsearch.ElasticsearchDataAutoConfiguration;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.PropertySources;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
+
+import com.enablix.bayes.exec.BayesExecRequest;
+import com.enablix.bayes.exec.BayesExecRequest.RecorderType;
+import com.enablix.commons.util.StringUtil;
+import com.enablix.bayes.exec.BayesExecutor;
 
 @EnableAutoConfiguration(exclude={ElasticsearchDataAutoConfiguration.class, ElasticsearchAutoConfiguration.class})
 @Configuration
@@ -55,7 +61,26 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 public class AnalyticsAppInit {
 
 	public static void main(String[] args) {
-		SpringApplication.run(AnalyticsAppInit.class, args);
+		
+		ConfigurableApplicationContext ctx = SpringApplication.run(AnalyticsAppInit.class, args);
+
+		String runAsJob = System.getProperty("runAsJob");
+		
+		if (StringUtil.hasText(runAsJob) && "true".equalsIgnoreCase(runAsJob)) {
+			BayesExecutor executor = ctx.getBean(BayesExecutor.class);
+			
+			BayesExecRequest request = new BayesExecRequest();
+			request.setRecorderType(RecorderType.DB);
+	
+			try {
+				executor.run(request);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			System.out.println("Closing...");
+			ctx.close();
+		}
 	}
 	
 }
