@@ -1,7 +1,6 @@
 package com.enablix.core.security;
 
 import java.io.IOException;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,12 +14,10 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.filter.GenericFilterBean;
 
 import com.enablix.commons.util.process.ProcessContext;
+import com.enablix.core.activity.audit.ActivityTrackingConstants;
 import com.enablix.core.activity.audit.ActivityTrackingContext;
 
 public class AuditTrackingContextInitFilter extends GenericFilterBean {
-
-	
-	private static final String AUDIT_TRACKING_PARAM_PREFIX = "at";
 
 	public AuditTrackingContextInitFilter() {
 	}
@@ -35,19 +32,18 @@ public class AuditTrackingContextInitFilter extends GenericFilterBean {
 		try {
 			Map<String, String> auditTrackingParams = new HashMap<>();
 			
-			Enumeration<String> paramNames = request.getParameterNames();
-			while (paramNames.hasMoreElements()) {
-				String paramName = paramNames.nextElement();
-				if (paramName.startsWith(AUDIT_TRACKING_PARAM_PREFIX)) {
-					auditTrackingParams.put(paramName, request.getParameter(paramName));
+			for (String trackAttr: ActivityTrackingConstants.TRACKING_ATTRS) {
+
+				// add request parameters first
+				String attrValue = request.getParameter(trackAttr);
+				if (attrValue != null) {
+					auditTrackingParams.put(trackAttr, attrValue);
 				}
-			}
-			
-			Enumeration<String> headerNames = request.getHeaderNames();
-			while (headerNames.hasMoreElements()) {
-				String header = headerNames.nextElement();
-				if (header.startsWith(AUDIT_TRACKING_PARAM_PREFIX)) {
-					auditTrackingParams.put(header, request.getHeader(header));
+				
+				// request header values over-write the request parameters
+				attrValue = request.getHeader(trackAttr);
+				if (attrValue != null) {
+					auditTrackingParams.put(trackAttr, attrValue);
 				}
 			}
 			

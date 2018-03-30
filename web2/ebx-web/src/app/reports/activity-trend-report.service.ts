@@ -168,11 +168,13 @@ export class ActivityTrendReportService implements ReportDataProvider {
       
       if (data) {
         data.forEach((metric) => {
-          metricTypes.push({
-            id: metric.metricCode,
-            label: metric.metricName
-          });
-          this.metricIdLabelMap[metric.metricCode] = metric.metricName;
+          if (metric.metricCode !== "ACTMETRIC7") {
+            metricTypes.push({
+              id: metric.metricCode,
+              label: metric.metricName
+            });
+            this.metricIdLabelMap[metric.metricCode] = metric.metricName;
+          }
         });
       }
 
@@ -202,7 +204,8 @@ export class ActivityTrendReportService implements ReportDataProvider {
            
       for (var key in dataItem) {
         
-        if (key !== "Time" && key != "startDate") {
+        if (key !== "Time" && key != "startDate"
+            && key != "ACTMETRIC7") {
         
           let value = dataItem[key];
           var dataPoints = newChartData[key];

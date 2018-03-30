@@ -27,10 +27,14 @@ export class ContentService {
               private http: HttpClient, private dsService: DataSearchService,
               private apiUrlService: ApiUrlService) { }
 
-  getContentRecord(containerQId: string, contentIdentity: string) : Observable<any> {
+  getContentRecord(containerQId: string, contentIdentity: string, atChannel?: string) : Observable<any> {
     let templateId = this.contentTemplateService.contentTemplate.id;
-    let apiUrl = this.apiUrlService.getContentRecordUrl(templateId, containerQId, contentIdentity);
-    return this.http.get(apiUrl);
+    let apiUrl = this.apiUrlService.getContentRecordUrl(templateId, containerQId, contentIdentity, atChannel);
+    let options = {};
+    if (atChannel) {
+      options.headers = { atChannel: atChannel};
+    }
+    return this.http.get(apiUrl, options)
   }
 
   decorateRecord(container: Container, dataRecord: any) {
@@ -150,13 +154,15 @@ export class ContentService {
     });
   }
 
-  getRecordAndChildData(contentQId: string, contentIdentity: string, childSizeLimit: string): Observable<any> {
+  getRecordAndChildData(contentQId: string, contentIdentity: string, childSizeLimit?: string, atChannel?: string): Observable<any> {
          
     var options = {};
     if (childSizeLimit) {
-      options = {
-        params : {size: childSizeLimit}
-      }
+      options.params = {size: childSizeLimit};
+    }
+
+    if (atChannel) {
+      options.headers = { atChannel: atChannel };
     }
 
     const apiUrl = this.apiUrlService.getRecordAndChildren(contentQId, contentIdentity);

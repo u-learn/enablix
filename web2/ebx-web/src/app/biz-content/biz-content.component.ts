@@ -12,6 +12,7 @@ import { NavigationService } from '../app-routing/navigation.service';
 import { ConfirmDialogComponent } from '../core/confirm-dialog/confirm-dialog.component'; 
 import { ContentDeleteButtonComponent } from '../content-action/content-delete-button/content-delete-button.component';
 import { ContentWorkflowService } from '../services/content-workflow.service';
+import { Constants } from '../util/constants';
 
 @Component({
   selector: 'ebx-biz-content',
@@ -77,7 +78,7 @@ export class BizContentComponent implements OnInit, AfterViewInit {
             
             this.container = this.contentTemplate.getConcreteContainerByQId(containerQId);
 
-            this.contentService.getContentRecord(containerQId, recordIdentity)
+            this.contentService.getContentRecord(containerQId, recordIdentity, Constants.AT_CHANNEL_WEB)
                   .subscribe(
                       result => {
                         

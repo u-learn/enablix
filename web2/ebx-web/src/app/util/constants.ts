@@ -7,4 +7,5 @@ export class Constants {
   static defaultTypeColor = "#b7babd";
   static refDataColor = "#54a7e4";
 
+  static AT_CHANNEL_WEB = "WEB";
 }

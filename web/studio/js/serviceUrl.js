@@ -109,7 +109,7 @@ enablix.serviceURL = {
 	"fetchApplicableUserPrefs" : enablix.domainName + "/userpref/applicable",
 	"saveAsUserPref" : enablix.domainName + "/userpref/saveasuserpref",
 	"saveAsSystemPref" : enablix.domainName + "/userpref/saveasyspref",
-	"getDocPreviewData": enablix.domainName + "/doc/pd/:docIdentity",
+	"getDocPreviewData": enablix.domainName + "/doc/pd/:docIdentity?atChannel=WEB",
 	"getContainerCountByRefListItems": enablix.domainName + "/data/search/cfc/:containerQId/",
 	"getEmbedInfo": enablix.domainName + "/urlembed/fetch/?url=:url"
 };

@@ -123,6 +123,18 @@ export class ActivitySummaryReportService implements ReportDataProvider {
   }
 
   prepareChartData(metricData: any, filters: any) {
+    let previewActvyIndx = -1;
+    for (var i = 0; i < metricData.length; i++) {
+      if (metricData[i].metricCode === "ACTMETRIC7") {
+        previewActvyIndx = i;
+        break;
+      }
+    }
+
+    if (previewActvyIndx >= 0) {
+      metricData.splice(previewActvyIndx, 1);
+    }
+
     return [{
       key: "Activity Count",
       color: "#1F8AEF",

@@ -182,7 +182,7 @@ public class DocumentController {
     	if (previewData != null) {
     		DocumentMetadata doc = docManager.getDocumentMetadata(docIdentity);
     		auditActivity(ActivityType.DOC_PREVIEW, docIdentity, doc, 
-        		Channel.WEB.toString(), atContext, atContextId, atContextTerm);
+        		atChannel, atContext, atContextId, atContextTerm);
     	}
     	
 		return previewData;

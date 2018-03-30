@@ -11,6 +11,7 @@ import { NavigationService } from '../../app-routing/navigation.service';
 import { ContentDeleteButtonComponent } from '../../content-action/content-delete-button/content-delete-button.component';
 import { EditBizDimensionComponent } from '../../biz-dimension/edit-biz-dimension/edit-biz-dimension.component';
 import { SearchBarService } from '../../core/search-bar/search-bar.service';
+import { Constants } from '../../util/constants';
 
 @Component({
   selector: 'ebx-biz-dimension-detail',
@@ -41,7 +42,7 @@ export class BizDimensionDetailComponent implements OnInit, AfterViewInit {
       let cQId = params['cQId'];
       let recIdentity = params['identity'];
 
-      this.contentService.getRecordAndChildData(cQId, recIdentity, "3")
+      this.contentService.getRecordAndChildData(cQId, recIdentity, "3", Constants.AT_CHANNEL_WEB)
           .subscribe(
               res => {
 
