@@ -30,7 +30,7 @@ export class ContentService {
   getContentRecord(containerQId: string, contentIdentity: string, atChannel?: string) : Observable<any> {
     let templateId = this.contentTemplateService.contentTemplate.id;
     let apiUrl = this.apiUrlService.getContentRecordUrl(templateId, containerQId, contentIdentity);
-    let options = {};
+    let options: any = {};
     if (atChannel) {
       options.headers = { atChannel: atChannel};
     }
@@ -156,7 +156,7 @@ export class ContentService {
 
   getRecordAndChildData(contentQId: string, contentIdentity: string, childSizeLimit?: string, atChannel?: string): Observable<any> {
          
-    var options = {};
+    var options: any = {};
     if (childSizeLimit) {
       options.params = {size: childSizeLimit};
     }
