@@ -110,6 +110,13 @@ export class UploadFileComponent implements OnInit {
     this.dialogRef.close();
   }
 
+  isFileDefaultImage() {
+    if (this.previewImageUrl) {
+      return this.previewImageUrl.endsWith(".svg");
+    }
+    return false;
+  }
+
   updateFile() {
     this.dialogRef.close(this.fileInfo);
   }
