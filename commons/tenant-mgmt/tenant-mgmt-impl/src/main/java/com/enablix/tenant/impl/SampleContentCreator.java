@@ -17,6 +17,7 @@ import com.enablix.app.content.ContentDataManager;
 import com.enablix.app.content.doc.DocumentManager;
 import com.enablix.app.content.update.UpdateContentRequest;
 import com.enablix.app.template.service.TemplateManager;
+import com.enablix.commons.constants.AppConstants;
 import com.enablix.commons.dms.api.Document;
 import com.enablix.commons.dms.api.DocumentMetadata;
 import com.enablix.commons.util.beans.BeanUtil;
@@ -24,6 +25,7 @@ import com.enablix.commons.util.process.ProcessContext;
 import com.enablix.core.api.TemplateFacade;
 import com.enablix.core.commons.xsdtopojo.ContainerType;
 import com.enablix.core.commons.xsdtopojo.ContentItemType;
+import com.enablix.core.domain.activity.RegisteredActor;
 import com.enablix.core.domain.activity.Activity.ActivityType;
 import com.enablix.core.domain.activity.ActivityChannel.Channel;
 import com.enablix.core.domain.content.SampleContent;
@@ -139,7 +141,9 @@ public class SampleContentCreator implements TenantSetupTask {
 		        		document, container.getQualifiedId(), null, generatePreview);
 		        
 		        ActivityLogger.auditDocActivity(ActivityType.DOC_UPLOAD, docQId, contentIdentity, 
-		        		docMd.getIdentity(), Channel.SYSTEM, null, null, null, null, title);
+		        		docMd.getIdentity(), Channel.SYSTEM, 
+		        		new RegisteredActor(AppConstants.SYSTEM_USER_ID, AppConstants.SYSTEM_USER_NAME), 
+		        		null, null, null, title);
 		        
 		        // update the record with uploaded document info
 		        record.put(docItemType.getId(), BeanUtil.beanToMap(docMd));
