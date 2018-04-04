@@ -1,8 +1,9 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, AfterViewInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { FormControl } from '@angular/forms';
 import "rxjs/add/operator/share";
+import "rxjs/operators/switchMap";
 
 import { SearchBarService } from './search-bar.service';
 import { SearchBarData, SearchBarItem, SearchDataset } from '../../model/search-bar-data.model';
@@ -14,7 +15,7 @@ import { NavigationService } from '../../app-routing/navigation.service';
   styleUrls: ['./search-bar.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class SearchBarComponent implements OnInit {
+export class SearchBarComponent implements OnInit, AfterViewInit {
 
   showOptions = false;
   doNotHideOnClick = false;
@@ -28,6 +29,8 @@ export class SearchBarComponent implements OnInit {
 
   filteredDSData: { [key: string] : Observable<SearchBarItem[]>} = {};
 
+  bizContentItems: any;
+
   constructor(private sbService: SearchBarService, private navService: NavigationService) { 
     this.textCtrl = new FormControl();
   }
@@ -40,6 +43,45 @@ export class SearchBarComponent implements OnInit {
       this.updateSearchBarData();
     });
 
+  }
+
+  ngAfterViewInit() {
+
+    /*const input: any = document.getElementById("globalSearchTB");
+
+    const search$ = Observable.fromEvent(input, 'keyup')
+      .switchMap(() => {
+        if (input.value && input.value.length > 3) {
+          return this.sbService.typeaheadSearchBizContent(input.value);
+        }
+        return Observable.of(null);
+      });
+
+    search$.subscribe(
+      (result: any) => {
+          if (result) {
+            this.bizContentItems = result.content;
+          } else {
+            this.bizContentItems = null;
+          }
+      }
+    );*/
+
+  }
+
+  getBizContentDesc(bizItem: any) : string {
+    var title = (bizItem.highlights && bizItem.highlights.__title) ? bizItem.highlights.__title :
+                  bizItem.record.__title;
+    return "<span class='typelabel'>" + bizItem.record.__container + ": </span>" 
+          + "<span class='title'>" + title + "</span>";
+  }
+
+  navToRecordDetail(bizItem: any) {
+    var contentQId = bizItem.contentQId;
+    var recIdentity = bizItem.record.identity;
+    if (contentQId && recIdentity) {
+      this.navService.goToContentDetail(contentQId, recIdentity);
+    }
   }
 
   private updateSearchBarData() {

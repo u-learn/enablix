@@ -2,6 +2,7 @@ package com.enablix.app.content.doc;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,7 @@ import com.enablix.commons.dms.api.DocumentStore;
 import com.enablix.commons.dms.repository.DocumentMetadataRepository;
 import com.enablix.commons.util.QIdUtil;
 import com.enablix.commons.util.StringUtil;
+import com.enablix.commons.util.collection.CollectionUtil;
 import com.enablix.commons.util.concurrent.Events;
 import com.enablix.commons.util.process.ProcessContext;
 import com.enablix.core.api.DocInfo;
@@ -281,6 +283,37 @@ public class DocumentManagerImpl implements DocumentManager {
 		}
 		
 		return exists;
+	}
+	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@Override
+	public Map<String, Object> getReferenceRecord(String docQId, String docIdentity) {
+		
+		Map<String, Object> record = null;
+		
+		if (StringUtil.hasText(docQId) && StringUtil.hasText(docIdentity)) {
+			
+			TemplateFacade template = templateMgr.getTemplateFacade(ProcessContext.get().getTemplateId());
+	
+			String parentQId = QIdUtil.getParentQId(docQId);
+			String parentCollName = template.getCollectionName(parentQId);
+			
+			if (StringUtil.hasText(parentCollName)) {
+				
+				String docAttrId = QIdUtil.getElementId(docQId);
+				String docIdentityAttr = docAttrId + "." + ContentDataConstants.IDENTITY_KEY;
+	
+				Criteria criteria = Criteria.where(docIdentityAttr).is(docIdentity);
+				
+				List<Map> records = genericDao.findByCriteria(criteria, parentCollName, Map.class, MongoDataView.ALL_DATA);
+				if (CollectionUtil.isNotEmpty(records)) {
+					record = records.get(0);
+				}
+			}
+			
+		}
+		
+		return record;
 	}
 
 }

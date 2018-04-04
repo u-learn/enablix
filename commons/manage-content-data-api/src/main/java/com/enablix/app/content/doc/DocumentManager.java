@@ -2,6 +2,7 @@ package com.enablix.app.content.doc;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Map;
 
 import com.enablix.commons.dms.api.Document;
 import com.enablix.commons.dms.api.DocumentMetadata;
@@ -41,5 +42,7 @@ public interface DocumentManager {
 	DocumentMetadata updatePreviewStatus(String docIdentity, PreviewStatus status);
 
 	boolean checkReferenceRecordExists(DocumentMetadata docMetadata);
+
+	Map<String, Object> getReferenceRecord(String docQId, String docIdentity);
 	
 }

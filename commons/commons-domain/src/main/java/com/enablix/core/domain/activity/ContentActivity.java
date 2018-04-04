@@ -1,6 +1,8 @@
 package com.enablix.core.domain.activity;
 
-public class ContentActivity extends ContextAwareActivity {
+import com.enablix.core.api.RecordReference;
+
+public class ContentActivity extends ContextAwareActivity implements RecordReference {
 
 	public enum ContainerType {
 		CONTENT, REF_DATA

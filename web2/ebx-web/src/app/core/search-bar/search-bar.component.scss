@@ -95,6 +95,34 @@
         
     }
 
+    .bizcontent-items .wrpr {
+
+        .suggest {
+            margin: 0 16px;
+            min-height: 58px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid rgba(227,235,239, 0.5);
+            cursor: pointer;
+
+            em {
+                font-weight: 600;
+                padding: 0 1px;
+                font-style: initial;
+            }
+
+            .typelabel {
+                padding-right: 8px;
+            }
+
+        }
+
+        &:hover {
+            background: #E3EBEF;
+        }
+
+    }
+
     .free-search {
         font-family: $FPLight;
         font-size: 16px;

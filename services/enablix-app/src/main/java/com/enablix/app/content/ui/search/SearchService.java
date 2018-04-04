@@ -15,5 +15,8 @@ public interface SearchService {
 			String searchText, int pageSize, int pageNum, DataView dataView, DisplayContext ctx);
 	
 	SearchResult<ContentDataRecord> searchBizContentRecords(String searchText, int pageSize, int pageNum, DataView dataView);
+
+	SearchResult<ContentDataRecord> searchAsYouTypeBizContentRecords(String searchText, int pageSize, int pageNum,
+			DataView dataView);
 	
 }

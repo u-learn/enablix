@@ -140,23 +140,24 @@ public class ActivityLogger {
 	}
 	
 	public static void auditDocDownload(ActivityType activityType, String contentQId,
-			String contentIdentity, String docIdentity, Channel channel, 
-			String contextName, String contextId, String contextTerm, String contentTitle) {
+			String contentIdentity, String docIdentity, Channel channel, String contextName, 
+			String contextId, String contextTerm, String contentTitle, String docTitle) {
 		
 		ProcessContext pc = ProcessContext.get();
 		auditDocActivity(activityType, contentQId, contentIdentity, docIdentity, channel, 
 				new RegisteredActor(pc.getUserId(), pc.getUserDisplayName()), contextName, 
-				contextId, contextTerm, contentTitle);
+				contextId, contextTerm, contentTitle, docTitle);
 	}
 	
-	public static void auditDocActivity(ActivityType activityType, String contentQId, 
+	public static void auditDocActivity(ActivityType activityType, String docQId, 
 			String contentIdentity, String docIdentity, Channel channel, Actor actor,
-			String contextName, String contextId, String contextTerm, String contentTitle) {
+			String contextName, String contextId, String contextTerm, String contentTitle,
+			String docTitle) {
 		
 		ActivityAudit activity = new ActivityAudit();
 		
-		DocumentActivity docDownloadActvy = new DocumentActivity(activityType, contentIdentity, contentQId, 
-				ContainerType.CONTENT, docIdentity, contextName, contextId, contextTerm, contentTitle);
+		DocumentActivity docDownloadActvy = new DocumentActivity(activityType, contentIdentity, docQId, 
+				ContainerType.CONTENT, docIdentity, contextName, contextId, contextTerm, contentTitle, docTitle);
 		
 		activity.setActivity(docDownloadActvy);
 		activity.setActor(actor);

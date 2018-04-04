@@ -1,6 +1,8 @@
 import { Injectable, Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
+import { ApiUrlService } from '../api-url.service';
 import { NavigationService } from '../../app-routing/navigation.service';
 import { ContentTemplateService } from '../content-template.service';
 import { ContentService, ContentDeleteEvent, ContentUpdateEvent } from '../content/content.service';
@@ -61,10 +63,17 @@ export class SearchBarService {
               private ctService: ContentTemplateService,
               private contentService: ContentService,
               private biDSBuilder: BoundedItemsDSBuilderService,
-              private route: ActivatedRoute) { 
+              private route: ActivatedRoute,
+              private apiUrlService: ApiUrlService,
+              private http: HttpClient) { 
     
     this.contentService.onContentUpdate.subscribe(res => {
       this.checkAndUpdateDimObjList(res);
+    });
+
+    this.ctService.onTemplateLoad.subscribe(res => {
+      this.initiated = false;
+      this.init();
     });
   }
 
@@ -356,6 +365,15 @@ export class SearchBarService {
       return queryParam.substring(3);
     }
     return null;
+  }
+
+  typeaheadSearchBizContent(text: string, pageNum: number = 0, pageSize: number = 5) {
+    let apiUrl = this.apiUrlService.postTypeaheadBizContentSearch();
+    return this.http.post(apiUrl, {
+              text: text,
+              page: pageNum,
+              size: pageSize
+            }); 
   }
 
 }

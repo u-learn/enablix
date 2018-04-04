@@ -6,7 +6,6 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 
 import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.core.api.TemplateFacade;
@@ -16,7 +15,6 @@ import com.enablix.core.commons.xsdtopojo.ContentItemType;
 import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 import com.enablix.services.util.TemplateUtil;
 
-@Component
 public class DefaultSearchFieldBuilder implements SearchFieldBuilder {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(DefaultSearchFieldBuilder.class);

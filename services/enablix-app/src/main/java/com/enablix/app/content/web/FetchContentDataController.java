@@ -219,21 +219,24 @@ public class FetchContentDataController {
 		DataView userDataView = dataSegmentService.getDataViewForUserId(ProcessContext.get().getUserId());
 		Object data =  fetchData(new FetchContentRequest(templateId, contentQId, null, dataIdentity), userDataView);
 		
-		// Audit access activity
-		Channel channel = Channel.parse(atChannel);
-		if (channel != null && !"SEARCH".equals(atContext)) {
-			
-			String contentTitle = null;
-			if (data instanceof Map) {
-				// single result 
-				Map record = (Map) data;
-				contentTitle = ContentDataUtil.findPortalLabelValue(record, 
-						templateMgr.getTemplateFacade(templateId), contentQId);
+		if (data != null) {
+			// Audit access activity
+			Channel channel = Channel.parse(atChannel);
+			if (channel != null && !"SEARCH".equals(atContext)) {
 				
+				String contentTitle = null;
+				if (data instanceof Map) {
+					// single result 
+					Map record = (Map) data;
+					contentTitle = ContentDataUtil.findPortalLabelValue(record, 
+							templateMgr.getTemplateFacade(templateId), contentQId);
+					
+				}
+				ActivityLogger.auditContentAccess(
+					ContentDataRef.createContentRef(templateId, contentQId, dataIdentity, contentTitle), 
+					ContainerType.CONTENT, channel, atContext, atContextId, atContextTerm);
 			}
-			ActivityLogger.auditContentAccess(
-				ContentDataRef.createContentRef(templateId, contentQId, dataIdentity, contentTitle), 
-				ContainerType.CONTENT, channel, atContext, atContextId, atContextTerm);
+			
 		}
 		
 		return data == null ? new HashMap<>() : data;

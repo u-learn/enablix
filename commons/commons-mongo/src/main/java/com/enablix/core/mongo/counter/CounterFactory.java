@@ -4,4 +4,6 @@ public interface CounterFactory {
 
 	Counter getCounter(String counterName);
 	
+	void checkAndCreateCounter(String counterName);
+	
 }

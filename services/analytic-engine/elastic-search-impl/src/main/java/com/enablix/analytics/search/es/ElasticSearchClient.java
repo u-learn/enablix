@@ -11,6 +11,7 @@ import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
+import org.elasticsearch.search.highlight.HighlightBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.enablix.analytics.search.SearchClient;
@@ -31,8 +32,9 @@ public class ElasticSearchClient implements SearchClient {
 	@Autowired
 	private SearchHitTransformer searchHitTx;
 	
-	@Autowired
-	private SearchFieldBuilder fieldBuilder;
+	private SearchFieldBuilder defaultSearchFieldBuilder = new DefaultSearchFieldBuilder();
+	
+	private TypeaheadSearchFieldBuilder typeaheadSearchFieldBuilder = new TypeaheadSearchFieldBuilder();
 	
 	@Override
 	public SearchResult<ContentDataRef> search(String text, 
@@ -87,7 +89,7 @@ public class ElasticSearchClient implements SearchClient {
 		
 		ESDataView esDataView = DataViewUtil.getElasticSearchDataView(dataView);
 		
-		return ESQueryBuilder.builder(text, template, fieldBuilder)
+		return ESQueryBuilder.builder(text, template, defaultSearchFieldBuilder)
 													.withPagination(pageSize, pageNum)
 													.withViewScope(esDataView).build();
 	}
@@ -122,6 +124,44 @@ public class ElasticSearchClient implements SearchClient {
 				buildBizContentSearchRequest(text, template, pageSize, pageNum, dataView));
 	}
 	
+	@Override
+	public SearchResult<ContentDataRecord> searchAsYouTypeBizContentRecords(String text, 
+			TemplateFacade template, int pageSize, int pageNum, DataView dataView) {
+		
+		return executeSearchAndCreateResult(template, pageSize, pageNum, 
+				(hit, templt) -> searchHitTx.toContentDataRecord(hit, templt),
+				buildTypeaheadBizContentSearchRequest(text, template, pageSize, pageNum, dataView));
+	}
+	
+	private SearchRequest buildTypeaheadBizContentSearchRequest(String text, 
+			TemplateFacade template, int pageSize, int pageNum, DataView dataView) {
+		
+		ESDataView esDataView = DataViewUtil.getElasticSearchDataView(dataView);
+		
+		Collection<String> bizContentCollections = new HashSet<>();
+		
+		template.getBizContentContainers().forEach((container) -> {
+			String collectionName = template.getCollectionName(container.getQualifiedId());
+			if (StringUtil.hasText(collectionName)) {
+				bizContentCollections.add(collectionName);
+			}
+		});
+		
+		HighlightBuilder highlighter = new HighlightBuilder();
+		for (String field : typeaheadSearchFieldBuilder.getFields()) {
+			highlighter.field(field);
+		}
+
+		QueryStringMatchQueryBuilder matchQueryBuilder = new QueryStringMatchQueryBuilder("*" + text + "*");
+		return ESQueryBuilder.builder(matchQueryBuilder, template, typeaheadSearchFieldBuilder)
+				.withPagination(pageSize, pageNum)
+				.withFuzziness((searchTerm) -> null)
+				.withTypeFilter((searchType) -> bizContentCollections.contains(searchType))
+				.withHighlighter(highlighter)
+				.withViewScope(esDataView)
+				.build();
+	}
+	
 	private SearchRequest buildBizContentSearchRequest(String text, 
 			TemplateFacade template, int pageSize, int pageNum, DataView dataView) {
 		
@@ -136,7 +176,7 @@ public class ElasticSearchClient implements SearchClient {
 			}
 		});
 		
-		return ESQueryBuilder.builder(text, template, fieldBuilder)
+		return ESQueryBuilder.builder(text, template, defaultSearchFieldBuilder)
 				.withPagination(pageSize, pageNum)
 				.withTypeFilter((searchType) -> bizContentCollections.contains(searchType))
 				.withViewScope(esDataView)

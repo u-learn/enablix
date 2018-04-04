@@ -78,7 +78,7 @@ public class ShareOptionsController {
 		
 		String shareableUrl = shareableUrlCreator.createShareableUrl(request.getUrl(), userId, true);
 		
-		auditDocUrlCopy(request.getAuditRequest());
+		auditExtLinkUrlCopy(request.getAuditRequest());
 		
 		return new ShareableUrlResponse(serverUrl + shareableUrl);
 	}

@@ -39,6 +39,7 @@ import { ReportsHomeComponent } from '../reports/reports-home/reports-home.compo
 import { RecoListComponent } from '../reco-content/reco-list/reco-list.component';
 import { ActivityAuditComponent } from '../reports/activity-audit/activity-audit.component';
 import { AuditActivityResolve } from './audit-activity.resolve';
+import { DimensionTemplateComponent } from '../company/dimension-template/dimension-template.component';
 
 const routes: Routes = [
   {
@@ -170,6 +171,10 @@ const routes: Routes = [
             {
               path: 'integrations',
               component: IntegrationsComponent
+            },
+            {
+              path: 'dimtemplate',
+              component: DimensionTemplateComponent
             }
           ]
         },

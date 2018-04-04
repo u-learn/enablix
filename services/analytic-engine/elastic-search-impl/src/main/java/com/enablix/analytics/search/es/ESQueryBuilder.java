@@ -10,6 +10,7 @@ import org.elasticsearch.client.Requests;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.search.aggregations.AbstractAggregationBuilder;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
+import org.elasticsearch.search.highlight.HighlightBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,7 +33,7 @@ public class ESQueryBuilder {
 	private TypeFilter typeFilter = TypeFilter.ALL_TYPES;
 	private FuzzyMatchOption fuzzyMatchOption = FuzzyMatchOption.DEFAULT_FUZZY_MATCH;
 	private MultiMatchQueryOptimizer queryOptimizer;
-
+	private HighlightBuilder highlightBuilder;
 	private SearchFieldBuilder fieldBuilder;
 
 	private AbstractAggregationBuilder aggregation;
@@ -90,6 +91,11 @@ public class ESQueryBuilder {
 		return this;
 	}
 	
+	public ESQueryBuilder withHighlighter(HighlightBuilder highlighter) {
+		this.highlightBuilder = highlighter;
+		return this;
+	}
+	
 	public SearchRequest build() {
 		
 		String indexName = getIndexName();
@@ -115,6 +121,10 @@ public class ESQueryBuilder {
 
 		if (aggregation != null) {
 			searchSource.aggregation(aggregation);
+		}
+		
+		if (this.highlightBuilder != null) {
+			searchSource.highlight(highlightBuilder);
 		}
 		
 		searchRequest.source(searchSource);

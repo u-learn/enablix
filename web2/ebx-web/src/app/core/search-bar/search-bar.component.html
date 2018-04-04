@@ -24,7 +24,7 @@
                 </div>
             </div>
         </div>
-        <input type="text" [formControl]="textCtrl"  placeholder="Search" (focus)="showSearchBar()" ng-change="updateFilters()" > 
+        <input type="text" [formControl]="textCtrl" id="globalSearchTB"  placeholder="Search" (focus)="showSearchBar()" ng-change="updateFilters()" > 
         <img class="funnel-icon" [src]="showOptions ? '/assets/images/icons/filter.svg' : '/assets/images/icons/filter-grey.svg'" (click)="toggleSearchBar()">
     </div>
     
@@ -49,10 +49,17 @@
                 </div>
             </ng-container>
         </ng-container>
-        <div class="filtered-row" *ngIf="freeText && freeText.length > 0">
-            <div class="freetext-search" (click)="searchBizContent()">
-                Search for "{{freeText}}"
+        <ng-container *ngIf="freeText && freeText.length > 0">
+            <div class="bizcontent-items">
+              <div class="wrpr" *ngFor="let bizItem of bizContentItems">
+                <div class="suggest" [innerHtml]="getBizContentDesc(bizItem)" (click)="navToRecordDetail(bizItem)"></div>
+              </div>
             </div>
-        </div>
+            <div class="filtered-row">
+              <div class="freetext-search" (click)="searchBizContent()">
+                  Search for "{{freeText}}"
+              </div>
+            </div>
+        </ng-container>
     </div>
 </div>

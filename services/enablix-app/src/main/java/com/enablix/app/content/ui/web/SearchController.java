@@ -1,5 +1,7 @@
 package com.enablix.app.content.ui.web;
 
+import java.util.concurrent.TimeUnit;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -70,6 +72,21 @@ public class SearchController {
 		ActivityLogger.auditActivity(new SearchActivity(request.getText(), 
 				searchResult.getCurrentPage(), searchResult.getNumberOfElements()));
 		return searchResult;
+	}
+	
+	@RequestMapping(method = RequestMethod.POST, value="/ta/bizcontent/")
+	public SearchResult<ContentDataRecord> searchAsYouTypeBizContentResults(@RequestBody SearchRequest request) {
+		
+		int pageInt = 0;
+		int sizeInt = 5;
+		
+		if (request.getPage() != null) {
+			pageInt = request.getPage();
+			sizeInt = request.getSize() == null ? sizeInt : request.getSize();
+		}
+		
+		DataView dataView = dataSegmentService.getDataViewForUserId(ProcessContext.get().getUserId());
+		return searchService.searchAsYouTypeBizContentRecords(request.getText(), sizeInt, pageInt, dataView);
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value="/d/t/{searchText}/")

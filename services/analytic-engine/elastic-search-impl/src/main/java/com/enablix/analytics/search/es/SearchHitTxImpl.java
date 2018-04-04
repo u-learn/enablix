@@ -1,11 +1,15 @@
 package com.enablix.analytics.search.es;
 
+import java.util.HashMap;
 import java.util.Map;
 
+import org.elasticsearch.common.text.Text;
 import org.elasticsearch.search.SearchHit;
+import org.elasticsearch.search.highlight.HighlightField;
 import org.springframework.stereotype.Component;
 
 import com.enablix.commons.constants.ContentDataConstants;
+import com.enablix.commons.util.collection.CollectionUtil;
 import com.enablix.core.api.ContentDataRecord;
 import com.enablix.core.api.ContentDataRef;
 import com.enablix.core.api.TemplateFacade;
@@ -47,10 +51,47 @@ public class SearchHitTxImpl implements SearchHitTransformer {
 		ContentTemplate template = templateWrapper.getTemplate();
 		ContainerType container = templateWrapper.getContainerForCollection(searchHit.getType());
 		
-		ContentDataRecord contentDataRef = new ContentDataRecord(
+		ContentDataRecordExt contentDataRef = new ContentDataRecordExt(
 				template.getId(), container.getQualifiedId(), searchHit.getSource());	
 		
+		Map<String, HighlightField> highlightFields = searchHit.getHighlightFields();
+		
+		if (CollectionUtil.isNotEmpty(highlightFields)) {
+		
+			for (HighlightField hlField : highlightFields.values()) {
+				Text[] fragments = hlField.fragments();
+				if (fragments.length > 0) {
+					contentDataRef.highlights.put(hlField.getName(), fragments[0].toString());
+				}
+			}
+		}
+		
 		return contentDataRef;
+	}
+	
+	private static class ContentDataRecordExt extends ContentDataRecord {
+		
+		private Map<String, String> highlights = new HashMap<>();
+
+		@SuppressWarnings("unused")
+		private ContentDataRecordExt() {
+			// for ORM
+		}
+		
+		public ContentDataRecordExt(String templateId, String containerQId, Map<String, Object> record) {
+			super(templateId, containerQId, record);
+		}
+
+		@SuppressWarnings("unused")
+		public Map<String, String> getHighlights() {
+			return highlights;
+		}
+
+		@SuppressWarnings("unused")
+		public void setHighlights(Map<String, String> highlights) {
+			this.highlights = highlights;
+		}
+		
 	}
 
 }

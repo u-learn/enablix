@@ -1,6 +1,8 @@
 package com.enablix.core.domain.activity;
 
-public class RecordAwareNavActivity extends ContainerAwareNavActivity {
+import com.enablix.core.api.RecordReference;
+
+public class RecordAwareNavActivity extends ContainerAwareNavActivity implements RecordReference {
 
 	private String itemIdentity;
 	

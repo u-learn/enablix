@@ -27,6 +27,7 @@ import com.enablix.commons.dms.api.DocumentMetadata;
 import com.enablix.commons.util.QIdUtil;
 import com.enablix.commons.util.StringUtil;
 import com.enablix.commons.util.collection.CollectionUtil;
+import com.enablix.commons.util.concurrent.Events;
 import com.enablix.commons.util.process.ProcessContext;
 import com.enablix.content.quality.QualityAnalyzer;
 import com.enablix.core.api.ContentDataRecord;
@@ -42,6 +43,7 @@ import com.enablix.core.content.event.ContentDataDelEvent;
 import com.enablix.core.domain.content.quality.QualityAnalysis;
 import com.enablix.core.mongo.content.ContentCrudService;
 import com.enablix.core.mongo.view.MongoDataView;
+import com.enablix.core.mq.EventSubscription;
 import com.enablix.data.view.DataView;
 import com.enablix.services.util.ContentDataUtil;
 import com.enablix.services.util.DataViewUtil;
@@ -322,7 +324,9 @@ public class ContentDataManagerImpl implements ContentDataManager {
 		
 		MongoDataView view = DataViewUtil.getMongoDataView(dataView);
 		String collName = template.getCollectionName(dataRef.getContainerQId());
-		Map<String, Object> triggerItemRecord = crud.findRecord(collName, dataRef.getInstanceIdentity(), view);
+		
+		Map<String, Object> triggerItemRecord = StringUtil.hasText(collName) ? 
+				crud.findRecord(collName, dataRef.getInstanceIdentity(), view) : null;
 
 		return triggerItemRecord;
 	}
@@ -615,6 +619,25 @@ public class ContentDataManagerImpl implements ContentDataManager {
 					}
 				}
 			}
+		}
+	}
+	
+	@EventSubscription(eventName = Events.CONTAINER_DEF_REMOVED)
+	public void deleteRecords(ContainerType container) {
+		// remove all records on container deletions
+		if (container != null) {
+			
+			TemplateFacade template = templateMgr.getTemplateFacade(ProcessContext.get().getTemplateId());
+			String collectionName = template.getCollectionName(container.getQualifiedId());
+			
+			List<Map<String, Object>> records = crud.findAllRecord(collectionName, MongoDataView.ALL_DATA);
+			
+			records.forEach((rec) -> {
+				DeleteContentRequest deleteRequest = new DeleteContentRequest(template.getId(), 
+						container.getQualifiedId(), ContentDataUtil.getRecordIdentity(rec));
+				deleteData(deleteRequest);
+			});
+			
 		}
 	}
 	

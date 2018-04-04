@@ -93,8 +93,8 @@ public class DocumentController {
             
             DocumentMetadata docMd = saveDocument(contentQId, parentIdentity, containerIdentity, document, generatePreview);
 			
-            auditActivity(ActivityType.DOC_UPLOAD, docIdentity, docMd, 
-            				null, null, null, null);
+            auditActivity(ActivityType.DOC_UPLOAD, docMd.getIdentity(), docMd, 
+            				Channel.WEB.toString(), null, null, null);
             
             return docMd;
             
@@ -233,7 +233,7 @@ public class DocumentController {
     	Map<String, Object> contentRecord = dataManager.getContentRecord(dataRef, template, DataViewUtil.allDataView());
     	ContainerType container = template.getContainerDefinition(contentQId);
 
-    	if (CollectionUtil.isNotEmpty(contentRecord)) {
+    	if (CollectionUtil.isNotEmpty(contentRecord) && container != null) {
     		
     		Map<String, Object> docRecord = ContentDataUtil.findDocRecord(contentRecord, container, template);
     		
@@ -440,7 +440,7 @@ public class DocumentController {
         	
         	ActivityLogger.auditDocActivity(activityType, docMd.getContentQId(), 
         			null, docIdentity, channel, actor, contextName, contextId, contextTerm, 
-        			docMd.getName());
+        			null, docMd.getName());
         }
 	}
 	

@@ -87,7 +87,7 @@ public class CounterFactoryImpl implements CounterFactory, ApplicationListener<M
 		
 	}
 	
-	private void checkAndCreateCounter(String counterName) {
+	public void checkAndCreateCounter(String counterName) {
 	
 		// check whether a counter exists for this class
 		CounterData counterData = counterRepo.findByCounterName(counterName);
@@ -118,7 +118,5 @@ public class CounterFactoryImpl implements CounterFactory, ApplicationListener<M
 	public float executionOrder() {
 		return TenantSetupTask.MAX_EXEC_ORDER;
 	}
-	
-	
 	
 }

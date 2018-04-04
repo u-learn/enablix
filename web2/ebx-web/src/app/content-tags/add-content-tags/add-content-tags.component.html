@@ -18,8 +18,7 @@
            <div class="head-label" [style.color]="getItemColor(selectContentItem)">{{selectContentItem.label}}</div>
         </div>
         <div class="content" *ngFor="let itemVal of filteredItemTags | async">
-            <div class="object-name" (click)="addItemVal(itemVal)">{{itemVal.label}}
-            </div>
+            <div class="object-name" (click)="addItemVal(itemVal)">{{itemVal.label}}</div>
         </div>
     </div>
 

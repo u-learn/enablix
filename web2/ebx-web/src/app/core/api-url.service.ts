@@ -42,7 +42,9 @@ export class ApiUrlService {
   static POST_INSERT_CHILD_CONTAINER_DATA = "/content/update/t/:templateId/c/:contentQId/r/:parentIdentity";
   static POST_BOUNDED_DEF_REF_LIST = "/bounded/d/list/";
   static POST_FILE_UPLOAD = '/doc/upload';
+
   static POST_BIZ_CONTENT_SEARCH = '/search/bizcontent/';
+  static POST_TYPEAHEAD_BIZ_CONTENT_SEARCH = '/search/ta/bizcontent/';
   
   static POST_SAVE_CONTENT_DRAFT = '/contentwf/savedraft/';
   static POST_SUBMIT_CONTENT_REQUEST = "/contentwf/submit/";
@@ -77,6 +79,11 @@ export class ApiUrlService {
 
   static POST_SAVE_AS_USER_PREF = "/userpref/saveasuserpref";
   static POST_SAVE_AS_SYSTEM_PREF = "/userpref/saveasyspref";
+
+  static POST_UPDATE_CONTAINER_DEF = "/template/:templateId/container/update";
+  static POST_ADD_CONTAINER_DEF = "/template/:templateId/container/add";
+
+  static DELETE_CONTAINER_DEF = "/template/:templateId/c/:containerQId/";
 
   static GET_LOGOUT = "/logout";
 
@@ -271,6 +278,10 @@ export class ApiUrlService {
     return this.getAPIUrl(ApiUrlService.POST_BIZ_CONTENT_SEARCH);
   }
 
+  postTypeaheadBizContentSearch() : string {
+    return this.getAPIUrl(ApiUrlService.POST_TYPEAHEAD_BIZ_CONTENT_SEARCH);
+  }
+
   postPublishContentRequestUrl() : string {
     return this.getAPIUrl(ApiUrlService.POST_PUBLISH_CONTENT_REQUEST);
   }
@@ -362,4 +373,17 @@ export class ApiUrlService {
   postFetchShareDocUrl() : string {
     return this.getAPIUrl(ApiUrlService.POST_FETCH_SHARE_DOC_URL);
   }
+
+  postUpdateContainerDefUrl(templateId: string) : string {
+    return this.getAPIUrl(ApiUrlService.POST_UPDATE_CONTAINER_DEF, { templateId: templateId });
+  }
+
+  postAddContainerDefUrl(templateId: string) : string {
+    return this.getAPIUrl(ApiUrlService.POST_ADD_CONTAINER_DEF, { templateId: templateId });
+  }
+
+  deleteContainerDefUrl(templateId: string, containerQId: string) : string {
+    return this.getAPIUrl(ApiUrlService.DELETE_CONTAINER_DEF, { templateId: templateId, containerQId: containerQId }); 
+  }
+
 }

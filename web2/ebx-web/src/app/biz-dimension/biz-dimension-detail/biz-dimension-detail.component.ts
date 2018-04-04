@@ -77,11 +77,13 @@ export class BizDimensionDetailComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.deleteButton.onDelete.subscribe(res => {
-        if (res) {
-          this.goBackHome();
-        }
-      });
+    if (this.deleteButton) {
+      this.deleteButton.onDelete.subscribe(res => {
+          if (res) {
+            this.goBackHome();
+          }
+        });
+    }
   }
 
   editState() {

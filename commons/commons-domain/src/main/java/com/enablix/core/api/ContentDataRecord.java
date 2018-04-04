@@ -12,8 +12,7 @@ public class ContentDataRecord implements ContentRecord {
 
 	private Map<String, Object> record;
 	
-	@SuppressWarnings("unused")
-	private ContentDataRecord() {
+	protected ContentDataRecord() {
 		// for ORM
 	}
 

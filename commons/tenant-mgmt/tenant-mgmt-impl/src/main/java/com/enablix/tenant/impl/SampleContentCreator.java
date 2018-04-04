@@ -114,13 +114,13 @@ public class SampleContentCreator implements TenantSetupTask {
 				@SuppressWarnings("unchecked")
 				Map<String, Object> fileInfo = (Map<String, Object>) fileObj;
 				
-				String fileLoc = (String) fileInfo.get("location");
+				String filename = (String) fileInfo.get("location");
 				String contentType = (String) fileInfo.get("contentType");
 				
 				Boolean generatePreview = (Boolean) fileInfo.get("generatePreview");
 				generatePreview = generatePreview == null ? Boolean.FALSE : generatePreview;
 				
-				String absFilePath = sampleContentLocation + File.separator + fileLoc;
+				String absFilePath = sampleContentLocation + File.separator + filename;
 				String docQId = docItemType.getQualifiedId();
 				String contentIdentity = ContentDataUtil.getRecordIdentity(record);
 				
@@ -143,7 +143,7 @@ public class SampleContentCreator implements TenantSetupTask {
 		        ActivityLogger.auditDocActivity(ActivityType.DOC_UPLOAD, docQId, contentIdentity, 
 		        		docMd.getIdentity(), Channel.SYSTEM, 
 		        		new RegisteredActor(AppConstants.SYSTEM_USER_ID, AppConstants.SYSTEM_USER_NAME), 
-		        		null, null, null, title);
+		        		null, null, null, title, filename);
 		        
 		        // update the record with uploaded document info
 		        record.put(docItemType.getId(), BeanUtil.beanToMap(docMd));

@@ -27,7 +27,7 @@ public class TemplateFileProcessor implements DataFileProcessor {
 		
 		try {
 			fis = new FileInputStream(templateFile);
-			templateManager.saveXml(fis);
+			templateManager.saveXml(fis, templateFile.getName());
 			
 		} catch (FileNotFoundException | JAXBException e) {
 			LOGGER.error("Error loading template file: " + templateFile.getAbsolutePath(), e);

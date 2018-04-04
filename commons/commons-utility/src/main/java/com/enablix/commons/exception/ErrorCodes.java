@@ -13,4 +13,6 @@ public class ErrorCodes {
 	public static final String INVALID_EMAIL_ID = "invalid_email_id";
 	public static final String INVALID_RESET_PWD_CODE = "invalid_reset_pwd_code";
 	public static final String INVALID_PWD_VERIFY_CODE = "invalid_reset_pwd_verify_code";
+	
+	public static final String INVALID_CONTAINER_QID = "invalid_container_qid";
 }

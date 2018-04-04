@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter, Output } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
@@ -19,28 +19,34 @@ export class ContentTemplateService {
   contentTemplate: ContentTemplate;
   templateCache: ContentTemplateCache;
 
+  @Output() onTemplateLoad: EventEmitter<any> = new EventEmitter();
+
   constructor(private http: HttpClient, private apiUrlService: ApiUrlService,
               private alert: AlertService) { }
 
-  init(): Observable<ContentTemplate> {
+  init(reload: boolean = false): Observable<ContentTemplate> {
     
     console.log("Loading content template...");
 
-    if (this.contentTemplate) {
+    if (this.contentTemplate && !reload) {
       return Observable.of(this.contentTemplate);
     } 
 
-    return this.http.get<ContentTemplate>(this.apiUrlService.getDefaultContentTemplateUrl())
-               .map(
+    return this.http.get<ContentTemplate>(this.apiUrlService.getDefaultContentTemplateUrl()).map(
                    (contentTemplate: ContentTemplate) => { 
-                     this.contentTemplate = contentTemplate; 
-                     this.templateCache = new ContentTemplateCache(this.contentTemplate);
-                     return this.contentTemplate;
+                     return this.loadTemplate(contentTemplate);
                    },
                    error => {
                      this.alert.error("Error loading content template", error.status);
                    }
                  );
+  }
+
+  loadTemplate(contentTemplate: ContentTemplate) {
+    this.contentTemplate = contentTemplate; 
+    this.templateCache = new ContentTemplateCache(this.contentTemplate);
+    this.onTemplateLoad.emit(this.contentTemplate);
+    return this.contentTemplate;
   }
 
   getContainerByQId(containerQId: string) : Container {
@@ -181,4 +187,20 @@ export class ContentTemplateService {
 
     return filterMd;
   }
+
+  updateContainerDefinition(container: Container) {
+    let apiUrl = this.apiUrlService.postUpdateContainerDefUrl(this.contentTemplate.id);
+    return this.http.post(apiUrl, container);
+  }
+
+  addContainerDefinition(container: Container) {
+    let apiUrl = this.apiUrlService.postAddContainerDefUrl(this.contentTemplate.id);
+    return this.http.post(apiUrl, container);
+  }
+
+  deleteContainerDefinition(containerQId: string) {
+    let apiUrl = this.apiUrlService.deleteContainerDefUrl(this.contentTemplate.id, containerQId);
+    return this.http.delete(apiUrl);
+  }
+
 }

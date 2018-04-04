@@ -8,7 +8,17 @@ import com.enablix.core.domain.BaseDocumentEntity;
 @Document
 public class TemplateDocument extends BaseDocumentEntity {
 
+	private String filename;
+	
 	private ContentTemplate template;
+	
+	public String getFilename() {
+		return filename;
+	}
+
+	public void setFilename(String filename) {
+		this.filename = filename;
+	}
 
 	public ContentTemplate getTemplate() {
 		return template;

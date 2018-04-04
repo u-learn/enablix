@@ -1,0 +1,68 @@
+<div class="main-section">
+  <div class="sub-section">
+    <div class="sub-section-header">
+      <h2>Dimensions</h2>
+      <div class="dashboard-buttons">
+        <div class="action-btn btn-with-text" (click)="addNewContainer()">
+          <div class="icon small plus"></div>
+          <p class="show-me">Add</p>
+        </div>
+      </div>
+    </div>
+    <ng-container *ngFor="let dim of dimContainers; let i = index">
+      <div class="sub-section-content" *ngIf="!dim.editing">
+        <div class="left">
+          <div class="type-header">
+            <h3>{{dim.instance.label}}</h3>
+          </div>
+          <ng-container *ngIf="dim.instance.singularLabel">
+            <div class="content-row flex-row">
+              <div class="param-key">Singular Label</div>
+              <div class="param-value">{{dim.instance.singularLabel}}</div>
+            </div>
+          </ng-container>
+        </div>
+        <div class="right dashboard-buttons small">
+          <div class="action-btn with-border btn-with-text" (click)="editDimension(dim, i)">
+            <div class="icon small edit"></div>
+            <p class="show-me">Edit</p>
+          </div>
+          <div class="action-btn with-border btn-with-text" (click)="deleteAction(dim, i)">
+            <div class="icon small trash"></div>
+            <p class="show-me">Delete</p>
+          </div>
+          <div class="action-btn with-border btn-with-text">
+            <div class="icon small move"></div>
+            <p class="show-me">Move</p>
+          </div>
+        </div>
+      </div>
+      <div class="sub-section-content" *ngIf="dim.editing">
+        <div class="left">
+          <div class="form-input">
+            <div class="input-label">Plural Label</div>
+            <div class="input-control">
+              <input type="text" [(ngModel)]="dim.instanceCopy.label" focus="true">
+            </div>
+          </div>
+          <div class="form-input">
+            <div class="input-label">Singular Label</div>
+            <div class="input-control">
+              <input type="text" [(ngModel)]="dim.instanceCopy.singularLabel">
+            </div>
+          </div>
+        </div>
+        <div class="right dashboard-buttons small">
+          <div class="action-btn with-border btn-with-text" (click)="onSave(dim, i)">
+            <div class="icon small save-blue"></div>
+            <p class="show-me">Save</p>
+          </div>
+          <div class="action-btn with-border btn-with-text" (click)="cancelEditing(dim, i)">
+            <div class="icon small cancel-blue"></div>
+            <p class="show-me">Cancel</p>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>

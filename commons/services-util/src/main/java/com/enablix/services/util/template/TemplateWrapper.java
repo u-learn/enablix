@@ -335,7 +335,7 @@ public class TemplateWrapper implements TemplateFacade {
 
 	@Override
 	public boolean isTextContainer(ContainerType container) {
-		return this.richTextContainers.contains(container.getQualifiedId());
+		return container != null && this.richTextContainers.contains(container.getQualifiedId());
 	}
 
 	@Override
