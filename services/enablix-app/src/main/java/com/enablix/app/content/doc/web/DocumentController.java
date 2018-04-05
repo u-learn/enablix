@@ -53,6 +53,7 @@ import com.enablix.services.util.DataViewUtil;
 public class DocumentController {
 
 	private static final String ONE_PX_SVG = "/assets/images/icons/one-px.svg";
+	private static final String FILE_ICON_IMG = "/assets/images/icons/file-icon.png";
 
 	private static final String TEXT_CONTENT_IMG = "/assets/images/icons/text-icon.png";
 	
@@ -242,17 +243,23 @@ public class DocumentController {
     			String docIdentity = (String) docRecord.get(ContentDataConstants.IDENTITY_KEY);
     			
     			if (StringUtil.hasText(docIdentity)) {
+    				
+    				iconFound = true;
     				IDocument part = previewService.getDocIcon(docIdentity);
-        			if (part != null) {
-        				sendDownloadResponse(response, part);
-        				iconFound = true;
+
+    				if (part != null) {
+        				
+    					sendDownloadResponse(response, part);
+    					
+        			} else if (ContentDataUtil.isDocContentTypeImage(docRecord)) {
+
+        				downloadAction(request, response, docIdentity, null, null, null, null, null);
+        				
+        			} else {
+        				response.sendRedirect(FILE_ICON_IMG);
         			}
     			}
     			
-    			if (!iconFound && ContentDataUtil.isDocContentTypeImage(docRecord)) {
-    				downloadAction(request, response, docIdentity, null, null, null, null, null);
-    				iconFound = true;
-    			}
     		}
     		
 			if (!iconFound) {
@@ -266,8 +273,9 @@ public class DocumentController {
        	}
     	
     	if (!iconFound) {
-
-    		if (template.isTextContainer(container)) {
+    		if (template.isDocContainer(container)) {
+    			response.sendRedirect(FILE_ICON_IMG);
+    		} else if (template.isTextContainer(container)) {
     			response.sendRedirect(TEXT_CONTENT_IMG);
     		} else {
     			response.sendRedirect(ONE_PX_SVG);

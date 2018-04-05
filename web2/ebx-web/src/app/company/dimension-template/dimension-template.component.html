@@ -31,38 +31,44 @@
             <div class="icon small trash"></div>
             <p class="show-me">Delete</p>
           </div>
-          <div class="action-btn with-border btn-with-text">
+          <!-- <div class="action-btn with-border btn-with-text">
             <div class="icon small move"></div>
             <p class="show-me">Move</p>
-          </div>
+          </div> -->
         </div>
       </div>
-      <div class="sub-section-content" *ngIf="dim.editing">
-        <div class="left">
-          <div class="form-input">
-            <div class="input-label">Plural Label</div>
-            <div class="input-control">
-              <input type="text" [(ngModel)]="dim.instanceCopy.label" focus="true">
+      <form #dimForm="ngForm" *ngIf="dim.editing">
+        <div class="sub-section-content">
+          <div class="left">
+            <div class="form-input">
+              <div class="input-label">Plural Label</div>
+              <div class="input-control">
+                <input type="text" name="label" [(ngModel)]="dim.instanceCopy.label" #label="ngModel" required>
+              </div>
+              <div class="input-error" [hidden]="label.valid || label.pristine">
+                <p [hidden]="!label.errors?.required">Plural Label is required</p>
+              </div>
+            </div>
+            <div class="form-input">
+              <div class="input-label">Singular Label</div>
+              <div class="input-control">
+                <input type="text" name="singularLabel" [(ngModel)]="dim.instanceCopy.singularLabel">
+              </div>
             </div>
           </div>
-          <div class="form-input">
-            <div class="input-label">Singular Label</div>
-            <div class="input-control">
-              <input type="text" [(ngModel)]="dim.instanceCopy.singularLabel">
+          <div class="right dashboard-buttons small">
+            <div class="action-btn with-border btn-with-text" 
+                (click)="onSave(dim, i, dimForm);">
+              <div class="icon small save-blue"></div>
+              <p class="show-me">Save</p>
+            </div>
+            <div class="action-btn with-border btn-with-text" (click)="cancelEditing(dim, i)">
+              <div class="icon small cancel-blue"></div>
+              <p class="show-me">Cancel</p>
             </div>
           </div>
         </div>
-        <div class="right dashboard-buttons small">
-          <div class="action-btn with-border btn-with-text" (click)="onSave(dim, i)">
-            <div class="icon small save-blue"></div>
-            <p class="show-me">Save</p>
-          </div>
-          <div class="action-btn with-border btn-with-text" (click)="cancelEditing(dim, i)">
-            <div class="icon small cancel-blue"></div>
-            <p class="show-me">Cancel</p>
-          </div>
-        </div>
-      </div>
+      </form>
     </ng-container>
   </div>
 </div>

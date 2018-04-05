@@ -48,7 +48,15 @@ export class DimensionTemplateComponent implements OnInit {
     }
   }
 
-  onSave(dim: any, indx: number) {
+  onSave(dim: any, indx: number, form: any) {
+    
+    if (form.invalid) {
+      Object.keys(form.controls).forEach(key => {
+        form.controls[key].markAsDirty();
+      });
+      return;
+    }
+
     if (dim.instance.qualifiedId) {
       this.updateContainer(dim, indx);
     } else {

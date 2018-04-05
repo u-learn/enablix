@@ -44,6 +44,12 @@ public class EmbedRocks implements EmbedInfoProvider {
 	@Override
 	public EmbedInfo fetchEmbedInfo(String url) {
 		
+		String lcUrl = url.toLowerCase();
+		if (!lcUrl.startsWith("http://")
+				&& !lcUrl.startsWith("http://")) {
+			url = "http://" + url;
+		}
+		
 		Map<String, String> urlVariables = new HashMap<>();
 		urlVariables.put("url", url);
 		urlVariables.put("key", apiKey);

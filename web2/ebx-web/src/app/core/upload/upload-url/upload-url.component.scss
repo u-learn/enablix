@@ -81,14 +81,17 @@ textarea {
 }
 
 .preview-img {
-    margin: 20px 0;
-    overflow-y: hidden;
+  margin-top: 20px;
+  overflow-y: hidden;
 
-    img {
-      max-width: 528px;
-    }
+  img {
+    max-width: 528px;
+  }
 }
 
+.preview-tag {
+  margin-top: 20px;
+}
 
 .actionBtns {
     margin-top: 24px;

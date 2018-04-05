@@ -10,7 +10,7 @@
 				<!-- <div class="label">Password</div> -->
 				<div><input type="password" name="password" [(ngModel)]="password" placeholder="Password"></div>
 			</div>
-			<div>
+			<div class="input-group">
 				<div class="pretty p-icon">
           <input type="checkbox" [checked]="rememberMe" (change)="rememberMe = !rememberMe">
           <div class="state p-primary">
@@ -19,7 +19,7 @@
         </div>
 			</div>
 			<div class="input-group">
-				<div class="link text right"><a routerLink="/forgotpassword">forgot password?</a></div>
+				<div class="link text"><a routerLink="/forgotpassword">Forgot password?</a></div>
 			</div>
 			<div class="input-group">
 				<div class="action-btn"><button type="submit">Login</button></div>
