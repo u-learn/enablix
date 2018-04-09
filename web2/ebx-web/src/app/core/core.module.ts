@@ -55,6 +55,7 @@ import { EbxDateTimezonePipe } from './pipes/ebx-date-timezone.pipe';
 import { AppMessageService } from './app-message/app-message.service';
 import { AppIntroMsgComponent } from './app-message/app-intro-msg/app-intro-msg.component';
 import { ActivityAuditService } from './activity-audit.service';
+import { RebootService } from './reboot.service';
 
 @NgModule({
   imports: [
@@ -68,6 +69,7 @@ import { ActivityAuditService } from './activity-audit.service';
     QuillModule
   ],
   providers: [
+    RebootService,
     AlertService,
   	ApiUrlService,
   	AuthService,

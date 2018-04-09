@@ -6,10 +6,13 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/observable/of';
 
+import { RebootService } from '../reboot.service';
+
 @Injectable()
 export class HttpErrorInterceptor implements HttpInterceptor {
 
-    constructor(private router: Router, private route: ActivatedRoute) { }
+    constructor(private router: Router, private route: ActivatedRoute,
+        private rebootService: RebootService) { }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         // install an error handler
@@ -20,6 +23,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
             // redirect to login page if not already on login page
             if (err.status == 401 && !this.router.url.startsWith('/login')
                     && !req.url.endsWith('/logout')) {
+                this.rebootService.reboot();
                 this.router.navigate(['login'], { queryParams: {returnUrl: this.router.url} });
                 return Observable.of(err);
             }

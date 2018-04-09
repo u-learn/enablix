@@ -1,4 +1,4 @@
-import { Injectable, Output, EventEmitter, NgZone } from '@angular/core';
+import { Injectable, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient, HttpResponse, HttpHeaders } from '@angular/common/http';
 import { Response, RequestOptions } from '@angular/http';
@@ -8,6 +8,7 @@ import 'rxjs/add/operator/map';
 import { BootController } from '../../../boot-control';
 import { ApiUrlService } from '../api-url.service';
 import { UserService } from './user.service';
+import { RebootService } from '../reboot.service';
 
 @Injectable()
 export class AuthService {
@@ -15,7 +16,7 @@ export class AuthService {
   @Output() loginIn: EventEmitter<any> = new EventEmitter();
 
   constructor(private http: HttpClient,
-    private ngZone: NgZone, 
+    private rebootService: RebootService, 
     private router: Router, 
     private apiUrlService: ApiUrlService, 
     private userService: UserService) { }
@@ -88,12 +89,7 @@ export class AuthService {
   }
 
   redirectToLogin() {
-    
-    console.log("Rebooting...");
-
-    // Triggers the reboot in main.ts        
-    this.ngZone.runOutsideAngular(() => BootController.getbootControl().restart());
-
+    this.rebootService.reboot();
     this.router.navigate(['login']);
   }
 
