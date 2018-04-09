@@ -309,7 +309,7 @@ public class DocumentController {
 		}
     	
     	if (!iconFound) {
-   			response.sendRedirect(ONE_PX_SVG);
+   			response.sendRedirect(FILE_ICON_IMG);
     	}
        	
    	}

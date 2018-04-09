@@ -198,7 +198,8 @@ export class ActivityAuditComponent implements OnInit {
 
   getActivityDesc(record: any) : string {
 
-    if (record.activity.category === "CONTENT") {
+    if (record.activity.category === "CONTENT"
+          || record.activity.category === "NAVIGATION") {
       return record.activity.itemTitle;
       
     } else if (record.activity.category === "SEARCH") {

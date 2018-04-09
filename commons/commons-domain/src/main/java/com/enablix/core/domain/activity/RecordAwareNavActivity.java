@@ -8,8 +8,7 @@ public class RecordAwareNavActivity extends ContainerAwareNavActivity implements
 	
 	private String itemTitle;
 	
-	@SuppressWarnings("unused")
-	private RecordAwareNavActivity() {
+	protected RecordAwareNavActivity() {
 		// for ORM
 	}
 	

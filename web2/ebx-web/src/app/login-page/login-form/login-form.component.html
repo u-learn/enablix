@@ -1,5 +1,8 @@
 <div class="login-container" [hidden]="loginSuccess">
   <div class="form-container">
+    <div class="input-group">
+      <div class="label"><h3>Sign In</h3></div>
+    </div>
 		<form (submit)="loginUser($event)">
 			<div *ngIf="invalidCredentials" class="input-group error">Invalid username or password</div>
 			<div class="input-group">
@@ -11,7 +14,7 @@
 				<div><input type="password" name="password" [(ngModel)]="password" placeholder="Password"></div>
 			</div>
 			<div class="input-group">
-				<div class="pretty p-icon">
+				<div class="pretty p-icon p-has-focus">
           <input type="checkbox" [checked]="rememberMe" (change)="rememberMe = !rememberMe">
           <div class="state p-primary">
           	<i class="icon mdi mdi-check"></i><label class="text">Remember Me</label>
@@ -22,7 +25,7 @@
 				<div class="link text"><a routerLink="/forgotpassword">Forgot password?</a></div>
 			</div>
 			<div class="input-group">
-				<div class="action-btn"><button type="submit">Login</button></div>
+				<div class="action-btn"><button type="submit">Sign In</button></div>
 			</div>
 		</form>
 	</div>

@@ -330,7 +330,7 @@ public class TemplateWrapper implements TemplateFacade {
 
 	@Override
 	public boolean isDocContainer(ContainerType container) {
-		return this.docContainers.contains(container.getQualifiedId());
+		return container != null && this.docContainers.contains(container.getQualifiedId());
 	}
 
 	@Override

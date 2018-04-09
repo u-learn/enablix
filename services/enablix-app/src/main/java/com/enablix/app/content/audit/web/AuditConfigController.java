@@ -33,6 +33,7 @@ public class AuditConfigController {
 		addActivityType(contentActivityTypes, ActivityType.SEARCH_FREE_TEXT);
 		addActivityType(contentActivityTypes, ActivityType.LOGIN);
 		addActivityType(contentActivityTypes, ActivityType.LOGOUT);
+		addActivityType(contentActivityTypes, ActivityType.NAV_EXTERNAL_LINK);
 		
 		return contentActivityTypes;	
 	}

@@ -32,7 +32,7 @@ public abstract class Activity {
 		DELETED(Category.CONTENT_CONNECTION, "Content Connection Deleted"),
 		
 		/* Navigation activities */
-		NAV_EXTERNAL_LINK(Category.NAVIGATION, "Accessed External Link"),
+		NAV_EXTERNAL_LINK(Category.NAVIGATION, "External Url Click"),
 		
 		/* Search activities */
 		SEARCH_FREE_TEXT(Category.SEARCH, "Search"), SUGGESTED_SEARCH(Category.SEARCH, "Suggested search")

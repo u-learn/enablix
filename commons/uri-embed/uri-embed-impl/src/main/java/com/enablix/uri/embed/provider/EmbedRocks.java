@@ -46,7 +46,7 @@ public class EmbedRocks implements EmbedInfoProvider {
 		
 		String lcUrl = url.toLowerCase();
 		if (!lcUrl.startsWith("http://")
-				&& !lcUrl.startsWith("http://")) {
+				&& !lcUrl.startsWith("https://")) {
 			url = "http://" + url;
 		}
 		
