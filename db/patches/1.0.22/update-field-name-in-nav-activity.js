@@ -73,13 +73,15 @@ dbs.forEach(function(database) {
 	    
     	db = db.getSiblingDB(database.name);
     	
-    	db.ebx_activity_audit.find({ "activity.activityType": { $in: ["NAV_EXTERNAL_LINK"] }, "activity.itemTitle": { $exists: false } })
+    	db.ebx_activity_audit.find({ "activity.activityType": { $in: ["NAV_EXTERNAL_LINK"] }, "activity.itemTitle": null })
     		.snapshot().forEach(
     				
 	    		function(activityAudit) {
 	    			
-	    			var contentQId = activityAudit.activity.contentItemQId;
-	    			var recIdentity = activityAudit.activity.contentIdentity;
+	    			var contentQId = activityAudit.activity.contentItemQId || activityAudit.activity.containerQId;
+	    			contentQId = getParentQId(contentQId);
+	    			
+	    			var recIdentity = activityAudit.activity.contentIdentity || activityAudit.activity.itemIdentity;
 	    			
 	    			print("processing: " + contentQId + ", " + recIdentity);
 	    			
