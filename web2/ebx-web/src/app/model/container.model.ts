@@ -10,6 +10,7 @@ export class Container extends BaseContainer {
   linkContainerQId: string;
   linkContentItemId: string;
   businessCategory: string;
+  displayOrder: number;
 
   // values added on UI
   color: string;

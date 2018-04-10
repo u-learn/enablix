@@ -30,7 +30,7 @@ export class EmbedInfoService {
 
   toEmbeddedUrl(embedInfo: EmbedInfo) : EmbeddedUrl {
     
-    const embeddedUrl = null;
+    let embeddedUrl = null;
     
     if (embedInfo) {
       embeddedUrl = new EmbeddedUrl();
@@ -45,7 +45,7 @@ export class EmbedInfoService {
 
   defaultEmbeddedUrl(urlInfo: UrlCaptureInfo) {
 
-    const embeddedUrl = null;
+    let embeddedUrl = null;
     
     if (urlInfo) {
       embeddedUrl = new EmbeddedUrl();
