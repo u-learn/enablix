@@ -21,4 +21,8 @@
     </object>
   </div>
   <div *ngIf="embedHtml" class="embed-oembed" [innerHtml]="embedHtml | safeHtml"></div>
+  <div class="embed-unknown" *ngIf="type == 'unknown'">
+    <div class="url-img"><img src="/assets/images/icons/url-icon.svg"></div>
+    <div class="info">Preview is not available for this asset.</div>
+  </div>
 </div>

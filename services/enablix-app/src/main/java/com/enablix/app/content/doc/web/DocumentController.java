@@ -56,6 +56,7 @@ public class DocumentController {
 	private static final String FILE_ICON_IMG = "/assets/images/icons/file-icon.png";
 
 	private static final String TEXT_CONTENT_IMG = "/assets/images/icons/text-icon.png";
+	private static final String URL_CONTENT_IMG = "/assets/images/icons/url-icon.png";
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(DocumentController.class);
 	
@@ -323,7 +324,8 @@ public class DocumentController {
 			List<EmbeddedUrl> urlList = (List<EmbeddedUrl>) urls;
 			if (urlList.size() > 0) {
 				EmbeddedUrl eUrl = urlList.get(0);
-				return eUrl.getPreviewImageUrl();
+				return StringUtil.isEmpty(eUrl.getPreviewImageUrl()) ? 
+						URL_CONTENT_IMG : eUrl.getPreviewImageUrl();
 			}
 		}
 		

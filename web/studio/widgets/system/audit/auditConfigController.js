@@ -24,7 +24,7 @@ enablix.studioApp.controller('AuditController',
                 desc: "Details",
                 valueFn: function(record) {
                 	
-                	if (record.activity.category === "CONTENT") {
+                	if (record.activity.category === "CONTENT" || record.activity.category === "NAVIGATION") {
                 		return record.activity.itemTitle;
                 		
                 	} else if (record.activity.category === "SEARCH") {
@@ -85,8 +85,10 @@ enablix.studioApp.controller('AuditController',
             tableCellClass: "details",
             actionCallbackFn: $scope.navToContent,
             checkApplicable: function(action, record) {
-            	return record.activity && record.activity.category === "CONTENT" && 
-            			!(record.activity.activityType === 'DOC_PREVIEW' 
+            	return record.activity 
+            			&& (record.activity.category === "CONTENT" 
+            				|| record.activity.category === "NAVIGATION")
+            			&& !(record.activity.activityType === 'DOC_PREVIEW' 
             				|| record.activity.activityType === "DOC_DOWNLOAD" 
             				|| record.activity.activityType === 'DOC_UPLOAD');
             }

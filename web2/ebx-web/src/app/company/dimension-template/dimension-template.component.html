@@ -9,7 +9,7 @@
         </div>
       </div>
     </div>
-    <ng-container *ngFor="let dim of dimContainers; let i = index">
+    <ng-container *ngFor="let dim of dimContainers; let i = index; let first = first; let last = last;">
       <div class="sub-section-content" *ngIf="!dim.editing">
         <div class="left">
           <div class="type-header">
@@ -31,10 +31,16 @@
             <div class="icon small trash"></div>
             <p class="show-me">Delete</p>
           </div>
-          <!-- <div class="action-btn with-border btn-with-text">
-            <div class="icon small move"></div>
-            <p class="show-me">Move</p>
-          </div> -->
+          <div class="action-btn with-border btn-with-text" 
+                (click)="moveDimUp(dim, i)" *ngIf="!first">
+            <div class="icon small moveup"></div>
+            <p class="show-me">Move Up</p>
+          </div>
+          <div class="action-btn with-border btn-with-text" 
+                (click)="moveDimDown(dim, i)" *ngIf="!last">
+            <div class="icon small movedown"></div>
+            <p class="show-me">Move Down</p>
+          </div>
         </div>
       </div>
       <form #dimForm="ngForm" *ngIf="dim.editing">

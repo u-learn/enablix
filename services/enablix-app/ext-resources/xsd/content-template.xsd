@@ -93,6 +93,7 @@
 		<xs:attribute name="label" type="xs:string" use="optional"/>
 		<xs:attribute name="singularLabel" type="xs:string" use="optional"/>
 		<xs:attribute name="searchBoost" type="xs:nonNegativeInteger" use="optional" default="1"/>
+		<xs:attribute name="displayOrder" type="xs:nonNegativeInteger" use="optional"/>
 	</xs:complexType>
 	
 	<xs:complexType name="qualityControlledContentType">

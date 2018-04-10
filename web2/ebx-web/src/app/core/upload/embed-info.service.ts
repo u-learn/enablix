@@ -5,6 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import { ApiUrlService } from '../api-url.service';
 import { EmbedInfo } from '../../model/embed-info.model';
 import { EmbeddedUrl } from '../../model/embedded-url.model';
+import { UrlCaptureInfo } from '../../model/upload-info.model';
 
 @Injectable()
 export class EmbedInfoService {
@@ -29,13 +30,30 @@ export class EmbedInfoService {
 
   toEmbeddedUrl(embedInfo: EmbedInfo) : EmbeddedUrl {
     
-    const embeddedUrl = new EmbeddedUrl();
+    const embeddedUrl = null;
     
-    embeddedUrl.previewImageUrl = this.getThumbnailUrl(embedInfo);
-    embeddedUrl.title = embedInfo.title;
-    embeddedUrl.url = embedInfo.url;
-    embeddedUrl.type = this.getEmbedInfoType(embedInfo);
+    if (embedInfo) {
+      embeddedUrl = new EmbeddedUrl();
+      embeddedUrl.previewImageUrl = this.getThumbnailUrl(embedInfo);
+      embeddedUrl.title = embedInfo.title;
+      embeddedUrl.url = embedInfo.url;
+      embeddedUrl.type = this.getEmbedInfoType(embedInfo);
+    }
+
+    return embeddedUrl;
+  }
+
+  defaultEmbeddedUrl(urlInfo: UrlCaptureInfo) {
+
+    const embeddedUrl = null;
     
+    if (urlInfo) {
+      embeddedUrl = new EmbeddedUrl();
+      embeddedUrl.previewImageUrl = "/assets/images/icons/url-icon.svg"
+      embeddedUrl.url = urlInfo.url;
+      embeddedUrl.type = "unknown";
+    }
+
     return embeddedUrl;
   }
 

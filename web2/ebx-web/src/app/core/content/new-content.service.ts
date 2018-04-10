@@ -66,10 +66,9 @@ export class NewContentService {
       }
     }
 
-    console.log(urlInfo);
-    console.log(embedInfo);
-    
-    const embeddedUrl = this.embedInfoService.toEmbeddedUrl(embedInfo);
+    const embeddedUrl = embedInfo ? this.embedInfoService.toEmbeddedUrl(embedInfo) :
+                          this.embedInfoService.defaultEmbeddedUrl(urlInfo);
+
     if (embeddedUrl) {
       this.content.data['__urls'] = [embeddedUrl];
     }

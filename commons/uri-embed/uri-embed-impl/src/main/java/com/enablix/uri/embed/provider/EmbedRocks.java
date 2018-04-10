@@ -16,11 +16,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriTemplate;
 
 import com.enablix.core.domain.uri.embed.EmbedInfo;
-import com.enablix.uri.embed.service.EmbedException;
+import com.enablix.uri.embed.EmbedException;
 import com.enablix.uri.embed.service.EmbedInfoProvider;
 import com.enablix.uri.embed.service.IFrameTester;
 
@@ -42,7 +43,7 @@ public class EmbedRocks implements EmbedInfoProvider {
 	private String apiKey;
 	
 	@Override
-	public EmbedInfo fetchEmbedInfo(String url) {
+	public EmbedInfo fetchEmbedInfo(String url) throws EmbedException {
 		
 		String lcUrl = url.toLowerCase();
 		if (!lcUrl.startsWith("http://")
@@ -63,18 +64,27 @@ public class EmbedRocks implements EmbedInfoProvider {
 		headers.add("User-Agent", "Enablix");
 		  
 		RequestEntity<String> request = new RequestEntity<>(headers, HttpMethod.GET, restUrl);
-		ResponseEntity<EmbedInfo> response = restTemplate.exchange(request, EmbedInfo.class);
 		
-		if (response.getStatusCode() != HttpStatus.OK) {
+		EmbedInfo embedInfo = null;
+		
+		try {
 			
-			LOGGER.error("Error calling embed.rocks: url [{}], params [{}], status [{}]", 
-					url, urlVariables, response.getStatusCode());
+			ResponseEntity<EmbedInfo> response = restTemplate.exchange(request, EmbedInfo.class);
 			
-			throw new EmbedException("Error calling embed.rocks");
+			if (response.getStatusCode() != HttpStatus.OK) {
+				
+				LOGGER.error("Error calling embed.rocks: url [{}], params [{}], status [{}]", 
+						url, urlVariables, response.getStatusCode());
+				
+				throw new EmbedException("Error calling embed.rocks", response.getStatusCode().value());
+			}
+			
+			embedInfo = response.getBody();
+			embedInfo.setIframeEmbeddable(iframeTester.checkIFrameEmbeddable(url));
+			
+		} catch (HttpStatusCodeException se) {
+			throw new EmbedException(se.getMessage(), se.getStatusCode().value(), se);
 		}
-		
-		EmbedInfo embedInfo = response.getBody();
-		embedInfo.setIframeEmbeddable(iframeTester.checkIFrameEmbeddable(url));
 		
 		return embedInfo;
 	}

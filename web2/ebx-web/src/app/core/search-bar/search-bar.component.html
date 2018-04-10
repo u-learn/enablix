@@ -50,11 +50,16 @@
             </ng-container>
         </ng-container>
         <ng-container *ngIf="freeText && freeText.length > 0">
-            <div class="bizcontent-items">
-              <div class="wrpr" *ngFor="let bizItem of bizContentItems">
-                <div class="suggest" [innerHtml]="getBizContentDesc(bizItem)" (click)="navToRecordDetail(bizItem)"></div>
+            <ng-container *ngIf="bizContentItems?.length > 0">
+              <div class="filtered-row">
+                <div class="filter-label"><h4>Assets</h4></div>
               </div>
-            </div>
+              <div class="bizcontent-items">
+                <div class="wrpr" *ngFor="let bizItem of bizContentItems">
+                  <div class="suggest" [innerHtml]="getBizContentDesc(bizItem)" (click)="navToRecordDetail(bizItem)"></div>
+                </div>
+              </div>
+            </ng-container>
             <div class="filtered-row">
               <div class="freetext-search" (click)="searchBizContent()">
                   Search for "{{freeText}}"

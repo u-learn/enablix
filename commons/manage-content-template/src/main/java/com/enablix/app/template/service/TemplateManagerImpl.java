@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -83,6 +84,8 @@ public class TemplateManagerImpl implements TemplateManager {
 	@Override
 	public void save(ContentTemplate template, String filename) {
 
+		checkAndUpdateDisplayOrder(template);
+		
 		TemplateDocument templateDoc = new TemplateDocument();
 		templateDoc.setFilename(filename);
 		templateDoc.setTemplate(template);
@@ -96,6 +99,13 @@ public class TemplateManagerImpl implements TemplateManager {
 		EventUtil.publishEvent(new Event<ContentTemplate>(Events.CONTENT_TEMPLATE_UPDATED, template));
 	}
 	
+	private void checkAndUpdateDisplayOrder(ContentTemplate template) {
+		BigInteger displayOrder = template.getDataDefinition().getContainer().get(0).getDisplayOrder();
+		if (displayOrder == null) {
+			TemplateBuilder.initContainerOrder(template);
+		}
+	}
+
 	private void updateTemplateInCache(ContentTemplate template) {
 		updateTemplateInCache(new TemplateWrapper(template));
 	}
@@ -207,6 +217,7 @@ public class TemplateManagerImpl implements TemplateManager {
 		
 		container.setId(id);
 		container.setQualifiedId(id);
+		container.setDisplayOrder(BigInteger.valueOf(1000 + nextValue));
 	}
 
 	@Override
@@ -320,6 +331,20 @@ public class TemplateManagerImpl implements TemplateManager {
 		}
 		
 		return destFolderLoc;
+	}
+
+	@Override
+	public ContentTemplate updateContainerOrder(ContainerOrder order, String templateId) throws Exception {
+		
+		TemplateDocument templateDoc = crudService.findByIdentity(templateId);
+		ContentTemplate template = templateDoc.getTemplate();
+		
+		TemplateBuilder.updateContainerOrder(template, order);
+		
+		Tenant tenant = tenantRepo.findByTenantId(ProcessContext.get().getTenantId());
+		persistOnFilesystem(template, tenant, templateDoc.getFilename());
+		
+		return template;
 	}
 
 }

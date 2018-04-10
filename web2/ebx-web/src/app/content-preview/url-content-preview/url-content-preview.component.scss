@@ -8,6 +8,33 @@
     height: 400px;
   }
 
+  .embed-unknown {
+    
+    .url-img {
+      background: $blue-med-5;
+      border-radius: 4px;
+      @include vcenterChildren;
+      height: 128px;
+      width: 256px;
+      justify-content: space-around;
+
+      img {
+        width: 48px;
+        height: 60px;
+      }  
+    }
+
+    .info {
+      @include vcenterChildren;
+      padding-top: 16px;
+      font-family: $FPLight;
+      font-size: 14px;
+      color: #2D2D2D;
+      line-height: 18px;
+    }
+
+  }
+
   .embed-rich {
 
     iframe, object {

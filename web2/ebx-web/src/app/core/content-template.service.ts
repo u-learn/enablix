@@ -85,15 +85,13 @@ export class ContentTemplateService {
 
   getPortalDimensionContainers() : Container[] {
     
-    let containers = this.getPortalTopNavItemContainers();
     let dimContainers: Container[] = [];
-
-    containers.forEach(item => {
-      let container = this.getContainerByQId(item.qualifiedId);
-      if (container != null && this.isBusinessDimension(container)) {
-        dimContainers.push(container);
-      }
-    });
+    let showCount = 4;
+    let dimCount = this.templateCache.bizDimensionContainers.length;
+    
+    for (var i = 0; i < dimCount && i < showCount; i++) {
+      dimContainers.push(this.templateCache.bizDimensionContainers[i]);
+    }
 
     return dimContainers;
   }
@@ -201,6 +199,11 @@ export class ContentTemplateService {
   deleteContainerDefinition(containerQId: string) {
     let apiUrl = this.apiUrlService.deleteContainerDefUrl(this.contentTemplate.id, containerQId);
     return this.http.delete(apiUrl);
+  }
+
+  updateContainerOrder(containerOrder: any) {
+    let apiUrl = this.apiUrlService.postUpdateContainerOrderUrl(this.contentTemplate.id);
+    return this.http.post(apiUrl, containerOrder);
   }
 
 }

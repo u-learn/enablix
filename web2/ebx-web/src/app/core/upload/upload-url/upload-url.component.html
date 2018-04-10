@@ -6,7 +6,7 @@
     <input [(ngModel)]="urlInfo.url" type="text" name="urlInfo.url"/>
   </div>
   <div [hidden]="!previewContent">
-    <div class="preview-img" *ngIf="thumbnailUrl">
+    <div class="preview-img" [class.default-url-img]="defaultImg" *ngIf="thumbnailUrl">
       <img [src]="thumbnailUrl" />
     </div>
     <div class="preview-tag">

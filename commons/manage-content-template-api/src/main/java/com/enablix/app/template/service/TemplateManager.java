@@ -38,37 +38,6 @@ public interface TemplateManager {
 	
 	ContainerAndTemplate deleteContainer(String templateId, String containerQId) throws Exception;
 	
-	public static class ContainerAndTemplate {
-		
-		private ContainerType container;
-		
-		private ContentTemplate template;
-		
-		public ContainerAndTemplate() {}
-		
-		public ContainerAndTemplate(ContainerType container, ContentTemplate template) {
-			super();
-			this.container = container;
-			this.template = template;
-		}
-
-		public ContainerType getContainer() {
-			return container;
-		}
-		
-		public void setContainer(ContainerType container) {
-			this.container = container;
-		}
-		
-		public ContentTemplate getTemplate() {
-			return template;
-		}
-		
-		public void setTemplate(ContentTemplate template) {
-			this.template = template;
-		}
-		
-		
-	}
+	ContentTemplate updateContainerOrder(ContainerOrder order, String templateId) throws Exception;
 	
 }

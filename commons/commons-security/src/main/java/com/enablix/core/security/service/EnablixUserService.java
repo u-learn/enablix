@@ -362,11 +362,12 @@ public class EnablixUserService implements UserService, UserDetailsService {
 		private String portal;
 		private Collection<GrantedAuthority> auths;
 
+		@SuppressWarnings("unused")
 		private LoggedInUser() {
 			// for ORM
 		}
 		
-		private LoggedInUser(User user, String templateId, List<Role> roles, UserProfile userProfile, String portal) {
+		public LoggedInUser(User user, String templateId, List<Role> roles, UserProfile userProfile, String portal) {
 			this.user = user;
 			this.templateId = templateId;
 			this.userProfile = userProfile;
@@ -462,14 +463,7 @@ public class EnablixUserService implements UserService, UserDetailsService {
 		GuestUserProvider provider = guestUserProviderFactory.getProvider(request);
 
 		if (provider != null) {
-
-			User guestUser = provider.getGuestUser(request);
-			UserProfile usrProfile = provider.getGuestUserProfile(guestUser);
-			if (guestUser != null) {
-				// Adding the role as null for the guest user
-				user = new LoggedInUser(guestUser, null, null, usrProfile, 
-						WebPortal.defaultPortal().getName());
-			}
+			user = provider.getGuestUser(request);
 		}
 
 		return user;

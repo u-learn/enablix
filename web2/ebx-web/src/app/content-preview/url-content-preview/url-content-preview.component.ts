@@ -55,8 +55,7 @@ export class UrlContentPreviewComponent implements OnInit {
                   }
                 },
                 error => {
-                  console.log(error);
-                  // TODO: handle error
+                  this.type = "unknown";
                 }
               );
       }

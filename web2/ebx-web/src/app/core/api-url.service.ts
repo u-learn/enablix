@@ -82,6 +82,7 @@ export class ApiUrlService {
 
   static POST_UPDATE_CONTAINER_DEF = "/template/:templateId/container/update";
   static POST_ADD_CONTAINER_DEF = "/template/:templateId/container/add";
+  static POST_UPDATE_CONTAINER_ORDER = "/template/:templateId/container/order";
 
   static DELETE_CONTAINER_DEF = "/template/:templateId/c/:containerQId/";
 
@@ -380,6 +381,10 @@ export class ApiUrlService {
 
   postAddContainerDefUrl(templateId: string) : string {
     return this.getAPIUrl(ApiUrlService.POST_ADD_CONTAINER_DEF, { templateId: templateId });
+  }
+
+  postUpdateContainerOrderUrl(templateId: string) : string {
+    return this.getAPIUrl(ApiUrlService.POST_UPDATE_CONTAINER_ORDER, { templateId: templateId });
   }
 
   deleteContainerDefUrl(templateId: string, containerQId: string) : string {

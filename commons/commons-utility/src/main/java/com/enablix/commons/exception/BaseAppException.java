@@ -21,6 +21,11 @@ public class BaseAppException extends Exception {
 		this(error);
 		this.httpErrorCode = httpErrorCode;
 	}
+	
+	public BaseAppException(AppError error, int httpErrorCode, Throwable t) {
+		this(error, t);
+		this.httpErrorCode = httpErrorCode;
+	}
 
 	public AppError getError() {
 		return error;

@@ -683,6 +683,11 @@ body {
         line-height: 24px;
       }
 
+      &.space-between {
+        display: flex;
+        justify-content: space-between;
+      }
+
       input {
         border: 1px solid #E3EBEF;
         /* box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.06); */
@@ -712,6 +717,7 @@ body {
         }
 
       }
+
     }
 
     .input-group:not(:last-child) {

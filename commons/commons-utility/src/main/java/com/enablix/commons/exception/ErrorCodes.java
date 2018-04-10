@@ -15,4 +15,5 @@ public class ErrorCodes {
 	public static final String INVALID_PWD_VERIFY_CODE = "invalid_reset_pwd_verify_code";
 	
 	public static final String INVALID_CONTAINER_QID = "invalid_container_qid";
+	public static final String OEMBED_PROVIDER_ERROR = "oembed_provider_error";
 }

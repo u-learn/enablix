@@ -152,7 +152,7 @@ public class ElasticSearchClient implements SearchClient {
 			highlighter.field(field);
 		}
 
-		QueryStringMatchQueryBuilder matchQueryBuilder = new QueryStringMatchQueryBuilder("*" + text + "*");
+		QueryStringMatchQueryBuilder matchQueryBuilder = new QueryStringMatchQueryBuilder("*" + text.trim() + "*");
 		return ESQueryBuilder.builder(matchQueryBuilder, template, typeaheadSearchFieldBuilder)
 				.withPagination(pageSize, pageNum)
 				.withFuzziness((searchTerm) -> null)

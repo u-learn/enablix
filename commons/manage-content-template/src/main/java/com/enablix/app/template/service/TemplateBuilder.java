@@ -4,6 +4,7 @@ import java.math.BigInteger;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.BeanUtils;
 
@@ -12,6 +13,7 @@ import com.enablix.commons.exception.AppError;
 import com.enablix.commons.exception.ErrorCodes;
 import com.enablix.commons.exception.ValidationException;
 import com.enablix.commons.util.QIdUtil;
+import com.enablix.commons.util.collection.CollectionUtil;
 import com.enablix.core.commons.xsdtopojo.BoundedListDatastoreType;
 import com.enablix.core.commons.xsdtopojo.BoundedRefListType;
 import com.enablix.core.commons.xsdtopojo.BoundedType;
@@ -29,6 +31,7 @@ import com.enablix.core.commons.xsdtopojo.TextAutoPopulateType;
 import com.enablix.core.commons.xsdtopojo.TextUIClassType;
 import com.enablix.core.commons.xsdtopojo.TextUIDefType;
 import com.enablix.services.util.TemplateUtil;
+import com.enablix.services.util.template.walker.ContainerVisitor;
 import com.enablix.services.util.template.walker.TemplateContainerWalker;
 
 public class TemplateBuilder {
@@ -287,6 +290,39 @@ public class TemplateBuilder {
 			});
 			
 		}
+	}
+
+	public static void updateContainerOrder(ContentTemplate template, ContainerOrder order) {
+		
+		Map<String, Integer> orderMap = order.getContainerOrder();
+		
+		if (CollectionUtil.isNotEmpty(orderMap)) {
+			
+			TemplateContainerWalker walker = new TemplateContainerWalker(template);
+			
+			walker.walk((cont) -> {
+				Integer displayOrder = orderMap.get(cont.getQualifiedId());
+				if (displayOrder != null) {
+					cont.setDisplayOrder(BigInteger.valueOf(displayOrder));
+				}
+			});
+		}
+	}
+
+	public static void initContainerOrder(ContentTemplate template) {
+		
+		TemplateContainerWalker walker = new TemplateContainerWalker(template);
+		
+		walker.walk(new ContainerVisitor() {
+			
+			private int order = 0;
+			
+			@Override
+			public void visit(ContainerType container) {
+				container.setDisplayOrder(BigInteger.valueOf(++order));
+			}
+			
+		});
 	}
 	
 }

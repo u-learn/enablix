@@ -4,14 +4,11 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.enablix.core.domain.security.authorization.UserProfile;
-import com.enablix.core.domain.user.User;
+import com.enablix.core.security.service.EnablixUserService.LoggedInUser;
 
 public interface GuestUserProvider {
 
-	User getGuestUser(HttpServletRequest request);
-	
-	UserProfile getGuestUserProfile(User user);
+	LoggedInUser getGuestUser(HttpServletRequest request);
 	
 	/**
 	 * List of Ant patterns for urls supported i.e. the urls for which

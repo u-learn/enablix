@@ -23,7 +23,11 @@ export class HttpErrorInterceptor implements HttpInterceptor {
             // redirect to login page if not already on login page
             if (err.status == 401 && !this.router.url.startsWith('/login')
                     && !req.url.endsWith('/logout')) {
-                this.rebootService.reboot();
+                
+                if (this.router.url.includes("/data/")) {
+                    this.rebootService.reboot();
+                }
+
                 this.router.navigate(['login'], { queryParams: {returnUrl: this.router.url} });
                 return Observable.of(err);
             }

@@ -178,6 +178,14 @@ button {
                 background: url("/assets/images/icons/move.svg") no-repeat center;
             }
 
+            &.moveup {
+                background: url("/assets/images/icons/moveup.svg") no-repeat center;
+            }
+
+            &.movedown {
+                background: url("/assets/images/icons/movedown.svg") no-repeat center;
+            }
+
             &.plus {
                 background: url("/assets/images/icons/plus.svg") no-repeat center;
             }

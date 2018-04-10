@@ -64,6 +64,9 @@ export class ContentTemplateCache {
       }
 
     });
+
+    this.bizDimensionContainers.sort(
+      (a: Container, b: Container) => { return a.displayOrder - b.displayOrder; });
   }
 
   getContainerByQId(containerQId: string) : Container {

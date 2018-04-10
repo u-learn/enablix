@@ -151,4 +151,48 @@ export class DimensionTemplateComponent implements OnInit {
     );
   }
 
+  moveDimUp(dim: any, indx: number) {
+    this.swapDimContainer(dim, indx, indx - 1);
+  }
+
+  moveDimDown(dim: any, indx: number) {
+    this.swapDimContainer(dim, indx, indx + 1);
+  }
+
+  swapDimContainer(dim: any, indx: number, swapWithIndx: number) {
+    
+    if (swapWithIndx >= 0 && swapWithIndx < this.dimContainers.length) {
+      
+      let swapWith = this.dimContainers[swapWithIndx];
+      
+      var order = {
+        containerOrder: {}
+      };
+      
+      order.containerOrder[dim.instance.qualifiedId] = swapWith.instance.displayOrder;
+      order.containerOrder[swapWith.instance.qualifiedId] = dim.instance.displayOrder;
+
+      this.ctService.updateContainerOrder(order).subscribe(
+        (result: any) => {
+          if (result) {
+            
+            this.ctService.loadTemplate(result);
+            
+            dim.instance.displayOrder = order.containerOrder[swapWith.instance.qualifiedId];
+            dim.instanceCopy.displayOrder = dim.instance.displayOrder;
+            
+            swapWith.instance.displayOrder = order.containerOrder[dim.instance.qualifiedId];
+            swapWith.instanceCopy.displayOrder = order.containerOrder[dim.instance.qualifiedId];
+
+            this.dimContainers[indx] = swapWith;
+            this.dimContainers[swapWithIndx] = dim;
+          }
+        },
+        (err) => {
+          this.alert.error("Error moving dimension. Please try later.", err.status);
+        }
+      );
+    }
+  }
+
 }

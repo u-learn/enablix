@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.enablix.core.domain.uri.embed.EmbedInfo;
+import com.enablix.uri.embed.EmbedException;
 import com.enablix.uri.embed.EmbedService;
 
 @Component
@@ -19,7 +20,7 @@ public class EmbedServiceImpl implements EmbedService {
 	private IFrameTester iframeTester;
 	
 	@Override
-	public EmbedInfo getEmbedInfo(String url) {
+	public EmbedInfo getEmbedInfo(String url) throws EmbedException {
 		
 		EmbedInfo embedInfo = localCache.get(url);
 		

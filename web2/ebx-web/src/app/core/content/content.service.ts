@@ -92,7 +92,9 @@ export class ContentService {
 
     if (!decoration.__thumbnailUrl) {
       if (dataRecord.__urls && dataRecord.__urls.length > 0) {
-        decoration.__thumbnailUrl = dataRecord.__urls[0].previewImageUrl;
+        var embedUrl = dataRecord.__urls[0];
+        decoration.__thumbnailUrl = embedUrl.type !== "unknown" ? embedUrl.previewImageUrl : 
+                  "/assets/images/icons/url-icon.svg";
       }
     }
 

@@ -65,5 +65,12 @@ public class EmbeddedUrl {
 	
 		return null;
 	}
+
+	public static EmbeddedUrl unknownUrl(String url) {
+		EmbeddedUrl eUrl = new EmbeddedUrl();
+		eUrl.setUrl(url);
+		eUrl.setType("unknown");
+		return eUrl;
+	}
 	
 }

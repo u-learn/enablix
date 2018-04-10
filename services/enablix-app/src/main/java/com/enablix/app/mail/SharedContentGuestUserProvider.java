@@ -12,12 +12,14 @@ import org.springframework.stereotype.Component;
 import com.enablix.app.content.share.ShareContentConstants;
 import com.enablix.commons.constants.AppConstants;
 import com.enablix.commons.util.process.ProcessContext;
+import com.enablix.core.api.WebPortal;
 import com.enablix.core.domain.security.authorization.UserBusinessProfile;
 import com.enablix.core.domain.security.authorization.UserProfile;
 import com.enablix.core.domain.security.authorization.UserSystemProfile;
 import com.enablix.core.domain.share.SharedSiteUrl;
 import com.enablix.core.domain.user.User;
 import com.enablix.core.security.auth.repo.UserProfileRepository;
+import com.enablix.core.security.service.EnablixUserService.LoggedInUser;
 import com.enablix.core.security.service.GuestUserProvider;
 import com.enablix.core.system.repo.SharedSiteUrlRepository;
 import com.enablix.core.system.repo.UserRepository;
@@ -42,9 +44,10 @@ public class SharedContentGuestUserProvider implements GuestUserProvider {
 	}
 	
 	@Override
-	public User getGuestUser(HttpServletRequest request) {
+	public LoggedInUser getGuestUser(HttpServletRequest request) {
 		
 		User user = null;
+		LoggedInUser loggedInUser = null;
 		
 		SharedSiteUrl shareDetails = getSharedUrlDetails(request);
 		
@@ -59,9 +62,16 @@ public class SharedContentGuestUserProvider implements GuestUserProvider {
 				user.setUserId(shareDetails.getSharedWith());
 				user.setTenantId(shareDetails.getTenantId());
 			}
+			
+			UserProfile usrProfile = this.getGuestUserProfile(user);
+			if (user != null) {
+				// Adding the role as null for the guest user
+				loggedInUser = new LoggedInUser(user, shareDetails.getTemplateId(), null, 
+						usrProfile, WebPortal.defaultPortal().getName());
+			}
 		}
 		
-		return user;
+		return loggedInUser;
 	}
 	
 	private UserProfile getUserProfile(User user) {
@@ -80,7 +90,6 @@ public class SharedContentGuestUserProvider implements GuestUserProvider {
 		return up;
 	}
 
-	@Override
 	public UserProfile getGuestUserProfile(User user) {
 		
 		UserProfile usrProfile = new UserProfile();

@@ -26,6 +26,7 @@ export class UploadUrlComponent implements OnInit {
   urlInfo: UrlCaptureInfo;
 
   thumbnailUrl: string;
+  defaultImg: boolean;
 
   contentTypeCtrl: FormControl;
   contentTypes: SelectOption[];
@@ -76,7 +77,11 @@ export class UploadUrlComponent implements OnInit {
               },
               error => {
                 this.loadingPreview = false;
-                console.log("embed info not found")
+                if (error.error && error.error.errorCode == "oembed_provider_error") {
+                  this.thumbnailUrl = "/assets/images/icons/url-icon.svg";
+                  this.previewContent = true;
+                  this.defaultImg = true;
+                }
               }
             );
     }

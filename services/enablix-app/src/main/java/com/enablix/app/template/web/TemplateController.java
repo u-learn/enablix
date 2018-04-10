@@ -16,8 +16,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.enablix.app.template.service.ContainerAndTemplate;
+import com.enablix.app.template.service.ContainerOrder;
 import com.enablix.app.template.service.TemplateManager;
-import com.enablix.app.template.service.TemplateManager.ContainerAndTemplate;
 import com.enablix.commons.exception.ValidationException;
 import com.enablix.commons.util.process.ProcessContext;
 import com.enablix.core.commons.xsdtopojo.ContainerType;
@@ -82,4 +83,10 @@ public class TemplateController {
 		return templateMgr.getTemplate(ProcessContext.get().getTemplateId());
 	}
 	
+	@RequestMapping(method = RequestMethod.POST, value="/{templateId}/container/order", consumes = "application/json")
+	public ContentTemplate updateContainerOrder(@PathVariable String templateId, 
+			@RequestBody ContainerOrder order) throws ValidationException, Exception {
+		LOGGER.debug("Updating container order");
+		return templateMgr.updateContainerOrder(order, templateId);
+	}
 }

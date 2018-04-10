@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.HttpServerErrorException;
 
 import com.enablix.commons.util.json.JsonUtil;
 
@@ -23,11 +24,12 @@ public class GlobalExceptionHandler {
 		
 		LOGGER.error("Error : ", e);
 		
+		int httpErrorCode = HttpStatus.INTERNAL_SERVER_ERROR.value();
+		String errorJson = null;
+		
 		if (e instanceof BaseAppException) {
 			
 			BaseAppException be = (BaseAppException) e;
-			
-			String errorJson = null;
 			
 			if (be instanceof ErrorCollection) {
 				
@@ -38,12 +40,20 @@ public class GlobalExceptionHandler {
 				errorJson = JsonUtil.toJsonString(be.getError());
 			}
 			
-			return ResponseEntity.status(be.getHttpErrorCode() >= 400 ? 
-							be.getHttpErrorCode() : HttpStatus.INTERNAL_SERVER_ERROR.value())
-					.body(errorJson);
+			if (be.getHttpErrorCode() >= 400) {
+				httpErrorCode = be.getHttpErrorCode();
+			}
+			
+		} else if (e instanceof HttpServerErrorException) {
+			
+			httpErrorCode = ((HttpServerErrorException) e).getStatusCode().value();
 		}
 		
-		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(JsonUtil.toJsonString(new AppError("unknown", e.getMessage())));
+		if (errorJson == null) {
+			errorJson = JsonUtil.toJsonString(new AppError("unknown", e.getMessage()));
+		}
+		
+		return ResponseEntity.status(httpErrorCode).body(errorJson);
 	}
 	
 	public static final class ErrorCollectionWrapper {

@@ -47,11 +47,11 @@ export class SearchBarComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
 
-    /*const input: any = document.getElementById("globalSearchTB");
+    const input: any = document.getElementById("globalSearchTB");
 
     const search$ = Observable.fromEvent(input, 'keyup')
       .switchMap(() => {
-        if (input.value && input.value.length > 3) {
+        if (input.value && input.value.length > 2) {
           return this.sbService.typeaheadSearchBizContent(input.value);
         }
         return Observable.of(null);
@@ -65,7 +65,7 @@ export class SearchBarComponent implements OnInit, AfterViewInit {
             this.bizContentItems = null;
           }
       }
-    );*/
+    );
 
   }
 

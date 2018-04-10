@@ -13,16 +13,14 @@
 				<!-- <div class="label">Password</div> -->
 				<div><input type="password" name="password" [(ngModel)]="password" placeholder="Password"></div>
 			</div>
-			<div class="input-group">
+			<div class="input-group space-between">
 				<div class="pretty p-icon p-has-focus">
           <input type="checkbox" [checked]="rememberMe" (change)="rememberMe = !rememberMe">
           <div class="state p-primary">
           	<i class="icon mdi mdi-check"></i><label class="text">Remember Me</label>
           </div>
         </div>
-			</div>
-			<div class="input-group">
-				<div class="link text"><a routerLink="/forgotpassword">Forgot password?</a></div>
+        <div class="link text"><a routerLink="/forgotpassword">Forgot password?</a></div>
 			</div>
 			<div class="input-group">
 				<div class="action-btn"><button type="submit">Sign In</button></div>

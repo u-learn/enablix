@@ -84,6 +84,15 @@ textarea {
   margin-top: 20px;
   overflow-y: hidden;
 
+  &.default-url-img {
+    text-align: center;
+    padding: 24px;
+    background: $blue-med-5;
+    img {
+      max-width: 128px;
+    }
+  }
+
   img {
     max-width: 528px;
   }

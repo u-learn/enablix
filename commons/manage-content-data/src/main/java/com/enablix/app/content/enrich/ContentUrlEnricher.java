@@ -6,6 +6,8 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -19,11 +21,14 @@ import com.enablix.core.commons.xsdtopojo.ContentItemClassType;
 import com.enablix.core.commons.xsdtopojo.ContentItemType;
 import com.enablix.core.content.EmbeddedUrl;
 import com.enablix.core.domain.uri.embed.EmbedInfo;
+import com.enablix.uri.embed.EmbedException;
 import com.enablix.uri.embed.EmbedService;
 
 @Component
 public class ContentUrlEnricher implements ContentEnricher {
 
+	private static final Logger LOGGER = LoggerFactory.getLogger(ContentUrlEnricher.class);
+	
 	@Autowired
 	private EmbedService embedService;
 	
@@ -58,12 +63,23 @@ public class ContentUrlEnricher implements ContentEnricher {
 
 		urls.forEach((url) -> {
 			
-			EmbedInfo embedInfo = embedService.getEmbedInfo(url);
+			EmbeddedUrl eUrl = null;
 			
-			EmbeddedUrl eUrl = EmbeddedUrl.fromEmbedInfo(embedInfo);
+			try {
+				
+				EmbedInfo embedInfo = embedService.getEmbedInfo(url);
+				
+				eUrl = EmbeddedUrl.fromEmbedInfo(embedInfo);
+				
+			} catch (EmbedException e) {
+				LOGGER.error("Error get embed info for [" + url + "]", e);
+				eUrl = EmbeddedUrl.unknownUrl(url);
+			}
+			
 			if (eUrl != null) {
 				embedUrls.add(eUrl);
 			}
+			
 		});
 		
 		return embedUrls;
