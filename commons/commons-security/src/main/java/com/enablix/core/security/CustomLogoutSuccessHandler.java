@@ -1,6 +1,7 @@
 package com.enablix.core.security;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Calendar;
 
 import javax.servlet.ServletException;
@@ -37,7 +38,7 @@ public class CustomLogoutSuccessHandler extends SimpleUrlLogoutSuccessHandler {
 	public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) throws IOException, ServletException {
 
-		super.handle(request, response, authentication);
+		// super.handle(request, response, authentication);
 
 		if (authentication != null) {
 
@@ -75,6 +76,10 @@ public class CustomLogoutSuccessHandler extends SimpleUrlLogoutSuccessHandler {
 
 			}
 		}
+		
+		PrintWriter writer = response.getWriter();
+		writer.write("{}");
+		writer.flush();
 
 	}
 

@@ -15,6 +15,7 @@ import org.springframework.security.web.authentication.RememberMeServices;
 import org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices;
 import org.springframework.security.web.authentication.switchuser.SwitchUserFilter;
 
+import com.enablix.commons.util.EnvironmentProperties;
 import com.enablix.core.security.service.EnablixUserService;
 
 @Configuration
@@ -29,6 +30,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Autowired
 	private EnablixUserService userService;
+	
+	@Autowired
+	private EnvironmentProperties envProps;
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
@@ -50,7 +54,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http
 			.authorizeRequests()
 				.antMatchers("/resetpassword", "/", "/health", "/site-doc/**/*", "/site/*", "/terms", "/privacy", "/signup",
-						"/**/*.html", "/**/*.js", "/**/*.json", "/**/*.css", "/**/*.png", "/**/*.jpg", "/**/*.jpeg", "/**/*.css.map", 
+						"/**/*.html", "/**/*.js", "/**/*.json", "/**/*.css", "/**/*.png", "/**/*.jpg", "/**/*.jpeg", "/**/*.map", 
 						"/**/*.gif", "/**/*.svg", "/**/*.ttf", "/**/*.woff", "/**/*.woff2", "/**/*.eot", "/**/*.otf",
 						"/analytics/**").permitAll()
 				.anyRequest().authenticated()
@@ -110,7 +114,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Bean
 	public CustomLogoutSuccessHandler logoutSuccessHandler() {
 		CustomLogoutSuccessHandler handler = new CustomLogoutSuccessHandler();
-		handler.setDefaultTargetUrl("/login.html#/login");
+		handler.setDefaultTargetUrl(envProps.getServerUrl() + "/login.html#/login");
 		return handler;
 	}
 	

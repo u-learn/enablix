@@ -257,7 +257,7 @@ public class DocumentController {
         				downloadAction(request, response, docIdentity, null, null, null, null, null);
         				
         			} else {
-        				response.sendRedirect(FILE_ICON_IMG);
+        				sendRedirect(FILE_ICON_IMG, request, response);
         			}
     			}
     			
@@ -275,11 +275,11 @@ public class DocumentController {
     	
     	if (!iconFound) {
     		if (template.isDocContainer(container)) {
-    			response.sendRedirect(FILE_ICON_IMG);
+    			sendRedirect(FILE_ICON_IMG, request, response);
     		} else if (template.isTextContainer(container)) {
-    			response.sendRedirect(TEXT_CONTENT_IMG);
+    			sendRedirect(TEXT_CONTENT_IMG, request, response);
     		} else {
-    			response.sendRedirect(ONE_PX_SVG);
+    			sendRedirect(ONE_PX_SVG, request, response);
     		}
     	}
        	
@@ -310,10 +310,16 @@ public class DocumentController {
 		}
     	
     	if (!iconFound) {
-   			response.sendRedirect(FILE_ICON_IMG);
+   			sendRedirect(FILE_ICON_IMG, request, response);
     	}
        	
    	}
+    
+    private void sendRedirect(String redirectUrl, HttpServletRequest request, HttpServletResponse response) throws IOException {
+    	String baseUrl = request.getScheme() + "://" + request.getServerName() + 
+    			(request.getServerPort() == 80 ? "" : (":" + request.getServerPort()));
+    	response.sendRedirect(baseUrl + redirectUrl);
+    }
     
     @SuppressWarnings("unchecked")
 	public String findUrlPreviewImageUrl(Map<String, Object> record) {
