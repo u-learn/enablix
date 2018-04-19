@@ -10,9 +10,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.enablix.app.content.ContentDataManager;
+import com.enablix.app.content.bulkimport.ImportManager;
 import com.enablix.app.content.delete.DeleteContentRequest;
 import com.enablix.app.content.update.UpdateContentRequest;
 import com.enablix.app.content.update.UpdateContentResponse;
+import com.enablix.commons.exception.ValidationException;
+import com.enablix.core.domain.content.ImportRequest;
 
 @RestController
 @RequestMapping("content")
@@ -22,6 +25,9 @@ public class ContentDataController {
 	
 	@Autowired
 	private ContentDataManager dataMgr;
+	
+	@Autowired
+	private ImportManager importMgr;
 	
 	@RequestMapping(method = RequestMethod.POST, 
 			value="/update/t/{templateId}/c/{contentQId}/r/{parentIdentity}", 
@@ -53,6 +59,13 @@ public class ContentDataController {
 		LOGGER.debug("Deleting content data");
 		dataMgr.deleteData(new DeleteContentRequest(templateId, contentQId, recordIdentity));
 		return "{\"status\": \"success\"}";
+	}
+	
+	@RequestMapping(method = RequestMethod.POST, 
+			value="/import/request", 
+			consumes = "application/json", produces = "application/json")
+	public void importRecords(@RequestBody ImportRequest request) throws ValidationException {
+		importMgr.acceptRequest(request);
 	}
 	
 }

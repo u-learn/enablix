@@ -1,11 +1,11 @@
 import { Component, OnInit, ViewEncapsulation, Input, ViewChild } from '@angular/core';
 
-import { ContentItem } from '../model/content-item.model';
-import { Container } from '../model/container.model';
-import { ContentTemplateService } from '../core/content-template.service';
-import { Constants } from '../util/constants';
+import { ContentItem } from '../../model/content-item.model';
+import { Container } from '../../model/container.model';
+import { ContentTemplateService } from '../content-template.service';
+import { Constants } from '../../util/constants';
 import { AddContentTagsComponent } from './add-content-tags/add-content-tags.component';
-import { ContentService } from '../core/content/content.service';
+import { ContentService } from '../content/content.service';
 
 @Component({
   selector: 'ebx-content-tags',
@@ -18,6 +18,7 @@ export class ContentTagsComponent implements OnInit {
   _record: any;
   @Input() tagItems?: ContentItem[];
   @Input() editing?: boolean = false;
+  @Input() label?: string;
 
   tags: Tag[] = [];
 

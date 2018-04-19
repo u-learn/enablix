@@ -217,6 +217,14 @@ button {
             &.withdraw {
                 background: url("/assets/images/icons/undo.svg") no-repeat center;   
             }
+
+            &.tags {
+                background: url("/assets/images/icons/tags.svg") no-repeat center;   
+            }
+
+            &.classify {
+                background: url("/assets/images/icons/classify.svg") no-repeat center;   
+            }
         }
     }
 

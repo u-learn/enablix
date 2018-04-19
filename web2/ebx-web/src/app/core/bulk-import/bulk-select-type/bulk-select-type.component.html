@@ -1,0 +1,11 @@
+<div class="bulk-upload-popup">
+  <h1 class="title">Select Content Type</h1>
+  <div class="preview-tag">
+    <ebx-select [(ngModel)]="selectedType"
+    placeholder="Select content type" [options]="contentTypes"></ebx-select>
+  </div>
+  <div class="actionBtns">
+    <button class="action" (click)="contentTypeSelected()">Select</button>
+    <button class="cancel" mat-dialog-close>Close</button>
+  </div>
+</div>

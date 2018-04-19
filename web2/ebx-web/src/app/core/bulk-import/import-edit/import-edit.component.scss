@@ -1,0 +1,32 @@
+@import '~styles/colors.scss';
+@import '~styles/layout.mixin.scss';
+@import '~styles/fonts.scss';
+
+.table-content {
+  .asset-title {
+    display: flex;
+    @include vcenterChildren;
+    span {
+      padding: 0 8px;
+    }
+  }
+
+  .preview-tag {
+
+    ebx-select {
+      width: 90%
+    }
+  }
+
+  .asset-thmb {
+    height: 48px;
+    width: 80px;
+    border-radius: 2px;
+  }
+
+  .input-error {
+    color: #d23e41;
+    margin: 8px 0 0 4px;
+    font-size: 14px;
+  }
+}

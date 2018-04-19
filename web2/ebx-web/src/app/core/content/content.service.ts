@@ -13,7 +13,7 @@ import { Pagination, Direction, SortCriteria } from '../../core/model/pagination
 import { DataPage } from '../../model/data-page.model';
 import { DataType, ConditionOperator } from '../../core/data-search/filter-metadata.model';
 import { Constants } from '../../util/constants';
-
+import { ImportRequest } from '../bulk-import/bulk-import.model';
 
 
 @Injectable()
@@ -203,6 +203,11 @@ export class ContentService {
     searchRequest.pagination.sort.direction = Direction.DESC;
 
     return this.dsService.getContainerDataSearchResult(containerQId, searchRequest);
+  }
+
+  submitImportRequest(request: ImportRequest) {
+    let apiUrl = this.apiUrlService.postImportRequestUrl();
+    return this.http.post(apiUrl, request);
   }
 
   getFilteredRecords(containerQId: string, searchRequest: DataSearchRequest) {

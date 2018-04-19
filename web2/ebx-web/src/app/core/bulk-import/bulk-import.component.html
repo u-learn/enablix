@@ -1,0 +1,29 @@
+<div class="bulk-upload-popup cls-step{{step}}">
+  <div [hidden]="step !== 1">
+    <h1 class="title">Select Source</h1>
+    <div class="imp-src" *ebxAccess="'BULK_IMPORT-GOOGLEDRIVE'">
+      <ebx-gdrive-import (onFileSelection)="filesSelected()" (onImportRequest)="importRequestReady($event)"></ebx-gdrive-import>
+    </div>
+    <div class="actionBtns">
+      <button class="cancel" mat-dialog-close>Cancel</button>
+    </div>
+  </div>
+  <ng-container *ngIf="step == 2">
+    <p class="msg">Retrieving files information...</p>
+    <div class="loader"><img src="/assets/images/icons/loading_icon.gif"></div>
+    <div class="actionBtns">
+      <button class="cancel" mat-dialog-close>Cancel</button>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="step == 3">
+    <ebx-import-edit [importRequest]="importRequest" (onImportSubmit)="importRequestSubmitted($event)"></ebx-import-edit>
+  </ng-container>
+  <ng-container *ngIf="step == 4">
+    <h1 class="title">Request Accepted</h1>
+    <p class="msg">Your request to import assets has been accepted. <br/>The assets will be available in a short while.</p>
+    <div class="actionBtns">
+      <button class="action" (click)="addMoreFiles()">Add More</button>
+      <button class="cancel" mat-dialog-close>Close</button>
+    </div>
+  </ng-container>
+</div>

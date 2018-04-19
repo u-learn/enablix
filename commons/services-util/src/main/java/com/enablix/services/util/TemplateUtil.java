@@ -441,6 +441,28 @@ public class TemplateUtil {
 		return matchedContentItem;
 		
 	}
+	
+	public static ContentItemType findBoundedItemWithStoreId(ContainerType containerDef, String storeId) {
+		
+		ContentItemType matchedContentItem = null;
+		
+		if (containerDef != null) {
+			
+			for (ContentItemType contentItem : containerDef.getContentItem()) {
+					
+				BoundedListDatastoreType ciDatastore = checkAndGetBoundedRefListDatastore(contentItem);
+				
+				if (ciDatastore != null && storeId.equals(ciDatastore.getStoreId())) {
+					matchedContentItem = contentItem;
+					break;
+				}
+					
+			}
+		}
+		
+		return matchedContentItem;
+		
+	}
 
 
 	public static BoundedListDatastoreType checkAndGetBoundedRefListDatastore(ContentItemType contentItem) {

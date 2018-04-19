@@ -43,6 +43,11 @@ public class GoogleDriveDocumentStore extends AbstractDocumentStore<GoogleDriveD
 	
 	protected void saveAndUpdateDocInfo(GoogleDriveDocument document, String contentPath) throws IOException {
 		
+		if (contentPath.startsWith("/")) {
+			// remove leading "/"
+			contentPath = contentPath.substring(1);
+		}
+		
 		Configuration config = getDocStoreConfiguration();
 		
 	    Drive drive = driveService.getDrive(config);

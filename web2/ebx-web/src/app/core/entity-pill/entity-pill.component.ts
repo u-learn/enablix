@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewEncapsulation, Input, EventEmitter, Output } from '@angular/core';
 
-import { ContentTemplateService } from '../core/content-template.service';
-import { NavigationService } from '../app-routing/navigation.service';
-import { Constants } from '../util/constants';
+import { ContentTemplateService } from '../content-template.service';
+import { NavigationService } from '../../app-routing/navigation.service';
+import { Constants } from '../../util/constants';
 
 @Component({
   selector: 'ebx-entity-pill',

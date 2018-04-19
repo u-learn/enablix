@@ -1,5 +1,5 @@
 <div class="row with-height" [hidden]="!editing && !hasValue()">
-  <p class="label">Relevance</p>
+  <p class="label" *ngIf="label">{{label}}</p>
   <div class="content-tags-container">
     <div class="pills-container">
       <div *ngFor="let tag of tags">

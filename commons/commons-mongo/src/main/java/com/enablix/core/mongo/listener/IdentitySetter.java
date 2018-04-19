@@ -15,6 +15,5 @@ public class IdentitySetter extends AbstractMongoEventListener<IdentityAware> {
 		if (StringUtil.isEmpty(event.getSource().getIdentity())) {
 			event.getSource().setIdentity(IdentityUtil.generateIdentity(event.getSource()));
 		}
-		
 	}
 }

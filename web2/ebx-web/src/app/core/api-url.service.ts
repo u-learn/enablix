@@ -42,6 +42,7 @@ export class ApiUrlService {
   static POST_INSERT_CHILD_CONTAINER_DATA = "/content/update/t/:templateId/c/:contentQId/r/:parentIdentity";
   static POST_BOUNDED_DEF_REF_LIST = "/bounded/d/list/";
   static POST_FILE_UPLOAD = '/doc/upload';
+  static POST_IMPORT_REQUEST = '/content/import/request';
 
   static POST_BIZ_CONTENT_SEARCH = '/search/bizcontent/';
   static POST_TYPEAHEAD_BIZ_CONTENT_SEARCH = '/search/ta/bizcontent/';
@@ -385,6 +386,10 @@ export class ApiUrlService {
 
   postUpdateContainerOrderUrl(templateId: string) : string {
     return this.getAPIUrl(ApiUrlService.POST_UPDATE_CONTAINER_ORDER, { templateId: templateId });
+  }
+
+  postImportRequestUrl() : string {
+    return this.getAPIUrl(ApiUrlService.POST_IMPORT_REQUEST);
   }
 
   deleteContainerDefUrl(templateId: string, containerQId: string) : string {

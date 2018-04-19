@@ -1,0 +1,10 @@
+<div class="bulk-upload-popup">
+  <h1 class="title">Add Tags</h1>
+  <div>
+    <ebx-content-tags [record]="tags" [tagItems]="tagItems" [editing]="true"></ebx-content-tags>
+  </div>
+  <div class="actionBtns">
+    <button class="action" (click)="tagsSelected()">Select</button>
+    <button class="cancel" mat-dialog-close>Close</button>
+  </div>
+</div>

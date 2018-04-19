@@ -7,8 +7,8 @@ export class ContentItem extends QualityControlledContent {
 }
 
 export class Bounded {
-  fixedList: BoundedFixedList;
-  refList: BoundedRefList;
+  fixedList?: BoundedFixedList;
+  refList?: BoundedRefList;
   multivalued: boolean;
 }
 
@@ -28,7 +28,7 @@ export class BoundedListDatastore {
   storeId: string;
   dataId: string;
   dataLabel: string;
-  hyperlink: boolean;
-  location: string;
+  hyperlink?: boolean;
+  location?: string;
 }
 

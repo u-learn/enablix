@@ -16,4 +16,5 @@ public class ErrorCodes {
 	
 	public static final String INVALID_CONTAINER_QID = "invalid_container_qid";
 	public static final String OEMBED_PROVIDER_ERROR = "oembed_provider_error";
+	public static final String UNSUPPORTED_IMPORT_SOURCE = "unsupported_import_source";
 }

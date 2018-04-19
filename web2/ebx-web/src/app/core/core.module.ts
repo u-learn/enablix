@@ -56,6 +56,15 @@ import { AppMessageService } from './app-message/app-message.service';
 import { AppIntroMsgComponent } from './app-message/app-intro-msg/app-intro-msg.component';
 import { ActivityAuditService } from './activity-audit.service';
 import { RebootService } from './reboot.service';
+import { BulkImportComponent } from './bulk-import/bulk-import.component';
+import { GoogleDriveService } from './bulk-import/google-drive.service';
+import { GdriveImportComponent } from './bulk-import/gdrive-import/gdrive-import.component';
+import { ImportEditComponent } from './bulk-import/import-edit/import-edit.component';
+import { ContentTagsComponent } from './content-tags/content-tags.component';
+import { AddContentTagsComponent } from './content-tags/add-content-tags/add-content-tags.component';
+import { EntityPillComponent } from './entity-pill/entity-pill.component';
+import { BulkSelectTypeComponent } from './bulk-import/bulk-select-type/bulk-select-type.component';
+import { BulkAddTagsComponent } from './bulk-import/bulk-add-tags/bulk-add-tags.component';
 
 @NgModule({
   imports: [
@@ -89,6 +98,7 @@ import { RebootService } from './reboot.service';
     EbxDateTimezonePipe,
     AppMessageService,
     ActivityAuditService,
+    GoogleDriveService,
   	{
   	  provide: HTTP_INTERCEPTORS,
       useClass: HttpErrorInterceptor,
@@ -105,7 +115,10 @@ import { RebootService } from './reboot.service';
     UploadUrlComponent,
     UploadTextComponent,
     AppIntroMsgComponent,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    BulkImportComponent,
+    BulkSelectTypeComponent,
+    BulkAddTagsComponent
   ],
   declarations: [
     HeaderComponent,
@@ -136,7 +149,15 @@ import { RebootService } from './reboot.service';
     AccessDirective,
     DataFiltersComponent,
     EbxDateTimezonePipe,
-    AppIntroMsgComponent
+    AppIntroMsgComponent,
+    BulkImportComponent,
+    GdriveImportComponent,
+    ImportEditComponent,
+    ContentTagsComponent,
+    AddContentTagsComponent,
+    EntityPillComponent,
+    BulkSelectTypeComponent,
+    BulkAddTagsComponent
   ],
   exports: [
     HeaderComponent,
@@ -160,7 +181,10 @@ import { RebootService } from './reboot.service';
     TextFileComponent,
     AccessDirective,
     DataFiltersComponent,
-    EbxDateTimezonePipe
+    EbxDateTimezonePipe,
+    ContentTagsComponent,
+    AddContentTagsComponent,
+    EntityPillComponent
   ]
 })
 export class CoreModule { }

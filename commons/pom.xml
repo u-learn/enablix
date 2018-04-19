@@ -47,5 +47,6 @@
 	<module>uri-embed</module>
 	<module>mail-integration</module>
 	<module>tenant-mgmt</module>
+	<module>google-drive-bulk-import</module>
   </modules>
 </project>

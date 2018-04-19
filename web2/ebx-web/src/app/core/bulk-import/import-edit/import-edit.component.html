@@ -1,0 +1,28 @@
+<h1 class="title">Edit Assets</h1>
+<div class="table-content">
+  <ebx-table *ngIf="importRequest" [tableData]="tableData" [tableColumns]="tableColumns" [tableActionConfig]="tableActions" [forceChangeDetection]="true">
+    <ng-template #dataRow let-rec>
+      <td style="width:30%;">
+        <div class="asset-title"><img *ngIf="rec.thumbnailUrl" class="asset-thmb" [src]="rec.thumbnailUrl"/><span contenteditable="true" [(ngModel)]="rec.title">{{rec.title}}</span><img src="/assets/images/icons/pencil-grey.svg"/>
+        </div>
+        <div class="input-error" [hidden]="!(rec.errors && rec.errors.title)">
+          <p *ngFor="let err of rec.errors?.title">{{err}}</p>
+        </div>
+      </td>
+      <td style="width:25%;">
+        <div class="preview-tag">
+          <ebx-select [(ngModel)]="rec.contentType"
+          placeholder="Select content type" [options]="contentTypes"></ebx-select>
+        </div>
+        <div class="input-error" [hidden]="!(rec.errors && rec.errors.contentType)">
+          <p *ngFor="let err of rec.errors?.contentType">{{err}}</p>
+        </div>
+      </td>
+      <td><ebx-content-tags [record]="rec.tags" [tagItems]="tagItems" [editing]="true"></ebx-content-tags></td>
+    </ng-template>
+  </ebx-table>
+</div>
+<div class="actionBtns">
+  <button class="action" (click)="submitImportRequest()">Submit</button>
+  <button class="cancel" mat-dialog-close>Cancel</button>
+</div>

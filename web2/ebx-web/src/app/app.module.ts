@@ -32,8 +32,6 @@ import { ImagePreviewComponent } from './content-preview/image-preview/image-pre
 import { FileImagesPreviewComponent } from './content-preview/file-images-preview/file-images-preview.component';
 import { ContentItemComponent } from './content-item/content-item.component';
 import { BizContentComponent } from './biz-content/biz-content.component';
-import { ContentTagsComponent } from './content-tags/content-tags.component';
-import { AddContentTagsComponent } from './content-tags/add-content-tags/add-content-tags.component';
 import { TextContentPreviewComponent } from './content-preview/text-content-preview/text-content-preview.component';
 import { BizDimensionDetailComponent } from './biz-dimension/biz-dimension-detail/biz-dimension-detail.component';
 import { BizDimensionListComponent } from './biz-dimension/biz-dimension-list/biz-dimension-list.component';
@@ -64,7 +62,6 @@ import { TPIntegrationsComponent } from './company/integrations/tpintegrations/t
 import { DocStoreIntegrationComponent } from './company/integrations/doc-store-integration/doc-store-integration.component';
 import { DocStoreConfigService } from './company/integrations/doc-store-integration/doc-store-config.service';
 import { ConfigInfoService } from './services/config-info.service';
-import { EntityPillComponent } from './entity-pill/entity-pill.component';
 import { DocUpdateButtonComponent } from './content-action/doc-update-button/doc-update-button.component';
 import { ContentReqApproveButtonComponent } from './content-action/content-req-approve-button/content-req-approve-button.component';
 import { ContentReqRejectButtonComponent } from './content-action/content-req-reject-button/content-req-reject-button.component';
@@ -107,8 +104,6 @@ import { DimensionTemplateComponent } from './company/dimension-template/dimensi
     FileImagesPreviewComponent,
     ContentItemComponent,
     BizContentComponent,
-    ContentTagsComponent,
-    AddContentTagsComponent,
     TextContentPreviewComponent,
     BizDimensionDetailComponent,
     BizDimensionListComponent,
@@ -132,7 +127,6 @@ import { DimensionTemplateComponent } from './company/dimension-template/dimensi
     MemberDetailComponent,
     TPIntegrationsComponent,
     DocStoreIntegrationComponent,
-    EntityPillComponent,
     DocUpdateButtonComponent,
     ContentReqApproveButtonComponent,
     ContentReqRejectButtonComponent,

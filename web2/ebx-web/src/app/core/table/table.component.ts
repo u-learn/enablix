@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation, Input, ContentChild, TemplateRef, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, Input, ContentChild, ChangeDetectorRef, TemplateRef, EventEmitter, Output } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material';
 
 import { TableColumn, TableActionConfig, TableAction } from '../model/table.model';
@@ -17,6 +17,7 @@ export class TableComponent implements OnInit {
   @Input() tableColumns: TableColumn[];
   @Input() pagination?: Pagination;
   @Input() tableActionConfig?: TableActionConfig<any>;
+  @Input() forceChangeDetection: boolean = false;
 
   @Output() onRefreshData = new EventEmitter<void>();
 
@@ -27,7 +28,7 @@ export class TableComponent implements OnInit {
 
   rowSelectOptions: RowSelectOption[];
 
-  constructor(private dialog: MatDialog) { }
+  constructor(private dialog: MatDialog, private changeDetector: ChangeDetectorRef) { }
 
   ngOnInit() {
     this.clearSelection();
@@ -99,12 +100,21 @@ export class TableComponent implements OnInit {
       this.selectedRecords = selRecords;
       this.availableActions = this.tableActionConfig.getAvailableActions(this.selectedRecords);
     }
+
+    this.runChangeDetector();
+  }
+
+  runChangeDetector() {
+    if (this.forceChangeDetection) {
+      this.changeDetector.detectChanges();
+    }
   }
 
   selectNone() {
     this.rowSelectOptions.forEach(opt => opt.checked = false);
     this.selectedRecords = [];
     this.availableActions = this.tableActionConfig.getAvailableActions(this.selectedRecords);
+    this.runChangeDetector();
   }
 
   onMultiSelectChange(value: string) {
@@ -141,6 +151,7 @@ export class TableComponent implements OnInit {
       }
 
       this.availableActions = this.tableActionConfig.getAvailableActions(this.selectedRecords);
+      this.runChangeDetector();
     }
   }
 

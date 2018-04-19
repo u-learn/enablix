@@ -12,6 +12,7 @@ import { SelectOption } from './select/select.component';
 import { AlertService } from './alert/alert.service';
 import { FilterMetadata, DataType, ConditionOperator } from './data-search/filter-metadata.model';
 import { Utility } from '../util/utility';
+import { ContentItem } from '../model/content-item.model';
 
 @Injectable()
 export class ContentTemplateService {
@@ -153,7 +154,7 @@ export class ContentTemplateService {
         
         let apiUrl = this.apiUrlService.postBoundedDefRefListUrl();
 
-        return this.http.post(apiUrl, contentItem);
+        return this.http.post(apiUrl, contentItem.bounded);
       }
     }
   }
@@ -204,6 +205,35 @@ export class ContentTemplateService {
   updateContainerOrder(containerOrder: any) {
     let apiUrl = this.apiUrlService.postUpdateContainerOrderUrl(this.contentTemplate.id);
     return this.http.post(apiUrl, containerOrder);
+  }
+
+  getBizDimBoundedItems() : ContentItem[] {
+    
+    let boundedItems: ContentItem[] = []; 
+    
+    this.templateCache.bizDimensionContainers.forEach((dimCont) => {
+      
+      let lblAttr = this.templateCache.getContainerLabelAttrId(dimCont.qualifiedId);
+
+      boundedItems.push({
+        id: dimCont.qualifiedId,
+        qualifiedId: null,
+        type: "BOUNDED",
+        label: dimCont.label,
+        bounded: {
+          multivalued: true,
+          refList: {
+            datastore: {
+              storeId: dimCont.qualifiedId,
+              dataId: "identity",
+              dataLabel: lblAttr
+            }
+          }
+        }
+      })
+    });
+
+    return boundedItems;
   }
 
 }

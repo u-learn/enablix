@@ -21,5 +21,6 @@ public final class Events {
 	public static final String SEND_EMAIL = "SEND_EMAIL";
 	public static final String CONTAINER_LABEL_UPDATED = "CONTAINER_LABEL_UPDATED";
 	public static final String CONTAINER_DEF_REMOVED = "CONTAINER_DEF_REMOVED";
+	public static final String BULK_IMPORT_REQUEST = "BULK_IMPORT_REQUEST";
 	
 }

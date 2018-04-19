@@ -3,10 +3,10 @@ import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/startWith';
 
-import { ContentItem } from '../../model/content-item.model';
-import { ContentTemplateService } from '../../core/content-template.service';
+import { ContentItem } from '../../../model/content-item.model';
+import { ContentTemplateService } from '../../content-template.service';
 import { Tag } from '../content-tags.component';
-import { Container } from '../../model/container.model';
+import { Container } from '../../../model/container.model';
 
 @Component({
   selector: 'ebx-add-content-tags',
