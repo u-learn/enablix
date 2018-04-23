@@ -9,7 +9,7 @@ $a_siteUrl/app.html#/portal/container/$a_containerQId/$a_contentIdentity/c/singl
 
 
 #macro( action_button_with_padding $a_btnText $a_btnUrl $a_btnPadding)
-	#action_button_with_padding_color( $a_btnText $a_btnUrl $a_btnPadding '#0e2a49')
+	#action_button_with_padding_color( $a_btnText $a_btnUrl $a_btnPadding '#1F8AEF')
 #end
 
 #macro( action_button_v2 $a_btnText $a_btnUrl )
@@ -90,7 +90,7 @@ $a_siteUrl/app.html#/portal/container/$a_containerQId/$a_contentIdentity/c/singl
 
 
 #macro( mail_opening $a_userName )
-<div class="h2" style="color:#0e2a49; font-family:Arial,sans-serif, 'OS'; font-size:20px; line-height:20px; text-align:left; font-weight:bold">
+<div class="h2" style="font-family:Arial,sans-serif, 'OS'; font-size:20px; line-height:20px; text-align:left;">
 	Hello #if($a_userName) $a_userName#else there#end,
 </div>
 #end

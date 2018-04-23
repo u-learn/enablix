@@ -96,7 +96,9 @@ var insertUsers = function() {
 		        "VIEW_REPORT-content-coverage-report", 
 		        "VIEW_REPORTS", 
 		        "VIEW_REPORT-activity-trend-calculator", 
-		        "DOCSTORE_DIRECT_ACCESS"
+		        "DOCSTORE_DIRECT_ACCESS",
+		        "BULK_IMPORT",
+		        "BULK_IMPORT-GOOGLEDRIVE"
 		    ]
 		},
 		{ 
@@ -109,8 +111,7 @@ var insertUsers = function() {
 		        "VIEW_RECENT_CONTENT", 
 		        "SUGGEST_CONTENT", 
 		        "SHARE_VIA_EMAIL", 
-		        "SHARE_VIA_SLACK", 
-		        "DOCSTORE_DIRECT_ACCESS"
+		        "SHARE_VIA_SLACK"
 		    ]
 		}];
 	
