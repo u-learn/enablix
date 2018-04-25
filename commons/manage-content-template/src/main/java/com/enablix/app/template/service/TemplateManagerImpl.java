@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -17,11 +18,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.enablix.commons.constants.AppConstants;
+import com.enablix.commons.exception.AppError;
+import com.enablix.commons.exception.ValidationException;
 import com.enablix.commons.util.EnvPropertiesUtil;
 import com.enablix.commons.util.IOUtil;
 import com.enablix.commons.util.StringUtil;
+import com.enablix.commons.util.collection.CollectionUtil;
 import com.enablix.commons.util.concurrent.Events;
 import com.enablix.commons.util.process.ProcessContext;
+import com.enablix.commons.validate.Validators;
 import com.enablix.core.api.TemplateFacade;
 import com.enablix.core.commons.xsd.parser.ContentTemplateXMLParser;
 import com.enablix.core.commons.xsd.parser.XMLParser;
@@ -72,6 +77,9 @@ public class TemplateManagerImpl implements TemplateManager {
 	
 	@Autowired
 	private ExplicitCounterRegistry counterRegistry;
+	
+	@Autowired
+	private ContainerRecordCountValidator contRecCntValidator;
 	
 	private Counter containerCounter;
 	
@@ -241,6 +249,9 @@ public class TemplateManagerImpl implements TemplateManager {
 	@Override
 	public ContainerAndTemplate deleteContainer(String templateId, String containerQId) throws Exception {
 		
+		ContainerType cacheDef = getTemplateFacade(templateId).getContainerDefinition(containerQId);
+		validateDelete(cacheDef);
+		
 		TemplateDocument templateDoc = crudService.findByIdentity(templateId);
 		ContentTemplate template = templateDoc.getTemplate();
 		
@@ -252,6 +263,13 @@ public class TemplateManagerImpl implements TemplateManager {
 		EventUtil.publishEvent(new Event<ContainerType>(Events.CONTAINER_DEF_REMOVED, container));
 		
 		return new ContainerAndTemplate(container, template);
+	}
+	
+	private void validateDelete(ContainerType container) throws ValidationException {
+		Collection<AppError> errors = Validators.list(contRecCntValidator).validate(container);
+		if (CollectionUtil.isNotEmpty(errors)) {
+			throw new ValidationException(errors);
+		}
 	}
 	
 	@Override

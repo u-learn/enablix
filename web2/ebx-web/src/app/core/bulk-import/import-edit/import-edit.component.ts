@@ -62,8 +62,8 @@ export class ImportEditComponent implements OnInit {
         key: "contentType"
       },
       {
-        heading: "Tags",
-        key: "tags"
+        heading: "Objects",
+        key: "objects"
       }
     ];
 
@@ -222,9 +222,9 @@ export class ImportRecordActions implements TableActionConfig<any> {
     });
 
     this.allActions.push({
-      label: "Add Tags",
+      label: "Add Objects",
       iconClass: "tags",
-      successMessage: "Tags Added",
+      successMessage: "Objects Added",
       execute: this.component.bulkTagsUpdate.bind(this.component)
     });
   }

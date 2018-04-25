@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DimensionTemplateComponent } from './dimension-template.component';
+import { MessageDialogComponent } from './message-dialog.component';
 
-describe('DimensionTemplateComponent', () => {
-  let component: DimensionTemplateComponent;
-  let fixture: ComponentFixture<DimensionTemplateComponent>;
+describe('MessageDialogComponent', () => {
+  let component: MessageDialogComponent;
+  let fixture: ComponentFixture<MessageDialogComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DimensionTemplateComponent ]
+      declarations: [ MessageDialogComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DimensionTemplateComponent);
+    fixture = TestBed.createComponent(MessageDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

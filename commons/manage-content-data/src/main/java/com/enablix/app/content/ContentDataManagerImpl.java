@@ -35,6 +35,7 @@ import com.enablix.core.api.ContentDataRef;
 import com.enablix.core.api.ContentRecordGroup;
 import com.enablix.core.api.ContentStackItem;
 import com.enablix.core.api.TemplateFacade;
+import com.enablix.core.commons.xsdtopojo.ContainerBusinessCategoryType;
 import com.enablix.core.commons.xsdtopojo.ContainerType;
 import com.enablix.core.commons.xsdtopojo.ContentItemClassType;
 import com.enablix.core.commons.xsdtopojo.ContentItemType;
@@ -625,7 +626,7 @@ public class ContentDataManagerImpl implements ContentDataManager {
 	@EventSubscription(eventName = Events.CONTAINER_DEF_REMOVED)
 	public void deleteRecords(ContainerType container) {
 		// remove all records on container deletions
-		if (container != null) {
+		if (container != null && container.getBusinessCategory() == ContainerBusinessCategoryType.BUSINESS_DIMENSION) {
 			
 			TemplateFacade template = templateMgr.getTemplateFacade(ProcessContext.get().getTemplateId());
 			String collectionName = template.getCollectionName(container.getQualifiedId());

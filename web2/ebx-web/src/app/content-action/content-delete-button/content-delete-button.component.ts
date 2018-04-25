@@ -40,7 +40,7 @@ export class ContentDeleteButtonComponent implements OnInit {
 
   getDeletedAlertText() : string {
     return this.contentType == "Asset" ? "Content Asset deleted successfully." :
-              "Dimension deleted successfully";
+              "Object deleted successfully";
   }
 
   deletePrompt() {

@@ -1,7 +1,7 @@
 <div class="main-section">
   <div class="sub-section">
     <div class="sub-section-header">
-      <h2>Dimensions</h2>
+      <h2>{{cntnrTypeLbl}}</h2>
       <div class="dashboard-buttons">
         <div class="action-btn btn-with-text" (click)="addNewContainer()">
           <div class="icon small plus"></div>
@@ -9,47 +9,55 @@
         </div>
       </div>
     </div>
-    <ng-container *ngFor="let dim of dimContainers; let i = index; let first = first; let last = last;">
-      <div class="sub-section-content" *ngIf="!dim.editing">
+    <div class="sub-section-header" *ngIf="cntnrTypeBizContent">
+      <div class="search-row">
+        <img class="search-icon" src="/assets/images/icons/search-grey.svg">
+        <input class="search-input" type="text" placeholder="Search" [formControl]="nameCtrl">
+      </div> 
+    </div>
+    <ng-container *ngFor="let cont of filteredContainers | async; let i = index; let first = first; let last = last;">
+      <div class="sub-section-content" *ngIf="!cont.editing">
         <div class="left">
           <div class="type-header">
-            <h3>{{dim.instance.label}}</h3>
+            <h3>{{cont.instance.label}}</h3>
           </div>
-          <ng-container *ngIf="dim.instance.singularLabel">
+          <ng-container *ngIf="cont.instance.singularLabel">
             <div class="content-row flex-row">
               <div class="param-key">Singular Label</div>
-              <div class="param-value">{{dim.instance.singularLabel}}</div>
+              <div class="param-value">{{cont.instance.singularLabel}}</div>
             </div>
           </ng-container>
         </div>
         <div class="right dashboard-buttons small">
-          <div class="action-btn with-border btn-with-text" (click)="editDimension(dim, i)">
+          <div class="action-btn with-border btn-with-text" *ngIf="cntnrTypeBizDim" (click)="editContainer(cont)">
             <div class="icon small edit"></div>
             <p class="show-me">Edit</p>
           </div>
-          <div class="action-btn with-border btn-with-text" (click)="deleteAction(dim, i)">
+          <div class="action-btn with-border btn-with-text" (click)="deleteAction(cont)">
             <div class="icon small trash"></div>
             <p class="show-me">Delete</p>
           </div>
-          <div class="action-btn with-border btn-with-text" 
-                (click)="moveDimUp(dim, i)" *ngIf="!first">
-            <div class="icon small moveup"></div>
-            <p class="show-me">Move Up</p>
-          </div>
-          <div class="action-btn with-border btn-with-text" 
-                (click)="moveDimDown(dim, i)" *ngIf="!last">
-            <div class="icon small movedown"></div>
-            <p class="show-me">Move Down</p>
-          </div>
+          <ng-container *ngIf="cntnrTypeBizDim">
+            <div class="action-btn with-border btn-with-text" 
+                  (click)="moveContUp(cont, i)" *ngIf="!first">
+              <div class="icon small moveup"></div>
+              <p class="show-me">Move Up</p>
+            </div>
+            <div class="action-btn with-border btn-with-text" 
+                  (click)="moveContDown(cont, i)" *ngIf="!last">
+              <div class="icon small movedown"></div>
+              <p class="show-me">Move Down</p>
+            </div>
+          </ng-container>
         </div>
       </div>
-      <form #dimForm="ngForm" *ngIf="dim.editing">
+      <form #contForm="ngForm" *ngIf="cont.editing">
         <div class="sub-section-content">
           <div class="left">
             <div class="form-input">
               <div class="input-label">Plural Label</div>
               <div class="input-control">
-                <input type="text" name="label" [(ngModel)]="dim.instanceCopy.label" #label="ngModel" required>
+                <input type="text" name="label" [(ngModel)]="cont.instanceCopy.label" #label="ngModel" required>
               </div>
               <div class="input-error" [hidden]="label.valid || label.pristine">
                 <p [hidden]="!label.errors?.required">Plural Label is required</p>
@@ -58,17 +66,17 @@
             <div class="form-input">
               <div class="input-label">Singular Label</div>
               <div class="input-control">
-                <input type="text" name="singularLabel" [(ngModel)]="dim.instanceCopy.singularLabel">
+                <input type="text" name="singularLabel" [(ngModel)]="cont.instanceCopy.singularLabel">
               </div>
             </div>
           </div>
           <div class="right dashboard-buttons small">
             <div class="action-btn with-border btn-with-text" 
-                (click)="onSave(dim, i, dimForm);">
+                (click)="onSave(cont, i, contForm);">
               <div class="icon small save-blue"></div>
               <p class="show-me">Save</p>
             </div>
-            <div class="action-btn with-border btn-with-text" (click)="cancelEditing(dim, i)">
+            <div class="action-btn with-border btn-with-text" (click)="cancelEditing(cont, i)">
               <div class="icon small cancel-blue"></div>
               <p class="show-me">Cancel</p>
             </div>

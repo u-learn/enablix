@@ -19,10 +19,10 @@
     <ebx-import-edit [importRequest]="importRequest" (onImportSubmit)="importRequestSubmitted($event)"></ebx-import-edit>
   </ng-container>
   <ng-container *ngIf="step == 4">
-    <h1 class="title">Request Accepted</h1>
-    <p class="msg">Your request to import assets has been accepted. <br/>The assets will be available in a short while.</p>
+    <h1 class="title">Publish Assets</h1>
+    <p class="msg">The imported assets will be published shortly. We will notify you once the assets are published successfully.</p>
     <div class="actionBtns">
-      <button class="action" (click)="addMoreFiles()">Add More</button>
+      <button class="action" (click)="addMoreFiles()">Import...</button>
       <button class="cancel" mat-dialog-close>Close</button>
     </div>
   </ng-container>

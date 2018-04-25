@@ -80,7 +80,13 @@ public class GDriveBulkImportProcessor implements ImportProcessor {
 		String oauthToken = (String) ctx.getSharedData().get("oauth_token");
 		
 		if (oauthToken == null) {
+			
 			String authCode = (String) ctx.getRequest().getSourceDetails().get("auth_code");
+			
+			String redirectUrl = (String) ctx.getRequest().getSourceDetails().get("redirect_url");
+			if (!StringUtil.hasText(redirectUrl)) {
+				redirectUrl = this.redirectUri;
+			}
 			
 			GoogleTokenResponse tokenResponse =
 			          new GoogleAuthorizationCodeTokenRequest(
@@ -88,7 +94,7 @@ public class GDriveBulkImportProcessor implements ImportProcessor {
 			        		  JacksonFactory.getDefaultInstance(),
 			        		  "https://www.googleapis.com/oauth2/v4/token",
 			        		  clientId, clientSecret,
-			        		  authCode, redirectUri
+			        		  authCode, redirectUrl
 			        	).execute();
 			
 			oauthToken = tokenResponse.getAccessToken();

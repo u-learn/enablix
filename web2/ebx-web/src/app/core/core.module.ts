@@ -65,6 +65,7 @@ import { AddContentTagsComponent } from './content-tags/add-content-tags/add-con
 import { EntityPillComponent } from './entity-pill/entity-pill.component';
 import { BulkSelectTypeComponent } from './bulk-import/bulk-select-type/bulk-select-type.component';
 import { BulkAddTagsComponent } from './bulk-import/bulk-add-tags/bulk-add-tags.component';
+import { MessageDialogComponent } from './message-dialog/message-dialog.component';
 
 @NgModule({
   imports: [
@@ -118,7 +119,8 @@ import { BulkAddTagsComponent } from './bulk-import/bulk-add-tags/bulk-add-tags.
     ConfirmDialogComponent,
     BulkImportComponent,
     BulkSelectTypeComponent,
-    BulkAddTagsComponent
+    BulkAddTagsComponent,
+    MessageDialogComponent
   ],
   declarations: [
     HeaderComponent,
@@ -157,7 +159,8 @@ import { BulkAddTagsComponent } from './bulk-import/bulk-add-tags/bulk-add-tags.
     AddContentTagsComponent,
     EntityPillComponent,
     BulkSelectTypeComponent,
-    BulkAddTagsComponent
+    BulkAddTagsComponent,
+    MessageDialogComponent
   ],
   exports: [
     HeaderComponent,

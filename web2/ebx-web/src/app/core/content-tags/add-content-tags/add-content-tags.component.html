@@ -5,7 +5,7 @@
     </div>
     <div class="input-search-result" *ngIf="!selectContentItem">
         <div class="header">
-           <div class="head-label">Pick Object</div>
+           <div class="head-label">Select Object</div>
            <div class="close" (click)="close()"><img src="/assets/images/icons/close-grey.svg" /></div>
         </div>
         <div class="content" *ngFor="let item of filteredObjectTags | async" (click)="selectItem(item)">

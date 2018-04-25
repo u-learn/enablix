@@ -39,7 +39,7 @@ import { ReportsHomeComponent } from '../reports/reports-home/reports-home.compo
 import { RecoListComponent } from '../reco-content/reco-list/reco-list.component';
 import { ActivityAuditComponent } from '../reports/activity-audit/activity-audit.component';
 import { AuditActivityResolve } from './audit-activity.resolve';
-import { DimensionTemplateComponent } from '../company/dimension-template/dimension-template.component';
+import { ContainerTemplateComponent } from '../company/container-template/container-template.component';
 
 const routes: Routes = [
   {
@@ -173,8 +173,18 @@ const routes: Routes = [
               component: IntegrationsComponent
             },
             {
-              path: 'dimtemplate',
-              component: DimensionTemplateComponent
+              path: 'cttemplate/dim',
+              component: ContainerTemplateComponent,
+              data: {
+                bizCategory: 'dim'
+              }
+            },
+            {
+              path: 'cttemplate/content',
+              component: ContainerTemplateComponent,
+              data: {
+                bizCategory: 'cntnt'
+              }
             }
           ]
         },
@@ -244,7 +254,11 @@ const routes: Routes = [
   imports: [
     CommonModule,
     RouterModule.forRoot(
-        routes/*, { enableTracing: true }*/
+        routes, 
+        { 
+          /*enableTracing: true,*/
+          onSameUrlNavigation: 'reload'
+        }
       )
   ],
   declarations: [

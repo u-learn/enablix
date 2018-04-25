@@ -86,4 +86,6 @@ public interface ContentCrudService {
 
 	void deleteContentStackItem(String collectionName, String contentStackAttrId, String contentIdentity);
 
+	Long getRecordCount(String collectionName);
+
 }

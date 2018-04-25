@@ -36,13 +36,26 @@ import com.enablix.services.util.template.walker.TemplateContainerWalker;
 
 public class TemplateBuilder {
 
-	private static final int NAME_SEARCH_BOOST = 7;
+	private static final int DEFAULT_TEXT_SEARCH_BOOST = 7;
 
 	private static final String NAME_ATTR_ID = "name";
 	private static final String NAME_ATTR_LBL = "Name";
 
 	private static final String SHORT_NAME_ATTR_ID = "shortName";
 	private static final String SHORT_NAME_ATTR_LBL = "Short Name";
+
+	private static final String TITLE_ATTR_ID = "title";
+	private static final String TITLE_ATTR_LBL = "Title";
+	
+	private static final String DESC_ATTR_ID = "desc";
+	private static final String DESC_ATTR_LBL = "Description";
+	
+	private static final String URL_ATTR_ID = "url";
+	private static final String URL_ATTR_LBL = "URL";
+	
+	private static final String FILE_ATTR_ID = "file";
+	private static final String FILE_ATTR_LBL = "File";
+	
 	
 	public static boolean updateContainerAndCheckLabelUpdate(ContentTemplate template, ContainerType container) throws Exception {
 		
@@ -105,9 +118,32 @@ public class TemplateBuilder {
 					(cntnrType) -> cntnrType.getBusinessCategory() == ContainerBusinessCategoryType.BUSINESS_CONTENT);
 			
 			walker.walk((bizContentContainer) -> {
-				
 				addLinkedContainer(container, SHORT_NAME_ATTR_ID, bizContentContainer);
-				
+			});
+			
+		} else if (container.getBusinessCategory() == ContainerBusinessCategoryType.BUSINESS_CONTENT) {
+			
+			// Add title field - text
+			addTextItem(TITLE_ATTR_ID, TITLE_ATTR_LBL, container);
+			
+			// add title UI config as label
+			addUILabelConfig(template, container, TITLE_ATTR_ID);
+
+			// Add file field - doc
+			addDocItem(FILE_ATTR_ID, FILE_ATTR_LBL, container);
+			
+			// Add url field - text
+			addContentItem(URL_ATTR_ID, URL_ATTR_LBL, ContentItemClassType.TEXT, container);
+			
+			// Add desc field - richText
+			addRichTextItem(DESC_ATTR_ID, DESC_ATTR_LBL, container);
+			
+			TemplateContainerWalker walker = new TemplateContainerWalker(template, 
+					(cntnrType) -> cntnrType.getBusinessCategory() == ContainerBusinessCategoryType.BUSINESS_DIMENSION);
+			
+			walker.walk((bizDimContainer) -> {
+				String lblAttrId = TemplateUtil.getPortalLabelAttributeId(template, bizDimContainer.getQualifiedId());
+				addLinkedContainer(bizDimContainer, lblAttrId, container);
 			});
 		}
 		
@@ -135,7 +171,7 @@ public class TemplateBuilder {
 		ds.setStoreId(inContainer.getQualifiedId());
 		ds.setDataId(ContentDataConstants.IDENTITY_KEY);
 		ds.setDataLabel(inContainerLabelAttrId);
-		refListType.setDatastore(ds );
+		refListType.setDatastore(ds);
 		
 		boundedType.setRefList(refListType );
 		
@@ -193,14 +229,35 @@ public class TemplateBuilder {
 		template.getUiDefinition().getContentUIDef().add(contUIDef);
 	}
 
-	private static void addTextItem(String nameAttrId, String nameAttrLbl, ContainerType container) {
-		ContentItemType nameItem = new ContentItemType();
-		nameItem.setId(nameAttrId);
-		nameItem.setLabel(nameAttrLbl);
-		nameItem.setType(ContentItemClassType.TEXT);
-		nameItem.setSearchBoost(BigInteger.valueOf(NAME_SEARCH_BOOST));
+	private static void addTextItem(String attrId, String attrLbl, ContainerType container) {
+		addTextItem(attrId, attrLbl, container, DEFAULT_TEXT_SEARCH_BOOST);
+	}
+	
+	private static void addTextItem(String attrId, String attrLbl, ContainerType container, int searchBoost) {
+		ContentItemType textItem = new ContentItemType();
+		textItem.setId(attrId);
+		textItem.setLabel(attrLbl);
+		textItem.setType(ContentItemClassType.TEXT);
+		textItem.setSearchBoost(BigInteger.valueOf(searchBoost));
 		
-		container.getContentItem().add(nameItem);
+		container.getContentItem().add(textItem);
+	}
+	
+	private static void addRichTextItem(String attrId, String attrLbl, ContainerType container) {
+		addContentItem(attrId, attrLbl, ContentItemClassType.RICH_TEXT, container);
+	}
+	
+	private static void addDocItem(String attrId, String attrLbl, ContainerType container) {
+		addContentItem(attrId, attrLbl, ContentItemClassType.DOC, container);
+	}
+	
+	private static void addContentItem(String attrId, String attrLbl, ContentItemClassType type, ContainerType container) {
+		ContentItemType richTextItem = new ContentItemType();
+		richTextItem.setId(attrId);
+		richTextItem.setLabel(attrLbl);
+		richTextItem.setType(type);
+		
+		container.getContentItem().add(richTextItem);
 	}
 	
 	private static ContainerType removeContainerFromList(String containerQId, List<ContainerType> list) {
@@ -269,26 +326,25 @@ public class TemplateBuilder {
 					}
 				}
 				
-				// remove UI Definition
-				for (Iterator<ContentUIDefType> itr = template.getUiDefinition().getContentUIDef().iterator(); itr.hasNext(); ) {
-					
-					ContentUIDefType uiDef = itr.next();
-					
-					if (uiDef.getQualifiedId().equals(containerQId)
-							|| uiDef.getQualifiedId().startsWith(containerQId + ".")) {
-						itr.remove();
-					}
-				}
-				
-				// remove sub-container references
-				for (ContainerType subCntnr : container.getContainer()) {
-					if (!TemplateUtil.isLinkedContainer(subCntnr)) {
-						removeContainerReferences(template, subCntnr);
-					}
-				}
-				
 			});
+
+			// remove UI Definition
+			for (Iterator<ContentUIDefType> itr = template.getUiDefinition().getContentUIDef().iterator(); itr.hasNext(); ) {
+				
+				ContentUIDefType uiDef = itr.next();
+				
+				if (uiDef.getQualifiedId().equals(containerQId)
+						|| uiDef.getQualifiedId().startsWith(containerQId + ".")) {
+					itr.remove();
+				}
+			}
 			
+			// remove sub-container references
+			for (ContainerType subCntnr : container.getContainer()) {
+				if (!TemplateUtil.isLinkedContainer(subCntnr)) {
+					removeContainerReferences(template, subCntnr);
+				}
+			}
 		}
 	}
 

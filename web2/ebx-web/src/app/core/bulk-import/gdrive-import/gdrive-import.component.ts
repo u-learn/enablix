@@ -80,7 +80,8 @@ export class GdriveImportComponent implements OnInit {
             var request: ImportRequest = {
               source: 'GOOGLEDRIVE',
               sourceDetails: {
-                "auth_code": this.gdrive.getAuthCode()
+                "auth_code": this.gdrive.getAuthCode(),
+                "redirect_url": window.location.origin
               },
               records: merged
             }

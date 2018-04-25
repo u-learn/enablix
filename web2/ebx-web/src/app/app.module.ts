@@ -82,7 +82,7 @@ import { RecoContentComponent } from './reco-content/reco-content.component';
 import { RecoContentService } from './reco-content/reco-content.service';
 import { CopyDownloadUrlButtonComponent } from './content-action/copy-download-url-button/copy-download-url-button.component';
 import { RecoListComponent } from './reco-content/reco-list/reco-list.component';
-import { DimensionTemplateComponent } from './company/dimension-template/dimension-template.component';
+import { ContainerTemplateComponent } from './company/container-template/container-template.component';
 
 @NgModule({
   declarations: [
@@ -143,7 +143,7 @@ import { DimensionTemplateComponent } from './company/dimension-template/dimensi
     RecoContentComponent,
     CopyDownloadUrlButtonComponent,
     RecoListComponent,
-    DimensionTemplateComponent
+    ContainerTemplateComponent
   ],
   imports: [
     BrowserModule,

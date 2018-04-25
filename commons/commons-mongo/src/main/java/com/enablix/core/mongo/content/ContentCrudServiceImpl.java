@@ -464,5 +464,10 @@ public class ContentCrudServiceImpl implements ContentCrudService {
 		
 		return CollectionUtil.isEmpty(allRecords) ? new HashMap<>() : allRecords.get(0);
 	}
+
+	@Override
+	public Long getRecordCount(String collectionName) {
+		return mongoTemplate.count(Query.query(new Criteria()), collectionName);
+	}
 	
 }
