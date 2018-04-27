@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<contentTemplate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="eoriginal_enterprise" version="1.29" xsi:noNamespaceSchemaLocation="../xsd/content-template.xsd">
+<contentTemplate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="eoriginal_enterprise" version="1.30" xsi:noNamespaceSchemaLocation="../xsd/content-template.xsd">
 	<dataDefinition>
 		<container id="solution" label="Solutions" businessCategory="BUSINESS_DIMENSION">
 			<contentItem id="name" label="Name" type="text" searchBoost="7"/>
@@ -11,7 +11,7 @@
 			<container id="solCompDocs" label="Competitor Docs" linkContainerQId="competitordoc" linkContentItemId="solutions"/>			
 			<container id="solDataSheet" label="Data Sheet" linkContainerQId="datasheet" linkContentItemId="solutions"/>
 			<container id="solDiscQuestion" label="Discovery Questions" linkContainerQId="discoveryquestion" linkContentItemId="solutions"/>
-			<container id="solDoorOpenEmail" label="Door Opener Emails" linkContainerQId="dooropeneremail" linkContentItemId="solutions"/>			
+			<container id="solDoorOpenEmail" label="Door Opener Communications" linkContainerQId="dooropeneremail" linkContentItemId="solutions"/>			
 			<container id="solEvent" label="Events" linkContainerQId="event" linkContentItemId="solutions"/>							
 			<container id="solFAQ" label="FAQ" linkContainerQId="faq" linkContentItemId="solutions"/>																
 			<container id="solFeatureSheet" label="Feature Sheets" linkContainerQId="featuresheet" linkContentItemId="solutions"/>										
@@ -58,7 +58,7 @@
 			<container id="indCompDocs" label="Competitor Docs" linkContainerQId="competitordoc" linkContentItemId="industries"/>						
 			<container id="indDataSheet" label="Data Sheet" linkContainerQId="datasheet" linkContentItemId="industries"/>						
 			<container id="indDiscQuestion" label="Discovery Questions" linkContainerQId="discoveryquestion" linkContentItemId="industries"/>
-			<container id="indDoorOpenEmail" label="Door Opener Emails" linkContainerQId="dooropeneremail" linkContentItemId="industries"/>
+			<container id="indDoorOpenEmail" label="Door Opener Communications" linkContainerQId="dooropeneremail" linkContentItemId="industries"/>
 			<container id="indEvent" label="Events" linkContainerQId="event" linkContentItemId="industries"/>							
 			<container id="indFAQ" label="FAQ" linkContainerQId="faq" linkContentItemId="industries"/>																			
 			<container id="indFeatureSheet" label="Feature Sheets" linkContainerQId="featuresheet" linkContentItemId="industries"/>													
@@ -104,7 +104,7 @@
 			<container id="compCaseStudy" label="Case Studies &amp; Success Stories" linkContainerQId="casestudy" linkContentItemId="competitors"/>
 			<container id="compCompDocs" label="Competitor Docs" linkContainerQId="competitordoc" linkContentItemId="competitors"/>										
 			<container id="compDiscQuestion" label="Discovery Questions" linkContainerQId="discoveryquestion" linkContentItemId="competitors"/>
-			<container id="compDoorOpenEmail" label="Door Opener Emails" linkContainerQId="dooropeneremail" linkContentItemId="competitors"/>
+			<container id="compDoorOpenEmail" label="Door Opener Communications" linkContainerQId="dooropeneremail" linkContentItemId="competitors"/>
 			<container id="compEvent" label="Events" linkContainerQId="event" linkContentItemId="competitors"/>
 			<container id="compFAQ" label="FAQ" linkContainerQId="faq" linkContentItemId="competitors"/>																
 			<container id="compFeatureSheet" label="Feature Sheets" linkContainerQId="featuresheet" linkContentItemId="competitors"/>				
@@ -150,7 +150,7 @@
 			<container id="partnerCompDocs" label="Competitor Docs" linkContainerQId="competitordoc" linkContentItemId="partners"/>										
 			<container id="partnerDataSheet" label="Data Sheet" linkContainerQId="datasheet" linkContentItemId="partners"/>
 			<container id="partnerDiscQuestion" label="Discovery Questions" linkContainerQId="discoveryquestion" linkContentItemId="partners"/>
-			<container id="partnerDoorOpenEmail" label="Door Opener Emails" linkContainerQId="dooropeneremail" linkContentItemId="partners"/>
+			<container id="partnerDoorOpenEmail" label="Door Opener Communications" linkContainerQId="dooropeneremail" linkContentItemId="partners"/>
 			<container id="partnerEvent" label="Events" linkContainerQId="event" linkContentItemId="partners"/>
 			<container id="partnerFAQ" label="FAQ" linkContainerQId="faq" linkContentItemId="partners"/>																
 			<container id="partnerFeatureSheet" label="Feature Sheets" linkContainerQId="featuresheet" linkContentItemId="partners"/>				
@@ -193,7 +193,7 @@
 			<container id="analystArticle" label="Articles" linkContainerQId="article" linkContentItemId="analysts"/>
 			<container id="analystBlog" label="Blogs" linkContainerQId="blog" linkContentItemId="analysts"/>
 			<container id="analystCaseStudy" label="Case Studies &amp; Success Stories" linkContainerQId="casestudy" linkContentItemId="analysts"/>						
-			<container id="analystDoorOpenEmail" label="Door Opener Emails" linkContainerQId="dooropeneremail" linkContentItemId="analysts"/>			
+			<container id="analystDoorOpenEmail" label="Door Opener Communications" linkContainerQId="dooropeneremail" linkContentItemId="analysts"/>			
 			<container id="analystEvent" label="Events" linkContainerQId="event" linkContentItemId="analysts"/>
 			<container id="analystFAQ" label="FAQ" linkContainerQId="faq" linkContentItemId="analysts"/>																
 			<container id="analystKnowledgeCard" label="Knowledge Card" linkContainerQId="knowledgecard" linkContentItemId="analysts"/>
@@ -340,7 +340,7 @@
 			<container id="topicCompDocs" label="Competitor Docs" linkContainerQId="competitordoc" linkContentItemId="topics"/>										
 			<container id="topicDataSheet" label="Data Sheet" linkContainerQId="datasheet" linkContentItemId="topics"/>			
 			<container id="topicDiscQuestion" label="Discovery Questions" linkContainerQId="discoveryquestion" linkContentItemId="topics"/>			
-			<container id="topicDoorOpenEmail" label="Door Opener Emails" linkContainerQId="dooropeneremail" linkContentItemId="topics"/>
+			<container id="topicDoorOpenEmail" label="Door Opener Communications" linkContainerQId="dooropeneremail" linkContentItemId="topics"/>
 			<container id="topicEvent" label="Events" linkContainerQId="event" linkContentItemId="topics"/>	
 			<container id="topicFAQ" label="FAQ" linkContainerQId="faq" linkContentItemId="topics"/>																
 			<container id="topicFeatureSheet" label="Feature Sheets" linkContainerQId="featuresheet" linkContentItemId="topics"/>				
@@ -1082,7 +1082,7 @@
 				</bounded>
 			</contentItem>													
 		</container>
-		<container id="dooropeneremail" label="Door Opener Emails" businessCategory="BUSINESS_CONTENT">
+		<container id="dooropeneremail" label="Door Opener Communications" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text" searchBoost="7"/>
 			<contentItem id="desc" label="Description" type="richText" searchBoost="4"/>
 			<contentItem id="file" label="File" type="doc"/>
@@ -3368,7 +3368,7 @@
 			<container id="tagCompDocs" label="Competitor Docs" linkContainerQId="competitordoc" linkContentItemId="tags"/>										
 			<container id="tagDataSheet" label="Data Sheets" linkContainerQId="datasheet" linkContentItemId="tags"/>												
 			<container id="tagDiscQuestion" label="Discovery Questions" linkContainerQId="discoveryquestion" linkContentItemId="tags"/>			
-			<container id="tagDoorOpenEmail" label="Door Opener Emails" linkContainerQId="dooropeneremail" linkContentItemId="tags"/>
+			<container id="tagDoorOpenEmail" label="Door Opener Communications" linkContainerQId="dooropeneremail" linkContentItemId="tags"/>
 			<container id="tagEvent" label="Events" linkContainerQId="event" linkContentItemId="tags"/>			
 			<container id="tagFAQ" label="FAQ" linkContainerQId="faq" linkContentItemId="tags"/>																
 			<container id="tagFeatureSheet" label="Feature Sheets" linkContainerQId="featuresheet" linkContentItemId="tags"/>			
