@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<contentTemplate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="eoriginal_enterprise" version="1.30" xsi:noNamespaceSchemaLocation="../xsd/content-template.xsd">
+<contentTemplate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="eoriginal_enterprise" version="1.31" xsi:noNamespaceSchemaLocation="../xsd/content-template.xsd">
 	<dataDefinition>
 		<container id="solution" label="Solutions" businessCategory="BUSINESS_DIMENSION">
 			<contentItem id="name" label="Name" type="text" searchBoost="7"/>
@@ -4361,7 +4361,7 @@
 					<childContainer id="ppttemplate"/>
 					<childContainer id="datasheet"/>
 					<childContainer id="discoveryquestion"/>
-					<childContainer id="dooropeneremails"/>					
+					<childContainer id="dooropeneremail"/>					
 					<childContainer id="event"/>							
 					<childContainer id="faq"/>													
 					<childContainer id="featuresheet"/>					
