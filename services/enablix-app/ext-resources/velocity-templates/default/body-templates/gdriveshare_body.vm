@@ -1,0 +1,29 @@
+#@mail_template('Google Drive for File Storage')
+
+	#spacer_row('15')
+											
+	#mail_opening(${obj.recipientUser.name})										
+	
+	#spacer_row('20')
+	
+	Enablix is now integrated with Google Drive and will store all files on Google Drive. You and other Enablix Administrators should have received an email notification from Google Drive notifying you about the new Google Drive folder $obj.inputData.get('sharedFolder'). Please note that Enablix files will be stored in this folder. <br /> 
+	
+	#spacer_double_row('20','10')
+
+	Some other points to note: <br/>
+	
+	<ul>
+		<li><span>If you have existing file assets on Enablix, the corresponding files for those assets will remain on Enablix servers.</span></li>
+		<li><span>If you upload a file for an existing file asset, the newly uploaded file will be stored on Google Drive.</span></li>
+		<li><span>If you add a new file asset, the file will be stored on Google Drive.</span></li>
+	</ul>
+
+	#spacer_double_row('20','10')
+	
+	<div><b>Need Help?</b></div>
+	<br />											
+	We’re here to help you! Simply reply to this email.
+	
+	#mail_closing($obj.tenant.name)
+
+#end

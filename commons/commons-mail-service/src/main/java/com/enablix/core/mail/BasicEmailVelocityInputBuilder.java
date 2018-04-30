@@ -1,16 +1,19 @@
-package com.enablix.app.mail.generic;
+package com.enablix.core.mail;
 
 import org.springframework.stereotype.Component;
 
-import com.enablix.app.mail.web.EmailRequest;
+import com.enablix.core.mail.entities.EmailRequest;
+import com.enablix.core.mail.velocity.AbstractEmailVelocityInputBuilder;
 import com.enablix.data.view.DataView;
 
 @Component
 public class BasicEmailVelocityInputBuilder extends AbstractEmailVelocityInputBuilder<BasicEmailVelocityInput> {
 
+	public static final String MAIL_TYPE_GENERAL = "general";
+	
 	@Override
 	public String mailType() {
-		return GenericMailConstants.MAIL_TYPE_GENERAL;
+		return MAIL_TYPE_GENERAL;
 	}
 
 	@Override

@@ -9,8 +9,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.enablix.app.mail.ShareEmailService;
-import com.enablix.app.mail.generic.EmailRequestProcessor;
 import com.enablix.commons.util.process.ProcessContext;
+import com.enablix.core.mail.entities.EmailRequest;
+import com.enablix.core.mail.service.EmailRequestProcessor;
 import com.enablix.data.segment.DataSegmentService;
 import com.enablix.data.view.DataView;
 

@@ -180,7 +180,7 @@ public class GoogleDriveDocumentStore extends AbstractDocumentStore<GoogleDriveD
 		String baseFolder = config.getStringValue(BASE_FOLDER_KEY);
 		String folderId = driveService.createOrFindFolderStructure(drive, baseFolder);
 		
-		driveService.shareFolderIdWithUser(drive, folderId, email);
+		driveService.shareFolderIdWithUser(drive, folderId, baseFolder, email);
 	}
 	
 }

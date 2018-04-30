@@ -12,7 +12,6 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.stereotype.Component;
 
 import com.enablix.app.content.ContentDataManager;
-import com.enablix.app.mail.web.EmailRequest;
 import com.enablix.app.template.service.TemplateManager;
 import com.enablix.commons.util.QIdUtil;
 import com.enablix.commons.util.collection.CollectionUtil;
@@ -24,6 +23,8 @@ import com.enablix.core.domain.activity.ActivityAudit;
 import com.enablix.core.domain.activity.ContentAccessActivity;
 import com.enablix.core.domain.activity.DocumentActivity;
 import com.enablix.core.domain.security.authorization.UserProfile;
+import com.enablix.core.mail.entities.EmailRequest;
+import com.enablix.core.mail.velocity.AbstractEmailVelocityInputBuilder;
 import com.enablix.core.mongo.dao.GenericDao;
 import com.enablix.core.mongo.search.service.SearchRequestTransformer;
 import com.enablix.core.security.auth.repo.UserProfileRepository;

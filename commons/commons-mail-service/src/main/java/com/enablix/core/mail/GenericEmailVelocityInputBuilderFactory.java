@@ -1,4 +1,4 @@
-package com.enablix.app.mail.generic;
+package com.enablix.core.mail;
 
 public interface GenericEmailVelocityInputBuilderFactory {
 

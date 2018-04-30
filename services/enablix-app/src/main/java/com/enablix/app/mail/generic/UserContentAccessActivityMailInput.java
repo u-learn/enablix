@@ -9,6 +9,7 @@ import com.enablix.core.api.ContentDataRef;
 import com.enablix.core.api.TemplateFacade;
 import com.enablix.core.commons.xsdtopojo.ContainerType;
 import com.enablix.core.domain.security.authorization.UserProfile;
+import com.enablix.core.mail.BasicEmailVelocityInput;
 
 public class UserContentAccessActivityMailInput extends BasicEmailVelocityInput {
 

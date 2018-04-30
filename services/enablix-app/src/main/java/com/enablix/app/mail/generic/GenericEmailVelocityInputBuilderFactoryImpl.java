@@ -6,6 +6,8 @@ import java.util.Map;
 import org.springframework.stereotype.Component;
 
 import com.enablix.commons.util.beans.SpringBackedBeanRegistry;
+import com.enablix.core.mail.GenericEmailVelocityInputBuilder;
+import com.enablix.core.mail.GenericEmailVelocityInputBuilderFactory;
 
 @SuppressWarnings("rawtypes")
 @Component

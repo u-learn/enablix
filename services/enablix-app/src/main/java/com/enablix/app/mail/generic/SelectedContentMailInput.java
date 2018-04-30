@@ -4,6 +4,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.enablix.core.mail.BasicEmailVelocityInput;
 import com.enablix.core.ui.DisplayableContent;
 
 public class SelectedContentMailInput extends BasicEmailVelocityInput {

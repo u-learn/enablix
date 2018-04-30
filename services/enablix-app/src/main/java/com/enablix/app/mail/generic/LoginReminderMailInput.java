@@ -1,5 +1,7 @@
 package com.enablix.app.mail.generic;
 
+import com.enablix.core.mail.BasicEmailVelocityInput;
+
 public class LoginReminderMailInput extends BasicEmailVelocityInput {
 
 	private String password;

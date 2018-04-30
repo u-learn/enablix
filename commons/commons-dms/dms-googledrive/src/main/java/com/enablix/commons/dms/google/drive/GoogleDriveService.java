@@ -5,17 +5,27 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.enablix.commons.util.FileUtil;
 import com.enablix.commons.util.StringUtil;
 import com.enablix.commons.util.collection.CollectionUtil;
+import com.enablix.commons.util.concurrent.Events;
 import com.enablix.core.domain.config.Configuration;
+import com.enablix.core.mail.BasicEmailVelocityInputBuilder;
+import com.enablix.core.mail.entities.EmailRequest;
+import com.enablix.core.mail.entities.EmailRequest.Recipient;
+import com.enablix.core.mail.service.EmailRequestProcessor;
+import com.enablix.core.mq.Event;
+import com.enablix.core.mq.EventSubscription;
+import com.enablix.core.mq.util.EventUtil;
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import com.google.api.client.googleapis.util.Utils;
 import com.google.api.client.http.InputStreamContent;
@@ -32,6 +42,9 @@ public class GoogleDriveService {
 	private static final String MIME_TYPE_GOOGLE_APPS_FOLDER = "application/vnd.google-apps.folder";
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(GoogleDriveService.class);
+	
+	@Autowired
+	private EmailRequestProcessor emailProcessor;
 	
 	public Drive getDrive(Configuration config) throws FileNotFoundException, IOException {
         
@@ -101,11 +114,11 @@ public class GoogleDriveService {
 	public void shareFolderWithUser(Drive drive, String folderPath, String userEmailId) throws FileNotFoundException, IOException {
 		File folder = findFolder(drive, folderPath);
 		if (folder != null) {
-			shareFolderIdWithUser(drive, folder.getId(), userEmailId);
+			shareFolderIdWithUser(drive, folder.getId(), folder.getName(), userEmailId);
 		}
 	}
 	
-	public void shareFolderIdWithUser(Drive drive, String folderId, String userEmailId) throws FileNotFoundException, IOException {
+	public void shareFolderIdWithUser(Drive drive, String folderId, String folderName, String userEmailId) throws FileNotFoundException, IOException {
 
 		LOGGER.debug("Sharing [{}] with [{}]", folderId, userEmailId);
 		
@@ -115,6 +128,25 @@ public class GoogleDriveService {
 		perm.setEmailAddress(userEmailId);
 		
 		drive.permissions().create(folderId, perm).execute();
+		
+		EventUtil.publishEvent(new Event<GDriveShareVO>(Events.GDRIVE_FOLDER_SHARE, new GDriveShareVO(folderName, userEmailId)));
+	}
+	
+	@EventSubscription(eventName = Events.GDRIVE_FOLDER_SHARE)
+	public void mailOnShare(GDriveShareVO shareVO) {
+		
+		Map<String, Object> inputData = new HashMap<>();
+		inputData.put("sharedFolder", shareVO.folderName);
+		
+		Recipient recipient = new EmailRequest.Recipient();
+		recipient.setEmailId(shareVO.getUserEmailId());
+		
+		EmailRequest emailRequest = new EmailRequest();
+		emailRequest.setMailTemplateId("gdriveshare");
+		emailRequest.setRecipients(Collections.singletonList(recipient));
+		emailRequest.setInputData(inputData);
+		
+		emailProcessor.sendEmail(BasicEmailVelocityInputBuilder.MAIL_TYPE_GENERAL, emailRequest);
 	}
 	
 	public void unshareFolderWithUser(Drive drive, String folderPath, String userEmailId) throws FileNotFoundException, IOException {
@@ -357,5 +389,36 @@ public class GoogleDriveService {
 
 	public void deleteFile(Drive drive, String fileId) throws IOException {
 		drive.files().delete(fileId).execute();
+	}
+	
+	public static class GDriveShareVO {
+
+		private String folderName;
+		private String userEmailId;
+		
+		public GDriveShareVO() { }
+
+		public GDriveShareVO(String folderName, String userEmailId) {
+			super();
+			this.folderName = folderName;
+			this.userEmailId = userEmailId;
+		}
+
+		public String getFolderName() {
+			return folderName;
+		}
+
+		public void setFolderName(String folderName) {
+			this.folderName = folderName;
+		}
+
+		public String getUserEmailId() {
+			return userEmailId;
+		}
+
+		public void setUserEmailId(String userEmailId) {
+			this.userEmailId = userEmailId;
+		}
+		
 	}
 }

@@ -1,4 +1,4 @@
-package com.enablix.app.mail.generic;
+package com.enablix.core.mail.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -6,10 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.enablix.app.content.ui.DisplayContext;
-import com.enablix.app.mail.web.EmailRequest;
-import com.enablix.app.mail.web.EmailRequest.Recipient;
 import com.enablix.core.domain.security.authorization.UserProfile;
-import com.enablix.core.mail.service.MailService;
+import com.enablix.core.mail.GenericEmailVelocityInputBuilder;
+import com.enablix.core.mail.GenericEmailVelocityInputBuilderFactory;
+import com.enablix.core.mail.entities.EmailRequest;
+import com.enablix.core.mail.entities.EmailRequest.Recipient;
 import com.enablix.core.mail.velocity.input.RecipientUserAware;
 import com.enablix.data.view.DataView;
 import com.enablix.services.util.DataViewUtil;

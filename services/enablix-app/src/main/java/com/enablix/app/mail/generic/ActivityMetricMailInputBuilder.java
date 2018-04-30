@@ -14,12 +14,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.enablix.app.content.ui.DisplayContext;
-import com.enablix.app.mail.web.EmailRequest;
-import com.enablix.app.mail.web.EmailRequest.Recipient;
 import com.enablix.app.report.activity.metric.ActivityMetricService;
 import com.enablix.app.report.activity.metric.metricesimpl.UserRegistrationMetric;
 import com.enablix.commons.util.date.DateUtil;
 import com.enablix.core.domain.report.activitymetric.MetricStats;
+import com.enablix.core.mail.entities.EmailRequest;
+import com.enablix.core.mail.entities.EmailRequest.Recipient;
+import com.enablix.core.mail.velocity.AbstractEmailVelocityInputBuilder;
 import com.enablix.core.mail.velocity.VelocityTemplateInputResolver;
 import com.enablix.core.mail.velocity.VelocityTemplateInputResolverFactory;
 import com.enablix.data.view.DataView;

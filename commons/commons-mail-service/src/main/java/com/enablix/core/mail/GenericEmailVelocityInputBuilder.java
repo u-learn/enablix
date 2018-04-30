@@ -1,8 +1,8 @@
-package com.enablix.app.mail.generic;
+package com.enablix.core.mail;
 
 import com.enablix.app.content.ui.DisplayContext;
-import com.enablix.app.mail.web.EmailRequest;
-import com.enablix.app.mail.web.EmailRequest.Recipient;
+import com.enablix.core.mail.entities.EmailRequest;
+import com.enablix.core.mail.entities.EmailRequest.Recipient;
 import com.enablix.data.view.DataView;
 
 public interface GenericEmailVelocityInputBuilder<T> {

@@ -1,4 +1,4 @@
-package com.enablix.app.mail.web;
+package com.enablix.core.mail.entities;
 
 import java.util.List;
 import java.util.Map;
