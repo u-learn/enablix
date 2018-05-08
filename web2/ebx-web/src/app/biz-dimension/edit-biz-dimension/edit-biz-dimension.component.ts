@@ -56,7 +56,9 @@ export class EditBizDimensionComponent implements OnInit {
 
       this.cwService.submitContent(this.container.qualifiedId, this.record, false, null).subscribe(
         res => {
-          this.alert.success("Dimension update request accepted.", true);
+          var msg = this.record.identity ? "Object update request accepted." :
+                      "Object add request accepted.";
+          this.alert.success(msg, true);
           this.dialogRef.close(true);
         }, 
         err => {
@@ -68,7 +70,9 @@ export class EditBizDimensionComponent implements OnInit {
       
       this.contentService.saveContainerData(this.container.qualifiedId, this.record).subscribe(
         res => {
-          this.alert.success("Dimension updated successfully.", true);
+          var msg = this.record.identity ? "Object updated successfully." :
+                      "Object added successfully.";
+          this.alert.success(msg, true);
           this.dialogRef.close(true);
         }, 
         err => {

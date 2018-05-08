@@ -48,5 +48,6 @@
 	<module>mail-integration</module>
 	<module>tenant-mgmt</module>
 	<module>google-drive-bulk-import</module>
+	<module>user-task</module>
   </modules>
 </project>

@@ -1,0 +1,25 @@
+<div class="user-tasks" *ngIf="userTasks && userTasks.length > 0">
+  <div class="usertask" *ngFor="let ut of userTasks">
+    <ng-container *ngIf="ut.steps && ut.steps.length > 1">
+      <div class="header"><h1>{{ut.name}}</h1></div>
+      <div class="progress">
+        <div class="progress-icon"><ebx-progress-circle [percent]="getCompletionPercent(ut)"></ebx-progress-circle></div>
+        <div class="progress-desc">{{getProgressDesc(ut)}}</div>
+      </div>
+      <div class="steps">
+        <ng-container *ngFor="let step of ut.steps; let last = last;">
+          <div class="step" [class.focus]="step.focus">
+            <div class="detail">
+              <div class="title" (click)="executeStep(ut, step)">{{step.name}}</div>
+              <div class="icon" (click)="focusOnStep(ut, step)"><img [src]="getStepIcon(step)"/></div>
+            </div>
+          </div>
+          <div class="divider" *ngIf="!last"><span><img src="/assets/images/icons/right-arrow-grey.svg"></span></div>
+        </ng-container>
+      </div>
+      <div class="step-desc">{{ut.focusStep?.desc}}</div>
+    </ng-container>
+    <ng-container *ngIf="ut.steps && ut.steps.length == 1">
+    </ng-container>
+  </div>
+</div>

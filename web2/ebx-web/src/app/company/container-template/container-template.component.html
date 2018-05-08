@@ -1,7 +1,11 @@
 <div class="main-section">
   <div class="sub-section">
     <div class="sub-section-header">
-      <h2>{{cntnrTypeLbl}}</h2>
+      <div class="header">
+        <h2>{{cntnrTypeLbl}}</h2>
+        <div class="subheader" *ngIf="cntnrTypeBizDim">Manage your Dimensions here. Add, Edit or Delete your Dimensions.</div>
+        <div class="subheader" *ngIf="cntnrTypeBizContent">Manage your content types here. Add new content types and delete unwanted ones.</div>
+      </div>
       <div class="dashboard-buttons">
         <div class="action-btn btn-with-text" (click)="addNewContainer()">
           <div class="icon small plus"></div>

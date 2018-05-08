@@ -36,8 +36,8 @@ public class ContainerRecordCountValidator implements Validator<ContainerType> {
 				
 				if (count > 0) {
 					
-					String msg = "'" + input.getLabel() + "' has " + count + " records in the system. "
-							+ "<br>Please delete all content before deleting content type.";
+					String msg = "There are '" + count + "' " + input.getLabel() + " in the system. "
+							+ "<br><br>Please delete all the " + input.getSingularLabel() + " assets before deleting this Content Type.";
 					return new AppError(ErrorCodes.CONTAINER_REC_EXIST, msg);
 				}
 			}

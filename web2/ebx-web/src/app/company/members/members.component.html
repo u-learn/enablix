@@ -1,9 +1,17 @@
-<div class="table-content">
-  <ebx-table *ngIf="dataPage" [tableData]="dataPage" [tableColumns]="tableColumns" [(pagination)]="pagination" [tableActionConfig]="tableActions" (onRefreshData)="fetchData()">
-    <ng-template #dataRow let-rec>
-      <td>{{rec.name}}</td>
-      <td>{{rec.email}}</td>
-      <td>{{getUserRoles(rec)}}</td>
-    </ng-template>
-  </ebx-table>
+<div class="main-section">
+  <div class="sub-section">
+    <div class="header">
+      <h2>User</h2>
+      <div class="subheader">Manage your team here. You can add and remove users and change their roles and permissions.</div>
+    </div>
+    <div class="table-content">
+      <ebx-table *ngIf="dataPage" [tableData]="dataPage" [tableColumns]="tableColumns" [(pagination)]="pagination" [tableActionConfig]="tableActions" (onRefreshData)="fetchData()">
+        <ng-template #dataRow let-rec>
+          <td>{{rec.name}}</td>
+          <td>{{rec.email}}</td>
+          <td>{{getUserRoles(rec)}}</td>
+        </ng-template>
+      </ebx-table>
+    </div>
+  </div>
 </div>

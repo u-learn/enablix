@@ -66,6 +66,10 @@ import { EntityPillComponent } from './entity-pill/entity-pill.component';
 import { BulkSelectTypeComponent } from './bulk-import/bulk-select-type/bulk-select-type.component';
 import { BulkAddTagsComponent } from './bulk-import/bulk-add-tags/bulk-add-tags.component';
 import { MessageDialogComponent } from './message-dialog/message-dialog.component';
+import { UserTaskComponent } from './user-task/user-task/user-task.component';
+import { UserTaskService } from './user-task/user-task.service';
+import { ProgressCircleComponent } from './progress-circle/progress-circle.component';
+import { AppEventService } from './app-event.service';
 
 @NgModule({
   imports: [
@@ -100,6 +104,8 @@ import { MessageDialogComponent } from './message-dialog/message-dialog.componen
     AppMessageService,
     ActivityAuditService,
     GoogleDriveService,
+    UserTaskService,
+    AppEventService,
   	{
   	  provide: HTTP_INTERCEPTORS,
       useClass: HttpErrorInterceptor,
@@ -160,7 +166,9 @@ import { MessageDialogComponent } from './message-dialog/message-dialog.componen
     EntityPillComponent,
     BulkSelectTypeComponent,
     BulkAddTagsComponent,
-    MessageDialogComponent
+    MessageDialogComponent,
+    UserTaskComponent,
+    ProgressCircleComponent
   ],
   exports: [
     HeaderComponent,
@@ -187,7 +195,9 @@ import { MessageDialogComponent } from './message-dialog/message-dialog.componen
     EbxDateTimezonePipe,
     ContentTagsComponent,
     AddContentTagsComponent,
-    EntityPillComponent
+    EntityPillComponent,
+    UserTaskComponent,
+    ProgressCircleComponent
   ]
 })
 export class CoreModule { }

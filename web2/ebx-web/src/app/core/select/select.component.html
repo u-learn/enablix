@@ -8,14 +8,19 @@
                 <img src="/assets/images/icons/close-white.svg">                
               </a>
             </div>
-            <input #textInput class="text-input" type="text" [placeholder]="placeholder" (focus)="showOptions()" [formControl]="selectCtrl" (blur)="onBlur()"> 
+            <input #textInput class="text-input" type="text" [placeholder]="placeholder" (focus)="showOptions()" [formControl]="selectCtrl" (blur)="onBlur()"
+            (keydown.arrowdown)="highlightOnDownArrow()" (keydown.arrowup)="highlightOnUpArrow()"
+            (keydown.enter)="selectHighlighted($event)"> 
         </div>
         <ng-container *ngIf="!multi">
-            <input #textInput class="text-input" type="text" [placeholder]="placeholder" (focus)="showOptions(true)" [formControl]="selectCtrl" (blur)="onBlur()"> 
+            <input #textInput class="text-input" type="text" [placeholder]="placeholder" 
+            (focus)="showOptions()" [formControl]="selectCtrl" (blur)="onBlur()"
+            (keydown.arrowdown)="highlightOnDownArrow()" (keydown.arrowup)="highlightOnUpArrow()"
+            (keydown.enter)="selectHighlighted($event)">
         </ng-container>
     </div>
     <div class="option-rows" [hidden]="!optionsVisible">
-        <div class="option-row" *ngFor="let opt of filteredOptions | async" (click)="updateSelection(opt)">
+        <div class="option-row" [class.highlighted]="opt == highlightedOpt" *ngFor="let opt of filteredOptions | async" (click)="updateSelection(opt)">
             <div class="option-label">{{opt.label}}</div>
         </div>
     </div>

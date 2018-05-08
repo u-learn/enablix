@@ -5,6 +5,7 @@ import { UploadFileComponent } from '../upload/upload-file/upload-file.component
 import { UploadUrlComponent } from '../upload/upload-url/upload-url.component';
 import { UploadTextComponent } from '../upload/upload-text/upload-text.component';
 import { BulkImportComponent } from '../bulk-import/bulk-import.component';
+import { AppEventService } from '../app-event.service';
 
 @Component({
   selector: 'ebx-upload-button',
@@ -16,12 +17,18 @@ export class UploadButtonComponent implements OnInit {
 
   @ViewChild("fileInput") fileInput;
   @ViewChild("fileForm") fileForm;
+
+  @ViewChild("addBtn") addBtn;
   
   uploadOptions = false;
 
-  constructor(private dialog: MatDialog) { }
+  constructor(private dialog: MatDialog,
+    private appEventService: AppEventService) { }
 
   ngOnInit() {
+    this.appEventService.onOpenAddAsset.subscribe(() => {
+      setTimeout(() => this.showUploadOptions(), 100);
+    });
   }
 
   showUploadOptions() {

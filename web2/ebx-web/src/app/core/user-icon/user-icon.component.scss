@@ -1,4 +1,6 @@
+@import '~styles/colors.scss';
 @import '~styles/fonts.scss';
+@import '~styles/layout.mixin.scss';
 
 .user {
   margin-left: 8px;
@@ -11,4 +13,32 @@
       height: 16px;
     }
   }
+
+  .dd-options {
+    
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    font-family: $FPBlond;
+    background-color: $white;
+    position: absolute;
+    width: 120px;
+    margin-left: -88px;
+    margin-top: 8px;
+
+    .dd-option {
+      padding: 8px 16px;
+      height: 32px;
+      cursor: pointer;
+      @include vcenterChildren;
+
+      &:not(:last-child) {
+        border-bottom: 1px solid rgba(0,0,0,0.10);
+      }
+
+      span {
+        padding-left: 8px;
+      }
+    } 
+
+  }
+
 }

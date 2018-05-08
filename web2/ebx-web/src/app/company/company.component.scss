@@ -9,6 +9,10 @@
     border-bottom: 1px solid rgba(0, 0, 0, 0.03);
     font-family: $FPThin;
 
+    &:first-child {
+      padding-top: 12px;
+    }
+
     .sub-section-header {
       display: flex;
       flex-direction: row;
@@ -32,6 +36,22 @@
           width: calc(100% - 32px);
         }
 
+      }
+
+    }
+
+    .table-content {
+      margin-top: 32px;
+    }
+
+    .header {
+      margin-bottom: 16px;
+      
+      .subheader {
+        font-family: $FPLight;
+        font-size: 14px;
+        color: $grey-dark;
+        line-height: 17px;
       }
     }
 

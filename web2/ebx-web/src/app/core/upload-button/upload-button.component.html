@@ -2,7 +2,7 @@
   <input #fileInput type="file" class="native-file-input" (change)="onFileSelect($event)">
 </form>
 <div class="upload" *ebxAccess="'VIEW_STUDIO|SUGGEST_CONTENT'" (clickOutside)="hideUploadOptions()">
-  <button (click)="showUploadOptions()">Add</button>
+  <button #addBtn (click)="showUploadOptions()">Add</button>
   <div class="upload-options-container" [hidden]="!uploadOptions">
     <div class="upload-option file-option" (click)="openFileBrowser()">
       <img src="/assets/images/icons/upload-icon-blue.svg" />

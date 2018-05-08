@@ -13,6 +13,8 @@ import { AuthService } from '../auth/auth.service';
 export class UserIconComponent implements OnInit {
 
   initial: string;
+  showOpts: boolean = false;
+
   constructor(private userService: UserService, private authService: AuthService) { }
 
   ngOnInit() {
@@ -21,6 +23,14 @@ export class UserIconComponent implements OnInit {
 
   logout() {
     this.authService.logoutUser();
+  }
+
+  showOptions() {
+    this.showOpts = true;
+  }
+
+  hideOptions() {
+    this.showOpts = false;
   }
 
 }

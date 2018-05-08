@@ -34,6 +34,8 @@ export class ApiUrlService {
   static GET_ACTIVITY_TREND_DATA = "/activitytrend";
   static GET_ACTIVITY_METRIC_SUMMARY = "/report/activitymetric";
 
+  static GET_PENDING_USER_TASKS = "/usertask/incmplt";
+
   static POST_FOR_DATA_SEARCH = "/data/search/t/:domainType/";
   static POST_FOR_CONTAINER_DATA_SEARCH = "/data/search/cq/:containerQId/";
 
@@ -84,6 +86,8 @@ export class ApiUrlService {
   static POST_UPDATE_CONTAINER_DEF = "/template/:templateId/container/update";
   static POST_ADD_CONTAINER_DEF = "/template/:templateId/container/add";
   static POST_UPDATE_CONTAINER_ORDER = "/template/:templateId/container/order";
+
+  static POST_USER_TASK_MILESTONE_UPDATE = "/usertask/updtmilestone";
 
   static DELETE_CONTAINER_DEF = "/template/:templateId/c/:containerQId/";
 
@@ -167,6 +171,10 @@ export class ApiUrlService {
   getBoundedRefListUrl(templateId: string, contentItemQId) : string {
     return this.getAPIUrl(ApiUrlService.GET_BOUNDED_REF_LIST, 
       {templateId: templateId, contentItemQId: contentItemQId});
+  }
+
+  getPendingUserTasksUrl() : string {
+    return this.getAPIUrl(ApiUrlService.GET_PENDING_USER_TASKS);
   }
 
   postBoundedDefRefListUrl() : string {
@@ -390,6 +398,10 @@ export class ApiUrlService {
 
   postImportRequestUrl() : string {
     return this.getAPIUrl(ApiUrlService.POST_IMPORT_REQUEST);
+  }
+
+  postUserTaskMilestoneUpdateUrl() : string {
+    return this.getAPIUrl(ApiUrlService.POST_USER_TASK_MILESTONE_UPDATE); 
   }
 
   deleteContainerDefUrl(templateId: string, containerQId: string) : string {

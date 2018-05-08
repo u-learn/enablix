@@ -1,5 +1,11 @@
-<div class="user" >
-  <button (click)="logout()" class="circle icon-btn">
+<div class="user" (clickOutside)="hideOptions()">
+  <button class="circle icon-btn" (click)="showOptions()">
     <div class="icon initial">{{initial}}</div>
   </button>
+  <div class="dd-options" [hidden]="!showOpts">
+    <div class="dd-option" (click)="logout()">
+      <img src="/assets/images/icons/shutdown.svg" />
+      <span>Log Out</span>
+    </div>
+  </div>
 </div>
