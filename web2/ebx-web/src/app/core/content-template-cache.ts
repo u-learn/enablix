@@ -97,16 +97,12 @@ export class ContentTemplateCache {
     for (let i = 0; i < container.contentItem.length; i++) {
     
       let contentItem = container.contentItem[i];
-      if (contentItem.type == 'RICH_TEXT' && contentItem.id != container.titleItemId
-            && !container.docItemId) {
+      if (contentItem.type == 'RICH_TEXT' && contentItem.id != container.titleItemId) {
         descItemId = contentItem.id;
         textItemDef = contentItem;
       } 
 
       if (contentItem.type == 'DOC') {
-        // this is a doc item type, nullify item id 
-        descItemId = null;
-        textItemDef = null;
         container.docItemId = contentItem.id;
       }
 

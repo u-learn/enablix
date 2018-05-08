@@ -43,6 +43,26 @@
       </div>
     </div>
   </ng-container>
+  <ng-container *ngSwitchCase="'cntntmgr'">
+    <div class="nav-bar company">
+      <div class="left">
+        <img class="enablix-logo" src="/assets/images/company/enablix_logo@2x.png" (click)="navToHome()"/>
+      </div>
+      <div class="center1">
+        <div class="rpt-heading">
+          <button class="circle icon-btn">
+            <div class="icon small drafts"></div>
+          </button>
+          <h3 class="title">Content Manager</h3>
+        </div>
+      </div>
+      <div class="center2"></div>
+      <div class="center3"></div>
+      <div class="right">
+        <ebx-user-icon></ebx-user-icon>
+      </div>
+    </div>
+  </ng-container>
 </ng-container>
 <ng-template #loggedInBlock>
   <div class="nav-bar">

@@ -98,7 +98,7 @@ export class ContentService {
       }
     }
 
-    if (container.textItemId) {
+    if (!decoration.__thumbnailUrl && container.textItemId) {
       decoration.__textContent = dataRecord[container.textItemId];
       if (!decoration.__textContent) {
         decoration.__thumbnailUrl = "/assets/images/icons/text-icon.png";
