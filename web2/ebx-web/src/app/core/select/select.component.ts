@@ -149,19 +149,15 @@ export class SelectComponent implements OnInit, ControlValueAccessor, AfterViewI
         }
       }, 300);  
 
-    } else {
-      this.hideOptions();
     }
     
   }
 
   highlightOnUpArrow() {
-    console.log("Highlight Up");
     this.upDownEvents.next('up');
   }
 
   highlightOnDownArrow() {
-    console.log("Highlight Down");
     this.upDownEvents.next('down');
   }
 
