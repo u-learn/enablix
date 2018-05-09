@@ -15,6 +15,8 @@ export class ContentStackPreviewComponent implements OnInit {
   @Input() record: any;
   @Input() container: Container;
 
+  showCount: number = 5;
+
   contentStack: any;
 
   constructor(private contentService: ContentService,
