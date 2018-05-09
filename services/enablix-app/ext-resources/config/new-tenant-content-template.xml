@@ -872,9 +872,9 @@
 			</text>
 		</contentUIDef>	
 		<contentUIDef qualifiedId="topic">
-			<container labelQualifiedId="topic.name">
+			<container labelQualifiedId="topic.shortName">
 				<portalConfig>
-					<headingContentItem id="name"/>
+					<headingContentItem id="shortName"/>
 				</portalConfig>
 			</container>
 		</contentUIDef>

@@ -83,6 +83,7 @@ import { RecoContentService } from './reco-content/reco-content.service';
 import { CopyDownloadUrlButtonComponent } from './content-action/copy-download-url-button/copy-download-url-button.component';
 import { RecoListComponent } from './reco-content/reco-list/reco-list.component';
 import { ContainerTemplateComponent } from './company/container-template/container-template.component';
+import { ContentStackPreviewComponent } from './content-preview/content-stack-preview/content-stack-preview.component';
 
 @NgModule({
   declarations: [
@@ -143,7 +144,8 @@ import { ContainerTemplateComponent } from './company/container-template/contain
     RecoContentComponent,
     CopyDownloadUrlButtonComponent,
     RecoListComponent,
-    ContainerTemplateComponent
+    ContainerTemplateComponent,
+    ContentStackPreviewComponent
   ],
   imports: [
     BrowserModule,

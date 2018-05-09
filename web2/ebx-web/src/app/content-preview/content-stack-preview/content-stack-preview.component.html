@@ -1,0 +1,15 @@
+<div class="main" *ngIf="!noChildren">
+    <div>
+        <div class="content-types-container">
+            <div class="full-width-container" *ngFor="let cg of contentStack">
+                <h2>{{cg?.container?.label}} ({{cg.records.numberOfElements}})</h2>
+                <div class="cards card-container">
+                  <div class="data-card" *ngFor="let rec of cg.records.content">
+                    <ebx-data-card  [containerQId]="cg.contentQId" [record]="rec"></ebx-data-card>
+                  </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>

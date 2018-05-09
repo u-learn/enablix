@@ -108,6 +108,7 @@ export class ContentTemplateCache {
 
       if (contentItem.type == 'CONTENT_STACK') {
         this.contentStackQIdMap[contentItem.qualifiedId] = contentItem;
+        container.contentStackItemId = contentItem.id;
       }
     }
 

@@ -37,6 +37,30 @@ export class ContentService {
     return this.http.get(apiUrl, options)
   }
 
+  getRecordContentStack(containerQId: string, contentIdentity: string) : Observable<any> {
+    let apiUrl = this.apiUrlService.getRecordContentStackUrl(containerQId, contentIdentity);
+    return this.http.get(apiUrl);
+  }
+
+  decorateContentGroup(cg: any) {
+    
+    for (var i = 0; i < cg.length; i++) {
+
+      let contentGrp = cg[i];
+
+      let container = this.contentTemplateService.getContainerByQId(contentGrp.contentQId);
+      if (container.linkContainerQId) {
+        contentGrp.linkContainer = container;
+        container = this.contentTemplateService.getContainerByQId(container.linkContainerQId);
+      }
+
+      contentGrp.container = container;
+      contentGrp.records.content.forEach(rec => {
+        this.decorateRecord(container, rec);
+      });
+    }
+  }
+
   decorateRecord(container: Container, dataRecord: any) {
         
     if (dataRecord && dataRecord.__associations && dataRecord.__associations.parent) {
@@ -71,6 +95,9 @@ export class ContentService {
         if (!dataRecord[item.id + "_rt"]) {
           dataRecord[item.id + "_rt"] = dataRecord[item.id];
         }
+
+      } else if (item.type == "CONTENT_STACK") {
+        decoration.__contentStack = dataRecord[item.id];
       }
     }
 

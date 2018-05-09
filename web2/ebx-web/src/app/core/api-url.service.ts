@@ -8,6 +8,7 @@ export class ApiUrlService {
   static GET_DEFAULT_CONTENT_TEMPLATE = "/template/default";
   static GET_ALL_RESOURCE_VERSIONS = "/version/all/";
   static GET_CONTENT_RECORD = "/data/t/:templateId/c/:contentQId/d/:recordIdentity";
+  static GET_RECORD_CONTENT_STACK = "/data/fetchcs/c/:contentQId/r/:recordIdentity";
   static GET_EMBED_INFO = "/urlembed/fetch/";
   static GET_EXT_LINK_URL = "/xlink?u=:url&cId=:cId&cQId=:cQId&atChannel=:atChannel";
   static GET_BOUNDED_REF_LIST = "/bounded/list/:templateId/:contentItemQId/";
@@ -266,6 +267,11 @@ export class ApiUrlService {
 
   getAuditActivityTypesUrl() : string {
     return this.getAPIUrl(ApiUrlService.GET_AUDIT_ACTIVITY_TYPES);
+  }
+
+  getRecordContentStackUrl(contentQId: string, recordIdentity: string) : string {
+    return this.getAPIUrl(ApiUrlService.GET_RECORD_CONTENT_STACK, 
+                  { contentQId: contentQId, recordIdentity: recordIdentity });
   }
 
   postCheckUserExistUrl() : string {
