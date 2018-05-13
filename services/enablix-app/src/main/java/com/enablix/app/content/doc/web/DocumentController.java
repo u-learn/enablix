@@ -86,6 +86,7 @@ public class DocumentController {
     		@RequestParam(value = "docIdentity", required = false) String docIdentity,
     		@RequestParam(value = "temporary", required = false) boolean temporary,
     		@RequestParam(value = "generatePreview", required = false) boolean generatePreview,
+    		@RequestParam(value = "generatePreviewAsync", required = false) boolean generatePreviewAsync,
             @RequestParam(value="file", required = true) MultipartFile file) {
         
         try {
@@ -93,7 +94,8 @@ public class DocumentController {
             		docManager.buildDocument(file.getInputStream(), file.getOriginalFilename(), 
             				file.getContentType(), contentQId, fileSize, docIdentity, temporary);
             
-            DocumentMetadata docMd = saveDocument(contentQId, parentIdentity, containerIdentity, document, generatePreview);
+            DocumentMetadata docMd = saveDocument(contentQId, parentIdentity, containerIdentity, 
+            		document, generatePreview, generatePreviewAsync);
 			
             auditActivity(ActivityType.DOC_UPLOAD, docMd.getIdentity(), docMd, 
             				Channel.WEB.toString(), null, null, null);
@@ -112,15 +114,16 @@ public class DocumentController {
 
 	private DocumentMetadata saveDocument(String contentQId, 
 			String parentIdentity, String containerIdentity,
-			Document<?> document, boolean generatePreview) throws IOException {
+			Document<?> document, boolean generatePreview,
+			boolean generatePreviewAsync) throws IOException {
 		
 		String containerQId = getContainerQId(contentQId);
 		DocumentMetadata docMd = null;
 		
 		if (!StringUtil.isEmpty(parentIdentity)) {
-			docMd = docManager.saveUsingParentInfo(document, containerQId, parentIdentity, generatePreview);
+			docMd = docManager.saveUsingParentInfo(document, containerQId, parentIdentity, generatePreview, generatePreviewAsync);
 		} else {
-			docMd = docManager.saveUsingContainerInfo(document, containerQId, containerIdentity, generatePreview);
+			docMd = docManager.saveUsingContainerInfo(document, containerQId, containerIdentity, generatePreview, generatePreviewAsync);
 		}
 		
 		return docMd;

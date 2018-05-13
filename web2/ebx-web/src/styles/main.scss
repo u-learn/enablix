@@ -881,4 +881,11 @@ body {
     }
 }
 
+.input-error {
+    color: #d23e41;
+    margin-top: 12px;
+    font-size: 16px;
+    font-family: $FPLight;
+}
+
 //@import '../pages/index.scss';

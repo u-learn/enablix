@@ -44,7 +44,7 @@
     background: #F7F9F9;
 }
 
-.preview-text, .preview-img, .preview-tag{
+.preview-text, .preview-tag{
     border-radius: 4px;
     font-family: $FPLight;
 }
@@ -81,6 +81,7 @@ textarea {
 }
 
 .preview-img {
+    font-family: $FPLight;
     margin: 20px 0;
     overflow-y: hidden;
     text-align: center;
@@ -88,6 +89,23 @@ textarea {
     img {
       max-width: 528px;
       background: $blue-med-5;
+    }
+
+    &.file-default {
+      @include vcenterChildren;
+      flex-direction: row;
+
+      img {
+        width: 80px;
+        border-radius: 4px;
+        padding: 8px;
+        height: 48px;
+      }
+
+      span {
+        margin-left: 8px;
+        font-size: 20px;
+      }
     }
 }
 

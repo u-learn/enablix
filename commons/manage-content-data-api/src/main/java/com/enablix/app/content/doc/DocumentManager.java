@@ -17,12 +17,14 @@ public interface DocumentManager {
 	IDocument load(DocInfo docInfo, String storeType) throws IOException;
 
 	DocumentMetadata saveUsingParentInfo(Document<?> doc, String docContainerQId, 
-			String docContainerParentInstanceIdentity, boolean generatePreview) throws IOException;
+			String docContainerParentInstanceIdentity, boolean generatePreview,
+			boolean generatePreviewAsync) throws IOException;
 	
-	DocumentMetadata save(Document<?> doc, String contentPath, boolean generatePreview) throws IOException;
+	DocumentMetadata save(Document<?> doc, String contentPath, boolean generatePreview,
+			boolean generatePreviewAsync) throws IOException;
 
 	DocumentMetadata saveUsingContainerInfo(Document<?> doc, String docContainerQId, 
-			String docContainerInstanceIdentity, boolean generatePreview) throws IOException;
+			String docContainerInstanceIdentity, boolean generatePreview, boolean generatePreviewAsync) throws IOException;
 	
 	Document<DocumentMetadata> buildDocument(InputStream dataStream, String name, String contentType, 
 			String contentQId, long fileSize, String docIdentity, boolean temporaryDoc);

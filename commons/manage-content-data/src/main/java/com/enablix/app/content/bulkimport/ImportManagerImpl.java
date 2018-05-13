@@ -199,7 +199,7 @@ public class ImportManagerImpl implements ImportManager {
 	        				importDoc.getMimeType(), docQId, -1, null, false);
 	        
 	        DocumentMetadata docMd = docMgr.saveUsingContainerInfo(
-	        		document, container.getQualifiedId(), null, false);
+	        		document, container.getQualifiedId(), null, false, false);
 	        
 	        ProcessContext pc = ProcessContext.get();
 	        ActivityLogger.auditDocActivity(ActivityType.DOC_UPLOAD, docQId, null, 

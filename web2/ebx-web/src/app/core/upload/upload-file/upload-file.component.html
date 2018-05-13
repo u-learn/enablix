@@ -1,6 +1,10 @@
-<h1 class="file-title" *ngIf="newContent"><span contenteditable="true" [(ngModel)]="fileInfo.title"></span><img src="/assets/images/icons/pencil-grey.svg"/></h1>
-<div class="preview-img" *ngIf="previewImageUrl" [class.file-default]="isFileDefaultImage()">
+<h1 class="file-title" *ngIf="newContent"><span id="ce-asset-title" contenteditable="true" [(ngModel)]="fileInfo.title" (input)="onTitleChange()"></span><img src="/assets/images/icons/pencil-grey.svg" style="cursor: pointer;" (click)="focusOnTitle('ce-asset-title')"/></h1>
+<div class="input-error" [hidden]="!errors.title?.required">
+  Please enter title
+</div>
+<div class="preview-img file-default" *ngIf="previewImageUrl">
     <img [src]="previewImageUrl" >
+    <span>{{filename}} uploaded</span>
 </div>
 <div class="content-uploading" *ngIf="loading">
   <img src="/assets/images/icons/loading_icon.gif">
@@ -9,9 +13,11 @@
   <ebx-select [formControl]="contentTypeCtrl"
       placeholder="Select content type"
       [options]="contentTypes"></ebx-select>
+  <div class="input-error" [hidden]="!errors.contentType?.required">
+    Please select content type
+  </div>
 </div>
 <div class="actionBtns">
-  <button class="action" *ngIf="newContent" (click)="captureFile()">Add</button>
-  <button class="action" *ngIf="!newContent" (click)="updateFile()">Update</button>
+  <button class="action" *ngIf="newContent" (click)="captureFile()" [disabled]="loading">Add</button>
   <button class="cancel" mat-dialog-close>Cancel</button>
 </div>

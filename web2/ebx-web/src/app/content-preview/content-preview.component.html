@@ -15,5 +15,5 @@
 </div>
 <div class="file-default" *ngIf="previewType == 'file-default'">
   <div class="file-img"><img [src]="getDefaultFileImg()"></div>
-  <div class="info">Preview is not available for this asset.</div>
+  <div class="info">{{getPreviewStatusText()}}</div>
 </div>

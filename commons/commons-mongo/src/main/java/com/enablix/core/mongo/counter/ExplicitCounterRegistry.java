@@ -45,6 +45,6 @@ public class ExplicitCounterRegistry implements TenantSetupTask {
 
 	@Override
 	public float executionOrder() {
-		return TenantSetupTask.MAX_EXEC_ORDER;
+		return TenantSetupTask.MAX_EXEC_ORDER + 100;
 	}
 }

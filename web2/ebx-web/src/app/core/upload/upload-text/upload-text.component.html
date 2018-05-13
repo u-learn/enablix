@@ -1,13 +1,19 @@
 <div class="upload-asset-popup">
-  <input class="asset-text" placeholder="Title" [(ngModel)]="textInfo.title" type="text">
+  <input class="asset-text" placeholder="Title" [(ngModel)]="textInfo.title" type="text" (change)="onTitleChange()">
+  <div class="input-error" [hidden]="!errors.title?.required">
+    Please enter title
+  </div>
   <div class="preview-text align-top">
-    <img src="/assets/images/icons/note_icon.svg" />
+    <img src="/assets/images/icons/note_icon.svg"/>
     <textarea [(ngModel)]="textInfo.text" placeholder="Text"></textarea>
   </div>
   <div class="preview-tag">
     <ebx-select [formControl]="contentTypeCtrl"
       placeholder="Select content type"
       [options]="contentTypes"></ebx-select>
+    <div class="input-error" [hidden]="!errors.contentType?.required">
+      Please select content type
+    </div>
   </div>
   <div class="actionBtns">
     <button class="action" (click)="createText()">Add</button>

@@ -31,6 +31,8 @@ export class UploadFileComponent implements OnInit {
 
   newContent: boolean = true;
 
+  errors: any = {};
+
   constructor(private dialogRef: MatDialogRef<UploadFileComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any,
               private fileService: FileService, private alert: AlertService,
@@ -58,6 +60,7 @@ export class UploadFileComponent implements OnInit {
           val => {
             if (val && val[0]) {
               this.fileInfo.containerQId = val[0].id;
+              this.errors.contentType = null;
             }
           }
         );
@@ -69,6 +72,12 @@ export class UploadFileComponent implements OnInit {
 
   }
 
+  onTitleChange() {
+    if (this.fileInfo.title.trim().length > 0) {
+      this.errors.title = null;
+    }
+  }
+
   uploadFile() {
     
     this.loading = true;
@@ -77,7 +86,8 @@ export class UploadFileComponent implements OnInit {
     formData.append("file", this.data.file);
     formData.append("fileSize", this.data.file.size);
     formData.append("temporary", "true");
-    formData.append("generatePreview", "true");
+    formData.append("generatePreview", "false");
+    formData.append("generatePreviewAsync", "false");
     
     this.fileService.uploadFile(formData).subscribe(
       res => {
@@ -89,14 +99,20 @@ export class UploadFileComponent implements OnInit {
         }
 
         record.__decoration.__docMetadata = this.fileInfo.docMetadata;
+        this.filename = this.fileInfo.docMetadata.name;
 
-        let previewHandler = this.contentPreviewService.getPreviewHandler(record);
+        /*let previewHandler = this.contentPreviewService.getPreviewHandler(record);
         if (previewHandler != null) {
           this.previewImageUrl = previewHandler.largeThumbnailUrl(record);
           this.fileInfo.thumbnailUrl = this.previewImageUrl;
-        }
+        }*/
+        this.previewImageUrl = "/assets/images/icons/file.svg";
 
         this.loading = false;
+
+        if (!this.newContent) {
+          this.updateFile();
+        }
       },
       err => {
         this.alert.error("Error uploading file. Please try again later.", err.status);
@@ -104,7 +120,32 @@ export class UploadFileComponent implements OnInit {
       });
   }
 
+  focusOnTitle(id: string) {
+    var elem = document.getElementById(id);
+    if (elem) {
+      setTimeout(() => {
+        elem.focus();
+      }, 0)
+    }
+  }
+
   captureFile() {
+    
+    let hasErrors = false;
+    if (!this.fileInfo.title || this.fileInfo.title.trim().length == 0) {
+      this.errors.title = { required: true };
+      hasErrors = true;
+    }
+
+    if (!this.fileInfo.containerQId) {
+      this.errors.contentType = { required: true };
+      hasErrors = true;
+    }
+
+    if (hasErrors) {
+      return;
+    }
+
     this.newContentService.captureFileContent(this.fileInfo);
     this.navService.goToNewContentEdit(this.fileInfo.containerQId);
     this.dialogRef.close();

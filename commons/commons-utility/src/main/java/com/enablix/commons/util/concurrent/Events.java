@@ -23,5 +23,6 @@ public final class Events {
 	public static final String CONTAINER_DEF_REMOVED = "CONTAINER_DEF_REMOVED";
 	public static final String BULK_IMPORT_REQUEST = "BULK_IMPORT_REQUEST";
 	public static final String GDRIVE_FOLDER_SHARE = "GDRIVE_FOLDER_SHARE";
+	public static final String GENERATE_DOC_PREVIEW = "GENERATE_DOC_PREVIEW";
 	
 }

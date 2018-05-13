@@ -14,11 +14,11 @@
 .url-title {
   font-family: $FPThin;
   line-height: 38px;
-  margin-bottom: 24px;
   font-size: 32px;
 
   img {
     margin-left: 8px;
+    cursor: pointer;
   }
 }
 
@@ -64,6 +64,7 @@ textarea {
     background: $white;
     border: 1px solid #E3EBEF;
     box-shadow: 0 1px 1px 0 rgba(0,0,0,0.06);
+    margin-top: 16px;
     @include vcenterChildren;
 
     img {

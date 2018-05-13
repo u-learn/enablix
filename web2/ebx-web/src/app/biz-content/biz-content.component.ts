@@ -53,6 +53,7 @@ export class BizContentComponent implements OnInit, AfterViewInit {
   returnUrl: string;
 
   recordNotFound: boolean = false;
+  errors: any = {};
 
   constructor(private route: ActivatedRoute, private contentService: ContentService,
               private alert: AlertService, private contentTemplate: ContentTemplateService,
@@ -185,12 +186,38 @@ export class BizContentComponent implements OnInit, AfterViewInit {
     }
   }
 
+  checkErrors() {
+    
+    var hasErrors = false;
+    
+    var title = this.record[this.container.titleItemId];
+    if (!title || title.trim().length == 0) {
+      this.errors.title = { required: true };
+      hasErrors = true;
+    }
+
+    return hasErrors;
+  }
+
+  onTitleChange() {
+    var title = this.record[this.container.titleItemId];
+    if (title.trim().length > 0) {
+      this.errors.title = null;
+    } else {
+      this.errors.title = { required: true };
+    }
+  }
+
   onContentUpdate() {
     this.contentService.decorateRecord(this.container, this.record);
     this.record = JSON.parse(JSON.stringify(this.record));
   }
 
   publishContent() {
+
+    if (this.checkErrors()) {
+      return;
+    }
 
     if (this.isDraft) {
 
@@ -338,10 +365,16 @@ export class BizContentComponent implements OnInit, AfterViewInit {
   }
 
   saveDraft() {
+    
+    if (this.checkErrors()) {
+      return;
+    }
+
     this.submitWFContent(true);
   }
 
   cancelEdit() {
+    this.errors = {};
     if (this.isNewRec) {
       this.goBackHome();
     }

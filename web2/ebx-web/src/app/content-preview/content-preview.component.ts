@@ -47,4 +47,10 @@ export class ContentPreviewComponent implements OnInit {
     return imgUrl;
   }
 
+  getPreviewStatusText() : string {
+    return this._record.__decoration && this._record.__decoration.__docMetadata &&
+            this._record.__decoration.__docMetadata.previewStatus == 'PENDING' ? 
+            "Generating preview for this asset." : "Preview is not available for this asset.";
+  }
+
 }

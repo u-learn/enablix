@@ -61,11 +61,12 @@ public class DocumentManagerImpl implements DocumentManager {
 	
 	@Override
 	public DocumentMetadata saveUsingParentInfo(Document<?> doc, String docContainerQId, 
-			String docContainerParentInstanceIdentity, boolean generatePreview) throws IOException {
+			String docContainerParentInstanceIdentity, boolean generatePreview,
+			boolean generatePreviewAsync) throws IOException {
 		
 		String contentPath = createContentPathUsingParentInfo(docContainerQId, 
 				docContainerParentInstanceIdentity, doc.getMetadata().isTemporary());
-		return save(doc, contentPath, generatePreview);
+		return save(doc, contentPath, generatePreview, generatePreviewAsync);
 	}
 
 	private String createContentPathUsingParentInfo(String docContainerQId, 
@@ -83,11 +84,12 @@ public class DocumentManagerImpl implements DocumentManager {
 
 	@Override
 	public DocumentMetadata saveUsingContainerInfo(Document<?> doc, String docContainerQId, 
-			String docContainerInstanceIdentity, boolean generatePreview) throws IOException {
+			String docContainerInstanceIdentity, boolean generatePreview,
+			boolean generatePreviewAsync) throws IOException {
 		
 		String contentPath = createContentPathUsingContainerInfo(docContainerQId, 
 				docContainerInstanceIdentity, doc.getMetadata().isTemporary());
-		return save(doc, contentPath, generatePreview);
+		return save(doc, contentPath, generatePreview, generatePreviewAsync);
 	}
 
 	private String createContentPathUsingContainerInfo(String docContainerQId, 
@@ -127,7 +129,8 @@ public class DocumentManagerImpl implements DocumentManager {
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
-	public DocumentMetadata save(Document<?> doc, String contentPath, boolean generatePreview) throws IOException {
+	public DocumentMetadata save(Document<?> doc, String contentPath, 
+			boolean generatePreview, boolean generatePreviewAsync) throws IOException {
 		
 		DocumentStore ds = storeFactory.getDocumentStore(doc);
 		
@@ -137,6 +140,18 @@ public class DocumentManagerImpl implements DocumentManager {
 		docMD = docRepo.save(docMD);
 		
 		if (generatePreview) {
+			
+			/*if (generatePreviewAsync) {
+			
+				EventUtil.publishEvent(new Event<DocumentMetadata>(Events.GENERATE_DOC_PREVIEW, docMD));
+				
+			} else {
+				docMD = docPreviewService.createPreview(docMD);
+			}*/
+			// TODO: handle generate async
+			// While the preview is still being generated, if user submits the records, save fails as the
+			// system tries to move the file from tmp folder to actual folder and gets an error: File in
+			// use by other program. Need to handle this.
 			docMD = docPreviewService.createPreview(docMD);
 		}
 		

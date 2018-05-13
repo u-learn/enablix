@@ -13,7 +13,7 @@ export class GoogleDriveService {
   private clientId = environment.googleAPIClientId;
 
   // Scope to use to access user's drive.
-  private scope = 'https://www.googleapis.com/auth/drive.readonly';
+  private scope = 'https://www.googleapis.com/auth/drive.readonly https://www.googleapis.com/auth/youtube';
 
   private pickerApiLoaded: boolean = false;
   private auth2ApiLoaded: boolean = false;
@@ -77,8 +77,12 @@ export class GoogleDriveService {
         docView.setIncludeFolders(true);
         docView.setSelectFolderEnabled(true);
 
+        var videoView = new google.picker.VideoSearchView()
+                            .setSite(google.picker.VideoSearchView.YOUTUBE);
+
         var picker = new google.picker.PickerBuilder().
             addView(docView).
+            addView(videoView).
             setOAuthToken(this.oauthToken).
             enableFeature(google.picker.Feature.MULTISELECT_ENABLED).
             setCallback(callback).

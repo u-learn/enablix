@@ -31,6 +31,8 @@ export class UploadUrlComponent implements OnInit {
   contentTypeCtrl: FormControl;
   contentTypes: SelectOption[];
 
+  errors: any = {};
+
   constructor(private dialogRef: MatDialogRef<UploadUrlComponent>,
               private embedInfoService: EmbedInfoService,
               private contentTemplateService: ContentTemplateService,
@@ -44,6 +46,7 @@ export class UploadUrlComponent implements OnInit {
         val => {
           if (val && val[0]) {
             this.urlInfo.containerQId = val[0].id;
+            this.errors.contentType = null;
           }
         }
       );
@@ -53,6 +56,12 @@ export class UploadUrlComponent implements OnInit {
     this.contentTypes = this.contentTemplateService.getBizContentSelectOptions();
     this.contentTypes.sort((a, b) => (a.label > b.label ? 1 : -1));
     this.newContentService.clear();
+  }
+
+  onTitleChange() {
+    if (this.urlInfo.title.trim().length > 0) {
+      this.errors.title = null;
+    }
   }
 
   showPreview() {
@@ -87,7 +96,32 @@ export class UploadUrlComponent implements OnInit {
     }
   }
 
+  focusOnTitle(id: string) {
+    var elem = document.getElementById(id);
+    if (elem) {
+      setTimeout(() => {
+        elem.focus();
+      }, 0)
+    }
+  }
+
   captureUrl() {
+    
+    let hasErrors = false;
+    if (!this.urlInfo.title || this.urlInfo.title.trim().length == 0) {
+      this.errors.title = { required: true };
+      hasErrors = true;
+    }
+
+    if (!this.urlInfo.containerQId) {
+      this.errors.contentType = { required: true };
+      hasErrors = true;
+    }
+
+    if (hasErrors) {
+      return;
+    }
+
     this.newContentService.captureUrlContent(this.urlInfo, this.embedInfo);
     this.navService.goToNewContentEdit(this.urlInfo.containerQId);
     this.dialogRef.close();

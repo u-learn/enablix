@@ -21,6 +21,8 @@ export class UploadTextComponent implements OnInit {
 
   textInfo: TextInfo;
 
+  errors: any = {};
+
   constructor(private dialogRef: MatDialogRef<UploadTextComponent>,
               private contentTemplateService: ContentTemplateService,
               private navService: NavigationService,
@@ -35,6 +37,7 @@ export class UploadTextComponent implements OnInit {
           val => {
             if (val && val[0]) {
               this.textInfo.containerQId = val[0].id;
+              this.errors.contentType = null;
             }
           }
         );
@@ -44,7 +47,28 @@ export class UploadTextComponent implements OnInit {
       this.newContentService.clear();
   }
 
+  onTitleChange() {
+    if (this.textInfo.title.trim().length > 0) {
+      this.errors.title = null;
+    }
+  }
+
   createText() {
+    let hasErrors = false;
+    if (!this.textInfo.title || this.textInfo.title.trim().length == 0) {
+      this.errors.title = { required: true };
+      hasErrors = true;
+    }
+
+    if (!this.textInfo.containerQId) {
+      this.errors.contentType = { required: true };
+      hasErrors = true;
+    }
+
+    if (hasErrors) {
+      return;
+    }
+
     this.newContentService.captureTextContent(this.textInfo);
     this.navService.goToNewContentEdit(this.textInfo.containerQId);
     this.dialogRef.close();

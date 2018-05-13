@@ -107,7 +107,7 @@ public class ContentRecordPersister {
 	            				contentQId + "." + entry.getKey(), 
 	            				docAttach.getFilesize(), null, temporaryDoc);
 				
-				DocumentMetadata docMd = docManager.saveUsingContainerInfo(document, contentQId, null, false);
+				DocumentMetadata docMd = docManager.saveUsingContainerInfo(document, contentQId, null, false, false);
 				
 				Map<?, ?> docMap = BeanUtil.beanToMap(docMd);
 				entry.setValue(docMap);
