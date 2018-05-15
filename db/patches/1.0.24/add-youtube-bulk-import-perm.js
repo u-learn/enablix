@@ -19,12 +19,13 @@ dbs = db.runCommand({
 dbs.forEach(function(database) {
 
     // only run the patch for client databases
-    if (database.name.endsWith("_enablix") &&
-        database.name != "system_enablix") {
+    if (database.name.endsWith("_enablix")) {
         
     	db = db.getSiblingDB(database.name);
-        
-        db.ebx_role.update(
+    	
+    	var coll = database.name == "system_enablix" ? "ref_ebx_role" : "ebx_role";
+    	
+        db[coll].update(
     		{ _id: 'contentAdmin' },
     		{ $addToSet: { permissions: { $each: ["BULK_IMPORT-YOUTUBE"] } } }
         );
