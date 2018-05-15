@@ -36,37 +36,47 @@
   </div>
 
   <div class="sub-section-content" *ngIf="docstore && editing">
-    <div class="left">
-      <div class="form-input">
-        <div class="input-control">
-          <ebx-select [options]="docstoreTypeOptions" placeholder="Select Document Store" [formControl]="docstoreTypeCtrl"></ebx-select>
+    <form #docstoreForm="ngForm">
+      {{printForm(docstoreForm)}}
+      <div class="left">
+        <div class="form-input">
+          <div class="input-control">
+            <ebx-select [options]="docstoreTypeOptions" placeholder="Select Document Store" [formControl]="docstoreTypeCtrl"></ebx-select>
+          </div>
+        </div>
+        <div class="form-input" *ngFor="let param of selectDocstoreMd?.params; let i = index;">
+          <div class="input-label">{{param.paramName}}</div>
+          <div class="input-control">
+            <ng-container [ngSwitch]="param.paramType">
+              <ng-container *ngSwitchCase="'TEXT_FILE_CONTENT'">
+                <ebx-text-file name="param{{i}" [(ngModel)]="docstore[param.paramKey]"></ebx-text-file>
+                <input type="text" name="hFileText" hidden [(ngModel)]="docstore[param.paramKey]" #hFileText="ngModel" [required]="param.required ? true : undefined">
+                <div class="input-error" [hidden]="hFileText.valid || hFileText.pristine">
+                  <p [hidden]="!hFileText.errors?.required">{{param.paramName}} is required</p>
+                </div>
+              </ng-container>
+              <ng-container *ngSwitchDefault>
+                <ng-container *ngIf="param.paramKey.endsWith('_ENC')"><input name="param{{i}}" type="password" [(ngModel)]="docstore[param.paramKey]" [required]="param.required ? true : undefined"></ng-container>
+                <ng-container *ngIf="!param.paramKey.endsWith('_ENC')"><input name="param{{i}}" type="text" [(ngModel)]="docstore[param.paramKey]" [required]="param.required ? true : undefined"></ng-container>
+                <div class="input-error" [hidden]="!docstoreForm.controls['param' + i] || docstoreForm.controls['param' + i].valid || docstoreForm.controls['param' + i].pristine">
+                  <p [hidden]="!docstoreForm.controls['param' + i]?.errors?.required">{{param.paramName}} is required</p>
+                </div>
+              </ng-container>
+            </ng-container>
+          </div>
         </div>
       </div>
-      <div class="form-input" *ngFor="let param of selectDocstoreMd?.params">
-        <div class="input-label">{{param.paramName}}</div>
-        <div class="input-control">
-          <ng-container [ngSwitch]="param.paramType">
-            <ng-container *ngSwitchCase="'TEXT_FILE_CONTENT'">
-              <ebx-text-file [(ngModel)]="docstore[param.paramKey]"></ebx-text-file>
-            </ng-container>
-            <ng-container *ngSwitchDefault>
-              <ng-container *ngIf="param.paramKey.endsWith('_ENC')"><input type="password" [(ngModel)]="docstore[param.paramKey]"></ng-container>
-              <ng-container *ngIf="!param.paramKey.endsWith('_ENC')"><input type="text" [(ngModel)]="docstore[param.paramKey]"></ng-container>
-            </ng-container>
-          </ng-container>
+      <div class="right dashboard-buttons small">
+        <div class="action-btn with-border btn-with-text" (click)="saveDocstoreConfig()">
+          <div class="icon small save-blue"></div>
+          <p class="show-me">Save</p>
+        </div>
+        <div class="action-btn with-border btn-with-text" (click)="cancelOperation()">
+          <div class="icon small cancel-blue"></div>
+          <p class="show-me">Cancel</p>
         </div>
       </div>
-    </div>
-    <div class="right dashboard-buttons small">
-      <div class="action-btn with-border btn-with-text" (click)="saveDocstoreConfig()">
-        <div class="icon small save-blue"></div>
-        <p class="show-me">Save</p>
-      </div>
-      <div class="action-btn with-border btn-with-text" (click)="cancelOperation()">
-        <div class="icon small cancel-blue"></div>
-        <p class="show-me">Cancel</p>
-      </div>
-    </div>
+    </form>
   </div>
 
 </div>

@@ -11,6 +11,7 @@ import com.enablix.app.content.bulkimport.ImportContext;
 import com.enablix.app.content.bulkimport.ImportProcessor;
 import com.enablix.commons.exception.ValidationException;
 import com.enablix.commons.util.StringUtil;
+import com.enablix.core.commons.xsdtopojo.ContainerType;
 import com.enablix.core.domain.content.ImportRecord;
 import com.enablix.core.domain.content.ImportRequest;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeTokenRequest;
@@ -47,7 +48,8 @@ public class GDriveBulkImportProcessor implements ImportProcessor {
 	}
 
 	@Override
-	public ImportDoc processRecord(ImportRecord record, ImportContext ctx) throws IOException {
+	public ImportProcessedInfo processRecord(ImportRecord record, 
+			ContainerType container, ImportContext ctx) throws IOException {
 		
 		Drive drive = getDrive(ctx);
 		
@@ -72,7 +74,7 @@ public class GDriveBulkImportProcessor implements ImportProcessor {
 			is = drive.files().get(record.getId()).executeMediaAsInputStream();
 		}
 		
-		return new ImportDoc(filename, contentType, is); 
+		return new ImportProcessedInfo(new ImportDoc(filename, contentType, is), null); 
 	}
 	
 	private String getOAuthToken(ImportContext ctx) throws IOException {

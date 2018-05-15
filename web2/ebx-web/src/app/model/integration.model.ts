@@ -7,11 +7,13 @@ export class DocStoreMetadata {
       "params" : [
         {
           "paramKey" : "APP_NAME",
-          "paramName" : "Application Name"
+          "paramName" : "Application Name",
+          "required" : true
         },
         {
           "paramKey" : "ACCESS_TOKEN",
-          "paramName" : "Dropbox Access Token"
+          "paramName" : "Dropbox Access Token",
+          "required" : true
         }
       ]
     },
@@ -21,19 +23,23 @@ export class DocStoreMetadata {
       "params" : [
         {
           "paramKey" : "HOST",
-          "paramName" : "Server Host"
+          "paramName" : "Server Host",
+          "required" : true
         },
         {
           "paramKey" : "BASE_DOC_PATH",
-          "paramName" : "Base document path"
+          "paramName" : "Base document path",
+          "required" : true
         },
         {
           "paramKey" : "USERNAME",
-          "paramName" : "Username"
+          "paramName" : "Username",
+          "required" : true
         },
         {
           "paramKey" : "PASSWORD_ENC",
-          "paramName" : "Password"
+          "paramName" : "Password",
+          "required" : true
         }
       ]
     },
@@ -43,19 +49,23 @@ export class DocStoreMetadata {
       "params" : [
         {
           "paramKey" : "SITE_URL",
-          "paramName" : "Sharepoint Site Url"
+          "paramName" : "Sharepoint Site Url",
+          "required" : true
         },
         {
           "paramKey" : "BASE_FOLDER",
-          "paramName" : "Base Folder"
+          "paramName" : "Base Folder",
+          "required" : true
         },
         {
           "paramKey" : "USERNAME",
-          "paramName" : "Username"
+          "paramName" : "Username",
+          "required" : true
         },
         {
           "paramKey" : "PASSWORD_ENC",
-          "paramName" : "Password"
+          "paramName" : "Password",
+          "required" : true
         }
       ]
     },
@@ -65,12 +75,14 @@ export class DocStoreMetadata {
       "params" : [
         {
           "paramKey" : "BASE_FOLDER",
-          "paramName" : "Base Folder"
+          "paramName" : "Base Folder",
+          "required" : true
         },
         {
           "paramKey" : "AUTH_KEY_FILE_ENC",
           "paramName" : "Service Account Key File",
-          "paramType" : "TEXT_FILE_CONTENT"
+          "paramType" : "TEXT_FILE_CONTENT",
+          "required" : true
         }
       ]
     }

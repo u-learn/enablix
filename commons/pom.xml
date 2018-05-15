@@ -49,5 +49,6 @@
 	<module>tenant-mgmt</module>
 	<module>google-drive-bulk-import</module>
 	<module>user-task</module>
+	<module>youtube-bulk-import</module>
   </modules>
 </project>

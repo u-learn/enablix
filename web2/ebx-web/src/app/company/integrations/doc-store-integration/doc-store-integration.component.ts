@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
 import { AlertService } from '../../../core/alert/alert.service';
@@ -13,6 +13,8 @@ import { DocStoreMetadata } from '../../../model/integration.model';
   encapsulation: ViewEncapsulation.None
 })
 export class DocStoreIntegrationComponent implements OnInit {
+
+  @ViewChild('docstoreForm') form;
 
   docstore: any;
   docstoreBackup: any;
@@ -29,6 +31,10 @@ export class DocStoreIntegrationComponent implements OnInit {
       private alert: AlertService,
       private dcConfigService: DocStoreConfigService) { 
     this.docstoreTypeCtrl = new FormControl();
+  }
+
+  printForm(form) {
+    console.log(form);
   }
 
   ngOnInit() {
@@ -99,6 +105,13 @@ export class DocStoreIntegrationComponent implements OnInit {
   }
 
   saveDocstoreConfig() {
+
+    if (this.form.invalid) {
+      Object.keys(this.form.controls).forEach(key => {
+        this.form.controls[key].markAsDirty();
+      });
+      return;
+    }
 
     this.dcConfigService.saveDocstoreConfig(this.docstore, this.selectDocstoreMd.storeTypeCode).subscribe(res => {
         this.editing = false;

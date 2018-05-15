@@ -4,6 +4,9 @@
     <div class="imp-src" *ebxAccess="'BULK_IMPORT-GOOGLEDRIVE'">
       <ebx-gdrive-import (onFileSelection)="filesSelected()" (onImportRequest)="importRequestReady($event)"></ebx-gdrive-import>
     </div>
+    <div class="imp-src" *ebxAccess="'BULK_IMPORT-YOUTUBE'">
+      <ebx-youtube-import (onFileSelection)="filesSelected()" (onImportRequest)="importRequestReady($event)"></ebx-youtube-import>
+    </div>
     <div class="actionBtns">
       <button class="cancel" mat-dialog-close>Cancel</button>
     </div>

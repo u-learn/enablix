@@ -20,7 +20,7 @@
         </ng-container>
     </div>
     <div class="option-rows" [hidden]="!optionsVisible">
-        <div class="option-row" [class.highlighted]="opt == highlightedOpt" *ngFor="let opt of filteredOptions | async" (click)="updateSelection(opt)">
+        <div class="option-row" [class.highlighted]="opt == highlightedOpt" *ngFor="let opt of filteredOptions | async" (click)="updateSelection(opt)" [id]="opt.id">
             <div class="option-label">{{opt.label}}</div>
         </div>
     </div>

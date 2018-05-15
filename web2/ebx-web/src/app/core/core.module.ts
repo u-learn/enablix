@@ -70,6 +70,7 @@ import { UserTaskComponent } from './user-task/user-task/user-task.component';
 import { UserTaskService } from './user-task/user-task.service';
 import { ProgressCircleComponent } from './progress-circle/progress-circle.component';
 import { AppEventService } from './app-event.service';
+import { YoutubeImportComponent } from './bulk-import/youtube-import/youtube-import.component';
 
 @NgModule({
   imports: [
@@ -168,7 +169,8 @@ import { AppEventService } from './app-event.service';
     BulkAddTagsComponent,
     MessageDialogComponent,
     UserTaskComponent,
-    ProgressCircleComponent
+    ProgressCircleComponent,
+    YoutubeImportComponent
   ],
   exports: [
     HeaderComponent,

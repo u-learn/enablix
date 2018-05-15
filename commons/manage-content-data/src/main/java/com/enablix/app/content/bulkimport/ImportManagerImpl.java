@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 
 import com.enablix.app.content.ContentDataManager;
 import com.enablix.app.content.bulkimport.ImportProcessor.ImportDoc;
+import com.enablix.app.content.bulkimport.ImportProcessor.ImportProcessedInfo;
 import com.enablix.app.content.doc.DocumentManager;
 import com.enablix.app.content.update.UpdateContentRequest;
 import com.enablix.app.template.service.TemplateManager;
@@ -159,7 +160,7 @@ public class ImportManagerImpl implements ImportManager {
 		recordData.put(ContentDataConstants.EXTERNAL_SOURCE_ID_KEY, rec.getId());
 		
 		processTags(rec, ctx, container, recordData);
-		uploadDocument(rec, ctx, processor, container, recordData);
+		processRecord(rec, ctx, processor, container, recordData);
 		return new UpdateContentRequest(templateId, null, rec.getContentQId(), recordData);
 	}
 
@@ -179,36 +180,46 @@ public class ImportManagerImpl implements ImportManager {
 		
 	}
 
-	private void uploadDocument(ImportRecord rec, ImportContext ctx, ImportProcessor processor,
+	private void processRecord(ImportRecord rec, ImportContext ctx, ImportProcessor processor,
 			ContainerType container, Map<String, Object> record) throws IOException {
 
-		ContentItemType docItemType = TemplateUtil.getDocItemType(container);
-		
-		if (docItemType == null) {
-			return;
-		}
-		
-		
-		ImportDoc importDoc = processor.processRecord(rec, ctx);
+		ImportProcessedInfo info = processor.processRecord(rec, container, ctx);
         
-		if (importDoc.getInputStream() != null) {
+		if (info != null) {
 			
-			String docQId = docItemType.getQualifiedId();
-			Document<DocumentMetadata> document = 
-	        		docMgr.buildDocument(importDoc.getInputStream(), importDoc.getFilename(), 
-	        				importDoc.getMimeType(), docQId, -1, null, false);
-	        
-	        DocumentMetadata docMd = docMgr.saveUsingContainerInfo(
-	        		document, container.getQualifiedId(), null, false, false);
-	        
-	        ProcessContext pc = ProcessContext.get();
-	        ActivityLogger.auditDocActivity(ActivityType.DOC_UPLOAD, docQId, null, 
-	        		docMd.getIdentity(), Channel.SYSTEM, 
-	        		new RegisteredActor(pc.getUserId(), pc.getUserDisplayName()), 
-	        		null, null, null, null, importDoc.getFilename());
-	        
-	        // update the record with uploaded document info
-	        record.put(docItemType.getId(), BeanUtil.beanToMap(docMd));
+			if (info.getImportDoc() != null) {
+				
+				ImportDoc importDoc = info.getImportDoc();
+				
+				if (importDoc.getInputStream() != null) {
+					
+					ContentItemType docItemType = TemplateUtil.getDocItemType(container);
+					
+					if (docItemType != null) {
+						
+						String docQId = docItemType.getQualifiedId();
+						Document<DocumentMetadata> document = 
+				        		docMgr.buildDocument(importDoc.getInputStream(), importDoc.getFilename(), 
+				        				importDoc.getMimeType(), docQId, -1, null, false);
+				        
+				        DocumentMetadata docMd = docMgr.saveUsingContainerInfo(
+				        		document, container.getQualifiedId(), null, false, false);
+				        
+				        ProcessContext pc = ProcessContext.get();
+				        ActivityLogger.auditDocActivity(ActivityType.DOC_UPLOAD, docQId, null, 
+				        		docMd.getIdentity(), Channel.SYSTEM, 
+				        		new RegisteredActor(pc.getUserId(), pc.getUserDisplayName()), 
+				        		null, null, null, null, importDoc.getFilename());
+				        
+				        // update the record with uploaded document info
+				        record.put(docItemType.getId(), BeanUtil.beanToMap(docMd));
+					}
+				}
+			}
+			
+			if (CollectionUtil.isNotEmpty(info.getRecordAttributes())) {
+				record.putAll(info.getRecordAttributes());
+			}
 		}
 	}
 

@@ -77,13 +77,10 @@ export class GoogleDriveService {
         docView.setIncludeFolders(true);
         docView.setSelectFolderEnabled(true);
 
-        var videoView = new google.picker.VideoSearchView()
-                            .setSite(google.picker.VideoSearchView.YOUTUBE);
-
         var picker = new google.picker.PickerBuilder().
             addView(docView).
-            addView(videoView).
             setOAuthToken(this.oauthToken).
+            setTitle('Select file(s)').
             enableFeature(google.picker.Feature.MULTISELECT_ENABLED).
             setCallback(callback).
             build();
@@ -91,6 +88,21 @@ export class GoogleDriveService {
 
       }
     }
+  }
+
+  createYoutubePicker(callback: any) {
+    
+    var videoView = new google.picker.VideoSearchView()
+                            .setSite(google.picker.VideoSearchView.YOUTUBE);
+
+    var picker = new google.picker.PickerBuilder().
+      addView(videoView).
+      setTitle('Select video(s)').
+      enableFeature(google.picker.Feature.MULTISELECT_ENABLED).
+      setCallback(callback).
+      build();
+
+    picker.setVisible(true);
   }
 
   getFilesInFolder(folderId: string) : Observable<any> {

@@ -536,4 +536,26 @@ public class TemplateUtil {
 		return descAttrId;
 	}
 	
+	public static String getUrlAttribute(ContainerType container, String labelAttrId) {
+		
+		String urlAttrId = null;
+		
+		if (container != null) {
+			
+			for (ContentItemType itemType : container.getContentItem()) {
+				
+				if (itemType.getType() == ContentItemClassType.TEXT
+						&& !itemType.getId().equals(labelAttrId)
+						&& !itemType.getId().equals("name")
+						&& !itemType.getId().equals("shortName")) {
+					
+					urlAttrId = itemType.getId();
+					break;
+				}
+			}
+		}
+		
+		return urlAttrId;
+	}
+	
 }

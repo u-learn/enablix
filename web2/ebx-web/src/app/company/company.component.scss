@@ -66,6 +66,13 @@
       justify-content: space-between;
       margin-bottom: 24px;
 
+      form {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+      }
+
       .sub-info {
         font-size: 12px;
         color: #808C9B;
@@ -109,6 +116,11 @@
         padding-left: 12px;
       }
     } 
+
+    .input-error {
+      font-size: 14px;
+    }
+    
   }
 
   .dashboard-buttons {

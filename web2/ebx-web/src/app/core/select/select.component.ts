@@ -103,6 +103,14 @@ export class SelectComponent implements OnInit, ControlValueAccessor, AfterViewI
           }
 
           console.log(this.highlightedOpt);
+          
+          if (this.highlightedOpt) {
+            // bring to focus
+            var hgElem = document.getElementById(this.highlightedOpt.id);
+            if (hgElem) {
+              hgElem.scrollIntoView();
+            }
+          }
 
         });
   }
