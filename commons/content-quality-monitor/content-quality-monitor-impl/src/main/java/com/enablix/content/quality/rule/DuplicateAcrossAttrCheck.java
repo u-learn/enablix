@@ -13,6 +13,7 @@ import com.enablix.commons.util.StringUtil;
 import com.enablix.commons.util.collection.CollectionUtil;
 import com.enablix.content.quality.rule.ContentAttributeQualityRule.AttrCheckConfig;
 import com.enablix.content.quality.rule.DuplicateAcrossAttrCheck.MatchAgainstAttrConfig;
+import com.enablix.core.api.QualityRuleConstants;
 import com.enablix.core.api.TemplateFacade;
 import com.enablix.core.commons.xsdtopojo.ContainerType;
 import com.enablix.core.commons.xsdtopojo.ContentItemType;
@@ -31,16 +32,16 @@ import com.enablix.services.util.ParamSetUtil;
 public class DuplicateAcrossAttrCheck extends DuplicateAttributeValueCheck<MatchAgainstAttrConfig> {
 
 	public DuplicateAcrossAttrCheck() {
-		super(RuleConstants.RULE_ID_DUPLICATE_VALUE_CHECK, AlertLevel.WARN);
+		super(QualityRuleConstants.RULE_ID_DUPLICATE_VALUE_CHECK, AlertLevel.WARN);
 	}
 
 	protected SearchFilter duplicateCheckFilter(ContentItemType attrDef, String itemValue, 
 			Map<String, Object> contentRecord, String contentQId, TemplateFacade template) {
 		
 		ParamSetType dupCheckParams = ParamSetUtil.getParamSet(
-				attrDef.getQualityConfig(), RuleConstants.PARAMSET_NAME_DUPLICATION_CHECK);
+				attrDef.getQualityConfig(), QualityRuleConstants.PARAMSET_NAME_DUPLICATION_CHECK);
 		
-		Collection<String> dupAttrs = ParamSetUtil.getStringValues(dupCheckParams, RuleConstants.PARAM_NAME_MATCH_ATTR);
+		Collection<String> dupAttrs = ParamSetUtil.getStringValues(dupCheckParams, QualityRuleConstants.PARAM_NAME_MATCH_ATTR);
 		
 		String recIdentity = ContentDataUtil.getRecordIdentity(contentRecord);
 		
@@ -73,14 +74,14 @@ public class DuplicateAcrossAttrCheck extends DuplicateAttributeValueCheck<Match
 	protected MatchAgainstAttrConfig buildAttrCheckConfig(ContainerType container, ContentItemType item) {
 		
 		ParamSetType paramSet = ParamSetUtil.getParamSet(
-				item.getQualityConfig(), RuleConstants.PARAMSET_NAME_DUPLICATION_CHECK);
+				item.getQualityConfig(), QualityRuleConstants.PARAMSET_NAME_DUPLICATION_CHECK);
 		
 		if (paramSet != null) {
 			
-			Collection<String> dupAttrs = ParamSetUtil.getStringValues(paramSet, RuleConstants.PARAM_NAME_MATCH_ATTR);
+			Collection<String> dupAttrs = ParamSetUtil.getStringValues(paramSet, QualityRuleConstants.PARAM_NAME_MATCH_ATTR);
 			
 			if (CollectionUtil.isNotEmpty(dupAttrs)) {
-				String severity = ParamSetUtil.getStringValue(paramSet, RuleConstants.PARAM_NAME_SEVERITY);
+				String severity = ParamSetUtil.getStringValue(paramSet, QualityRuleConstants.PARAM_NAME_SEVERITY);
 				AlertSeverity alertSeverity = StringUtil.hasText(severity) ? AlertSeverity.valueOf(severity) : AlertSeverity.MEDIUM;
 			
 				return new MatchAgainstAttrConfig(item, container.getQualifiedId(), getAlertLevel(), alertSeverity, dupAttrs);

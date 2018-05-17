@@ -7,6 +7,14 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import com.enablix.core.domain.BaseDocumentEntity;
 
 @Document(collection = "ebx_content_quality_analysis")
+@Deprecated
+
+/**
+ * Deprecated. ContentQualityAlert will be stored as individual alerts
+ * 
+ * @author dluthra
+ *
+ */
 public class ContentQualityAnalysis extends BaseDocumentEntity {
 
 	private String contentIdentity;

@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 import com.enablix.app.template.service.TemplateManager;
 import com.enablix.commons.util.concurrent.Events;
 import com.enablix.content.quality.QualityAnalyzer;
-import com.enablix.content.quality.QualityAnalyzer.AnalysisRuleSet;
+import com.enablix.content.quality.QualityRuleSet;
 import com.enablix.core.api.TemplateFacade;
 import com.enablix.core.content.event.ContentDataSaveEvent;
 import com.enablix.core.mq.EventSubscription;
@@ -26,7 +26,7 @@ public class ContentQualityAsyncRecorder {
 		TemplateFacade template = templateMgr.getTemplateFacade(event.getTemplateId());
 		String contentQId = event.getContainerType().getQualifiedId();
 		
-		analyzer.analyzeAndRecord(event.getDataAsMap(), contentQId, AnalysisRuleSet.ALL, template);
+		analyzer.analyzeAndRecord(event.getDataAsMap(), contentQId, QualityRuleSet.ALL, template);
 
 	}
 	

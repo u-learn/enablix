@@ -78,6 +78,7 @@
             <container linkContainerQId="type4" linkContentItemId="type4product" id="producttype4" qualifiedId="product.producttype4" label="Products"/>
             <container linkContainerQId="type5" linkContentItemId="type5product" id="producttype5" qualifiedId="product.producttype5" label="Products"/>
             <container linkContainerQId="type6" linkContentItemId="type6product" id="producttype6" qualifiedId="product.producttype6" label="Products"/>
+            <container linkContainerQId="type10" linkContentItemId="type10product" id="producttype10" qualifiedId="product.producttype10" label="Products"/>
         </container>
         <container businessCategory="BUSINESS_DIMENSION" id="solution" qualifiedId="solution" label="Solutions" displayOrder="1">
             <contentItem type="text" id="name" qualifiedId="solution.name" label="Name" searchBoost="7"/>
@@ -143,6 +144,7 @@
             <container linkContainerQId="type4" linkContentItemId="type4solution" id="solutiontype4" qualifiedId="solution.solutiontype4" label="Solutions"/>
             <container linkContainerQId="type5" linkContentItemId="type5solution" id="solutiontype5" qualifiedId="solution.solutiontype5" label="Solutions"/>
             <container linkContainerQId="type6" linkContentItemId="type6solution" id="solutiontype6" qualifiedId="solution.solutiontype6" label="Solutions"/>
+            <container linkContainerQId="type10" linkContentItemId="type10solution" id="solutiontype10" qualifiedId="solution.solutiontype10" label="Solutions"/>
         </container>
         <container businessCategory="BUSINESS_DIMENSION" id="competitor" qualifiedId="competitor" label="Competitors" displayOrder="70">
             <contentItem type="text" id="name" qualifiedId="competitor.name" label="Competitor Name" searchBoost="7"/>
@@ -230,6 +232,7 @@
             <container linkContainerQId="type4" linkContentItemId="type4competitor" id="competitortype4" qualifiedId="competitor.competitortype4" label="Competitors"/>
             <container linkContainerQId="type5" linkContentItemId="type5competitor" id="competitortype5" qualifiedId="competitor.competitortype5" label="Competitors"/>
             <container linkContainerQId="type6" linkContentItemId="type6competitor" id="competitortype6" qualifiedId="competitor.competitortype6" label="Competitors"/>
+            <container linkContainerQId="type10" linkContentItemId="type10competitor" id="competitortype10" qualifiedId="competitor.competitortype10" label="Competitors"/>
         </container>
         <container referenceable="true" refData="false" single="false" businessCategory="BUSINESS_DIMENSION" color="#4046ad" id="customer" qualifiedId="customer" label="Customers" singularLabel="Customer" searchBoost="1" displayOrder="140">
             <contentItem type="text" id="name" qualifiedId="customer.name" label="Account Name" searchBoost="7"/>
@@ -515,6 +518,7 @@
             <container linkContainerQId="type4" linkContentItemId="type4customer" id="customertype4" qualifiedId="customer.customertype4" label="Customers"/>
             <container linkContainerQId="type5" linkContentItemId="type5customer" id="customertype5" qualifiedId="customer.customertype5" label="Customers"/>
             <container linkContainerQId="type6" linkContentItemId="type6customer" id="customertype6" qualifiedId="customer.customertype6" label="Customers"/>
+            <container linkContainerQId="type10" linkContentItemId="type10customer" id="customertype10" qualifiedId="customer.customertype10" label="Customers"/>
         </container>
         <container businessCategory="BUSINESS_DIMENSION" id="partner" qualifiedId="partner" label="Partners" displayOrder="94">
             <contentItem type="text" id="name" qualifiedId="partner.name" label="Partner Name" searchBoost="7"/>
@@ -559,6 +563,7 @@
             <container linkContainerQId="type4" linkContentItemId="type4partner" id="partnertype4" qualifiedId="partner.partnertype4" label="Partners"/>
             <container linkContainerQId="type5" linkContentItemId="type5partner" id="partnertype5" qualifiedId="partner.partnertype5" label="Partners"/>
             <container linkContainerQId="type6" linkContentItemId="type6partner" id="partnertype6" qualifiedId="partner.partnertype6" label="Partners"/>
+            <container linkContainerQId="type10" linkContentItemId="type10partner" id="partnertype10" qualifiedId="partner.partnertype10" label="Partners"/>
         </container>
         <container businessCategory="BUSINESS_DIMENSION" id="analyst" qualifiedId="analyst" label="Analysts" displayOrder="151">
             <contentItem type="text" id="name" qualifiedId="analyst.name" label="Analyst Name" searchBoost="7"/>
@@ -780,6 +785,7 @@
             <container linkContainerQId="type4" linkContentItemId="type4analyst" id="analysttype4" qualifiedId="analyst.analysttype4" label="Analysts"/>
             <container linkContainerQId="type5" linkContentItemId="type5analyst" id="analysttype5" qualifiedId="analyst.analysttype5" label="Analysts"/>
             <container linkContainerQId="type6" linkContentItemId="type6analyst" id="analysttype6" qualifiedId="analyst.analysttype6" label="Analysts"/>
+            <container linkContainerQId="type10" linkContentItemId="type10analyst" id="analysttype10" qualifiedId="analyst.analysttype10" label="Analysts"/>
         </container>
         <container businessCategory="BUSINESS_CONTENT" id="marketingevent" qualifiedId="marketingevent" label="Events" displayOrder="150">
             <contentItem type="text" id="title" qualifiedId="marketingevent.title" label="Event Title" searchBoost="7"/>
@@ -945,6 +951,7 @@
             <container linkContainerQId="type4" linkContentItemId="type4topic" id="topictype4" qualifiedId="topic.topictype4" label="Topics"/>
             <container linkContainerQId="type5" linkContentItemId="type5topic" id="topictype5" qualifiedId="topic.topictype5" label="Topics"/>
             <container linkContainerQId="type6" linkContentItemId="type6topic" id="topictype6" qualifiedId="topic.topictype6" label="Topics"/>
+            <container linkContainerQId="type10" linkContentItemId="type10topic" id="topictype10" qualifiedId="topic.topictype10" label="Topics"/>
         </container>
         <container businessCategory="BUSINESS_CONTENT" id="battlecard" qualifiedId="battlecard" label="Battle Cards" displayOrder="169">
             <contentItem type="text" id="title" qualifiedId="battlecard.title" label="Title"/>
@@ -1055,6 +1062,9 @@
             </contentItem>
         </container>
         <container businessCategory="BUSINESS_CONTENT" id="caseStudy" qualifiedId="caseStudy" label="Case Studies" displayOrder="171">
+            <qualityConfig>
+                <param name="OBSOLETE_IN_DAYS" value="30"/>
+            </qualityConfig>
             <contentItem type="text" id="title" qualifiedId="caseStudy.title" label="Title"/>
             <contentItem type="doc" id="file" qualifiedId="caseStudy.file" label="File">
                 <qualityConfig>
@@ -1147,7 +1157,10 @@
                 </bounded>
             </contentItem>
         </container>
-        <container businessCategory="BUSINESS_CONTENT" id="demoenvironment" qualifiedId="demoenvironment" label="Demo Environments" displayOrder="172">
+        <container referenceable="true" refData="false" single="false" businessCategory="BUSINESS_CONTENT" color="#1F8AEF" id="demoenvironment" qualifiedId="demoenvironment" label="Demo Environments" singularLabel="Demo Environments" searchBoost="1" displayOrder="172">
+            <qualityConfig>
+                <param name="OBSOLETE_IN_DAYS" value="30"/>
+            </qualityConfig>
             <contentItem type="text" id="title" qualifiedId="demoenvironment.title" label="Title"/>
             <contentItem type="richText" id="desc" qualifiedId="demoenvironment.desc" label="Description" searchBoost="2"/>
             <contentItem type="text" id="url" qualifiedId="demoenvironment.url" label="URL" searchBoost="3"/>
@@ -2948,10 +2961,10 @@
             </contentItem>
         </container>
         <container referenceable="true" businessCategory="BUSINESS_CONTENT" id="type6" qualifiedId="type6" label="Customer Success Stories" singularLabel="Customer Success Story" displayOrder="1006">
-            <contentItem type="text" id="title" label="Title" searchBoost="7"/>
-            <contentItem type="doc" id="file" label="File"/>
-            <contentItem type="text" id="url" label="URL"/>
-            <contentItem type="richText" id="desc" label="Description"/>
+            <contentItem type="text" id="title" qualifiedId="type6.title" label="Title" searchBoost="7"/>
+            <contentItem type="doc" id="file" qualifiedId="type6.file" label="File"/>
+            <contentItem type="text" id="url" qualifiedId="type6.url" label="URL"/>
+            <contentItem type="richText" id="desc" qualifiedId="type6.desc" label="Description"/>
             <contentItem type="bounded" id="type6product" qualifiedId="type6.type6product" label="Products">
                 <bounded multivalued="true">
                     <refList>
@@ -3019,6 +3032,92 @@
                 </bounded>
             </contentItem>
             <contentItem type="bounded" id="type6topic" qualifiedId="type6.type6topic" label="Topics">
+                <bounded multivalued="true">
+                    <refList>
+                        <datastore hyperlink="true">
+                            <storeId>topic</storeId>
+                            <dataId>identity</dataId>
+                            <dataLabel>name</dataLabel>
+                        </datastore>
+                    </refList>
+                </bounded>
+            </contentItem>
+        </container>
+        <container referenceable="true" businessCategory="BUSINESS_CONTENT" id="type10" qualifiedId="type10" label="New Content" singularLabel="New Content" displayOrder="1010">
+            <qualityConfig>
+                <param name="OBSOLETE_IN_DAYS" value="30"/>
+            </qualityConfig>
+            <contentItem type="text" id="title" qualifiedId="type10.title" label="Title" searchBoost="7"/>
+            <contentItem type="doc" id="file" qualifiedId="type10.file" label="File"/>
+            <contentItem type="text" id="url" qualifiedId="type10.url" label="URL"/>
+            <contentItem type="richText" id="desc" qualifiedId="type10.desc" label="Description"/>
+            <contentItem type="bounded" id="type10product" qualifiedId="type10.type10product" label="Products">
+                <bounded multivalued="true">
+                    <refList>
+                        <datastore hyperlink="true">
+                            <storeId>product</storeId>
+                            <dataId>identity</dataId>
+                            <dataLabel>shortName</dataLabel>
+                        </datastore>
+                    </refList>
+                </bounded>
+            </contentItem>
+            <contentItem type="bounded" id="type10solution" qualifiedId="type10.type10solution" label="Solutions">
+                <bounded multivalued="true">
+                    <refList>
+                        <datastore hyperlink="true">
+                            <storeId>solution</storeId>
+                            <dataId>identity</dataId>
+                            <dataLabel>shortName</dataLabel>
+                        </datastore>
+                    </refList>
+                </bounded>
+            </contentItem>
+            <contentItem type="bounded" id="type10competitor" qualifiedId="type10.type10competitor" label="Competitors">
+                <bounded multivalued="true">
+                    <refList>
+                        <datastore hyperlink="true">
+                            <storeId>competitor</storeId>
+                            <dataId>identity</dataId>
+                            <dataLabel>shortName</dataLabel>
+                        </datastore>
+                    </refList>
+                </bounded>
+            </contentItem>
+            <contentItem type="bounded" id="type10customer" qualifiedId="type10.type10customer" label="Customers">
+                <bounded multivalued="true">
+                    <refList>
+                        <datastore hyperlink="true">
+                            <storeId>customer</storeId>
+                            <dataId>identity</dataId>
+                            <dataLabel>shortName</dataLabel>
+                        </datastore>
+                    </refList>
+                </bounded>
+            </contentItem>
+            <contentItem type="bounded" id="type10partner" qualifiedId="type10.type10partner" label="Partners">
+                <bounded multivalued="true">
+                    <refList>
+                        <datastore hyperlink="true">
+                            <storeId>partner</storeId>
+                            <dataId>identity</dataId>
+                            <dataLabel>shortName</dataLabel>
+                        </datastore>
+                    </refList>
+                </bounded>
+            </contentItem>
+            <contentItem type="bounded" id="type10analyst" qualifiedId="type10.type10analyst" label="Analysts">
+                <bounded multivalued="true">
+                    <refList>
+                        <datastore hyperlink="true">
+                            <storeId>analyst</storeId>
+                            <dataId>identity</dataId>
+                            <dataLabel>shortName</dataLabel>
+                        </datastore>
+                    </refList>
+                </bounded>
+            </contentItem>
+            <contentItem type="bounded" id="type10topic" qualifiedId="type10.type10topic" label="Topics">
                 <bounded multivalued="true">
                     <refList>
                         <datastore hyperlink="true">
@@ -3822,6 +3921,13 @@
                 </portalConfig>
             </container>
         </contentUIDef>
+        <contentUIDef qualifiedId="type10">
+            <container labelQualifiedId="type10.title">
+                <portalConfig>
+                    <headingContentItem id="title"/>
+                </portalConfig>
+            </container>
+        </contentUIDef>
     </uiDefinition>
     <portalUIDefinition>
         <topNavigation>
@@ -3882,6 +3988,7 @@
             <rule id="REQUIRED_ATTR_VALIDATION_RULE"/>
             <rule id="REQUIRED_ATTR_CHECK_RULE"/>
             <rule id="DUPLICATE_ATTR_VALUE_CHECK_RULE"/>
+            <rule id="OBSOLETE_CONTENT_VERIFY_RULE"/>
         </qualityRules>
     </qualityRuleConfig>
 </contentTemplate>

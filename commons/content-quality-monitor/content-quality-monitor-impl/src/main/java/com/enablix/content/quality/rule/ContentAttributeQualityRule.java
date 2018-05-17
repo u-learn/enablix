@@ -48,14 +48,9 @@ public abstract class ContentAttributeQualityRule<C extends AttrCheckConfig> imp
 
 	protected QualityAlert buildQualityAlert(String contentQId, ContentItemType item, 
 			AlertLevel alertLevel, String alertMessage) {
-	
-		QualityAlert error = new QualityAlert(getRuleId(), alertLevel);
 		
-		ContentAttribute alertInfo = new ContentAttribute(contentQId, item.getId());
-		error.setInfo(alertInfo);
-		error.setMessage(alertMessage);
-		
-		return error;
+		return QualityAlert.build(getRuleId(), 
+				new ContentAttribute(contentQId, item.getId()), alertLevel, alertMessage);
 	}
 	
 	@SuppressWarnings("unchecked")

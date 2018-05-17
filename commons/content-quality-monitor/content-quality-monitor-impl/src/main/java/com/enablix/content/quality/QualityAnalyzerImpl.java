@@ -1,5 +1,6 @@
 package com.enablix.content.quality;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -10,12 +11,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.enablix.commons.util.collection.CollectionUtil;
+import com.enablix.content.quality.ContentAuthorResolver.Author;
+import com.enablix.content.quality.repo.ContentQualityAlertRepository;
 import com.enablix.content.quality.rule.QualityRuleFactory;
 import com.enablix.core.api.TemplateFacade;
 import com.enablix.core.commons.xsdtopojo.QualityRuleType;
-import com.enablix.core.domain.content.quality.ContentQualityAnalysis;
+import com.enablix.core.domain.content.quality.ContentQualityAlert;
 import com.enablix.core.domain.content.quality.QualityAlert;
 import com.enablix.core.domain.content.quality.QualityAnalysis;
+import com.enablix.data.segment.view.DataSegmentInfoBuilder;
 import com.enablix.services.util.ContentDataUtil;
 
 @Component
@@ -24,18 +28,24 @@ public class QualityAnalyzerImpl implements QualityAnalyzer {
 	private static final Logger LOGGER = LoggerFactory.getLogger(QualityAnalyzerImpl.class);
 	
 	@Autowired
-	private ContentQualityAlertsCrud crud;
+	private ContentQualityAlertRepository alertRepo;
 	
 	@Autowired
 	private QualityRuleFactory ruleFactory;
 	
+	@Autowired
+	private DataSegmentInfoBuilder dsInfoBuilder;
+	
+	@Autowired
+	private ContentAuthorResolver authorResolver;
+	
 	@Override
 	public QualityAnalysis analyze(Map<String, Object> content, String contentQId, 
-			AnalysisRuleSet analysisLevel, TemplateFacade template) {
+			QualityRuleSet ruleSet, TemplateFacade template) {
 		
 		QualityAnalysis qa = new QualityAnalysis();
 
-		if (analysisLevel != AnalysisRuleSet.NONE) {
+		if (ruleSet != null) {
 		
 			List<String> qualityRuleIds = template.getApplicableQualityRules(contentQId);
 			
@@ -49,19 +59,18 @@ public class QualityAnalyzerImpl implements QualityAnalyzer {
 						
 						LOGGER.error("Invalid quality rule [{}]", ruleId);
 						
-					} else {
-			
-						if (analysisLevel == AnalysisRuleSet.ALL
-								|| analysisLevelMatchesRuleAlertLevel(analysisLevel, rule)) {
+					} else if (ruleSet.contains(rule)) {
 						
-							QualityRuleType ruleType = template.getQualityRule(ruleId);
-							
-							Collection<QualityAlert> alerts = rule.evaluate(
-									ruleType.getConfigParams(), content, contentQId, template);
-							
+						QualityRuleType ruleType = template.getQualityRule(ruleId);
+						
+						Collection<QualityAlert> alerts = rule.evaluate(
+								ruleType.getConfigParams(), content, contentQId, template);
+						
+						if (CollectionUtil.isNotEmpty(alerts)) {
 							qa.addAlerts(alerts);
-							
 						}
+						
+						qa.addRuleExecuted(ruleId);
 					}
 					
 				}
@@ -71,30 +80,41 @@ public class QualityAnalyzerImpl implements QualityAnalyzer {
 		return qa;
 	}
 
-	private boolean analysisLevelMatchesRuleAlertLevel(AnalysisRuleSet analysisLevel, QualityRule rule) {
-		return analysisLevel.name().equals(rule.getAlertLevel().name());
-	}
-
 	@Override
 	public QualityAnalysis analyzeAndRecord(Map<String, Object> content, String contentQId,
-			AnalysisRuleSet analysisLevel, TemplateFacade template) {
+			QualityRuleSet ruleSet, TemplateFacade template) {
 		
-		QualityAnalysis analysis = analyze(content, contentQId, analysisLevel, template);
+		QualityAnalysis analysis = analyze(content, contentQId, ruleSet, template);
 		String contentIdentity = ContentDataUtil.getRecordIdentity(content);
 		
-		if (analysis.hasAlerts()) {
+		if (CollectionUtil.isNotEmpty(analysis.getRulesExecuted())) {
 			
-			ContentQualityAnalysis contentQA = 
-					new ContentQualityAnalysis(contentIdentity, contentQId);
-			contentQA.addAlerts(analysis.getAlerts());
-			crud.saveOrUpdate(contentQA);
+			alertRepo.deleteByRecordIdentityAndAlertRuleIdIn(contentIdentity, analysis.getRulesExecuted());
 			
-		} else {
-			crud.deleteByContentIdentity(contentIdentity);
-		}
+			if (analysis.hasAlerts()) {
 
+				Author author = authorResolver.getAuthor(content, contentQId);
+				
+				List<ContentQualityAlert> qAlerts = new ArrayList<>();
+				
+				for (QualityAlert alert : analysis.getAlerts()) {
+					
+					ContentQualityAlert cqAlert = new ContentQualityAlert(
+							contentQId, contentIdentity, author.getUserId(), author.getName(), alert);
+					
+					cqAlert.setDataSegmentInfo(dsInfoBuilder.build(cqAlert));
+					
+					qAlerts.add(cqAlert);
+				}
+				
+				alertRepo.save(qAlerts);
+			}
+		}
+		
 		return analysis;
 	}
+	
+	
 }
 
 	

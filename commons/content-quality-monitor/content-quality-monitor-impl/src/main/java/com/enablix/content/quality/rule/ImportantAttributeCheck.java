@@ -3,6 +3,7 @@ package com.enablix.content.quality.rule;
 import org.springframework.stereotype.Component;
 
 import com.enablix.commons.util.StringUtil;
+import com.enablix.core.api.QualityRuleConstants;
 import com.enablix.core.commons.xsdtopojo.ContainerType;
 import com.enablix.core.commons.xsdtopojo.ContentItemType;
 import com.enablix.core.commons.xsdtopojo.ParamSetType;
@@ -14,7 +15,7 @@ import com.enablix.services.util.ParamSetUtil;
 public class ImportantAttributeCheck extends RequiredAttributeRule {
 
 	public ImportantAttributeCheck() {
-		super(RuleConstants.RULE_ID_REQUIRED_ATTR_CHECK, AlertLevel.WARN);
+		super(QualityRuleConstants.RULE_ID_REQUIRED_ATTR_CHECK, AlertLevel.WARN);
 	}
 
 	@Override
@@ -27,11 +28,11 @@ public class ImportantAttributeCheck extends RequiredAttributeRule {
 		
 		AttrCheckConfig attrConfig = null;
 		
-		ParamSetType paramSet = ParamSetUtil.getParamSet(item.getQualityConfig(), RuleConstants.PARAMSET_NAME_REQUIRED);
+		ParamSetType paramSet = ParamSetUtil.getParamSet(item.getQualityConfig(), QualityRuleConstants.PARAMSET_NAME_REQUIRED);
 	
 		if (paramSet != null) {
 		
-			String severity = ParamSetUtil.getStringValue(paramSet, RuleConstants.PARAM_NAME_SEVERITY);
+			String severity = ParamSetUtil.getStringValue(paramSet, QualityRuleConstants.PARAM_NAME_SEVERITY);
 			
 			if (StringUtil.hasText(severity)) {
 				attrConfig = new AttrCheckConfig(item, container.getQualifiedId(), 

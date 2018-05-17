@@ -23,6 +23,7 @@ import { BizDimensionDetailComponent } from '../biz-dimension/biz-dimension-deta
 import { BizDimensionComponent } from '../biz-dimension/biz-dimension.component';
 import { ConsolidateContentComponent } from '../consolidate-content/consolidate-content.component';
 import { MyDraftComponent } from '../consolidate-content/my-draft/my-draft.component';
+import { ObsoleteContentComponent } from '../consolidate-content/obsolete-content/obsolete-content.component';
 import { ContentRequestComponent } from '../consolidate-content/content-request/content-request.component';
 import { FreetextSearchComponent } from '../freetext-search/freetext-search.component';
 import { CompanyComponent } from '../company/company.component';
@@ -157,6 +158,10 @@ const routes: Routes = [
             {
               path: 'myrequests',
               component: MyContentRequestComponent
+            },
+            {
+              path: 'cverify',
+              component: ObsoleteContentComponent
             }
           ]
         },

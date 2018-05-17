@@ -2,6 +2,7 @@ package com.enablix.content.quality.rule;
 
 import org.springframework.stereotype.Component;
 
+import com.enablix.core.api.QualityRuleConstants;
 import com.enablix.core.commons.xsdtopojo.ContainerType;
 import com.enablix.core.commons.xsdtopojo.ContentItemType;
 import com.enablix.core.domain.content.quality.AlertLevel;
@@ -12,7 +13,7 @@ import com.enablix.services.util.ParamSetUtil;
 public class MandatoryAttributeCheck extends RequiredAttributeRule {
 
 	public MandatoryAttributeCheck() {
-		super(RuleConstants.RULE_ID_REQUIRED_ATTR_VALIDATION, AlertLevel.ERROR);
+		super(QualityRuleConstants.RULE_ID_REQUIRED_ATTR_VALIDATION, AlertLevel.ERROR);
 	}
 
 	@Override
@@ -23,7 +24,7 @@ public class MandatoryAttributeCheck extends RequiredAttributeRule {
 	
 	protected AttrCheckConfig buildAttrCheckConfig(ContainerType container, ContentItemType item) {
 		
-		Boolean required = ParamSetUtil.getBooleanValue(item.getQualityConfig(), RuleConstants.PARAM_NAME_REQUIRED, Boolean.FALSE);
+		Boolean required = ParamSetUtil.getBooleanValue(item.getQualityConfig(), QualityRuleConstants.PARAM_NAME_REQUIRED, Boolean.FALSE);
 		
 		if (required) {
 			return new AttrCheckConfig(item, container.getQualifiedId(), getAlertLevel(), AlertSeverity.HIGH);

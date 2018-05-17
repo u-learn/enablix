@@ -31,9 +31,15 @@
               <div class="param-value">{{cont.instance.singularLabel}}</div>
             </div>
           </ng-container>
+          <ng-container *ngIf="hasVerifyInDaysConfig(cont.instance)">
+            <div class="content-row flex-row">
+              <div class="param-key">Verify in Days</div>
+              <div class="param-value">{{getVerifyInDaysLabel(cont.instance)}}</div>
+            </div>
+          </ng-container>
         </div>
         <div class="right dashboard-buttons small">
-          <div class="action-btn with-border btn-with-text" *ngIf="cntnrTypeBizDim" (click)="editContainer(cont)">
+          <div class="action-btn with-border btn-with-text" (click)="editContainer(cont)">
             <div class="icon small edit"></div>
             <p class="show-me">Edit</p>
           </div>
@@ -58,19 +64,40 @@
       <form #contForm="ngForm" *ngIf="cont.editing">
         <div class="sub-section-content">
           <div class="left">
-            <div class="form-input">
-              <div class="input-label">Plural Label</div>
-              <div class="input-control">
-                <input type="text" name="label" [(ngModel)]="cont.instanceCopy.label" #label="ngModel" required>
+            <ng-container *ngIf="cntnrTypeBizDim || !cont.instance.id">
+              <div class="form-input" >
+                <div class="input-label">Plural Label</div>
+                <div class="input-control">
+                  <input type="text" name="label" [(ngModel)]="cont.instanceCopy.label" #label="ngModel" required>
+                </div>
+                <div class="input-error" [hidden]="label.valid || label.pristine">
+                  <p [hidden]="!label.errors?.required">Plural Label is required</p>
+                </div>
               </div>
-              <div class="input-error" [hidden]="label.valid || label.pristine">
-                <p [hidden]="!label.errors?.required">Plural Label is required</p>
+              <div class="form-input">
+                <div class="input-label">Singular Label</div>
+                <div class="input-control">
+                  <input type="text" name="singularLabel" [(ngModel)]="cont.instanceCopy.singularLabel">
+                </div>
               </div>
-            </div>
-            <div class="form-input">
-              <div class="input-label">Singular Label</div>
+            </ng-container>
+            <ng-container *ngIf="cntnrTypeBizContent && cont.instance.id">
+              <div class="type-header">
+                <h3>{{cont.instance.label}}</h3>
+              </div>
+              <ng-container *ngIf="cont.instance.singularLabel">
+                <div class="content-row flex-row" style="margin-bottom: 12px;">
+                  <div class="param-key">Singular Label</div>
+                  <div class="param-value">{{cont.instance.singularLabel}}</div>
+                </div>
+              </ng-container>
+            </ng-container>
+            <div class="form-input" *ngIf="cntnrTypeBizContent">
+              <div class="input-label">Verify In Days</div>
               <div class="input-control">
-                <input type="text" name="singularLabel" [(ngModel)]="cont.instanceCopy.singularLabel">
+                <ebx-select [formControl]="cont.verifyInDaysCtrl"
+                    placeholder="Select Verify In Days"
+                    [options]="verifyInDaysOpts"></ebx-select>
               </div>
             </div>
           </div>

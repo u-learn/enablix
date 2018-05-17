@@ -69,4 +69,20 @@ public class QualityAlert {
 		this.message = alertMessage;
 	}
 	
+	public static QualityAlert build(String ruleId, AlertInfo alertInfo, 
+			AlertLevel alertLevel, String alertMessage) {
+
+		return build(ruleId, alertInfo, alertLevel, AlertSeverity.MEDIUM, alertMessage);
+	}
+	
+	public static QualityAlert build(String ruleId, AlertInfo alertInfo, 
+			AlertLevel alertLevel, AlertSeverity alertSeverity, String alertMessage) {
+	
+		QualityAlert error = new QualityAlert(ruleId, alertLevel, alertSeverity);
+		error.setInfo(alertInfo);
+		error.setMessage(alertMessage);
+		
+		return error;
+	}
+	
 }

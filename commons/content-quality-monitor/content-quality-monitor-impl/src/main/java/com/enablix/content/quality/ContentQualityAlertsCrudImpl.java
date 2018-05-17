@@ -9,6 +9,7 @@ import com.enablix.core.domain.content.quality.ContentQualityAnalysis;
 import com.enablix.core.mongo.repository.BaseMongoRepository;
 
 @Component
+@Deprecated
 public class ContentQualityAlertsCrudImpl extends MongoRepoCrudService<ContentQualityAnalysis> implements ContentQualityAlertsCrud {
 
 	@Autowired

@@ -71,6 +71,7 @@ import { UserTaskService } from './user-task/user-task.service';
 import { ProgressCircleComponent } from './progress-circle/progress-circle.component';
 import { AppEventService } from './app-event.service';
 import { YoutubeImportComponent } from './bulk-import/youtube-import/youtube-import.component';
+import { ContentQualityService } from './content/content-quality.service';
 
 @NgModule({
   imports: [
@@ -107,6 +108,7 @@ import { YoutubeImportComponent } from './bulk-import/youtube-import/youtube-imp
     GoogleDriveService,
     UserTaskService,
     AppEventService,
+    ContentQualityService,
   	{
   	  provide: HTTP_INTERCEPTORS,
       useClass: HttpErrorInterceptor,

@@ -9,6 +9,7 @@ import { AlertService } from '../../core/alert/alert.service';
 import { ContentTemplate } from '../../model/content-template.model';
 import { ConfirmDialogComponent } from '../../core/confirm-dialog/confirm-dialog.component'; 
 import { MessageDialogComponent } from '../../core/message-dialog/message-dialog.component'; 
+import { SelectOption } from '../../core/select/select.component';
 
 @Component({
   selector: 'ebx-container-template',
@@ -17,6 +18,8 @@ import { MessageDialogComponent } from '../../core/message-dialog/message-dialog
   encapsulation: ViewEncapsulation.None
 })
 export class ContainerTemplateComponent implements OnInit {
+
+  verifyInDaysOpts: SelectOption[];
 
   containerList: any[];
   filteredContainers: Observable<any>;
@@ -45,7 +48,25 @@ export class ContainerTemplateComponent implements OnInit {
 
   ngOnInit() {
     
-    this.bizCategory = this.route.snapshot.data['bizCategory'] || 'dim'
+    this.bizCategory = this.route.snapshot.data['bizCategory'] || 'dim';
+    this.verifyInDaysOpts = [
+      {
+        id: '30',
+        label: '30 Days'
+      },
+      {
+        id: '90',
+        label: '90 Days'
+      },
+      {
+        id: '180',
+        label: '180 Days'
+      },
+      {
+        id: '365',
+        label: '1 year'
+      }
+    ];
     
     this.containerList = [];
     var targetContainers = null;
@@ -91,15 +112,124 @@ export class ContainerTemplateComponent implements OnInit {
   initContainerList(targetContainers: any[]) {
 
     if (targetContainers) {
+      
       var indx = 0;
+      
       targetContainers.forEach(
         (cont) => {
-          this.containerList.push({
+          
+          let cntnrItem: any = {
             editing: false,
             index: indx++,
             instance: cont,
-            instanceCopy: JSON.parse(JSON.stringify(cont))  
-          });
+            instanceCopy: JSON.parse(JSON.stringify(cont))
+          };
+
+          this.addVerifyInDaysControl(cntnrItem);
+          this.containerList.push(cntnrItem);
+        }
+      );
+    }
+  }
+
+  getObsoleteInDaysParam(contInstance: any) {
+
+    if (contInstance.qualityConfig && contInstance.qualityConfig.param) {
+
+      for (let param of contInstance.qualityConfig.param) {
+        if (param.name == 'OBSOLETE_IN_DAYS') {
+          return param;
+        }
+      }
+    }
+
+    return null;
+  }
+
+  hasVerifyInDaysConfig(contInstance: any) {
+    return this.getObsoleteInDaysParam(contInstance) != null;
+  }
+
+  getVerifyInDaysLabel(contInstance: any) {
+    
+    let param = this.getObsoleteInDaysParam(contInstance);
+    
+    if (param) {
+      for (let opt of this.verifyInDaysOpts) {
+        if (opt.id == param.value) {
+          return opt.label;
+        }
+      }
+      // if not found in opts
+      return param.value + " Days";
+    }
+
+    return "";
+  }
+
+  addVerifyInDaysControl(cntnrItem: any) {
+
+    if (this.isBizContent) {
+
+      cntnrItem.verifyInDaysCtrl = new FormControl();
+      
+      let initVal = [this.verifyInDaysOpts[0]];
+      
+      if (cntnrItem.instanceCopy.qualityConfig) {
+      
+        for (let param of cntnrItem.instanceCopy.qualityConfig.param) {
+      
+          if (param.name == 'OBSOLETE_IN_DAYS') {
+      
+            for (let opt of this.verifyInDaysOpts) {
+              if (opt.id == param.value) {
+                initVal = [opt];
+                break;
+              }
+            }
+      
+            break;
+          }
+        }
+      }
+
+      cntnrItem.verifyInDaysCtrl.valueChanges.subscribe(
+        val => {
+          if (val && val[0]) {
+            
+            var verifyInParam = {
+              'name': 'OBSOLETE_IN_DAYS',
+              'value': val[0].id
+            };
+
+            if (cntnrItem.instanceCopy.qualityConfig) {
+
+              if (cntnrItem.instanceCopy.qualityConfig.param) {
+              
+                var updated = false;
+              
+                for (let param of cntnrItem.instanceCopy.qualityConfig.param) {
+                  if (param.name == verifyInParam.name) {
+                    param.value = verifyInParam.value;
+                    updated = true;
+                    break;
+                  }
+                }
+
+                if (!updated) {
+                  cntnrItem.instanceCopy.qualityConfig.param.push(verifyInParam);
+                }
+
+              } else {
+                cntnrItem.instanceCopy.qualityConfig.param = [verifyInParam];
+              }
+
+            } else {
+              cntnrItem.instanceCopy.qualityConfig = {
+                param: [verifyInParam]
+              }
+            }
+          }
         }
       );
     }
@@ -166,12 +296,15 @@ export class ContainerTemplateComponent implements OnInit {
 
   addNewContainer() {
     
-    this.containerList.push({
+    let cntnrItem = {
       editing: true,
       index: this.containerList.length,
       instance: {},
       instanceCopy: {}
-    });
+    };
+
+    this.addVerifyInDaysControl(cntnrItem);
+    this.containerList.push(cntnrItem);
 
     this.refreshFilteredlist();
 

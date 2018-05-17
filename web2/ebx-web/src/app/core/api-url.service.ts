@@ -90,6 +90,8 @@ export class ApiUrlService {
 
   static POST_USER_TASK_MILESTONE_UPDATE = "/usertask/updtmilestone";
 
+  static POST_FETCH_QUALITY_ALERTS = "/cq/fetch";
+
   static DELETE_CONTAINER_DEF = "/template/:templateId/c/:containerQId/";
 
   static GET_LOGOUT = "/logout";
@@ -408,6 +410,10 @@ export class ApiUrlService {
 
   postUserTaskMilestoneUpdateUrl() : string {
     return this.getAPIUrl(ApiUrlService.POST_USER_TASK_MILESTONE_UPDATE); 
+  }
+
+  postFetchQualityAlertsUrl() : string {
+    return this.getAPIUrl(ApiUrlService.POST_FETCH_QUALITY_ALERTS);
   }
 
   deleteContainerDefUrl(templateId: string, containerQId: string) : string {

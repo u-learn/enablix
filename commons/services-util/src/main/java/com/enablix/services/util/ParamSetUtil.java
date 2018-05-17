@@ -4,6 +4,9 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.enablix.commons.util.collection.CollectionUtil;
 import com.enablix.core.commons.xsdtopojo.ParamSetType;
 import com.enablix.core.commons.xsdtopojo.ParameterType;
@@ -11,9 +14,28 @@ import com.enablix.core.commons.xsdtopojo.QualityConfigType;
 
 public class ParamSetUtil {
 
+	private static final Logger LOGGER = LoggerFactory.getLogger(ParamSetUtil.class);
+	
 	public static String getStringValue(ParamSetType paramSet, String paramName) {
 		ParameterType parameter = getParameter(paramSet, paramName);
 		return parameter == null ? null : parameter.getValue();
+	}
+	
+	public static Integer getIntegerValue(ParamSetType paramSet, String paramName) {
+		
+		ParameterType parameter = getParameter(paramSet, paramName);
+		
+		Integer intValue = null;
+		
+		if (parameter != null) {
+			try {
+				intValue = Integer.valueOf(parameter.getValue());
+			} catch (NumberFormatException nfe) {
+				LOGGER.error("Invalid value [{}] for param [{}]", parameter.getName(), parameter.getValue());
+			}
+		}
+		
+		return intValue;
 	}
 	
 	public static Boolean getBooleanValue(ParamSetType paramSet, String paramName) {
@@ -27,9 +49,12 @@ public class ParamSetUtil {
 	
 	private static ParameterType getParameter(ParamSetType paramSet, String paramName) {
 		
-		for (ParameterType param : paramSet.getParam()) {
-			if (paramName.equals(param.getName())) {
-				return param;
+		if (paramSet != null) {
+		
+			for (ParameterType param : paramSet.getParam()) {
+				if (paramName.equals(param.getName())) {
+					return param;
+				}
 			}
 		}
 		

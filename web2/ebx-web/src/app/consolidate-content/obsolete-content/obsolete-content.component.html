@@ -1,0 +1,10 @@
+<div class="table-content">
+  <ebx-table *ngIf="dataPage" [tableData]="dataPage" [tableColumns]="tableColumns" [(pagination)]="pagination" (onRefreshData)="fetchData()">
+    <ng-template #dataRow let-rec>
+      <td><div class="asset" (click)="navToRecordDetail(rec)"><ebx-card-preview [record]="getDecoratedContentRecord(rec)" [container]="getRecordContainer(rec)" size="small"></ebx-card-preview><div class="title">{{rec.record.__title}}</div></div></td>
+      <td><div class="center-content"><ebx-type-pill [containerQId]="rec.contentQualityAlert.contentQId"></ebx-type-pill></div></td>
+      <td>{{rec.contentQualityAlert.alert.info?.obsoleteOn | ebxDate }}</td>
+      <td>{{rec.contentQualityAlert.authorName}}</td>
+    </ng-template>
+  </ebx-table>
+</div>

@@ -294,4 +294,13 @@ public class ContentDataUtil {
 		return false;
 	}
 
+
+	public static String getContentModifiedBy(Map<String, Object> contentData) {
+		return (String) contentData.get(ContentDataConstants.MODIFIED_BY_KEY);
+	}
+	
+	public static String getContentModifiedByName(Map<String, Object> contentData) {
+		return (String) contentData.get(ContentDataConstants.MODIFIED_BY_NAME_KEY);
+	}
+
 }

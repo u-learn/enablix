@@ -5,7 +5,7 @@ import java.util.Map;
 import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.commons.util.StringUtil;
 import com.enablix.commons.util.json.JsonUtil;
-import com.enablix.content.quality.QualityAnalyzer.AnalysisRuleSet;
+import com.enablix.core.domain.content.quality.AlertLevel;
 
 public class UpdateContentRequest implements ContentUpdateContext {
 
@@ -24,7 +24,7 @@ public class UpdateContentRequest implements ContentUpdateContext {
 	
 	private QualityAlertProcessing qualityAlertProcessing;
 	
-	private AnalysisRuleSet qualityAnalysisLevel;
+	private AlertLevel qualityAnalysisLevel;
 
 	protected UpdateContentRequest() {
 		
@@ -48,7 +48,7 @@ public class UpdateContentRequest implements ContentUpdateContext {
 		this.contentQId = contentQId;
 		this.dataAsMap = dataAsMap;
 		this.qualityAlertProcessing = QualityAlertProcessing.BREAK;
-		this.qualityAnalysisLevel = AnalysisRuleSet.ERROR;
+		this.qualityAnalysisLevel = AlertLevel.ERROR;
 	}
 	
 	public String getTemplateId() {
@@ -114,11 +114,11 @@ public class UpdateContentRequest implements ContentUpdateContext {
 		this.qualityAlertProcessing = qualityAlertProcessing;
 	}
 
-	public AnalysisRuleSet getQualityAnalysisLevel() {
+	public AlertLevel getQualityAnalysisLevel() {
 		return qualityAnalysisLevel;
 	}
 
-	public void setQualityAnalysisLevel(AnalysisRuleSet qualityAnalysisLevel) {
+	public void setQualityAnalysisLevel(AlertLevel qualityAnalysisLevel) {
 		this.qualityAnalysisLevel = qualityAnalysisLevel;
 	}
 	

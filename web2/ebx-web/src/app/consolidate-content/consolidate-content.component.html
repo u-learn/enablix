@@ -6,6 +6,7 @@
         <a routerLink="/portal/cconsol" routerLinkActive="tab-active" [routerLinkActiveOptions]="{ exact: true }">My Drafts</a>
         <a *ebxAccess="'MANAGE_CONTENT_REQUEST'" routerLink="/portal/cconsol/requests" routerLinkActive="tab-active">Requests</a>
         <a routerLink="/portal/cconsol/myrequests" routerLinkActive="tab-active">My Requests</a>
+        <a routerLink="/portal/cconsol/cverify" routerLinkActive="tab-active">Verify Content</a>
       </div>
       <div class="tab-content">
         <router-outlet></router-outlet>

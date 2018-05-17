@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.content.quality.rule.ContentAttributeQualityRule.AttrCheckConfig;
+import com.enablix.core.api.QualityRuleConstants;
 import com.enablix.core.api.TemplateFacade;
 import com.enablix.core.commons.xsdtopojo.ContainerType;
 import com.enablix.core.commons.xsdtopojo.ContentItemType;
@@ -21,7 +22,7 @@ import com.enablix.services.util.ParamSetUtil;
 public class UniqueAttributeValueCheck extends DuplicateAttributeValueCheck<AttrCheckConfig> {
 
 	public UniqueAttributeValueCheck() {
-		super(RuleConstants.RULE_ID_UNIQUE_ATTR_VALIDATION, AlertLevel.ERROR);
+		super(QualityRuleConstants.RULE_ID_UNIQUE_ATTR_VALIDATION, AlertLevel.ERROR);
 	}
 
 	protected SearchFilter duplicateCheckFilter(ContentItemType attrDef, String itemValue, 
@@ -40,7 +41,7 @@ public class UniqueAttributeValueCheck extends DuplicateAttributeValueCheck<Attr
 
 	@Override
 	protected AttrCheckConfig buildAttrCheckConfig(ContainerType container, ContentItemType item) {
-		if (ParamSetUtil.isBooleanAndTrue(item.getQualityConfig(), RuleConstants.PARAM_NAME_UNIQUE)) {
+		if (ParamSetUtil.isBooleanAndTrue(item.getQualityConfig(), QualityRuleConstants.PARAM_NAME_UNIQUE)) {
 			return new AttrCheckConfig(item, container.getQualifiedId(), getAlertLevel(), AlertSeverity.HIGH);
 		}
 		return null;

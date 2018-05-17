@@ -29,7 +29,9 @@ import com.enablix.commons.util.StringUtil;
 import com.enablix.commons.util.collection.CollectionUtil;
 import com.enablix.commons.util.concurrent.Events;
 import com.enablix.commons.util.process.ProcessContext;
+import com.enablix.content.quality.LevelBasedRuleSet;
 import com.enablix.content.quality.QualityAnalyzer;
+import com.enablix.content.quality.QualityRuleSet;
 import com.enablix.core.api.ContentDataRecord;
 import com.enablix.core.api.ContentDataRef;
 import com.enablix.core.api.ContentRecordGroup;
@@ -41,6 +43,7 @@ import com.enablix.core.commons.xsdtopojo.ContentItemClassType;
 import com.enablix.core.commons.xsdtopojo.ContentItemType;
 import com.enablix.core.commons.xsdtopojo.ContentTemplate;
 import com.enablix.core.content.event.ContentDataDelEvent;
+import com.enablix.core.domain.content.quality.AlertLevel;
 import com.enablix.core.domain.content.quality.QualityAnalysis;
 import com.enablix.core.mongo.content.ContentCrudService;
 import com.enablix.core.mongo.view.MongoDataView;
@@ -92,7 +95,7 @@ public class ContentDataManagerImpl implements ContentDataManager {
 		TemplateFacade template = templateMgr.getTemplateFacade(ProcessContext.get().getTemplateId());
 		
 		QualityAnalysis analysis = qualityAnalyzer.analyze(request.getDataAsMap(), 
-				request.getContentQId(), request.getQualityAnalysisLevel(), template);
+				request.getContentQId(), getQualityRuleSet(request.getQualityAnalysisLevel()), template);
 		
 		response.setQualityAnalysis(analysis);
 		
@@ -108,6 +111,10 @@ public class ContentDataManagerImpl implements ContentDataManager {
 		}
 		
 		return response;
+	}
+	
+	private QualityRuleSet getQualityRuleSet(AlertLevel level) {
+		return new LevelBasedRuleSet(new AlertLevel[] { level });
 	}
 	
 
