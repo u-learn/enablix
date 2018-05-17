@@ -62,6 +62,10 @@ export class BizContentComponent implements OnInit, AfterViewInit {
               private router: Router) { }
 
   ngOnInit() {
+    // override the route reuse strategy to force component reload
+    this.router.routeReuseStrategy.shouldReuseRoute = function() {
+        return false;
+    };
 
     // get return url from route parameters or default to '/'
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';

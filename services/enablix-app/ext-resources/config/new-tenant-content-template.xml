@@ -1068,4 +1068,12 @@
 			</enclosures>
 		</topNavigation>
 	</portalUIDefinition>
+	<qualityRuleConfig>
+        <qualityRules>
+            <rule id="REQUIRED_ATTR_VALIDATION_RULE"/>
+            <rule id="REQUIRED_ATTR_CHECK_RULE"/>
+            <rule id="DUPLICATE_ATTR_VALUE_CHECK_RULE"/>
+            <rule id="OBSOLETE_CONTENT_VERIFY_RULE"/>
+        </qualityRules>
+    </qualityRuleConfig>
 </contentTemplate>

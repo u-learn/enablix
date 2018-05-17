@@ -25,7 +25,6 @@ export class ContentStackPreviewComponent implements OnInit {
   ngOnInit() {
     this.contentService.getRecordContentStack(this.container.qualifiedId, this.record.identity).subscribe(
       (result: any) => {
-        console.log(result);
         this.contentService.decorateContentGroup(result);
         this.contentStack = result;
       }, 
