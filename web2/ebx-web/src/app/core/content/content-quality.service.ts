@@ -36,7 +36,7 @@ export class ContentQualityService {
     searchRequest.projectedFields = [];
 
     let apiUrl = this.apiUrlService.postFetchQualityAlertsUrl();
-    return this.http.post(apiUrl, searchRequest);
+    return this.http.post<DataPage>(apiUrl, searchRequest);
   }
 
 }
