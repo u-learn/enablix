@@ -90,6 +90,7 @@
     </div>
   </div>
   <div *ngSwitchCase="'TEXT'">
+    <div class="title">{{record?.title}}</div>
     <div class="text-preview" [innerHtml]="record.preview.text"></div>
   </div>
 </ng-container>
