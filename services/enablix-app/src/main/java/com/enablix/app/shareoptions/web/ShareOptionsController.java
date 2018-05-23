@@ -3,6 +3,7 @@ package com.enablix.app.shareoptions.web;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -32,6 +33,12 @@ public class ShareOptionsController {
 	
 	@Autowired
 	private SharedContentUrlCreator shareableUrlCreator;
+	
+	@Value("${site.url.content.widget}")
+	private String contentWidgetUrl;
+	
+	@Value("${site.content.widget.embed.code}")
+	private String contentWidgetEmbedCode;
 
 	@RequestMapping(method = RequestMethod.POST, value = "/downldDocURLCopyAudit/")
 	public @ResponseBody Boolean auditDocUrlCopy(@RequestBody ContentAuditRequest request) {
@@ -82,6 +89,23 @@ public class ShareOptionsController {
 		
 		return new ShareableUrlResponse(serverUrl + shareableUrl);
 	}
+
+	@RequestMapping(method = RequestMethod.POST, value = "/shareableContentWidgetUrl/", produces="application/json")
+	public ShareableUrlResponse getShareableContentWidgetUrl(@RequestBody ShareableUrlRequest request) {
+		
+		String serverUrl = EnvPropertiesUtil.getProperties().getServerUrl();
+		String userId = ProcessContext.get().getUserId();
+		
+		String shareableUrl = shareableUrlCreator.createShareableUrl(request.getUrl(), userId, true);
+		
+		String id = shareableUrl.substring(shareableUrl.lastIndexOf('/') + 1);
+		String widgetUrl = contentWidgetUrl.replaceFirst(":accessId", id);
+		
+		String embedCode = contentWidgetEmbedCode.replaceFirst(":contentwidgeturl", (serverUrl + widgetUrl));
+		
+		return new ShareableUrlResponse(embedCode);
+	}
+
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/extLinkURLCopyAudit/")
 	public @ResponseBody Boolean auditExtLinkUrlCopy(@RequestBody ContentAuditRequest request) {

@@ -1,0 +1,292 @@
+@import 'font.mixin';
+
+@include font-face("Fakt Pro Blond", "./assets/fonts/FaktPro-Blond", null, null, ttf);
+@include font-face("Fakt Pro Light", "./assets/fonts/FaktPro-Light", null, null, ttf);
+@include font-face("Fakt Pro Medium", "./assets/fonts/FaktPro-Medium", null, null, ttf);
+@include font-face("Fakt Pro Normal", "./assets/fonts/FaktPro-Normal", null, null, ttf);
+@include font-face("Fakt Pro SemiBold", "./assets/fonts/FaktPro-SemiBold", null, null, ttf);
+@include font-face("Fakt Pro Thin", "./assets/fonts/FaktPro-Thin", null, null, ttf);
+
+$FPBlond: 'Fakt Pro Blond';
+$FPLight: 'Fakt Pro Light';
+$FPMedium: 'Fakt Pro Medium';
+$FPNormal: 'Fakt Pro Normal';
+$FPSemiBold: 'Fakt Pro SemiBold';
+$FPThin: 'Fakt Pro Thin';
+
+$black: #000;
+$white: #fff;
+
+$grey-dark: #808C9B;
+$grey-med: #BFCBD9;
+$grey-lig-20: #DEE4EA;
+$grey-lig-10: #E3EBEF;
+$grey-lig-5: #F7F9F9;
+
+$blue-med-20: #1F8AEF;
+$blue-med-10: #2CA6E3;
+$blue-med-5: #2C4290;
+$blue-purple: #4049AA;
+$purple: #724BD0;
+
+$yellow-dark: #D0A82B;
+$orange: #ED583E;
+
+
+body {
+  font-family: $FPLight;
+  background: $grey-lig-5;
+}
+
+.header-with-btns {
+  display: flex;
+  align-items: center;
+}
+
+.title {
+  font-size: 1.2em;
+  margin: 0 12px 8px 0;
+}
+
+.all-slides {
+  display: flex;
+  width: 100%;
+  overflow-x: auto;
+}
+
+img.slide {
+    width: 100%;
+    height: auto;
+}
+
+img.slide, img.slide-thumbnail {
+  border-radius: 4px;
+}
+
+.mini-slide {
+  display: inline-block;
+  margin-right: 8px;
+  z-index: 1;
+  cursor: pointer;
+  height: 116px;
+
+  &.active > .overlay {
+    background-color: #000;
+    position:relative;
+    opacity: 0.5;
+    height: 108px;
+    width: 192px;
+    -moz-opacity: 50%;
+    -webkit-opacity: 50%;
+    z-index: 2;
+    top: -112px;
+    border-radius: 4px;
+
+    ~ .eye {
+        position: relative;
+        z-index: 3;
+        width: 24px;
+        height: 16px;
+        top: -176px;
+        left: 84px;
+    }
+  }
+
+  img.slide-thumbnail {
+    height: 108px;
+    width: 192px;
+  }
+}
+
+.action-btns {
+  margin-bottom: 8px;
+}
+
+.action-btn {
+  display: flex;
+  background: white;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 1px 1px 0 rgba(0,0,0,0.06);
+  border-radius: 3px;
+  cursor: pointer;
+  padding: 4px;
+
+  .action-btn {
+    padding: 0;
+    box-shadow: none;
+  }
+
+  &.with-border {
+    border: 1px solid $grey-lig-10;
+  }
+
+  &:hover {
+    background: #fcfcfc;
+  }
+
+  &.add-padding {
+    padding: 0 8px;
+  }
+
+  & + .action-btn {
+    margin-left: 8px;
+  }
+
+  &.btn-with-text, .btn-with-text {
+    display: flex;
+    align-items: center;
+  }
+
+  .show-me {
+    display: none;
+    height: 13px;
+    font-size: 14px;
+    color: $blue-med-20;
+    text-transform: capitalize;
+    font-family: $FPThin;
+    white-space: nowrap;
+
+    &.visible {
+      display: flex;
+    }
+  }
+
+  &:hover .show-me {
+    display: flex;
+  }
+
+  span {
+    height: 13px;                    
+    font-size: 14px;
+    color: $blue-med-20;
+    text-transform: capitalize;
+  }
+
+  .icon + span {
+    padding-left: 8px;
+  }
+
+  .icon {
+
+    &.small {
+      width: 16px;
+      height: 16px;
+    }
+
+    &.download {
+      background: url("/assets/images/icons/download.svg") no-repeat center;
+    }
+    
+    &.openurl {
+      background: url("/assets/images/icons/open-link.svg") no-repeat center;   
+    }
+
+  }
+}
+
+.file-default {
+  justify-content: center;
+  display: flex;
+  justify-content: left;
+  flex-direction: column;
+
+  .file-img {
+    background: $blue-med-5;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    height: 128px;
+    width: 256px;
+    justify-content: space-around;
+
+    img {
+      width: 48px;
+      height: 60px;
+    }  
+  }
+  
+
+  .info {
+    display: flex;
+    align-items: center;
+    padding-top: 16px;
+    font-family: $FPLight;
+    font-size: 14px;
+    color: #2D2D2D;
+    line-height: 18px;
+  }
+}
+
+.embed-rich {
+
+  iframe, object {
+    border: 0;
+    min-height: calc(100vh - 80px);;
+    width: 100%;
+  }
+
+  .embed-heading {
+    font-family: $FPNormal;
+    color: $black;
+    font-size: 18px;
+    text-align: center;
+    padding: 14px;
+    border-bottom: 1px solid rgba(0,0,0,0.03);
+  }
+
+  .embed-image {
+    
+    text-align: center;
+
+    img {
+      width: 100%;
+    }
+  }
+
+  .embed-card-text {
+
+    padding: 16px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.03);   
+
+    h3 {
+      font-family: $FPLight;
+    }
+
+    
+
+    .embed-desc {
+      font-family: $FPLight;
+      color: $black;
+      font-size: 16px;
+      padding: 14px 0;
+      
+    }
+
+    .fav {
+      font-family: $FPLight;
+      font-size: 12px;
+      text-transform: uppercase;
+    }
+
+    .favicon {
+      width: 12px;
+      height: 12px;
+      margin-right: 5px;
+      vertical-align: top;
+    }
+  }
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+h3, p {
+  margin: 0;
+}
+
+.eye {
+  background: url("/assets/images/icons/eye-icon-white.svg") no-repeat;
+}

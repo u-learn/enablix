@@ -1,0 +1,95 @@
+<ng-container [ngSwitch]="type">
+  <div *ngSwitchCase="'IMAGE'">
+    <div class="header-with-btns">
+      <div class="title">{{record?.title}}</div>
+      <div class="action-btns">
+        <div class="action-btn btn-with-text" (click)="docDownload()">
+          <div class="icon small download"></div>
+          <span class="show-me">Download File</span>
+          <a [href]="record.doc.accessUrl" [hidden]="true" #downloadLink></a>
+        </div>
+      </div>
+    </div>
+    <img [src]="record.preview.imageUrl">
+  </div>
+  <div *ngSwitchCase="'IMAGE_BASED_PREVIEW'">
+    <div class="header-with-btns">
+      <div class="title">{{record?.title}}</div>
+      <div class="action-btns">
+        <div class="action-btn btn-with-text" (click)="docDownload()">
+          <div class="icon small download"></div>
+          <span class="show-me">Download File</span>
+          <a [href]="record.doc.accessUrl" [hidden]="true" #downloadLink></a>
+        </div>
+      </div>
+    </div>
+    <div class="file-preview">
+      <div class="active-slide" *ngFor="let s of slides" [hidden]="s !== activeSlide">
+        <img class="slide" [src]="s"/>
+      </div>
+      <div class="all-slides">
+        <div class="mini-slide" [class.active]="s == activeSlide" *ngFor="let s of slides" (click)="activeSlide = s">
+          <img class="slide-thumbnail" [src]="s"/>
+          <div class="overlay"></div>
+          <div class="eye"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngSwitchCase="'DOC_NO_PREVIEW'">
+    <div class="header-with-btns">
+      <div class="title">{{record?.title}}</div>
+      <div class="action-btns">
+        <div class="action-btn btn-with-text" (click)="docDownload()">
+          <div class="icon small download"></div>
+          <span class="show-me">Download File</span>
+          <a [href]="record.doc.accessUrl" [hidden]="true" #downloadLink></a>
+        </div>
+      </div>
+    </div>
+    <div class="file-default">
+      <div class="file-img"><img [src]="noPreviewImg()"></div>
+      <div class="info">Preview is not available for this asset.</div>
+    </div>
+  </div>
+  <div *ngSwitchCase="'URL'">
+    <div class="header-with-btns">
+      <div class="title">{{record?.title}}</div>
+      <div class="action-btns">
+        <div class="action-btn btn-with-text" (click)="openUrl()">
+          <div class="icon small openurl"></div>
+          <span class="show-me">Open URL</span>
+        </div>
+      </div>
+    </div>
+    <div class="embed-rich" *ngIf="urlType == 'rich' || urlType == 'link'">
+      <iframe [src]="record.preview.embedInfo.url | safeUrl" sandbox="allow-scripts allow-popups allow-forms allow-pointer-lock allow-same-origin" *ngIf="!iframeNotSupported">
+        <a target="_blank" [href]="record.hyperlink.href">Your browser does not support iFrame</a>
+      </iframe>
+      <div class="embed-card" *ngIf="iframeNotSupported">
+        <a target="_blank" [href]="navUrl">
+          <div class="embed-image" *ngIf="urlThumbnail">
+            <img [src]="urlThumbnail">
+          </div>
+          <div class="embed-card-text">
+            <h3>{{record.preview.embedInfo?.title}}</h3>
+            <div class="embed-desc">{{record.preview.embedInfo?.description}}</div>
+            <p class="fav"><img class="favicon" *ngIf="record.preview.embedInfo?.favicon?.url" onerror="this.src='/assets/images/icons/broken.jpg'" [src]="record.preview.embedInfo.favicon.url">{{record.preview.embedInfo?.site}}</p>
+          </div>
+        </a>
+      </div>
+    </div>
+    <div class="embed-rich" *ngIf="urlType == 'pdf'">
+      <object [data]="record.preview.embedInfo.url | safeUrl" type="application/pdf">
+      </object>
+    </div>
+    <div *ngIf="urlEmbedHtml" class="embed-oembed" [innerHtml]="urlEmbedHtml | safeHtml"></div>
+    <div class="embed-unknown" *ngIf="urlType == 'unknown'">
+      <div class="url-img"><img src="/assets/images/icons/url-icon.svg"></div>
+      <div class="info">Preview is not available for this asset.</div>
+    </div>
+  </div>
+  <div *ngSwitchCase="'TEXT'">
+    <div class="text-preview" [innerHtml]="record.preview.text"></div>
+  </div>
+</ng-container>

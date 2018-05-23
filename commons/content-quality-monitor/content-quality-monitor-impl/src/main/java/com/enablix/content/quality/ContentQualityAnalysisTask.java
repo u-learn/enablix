@@ -35,6 +35,7 @@ public class ContentQualityAnalysisTask implements Task {
 	@Autowired
 	private ContentCrudService crud;
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public void run(TaskContext context) {
 
@@ -44,9 +45,9 @@ public class ContentQualityAnalysisTask implements Task {
 			
 			Object rulesObj = context.getTaskParameter("rules");
 			
-			String[] ruleIds = null;
+			List<String> ruleIds = null;
 			if (rulesObj != null) {
-				ruleIds = (String[]) rulesObj;
+				ruleIds = (List<String>) rulesObj;
 			}
 
 			final QualityRuleSet ruleSet = ruleIds == null ? QualityRuleSet.ALL : new RuleIdBasedRuleSet(ruleIds);

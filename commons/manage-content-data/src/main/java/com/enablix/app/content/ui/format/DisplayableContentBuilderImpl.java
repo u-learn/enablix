@@ -26,6 +26,7 @@ import com.enablix.core.ui.DisplayableContent;
 import com.enablix.core.ui.DocRef;
 import com.enablix.core.ui.FieldValue;
 import com.enablix.core.ui.Hyperlink;
+import com.enablix.core.ui.RichTextValue;
 import com.enablix.services.util.ContentDataUtil;
 import com.enablix.services.util.TemplateUtil;
 
@@ -76,6 +77,8 @@ public class DisplayableContentBuilderImpl implements DisplayableContentBuilder 
 				FieldValue fieldVal = field.getValue();
 				if (fieldVal instanceof DocRef) {
 					dispContent.setDoc((DocRef) fieldVal);
+				} else if (fieldVal instanceof RichTextValue) {
+					dispContent.setRichText((RichTextValue) fieldVal);
 				}
 			}
 		}

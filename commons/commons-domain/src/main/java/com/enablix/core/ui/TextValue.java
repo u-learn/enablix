@@ -15,7 +15,11 @@ public class TextValue extends AbstractFieldValue {
 	}
 	
 	public TextValue(String rawValue, String value) {
-		super(FieldValueType.TEXT);
+		this(FieldValueType.TEXT, rawValue, value);
+	}
+	
+	protected TextValue(FieldValueType type, String rawValue, String value) {
+		super(type);
 		this.rawValue = rawValue;
 		this.value = value;
 	}

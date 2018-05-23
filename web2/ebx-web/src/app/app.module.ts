@@ -85,6 +85,7 @@ import { RecoListComponent } from './reco-content/reco-list/reco-list.component'
 import { ContainerTemplateComponent } from './company/container-template/container-template.component';
 import { ContentStackPreviewComponent } from './content-preview/content-stack-preview/content-stack-preview.component';
 import { ObsoleteContentComponent } from './consolidate-content/obsolete-content/obsolete-content.component';
+import { CopyEmbedCodeButtonComponent } from './content-action/copy-embed-code-button/copy-embed-code-button.component';
 
 @NgModule({
   declarations: [
@@ -147,7 +148,8 @@ import { ObsoleteContentComponent } from './consolidate-content/obsolete-content
     RecoListComponent,
     ContainerTemplateComponent,
     ContentStackPreviewComponent,
-    ObsoleteContentComponent
+    ObsoleteContentComponent,
+    CopyEmbedCodeButtonComponent
   ],
   imports: [
     BrowserModule,

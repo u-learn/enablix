@@ -15,7 +15,10 @@ public class DisplayableContent {
 	private String title;
 	private DocRef doc;
 	private Hyperlink hyperlink;
+	private RichTextValue richText;
 	private String portalUrl;
+	
+	private ContentPreviewInfo preview;
 
 	public DisplayableContent() {
 		this.fields = new ArrayList<>();
@@ -61,6 +64,14 @@ public class DisplayableContent {
 	public void setDoc(DocRef doc) {
 		this.doc = doc;
 	}
+	
+	public RichTextValue getRichText() {
+		return richText;
+	}
+
+	public void setRichText(RichTextValue richText) {
+		this.richText = richText;
+	}
 
 	public void addField(DisplayField<?> field) {
 		fields.add(field);
@@ -88,6 +99,14 @@ public class DisplayableContent {
 
 	public void setPortalUrl(String accessUrl) {
 		this.portalUrl = accessUrl;
+	}
+	
+	public ContentPreviewInfo getPreview() {
+		return preview;
+	}
+
+	public void setPreview(ContentPreviewInfo preview) {
+		this.preview = preview;
 	}
 
 	@Override

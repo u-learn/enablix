@@ -18,5 +18,7 @@ public interface DisplayableContentService {
 			DisplayContext ctx);
 
 	void postProcessDisplayableContent(DisplayableContent dispRecord, String sharedWithEmailId, DisplayContext ctx);
+
+	void populatePreviewInfo(DisplayableContent dispRecord, DisplayContext ctx);
 	
 }

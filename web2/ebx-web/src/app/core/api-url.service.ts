@@ -14,6 +14,7 @@ export class ApiUrlService {
   static GET_BOUNDED_REF_LIST = "/bounded/list/:templateId/:contentItemQId/";
   static GET_DOC_PREVIEW_DATA = "/doc/pd/:docIdentity";
   static GET_DOC_DOWNLOAD = "/doc/download/:docIdentity";
+  static GET_EMBED_CODE = "/cwdg/dc/:contentQId/:contentIdentity/";
   static GET_RECORD_AND_CHILDREN = "/data/rnc/c/:contentQId/r/:contentIdentity";
   static GET_TENANT = "/tenant/fetch";
   static GET_DELETE_CONTENT_RECORD = "/content/delete/t/:templateId/c/:contentQId/r/:recordIdentity";
@@ -77,6 +78,7 @@ export class ApiUrlService {
   static POST_SHARE_BY_EMAIL_URL = "/email/sharecontent";
   static POST_FETCH_SHARE_LINK_URL = "/shareOptions/shareableLinkUrl/";
   static POST_FETCH_SHARE_DOC_URL = "/shareOptions/shareableDocUrlv2/";
+  static POST_FETCH_CONTENT_WIDGET_URL = "/shareOptions/shareableContentWidgetUrl/";
  
   static POST_RESET_PASSWORD_URL = "/resetpassword";
   static POST_SET_PASSWORD_URL = "/systemuserchangepwd";
@@ -194,6 +196,11 @@ export class ApiUrlService {
 
   getShareDocDownloadUrl(docIdentity: string) : string {
     return this.getAPIUrl(ApiUrlService.GET_DOC_DOWNLOAD, {docIdentity: docIdentity}, false);
+  }
+
+  getEmbedCodeUrl(contentQId: string, contentIdentity: string) : string {
+    return this.getAPIUrl(ApiUrlService.GET_EMBED_CODE, 
+      {contentQId: contentQId, contentIdentity: contentIdentity}, false);
   }
 
   getDocPreviewDataUrl(docIdentity: string) : string {
@@ -390,6 +397,10 @@ export class ApiUrlService {
 
   postFetchShareDocUrl() : string {
     return this.getAPIUrl(ApiUrlService.POST_FETCH_SHARE_DOC_URL);
+  }
+
+  postFetchContentWidgetUrl() : string {
+    return this.getAPIUrl(ApiUrlService.POST_FETCH_CONTENT_WIDGET_URL);
   }
 
   postUpdateContainerDefUrl(templateId: string) : string {

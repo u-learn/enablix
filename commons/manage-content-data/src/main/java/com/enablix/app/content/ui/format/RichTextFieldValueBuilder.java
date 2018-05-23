@@ -8,6 +8,7 @@ import com.enablix.commons.util.StringUtil;
 import com.enablix.core.api.TemplateFacade;
 import com.enablix.core.commons.xsdtopojo.ContentItemClassType;
 import com.enablix.core.commons.xsdtopojo.ContentItemType;
+import com.enablix.core.ui.RichTextValue;
 import com.enablix.core.ui.TextValue;
 
 @Component
@@ -16,7 +17,7 @@ public class RichTextFieldValueBuilder implements FieldValueBuilder<TextValue, S
 	@Override
 	public TextValue build(ContentItemType fieldDef, String fieldValue, 
 			TemplateFacade template, DisplayContext ctx) {
-		return StringUtil.hasText(fieldValue) ? new TextValue(fieldValue) : null;
+		return StringUtil.hasText(fieldValue) ? new RichTextValue(fieldValue) : null;
 	}
 
 	@Override

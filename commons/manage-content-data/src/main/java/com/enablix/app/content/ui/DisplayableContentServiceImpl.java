@@ -9,12 +9,14 @@ import org.springframework.stereotype.Component;
 
 import com.enablix.app.content.ContentDataManager;
 import com.enablix.app.content.share.DocUnsecureAccessUrlPopulator;
+import com.enablix.app.content.ui.format.ContentPreviewBuilder;
 import com.enablix.app.content.ui.format.TextLinkProcessor;
 import com.enablix.app.template.service.TemplateManager;
 import com.enablix.commons.util.process.ProcessContext;
 import com.enablix.core.api.ContentDataRecord;
 import com.enablix.core.api.ContentDataRef;
 import com.enablix.core.api.TemplateFacade;
+import com.enablix.core.ui.ContentPreviewInfo;
 import com.enablix.core.ui.DisplayableContent;
 import com.enablix.data.view.DataView;
 
@@ -35,6 +37,9 @@ public class DisplayableContentServiceImpl implements DisplayableContentService 
 	
 	@Autowired
 	private TextLinkProcessor textLinkProcessor;
+	
+	@Autowired
+	private ContentPreviewBuilder contentPreviewBuilder;
 	
 	@Override
 	public DisplayableContent getDisplayableContent(String contentQId, String contentIdentity, DataView view, DisplayContext ctx) {
@@ -100,6 +105,12 @@ public class DisplayableContentServiceImpl implements DisplayableContentService 
 		docUrlPopulator.populateUnsecureUrl(dispRecord, sharedWithEmailId, ctx);
 		textLinkProcessor.process(dispRecord, template, sharedWithEmailId, ctx);
 		
+	}
+	
+	@Override
+	public void populatePreviewInfo(DisplayableContent dispRecord, DisplayContext ctx) {
+		ContentPreviewInfo previewInfo = contentPreviewBuilder.buildPreview(dispRecord, ctx);
+		dispRecord.setPreview(previewInfo);
 	}
 
 }
