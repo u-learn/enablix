@@ -1,0 +1,35 @@
+<div>
+<div class="sidebar toRight">
+  <div class="simple-sidebar">
+    <div class="stage">
+      <div *ngFor="let cg of groupedRecords">
+        <h3 class="sales-funnel-name" (click)="selectGroup(cg)" style="cursor: pointer;">{{cg.title}}</h3>
+        <p class="description">{{cg.desc}}</p>
+        <p class="assets-count" ng-if="s.assetsCount">{{cg.records.length}} Assets</p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="content-types-container">
+  <div [id]="cg.id" class="full-width-container" *ngFor="let cg of groupedRecords; let k = index;">
+    <div class="sales-funnel-header">
+      <div class="line"></div>
+      <h2>{{cg.title}}</h2>
+      <div class="line"></div>
+    </div>
+    
+    <div class="cards card-container">
+      <ng-container *ngFor="let rec of cg.records; let i = index;">
+        <div class="data-card" *ngIf="cg.showAll || cg.records.length <= showCount || (i < (showCount - 1))">
+          <ebx-data-card  [containerQId]="rec.containerQId" [record]="rec.record"></ebx-data-card>
+        </div>
+      </ng-container>
+      <div class="card biz-card" *ngIf="!cg.showAll && cg.records.length > showCount" (click)="cg.showAll = true;">
+        <div class="card-remaining-count">
+          <p class="ng-binding">+{{cg.records.length - showCount + 1}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>

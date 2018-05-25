@@ -12,6 +12,7 @@ import { ContentDeleteButtonComponent } from '../../content-action/content-delet
 import { EditBizDimensionComponent } from '../../biz-dimension/edit-biz-dimension/edit-biz-dimension.component';
 import { SearchBarService } from '../../core/search-bar/search-bar.service';
 import { Constants } from '../../util/constants';
+import { LayoutService } from '../../core/layout.service';
 
 @Component({
   selector: 'ebx-biz-dimension-detail',
@@ -28,21 +29,44 @@ export class BizDimensionDetailComponent implements OnInit, AfterViewInit {
   children: ContentRecordGroup[] = [];
   noChildren: boolean = false;
 
+  layout: string;
+  layoutConfig: any;
+
   constructor(private contentService: ContentService,
               private alert: AlertService,
               private route: ActivatedRoute, 
               private navService: NavigationService,
               private ctService: ContentTemplateService,
               private sbService: SearchBarService,
-              private dialog: MatDialog) { }
+              private layoutService: LayoutService,
+              private dialog: MatDialog,
+              private router: Router) { }
 
   ngOnInit() {
+
+    // override the route reuse strategy to force component reload
+    this.router.routeReuseStrategy.shouldReuseRoute = function() {
+        return false;
+    };
+
+    var qParams = this.route.snapshot.queryParams;
+    let reqLayout = qParams['layout'];
+
+    this.layout = 'default';
+    let cgSize = "3";
+
+    this.layoutConfig = this.layoutService.getDimLayoutConfig(reqLayout);
+
+    if (this.layoutConfig) {
+      cgSize = this.layoutConfig.pageSize;
+      this.layout = this.layoutConfig.type;
+    }
 
     this.route.params.subscribe(params => {
       let cQId = params['cQId'];
       let recIdentity = params['identity'];
 
-      this.contentService.getRecordAndChildData(cQId, recIdentity, "3", Constants.AT_CHANNEL_WEB)
+      this.contentService.getRecordAndChildData(cQId, recIdentity, cgSize, Constants.AT_CHANNEL_WEB)
           .subscribe(
               res => {
 

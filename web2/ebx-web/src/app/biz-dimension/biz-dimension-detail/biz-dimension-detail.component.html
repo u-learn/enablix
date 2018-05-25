@@ -9,18 +9,14 @@
             <div class="divider"></div>
             <ebx-content-email-button class="action-btn" [container]="container" [record]="record" ></ebx-content-email-button>
             <ebx-content-delete-button *ebxAccess="'VIEW_STUDIO'" class="action-btn add-padding" [container]="container" [record]="record" contentType="Object"></ebx-content-delete-button>
-            <!-- <div class="divider"></div>
-            <button class="circle icon-btn" ng-click="goToFunnelView()">
-                <div class="icon small funnel"></div>
-            </button>
-            <button class="circle icon-btn active">
-                <div class="icon small list"></div>
-            </button> -->
+            <ebx-biz-dim-layout-switch *ngIf="record" [dimQId]="container?.qualifiedId" [recordIdentity]="record?.identity"></ebx-biz-dim-layout-switch>
         </div>
     </div>
-    <div class="main" *ngIf="!noChildren">
+    <div class="main" *ngIf="!noChildren && children && children.length > 0">
         <div>
-            <div class="content-types-container">
+            <ebx-default-layout *ngIf="layout == 'default'" [contentGroups]="children" (onNavToAllChildType)="navToAllContent($event)"></ebx-default-layout>
+            <ebx-content-mapping-layout *ngIf="layout == 'cm'" [contentGroups]="children" [config]="layoutConfig"></ebx-content-mapping-layout>
+            <!-- <div class="content-types-container">
                 <div *ngFor="let cg of children">
                     <h2>{{cg?.container?.label}} ({{cg.records.totalElements}})</h2>
                     <div class="seeAll" (click)="navToAllContent(cg)">
@@ -32,9 +28,8 @@
                       </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        
+            </div> -->
+        </div> 
     </div>
     <div [hidden]="!noChildren" class="no-data">
         <div>Oops. Looks like this object has no content.</div>

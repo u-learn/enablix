@@ -1,0 +1,8 @@
+<div class="btn-container" *ngIf="layoutOptions && layoutOptions.length > 1">
+  <div class="divider"></div>
+  <ng-container *ngFor="let opt of layoutOptions">
+    <button class="circle icon-btn" [class.active]="opt.id == activeOptId" (click)="switchLayout(opt)">
+      <div class="icon small {{opt.iconClazz}}"></div>
+    </button>
+  </ng-container>
+</div>

@@ -22,7 +22,7 @@ public class PptxToImage {
    public static void main(String args[]) throws IOException{
       
 	   String outFolder = "C:\\Users\\dluthra\\Downloads\\preview\\";
-	   String filePath = "C:\\Users\\dluthra\\Downloads\\Haystax Presentation Template.pptx";
+	   String filePath = "C:\\Users\\dluthra\\Downloads\\Sales Presentation.pptx";
 	   String imageFilePrefix = "Haystax";
 	   FileInputStream is = new FileInputStream(filePath);
 	   

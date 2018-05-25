@@ -38,6 +38,8 @@ export class ApiUrlService {
 
   static GET_PENDING_USER_TASKS = "/usertask/incmplt";
 
+  static GET_FIRST_CONTENT_CONN_BY_QID = "/contentconn/rf/:contentQId/";
+
   static POST_FOR_DATA_SEARCH = "/data/search/t/:domainType/";
   static POST_FOR_CONTAINER_DATA_SEARCH = "/data/search/cq/:containerQId/";
 
@@ -281,6 +283,11 @@ export class ApiUrlService {
   getRecordContentStackUrl(contentQId: string, recordIdentity: string) : string {
     return this.getAPIUrl(ApiUrlService.GET_RECORD_CONTENT_STACK, 
                   { contentQId: contentQId, recordIdentity: recordIdentity });
+  }
+
+  getFirstContentConnByContentQId(contentQId: string) : string {
+    return this.getAPIUrl(ApiUrlService.GET_FIRST_CONTENT_CONN_BY_QID, 
+                  { contentQId: contentQId });
   }
 
   postCheckUserExistUrl() : string {

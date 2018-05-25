@@ -879,6 +879,24 @@ body {
         margin-bottom: 32px;
         cursor: pointer;
     }
+
+    .sales-funnel-header {
+        display: flex;
+        align-items: center;
+        margin: 0 0 40px 0;
+        width: 100%;
+
+        h2 {
+            margin: 0 8px 0 8px;
+        }
+    }
+
+    .line {
+        opacity: 0.03;
+        background: #000000;
+        height: 1px;
+        flex-grow: 1;
+    }
 }
 
 .input-error {
@@ -886,6 +904,47 @@ body {
     margin-top: 12px;
     font-size: 16px;
     font-family: $FPLight;
+}
+
+.simple-sidebar {
+    .stage {
+
+        >div {
+            border-bottom: 1px solid rgba(0,0,0,0.03);
+            
+            &:not(:first-child){
+                padding: 20px 0;
+            }
+
+            &:first-child {
+                padding-bottom: 20px;
+            }
+        }
+
+        h3 {
+            font-family: $FPThin;
+            font-size: 18px;    
+        }
+
+        h3.active {
+            font-size: 24px;
+        }
+
+        .description {
+            font-family: $FPLight;
+            font-size: 14px;
+            color: #808C9B;
+            line-height: 17px;
+            padding-bottom: 16px;
+            margin-top: 8px;
+        }
+
+        .assets-count {
+            font-family: $FPSemiBold;
+            font-size: 14px;
+            color: #1F8AEF;
+        }
+    }
 }
 
 //@import '../pages/index.scss';

@@ -86,6 +86,9 @@ import { ContainerTemplateComponent } from './company/container-template/contain
 import { ContentStackPreviewComponent } from './content-preview/content-stack-preview/content-stack-preview.component';
 import { ObsoleteContentComponent } from './consolidate-content/obsolete-content/obsolete-content.component';
 import { CopyEmbedCodeButtonComponent } from './content-action/copy-embed-code-button/copy-embed-code-button.component';
+import { DefaultLayoutComponent } from './biz-dimension/biz-dimension-detail/default-layout/default-layout.component';
+import { ContentMappingLayoutComponent } from './biz-dimension/biz-dimension-detail/content-mapping-layout/content-mapping-layout.component';
+import { BizDimLayoutSwitchComponent } from './biz-dimension/biz-dimension-detail/biz-dim-layout-switch/biz-dim-layout-switch.component';
 
 @NgModule({
   declarations: [
@@ -149,7 +152,10 @@ import { CopyEmbedCodeButtonComponent } from './content-action/copy-embed-code-b
     ContainerTemplateComponent,
     ContentStackPreviewComponent,
     ObsoleteContentComponent,
-    CopyEmbedCodeButtonComponent
+    CopyEmbedCodeButtonComponent,
+    DefaultLayoutComponent,
+    ContentMappingLayoutComponent,
+    BizDimLayoutSwitchComponent
   ],
   imports: [
     BrowserModule,

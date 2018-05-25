@@ -26,6 +26,10 @@ button {
     font-size: 18px;
 }
 
+.btn-container {
+    display: flex;
+}
+
 .dashboard-buttons {
     display: flex;
     height: 32px;
@@ -240,6 +244,10 @@ button {
 
         &:not(.active){
             background: $white;
+        }
+
+        &:hover {
+            background: #fcfcfc;
         }
 
         .funnel {

@@ -72,6 +72,8 @@ import { ProgressCircleComponent } from './progress-circle/progress-circle.compo
 import { AppEventService } from './app-event.service';
 import { YoutubeImportComponent } from './bulk-import/youtube-import/youtube-import.component';
 import { ContentQualityService } from './content/content-quality.service';
+import { LayoutService } from './layout.service';
+import { ContentConnService } from './content-conn.service';
 
 @NgModule({
   imports: [
@@ -109,6 +111,8 @@ import { ContentQualityService } from './content/content-quality.service';
     UserTaskService,
     AppEventService,
     ContentQualityService,
+    LayoutService,
+    ContentConnService,
   	{
   	  provide: HTTP_INTERCEPTORS,
       useClass: HttpErrorInterceptor,

@@ -36,8 +36,9 @@ export class NavigationService {
     this.router.navigate(['/portal/dim/list', containerQId]);
   }
 
-  goToDimDetail(containerQId: string, identity: string) {
-    this.router.navigate(['/portal/dim/detail', containerQId, identity]);
+  goToDimDetail(containerQId: string, identity: string, queryParams: any = {}) {
+    this.router.navigate(['/portal/dim/detail', containerQId, identity], 
+      { queryParams: queryParams });
   }
 
   goToRecordDetail(containerQId: string, identity: string, returnUrl: string = "/") {
