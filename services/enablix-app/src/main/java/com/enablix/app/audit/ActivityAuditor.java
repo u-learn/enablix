@@ -195,9 +195,4 @@ public class ActivityAuditor {
 		
 	}
 
-	public static void main(String[] args) throws MalformedURLException {
-		URL url = new URL("http://test.enablix.com/login.html");
-		System.out.println(url.getHost());
-	}
-	
 }
