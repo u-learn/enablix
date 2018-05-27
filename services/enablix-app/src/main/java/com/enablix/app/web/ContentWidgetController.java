@@ -8,9 +8,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.enablix.app.content.ui.DisplayContext;
 import com.enablix.app.content.ui.DisplayableContentService;
+import com.enablix.commons.util.process.ProcessContext;
+import com.enablix.core.activity.audit.ActivityTrackingContext;
+import com.enablix.core.api.ContentDataRef;
 import com.enablix.core.domain.activity.ActivityChannel.Channel;
+import com.enablix.core.domain.activity.ContentActivity.ContainerType;
 import com.enablix.core.ui.DisplayableContent;
 import com.enablix.data.view.DataView;
+import com.enablix.services.util.ActivityLogger;
 import com.enablix.services.util.DataViewUtil;
 
 @RestController
@@ -29,8 +34,17 @@ public class ContentWidgetController {
 		DisplayableContent dispRecord = dsplyContentService.getDisplayableContent(
 				contentQId, recordIdentity, view, ctx);
 		
-		dsplyContentService.postProcessDisplayableContent(dispRecord, "content-widget", ctx);
+		String sharedWith = ProcessContext.get().getUserId();
+		
+		dsplyContentService.postProcessDisplayableContent(dispRecord, sharedWith, ctx);
 		dsplyContentService.populatePreviewInfo(dispRecord, ctx);
+		
+		// audit content widget view
+		ContentDataRef contentDataRef = ContentDataRef.createContentRef(ProcessContext.get().getTemplateId(), 
+				dispRecord.getContainerQId(), dispRecord.getRecordIdentity(), dispRecord.getTitle());
+		
+		Channel channel = ActivityTrackingContext.get().getActivityChannel(Channel.CONTENTWIDGET);
+		ActivityLogger.auditContentEmbedView(contentDataRef, ContainerType.CONTENT, channel);
 		
 		return dispRecord;
 		
@@ -40,6 +54,8 @@ public class ContentWidgetController {
 		
 		DisplayContext ctx = new DisplayContext();
 		ctx.setDisplayChannel(Channel.CONTENTWIDGET);
+		
+		ctx.setTrackingParams(ActivityTrackingContext.get().getAuditContextParams());
 		
 		return ctx;
 	}

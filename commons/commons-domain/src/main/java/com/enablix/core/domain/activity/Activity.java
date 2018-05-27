@@ -21,6 +21,8 @@ public abstract class Activity {
 		CONTENT_PORTAL_URL_COPIED(Category.CONTENT, "Content Portal URL Copied"), 
 		CONTENT_DOWNLD_URL_COPIED(Category.CONTENT, "Content Download URL Copied"),
 		CONTENT_EXT_LINK_URL_COPIED(Category.CONTENT, "Content External Link URL Copied"),
+		CONTENT_EMBED_CODE_COPIED(Category.CONTENT, "Content Embed Code Copied"),
+		CONTENT_EMBED_VIEW(Category.CONTENT, "Content Embed View"),
 		
 		/* Account related activities */
 		LOGIN(Category.USER_ACCOUNT, "Login"), LOGOUT(Category.USER_ACCOUNT, "Logout"), 

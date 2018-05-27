@@ -10,4 +10,10 @@ public interface ActivityContextAware {
 
 	void setContextTerm(String contextTerm);
 	
+	void setReferer(String referer);
+	
+	void setRefererHost(String refererHost);
+	
+	String getReferer();
+	
 }

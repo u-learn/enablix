@@ -8,6 +8,8 @@ public abstract class ContextAwareActivity extends Activity implements ActivityC
 	private String contextId;
 	private String contextName;
 	private String contextTerm;
+	private String referer;
+	private String refererHost;
 	
 	protected ContextAwareActivity() {
 		// for ORM
@@ -53,4 +55,21 @@ public abstract class ContextAwareActivity extends Activity implements ActivityC
 		this.contextTerm = contextTerm;
 	}
 
+	public String getReferer() {
+		return referer;
+	}
+
+	@Override
+	public void setReferer(String referer) {
+		this.referer = referer;
+	}
+
+	public String getRefererHost() {
+		return refererHost;
+	}
+
+	public void setRefererHost(String refererHost) {
+		this.refererHost = refererHost;
+	}
+	
 }

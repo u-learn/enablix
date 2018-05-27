@@ -103,6 +103,8 @@ public class ShareOptionsController {
 		
 		String embedCode = contentWidgetEmbedCode.replaceFirst(":contentwidgeturl", (serverUrl + widgetUrl));
 		
+		auditEmbedCodeCopy(request.getAuditRequest());
+		
 		return new ShareableUrlResponse(embedCode);
 	}
 
@@ -118,6 +120,26 @@ public class ShareOptionsController {
 					request.getInstanceIdentity(), request.getItemTitle());
 			
 			ActivityLogger.auditContentExtLinkURLCopied(dataRef, ContentActivity.ContainerType.CONTENT, Channel.WEB);
+			
+			return true;
+			
+		} catch(Exception e) {
+			LOGGER.error("Error Saving the Audit Data for the Activity :: Portal URL Copied",e);
+			return false;
+		}
+	}
+	
+	@RequestMapping(method = RequestMethod.POST, value = "/embedCodeAuditCopy/")
+	public @ResponseBody Boolean auditEmbedCodeCopy(@RequestBody ContentAuditRequest request) {
+		
+		try	{
+		
+			String templateId = ProcessContext.get().getTemplateId();
+			
+			ContentDataRef dataRef = ContentDataRef.createContentRef(templateId, request.getContainerQId(), 
+					request.getInstanceIdentity(), request.getItemTitle());
+			
+			ActivityLogger.auditEmbedCodeCopied(dataRef, ContentActivity.ContainerType.CONTENT, Channel.WEB);
 			
 			return true;
 			

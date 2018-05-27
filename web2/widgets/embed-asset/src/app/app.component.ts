@@ -27,19 +27,30 @@ export class AppComponent implements OnInit {
   slides: string[];
   activeSlide: string;
 
+  env: any;
+
   constructor(private http: HttpClient) {
 
   }
 
   ngOnInit() {
     
+    this.env = environment;
+
+    var headers = {};
+    if (document.referrer) {
+      headers['atReferer'] = document.referrer;  
+    }
+    
+    console.log("Referer: " + document.referrer);
+
     var urlString = window.location.href;
     var url = new URL(urlString);
     var accessId = url.searchParams.get('id');
 
     if (accessId) {
       var apiUrl = environment.baseAPIUrl + '/ushare/' + accessId;
-      this.http.get(apiUrl).subscribe(
+      this.http.get(apiUrl, {headers : headers}).subscribe(
         (res: any) => {
           console.log(res);
           this.record = res;

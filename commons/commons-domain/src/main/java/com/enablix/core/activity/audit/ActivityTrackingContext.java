@@ -87,11 +87,21 @@ public class ActivityTrackingContext {
 		return auditContextParams.get(ActivityTrackingConstants.CONTEXT_TERM);
 	}
 	
+	public String getClientReferer() {
+		return auditContextParams.get(ActivityTrackingConstants.REFERER);
+	}
+	
+	public String getReferer() {
+		String referer = auditContextParams.get(ActivityTrackingConstants.AT_REFERER);
+		return referer == null ? getClientReferer() : referer;
+	}
+	
 	public void setActivityContext(ActivityContextAware activity) {
 		activity.setActivityOrigin(getActivityOrigin());
 		activity.setContextId(getActivityContextId());
 		activity.setContextName(getActivityContextName());
 		activity.setContextTerm(getActivityContextTerm());
+		activity.setReferer(getReferer());
 	}
 	
 }

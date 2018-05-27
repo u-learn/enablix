@@ -10,7 +10,7 @@
         </div>
       </div>
     </div>
-    <img [src]="record.preview.imageUrl">
+    <img [src]="env.baseAPIUrl + record.preview.imageUrl">
   </div>
   <div *ngSwitchCase="'IMAGE_BASED_PREVIEW'">
     <div class="header-with-btns">

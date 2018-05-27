@@ -20,6 +20,7 @@ import com.enablix.core.domain.activity.ContentActivity;
 import com.enablix.core.domain.activity.ContentActivity.ContainerType;
 import com.enablix.core.domain.activity.ContentConnActivity;
 import com.enablix.core.domain.activity.ContentDownldURLCopy;
+import com.enablix.core.domain.activity.ContentEmbedCodeCopy;
 import com.enablix.core.domain.activity.ContentExtLinkURLCopy;
 import com.enablix.core.domain.activity.ContentPortalURLCopy;
 import com.enablix.core.domain.activity.ContentShareActivity;
@@ -193,6 +194,15 @@ public class ActivityLogger {
 		}
 	}
 
+	public static void auditContentEmbedView(ContentDataRef dataRef,
+			ContainerType containerType, Channel channel) {
+		
+		ContentActivity contentActvy = new ContentActivity(dataRef.getInstanceIdentity(), 
+				dataRef.getContainerQId(), containerType, ActivityType.CONTENT_EMBED_VIEW, dataRef.getTitle());
+		
+		auditContentActivity(contentActvy, channel, null);
+	}
+	
 	public static void auditContentAccess(ContentDataRef dataRef,
 			ContainerType containerType, Channel channel) {
 		
@@ -245,6 +255,14 @@ public class ActivityLogger {
 				dataRef.getContainerQId(), containerType, dataRef.getTitle());
 		
 		auditContentActivity(contentActvy, channel);
+	}
+
+	public static void auditEmbedCodeCopied(ContentDataRef dataRef, ContainerType containerType, Channel channel) {
+		ContentActivity contentActvy = new ContentEmbedCodeCopy(dataRef.getInstanceIdentity(), 
+				dataRef.getContainerQId(), containerType, dataRef.getTitle());
+		
+		auditContentActivity(contentActvy, channel);
+		
 	}
 
 }

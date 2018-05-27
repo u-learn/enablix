@@ -1,5 +1,7 @@
 package com.enablix.app.audit;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,7 @@ import com.enablix.commons.util.StringUtil;
 import com.enablix.commons.util.concurrent.Events;
 import com.enablix.commons.util.date.DateUtil;
 import com.enablix.commons.util.process.ProcessContext;
+import com.enablix.core.activity.audit.ActivityContextAware;
 import com.enablix.core.api.ContentDataRef;
 import com.enablix.core.api.RecordReference;
 import com.enablix.core.api.TemplateFacade;
@@ -61,6 +64,8 @@ public class ActivityAuditor {
 					DateUtil.getDateDimension(activity.getActivityTime()));
 		}
 		
+		updateRefererHost(activity);
+		
 		checkAndUpdateContentTitle(activity);
 		
 		checkAndUpdateDocRefRecord(activity);
@@ -68,6 +73,26 @@ public class ActivityAuditor {
 		auditRepo.save(activity);
 	}
 	
+	private void updateRefererHost(ActivityAudit activity) {
+		
+		if (activity.getActivity() instanceof ActivityContextAware) {
+			
+			ActivityContextAware ctxAware = (ActivityContextAware) activity.getActivity();
+			String referer = ctxAware.getReferer();
+			
+			if (StringUtil.hasText(referer)) {
+				
+				try {
+					URL url = new URL(referer);
+					ctxAware.setRefererHost(url.getHost());
+				} catch (MalformedURLException e) {
+					// ignore
+				}
+			}
+		}
+		
+	}
+
 	private void checkAndUpdateContentTitle(ActivityAudit activity) {
 		
 		Activity auditActvy = activity.getActivity();
@@ -168,6 +193,11 @@ public class ActivityAuditor {
 			
 		}
 		
+	}
+
+	public static void main(String[] args) throws MalformedURLException {
+		URL url = new URL("http://test.enablix.com/login.html");
+		System.out.println(url.getHost());
 	}
 	
 }

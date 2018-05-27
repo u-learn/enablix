@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.enablix.app.content.doc.DocumentManager;
@@ -15,6 +16,7 @@ import com.enablix.commons.dms.api.DocumentMetadata.PreviewStatus;
 import com.enablix.commons.util.EnvPropertiesUtil;
 import com.enablix.commons.util.FileUtil;
 import com.enablix.commons.util.collection.CollectionUtil;
+import com.enablix.commons.util.process.ProcessContext;
 import com.enablix.core.api.DocInfo;
 import com.enablix.core.ui.ContentPreviewInfo;
 import com.enablix.core.ui.DisplayableContent;
@@ -37,6 +39,9 @@ public class DocPreviewBuilder implements PreviewBuilder {
 	@Autowired
 	private SharedContentUrlCreator urlCreator;
 	
+	@Value("${site.url.doc.download}")
+	private String docDownloadUrl;
+	
 	@Override
 	public ContentPreviewInfo buildPreview(DisplayableContent displayRecord, DisplayContext ctx) {
 		
@@ -50,16 +55,21 @@ public class DocPreviewBuilder implements PreviewBuilder {
 			
 			if (docMd != null) {
 			
+				String sharedWith = ProcessContext.get().getUserId();
+				
 				if (ContentDataUtil.isImageContentType(docMd.getContentType())) {
 					
+					String imgPreviewUrl = urlCreator.createShareableUrl(
+							docDownloadUrl.replaceAll(":docIdentity", docMd.getIdentity()), sharedWith, true);
+
 					ImagePreviewInfo imagePreview = new ImagePreviewInfo();
-					imagePreview.setImageUrl(doc.getAccessUrl());
+					imagePreview.setImageUrl(imgPreviewUrl);
 					previewInfo = imagePreview;
 					
 				} else {
 				
 					if (docMd.getPreviewStatus() == PreviewStatus.AVAILABLE) {
-						previewInfo = buildImagesPreview(docMd);
+						previewInfo = buildImagesPreview(docMd, sharedWith);
 					}
 					
 					if (previewInfo == null) {
@@ -79,7 +89,7 @@ public class DocPreviewBuilder implements PreviewBuilder {
 		return noPreview;
 	}
 
-	private ContentPreviewInfo buildImagesPreview(DocumentMetadata docMd) {
+	private ContentPreviewInfo buildImagesPreview(DocumentMetadata docMd, String sharedWith) {
 		
 		ImagesBasedPreviewInfo previewInfo = null;
 		
@@ -95,7 +105,7 @@ public class DocPreviewBuilder implements PreviewBuilder {
 				List<String> imagesUrl = new ArrayList<>();
 				
 				for (int i = 0; i < parts.size(); i++) {
-					String partImgUrl = createPartImageUrl(docIdentity, i);
+					String partImgUrl = createPartImageUrl(docIdentity, i, sharedWith);
 					imagesUrl.add(partImgUrl);
 				}
 				
@@ -109,10 +119,10 @@ public class DocPreviewBuilder implements PreviewBuilder {
 	
 	
 
-	private String createPartImageUrl(String docIdentity, int i) {
+	private String createPartImageUrl(String docIdentity, int i, String sharedWith) {
 		String url = "/doc/pdp/" + docIdentity + "/" + i + "/";
 		return EnvPropertiesUtil.getProperties().getServerUrl() 
-				+ urlCreator.createShareableUrl(url, "content-preview", true);
+				+ urlCreator.createShareableUrl(url, sharedWith, true);
 	}
 
 	@Override
