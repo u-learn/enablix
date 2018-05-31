@@ -181,13 +181,17 @@ export class BizContentComponent implements OnInit, AfterViewInit {
                               (this.record.__decoration.__thumbnailUrl || 
                                 this.container.textItemId != item.id) );
 
-      this.boundedItems = this.container.contentItem.filter(item => item.bounded);
+      this.boundedItems = this.container.contentItem.filter(item => this.isRelevanceItem(item));
     }
 
     if (this.record) {
       this.isNewRec = !this.record.identity && (!this.contentRequest);
       this.updateRecordLocalCopy(this.record);
     }
+  }
+
+  isRelevanceItem(item: ContentItem) {
+    return this.contentTemplate.templateCache.isRelevanceItem(item);
   }
 
   checkErrors() {

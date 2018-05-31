@@ -19,4 +19,8 @@ export class DefaultLayoutComponent implements OnInit {
   ngOnInit() {
   }
 
+  navToAllContent(cg: ContentRecordGroup) {
+    this.onNavToAllChildType.emit(cg);
+  }
+
 }

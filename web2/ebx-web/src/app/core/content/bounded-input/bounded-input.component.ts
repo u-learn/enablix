@@ -24,6 +24,8 @@ export class BoundedInputComponent implements OnInit, ControlValueAccessor {
   @Input() contentItem: ContentItem;
   @Input() placeholder?: string;
 
+  multiValued: boolean = false;
+
   selectCtrl: FormControl;
   options: SelectOption[] = [];
   boundedItemColor: string;
@@ -46,6 +48,8 @@ export class BoundedInputComponent implements OnInit, ControlValueAccessor {
           console.log("Error getting bounded list value.");
         }
       );
+
+    this.multiValued = this.contentItem.bounded.multivalued;
 
     this.boundedItemColor = this.ctService.templateCache.getBoundedContentItemColor(this.contentItem);
     this.selectCtrl.valueChanges.subscribe(val => this.onChange(val));

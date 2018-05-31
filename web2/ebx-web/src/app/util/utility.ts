@@ -50,6 +50,23 @@ export class Utility {
     return parentQId;
   }
 
+  static getElementId(qId: string) : string {
+    var elemId = qId;
+    var lastIndx = qId.lastIndexOf(".");
+    if (lastIndx > 0) {
+      elemId = qId.substr(lastIndx + 1);
+    }
+    return elemId;
+  }
+
+  static getQId(parentQId: string, elemId: string) {
+    return parentQId + "." + elemId;
+  }
+
+  static isNullOrUndefined(obj) {
+    return obj == null || obj == undefined;
+  }
+
   static syncPostAjaxCall(url: string, data: any, callback: (responseText: string) => void) {
     
     var xhttp = new XMLHttpRequest();

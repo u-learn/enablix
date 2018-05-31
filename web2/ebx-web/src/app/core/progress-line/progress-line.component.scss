@@ -1,0 +1,14 @@
+.progress-line, .progress-line .completed {
+  height: 6px;
+  border-radius: 4px;
+}
+
+.progress-line {
+  min-width: 200px;
+  width: 100%;
+  background: #EBEBEB;
+
+  .completed {
+    background: #1889ED;
+  }
+}

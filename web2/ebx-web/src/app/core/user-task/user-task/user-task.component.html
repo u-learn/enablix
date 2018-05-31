@@ -2,22 +2,24 @@
   <div class="usertask" *ngFor="let ut of userTasks">
     <ng-container *ngIf="ut.steps && ut.steps.length > 1">
       <div class="header"><h1>{{ut.name}}</h1></div>
-      <div class="progress">
-        <div class="progress-icon"><ebx-progress-circle [percent]="getCompletionPercent(ut)"></ebx-progress-circle></div>
-        <div class="progress-desc">{{getProgressDesc(ut)}}</div>
-      </div>
+      <div class="desc" *ngIf="ut.desc">{{ut.desc}}</div>
       <div class="steps">
-        <ng-container *ngFor="let step of ut.steps; let last = last;">
-          <div class="step" [class.focus]="step.focus">
-            <div class="detail">
-              <div class="title" (click)="executeStep(ut, step)">{{step.name}}</div>
-              <div class="icon" (click)="focusOnStep(ut, step)"><img [src]="getStepIcon(step)"/></div>
+        <div class="step-details">
+          <ng-container *ngFor="let step of ut.steps; let first = first;">
+            <div class="divider" [class.completed]="step.status == 'COMPLETE'" *ngIf="!first"></div>
+            <div class="step" [class.focus]="step.focus" [class.completed]="step.status == 'COMPLETE'">
+              <div class="detail" (click)="executeStep(ut, step)">
+                <div class="title">{{step.name}}</div>
+                <div class="icon" [innerHtml]="step.details.icon | safeHtml"></div>
+              </div>
             </div>
-          </div>
-          <div class="divider" *ngIf="!last"><span><img src="/assets/images/icons/right-arrow-grey.svg"></span></div>
-        </ng-container>
+          </ng-container>
+        </div>
+        <div class="progress">
+          <div class="progress-icon"><ebx-progress-line [percent]="getCompletionPercent(ut)"></ebx-progress-line></div>
+          <div class="progress-desc"><span class="bold">{{getCompletionPercent(ut)}}%</span> completed</div>
+        </div>
       </div>
-      <div class="step-desc">{{ut.focusStep?.desc}}</div>
     </ng-container>
     <ng-container *ngIf="ut.steps && ut.steps.length == 1">
     </ng-container>

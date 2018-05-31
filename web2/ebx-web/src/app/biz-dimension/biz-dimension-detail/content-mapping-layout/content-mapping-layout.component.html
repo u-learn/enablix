@@ -1,6 +1,6 @@
-<div>
-<div class="sidebar toRight">
-  <div class="simple-sidebar">
+<div style="display: flex;">
+<div style="margin-right: 24px;">
+  <div class="simple-sidebar biz-scroll" style="width: 296px;">
     <div class="stage">
       <div *ngFor="let cg of groupedRecords">
         <h3 class="sales-funnel-name" (click)="selectGroup(cg)" style="cursor: pointer;">{{cg.title}}</h3>
@@ -10,7 +10,7 @@
     </div>
   </div>
 </div>
-<div class="content-types-container">
+<div class="content-types-container biz-scroll">
   <div [id]="cg.id" class="full-width-container" *ngFor="let cg of groupedRecords; let k = index;">
     <div class="sales-funnel-header">
       <div class="line"></div>

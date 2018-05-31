@@ -1,0 +1,26 @@
+ebx-date-input {
+
+  .mat-form-field-underline {
+    width: 0px;
+  }
+
+  .mat-form-field-wrapper {
+    padding-bottom: 0px;
+  }
+
+  .mat-form-field-infix {
+    padding: 0;
+    border-top: 0;
+  }
+
+  .mat-form-field-flex {
+    align-items: center;
+  }
+
+  .mat-datepicker-toggle-default-icon {
+    margin-left: 8px;
+    height: 24px !important;
+    width: 24px !important;
+    fill: #BFCBD9 !important;
+  }
+}

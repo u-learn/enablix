@@ -17,6 +17,8 @@ public class UserTask extends BaseDocumentEntity {
 	
 	private String name;
 	
+	private String desc;
+	
 	private List<UserTaskStep> steps;
 	
 	private TaskStatus status = TaskStatus.PENDING;
@@ -45,6 +47,14 @@ public class UserTask extends BaseDocumentEntity {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	public String getDesc() {
+		return desc;
+	}
+
+	public void setDesc(String desc) {
+		this.desc = desc;
 	}
 
 	public List<UserTaskStep> getSteps() {

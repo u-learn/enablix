@@ -2,96 +2,151 @@
 @import '~styles/layout.mixin.scss';
 @import '~styles/fonts.scss';
 
+$completedClr: #81BFF6;
+$activeClr: #1889ED;
+$inactiveClr: #EBEBEB;
+
 .user-tasks {
   
   font-family: $FPLight;
   margin: 0 0 66px 0;
 
   .usertask {
+    padding: 20px;
+    border: 1px solid $completedClr;
+    background: #fff;
 
     .header {
       margin-bottom: 12px;
     }
 
-    .progress {
-
-      margin-bottom: 8px;
-      @include vcenterChildren;
-
-      .progress-icon {
-      }
-
-      .progress-desc {
-        font-size: 16px;
-        font-family: $FPBlond;
-        line-height: 18px;
-        margin-left: 12px;
-        color: $grey-dark;
-      }
-
+    .desc {
+      font-size: 14px;
+      font-family: $FPBlond;
+      color: $grey-dark;
     }
 
     .steps {
-      
-      display: flex;
-      padding: 16px 0 16px 0;
-      font-family: $FPBlond;
-      font-size: 14px;
-      color: #2D2D2D;
-      line-height: 18px;
 
-      border-bottom: 1px solid rgba(0,0,0,0.03);
-      border-top: 1px solid rgba(0,0,0,0.03);
+      display: inline-flex;
+      flex-direction: column;
 
-      .step {
+      .step-details {
+        display: flex;
+        padding: 24px 0;
+        font-family: $FPBlond;
+        font-size: 14px;
+        color: #2D2D2D;
+        line-height: 18px;
+        align-items: flex-end;
 
-        width: 80px;
-        padding: 8px;
+        .step {
+          color: $inactiveClr;
+          width: 80px;
 
-        &.focus {
-          background: $grey-lig-10;
-          border-radius: 4px;
-        }
+          &.focus {
+          }
 
-        .detail {
-          
-          text-align: center;
-          display: flex;
-          flex-direction: column;
-          justify-content: space-between;
-          height: 100%;
+          &.completed {
+            color: $completedClr;
 
-          .title {
-            margin-bottom: 8px;
-            color: #1F8AEF;
-            cursor: pointer;
+            .detail {
             
-            &:hover {
-              color: #44A1F8;
-              font-weight: 600;
+              .title {
+                color: $completedClr;
+              }
+            
+              .icon {
+                svg {
+                  .fill-node {
+                    fill: $completedClr;
+                  }
+                }
+              }
             }
           }
 
-          .icon {
-            width: auto;
-            height: auto;
-            cursor: pointer;
+          &:hover {
+            color: $activeClr;
+
+            .detail {
+            
+              .title {
+                color: $activeClr;
+              }
+            
+              .icon {
+                svg {
+                  .fill-node {
+                    fill: $activeClr;
+                  }
+                }
+              }
+            }
+          }
+
+          .detail {
+            
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+
+            .title {
+              margin-bottom: 8px;
+              cursor: pointer;
+            }
+
+            .icon {
+              width: auto;
+              height: auto;
+              cursor: pointer;
+
+              svg {
+                .fill-node {
+                  fill: $inactiveClr;
+                }
+              }
+            }
           }
         }
       }
 
-      .divider {
-        width: 40px;
-        margin: 0 8px;
-        background: none;
-        position: relative;
-        height: auto;
+      .progress {
+        padding: 0 48px;
+        @include vcenterChildren;
+        justify-content: center;
+        flex-direction: column;
 
-        span {
-          position: absolute;
-          bottom: 12px;
+        .progress-icon {
           width: 100%;
-          text-align: center;
+        }
+
+        .progress-desc {
+          font-size: 14px;
+          font-family: $FPBlond;
+          line-height: 18px;
+          margin-top: 12px;
+          color: $grey-dark;
+
+          .bold {
+            color: #000;
+            font-family: $FPSemiBold;
+          }
+        }
+
+      }
+
+      .divider {
+        width: 60px;
+        margin: 0 0 20px 0;
+        background: $inactiveClr;
+        height: 2px;
+        border-radius: 1px;
+
+        &.completed {
+          background: $completedClr;
         }
       }
 

@@ -178,9 +178,32 @@ public class GoogleDriveDocumentStore extends AbstractDocumentStore<GoogleDriveD
 		Drive drive = driveService.getDrive(config);
 		
 		String baseFolder = config.getStringValue(BASE_FOLDER_KEY);
-		String folderId = driveService.createOrFindFolderStructure(drive, baseFolder);
+		String folderId = driveService.createOrFindFolderStructure(drive, baseFolder).getId();
 		
 		driveService.shareFolderIdWithUser(drive, folderId, baseFolder, email);
+	}
+	
+	public void unshareWithUser(String email) throws FileNotFoundException, IOException {
+		
+		Configuration config = getDocStoreConfiguration();
+		Drive drive = driveService.getDrive(config);
+		
+		String baseFolder = config.getStringValue(BASE_FOLDER_KEY);
+		
+		if (baseFolder != null) {
+			driveService.unshareFolderWithUser(drive, baseFolder, email);
+		}
+	}
+
+	public void checkAndShareWithUser(String email) throws FileNotFoundException, IOException {
+		
+		Configuration config = getDocStoreConfiguration();
+		Drive drive = driveService.getDrive(config);
+		
+		String baseFolder = config.getStringValue(BASE_FOLDER_KEY);
+		
+		driveService.checkAndShareFolderWithUser(drive, baseFolder, email);
+		
 	}
 	
 }

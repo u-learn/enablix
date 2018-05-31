@@ -26,6 +26,7 @@ export class DocStoreIntegrationComponent implements OnInit {
 
   editing: boolean = false;
 
+  enablixDSMetadata: any;
 
   constructor(
       private alert: AlertService,
@@ -46,6 +47,8 @@ export class DocStoreIntegrationComponent implements OnInit {
           label: dsMetadata.storeTypeName  
         };
       });
+
+    this.enablixDSMetadata = this.getEnablixDocstore();
 
     this.docstoreTypeCtrl.valueChanges.subscribe(vals => {
         
@@ -95,6 +98,17 @@ export class DocStoreIntegrationComponent implements OnInit {
     return "";
   }
 
+  getDocstoreDesc(docstore:any) {
+    let docMdList = DocStoreMetadata.metadata;
+    for (let i = 0; i < docMdList.length; i++) {
+      if (docMdList[i].storeTypeCode == docstore.STORE_TYPE) {
+        var dsMd = docMdList[i];
+        return dsMd.storeDesc ? dsMd.storeDesc : "";
+      }
+    }
+    return "";
+  }
+
   addDocstore() {
     this.editing = true;
     this.docstore = {};
@@ -102,6 +116,32 @@ export class DocStoreIntegrationComponent implements OnInit {
 
   editDocstore() {
     this.editing = true;
+  }
+
+  isDeletable(docstore: any) {
+    return docstore && docstore.STORE_TYPE != this.enablixDSMetadata.storeTypeCode;
+  }
+
+  deleteDocstore() {
+    
+    var docstoreConfig = {};
+    docstoreConfig['STORE_TYPE'] = this.enablixDSMetadata.storeTypeCode;
+
+    this.dcConfigService.saveDocstoreConfig(docstoreConfig, this.enablixDSMetadata.storeTypeCode).subscribe(res => {
+        this.updateAndBackupLocalCopy(res);
+      }, err => {
+        this.alert.error("Error deleting file storage configuration.", err.status);
+      });
+  }
+
+  getEnablixDocstore() {
+    let docMdList = DocStoreMetadata.metadata;
+    for (let i = 0; i < docMdList.length; i++) {
+      if (docMdList[i].storeTypeCode == 'DISK') {
+        return docMdList[i];
+      }
+    }
+    return null;
   }
 
   saveDocstoreConfig() {
@@ -117,7 +157,7 @@ export class DocStoreIntegrationComponent implements OnInit {
         this.editing = false;
         this.updateAndBackupLocalCopy(res);
       }, err => {
-        this.alert.error("Error updating document store configuration.", err.status);
+        this.alert.error("Error updating file storage configuration.", err.status);
       });
   }
 

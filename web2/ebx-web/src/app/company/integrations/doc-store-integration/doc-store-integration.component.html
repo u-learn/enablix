@@ -1,6 +1,6 @@
 <div>
   <div class="sub-section-header">
-    <h2>Document Store</h2>
+    <h2>File Storage</h2>
   </div>
   <div *ngIf="!docstore">
     <div class="dashboard-buttons">
@@ -13,7 +13,8 @@
   <div class="sub-section-content" *ngIf="docstore && !editing">
     <div class="left">
       <h3>{{getDocstoreName(docstore)}}</h3>
-      <div class="sub-info" *ngIf="dsConfigInfo">Last updated at {{dsConfigInfo.modifiedAt | ebxDate}} by {{dsConfigInfo.modifiedByName}}</div>
+      <div class="sub-info" *ngIf="dsConfigInfo.modifiedAt">Last updated at {{dsConfigInfo.modifiedAt | ebxDate}} by {{dsConfigInfo.modifiedByName}}</div>
+      <div class="sub-info">{{getDocstoreDesc(docstore)}}</div>
       <div class="content-row flex-row" *ngFor="let param of selectDocstoreMd?.params">
         <div class="param-key">{{param.paramName}}</div>
         <div class="param-value">
@@ -32,6 +33,10 @@
         <div class="icon small edit"></div>
         <p class="show-me">Edit</p>
       </div>
+      <div class="action-btn with-border btn-with-text" *ngIf="isDeletable(docstore)" (click)="deleteDocstore()">
+        <div class="icon small trash"></div>
+        <p class="show-me">Trash</p>
+      </div>
     </div>
   </div>
 
@@ -44,6 +49,7 @@
             <ebx-select [options]="docstoreTypeOptions" placeholder="Select Document Store" [formControl]="docstoreTypeCtrl"></ebx-select>
           </div>
         </div>
+        <div class="sub-info" *ngIf="selectDocstoreMd?.storeDesc">{{selectDocstoreMd.storeDesc}}</div>
         <div class="form-input" *ngFor="let param of selectDocstoreMd?.params; let i = index;">
           <div class="input-label">{{param.paramName}}</div>
           <div class="input-control">

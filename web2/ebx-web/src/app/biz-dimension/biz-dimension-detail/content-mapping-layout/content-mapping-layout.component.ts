@@ -8,7 +8,7 @@ import { ContentTemplateService } from '../../../core/content-template.service';
 @Component({
   selector: 'ebx-content-mapping-layout',
   templateUrl: './content-mapping-layout.component.html',
-  styleUrls: ['./content-mapping-layout.component.css'],
+  styleUrls: ['./content-mapping-layout.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class ContentMappingLayoutComponent implements OnInit {

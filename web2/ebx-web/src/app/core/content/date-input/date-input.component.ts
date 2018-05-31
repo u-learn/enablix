@@ -6,7 +6,7 @@ import { ContentItem } from '../../../model/content-item.model';
 @Component({
   selector: 'ebx-date-input',
   templateUrl: './date-input.component.html',
-  styleUrls: ['./date-input.component.css'],
+  styleUrls: ['./date-input.component.scss'],
   encapsulation: ViewEncapsulation.None,
   providers: [
     {
@@ -21,26 +21,26 @@ export class DateInputComponent implements OnInit {
   @Input() record: any;
   @Input() contentItem: ContentItem;
 
-  textCtrl: FormControl;
+  dateCtrl: FormControl;
   disabled: boolean = false;
 
   constructor() {
-    this.textCtrl = new FormControl();
+    this.dateCtrl = new FormControl();
   }
 
   ngOnInit() {
   }
 
-  onChange = (text: string) => {};
+  onChange = (date: any) => {};
 
   onTouched = () => {}
 
-  writeValue(text: string): void {
-    this.textCtrl.setValue(text);
+  writeValue(date: any): void {
+    this.dateCtrl.setValue(new Date(date));
   }
 
 
-  registerOnChange(fn: (text: string) => void): void {
+  registerOnChange(fn: (date: any) => void): void {
     this.onChange = fn;
   }
 

@@ -103,16 +103,21 @@ export class SelectComponent implements OnInit, ControlValueAccessor, AfterViewI
           }
 
           console.log(this.highlightedOpt);
-          
+
           if (this.highlightedOpt) {
             // bring to focus
             var hgElem = document.getElementById(this.highlightedOpt.id);
             if (hgElem) {
-              hgElem.scrollIntoView();
+              this.scrollToElement(hgElem);
             }
           }
 
         });
+  }
+
+  scrollToElement(el){
+    var topPos = el.offsetTop;
+    el.parentNode.scrollTop = topPos - 10;
   }
 
   getHighlightedOptIndex(opts: any) {
@@ -255,6 +260,7 @@ export class SelectComponent implements OnInit, ControlValueAccessor, AfterViewI
   removeOption(indx: number) {
     if (indx != -1) {
       this.selected.splice(indx, 1);
+      this.onChange(this.selected);
     }
   }
 

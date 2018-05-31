@@ -41,8 +41,6 @@ export class AppComponent implements OnInit {
     if (document.referrer) {
       headers['atReferer'] = document.referrer;  
     }
-    
-    console.log("Referer: " + document.referrer);
 
     var urlString = window.location.href;
     var url = new URL(urlString);

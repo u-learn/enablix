@@ -24,5 +24,6 @@ public final class Events {
 	public static final String BULK_IMPORT_REQUEST = "BULK_IMPORT_REQUEST";
 	public static final String GDRIVE_FOLDER_SHARE = "GDRIVE_FOLDER_SHARE";
 	public static final String GENERATE_DOC_PREVIEW = "GENERATE_DOC_PREVIEW";
+	public static final String USER_UPDATED = "USER_UPDATED";
 	
 }

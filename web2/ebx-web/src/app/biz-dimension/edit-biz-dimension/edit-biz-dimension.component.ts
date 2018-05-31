@@ -21,7 +21,7 @@ export class EditBizDimensionComponent implements OnInit {
   approvalWFRequired: boolean;
 
   constructor(
-    private ctService: ContentTemplateService,
+    public ctService: ContentTemplateService,
     private contentService: ContentService,
     private alert: AlertService,
     private cwService: ContentWorkflowService,

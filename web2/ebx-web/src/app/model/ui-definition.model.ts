@@ -19,7 +19,7 @@ export class ContainerUIDef {
 }
 
 export class TextUIDef {
-
+  autoPopulate: any;
 }
 
 export class BoundedUIDef {

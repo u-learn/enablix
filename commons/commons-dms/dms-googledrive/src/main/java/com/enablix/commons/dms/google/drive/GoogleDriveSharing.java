@@ -44,6 +44,26 @@ public class GoogleDriveSharing {
 		}
 	}
 	
+	@EventSubscription(eventName = {Events.USER_UPDATED})
+	public void unshareDocstoreWithUser(UserProfile userProfile) {
+		
+		if (isGoogleDriveDefaultStore()) {
+
+			try {
+				
+				if (!SecurityUtil.userHasAllPermission(userProfile, 
+						PermissionConstants.PERMISSION_DOCSTORE_DIRECT_ACCESS)) {
+					docStore.unshareWithUser(userProfile.getEmail());
+				} else {
+					docStore.checkAndShareWithUser(userProfile.getEmail());
+				}
+				
+			} catch (IOException e) {
+				LOGGER.error("Error share doc store with user: " + userProfile.getEmail(), e);
+			} 
+		}
+	}
+	
 	private void shareWithUser(UserProfile userProfile) throws FileNotFoundException, IOException {
 		
 		if (SecurityUtil.userHasAllPermission(userProfile, 

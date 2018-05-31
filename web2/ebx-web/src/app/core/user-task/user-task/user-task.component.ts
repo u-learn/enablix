@@ -97,7 +97,7 @@ export class UserTaskComponent implements OnInit {
   }
 
   getCompletionPercent(ut: UserTask) {
-    return ut.steps && ut.steps.length > 1 ? (this.getCompletedStepCount(ut)*100/ut.steps.length) : 0; 
+    return ut.steps && ut.steps.length > 1 ? Math.floor(this.getCompletedStepCount(ut)*100/ut.steps.length) : 0; 
   }
 
   getStepIcon(utStep: UserTaskStep) {

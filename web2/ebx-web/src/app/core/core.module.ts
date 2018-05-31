@@ -5,7 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ClickOutsideModule } from 'ng-click-outside';
 import { RouterModule, RouterLink } from '@angular/router';
-import { MatDialogModule } from '@angular/material';
+import { MatDialogModule, MatDatepickerModule, MatInputModule, MatNativeDateModule } from '@angular/material';
 import { QuillModule } from 'ngx-quill';
 
 import { HeaderComponent } from './header/header.component';
@@ -74,6 +74,7 @@ import { YoutubeImportComponent } from './bulk-import/youtube-import/youtube-imp
 import { ContentQualityService } from './content/content-quality.service';
 import { LayoutService } from './layout.service';
 import { ContentConnService } from './content-conn.service';
+import { ProgressLineComponent } from './progress-line/progress-line.component';
 
 @NgModule({
   imports: [
@@ -84,6 +85,9 @@ import { ContentConnService } from './content-conn.service';
     ClickOutsideModule,
     RouterModule,
     MatDialogModule,
+    MatDatepickerModule,
+    MatInputModule,
+    MatNativeDateModule,
     QuillModule
   ],
   providers: [
@@ -101,6 +105,7 @@ import { ContentConnService } from './content-conn.service';
     NewContentService,
     FileService,
     DatePipe,
+    EbxDatePipe,
     SearchBarService,
     BoundedItemsDSBuilderService,
     UserPreferenceService,
@@ -176,7 +181,8 @@ import { ContentConnService } from './content-conn.service';
     MessageDialogComponent,
     UserTaskComponent,
     ProgressCircleComponent,
-    YoutubeImportComponent
+    YoutubeImportComponent,
+    ProgressLineComponent
   ],
   exports: [
     HeaderComponent,
@@ -205,7 +211,8 @@ import { ContentConnService } from './content-conn.service';
     AddContentTagsComponent,
     EntityPillComponent,
     UserTaskComponent,
-    ProgressCircleComponent
+    ProgressCircleComponent,
+    ProgressLineComponent
   ]
 })
 export class CoreModule { }

@@ -131,6 +131,38 @@ public class GoogleDriveService {
 		
 		EventUtil.publishEvent(new Event<GDriveShareVO>(Events.GDRIVE_FOLDER_SHARE, new GDriveShareVO(folderName, userEmailId)));
 	}
+
+	public void checkAndShareFolderWithUser(Drive drive, String folderPath, String userEmailId) throws FileNotFoundException, IOException {
+		
+		File folder = createOrFindFolderStructure(drive, folderPath);
+		
+		if (folder != null) {
+			
+			String folderId = folder.getId();
+			PermissionList permList = drive.permissions().list(folderId)
+										   .setFields("permissions(id, role, emailAddress)")
+										   .execute();
+			
+			if (permList != null) {
+			
+				boolean userHasPerm = false;
+
+				for (Permission perm : permList.getPermissions()) {
+					
+					if (userEmailId.equalsIgnoreCase(perm.getEmailAddress())) {
+						
+						LOGGER.debug("User [{}] has permission on [{}]", userEmailId, folderPath);
+						userHasPerm = true;
+						break;
+					}
+				}
+				
+				if (!userHasPerm) {
+					shareFolderIdWithUser(drive, folderId, folder.getName(), userEmailId);
+				}
+			}
+		}
+	}
 	
 	@EventSubscription(eventName = Events.GDRIVE_FOLDER_SHARE)
 	public void mailOnShare(GDriveShareVO shareVO) {
@@ -202,7 +234,7 @@ public class GoogleDriveService {
 		File file = new File();
 		file.setName(filename);
 
-		String parentFolderId = createOrFindFolderStructure(drive, destPath);
+		String parentFolderId = createOrFindFolderStructure(drive, destPath).getId();
 		
 		InputStreamContent fileContent = new InputStreamContent(mimeType, dataStream);
 		
@@ -282,7 +314,7 @@ public class GoogleDriveService {
 		
 		if (StringUtil.hasText(fileId)) {
 			
-			String destFolderId = createOrFindFolderStructure(drive, toFilePath);
+			String destFolderId = createOrFindFolderStructure(drive, toFilePath).getId();
 			
 			updatedFile = drive.files().update(fileId, null)
 								 	   .setAddParents(destFolderId)
@@ -294,7 +326,29 @@ public class GoogleDriveService {
 		return updatedFile;
 	}
 	
-	public String createOrFindFolderStructure(Drive drive, String folderPath) throws IOException {
+	public File createOrFindFolderStructure(Drive drive, String folderPath) throws IOException {
+		
+		String[] folders = FileUtil.getFolderList(folderPath);
+		
+		String parentFolderId = null;
+		File parentFolder = null;
+		
+		for (String currFolder : folders) {
+		
+			File folder = findFolder(drive, currFolder, parentFolderId);
+			
+			if (folder == null) {
+				folder = createFolder(drive, currFolder, parentFolderId);
+			}
+			
+			parentFolderId = folder.getId();
+			parentFolder = folder;
+		}
+		
+		return parentFolder;
+	}
+	
+	public String findFolderStructure(Drive drive, String folderPath) throws IOException {
 		
 		String[] folders = FileUtil.getFolderList(folderPath);
 		
@@ -305,7 +359,7 @@ public class GoogleDriveService {
 			File folder = findFolder(drive, currFolder, parentFolderId);
 			
 			if (folder == null) {
-				folder = createFolder(drive, currFolder, parentFolderId);
+				return null;
 			}
 			
 			parentFolderId = folder.getId();

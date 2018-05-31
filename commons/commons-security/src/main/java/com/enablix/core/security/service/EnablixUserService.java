@@ -237,6 +237,8 @@ public class EnablixUserService implements UserService, UserDetailsService {
 			//mailService.sendHtmlEmail(user, modUP.getEmail(), mailScenario);
 			EventUtil.publishEvent(new Event<MailEvent>(Events.SEND_EMAIL, new MailEvent(user, modUP.getEmail(), mailScenario)));
 			EventUtil.publishEvent(new Event<UserProfile>(Events.USER_ADDED, modUP));
+		} else {
+			EventUtil.publishEvent(new Event<UserProfile>(Events.USER_UPDATED, modUP));
 		}
 		
 		return modUP;

@@ -3,6 +3,7 @@ import { Container } from '../model/container.model';
 import { ContentItem } from '../model/content-item.model';
 import { ContentTemplate } from '../model/content-template.model';
 import { Constants } from '../util/constants';
+import { Utility } from '../util/utility';
 
 export class ContentTemplateCache {
 
@@ -14,6 +15,8 @@ export class ContentTemplateCache {
   bizDimensionContainers: Container[] = [];
 
   contentStackQIdMap = {};
+
+  autoPopulateDependents: any = {};
 
   private index = 0;
   colors = [];
@@ -53,6 +56,7 @@ export class ContentTemplateCache {
         } else if (this.isBusinessDimension(container)) {
           this.bizDimensionContainers.push(container);
           if (!container.color) {
+            console.log("Getting color: " + container.qualifiedId + ", index: " + this.index);
             container.color = this.getContainerColor(this.index++);
           }
         }
@@ -67,10 +71,45 @@ export class ContentTemplateCache {
 
     this.bizDimensionContainers.sort(
       (a: Container, b: Container) => { return a.displayOrder - b.displayOrder; });
+
+    this.initAutoPopulateDependents();
+  }
+
+  initAutoPopulateDependents() {
+    
+    var uiDefinitions = this.contentTemplate.uiDefinition.contentUIDef;
+    
+    // find the container UI definition
+    for (var i = 0; i < uiDefinitions.length; i++) {
+
+      var uiDef = uiDefinitions[i]; 
+      
+      if (uiDef.text && uiDef.text.autoPopulate) {
+        
+        var dependentQId = uiDef.qualifiedId;
+        var refItemId = uiDef.text.autoPopulate.refContentItem.itemId;
+        
+        var parentQId = Utility.getParentQId(dependentQId);
+        var dependentId = Utility.getElementId(dependentQId);
+        var refItemQId = Utility.getQId(parentQId, refItemId);
+
+        var dependents: string[] = this.autoPopulateDependents[refItemQId];
+        if (!dependents) {
+          dependents = [];
+          this.autoPopulateDependents[refItemQId] = dependents;
+        }
+
+        dependents.push(dependentId);
+      }
+    }
+  }
+
+  getAutoPopulateDependentItemIds(refQId: string) {
+    return this.autoPopulateDependents[refQId];
   }
 
   getContainerByQId(containerQId: string) : Container {
-      return this.qIdToContainerMap[containerQId];
+    return this.qIdToContainerMap[containerQId];
   }
 
   getContainerColor(containerIndex: number) : string {
@@ -82,7 +121,7 @@ export class ContentTemplateCache {
   }
 
   isBusinessDimension(container: Container) : boolean {
-    return 'BUSINESS_DIMENSION' == container.businessCategory;
+    return !container.refData && 'BUSINESS_DIMENSION' == container.businessCategory;
   }
 
   isBusinessContent(container: Container) : boolean {
@@ -169,9 +208,20 @@ export class ContentTemplateCache {
 
   getFreeInputContentItems(container: Container) : ContentItem[] {
     let freeInputItems = container.contentItem.filter(item => {
-      return item.type == 'TEXT' || item.type == 'DATE_TIME' || item.type == 'NUMERIC' || item.type == 'RICH_TEXT';
+      return item.type == 'TEXT' || item.type == 'DATE_TIME' || item.type == 'NUMERIC' || item.type == 'RICH_TEXT'
+              || (item.type == 'BOUNDED' && !this.isRelevanceItem(item));
     });
     return freeInputItems;
+  }
+
+  isRelevanceItem(item: ContentItem) {
+    if (item.bounded) {
+      var bndCont = this.getBoundedItemDatastoreContainer(item);
+      if (bndCont) {
+        return !bndCont.refData && this.isBusinessDimension(bndCont)
+      }
+    }
+    return false;
   }
 
   getBoundedItemDatastoreContainer(contentItem: ContentItem) : Container {

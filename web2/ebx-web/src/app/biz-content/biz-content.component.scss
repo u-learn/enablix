@@ -58,6 +58,18 @@
                     margin-top: 8px;
                 }
             }
+
+            .ebx-select, .ebx-select .option-rows {
+                border-radius: 0;
+                box-shadow: none;    
+            }
+
+            .ebx-select .input-row input[type="text"],
+            .ebx-select .input-row .pills-container input[type="text"] {
+                font-size: 14px;
+                height: 32px;
+                padding: 0 4px;
+            }
         }
         
         .label {

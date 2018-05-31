@@ -3,13 +3,10 @@
   <p class="text" *ngIf="!editable" [innerHtml]="getValue()"></p>
   <div class="text" *ngIf="editable" [ngSwitch]="contentItem.type">
     <div *ngSwitchCase="'TEXT'">
-      <ebx-text-input [record]="record" [contentItem]="contentItem" [(ngModel)]="record[contentItem.id]"></ebx-text-input>
+      <ebx-text-input [record]="record" [contentItem]="contentItem" [contentTemplate]="ctService.templateCache" [(ngModel)]="record[contentItem.id]"></ebx-text-input>
     </div>
     <div *ngSwitchCase="'NUMERIC'">
-      <ebx-text-input [record]="record" [contentItem]="contentItem" [(ngModel)]="record[contentItem.id]"></ebx-text-input>
-    </div>
-    <div *ngSwitchCase="'DOC'">
-      Doc Input
+      <ebx-text-input [record]="record" [contentItem]="contentItem" [contentTemplate]="ctService.templateCache" [(ngModel)]="record[contentItem.id]"></ebx-text-input>
     </div>
     <div *ngSwitchCase="'BOUNDED'">
       <ebx-bounded-input [record]="record" [contentItem]="contentItem" [(ngModel)]="record[contentItem.id]"></ebx-bounded-input>

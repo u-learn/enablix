@@ -1,6 +1,11 @@
 export class DocStoreMetadata {
   
-  static metadata = [
+  static metadata: any[] = [
+    {
+      "storeTypeName" : "Enablix",
+      "storeTypeCode" : "DISK",
+      "storeDesc": "When Enablix is selected as a Document Store, all the files that are imported or added in Enablix will be stored on Enablix servers."
+    },
     {
       "storeTypeName" : "Dropbox",
       "storeTypeCode" : "DROPBOX",

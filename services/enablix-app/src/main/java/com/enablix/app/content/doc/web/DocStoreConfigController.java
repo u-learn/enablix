@@ -1,9 +1,10 @@
 package com.enablix.app.content.doc.web;
 
+import java.util.Collections;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.httpclient.HttpStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.enablix.app.config.ConfigurationCrudService;
+import com.enablix.app.content.doc.DocumentStoreFactory;
 import com.enablix.app.service.CrudResponse;
 import com.enablix.commons.config.TenantDBConfigurationProvider;
 import com.enablix.commons.dms.DMSUtil;
@@ -34,6 +36,9 @@ public class DocStoreConfigController {
 	@Autowired
 	private ConfigurationCrudService configManager;
 	
+	@Autowired
+	private DocumentStoreFactory docStoreFactory;
+	
 	//@Autowired
 	/*private DocStoreConfigMetadataProvider docstoreConfigMetadataProvider;
 	
@@ -51,13 +56,20 @@ public class DocStoreConfigController {
 		Configuration docStoreConfig = null;
 		
 		Configuration defaultDocStoreConfig = configProvider.getConfiguration(DocumentStoreConstants.DOC_STORE_CONFIG_KEY);
+		
 		if (defaultDocStoreConfig != null) {
+			
 			docStoreConfig = configProvider.getConfiguration(DMSUtil.getDocStoreConfigKey(
 				defaultDocStoreConfig.getStringValue(DocumentStoreConstants.DEFAULT_DOC_STORE_CONFIG_PROP)));
-		}
-
-		if (docStoreConfig == null) {
-			res.setStatus(HttpStatus.SC_NO_CONTENT);
+			
+		} else {
+		
+			docStoreConfig = new Configuration();
+			
+			String storeType = docStoreFactory.defaultStoreType();
+			docStoreConfig.setKey(DMSUtil.getDocStoreConfigKey(storeType));
+			docStoreConfig.setConfig(Collections.singletonMap(DocumentStoreConstants.DOC_STORE_TYPE_PROP, storeType));
+			
 		}
 		
 		return docStoreConfig;
