@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, Params, ActivatedRoute } from '@angular/router';
 
 import { AlertService } from '../../../core/alert/alert.service';
 import { UiWidgetService } from '../../../services/ui-widget.service';
