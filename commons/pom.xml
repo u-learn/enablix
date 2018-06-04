@@ -50,5 +50,6 @@
 	<module>google-drive-bulk-import</module>
 	<module>user-task</module>
 	<module>youtube-bulk-import</module>
+	<module>ui-widget</module>
   </modules>
 </project>

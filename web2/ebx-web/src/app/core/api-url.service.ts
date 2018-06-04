@@ -40,6 +40,8 @@ export class ApiUrlService {
 
   static GET_FIRST_CONTENT_CONN_BY_QID = "/contentconn/rf/:contentQId/";
 
+  static GET_UI_WIDGET_DATA = "/uiwdg/data/:widgetIdentity/?pageSize=:pageSize&pageNo=:pageNo";
+
   static POST_FOR_DATA_SEARCH = "/data/search/t/:domainType/";
   static POST_FOR_CONTAINER_DATA_SEARCH = "/data/search/cq/:containerQId/";
 
@@ -288,6 +290,11 @@ export class ApiUrlService {
   getFirstContentConnByContentQId(contentQId: string) : string {
     return this.getAPIUrl(ApiUrlService.GET_FIRST_CONTENT_CONN_BY_QID, 
                   { contentQId: contentQId });
+  }
+
+  getUIWidgetData(widgetIdentity: string, pageNo: number = 0, pageSize: number = 5) {
+    return this.getAPIUrl(ApiUrlService.GET_UI_WIDGET_DATA, 
+      { widgetIdentity: widgetIdentity, pageSize: String(pageSize), pageNo: String(pageNo) });
   }
 
   postCheckUserExistUrl() : string {

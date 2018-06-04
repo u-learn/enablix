@@ -69,7 +69,9 @@ import com.enablix.commons.util.StringUtil;
 				"com.enablix.uri.embed.repo",
 				"com.enablix.core.mongo.repo",
 				"com.enablix.core.mongo.content.repo",
-				"com.enablix.user.task.repo"})
+				"com.enablix.user.task.repo",
+				"com.enablix.app.content.pack.repo",
+				"com.enablix.ui.widget.repo"})
 @EnableScheduling
 public class ApplicationInit extends WebMvcAutoConfigurationAdapter {
 

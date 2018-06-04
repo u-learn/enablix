@@ -41,6 +41,7 @@ import { RecoListComponent } from '../reco-content/reco-list/reco-list.component
 import { ActivityAuditComponent } from '../reports/activity-audit/activity-audit.component';
 import { AuditActivityResolve } from './audit-activity.resolve';
 import { ContainerTemplateComponent } from '../company/container-template/container-template.component';
+import { CpWidgetDetailComponent } from '../ui-widget/content-pack-widget/cp-widget-detail/cp-widget-detail.component';
 
 const routes: Routes = [
   {
@@ -203,6 +204,13 @@ const routes: Routes = [
         {
           path: 'reco/list',
           component: RecoListComponent,
+          resolve: {
+            sbData: SearchBarResolve
+          }
+        },
+        {
+          path: 'cpwdg/:widgetId',
+          component: CpWidgetDetailComponent,
           resolve: {
             sbData: SearchBarResolve
           }

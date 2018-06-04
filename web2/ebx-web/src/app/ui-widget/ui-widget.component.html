@@ -1,0 +1,5 @@
+<ng-container [ngSwitch]="widgetDetails?.definition?.type">
+  <ng-container *ngSwitchCase="'CONTENT_PACK'">
+    <ebx-content-pack-widget [details]="widgetDetails"></ebx-content-pack-widget>
+  </ng-container>
+</ng-container>

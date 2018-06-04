@@ -11,8 +11,11 @@
 <ebx-header></ebx-header>
 <div class="container flex-row">
   <div class="dashboard">
-    <!-- <ebx-recent-content></ebx-recent-content> -->
     <ebx-user-task></ebx-user-task>
+    <ng-container *ngFor="let wdgId of widgetIds">
+      <ebx-ui-widget [widgetId]="wdgId"></ebx-ui-widget>
+    </ng-container>
+    <!-- <ebx-recent-content></ebx-recent-content> -->
     <ebx-reco-content></ebx-reco-content>
     <ebx-dimensions></ebx-dimensions>  
   </div>

@@ -1,3 +1,12 @@
+<ng-template #clientBrand>
+  <ng-container *ngIf="tenantLogoExist">
+    <img class="client-logo" src="/assets/img/client-logo.png" (error)="tenantLogoExist = false"/>
+  </ng-container>
+  <ng-container *ngIf="!tenantLogoExist">
+    <div class="logo"><div class="logo-placeholder"></div></div>
+    <h3 class="brand" [title]="tenantService.tenant?.name">{{tenantService.tenant?.name}}</h3>
+  </ng-container>
+</ng-template>
 <ng-container [ngSwitch]="type">
   <ng-container *ngSwitchCase="'portal'">
     <div *ngIf="username != null; then loggedInBlock; else loggedOutBlock"></div>
@@ -12,8 +21,7 @@
       </div>
       <div class="center1">
         <div class="client-brand full-width" (click)="navToCompanyPage()">
-          <div class="logo"><div class="logo-placeholder"></div></div>
-          <h3 class="brand">{{tenantService.tenant?.name}}</h3>
+          <ng-template *ngTemplateOutlet="clientBrand"></ng-template>
         </div>
       </div>
       <div class="center2"></div>
@@ -83,9 +91,8 @@
     </div>
     <div class="center3">
       <div class="center-sub">
-        <div class="client-brand" (click)="navToCompanyPage()">  
-          <div class="logo"><div class="logo-placeholder"></div></div>
-          <h3 class="brand" [title]="tenantService.tenant?.name">{{tenantService.tenant?.name}}</h3>
+        <div class="client-brand" (click)="navToCompanyPage()">
+          <ng-template *ngTemplateOutlet="clientBrand"></ng-template>
         </div>
       </div>
       <div class="center-sub center-rt">

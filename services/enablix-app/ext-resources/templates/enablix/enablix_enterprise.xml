@@ -533,6 +533,7 @@
         <container businessCategory="BUSINESS_CONTENT" id="faq" qualifiedId="faq" label="FAQ">
             <contentItem type="text" id="title" qualifiedId="faq.title" label="Question" searchBoost="7"/>
             <contentItem type="richText" id="desc" qualifiedId="faq.desc" label="Answer" searchBoost="2"/>
+            <contentItem type="doc" id="file" label="File"/>
             <contentItem type="bounded" id="industries" qualifiedId="faq.industries" label="Industries" searchBoost="6">
                 <bounded multivalued="true">
                     <refList>

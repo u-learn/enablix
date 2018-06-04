@@ -1,6 +1,6 @@
 {
 	"app.name" : "",
-	"portal.home.reco.header": "Sales Playbooks",
+	"portal.home.reco.header": "Featured Content",
 		
 	"content.approval.status.PENDING_APPROVAL" : "Pending Approval",
 	"content.approval.status.REJECTED" : "Rejected",

@@ -1,0 +1,16 @@
+<ebx-header></ebx-header>
+<div class="container">
+  <div class="free-results" *ngIf="details">
+    <div class="header">
+        <h1>{{details?.definition.title}}</h1>
+    </div>
+    <div class="main" *ngIf="details.data">
+      <div class="card" *ngFor="let rec of details.data.records.content">
+        <ebx-data-card [containerQId]="rec.containerQId" [record]="rec.record"></ebx-data-card>
+      </div>
+    </div>
+  </div>
+  <div class="table-pagination" *ngIf="details?.data?.records.totalPages > 1">
+    <ebx-pagination [totalPages]="details.data.records.totalPages" [currentPage]="details.data.records.number" (onPageChange)="setPage($event)"></ebx-pagination>
+  </div>
+</div>

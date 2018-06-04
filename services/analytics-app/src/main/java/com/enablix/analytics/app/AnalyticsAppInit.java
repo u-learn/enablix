@@ -58,7 +58,8 @@ import com.enablix.bayes.exec.BayesExecutor;
 				"com.enablix.content.quality.repo",
 				"com.enablix.uri.embed.repo",
 				"com.enablix.core.mongo.repo",
-				"com.enablix.core.mongo.content.repo"})
+				"com.enablix.core.mongo.content.repo",
+				"com.enablix.app.content.pack.repo"})
 public class AnalyticsAppInit {
 
 	public static void main(String[] args) {

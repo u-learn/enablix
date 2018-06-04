@@ -17,6 +17,8 @@ export class HeaderComponent implements OnInit {
   @Input() type?: string = 'portal'; 
   username: string;
 
+  tenantLogoExist: boolean = true; 
+
   constructor(private userService: UserService, private authService: AuthService,
               private navService: NavigationService, public tenantService: TenantService) { }
 

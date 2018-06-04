@@ -89,6 +89,10 @@ import { CopyEmbedCodeButtonComponent } from './content-action/copy-embed-code-b
 import { DefaultLayoutComponent } from './biz-dimension/biz-dimension-detail/default-layout/default-layout.component';
 import { ContentMappingLayoutComponent } from './biz-dimension/biz-dimension-detail/content-mapping-layout/content-mapping-layout.component';
 import { BizDimLayoutSwitchComponent } from './biz-dimension/biz-dimension-detail/biz-dim-layout-switch/biz-dim-layout-switch.component';
+import { UiWidgetComponent } from './ui-widget/ui-widget.component';
+import { UiWidgetService } from './services/ui-widget.service';
+import { ContentPackWidgetComponent } from './ui-widget/content-pack-widget/content-pack-widget.component';
+import { CpWidgetDetailComponent } from './ui-widget/content-pack-widget/cp-widget-detail/cp-widget-detail.component';
 
 @NgModule({
   declarations: [
@@ -155,7 +159,10 @@ import { BizDimLayoutSwitchComponent } from './biz-dimension/biz-dimension-detai
     CopyEmbedCodeButtonComponent,
     DefaultLayoutComponent,
     ContentMappingLayoutComponent,
-    BizDimLayoutSwitchComponent
+    BizDimLayoutSwitchComponent,
+    UiWidgetComponent,
+    ContentPackWidgetComponent,
+    CpWidgetDetailComponent
   ],
   imports: [
     BrowserModule,
@@ -185,6 +192,7 @@ import { BizDimLayoutSwitchComponent } from './biz-dimension/biz-dimension-detai
     ConfigInfoService,
     ContentShareService,
     RecoContentService,
+    UiWidgetService,
     { 
         provide: HTTP_INTERCEPTORS, 
         useClass: NgProgressInterceptor, 
