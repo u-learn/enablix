@@ -180,7 +180,7 @@ public class TemplateBuilder {
 		linkContainer.getContentItem().add(linkingItem);
 		
 		ContainerType linkedContentType = new ContainerType();
-		linkedContentType.setLabel(inContainer.getLabel());
+		linkedContentType.setLabel(linkContainer.getLabel());
 		linkedContentType.setId(linkContainerId);
 		linkedContentType.setQualifiedId(QIdUtil.createQualifiedId(inContainer.getId(), linkContainerId));
 		linkedContentType.setLinkContainerQId(linkContainer.getQualifiedId());
