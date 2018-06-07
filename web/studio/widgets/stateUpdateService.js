@@ -418,12 +418,29 @@ enablix.studioApp.factory('StateUpdateService',
 	 		};
 	 		
 	 		var checkAndMapCorrectApp = function(_url) {
+	 			
 	 			var portal = enablix.loggedInUser ? enablix.loggedInUser.portal : "v1";
+	 			
 	 			if (portal === "v2") {
 	 				_url = _url.replace("app.html", "app2.html");
 	 			} else {
 	 				_url = _url.replace("app.html", "app1.html");
 	 			}
+	 			
+	 			// tenant specific url
+	 			if (enablix.loggedInUser.user && enablix.loggedInUser.user.tenantId) {
+	 				
+	 				var tenantId = enablix.loggedInUser.user.tenantId;
+	 				
+	 				if (_url.indexOf("www.enablix.com") > 0) {
+	 					_url = _url.replace("www.enablix.com", tenantId + ".enablix.com");
+	 				} else if (_url.indexOf("//test.enablix.com") > 0) {
+	 					_url = _url.replace("test.enablix.com", tenantId + ".test.enablix.com");
+	 				} else if (_url.indexOf("www.ebxlocal.com") > 0) {
+	 					_url = _url.replace("www.ebxlocal.com", tenantId + ".ebxlocal.com");
+	 				} 
+	 			}
+	 			
 	 			return _url;
 	 		}
 	 		
