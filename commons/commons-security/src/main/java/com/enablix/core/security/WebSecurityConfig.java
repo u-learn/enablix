@@ -15,7 +15,7 @@ import org.springframework.security.web.authentication.RememberMeServices;
 import org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices;
 import org.springframework.security.web.authentication.switchuser.SwitchUserFilter;
 
-import com.enablix.commons.util.EnvironmentProperties;
+import com.enablix.commons.util.EnvPropertiesUtil;
 import com.enablix.core.security.service.EnablixUserService;
 
 @Configuration
@@ -31,9 +31,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private EnablixUserService userService;
 	
-	@Autowired
-	private EnvironmentProperties envProps;
-
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		
@@ -41,12 +38,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		
 		http = http.addFilterAfter(new ProcessContextInitFilter(systemUserRequestPatterns), SwitchUserFilter.class);
 		http = http.addFilterAfter(new AuditTrackingContextInitFilter(), SwitchUserFilter.class);
-		http = http.addFilterBefore(new RequestContextFilter(), ProcessContextInitFilter.class);
+		//http = http.addFilterBefore(new RequestContextFilter(), ProcessContextInitFilter.class);
 		//http = http.addFilterBefore(hubspotAuthFilter(), RequestContextFilter.class);
 		
 		// Add guest login filter ahead of username/password filter. Also, read the following:
 		// http://mtyurt.net/2015/07/15/spring-how-to-insert-a-filter-before-springsecurityfilterchain/
 		http = http.addFilterBefore(guestLoginFilter(), FilterSecurityInterceptor.class);
+		//http = http.addFilterBefore(new RequestContextFilter(), FilterSecurityInterceptor.class);
 		
 		// commenting below to allow embedding in iFrame
 		http.headers().frameOptions().disable();
@@ -114,7 +112,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Bean
 	public CustomLogoutSuccessHandler logoutSuccessHandler() {
 		CustomLogoutSuccessHandler handler = new CustomLogoutSuccessHandler();
-		handler.setDefaultTargetUrl(envProps.getServerUrl() + "/login.html#/login");
+		handler.setDefaultTargetUrl(EnvPropertiesUtil.getSubdomainSpecificServerUrl() + "/login.html#/login");
 		return handler;
 	}
 	

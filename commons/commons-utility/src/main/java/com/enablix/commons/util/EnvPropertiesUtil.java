@@ -1,6 +1,8 @@
 package com.enablix.commons.util;
 
 import com.enablix.commons.constants.AppConstants;
+import com.enablix.commons.util.process.ProcessContext;
+import com.enablix.commons.util.process.RequestContext;
 
 public class EnvPropertiesUtil {
 
@@ -40,6 +42,29 @@ public class EnvPropertiesUtil {
 		}
 		
 		return baseDir; 
+	}
+	
+	public static String getDefaultServerUrl() {
+		return properties.getSubdomainSpecificServerUrl(null);
+	}
+	
+	public static String getSubdomainSpecificServerUrl() {
+		
+		String tenantId = null;
+		
+		RequestContext requestContext = RequestContext.get();
+		if (requestContext != null) {
+			tenantId = requestContext.getTenantId();
+		}
+		
+		if (tenantId == null) {
+			ProcessContext pc = ProcessContext.get();
+			if (pc != null) {
+				tenantId = pc.getTenantId();
+			}
+		}
+		
+		return properties.getSubdomainSpecificServerUrl(tenantId);
 	}
 	
 }

@@ -29,7 +29,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.util.ContentCachingRequestWrapper;
 
-import com.enablix.commons.util.EnvironmentProperties;
+import com.enablix.commons.util.EnvPropertiesUtil;
 import com.enablix.commons.util.web.TenantInfo;
 import com.enablix.commons.util.web.WebUtils;
 import com.enablix.core.security.hubspot.HubspotAuthToken;
@@ -41,9 +41,6 @@ import com.google.common.hash.Hashing;
 public class HubspotAuthFilter extends OncePerRequestFilter {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(HubspotAuthFilter.class);
-	
-	@Autowired
-	private EnvironmentProperties envProps;
 	
 	@Autowired
 	private HubspotAuthTokenRepository authTokenRepo;
@@ -90,7 +87,7 @@ public class HubspotAuthFilter extends OncePerRequestFilter {
 		HubspotHttpRequest hubspotRequest = new HubspotHttpRequest(request, oauth2Token);
 		
 		try {
-			if (!hubspotRequest.validateHubspotSignature(authToken.getHubspotAppKey(), envProps.getServerUrl())) {
+			if (!hubspotRequest.validateHubspotSignature(authToken.getHubspotAppKey(), EnvPropertiesUtil.getSubdomainSpecificServerUrl())) {
 				response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid hubspot signature");
 				return;
 			}

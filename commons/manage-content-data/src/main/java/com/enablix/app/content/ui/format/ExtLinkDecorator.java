@@ -24,7 +24,7 @@ public class ExtLinkDecorator implements LinkDecorator {
 	@Override
 	public String getHref(String url, String contentItemQId) {
 		String sharedUrl = urlCreator.createShareableUrl(getExtLinkUrl(url, contentItemQId), sharedWithEmail, true);
-		return EnvPropertiesUtil.getProperties().getServerUrl() + sharedUrl;
+		return EnvPropertiesUtil.getSubdomainSpecificServerUrl() + sharedUrl;
 	}
 
 	private String getExtLinkUrl(String url, String contentItemQId) {

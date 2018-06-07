@@ -138,7 +138,7 @@ public class SlackServiceImpl implements SlackService {
 	}
 
 	private String getRedirectURI() {
-		return EnvPropertiesUtil.getProperties().getServerUrl()+"/app.html#/account/slackdtls";
+		return EnvPropertiesUtil.getSubdomainSpecificServerUrl() + "/app.html#/account/slackdtls";
 	}
 
 	private void auditUserActivity(ActivityType activityType){

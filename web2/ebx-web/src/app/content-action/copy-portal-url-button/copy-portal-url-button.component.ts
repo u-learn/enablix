@@ -27,7 +27,7 @@ export class CopyPortalUrlButtonComponent implements OnInit {
 
   copy() {
     // http://localhost:4200/portal/content/detail/faq/5ff46989-b6a7-458c-a181-fe2ae55d84ab
-    let url = window.location.protocol + "//" + window.location.host + "/portal/content/detail/"
+    let url = window.location.protocol + "//" + window.location.host + "/app.html#/portal/container/"
       + this.container.qualifiedId + "/" + this.record.identity;
 
     Utility.copyToClipboard(url);

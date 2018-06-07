@@ -23,6 +23,7 @@ import com.enablix.commons.util.concurrent.Events;
 import com.enablix.commons.util.id.IdentityUtil;
 import com.enablix.commons.util.json.JsonUtil;
 import com.enablix.commons.util.process.ProcessContext;
+import com.enablix.commons.util.process.RequestContext;
 import com.enablix.core.api.WebPortal;
 import com.enablix.core.domain.security.authorization.Role;
 import com.enablix.core.domain.security.authorization.UserBusinessProfile;
@@ -64,7 +65,15 @@ public class EnablixUserService implements UserService, UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
 
-		User user = userRepo.findByUserId(userName.toLowerCase());
+		String tenantId = null;
+		RequestContext requestContext = RequestContext.get();
+		if (requestContext != null) {
+			tenantId = requestContext.getTenantId();
+		}
+		
+		User user = !StringUtil.hasText(tenantId) ? userRepo.findByUserId(userName.toLowerCase())
+						: userRepo.findByUserIdAndTenantId(userName.toLowerCase(), tenantId);
+		
 		UserProfile userProfile = null;
 		if (user == null) {
 			throw new UsernameNotFoundException("[" + userName + "] not found");

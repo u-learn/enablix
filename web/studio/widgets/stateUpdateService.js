@@ -70,11 +70,12 @@ enablix.studioApp.factory('StateUpdateService',
 	 			if(previousUrl.lastIndexOf("#") > 0 && previousUrl.substring(previousUrl.lastIndexOf("#") + 1, previousUrl.length).length > 7) {
 					//if previous URL is other than logout
 					$window.location.href = $location.protocol() + "://" + $location.host() 
- 											+ ":" + $location.port() + TenantInfoService.getTenantContextUrl() 
+ 											+ ":" + $location.port() //+ TenantInfoService.getTenantContextUrl() 
  											+ "/login.html#/login#" +"redirect#" + encodeURIComponent(previousUrl);
 				} else {
 					$window.location.href = $location.protocol() + "://" + $location.host() 
- 											+ ":" + $location.port() + TenantInfoService.getTenantContextUrl() + "/login.html#/login";
+ 											+ ":" + $location.port() //+ TenantInfoService.getTenantContextUrl() 
+ 											+ "/login.html#/login";
 				}
 											
 	 		};

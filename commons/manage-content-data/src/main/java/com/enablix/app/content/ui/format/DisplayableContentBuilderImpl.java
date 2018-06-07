@@ -93,7 +93,7 @@ public class DisplayableContentBuilderImpl implements DisplayableContentBuilder 
 			return "";
 		} 
 		
-		String url = EnvPropertiesUtil.getProperties().getServerUrl() + 
+		String url = EnvPropertiesUtil.getSubdomainSpecificServerUrl() + 
 				containerInstanceUrl.replaceAll(":containerQId", containerQId)
 									.replaceAll(":contentIdentity", contentIdentity);
 		

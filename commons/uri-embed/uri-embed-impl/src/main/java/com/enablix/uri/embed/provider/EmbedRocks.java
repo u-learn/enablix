@@ -53,7 +53,6 @@ public class EmbedRocks implements EmbedInfoProvider {
 		
 		Map<String, String> urlVariables = new HashMap<>();
 		urlVariables.put("url", url);
-		urlVariables.put("key", apiKey);
 		urlVariables.put("skip", "article");
 		
 		UriTemplate uriTemplate = new UriTemplate(apiUrl);
@@ -62,6 +61,7 @@ public class EmbedRocks implements EmbedInfoProvider {
 		MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
 		headers.add("Accept", "application/json");
 		headers.add("User-Agent", "Enablix");
+		headers.add("x-api-key", apiKey);
 		  
 		RequestEntity<String> request = new RequestEntity<>(headers, HttpMethod.GET, restUrl);
 		
@@ -95,6 +95,7 @@ public class EmbedRocks implements EmbedInfoProvider {
 		MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
 		headers.add("Accept", "application/json");
 		headers.add("User-Agent", "Enablix");
+		headers.add("x-api-key", "defbf772-553c-4392-aaf9-7ded5272fcbe");
 		  
 		RequestEntity<String> request = new RequestEntity<>(headers, HttpMethod.GET, new URI(uri));
 		ResponseEntity<EmbedInfo> response = restTemplate.exchange(request, EmbedInfo.class);

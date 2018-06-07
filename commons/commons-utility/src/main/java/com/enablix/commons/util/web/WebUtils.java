@@ -38,27 +38,49 @@ public class WebUtils {
 		
 		TenantInfo tenantInfo = null;
 		
-		String requestURI = request.getRequestURI();
-		requestURI = removeLeadingSlash(requestURI);
-
-		if (requestURI.startsWith(TENANT_ID_URL_PREFIX)) {
+		String serverName = request.getServerName();
 		
-			tenantInfo = new TenantInfo();
+		int firstIndx = serverName.indexOf('.');
+		
+		if (firstIndx > 0) {
+		
+			int secondIndx = serverName.indexOf('.', firstIndx + 1);
 			
-			int indexOfNextSlash = requestURI.indexOf("/", TENANT_ID_URL_PREFIX_OFFSET);
-			String tenantId = requestURI.substring(TENANT_ID_URL_PREFIX_OFFSET, indexOfNextSlash);
-			tenantInfo.setTenantId(tenantId);
-			
-			requestURI = requestURI.substring(indexOfNextSlash + 1);
-			
-			if (requestURI.startsWith(CLIENT_ID_URL_PREFIX)) {
+			if (secondIndx > 0) {
+				// subdomain present
+				String subdomain = serverName.substring(0, firstIndx).toLowerCase();
 				
-				indexOfNextSlash = requestURI.indexOf("/", CLIENT_ID_URL_PREFIX_OFFSET);
-				String clientId = requestURI.substring(TENANT_ID_URL_PREFIX_OFFSET, indexOfNextSlash);
-				tenantInfo.setClientId(clientId);
+				if (!subdomain.equals("www") && !subdomain.equals("test")) {
+					tenantInfo = new TenantInfo();
+					tenantInfo.setTenantId(subdomain);
+				}
 			}
 		}
-
+		
+		if (tenantInfo == null) {
+			
+			String requestURI = request.getRequestURI();
+			requestURI = removeLeadingSlash(requestURI);
+	
+			if (requestURI.startsWith(TENANT_ID_URL_PREFIX)) {
+			
+				tenantInfo = new TenantInfo();
+				
+				int indexOfNextSlash = requestURI.indexOf("/", TENANT_ID_URL_PREFIX_OFFSET);
+				String tenantId = requestURI.substring(TENANT_ID_URL_PREFIX_OFFSET, indexOfNextSlash);
+				tenantInfo.setTenantId(tenantId);
+				
+				requestURI = requestURI.substring(indexOfNextSlash + 1);
+				
+				if (requestURI.startsWith(CLIENT_ID_URL_PREFIX)) {
+					
+					indexOfNextSlash = requestURI.indexOf("/", CLIENT_ID_URL_PREFIX_OFFSET);
+					String clientId = requestURI.substring(TENANT_ID_URL_PREFIX_OFFSET, indexOfNextSlash);
+					tenantInfo.setClientId(clientId);
+				}
+			}
+		}
+		
 		return tenantInfo;
 	}
 	

@@ -7,6 +7,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.core.annotation.Order;
+import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.enablix.commons.constants.AppConstants;
@@ -15,7 +17,9 @@ import com.enablix.commons.util.process.RequestContext;
 import com.enablix.commons.util.web.TenantInfo;
 import com.enablix.commons.util.web.WebUtils;
 
-public class RequestContextFilter extends OncePerRequestFilter {
+@Component
+@Order(-1010)
+public class RequestContextInitFilter extends OncePerRequestFilter {
 
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
@@ -28,6 +32,11 @@ public class RequestContextFilter extends OncePerRequestFilter {
 		if (tenantInfo != null) {
 			tenantId = tenantInfo.getTenantId();
 			clientId = tenantInfo.getClientId();
+		}
+		
+		if (StringUtil.hasText(tenantId) && request.getRequestURI().equals("/")) {
+			String appUrl = request.getRequestURL() + "app.html#/portal/home";
+			response.sendRedirect(appUrl);
 		}
 		
 		if (tenantId == null) {

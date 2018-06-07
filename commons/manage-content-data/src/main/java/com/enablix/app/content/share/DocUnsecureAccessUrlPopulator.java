@@ -29,11 +29,11 @@ public class DocUnsecureAccessUrlPopulator {
 			
 			String shareableUrl = urlCreator.createShareableUrl(
 					getActualDocDownloadUrl(contentDoc.getDocIdentity(), ctx), sharedWithEmail, true);
-			contentDoc.setAccessUrl(EnvPropertiesUtil.getProperties().getServerUrl() + shareableUrl);
+			contentDoc.setAccessUrl(EnvPropertiesUtil.getSubdomainSpecificServerUrl() + shareableUrl);
 			
 			String shareableThmbUrl = urlCreator.createShareableUrl(
 					getActualDocThumbnailUrl(contentDoc.getDocIdentity(), ctx), sharedWithEmail, true);
-			contentDoc.setThumbnailUrl(EnvPropertiesUtil.getProperties().getServerUrl() + shareableThmbUrl);
+			contentDoc.setThumbnailUrl(EnvPropertiesUtil.getSubdomainSpecificServerUrl() + shareableThmbUrl);
 		}
 		
 	}
@@ -52,7 +52,7 @@ public class DocUnsecureAccessUrlPopulator {
 		
 		if (contentDoc != null) {
 			String shareableUrl = getActualDocDownloadUrl(contentDoc.getDocIdentity(), ctx);
-			contentDoc.setAccessUrl(EnvPropertiesUtil.getProperties().getServerUrl() + shareableUrl);
+			contentDoc.setAccessUrl(EnvPropertiesUtil.getSubdomainSpecificServerUrl() + shareableUrl);
 		}
 		
 	}

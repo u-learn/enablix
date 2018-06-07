@@ -62,7 +62,7 @@ public class ShareOptionsController {
 	@RequestMapping(method = RequestMethod.POST, value = "/shareableDocUrl/", produces="text/plain")
 	public @ResponseBody String getShareableDocUrl(@RequestBody ShareableUrlRequest request) {
 		
-		String serverUrl = EnvPropertiesUtil.getProperties().getServerUrl();
+		String serverUrl = EnvPropertiesUtil.getSubdomainSpecificServerUrl();
 		String userId = ProcessContext.get().getUserId();
 		
 		String shareableUrl = shareableUrlCreator.createShareableUrl(request.getUrl(), userId, true);
@@ -80,7 +80,7 @@ public class ShareOptionsController {
 	@RequestMapping(method = RequestMethod.POST, value = "/shareableLinkUrl/", produces="application/json")
 	public ShareableUrlResponse getShareableLinkUrl(@RequestBody ShareableUrlRequest request) {
 		
-		String serverUrl = EnvPropertiesUtil.getProperties().getServerUrl();
+		String serverUrl = EnvPropertiesUtil.getSubdomainSpecificServerUrl();
 		String userId = ProcessContext.get().getUserId();
 		
 		String shareableUrl = shareableUrlCreator.createShareableUrl(request.getUrl(), userId, true);
@@ -93,7 +93,7 @@ public class ShareOptionsController {
 	@RequestMapping(method = RequestMethod.POST, value = "/shareableContentWidgetUrl/", produces="application/json")
 	public ShareableUrlResponse getShareableContentWidgetUrl(@RequestBody ShareableUrlRequest request) {
 		
-		String serverUrl = EnvPropertiesUtil.getProperties().getServerUrl();
+		String serverUrl = EnvPropertiesUtil.getSubdomainSpecificServerUrl();
 		String userId = ProcessContext.get().getUserId();
 		
 		String shareableUrl = shareableUrlCreator.createShareableUrl(request.getUrl(), userId, true);

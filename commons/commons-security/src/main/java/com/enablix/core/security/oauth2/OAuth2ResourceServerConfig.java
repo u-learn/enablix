@@ -14,7 +14,6 @@ import org.springframework.security.web.util.matcher.RequestMatcher;
 
 import com.enablix.core.security.AuditTrackingContextInitFilter;
 import com.enablix.core.security.ProcessContextInitFilter;
-import com.enablix.core.security.RequestContextFilter;
 import com.enablix.core.security.SecurityConstant;
 
 @Configuration
@@ -29,7 +28,7 @@ public class OAuth2ResourceServerConfig extends ResourceServerConfigurerAdapter 
 		
 		http = http.addFilterAfter(new ProcessContextInitFilter(systemUserRequestPatterns), SwitchUserFilter.class);
 		http = http.addFilterAfter(new AuditTrackingContextInitFilter(), SwitchUserFilter.class);
-		http = http.addFilterBefore(new RequestContextFilter(), ProcessContextInitFilter.class);
+		//http = http.addFilterBefore(new RequestContextInitFilter(), ProcessContextInitFilter.class);
 		
 		// only enable oauth resource server for request containing bearer token
 		http.requestMatcher(new BearerRequestMatcher()) 

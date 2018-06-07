@@ -121,7 +121,7 @@ public class DocPreviewBuilder implements PreviewBuilder {
 
 	private String createPartImageUrl(String docIdentity, int i, String sharedWith) {
 		String url = "/doc/pdp/" + docIdentity + "/" + i + "/";
-		return EnvPropertiesUtil.getProperties().getServerUrl() 
+		return EnvPropertiesUtil.getSubdomainSpecificServerUrl()
 				+ urlCreator.createShareableUrl(url, sharedWith, true);
 	}
 
