@@ -7,6 +7,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -16,11 +17,15 @@ import com.enablix.commons.util.StringUtil;
 import com.enablix.commons.util.process.RequestContext;
 import com.enablix.commons.util.web.TenantInfo;
 import com.enablix.commons.util.web.WebUtils;
+import com.enablix.tenant.TenantManager;
 
 @Component
 @Order(-1010)
 public class RequestContextInitFilter extends OncePerRequestFilter {
 
+	@Autowired
+	private TenantManager tenantMgr;
+	
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
@@ -30,7 +35,14 @@ public class RequestContextInitFilter extends OncePerRequestFilter {
 		
 		TenantInfo tenantInfo = WebUtils.getTenantInfoFromUrl(request);
 		if (tenantInfo != null) {
+			
 			tenantId = tenantInfo.getTenantId();
+			
+			if (tenantId != null && !tenantMgr.doesTenantExist(tenantId)) {
+				response.sendError(HttpServletResponse.SC_NOT_FOUND);
+				return;
+			}
+			
 			clientId = tenantInfo.getClientId();
 		}
 		

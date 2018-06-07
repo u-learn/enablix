@@ -2,12 +2,19 @@ package com.enablix.tenant.impl;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
+import javax.annotation.PostConstruct;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import com.enablix.commons.constants.AppConstants;
@@ -47,6 +54,31 @@ public class TenantManagerImpl implements TenantManager {
 	@Autowired
 	private TenantSetupTaskFactory setupTaskFactory;
 	
+	private Set<String> existingTenantIds;
+	
+	public TenantManagerImpl() {
+		this.existingTenantIds = new HashSet<>();
+	}
+	
+	@PostConstruct
+	public void init() {
+		// load existing tenantIds
+		Pageable pageable = new PageRequest(0, 50);
+		
+		Page<Tenant> tenants = tenantRepo.findAll(pageable);
+	
+		while (tenants != null && tenants.hasContent()) {
+			
+			tenants.forEach((tenant) -> existingTenantIds.add(tenant.getTenantId()));
+			
+			if (tenants.hasNext()) {
+				tenants = tenantRepo.findAll(pageable.next());
+			} else {
+				tenants = null;
+			}
+		}
+	}
+	
 	@Override
 	public void setupTenant(SignupRequest request) throws Exception {
 		
@@ -72,6 +104,8 @@ public class TenantManagerImpl implements TenantManager {
 		}
 		
 		Tenant tenant = createTenantRecord(request);
+		
+		existingTenantIds.add(tenant.getTenantId());
 		
 		ProcessContext.clear();
 		ProcessContext.initialize(AppConstants.SYSTEM_USER_ID, AppConstants.SYSTEM_USER_NAME, 
@@ -181,6 +215,11 @@ public class TenantManagerImpl implements TenantManager {
 		}
 		
 		return finalTenantId;
+	}
+
+	@Override
+	public boolean doesTenantExist(String tenantId) {
+		return tenantId == null ? false : existingTenantIds.contains(tenantId);
 	}
 
 }

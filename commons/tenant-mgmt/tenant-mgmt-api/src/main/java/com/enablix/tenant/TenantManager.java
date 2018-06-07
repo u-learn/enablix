@@ -6,4 +6,6 @@ public interface TenantManager {
 
 	void setupTenant(SignupRequest request) throws Exception;
 	
+	boolean doesTenantExist(String tenantId);
+	
 }
