@@ -26,6 +26,8 @@ public abstract class DocumentMetadata extends BaseDocumentEntity implements Doc
 	
 	private PreviewStatus previewStatus;
 	
+	private String embedHtml;
+	
 	protected DocumentMetadata(String docName, String contentType, 
 			String contentQId) {
 		this(null, docName, contentType, contentQId);
@@ -86,4 +88,12 @@ public abstract class DocumentMetadata extends BaseDocumentEntity implements Doc
 		this.previewStatus = previewStatus;
 	}
 
+	public String getEmbedHtml() {
+		return embedHtml;
+	}
+
+	public void setEmbedHtml(String embedUrl) {
+		this.embedHtml = embedUrl;
+	}
+	
 }
