@@ -15,16 +15,22 @@ enablix.studioApp.controller('slackAuthController',
 			}
 
 			$scope.authorizeSlack = function(){
-				var hostAddr = $location.host();
-				var redirectURI = "redirect_uri=" + $location.protocol() + "://" + hostAddr 
-									+ (hostAddr === 'localhost' ? ":" + $location.port() : "")
-									+ "/app.html%23/account/slackdtls";
 				
 				var url = enablix.serviceURL["getSlackCode"];
 				
 				RESTService.getForData('getSlackAppDtls', null, null, function(data) {
 					if( data != null && data!="" ){
-						window.location.href = url + data.clientID + "&" +redirectURI;
+						
+						var hostAddr = $location.host();
+						
+						var subdomain = "www";
+						var dotIndx = hostAddr.indexOf('.');
+						if (dotIndx > 0) {
+							subdomain = hostAddr.substr(0, dotIndx);
+						}
+						
+						var redirectURI = "redirect_uri=" + data.redirectDomain + "/app.html";
+						window.location.href = (url + data.clientID + "&" + redirectURI + "&state=" + subdomain);
 					}
 				}, function() {    		
 					Notification.error({message: "Oops! There was an error on Slack.", delay: enablix.errorMsgShowTime});

@@ -1,10 +1,11 @@
-import { Component, OnInit, ViewEncapsulation, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ViewChild, ElementRef, Output, EventEmitter, OnDestroy, Renderer2 } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { forkJoin } from "rxjs/observable/forkJoin";
 
 import { GoogleDriveService } from '../google-drive.service';
 import { ImportRecord, ImportRequest } from '../bulk-import.model';
 import { AlertService } from '../../alert/alert.service';
+import { environment } from '../../../../environments/environment';
 
 declare var google: any;
 
@@ -14,20 +15,39 @@ declare var google: any;
   styleUrls: ['./gdrive-import.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class GdriveImportComponent implements OnInit {
+export class GdriveImportComponent implements OnInit, OnDestroy {
+
+  @ViewChild('goauthFrame') goauthFrame: ElementRef;
 
   @Output() onFileSelection = new EventEmitter<void>();
   @Output() onImportRequest = new EventEmitter<ImportRequest>();
 
+  stopListening: Function;
+
+  defaultDomain: string = "http://www.ebxlocal.com";
+
   constructor(private gdrive: GoogleDriveService,
-    private alert: AlertService) { }
+    private alert: AlertService, private renderer: Renderer2) { }
 
   ngOnInit() {
     this.gdrive.loadLibraries();
+    this.stopListening = this.renderer.listen('window', 'message', this.handleMessage.bind(this));
+  }
+
+  handleMessage(msg) {
+    
+    console.log("Window message...");
+    console.log(msg);
+
+    if (msg.origin == this.defaultDomain) {
+      this.gdrive.createPickerUsingAuth(this.pickerCallback.bind(this), 
+        msg.data.oauthToken, msg.data.authCode);
+    }
   }
 
   createPicker() {
-    this.gdrive.authAndCreatePicker(this.pickerCallback.bind(this));
+    var authConfig = this.gdrive.getAuthorizeConfig();
+    this.goauthFrame.nativeElement.contentWindow.postMessage(authConfig, '*');
   }
 
   // A simple callback implementation.
@@ -43,11 +63,7 @@ export class GdriveImportComponent implements OnInit {
       data[google.picker.Response.DOCUMENTS].forEach(
         (doc: any) => {
           
-          console.log(doc);
-          
           if (doc.type === 'folder') {
-          
-            console.log("******** Folder: ");
           
             var obs$ = this.gdrive.getFilesInFolder(doc.id).map(
                 (result: any) => {
@@ -81,7 +97,7 @@ export class GdriveImportComponent implements OnInit {
               source: 'GOOGLEDRIVE',
               sourceDetails: {
                 "auth_code": this.gdrive.getAuthCode(),
-                "redirect_url": window.location.origin
+                "redirect_url": this.defaultDomain
               },
               records: merged
             }
@@ -95,6 +111,13 @@ export class GdriveImportComponent implements OnInit {
 
     }
 
+  }
+
+  ngOnDestroy() {
+    console.log("Google Import destroyed");
+    if (this.stopListening) {
+      this.stopListening();
+    }
   }
 
 }

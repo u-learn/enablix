@@ -26,7 +26,6 @@ import com.enablix.app.content.ui.DisplayableContentBuilder;
 import com.enablix.app.template.service.TemplateManager;
 import com.enablix.commons.config.ConfigurationProviderChain;
 import com.enablix.commons.constants.AppConstants;
-import com.enablix.commons.util.EnvPropertiesUtil;
 import com.enablix.commons.util.id.IdentityUtil;
 import com.enablix.commons.util.process.ProcessContext;
 import com.enablix.core.api.ContentDataRecord;
@@ -84,6 +83,15 @@ public class SlackServiceImpl implements SlackService {
 
 	@Value("${slack.attachment.footer.label}")
 	private String FOOTER_TEXT;
+	
+	@Value("${slack.app.enablix.clientId}")
+	private String clientId;
+	
+	@Value("${slack.app.enablix.clientSecret}")
+	private String clientSecret;
+	
+	@Value("${slack.app.enablix.redirect.domain}")
+	private String redirectDomain;
 
 	@Autowired
 	private SlackAccessTokenRepository slackTokenRepo;
@@ -111,9 +119,6 @@ public class SlackServiceImpl implements SlackService {
 
 	public SlackAccessToken authorize(String _code,String userID) throws Exception {
 
-		Configuration config = configProvider.getConfiguration(AppConstants.SLACK_APP);
-		String clientId = config.getStringValue(AppConstants.SLACK_APP_CLIENT_ID);
-		String clientSecret =  config.getStringValue(AppConstants.SLACK_APP_CLIENT_SECRET);
 		String redirectURI = getRedirectURI();
 		URI targetUrl= UriComponentsBuilder.fromUriString(BASE_URL)
 				.path(OAUTH_ACCESS_API)
@@ -138,7 +143,7 @@ public class SlackServiceImpl implements SlackService {
 	}
 
 	private String getRedirectURI() {
-		return EnvPropertiesUtil.getSubdomainSpecificServerUrl() + "/app.html#/account/slackdtls";
+		return redirectDomain + "/app.html";
 	}
 
 	private void auditUserActivity(ActivityType activityType){
@@ -295,6 +300,11 @@ public class SlackServiceImpl implements SlackService {
 	private void deleteToken(SlackAccessToken slackAccessToken){
 		slackTokenRepo.delete(slackAccessToken);
 		auditUserActivity(ActivityType.SLACK_UNAUTH);
+	}
+
+	@Override
+	public String getRedirectDomain() {
+		return redirectDomain;
 	}
 
 	@Override

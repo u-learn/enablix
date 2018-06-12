@@ -91,7 +91,9 @@ public class SlackController {
 		try	{
 			HashMap<String, String> slackAppDtls = new HashMap<String, String>();
 			String clientId = slackServiceImpl.getClientId();
+			String redirectDomain = slackServiceImpl.getRedirectDomain();
 			slackAppDtls.put(AppConstants.SLACK_APP_CLIENT_ID, clientId);
+			slackAppDtls.put(AppConstants.SLACK_APP_REDIRECT_DOMAIN, redirectDomain);
 			return slackAppDtls;
 		}
 		catch(Exception e) {

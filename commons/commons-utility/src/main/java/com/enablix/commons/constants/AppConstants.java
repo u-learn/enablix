@@ -32,6 +32,7 @@ public class AppConstants {
 	public static final String DOC_DOWN_TRACK_SLACK = "?atChannel=SLACK";
 	
 	public static final String SLACK_APP_CLIENT_ID = "clientID";
+	public static final String SLACK_APP_REDIRECT_DOMAIN = "redirectDomain";
 	public static final String SLACK_APP_CLIENT_SECRET = "clientSecret";
 	public static final String SLACK_RESPONSE_OK = "ok";
 	public static final String SLACK_ERROR_TOKEN_REVOKED = "token_revoked";

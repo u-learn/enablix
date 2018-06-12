@@ -31,7 +31,7 @@ export class GoogleDriveService {
         gapi.load('client', () => {
           gapi.client.load("drive", "v3");
         });
-      });  
+      }); 
     }
   }
 
@@ -47,7 +47,15 @@ export class GoogleDriveService {
     return this.authCode;
   }
 
+  createPickerUsingAuth(callback: any, oauthToken: string, authCode: string) {
+    this.authCode = authCode;
+    this.oauthToken = oauthToken;
+    this.createPicker(callback, this.oauthToken);
+  }
+
   authAndCreatePicker(callback: any) {
+
+    //this.createPicker(callback, this.oauthToken);
 
     gapi.auth2.authorize(
       {
@@ -57,6 +65,7 @@ export class GoogleDriveService {
       }, 
       (authResult: any) => {
         if (authResult && !authResult.error) {
+          console.log(authResult);
           this.oauthToken = authResult.access_token;
           this.authCode = authResult.code;
           this.createPicker(callback, this.oauthToken);
@@ -64,6 +73,14 @@ export class GoogleDriveService {
       }
     );
 
+  }
+
+  getAuthorizeConfig() {
+    return {
+      client_id: this.clientId,
+      scope: this.scope,
+      response_type: 'permission code'
+    };
   }
 
   // Create and render a Picker object for picking user Photos.

@@ -21,5 +21,7 @@ public interface SlackService {
 	SlackAccessToken getStoredSlackTeamDtls(String userID);
 	
 	String getClientId();
+
+	String getRedirectDomain();
 	
 }

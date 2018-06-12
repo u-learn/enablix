@@ -30,6 +30,17 @@ public class RequestContextInitFilter extends OncePerRequestFilter {
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
 		
+		String requestURL = request.getRequestURL().toString();
+		if (requestURL.contains("slackredirect")) {
+			String stateParam = request.getParameter("state");
+			if (StringUtil.hasText(stateParam)) {
+				String redirectUrl = requestURL.replace("slackredirect", stateParam) 
+						+ "#/account/slackdtls?" + request.getQueryString();
+				response.sendRedirect(redirectUrl);
+				return;
+			}
+		}
+		
 		String tenantId = null;
 		String clientId = null;
 		

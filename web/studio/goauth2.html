@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <base href="/">
+</head>
+<body>
+	<script>
+
+		var hostname = window.location.hostname;
+		var domainName = hostname;
+		
+		var indxOfDot = hostname.indexOf('.');
+		
+		if (indxOfDot > 0) {
+			domainName = hostname.substr(indxOfDot);
+		}
+		
+		function handleClientLoad() {
+			// Loads the client library and the auth2 library together for efficiency.
+			// Loading the auth2 library is optional here since `gapi.client.init` function will load
+			// it if not already loaded. Loading it upfront can save one network request.
+			gapi.load('auth2', initClient);
+		}
+
+		function initClient() {
+		}
+		
+		function googleAuth(event) {
+		
+			if (event.source) {
+		
+				console.log(event.data);
+				
+				gapi.auth2.authorize(
+					event.data, 
+			      	function(authResult) {
+						
+						console.log("Auth result:");
+						console.log(authResult);
+						
+						if (authResult && !authResult.error) {
+			          		
+							console.log(authResult);
+			          		
+			          		var msg = {
+								oauthToken: authResult.access_token,
+								authCode: authResult.code
+							};
+						
+							event.source.postMessage(msg, event.origin);
+			        	}
+			      	}
+			    );
+				
+			}
+		}
+		
+		// Called sometime after postMessage is called
+		function receiveMessage(event) {
+		  
+			console.log("window domain = " + domainName);
+		  	console.log("event origin = " + event.origin);
+		  	
+			if (window.origin.indexOf(domainName) < 0) {
+				return;
+			}	
+		  
+		  	googleAuth(event);
+		}
+		
+		window.addEventListener("message", receiveMessage, false);
+	
+	</script>
+
+	<script async defer src="https://apis.google.com/js/api.js"
+      onload="this.onload=function(){};handleClientLoad()"
+      onreadystatechange="if (this.readyState === 'complete') this.onload()">
+    </script>
+</body>
+
+</html>
+
+

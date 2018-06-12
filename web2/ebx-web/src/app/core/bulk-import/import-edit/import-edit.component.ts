@@ -166,13 +166,19 @@ export class ImportEditComponent implements OnInit {
     this.contentService.submitImportRequest(this.importRequest).subscribe(
       (res: any) => {
         this.onImportSubmit.emit(res);
-        this.changeDetector.detectChanges();
+        this.forceChangeDetection();
       },
       (err) => {
         this.alert.error("Error submitting request. Please try later.", err.statusCode);
-        this.changeDetector.detectChanges();
+        this.forceChangeDetection();
       }
     );
+  }
+
+  forceChangeDetection() {
+    if (!this.changeDetector['destroyed']) {
+      this.changeDetector.detectChanges();
+    }
   }
 
   getTagItems(rec: ImportRecord) {
