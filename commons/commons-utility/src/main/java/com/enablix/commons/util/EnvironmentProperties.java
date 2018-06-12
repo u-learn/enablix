@@ -87,7 +87,8 @@ public class EnvironmentProperties {
 		
 		String getServerUrl(String subdomain) {
 			if (variableSubdomain) {
-				return urlPrefix + (StringUtil.hasText(subdomain) ? subdomain : defaultSubdomain) + "." + baseDomain;
+				String finalSubdomain = StringUtil.hasText(subdomain) ? subdomain : defaultSubdomain;
+				return urlPrefix + (StringUtil.hasText(finalSubdomain) ? (finalSubdomain + ".") : "") + baseDomain;
 			} 
 			return serverUrlPropValue;
 		}
