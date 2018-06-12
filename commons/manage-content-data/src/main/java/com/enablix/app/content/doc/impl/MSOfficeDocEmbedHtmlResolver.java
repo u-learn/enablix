@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import com.enablix.app.content.doc.DocEmbedHtmlResolver;
 import com.enablix.app.content.share.DocUnsecureAccessUrlPopulator;
+import com.enablix.app.content.share.SharedContentUrlCreator;
 import com.enablix.app.content.ui.DisplayContext;
 import com.enablix.commons.dms.api.DocumentMetadata;
 import com.enablix.commons.util.EnvPropertiesUtil;
@@ -41,11 +42,14 @@ public class MSOfficeDocEmbedHtmlResolver implements DocEmbedHtmlResolver {
 	@Autowired
 	private DocUnsecureAccessUrlPopulator docUrlPopulator;
 	
+	@Autowired
+	private SharedContentUrlCreator urlCreator;
+	
 	@Override
 	public String getEmbedHtml(DocumentMetadata docMd) {
-		String docDownloadUrl = EnvPropertiesUtil.getDefaultServerUrl() + 
-				docUrlPopulator.getActualDocDownloadUrl(docMd.getIdentity(), new DisplayContext());
-		return embedHtmlTemplate.replaceFirst(":docUrl", docDownloadUrl);
+		String docDownloadUrl =  docUrlPopulator.getActualDocDownloadUrl(docMd.getIdentity(), new DisplayContext());
+		String shareableUrl = urlCreator.createShareableUrl(docDownloadUrl, "msoffice-viewer", true);
+		return embedHtmlTemplate.replaceFirst(":docUrl", EnvPropertiesUtil.getDefaultServerUrl() + shareableUrl);
 	}
 
 	@Override
