@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/Observable';
 
 import { ContentPreviewHandler } from './content-preview-handler';
 import { ImagePreviewHandler } from './image-preview-handler';
+import { EmbedHtmlContentPreviewHandler } from './embed-html-content-preview-handler';
 import { UrlPreviewHandler } from './url-preview-handler';
 import { PreviewDataBasedHandler } from './preview-data-based-handler';
 import { TextContentPreviewHandler } from './text-content-preview-handler';
@@ -18,6 +19,7 @@ export class ContentPreviewService {
   constructor(private http: HttpClient, private apiUrlService: ApiUrlService) { 
     this.previewHandlers = [];
     this.previewHandlers.push(new ImagePreviewHandler());
+    this.previewHandlers.push(new EmbedHtmlContentPreviewHandler());
     this.previewHandlers.push(new PreviewDataBasedHandler());
     this.previewHandlers.push(new UrlPreviewHandler());
     this.previewHandlers.push(new ContentStackPreviewHandler());

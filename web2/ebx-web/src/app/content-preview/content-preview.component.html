@@ -13,6 +13,9 @@
 <div *ngIf="previewType == 'text'">
   <ebx-text-content-preview [record]="record" [container]="container" [editing]="editing"></ebx-text-content-preview>
 </div>
+<div *ngIf="previewType == 'embed-html'">
+  <ebx-embed-html-preview [record]="record" [container]="container"></ebx-embed-html-preview>
+</div>
 <div class="file-default" *ngIf="previewType == 'file-default'">
   <div class="file-img"><img [src]="getDefaultFileImg()"></div>
   <div class="info">{{getPreviewStatusText()}}</div>

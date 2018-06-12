@@ -93,6 +93,7 @@ import { UiWidgetComponent } from './ui-widget/ui-widget.component';
 import { UiWidgetService } from './services/ui-widget.service';
 import { ContentPackWidgetComponent } from './ui-widget/content-pack-widget/content-pack-widget.component';
 import { CpWidgetDetailComponent } from './ui-widget/content-pack-widget/cp-widget-detail/cp-widget-detail.component';
+import { EmbedHtmlPreviewComponent } from './content-preview/embed-html-preview/embed-html-preview.component';
 
 @NgModule({
   declarations: [
@@ -162,7 +163,8 @@ import { CpWidgetDetailComponent } from './ui-widget/content-pack-widget/cp-widg
     BizDimLayoutSwitchComponent,
     UiWidgetComponent,
     ContentPackWidgetComponent,
-    CpWidgetDetailComponent
+    CpWidgetDetailComponent,
+    EmbedHtmlPreviewComponent
   ],
   imports: [
     BrowserModule,
