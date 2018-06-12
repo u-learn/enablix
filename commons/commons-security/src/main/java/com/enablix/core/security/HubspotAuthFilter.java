@@ -87,7 +87,7 @@ public class HubspotAuthFilter extends OncePerRequestFilter {
 		HubspotHttpRequest hubspotRequest = new HubspotHttpRequest(request, oauth2Token);
 		
 		try {
-			if (!hubspotRequest.validateHubspotSignature(authToken.getHubspotAppKey(), EnvPropertiesUtil.getSubdomainSpecificServerUrl())) {
+			if (!hubspotRequest.validateHubspotSignature(authToken.getHubspotAppKey(), EnvPropertiesUtil.getDefaultServerUrl())) {
 				response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid hubspot signature");
 				return;
 			}
