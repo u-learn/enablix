@@ -24,7 +24,8 @@ export class GdriveImportComponent implements OnInit, OnDestroy {
 
   stopListening: Function;
 
-  defaultDomain: string = "http://www.ebxlocal.com";
+  defaultDomain: string = environment.domainUrl;
+  goauthFrameSrc: string = environment.domainUrl + "/goauth2.html";
 
   constructor(private gdrive: GoogleDriveService,
     private alert: AlertService, private renderer: Renderer2) { }
