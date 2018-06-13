@@ -95,10 +95,10 @@ public class EmbedRocks implements EmbedInfoProvider {
 		MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
 		headers.add("Accept", "application/json");
 		headers.add("User-Agent", "Enablix");
-		headers.add("x-api-key", "defbf772-553c-4392-aaf9-7ded5272fcbe");
+		headers.add("x-api-key", "0a10ecec-f206-484f-8c83-6906cb6eec92");
 		  
 		RequestEntity<String> request = new RequestEntity<>(headers, HttpMethod.GET, new URI(uri));
-		ResponseEntity<EmbedInfo> response = restTemplate.exchange(request, EmbedInfo.class);
+		ResponseEntity<String> response = restTemplate.exchange(request, String.class);
 		System.out.println("response = " + response.getBody());
 	}
 

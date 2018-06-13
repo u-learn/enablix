@@ -46,5 +46,7 @@ public interface DocumentManager {
 	boolean checkReferenceRecordExists(DocumentMetadata docMetadata);
 
 	Map<String, Object> getReferenceRecord(String docQId, String docIdentity);
+
+	DocumentMetadata updateEmbedHtml(String docIdentity, String embedHtml);
 	
 }

@@ -9,6 +9,8 @@ import com.enablix.core.domain.BaseDocumentEntity;
 public abstract class DocumentMetadata extends BaseDocumentEntity implements DocInfo {
 
 	public static final String PREVIEW_STATUS_FLD_ID = "previewStatus";
+	public static final String EMBED_HTML_FLD_ID = "embedHtml";
+	
 	
 	public enum PreviewStatus {
 		PENDING, AVAILABLE, NOT_SUPPORTED, FAILED

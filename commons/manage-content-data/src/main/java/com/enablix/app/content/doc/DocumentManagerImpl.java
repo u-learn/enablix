@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -246,11 +247,28 @@ public class DocumentManagerImpl implements DocumentManager {
 	@Override
 	public DocumentMetadata updatePreviewStatus(String docIdentity, PreviewStatus status) {
 		
+		return updateDocMetadataAttr(
+				docIdentity, DocumentMetadata.PREVIEW_STATUS_FLD_ID, 
+				(docMd) -> docMd.setPreviewStatus(status), status);
+
+	}
+	
+	@Override
+	public DocumentMetadata updateEmbedHtml(String docIdentity, String embedHtml) {
+		
+		return updateDocMetadataAttr(
+					docIdentity, DocumentMetadata.EMBED_HTML_FLD_ID, 
+					(docMd) -> docMd.setEmbedHtml(embedHtml), embedHtml);
+	}
+	
+	private DocumentMetadata updateDocMetadataAttr(String docIdentity, 
+			String attrId, Consumer<DocumentMetadata> updater, Object attrValue) {
+		
 		DocumentMetadata docMetadata = getDocumentMetadata(docIdentity);
 		
 		if (docMetadata != null) {
 			
-			docMetadata.setPreviewStatus(status);
+			updater.accept(docMetadata);
 			docMetadata = docRepo.save(docMetadata);
 			
 			if (!StringUtil.isEmpty(docMetadata.getContentQId())) {
@@ -266,13 +284,13 @@ public class DocumentManagerImpl implements DocumentManager {
 				
 					String docAttrId = QIdUtil.getElementId(docQId);
 					String docIdentityAttr = docAttrId + "." + ContentDataConstants.IDENTITY_KEY;
-					String previewStatusAttr = docAttrId + "." + DocumentMetadata.PREVIEW_STATUS_FLD_ID;
+					String updateAttr = docAttrId + "." + attrId;
 					
-					StringFilter docIdentitFilter = new StringFilter(docIdentityAttr , docIdentity, ConditionOperator.EQ);
+					StringFilter docIdentitFilter = new StringFilter(docIdentityAttr, docIdentity, ConditionOperator.EQ);
 					Query query = new Query(docIdentitFilter.toPredicate(new Criteria()));
 		
 					Update update = new Update();
-					update.set(previewStatusAttr, status);
+					update.set(updateAttr, attrValue);
 		
 					genericDao.updateMulti(query, update, parentCollName);
 				}

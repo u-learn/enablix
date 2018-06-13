@@ -36,6 +36,20 @@
       </div>
     </div>
   </div>
+  <div *ngSwitchCase="'EMBED_HTML'">
+    <div class="header-with-btns">
+      <div class="title">{{record?.title}}</div>
+      <div class="action-btns">
+        <div class="action-btn btn-with-text" (click)="docDownload()">
+          <div class="icon small download"></div>
+          <span class="show-me">Download File</span>
+          <a [href]="record.doc.accessUrl" [hidden]="true" #downloadLink></a>
+        </div>
+      </div>
+    </div>
+    <div class="embed-html-preview" [innerHtml]="record.preview.embedHtml | safeHtml">
+    </div>
+  </div>
   <div *ngSwitchCase="'DOC_NO_PREVIEW'">
     <div class="header-with-btns">
       <div class="title">{{record?.title}}</div>

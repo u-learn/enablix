@@ -51,4 +51,13 @@ public class UserPreferenceServiceImpl implements UserPreferenceService {
 		return keyToPref.values();
 	}
 
+	@Override
+	public UserPreference getUserApplicablePreference(String userId, String prefKey) {
+		UserPreference pref = repo.findByUserIdAndKey(userId, prefKey);
+		if (pref == null) {
+			pref = repo.findByUserIdAndKey(AppConstants.SYSTEM_USER_ID, prefKey);
+		}
+		return pref;
+	}
+
 }

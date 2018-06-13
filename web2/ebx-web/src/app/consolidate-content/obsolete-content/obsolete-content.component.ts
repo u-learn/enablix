@@ -68,7 +68,7 @@ export class ObsoleteContentComponent implements OnInit {
       alertRuleId: 'OBSOLETE_CONTENT_VERIFY_RULE'
     };
 
-    if (this.userService.userHasPermission('VERIFY_ANY_CONTENT')) {
+    if (!this.userService.userHasPermission('VERIFY_ANY_CONTENT')) {
       this.filters['authorId'] = this.userService.getUserIdentity();
     }
 

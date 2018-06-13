@@ -43,6 +43,10 @@ body {
   align-items: center;
 }
 
+.embed-html-preview iframe {
+  height: 90vh;
+}
+
 .title {
   font-size: 1.2em;
   margin: 0 12px 8px 0;

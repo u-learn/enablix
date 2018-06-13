@@ -10,16 +10,18 @@ import { PreviewDataBasedHandler } from './preview-data-based-handler';
 import { TextContentPreviewHandler } from './text-content-preview-handler';
 import { ContentStackPreviewHandler } from './content-stack-preview-handler';
 import { ApiUrlService } from '../api-url.service';
+import { UserPreferenceService } from '../user-preference.service';
 
 @Injectable()
 export class ContentPreviewService {
 
   private previewHandlers: ContentPreviewHandler[];
 
-  constructor(private http: HttpClient, private apiUrlService: ApiUrlService) { 
+  constructor(private http: HttpClient, private apiUrlService: ApiUrlService,
+              private userPrefs: UserPreferenceService) { 
     this.previewHandlers = [];
     this.previewHandlers.push(new ImagePreviewHandler());
-    this.previewHandlers.push(new EmbedHtmlContentPreviewHandler());
+    this.previewHandlers.push(new EmbedHtmlContentPreviewHandler(this.userPrefs));
     this.previewHandlers.push(new PreviewDataBasedHandler());
     this.previewHandlers.push(new UrlPreviewHandler());
     this.previewHandlers.push(new ContentStackPreviewHandler());

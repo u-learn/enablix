@@ -15,17 +15,21 @@ import com.enablix.commons.dms.api.DocumentMetadata;
 import com.enablix.commons.dms.api.DocumentMetadata.PreviewStatus;
 import com.enablix.commons.util.EnvPropertiesUtil;
 import com.enablix.commons.util.FileUtil;
+import com.enablix.commons.util.StringUtil;
 import com.enablix.commons.util.collection.CollectionUtil;
 import com.enablix.commons.util.process.ProcessContext;
 import com.enablix.core.api.DocInfo;
+import com.enablix.core.domain.preference.UserPreference;
 import com.enablix.core.ui.ContentPreviewInfo;
 import com.enablix.core.ui.DisplayableContent;
 import com.enablix.core.ui.DocNoPreviewInfo;
 import com.enablix.core.ui.DocRef;
+import com.enablix.core.ui.EmbedHtmlPreview;
 import com.enablix.core.ui.ImagePreviewInfo;
 import com.enablix.core.ui.ImagesBasedPreviewInfo;
 import com.enablix.doc.preview.DocPreviewService;
 import com.enablix.services.util.ContentDataUtil;
+import com.enablix.user.pref.UserPreferenceService;
 
 @Component
 public class DocPreviewBuilder implements PreviewBuilder {
@@ -38,6 +42,9 @@ public class DocPreviewBuilder implements PreviewBuilder {
 	
 	@Autowired
 	private SharedContentUrlCreator urlCreator;
+	
+	@Autowired
+	private UserPreferenceService userPrefService;
 	
 	@Value("${site.url.doc.download}")
 	private String docDownloadUrl;
@@ -66,6 +73,12 @@ public class DocPreviewBuilder implements PreviewBuilder {
 					imagePreview.setImageUrl(imgPreviewUrl);
 					previewInfo = imagePreview;
 					
+				} else if (StringUtil.hasText(docMd.getEmbedHtml()) && isContentWidgetEmbedHtmlViewEnabled()) {
+					
+					EmbedHtmlPreview embedHtml = new EmbedHtmlPreview();
+					embedHtml.setEmbedHtml(docMd.getEmbedHtml());
+					previewInfo = embedHtml;
+					
 				} else {
 				
 					if (docMd.getPreviewStatus() == PreviewStatus.AVAILABLE) {
@@ -80,6 +93,19 @@ public class DocPreviewBuilder implements PreviewBuilder {
 		}
 		
 		return previewInfo;
+	}
+
+	private boolean isContentWidgetEmbedHtmlViewEnabled() {
+		
+		UserPreference pref = userPrefService.getUserApplicablePreference(
+				ProcessContext.get().getUserId(), "asset.view.settings");
+		
+		if (pref != null) {
+			return (Boolean) pref.getConfig().getOrDefault(
+					"enableContentWidgetEmbedHtmlView", false);
+		}
+		
+		return false;
 	}
 
 	private ContentPreviewInfo buildNoPreviewInfo(DisplayableContent displayRecord, DocumentMetadata docMd) {

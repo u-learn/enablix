@@ -3,7 +3,7 @@ package com.enablix.core.ui;
 public abstract class ContentPreviewInfo {
 
 	public enum PreviewType {
-		IMAGE, IMAGE_BASED_PREVIEW, DOC_NO_PREVIEW, URL, TEXT, NO_PREVIEW
+		IMAGE, IMAGE_BASED_PREVIEW, DOC_NO_PREVIEW, URL, TEXT, NO_PREVIEW, EMBED_HTML
 	}
 	
 	private PreviewType previewType;

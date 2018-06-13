@@ -12,4 +12,6 @@ public interface UserPreferenceService {
 
 	void saveUserPreference(UserPreference userPref);
 	
+	UserPreference getUserApplicablePreference(String userId, String prefKey);
+	
 }
