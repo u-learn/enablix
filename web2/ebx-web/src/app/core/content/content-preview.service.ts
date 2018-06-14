@@ -50,7 +50,7 @@ export class ContentPreviewService {
 
 }
 
-class NoPreviewHandler implements ContentPreviewHandler {
+export class NoPreviewHandler implements ContentPreviewHandler {
 
   supportedExts: string[] = [
     "doc", "docx", "gdoc", "gsheet", "gslides", "pdf", "pps", 

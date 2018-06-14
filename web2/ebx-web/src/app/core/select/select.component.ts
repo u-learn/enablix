@@ -35,7 +35,7 @@ export class SelectComponent implements OnInit, ControlValueAccessor, AfterViewI
   @ViewChild("textInput") textInput;
 
   optionsVisible: boolean;
-  singleValue: string = "";
+  //singleValue: string = "";
   disabled: boolean = false;
 
   selected: SelectOption[] = [];
@@ -223,7 +223,7 @@ export class SelectComponent implements OnInit, ControlValueAccessor, AfterViewI
       } else {
         let opt: SelectOption = opts[0];
         this.selected = [opt];
-        this.selectCtrl.setValue(opt.label);
+        this.selectCtrl.setValue(null);
       }
 
       this.onChange(this.selected);

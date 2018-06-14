@@ -1,7 +1,7 @@
 <div class="ebx-select" (clickOutside)="hideOptions()">
     <div class="input-row">
         <img *ngIf="headIcon" class="head-icon" [src]="headIcon">
-        <div class="pills-container" *ngIf="multi">
+        <div class="pills-container">
             <div class="pill" *ngFor="let sOpt of selected; let i = index" [style.background]="pillsColor">
               <span class="pill-label">{{sOpt?.label}}</span>
               <a class="remove" (click)="removeOption(i)">
@@ -12,12 +12,12 @@
             (keydown.arrowdown)="highlightOnDownArrow()" (keydown.arrowup)="highlightOnUpArrow()"
             (keydown.enter)="selectHighlighted($event)"> 
         </div>
-        <ng-container *ngIf="!multi">
+        <!-- <ng-container *ngIf="!multi">
             <input #textInput class="text-input" type="text" [placeholder]="placeholder" 
             (focus)="showOptions()" [formControl]="selectCtrl" (blur)="onBlur()"
             (keydown.arrowdown)="highlightOnDownArrow()" (keydown.arrowup)="highlightOnUpArrow()"
             (keydown.enter)="selectHighlighted($event)">
-        </ng-container>
+        </ng-container> -->
     </div>
     <div class="option-rows" [hidden]="!optionsVisible">
         <div class="option-row" [class.highlighted]="opt == highlightedOpt" *ngFor="let opt of filteredOptions | async" (click)="updateSelection(opt)" [id]="opt.id">

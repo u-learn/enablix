@@ -1,21 +1,26 @@
 import { ContentPreviewHandler } from './content-preview-handler';
 import { PreviewDataBasedHandler } from './preview-data-based-handler';
 import { UserPreferenceService } from '../user-preference.service';
+import { NoPreviewHandler } from './content-preview.service';
 
-export class EmbedHtmlContentPreviewHandler extends PreviewDataBasedHandler {
+export class EmbedHtmlContentPreviewHandler implements ContentPreviewHandler {
   
   previewDataBasedHandler: PreviewDataBasedHandler = new PreviewDataBasedHandler();
+  noPreviewHandler: NoPreviewHandler = new NoPreviewHandler();
 
   constructor(private userPref: UserPreferenceService) {
-    super();
   }
 
   smallThumbnailUrl(dataRecord: any) : string {
-    return super.canHandle(dataRecord) ? super.smallThumbnailUrl(dataRecord) : "";
+    return this.previewDataBasedHandler.canHandle(dataRecord) ? 
+            this.previewDataBasedHandler.smallThumbnailUrl(dataRecord) : 
+            this.noPreviewHandler.smallThumbnailUrl(dataRecord);
   }
 
   public largeThumbnailUrl(dataRecord: any) : string {
-    return super.canHandle(dataRecord) ? super.largeThumbnailUrl(dataRecord) : "";
+    return this.previewDataBasedHandler.canHandle(dataRecord) ? 
+            this.previewDataBasedHandler.largeThumbnailUrl(dataRecord) : 
+            this.noPreviewHandler.largeThumbnailUrl(dataRecord);
   }
 
   canHandle(dataRecord: any) : boolean {

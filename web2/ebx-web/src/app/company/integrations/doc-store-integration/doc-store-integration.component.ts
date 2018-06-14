@@ -1,10 +1,12 @@
 import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { MatDialog, MatDialogRef } from '@angular/material';
 
 import { AlertService } from '../../../core/alert/alert.service';
 import { DocStoreConfigService } from './doc-store-config.service';
 import { SelectOption } from '../../../core/select/select.component';
 import { DocStoreMetadata } from '../../../model/integration.model';
+import { ConfirmDialogComponent } from '../../../core/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'ebx-doc-store-integration',
@@ -29,6 +31,7 @@ export class DocStoreIntegrationComponent implements OnInit {
   enablixDSMetadata: any;
 
   constructor(
+      private dialog: MatDialog,
       private alert: AlertService,
       private dcConfigService: DocStoreConfigService) { 
     this.docstoreTypeCtrl = new FormControl();
@@ -124,6 +127,28 @@ export class DocStoreIntegrationComponent implements OnInit {
 
   deleteDocstore() {
     
+    let dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '624px',
+      disableClose: true,
+      data: { 
+        title: 'Delete File Storage',
+        text: 'You are about to Delete file storage configuration. You cannot undo this operation. Would you like to proceed?',
+        confirmLabel: 'Proceed',
+        cancelLabel: 'Cancel'
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(res => {
+      if (res) {
+        this.doDeleteDocstore();
+      }
+    });
+
+    
+  }
+
+  doDeleteDocstore() {
+
     var docstoreConfig = {};
     docstoreConfig['STORE_TYPE'] = this.enablixDSMetadata.storeTypeCode;
 
