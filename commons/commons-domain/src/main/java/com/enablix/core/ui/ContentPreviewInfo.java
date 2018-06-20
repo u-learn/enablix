@@ -6,6 +6,10 @@ public abstract class ContentPreviewInfo {
 		IMAGE, IMAGE_BASED_PREVIEW, DOC_NO_PREVIEW, URL, TEXT, NO_PREVIEW, EMBED_HTML
 	}
 	
+	public enum PreviewProperty {
+		URL, FILE, TEXT
+	}
+	
 	private PreviewType previewType;
 
 	public ContentPreviewInfo(PreviewType previewType) {

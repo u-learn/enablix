@@ -222,6 +222,13 @@ img.slide, img.slide-thumbnail {
   }
 }
 
+.embed-oembed {
+  iframe {
+    width: 100%;
+    height: 85vh;
+  }
+}
+
 .embed-rich {
 
   iframe, object {

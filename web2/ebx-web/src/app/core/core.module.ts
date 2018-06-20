@@ -49,6 +49,7 @@ import { TextFileComponent } from './file/text-file/text-file.component';
 import { AccessDirective } from './auth/access.directive';
 import { SearchBarService } from './search-bar/search-bar.service';
 import { BoundedItemsDSBuilderService } from './search-bar/bounded-items-dsbuilder.service';
+import { LinkedContainerDsbuilderService } from './search-bar/linked-container-dsbuilder.service';
 import { DataFiltersComponent } from './data-filters/data-filters.component';
 import { UserPreferenceService } from './user-preference.service';
 import { EbxDateTimezonePipe } from './pipes/ebx-date-timezone.pipe';
@@ -108,6 +109,7 @@ import { ProgressLineComponent } from './progress-line/progress-line.component';
     EbxDatePipe,
     SearchBarService,
     BoundedItemsDSBuilderService,
+    LinkedContainerDsbuilderService,
     UserPreferenceService,
     EbxDateTimezonePipe,
     AppMessageService,

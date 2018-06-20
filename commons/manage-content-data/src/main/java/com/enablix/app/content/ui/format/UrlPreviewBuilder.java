@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import com.enablix.app.content.ui.DisplayContext;
 import com.enablix.core.domain.uri.embed.EmbedInfo;
 import com.enablix.core.ui.ContentPreviewInfo;
+import com.enablix.core.ui.ContentPreviewInfo.PreviewProperty;
 import com.enablix.core.ui.DisplayableContent;
 import com.enablix.core.ui.Hyperlink;
 import com.enablix.core.ui.UrlPreviewInfo;
@@ -47,4 +48,9 @@ public class UrlPreviewBuilder implements PreviewBuilder {
 		return displayRecord.getHyperlink() != null;
 	}
 
+	@Override
+	public PreviewProperty buildsUsingPreviewProperty() {
+		return PreviewProperty.URL;
+	}
+	
 }

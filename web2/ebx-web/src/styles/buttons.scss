@@ -60,7 +60,18 @@ button {
         }
     }
 
-    .action-btn {
+    .action-btn-wrap {
+
+        & + .action-btn {
+            margin-left: 8px;
+        }
+
+        & + .action-btn-wrap {
+            margin-left: 8px;
+        }
+    }
+
+    .action-btn, .btn-with-dd {
         display: flex;
         background: white;
         align-items: center;
@@ -88,6 +99,10 @@ button {
         }
 
         & + .action-btn {
+            margin-left: 8px;
+        }
+
+        & + .action-btn-wrap {
             margin-left: 8px;
         }
 
@@ -375,6 +390,56 @@ button {
         button {
             height: 40px;
         }
+    }
+}
+
+.btn-with-dd {
+    display: block !important;
+
+    &:hover {
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+        background: white !important;
+    }
+
+    &:hover .dd-options {
+        display: block;
+    }
+
+    .dd-options {
+        display: none;
+        box-shadow: 0 1px 1px 0 rgba(0,0,0,0.06);
+        font-family: $FPThin;
+        font-size: 14px;
+        background-color: $white;
+        position: absolute;
+        width: max-content;
+        margin-left: -8px;
+        margin-top: 8px;
+        color: $blue-med-20;
+        border-bottom-left-radius: 4px;
+        border-bottom-right-radius: 4px;
+        border-top: 1px solid rgba(0,0,0,0.06);
+
+        .dd-option {
+          padding: 4px 16px 0 8px;
+          height: 32px;
+          cursor: pointer;
+          @include vcenterChildren;
+
+          &:not(:last-child) {
+            border-bottom: 1px solid rgba(0,0,0,0.06);
+          }
+
+          &:hover {
+            background: #fcfcfc;
+          }
+
+          span {
+            padding-left: 8px;
+          }
+        } 
+
     }
 }
 

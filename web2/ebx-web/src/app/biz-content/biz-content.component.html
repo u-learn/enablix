@@ -24,7 +24,7 @@
             <div class="btn-set">
               <ng-container *ngIf="!contentRequest">
                 <ebx-copy-portal-url-button class="action-btn" [container]="container" [record]="record"></ebx-copy-portal-url-button>
-                <ebx-copy-embed-code-button class="action-btn" [container]="container" [record]="record"></ebx-copy-embed-code-button>
+                <ebx-copy-embed-code-button class="action-btn-wrap" [container]="container" [record]="record"></ebx-copy-embed-code-button>
               </ng-container>
               <ng-container *ngIf="record?.__decoration?.__docMetadata">
                 <ebx-copy-download-url-button class="action-btn" [container]="container" [record]="record"></ebx-copy-download-url-button>

@@ -14,6 +14,7 @@ import { DataPage } from '../../model/data-page.model';
 import { DataType, ConditionOperator } from '../../core/data-search/filter-metadata.model';
 import { Constants } from '../../util/constants';
 import { ImportRequest } from '../bulk-import/bulk-import.model';
+import { UserPreferenceService } from '../user-preference.service';
 
 
 @Injectable()
@@ -25,7 +26,8 @@ export class ContentService {
   constructor(private contentTemplateService: ContentTemplateService, 
               private contentPreviewService: ContentPreviewService,
               private http: HttpClient, private dsService: DataSearchService,
-              private apiUrlService: ApiUrlService) { }
+              private apiUrlService: ApiUrlService,
+              private userPrefs: UserPreferenceService) { }
 
   getContentRecord(containerQId: string, contentIdentity: string, atChannel?: string) : Observable<any> {
     let templateId = this.contentTemplateService.contentTemplate.id;
@@ -136,6 +138,55 @@ export class ContentService {
       dataRecord.__title = dataRecord[container.titleItemId];
     }
 
+    // process indicators if any
+    this.processIndicators(container, dataRecord);
+
+  }
+
+  processIndicators(container: Container, dataRecord: any) {
+        
+    var indicatorsConfig = this.userPrefs.getPrefByKey('ui.content.indicators');
+    
+    if (indicatorsConfig) {
+    
+      var allIndConfigs = {};
+      var globalIndConfig = indicatorsConfig.config["GLOBAL"];
+      
+      if (globalIndConfig) {
+      
+        globalIndConfig.forEach((indConfig) => {
+          allIndConfigs[indConfig.id] = indConfig;
+        });
+      }
+      
+      var contIndConfig = indicatorsConfig.config[container.qualifiedId];
+      if (contIndConfig) {
+        contIndConfig.forEach((indConfig) => {
+          allIndConfigs[indConfig.id] = indConfig;
+        });
+      }
+      
+      dataRecord.__decoration.indicators = {};
+      var rec = dataRecord; // for indicators expression evaluation
+      
+      for(let key in allIndConfigs) {
+        let indctrConfig = allIndConfigs[key];
+        let indctrId =key;
+        
+        var indctrVal = eval(indctrConfig.value);
+        
+        var indctrValueList = dataRecord.__decoration.indicators[indctrConfig.type];
+        if (!indctrValueList) {
+          indctrValueList = [];
+          dataRecord.__decoration.indicators[indctrConfig.type] = indctrValueList;
+        }
+        
+        indctrValueList.push({
+          value: indctrVal,
+          config: indctrConfig
+        });
+      }
+    }
   }
 
   addLinkedContent(dataRecord: any, linkedContentProp: string) {

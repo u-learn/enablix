@@ -10,6 +10,7 @@ import { SearchBarData, NavContext, ObjectType, SearchBarItem, NavCtxItem } from
 import { Container } from '../../model/container.model';
 import { LocalDataset } from './local-dataset';
 import { BoundedItemsDSBuilderService } from './bounded-items-dsbuilder.service';
+import { LinkedContainerDsbuilderService } from './linked-container-dsbuilder.service';
 
 
 /**
@@ -63,6 +64,7 @@ export class SearchBarService {
               private ctService: ContentTemplateService,
               private contentService: ContentService,
               private biDSBuilder: BoundedItemsDSBuilderService,
+              private lcDSBuilder: LinkedContainerDsbuilderService,
               private route: ActivatedRoute,
               private apiUrlService: ApiUrlService,
               private http: HttpClient) { 
@@ -215,6 +217,7 @@ export class SearchBarService {
     let sbData = new SearchBarData();
     sbData.context = this.buildBizDimObjectContext(container, record);
     sbData.initialFilterIds = queryFilters;
+    sbData.datasets = this.lcDSBuilder.buildSearchDatasets(container, sbData);
     this.updateSearchBarData(sbData);
   }
 

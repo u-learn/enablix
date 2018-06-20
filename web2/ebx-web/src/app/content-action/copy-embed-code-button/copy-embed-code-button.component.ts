@@ -18,16 +18,51 @@ export class CopyEmbedCodeButtonComponent implements OnInit {
 
   buttonText = "Copy Embed Code";
 
+  showOpts: boolean = false;
+  ecPropOptions: any[];
+
   constructor(private route: ActivatedRoute, private apiUrlService: ApiUrlService) { }
 
   ngOnInit() {
+
+    var fileOpt = this.record.__decoration && this.record.__decoration.__docMetadata;
+    var urlOpt = this.record.__urls && this.record.__urls.length > 0
+
+    if (fileOpt && urlOpt) {
+
+      this.ecPropOptions = [
+        {
+          previewProp: 'URL',
+          label: 'Copy URL Embed Code'
+        },
+        {
+          previewProp: 'FILE',
+          label: 'Copy File Embed Code'
+        }
+      ];
+    }
+
   }
 
-  copy() {
+  hideOptions() {
+    this.showOpts = false;
+  }
+
+  copyOrShowOptions() {
+    if (this.ecPropOptions) {
+      this.showOpts = true;
+    } else {
+      this.copy();
+    }
+  }
+
+  copy(previewProp?: string) {
 
     if (this.record) {
     
-      let navUrl = this.apiUrlService.getEmbedCodeUrl(this.container.qualifiedId, this.record.identity) + "?atChannel=CONTENTWIDGET&atContext=EMBEDCODE";
+      let navUrl = this.apiUrlService.getEmbedCodeUrl(this.container.qualifiedId, this.record.identity, previewProp);
+      navUrl += ((navUrl.indexOf('?') > 0) ? '&' : '?') + "atChannel=CONTENTWIDGET&atContext=EMBEDCODE";
+
       let apiUrl = this.apiUrlService.postFetchContentWidgetUrl();
 
       var auditRequest = {

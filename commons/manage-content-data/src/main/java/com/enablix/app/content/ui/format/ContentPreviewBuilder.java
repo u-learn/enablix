@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import com.enablix.app.content.ui.DisplayContext;
 import com.enablix.core.ui.ContentPreviewInfo;
+import com.enablix.core.ui.ContentPreviewInfo.PreviewProperty;
 import com.enablix.core.ui.DisplayableContent;
 
 @Component
@@ -37,10 +38,12 @@ public class ContentPreviewBuilder {
 	public ContentPreviewInfo buildPreview(DisplayableContent dispRecord, DisplayContext ctx) {
 		
 		ContentPreviewInfo previewInfo = null;
+		PreviewProperty previewProp = ctx.getPreviewProperty();
 		
 		for (PreviewBuilder builder : previewBuilders) {
 			
-			if (builder.canHandle(dispRecord)) {
+			if ((previewProp == null || builder.buildsUsingPreviewProperty() == previewProp)
+					&& builder.canHandle(dispRecord)) {
 				
 				previewInfo = builder.buildPreview(dispRecord, ctx);
 				

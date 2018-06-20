@@ -202,9 +202,16 @@ export class ApiUrlService {
     return this.getAPIUrl(ApiUrlService.GET_DOC_DOWNLOAD, {docIdentity: docIdentity}, false);
   }
 
-  getEmbedCodeUrl(contentQId: string, contentIdentity: string) : string {
-    return this.getAPIUrl(ApiUrlService.GET_EMBED_CODE, 
+  getEmbedCodeUrl(contentQId: string, contentIdentity: string, previewProp?: string) : string {
+    
+    let url = this.getAPIUrl(ApiUrlService.GET_EMBED_CODE, 
       {contentQId: contentQId, contentIdentity: contentIdentity}, false);
+    
+    if (previewProp) {
+      url += "?pp=" + previewProp;
+    }
+
+    return url;
   }
 
   getDocPreviewDataUrl(docIdentity: string) : string {

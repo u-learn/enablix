@@ -1,14 +1,20 @@
 package com.enablix.core.security;
 
+import java.lang.reflect.Method;
 import java.util.Calendar;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices;
+import org.springframework.util.ReflectionUtils;
+
+import com.enablix.commons.util.StringUtil;
 
 public class CustomTokenBasedRememberMeServices extends TokenBasedRememberMeServices {
 
@@ -18,8 +24,14 @@ public class CustomTokenBasedRememberMeServices extends TokenBasedRememberMeServ
 	@Autowired
 	private LastRememberMeLoginCache lastLoginCache;
 	
+	@Value("${server.session.cookie.domain}")
+	private String cookieDomain;
+	
+	private Method setHttpOnlyMethod;
+	
 	public CustomTokenBasedRememberMeServices(String key, UserDetailsService userDetailsService) {
 		super(key, userDetailsService);
+		this.setHttpOnlyMethod = ReflectionUtils.findMethod(Cookie.class, "setHttpOnly", boolean.class);
 	}
 
 	@Override
@@ -70,6 +82,53 @@ public class CustomTokenBasedRememberMeServices extends TokenBasedRememberMeServ
 		int lastLoginDayOfYear = lastLoginCache.getAndSetLastRememberMeLoginDay(username, presentDayOfYear);
 
 		return lastLoginDayOfYear != presentDayOfYear;
+	}
+	
+	protected void setCookie(String[] tokens, int maxAge, HttpServletRequest request,
+			HttpServletResponse response) {
+		String cookieValue = encodeCookie(tokens);
+		Cookie cookie = new Cookie(getCookieName(), cookieValue);
+		cookie.setMaxAge(maxAge);
+		cookie.setPath(getCookiePath(request));
+
+		// CUSTOMIZATION: adding cookie domain to remember-me cookie
+		if (StringUtil.hasText(cookieDomain)) {
+			cookie.setDomain(cookieDomain);
+		}
+		
+		if (maxAge < 1) {
+			cookie.setVersion(1);
+		}
+
+		cookie.setSecure(request.isSecure());
+
+		if (setHttpOnlyMethod != null) {
+			ReflectionUtils.invokeMethod(setHttpOnlyMethod, cookie, Boolean.TRUE);
+		}
+		else if (logger.isDebugEnabled()) {
+			logger.debug("Note: Cookie will not be marked as HttpOnly because you are not using Servlet 3.0 (Cookie#setHttpOnly(boolean) was not found).");
+		}
+
+		response.addCookie(cookie);
+	}
+	
+	protected void cancelCookie(HttpServletRequest request, HttpServletResponse response) {
+		logger.debug("Cancelling cookie");
+		Cookie cookie = new Cookie(getCookieName(), null);
+		cookie.setMaxAge(0);
+		cookie.setPath(getCookiePath(request));
+		
+		// CUSTOMIZATION: adding cookie domain to remember-me cookie
+		if (StringUtil.hasText(cookieDomain)) {
+			cookie.setDomain(cookieDomain);
+		}
+
+		response.addCookie(cookie);
+	}
+	
+	private String getCookiePath(HttpServletRequest request) {
+		String contextPath = request.getContextPath();
+		return contextPath.length() > 0 ? contextPath : "/";
 	}
 	
 }

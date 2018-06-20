@@ -21,6 +21,7 @@ import com.enablix.commons.util.process.ProcessContext;
 import com.enablix.core.api.DocInfo;
 import com.enablix.core.domain.preference.UserPreference;
 import com.enablix.core.ui.ContentPreviewInfo;
+import com.enablix.core.ui.ContentPreviewInfo.PreviewProperty;
 import com.enablix.core.ui.DisplayableContent;
 import com.enablix.core.ui.DocNoPreviewInfo;
 import com.enablix.core.ui.DocRef;
@@ -154,6 +155,11 @@ public class DocPreviewBuilder implements PreviewBuilder {
 	@Override
 	public boolean canHandle(DisplayableContent displayRecord) {
 		return displayRecord.getDoc() != null;
+	}
+
+	@Override
+	public PreviewProperty buildsUsingPreviewProperty() {
+		return PreviewProperty.FILE;
 	}
 
 }

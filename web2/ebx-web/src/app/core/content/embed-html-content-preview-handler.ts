@@ -1,7 +1,7 @@
 import { ContentPreviewHandler } from './content-preview-handler';
 import { PreviewDataBasedHandler } from './preview-data-based-handler';
 import { UserPreferenceService } from '../user-preference.service';
-import { NoPreviewHandler } from './content-preview.service';
+import { NoPreviewHandler } from './no-preview-handler';
 
 export class EmbedHtmlContentPreviewHandler implements ContentPreviewHandler {
   

@@ -23,7 +23,7 @@ import com.enablix.core.security.service.EnablixUserService;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-	private static final String PERSISTENT_REMEMBER_ME_KEY = "3nabl1xr0cks";
+	private static final String PERSISTENT_REMEMBER_ME_KEY = "3nabl1xr0ck0n";
 	
 	@Value("${security.remember.me.tokenValiditySeconds:2419200}")
 	private Integer REMEMBER_ME_TOKEN_VALIDITY_IN_SECONDS;

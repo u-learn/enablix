@@ -7,14 +7,17 @@ import com.enablix.commons.util.StringUtil;
 import com.enablix.commons.util.TextLinkifier.LinkDecorator;
 import com.enablix.core.activity.audit.ActivityTrackingConstants;
 import com.enablix.core.domain.activity.ActivityChannel.Channel;
+import com.enablix.core.ui.ContentPreviewInfo.PreviewProperty;
 
 public class DisplayContext {
-
+	
 	private LinkDecorator linkDecorator;
 	
 	private Channel displayChannel;
 	
 	private Map<String, String> trackingParams;
+	
+	private PreviewProperty previewProperty;
 
 	public Map<String, String> getTrackingParams() {
 		return trackingParams;
@@ -85,6 +88,14 @@ public class DisplayContext {
 
 	public void setDisplayChannel(Channel displayChannel) {
 		this.displayChannel = displayChannel;
+	}
+
+	public PreviewProperty getPreviewProperty() {
+		return previewProperty;
+	}
+
+	public void setPreviewProperty(PreviewProperty previewProperty) {
+		this.previewProperty = previewProperty;
 	}
 
 }

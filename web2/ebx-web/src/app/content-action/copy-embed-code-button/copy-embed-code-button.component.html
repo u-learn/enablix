@@ -1,4 +1,11 @@
-<div class="btn-with-text" (click)="copy()">
-    <div class="icon small code"></div>
-    <p class="show-me">{{buttonText}}</p>
+<div class="{{ ecPropOptions ? 'btn-with-dd' : 'action-btn'}}" (clickOutside)="hideOptions()">
+  <div class="btn-with-text" (click)="copyOrShowOptions()">
+      <div class="icon small code"></div>
+      <p class="show-me">{{buttonText}}</p>
+  </div>
+  <div *ngIf="ecPropOptions" class="dd-options">
+    <div *ngFor="let prop of ecPropOptions" class="dd-option" (click)="copy(prop.previewProp)">
+      <span>{{prop.label}}</span>
+    </div>
+  </div>
 </div>
