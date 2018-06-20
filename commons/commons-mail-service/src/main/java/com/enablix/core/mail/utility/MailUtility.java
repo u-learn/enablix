@@ -17,6 +17,7 @@ import javax.mail.internet.MimeMultipart;
 
 import org.slf4j.LoggerFactory;
 
+import com.enablix.commons.util.StringUtil;
 import com.enablix.core.domain.config.EmailConfiguration;
 
 public class MailUtility {
@@ -27,7 +28,13 @@ public class MailUtility {
 		try{
 			logger.info("sending mail.. " + emailConfiguration);
 					
-			String	username = emailConfiguration.getEmailId();
+			String username = emailConfiguration.getEmailId();
+			
+			String smtpuser = emailConfiguration.getSmtpUsername();
+			if (!StringUtil.hasText(smtpuser)) {
+				smtpuser = username;
+			}
+			
 			String password = emailConfiguration.getPassword();
 			String smtpserver = emailConfiguration.getSmtp();
 			String smtpport = emailConfiguration.getPort();			
@@ -35,14 +42,14 @@ public class MailUtility {
 				
 			Properties props = new Properties();
 	        props.put("mail.smtp.host", smtpserver);
-	        props.put("mail.smtp.port",smtpport);
-	        props.put("mail.smtp.user",username);
-	        props.put("password",password);
-	        props.put("mail.smtp.auth","true");
-	        props.put("mail.transport.protocol","smtp");
+	        props.put("mail.smtp.port", smtpport);
+	        props.put("mail.smtp.user", smtpuser);
+	        props.put("password", password);
+	        props.put("mail.smtp.auth", "true");
+	        props.put("mail.transport.protocol", "smtp");
 	        props.put("mail.smtp.starttls.enable", "true");	
 	        
-	        final String authUsername = username;
+	        final String authUsername = smtpuser;
             final String authPassword = password;
             
 	        Session session = Session.getInstance(props, new Authenticator() {
