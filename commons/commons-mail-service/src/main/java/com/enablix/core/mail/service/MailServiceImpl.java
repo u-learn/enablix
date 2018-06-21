@@ -43,6 +43,9 @@ public class MailServiceImpl implements MailService {
 	@Value("${from.mail.address}")
 	private String emailId;
 
+	@Value("${smtp.default.username}")
+	private String smtpUser;
+	
 	@Value("${from.mail.password}")
 	private String password;
 
@@ -83,6 +86,7 @@ public class MailServiceImpl implements MailService {
 	public void init() {
 		defaultEmailConfig = new EmailConfiguration();
 		defaultEmailConfig.setEmailId(emailId);
+		defaultEmailConfig.setSmtpUsername(smtpUser);
 		defaultEmailConfig.setPassword(EncryptionUtil.getAesDecryptedString(
 										password, new DefaultAESParameterProvider()));
 		defaultEmailConfig.setSmtp(server);
