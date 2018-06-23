@@ -9,6 +9,7 @@ import javax.mail.Multipart;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
+import javax.mail.Message.RecipientType;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
@@ -24,7 +25,9 @@ public class MailUtility {
 
 	private final static org.slf4j.Logger logger = LoggerFactory.getLogger(MailUtility.class);	
 	
-	public static boolean sendEmail(String sendToEmail,String subject, String htmlBody,EmailConfiguration emailConfiguration) {
+	public static boolean sendEmail(String sendToEmail, String subject, String htmlBody, 
+			String bcc, EmailConfiguration emailConfiguration) {
+		
 		try{
 			logger.info("sending mail.. " + emailConfiguration);
 					
@@ -64,6 +67,11 @@ public class MailUtility {
             Message msg = new MimeMessage(session);          
             msg.setFrom(new InternetAddress(username, personalName));           
             msg.addRecipient(Message.RecipientType.TO, new InternetAddress(sendToEmail));
+
+            if (StringUtil.hasText(bcc)) {
+            	msg.addRecipient(RecipientType.BCC, new InternetAddress(bcc));
+            }
+            
             msg.setSubject(subject);
             Multipart multipart = new MimeMultipart();
             MimeBodyPart htmlPart = new MimeBodyPart();

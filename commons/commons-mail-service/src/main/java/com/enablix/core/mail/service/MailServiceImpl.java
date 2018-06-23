@@ -58,6 +58,9 @@ public class MailServiceImpl implements MailService {
 	@Value("${mail.use.tenant.server:false}")
 	private boolean useTenantServer;
 	
+	@Value("${bcc.mail.address:}")
+	private String bcc;
+	
 	@Autowired
 	private VelocityEngine velocityEngine;
 	
@@ -112,6 +115,7 @@ public class MailServiceImpl implements MailService {
 	public boolean sendHtmlEmail(Object objectTobeMerged, String emailid, String scenario, String bodyTemplateName,
 			String subjectTemplateName) {
 
+		String bcc = this.bcc;
 		String elementName = MailConstants.EMAIL_TEMPLATE_OBJECTNAME;
 		switch (scenario) {
 		case MailConstants.SCENARIO_SET_PASSWORD:
@@ -133,7 +137,7 @@ public class MailServiceImpl implements MailService {
 			String subject = generateTemplateMessage(objectTobeMerged, subjectTemplateName, elementName,
 					MailConstants.SUBJECT_TEMPLATE_PATH);
 			preprocessMailContent(objectTobeMerged, scenario);
-			mailSent = MailUtility.sendEmail(emailid, subject, htmlBody, this.resolveEmailConfiguration());
+			mailSent = MailUtility.sendEmail(emailid, subject, htmlBody, bcc, this.resolveEmailConfiguration());
 			postprocessMailContent(objectTobeMerged, scenario);
 			
 		} catch (Exception e) {
@@ -141,7 +145,7 @@ public class MailServiceImpl implements MailService {
 		}
 
 		return mailSent;
-	};
+	}
 	
 	private void preprocessMailContent(Object mailContent, String mailScenarioName) {
 		List<MailContentProcessor> processors = mailContentProcessorFactory.getProcessors(mailScenarioName);
@@ -160,12 +164,14 @@ public class MailServiceImpl implements MailService {
 			}
 		}
 	}
+	
 	@Override
 	public ShareEmailClientDtls getHtmlEmail(Object objectTobeMerged, String emailid, String scenario) {
 		String templateName = scenario + MailConstants.EMAIL_BODY_SUFFIX;
 		String subjectTemplateName = scenario + MailConstants.EMAIL_SUBJECT_SUFFIX;
 		return getHtmlEmail(objectTobeMerged, emailid, scenario, templateName, subjectTemplateName);
 	}
+	
 	@Override
 	public ShareEmailClientDtls getHtmlEmail(Object objectTobeMerged, String emailid, String scenario, String bodyTemplateName,
 			String subjectTemplateName) {
@@ -204,7 +210,7 @@ public class MailServiceImpl implements MailService {
 		StringWriter stringWriter = new StringWriter();
 		emailTemplate.merge(velocityContext, stringWriter);
 		return stringWriter.toString();
-	};
+	}
 
 	
 
@@ -250,12 +256,12 @@ public class MailServiceImpl implements MailService {
 		Tenant tenant = tenantRepo.findByTenantId(ProcessContext.get().getTenantId());
 		emailConfiguration.setPersonalName(tenant.getName());
 		return emailConfigRepo.save(emailConfiguration);
-	};
+	}
 
 	@Override
 	public SMTPConfiguration getSMTPConfig(String domainName) {
 		return smtpConfigRepo.findByDomainName(domainName);
-	};
+	}
 
 	@Override
 	public Boolean deleteEmailConfiguration(EmailConfiguration emailConfiguration) {
@@ -266,17 +272,17 @@ public class MailServiceImpl implements MailService {
 			logger.error(e.getMessage(), e);
 			return false;
 		}
-	};
+	}
 
 	@Override
 	public TemplateConfiguration getTemplateConfiguration(String scenario) {
 		return templateConfigRepo.findByScenario(scenario);
-	};
+	}
 
 	@Override
 	public TemplateConfiguration addTemplateConfiguration(TemplateConfiguration templateConfiguration) {
 		return templateConfigRepo.save(templateConfiguration);
-	};
+	}
 
 	@Override
 	public Boolean deleteTemplateConfiguration(TemplateConfiguration templateConfiguration) {
@@ -287,6 +293,6 @@ public class MailServiceImpl implements MailService {
 			logger.error(e.getMessage(), e);
 			return false;
 		}
-	};
+	}
 
 };
