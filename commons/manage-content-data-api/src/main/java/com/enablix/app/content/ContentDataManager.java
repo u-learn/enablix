@@ -48,5 +48,8 @@ public interface ContentDataManager {
 
 	List<ContentRecordGroup> getContentStackItemForContentRecord(String containerQId, String instanceIdentity,
 			String itemQId, Pageable pageable, DataView userDataView);
+
+	List<ContentRecordGroup> fetchStackDetails(List<Map<String, String>> stackValue, Pageable pageable,
+			DataView dataView);
 	
 }

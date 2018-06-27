@@ -5,6 +5,7 @@ import { AuthService } from '../auth/auth.service';
 import { NavigationService } from '../../app-routing/navigation.service';
 import { TenantService } from '../../services/tenant.service';
 import { Permissions } from '../../model/permissions.model';
+import { GlobalSearchControllerService } from '../../core/search-bar/global-search-controller.service';
 
 @Component({
   selector: 'ebx-header',
@@ -20,7 +21,8 @@ export class HeaderComponent implements OnInit {
   tenantLogoExist: boolean = true; 
 
   constructor(private userService: UserService, private authService: AuthService,
-              private navService: NavigationService, public tenantService: TenantService) { }
+              private navService: NavigationService, public tenantService: TenantService,
+              public globalSearchCtrl: GlobalSearchControllerService) { }
 
   ngOnInit() {
     this.updateUsername();

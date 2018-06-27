@@ -1,5 +1,11 @@
 <div class="main">
     <div>
+        <div class="heading">
+          <div class="label">{{heading}}</div>
+          <div class="dashboard-buttons" *ngIf="editing">
+            <ebx-content-picker-button [preSelected]="stackArr" (onSelectionDone)="selectionDone($event)"></ebx-content-picker-button>
+          </div>
+        </div>
         <div class="content-types-container">
             <div class="full-width-container" *ngFor="let cg of contentStack">
                 <h2>{{cg?.container?.label}} ({{cg.records.numberOfElements}})</h2>

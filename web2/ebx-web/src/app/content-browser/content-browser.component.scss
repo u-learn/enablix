@@ -1,0 +1,110 @@
+@import '~styles/colors.scss';
+@import '~styles/layout.mixin.scss';
+@import '~styles/fonts.scss';
+
+.content-browser {
+  display: flex;
+  height: 100%;
+  font-family: $FPLight;
+
+  .heading {
+    font-family: $FPThin;
+    padding-bottom: 16px;
+    font-size: 22px;
+    font-weight: 700;
+  }
+
+  .left-side {
+    display: flex;
+    flex-direction: column;
+    flex: 3;
+    padding-right: 24px;
+    border-right: 1px solid rgba(0,0,0,0.06);
+
+    .content-items {
+      flex-grow: 1;
+      margin: 24px 0;
+      overflow-y: auto;
+
+      .main {
+        
+        .card-container {
+          
+          display: flex;
+          flex-wrap: wrap;
+        
+          .data-card {
+
+            margin: 8px 12px 8px 4px;
+            height: 228px;
+
+            &.selected {
+              .overlay {
+                box-shadow: 0 0 1px 2px $blue-med-20;
+              }
+            }
+
+            .overlay {
+              position: relative;
+              height: 226px;
+              width: 190px;
+              top: -252px;
+              z-index: 2;
+              border-radius: 4px;
+              cursor: pointer;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .right-side {
+    flex: 1;
+    padding-left: 24px;
+    display: flex;
+    flex-direction: column;
+
+    .content {
+      overflow-y: auto;
+
+      .item {
+        display: flex;
+        padding: 8px 0;
+        border-top: 1px solid rgba(0,0,0,0.06);
+
+        &:last-child {
+          border-bottom: 1px solid rgba(0,0,0,0.06);
+        }
+
+        .removeBtn {
+          min-width: 32px;
+          font-weight: 700;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .details {
+
+          .label {
+            font-size: 14px;
+            line-height: 18px;
+            color: #2D2D2D;
+          }
+
+          .typequalifier {
+            color: #808c9B;
+            font-size: 12px;
+          }
+        }
+
+      }
+    }
+  }
+
+  .search-bar .filtered-row, .search-bar .bizcontent-items .wrpr .suggest {
+    min-height: 46px;
+  }
+}

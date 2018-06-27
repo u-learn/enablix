@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -93,9 +94,21 @@ public class FetchContentDataController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST, value="/fetchcs", produces = "application/json")
-	public List<ContentDataRecord> getContentStack(List<ContentStackItem> contentStackItems) {
+	public List<ContentDataRecord> getContentStack(@RequestBody List<ContentStackItem> contentStackItems) {
 		DataView userDataView = dataSegmentService.getDataViewForUserId(ProcessContext.get().getUserId());
 		return dataMgr.getContentStackRecords(contentStackItems, userDataView);
+	}
+	
+	@RequestMapping(method = RequestMethod.POST, value="/fetchcsgrp", produces = "application/json")
+	public List<ContentRecordGroup> getContentStackGroup(@RequestBody List<Map<String, String>> contentStackItems,
+			@RequestParam(required=false) String page, 
+			@RequestParam(required=false) String size,
+			@RequestParam(required=false) String sortProp,
+			@RequestParam(required=false) Sort.Direction sortDir) {
+		
+		Pageable pageable = createPaginationInfo(page, size, sortProp, sortDir);
+		DataView userDataView = dataSegmentService.getDataViewForUserId(ProcessContext.get().getUserId());
+		return dataMgr.fetchStackDetails(contentStackItems, pageable, userDataView);
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, 

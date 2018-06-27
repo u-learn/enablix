@@ -8,7 +8,7 @@
   <ebx-image-preview [record]="record"></ebx-image-preview>
 </div>
 <div *ngIf="previewType == 'content-stack'">
-  <ebx-content-stack-preview [record]="record" [container]="container"></ebx-content-stack-preview>
+  <ebx-content-stack-preview [record]="record" [container]="container" [editing]="editing" (onStackUpdate)="onStackUpdate()"></ebx-content-stack-preview>
 </div>
 <div *ngIf="previewType == 'text'">
   <ebx-text-content-preview [record]="record" [container]="container" [editing]="editing"></ebx-text-content-preview>

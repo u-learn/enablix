@@ -30,35 +30,13 @@ import { LinkedContainerDsbuilderService } from './linked-container-dsbuilder.se
 @Injectable()
 export class SearchBarService {
 
-  @Output() onSearchBarDataUpdate = new EventEmitter<void>();
-  searchBarData: SearchBarData;
-
   initiated: boolean = false;
+  searchBarData: SearchBarData;
 
   bizDimListDataset: LocalDataset;
   bizContentListDataset: LocalDataset;
 
   bizDimObjListDataset: LocalDataset;
-
-
-  navStates: NavState[] = [
-    {
-      navPath: "",
-      routePath: "/portal"
-    },
-    {
-      navPath: ">BIZ_DIM",
-      routePath: "/portal/dim/list"
-    },
-    {
-      navPath: ">BIZ_DIM_OBJ",
-      routePath: "/portal/dim/detail"
-    },
-    {
-      navPath: ">BIZ_CONTENT",
-      routePath: "/portal/content/list"
-    }
-  ]
 
   constructor(private navService: NavigationService, 
               private ctService: ContentTemplateService,
@@ -181,97 +159,6 @@ export class SearchBarService {
     }
   }
 
-  updateSearchBarData(sbData: SearchBarData) {
-    this.searchBarData = sbData;
-    this.onSearchBarDataUpdate.emit();
-  }
-
-  setDashboardSearchBar() {
-    
-    let sbData = new SearchBarData();
-    sbData.context = new NavContext();
-    sbData.datasets = [this.bizDimListDataset, this.bizDimObjListDataset, this.bizContentListDataset];
-
-    this.updateSearchBarData(sbData);
-  }
-
-  setFreetextSearchBar(text: string) {
-    
-    let sbData = new SearchBarData();
-    sbData.context = new NavContext();
-    sbData.freetext = text;
-    sbData.datasets = [this.bizDimListDataset, this.bizDimObjListDataset, this.bizContentListDataset];
-
-    this.updateSearchBarData(sbData);
-  }
-
-  setBizDimListSearchBar(container: Container, queryFilters: string[]) {
-    let sbData = new SearchBarData();
-    sbData.context = this.buildBizDimListContext(container);
-    sbData.initialFilterIds = queryFilters;
-    sbData.datasets = this.biDSBuilder.buildSearchDatasets(container, sbData);
-    this.updateSearchBarData(sbData);
-  }
-
-  setBizDimDetailSearchBar(container: Container, record: any, queryFilters: string[]) {
-    let sbData = new SearchBarData();
-    sbData.context = this.buildBizDimObjectContext(container, record);
-    sbData.initialFilterIds = queryFilters;
-    sbData.datasets = this.lcDSBuilder.buildSearchDatasets(container, sbData);
-    this.updateSearchBarData(sbData);
-  }
-
-  setBizContentListSearchBar(container: Container, queryFilters: string[]) {
-    let sbData = new SearchBarData();
-    sbData.context = this.buildBizContentListNavCtx(container);
-    sbData.initialFilterIds = queryFilters;
-    sbData.datasets = this.biDSBuilder.buildSearchDatasets(container, sbData);
-    this.updateSearchBarData(sbData);
-  }
-  
-  addSearchBarItem(sbItem: SearchBarItem) {
-    sbItem.addToSearchBarData(this.searchBarData);
-    this.onSearchBarDataUpdate.emit();
-    this.checkAndNavigate();
-  }
-
-  removeSearchBarItem(sbItem: SearchBarItem) {
-    sbItem.removeFromSearchBarData(this.searchBarData);
-    this.onSearchBarDataUpdate.emit();
-    this.checkAndNavigate();
-  };
-
-  checkAndNavigate() {
-    
-    let navPath = '';
-    let routeParams = [];
-    let queryParams = {};
-
-    let ctxItems = this.searchBarData.context.contextItems;
-    for (let i = 0; i < ctxItems.length; i++) {
-      navPath += '>' + ctxItems[i].type;
-      ctxItems[i].routeParams.forEach(param => routeParams.push(param));
-    }
-
-    let filters = this.searchBarData.filters;
-    for (let j = 0; j < filters.length; j++) {
-      let filter = filters[j];
-      for (let prop in filter.queryParams) {
-        if (!queryParams[prop]) {
-          queryParams[prop] = []
-        }
-        queryParams[prop].push(filter.queryParams[prop]);
-      }
-    }
-
-    for (let k = 0; k < this.navStates.length; k++) {
-      if (this.navStates[k].navPath == navPath) {
-        this.navService.goToRoute(this.navStates[k].routePath, routeParams, queryParams);
-      }
-    }
-
-  }
-
   buildBizTypeItem(container: Container, type: ObjectType) : NavCtxItem {
     let item = new NavCtxItem();
     item.id = container.qualifiedId;
@@ -379,9 +266,4 @@ export class SearchBarService {
             }); 
   }
 
-}
-
-class NavState {
-  navPath: string;
-  routePath: string;
 }

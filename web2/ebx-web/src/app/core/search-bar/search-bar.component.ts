@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, AfterViewInit, Input } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { FormControl } from '@angular/forms';
@@ -8,6 +8,7 @@ import "rxjs/operators/switchMap";
 import { SearchBarService } from './search-bar.service';
 import { SearchBarData, SearchBarItem, SearchDataset } from '../../model/search-bar-data.model';
 import { NavigationService } from '../../app-routing/navigation.service';
+import { SearchBarController } from './search-bar-controller';
 
 @Component({
   selector: 'ebx-search-bar',
@@ -16,6 +17,8 @@ import { NavigationService } from '../../app-routing/navigation.service';
   encapsulation: ViewEncapsulation.None
 })
 export class SearchBarComponent implements OnInit, AfterViewInit {
+
+  @Input() sbController: SearchBarController;
 
   showOptions = false;
   doNotHideOnClick = false;
@@ -31,6 +34,8 @@ export class SearchBarComponent implements OnInit, AfterViewInit {
 
   bizContentItems: any;
 
+  searchTextboxElementId: string;
+
   constructor(private sbService: SearchBarService, private navService: NavigationService) { 
     this.textCtrl = new FormControl();
   }
@@ -39,33 +44,37 @@ export class SearchBarComponent implements OnInit, AfterViewInit {
     
     this.updateSearchBarData();
     
-    this.sbService.onSearchBarDataUpdate.subscribe(data => {
+    this.sbController.onSearchBarDataUpdate().subscribe(data => {
       this.updateSearchBarData();
     });
+
+    this.searchTextboxElementId = this.sbController.searchInputId();
 
   }
 
   ngAfterViewInit() {
 
-    const input: any = document.getElementById("globalSearchTB");
+    const input: any = document.getElementById(this.searchTextboxElementId);
 
-    const search$ = Observable.fromEvent(input, 'keyup')
-      .switchMap(() => {
-        if (input.value && input.value.length > 2) {
-          return this.sbService.typeaheadSearchBizContent(input.value);
-        }
-        return Observable.of(null);
-      });
-
-    search$.subscribe(
-      (result: any) => {
-          if (result) {
-            this.bizContentItems = result.content;
-          } else {
-            this.bizContentItems = null;
+    if (input) {
+      const search$ = Observable.fromEvent(input, 'keyup')
+        .switchMap(() => {
+          if (input.value && input.value.length > 2) {
+            return this.sbService.typeaheadSearchBizContent(input.value);
           }
-      }
-    );
+          return Observable.of(null);
+        });
+
+      search$.subscribe(
+        (result: any) => {
+            if (result) {
+              this.bizContentItems = result.content;
+            } else {
+              this.bizContentItems = null;
+            }
+        }
+      );
+    }
 
   }
 
@@ -76,16 +85,13 @@ export class SearchBarComponent implements OnInit, AfterViewInit {
           + "<span class='title'>" + title + "</span>";
   }
 
-  navToRecordDetail(bizItem: any) {
-    var contentQId = bizItem.contentQId;
-    var recIdentity = bizItem.record.identity;
-    if (contentQId && recIdentity) {
-      this.navService.goToContentDetail(contentQId, recIdentity);
-    }
+  typeaheadSuggestSelected(bizItem: any) {
+    this.sbController.typeaheadItemSelected(bizItem);
+    this.hideSearchBar();
   }
-
+  
   private updateSearchBarData() {
-    this.searchBarData = this.sbService.searchBarData;
+    this.searchBarData = this.sbController.searchBarData();
 
     if (this.searchBarData && this.searchBarData.datasets) {
 
@@ -118,7 +124,6 @@ export class SearchBarComponent implements OnInit, AfterViewInit {
 
   toggleSearchBar() {
     this.showOptions = !this.showOptions;
-    console.log("search bar show: " + this.showOptions);
   }
 
   hideSearchBar() {
@@ -134,17 +139,17 @@ export class SearchBarComponent implements OnInit, AfterViewInit {
   }
 
   addSearchBarItem(sbItem: SearchBarItem) {
-    this.sbService.addSearchBarItem(sbItem);
+    this.sbController.addSearchBarItem(sbItem);
   }
 
   removeSearchBarItem(sbItem: SearchBarItem) {
-    this.sbService.removeSearchBarItem(sbItem);
+    this.sbController.removeSearchBarItem(sbItem);
     this.doNotHideOnClick = true;
   }
 
   searchBizContent() {
     if (this.freeText) {
-      this.navService.goToFreetextSearch(this.freeText);  
+      this.sbController.doFreetextSearch(this.freeText);
       this.textCtrl.setValue(null);
     }
   }

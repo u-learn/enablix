@@ -1,0 +1,41 @@
+<div class="content-browser">
+  <div class="left-side">
+    <div class="heading">Select Items</div>
+    <div><ebx-search-bar [sbController]="browserSearchCtrl"></ebx-search-bar></div>
+    <div class="content-items" #infiniteScrollParentElem
+            infiniteScroll
+            [infiniteScrollDistance]="'2'"
+            [infiniteScrollThrottle]="'50'"
+            (scrolled)="onScroll()"
+            [scrollWindow]="false">
+      <div #infiniteScrollChildElem class="main" >
+        <div *ngIf="browserSearchCtrl.browserData">
+          <div class="cards card-container">
+            <ng-container *ngFor="let rec of browserSearchCtrl.browserData">
+              <div class="data-card" [class.selected]="isSelected(rec)">
+                <ebx-data-card [containerQId]="rec.containerQId" [record]="rec.record"></ebx-data-card>
+                <div class="overlay" (click)="toggleSelect(rec)"></div>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="actionBtns">
+      <button class="action" (click)="done()">Done</button>
+      <button class="cancel" mat-dialog-close>Cancel</button>
+    </div>
+  </div>
+  <div class="right-side">
+    <div class="heading">Selected Items</div>
+    <div class="content">
+      <div class="item" *ngFor="let key of objectKeys(selectedItems)">
+        <div class="removeBtn" (click)="removeItem(key)"><span>x</span></div>
+        <div class="details">
+          <div class="label">{{selectedItems[key].label}}</div>
+          <div class="typequalifier">{{selectedItems[key].containerLabel}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

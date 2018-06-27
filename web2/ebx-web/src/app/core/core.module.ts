@@ -76,6 +76,7 @@ import { ContentQualityService } from './content/content-quality.service';
 import { LayoutService } from './layout.service';
 import { ContentConnService } from './content-conn.service';
 import { ProgressLineComponent } from './progress-line/progress-line.component';
+import { GlobalSearchControllerService } from './search-bar/global-search-controller.service';
 
 @NgModule({
   imports: [
@@ -120,6 +121,7 @@ import { ProgressLineComponent } from './progress-line/progress-line.component';
     ContentQualityService,
     LayoutService,
     ContentConnService,
+    GlobalSearchControllerService,
   	{
   	  provide: HTTP_INTERCEPTORS,
       useClass: HttpErrorInterceptor,
@@ -214,7 +216,8 @@ import { ProgressLineComponent } from './progress-line/progress-line.component';
     EntityPillComponent,
     UserTaskComponent,
     ProgressCircleComponent,
-    ProgressLineComponent
+    ProgressLineComponent,
+    SearchBarComponent
   ]
 })
 export class CoreModule { }

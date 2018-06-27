@@ -467,19 +467,7 @@ public class ContentDataManagerImpl implements ContentDataManager {
 					List<Map<String, String>> contentStackAttrVal = 
 							(List<Map<String, String>>) contentRecord.get(itemType.getId());
 					
-					if (CollectionUtil.isNotEmpty(contentStackAttrVal)) {
-						
-						for (Map<String, String> contentStackEntry : contentStackAttrVal) {
-							
-							String qualifiedId = contentStackEntry.get(ContentDataConstants.QUALIFIED_ID_KEY);
-							
-							if (CollectionUtil.isEmpty(filterItemQId) || filterItemQId.contains(qualifiedId)) {
-								String identity = contentStackEntry.get(ContentDataConstants.IDENTITY_KEY);
-								checkAndAddIdentityForContainer(containerIdentities, qualifiedId, identity);
-							}
-							
-						}
-					}
+					addToContainerIdGroup(filterItemQId, containerIdentities, contentStackAttrVal);
 					
 				}
 			}
@@ -488,6 +476,35 @@ public class ContentDataManagerImpl implements ContentDataManager {
 			stackRecords = fetchContentStackRecords(containerIdentities, pageable, dataView);
 		}
 		
+		return stackRecords == null ? new ArrayList<ContentRecordGroup>() : stackRecords;
+	}
+
+	private void addToContainerIdGroup(List<String> filterItemQId, Map<String, List<String>> containerIdentities,
+			List<Map<String, String>> contentStackAttrVal) {
+		
+		if (CollectionUtil.isNotEmpty(contentStackAttrVal)) {
+			
+			for (Map<String, String> contentStackEntry : contentStackAttrVal) {
+				
+				String qualifiedId = contentStackEntry.get(ContentDataConstants.QUALIFIED_ID_KEY);
+				
+				if (CollectionUtil.isEmpty(filterItemQId) || filterItemQId.contains(qualifiedId)) {
+					String identity = contentStackEntry.get(ContentDataConstants.IDENTITY_KEY);
+					checkAndAddIdentityForContainer(containerIdentities, qualifiedId, identity);
+				}
+				
+			}
+		}
+	}
+	
+	@Override
+	public List<ContentRecordGroup> fetchStackDetails(List<Map<String, String>> stackValue, Pageable pageable, DataView dataView) {
+		
+		Map<String, List<String>> containerIdentities = new LinkedHashMap<>();
+		addToContainerIdGroup(null, containerIdentities, stackValue);
+		
+		// fetch content data records
+		List<ContentRecordGroup> stackRecords = fetchContentStackRecords(containerIdentities, pageable, dataView);
 		return stackRecords == null ? new ArrayList<ContentRecordGroup>() : stackRecords;
 	}
 

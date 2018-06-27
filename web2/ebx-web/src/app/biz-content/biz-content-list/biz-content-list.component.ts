@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Container } from '../../model/container.model';
 import { ContentTemplateService } from '../../core/content-template.service';
 import { SearchBarService } from '../../core/search-bar/search-bar.service';
+import { GlobalSearchControllerService } from '../../core/search-bar/global-search-controller.service';
 import { ContentService } from '../../core/content/content.service';
 import { DataPage } from '../../model/data-page.model';
 import { AlertService } from '../../core/alert/alert.service';
@@ -30,7 +31,8 @@ export class BizContentListComponent implements OnInit {
     private contentTemplateService: ContentTemplateService,
     private contentService: ContentService,
     private alert: AlertService,
-    private sbService: SearchBarService) { }
+    private sbService: SearchBarService,
+    private globalSearchCtrl: GlobalSearchControllerService) { }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -47,7 +49,7 @@ export class BizContentListComponent implements OnInit {
           
           this.filters = this.sbService.buildFiltersFromQueryParams(queryParams);
           let filterIds = this.sbService.getFilterIdsFromQueryParams(queryParams);
-          this.sbService.setBizContentListSearchBar(this.container, filterIds);
+          this.globalSearchCtrl.setBizContentListSearchBar(this.container, filterIds);
 
           this.fetchData();
         });

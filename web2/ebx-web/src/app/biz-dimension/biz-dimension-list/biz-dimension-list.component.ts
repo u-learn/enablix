@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Container } from '../../model/container.model';
 import { ContentTemplateService } from '../../core/content-template.service';
 import { SearchBarService } from '../../core/search-bar/search-bar.service';
+import { GlobalSearchControllerService } from '../../core/search-bar/global-search-controller.service';
 import { FilterMetadata } from '../../core/data-search/filter-metadata.model';
 
 @Component({
@@ -18,8 +19,10 @@ export class BizDimensionListComponent implements OnInit {
   filterMetadata: { [key: string] : FilterMetadata };
   filters: { [key: string] : any};
 
-  constructor(private route: ActivatedRoute, private contentTemplateService: ContentTemplateService,
-    private sbService: SearchBarService) { 
+  constructor(private route: ActivatedRoute, 
+    private contentTemplateService: ContentTemplateService,
+    private sbService: SearchBarService,
+    private globalSearchCtrl: GlobalSearchControllerService) { 
 
   }
 
@@ -38,7 +41,7 @@ export class BizDimensionListComponent implements OnInit {
           this.filters = this.sbService.buildFiltersFromQueryParams(queryParams);
           let filterIds = this.sbService.getFilterIdsFromQueryParams(queryParams);
           
-          this.sbService.setBizDimListSearchBar(this.container, filterIds);
+          this.globalSearchCtrl.setBizDimListSearchBar(this.container, filterIds);
         });
       }
     });

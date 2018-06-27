@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation, Input } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, Input, Output, EventEmitter } from '@angular/core';
 
 import { ContentPreviewService } from '../core/content/content-preview.service';
 import { ContentPreviewHandler } from '../core/content/content-preview-handler';
@@ -51,6 +51,10 @@ export class ContentPreviewComponent implements OnInit {
     return this._record.__decoration && this._record.__decoration.__docMetadata &&
             this._record.__decoration.__docMetadata.previewStatus == 'PENDING' ? 
             "Generating preview for this asset." : "Preview is not available for this asset.";
+  }
+
+  onStackUpdate() {
+    
   }
 
 }

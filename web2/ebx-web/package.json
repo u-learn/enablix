@@ -36,6 +36,7 @@
     "ng-contenteditable": "^1.0.5",
     "ng2-nvd3": "^2.0.0",
     "ngx-ellipsis": "^1.0.7",
+    "ngx-infinite-scroll": "^0.8.4",
     "ngx-progressbar": "^2.1.1",
     "ngx-quill": "^2.2.0",
     "pretty-checkbox": "^3.0.3",

@@ -9,6 +9,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EllipsisModule } from 'ngx-ellipsis';
 import { NgProgressModule, NgProgressInterceptor } from 'ngx-progressbar';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 import { CoreModule } from './core/core.module';
 import { ContentEditableDirective } from './core/directives/content-editable/content-editable.directive';
@@ -94,6 +95,9 @@ import { UiWidgetService } from './services/ui-widget.service';
 import { ContentPackWidgetComponent } from './ui-widget/content-pack-widget/content-pack-widget.component';
 import { CpWidgetDetailComponent } from './ui-widget/content-pack-widget/cp-widget-detail/cp-widget-detail.component';
 import { EmbedHtmlPreviewComponent } from './content-preview/embed-html-preview/embed-html-preview.component';
+import { ContentPickerButtonComponent } from './content-action/content-picker-button/content-picker-button.component';
+import { ContentBrowserComponent } from './content-browser/content-browser.component';
+import { ContentBrowserSearchControllerService } from './content-browser/content-browser-search-controller.service';
 
 @NgModule({
   declarations: [
@@ -164,7 +168,9 @@ import { EmbedHtmlPreviewComponent } from './content-preview/embed-html-preview/
     UiWidgetComponent,
     ContentPackWidgetComponent,
     CpWidgetDetailComponent,
-    EmbedHtmlPreviewComponent
+    EmbedHtmlPreviewComponent,
+    ContentBrowserComponent,
+    ContentPickerButtonComponent
   ],
   imports: [
     BrowserModule,
@@ -181,7 +187,8 @@ import { EmbedHtmlPreviewComponent } from './content-preview/embed-html-preview/
     MatInputModule,
     EllipsisModule,
     NgProgressModule,
-    ReportsModule
+    ReportsModule,
+    InfiniteScrollModule
   ],
   providers: [
     RecentContentService,
@@ -195,6 +202,7 @@ import { EmbedHtmlPreviewComponent } from './content-preview/embed-html-preview/
     ContentShareService,
     RecoContentService,
     UiWidgetService,
+    ContentBrowserSearchControllerService,
     { 
         provide: HTTP_INTERCEPTORS, 
         useClass: NgProgressInterceptor, 
@@ -204,7 +212,8 @@ import { EmbedHtmlPreviewComponent } from './content-preview/embed-html-preview/
   entryComponents: [
     EditBizDimensionComponent,
     MemberDetailComponent,
-    EmailSharePopupComponent
+    EmailSharePopupComponent,
+    ContentBrowserComponent
   ],
   bootstrap: [AppComponent]
 })

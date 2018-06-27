@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { AlertService } from '../core/alert/alert.service';
-import { SearchBarService } from '../core/search-bar/search-bar.service';
+import { GlobalSearchControllerService } from '../core/search-bar/global-search-controller.service';
 import { AppMessageService } from '../core/app-message/app-message.service';
 import { AppIntroMsgComponent } from '../core/app-message/app-intro-msg/app-intro-msg.component';
 import { UserPreferenceService } from '../core/user-preference.service';
@@ -20,13 +20,13 @@ export class HomeComponent implements OnInit {
   widgetIds: string[];
 
   constructor(private alertService: AlertService, 
-    private searchBarService: SearchBarService,
+    private globalSearchCtrl: GlobalSearchControllerService,
     private http: HttpClient, private route: ActivatedRoute,
     private appMsgService: AppMessageService,
     private userPrefs: UserPreferenceService) { }
 
   ngOnInit() {
-    this.searchBarService.setDashboardSearchBar();
+    this.globalSearchCtrl.setDashboardSearchBar();
     var newSignup = this.route.snapshot.queryParams["ns"];
     if (newSignup === "1") {
       setTimeout(() => {

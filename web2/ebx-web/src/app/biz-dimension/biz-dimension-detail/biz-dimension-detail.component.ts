@@ -11,6 +11,7 @@ import { NavigationService } from '../../app-routing/navigation.service';
 import { ContentDeleteButtonComponent } from '../../content-action/content-delete-button/content-delete-button.component';
 import { EditBizDimensionComponent } from '../../biz-dimension/edit-biz-dimension/edit-biz-dimension.component';
 import { SearchBarService } from '../../core/search-bar/search-bar.service';
+import { GlobalSearchControllerService } from '../../core/search-bar/global-search-controller.service';
 import { Constants } from '../../util/constants';
 import { LayoutService } from '../../core/layout.service';
 
@@ -38,6 +39,7 @@ export class BizDimensionDetailComponent implements OnInit, AfterViewInit {
               private navService: NavigationService,
               private ctService: ContentTemplateService,
               private sbService: SearchBarService,
+              private globalSearchCtrl: GlobalSearchControllerService,
               private layoutService: LayoutService,
               private dialog: MatDialog,
               private router: Router) { }
@@ -83,7 +85,7 @@ export class BizDimensionDetailComponent implements OnInit, AfterViewInit {
                   if (contentGrp.contentQId == cQId) {
                     this.record = contentGrp.records.content[0];
                     this.container = container;
-                    this.sbService.setBizDimDetailSearchBar(container, this.record, []);
+                    this.globalSearchCtrl.setBizDimDetailSearchBar(container, this.record, []);
                   }
 
                   contentGrp.container = container;

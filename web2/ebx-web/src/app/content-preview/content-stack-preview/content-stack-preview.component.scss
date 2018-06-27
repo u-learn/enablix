@@ -1,0 +1,23 @@
+@import '~styles/colors.scss';
+@import '~styles/layout.mixin.scss';
+@import '~styles/fonts.scss';
+
+.main {
+  .heading {
+    display: flex;
+    border-bottom: 1px solid rgba(0,0,0,0.03);
+    margin-bottom: 32px;
+    padding-bottom: 16px;
+    align-items: flex-end;
+
+    .label {
+      font-family: $FPThin;
+      font-size: 24px;
+      font-weight: 700;
+    }
+
+    .dashboard-buttons {
+      margin-left: 16px;
+    }
+  }
+}

@@ -98,6 +98,8 @@ export class ApiUrlService {
 
   static POST_FETCH_QUALITY_ALERTS = "/cq/fetch";
 
+  static POST_FETCH_CONTENT_STACK_DETAILS = "/data/fetchcsgrp?pageSize=:pageSize&pageNo=:pageNo";
+
   static DELETE_CONTAINER_DEF = "/template/:templateId/c/:containerQId/";
 
   static GET_LOGOUT = "/logout";
@@ -446,6 +448,11 @@ export class ApiUrlService {
 
   postFetchQualityAlertsUrl() : string {
     return this.getAPIUrl(ApiUrlService.POST_FETCH_QUALITY_ALERTS);
+  }
+
+  postFetchContentStackDetails(pageSize: number, pageNo: number) : string {
+    return this.getAPIUrl(ApiUrlService.POST_FETCH_CONTENT_STACK_DETAILS,
+      { pageSize: String(pageSize), pageNo: String(pageNo) });
   }
 
   deleteContainerDefUrl(templateId: string, containerQId: string) : string {

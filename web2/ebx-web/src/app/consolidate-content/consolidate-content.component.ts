@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 
-import { SearchBarService } from '../core/search-bar/search-bar.service';
+import { GlobalSearchControllerService } from '../core/search-bar/global-search-controller.service';
 
 @Component({
   selector: 'ebx-consolidate-content',
@@ -10,10 +10,10 @@ import { SearchBarService } from '../core/search-bar/search-bar.service';
 })
 export class ConsolidateContentComponent implements OnInit {
 
-  constructor(private sbService: SearchBarService) { }
+  constructor(private globalSearchCtrl: GlobalSearchControllerService) { }
 
   ngOnInit() {
-    this.sbService.setDashboardSearchBar();
+    this.globalSearchCtrl.setDashboardSearchBar();
   }
 
 }

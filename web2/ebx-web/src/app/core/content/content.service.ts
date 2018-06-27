@@ -44,6 +44,11 @@ export class ContentService {
     return this.http.get(apiUrl);
   }
 
+  getContentStackDetails(stackValue: any) : Observable<any> {
+    let apiUrl = this.apiUrlService.postFetchContentStackDetails(50, 0);
+    return this.http.post(apiUrl, stackValue);
+  }
+
   decorateContentGroup(cg: any) {
     
     for (var i = 0; i < cg.length; i++) {
