@@ -90,7 +90,38 @@ export class DocStoreMetadata {
           "required" : true
         }
       ]
-    }
+    },
+    {
+      "storeTypeName" : "One Drive",
+      "storeTypeCode" : "ONEDRIVE",
+      "params" : [
+        {
+          "paramKey" : "ORG_ID",
+          "paramName" : "One Drive Organization Id",
+          "required" : true
+        },
+        {
+          "paramKey" : "APP_ID",
+          "paramName" : "Application Id",
+          "required" : true
+        },
+        {
+          "paramKey" : "APP_PWD_ENC",
+          "paramName" : "Application Password",
+          "required" : true
+        },
+        {
+          "paramKey" : "DRIVE_OWNER_ID",
+          "paramName" : "File Storage Owner Id",
+          "required" : true
+        },
+        {
+          "paramKey" : "BASE_FOLDER",
+          "paramName" : "Base Folder",
+          "required" : true
+        }
+      ]
+    },
   ];
 }
 

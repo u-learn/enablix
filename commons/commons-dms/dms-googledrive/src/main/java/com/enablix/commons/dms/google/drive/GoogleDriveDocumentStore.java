@@ -150,11 +150,11 @@ public class GoogleDriveDocumentStore extends AbstractDocumentStore<GoogleDriveD
 	@Override
 	public DocInfo save(IDocument document, String path) throws IOException {
 		
-		saveAndUpdateDocInfo(
-				new GoogleDriveDocument(document.getDataStream(), createGoogleDocMetadata(document.getDocInfo())), 
-				path);
+		GoogleDriveDocument googleDoc = new GoogleDriveDocument(document.getDataStream(), 
+							createGoogleDocMetadata(document.getDocInfo()));
+		saveAndUpdateDocInfo(googleDoc, path);
 		
-		return document.getDocInfo();
+		return googleDoc.getDocInfo();
 	}
 
 	@Override

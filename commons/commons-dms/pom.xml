@@ -10,6 +10,7 @@
   	<module>dms-sharepoint</module>
   	<module>dms-impl</module>
   	<module>dms-googledrive</module>
+  	<module>dms-onedrive</module>
   </modules>
   <parent>
   	<groupId>com.enablix.commons</groupId>

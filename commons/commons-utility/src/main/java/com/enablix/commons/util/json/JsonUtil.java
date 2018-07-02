@@ -51,16 +51,27 @@ public class JsonUtil {
 			return mapper.readTree(jsonData);
 		}
 		catch (Exception e) {
-			throw new RuntimeException("Failed to convert json to Map", e);
+			throw new RuntimeException("Failed to convert json to JsonNode", e);
 		}
 	}
 	
 	public static <T> T jsonToJavaPojo(JsonNode json, Class<T> className) {
 		final ObjectMapper mapper = new ObjectMapper();
+		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 		try {
 			return mapper.treeToValue(json, className);
 		} catch (IOException e) {
-			throw new RuntimeException("Failed to convert json to Map", e);
+			throw new RuntimeException("Failed to convert json to Object", e);
+		}
+	}
+	
+	public static <T> T jsonToJavaPojo(String json, Class<T> clazz) {
+		final ObjectMapper mapper = new ObjectMapper();
+		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+		try {
+			return mapper.readValue(json, clazz);
+		} catch (IOException e) {
+			throw new RuntimeException("Failed to convert json to Object", e);
 		}
 	}
 	

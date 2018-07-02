@@ -51,5 +51,6 @@
 	<module>user-task</module>
 	<module>youtube-bulk-import</module>
 	<module>ui-widget</module>
+	<module>ms-graph-sdk</module>
   </modules>
 </project>

@@ -13,7 +13,6 @@ import com.enablix.core.commons.xsdtopojo.DataDefinitionType;
 import com.enablix.core.commons.xsdtopojo.UiDefinitionType;
 import com.enablix.core.domain.tenant.Tenant;
 
-@SuppressWarnings("restriction")
 public interface TemplateManager {
 
 	void save(ContentTemplate template, String filename);
