@@ -1067,6 +1067,17 @@
                     </refList>
                 </bounded>
             </contentItem>
+            <contentItem type="bounded" id="proposals" label="Proposal">
+                <bounded>
+                    <refList>
+                        <datastore hyperlink="true">
+                            <storeId>proposal</storeId>
+                            <dataId>identity</dataId>
+                            <dataLabel>title</dataLabel>
+                        </datastore>
+                    </refList>
+                </bounded>
+            </contentItem>
         </container>
         <container businessCategory="BUSINESS_CONTENT" id="caseStudy" qualifiedId="caseStudy" label="Case Studies" displayOrder="171">
             <qualityConfig>
@@ -1159,6 +1170,17 @@
                             <storeId>topic</storeId>
                             <dataId>identity</dataId>
                             <dataLabel>shortName</dataLabel>
+                        </datastore>
+                    </refList>
+                </bounded>
+            </contentItem>
+            <contentItem type="bounded" id="proposals" label="Proposal">
+                <bounded>
+                    <refList>
+                        <datastore hyperlink="true">
+                            <storeId>proposal</storeId>
+                            <dataId>identity</dataId>
+                            <dataLabel>title</dataLabel>
                         </datastore>
                     </refList>
                 </bounded>
@@ -1393,6 +1415,17 @@
                             <storeId>contentAccessType</storeId>
                             <dataId>identity</dataId>
                             <dataLabel>accessTypeName</dataLabel>
+                        </datastore>
+                    </refList>
+                </bounded>
+            </contentItem>
+            <contentItem type="bounded" id="proposals" label="Proposal">
+                <bounded>
+                    <refList>
+                        <datastore hyperlink="true">
+                            <storeId>proposal</storeId>
+                            <dataId>identity</dataId>
+                            <dataLabel>title</dataLabel>
                         </datastore>
                     </refList>
                 </bounded>
@@ -2097,6 +2130,9 @@
                 </bounded>
             </contentItem>
             <container linkContainerQId="execSummary" linkContentItemId="proposals" id="propExecSummary" qualifiedId="proposal.propExecSummary" label="Executive Summary" displayOrder="188"/>
+            <container linkContainerQId="featureSheet" linkContentItemId="proposals" id="propFeatureSheet" label="Feature Sheets" displayOrder="189"/>
+            <container linkContainerQId="caseStudy" linkContentItemId="proposals" id="propCaseStudy" label="Case Studies" displayOrder="190"/>
+            <container linkContainerQId="faq" linkContentItemId="proposals" id="propFaq" label="FAQs" displayOrder="191"/>
         </container>
         <container businessCategory="BUSINESS_CONTENT" id="article" qualifiedId="article" label="News Article" displayOrder="189">
             <contentItem type="text" id="title" qualifiedId="article.title" label="Title"/>

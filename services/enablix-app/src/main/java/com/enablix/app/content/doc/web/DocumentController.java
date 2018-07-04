@@ -57,6 +57,7 @@ public class DocumentController {
 
 	private static final String TEXT_CONTENT_IMG = "/assets/images/icons/text-icon.png";
 	private static final String URL_CONTENT_IMG = "/assets/images/icons/url-icon.png";
+	private static final String KIT_CONTENT_IMG = "/assets/images/icons/kit-icon.png";
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(DocumentController.class);
 	
@@ -277,7 +278,9 @@ public class DocumentController {
        	}
     	
     	if (!iconFound) {
-    		if (template.isDocContainer(container)) {
+    		if (template.isContentStackContainer(container)) {
+    			sendRedirect(KIT_CONTENT_IMG, request, response);
+    		} else if (template.isDocContainer(container)) {
     			sendRedirect(FILE_ICON_IMG, request, response);
     		} else if (template.isTextContainer(container)) {
     			sendRedirect(TEXT_CONTENT_IMG, request, response);

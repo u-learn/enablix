@@ -40,8 +40,9 @@ export class BizDimensionListComponent implements OnInit {
         this.route.queryParams.subscribe(queryParams => {
           this.filters = this.sbService.buildFiltersFromQueryParams(queryParams);
           let filterIds = this.sbService.getFilterIdsFromQueryParams(queryParams);
-          
-          this.globalSearchCtrl.setBizDimListSearchBar(this.container, filterIds);
+          let textquery = this.sbService.getTextQueryFromQueryParams(queryParams);
+
+          this.globalSearchCtrl.setBizDimListSearchBar(this.container, filterIds, textquery);
         });
       }
     });

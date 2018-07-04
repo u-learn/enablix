@@ -1,4 +1,5 @@
 import { Injectable, EventEmitter } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { SearchBarController } from './search-bar-controller';
 import { NavigationService } from '../../app-routing/navigation.service';
@@ -35,7 +36,7 @@ export class GlobalSearchControllerService implements SearchBarController {
     }
   ]
 
-  constructor(
+  constructor(private router: Router,
         private navService: NavigationService,
         private sbService: SearchBarService,
         private biDSBuilder: BoundedItemsDSBuilderService,
@@ -78,7 +79,7 @@ export class GlobalSearchControllerService implements SearchBarController {
       navPath += '>' + ctxItems[i].type;
       ctxItems[i].routeParams.forEach(param => routeParams.push(param));
     }
-
+    
     let filters = this.sbData.filters;
     for (let j = 0; j < filters.length; j++) {
       let filter = filters[j];
@@ -90,9 +91,22 @@ export class GlobalSearchControllerService implements SearchBarController {
       }
     }
 
-    for (let k = 0; k < this.navStates.length; k++) {
-      if (this.navStates[k].navPath == navPath) {
-        this.navService.goToRoute(this.navStates[k].routePath, routeParams, queryParams);
+    var tq = this.sbData.freetext;
+    
+    if (navPath == '' && tq && tq != '') {
+      
+      this.navService.goToFreetextSearch(this.sbData.freetext); 
+
+    } else {
+      
+      if (tq && tq != '') {
+        queryParams['tq'] = tq;
+      }
+      
+      for (let k = 0; k < this.navStates.length; k++) {
+        if (this.navStates[k].navPath == navPath) {
+          this.navService.goToRoute(this.navStates[k].routePath, routeParams, queryParams);
+        }
       }
     }
 
@@ -130,25 +144,28 @@ export class GlobalSearchControllerService implements SearchBarController {
     this.updateSearchBarData(sbData);
   }
 
-  setBizDimListSearchBar(container: Container, queryFilters: string[]) {
+  setBizDimListSearchBar(container: Container, queryFilters: string[], textQuery: string = null) {
     let sbData = new SearchBarData();
     sbData.context = this.sbService.buildBizDimListContext(container);
+    sbData.freetext = textQuery;
     sbData.initialFilterIds = queryFilters;
     sbData.datasets = this.biDSBuilder.buildSearchDatasets(container, sbData);
     this.updateSearchBarData(sbData);
   }
 
-  setBizDimDetailSearchBar(container: Container, record: any, queryFilters: string[]) {
+  setBizDimDetailSearchBar(container: Container, record: any, queryFilters: string[], textQuery: string) {
     let sbData = new SearchBarData();
     sbData.context = this.sbService.buildBizDimObjectContext(container, record);
+    sbData.freetext = textQuery;
     sbData.initialFilterIds = queryFilters;
     sbData.datasets = this.lcDSBuilder.buildSearchDatasets(container, sbData);
     this.updateSearchBarData(sbData);
   }
 
-  setBizContentListSearchBar(container: Container, queryFilters: string[]) {
+  setBizContentListSearchBar(container: Container, queryFilters: string[], textQuery: string) {
     let sbData = new SearchBarData();
     sbData.context = this.sbService.buildBizContentListNavCtx(container);
+    sbData.freetext = textQuery;
     sbData.initialFilterIds = queryFilters;
     sbData.datasets = this.biDSBuilder.buildSearchDatasets(container, sbData);
     this.updateSearchBarData(sbData);
@@ -159,16 +176,21 @@ export class GlobalSearchControllerService implements SearchBarController {
     var contentQId = bizItem.contentQId;
     var recIdentity = bizItem.record.identity;
     if (contentQId && recIdentity) {
-      this.navService.goToContentDetail(contentQId, recIdentity);
+      this.navService.goToRecordDetail(contentQId, recIdentity, this.router.url);
     }
   }
 
   doFreetextSearch(text: any) {
-    if (text) {
-      this.navService.goToFreetextSearch(text);  
+    if (text) { 
+      this.sbData.freetext = text;
+      this.checkAndNavigate();
     }
   }
-  
+
+  clearFreetext() {
+    this.sbData.freetext = null;
+    this.checkAndNavigate();
+  }
 
 }
 

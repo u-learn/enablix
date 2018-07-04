@@ -303,4 +303,9 @@ public class ContentDataUtil {
 		return (String) contentData.get(ContentDataConstants.MODIFIED_BY_NAME_KEY);
 	}
 
+
+	public static String getRecordTitle(Map<String, Object> contentData) {
+		return (String) contentData.get(ContentDataConstants.CONTENT_TITLE_KEY);
+	}
+
 }

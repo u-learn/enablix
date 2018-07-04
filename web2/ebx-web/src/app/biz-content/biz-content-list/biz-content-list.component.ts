@@ -27,6 +27,8 @@ export class BizContentListComponent implements OnInit {
   filterMetadata: { [key: string] : FilterMetadata } = {};
   filters: { [key: string] : any} = {};
 
+  textFilter: string;
+
   constructor(private route: ActivatedRoute, 
     private contentTemplateService: ContentTemplateService,
     private contentService: ContentService,
@@ -49,7 +51,8 @@ export class BizContentListComponent implements OnInit {
           
           this.filters = this.sbService.buildFiltersFromQueryParams(queryParams);
           let filterIds = this.sbService.getFilterIdsFromQueryParams(queryParams);
-          this.globalSearchCtrl.setBizContentListSearchBar(this.container, filterIds);
+          this.textFilter = this.sbService.getTextQueryFromQueryParams(queryParams);
+          this.globalSearchCtrl.setBizContentListSearchBar(this.container, filterIds, this.textFilter);
 
           this.fetchData();
         });
@@ -62,7 +65,14 @@ export class BizContentListComponent implements OnInit {
   }
 
   fetchData() {
+    this.fetchFiltered();
+  }
 
+  fetchTextFiltered(textQuery: string) {
+
+  }
+
+  fetchFiltered() {
     let searchRequest = new DataSearchRequest();
     
     searchRequest.projectedFields = [];

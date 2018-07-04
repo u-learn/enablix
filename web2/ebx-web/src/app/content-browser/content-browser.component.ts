@@ -18,6 +18,8 @@ export class ContentBrowserComponent implements OnInit {
 
   selectedItems: any;
 
+  noData: boolean = false;
+
   constructor(
       public browserSearchCtrl: ContentBrowserSearchControllerService,
       private dialogRef: MatDialogRef<ContentBrowserComponent>,
@@ -25,7 +27,7 @@ export class ContentBrowserComponent implements OnInit {
 
   ngOnInit() {
     
-    this.browserSearchCtrl.initBrowserSearchBar();
+    this.browserSearchCtrl.initBrowserSearchBar(this.data.scopeContainer);
     this.selectedItems = {};
 
     if (this.data.selectedItems) {
@@ -83,6 +85,10 @@ export class ContentBrowserComponent implements OnInit {
   }
 
   onBrowserDataUpdate() {
+    
+    this.noData = !this.browserSearchCtrl.browserData 
+      || this.browserSearchCtrl.browserData.length == 0;
+
     if (this.browserSearchCtrl.hasNextPage) {
       this.callbackUntilScrollable();
     }

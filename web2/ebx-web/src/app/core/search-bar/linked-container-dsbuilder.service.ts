@@ -16,15 +16,15 @@ export class LinkedContainerDsbuilderService {
     let ds: SearchDataset[] = [];
 
     // search bar row of business content
-    let bizContentSearchItems: NavCtxItem[] = [];
-    let bizDimSearchItems: NavCtxItem[] = [];
+    let bizContentSearchItems: NavFilter[] = [];
+    let bizDimSearchItems: NavFilter[] = [];
     
     container.container.forEach(cont => {
         
       var cc = this.ctService.getConcreteContainerByQId(cont.qualifiedId);
       
       if (cc) {
-        let item = new NavCtxItem();
+        let item = new NavFilter();
         
         item.id = cc.qualifiedId;
         item.label = cc.label;
@@ -32,12 +32,16 @@ export class LinkedContainerDsbuilderService {
         item.color = cc.color;
         item.data = cc;
         
-        item.routeParams = [cc.qualifiedId];
+        item.queryParams = { "sf_cqid" : cc.qualifiedId };
 
         if (this.ctService.isBusinessContent(cc)) {
           bizContentSearchItems.push(item);  
         } else if (this.ctService.isBusinessDimension(cc)) {
           bizDimSearchItems.push(item);
+        }
+
+        if (sbData.initialFilterIds.indexOf(item.id) >= 0) {
+          sbData.filters.push(item);
         }
         
       }

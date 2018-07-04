@@ -1,5 +1,8 @@
 package com.enablix.app.content.update;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 import com.enablix.commons.constants.ContentDataConstants;
@@ -8,6 +11,8 @@ import com.enablix.commons.util.json.JsonUtil;
 import com.enablix.core.domain.content.quality.AlertLevel;
 
 public class UpdateContentRequest implements ContentUpdateContext {
+
+	private static final String LINKAGE_CHANGE_KEY = "__linkageChange";
 
 	public enum QualityAlertProcessing {
 		BREAK, 
@@ -25,6 +30,8 @@ public class UpdateContentRequest implements ContentUpdateContext {
 	private QualityAlertProcessing qualityAlertProcessing;
 	
 	private AlertLevel qualityAnalysisLevel;
+	
+	private List<LinkageChange> linkageChanges;
 
 	protected UpdateContentRequest() {
 		
@@ -40,6 +47,7 @@ public class UpdateContentRequest implements ContentUpdateContext {
 		this(templateId, parentIdentity, contentQId, JsonUtil.jsonToMap(jsonData));
 	}
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public UpdateContentRequest(String templateId, 
 			String parentIdentity, String contentQId, Map<String, Object> dataAsMap) {
 		super();
@@ -47,6 +55,26 @@ public class UpdateContentRequest implements ContentUpdateContext {
 		this.parentIdentity = parentIdentity;
 		this.contentQId = contentQId;
 		this.dataAsMap = dataAsMap;
+		
+		if (dataAsMap.containsKey(LINKAGE_CHANGE_KEY)) {
+			
+			Object linkChanges = dataAsMap.remove(LINKAGE_CHANGE_KEY);
+			
+			if (linkChanges instanceof Collection) {
+			
+				this.linkageChanges = new ArrayList<>();
+				
+				((Collection) linkChanges).forEach((lc) -> {
+				
+					if (lc instanceof Map) {
+						LinkageChange lcObj = JsonUtil.jsonToObject((Map<String, Object>)lc, LinkageChange.class);
+						this.linkageChanges.add(lcObj);
+					}
+					
+				});
+			}
+		}
+		
 		this.qualityAlertProcessing = QualityAlertProcessing.BREAK;
 		this.qualityAnalysisLevel = AlertLevel.ERROR;
 	}
@@ -120,6 +148,14 @@ public class UpdateContentRequest implements ContentUpdateContext {
 
 	public void setQualityAnalysisLevel(AlertLevel qualityAnalysisLevel) {
 		this.qualityAnalysisLevel = qualityAnalysisLevel;
+	}
+
+	public List<LinkageChange> getLinkageChanges() {
+		return linkageChanges;
+	}
+
+	public void setLinkageChange(List<LinkageChange> linkageChange) {
+		this.linkageChanges = linkageChange;
 	}
 	
 }

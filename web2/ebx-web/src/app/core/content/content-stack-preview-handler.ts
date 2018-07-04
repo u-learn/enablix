@@ -16,7 +16,9 @@ export class ContentStackPreviewHandler implements ContentPreviewHandler {
   }
 
   canHandle(dataRecord: any) : boolean {
-    return dataRecord.__decoration && dataRecord.__decoration.__contentStack;
+    return dataRecord.__decoration &&
+            (dataRecord.__decoration.__contentStack ||
+              dataRecord.__decoration.__hasLinkedBizContent);
   }
 
   type() : string {

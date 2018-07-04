@@ -48,6 +48,7 @@ public class TemplateWrapper implements TemplateFacade {
 	private List<ContainerType> bizContentContainers;
  	private Set<String> docContainers;
 	private Set<String> richTextContainers;
+	private Set<String> contentStackContainers;
 
 	public TemplateWrapper(ContentTemplate template) {
 		super();
@@ -122,6 +123,7 @@ public class TemplateWrapper implements TemplateFacade {
 		this.bizContentContainers = new ArrayList<>();
 		this.docContainers = new HashSet<>();
 		this.richTextContainers = new HashSet<>();
+		this.contentStackContainers = new HashSet<>();
 		
 		
 		TemplateContainerWalker walker = new TemplateContainerWalker(this.template);
@@ -191,6 +193,10 @@ public class TemplateWrapper implements TemplateFacade {
 					
 					if (contItem.getType() == ContentItemClassType.RICH_TEXT) {
 						richTextContainers.add(container.getQualifiedId());
+					}
+					
+					if (contItem.getType() == ContentItemClassType.CONTENT_STACK) {
+						contentStackContainers.add(container.getQualifiedId());
 					}
 				});
 			}
@@ -356,6 +362,11 @@ public class TemplateWrapper implements TemplateFacade {
 	@Override
 	public ContainerType getContainerByLabel(String containerLabel) {
 		return containerLabel == null ? null : concreteContainerLabelMap.get(containerLabel.toLowerCase());
+	}
+
+	@Override
+	public boolean isContentStackContainer(ContainerType container) {
+		return container != null && this.contentStackContainers.contains(container.getQualifiedId());
 	}
 	
 }

@@ -78,6 +78,9 @@ export class ContentService {
 
     decoration.containerQId = container.qualifiedId;
     decoration.__linkedContentCount = 0;
+    if (container.linkedBizContent) {
+      decoration.__hasLinkedBizContent = true;
+    }
     
     for (let i = 0; i < container.contentItem.length; i++) {
       

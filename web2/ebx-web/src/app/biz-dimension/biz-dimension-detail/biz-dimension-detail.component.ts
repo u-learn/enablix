@@ -83,9 +83,14 @@ export class BizDimensionDetailComponent implements OnInit, AfterViewInit {
                   }
 
                   if (contentGrp.contentQId == cQId) {
+                    
                     this.record = contentGrp.records.content[0];
                     this.container = container;
-                    this.globalSearchCtrl.setBizDimDetailSearchBar(container, this.record, []);
+                    
+                    let filterIds = this.sbService.getFilterIdsFromQueryParams(qParams);
+                    let textQuery = this.sbService.getTextQueryFromQueryParams(qParams);
+
+                    this.globalSearchCtrl.setBizDimDetailSearchBar(container, this.record, filterIds, textQuery);
                   }
 
                   contentGrp.container = container;

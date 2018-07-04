@@ -76,6 +76,7 @@ export abstract class SearchBarItem {
   label: string;
   type: ObjectType;
   color: string;
+  removable?: boolean = true;
 
   data?: any;
 

@@ -1,5 +1,7 @@
 package com.enablix.app.content.ui.web;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -8,11 +10,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.enablix.analytics.search.SearchScope;
 import com.enablix.app.content.ui.DisplayContext;
 import com.enablix.app.content.ui.NavigableContent;
 import com.enablix.app.content.ui.search.SearchService;
 import com.enablix.commons.constants.AppConstants;
 import com.enablix.commons.util.StringUtil;
+import com.enablix.commons.util.collection.CollectionUtil;
 import com.enablix.commons.util.process.ProcessContext;
 import com.enablix.core.api.ContentDataRecord;
 import com.enablix.core.api.SearchResult;
@@ -34,6 +38,7 @@ public class SearchController {
 	
 	@RequestMapping(method = RequestMethod.GET, value="/t/{searchText}/")
 	public SearchResult<NavigableContent> searchResults(@PathVariable String searchText,
+			@RequestParam(name="cqid", required=false) List<String> cqIds,
 			@RequestParam(required=false) String page, 
 			@RequestParam(required=false) String size) {
 		
@@ -45,8 +50,14 @@ public class SearchController {
 			sizeInt = StringUtil.isEmpty(size) ? AppConstants.DEFAULT_PAGE_SIZE : Integer.parseInt(size);
 		}
 		
+		SearchScope scope = null;
+		if (CollectionUtil.isNotEmpty(cqIds)) {
+			scope = new SearchScope();
+			scope.setContentQIds(cqIds);
+		}
+		
 		DataView dataView = dataSegmentService.getDataViewForUserId(ProcessContext.get().getUserId());
-		SearchResult<NavigableContent> searchResult = searchService.search(searchText, sizeInt, pageInt, dataView);
+		SearchResult<NavigableContent> searchResult = searchService.search(searchText, scope, sizeInt, pageInt, dataView);
 		
 		ActivityLogger.auditActivity(new SearchActivity(searchText, 
 				searchResult.getCurrentPage(), searchResult.getNumberOfElements()));
@@ -64,8 +75,11 @@ public class SearchController {
 			sizeInt = request.getSize() == null ? AppConstants.DEFAULT_PAGE_SIZE : request.getSize();
 		}
 		
+		SearchScope scope = request.getSearchScope();
+		
 		DataView dataView = dataSegmentService.getDataViewForUserId(ProcessContext.get().getUserId());
-		SearchResult<ContentDataRecord> searchResult = searchService.searchBizContentRecords(request.getText(), sizeInt, pageInt, dataView);
+		SearchResult<ContentDataRecord> searchResult = searchService.searchBizContentRecords(
+				request.getText(), scope, sizeInt, pageInt, dataView);
 		
 		ActivityLogger.auditActivity(new SearchActivity(request.getText(), 
 				searchResult.getCurrentPage(), searchResult.getNumberOfElements()));
@@ -84,11 +98,12 @@ public class SearchController {
 		}
 		
 		DataView dataView = dataSegmentService.getDataViewForUserId(ProcessContext.get().getUserId());
-		return searchService.searchAsYouTypeBizContentRecords(request.getText(), sizeInt, pageInt, dataView);
+		return searchService.searchAsYouTypeBizContentRecords(request.getText(), request.getSearchScope(), sizeInt, pageInt, dataView);
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value="/d/t/{searchText}/")
 	public SearchResult<DisplayableContent> displayableSearchResults(@PathVariable String searchText,
+			@RequestParam(name="cqid", required=false) List<String> cqIds,
 			@RequestParam(required=false) String page, 
 			@RequestParam(required=false) String size) {
 		
@@ -100,10 +115,16 @@ public class SearchController {
 			sizeInt = StringUtil.isEmpty(size) ? AppConstants.DEFAULT_PAGE_SIZE : Integer.parseInt(size);
 		}
 		
+		SearchScope scope = null;
+		if (CollectionUtil.isNotEmpty(cqIds)) {
+			scope = new SearchScope();
+			scope.setContentQIds(cqIds);
+		}
+		
 		DataView dataView = dataSegmentService.getDataViewForUserId(ProcessContext.get().getUserId());
 		DisplayContext ctx = new DisplayContext();
 		SearchResult<DisplayableContent> searchResult = 
-				searchService.searchAndGetResultAsDisplayContent(searchText, sizeInt, pageInt, dataView, ctx);
+				searchService.searchAndGetResultAsDisplayContent(searchText, scope, sizeInt, pageInt, dataView, ctx);
 		
 		ActivityLogger.auditActivity(new SearchActivity(searchText, 
 				searchResult.getCurrentPage(), searchResult.getNumberOfElements()));
@@ -113,8 +134,18 @@ public class SearchController {
 	public static class SearchRequest {
 		
 		private String text;
+		private List<String> contentQIds;
 		private Integer page;
 		private Integer size;
+		
+		public SearchScope getSearchScope() {
+			SearchScope scope = null;
+			if (CollectionUtil.isNotEmpty(contentQIds)) {
+				scope = new SearchScope();
+				scope.setContentQIds(contentQIds);
+			}
+			return scope;
+		}
 		
 		public String getText() {
 			return text;
@@ -133,6 +164,12 @@ public class SearchController {
 		}
 		public void setSize(Integer size) {
 			this.size = size;
+		}
+		public List<String> getContentQIds() {
+			return contentQIds;
+		}
+		public void setContentQIds(List<String> contentQIds) {
+			this.contentQIds = contentQIds;
 		}
 		
 	}

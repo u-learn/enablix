@@ -48,6 +48,10 @@ export class ContentBrowserSearchControllerService implements SearchBarControlle
     {
       navPath: ">FREE_TEXT",
       searchFn: this.performFreetextSearch.bind(this)
+    },
+    {
+      navPath: ">BIZ_CONTENT>FREE_TEXT",
+      searchFn: this.performFreetextSearch.bind(this)
     }
   ]
 
@@ -78,11 +82,23 @@ export class ContentBrowserSearchControllerService implements SearchBarControlle
     return "contentBrowserSearchTB";
   }
 
-  initBrowserSearchBar() {
+  initBrowserSearchBar(scopeContainer?: Container) {
     
     let sbData = new SearchBarData();
     sbData.context = new NavContext();
-    sbData.datasets = [
+
+    var limitScope = false;
+    if (scopeContainer) {
+      if (this.ctService.isBusinessContent(scopeContainer)) {
+        sbData.context = this.sbService.buildBizContentListNavCtx(scopeContainer, false);
+        limitScope = true;
+      } /*else if (this.ctService.isBusinessDimension(scopeContainer)) {
+        sbData.context = this.sbService.buildBizDimListContext(scopeContainer, false);
+      }*/
+    }
+    
+
+    sbData.datasets = limitScope ? [] : [
       // this.sbService.bizDimListDataset, 
       // this.sbService.bizDimObjListDataset, 
       this.sbService.bizContentListDataset
@@ -90,6 +106,7 @@ export class ContentBrowserSearchControllerService implements SearchBarControlle
 
     this.browserData = null;
     this.updateSearchBarData(sbData);
+    this.checkAndFetchData();
   }
 
   addSearchBarItem(sbItem: SearchBarItem) {
@@ -140,6 +157,7 @@ export class ContentBrowserSearchControllerService implements SearchBarControlle
 
     if (!searchExec) {
       this.browserData = null;
+      this.hasNextPage = false;
     }
 
   }
@@ -190,6 +208,9 @@ export class ContentBrowserSearchControllerService implements SearchBarControlle
       }
     }
 
+    // clear context. TODO: need to define new dataset
+    this.sbData.datasets = [];
+
     if (containerQId) {
 
       let searchRequest = new DataSearchRequest();
@@ -237,15 +258,20 @@ export class ContentBrowserSearchControllerService implements SearchBarControlle
 
 
   performFreetextSearch() {
-    this.doFreetextSearch(this.sbData.freetext);
+    this.doFreetextSearch(this.sbData.freetext, false);
   }
 
-  doFreetextSearch(text: string) {
+  doFreetextSearch(text: string, resetPage: boolean = true) {
     
+    if (resetPage) {
+      this.pageNum = 0;
+    }
+
     if (text) {
 
       this.sbData.freetext = text;
-      this.textSearch.searchBizContent(text, this.pageNum, this.pageSize).subscribe((res: any) => {
+      let searchScope = this.sbService.resolveSearchScope(this.sbData);
+      this.textSearch.searchBizContent(text, this.pageNum, this.pageSize, searchScope).subscribe((res: any) => {
       
           if (res) {
       
@@ -253,7 +279,7 @@ export class ContentBrowserSearchControllerService implements SearchBarControlle
               this.browserData = [];
             }
             
-            this.hasNextPage = !res.last;
+            this.hasNextPage = res.currentPage < res.totalPages;
 
             res.content.forEach(item => {
       
@@ -275,6 +301,11 @@ export class ContentBrowserSearchControllerService implements SearchBarControlle
           this.alert.error("Unable to search. Please try later.", err.statusCode);
         }); 
     }
+  }
+
+  clearFreetext() {
+    this.sbData.freetext = null;
+    this.checkAndFetchData();
   }
 
 }

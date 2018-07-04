@@ -17,4 +17,6 @@ export interface SearchBarController {
 
   doFreetextSearch(text: string);
 
+  clearFreetext();
+
 }

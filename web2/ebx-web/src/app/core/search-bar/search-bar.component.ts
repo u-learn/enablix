@@ -60,7 +60,7 @@ export class SearchBarComponent implements OnInit, AfterViewInit {
       const search$ = Observable.fromEvent(input, 'keyup')
         .switchMap(() => {
           if (input.value && input.value.length > 2) {
-            return this.sbService.typeaheadSearchBizContent(input.value);
+            return this.sbService.typeaheadSearchBizContent(input.value, this.searchBarData);
           }
           return Observable.of(null);
         });
@@ -81,7 +81,7 @@ export class SearchBarComponent implements OnInit, AfterViewInit {
   getBizContentDesc(bizItem: any) : string {
     var title = (bizItem.highlights && bizItem.highlights.__title) ? bizItem.highlights.__title :
                   bizItem.record.__title;
-    return "<span class='typelabel'>" + bizItem.record.__container + ": </span>" 
+    return "<span class='typelabel'>" + bizItem.record.__container + " </span>" 
           + "<span class='title'>" + title + "</span>";
   }
 
@@ -99,7 +99,7 @@ export class SearchBarComponent implements OnInit, AfterViewInit {
         if (!this.dsItemLimit[ds.getDatasetLabel()]) {
           this.dsItemLimit[ds.getDatasetLabel()] = this.defaultDSItemLimit;
         }
-      })
+      });
     
       this.textCtrl.valueChanges.startWith(null).subscribe(
         text => {
@@ -155,7 +155,7 @@ export class SearchBarComponent implements OnInit, AfterViewInit {
   }
 
   clearFreetext() {
-    this.searchBarData.freetext = null;
+    this.sbController.clearFreetext();
   }
 
 }

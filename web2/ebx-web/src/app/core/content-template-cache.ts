@@ -61,6 +61,8 @@ export class ContentTemplateCache {
           }
         }
 
+        
+
         if (!container.color) {
           container.color = Constants.defaultTypeColor;
         }
@@ -68,6 +70,15 @@ export class ContentTemplateCache {
       }
 
     });
+
+    // populate linked BIZ_CONTENT containers
+    for (let key in this.qIdToContainerMap) {
+      var cntr = this.qIdToContainerMap[key];
+      var lnkBizConts = this.getLinkedBizContentContainers(cntr);
+      if (lnkBizConts && lnkBizConts.length > 0) {
+        cntr.linkedBizContent = lnkBizConts;
+      }
+    }
 
     this.bizDimensionContainers.sort(
       (a: Container, b: Container) => { return a.displayOrder - b.displayOrder; });
@@ -240,6 +251,19 @@ export class ContentTemplateCache {
   getBoundedContentItemColor(contentItem: ContentItem) : string {
     let container = this.getBoundedItemDatastoreContainer(contentItem);
     return container ? container.color : Constants.defaultTypeColor;
+  }
+
+  getLinkedBizContentContainers(container: Container) {
+    var linkedContainers = [];
+    if (container.container) {
+      container.container.forEach((lc) => {
+        var lnkContainer = this.getContainerByQId(lc.linkContainerQId);
+        if (lnkContainer && this.isBusinessContent(lnkContainer)) {
+          linkedContainers.push(lc);
+        }
+      });
+    }
+    return linkedContainers;
   }
 
   /*

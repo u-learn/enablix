@@ -848,6 +848,27 @@ body {
         width: 50%;
     }
 
+    .content-type-heading {
+        display: flex;
+        align-items: flex-end;
+        margin-bottom: 24px;
+
+        h2 {
+            margin-bottom: 0;
+        }
+
+        .dashboard-buttons {
+            margin-left: 16px;
+        }
+    }
+
+    .content-type-msg {
+        font-family: $FPLight;
+        font-size: 14px;
+        color: #808C9B;
+        line-height: 17px;
+    }
+
     //@media ( max-width : 1465px) {
     .full-width-container {
         width: 100%;

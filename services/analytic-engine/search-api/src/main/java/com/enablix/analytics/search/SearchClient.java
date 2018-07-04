@@ -8,12 +8,13 @@ import com.enablix.data.view.DataView;
 
 public interface SearchClient {
 
-	SearchResult<ContentDataRef> search(String text, TemplateFacade template, int pageSize, int pageNum, DataView dataView);
+	SearchResult<ContentDataRef> search(String text, SearchScope scope, TemplateFacade template, int pageSize, int pageNum, DataView dataView);
 
-	SearchResult<ContentDataRecord> searchAndGetRecords(String text, TemplateFacade template, int pageSize, int pageNum, DataView dataView);
+	SearchResult<ContentDataRecord> searchAndGetRecords(String text, SearchScope scope, TemplateFacade template, int pageSize, int pageNum, DataView dataView);
 	
-	SearchResult<ContentDataRecord> searchBizContentRecords(String text, TemplateFacade template, int pageSize, int pageNum, DataView dataView);
+	SearchResult<ContentDataRecord> searchBizContentRecords(String text, SearchScope scope, TemplateFacade template, int pageSize, int pageNum, DataView dataView);
 
-	SearchResult<ContentDataRecord> searchAsYouTypeBizContentRecords(String text, TemplateFacade template, int pageSize,
+	SearchResult<ContentDataRecord> searchAsYouTypeBizContentRecords(String text, SearchScope scope, TemplateFacade template, int pageSize,
 			int pageNum, DataView dataView);
+
 }

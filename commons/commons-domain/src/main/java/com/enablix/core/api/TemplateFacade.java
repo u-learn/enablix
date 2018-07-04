@@ -49,4 +49,6 @@ public interface TemplateFacade {
 
 	ContainerType getContainerByLabel(String containerLabel);
 
+	boolean isContentStackContainer(ContainerType container);
+
 }

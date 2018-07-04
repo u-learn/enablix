@@ -1,4 +1,31 @@
-<div class="main">
+<div class="main" *ngIf="lnkContainerContent">
+  <div class="content-types-container">
+    <div class="full-width-container" *ngFor="let cg of lnkContainerContent">
+      <div class="content-type-heading">
+        <h2>{{cg?.linkContainer ? cg.linkContainer.label : cg.container?.label}} ({{cg.count}})</h2>
+        <div class="dashboard-buttons" *ngIf="editing">
+          <ebx-content-picker-button [preSelected]="convertToBrowserItems(cg)" (onSelectionDone)="linkedItemSelectionDone($event, cg)" [scopeContainer]="cg.container"></ebx-content-picker-button>
+        </div>
+      </div>
+      <div class="content-type-msg" *ngIf="cg.count == 0">
+        Please select or add {{cg?.linkContainer ? cg.linkContainer.label : cg.container?.label}}.
+      </div>
+      <div class="cards card-container" *ngIf="cg.count > 0">
+        <ng-container *ngFor="let rec of cg.records?.content">
+          <div class="data-card" *ngIf="!rec.__removed">
+            <ebx-data-card  [containerQId]="cg.contentQId" [record]="rec"></ebx-data-card>
+          </div>
+        </ng-container>
+        <ng-container *ngFor="let nc of cg.newRecords">
+          <div class="data-card">
+            <ebx-data-card  [containerQId]="nc.qualifiedId" [recordIdentity]="nc.identity"></ebx-data-card>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="main" *ngIf="stackArr">
     <div>
         <div class="heading">
           <div class="label">{{heading}}</div>

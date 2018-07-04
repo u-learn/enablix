@@ -4,6 +4,7 @@ public class ContentDataConstants {
 
 	public static final String IDENTITY_KEY = "identity";
 	public static final String ID_FLD_KEY = "id";
+	public static final String LBL_FLD_KEY = "label";
 	
 	public static final String CREATED_AT_KEY = "createdAt";
 	public static final String CREATED_BY_KEY = "createdBy";

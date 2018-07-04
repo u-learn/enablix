@@ -19,5 +19,6 @@ export class Container extends BaseContainer {
   docItemId: string;
   contentStackItemId: string;
   textItemDef: ContentItem;
+  linkedBizContent: Container[]
 
 }

@@ -21,11 +21,11 @@ export class ContentPreviewService {
   constructor(private http: HttpClient, private apiUrlService: ApiUrlService,
               private userPrefs: UserPreferenceService) { 
     this.previewHandlers = [];
+    this.previewHandlers.push(new ContentStackPreviewHandler());
     this.previewHandlers.push(new ImagePreviewHandler());
     this.previewHandlers.push(new EmbedHtmlContentPreviewHandler(this.userPrefs));
     this.previewHandlers.push(new PreviewDataBasedHandler());
     this.previewHandlers.push(new UrlPreviewHandler());
-    this.previewHandlers.push(new ContentStackPreviewHandler());
     this.previewHandlers.push(new TextContentPreviewHandler());
     this.previewHandlers.push(new NoPreviewHandler());
   }

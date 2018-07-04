@@ -159,36 +159,38 @@ export class SearchBarService {
     }
   }
 
-  buildBizTypeItem(container: Container, type: ObjectType) : NavCtxItem {
+  buildBizTypeItem(container: Container, type: ObjectType, removable: boolean = true) : NavCtxItem {
     let item = new NavCtxItem();
     item.id = container.qualifiedId;
     item.label = container.label;
     item.type = type;
+    item.removable = removable;
     item.color = container.color;
     item.routeParams = [container.qualifiedId];
     return item;
   }
 
-  buildBizDimObjectItem(container: Container, record: any) : NavCtxItem {
+  buildBizDimObjectItem(container: Container, record: any, removable: boolean = true) : NavCtxItem {
     let item = new NavCtxItem();
     item.id = record.identity;
     item.label = record.__title;
     item.type = ObjectType.BIZ_DIM_OBJ;
+    item.removable = removable;
     item.color = container.color;
     item.routeParams = [container.qualifiedId, record.identity];
     return item;
   }
 
-  buildBizContentListNavCtx(bizDimContainer: Container) : NavContext {
+  buildBizContentListNavCtx(bizDimContainer: Container, removable: boolean = true) : NavContext {
     return {
-      contextItems: [this.buildBizTypeItem(bizDimContainer, ObjectType.BIZ_CONTENT)]
+      contextItems: [this.buildBizTypeItem(bizDimContainer, ObjectType.BIZ_CONTENT, removable)]
     }
   }
 
 
-  buildBizDimListContext(bizDimContainer: Container) {
+  buildBizDimListContext(bizDimContainer: Container, removable: boolean = true) {
     return {
-      contextItems: [this.buildBizTypeItem(bizDimContainer, ObjectType.BIZ_DIM)]
+      contextItems: [this.buildBizTypeItem(bizDimContainer, ObjectType.BIZ_DIM, removable)]
     }
   }
 
@@ -249,6 +251,10 @@ export class SearchBarService {
 
     return filterIds;
   }
+
+  getTextQueryFromQueryParams(queryParams: any) {
+    return queryParams['tq'];
+  }
   
   private getFilterId(queryParam: string) {
     if (queryParam.startsWith("sf_")) {
@@ -257,12 +263,29 @@ export class SearchBarService {
     return null;
   }
 
-  typeaheadSearchBizContent(text: string, pageNum: number = 0, pageSize: number = 5) {
+  resolveSearchScope(sbData: SearchBarData) {
+    
+    var searchScope = [];
+    
+    sbData.context.contextItems.forEach((ci) => {
+      if (ci.type == ObjectType.BIZ_CONTENT || ci.type == ObjectType.BIZ_DIM) {
+        searchScope.push(ci.id);
+      }
+    });
+
+    return searchScope.length > 0 ? searchScope : null;
+  }
+
+  typeaheadSearchBizContent(text: string, sbData: SearchBarData, pageNum: number = 0, pageSize: number = 5) {
+    
     let apiUrl = this.apiUrlService.postTypeaheadBizContentSearch();
+    var searchScope = this.resolveSearchScope(sbData);
+
     return this.http.post(apiUrl, {
               text: text,
               page: pageNum,
-              size: pageSize
+              size: pageSize,
+              contentQIds: searchScope
             }); 
   }
 

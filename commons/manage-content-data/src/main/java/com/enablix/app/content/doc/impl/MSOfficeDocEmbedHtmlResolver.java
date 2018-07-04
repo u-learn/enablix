@@ -36,6 +36,9 @@ public class MSOfficeDocEmbedHtmlResolver implements DocEmbedHtmlResolver {
 	@Value("${msoffice.doc.viewer.embed.html}")
 	private String embedHtmlTemplate;
 	
+	@Value("${msoffice.doc.viewer.size.limit:10000000}") // approx 10 MB i.e. 10 * 1024 * 1024 = ~10000000
+	private int fileSizeLimit;
+	
 	@Autowired
 	private DocFormatResolver docFormatResolver;
 	
@@ -55,7 +58,7 @@ public class MSOfficeDocEmbedHtmlResolver implements DocEmbedHtmlResolver {
 	@Override
 	public boolean canHandle(DocumentMetadata docMd) {
 		DocumentFormat format = docFormatResolver.resolve(docMd);
-		return format != null && supportedFormats.contains(format);
+		return format != null && docMd.getContentLength() < fileSizeLimit && supportedFormats.contains(format);
 	}
 
 }

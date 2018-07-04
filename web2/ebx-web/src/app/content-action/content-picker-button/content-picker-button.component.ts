@@ -2,7 +2,7 @@ import { Component, OnInit, ViewEncapsulation, Input, Output, EventEmitter } fro
 import { MatDialog, MatDialogRef } from '@angular/material';
 
 import { ContentBrowserComponent } from '../../content-browser/content-browser.component';
-
+import { Container } from '../../model/container.model';
 @Component({
   selector: 'ebx-content-picker-button',
   templateUrl: './content-picker-button.component.html',
@@ -12,6 +12,7 @@ import { ContentBrowserComponent } from '../../content-browser/content-browser.c
 export class ContentPickerButtonComponent implements OnInit {
 
   @Input() preSelected?: any;
+  @Input() scopeContainer?: Container;
   @Output() onSelectionDone = new EventEmitter<any>();
 
   constructor(private dialog: MatDialog) { }
@@ -25,7 +26,10 @@ export class ContentPickerButtonComponent implements OnInit {
         width: '80vw',
         height: '90vh',
         disableClose: true,
-        data: { selectedItems: this.preSelected }
+        data: { 
+          selectedItems: this.preSelected,
+          scopeContainer: this.scopeContainer
+        }
       });
 
     dialogRef.afterClosed().subscribe(result => {

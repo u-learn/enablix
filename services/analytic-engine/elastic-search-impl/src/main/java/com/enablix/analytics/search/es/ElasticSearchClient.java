@@ -15,6 +15,7 @@ import org.elasticsearch.search.highlight.HighlightBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.enablix.analytics.search.SearchClient;
+import com.enablix.analytics.search.SearchScope;
 import com.enablix.commons.util.StringUtil;
 import com.enablix.core.api.ContentDataRecord;
 import com.enablix.core.api.ContentDataRef;
@@ -26,6 +27,10 @@ import com.enablix.services.util.DataViewUtil;
 
 public class ElasticSearchClient implements SearchClient {
 
+	public static interface ResultTx<T> {
+		T transform(SearchHit hit, TemplateFacade template);
+	}
+	
 	@Autowired
 	private Client esClient;
 	
@@ -37,17 +42,17 @@ public class ElasticSearchClient implements SearchClient {
 	private TypeaheadSearchFieldBuilder typeaheadSearchFieldBuilder = new TypeaheadSearchFieldBuilder();
 	
 	@Override
-	public SearchResult<ContentDataRef> search(String text, 
+	public SearchResult<ContentDataRef> search(String text, SearchScope scope,
 			TemplateFacade template, int pageSize, int pageNum, DataView dataView) {
 
-		return searchAndGetTransformedResult(text, template, pageSize, pageNum, dataView, 
+		return searchAndGetTransformedResult(text, scope, template, pageSize, pageNum, dataView, 
 						(hit, templt) -> searchHitTx.toContentDataRef(hit, templt));
 	}
 
-	private <T> SearchResult<T> searchAndGetTransformedResult(String text, TemplateFacade template,
-			int pageSize, int pageNum, DataView dataView, ResultTx<T> resultTx) {
+	private <T> SearchResult<T> searchAndGetTransformedResult(String text, SearchScope scope,
+			TemplateFacade template, int pageSize, int pageNum, DataView dataView, ResultTx<T> resultTx) {
 		
-		SearchRequest searchRequest = buildSearchRequest(text, template, pageSize, pageNum, dataView);
+		SearchRequest searchRequest = buildSearchRequest(text, scope, template, pageSize, pageNum, dataView);
 		
 		return executeSearchAndCreateResult(template, pageSize, pageNum, resultTx, searchRequest);
 	}
@@ -84,21 +89,23 @@ public class ElasticSearchClient implements SearchClient {
 		return searchResult;
 	}
 
-	private SearchRequest buildSearchRequest(String text, 
+	private SearchRequest buildSearchRequest(String text, SearchScope scope,
 			TemplateFacade template, int pageSize, int pageNum, DataView dataView) {
 		
+		ElasticSearchScope esScope = new ElasticSearchScope(scope, template);
 		ESDataView esDataView = DataViewUtil.getElasticSearchDataView(dataView);
 		
 		return ESQueryBuilder.builder(text, template, defaultSearchFieldBuilder)
-													.withPagination(pageSize, pageNum)
-													.withViewScope(esDataView).build();
+							 .withPagination(pageSize, pageNum)
+							 .withTypeFilter(esScope.getTypeFilter())
+							 .withViewScope(esDataView).build();
 	}
 	
 	@Override
-	public SearchResult<ContentDataRecord> searchAndGetRecords(
-			String text, TemplateFacade template, int pageSize, int pageNum, DataView dataView) {
+	public SearchResult<ContentDataRecord> searchAndGetRecords(String text, SearchScope scope, 
+			TemplateFacade template, int pageSize, int pageNum, DataView dataView) {
 		
-		return searchAndGetTransformedResult(text, template, pageSize, pageNum, dataView, 
+		return searchAndGetTransformedResult(text, scope, template, pageSize, pageNum, dataView, 
 						(hit, templt) -> searchHitTx.toContentDataRecord(hit, templt));
 	}
 	
@@ -111,42 +118,35 @@ public class ElasticSearchClient implements SearchClient {
 		return esClient.search(request);
 	}
 	
-	public static interface ResultTx<T> {
-		T transform(SearchHit hit, TemplateFacade template);
-	}
-
 	@Override
-	public SearchResult<ContentDataRecord> searchBizContentRecords(String text, TemplateFacade template, int pageSize,
-			int pageNum, DataView dataView) {
+	public SearchResult<ContentDataRecord> searchBizContentRecords(String text, 
+			SearchScope scope, TemplateFacade template, int pageSize, int pageNum, DataView dataView) {
 
 		return executeSearchAndCreateResult(template, pageSize, pageNum, 
 				(hit, templt) -> searchHitTx.toContentDataRecord(hit, templt),
-				buildBizContentSearchRequest(text, template, pageSize, pageNum, dataView));
+				buildBizContentSearchRequest(text, scope, template, pageSize, pageNum, dataView));
 	}
 	
 	@Override
 	public SearchResult<ContentDataRecord> searchAsYouTypeBizContentRecords(String text, 
-			TemplateFacade template, int pageSize, int pageNum, DataView dataView) {
+			SearchScope scope, TemplateFacade template, int pageSize, int pageNum, DataView dataView) {
 		
 		return executeSearchAndCreateResult(template, pageSize, pageNum, 
 				(hit, templt) -> searchHitTx.toContentDataRecord(hit, templt),
-				buildTypeaheadBizContentSearchRequest(text, template, pageSize, pageNum, dataView));
+				buildTypeaheadBizContentSearchRequest(text, scope, template, pageSize, pageNum, dataView));
 	}
 	
 	private SearchRequest buildTypeaheadBizContentSearchRequest(String text, 
-			TemplateFacade template, int pageSize, int pageNum, DataView dataView) {
+			SearchScope scope, TemplateFacade template, int pageSize, int pageNum, DataView dataView) {
 		
+		ElasticSearchScope esScope = new ElasticSearchScope(scope, template);
 		ESDataView esDataView = DataViewUtil.getElasticSearchDataView(dataView);
 		
-		Collection<String> bizContentCollections = new HashSet<>();
-		
-		template.getBizContentContainers().forEach((container) -> {
-			String collectionName = template.getCollectionName(container.getQualifiedId());
-			if (StringUtil.hasText(collectionName)) {
-				bizContentCollections.add(collectionName);
-			}
-		});
-		
+		TypeFilter typeFilter = esScope.getTypeFilter();
+		if (typeFilter == null) {
+			typeFilter = getBizContentTypeFilter(template);
+		}
+
 		HighlightBuilder highlighter = new HighlightBuilder();
 		for (String field : typeaheadSearchFieldBuilder.getFields()) {
 			highlighter.field(field);
@@ -156,16 +156,32 @@ public class ElasticSearchClient implements SearchClient {
 		return ESQueryBuilder.builder(matchQueryBuilder, template, typeaheadSearchFieldBuilder)
 				.withPagination(pageSize, pageNum)
 				.withFuzziness((searchTerm) -> null)
-				.withTypeFilter((searchType) -> bizContentCollections.contains(searchType))
+				.withTypeFilter(typeFilter)
 				.withHighlighter(highlighter)
 				.withViewScope(esDataView)
 				.build();
 	}
 	
-	private SearchRequest buildBizContentSearchRequest(String text, 
+	private SearchRequest buildBizContentSearchRequest(String text, SearchScope scope,
 			TemplateFacade template, int pageSize, int pageNum, DataView dataView) {
 		
+		ElasticSearchScope esScope = new ElasticSearchScope(scope, template);
 		ESDataView esDataView = DataViewUtil.getElasticSearchDataView(dataView);
+		
+		TypeFilter typeFilter = esScope.getTypeFilter();
+		if (typeFilter == null) {
+			typeFilter = getBizContentTypeFilter(template);
+		}
+		
+		return ESQueryBuilder.builder(text, template, defaultSearchFieldBuilder)
+				.withPagination(pageSize, pageNum)
+				.withTypeFilter(typeFilter)
+				.withViewScope(esDataView)
+				.build();
+		
+	}
+	
+	private TypeFilter getBizContentTypeFilter(TemplateFacade template) {
 		
 		Collection<String> bizContentCollections = new HashSet<>();
 		
@@ -176,12 +192,7 @@ public class ElasticSearchClient implements SearchClient {
 			}
 		});
 		
-		return ESQueryBuilder.builder(text, template, defaultSearchFieldBuilder)
-				.withPagination(pageSize, pageNum)
-				.withTypeFilter((searchType) -> bizContentCollections.contains(searchType))
-				.withViewScope(esDataView)
-				.build();
-		
+		return (searchType) -> bizContentCollections.contains(searchType);
 	}
 
 }

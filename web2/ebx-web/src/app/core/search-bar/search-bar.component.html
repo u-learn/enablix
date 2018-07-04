@@ -6,13 +6,13 @@
             <div class="pills-container" *ngIf="searchBarData && searchBarData.context">
                 <div class="pill" *ngFor="let item of searchBarData.context.contextItems" [style.background]="item.color" [class.roundpill]="item.type == 'BIZ_CONTENT'">
                   <span class="pill-label">{{item?.label}}</span>
-                  <a class="remove" (click)="removeSearchBarItem(item)">
+                  <a class="remove" *ngIf="item.removable" (click)="removeSearchBarItem(item)">
                     <img src="/assets/images/icons/close-white.svg">                
                   </a>
                 </div>
                 <div class="pill" *ngFor="let item of searchBarData.filters" [style.background]="item.color" [class.roundpill]="item.type == 'BIZ_CONTENT' || item.type == 'FILTER'">
                   <span class="pill-label">{{item?.label}}</span>
-                  <a class="remove" (click)="removeSearchBarItem(item)">
+                  <a class="remove" *ngIf="item.removable" (click)="removeSearchBarItem(item)">
                     <img src="/assets/images/icons/close-white.svg">                
                   </a>
                 </div>
