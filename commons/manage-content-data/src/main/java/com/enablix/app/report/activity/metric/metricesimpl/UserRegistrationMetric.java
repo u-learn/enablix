@@ -7,9 +7,9 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Component;
 
 import com.enablix.commons.constants.AppConstants.MetricType;
+import com.enablix.core.api.SearchRequest;
 import com.enablix.core.domain.report.activitymetric.MetricStats;
 import com.enablix.core.domain.security.authorization.UserProfile;
-import com.enablix.core.mongo.search.service.SearchRequest;
 import com.enablix.core.mongo.search.service.SearchRequestTransformer;
 
 @Component

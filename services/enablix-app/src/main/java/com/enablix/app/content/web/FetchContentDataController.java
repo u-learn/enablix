@@ -166,7 +166,9 @@ public class FetchContentDataController {
 	public Object fetchRecordAndAllChildrenData(
 			@PathVariable String contentQId, 
 			@PathVariable String contentIdentity,
-			@RequestParam(required=false) String size) {
+			@RequestParam(required=false) String size,
+			@RequestParam(name="cqid", required=false) List<String> cqIds,
+			@RequestParam(name="tq", required=false) String textQuery) {
 		
 		LOGGER.debug("Fetch record and all children content data");
 		
@@ -177,7 +179,7 @@ public class FetchContentDataController {
 		
 		DataView userDataView = dataSegmentService.getDataViewForUserId(ProcessContext.get().getUserId());
 		List<ContentRecordGroup> recordAndChildren = dataMgr.fetchRecordAndChildData(
-										contentQId, contentIdentity, pageable, userDataView);
+										contentQId, contentIdentity, pageable, cqIds, textQuery, userDataView);
 		
 		// Audit Access activity
 		if (CollectionUtil.isNotEmpty(recordAndChildren)) {

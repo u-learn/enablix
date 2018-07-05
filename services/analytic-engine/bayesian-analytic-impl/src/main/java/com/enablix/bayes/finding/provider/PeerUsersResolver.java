@@ -10,10 +10,10 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.stereotype.Component;
 
 import com.enablix.commons.util.collection.CollectionUtil;
+import com.enablix.core.api.ConditionOperator;
 import com.enablix.core.domain.security.authorization.UserBusinessProfile;
 import com.enablix.core.domain.security.authorization.UserProfile;
 import com.enablix.core.mongo.dao.GenericDao;
-import com.enablix.core.mongo.search.ConditionOperator;
 import com.enablix.core.mongo.search.SearchFilter;
 import com.enablix.core.mongo.search.StringFilter;
 import com.enablix.core.mongo.search.StringListFilter;

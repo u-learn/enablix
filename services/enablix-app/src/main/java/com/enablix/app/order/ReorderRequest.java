@@ -1,6 +1,6 @@
 package com.enablix.app.order;
 
-import com.enablix.core.mongo.search.service.SearchRequest;
+import com.enablix.core.api.SearchRequest;
 
 public class ReorderRequest {
 

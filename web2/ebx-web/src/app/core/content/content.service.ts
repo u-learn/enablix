@@ -242,7 +242,7 @@ export class ContentService {
     });
   }
 
-  getRecordAndChildData(contentQId: string, contentIdentity: string, childSizeLimit?: string, atChannel?: string): Observable<any> {
+  getRecordAndChildData(contentQId: string, contentIdentity: string, childSizeLimit?: string, atChannel?: string, childQIds?: any, textQuery?: string, ): Observable<any> {
          
     var options: any = {};
     if (childSizeLimit) {
@@ -251,6 +251,20 @@ export class ContentService {
 
     if (atChannel) {
       options.headers = { atChannel: atChannel };
+    }
+
+    if (childQIds) {
+      if (!options.params) {
+        options.params = {};
+      }
+      options.params['cqid'] = childQIds;
+    }
+
+    if (textQuery) {
+      if (!options.params) {
+        options.params = {};
+      }
+      options.params['tq'] = textQuery;
     }
 
     const apiUrl = this.apiUrlService.getRecordAndChildren(contentQId, contentIdentity);

@@ -9,12 +9,12 @@ import org.springframework.stereotype.Component;
 
 import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.commons.util.collection.CollectionUtil;
+import com.enablix.core.api.ConditionOperator;
 import com.enablix.core.api.TemplateFacade;
 import com.enablix.core.commons.xsdtopojo.FilterCriteriaType;
 import com.enablix.core.commons.xsdtopojo.FilterType;
 import com.enablix.core.domain.trigger.ContentChange;
 import com.enablix.core.mongo.content.ContentCrudService;
-import com.enablix.core.mongo.search.ConditionOperator;
 import com.enablix.core.mongo.search.SearchFilter;
 import com.enablix.core.mongo.search.StringFilter;
 import com.enablix.core.mongo.view.MongoDataView;

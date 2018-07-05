@@ -7,9 +7,9 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 
+import com.enablix.core.api.ConditionOperator;
 import com.enablix.core.mongo.dao.GenericDao;
 import com.enablix.core.mongo.search.BoolFilter;
-import com.enablix.core.mongo.search.ConditionOperator;
 import com.enablix.core.mongo.view.MongoDataView;
 
 public class MongoUtil {

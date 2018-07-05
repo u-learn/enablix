@@ -36,7 +36,17 @@ export class FreetextSearchComponent implements OnInit {
           this.pageNum = queryParams['pageNum'] || 0;
           this.pageSize = queryParams['pageSize'] || 20;
           
-          this.textSearch.searchBizContent(searchText, this.pageNum, this.pageSize).subscribe(res => {
+          var searchInput = {
+            request: {
+              textQuery: searchText,
+              pagination: {
+                pageNum: this.pageNum,
+                pageSize: this.pageSize
+              }
+            }
+          };
+          
+          this.textSearch.searchBizContent(searchInput).subscribe(res => {
               this.searchResults = res;
             }, err => {
               this.alert.error("Unable to search. Please try later.", err.statusCode);

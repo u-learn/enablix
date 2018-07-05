@@ -11,13 +11,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.enablix.analytics.search.SearchClient;
 import com.enablix.app.content.ui.search.RefListItemCount;
 import com.enablix.app.content.ui.search.UIFilterService;
 import com.enablix.app.template.service.TemplateManager;
+import com.enablix.commons.util.StringUtil;
 import com.enablix.commons.util.process.ProcessContext;
+import com.enablix.core.api.SearchRequest;
 import com.enablix.core.api.TemplateFacade;
 import com.enablix.core.mongo.dao.GenericDao;
-import com.enablix.core.mongo.search.service.SearchRequest;
 import com.enablix.core.mongo.view.MongoDataView;
 import com.enablix.data.segment.DataSegmentService;
 import com.enablix.data.view.DataView;
@@ -38,6 +40,9 @@ public class GenericDataFetchController {
 	
 	@Autowired
 	private UIFilterService uiFilterService;
+	
+	@Autowired
+	private SearchClient searchClient;
 	
 	@RequestMapping(method = RequestMethod.POST, value="/c/{collectionName}/t/{className}",
 			consumes = "application/json", produces = "application/json")
@@ -70,8 +75,22 @@ public class GenericDataFetchController {
 	public Page<?> filterContainerData(@RequestBody SearchRequest searchRequest,
 			@PathVariable String containerQId) throws ClassNotFoundException {
 		
+		Page<?> result = null;
+		
 		String templateId = ProcessContext.get().getTemplateId();
 		TemplateFacade template = templateManager.getTemplateFacade(templateId);
+		
+		if (StringUtil.hasText(searchRequest.getTextQuery())) {
+			result = searchViaSearchClient(searchRequest, template, containerQId);
+		} else {
+			result = searchViaMongoTemplate(searchRequest, template, containerQId);
+		}
+		
+		return result;
+	}
+	
+	private Page<?> searchViaMongoTemplate(SearchRequest searchRequest, TemplateFacade template, String containerQId) {
+		
 		String collectionName = template.getCollectionName(containerQId);
 		
 		DataView userView = dataSegmentService.getDataViewForUserId(ProcessContext.get().getUserId());
@@ -79,7 +98,12 @@ public class GenericDataFetchController {
 		
 		return dao.findByQuery(searchRequest, collectionName, Map.class, view);
 	}
-	
+
+	private Page<?> searchViaSearchClient(SearchRequest searchRequest, TemplateFacade template, String containerQId) {
+		DataView userView = dataSegmentService.getDataViewForUserId(ProcessContext.get().getUserId());
+		return searchClient.searchTypeRecords(containerQId, template, searchRequest, userView);
+	}
+
 	@RequestMapping(method = RequestMethod.POST, value="/cfc/{containerQId}/",
 			consumes = "application/json", produces = "application/json")
 	public Map<String, List<RefListItemCount>> findContainerItemCountByRefListValue(

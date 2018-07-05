@@ -21,7 +21,7 @@ import com.enablix.app.content.ui.peers.PeerContentService;
 import com.enablix.app.content.ui.reco.RecommendedContentService;
 import com.enablix.commons.util.process.ProcessContext;
 import com.enablix.core.api.ContentDataRef;
-import com.enablix.core.mongo.search.service.SearchRequest;
+import com.enablix.core.api.SearchRequest;
 import com.enablix.data.segment.DataSegmentService;
 import com.enablix.data.view.DataView;
 

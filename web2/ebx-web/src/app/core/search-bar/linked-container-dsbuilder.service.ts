@@ -11,7 +11,7 @@ export class LinkedContainerDsbuilderService {
 
   constructor(private ctService: ContentTemplateService) { }
 
-  buildSearchDatasets(container: Container, sbData: SearchBarData) : SearchDataset[] {
+  buildSearchDatasets(container: Container, childQIds: any, sbData: SearchBarData) : SearchDataset[] {
     
     let ds: SearchDataset[] = [];
 
@@ -21,6 +21,10 @@ export class LinkedContainerDsbuilderService {
     
     container.container.forEach(cont => {
         
+      if (childQIds && childQIds.indexOf(cont.qualifiedId) < 0) {
+        return;
+      }
+      
       var cc = this.ctService.getConcreteContainerByQId(cont.qualifiedId);
       
       if (cc) {

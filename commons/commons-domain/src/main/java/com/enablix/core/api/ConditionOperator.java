@@ -1,4 +1,4 @@
-package com.enablix.core.mongo.search;
+package com.enablix.core.api;
 
 import java.util.Collection;
 

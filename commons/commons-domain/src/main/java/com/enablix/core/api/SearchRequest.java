@@ -1,38 +1,22 @@
-package com.enablix.core.mongo.search.service;
+package com.enablix.core.api;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 
-import com.enablix.core.mongo.search.BoolFilter;
-import com.enablix.core.mongo.search.ConditionOperator;
-import com.enablix.core.mongo.search.DateFilter;
-import com.enablix.core.mongo.search.NumericFilter;
-import com.enablix.core.mongo.search.SearchFilter;
-import com.enablix.core.mongo.search.StringFilter;
-import com.enablix.core.mongo.search.StringListFilter;
-import com.enablix.core.mongo.search.service.SearchRequest.DateFilterConfig.ValueType;
-
 public class SearchRequest {
-	
-	private static final Logger LOGGER = LoggerFactory.getLogger(SearchRequest.class);
 	
 	private Map<String, Object> filters = new HashMap<>();
 	private Map<String, FilterMetadata> filterMetadata = new HashMap<>();
 	private Pagination pagination;
 	private List<String> projectedFields;
+	
+	private String textQuery;
 	
 	public Map<String, Object> getFilters() {
 		return filters;
@@ -65,6 +49,15 @@ public class SearchRequest {
 	public void setProjectedFields(List<String> projectedFields) {
 		this.projectedFields = projectedFields;
 	}
+	
+	public String getTextQuery() {
+		return textQuery;
+	}
+
+	public void setTextQuery(String textQuery) {
+		this.textQuery = textQuery;
+	}
+
 
 	public static class FilterMetadata {
 		
@@ -109,83 +102,6 @@ public class SearchRequest {
 			this.dateFilter = dateFilter;
 		}
 
-		@SuppressWarnings("unchecked")
-		public SearchFilter buildSearchFilter(Object filterValue) {
-			
-			SearchFilter filter = null;
-			
-			switch (dataType) {
-				
-				case DATE:
-					
-					filter = getDateFilter(filterValue);
-					break;
-					
-				case BOOL:
-					Boolean propValue = filterValue instanceof Boolean ? (Boolean) filterValue : 
-											Boolean.valueOf(String.valueOf(filterValue));
-					filter = new BoolFilter(field, propValue, operator);
-					break;
-					
-				case NUMBER:
-					
-					Number numValue = null;
-					
-					if (filterValue instanceof Number) {
-						numValue = (Number) filterValue;
-					} else {
-						numValue = Double.parseDouble(String.valueOf(filterValue));
-					}
-					
-					filter = new NumericFilter(field, numValue, operator);
-					break;
-					
-				case STRING:
-					
-					if (filterValue instanceof List) {
-						filter = new StringListFilter(field, (List<String>) filterValue, operator);
-						break;
-					}
-					
-				default:
-					filter = new StringFilter(field, String.valueOf(filterValue), operator);
-					break;
-			}
-			
-			return filter;
-		}
-	
-		private DateFilter getDateFilter(Object filterValue) {
-			
-			DateFilter filter = null;
-			
-			try {
-
-				Date filterDate = null;
-				
-				if (dateFilter != null && dateFilter.valueType == ValueType.LAST_X_DAYS) {
-
-					int noOfDays = Integer.parseInt(String.valueOf(filterValue));
-					Calendar date = Calendar.getInstance();
-					date.add(Calendar.DAY_OF_MONTH, -noOfDays);
-					filterDate = date.getTime();
-					
-				} else {
-					
-					DateFormat formatter = new SimpleDateFormat("dd-MMM-yy");
-					filterDate = formatter.parse(String.valueOf(filterValue));
-				}
-				
-				
-				filter = new DateFilter(field, filterDate, operator);
-				
-			} catch (ParseException e) {
-				LOGGER.error("Error parsing date [" + String.valueOf(filterValue) +"]", e);
-			}
-			
-			return filter;
-		}
-		
 	}
 	
 	

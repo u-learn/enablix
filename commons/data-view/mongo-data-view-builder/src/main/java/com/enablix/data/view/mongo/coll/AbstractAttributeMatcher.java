@@ -6,9 +6,9 @@ import java.util.Map;
 
 import com.enablix.commons.content.ContentParser;
 import com.enablix.commons.util.collection.CollectionUtil;
+import com.enablix.core.api.ConditionOperator;
 import com.enablix.core.domain.segment.DataSegmentAttribute;
 import com.enablix.core.domain.segment.DataSegmentAttribute.Matching;
-import com.enablix.core.mongo.search.ConditionOperator;
 import com.enablix.core.mongo.search.SearchCondition;
 import com.enablix.core.mongo.search.StringFilter;
 import com.enablix.core.mongo.search.StringListFilter;

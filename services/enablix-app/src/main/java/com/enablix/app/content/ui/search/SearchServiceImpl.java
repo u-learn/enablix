@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.enablix.analytics.search.SearchClient;
-import com.enablix.analytics.search.SearchScope;
+import com.enablix.analytics.search.SearchInput;
 import com.enablix.app.content.label.ContentLabelResolver;
 import com.enablix.app.content.label.PortalContentLabelResolver;
 import com.enablix.app.content.share.DocUnsecureAccessUrlPopulator;
@@ -46,7 +46,7 @@ public class SearchServiceImpl implements SearchService {
 	
 	@Override
 	public SearchResult<NavigableContent> search(
-			String searchText, SearchScope scope, int pageSize, int pageNum, DataView dataView) {
+			String searchText, SearchInput scope, int pageSize, int pageNum, DataView dataView) {
 		
 		String templateId = ProcessContext.get().getTemplateId();
 		SearchResult<ContentDataRef> searchResult = searchClient.search(searchText, scope,
@@ -75,7 +75,7 @@ public class SearchServiceImpl implements SearchService {
 	
 	@Override
 	public SearchResult<DisplayableContent> searchAndGetResultAsDisplayContent(String searchText, 
-			SearchScope scope, int pageSize, int pageNum, DataView dataView, DisplayContext ctx) {
+			SearchInput scope, int pageSize, int pageNum, DataView dataView, DisplayContext ctx) {
 		
 		String templateId = ProcessContext.get().getTemplateId();
 		TemplateFacade template = templateMgr.getTemplateFacade(templateId);
@@ -111,24 +111,21 @@ public class SearchServiceImpl implements SearchService {
 	}
 
 	@Override
-	public SearchResult<ContentDataRecord> searchBizContentRecords(String searchText, 
-			SearchScope scope, int pageSize, int pageNum, DataView dataView) {
+	public SearchResult<ContentDataRecord> searchBizContentRecords(SearchInput input, DataView dataView) {
 		
 		String templateId = ProcessContext.get().getTemplateId();
 		TemplateFacade template = templateMgr.getTemplateFacade(templateId);
 		
-		return searchClient.searchBizContentRecords(searchText, scope, template, pageSize, pageNum, dataView);
+		return searchClient.searchBizContentRecords(input, template, dataView);
 	}
 	
 	@Override
-	public SearchResult<ContentDataRecord> searchAsYouTypeBizContentRecords(String searchText, 
-			SearchScope scope, int pageSize, int pageNum, DataView dataView) {
+	public SearchResult<ContentDataRecord> searchAsYouTypeBizContentRecords(SearchInput input, DataView dataView) {
 		
 		String templateId = ProcessContext.get().getTemplateId();
 		TemplateFacade template = templateMgr.getTemplateFacade(templateId);
 		
-		return searchClient.searchAsYouTypeBizContentRecords(searchText, scope, 
-				template, pageSize, pageNum, dataView);
+		return searchClient.searchAsYouTypeBizContentRecords(input, template, dataView);
 	}
 
 }

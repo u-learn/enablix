@@ -18,6 +18,7 @@ export class BizDimensionListComponent implements OnInit {
   container: Container;
   filterMetadata: { [key: string] : FilterMetadata };
   filters: { [key: string] : any};
+  textFilter: string;
 
   constructor(private route: ActivatedRoute, 
     private contentTemplateService: ContentTemplateService,
@@ -40,9 +41,9 @@ export class BizDimensionListComponent implements OnInit {
         this.route.queryParams.subscribe(queryParams => {
           this.filters = this.sbService.buildFiltersFromQueryParams(queryParams);
           let filterIds = this.sbService.getFilterIdsFromQueryParams(queryParams);
-          let textquery = this.sbService.getTextQueryFromQueryParams(queryParams);
+          this.textFilter = this.sbService.getTextQueryFromQueryParams(queryParams);
 
-          this.globalSearchCtrl.setBizDimListSearchBar(this.container, filterIds, textquery);
+          this.globalSearchCtrl.setBizDimListSearchBar(this.container, filterIds, this.textFilter);
         });
       }
     });

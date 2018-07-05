@@ -17,6 +17,7 @@ export class ContentBrowserComponent implements OnInit {
   objectKeys = Object.keys;
 
   selectedItems: any;
+  selectedItemGrps: any[];
 
   noData: boolean = false;
 
@@ -29,54 +30,131 @@ export class ContentBrowserComponent implements OnInit {
     
     this.browserSearchCtrl.initBrowserSearchBar(this.data.scopeContainer);
     this.selectedItems = {};
+    this.selectedItemGrps = [];
 
     if (this.data.selectedItems) {
       this.data.selectedItems.forEach(item => {
-        this.selectedItems[item.identity] = item;
+        this.addItemToGrp(item);
       });
     }
 
+    console.log(this.selectedItemGrps);
     this.browserSearchCtrl.onBrowserDataUpdate.subscribe(this.onBrowserDataUpdate.bind(this));
 
   }
 
-  done() {
+  private addItemToGrp(item: any) {
     
-    var result = [];
-    for (let key in this.selectedItems) {
-      result.push(this.selectedItems[key]);
+    var grpEntry = null;
+    
+    for(var i = 0; i < this.selectedItemGrps.length; i++) {
+      var grp = this.selectedItemGrps[i];
+      if (grp.qId == item.qualifiedId) {
+        grpEntry = grp;
+        break;
+      }
     }
 
+    if (!grpEntry) {
+      grpEntry = {
+        qId: item.qualifiedId,
+        label: item.containerLabel,
+        items: []
+      }
+      this.selectedItemGrps.push(grpEntry);
+    }
+
+    grpEntry.items.push(item);
+  }
+
+  done() {
+    var result = [];
+    this.selectedItemGrps.forEach((grp) => {
+      grp.items.forEach((item) => result.push(item));
+    });
     this.dialogRef.close(result);
   }
 
-  toggleSelect(rec: any) {
+  deleteItemIfFound(item: any) {
     
-    var recIdentity = rec.record.identity;
-    
-    if (this.selectedItems[recIdentity]) {
-      
-      delete this.selectedItems[recIdentity];
+    var deleted = false;
 
-    } else {
-    
-      this.selectedItems[recIdentity] = {
-        identity: recIdentity,
-        label: rec.record.__title,
-        qualifiedId: rec.containerQId,
-        containerLabel: rec.record.__container
+    var itemLoc = this.findItem(item);
+
+    if (itemLoc && itemLoc.index >= 0) {
+      if (itemLoc.list) {
+        itemLoc.list.splice(itemLoc.index, 1);
+        deleted = true;
       }
+    }
+
+    return deleted;
+  }
+
+  findItem(item: any) {
+    
+    var itemLocation = null;
+
+    for(var i = 0; i < this.selectedItemGrps.length; i++) {
+    
+      var grp = this.selectedItemGrps[i];
+    
+      if (grp.qId == item.qualifiedId) {
+    
+        for (var k = 0; k < grp.items.length; k++) {
+    
+          var grpItem = grp.items[k];
+          
+          if (grpItem.identity === item.identity) {
+            
+            itemLocation = {
+              list: grp.items,
+              index: k
+            };
+
+            break;
+          }
+        }
+        break;
+      }
+    }
+
+    return itemLocation;
+  }
+
+
+  toggleSelect(rec: any) {
+    var item = this.convertRecordToItem(rec);
+    if (!this.deleteItemIfFound(item)) {
+      this.addItemToGrp(item);
     }
   }
 
-  removeItem(itemIdentity: string) {
-    if (this.selectedItems[itemIdentity]) {
-      delete this.selectedItems[itemIdentity];
+  convertRecordToItem(rec: any) {
+    return {
+      identity: rec.record.identity,
+      label: rec.record.__title,
+      qualifiedId: rec.containerQId,
+      containerLabel: rec.record.__container
     }
+  }
+
+  removeItem(item: any) {
+    this.deleteItemIfFound(item);
   }
 
   isSelected(rec: any) {
-    return this.selectedItems[rec.record.identity];
+    var item = this.convertRecordToItem(rec);
+    if (this.findItem(item)) return true;
+    return false;
+  }
+
+  getTotalSelectedItemCount() {
+    var cnt = 0;
+    this.selectedItemGrps.forEach((grp) => {
+      cnt += grp.items.length;
+    });
+    return cnt;
   }
 
   onScroll() {

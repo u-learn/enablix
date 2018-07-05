@@ -10,8 +10,8 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
-import com.enablix.core.mongo.search.service.SearchRequest;
-import com.enablix.core.mongo.search.service.SearchRequest.Pagination;
+import com.enablix.core.api.SearchRequest;
+import com.enablix.core.api.SearchRequest.Pagination;
 import com.enablix.core.mongo.search.service.SearchRequestTransformer;
 import com.enablix.core.mongo.view.MongoDataView;
 

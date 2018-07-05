@@ -2,6 +2,8 @@ package com.enablix.core.mongo.search;
 
 import java.util.List;
 
+import com.enablix.core.api.ConditionOperator;
+
 public class StringListFilter extends SearchCondition<List<String>> {
 
 	private static final ConditionOperator[] SUPPORTED_OP = {

@@ -28,6 +28,8 @@ export class DimensionComponent implements OnInit, OnChanges {
 
   @Input() filterMetadata?: { [key: string] : FilterMetadata };
   @Input() filters?: { [key: string] : any};
+
+  @Input() textFilter?: string;
   
   data: DataPage;
   remainingCount = 0;
@@ -55,6 +57,7 @@ export class DimensionComponent implements OnInit, OnChanges {
     searchRequest.filterMetadata = this.filterMetadata ? this.filterMetadata : {};
 
     searchRequest.filters = this.filters ? this.filters : {};
+    searchRequest.textQuery = this.textFilter;
 
     searchRequest.pagination = new Pagination();
     searchRequest.pagination.pageNum = 0;

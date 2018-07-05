@@ -9,9 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.enablix.commons.constants.ContentDataConstants;
+import com.enablix.core.api.ConditionOperator;
 import com.enablix.core.api.TemplateFacade;
 import com.enablix.core.commons.xsdtopojo.ContentItemType;
-import com.enablix.core.mongo.search.ConditionOperator;
 import com.enablix.core.mongo.search.SearchFilter;
 import com.enablix.core.mongo.search.StringFilter;
 import com.enablix.core.mongo.search.StringListFilter;

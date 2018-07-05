@@ -7,6 +7,8 @@ import java.util.Date;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 
+import com.enablix.core.api.ConditionOperator;
+
 public class SearchFilterTest {
 
 	public static void main(String[] args) {

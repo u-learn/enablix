@@ -72,23 +72,12 @@ export class GlobalSearchControllerService implements SearchBarController {
     
     let navPath = '';
     let routeParams = [];
-    let queryParams = {};
+    let queryParams = this.sbService.getFilterQueryParams(this.sbData);
 
     let ctxItems = this.sbData.context.contextItems;
     for (let i = 0; i < ctxItems.length; i++) {
       navPath += '>' + ctxItems[i].type;
       ctxItems[i].routeParams.forEach(param => routeParams.push(param));
-    }
-    
-    let filters = this.sbData.filters;
-    for (let j = 0; j < filters.length; j++) {
-      let filter = filters[j];
-      for (let prop in filter.queryParams) {
-        if (!queryParams[prop]) {
-          queryParams[prop] = []
-        }
-        queryParams[prop].push(filter.queryParams[prop]);
-      }
     }
 
     var tq = this.sbData.freetext;
@@ -153,12 +142,12 @@ export class GlobalSearchControllerService implements SearchBarController {
     this.updateSearchBarData(sbData);
   }
 
-  setBizDimDetailSearchBar(container: Container, record: any, queryFilters: string[], textQuery: string) {
+  setBizDimDetailSearchBar(container: Container, childContainerWithData: any, record: any, queryFilters: string[], textQuery: string) {
     let sbData = new SearchBarData();
     sbData.context = this.sbService.buildBizDimObjectContext(container, record);
     sbData.freetext = textQuery;
     sbData.initialFilterIds = queryFilters;
-    sbData.datasets = this.lcDSBuilder.buildSearchDatasets(container, sbData);
+    sbData.datasets = this.lcDSBuilder.buildSearchDatasets(container, childContainerWithData, sbData);
     this.updateSearchBarData(sbData);
   }
 

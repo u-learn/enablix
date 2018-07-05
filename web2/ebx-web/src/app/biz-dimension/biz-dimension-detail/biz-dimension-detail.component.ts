@@ -68,10 +68,15 @@ export class BizDimensionDetailComponent implements OnInit, AfterViewInit {
       let cQId = params['cQId'];
       let recIdentity = params['identity'];
 
-      this.contentService.getRecordAndChildData(cQId, recIdentity, cgSize, Constants.AT_CHANNEL_WEB)
+      let filters = this.sbService.buildFiltersFromQueryParams(qParams);
+      let childQIds = filters['cqid'];
+      let textQuery = this.sbService.getTextQueryFromQueryParams(qParams);
+
+      this.contentService.getRecordAndChildData(cQId, recIdentity, cgSize, Constants.AT_CHANNEL_WEB, childQIds, textQuery)
           .subscribe(
               res => {
 
+                var childContainerWithData = [];
                 for (var i = 0; i < res.length; i++) {
 
                   let contentGrp = res[i];
@@ -79,7 +84,10 @@ export class BizDimensionDetailComponent implements OnInit, AfterViewInit {
                   let container = this.ctService.getContainerByQId(contentGrp.contentQId);
                   if (container.linkContainerQId) {
                     contentGrp.linkContainer = container;
+                    childContainerWithData.push(container.qualifiedId);
                     container = this.ctService.getContainerByQId(container.linkContainerQId);
+                  } else {
+                    childContainerWithData.push(container.qualifiedId);
                   }
 
                   if (contentGrp.contentQId == cQId) {
@@ -87,10 +95,6 @@ export class BizDimensionDetailComponent implements OnInit, AfterViewInit {
                     this.record = contentGrp.records.content[0];
                     this.container = container;
                     
-                    let filterIds = this.sbService.getFilterIdsFromQueryParams(qParams);
-                    let textQuery = this.sbService.getTextQueryFromQueryParams(qParams);
-
-                    this.globalSearchCtrl.setBizDimDetailSearchBar(container, this.record, filterIds, textQuery);
                   }
 
                   contentGrp.container = container;
@@ -98,6 +102,9 @@ export class BizDimensionDetailComponent implements OnInit, AfterViewInit {
                     this.contentService.decorateRecord(container, rec);
                   });
                 }
+
+                let filterIds = this.sbService.getFilterIdsFromQueryParams(qParams);
+                this.globalSearchCtrl.setBizDimDetailSearchBar(this.container, null, this.record, filterIds, textQuery);
 
                 this.children = res.filter(cg => cg.contentQId != cQId);
                 this.noChildren = (!this.children || this.children.length == 0);

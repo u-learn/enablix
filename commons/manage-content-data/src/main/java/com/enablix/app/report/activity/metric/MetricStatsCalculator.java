@@ -4,8 +4,8 @@ import java.util.Date;
 import java.util.List;
 
 import com.enablix.commons.constants.AppConstants.MetricType;
+import com.enablix.core.api.SearchRequest;
 import com.enablix.core.domain.report.activitymetric.MetricStats;
-import com.enablix.core.mongo.search.service.SearchRequest;
 
 public interface MetricStatsCalculator {
 	

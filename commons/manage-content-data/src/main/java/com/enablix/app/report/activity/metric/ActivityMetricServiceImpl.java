@@ -9,9 +9,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.enablix.core.api.SearchRequest;
 import com.enablix.core.domain.report.activitymetric.ActivityMetricType;
 import com.enablix.core.domain.report.activitymetric.MetricStats;
-import com.enablix.core.mongo.search.service.SearchRequest;
 
 @Component
 public class ActivityMetricServiceImpl implements ActivityMetricService {

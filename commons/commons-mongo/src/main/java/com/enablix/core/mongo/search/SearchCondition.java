@@ -5,6 +5,8 @@ import java.util.regex.Pattern;
 
 import org.springframework.data.mongodb.core.query.Criteria;
 
+import com.enablix.core.api.ConditionOperator;
+
 
 public abstract class SearchCondition<T> extends AbstractFilter {
 

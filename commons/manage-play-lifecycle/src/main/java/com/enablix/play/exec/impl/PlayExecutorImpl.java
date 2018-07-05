@@ -10,12 +10,12 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.stereotype.Component;
 
 import com.enablix.commons.util.process.ProcessContext;
+import com.enablix.core.api.ConditionOperator;
 import com.enablix.core.api.ContentDataRecord;
 import com.enablix.core.commons.xsdtopojo.CondValueType;
 import com.enablix.core.commons.xsdtopojo.ContentRecordType;
 import com.enablix.core.commons.xsdtopojo.ContentSetType;
 import com.enablix.core.mongo.dao.GenericDao;
-import com.enablix.core.mongo.search.ConditionOperator;
 import com.enablix.core.mongo.search.SearchCondition;
 import com.enablix.core.mongo.search.StringFilter;
 import com.enablix.core.mongo.search.StringListFilter;

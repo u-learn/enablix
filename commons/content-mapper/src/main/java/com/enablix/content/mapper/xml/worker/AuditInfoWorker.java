@@ -12,12 +12,12 @@ import com.enablix.commons.util.collection.CollectionUtil;
 import com.enablix.content.mapper.EnablixContent;
 import com.enablix.content.mapper.ExternalContent;
 import com.enablix.content.mapper.xml.MappingWorker;
+import com.enablix.core.api.ConditionOperator;
 import com.enablix.core.api.TemplateFacade;
 import com.enablix.core.commons.xsdtopojo.ContentContainerMappingType;
 import com.enablix.core.commons.xsdtopojo.SytemUserMappingType;
 import com.enablix.core.domain.user.User;
 import com.enablix.core.mongo.dao.GenericSystemDao;
-import com.enablix.core.mongo.search.ConditionOperator;
 import com.enablix.core.mongo.search.StringFilter;
 import com.enablix.core.mongo.view.MongoDataView;
 

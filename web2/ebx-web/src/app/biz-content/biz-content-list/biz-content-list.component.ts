@@ -65,14 +65,7 @@ export class BizContentListComponent implements OnInit {
   }
 
   fetchData() {
-    this.fetchFiltered();
-  }
-
-  fetchTextFiltered(textQuery: string) {
-
-  }
-
-  fetchFiltered() {
+    
     let searchRequest = new DataSearchRequest();
     
     searchRequest.projectedFields = [];
@@ -86,6 +79,8 @@ export class BizContentListComponent implements OnInit {
     searchRequest.pagination.sort = new SortCriteria();
     searchRequest.pagination.sort.field = Constants.FLD_MODIFIED_AT
     searchRequest.pagination.sort.direction = Direction.DESC;
+
+    searchRequest.textQuery = this.textFilter;
 
     this.contentService.getFilteredRecords(this.container.qualifiedId, searchRequest).subscribe(
       result => {

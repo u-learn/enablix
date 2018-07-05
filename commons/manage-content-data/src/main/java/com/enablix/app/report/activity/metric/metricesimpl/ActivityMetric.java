@@ -23,12 +23,12 @@ import com.enablix.app.report.util.TrendUtil;
 import com.enablix.commons.constants.AppConstants.MetricType;
 import com.enablix.commons.util.collection.CollectionUtil;
 import com.enablix.commons.util.date.DateUtil;
+import com.enablix.core.api.SearchRequest;
 import com.enablix.core.domain.activity.ActivityAudit;
 import com.enablix.core.domain.report.activitymetric.MetricStats;
 import com.enablix.core.domain.report.activitymetric.TrendAggMetric;
 import com.enablix.core.domain.security.authorization.UserProfile;
 import com.enablix.core.mongo.dao.GenericDao;
-import com.enablix.core.mongo.search.service.SearchRequest;
 import com.enablix.core.mongo.search.service.SearchRequestTransformer;
 import com.enablix.core.mongo.view.MongoDataView;
 

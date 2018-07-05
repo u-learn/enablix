@@ -1,5 +1,6 @@
 package com.enablix.core.mongo.search;
 
+import com.enablix.core.api.ConditionOperator;
 
 public class StringFilter extends SearchCondition<String> {
 

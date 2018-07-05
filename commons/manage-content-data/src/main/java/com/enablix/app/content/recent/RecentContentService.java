@@ -6,8 +6,8 @@ import org.springframework.data.domain.Page;
 
 import com.enablix.analytics.web.request.WebContentRequest;
 import com.enablix.app.content.ui.NavigableContent;
+import com.enablix.core.api.SearchRequest;
 import com.enablix.core.mongo.search.SearchCriteria;
-import com.enablix.core.mongo.search.service.SearchRequest;
 import com.enablix.data.view.DataView;
 
 public interface RecentContentService {

@@ -1,6 +1,6 @@
 <div class="content-browser">
   <div class="left-side">
-    <div class="heading">Select Items</div>
+    <div class="heading">Search Assets to Select</div>
     <div><ebx-search-bar [sbController]="browserSearchCtrl"></ebx-search-bar></div>
     <div class="content-items" #infiniteScrollParentElem
             infiniteScroll
@@ -28,15 +28,19 @@
     </div>
   </div>
   <div class="right-side">
-    <div class="heading">Selected Items</div>
+    <div class="heading">Selected Assets ({{getTotalSelectedItemCount()}})</div>
     <div class="content">
-      <div class="item" *ngFor="let key of objectKeys(selectedItems)">
-        <div class="removeBtn" (click)="removeItem(key)"><span>x</span></div>
-        <div class="details">
-          <div class="label">{{selectedItems[key].label}}</div>
-          <div class="typequalifier">{{selectedItems[key].containerLabel}}</div>
+      <ng-container *ngFor="let grp of selectedItemGrps">
+        <div class="content-grp" *ngIf="grp.items?.length > 0">
+          <div class="grp-label">{{grp.label}} ({{grp.items.length}})</div>
+          <div class="item" *ngFor="let item of grp.items">
+            <div class="removeBtn" (click)="removeItem(item)"><span>x</span></div>
+            <div class="details">
+              <div class="label">{{item.label}}</div>
+            </div>
+          </div>
         </div>
-      </div>
+      </ng-container>
     </div>
   </div>
 </div>

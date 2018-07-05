@@ -5,12 +5,12 @@ import java.util.List;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.stereotype.Component;
 
+import com.enablix.core.api.ConditionOperator;
 import com.enablix.core.api.ContentDataRef;
 import com.enablix.core.correlation.ItemUserCorrelation;
 import com.enablix.core.mongo.dao.BaseTenantDao;
 import com.enablix.core.mongo.search.And;
 import com.enablix.core.mongo.search.CompositeFilter;
-import com.enablix.core.mongo.search.ConditionOperator;
 import com.enablix.core.mongo.search.SearchFilter;
 import com.enablix.core.mongo.search.StringFilter;
 import com.enablix.core.mongo.view.MongoDataView;

@@ -7,12 +7,12 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.stereotype.Component;
 
 import com.enablix.commons.util.collection.CollectionUtil;
+import com.enablix.core.api.ConditionOperator;
 import com.enablix.core.api.ContentDataRef;
 import com.enablix.core.correlation.ItemItemCorrelation;
 import com.enablix.core.mongo.dao.BaseTenantDao;
 import com.enablix.core.mongo.search.And;
 import com.enablix.core.mongo.search.CompositeFilter;
-import com.enablix.core.mongo.search.ConditionOperator;
 import com.enablix.core.mongo.search.Or;
 import com.enablix.core.mongo.search.SearchFilter;
 import com.enablix.core.mongo.search.StringFilter;

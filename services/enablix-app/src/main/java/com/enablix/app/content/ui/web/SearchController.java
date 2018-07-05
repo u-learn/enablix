@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.enablix.analytics.search.SearchScope;
+import com.enablix.analytics.search.SearchInput;
 import com.enablix.app.content.ui.DisplayContext;
 import com.enablix.app.content.ui.NavigableContent;
 import com.enablix.app.content.ui.search.SearchService;
@@ -19,6 +19,8 @@ import com.enablix.commons.util.StringUtil;
 import com.enablix.commons.util.collection.CollectionUtil;
 import com.enablix.commons.util.process.ProcessContext;
 import com.enablix.core.api.ContentDataRecord;
+import com.enablix.core.api.SearchRequest;
+import com.enablix.core.api.SearchRequest.Pagination;
 import com.enablix.core.api.SearchResult;
 import com.enablix.core.domain.activity.SearchActivity;
 import com.enablix.core.ui.DisplayableContent;
@@ -50,9 +52,9 @@ public class SearchController {
 			sizeInt = StringUtil.isEmpty(size) ? AppConstants.DEFAULT_PAGE_SIZE : Integer.parseInt(size);
 		}
 		
-		SearchScope scope = null;
+		SearchInput scope = null;
 		if (CollectionUtil.isNotEmpty(cqIds)) {
-			scope = new SearchScope();
+			scope = new SearchInput();
 			scope.setContentQIds(cqIds);
 		}
 		
@@ -65,40 +67,38 @@ public class SearchController {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, value="/bizcontent/")
-	public SearchResult<ContentDataRecord> searchBizContentResults(@RequestBody SearchRequest request) {
+	public SearchResult<ContentDataRecord> searchBizContentResults(@RequestBody SearchInput request) {
 		
-		int pageInt = 0;
-		int sizeInt = AppConstants.DEFAULT_PAGE_SIZE;
-		
-		if (request.getPage() != null) {
-			pageInt = request.getPage();
-			sizeInt = request.getSize() == null ? AppConstants.DEFAULT_PAGE_SIZE : request.getSize();
-		}
-		
-		SearchScope scope = request.getSearchScope();
+		setPagination(request.getRequest(), AppConstants.DEFAULT_PAGE_SIZE);
 		
 		DataView dataView = dataSegmentService.getDataViewForUserId(ProcessContext.get().getUserId());
-		SearchResult<ContentDataRecord> searchResult = searchService.searchBizContentRecords(
-				request.getText(), scope, sizeInt, pageInt, dataView);
+		SearchResult<ContentDataRecord> searchResult = searchService.searchBizContentRecords(request, dataView);
 		
-		ActivityLogger.auditActivity(new SearchActivity(request.getText(), 
+		ActivityLogger.auditActivity(new SearchActivity(request.getRequest().getTextQuery(), 
 				searchResult.getCurrentPage(), searchResult.getNumberOfElements()));
 		return searchResult;
 	}
-	
-	@RequestMapping(method = RequestMethod.POST, value="/ta/bizcontent/")
-	public SearchResult<ContentDataRecord> searchAsYouTypeBizContentResults(@RequestBody SearchRequest request) {
+
+	private void setPagination(SearchRequest request, int defaultSize) {
 		
-		int pageInt = 0;
-		int sizeInt = 5;
+		Pagination pagination = request.getPagination();
 		
-		if (request.getPage() != null) {
-			pageInt = request.getPage();
-			sizeInt = request.getSize() == null ? sizeInt : request.getSize();
+		if (pagination == null) {
+			pagination = new Pagination();
+			pagination.setPageNum(0);
+			pagination.setPageSize(defaultSize);
+			request.setPagination(pagination);
 		}
 		
+	}
+	
+	@RequestMapping(method = RequestMethod.POST, value="/ta/bizcontent/")
+	public SearchResult<ContentDataRecord> searchAsYouTypeBizContentResults(@RequestBody SearchInput request) {
+		
+		setPagination(request.getRequest(), 5);
+		
 		DataView dataView = dataSegmentService.getDataViewForUserId(ProcessContext.get().getUserId());
-		return searchService.searchAsYouTypeBizContentRecords(request.getText(), request.getSearchScope(), sizeInt, pageInt, dataView);
+		return searchService.searchAsYouTypeBizContentRecords(request, dataView);
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value="/d/t/{searchText}/")
@@ -115,9 +115,9 @@ public class SearchController {
 			sizeInt = StringUtil.isEmpty(size) ? AppConstants.DEFAULT_PAGE_SIZE : Integer.parseInt(size);
 		}
 		
-		SearchScope scope = null;
+		SearchInput scope = null;
 		if (CollectionUtil.isNotEmpty(cqIds)) {
-			scope = new SearchScope();
+			scope = new SearchInput();
 			scope.setContentQIds(cqIds);
 		}
 		
@@ -129,49 +129,6 @@ public class SearchController {
 		ActivityLogger.auditActivity(new SearchActivity(searchText, 
 				searchResult.getCurrentPage(), searchResult.getNumberOfElements()));
 		return searchResult;
-	}
-	
-	public static class SearchRequest {
-		
-		private String text;
-		private List<String> contentQIds;
-		private Integer page;
-		private Integer size;
-		
-		public SearchScope getSearchScope() {
-			SearchScope scope = null;
-			if (CollectionUtil.isNotEmpty(contentQIds)) {
-				scope = new SearchScope();
-				scope.setContentQIds(contentQIds);
-			}
-			return scope;
-		}
-		
-		public String getText() {
-			return text;
-		}
-		public void setText(String text) {
-			this.text = text;
-		}
-		public Integer getPage() {
-			return page;
-		}
-		public void setPage(Integer page) {
-			this.page = page;
-		}
-		public Integer getSize() {
-			return size;
-		}
-		public void setSize(Integer size) {
-			this.size = size;
-		}
-		public List<String> getContentQIds() {
-			return contentQIds;
-		}
-		public void setContentQIds(List<String> contentQIds) {
-			this.contentQIds = contentQIds;
-		}
-		
 	}
 	
 }

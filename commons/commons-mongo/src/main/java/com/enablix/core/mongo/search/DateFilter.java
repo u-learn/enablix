@@ -2,6 +2,8 @@ package com.enablix.core.mongo.search;
 
 import java.util.Date;
 
+import com.enablix.core.api.ConditionOperator;
+
 public class DateFilter extends SearchCondition<Date> {
 
 	private static final ConditionOperator[] SUPPORTED_OP = {

@@ -26,6 +26,7 @@ export class ContentPickerButtonComponent implements OnInit {
         width: '80vw',
         height: '90vh',
         disableClose: true,
+        autoFocus: false,
         data: { 
           selectedItems: this.preSelected,
           scopeContainer: this.scopeContainer

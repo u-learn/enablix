@@ -2,6 +2,8 @@ package com.enablix.core.mongo.search;
 
 import java.util.regex.Pattern;
 
+import com.enablix.core.api.ConditionOperator;
+
 public class RegexFilter extends SearchCondition<Pattern> {
 
 	private static final ConditionOperator[] SUPPORTED_OP = {

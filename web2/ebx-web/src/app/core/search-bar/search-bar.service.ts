@@ -263,30 +263,60 @@ export class SearchBarService {
     return null;
   }
 
-  resolveSearchScope(sbData: SearchBarData) {
+  getFilterQueryParams(sbData: SearchBarData, removeFilterPrefix: boolean = false) {
     
-    var searchScope = [];
+    let filters = sbData.filters;
+    let queryParams = {};
+    
+    for (let j = 0; j < filters.length; j++) {
+    
+      let filter = filters[j];
+    
+      for (let prop in filter.queryParams) {
+    
+        var fltrId = removeFilterPrefix ? this.getFilterId(prop) : prop;
+        if (!fltrId) {
+          fltrId = prop;
+        }
+
+        if (!queryParams[fltrId]) {
+          queryParams[fltrId] = []
+        }
+        queryParams[fltrId].push(filter.queryParams[prop]);
+      }
+    }
+    return queryParams;
+  }
+
+  buildTextSearchInput(sbData: SearchBarData, text: string, pageNum: number = 0, pageSize: number = 10) {
+    
+    var contentQIds = [];
     
     sbData.context.contextItems.forEach((ci) => {
       if (ci.type == ObjectType.BIZ_CONTENT || ci.type == ObjectType.BIZ_DIM) {
-        searchScope.push(ci.id);
+        contentQIds.push(ci.id);
       }
     });
 
-    return searchScope.length > 0 ? searchScope : null;
+    var filters = null; //this.getFilterQueryParams(sbData, true);
+
+    return {
+      contentQIds: contentQIds,
+      request: {
+        textQuery: text,
+        filters: filters,
+        pagination: {
+          pageNum: pageNum,
+          pageSize: pageSize
+        }
+      }
+    };
   }
 
   typeaheadSearchBizContent(text: string, sbData: SearchBarData, pageNum: number = 0, pageSize: number = 5) {
-    
     let apiUrl = this.apiUrlService.postTypeaheadBizContentSearch();
-    var searchScope = this.resolveSearchScope(sbData);
-
-    return this.http.post(apiUrl, {
-              text: text,
-              page: pageNum,
-              size: pageSize,
-              contentQIds: searchScope
-            }); 
+    var input = this.buildTextSearchInput(sbData, text, pageNum, pageSize);
+    return this.http.post(apiUrl, input); 
   }
 
 }

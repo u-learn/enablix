@@ -511,8 +511,8 @@ public class ContentDataManagerImpl implements ContentDataManager {
 
 	@SuppressWarnings({"rawtypes", "unchecked"})
 	@Override
-	public List<ContentRecordGroup> fetchAllChildrenData(String parentQId, 
-			String parentIdentity, Pageable pageable, DataView view) {
+	public List<ContentRecordGroup> fetchAllChildrenData(String parentQId, String parentIdentity, 
+			Pageable pageable, List<String> childQIds, String textQuery, DataView view) {
 		
 		List<ContentRecordGroup> contentGroups = new ArrayList<>();
 		
@@ -525,29 +525,36 @@ public class ContentDataManagerImpl implements ContentDataManager {
 			for (ContainerType childContainer : parentContainer.getContainer()) {
 				
 				String childQId = childContainer.getQualifiedId();
-				FetchContentRequest request = new FetchContentRequest(
-						templateId, childQId, parentIdentity, null, pageable);
 				
-				Object data = fetchDataJson(request, view);
-				
-				ContentRecordGroup contentGroup = new ContentRecordGroup();
-				contentGroup.setContentQId(childQId);
-				
-				if (data instanceof Page) {
+				String concreteQId = TemplateUtil.isLinkedContainer(childContainer) ? 
+						childContainer.getLinkContainerQId() : childContainer.getQualifiedId();
+						
+				if (CollectionUtil.isEmpty(childQIds) || childQIds.contains(concreteQId)) {
 					
-					contentGroup.setRecords((Page) data);
+					FetchContentRequest request = new FetchContentRequest(
+							templateId, childQId, parentIdentity, null, pageable);
 					
-				} else if (data instanceof List) {
+					Object data = fetchDataJson(request, view);
 					
-					contentGroup.setRecords((List) data);
+					ContentRecordGroup contentGroup = new ContentRecordGroup();
+					contentGroup.setContentQId(childQId);
 					
-				} else if (data instanceof Map) {
+					if (data instanceof Page) {
+						
+						contentGroup.setRecords((Page) data);
+						
+					} else if (data instanceof List) {
+						
+						contentGroup.setRecords((List) data);
+						
+					} else if (data instanceof Map) {
+						
+						contentGroup.setRecords((Map) data);
+					}
 					
-					contentGroup.setRecords((Map) data);
-				}
-				
-				if (CollectionUtil.isNotEmpty(contentGroup.getRecords())) {
-					contentGroups.add(contentGroup);
+					if (CollectionUtil.isNotEmpty(contentGroup.getRecords())) {
+						contentGroups.add(contentGroup);
+					}
 				}
 			}
 			
@@ -559,8 +566,8 @@ public class ContentDataManagerImpl implements ContentDataManager {
 	}
 	
 	@Override
-	public List<ContentRecordGroup> fetchRecordAndChildData(String contentQId, 
-			String contentIdentity, Pageable childPagination, DataView view) {
+	public List<ContentRecordGroup> fetchRecordAndChildData(String contentQId, String contentIdentity, 
+			Pageable childPagination, List<String> childQIds, String textQuery, DataView view) {
 		
 		List<ContentRecordGroup> contentGroups = new ArrayList<>();
 		
@@ -581,7 +588,7 @@ public class ContentDataManagerImpl implements ContentDataManager {
 			contentGroups.add(contentGroup);
 			
 			// add child data
-			contentGroups.addAll(fetchAllChildrenData(contentQId, contentIdentity, childPagination, view));
+			contentGroups.addAll(fetchAllChildrenData(contentQId, contentIdentity, childPagination, childQIds, textQuery, view));
 		}
 		
 		return contentGroups;

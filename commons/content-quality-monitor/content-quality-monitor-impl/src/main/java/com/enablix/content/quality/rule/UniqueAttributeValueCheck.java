@@ -6,13 +6,13 @@ import org.springframework.stereotype.Component;
 
 import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.content.quality.rule.ContentAttributeQualityRule.AttrCheckConfig;
+import com.enablix.core.api.ConditionOperator;
 import com.enablix.core.api.QualityRuleConstants;
 import com.enablix.core.api.TemplateFacade;
 import com.enablix.core.commons.xsdtopojo.ContainerType;
 import com.enablix.core.commons.xsdtopojo.ContentItemType;
 import com.enablix.core.domain.content.quality.AlertLevel;
 import com.enablix.core.domain.content.quality.QualityAlert.AlertSeverity;
-import com.enablix.core.mongo.search.ConditionOperator;
 import com.enablix.core.mongo.search.SearchFilter;
 import com.enablix.core.mongo.search.StringFilter;
 import com.enablix.services.util.ContentDataUtil;

@@ -69,11 +69,6 @@ export class ContentBrowserSearchControllerService implements SearchBarControlle
     return this.onDataUpdate;
   }
 
-  updateSearchBarData(sbData: SearchBarData) {
-    this.sbData = sbData;
-    this.onDataUpdate.emit();
-  }
-
   searchBarData(): SearchBarData {
     return this.sbData;
   }
@@ -84,41 +79,32 @@ export class ContentBrowserSearchControllerService implements SearchBarControlle
 
   initBrowserSearchBar(scopeContainer?: Container) {
     
-    let sbData = new SearchBarData();
-    sbData.context = new NavContext();
+    this.sbData = new SearchBarData();
+    this.sbData.context = new NavContext();
 
-    var limitScope = false;
     if (scopeContainer) {
       if (this.ctService.isBusinessContent(scopeContainer)) {
-        sbData.context = this.sbService.buildBizContentListNavCtx(scopeContainer, false);
-        limitScope = true;
+        this.sbData.context = this.sbService.buildBizContentListNavCtx(scopeContainer, false);
       } /*else if (this.ctService.isBusinessDimension(scopeContainer)) {
         sbData.context = this.sbService.buildBizDimListContext(scopeContainer, false);
       }*/
     }
     
-
-    sbData.datasets = limitScope ? [] : [
-      // this.sbService.bizDimListDataset, 
-      // this.sbService.bizDimObjListDataset, 
-      this.sbService.bizContentListDataset
-    ];
-
     this.browserData = null;
-    this.updateSearchBarData(sbData);
     this.checkAndFetchData();
+    this.onDataUpdate.emit();
   }
 
   addSearchBarItem(sbItem: SearchBarItem) {
     sbItem.addToSearchBarData(this.sbData);
-    this.onDataUpdate.emit();
     this.checkAndFetchData();
+    this.onDataUpdate.emit();
   }
 
   removeSearchBarItem(sbItem: SearchBarItem) {
     sbItem.removeFromSearchBarData(this.sbData);
-    this.onDataUpdate.emit();
     this.checkAndFetchData();
+    this.onDataUpdate.emit();
   }
 
   checkAndFetchData(nextPage: boolean = false) {
@@ -153,6 +139,14 @@ export class ContentBrowserSearchControllerService implements SearchBarControlle
           break;
         }
       }
+    }
+
+    if (navPath == '') {
+      this.sbData.datasets = [
+        // this.sbService.bizDimListDataset, 
+        // this.sbService.bizDimObjListDataset, 
+        this.sbService.bizContentListDataset
+      ];
     }
 
     if (!searchExec) {
@@ -197,6 +191,8 @@ export class ContentBrowserSearchControllerService implements SearchBarControlle
   }
 
   fetchBizContentList() {
+
+    this.sbData.datasets = [];
 
     let containerQId = null;
     let ctxItems = this.sbData.context.contextItems;
@@ -270,8 +266,8 @@ export class ContentBrowserSearchControllerService implements SearchBarControlle
     if (text) {
 
       this.sbData.freetext = text;
-      let searchScope = this.sbService.resolveSearchScope(this.sbData);
-      this.textSearch.searchBizContent(text, this.pageNum, this.pageSize, searchScope).subscribe((res: any) => {
+      let searchInput = this.sbService.buildTextSearchInput(this.sbData, text, this.pageNum, this.pageSize);
+      this.textSearch.searchBizContent(searchInput).subscribe((res: any) => {
       
           if (res) {
       

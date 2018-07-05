@@ -5,12 +5,12 @@ import java.util.Map;
 
 import org.springframework.stereotype.Component;
 
+import com.enablix.core.api.ConditionOperator;
 import com.enablix.core.domain.segment.DataSegmentAttribute;
 import com.enablix.core.domain.segment.DataSegmentAttribute.Matching;
 import com.enablix.core.domain.segment.DataSegmentAttribute.Presence;
 import com.enablix.core.domain.segment.DataSegmentAware;
 import com.enablix.core.domain.segment.DataSegmentInfo;
-import com.enablix.core.mongo.search.ConditionOperator;
 import com.enablix.core.mongo.search.ObjectFilter;
 import com.enablix.core.mongo.search.SearchCondition;
 import com.enablix.core.mongo.search.SearchFilter;

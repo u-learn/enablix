@@ -3,8 +3,8 @@ package com.enablix.core.mail.entities;
 import java.util.List;
 import java.util.Map;
 
+import com.enablix.core.api.SearchRequest;
 import com.enablix.core.domain.security.authorization.UserProfile;
-import com.enablix.core.mongo.search.service.SearchRequest;
 
 public class EmailRequest {
 
