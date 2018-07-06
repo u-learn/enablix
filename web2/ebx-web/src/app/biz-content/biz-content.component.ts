@@ -1,6 +1,6 @@
-import { Component, OnInit, ViewEncapsulation, Input, ViewChildren, AfterViewInit, QueryList } from '@angular/core';
+import { Optional, Component, OnInit, ViewEncapsulation, Input, ViewChildren, AfterViewInit, QueryList, Inject } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MatDialog, MatDialogRef } from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Location } from '@angular/common';
 
 import { Container } from '../model/container.model';
@@ -59,7 +59,8 @@ export class BizContentComponent implements OnInit, AfterViewInit {
               private alert: AlertService, private contentTemplate: ContentTemplateService,
               private contentWFService: ContentWorkflowService, private loc: Location,
               private navService: NavigationService, private dialog: MatDialog,
-              private router: Router) { }
+              private router: Router, @Optional() @Inject(MAT_DIALOG_DATA) public data?: any,
+              @Optional() public dialogRef?: MatDialogRef<BizContentComponent>,) { }
 
   ngOnInit() {
     // override the route reuse strategy to force component reload
@@ -71,6 +72,13 @@ export class BizContentComponent implements OnInit, AfterViewInit {
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
 
     this.approvalWFRequired = this.contentWFService.isApprovalWFRequired();
+
+    console.log(this.data);
+    if (this.data) {
+      this.record = this.data.record;
+      this.container = this.data.container;
+      this.editing = this.data.editing;
+    }
 
     if (!this.record) {
       
@@ -255,8 +263,14 @@ export class BizContentComponent implements OnInit, AfterViewInit {
                                   "Content Asset updated successfully.";
                                   
                 this.alert.success(successMsg, true);
-                this.navService.goToContentDetail(
-                  this.container.qualifiedId, result.contentRecord.identity);
+
+                if (this.dialogRef) {
+                  this.dialogRef.close(this.record);
+                } else {
+                  this.navService.goToContentDetail(
+                    this.container.qualifiedId, result.contentRecord.identity);
+                }
+
               },
               error => {
                 if (error.qualityAlerts) {
@@ -271,8 +285,12 @@ export class BizContentComponent implements OnInit, AfterViewInit {
   }
 
   goToContentDetailForRequest(res: any) {
-    this.navService.goToContentDetail(
-      this.container.qualifiedId, res.objectRef.data.identity);
+    if (this.dialogRef) {
+      this.dialogRef.close(res);
+    } else {
+      this.navService.goToContentDetail(
+        this.container.qualifiedId, res.objectRef.data.identity);
+    }
   }
 
   onReject(res: any) {
@@ -310,7 +328,12 @@ export class BizContentComponent implements OnInit, AfterViewInit {
     this.contentRequest = res;
 
     this.initContentRequest();
-    this.navService.goToContentRequestDetail(res.objectRef.identity);
+
+    if (this.dialogRef) {
+      this.dialogRef.close(res);
+    } else {
+      this.navService.goToContentRequestDetail(res.objectRef.identity);
+    }
   }
 
   publishWFContent() {
@@ -331,8 +354,11 @@ export class BizContentComponent implements OnInit, AfterViewInit {
   }
 
   goBackHome() {
-    //this.navService.goToPortalHome();
-    this.router.navigateByUrl(this.returnUrl);
+    if (this.dialogRef) {
+      this.dialogRef.close();
+    } else {
+      this.router.navigateByUrl(this.returnUrl);
+    }
   }
 
   editState() {

@@ -3,9 +3,12 @@
     <div class="full-width-container" *ngFor="let cg of lnkContainerContent">
       <div class="content-type-heading">
         <h2>{{cg?.linkContainer ? cg.linkContainer.label : cg.container?.label}} ({{cg.count}})</h2>
-        <div class="dashboard-buttons" *ngIf="editing">
-          <ebx-content-picker-button [preSelected]="convertToBrowserItems(cg)" (onSelectionDone)="linkedItemSelectionDone($event, cg)" [scopeContainer]="cg.container"></ebx-content-picker-button>
-        </div>
+        <ng-container *ebxAccess="'VIEW_STUDIO'">
+          <div class="dashboard-buttons" *ngIf="editing">
+            <ebx-content-picker-button class="action-btn" [preSelected]="convertToBrowserItems(cg)" (onSelectionDone)="linkedItemSelectionDone($event, cg)" [scopeContainer]="cg.container"></ebx-content-picker-button>
+            <ebx-add-biz-content-dialog-button class="action-btn" [container]="cg.container" (onDialogClose)="addNewContent($event, cg)"></ebx-add-biz-content-dialog-button>
+          </div>
+        </ng-container>
       </div>
       <div class="content-type-msg" *ngIf="cg.count == 0">
         Please select or add {{cg?.linkContainer ? cg.linkContainer.label : cg.container?.label}}.
@@ -25,15 +28,18 @@
     </div>
   </div>
 </div>
-<div class="main" *ngIf="stackArr">
-    <div>
+<div class="main" *ngIf="heading">
+    <div class="content-stack-container">
         <div class="heading">
           <div class="label">{{heading}}</div>
           <div class="dashboard-buttons" *ngIf="editing">
             <ebx-content-picker-button [preSelected]="stackArr" (onSelectionDone)="selectionDone($event)"></ebx-content-picker-button>
           </div>
         </div>
-        <div class="content-types-container">
+        <div class="content-type-msg" *ngIf="!stackArr">
+          No {{heading}} selected.
+        </div>
+        <div class="content-types-container" *ngIf="stackArr">
             <div class="full-width-container" *ngFor="let cg of contentStack">
                 <h2>{{cg?.container?.label}} ({{cg.records.numberOfElements}})</h2>
                 <div class="cards card-container">
@@ -51,5 +57,4 @@
             </div>
         </div>
     </div>
-    
 </div>

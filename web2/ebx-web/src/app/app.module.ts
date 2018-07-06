@@ -98,6 +98,7 @@ import { EmbedHtmlPreviewComponent } from './content-preview/embed-html-preview/
 import { ContentPickerButtonComponent } from './content-action/content-picker-button/content-picker-button.component';
 import { ContentBrowserComponent } from './content-browser/content-browser.component';
 import { ContentBrowserSearchControllerService } from './content-browser/content-browser-search-controller.service';
+import { AddBizContentDialogButtonComponent } from './content-action/add-biz-content-dialog-button/add-biz-content-dialog-button.component';
 
 @NgModule({
   declarations: [
@@ -170,7 +171,8 @@ import { ContentBrowserSearchControllerService } from './content-browser/content
     CpWidgetDetailComponent,
     EmbedHtmlPreviewComponent,
     ContentBrowserComponent,
-    ContentPickerButtonComponent
+    ContentPickerButtonComponent,
+    AddBizContentDialogButtonComponent
   ],
   imports: [
     BrowserModule,
@@ -213,7 +215,8 @@ import { ContentBrowserSearchControllerService } from './content-browser/content
     EditBizDimensionComponent,
     MemberDetailComponent,
     EmailSharePopupComponent,
-    ContentBrowserComponent
+    ContentBrowserComponent,
+    BizContentComponent
   ],
   bootstrap: [AppComponent]
 })

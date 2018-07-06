@@ -108,6 +108,7 @@ export class ContentService {
 
       } else if (item.type == "CONTENT_STACK") {
         decoration.__contentStack = dataRecord[item.id];
+        decoration.__hasContentStackItem = true;
       }
     }
 

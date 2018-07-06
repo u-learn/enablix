@@ -1,5 +1,5 @@
 <div class="assets-navbar">
-  <div (click)="goBackHome()">
+  <div (click)="goBackHome()" *ngIf="!dialogRef">
       <button class="circle icon-btn">
           <div class="icon small back"></div>
       </button>
@@ -24,7 +24,7 @@
             <div class="btn-set">
               <ng-container *ngIf="!contentRequest">
                 <ebx-copy-portal-url-button class="action-btn" [container]="container" [record]="record"></ebx-copy-portal-url-button>
-                <ebx-copy-embed-code-button class="action-btn-wrap" [container]="container" [record]="record"></ebx-copy-embed-code-button>
+                <ebx-copy-embed-code-button *ebxAccess="'COPY_EMBED_CODE'" class="action-btn-wrap" [container]="container" [record]="record"></ebx-copy-embed-code-button>
               </ng-container>
               <ng-container *ngIf="record?.__decoration?.__docMetadata">
                 <ebx-copy-download-url-button class="action-btn" [container]="container" [record]="record"></ebx-copy-download-url-button>
@@ -44,7 +44,7 @@
                 <div class="icon small send"></div>
                 <p class="btn-text">Publish</p>
             </button>
-            <button class="publish-btn" *ngIf="isNewRec || isDraft" (click)="saveDraft()">
+            <button class="publish-btn" *ngIf="(isNewRec || isDraft) && !dialogRef" (click)="saveDraft()">
                 <div class="icon small save"></div>
                 <p class="btn-text">Save as Draft</p>
             </button>
@@ -55,7 +55,7 @@
         </div>
     </div>
   </ng-container>
-  <div class="far-right">
+  <div class="far-right" *ngIf="!dialogRef">
       <ebx-user-icon></ebx-user-icon>
   </div>
 </div>

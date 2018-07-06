@@ -834,6 +834,16 @@ body {
     }
 }
 
+.content-stack-container, .content-types-container {
+
+    .content-type-msg {
+        font-family: $FPLight;
+        font-size: 14px;
+        color: #808C9B;
+        line-height: 17px;
+    }
+}
+
 .content-types-container {
     display: flex;
     flex-wrap: wrap;

@@ -141,7 +141,10 @@ public class ContentPersistOperation {
 			update.addToSet(linkContainer.getLinkContentItemId(), updateVal);
 			
 			List<String> lnkIdentities = newLinks.stream().map(ContentStackItem::getIdentity).collect(Collectors.toList());
-			Query query = Query.query(Criteria.where(ContentDataConstants.IDENTITY_KEY).in(lnkIdentities));
+			String existingLinkCheckFieldId = linkContainer.getLinkContentItemId() + "." + ContentDataConstants.ID_FLD_KEY;
+			
+			Query query = Query.query(Criteria.where(ContentDataConstants.IDENTITY_KEY).in(lnkIdentities)
+											  .and(existingLinkCheckFieldId).ne(recordIdentity));
 			mongoTemplate.updateMulti(query, update, collectionName);
 		}
 		

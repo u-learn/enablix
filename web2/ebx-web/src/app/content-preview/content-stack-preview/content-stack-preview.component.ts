@@ -1,10 +1,12 @@
 import { Component, OnInit, ViewEncapsulation, Input, Output, EventEmitter } from '@angular/core';
+import { MatDialog } from '@angular/material';
 
 import { Container } from '../../model/container.model';
 import { ContentService } from '../../core/content/content.service';
 import { AlertService } from '../../core/alert/alert.service';
 import { ContentTemplateService } from '../../core/content-template.service';
 import { Utility } from '../../util/utility';
+import { BizContentComponent } from '../../biz-content/biz-content.component';
 
 @Component({
   selector: 'ebx-content-stack-preview',
@@ -41,7 +43,8 @@ export class ContentStackPreviewComponent implements OnInit {
 
   constructor(private contentService: ContentService,
     private alert: AlertService,
-    private ctService: ContentTemplateService) { }
+    private ctService: ContentTemplateService,
+    private dialog: MatDialog) { }
 
   ngOnInit() {
 
@@ -229,6 +232,47 @@ export class ContentStackPreviewComponent implements OnInit {
       this.fetchStackDetails();
       this.onStackUpdate.emit();
     }
+  }
+
+  addNewContent(newRecord: any, cg: any) {
+    if (newRecord) {
+      this.addNewAssetToContentGroup(cg, newRecord);
+    }
+  }
+
+  addNewAssetToContentGroup(cg: any, newRecord: any) {
+    
+    var item = {
+        identity: newRecord.identity,
+        label: newRecord.__title,
+        qualifiedId: cg.container.qualifiedId,
+        containerLabel: cg.container.label
+      };
+
+    if (!cg.newRecords) {
+      cg.newRecords = [];
+    } 
+    cg.newRecords.push(item);
+
+    cg.count = cg.count ? (cg.count + 1) : 1;
+    
+    var linkChange = this.linkageChange[cg.linkContainer.qualifiedId];
+    
+    if (!linkChange) {
+      linkChange = {
+        linkContainerQId: cg.linkContainer.qualifiedId,
+        newLinks: [],
+        removedLinks: []
+      };
+      this.linkageChange[cg.linkContainer.qualifiedId] = linkChange; 
+
+      if (!this._record.__linkageChange) {
+        this._record.__linkageChange = [];
+      }
+      this._record.__linkageChange.push(linkChange);
+    }
+    linkChange.newLinks.push(item);
+
   }
 
 }
