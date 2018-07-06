@@ -291,19 +291,37 @@ export class SearchBarService {
   buildTextSearchInput(sbData: SearchBarData, text: string, pageNum: number = 0, pageSize: number = 10) {
     
     var contentQIds = [];
+    var parent = null;
     
     sbData.context.contextItems.forEach((ci) => {
+    
       if (ci.type == ObjectType.BIZ_CONTENT || ci.type == ObjectType.BIZ_DIM) {
+    
         contentQIds.push(ci.id);
+    
+      } else if (ci.type == ObjectType.BIZ_CONTENT_OBJ || ci.type == ObjectType.BIZ_DIM_OBJ) {
+    
+        parent = {
+          qualifiedId: ci.routeParams[0],
+          identity: ci.routeParams[1]
+        }
       }
     });
 
-    var filters = null; //this.getFilterQueryParams(sbData, true);
+    var filters = this.getFilterQueryParams(sbData, true);
+    if (filters['cqid']) {
+      filters['cqid'].forEach((qid) => contentQIds.push(qid));
+      delete filters['cqid'];
+    }
+
+    var filterMetadata = this.buildFilterMetadata(filters);
 
     return {
       contentQIds: contentQIds,
+      parent: parent,
       request: {
         textQuery: text,
+        filterMetadata: filterMetadata,
         filters: filters,
         pagination: {
           pageNum: pageNum,
@@ -311,6 +329,20 @@ export class SearchBarService {
         }
       }
     };
+  }
+
+  buildFilterMetadata(filters: any) {
+    var filterMetadata = {};
+    if (filters) {
+      for (let fltrId in filters) {
+        filterMetadata[fltrId] = {
+          field: fltrId + ".id",
+          dataType: "STRING",
+          operator: "IN"
+        }
+      }
+    }
+    return filterMetadata;
   }
 
   typeaheadSearchBizContent(text: string, sbData: SearchBarData, pageNum: number = 0, pageSize: number = 5) {

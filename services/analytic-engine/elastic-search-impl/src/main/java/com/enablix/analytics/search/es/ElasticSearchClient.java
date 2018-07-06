@@ -2,7 +2,6 @@ package com.enablix.analytics.search.es;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -173,7 +172,7 @@ public class ElasticSearchClient implements SearchClient {
 		int pageNum = input.getRequest().getPagination().getPageNum();
 		
 		QueryStringMatchQueryBuilder stringMatchBuilder = new QueryStringMatchQueryBuilder("*" + text.trim() + "*");
-		SearchRequestQueryBuilder matchQueryBuilder = new SearchRequestQueryBuilder(input.getRequest(), stringMatchBuilder);
+		SearchRequestQueryBuilder matchQueryBuilder = new SearchRequestQueryBuilder(input, template, stringMatchBuilder);
 		
 		return ESQueryBuilder.builder(matchQueryBuilder, template, typeaheadSearchFieldBuilder)
 				.withPagination(pageSize, pageNum)
@@ -194,6 +193,14 @@ public class ElasticSearchClient implements SearchClient {
 					.map(ContainerType::getQualifiedId).collect(Collectors.toList());
 		}
 		
+		Collection<String> typenames = getContentTypenames(template, qIds);
+		
+		return buildSearchRequestQuery(typenames, template, scope, null, dataView);
+		
+	}
+
+	private Collection<String> getContentTypenames(TemplateFacade template, Collection<String> qIds) {
+		
 		Collection<String> typenames = new HashSet<>();
 		
 		qIds.forEach((qId) -> {
@@ -203,8 +210,7 @@ public class ElasticSearchClient implements SearchClient {
 			}
 		});
 		
-		return buildSearchRequestQuery(typenames, template, scope.getRequest(), null, dataView);
-		
+		return typenames;
 	}
 	
 	private TypeFilter getBizContentTypeFilter(TemplateFacade template) {
@@ -222,23 +228,23 @@ public class ElasticSearchClient implements SearchClient {
 	}
 
 	@Override
-	public Page<?> searchTypeRecords(String containerQId, TemplateFacade template,
-			com.enablix.core.api.SearchRequest searchRequest, DataView userView) {
+	public Page<?> searchTypeRecords(SearchInput input, TemplateFacade template, DataView userView) {
 		
 		Page<?> result = null;
-		String typename = template.getCollectionName(containerQId);
 		
-		if (StringUtil.hasText(typename)) {
+		Collection<String> contentTypenames = getContentTypenames(template, input.getContentQIds());
+		
+		if (CollectionUtil.isNotEmpty(contentTypenames)) {
 			
-			Pagination pagination = searchRequest.getPagination();
+			Pagination pagination = input.getRequest().getPagination();
 			int pageNum = pagination != null ? pagination.getPageNum() : 0;
 			int pageSize = pagination != null ? pagination.getPageSize() : AppConstants.DEFAULT_PAGE_SIZE;
 			
 			SearchResult<Map<String, Object>> searchResult = 
 				executeSearchAndCreateResult(template, pageSize, pageNum, 
 					(hit, tmplt) -> hit.getSource(), 
-					buildSearchRequestQuery(Collections.singletonList(typename), 
-							template, searchRequest, null, userView));
+					buildSearchRequestQuery(contentTypenames, 
+							template, input, null, userView));
 			
 			result = new PageImpl<>(searchResult.getContent(), 
 					new PageRequest(pageNum, pageSize), 
@@ -252,11 +258,12 @@ public class ElasticSearchClient implements SearchClient {
 	}
 
 	private SearchRequest buildSearchRequestQuery(Collection<String> typenames, TemplateFacade template,
-			com.enablix.core.api.SearchRequest searchRequest, MatchQueryBuilder stringMatchBuilder, DataView userView) {
+			SearchInput searchInput, MatchQueryBuilder stringMatchBuilder, DataView userView) {
 		
 		ESDataView esView = DataViewUtil.getElasticSearchDataView(userView);
-		SearchRequestQueryBuilder matchQueryBuilder = new SearchRequestQueryBuilder(searchRequest, stringMatchBuilder);
+		SearchRequestQueryBuilder matchQueryBuilder = new SearchRequestQueryBuilder(searchInput, template, stringMatchBuilder);
 		
+		com.enablix.core.api.SearchRequest searchRequest = searchInput.getRequest();
 		int pageSize = searchRequest.getPagination().getPageSize();
 		int pageNum = searchRequest.getPagination().getPageNum();
 		

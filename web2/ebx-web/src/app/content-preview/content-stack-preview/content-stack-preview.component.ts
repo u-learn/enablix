@@ -67,7 +67,7 @@ export class ContentStackPreviewComponent implements OnInit {
     
     if (this.container.linkedBizContent) {
       
-      this.contentService.getRecordAndChildData(this.container.qualifiedId, this._record.identity, "50")
+      this.contentService.getRecordAndChildData(this.container.qualifiedId, this._record.identity, "0", "50")
           .subscribe(
               res => {
 
@@ -199,7 +199,7 @@ export class ContentStackPreviewComponent implements OnInit {
 
     cg.newRecords = newItems;
     cg.count = selection.length;
-    
+
     this.linkageChange[cg.linkContainer.qualifiedId] = lnkChange;
     
     this._record.__linkageChange = [];

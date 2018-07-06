@@ -1,5 +1,5 @@
 import { Injectable, EventEmitter } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 import { SearchBarController } from './search-bar-controller';
 import { NavigationService } from '../../app-routing/navigation.service';
@@ -37,6 +37,7 @@ export class GlobalSearchControllerService implements SearchBarController {
   ]
 
   constructor(private router: Router,
+        private route: ActivatedRoute, 
         private navService: NavigationService,
         private sbService: SearchBarService,
         private biDSBuilder: BoundedItemsDSBuilderService,
@@ -93,7 +94,8 @@ export class GlobalSearchControllerService implements SearchBarController {
       }
       
       for (let k = 0; k < this.navStates.length; k++) {
-        if (this.navStates[k].navPath == navPath) {
+        var navState = this.navStates[k];
+        if (navState.navPath == navPath) {
           this.navService.goToRoute(this.navStates[k].routePath, routeParams, queryParams);
         }
       }

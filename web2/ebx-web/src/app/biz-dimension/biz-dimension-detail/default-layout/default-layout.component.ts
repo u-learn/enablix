@@ -11,8 +11,10 @@ import { ContentRecordGroup } from '../../../model/content-record-group.model';
 export class DefaultLayoutComponent implements OnInit {
 
   @Input() contentGroups: ContentRecordGroup[];
+  @Input() showAll?: boolean;
 
   @Output() onNavToAllChildType = new EventEmitter<ContentRecordGroup>();
+  @Output() onAddNextPage = new EventEmitter<ContentRecordGroup>();
 
   constructor() { }
 
@@ -21,6 +23,10 @@ export class DefaultLayoutComponent implements OnInit {
 
   navToAllContent(cg: ContentRecordGroup) {
     this.onNavToAllChildType.emit(cg);
+  }
+
+  addNextPage(cg: ContentRecordGroup) {
+    this.onAddNextPage.emit(cg);
   }
 
 }

@@ -2,6 +2,7 @@ package com.enablix.app.content;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -14,6 +15,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
+import com.enablix.analytics.search.SearchClient;
+import com.enablix.analytics.search.SearchInput;
+import com.enablix.analytics.search.SearchInput.ParentFilter;
 import com.enablix.app.content.delete.DeleteContentRequest;
 import com.enablix.app.content.doc.DocumentManager;
 import com.enablix.app.content.event.ContentDataEventListener;
@@ -36,6 +40,8 @@ import com.enablix.core.api.ContentDataRecord;
 import com.enablix.core.api.ContentDataRef;
 import com.enablix.core.api.ContentRecordGroup;
 import com.enablix.core.api.ContentStackItem;
+import com.enablix.core.api.SearchRequest;
+import com.enablix.core.api.SearchRequest.Pagination;
 import com.enablix.core.api.TemplateFacade;
 import com.enablix.core.commons.xsdtopojo.ContainerBusinessCategoryType;
 import com.enablix.core.commons.xsdtopojo.ContainerType;
@@ -78,6 +84,9 @@ public class ContentDataManagerImpl implements ContentDataManager {
 	
 	@Autowired
 	private QualityAlertProcessorFactory alertProcessorFactory;
+	
+	@Autowired
+	private SearchClient searchClient;
 	
 	/*
 	 * Use cases:
@@ -531,10 +540,38 @@ public class ContentDataManagerImpl implements ContentDataManager {
 						
 				if (CollectionUtil.isEmpty(childQIds) || childQIds.contains(concreteQId)) {
 					
-					FetchContentRequest request = new FetchContentRequest(
-							templateId, childQId, parentIdentity, null, pageable);
+					Object data = null;
 					
-					Object data = fetchDataJson(request, view);
+					if (StringUtil.hasText(textQuery)) {
+						
+						SearchInput input = new SearchInput();
+						input.setContentQIds(Collections.singletonList(concreteQId));
+						
+						ParentFilter parent = new ParentFilter();
+						parent.setIdentity(parentIdentity);
+						parent.setQualifiedId(parentQId);
+						
+						input.setParent(parent);
+						
+						SearchRequest request = new SearchRequest();
+						request.setTextQuery(textQuery);
+						
+						Pagination pagination = new Pagination();
+						pagination.setPageNum(pageable.getPageNumber());
+						pagination.setPageSize(pageable.getPageSize());
+
+						request.setPagination(pagination);
+						input.setRequest(request );
+						
+						data = searchData(input, template, view);
+						
+					} else {
+						
+						FetchContentRequest request = new FetchContentRequest(
+								templateId, childQId, parentIdentity, null, pageable);
+						
+						data = fetchDataJson(request, view);
+					}
 					
 					ContentRecordGroup contentGroup = new ContentRecordGroup();
 					contentGroup.setContentQId(childQId);
@@ -565,6 +602,10 @@ public class ContentDataManagerImpl implements ContentDataManager {
 		return contentGroups;
 	}
 	
+	private Object searchData(SearchInput input, TemplateFacade template, DataView dataView) {
+		return searchClient.searchTypeRecords(input, template, dataView);
+	}
+
 	@Override
 	public List<ContentRecordGroup> fetchRecordAndChildData(String contentQId, String contentIdentity, 
 			Pageable childPagination, List<String> childQIds, String textQuery, DataView view) {

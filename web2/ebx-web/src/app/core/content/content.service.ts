@@ -242,11 +242,13 @@ export class ContentService {
     });
   }
 
-  getRecordAndChildData(contentQId: string, contentIdentity: string, childSizeLimit?: string, atChannel?: string, childQIds?: any, textQuery?: string, ): Observable<any> {
+  getRecordAndChildData(contentQId: string, contentIdentity: string, childPageNo: string = '0', childSizeLimit?: string, atChannel?: string, childQIds?: any, textQuery?: string, ): Observable<any> {
          
     var options: any = {};
+    options.params = {pageNum: childPageNo};
+
     if (childSizeLimit) {
-      options.params = {size: childSizeLimit};
+      options.params.size = childSizeLimit;
     }
 
     if (atChannel) {
@@ -254,16 +256,14 @@ export class ContentService {
     }
 
     if (childQIds) {
-      if (!options.params) {
-        options.params = {};
-      }
+      options.params['cqid'] = childQIds;
+    }
+
+    if (childQIds) {
       options.params['cqid'] = childQIds;
     }
 
     if (textQuery) {
-      if (!options.params) {
-        options.params = {};
-      }
       options.params['tq'] = textQuery;
     }
 

@@ -1,5 +1,6 @@
 package com.enablix.app.web;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.enablix.analytics.search.SearchClient;
+import com.enablix.analytics.search.SearchInput;
 import com.enablix.app.content.ui.search.RefListItemCount;
 import com.enablix.app.content.ui.search.UIFilterService;
 import com.enablix.app.template.service.TemplateManager;
@@ -100,8 +102,14 @@ public class GenericDataFetchController {
 	}
 
 	private Page<?> searchViaSearchClient(SearchRequest searchRequest, TemplateFacade template, String containerQId) {
+		
 		DataView userView = dataSegmentService.getDataViewForUserId(ProcessContext.get().getUserId());
-		return searchClient.searchTypeRecords(containerQId, template, searchRequest, userView);
+		
+		SearchInput input = new SearchInput();
+		input.setContentQIds(Collections.singletonList(containerQId));
+		input.setRequest(searchRequest);
+		
+		return searchClient.searchTypeRecords(input, template, userView);
 	}
 
 	@RequestMapping(method = RequestMethod.POST, value="/cfc/{containerQId}/",

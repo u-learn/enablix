@@ -14,7 +14,7 @@
     </div>
     <div class="main" *ngIf="!noChildren && children && children.length > 0">
         <div>
-            <ebx-default-layout *ngIf="layout == 'default'" [contentGroups]="children" (onNavToAllChildType)="navToAllContent($event)"></ebx-default-layout>
+            <ebx-default-layout *ngIf="layout == 'default'" [contentGroups]="children" (onNavToAllChildType)="navToAllContent($event)" [showAll]="seeAll" (onAddNextPage)="addNextDataPage($event)"></ebx-default-layout>
             <ebx-content-mapping-layout *ngIf="layout == 'cm'" [contentGroups]="children" [config]="layoutConfig"></ebx-content-mapping-layout>
             <!-- <div class="content-types-container">
                 <div *ngFor="let cg of children">

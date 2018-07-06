@@ -167,6 +167,7 @@ public class FetchContentDataController {
 			@PathVariable String contentQId, 
 			@PathVariable String contentIdentity,
 			@RequestParam(required=false) String size,
+			@RequestParam(required=false) String pageNum,
 			@RequestParam(name="cqid", required=false) List<String> cqIds,
 			@RequestParam(name="tq", required=false) String textQuery) {
 		
@@ -174,7 +175,8 @@ public class FetchContentDataController {
 		
 		Pageable pageable = null;
 		if (StringUtil.hasText(size)) {
-			pageable = createPaginationInfo("0", size);
+			pageNum = StringUtil.hasText(pageNum) ? pageNum : "0";
+			pageable = createPaginationInfo(pageNum, size);
 		}
 		
 		DataView userDataView = dataSegmentService.getDataViewForUserId(ProcessContext.get().getUserId());

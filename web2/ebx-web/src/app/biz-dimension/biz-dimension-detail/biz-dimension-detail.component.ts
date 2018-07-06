@@ -33,6 +33,10 @@ export class BizDimensionDetailComponent implements OnInit, AfterViewInit {
   layout: string;
   layoutConfig: any;
 
+  seeAll: boolean;
+  pageSize: string;
+  textQuery: string;
+
   constructor(private contentService: ContentService,
               private alert: AlertService,
               private route: ActivatedRoute, 
@@ -53,6 +57,7 @@ export class BizDimensionDetailComponent implements OnInit, AfterViewInit {
 
     var qParams = this.route.snapshot.queryParams;
     let reqLayout = qParams['layout'];
+    this.seeAll = qParams['all'] == 'true';
 
     this.layout = 'default';
     let cgSize = "3";
@@ -64,54 +69,90 @@ export class BizDimensionDetailComponent implements OnInit, AfterViewInit {
       this.layout = this.layoutConfig.type;
     }
 
+    if (this.seeAll) {
+      cgSize = '50';
+    }
+
+    this.pageSize = cgSize;
+
     this.route.params.subscribe(params => {
       let cQId = params['cQId'];
       let recIdentity = params['identity'];
 
       let filters = this.sbService.buildFiltersFromQueryParams(qParams);
       let childQIds = filters['cqid'];
-      let textQuery = this.sbService.getTextQueryFromQueryParams(qParams);
+      this.textQuery = this.sbService.getTextQueryFromQueryParams(qParams);
 
-      this.contentService.getRecordAndChildData(cQId, recIdentity, cgSize, Constants.AT_CHANNEL_WEB, childQIds, textQuery)
-          .subscribe(
-              res => {
+      this.contentService.getRecordAndChildData(cQId, recIdentity, '0', cgSize, 
+                Constants.AT_CHANNEL_WEB, childQIds, this.textQuery).subscribe(
+        res => {
 
-                var childContainerWithData = [];
-                for (var i = 0; i < res.length; i++) {
+          var childContainerWithData = [];
+          for (var i = 0; i < res.length; i++) {
 
-                  let contentGrp = res[i];
+            let contentGrp = res[i];
 
-                  let container = this.ctService.getContainerByQId(contentGrp.contentQId);
-                  if (container.linkContainerQId) {
-                    contentGrp.linkContainer = container;
-                    childContainerWithData.push(container.qualifiedId);
-                    container = this.ctService.getContainerByQId(container.linkContainerQId);
-                  } else {
-                    childContainerWithData.push(container.qualifiedId);
-                  }
+            let container = this.ctService.getContainerByQId(contentGrp.contentQId);
+            if (container.linkContainerQId) {
+              contentGrp.linkContainer = container;
+              childContainerWithData.push(container.qualifiedId);
+              container = this.ctService.getContainerByQId(container.linkContainerQId);
+            } else {
+              childContainerWithData.push(container.qualifiedId);
+            }
 
-                  if (contentGrp.contentQId == cQId) {
-                    
-                    this.record = contentGrp.records.content[0];
-                    this.container = container;
-                    
-                  }
+            if (contentGrp.contentQId == cQId) {
+              
+              this.record = contentGrp.records.content[0];
+              this.container = container;
+              
+            }
 
-                  contentGrp.container = container;
-                  contentGrp.records.content.forEach(rec => {
-                    this.contentService.decorateRecord(container, rec);
-                  });
-                }
+            contentGrp.container = container;
+            contentGrp.records.content.forEach(rec => {
+              this.contentService.decorateRecord(container, rec);
+            });
+          }
 
-                let filterIds = this.sbService.getFilterIdsFromQueryParams(qParams);
-                this.globalSearchCtrl.setBizDimDetailSearchBar(this.container, null, this.record, filterIds, textQuery);
+          let filterIds = this.sbService.getFilterIdsFromQueryParams(qParams);
+          this.globalSearchCtrl.setBizDimDetailSearchBar(this.container, null, this.record, filterIds, this.textQuery);
 
-                this.children = res.filter(cg => cg.contentQId != cQId);
-                this.noChildren = (!this.children || this.children.length == 0);
-              }
-            );
+          this.children = res.filter(cg => cg.contentQId != cQId);
+          this.noChildren = (!this.children || this.children.length == 0);
+        }
+      );
     });
 
+  }
+
+  addNextDataPage(cg: ContentRecordGroup) {
+
+    var childQIds = [cg.container.qualifiedId];
+
+    this.contentService.getRecordAndChildData(this.container.qualifiedId, this.record.identity, 
+              String(cg.records.number+1), this.pageSize, Constants.AT_CHANNEL_WEB, childQIds, this.textQuery).subscribe(
+      res => {
+
+        for (var i = 0; i < res.length; i++) {
+
+          let contentGrp = res[i];
+          if (cg.contentQId == contentGrp.contentQId) {
+            contentGrp.records.content.forEach(rec => {
+              this.contentService.decorateRecord(cg.container, rec);
+              cg.records.content.push(rec);
+            });
+
+            cg.records.first = contentGrp.records.first;
+            cg.records.last = contentGrp.records.last;
+            cg.records.number = contentGrp.records.number;
+            cg.records.numberOfElements = contentGrp.records.numberOfElements;
+
+            break;
+          }
+        }
+
+      }
+    );
   }
 
   ngAfterViewInit(): void {
@@ -150,10 +191,17 @@ export class BizDimensionDetailComponent implements OnInit, AfterViewInit {
   }
 
   navToAllContent(contentGrp: ContentRecordGroup) {
-    let paramId = "sf_" + contentGrp.linkContainer.linkContentItemId;
+    let paramId = "sf_cqid";
     let queryParams: { [key: string] : string } = {};
-    queryParams[paramId] = this.record.identity;
-    this.navService.goToContentList(contentGrp.container.qualifiedId, queryParams);
+    queryParams[paramId] = contentGrp.container.qualifiedId;
+    queryParams['all'] = 'true';
+    
+    var textQuery = this.route.snapshot.queryParams['tq'];
+    if (textQuery) {
+      queryParams['tq'] = textQuery;
+    }
+
+    this.navService.goToDimDetail(this.container.qualifiedId, this.record.identity, queryParams);
   }
 
   goBackHome() {
