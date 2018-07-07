@@ -20,7 +20,6 @@ import com.enablix.core.api.IDocument;
 import com.enablix.core.domain.config.Configuration;
 import com.enablix.ms.graph.MSGraphException;
 import com.enablix.ms.graph.MSGraphSDK;
-import com.enablix.ms.graph.MSGraphSession;
 import com.enablix.ms.graph.model.OneDriveFile;
 import com.enablix.ms.graph.model.ParentReference;
 
@@ -34,6 +33,9 @@ public class OneDriveDocumentStore extends AbstractDocumentStore<OneDriveDocumen
 	
 	@Autowired
 	private MSGraphSDK msGraphSDK;
+	
+	@Autowired
+	private AuthenticatedActionExecutor actionExecutor;
 
 	@Override
 	public OneDriveDocumentMetadata save(OneDriveDocument document, String contentPath) throws IOException {
@@ -45,29 +47,32 @@ public class OneDriveDocumentStore extends AbstractDocumentStore<OneDriveDocumen
 		
 		Configuration config = getDocStoreConfiguration();
 		
-		String baseFolder = OneDriveUtil.getBaseFolder(config);
-		MSGraphSession msSession = login(config);
-		
-		String filePath = createFilepath(baseFolder, contentPath);
-		OneDriveDocumentMetadata docInfo = doc.getDocInfo();
-		String filename = docInfo.getName();
-	    String fileLocation = filePath + "/" + filename;
-	    
-		try {
-		
-			OneDriveFile oneDriveFile = msGraphSDK.uploadFile(
-					msSession, filePath, filename, doc.getDataStream(), doc.getContentLength());
+		actionExecutor.loginAndExecute(config, (msSession) -> {
 			
-			docInfo.setLocation(
-		    		OneDriveUtil.getFileLocationRelativeToBaseFolder(fileLocation, baseFolder));
+			String baseFolder = OneDriveUtil.getBaseFolder(config);
 			
-			setOneDriveIds(docInfo, oneDriveFile);
+			String filePath = createFilepath(baseFolder, contentPath);
+			OneDriveDocumentMetadata docInfo = doc.getDocInfo();
+			String filename = docInfo.getName();
+		    String fileLocation = filePath + "/" + filename;
+		    
+			try {
 			
-		} catch (MSGraphException e) {
-			LOGGER.error("Failed to upload file on one drive", e);
-			throw new IOException("Failed to uploade file on one drive", e);
-		}
-
+				OneDriveFile oneDriveFile = msGraphSDK.uploadFile(
+						msSession, filePath, filename, doc.getDataStream(), doc.getContentLength());
+				
+				docInfo.setLocation(
+			    		OneDriveUtil.getFileLocationRelativeToBaseFolder(fileLocation, baseFolder));
+				
+				setOneDriveIds(docInfo, oneDriveFile);
+				
+			} catch (MSGraphException e) {
+				LOGGER.error("Failed to upload file on one drive", e);
+				throw new IOException("Failed to uploade file on one drive", e);
+			}
+			
+			return null;
+		});
 	    
 	}
 	
@@ -82,27 +87,6 @@ public class OneDriveDocumentStore extends AbstractDocumentStore<OneDriveDocumen
 		
 	}
 
-	private MSGraphSession login(Configuration config) throws IOException {
-		
-		MSGraphSession spSession;
-		
-		try {
-			
-			String clientId = OneDriveUtil.getAppId(config);
-			String clientSecret = OneDriveUtil.getAppPassword(config);
-			String orgId = OneDriveUtil.getDriveOrgId(config);
-			String driveOwnerId = OneDriveUtil.getDriveOwnerId(config);
-			
-			spSession = msGraphSDK.loginAsApp(clientId, clientSecret, orgId, driveOwnerId);
-			
-		} catch (MSGraphException e) {
-			LOGGER.error("Unable to login", e);
-			throw new IOException("Failed to login to one drive", e);
-		}
-		
-		return spSession;
-	}
-
 	@Override
 	public OneDriveDocument load(OneDriveDocumentMetadata docMetadata) throws IOException {
 		return load(docMetadata, (is) -> new OneDriveDocument(is, docMetadata));
@@ -110,59 +94,62 @@ public class OneDriveDocumentStore extends AbstractDocumentStore<OneDriveDocumen
 	
 	public <R> R load(OneDriveDocumentMetadata docMetadata, Function<InputStream, R> func) throws IOException {
 		
-		R document = null;
+		Configuration config = getDocStoreConfiguration();
 		
-		try {
+		return actionExecutor.loginAndExecute(getDocStoreConfiguration(), (msSession) -> {
 			
-			Configuration config = getDocStoreConfiguration();
+			R document = null;
 			
-			MSGraphSession msSession = login(config);
-			
-			String driveFileId = docMetadata.getDriveFileId();
-			
-			InputStream fileStream = driveFileId != null ?
-					msGraphSDK.getFileStreamById(msSession, driveFileId) :
-					msGraphSDK.getFileStreamByPath(msSession, 
-						OneDriveUtil.createFileLocationWithBaseFolder(
-								docMetadata.getLocation(), OneDriveUtil.getBaseFolder(config)));
-		    
-		    document = func.apply(fileStream);
-		    
-		} catch(MSGraphException ex){
+			try {
+				
+				String driveFileId = docMetadata.getDriveFileId();
+				
+				InputStream fileStream = driveFileId != null ?
+						msGraphSDK.getFileStreamById(msSession, driveFileId) :
+						msGraphSDK.getFileStreamByPath(msSession, 
+							OneDriveUtil.createFileLocationWithBaseFolder(
+									docMetadata.getLocation(), OneDriveUtil.getBaseFolder(config)));
+			    
+			    document = func.apply(fileStream);
+			    
+			} catch(MSGraphException ex){
 
-			LOGGER.error("Error loading document from One Drive server", ex);
-			throw new IOException(ex.getMessage(), ex);
-		}
+				LOGGER.error("Error loading document from One Drive server", ex);
+				throw new IOException(ex.getMessage(), ex);
+			}
 
-		return document;
+			return document;
+
+		});
 	}
 	
 	@Override
 	public OneDriveDocumentMetadata move(OneDriveDocumentMetadata docMetadata, String newContentPath) throws IOException {
 
 		Configuration config = getDocStoreConfiguration();
-		String baseFolder = OneDriveUtil.getBaseFolder(config);
 		
-		MSGraphSession spSession = login(config);
-		
-		String moveToFilepath = createFilepath(baseFolder, newContentPath);
-		String filename = docMetadata.getName();
-		String moveToFileLocation = createFileLocation(moveToFilepath, filename);
-		
-		try {
+		return actionExecutor.loginAndExecute(config, (msSession) -> {
 			
-			msGraphSDK.moveFile(spSession, docMetadata.getDriveFileId(), moveToFilepath, filename);
-			docMetadata.setFileLocation(
-					OneDriveUtil.getFileLocationRelativeToBaseFolder(moveToFileLocation, baseFolder));
+			String baseFolder = OneDriveUtil.getBaseFolder(config);
+			String moveToFilepath = createFilepath(baseFolder, newContentPath);
+			String filename = docMetadata.getName();
+			String moveToFileLocation = createFileLocation(moveToFilepath, filename);
 			
-		} catch (MSGraphException e) {
-			
-			String msg = "Unable to move file [" + filename + "] to [" + moveToFileLocation + "]";
-			LOGGER.error(msg, e);
-			throw new IOException(msg, e);
-		}
-		    
-		return docMetadata;
+			try {
+				
+				msGraphSDK.moveFile(msSession, docMetadata.getDriveFileId(), moveToFilepath, filename);
+				docMetadata.setFileLocation(
+						OneDriveUtil.getFileLocationRelativeToBaseFolder(moveToFileLocation, baseFolder));
+				
+			} catch (MSGraphException e) {
+				
+				String msg = "Unable to move file [" + filename + "] to [" + moveToFileLocation + "]";
+				LOGGER.error(msg, e);
+				throw new IOException(msg, e);
+			}
+			    
+			return docMetadata;
+		});
 	}
 
 	private String createFileLocation(String filepath, String filename) {
@@ -172,19 +159,24 @@ public class OneDriveDocumentStore extends AbstractDocumentStore<OneDriveDocumen
 	@Override
 	public void delete(OneDriveDocumentMetadata docMetadata) throws IOException {
 		
-		try {
+		Configuration config = getDocStoreConfiguration();
+		
+		actionExecutor.loginAndExecute(config, (msSession) -> {
+
+			try {
+				
+				msGraphSDK.deleteFile(msSession, docMetadata.getDriveFileId());
+				
+			} catch(MSGraphException ex){
+				
+				String msg = "Error deleting file [" + docMetadata.getFileLocation() + "] from One Drive";
+				LOGGER.error(msg, ex);
+				throw new IOException(msg, ex);
+				
+			}
 			
-			Configuration config = getDocStoreConfiguration();
-			MSGraphSession msSession = login(config);
-			msGraphSDK.deleteFile(msSession, docMetadata.getDriveFileId());
-			
-		} catch(MSGraphException ex){
-			
-			String msg = "Error deleting file [" + docMetadata.getFileLocation() + "] from One Drive";
-			LOGGER.error(msg, ex);
-			throw new IOException(msg, ex);
-			
-		} 
+			return null;
+		});
 
 	}
 

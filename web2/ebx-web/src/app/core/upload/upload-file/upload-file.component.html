@@ -9,6 +9,9 @@
 <div class="content-uploading" *ngIf="loading">
   <img src="/assets/images/icons/loading_icon.gif">
 </div>
+<div class="input-error" *ngIf="loadingFailed" style="margin-bottom: 24px;">
+  Error uploading file: {{errorMsg}}
+</div>
 <div *ngIf="newContent" class="preview-tag">
   <ebx-select [formControl]="contentTypeCtrl"
       placeholder="Select content type"
@@ -18,6 +21,6 @@
   </div>
 </div>
 <div class="actionBtns">
-  <button class="action" *ngIf="newContent" (click)="captureFile()" [disabled]="loading">Add</button>
+  <button class="action" *ngIf="newContent" (click)="captureFile()" [disabled]="loading || loadingFailed">Add</button>
   <button class="cancel" mat-dialog-close>Cancel</button>
 </div>

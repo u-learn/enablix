@@ -12,6 +12,7 @@ import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
 
 import com.enablix.ms.graph.MSGraphException;
@@ -50,6 +51,10 @@ public class AppLoginHandler {
 			oauth20Token = responseEntity.getBody();
 			
 		} catch (URISyntaxException e) {
+			
+			MSGraphUtil.logAndThrowMSGraphException(LOGGER, "Unable to login", e);
+			
+		} catch (HttpStatusCodeException e) {
 			MSGraphUtil.logAndThrowMSGraphException(LOGGER, "Unable to login", e);
 		}
 		

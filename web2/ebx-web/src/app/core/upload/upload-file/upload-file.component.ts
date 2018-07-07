@@ -22,6 +22,8 @@ export class UploadFileComponent implements OnInit {
   previewImageUrl: string;
 
   loading: boolean = false;
+  loadingFailed: boolean = false;
+  errorMsg: string;
 
   contentTypeCtrl: FormControl;
   contentTypes: SelectOption[];
@@ -115,7 +117,14 @@ export class UploadFileComponent implements OnInit {
         }
       },
       err => {
+        
         this.alert.error("Error uploading file. Please try again later.", err.status);
+        
+        if (err.error) {
+          this.errorMsg = err.error.errorMessage;
+        }
+
+        this.loadingFailed = true;
         this.loading = false;
       });
   }

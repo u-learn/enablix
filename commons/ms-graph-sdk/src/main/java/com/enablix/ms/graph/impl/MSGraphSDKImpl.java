@@ -1,5 +1,6 @@
 package com.enablix.ms.graph.impl;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
@@ -23,6 +24,7 @@ import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
 
@@ -160,10 +162,20 @@ public class MSGraphSDKImpl implements MSGraphSDK {
 		
 			response = httpClient.execute(request);
 			
-			if (response.getStatusLine().getStatusCode() == org.apache.http.HttpStatus.SC_NOT_FOUND) {
+			int statusCode = response.getStatusLine().getStatusCode();
+			if (statusCode == org.apache.http.HttpStatus.SC_NOT_FOUND) {
 				LOGGER.error("File [{}] not found", filePointer);
 				throw new MSGraphException("File not found");
+			}
+			
+			if (statusCode == org.apache.http.HttpStatus.SC_UNAUTHORIZED) {
 				
+				ByteArrayOutputStream bos = new ByteArrayOutputStream();
+				response.getEntity().writeTo(bos);
+				String res = bos.toString();
+				LOGGER.error("Authentication Failed: {}", res);
+				
+				throw new HttpClientErrorException(HttpStatus.UNAUTHORIZED, "Authentication Failed");
 			}
 			
 			dataStream = response.getEntity().getContent();
