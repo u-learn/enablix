@@ -5,8 +5,9 @@
       <div class="sub-tabs">
         <a routerLink="/portal/reports" routerLinkActive="tab-active" [routerLinkActiveOptions]="{ exact: true }">All Activity</a>
         <ng-container *ngFor="let rpt of reports">
-          <a [class.tab-active]="rpt.id == selectedRpt?.id" (click)=navToReport(rpt)>{{rpt.name}}</a>
+          <a *ebxAccess="'VIEW_REPORT-' + rpt.id" [class.tab-active]="rpt.id == selectedRpt?.id" (click)=navToReport(rpt)>{{rpt.name}}</a>
         </ng-container>
+        <a routerLink="/portal/reports/content-engagement" routerLinkActive="tab-active"  *ebxAccess="'VIEW_REPORT-content-engagement-summary'">Content Engagement</a>
       </div>
       <div class="tab-content" *ngIf="selectedRpt">
         <ebx-report-detail [reportConfig]="selectedRpt"></ebx-report-detail>

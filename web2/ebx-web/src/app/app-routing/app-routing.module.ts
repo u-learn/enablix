@@ -42,6 +42,7 @@ import { ActivityAuditComponent } from '../reports/activity-audit/activity-audit
 import { AuditActivityResolve } from './audit-activity.resolve';
 import { ContainerTemplateComponent } from '../company/container-template/container-template.component';
 import { CpWidgetDetailComponent } from '../ui-widget/content-pack-widget/cp-widget-detail/cp-widget-detail.component';
+import { ContentEngagementComponent } from '../reports/content-engagement/content-engagement.component';
 
 const routes: Routes = [
   {
@@ -225,6 +226,10 @@ const routes: Routes = [
               resolve: {
                 actTypes: AuditActivityResolve
               }
+            },
+            {
+              path: 'content-engagement',
+              component: ContentEngagementComponent
             }
           ]
         },

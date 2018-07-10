@@ -17,7 +17,8 @@ export class ReportService {
 
   passThruValidator = new PassThroughDataFilterValidator();
 
-  constructor(private userPrefService: UserPreferenceService,
+  constructor(
+      private userPrefService: UserPreferenceService,
       private activityTrendRptService: ActivityTrendReportService,
       private activitySummaryRptService: ActivitySummaryReportService,
       private contentCoverageRptService: ContentCoverageReportService) { }

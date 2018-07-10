@@ -15,6 +15,8 @@ import { ActivityTrendReportService } from './activity-trend-report.service';
 import { ReportDetailComponent } from './report-detail/report-detail.component';
 import { HeatmapChartComponent } from './heatmap-chart/heatmap-chart.component';
 import { ActivityAuditComponent } from './activity-audit/activity-audit.component';
+import { ContentEngagementComponent } from './content-engagement/content-engagement.component';
+import { ContentEngagementDistributionComponent } from './content-engagement/content-engagement-distribution/content-engagement-distribution.component';
 
 @NgModule({
   imports: [
@@ -33,10 +35,15 @@ import { ActivityAuditComponent } from './activity-audit/activity-audit.componen
     ReportsHomeComponent,
     ReportDetailComponent,
     HeatmapChartComponent,
-    ActivityAuditComponent
+    ActivityAuditComponent,
+    ContentEngagementComponent,
+    ContentEngagementDistributionComponent
   ],
   exports: [
     ReportsHomeComponent
-  ]
+  ],
+  entryComponents: [
+    ContentEngagementDistributionComponent
+  ],
 })
 export class ReportsModule { }

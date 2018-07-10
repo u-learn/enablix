@@ -1,0 +1,15 @@
+@import '~styles/colors.scss';
+
+.table-content {
+  .right-align {
+    text-align: right;
+    padding-right: 40px;
+  }
+
+  .nav-link {
+    cursor: pointer;
+    &:hover {
+      color: $blue-med-20;
+    }
+  }
+}
