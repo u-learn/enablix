@@ -126,22 +126,22 @@ export class ContentEngagementComponent implements OnInit {
       {
         heading: "Internal Downloads",
         key: "internalDownload",
-        sortProp: "internalDownload.count"
+        sortProp: "internalDownloads.count"
       },
       {
         heading: "External Downloads",
         key: "externalDownload",
-        sortProp: "externalDownload.count"
+        sortProp: "externalDownloads.count"
       },
       {
         heading: "Internal Shares",
-        key: "externalShares",
-        sortProp: "externalShares.count"
+        key: "internalShares",
+        sortProp: "internalShares.count"
       },
       {
         heading: "External Shares",
         key: "externalShares.count",
-        sortProp: "externalShares"
+        sortProp: "externalShares.count"
       }
     ];
 
@@ -173,6 +173,7 @@ export class ContentEngagementComponent implements OnInit {
 
     searchRequest.filterMetadata = {};
     searchRequest.filters = {};
+    searchRequest.pagination = this.pagination;
 
     this.dsService.getDataSearchResult(CONTENT_ENGAGEMENT_DOMAIN, searchRequest).subscribe((data) => {
       this.dataPage = data;
