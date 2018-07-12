@@ -1,12 +1,48 @@
-<div class="header">
-  <h1>Recommended</h1>
-  <p class="subheader">This content is recommended for you.</p>
-  <div><a class="cta-link">See More</a></div>
-</div>
-<div class="main featured">
-  <div class="card-container">
-    <div class="data-card" *ngFor="let rec of (data ? data.content : [])">
-      <ebx-data-card [containerQId]="rec.data.contentQId" [recordIdentity]="rec.data.instanceIdentity"></ebx-data-card>
+<ng-container *ngIf="layout == 'widget'">
+  <div class="header">
+    <h1>Recommended</h1>
+    <p class="subheader">This content is recommended for you.</p>
+    <div><a class="cta-link">See More</a></div>
+  </div>
+  <div class="main featured">
+    <div class="card-container">
+      <div class="data-card" *ngFor="let rec of (data ? data.content : [])">
+        <ebx-data-card [containerQId]="rec.data.contentQId" [recordIdentity]="rec.data.instanceIdentity"></ebx-data-card>
+      </div>
     </div>
   </div>
+</ng-container>
+<div *ngIf="layout == 'sidebar'" class="activity-sidebar">
+    <div class="header">
+        <h1>Recent Updates</h1>
+        <div><a class="cta-link" routerLink="/portal/recentlist">See More</a></div>
+    </div>
+    <div>
+      <div class="activity-table">
+        <table>
+          <tr class="content" *ngFor="let a of (data ? data.content : [])">
+            <td>
+              <div class="activity inSidebar">
+                <div>
+                  <div class="activity-detail narrow asset-thumbnail">
+                    <div class="description" ellipsis ellipsis-resize-detection="window">
+                      {{getTextDescription(a)}}
+                    </div>
+                    <div class="date-modified">
+                      {{a.createdAt | ebxDate}}
+                    </div>
+                  </div>
+                  <div class="content-icon">
+                    <div class="img-cont" [style.background]="getContentColor(a)" (click)="navToItemDetail(a)">
+                      <img [src]="getIconUrl(a)" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+
+    </div>
 </div>

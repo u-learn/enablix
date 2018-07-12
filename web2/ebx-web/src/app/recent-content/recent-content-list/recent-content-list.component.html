@@ -1,0 +1,27 @@
+<ebx-header></ebx-header>
+<div class="container">
+  <div class="free-results">
+    <div class="header">
+        <h1>Recent Updates <span *ngIf="filters?.lastXDays">(Last {{filters.lastXDays}} Days)</span></h1>
+    </div>
+  </div>
+  <div class="table-content top-border">
+    <ebx-table *ngIf="dataPage" [tableData]="dataPage" [tableColumns]="tableColumns" [(pagination)]="pagination" (onRefreshData)="fetchData()">
+      <ng-template #dataRow let-rec>
+        <td><span class="recent-update-type {{rec.updateType}}">{{rec.updateType}}</span></td>
+        <td>
+          <div class="asset" (click)="navToContent(rec)">
+            <div class="content-icon">
+              <div class="img-cont" [style.background]="getContentColor(rec)" (click)="navToItemDetail(rec)">
+                <img [src]="getIconUrl(rec)" />
+              </div>
+            </div>
+            <div class="title">{{rec.data.title}}</div>
+          </div>
+        </td>
+        <td><div class="center-content"><ebx-type-pill [containerQId]="rec.data.contentQId"></ebx-type-pill></div></td>
+        <td>{{rec.createdAt | ebxDate }}</td>
+      </ng-template>
+    </ebx-table>
+  </div>
+</div>

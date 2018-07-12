@@ -11,6 +11,8 @@ import { AlertService } from '../core/alert/alert.service';
 import { NavigationService } from '../app-routing/navigation.service';
 import { ConfirmDialogComponent } from '../core/confirm-dialog/confirm-dialog.component'; 
 import { ContentDeleteButtonComponent } from '../content-action/content-delete-button/content-delete-button.component';
+import { ContentReqApproveButtonComponent } from '../content-action/content-req-approve-button/content-req-approve-button.component';
+import { ContentReqRejectButtonComponent } from '../content-action/content-req-reject-button/content-req-reject-button.component';
 import { ContentWorkflowService } from '../services/content-workflow.service';
 import { Constants } from '../util/constants';
 
@@ -23,6 +25,8 @@ import { Constants } from '../util/constants';
 export class BizContentComponent implements OnInit, AfterViewInit {
 
   @ViewChildren(ContentDeleteButtonComponent) deleteButtons: QueryList<ContentDeleteButtonComponent>;
+  @ViewChildren(ContentReqApproveButtonComponent) approveBtns: QueryList<ContentReqApproveButtonComponent>;
+  @ViewChildren(ContentReqRejectButtonComponent) rejectBtns: QueryList<ContentReqRejectButtonComponent>;
 
   @Input() record?: any;
   @Input() container?: Container;
@@ -54,6 +58,8 @@ export class BizContentComponent implements OnInit, AfterViewInit {
 
   recordNotFound: boolean = false;
   errors: any = {};
+
+  crAction: string;
 
   constructor(private route: ActivatedRoute, private contentService: ContentService,
               private alert: AlertService, private contentTemplate: ContentTemplateService,
@@ -156,6 +162,7 @@ export class BizContentComponent implements OnInit, AfterViewInit {
     
     this.contentService.decorateRecord(this.container, this.record);
     this.initState();
+    
   }
 
   updateRecordLocalCopy(rec: any) {
@@ -177,6 +184,29 @@ export class BizContentComponent implements OnInit, AfterViewInit {
         });
       }
     });
+
+    var crAction = this.route.snapshot.params['action'];
+    
+    if (crAction) {
+      
+      if (crAction === 'approve') {
+        
+        this.approveBtns.changes.subscribe((comps: QueryList <ContentReqApproveButtonComponent>) => {
+          if (comps.first && this.enableApproveAction) {
+            comps.first.approveRecord();
+          }
+        });
+
+      } else if (crAction === 'reject') {
+        
+        this.rejectBtns.changes.subscribe((comps: QueryList <ContentReqRejectButtonComponent>) => {
+          if (comps.first && this.enableRejectAction) {
+            comps.first.rejectRecord();
+          }
+        });
+      }
+
+    }
   }
 
   private initState() {
@@ -414,6 +444,17 @@ export class BizContentComponent implements OnInit, AfterViewInit {
     }
     this.editing = false;
     this.updateRecordLocalCopy(this.recordBackup);
+  }
+
+  getContentRequestStatusText() {
+    if (this.contentRequest) {
+      if (this.contentRequest.actionHistory.actions && this.contentRequest.actionHistory.actions.length > 0) {
+        var lastAction = this.contentRequest.actionHistory.actions[this.contentRequest.actionHistory.actions.length - 1];
+        let actionName = this.contentWFService.actionDisplayText[lastAction.actionName];
+        return actionName + " by " + lastAction.actorName;
+      }
+    }
+    return '';
   }
 
   ngOnDestroy() {

@@ -70,7 +70,8 @@
         <div class="input-error" [hidden]="!errors.title?.required">
           Please enter title
         </div>
-        <p class="label">Last updated {{(contentRequest ? contentRequest.modifiedAt : record.modifiedAt) | ebxDate}}</p>
+        <p class="label" *ngIf="!contentRequest">Last updated {{record.modifiedAt | ebxDate}}</p>
+        <p class="label" *ngIf="contentRequest">{{getContentRequestStatusText()}} on {{contentRequest.modifiedAt | ebxDate}}</p>
         <div class="row" *ngIf="record?.__decoration?.__docMetadata?.name || (container.docItemId && editing)">
             <p class="label">File</p>
             <div class="text">{{record?.__decoration?.__docMetadata?.name}}</div>

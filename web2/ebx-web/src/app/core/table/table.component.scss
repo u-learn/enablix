@@ -45,22 +45,24 @@ ebx-table {
         th {
             text-align: left;
 
-            &.text-right {
-                text-align: right;
-            }
+            .header-wrapper {
+                display: flex;
+                align-items: center;
 
-            &.text-center {
-                text-align: center;
+                >div {
+                    text-align: right;
+                }
             }
 
             .icon.dropdown {
-                padding: 0 6px;
+                padding: 0px 6px 2px 6px;
                 width: 9px;
                 height: 7px;
                 cursor: pointer;
 
                 &.dir-up {
                     transform: rotate(180deg);
+                    padding: 2px 6px 0px 6px;
                 }
             }
         }
@@ -71,6 +73,14 @@ ebx-table {
 
             >div {
                 display: flex;
+            }
+
+            &.text-right, .text-right {
+                text-align: right;
+            }
+
+            &.text-center, .text-center {
+                text-align: center;
             }
         }
 

@@ -26,19 +26,21 @@ export class ContentEngagementDistributionComponent implements OnInit {
       chart: {
         type: 'pieChart',
         height: 500,
-        x: function(d){return d.label;},
-        y: function(d){return d.count;},
+        x: function(d) { return d.label + " (" + d.count + ")"; },
+        y: function(d) { return d.count; },
         showLabels: true,
         duration: 500,
         labelThreshold: 0.01,
         labelSunbeamLayout: true,
         legend: {
-            margin: {
-                top: 5,
-                right: 35,
-                bottom: 5,
-                left: 0
-            }
+        },
+        tooltip: {
+          contentGenerator: function(d) { 
+            return '<table><tbody><tr><td class="legend-color-guide">' +
+                    '<div style="background-color: ' + d.color + '"></div></td>' + 
+                    '<td class="key">' + d.data.label + '</td><td class="value">' + d.data.count + '</td>' +
+                    '</tr></tbody></table>';
+          }
         }
       }
     };

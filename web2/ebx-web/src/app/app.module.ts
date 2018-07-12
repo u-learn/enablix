@@ -99,6 +99,7 @@ import { ContentPickerButtonComponent } from './content-action/content-picker-bu
 import { ContentBrowserComponent } from './content-browser/content-browser.component';
 import { ContentBrowserSearchControllerService } from './content-browser/content-browser-search-controller.service';
 import { AddBizContentDialogButtonComponent } from './content-action/add-biz-content-dialog-button/add-biz-content-dialog-button.component';
+import { RecentContentListComponent } from './recent-content/recent-content-list/recent-content-list.component';
 
 @NgModule({
   declarations: [
@@ -172,7 +173,8 @@ import { AddBizContentDialogButtonComponent } from './content-action/add-biz-con
     EmbedHtmlPreviewComponent,
     ContentBrowserComponent,
     ContentPickerButtonComponent,
-    AddBizContentDialogButtonComponent
+    AddBizContentDialogButtonComponent,
+    RecentContentListComponent
   ],
   imports: [
     BrowserModule,

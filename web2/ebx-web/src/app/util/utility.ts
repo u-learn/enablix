@@ -67,6 +67,20 @@ export class Utility {
     return obj == null || obj == undefined;
   }
 
+  static readSearchFiltersInQueryParams(queryParams: any) {
+    
+    var filters = null;
+    
+    for (let param in  queryParams) {
+      if (param.startsWith("sf_")) {
+        if (!filters) filters = {};
+        filters[param.substr(3)] = queryParams[param];
+      }
+    }
+
+    return filters;
+  }
+
   static syncPostAjaxCall(url: string, data: any, callback: (responseText: string) => void) {
     
     var xhttp = new XMLHttpRequest();

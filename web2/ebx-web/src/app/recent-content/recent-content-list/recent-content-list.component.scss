@@ -1,0 +1,46 @@
+.recent-update-type {
+  display: block;
+  color: #fff;
+  text-transform: lowercase;
+  padding: 4px 8px;
+  border-radius: 4px;
+  width: 60px;
+  text-align: center;
+
+  &.NEW {
+    background-color: #2ecc71;  
+  }
+
+  &.UPDATED {
+    background-color: #e67e22;
+  }
+}
+
+.table-content {
+  
+  .asset {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+
+    .content-icon {
+      height: 40px;
+      overflow-y: hidden;
+      overflow-x: hidden;
+      padding-left: 8px;
+      margin-right: 16px;
+
+      .img-cont {
+        width: 64px;
+        border-radius: 2px;
+        min-height: 40px;
+        cursor: pointer;
+
+        img {
+            max-width: 64px;
+            border-radius: 2px;
+        }    
+      }    
+    }
+  }
+}

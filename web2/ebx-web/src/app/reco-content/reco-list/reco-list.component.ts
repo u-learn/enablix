@@ -26,7 +26,7 @@ export class RecoListComponent implements OnInit {
       
       this.pageNum = queryParams['pageNum'] || 0;
       this.pageSize = queryParams['pageSize'] || 20;
-      
+
       this.recoContentService.fetchRecoContent(this.pageSize, this.pageNum).subscribe(res => {
           this.recoList = res;
         }, err => {

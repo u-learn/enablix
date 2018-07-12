@@ -112,36 +112,48 @@ export class ContentEngagementComponent implements OnInit {
       {
         heading: "Title",
         key: "contentTitle",
-        sortProp: "contentTitle"
+        sortProp: "contentTitle",
+        headerCssClass: "small-font content-title-col"
       },
       {
         heading: "Type",
-        key: "contentType"
+        key: "contentType",
+        headerCssClass: "small-font content-type-col"
       },
       {
         heading: "Internal Access",
         key: "internalAccess",
-        sortProp: "internalAccess.count"
+        sortProp: "internalAccess.count",
+        dataType: DataType.NUMBER,
+        headerCssClass: "small-font"
       },
       {
         heading: "Internal Downloads",
         key: "internalDownload",
-        sortProp: "internalDownloads.count"
+        sortProp: "internalDownloads.count",
+        dataType: DataType.NUMBER,
+        headerCssClass: "small-font"
       },
       {
         heading: "External Downloads",
         key: "externalDownload",
-        sortProp: "externalDownloads.count"
+        sortProp: "externalDownloads.count",
+        dataType: DataType.NUMBER,
+        headerCssClass: "small-font"
       },
       {
         heading: "Internal Shares",
         key: "internalShares",
-        sortProp: "internalShares.count"
+        sortProp: "internalShares.count",
+        dataType: DataType.NUMBER,
+        headerCssClass: "small-font"
       },
       {
         heading: "External Shares",
         key: "externalShares.count",
-        sortProp: "externalShares.count"
+        sortProp: "externalShares.count",
+        dataType: DataType.NUMBER,
+        headerCssClass: "small-font"
       }
     ];
 

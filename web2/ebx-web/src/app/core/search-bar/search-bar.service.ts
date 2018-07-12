@@ -11,7 +11,7 @@ import { Container } from '../../model/container.model';
 import { LocalDataset } from './local-dataset';
 import { BoundedItemsDSBuilderService } from './bounded-items-dsbuilder.service';
 import { LinkedContainerDsbuilderService } from './linked-container-dsbuilder.service';
-
+import { Utility } from '../../util/utility';
 
 /**
   
@@ -97,7 +97,9 @@ export class SearchBarService {
           
           item.routeParams = [cont.qualifiedId];
           return item;
-        })
+        });
+
+      Utility.sortArrayByLabel(bizContentSearchItems);
 
       this.bizContentListDataset = new LocalDataset("Content Types", bizContentSearchItems);
 

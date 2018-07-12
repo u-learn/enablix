@@ -58,6 +58,7 @@ export class ContentWorkflowService {
   static ACTION_WITHDRAW = "WITHDRAW";
   static ACTION_PUBLISH = "PUBLISH";
   static ACTION_DISCARD = "DISCARD";
+  static ACTION_SUBMIT = "SUBMIT";
    
   static STATE_DRAFT = "DRAFT";
   static STATE_PUBLISHED = "PUBLISHED";
@@ -67,6 +68,7 @@ export class ContentWorkflowService {
   static STATE_REJECTED = "REJECTED";
 
   stateDisplayText = {};
+  actionDisplayText = {};
   stateActionMap: any;
 
   constructor(private http: HttpClient, private apiUrlService: ApiUrlService,
@@ -79,6 +81,10 @@ export class ContentWorkflowService {
     this.stateDisplayText[ContentWorkflowService.STATE_APPROVED] = "Approved";
     this.stateDisplayText[ContentWorkflowService.STATE_REJECTED] = "Rejected";
 
+    this.actionDisplayText[ContentWorkflowService.ACTION_SUBMIT] = "Approval Requested";
+    this.actionDisplayText[ContentWorkflowService.ACTION_APPROVE] = "Approved";
+    this.actionDisplayText[ContentWorkflowService.ACTION_REJECT] = "Rejected";
+    this.actionDisplayText[ContentWorkflowService.ACTION_WITHDRAW] = "Withdrawn";
   }
 
   init() : Observable<any> {

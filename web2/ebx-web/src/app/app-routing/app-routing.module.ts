@@ -43,6 +43,7 @@ import { AuditActivityResolve } from './audit-activity.resolve';
 import { ContainerTemplateComponent } from '../company/container-template/container-template.component';
 import { CpWidgetDetailComponent } from '../ui-widget/content-pack-widget/cp-widget-detail/cp-widget-detail.component';
 import { ContentEngagementComponent } from '../reports/content-engagement/content-engagement.component';
+import { RecentContentListComponent } from '../recent-content/recent-content-list/recent-content-list.component';
 
 const routes: Routes = [
   {
@@ -75,6 +76,13 @@ const routes: Routes = [
           // mapping from old application "#/portal/home"
           path: 'home',
           component: HomeComponent,
+          resolve: {
+            sbData: SearchBarResolve
+          }
+        },
+        {
+          path: 'recentlist',
+          component: RecentContentListComponent,
           resolve: {
             sbData: SearchBarResolve
           }
@@ -121,7 +129,12 @@ const routes: Routes = [
             {
               path: 'request/:crIdentity',
               component: BizContentComponent
+            },
+            {
+              path: 'request/:crIdentity/:action/',
+              component: BizContentComponent
             }
+
           ]
         },
         {
@@ -261,6 +274,11 @@ const routes: Routes = [
         component: SetPasswordComponent
       }
     ]
+  },
+  {
+    // mapping from old application
+    path: "system/contentrequest/a/:action/:contentRequestId",
+    redirectTo: "portal/content/request/:contentRequestId/:action"
   },
   {
     path: '**',

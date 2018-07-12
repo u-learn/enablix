@@ -20,6 +20,7 @@
     <ebx-dimensions></ebx-dimensions>  
   </div>
   <div class="sidebar" ng-click="navigateToRecentActivity()">
-    <ebx-recent-activities></ebx-recent-activities>
+    <!-- <ebx-recent-activities></ebx-recent-activities> -->
+    <ebx-recent-content layout="sidebar" [bizContentOnly]="false" [pagesize]="10"></ebx-recent-content> 
   </div>
 </div>
