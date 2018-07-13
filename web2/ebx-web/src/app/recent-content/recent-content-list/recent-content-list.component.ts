@@ -44,18 +44,20 @@ export class RecentContentListComponent implements OnInit {
       },
       {
         heading: "Content Title",
-        key: "contentTitle",
-        sortProp: "data.title"
+        key: "contentTitle"
       },
       {
         heading: "Content Type",
-        key: "contentType",
-        sortProp: "data.contentQId"
+        key: "contentType"
       },
       {
         heading: "Updated On",
         key: "updatedOn",
         sortProp: "createdAt"
+      },
+      {
+        heading: "Updated By",
+        key: "updatedBy"
       }
     ];
 

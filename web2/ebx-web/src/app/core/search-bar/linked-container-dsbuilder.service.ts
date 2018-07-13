@@ -4,6 +4,7 @@ import { Container } from '../../model/container.model';
 import { SearchDataset, NavFilter, ObjectType, NavContext, NavCtxItem, SearchBarData } from '../../model/search-bar-data.model';
 import { ContentTemplateService } from '../content-template.service';
 import { Constants } from '../../util/constants';
+import { Utility } from '../../util/utility';
 import { LocalDataset } from './local-dataset';
 
 @Injectable()
@@ -43,6 +44,8 @@ export class LinkedContainerDsbuilderService {
         } else if (this.ctService.isBusinessDimension(cc)) {
           bizDimSearchItems.push(item);
         }
+
+        Utility.sortArrayByLabel(bizContentSearchItems);
 
         if (sbData.initialFilterIds.indexOf(item.id) >= 0) {
           sbData.filters.push(item);
