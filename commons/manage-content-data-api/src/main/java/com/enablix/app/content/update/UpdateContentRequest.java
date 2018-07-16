@@ -13,6 +13,7 @@ import com.enablix.core.domain.content.quality.AlertLevel;
 public class UpdateContentRequest implements ContentUpdateContext {
 
 	private static final String LINKAGE_CHANGE_KEY = "__linkageChange";
+	private static final String DELETED_DOCS = "__deletedDocs";
 
 	public enum QualityAlertProcessing {
 		BREAK, 

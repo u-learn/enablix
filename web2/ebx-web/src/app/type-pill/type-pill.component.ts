@@ -24,7 +24,7 @@ export class TypePillComponent implements OnInit {
   ngOnInit() {
     let container = this.ctService.getConcreteContainerByQId(this.containerQId);
     if (container) {
-      this.label = container.label;
+      this.label = container.singularLabel;
       this.color = container.color;
       this.isBizContent = this.ctService.isBusinessContent(container);
       this.isBizDim = this.ctService.isBusinessDimension(container);

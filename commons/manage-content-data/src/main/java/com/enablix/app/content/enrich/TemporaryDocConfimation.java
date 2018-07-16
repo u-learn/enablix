@@ -3,6 +3,8 @@ package com.enablix.app.content.enrich;
 import java.io.IOException;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -21,6 +23,8 @@ import com.enablix.core.commons.xsdtopojo.ContentItemType;
 @Component
 public class TemporaryDocConfimation implements ContentEnricher {
 
+	private static final Logger LOGGER = LoggerFactory.getLogger(TemporaryDocConfimation.class);
+	
 	@Autowired
 	private DocumentManager docManager;
 	
@@ -47,17 +51,31 @@ public class TemporaryDocConfimation implements ContentEnricher {
 				
 					Map docMap = (Map) object;
 					Object tempDoc = docMap.get(ContentDataConstants.DOC_TEMPORARY_ATTR);
+					Object delDoc = docMap.get(ContentDataConstants.DOC_DELETED_ATTR);
 					String previewStatus = (String) docMap.get(ContentDataConstants.DOC_PREVIEW_STATUS_ATTR);
 					
+					boolean deleteDoc = delDoc != null && delDoc instanceof Boolean && ((Boolean) delDoc);
 					boolean tempDocBool = tempDoc != null && tempDoc instanceof Boolean && ((Boolean) tempDoc);
 					boolean psPending = PreviewStatus.PENDING.equals(previewStatus);
 					
-					if (tempDocBool || psPending) {
+					if (tempDocBool || psPending || deleteDoc) {
 						
 						String docIdentity = (String) docMap.get(ContentDataConstants.IDENTITY_KEY);
 						DocumentMetadata docMd = docManager.getDocumentMetadata(docIdentity);
 						
-						if (tempDocBool) {
+						if (deleteDoc) {
+							
+							try {
+								
+								docManager.delete(docMd);
+								content.put(itemDef.getId(), null);
+								
+							} catch (IOException e) {
+								LOGGER.debug("Failed to delete document", e);
+								throw new RuntimeException("Unable to delete document", e);
+							}
+							
+						} else if (tempDocBool) {
 							
 							docMd.setContentQId(itemDef.getQualifiedId());
 							
@@ -74,6 +92,7 @@ public class TemporaryDocConfimation implements ContentEnricher {
 								content.put(itemDef.getId(), beanToMap);
 								
 							} catch (IOException e) {
+								LOGGER.debug("Unable to attach document", e);
 								throw new RuntimeException("Unable to attach document", e);
 							}
 							

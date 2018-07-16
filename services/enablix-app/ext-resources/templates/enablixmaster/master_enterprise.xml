@@ -3266,10 +3266,10 @@
             <qualityConfig>
                 <param name="OBSOLETE_IN_DAYS" value="30"/>
             </qualityConfig>
-            <contentItem type="text" id="title" label="Title" searchBoost="7"/>
-            <contentItem type="doc" id="file" label="File"/>
-            <contentItem type="text" id="url" label="URL"/>
-            <contentItem type="richText" id="desc" label="Description"/>
+            <contentItem type="text" id="title" qualifiedId="type13.title" label="Title" searchBoost="7"/>
+            <contentItem type="doc" id="file" qualifiedId="type13.file" label="File"/>
+            <contentItem type="text" id="url" qualifiedId="type13.url" label="URL"/>
+            <contentItem type="richText" id="desc" qualifiedId="type13.desc" label="Description"/>
             <contentItem type="bounded" id="type13product" qualifiedId="type13.type13product" label="Products">
                 <bounded multivalued="true">
                     <refList>

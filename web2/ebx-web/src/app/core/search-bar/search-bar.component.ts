@@ -9,6 +9,7 @@ import { SearchBarService } from './search-bar.service';
 import { SearchBarData, SearchBarItem, SearchDataset } from '../../model/search-bar-data.model';
 import { NavigationService } from '../../app-routing/navigation.service';
 import { SearchBarController } from './search-bar-controller';
+import { ContentTemplateService } from '../content-template.service';
 
 @Component({
   selector: 'ebx-search-bar',
@@ -36,7 +37,9 @@ export class SearchBarComponent implements OnInit, AfterViewInit {
 
   searchTextboxElementId: string;
 
-  constructor(private sbService: SearchBarService, private navService: NavigationService) { 
+  constructor(private sbService: SearchBarService, 
+    private navService: NavigationService,
+    private ctService: ContentTemplateService) { 
     this.textCtrl = new FormControl();
   }
 
@@ -81,7 +84,7 @@ export class SearchBarComponent implements OnInit, AfterViewInit {
   getBizContentDesc(bizItem: any) : string {
     var title = (bizItem.highlights && bizItem.highlights.__title) ? bizItem.highlights.__title :
                   bizItem.record.__title;
-    return "<span class='typelabel'>" + bizItem.record.__container + " </span>" 
+    return "<span class='typelabel'>" + this.ctService.getContainerSingularLabel(bizItem.contentQId) + " </span>" 
           + "<span class='title'>" + title + "</span>";
   }
 

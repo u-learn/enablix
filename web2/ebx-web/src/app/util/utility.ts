@@ -81,6 +81,17 @@ export class Utility {
     return filters;
   }
 
+  static removeFileExtn(filename: string) {
+    var response = filename;
+    if (filename) {
+      var n = filename.lastIndexOf('.');
+      if (n > 0) {
+        response = filename.substr(0, n);
+      }
+    }
+    return response;
+  }
+
   static syncPostAjaxCall(url: string, data: any, callback: (responseText: string) => void) {
     
     var xhttp = new XMLHttpRequest();

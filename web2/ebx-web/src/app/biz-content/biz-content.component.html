@@ -72,11 +72,15 @@
         </div>
         <p class="label" *ngIf="!contentRequest">Last updated {{record.modifiedAt | ebxDate}}</p>
         <p class="label" *ngIf="contentRequest">{{getContentRequestStatusText()}} on {{contentRequest.modifiedAt | ebxDate}}</p>
-        <div class="row" *ngIf="record?.__decoration?.__docMetadata?.name || (container.docItemId && editing)">
+        <div class="row" *ngIf="(record?.__decoration?.__docMetadata?.name) || (container.docItemId && editing)">
             <p class="label">File</p>
             <div class="text">{{record?.__decoration?.__docMetadata?.name}}</div>
             <div class="dashboard-buttons margin-top" *ngIf="editing">
               <ebx-doc-update-button class="action-btn" [container]="container" [record]="record" (onDocUpdate)="onContentUpdate()"></ebx-doc-update-button>
+              <div class="action-btn" *ngIf="record?.__decoration?.__docMetadata" (click)="deleteDoc()">
+                  <div class="icon small trash"></div>
+                  <p class="show-me">Delete</p>
+              </div>
             </div>
         </div>
         <ng-container *ngFor="let item of inputItems">

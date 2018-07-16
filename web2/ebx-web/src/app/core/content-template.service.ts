@@ -124,7 +124,7 @@ export class ContentTemplateService {
   private containerListToSelectOption(containers: Container[]): SelectOption[] {
     let options: SelectOption[] = [];
     containers.forEach(container => {
-          options.push({id: container.qualifiedId, label: container.label});
+          options.push({id: container.qualifiedId, label: container.singularLabel});
         });
     return options;
   }

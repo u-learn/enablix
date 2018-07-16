@@ -1,6 +1,6 @@
 <h1 class="file-title" *ngIf="newContent"><span id="ce-asset-title" contenteditable="true" [(ngModel)]="fileInfo.title" (input)="onTitleChange()"></span><img src="/assets/images/icons/pencil-grey.svg" style="cursor: pointer;" (click)="focusOnTitle('ce-asset-title')"/></h1>
 <div class="input-error" [hidden]="!errors.title?.required">
-  Please enter title
+  Please enter a title
 </div>
 <div class="preview-img file-default" *ngIf="previewImageUrl">
     <img [src]="previewImageUrl" >
@@ -17,7 +17,7 @@
       placeholder="Select content type"
       [options]="contentTypes"></ebx-select>
   <div class="input-error" [hidden]="!errors.contentType?.required">
-    Please select content type
+    Please select a content type
   </div>
 </div>
 <div class="actionBtns">

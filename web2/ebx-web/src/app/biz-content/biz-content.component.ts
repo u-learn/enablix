@@ -457,6 +457,14 @@ export class BizContentComponent implements OnInit, AfterViewInit {
     return '';
   }
 
+  deleteDoc() {
+    if (this.record && this.record.__decoration.__docMetadata) {
+      delete this.record.__decoration.__docMetadata;
+      var docFld = this.record[this.container.docItemId];
+      docFld.deleted = true;
+    }
+  }
+
   ngOnDestroy() {
     if (this.sub) {
       this.sub.unsubscribe();  

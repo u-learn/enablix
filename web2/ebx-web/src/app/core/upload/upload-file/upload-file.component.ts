@@ -10,6 +10,7 @@ import { ContentTemplateService } from '../../content-template.service';
 import { NewContentService } from '../../content/new-content.service';
 import { FileUploadInfo } from '../../../model/upload-info.model';
 import { NavigationService } from '../../../app-routing/navigation.service';
+import { Utility } from '../../../util/utility';
 
 @Component({
   selector: 'ebx-upload-file',
@@ -54,7 +55,7 @@ export class UploadFileComponent implements OnInit {
       this.newContent = !this.data.updateOperation;
 
       this.fileInfo = new FileUploadInfo();
-      this.fileInfo.title = this.data.file.name;
+      this.fileInfo.title = Utility.removeFileExtn(this.data.file.name);
       this.uploadFile();
 
       this.contentTypeCtrl = new FormControl();

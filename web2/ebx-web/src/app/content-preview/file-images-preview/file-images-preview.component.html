@@ -1,4 +1,4 @@
-<div class="file-preview">
+<div class="file-preview" *ngIf="record.__decoration?.__docMetadata">
   <div class="active-slide" *ngFor="let s of slides" [hidden]="s.id !== activeSlide.id">
     <img class="slide" [src]="s.url" />
   </div>

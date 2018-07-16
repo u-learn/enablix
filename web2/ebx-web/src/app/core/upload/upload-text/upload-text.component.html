@@ -1,7 +1,7 @@
 <div class="upload-asset-popup">
   <input class="asset-text" placeholder="Title" [(ngModel)]="textInfo.title" type="text" (change)="onTitleChange()">
   <div class="input-error" [hidden]="!errors.title?.required">
-    Please enter title
+    Please enter a title
   </div>
   <div class="preview-text align-top">
     <img src="/assets/images/icons/note_icon.svg"/>
@@ -12,7 +12,7 @@
       placeholder="Select content type"
       [options]="contentTypes"></ebx-select>
     <div class="input-error" [hidden]="!errors.contentType?.required">
-      Please select content type
+      Please select a content type
     </div>
   </div>
   <div class="actionBtns">

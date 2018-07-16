@@ -2,7 +2,7 @@
   <h1 [hidden]="previewContent" class="url-title">Add URL</h1>
   <h1 [hidden]="!previewContent" class="url-title"><span id="ce-asset-title" contenteditable="true" [(ngModel)]="urlInfo.title" [ngModelOptions]="{standalone: true}" (input)="onTitleChange()"></span><img src="/assets/images/icons/pencil-grey.svg" (click)="focusOnTitle('ce-asset-title')"/></h1>
   <div class="input-error" [hidden]="!errors.title?.required">
-    Please enter title
+    Please enter a title
   </div>
   <div class="preview-text">
     <img src="/assets/images/icons/globe_earth.svg" />
@@ -17,7 +17,7 @@
           placeholder="Select content type"
           [options]="contentTypes"></ebx-select>
       <div class="input-error" [hidden]="!errors.contentType?.required">
-        Please select content type
+        Please select a content type
       </div>
     </div>
   </div>

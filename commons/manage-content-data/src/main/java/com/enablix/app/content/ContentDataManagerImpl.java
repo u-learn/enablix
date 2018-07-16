@@ -138,22 +138,27 @@ public class ContentDataManagerImpl implements ContentDataManager {
 		
 		ContainerType containerType = templateWrapper.getContainerDefinition(contentQId);
 		
-		if (TemplateUtil.hasOwnCollection(containerType)) {
-			Map<String, Object> deletedRecord = crud.deleteRecord(collName, request.getRecordIdentity());
-			
-			if (deletedRecord != null) {
-				String contentTitle = ContentDataUtil.findPortalLabelValue(deletedRecord, templateWrapper, contentQId);
+		try {
+			if (TemplateUtil.hasOwnCollection(containerType)) {
+				Map<String, Object> deletedRecord = crud.deleteRecord(collName, request.getRecordIdentity());
 				
-				publishContentDeleteEvent(new ContentDataDelEvent(request.getTemplateId(), 
-					request.getContentQId(), request.getRecordIdentity(), containerType, contentTitle));
+				if (deletedRecord != null) {
+					String contentTitle = ContentDataUtil.findPortalLabelValue(deletedRecord, templateWrapper, contentQId);
+					deleteRecordDocuments(deletedRecord, contentQId);
+					publishContentDeleteEvent(new ContentDataDelEvent(request.getTemplateId(), 
+						request.getContentQId(), request.getRecordIdentity(), containerType, contentTitle));
+				}
+				
+			} else {
+				String qIdRelativeToParent = QIdUtil.getElementId(contentQId);
+				crud.deleteChild(collName, qIdRelativeToParent, request.getRecordIdentity());
 			}
-			
-		} else {
-			String qIdRelativeToParent = QIdUtil.getElementId(contentQId);
-			crud.deleteChild(collName, qIdRelativeToParent, request.getRecordIdentity());
-		}
 		
-		deleteChildContainerData(templateWrapper, contentQId, request.getRecordIdentity());
+			deleteChildContainerData(templateWrapper, contentQId, request.getRecordIdentity());
+			
+		} catch (IOException ioe) {
+			throw new RuntimeException("Error deleting record", ioe);
+		}
 	}
 	
 	private void publishContentDeleteEvent(ContentDataDelEvent event) {
@@ -163,7 +168,7 @@ public class ContentDataManagerImpl implements ContentDataManager {
 	}
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	private void deleteChildContainerData(TemplateFacade templateWrapper, String containerQId, String recordIdentity) {
+	private void deleteChildContainerData(TemplateFacade templateWrapper, String containerQId, String recordIdentity) throws IOException {
 		
 		ContentTemplate template = templateWrapper.getTemplate();
 		
@@ -184,6 +189,7 @@ public class ContentDataManagerImpl implements ContentDataManager {
 					String childRecordIdentity = (String) childRecord.get(ContentDataConstants.IDENTITY_KEY);
 					String recordTitle = ContentDataUtil.findPortalLabelValue(childRecord, templateWrapper, childQId);
 					
+					deleteRecordDocuments(childRecord, childContainerId);
 					publishContentDeleteEvent(new ContentDataDelEvent(template.getId(), 
 							childQId, childRecordIdentity, childContainer, recordTitle));
 
@@ -663,7 +669,10 @@ public class ContentDataManagerImpl implements ContentDataManager {
 	
 	@Override
 	public void deleteRecordDocuments(Map<String, Object> record, String containerQId) throws IOException {
-		processRecordDocuments(record, containerQId, (docMd) -> { docManager.delete(docMd); return docMd; });
+		processRecordDocuments(record, containerQId, (docMd) -> { 
+			DocumentMetadata updatedDocMd = docManager.delete(docMd); 
+			return updatedDocMd; 
+		});
 	}
 
 	@SuppressWarnings("rawtypes")

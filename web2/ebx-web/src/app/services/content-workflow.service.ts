@@ -85,6 +85,10 @@ export class ContentWorkflowService {
     this.actionDisplayText[ContentWorkflowService.ACTION_APPROVE] = "Approved";
     this.actionDisplayText[ContentWorkflowService.ACTION_REJECT] = "Rejected";
     this.actionDisplayText[ContentWorkflowService.ACTION_WITHDRAW] = "Withdrawn";
+    this.actionDisplayText[ContentWorkflowService.ACTION_SAVE_DRAFT] = "Draft Saved";
+    this.actionDisplayText[ContentWorkflowService.ACTION_EDIT] = "Edited";
+    this.actionDisplayText[ContentWorkflowService.ACTION_DISCARD] = "Discarded";
+    this.actionDisplayText[ContentWorkflowService.ACTION_PUBLISH] = "Published";
   }
 
   init() : Observable<any> {

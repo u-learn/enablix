@@ -25,6 +25,7 @@ public class ContentDataConstants {
 
 	public static final String DOC_NAME_ATTR = "name";
 	public static final String DOC_TEMPORARY_ATTR = "temporary";
+	public static final String DOC_DELETED_ATTR = "deleted";
 	public static final Object DOC_PREVIEW_STATUS_ATTR = "previewStatus";
 	public static final String BOUNDED_LABEL_ATTR = "label";
 	public static final String BOUNDED_ID_ATTR = "id";
