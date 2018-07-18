@@ -1,0 +1,33 @@
+#@mail_template('Introducing the new and improved Enablix UI')
+
+	#spacer_row('15')
+											
+	#mail_opening(${obj.recipientUser.name})										
+	
+	#spacer_row('20')
+	
+	Enablix is committed to ensuring that every user has a great experience using Enablix. That’s why over the past several months we have invested in a modern and improved user experience for our users. Today, we are excited to announce that we will be moving the $obj.inputData.get('teamName') team to the new and improved Enablix UI this coming weekend.
+	
+	#spacer_double_row('20','10')
+
+	<table style="width: 100%;">
+		<tr style="width: 100%;"><td style="width: 100%; text-align: center;"><img src="${obj.url}${obj.inputData.get('newUIImgSrc')}" style="max-width: 100%;"></img></td></tr>
+	</table>
+	
+	#spacer_double_row('20','10')
+	
+	Three important points regarding this upcoming change: <br/><br/>
+	
+	<ul>
+		<li><span>Your Enablix login credentials will remain the same.</span></li>
+		<li><span>Your access to the content will remain the same.</span></li>
+		<li><span>We will notify you once your account is switched to the new UI.</span></li>
+	</ul>
+
+	#spacer_double_row('20','10')
+	
+	Feel free to send us any questions by replying to this email.
+	
+	#mail_closing($obj.tenant.name)
+
+#end

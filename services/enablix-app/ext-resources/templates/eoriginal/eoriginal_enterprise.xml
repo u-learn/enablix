@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <contentTemplate id="eoriginal_enterprise" version="1.31">
     <dataDefinition>
-        <container businessCategory="BUSINESS_DIMENSION" id="solution" qualifiedId="solution" label="Solutions" displayOrder="1">
+        <container businessCategory="BUSINESS_DIMENSION" id="solution" qualifiedId="solution" label="Solutions" displayOrder="34">
             <contentItem type="text" id="name" qualifiedId="solution.name" label="Name" searchBoost="7"/>
             <contentItem type="text" id="shortName" qualifiedId="solution.shortName" label="Short Name" searchBoost="7"/>
             <container linkContainerQId="article" linkContentItemId="solutions" id="solArticle" qualifiedId="solution.solArticle" label="News Article" displayOrder="2"/>
@@ -40,8 +40,9 @@
             <container linkContainerQId="type2" linkContentItemId="type2solution" id="solutiontype2" qualifiedId="solution.solutiontype2" label="Corporate Positioning"/>
             <container linkContainerQId="type3" linkContentItemId="type3solution" id="solutiontype3" qualifiedId="solution.solutiontype3" label="Templates"/>
             <container linkContainerQId="type4" linkContentItemId="type4solution" id="solutiontype4" qualifiedId="solution.solutiontype4" label="Images"/>
+            <container linkContainerQId="type5" linkContentItemId="type5solution" id="solutiontype5" qualifiedId="solution.solutiontype5" label="Competitive Feature Sheets"/>
         </container>
-        <container businessCategory="BUSINESS_DIMENSION" id="industry" qualifiedId="industry" label="Industries" displayOrder="34">
+        <container businessCategory="BUSINESS_DIMENSION" id="industry" qualifiedId="industry" label="Industries" displayOrder="1">
             <contentItem type="text" id="name" qualifiedId="industry.name" label="Name" searchBoost="7"/>
             <contentItem type="text" id="shortName" qualifiedId="industry.shortName" label="Short Name" searchBoost="7"/>
             <contentItem type="bounded" id="alias" qualifiedId="industry.alias" label="Aliases" searchBoost="6">
@@ -91,6 +92,7 @@
             <container linkContainerQId="type2" linkContentItemId="type2industry" id="industrytype2" qualifiedId="industry.industrytype2" label="Corporate Positioning"/>
             <container linkContainerQId="type3" linkContentItemId="type3industry" id="industrytype3" qualifiedId="industry.industrytype3" label="Templates"/>
             <container linkContainerQId="type4" linkContentItemId="type4industry" id="industrytype4" qualifiedId="industry.industrytype4" label="Images"/>
+            <container linkContainerQId="type5" linkContentItemId="type5industry" id="industrytype5" qualifiedId="industry.industrytype5" label="Competitive Feature Sheets"/>
         </container>
         <container businessCategory="BUSINESS_DIMENSION" id="competitor" qualifiedId="competitor" label="Competitors" displayOrder="67">
             <contentItem type="text" id="name" qualifiedId="competitor.name" label="Competitor Name" searchBoost="7"/>
@@ -140,6 +142,7 @@
             <container linkContainerQId="type2" linkContentItemId="type2competitor" id="competitortype2" qualifiedId="competitor.competitortype2" label="Corporate Positioning"/>
             <container linkContainerQId="type3" linkContentItemId="type3competitor" id="competitortype3" qualifiedId="competitor.competitortype3" label="Templates"/>
             <container linkContainerQId="type4" linkContentItemId="type4competitor" id="competitortype4" qualifiedId="competitor.competitortype4" label="Images"/>
+            <container linkContainerQId="type5" linkContentItemId="type5competitor" id="competitortype5" qualifiedId="competitor.competitortype5" label="Competitive Feature Sheets"/>
         </container>
         <container businessCategory="BUSINESS_DIMENSION" id="partner" qualifiedId="partner" label="Partners" displayOrder="98">
             <contentItem type="text" id="name" qualifiedId="partner.name" label="Partner Name" searchBoost="7"/>
@@ -191,6 +194,7 @@
             <container linkContainerQId="type2" linkContentItemId="type2partner" id="partnertype2" qualifiedId="partner.partnertype2" label="Corporate Positioning"/>
             <container linkContainerQId="type3" linkContentItemId="type3partner" id="partnertype3" qualifiedId="partner.partnertype3" label="Templates"/>
             <container linkContainerQId="type4" linkContentItemId="type4partner" id="partnertype4" qualifiedId="partner.partnertype4" label="Images"/>
+            <container linkContainerQId="type5" linkContentItemId="type5partner" id="partnertype5" qualifiedId="partner.partnertype5" label="Competitive Feature Sheets"/>
         </container>
         <container businessCategory="BUSINESS_DIMENSION" id="analyst" qualifiedId="analyst" label="Analysts" displayOrder="131">
             <contentItem type="text" id="name" qualifiedId="analyst.name" label="Analyst Name" searchBoost="7"/>
@@ -229,6 +233,7 @@
             <container linkContainerQId="type2" linkContentItemId="type2analyst" id="analysttype2" qualifiedId="analyst.analysttype2" label="Corporate Positioning"/>
             <container linkContainerQId="type3" linkContentItemId="type3analyst" id="analysttype3" qualifiedId="analyst.analysttype3" label="Templates"/>
             <container linkContainerQId="type4" linkContentItemId="type4analyst" id="analysttype4" qualifiedId="analyst.analysttype4" label="Images"/>
+            <container linkContainerQId="type5" linkContentItemId="type5analyst" id="analysttype5" qualifiedId="analyst.analysttype5" label="Competitive Feature Sheets"/>
         </container>
         <container businessCategory="BUSINESS_DIMENSION" id="account" qualifiedId="account" label="Accounts" displayOrder="152">
             <contentItem type="text" id="name" qualifiedId="account.name" label="Name" searchBoost="7"/>
@@ -258,6 +263,7 @@
             <container linkContainerQId="type2" linkContentItemId="type2account" id="accounttype2" qualifiedId="account.accounttype2" label="Corporate Positioning"/>
             <container linkContainerQId="type3" linkContentItemId="type3account" id="accounttype3" qualifiedId="account.accounttype3" label="Templates"/>
             <container linkContainerQId="type4" linkContentItemId="type4account" id="accounttype4" qualifiedId="account.accounttype4" label="Images"/>
+            <container linkContainerQId="type5" linkContentItemId="type5account" id="accounttype5" qualifiedId="account.accounttype5" label="Competitive Feature Sheets"/>
         </container>
         <container businessCategory="BUSINESS_DIMENSION" id="opportunity" qualifiedId="opportunity" label="Opportunities" displayOrder="154">
             <contentItem type="text" id="title" qualifiedId="opportunity.title" label="Name" searchBoost="7"/>
@@ -310,6 +316,7 @@
             <container linkContainerQId="type2" linkContentItemId="type2opportunity" id="opportunitytype2" qualifiedId="opportunity.opportunitytype2" label="Corporate Positioning"/>
             <container linkContainerQId="type3" linkContentItemId="type3opportunity" id="opportunitytype3" qualifiedId="opportunity.opportunitytype3" label="Templates"/>
             <container linkContainerQId="type4" linkContentItemId="type4opportunity" id="opportunitytype4" qualifiedId="opportunity.opportunitytype4" label="Images"/>
+            <container linkContainerQId="type5" linkContentItemId="type5opportunity" id="opportunitytype5" qualifiedId="opportunity.opportunitytype5" label="Competitive Feature Sheets"/>
         </container>
         <container businessCategory="BUSINESS_DIMENSION" id="topic" qualifiedId="topic" label="Topics" displayOrder="156">
             <contentItem type="text" id="name" qualifiedId="topic.name" label="Topic Name"/>
@@ -393,6 +400,7 @@
             <container linkContainerQId="type2" linkContentItemId="type2topic" id="topictype2" qualifiedId="topic.topictype2" label="Corporate Positioning"/>
             <container linkContainerQId="type3" linkContentItemId="type3topic" id="topictype3" qualifiedId="topic.topictype3" label="Templates"/>
             <container linkContainerQId="type4" linkContentItemId="type4topic" id="topictype4" qualifiedId="topic.topictype4" label="Images"/>
+            <container linkContainerQId="type5" linkContentItemId="type5topic" id="topictype5" qualifiedId="topic.topictype5" label="Competitive Feature Sheets"/>
         </container>
         <container businessCategory="BUSINESS_CONTENT" id="article" qualifiedId="article" label="Article" displayOrder="187">
             <contentItem type="text" id="title" qualifiedId="article.title" label="Title" searchBoost="7"/>
@@ -3458,6 +3466,7 @@
             <container linkContainerQId="type2" linkContentItemId="type2accessType" id="accessTypetype2" qualifiedId="accessType.accessTypetype2" label="Corporate Positioning"/>
             <container linkContainerQId="type3" linkContentItemId="type3accessType" id="accessTypetype3" qualifiedId="accessType.accessTypetype3" label="Templates"/>
             <container linkContainerQId="type4" linkContentItemId="type4accessType" id="accessTypetype4" qualifiedId="accessType.accessTypetype4" label="Images"/>
+            <container linkContainerQId="type5" linkContentItemId="type5accessType" id="accessTypetype5" qualifiedId="accessType.accessTypetype5" label="Competitive Feature Sheets"/>
         </container>
         <container refData="true" id="analystType" qualifiedId="analystType" label="Analyst Types" displayOrder="228">
             <contentItem type="text" id="typeName" qualifiedId="analystType.typeName" label="Type"/>
@@ -3538,6 +3547,10 @@
             <contentItem type="text" id="typeName" qualifiedId="slideType.typeName" label="Type"/>
             <contentItem type="text" id="desc" qualifiedId="slideType.desc" label="Description"/>
             <container linkContainerQId="importantslide" linkContentItemId="slideType" id="slideTypeImpSlide" qualifiedId="slideType.slideTypeImpSlide" label="Important Slides" displayOrder="276"/>
+        </container>
+        <container refData="true" id="imageType" qualifiedId="imageType" label="Image Types" displayOrder="275">
+            <contentItem type="text" id="typeName" qualifiedId="imageType.typeName" label="Type"/>
+            <container linkContainerQId="type4" linkContentItemId="imageType" id="slideTypeImpSlide" qualifiedId="imageType.slideTypeImpSlide" label="Images" displayOrder="276"/>
         </container>
         <container refData="true" id="videoCategory" qualifiedId="videoCategory" label="Video Category" displayOrder="277">
             <contentItem type="text" id="categoryName" qualifiedId="videoCategory.categoryName" label="Category"/>
@@ -3790,10 +3803,21 @@
             </contentItem>
         </container>
         <container referenceable="true" businessCategory="BUSINESS_CONTENT" id="type4" qualifiedId="type4" label="Images" singularLabel="Image" displayOrder="1004">
-            <contentItem type="text" id="title" label="Title" searchBoost="7"/>
-            <contentItem type="doc" id="file" label="File"/>
-            <contentItem type="text" id="url" label="URL"/>
-            <contentItem type="richText" id="desc" label="Description"/>
+            <contentItem type="text" id="title" qualifiedId="type4.title" label="Title" searchBoost="7"/>
+            <contentItem type="doc" id="file" qualifiedId="type4.file" label="File"/>
+            <contentItem type="text" id="url" qualifiedId="type4.url" label="URL"/>
+            <contentItem type="richText" id="desc" qualifiedId="type4.desc" label="Description"/>
+            <contentItem type="bounded" id="imageType" qualifiedId="type4.imageType" label="Image Type" searchBoost="6">
+                <bounded multivalued="true">
+                    <refList>
+                        <datastore hyperlink="true">
+                            <storeId>imageType</storeId>
+                            <dataId>identity</dataId>
+                            <dataLabel>typeName</dataLabel>
+                        </datastore>
+                    </refList>
+                </bounded>
+            </contentItem>
             <contentItem type="bounded" id="type4solution" qualifiedId="type4.type4solution" label="Solutions">
                 <bounded multivalued="true">
                     <refList>
@@ -3883,6 +3907,111 @@
                 </bounded>
             </contentItem>
             <contentItem type="bounded" id="type4accessType" qualifiedId="type4.type4accessType" label="Access Types">
+                <bounded multivalued="true">
+                    <refList>
+                        <datastore hyperlink="true">
+                            <storeId>accessType</storeId>
+                            <dataId>identity</dataId>
+                            <dataLabel>name</dataLabel>
+                        </datastore>
+                    </refList>
+                </bounded>
+            </contentItem>
+        </container>
+        <container referenceable="true" businessCategory="BUSINESS_CONTENT" id="type5" qualifiedId="type5" label="Competitive Feature Sheets" singularLabel="Competitive Feature Sheet" displayOrder="1005">
+            <contentItem type="text" id="title" qualifiedId="type5.title" label="Title" searchBoost="7"/>
+            <contentItem type="doc" id="file" qualifiedId="type5.file" label="File"/>
+            <contentItem type="text" id="url" qualifiedId="type5.url" label="URL"/>
+            <contentItem type="richText" id="desc" qualifiedId="type5.desc" label="Description"/>
+            <contentItem type="bounded" id="type5solution" qualifiedId="type5.type5solution" label="Solutions">
+                <bounded multivalued="true">
+                    <refList>
+                        <datastore hyperlink="true">
+                            <storeId>solution</storeId>
+                            <dataId>identity</dataId>
+                            <dataLabel>shortName</dataLabel>
+                        </datastore>
+                    </refList>
+                </bounded>
+            </contentItem>
+            <contentItem type="bounded" id="type5industry" qualifiedId="type5.type5industry" label="Industries">
+                <bounded multivalued="true">
+                    <refList>
+                        <datastore hyperlink="true">
+                            <storeId>industry</storeId>
+                            <dataId>identity</dataId>
+                            <dataLabel>shortName</dataLabel>
+                        </datastore>
+                    </refList>
+                </bounded>
+            </contentItem>
+            <contentItem type="bounded" id="type5competitor" qualifiedId="type5.type5competitor" label="Competitors">
+                <bounded multivalued="true">
+                    <refList>
+                        <datastore hyperlink="true">
+                            <storeId>competitor</storeId>
+                            <dataId>identity</dataId>
+                            <dataLabel>shortName</dataLabel>
+                        </datastore>
+                    </refList>
+                </bounded>
+            </contentItem>
+            <contentItem type="bounded" id="type5partner" qualifiedId="type5.type5partner" label="Partners">
+                <bounded multivalued="true">
+                    <refList>
+                        <datastore hyperlink="true">
+                            <storeId>partner</storeId>
+                            <dataId>identity</dataId>
+                            <dataLabel>shortName</dataLabel>
+                        </datastore>
+                    </refList>
+                </bounded>
+            </contentItem>
+            <contentItem type="bounded" id="type5analyst" qualifiedId="type5.type5analyst" label="Analysts">
+                <bounded multivalued="true">
+                    <refList>
+                        <datastore hyperlink="true">
+                            <storeId>analyst</storeId>
+                            <dataId>identity</dataId>
+                            <dataLabel>shortName</dataLabel>
+                        </datastore>
+                    </refList>
+                </bounded>
+            </contentItem>
+            <contentItem type="bounded" id="type5account" qualifiedId="type5.type5account" label="Accounts">
+                <bounded multivalued="true">
+                    <refList>
+                        <datastore hyperlink="true">
+                            <storeId>account</storeId>
+                            <dataId>identity</dataId>
+                            <dataLabel>name</dataLabel>
+                        </datastore>
+                    </refList>
+                </bounded>
+            </contentItem>
+            <contentItem type="bounded" id="type5opportunity" qualifiedId="type5.type5opportunity" label="Opportunities">
+                <bounded multivalued="true">
+                    <refList>
+                        <datastore hyperlink="true">
+                            <storeId>opportunity</storeId>
+                            <dataId>identity</dataId>
+                            <dataLabel>title</dataLabel>
+                        </datastore>
+                    </refList>
+                </bounded>
+            </contentItem>
+            <contentItem type="bounded" id="type5topic" qualifiedId="type5.type5topic" label="Topics">
+                <bounded multivalued="true">
+                    <refList>
+                        <datastore hyperlink="true">
+                            <storeId>topic</storeId>
+                            <dataId>identity</dataId>
+                            <dataLabel>name</dataLabel>
+                        </datastore>
+                    </refList>
+                </bounded>
+            </contentItem>
+            <contentItem type="bounded" id="type5accessType" qualifiedId="type5.type5accessType" label="Access Types">
                 <bounded multivalued="true">
                     <refList>
                         <datastore hyperlink="true">
@@ -4827,6 +4956,20 @@
             <container labelQualifiedId="type4.title">
                 <portalConfig>
                     <headingContentItem id="title"/>
+                </portalConfig>
+            </container>
+        </contentUIDef>
+        <contentUIDef qualifiedId="type5">
+            <container labelQualifiedId="type5.title">
+                <portalConfig>
+                    <headingContentItem id="title"/>
+                </portalConfig>
+            </container>
+        </contentUIDef>
+        <contentUIDef qualifiedId="imageType">
+            <container labelQualifiedId="imageType.typeName">
+                <portalConfig>
+                    <headingContentItem id="typeName"/>
                 </portalConfig>
             </container>
         </contentUIDef>

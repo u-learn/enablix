@@ -1,0 +1,57 @@
+#@mail_template('New Enablix UI')
+
+	#spacer_row('15')
+											
+	#mail_opening(${obj.recipientUser.name})										
+	
+	#spacer_row('20')
+	
+	We have successfully moved your Enablix account to the new and improved UI. Please remember that your Enablix login credentials remain the same.
+	
+	#spacer_double_row('20','10')
+
+	<b>What's New?</b>
+	
+	#spacer_row('15')
+	
+	<table style="width: 100%;">
+		<tr style="width: 100%;">
+			<td style="width: 40%; text-align: center;"><img src="${obj.url}${obj.inputData.get('newVisualImgSrc')}" style="max-width: 100%;"></img></td>
+			<td style="width: 60%; padding-left: 24px;">
+				<b style="text-decoration: underline;">Visual Experience</b><br/>
+				In the new Enablix UI, we are moving away from text to imagery. We leverage the thumbnail imagery of the digital assets to enhance the users experience. The result is an easy to use, decluttered user experience which will help users find what they need. 
+			</td>		
+		</tr>
+	</table>
+	
+	#spacer_double_row('20','10')
+
+	<table style="width: 100%;">
+		<tr style="width: 100%;">
+			<td style="width: 40%; text-align: center;"><img src="${obj.url}${obj.inputData.get('newSearchImgSrc')}" style="max-width: 100%;"></img></td>
+			<td style="width: 60%; padding-left: 24px;">
+				<b style="text-decoration: underline;">Improved Search</b><br/>
+				Search in the new UI is simpler, yet more powerful. Start typing the text and you can easily navigate to a content type or an object from the search bar. With type-ahead, you can navigate directly to an asset. 
+			</td>		
+		</tr>
+	</table>
+	
+	#spacer_double_row('20','10')
+
+	<table style="width: 100%;">
+		<tr style="width: 100%;">
+			<td style="width: 40%; text-align: center;"><img src="${obj.url}${obj.inputData.get('contentPreviewImgSrc')}" style="max-width: 100%;"></img></td>
+			<td style="width: 60%; padding-left: 24px;">
+				<b style="text-decoration: underline;">Content Preview</b><br/>
+				The new UI brings a better and a more native preview experience of your content. You can browse web based content right inside Enablix application. For files we have richer previews to help you browse and find information without downloading the target file.  
+			</td>		
+		</tr>
+	</table>
+	
+	#spacer_double_row('20','10')
+	
+	We hope you find the new UI easier to use.
+	
+	#mail_closing($obj.tenant.name)
+
+#end
