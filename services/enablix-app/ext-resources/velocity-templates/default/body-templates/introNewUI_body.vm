@@ -6,7 +6,7 @@
 	
 	#spacer_row('20')
 	
-	Enablix is committed to ensuring that every user has a great experience using Enablix. That’s why over the past several months we have invested in a modern and improved user experience for our users. Today, we are excited to announce that we will be moving the $obj.inputData.get('teamName') team to the new and improved Enablix UI this coming weekend.
+	Enablix is committed to ensuring that every user has a great experience using Enablix. That’s why over the past several months we have invested in a modern and improved user experience for our users. Today, we are excited to announce that we will be moving the $obj.inputData.get('teamName') team to the new and improved Enablix UI this <span style="text-decoration: underline;">coming weekend</span>.
 	
 	#spacer_double_row('20','10')
 

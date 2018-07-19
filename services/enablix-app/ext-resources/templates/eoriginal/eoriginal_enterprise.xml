@@ -402,7 +402,7 @@
             <container linkContainerQId="type4" linkContentItemId="type4topic" id="topictype4" qualifiedId="topic.topictype4" label="Images"/>
             <container linkContainerQId="type5" linkContentItemId="type5topic" id="topictype5" qualifiedId="topic.topictype5" label="Competitive Feature Sheets"/>
         </container>
-        <container businessCategory="BUSINESS_CONTENT" id="article" qualifiedId="article" label="Article" displayOrder="187">
+        <container businessCategory="BUSINESS_CONTENT" id="article" qualifiedId="article" label="Articles" singularLabel="Article" displayOrder="187">
             <contentItem type="text" id="title" qualifiedId="article.title" label="Title" searchBoost="7"/>
             <contentItem type="text" id="url" qualifiedId="article.url" label="URL"/>
             <contentItem type="doc" id="file" qualifiedId="article.file" label="File"/>
@@ -496,7 +496,7 @@
                 </bounded>
             </contentItem>
         </container>
-        <container businessCategory="BUSINESS_CONTENT" id="battlecard" qualifiedId="battlecard" label="Battle Cards" displayOrder="188">
+        <container businessCategory="BUSINESS_CONTENT" id="battlecard" qualifiedId="battlecard" label="Battle Cards" singularLabel="Battle Card" displayOrder="188">
             <contentItem type="text" id="title" qualifiedId="battlecard.title" label="Title"/>
             <contentItem type="doc" id="file" qualifiedId="battlecard.file" label="File"/>
             <contentItem type="richText" id="desc" qualifiedId="battlecard.desc" label="Description"/>
@@ -567,7 +567,7 @@
                 </bounded>
             </contentItem>
         </container>
-        <container businessCategory="BUSINESS_CONTENT" id="blog" qualifiedId="blog" label="Blogs" displayOrder="189">
+        <container businessCategory="BUSINESS_CONTENT" id="blog" qualifiedId="blog" label="Blogs"  singularLabel="Blog" displayOrder="189">
             <contentItem type="text" id="title" qualifiedId="blog.title" label="Title"/>
             <contentItem type="text" id="url" qualifiedId="blog.url" label="URL"/>
             <contentItem type="dateTime" id="blogdate" qualifiedId="blog.blogdate" label="Publish Date"/>
@@ -669,7 +669,7 @@
                 </bounded>
             </contentItem>
         </container>
-        <container businessCategory="BUSINESS_CONTENT" id="casestudy" qualifiedId="casestudy" label="Case Studies &amp; Success Stories" displayOrder="190">
+        <container businessCategory="BUSINESS_CONTENT" id="casestudy" qualifiedId="casestudy" label="Case Studies &amp; Success Stories"  singularLabel="Case Study &amp; Success Story" displayOrder="190">
             <contentItem type="text" id="title" qualifiedId="casestudy.title" label="Title"/>
             <contentItem type="doc" id="file" qualifiedId="casestudy.file" label="File"/>
             <contentItem type="text" id="url" qualifiedId="casestudy.url" label="URL"/>
@@ -774,7 +774,7 @@
                 </bounded>
             </contentItem>
         </container>
-        <container businessCategory="BUSINESS_CONTENT" id="pricing" qualifiedId="pricing" label="Pricing" displayOrder="191">
+        <container businessCategory="BUSINESS_CONTENT" id="pricing" qualifiedId="pricing" label="Pricing" singularLabel="Pricing" displayOrder="191">
             <contentItem type="text" id="title" qualifiedId="pricing.title" label="Title"/>
             <contentItem type="doc" id="file" qualifiedId="pricing.file" label="File"/>
             <contentItem type="text" id="url" qualifiedId="pricing.url" label="URL"/>
@@ -857,7 +857,7 @@
                 </bounded>
             </contentItem>
         </container>
-        <container businessCategory="BUSINESS_CONTENT" id="competitordoc" qualifiedId="competitordoc" label="Competitor Docs" displayOrder="192">
+        <container businessCategory="BUSINESS_CONTENT" id="competitordoc" qualifiedId="competitordoc" label="Competitor Docs" singularLabel="Competitor Doc" displayOrder="192">
             <contentItem type="text" id="title" qualifiedId="competitordoc.title" label="Title"/>
             <contentItem type="doc" id="file" qualifiedId="competitordoc.file" label="File"/>
             <contentItem type="text" id="url" qualifiedId="competitordoc.url" label="URL"/>
@@ -951,7 +951,7 @@
                 </bounded>
             </contentItem>
         </container>
-        <container businessCategory="BUSINESS_CONTENT" id="contentkit" qualifiedId="contentkit" label="Content Kits" displayOrder="216">
+        <container businessCategory="BUSINESS_CONTENT" id="contentkit" qualifiedId="contentkit" label="Content Kits" singularLabel="Content Kit" displayOrder="216">
             <contentItem type="text" id="title" qualifiedId="contentkit.title" label="Title" searchBoost="7"/>
             <contentItem type="richText" id="desc" qualifiedId="contentkit.desc" label="Description" searchBoost="2"/>
             <contentItem type="bounded" id="solutions" qualifiedId="contentkit.solutions" label="Solutions">
@@ -1033,7 +1033,7 @@
             </contentItem>
             <contentItem type="contentStack" id="contentkitContent" qualifiedId="contentkit.contentkitContent" label="Content"/>
         </container>
-        <container businessCategory="BUSINESS_CONTENT" id="ppttemplate" qualifiedId="ppttemplate" label="Corporate PPT Templates" displayOrder="193">
+        <container businessCategory="BUSINESS_CONTENT" id="ppttemplate" qualifiedId="ppttemplate" label="Corporate PPT Templates"  singularLabel="Corporate PPT Template" displayOrder="193">
             <contentItem type="text" id="title" qualifiedId="ppttemplate.title" label="Title"/>
             <contentItem type="richText" id="desc" qualifiedId="ppttemplate.desc" label="Description"/>
             <contentItem type="doc" id="file" qualifiedId="ppttemplate.file" label="File"/>
@@ -1049,7 +1049,7 @@
                 </bounded>
             </contentItem>
         </container>
-        <container businessCategory="BUSINESS_CONTENT" id="datasheet" qualifiedId="datasheet" label="Data Sheets" displayOrder="194">
+        <container businessCategory="BUSINESS_CONTENT" id="datasheet" qualifiedId="datasheet" label="Data Sheets" singularLabel="Data Sheet" displayOrder="194">
             <contentItem type="text" id="title" qualifiedId="datasheet.title" label="Title"/>
             <contentItem type="doc" id="file" qualifiedId="datasheet.file" label="File"/>
             <contentItem type="text" id="url" qualifiedId="datasheet.url" label="URL"/>
@@ -1120,7 +1120,7 @@
                 </bounded>
             </contentItem>
         </container>
-        <container businessCategory="BUSINESS_CONTENT" id="discoveryquestion" qualifiedId="discoveryquestion" label="Discovery Questions" displayOrder="195">
+        <container businessCategory="BUSINESS_CONTENT" id="discoveryquestion" qualifiedId="discoveryquestion" label="Discovery Questions" singularLabel="Discovery Question" displayOrder="195">
             <contentItem type="text" id="question" qualifiedId="discoveryquestion.question" label="Question" searchBoost="6"/>
             <contentItem type="richText" id="significance" qualifiedId="discoveryquestion.significance" label="Significance" searchBoost="2"/>
             <contentItem type="bounded" id="solutions" qualifiedId="discoveryquestion.solutions" label="Solutions">
@@ -1201,7 +1201,7 @@
                 </bounded>
             </contentItem>
         </container>
-        <container businessCategory="BUSINESS_CONTENT" id="dooropeneremail" qualifiedId="dooropeneremail" label="Door Opener Communications" displayOrder="196">
+        <container businessCategory="BUSINESS_CONTENT" id="dooropeneremail" qualifiedId="dooropeneremail" label="Door Opener Communications" singularLabel="Door Opener Communication" displayOrder="196">
             <contentItem type="text" id="title" qualifiedId="dooropeneremail.title" label="Title" searchBoost="7"/>
             <contentItem type="richText" id="desc" qualifiedId="dooropeneremail.desc" label="Description" searchBoost="4"/>
             <contentItem type="doc" id="file" qualifiedId="dooropeneremail.file" label="File"/>
@@ -1295,7 +1295,7 @@
                 </bounded>
             </contentItem>
         </container>
-        <container businessCategory="BUSINESS_CONTENT" id="event" qualifiedId="event" label="Events" displayOrder="197">
+        <container businessCategory="BUSINESS_CONTENT" id="event" qualifiedId="event" label="Events"  singularLabel="Event" displayOrder="197">
             <contentItem type="text" id="title" qualifiedId="event.title" label="Event Title" searchBoost="7"/>
             <contentItem type="bounded" id="type" qualifiedId="event.type" label="Event Type" searchBoost="6">
                 <bounded multivalued="true">
@@ -1420,7 +1420,7 @@
                 </contentItem>
             </container>
         </container>
-        <container businessCategory="BUSINESS_CONTENT" id="faq" qualifiedId="faq" label="FAQ" displayOrder="201">
+        <container businessCategory="BUSINESS_CONTENT" id="faq" qualifiedId="faq" label="FAQ" singularLabel="FAQ" displayOrder="201">
             <contentItem type="text" id="title" qualifiedId="faq.title" label="Title" searchBoost="6"/>
             <contentItem type="richText" id="desc" qualifiedId="faq.desc" label="Description" searchBoost="2"/>
             <contentItem type="doc" id="file" qualifiedId="faq.file" label="File"/>
@@ -1513,7 +1513,7 @@
                 </bounded>
             </contentItem>
         </container>
-        <container businessCategory="BUSINESS_CONTENT" id="featuresheet" qualifiedId="featuresheet" label="Feature Sheets" displayOrder="202">
+        <container businessCategory="BUSINESS_CONTENT" id="featuresheet" qualifiedId="featuresheet" label="Feature Sheets"  singularLabel="Feature Sheet" displayOrder="202">
             <contentItem type="text" id="title" qualifiedId="featuresheet.title" label="Title"/>
             <contentItem type="doc" id="file" qualifiedId="featuresheet.file" label="File"/>
             <contentItem type="richText" id="desc" qualifiedId="featuresheet.desc" label="Description"/>
@@ -1595,7 +1595,7 @@
                 </bounded>
             </contentItem>
         </container>
-        <container businessCategory="BUSINESS_CONTENT" id="importantslide" qualifiedId="importantslide" label="Important Slides" displayOrder="203">
+        <container businessCategory="BUSINESS_CONTENT" id="importantslide" qualifiedId="importantslide" label="Important Slides" singularLabel="Important Slide" displayOrder="203">
             <contentItem type="text" id="title" qualifiedId="importantslide.title" label="Title"/>
             <contentItem type="doc" id="file" qualifiedId="importantslide.file" label="File"/>
             <contentItem type="richText" id="desc" qualifiedId="importantslide.desc" label="Description"/>
@@ -1677,7 +1677,7 @@
                 </bounded>
             </contentItem>
         </container>
-        <container businessCategory="BUSINESS_CONTENT" id="knowledgecard" qualifiedId="knowledgecard" label="Knowledge Card" displayOrder="204">
+        <container businessCategory="BUSINESS_CONTENT" id="knowledgecard" qualifiedId="knowledgecard" label="Knowledge Cards" singularLabel="Knowledge Card" displayOrder="204">
             <contentItem type="text" id="title" qualifiedId="knowledgecard.title" label="Title"/>
             <contentItem type="richText" id="desc" qualifiedId="knowledgecard.desc" label="Description"/>
             <contentItem type="doc" id="file" qualifiedId="knowledgecard.file" label="File"/>
@@ -1771,7 +1771,7 @@
                 </bounded>
             </contentItem>
         </container>
-        <container businessCategory="BUSINESS_CONTENT" id="mediacoverage" qualifiedId="mediacoverage" label="Media Coverage" displayOrder="205">
+        <container businessCategory="BUSINESS_CONTENT" id="mediacoverage" qualifiedId="mediacoverage" label="Media Coverage"  singularLabel="Media Coverage" displayOrder="205">
             <contentItem type="text" id="title" qualifiedId="mediacoverage.title" label="Title"/>
             <contentItem type="richText" id="desc" qualifiedId="mediacoverage.desc" label="Description"/>
             <contentItem type="doc" id="file" qualifiedId="mediacoverage.file" label="File"/>
@@ -1865,7 +1865,7 @@
                 </bounded>
             </contentItem>
         </container>
-        <container businessCategory="BUSINESS_CONTENT" id="newsletter" qualifiedId="newsletter" label="Newsletters" displayOrder="206">
+        <container businessCategory="BUSINESS_CONTENT" id="newsletter" qualifiedId="newsletter" label="Newsletters" singularLabel="Newsletter" displayOrder="206">
             <contentItem type="text" id="title" qualifiedId="newsletter.title" label="Title"/>
             <contentItem type="richText" id="desc" qualifiedId="newsletter.desc" label="Description"/>
             <contentItem type="doc" id="file" qualifiedId="newsletter.file" label="File"/>
@@ -1959,7 +1959,7 @@
                 </bounded>
             </contentItem>
         </container>
-        <container businessCategory="BUSINESS_CONTENT" id="persona" qualifiedId="persona" label="Personas" displayOrder="207">
+        <container businessCategory="BUSINESS_CONTENT" id="persona" qualifiedId="persona" label="Personas" singularLabel="Persona" displayOrder="207">
             <contentItem type="text" id="title" qualifiedId="persona.title" label="Title" searchBoost="7"/>
             <contentItem type="doc" id="file" qualifiedId="persona.file" label="File"/>
             <contentItem type="text" id="url" qualifiedId="persona.url" label="URL"/>
@@ -2053,7 +2053,7 @@
                 </bounded>
             </contentItem>
         </container>
-        <container businessCategory="BUSINESS_CONTENT" id="press" qualifiedId="press" label="Press Releases" displayOrder="208">
+        <container businessCategory="BUSINESS_CONTENT" id="press" qualifiedId="press" label="Press Releases" singularLabel="Press Release" displayOrder="208">
             <contentItem type="text" id="title" qualifiedId="press.title" label="Title" searchBoost="7"/>
             <contentItem type="doc" id="file" qualifiedId="press.file" label="File"/>
             <contentItem type="text" id="url" qualifiedId="press.url" label="URL"/>
@@ -2148,7 +2148,7 @@
                 </bounded>
             </contentItem>
         </container>
-        <container businessCategory="BUSINESS_CONTENT" id="presentation" qualifiedId="presentation" label="Presentations" displayOrder="209">
+        <container businessCategory="BUSINESS_CONTENT" id="presentation" qualifiedId="presentation" label="Presentations" singularLabel="Presentation" displayOrder="209">
             <contentItem type="text" id="title" qualifiedId="presentation.title" label="Title" searchBoost="7"/>
             <contentItem type="doc" id="file" qualifiedId="presentation.file" label="File"/>
             <contentItem type="text" id="url" qualifiedId="presentation.url" label="URL"/>
@@ -2264,7 +2264,7 @@
                 </bounded>
             </contentItem>
         </container>
-        <container businessCategory="BUSINESS_CONTENT" id="poc" qualifiedId="poc" label="Proof of Concept" displayOrder="210">
+        <container businessCategory="BUSINESS_CONTENT" id="poc" qualifiedId="poc" label="Proof of Concepts" singularLabel="Proof of Concept" displayOrder="210">
             <contentItem type="text" id="title" qualifiedId="poc.title" label="Title"/>
             <contentItem type="richText" id="desc" qualifiedId="poc.desc" label="Description"/>
             <contentItem type="bounded" id="accounts" qualifiedId="poc.accounts" label="Account">
@@ -2384,7 +2384,7 @@
                 </contentItem>
             </container>
         </container>
-        <container businessCategory="BUSINESS_CONTENT" id="proposal" qualifiedId="proposal" label="Proposals" displayOrder="212">
+        <container businessCategory="BUSINESS_CONTENT" id="proposal" qualifiedId="proposal" label="Proposals" singularLabel="Proposal" displayOrder="212">
             <contentItem type="text" id="title" qualifiedId="proposal.title" label="Title"/>
             <contentItem type="doc" id="file" qualifiedId="proposal.file" label="File"/>
             <contentItem type="richText" id="desc" qualifiedId="proposal.desc" label="Description" searchBoost="2"/>
@@ -2494,7 +2494,7 @@
                 </contentItem>
             </container>
         </container>
-        <container businessCategory="BUSINESS_CONTENT" id="research" qualifiedId="research" label="Research" displayOrder="214">
+        <container businessCategory="BUSINESS_CONTENT" id="research" qualifiedId="research" label="Research" singularLabel="Research" displayOrder="214">
             <contentItem type="text" id="title" qualifiedId="research.title" label="Title" searchBoost="7"/>
             <contentItem type="doc" id="file" qualifiedId="research.file" label="File"/>
             <contentItem type="text" id="url" qualifiedId="research.url" label="URL"/>
@@ -2596,7 +2596,7 @@
                 </bounded>
             </contentItem>
         </container>
-        <container businessCategory="BUSINESS_CONTENT" id="saleskit" qualifiedId="saleskit" label="Sales Kits" displayOrder="215">
+        <container businessCategory="BUSINESS_CONTENT" id="saleskit" qualifiedId="saleskit" label="Sales Kits" singularLabel="Sales Kit" displayOrder="215">
             <contentItem type="text" id="kitName" qualifiedId="saleskit.kitName" label="Name" searchBoost="7"/>
             <contentItem type="richText" id="kitDesc" qualifiedId="saleskit.kitDesc" label="Description" searchBoost="2"/>
             <contentItem type="bounded" id="solutions" qualifiedId="saleskit.solutions" label="Solutions">
@@ -2678,7 +2678,7 @@
                 </bounded>
             </contentItem>
         </container>
-        <container businessCategory="BUSINESS_CONTENT" id="salesplaybook" qualifiedId="salesplaybook" label="Sales Playbooks" displayOrder="216">
+        <container businessCategory="BUSINESS_CONTENT" id="salesplaybook" qualifiedId="salesplaybook" label="Sales Playbooks" singularLabel="Sales Playbook" displayOrder="216">
             <contentItem type="text" id="title" qualifiedId="salesplaybook.title" label="Title" searchBoost="7"/>
             <contentItem type="richText" id="desc" qualifiedId="salesplaybook.desc" label="Description" searchBoost="2"/>
             <contentItem type="bounded" id="solutions" qualifiedId="salesplaybook.solutions" label="Solutions">
@@ -2760,7 +2760,7 @@
             </contentItem>
             <contentItem type="contentStack" id="playbookContent" qualifiedId="salesplaybook.playbookContent" label="Playbook Content"/>
         </container>
-        <container businessCategory="BUSINESS_CONTENT" id="secollateral" qualifiedId="secollateral" label="SE Collateral" displayOrder="217">
+        <container businessCategory="BUSINESS_CONTENT" id="secollateral" qualifiedId="secollateral" label="SE Collateral" singularLabel="SE Collateral" displayOrder="217">
             <contentItem type="text" id="title" qualifiedId="secollateral.title" label="Title"/>
             <contentItem type="doc" id="file" qualifiedId="secollateral.file" label="File"/>
             <contentItem type="text" id="url" qualifiedId="secollateral.url" label="URL"/>
@@ -2854,7 +2854,7 @@
                 </bounded>
             </contentItem>
         </container>
-        <container businessCategory="BUSINESS_CONTENT" id="slideshare" qualifiedId="slideshare" label="Slideshare" displayOrder="218">
+        <container businessCategory="BUSINESS_CONTENT" id="slideshare" qualifiedId="slideshare" label="Slideshares" singularLabel="Slideshare" displayOrder="218">
             <contentItem type="text" id="title" qualifiedId="slideshare.title" label="Title" searchBoost="7"/>
             <contentItem type="text" id="url" qualifiedId="slideshare.url" label="URL"/>
             <contentItem type="richText" id="desc" qualifiedId="slideshare.desc" label="Description" searchBoost="2"/>
@@ -2958,7 +2958,7 @@
                 </bounded>
             </contentItem>
         </container>
-        <container businessCategory="BUSINESS_CONTENT" id="solutionoverview" qualifiedId="solutionoverview" label="Solution Overview" displayOrder="219">
+        <container businessCategory="BUSINESS_CONTENT" id="solutionoverview" qualifiedId="solutionoverview" label="Solution Overviews"  singularLabel="Solution Overview" displayOrder="219">
             <contentItem type="text" id="title" qualifiedId="solutionoverview.title" label="Title" searchBoost="7"/>
             <contentItem type="doc" id="file" qualifiedId="solutionoverview.file" label="File"/>
             <contentItem type="richText" id="desc" qualifiedId="solutionoverview.desc" label="Description" searchBoost="2"/>
@@ -3051,7 +3051,7 @@
                 </bounded>
             </contentItem>
         </container>
-        <container businessCategory="BUSINESS_CONTENT" id="video" qualifiedId="video" label="Videos" displayOrder="220">
+        <container businessCategory="BUSINESS_CONTENT" id="video" qualifiedId="video" label="Videos" singularLabel="Video" displayOrder="220">
             <contentItem type="text" id="title" qualifiedId="video.title" label="Title"/>
             <contentItem type="text" id="url" qualifiedId="video.url" label="URL"/>
             <contentItem type="richText" id="desc" qualifiedId="video.desc" label="Description"/>
@@ -3166,7 +3166,7 @@
                 </bounded>
             </contentItem>
         </container>
-        <container businessCategory="BUSINESS_CONTENT" id="webinar" qualifiedId="webinar" label="Webinars" displayOrder="221">
+        <container businessCategory="BUSINESS_CONTENT" id="webinar" qualifiedId="webinar" label="Webinars" singularLabel="Webinar" displayOrder="221">
             <contentItem type="text" id="title" qualifiedId="webinar.title" label="Title"/>
             <contentItem type="text" id="url" qualifiedId="webinar.url" label="URL"/>
             <contentItem type="dateTime" id="recordedon" qualifiedId="webinar.recordedon" label="Recorded Date"/>
@@ -3271,7 +3271,7 @@
                 </bounded>
             </contentItem>
         </container>
-        <container businessCategory="BUSINESS_CONTENT" id="whitepaper" qualifiedId="whitepaper" label="White Papers" displayOrder="222">
+        <container businessCategory="BUSINESS_CONTENT" id="whitepaper" qualifiedId="whitepaper" label="White Papers"  singularLabel="White Paper" displayOrder="222">
             <contentItem type="text" id="title" qualifiedId="whitepaper.title" label="Title"/>
             <contentItem type="doc" id="file" qualifiedId="whitepaper.file" label="File"/>
             <contentItem type="text" id="url" qualifiedId="whitepaper.url" label="URL"/>
@@ -3373,7 +3373,7 @@
                 </bounded>
             </contentItem>
         </container>
-        <container businessCategory="BUSINESS_CONTENT" id="content" qualifiedId="content" label="Other Content" displayOrder="223">
+        <container businessCategory="BUSINESS_CONTENT" id="content" qualifiedId="content" label="Other Content"  singularLabel="Other Content" displayOrder="223">
             <contentItem type="text" id="title" qualifiedId="content.title" label="Title"/>
             <contentItem type="text" id="Document Type" qualifiedId="content.Document Type" label="Document Type"/>
             <contentItem type="doc" id="file" qualifiedId="content.file" label="File"/>
