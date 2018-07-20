@@ -144,12 +144,12 @@ export class ImportEditComponent implements OnInit {
       rec.errors = {};
       
       if (!rec.title || rec.title.trim().length == 0) {
-        rec.errors.title = ["Please enter title"];
+        rec.errors.title = ["Please enter a title"];
         hasErrors = true;
       }
 
       if (!rec.contentType || rec.contentType.length == 0) {
-        rec.errors.contentType = ["Please select content type"];
+        rec.errors.contentType = ["Please select a content type"];
         hasErrors = true;
       }
 

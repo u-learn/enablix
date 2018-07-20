@@ -82,7 +82,7 @@
             <container linkContainerQId="type12" linkContentItemId="type12product" id="producttype12" qualifiedId="product.producttype12" label="Other Content"/>
             <container linkContainerQId="type13" linkContentItemId="type13product" id="producttype13" qualifiedId="product.producttype13" label="Corporate History"/>
         </container>
-        <container businessCategory="BUSINESS_DIMENSION" id="solution" qualifiedId="solution" label="Solutions" displayOrder="1">
+        <container businessCategory="BUSINESS_DIMENSION" color="#7147d3" id="solution" qualifiedId="solution" label="Solutions" displayOrder="1">
             <contentItem type="text" id="name" qualifiedId="solution.name" label="Name" searchBoost="7"/>
             <contentItem type="text" id="shortName" qualifiedId="solution.shortName" label="Short Name" searchBoost="7"/>
             <contentItem type="bounded" id="solArea" qualifiedId="solution.solArea" label="Solution Area" searchBoost="7">
@@ -150,7 +150,7 @@
             <container linkContainerQId="type12" linkContentItemId="type12solution" id="solutiontype12" qualifiedId="solution.solutiontype12" label="Other Content"/>
             <container linkContainerQId="type13" linkContentItemId="type13solution" id="solutiontype13" qualifiedId="solution.solutiontype13" label="Corporate History"/>
         </container>
-        <container businessCategory="BUSINESS_DIMENSION" id="competitor" qualifiedId="competitor" label="Competitors" displayOrder="70">
+        <container businessCategory="BUSINESS_DIMENSION" color="#4046ad" id="competitor" qualifiedId="competitor" label="Competitors" displayOrder="70">
             <contentItem type="text" id="name" qualifiedId="competitor.name" label="Competitor Name" searchBoost="7"/>
             <contentItem type="text" id="shortName" qualifiedId="competitor.shortName" label="Short Name" searchBoost="7"/>
             <container businessCategory="BUSINESS_CONTENT" id="compswot" qualifiedId="competitor.compswot" label="SWOT" displayOrder="71">
@@ -240,7 +240,7 @@
             <container linkContainerQId="type12" linkContentItemId="type12competitor" id="competitortype12" qualifiedId="competitor.competitortype12" label="Other Content"/>
             <container linkContainerQId="type13" linkContentItemId="type13competitor" id="competitortype13" qualifiedId="competitor.competitortype13" label="Corporate History"/>
         </container>
-        <container referenceable="true" refData="false" single="false" businessCategory="BUSINESS_DIMENSION" color="#4046ad" id="customer" qualifiedId="customer" label="Customers" singularLabel="Customer" searchBoost="1" displayOrder="140">
+        <container referenceable="true" refData="false" single="false" businessCategory="BUSINESS_DIMENSION" color="#d0a914" id="customer" qualifiedId="customer" label="Customers" singularLabel="Customer" searchBoost="1" displayOrder="140">
             <contentItem type="text" id="name" qualifiedId="customer.name" label="Account Name" searchBoost="7"/>
             <contentItem type="text" id="shortName" qualifiedId="customer.shortName" label="Account Short Name" searchBoost="7"/>
             <contentItem type="bounded" id="custRegions" qualifiedId="customer.custRegions" label="Regions" searchBoost="6">
@@ -528,7 +528,7 @@
             <container linkContainerQId="type12" linkContentItemId="type12customer" id="customertype12" qualifiedId="customer.customertype12" label="Other Content"/>
             <container linkContainerQId="type13" linkContentItemId="type13customer" id="customertype13" qualifiedId="customer.customertype13" label="Corporate History"/>
         </container>
-        <container businessCategory="BUSINESS_DIMENSION" id="partner" qualifiedId="partner" label="Partners" displayOrder="94">
+        <container businessCategory="BUSINESS_DIMENSION" color="#a62078" id="partner" qualifiedId="partner" label="Partners" displayOrder="94">
             <contentItem type="text" id="name" qualifiedId="partner.name" label="Partner Name" searchBoost="7"/>
             <contentItem type="text" id="shortName" qualifiedId="partner.shortName" label="Short Name" searchBoost="7"/>
             <contentItem type="bounded" id="type" qualifiedId="partner.type" label="Partner Type" searchBoost="6">
@@ -575,7 +575,7 @@
             <container linkContainerQId="type12" linkContentItemId="type12partner" id="partnertype12" qualifiedId="partner.partnertype12" label="Other Content"/>
             <container linkContainerQId="type13" linkContentItemId="type13partner" id="partnertype13" qualifiedId="partner.partnertype13" label="Corporate History"/>
         </container>
-        <container businessCategory="BUSINESS_DIMENSION" id="analyst" qualifiedId="analyst" label="Analysts" displayOrder="151">
+        <container businessCategory="BUSINESS_DIMENSION" color="#70e58f" id="analyst" qualifiedId="analyst" label="Analysts" displayOrder="151">
             <contentItem type="text" id="name" qualifiedId="analyst.name" label="Analyst Name" searchBoost="7"/>
             <contentItem type="text" id="shortName" qualifiedId="analyst.shortName" label="Short Name" searchBoost="7"/>
             <contentItem type="bounded" id="type" qualifiedId="analyst.type" label="Analyst Type" searchBoost="6">
@@ -884,7 +884,7 @@
             </contentItem>
             <contentItem type="contentStack" id="eventContent" qualifiedId="marketingevent.eventContent" label="Event Content"/>
         </container>
-        <container businessCategory="BUSINESS_DIMENSION" id="topic" qualifiedId="topic" label="Topics" displayOrder="140">
+        <container businessCategory="BUSINESS_DIMENSION" color="#7d64c2" id="topic" qualifiedId="topic" label="Topics" displayOrder="140">
             <contentItem type="text" id="name" qualifiedId="topic.name" label="Topic Name"/>
             <contentItem type="text" id="shortName" qualifiedId="topic.shortName" label="Short Name"/>
             <contentItem type="text" id="summary" qualifiedId="topic.summary" label="Summary"/>
@@ -1193,7 +1193,7 @@
                 </bounded>
             </contentItem>
         </container>
-        <container referenceable="true" refData="false" single="false" businessCategory="BUSINESS_CONTENT" color="#1F8AEF" id="demoenvironment" qualifiedId="demoenvironment" label="Demo Environments" singularLabel="Demo Environments" searchBoost="1" displayOrder="172">
+        <container referenceable="true" refData="false" single="false" businessCategory="BUSINESS_CONTENT" id="demoenvironment" qualifiedId="demoenvironment" label="Demo Environments" singularLabel="Demo Environments" searchBoost="1" displayOrder="172">
             <qualityConfig>
                 <param name="OBSOLETE_IN_DAYS" value="30"/>
             </qualityConfig>

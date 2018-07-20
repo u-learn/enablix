@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <contentTemplate id="technomile_enterprise" version="1.4">
     <dataDefinition>
-        <container businessCategory="BUSINESS_DIMENSION" id="product" qualifiedId="product" label="Products" singularLabel="Product" displayOrder="1">
+        <container businessCategory="BUSINESS_DIMENSION" color="#ed5a99" id="product" qualifiedId="product" label="Products" singularLabel="Product" displayOrder="1">
             <contentItem type="text" id="name" qualifiedId="product.name" label="Name" searchBoost="7"/>
             <contentItem type="text" id="shortName" qualifiedId="product.shortName" label="Short Name" searchBoost="7"/>
             <contentItem type="bounded" id="prodOppType" qualifiedId="product.prodOppType" label="Opportunity Type" searchBoost="5">
@@ -792,11 +792,11 @@
                 </bounded>
             </contentItem>
         </container>
-        <container refData="true" id="oppType" label="Opportunity Type" displayOrder="80">
-            <contentItem type="text" id="typeName" label="Type"/>
-            <contentItem type="text" id="desc" label="Description"/>
+        <container refData="true" id="oppType" qualifiedId="oppType" label="Opportunity Type" displayOrder="80">
+            <contentItem type="text" id="typeName" qualifiedId="oppType.typeName" label="Type"/>
+            <contentItem type="text" id="desc" qualifiedId="oppType.desc" label="Description"/>
         </container>
-        <container referenceable="true" businessCategory="BUSINESS_DIMENSION" id="dim1" qualifiedId="dim1" label="Services" singularLabel="Service" displayOrder="1003">
+        <container referenceable="true" businessCategory="BUSINESS_DIMENSION" color="#b0ace8" id="dim1" qualifiedId="dim1" label="Services" singularLabel="Service" displayOrder="1003">
             <contentItem type="text" id="name" qualifiedId="dim1.name" label="Name" searchBoost="7"/>
             <contentItem type="text" id="shortName" qualifiedId="dim1.shortName" label="Short Name" searchBoost="7"/>
             <container linkContainerQId="article" linkContentItemId="articledim1" id="dim1article" qualifiedId="dim1.dim1article" label="Services"/>
@@ -815,7 +815,7 @@
             <container linkContainerQId="whitepaper" linkContentItemId="whitepaperdim1" id="dim1whitepaper" qualifiedId="dim1.dim1whitepaper" label="Services"/>
             <container linkContainerQId="content" linkContentItemId="contentdim1" id="dim1content" qualifiedId="dim1.dim1content" label="Services"/>
         </container>
-        <container referenceable="true" businessCategory="BUSINESS_DIMENSION" id="dim2" qualifiedId="dim2" label="Industries" singularLabel="Industry" displayOrder="49">
+        <container referenceable="true" businessCategory="BUSINESS_DIMENSION" color="#b03159" id="dim2" qualifiedId="dim2" label="Industries" singularLabel="Industry" displayOrder="49">
             <contentItem type="text" id="name" qualifiedId="dim2.name" label="Name" searchBoost="7"/>
             <contentItem type="text" id="shortName" qualifiedId="dim2.shortName" label="Short Name" searchBoost="7"/>
             <container linkContainerQId="article" linkContentItemId="articledim2" id="dim2article" qualifiedId="dim2.dim2article" label="Industries"/>
@@ -834,7 +834,7 @@
             <container linkContainerQId="whitepaper" linkContentItemId="whitepaperdim2" id="dim2whitepaper" qualifiedId="dim2.dim2whitepaper" label="Industries"/>
             <container linkContainerQId="content" linkContentItemId="contentdim2" id="dim2content" qualifiedId="dim2.dim2content" label="Industries"/>
         </container>
-        <container referenceable="true" businessCategory="BUSINESS_DIMENSION" id="dim3" qualifiedId="dim3" label="Partners" singularLabel="Partner" displayOrder="1003">
+        <container referenceable="true" businessCategory="BUSINESS_DIMENSION" color="#0435f6" id="dim3" qualifiedId="dim3" label="Partners" singularLabel="Partner" displayOrder="1003">
             <contentItem type="text" id="name" qualifiedId="dim3.name" label="Name" searchBoost="7"/>
             <contentItem type="text" id="shortName" qualifiedId="dim3.shortName" label="Short Name" searchBoost="7"/>
             <container linkContainerQId="article" linkContentItemId="articledim3" id="dim3article" qualifiedId="dim3.dim3article" label="Partners"/>

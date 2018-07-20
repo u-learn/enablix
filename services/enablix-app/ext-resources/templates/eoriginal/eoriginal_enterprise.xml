@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <contentTemplate id="eoriginal_enterprise" version="1.31">
     <dataDefinition>
-        <container businessCategory="BUSINESS_DIMENSION" id="solution" qualifiedId="solution" label="Solutions" displayOrder="34">
+        <container businessCategory="BUSINESS_DIMENSION" color="#ed5a99" id="solution" qualifiedId="solution" label="Solutions" displayOrder="34">
             <contentItem type="text" id="name" qualifiedId="solution.name" label="Name" searchBoost="7"/>
             <contentItem type="text" id="shortName" qualifiedId="solution.shortName" label="Short Name" searchBoost="7"/>
             <container linkContainerQId="article" linkContentItemId="solutions" id="solArticle" qualifiedId="solution.solArticle" label="News Article" displayOrder="2"/>
@@ -42,7 +42,7 @@
             <container linkContainerQId="type4" linkContentItemId="type4solution" id="solutiontype4" qualifiedId="solution.solutiontype4" label="Images"/>
             <container linkContainerQId="type5" linkContentItemId="type5solution" id="solutiontype5" qualifiedId="solution.solutiontype5" label="Competitive Feature Sheets"/>
         </container>
-        <container businessCategory="BUSINESS_DIMENSION" id="industry" qualifiedId="industry" label="Industries" displayOrder="1">
+        <container businessCategory="BUSINESS_DIMENSION" color="#b0ace8" id="industry" qualifiedId="industry" label="Industries" displayOrder="1">
             <contentItem type="text" id="name" qualifiedId="industry.name" label="Name" searchBoost="7"/>
             <contentItem type="text" id="shortName" qualifiedId="industry.shortName" label="Short Name" searchBoost="7"/>
             <contentItem type="bounded" id="alias" qualifiedId="industry.alias" label="Aliases" searchBoost="6">
@@ -94,7 +94,7 @@
             <container linkContainerQId="type4" linkContentItemId="type4industry" id="industrytype4" qualifiedId="industry.industrytype4" label="Images"/>
             <container linkContainerQId="type5" linkContentItemId="type5industry" id="industrytype5" qualifiedId="industry.industrytype5" label="Competitive Feature Sheets"/>
         </container>
-        <container businessCategory="BUSINESS_DIMENSION" id="competitor" qualifiedId="competitor" label="Competitors" displayOrder="67">
+        <container businessCategory="BUSINESS_DIMENSION" color="#b03159" id="competitor" qualifiedId="competitor" label="Competitors" displayOrder="67">
             <contentItem type="text" id="name" qualifiedId="competitor.name" label="Competitor Name" searchBoost="7"/>
             <contentItem type="text" id="shortName" qualifiedId="competitor.shortName" label="Short Name" searchBoost="7"/>
             <contentItem type="bounded" id="relIndustries" qualifiedId="competitor.relIndustries" label="Related Industries" searchBoost="4">
@@ -144,7 +144,7 @@
             <container linkContainerQId="type4" linkContentItemId="type4competitor" id="competitortype4" qualifiedId="competitor.competitortype4" label="Images"/>
             <container linkContainerQId="type5" linkContentItemId="type5competitor" id="competitortype5" qualifiedId="competitor.competitortype5" label="Competitive Feature Sheets"/>
         </container>
-        <container businessCategory="BUSINESS_DIMENSION" id="partner" qualifiedId="partner" label="Partners" displayOrder="98">
+        <container businessCategory="BUSINESS_DIMENSION" color="#0435f6" id="partner" qualifiedId="partner" label="Partners" displayOrder="98">
             <contentItem type="text" id="name" qualifiedId="partner.name" label="Partner Name" searchBoost="7"/>
             <contentItem type="text" id="shortName" qualifiedId="partner.shortName" label="Short Name" searchBoost="7"/>
             <contentItem type="bounded" id="type" qualifiedId="partner.type" label="Partner Type" searchBoost="6">
@@ -196,7 +196,7 @@
             <container linkContainerQId="type4" linkContentItemId="type4partner" id="partnertype4" qualifiedId="partner.partnertype4" label="Images"/>
             <container linkContainerQId="type5" linkContentItemId="type5partner" id="partnertype5" qualifiedId="partner.partnertype5" label="Competitive Feature Sheets"/>
         </container>
-        <container businessCategory="BUSINESS_DIMENSION" id="analyst" qualifiedId="analyst" label="Analysts" displayOrder="131">
+        <container businessCategory="BUSINESS_DIMENSION" color="#7b53d5" id="analyst" qualifiedId="analyst" label="Analysts" displayOrder="131">
             <contentItem type="text" id="name" qualifiedId="analyst.name" label="Analyst Name" searchBoost="7"/>
             <contentItem type="text" id="shortName" qualifiedId="analyst.shortName" label="Short Name" searchBoost="7"/>
             <contentItem type="bounded" id="type" qualifiedId="analyst.type" label="Analyst Type" searchBoost="6">
@@ -235,7 +235,7 @@
             <container linkContainerQId="type4" linkContentItemId="type4analyst" id="analysttype4" qualifiedId="analyst.analysttype4" label="Images"/>
             <container linkContainerQId="type5" linkContentItemId="type5analyst" id="analysttype5" qualifiedId="analyst.analysttype5" label="Competitive Feature Sheets"/>
         </container>
-        <container businessCategory="BUSINESS_DIMENSION" id="account" qualifiedId="account" label="Accounts" displayOrder="152">
+        <container businessCategory="BUSINESS_DIMENSION" color="#857610" id="account" qualifiedId="account" label="Accounts" displayOrder="152">
             <contentItem type="text" id="name" qualifiedId="account.name" label="Name" searchBoost="7"/>
             <contentItem type="bounded" id="accountOwner" qualifiedId="account.accountOwner" label="Owner" searchBoost="5">
                 <bounded multivalued="false">
@@ -265,7 +265,7 @@
             <container linkContainerQId="type4" linkContentItemId="type4account" id="accounttype4" qualifiedId="account.accounttype4" label="Images"/>
             <container linkContainerQId="type5" linkContentItemId="type5account" id="accounttype5" qualifiedId="account.accounttype5" label="Competitive Feature Sheets"/>
         </container>
-        <container businessCategory="BUSINESS_DIMENSION" id="opportunity" qualifiedId="opportunity" label="Opportunities" displayOrder="154">
+        <container businessCategory="BUSINESS_DIMENSION" color="#553191" id="opportunity" qualifiedId="opportunity" label="Opportunities" displayOrder="154">
             <contentItem type="text" id="title" qualifiedId="opportunity.title" label="Name" searchBoost="7"/>
             <contentItem type="text" id="id" qualifiedId="opportunity.id" label="Opportunity ID" searchBoost="7"/>
             <contentItem type="bounded" id="stage" qualifiedId="opportunity.stage" label="Stage">
@@ -318,7 +318,7 @@
             <container linkContainerQId="type4" linkContentItemId="type4opportunity" id="opportunitytype4" qualifiedId="opportunity.opportunitytype4" label="Images"/>
             <container linkContainerQId="type5" linkContentItemId="type5opportunity" id="opportunitytype5" qualifiedId="opportunity.opportunitytype5" label="Competitive Feature Sheets"/>
         </container>
-        <container businessCategory="BUSINESS_DIMENSION" id="topic" qualifiedId="topic" label="Topics" displayOrder="156">
+        <container businessCategory="BUSINESS_DIMENSION" color="#faddda" id="topic" qualifiedId="topic" label="Topics" displayOrder="156">
             <contentItem type="text" id="name" qualifiedId="topic.name" label="Topic Name"/>
             <contentItem type="text" id="shortName" qualifiedId="topic.shortName" label="Short Name"/>
             <contentItem type="richText" id="desc" qualifiedId="topic.desc" label="Description" searchBoost="2"/>
@@ -567,7 +567,7 @@
                 </bounded>
             </contentItem>
         </container>
-        <container businessCategory="BUSINESS_CONTENT" id="blog" qualifiedId="blog" label="Blogs"  singularLabel="Blog" displayOrder="189">
+        <container businessCategory="BUSINESS_CONTENT" id="blog" qualifiedId="blog" label="Blogs" singularLabel="Blog" displayOrder="189">
             <contentItem type="text" id="title" qualifiedId="blog.title" label="Title"/>
             <contentItem type="text" id="url" qualifiedId="blog.url" label="URL"/>
             <contentItem type="dateTime" id="blogdate" qualifiedId="blog.blogdate" label="Publish Date"/>
@@ -669,7 +669,7 @@
                 </bounded>
             </contentItem>
         </container>
-        <container businessCategory="BUSINESS_CONTENT" id="casestudy" qualifiedId="casestudy" label="Case Studies &amp; Success Stories"  singularLabel="Case Study &amp; Success Story" displayOrder="190">
+        <container businessCategory="BUSINESS_CONTENT" id="casestudy" qualifiedId="casestudy" label="Case Studies &amp; Success Stories" singularLabel="Case Study &amp; Success Story" displayOrder="190">
             <contentItem type="text" id="title" qualifiedId="casestudy.title" label="Title"/>
             <contentItem type="doc" id="file" qualifiedId="casestudy.file" label="File"/>
             <contentItem type="text" id="url" qualifiedId="casestudy.url" label="URL"/>
@@ -1033,7 +1033,7 @@
             </contentItem>
             <contentItem type="contentStack" id="contentkitContent" qualifiedId="contentkit.contentkitContent" label="Content"/>
         </container>
-        <container businessCategory="BUSINESS_CONTENT" id="ppttemplate" qualifiedId="ppttemplate" label="Corporate PPT Templates"  singularLabel="Corporate PPT Template" displayOrder="193">
+        <container businessCategory="BUSINESS_CONTENT" id="ppttemplate" qualifiedId="ppttemplate" label="Corporate PPT Templates" singularLabel="Corporate PPT Template" displayOrder="193">
             <contentItem type="text" id="title" qualifiedId="ppttemplate.title" label="Title"/>
             <contentItem type="richText" id="desc" qualifiedId="ppttemplate.desc" label="Description"/>
             <contentItem type="doc" id="file" qualifiedId="ppttemplate.file" label="File"/>
@@ -1295,7 +1295,7 @@
                 </bounded>
             </contentItem>
         </container>
-        <container businessCategory="BUSINESS_CONTENT" id="event" qualifiedId="event" label="Events"  singularLabel="Event" displayOrder="197">
+        <container businessCategory="BUSINESS_CONTENT" id="event" qualifiedId="event" label="Events" singularLabel="Event" displayOrder="197">
             <contentItem type="text" id="title" qualifiedId="event.title" label="Event Title" searchBoost="7"/>
             <contentItem type="bounded" id="type" qualifiedId="event.type" label="Event Type" searchBoost="6">
                 <bounded multivalued="true">
@@ -1513,7 +1513,7 @@
                 </bounded>
             </contentItem>
         </container>
-        <container businessCategory="BUSINESS_CONTENT" id="featuresheet" qualifiedId="featuresheet" label="Feature Sheets"  singularLabel="Feature Sheet" displayOrder="202">
+        <container businessCategory="BUSINESS_CONTENT" id="featuresheet" qualifiedId="featuresheet" label="Feature Sheets" singularLabel="Feature Sheet" displayOrder="202">
             <contentItem type="text" id="title" qualifiedId="featuresheet.title" label="Title"/>
             <contentItem type="doc" id="file" qualifiedId="featuresheet.file" label="File"/>
             <contentItem type="richText" id="desc" qualifiedId="featuresheet.desc" label="Description"/>
@@ -1771,7 +1771,7 @@
                 </bounded>
             </contentItem>
         </container>
-        <container businessCategory="BUSINESS_CONTENT" id="mediacoverage" qualifiedId="mediacoverage" label="Media Coverage"  singularLabel="Media Coverage" displayOrder="205">
+        <container businessCategory="BUSINESS_CONTENT" id="mediacoverage" qualifiedId="mediacoverage" label="Media Coverage" singularLabel="Media Coverage" displayOrder="205">
             <contentItem type="text" id="title" qualifiedId="mediacoverage.title" label="Title"/>
             <contentItem type="richText" id="desc" qualifiedId="mediacoverage.desc" label="Description"/>
             <contentItem type="doc" id="file" qualifiedId="mediacoverage.file" label="File"/>
@@ -2958,7 +2958,7 @@
                 </bounded>
             </contentItem>
         </container>
-        <container businessCategory="BUSINESS_CONTENT" id="solutionoverview" qualifiedId="solutionoverview" label="Solution Overviews"  singularLabel="Solution Overview" displayOrder="219">
+        <container businessCategory="BUSINESS_CONTENT" id="solutionoverview" qualifiedId="solutionoverview" label="Solution Overviews" singularLabel="Solution Overview" displayOrder="219">
             <contentItem type="text" id="title" qualifiedId="solutionoverview.title" label="Title" searchBoost="7"/>
             <contentItem type="doc" id="file" qualifiedId="solutionoverview.file" label="File"/>
             <contentItem type="richText" id="desc" qualifiedId="solutionoverview.desc" label="Description" searchBoost="2"/>
@@ -3271,7 +3271,7 @@
                 </bounded>
             </contentItem>
         </container>
-        <container businessCategory="BUSINESS_CONTENT" id="whitepaper" qualifiedId="whitepaper" label="White Papers"  singularLabel="White Paper" displayOrder="222">
+        <container businessCategory="BUSINESS_CONTENT" id="whitepaper" qualifiedId="whitepaper" label="White Papers" singularLabel="White Paper" displayOrder="222">
             <contentItem type="text" id="title" qualifiedId="whitepaper.title" label="Title"/>
             <contentItem type="doc" id="file" qualifiedId="whitepaper.file" label="File"/>
             <contentItem type="text" id="url" qualifiedId="whitepaper.url" label="URL"/>
@@ -3373,7 +3373,7 @@
                 </bounded>
             </contentItem>
         </container>
-        <container businessCategory="BUSINESS_CONTENT" id="content" qualifiedId="content" label="Other Content"  singularLabel="Other Content" displayOrder="223">
+        <container businessCategory="BUSINESS_CONTENT" id="content" qualifiedId="content" label="Other Content" singularLabel="Other Content" displayOrder="223">
             <contentItem type="text" id="title" qualifiedId="content.title" label="Title"/>
             <contentItem type="text" id="Document Type" qualifiedId="content.Document Type" label="Document Type"/>
             <contentItem type="doc" id="file" qualifiedId="content.file" label="File"/>
@@ -3457,7 +3457,7 @@
                 </bounded>
             </contentItem>
         </container>
-        <container refData="true" businessCategory="BUSINESS_DIMENSION" id="accessType" qualifiedId="accessType" label="Access Types" displayOrder="224">
+        <container refData="true" businessCategory="BUSINESS_DIMENSION" color="#3d90ff" id="accessType" qualifiedId="accessType" label="Access Types" displayOrder="224">
             <contentItem type="text" id="name" qualifiedId="accessType.name" label="Name"/>
             <contentItem type="text" id="desc" qualifiedId="accessType.desc" label="Description"/>
             <container linkContainerQId="presentation" linkContentItemId="access" id="accessPresentation" qualifiedId="accessType.accessPresentation" label="Presentations" displayOrder="225"/>

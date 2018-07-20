@@ -68,7 +68,7 @@
         <h1 *ngIf="editing" contenteditable="true" class="editable" [(ngModel)]="record[container.titleItemId]" (input)="onTitleChange()"></h1>
         <h1 *ngIf="!editing" [innerHtml]="record[container.titleItemId]"></h1>
         <div class="input-error" [hidden]="!errors.title?.required">
-          Please enter title
+          Please enter a title
         </div>
         <p class="label" *ngIf="!contentRequest">Last updated {{record.modifiedAt | ebxDate}}</p>
         <p class="label" *ngIf="contentRequest">{{getContentRequestStatusText()}} on {{contentRequest.modifiedAt | ebxDate}}</p>

@@ -7,7 +7,9 @@ import java.io.InputStream;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.annotation.PostConstruct;
 import javax.xml.bind.JAXBException;
@@ -94,6 +96,15 @@ public class TemplateManagerImpl implements TemplateManager {
 
 		checkAndUpdateDisplayOrder(template);
 		
+		if (updateBizDimColors(template)) {
+		
+			try {
+				persistOnFilesystem(template, ProcessContext.get().getTenantId(), filename);
+			} catch (Exception e) {
+				LOGGER.error("Error persisting template file", e);
+			}
+		}
+		
 		TemplateDocument templateDoc = new TemplateDocument();
 		templateDoc.setFilename(filename);
 		templateDoc.setTemplate(template);
@@ -107,6 +118,37 @@ public class TemplateManagerImpl implements TemplateManager {
 		EventUtil.publishEvent(new Event<ContentTemplate>(Events.CONTENT_TEMPLATE_UPDATED, template));
 	}
 	
+	private boolean updateBizDimColors(ContentTemplate template) {
+		
+		List<ContainerType> cntnrWithoutColors = new ArrayList<>();
+		Set<String> usedColors = new HashSet<>();
+		
+		for (ContainerType container : template.getDataDefinition().getContainer()) {
+			if (container.getBusinessCategory() == ContainerBusinessCategoryType.BUSINESS_DIMENSION) {
+				if (StringUtil.isEmpty(container.getColor())) {
+					cntnrWithoutColors.add(container);
+				} else {
+					usedColors.add(container.getColor());
+				}
+			} 
+		}
+		
+		boolean colorUpdated = false;
+		
+		if (!cntnrWithoutColors.isEmpty()) {
+			for (ContainerType container : cntnrWithoutColors) {
+				String color = TemplateBuilder.getNextBizDimColor(usedColors);
+				if (color != null) {
+					colorUpdated = true;
+					container.setColor(color);
+					usedColors.add(color);
+				}
+			}
+		}
+		
+		return colorUpdated;
+	}
+
 	private void checkAndUpdateDisplayOrder(ContentTemplate template) {
 		BigInteger displayOrder = template.getDataDefinition().getContainer().get(0).getDisplayOrder();
 		if (displayOrder == null) {
@@ -275,7 +317,17 @@ public class TemplateManagerImpl implements TemplateManager {
 	@Override
 	public void persistOnFilesystem(ContentTemplate template, Tenant tenant, String filename) throws Exception {
 		
-		String destinationFolder = getDestinationFolder(tenant.getTenantId());
+		if (!StringUtil.hasText(filename)) {
+			// set the default file name
+			filename = tenant.getDefaultTemplateId() + ".xml";
+		}
+		
+		persistOnFilesystem(template, tenant.getTenantId(), filename);
+	}
+		
+	private void persistOnFilesystem(ContentTemplate template, String tenantId, String filename) throws Exception {
+		
+		String destinationFolder = getDestinationFolder(tenantId);
 		
 		if (!StringUtil.hasText(filename)) {
 			
@@ -301,10 +353,6 @@ public class TemplateManagerImpl implements TemplateManager {
 				
 			}
 			
-			if (!StringUtil.hasText(filename)) {
-				// set the default file name
-				filename = tenant.getDefaultTemplateId() + ".xml";
-			}
 		}
 		
 		String destLocation = destinationFolder + File.separator + filename; 
