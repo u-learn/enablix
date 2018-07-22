@@ -2,6 +2,7 @@ package com.enablix.app.template.service;
 
 import java.math.BigInteger;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -15,6 +16,7 @@ import com.enablix.commons.exception.AppError;
 import com.enablix.commons.exception.ErrorCodes;
 import com.enablix.commons.exception.ValidationException;
 import com.enablix.commons.util.QIdUtil;
+import com.enablix.commons.util.StringUtil;
 import com.enablix.commons.util.collection.CollectionUtil;
 import com.enablix.core.commons.xsdtopojo.BoundedListDatastoreType;
 import com.enablix.core.commons.xsdtopojo.BoundedRefListType;
@@ -67,92 +69,40 @@ public class TemplateBuilder {
 		BIZ_DIM_COLORS.add("#d0a914");
 		BIZ_DIM_COLORS.add("#a62078");
 		BIZ_DIM_COLORS.add("#70e58f");
-		BIZ_DIM_COLORS.add("#7d64c2");
-		BIZ_DIM_COLORS.add("#926fa9");
 		BIZ_DIM_COLORS.add("#448e14");
-		BIZ_DIM_COLORS.add("#600ce7");
-		BIZ_DIM_COLORS.add("#f1b71b");
-		BIZ_DIM_COLORS.add("#2550f2");
-		BIZ_DIM_COLORS.add("#ae6893");
 		BIZ_DIM_COLORS.add("#dbda1e");
-		BIZ_DIM_COLORS.add("#52c07f");
-		BIZ_DIM_COLORS.add("#67a821");
-		BIZ_DIM_COLORS.add("#df491f");
-		BIZ_DIM_COLORS.add("#b03159");
-		BIZ_DIM_COLORS.add("#14a176");
 		BIZ_DIM_COLORS.add("#569cb1");
-		BIZ_DIM_COLORS.add("#4a8ed8");
-		BIZ_DIM_COLORS.add("#57d658");
-		BIZ_DIM_COLORS.add("#6754f4");
 		BIZ_DIM_COLORS.add("#6a1c9e");
 		BIZ_DIM_COLORS.add("#e0129f");
-		BIZ_DIM_COLORS.add("#7b53d5");
 		BIZ_DIM_COLORS.add("#c87b89");
 		BIZ_DIM_COLORS.add("#8fcc92");
 		BIZ_DIM_COLORS.add("#75684c");
 		BIZ_DIM_COLORS.add("#c81dfa");
 		BIZ_DIM_COLORS.add("#857610");
-		BIZ_DIM_COLORS.add("#344286");
 		BIZ_DIM_COLORS.add("#d4b577");
 		BIZ_DIM_COLORS.add("#9c789b");
-		BIZ_DIM_COLORS.add("#936e94");
 		BIZ_DIM_COLORS.add("#ee7aaa");
-		BIZ_DIM_COLORS.add("#17762e");
-		BIZ_DIM_COLORS.add("#6a2c70");
-		BIZ_DIM_COLORS.add("#435fb5");
-		BIZ_DIM_COLORS.add("#ed5a99");
 		BIZ_DIM_COLORS.add("#e6bcdc");
-		BIZ_DIM_COLORS.add("#9909b7");
 		BIZ_DIM_COLORS.add("#bda2e6");
 		BIZ_DIM_COLORS.add("#6a905e");
-		BIZ_DIM_COLORS.add("#866422");
-		BIZ_DIM_COLORS.add("#eacab6");
-		BIZ_DIM_COLORS.add("#26acb6");
-		BIZ_DIM_COLORS.add("#7d2ce8");
-		BIZ_DIM_COLORS.add("#7709cd");
-		BIZ_DIM_COLORS.add("#b0ace8");
-		BIZ_DIM_COLORS.add("#c9b38f");
-		BIZ_DIM_COLORS.add("#ba6d77");
 		BIZ_DIM_COLORS.add("#c23c0b");
 		BIZ_DIM_COLORS.add("#55ae52");
 		BIZ_DIM_COLORS.add("#b6410a");
-		BIZ_DIM_COLORS.add("#f42113");
-		BIZ_DIM_COLORS.add("#0435f6");
-		BIZ_DIM_COLORS.add("#3ffa69");
-		BIZ_DIM_COLORS.add("#798328");
-		BIZ_DIM_COLORS.add("#faddda");
-		BIZ_DIM_COLORS.add("#35f32b");
 		BIZ_DIM_COLORS.add("#82514a");
-		BIZ_DIM_COLORS.add("#4fa45f");
-		BIZ_DIM_COLORS.add("#14b569");
+		BIZ_DIM_COLORS.add("#66818b");
+		BIZ_DIM_COLORS.add("#4968a3");
 		BIZ_DIM_COLORS.add("#be203f");
-		BIZ_DIM_COLORS.add("#5805bc");
+		BIZ_DIM_COLORS.add("#0ee4b2");
 		BIZ_DIM_COLORS.add("#058bea");
 		BIZ_DIM_COLORS.add("#e6979d");
-		BIZ_DIM_COLORS.add("#b972db");
 		BIZ_DIM_COLORS.add("#d27862");
 		BIZ_DIM_COLORS.add("#18536c");
 		BIZ_DIM_COLORS.add("#968283");
-		BIZ_DIM_COLORS.add("#28bb28");
-		BIZ_DIM_COLORS.add("#94c88c");
-		BIZ_DIM_COLORS.add("#1dc683");
-		BIZ_DIM_COLORS.add("#3d90ff");
-		BIZ_DIM_COLORS.add("#dfd677");
-		BIZ_DIM_COLORS.add("#4ba2e9");
-		BIZ_DIM_COLORS.add("#e133d2");
 		BIZ_DIM_COLORS.add("#bdd0c0");
-		BIZ_DIM_COLORS.add("#bfe63c");
-		BIZ_DIM_COLORS.add("#bbe603");
 		BIZ_DIM_COLORS.add("#179ac5");
-		BIZ_DIM_COLORS.add("#553191");
-		BIZ_DIM_COLORS.add("#9f2bf8");
 		BIZ_DIM_COLORS.add("#d9004f");
 		BIZ_DIM_COLORS.add("#befb21");
 		BIZ_DIM_COLORS.add("#c39989");
-		BIZ_DIM_COLORS.add("#78e348");
-		BIZ_DIM_COLORS.add("#f705c1");
-		BIZ_DIM_COLORS.add("#89190b");
-		BIZ_DIM_COLORS.add("#ef5a16");
 	}
 	
 	
@@ -208,6 +158,8 @@ public class TemplateBuilder {
 			
 			addTextItem(NAME_ATTR_ID, NAME_ATTR_LBL, container);
 			addTextItem(SHORT_NAME_ATTR_ID, SHORT_NAME_ATTR_LBL, container);
+			
+			assignColorToContainer(template, container);
 
 			addUILabelConfig(template, container, SHORT_NAME_ATTR_ID);
 			
@@ -244,6 +196,23 @@ public class TemplateBuilder {
 				String lblAttrId = TemplateUtil.getPortalLabelAttributeId(template, bizDimContainer.getQualifiedId());
 				addLinkedContainer(bizDimContainer, lblAttrId, container);
 			});
+		}
+		
+	}
+
+	private static void assignColorToContainer(ContentTemplate template, ContainerType container) {
+		
+		Set<String> usedColors = new HashSet<>();
+		
+		for (ContainerType tmpCont : template.getDataDefinition().getContainer()) {
+			if (StringUtil.hasText(tmpCont.getColor())) {
+				usedColors.add(tmpCont.getColor());
+			}
+		}
+		
+		String color = getNextBizDimColor(usedColors);
+		if (StringUtil.hasText(color)) {
+			container.setColor(color);
 		}
 		
 	}
