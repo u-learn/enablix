@@ -40,6 +40,7 @@ import { SafeHtmlPipe } from './pipes/safe-html.pipe';
 import { ContentEditableDirective } from './directives/content-editable/content-editable.directive';
 import { FileService } from './file/file.service';
 import { EbxDatePipe } from './pipes/ebx-date.pipe';
+import { EbxDateOnlyPipe } from './pipes/ebx-date-only.pipe';
 import { TextInputComponent } from './content/text-input/text-input.component';
 import { RichTextInputComponent } from './content/rich-text-input/rich-text-input.component';
 import { BoundedInputComponent } from './content/bounded-input/bounded-input.component';
@@ -108,6 +109,7 @@ import { GlobalSearchControllerService } from './search-bar/global-search-contro
     FileService,
     DatePipe,
     EbxDatePipe,
+    EbxDateOnlyPipe,
     SearchBarService,
     BoundedItemsDSBuilderService,
     LinkedContainerDsbuilderService,
@@ -164,6 +166,7 @@ import { GlobalSearchControllerService } from './search-bar/global-search-contro
     SafeHtmlPipe,
     ContentEditableDirective,
     EbxDatePipe,
+    EbxDateOnlyPipe,
     TextInputComponent,
     RichTextInputComponent,
     BoundedInputComponent,
@@ -207,6 +210,7 @@ import { GlobalSearchControllerService } from './search-bar/global-search-contro
     SafeHtmlPipe,
     ContentEditableDirective,
     EbxDatePipe,
+    EbxDateOnlyPipe,
     TextFileComponent,
     AccessDirective,
     DataFiltersComponent,

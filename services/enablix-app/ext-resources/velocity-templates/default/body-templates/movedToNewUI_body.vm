@@ -52,6 +52,14 @@
 	
 	We hope you find the new UI easier to use.
 	
+	#spacer_double_row('20','10')
+	
+	#@action_button_table()
+		#@action_button_cell('200')
+			#action_button('Login' "https://www.enablix.com/login.html#login")
+		#end
+	#end
+	
 	#mail_closing($obj.tenant.name)
 
 #end

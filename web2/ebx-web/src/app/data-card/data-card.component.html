@@ -16,7 +16,7 @@
       <p class="content-type" [innerHtml]="containerLabel" (click)="navToContentList()"></p>
       <p class="card-title" [innerHtml]="title" ellipsis ellipsis-resize-detection="window"></p>
       <p class="company-properties">
-        <span>{{record?.modifiedAt | ebxDate}}</span>
+        <span>{{record?.modifiedAt | ebxDateOnly}}</span>
       </p>
     </div>
   </div>
