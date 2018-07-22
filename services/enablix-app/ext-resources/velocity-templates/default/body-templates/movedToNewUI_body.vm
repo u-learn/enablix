@@ -19,7 +19,7 @@
 			<td style="width: 40%; text-align: center;"><img src="${obj.url}${obj.inputData.get('newVisualImgSrc')}" style="max-width: 100%;"></img></td>
 			<td style="width: 60%; padding-left: 24px;">
 				<b style="text-decoration: underline;">Visual Experience</b><br/>
-				In the new Enablix UI, we are moving away from text to imagery. We leverage the thumbnail imagery of the digital assets to enhance the users experience. The result is an easy to use, decluttered user experience which will help users find what they need. 
+				In the new UI, we are moving from text to imagery. We leverage the thumbnail images of the digital assets to enhance the user experience. The result is an easy to use, decluttered user experience which will help users find what they need.  
 			</td>		
 		</tr>
 	</table>
@@ -43,7 +43,7 @@
 			<td style="width: 40%; text-align: center;"><img src="${obj.url}${obj.inputData.get('contentPreviewImgSrc')}" style="max-width: 100%;"></img></td>
 			<td style="width: 60%; padding-left: 24px;">
 				<b style="text-decoration: underline;">Content Preview</b><br/>
-				The new UI brings a better and a more native preview experience of your content. You can browse web based content right inside Enablix application. For files we have richer previews to help you browse and find information without downloading the target file.  
+				The new UI brings a better and a more native preview experience of your content. You can browse web based content right inside Enablix application. For files and URLs, we have richer previews to help you find information without downloading the file or navigating to the URL.  
 			</td>		
 		</tr>
 	</table>
