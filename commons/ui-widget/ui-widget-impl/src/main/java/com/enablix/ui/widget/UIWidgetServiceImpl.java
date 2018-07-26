@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.enablix.commons.util.collection.CollectionUtil;
 import com.enablix.core.api.UIWidget;
 import com.enablix.core.domain.ui.UIWidgetDefinition;
 import com.enablix.data.view.DataView;
@@ -38,6 +39,10 @@ public class UIWidgetServiceImpl implements UIWidgetService {
 				LOGGER.error(errMessage);
 				throw new IllegalStateException(errMessage);
 			}
+		
+			if (dataRequest.getPageSize() == -1) {
+				dataRequest.setPageSize(getPageSizeFromWidgetDef(widgetDef));
+			}
 			
 			Object data = resolver.getData(widgetDef, dataView, dataRequest);
 			
@@ -47,6 +52,17 @@ public class UIWidgetServiceImpl implements UIWidgetService {
 		}
 		
 		return widget;
+	}
+
+	private int getPageSizeFromWidgetDef(UIWidgetDefinition widgetDef) {
+		int pageSize = 0;
+		if (CollectionUtil.isNotEmpty(widgetDef.getProperties())) {
+			Object itemLimit = widgetDef.getProperties().get("widgetItemLimit");
+			if (itemLimit instanceof Number) {
+				pageSize = ((Number) itemLimit).intValue();
+			}
+		}
+		return pageSize > 0 ? pageSize : 5;
 	}
 
 

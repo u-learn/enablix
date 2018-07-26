@@ -26,7 +26,7 @@ export class UserService {
   }
 
   getUserDisplayName() {
-  	return this.user ? this.user.principal.displayName : null;
+  	return this.user ? this.user.principal.userProfile.name : null;
   }
 
   getUsername() {
@@ -43,6 +43,16 @@ export class UserService {
 
   isPasswordSet() : boolean {
     return this.user ? this.user.principal.user.isPasswordSet : false;
+  }
+
+  getUserProfile() : boolean {
+    return this.user ? this.user.principal.userProfile : null;
+  }
+
+  updateUserProfile(userProfile: any) {
+    if (this.user) {
+      this.user.principal.userProfile = userProfile;
+    }
   }
 
   userHasPermission(checkPerm: string) {

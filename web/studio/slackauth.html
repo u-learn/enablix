@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <base href="/">
+</head>
+<body>
+	<script>
+		if (window.opener) {
+			
+			var urlParams = new URLSearchParams(window.location.search);
+			
+			var error = urlParams.get('error');
+			var code = urlParams.get('code');
+			
+			var domain = urlParams.get('state');
+			var msg = {
+				error: error,
+				code: code 
+			};
+			
+			window.opener.postMessage(msg, domain);
+			
+			window.close();
+		}
+	</script>
+</body>
+
+</html>
+
+

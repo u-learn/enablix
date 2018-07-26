@@ -10,7 +10,7 @@ export class UiWidgetService {
   constructor(private http: HttpClient, 
     private urlService: ApiUrlService) { }
 
-  getWidgetData(widgetIdentity: string, pageNo: number = 0, pageSize: number = 5) {
+  getWidgetData(widgetIdentity: string, pageNo: number = 0, pageSize: number = -1) {
     let apiUrl = this.urlService.getUIWidgetData(widgetIdentity, pageNo, pageSize);
     return this.http.get(apiUrl);
   }

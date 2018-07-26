@@ -44,6 +44,7 @@ import { ContainerTemplateComponent } from '../company/container-template/contai
 import { CpWidgetDetailComponent } from '../ui-widget/content-pack-widget/cp-widget-detail/cp-widget-detail.component';
 import { ContentEngagementComponent } from '../reports/content-engagement/content-engagement.component';
 import { RecentContentListComponent } from '../recent-content/recent-content-list/recent-content-list.component';
+import { MyaccountComponent } from '../myaccount/myaccount.component';
 
 const routes: Routes = [
   {
@@ -249,6 +250,10 @@ const routes: Routes = [
         {
           path: 'reports/d/:reportId',
           component: ReportsHomeComponent
+        },
+        {
+          path: 'myaccount',
+          component: MyaccountComponent
         }
       ],
   },

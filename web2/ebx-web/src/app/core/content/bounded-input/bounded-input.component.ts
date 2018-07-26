@@ -24,6 +24,8 @@ export class BoundedInputComponent implements OnInit, ControlValueAccessor {
   @Input() contentItem: ContentItem;
   @Input() placeholder?: string;
 
+  @Input() readOnly?: boolean = false;
+
   multiValued: boolean = false;
 
   selectCtrl: FormControl;

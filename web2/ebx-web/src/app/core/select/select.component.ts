@@ -26,6 +26,7 @@ export class SelectComponent implements OnInit, ControlValueAccessor, AfterViewI
   @Input() headIcon?: string;
   _options: SelectOption[] = [];
   
+  @Input() readOnly?: boolean = false;
   @Input() multi?: boolean = false;
   @Input() placeholder?: string = "";
   @Input() pillsColor?: string;

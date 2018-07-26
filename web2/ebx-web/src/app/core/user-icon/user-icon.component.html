@@ -3,6 +3,10 @@
     <div class="icon initial">{{initial}}</div>
   </button>
   <div class="dd-options" [hidden]="!showOpts">
+    <div class="dd-option" routerLink="/portal/myaccount">
+      <img src="/assets/images/icons/settings.svg" />
+      <span>Settings</span>
+    </div>
     <div class="dd-option" (click)="logout()">
       <img src="/assets/images/icons/shutdown.svg" />
       <span>Log Out</span>

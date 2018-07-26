@@ -45,8 +45,18 @@ export class ContentService {
   }
 
   getContentStackDetails(stackValue: any) : Observable<any> {
-    let apiUrl = this.apiUrlService.postFetchContentStackDetails(50, 0);
-    return this.http.post(apiUrl, stackValue);
+    
+    let apiUrl = this.apiUrlService.postFetchContentStackDetails();
+    
+    let params = {
+      page: '0',
+      size: '50',
+      sortProp: Constants.FLD_MODIFIED_AT,
+      sortDir: Direction.DESC
+    };
+
+    let options = { params: params };
+    return this.http.post(apiUrl, stackValue, options);
   }
 
   decorateContentGroup(cg: any) {
@@ -246,7 +256,11 @@ export class ContentService {
   getRecordAndChildData(contentQId: string, contentIdentity: string, childPageNo: string = '0', childSizeLimit?: string, atChannel?: string, childQIds?: any, textQuery?: string, ): Observable<any> {
          
     var options: any = {};
-    options.params = {pageNum: childPageNo};
+    options.params = {
+      pageNum: childPageNo,
+      sortProp: Constants.FLD_MODIFIED_AT,
+      sortDir: Direction.DESC
+    };
 
     if (childSizeLimit) {
       options.params.size = childSizeLimit;

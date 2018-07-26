@@ -1,5 +1,7 @@
 package com.enablix.core.domain.ui;
 
+import java.util.Map;
+
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.enablix.core.domain.BaseDocumentEntity;
@@ -14,6 +16,8 @@ public class UIWidgetDefinition extends BaseDocumentEntity {
 	private String title;
 	
 	private Type type;
+	
+	private Map<String, Object> properties;
 
 	public String getTitle() {
 		return title;
@@ -30,5 +34,13 @@ public class UIWidgetDefinition extends BaseDocumentEntity {
 	public void setType(Type type) {
 		this.type = type;
 	}
-	
+
+	public Map<String, Object> getProperties() {
+		return properties;
+	}
+
+	public void setProperties(Map<String, Object> properties) {
+		this.properties = properties;
+	}
+
 }

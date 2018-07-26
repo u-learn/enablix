@@ -150,6 +150,22 @@ export class MembersComponent implements OnInit {
     return sub;
   }
 
+  openMemberDetail(userProfile: UserProfile) {
+    let dialogRef = this.dialog.open(MemberDetailComponent, {
+        width: '640px',
+        maxHeight: '90vh',
+        disableClose: true,
+        data: { newRecord: false, readOnly: true, profileIdentity: userProfile.identity }
+      });
+
+    let sub = dialogRef.afterClosed().share();
+    sub.subscribe(res => {
+      if (res) {
+        this.fetchData();
+      }
+    }); 
+  }
+
 }
 
 class MembersTableActions implements TableActionConfig<UserProfile> {

@@ -78,6 +78,10 @@ export class NavigationService {
     this.router.navigate(['/portal/reports/d', reportId]);
   }
 
+  goToMyAccount() {
+    this.router.navigate(['/portal/myaccount']);
+  }
+
   goToRoute(routePath: string, routeParams: string[], queryParams?: {[key: string] : string}) {
     
     let navigateParams = [routePath];

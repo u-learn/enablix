@@ -100,6 +100,12 @@ import { ContentBrowserComponent } from './content-browser/content-browser.compo
 import { ContentBrowserSearchControllerService } from './content-browser/content-browser-search-controller.service';
 import { AddBizContentDialogButtonComponent } from './content-action/add-biz-content-dialog-button/add-biz-content-dialog-button.component';
 import { RecentContentListComponent } from './recent-content/recent-content-list/recent-content-list.component';
+import { MyaccountComponent } from './myaccount/myaccount.component';
+import { SlackService } from './services/slack.service';
+import { SlackShareButtonComponent } from './content-action/slack-share-button/slack-share-button.component';
+import { SlackSharePopupComponent } from './content-action/slack-share-button/slack-share-popup/slack-share-popup.component';
+import { MyProfileComponent } from './myaccount/my-profile/my-profile.component';
+import { MySlackIntegrationComponent } from './myaccount/my-slack-integration/my-slack-integration.component';
 
 @NgModule({
   declarations: [
@@ -174,7 +180,12 @@ import { RecentContentListComponent } from './recent-content/recent-content-list
     ContentBrowserComponent,
     ContentPickerButtonComponent,
     AddBizContentDialogButtonComponent,
-    RecentContentListComponent
+    RecentContentListComponent,
+    MyaccountComponent,
+    SlackShareButtonComponent,
+    SlackSharePopupComponent,
+    MyProfileComponent,
+    MySlackIntegrationComponent
   ],
   imports: [
     BrowserModule,
@@ -207,6 +218,7 @@ import { RecentContentListComponent } from './recent-content/recent-content-list
     RecoContentService,
     UiWidgetService,
     ContentBrowserSearchControllerService,
+    SlackService,
     { 
         provide: HTTP_INTERCEPTORS, 
         useClass: NgProgressInterceptor, 
@@ -218,7 +230,8 @@ import { RecentContentListComponent } from './recent-content/recent-content-list
     MemberDetailComponent,
     EmailSharePopupComponent,
     ContentBrowserComponent,
-    BizContentComponent
+    BizContentComponent,
+    SlackSharePopupComponent
   ],
   bootstrap: [AppComponent]
 })

@@ -8,7 +8,7 @@ import com.enablix.slack.integration.entities.SlackTeamDtls;
 
 public interface SlackService {
 	
-	SlackAccessToken authorize(String code, String userID) throws Exception;
+	SlackAccessToken authorize(String code, String userID, String redirectUri) throws Exception;
 	
 	boolean unauthorize(String userID);
 	
@@ -16,7 +16,7 @@ public interface SlackService {
 	
 	boolean postMessageToChannel(String userID, List<String> channelID, String containerQId, String contentIdentity, String slackCustomContent) throws Exception;
 	
-	SlackAccessToken saveUserSpecificToken(SlackTeamDtls slackTeamDtls, String userID) throws Exception;
+	SlackAccessToken saveUserSpecificToken(SlackTeamDtls slackTeamDtls, String userID, String redirectUri) throws Exception;
 	
 	SlackAccessToken getStoredSlackTeamDtls(String userID);
 	

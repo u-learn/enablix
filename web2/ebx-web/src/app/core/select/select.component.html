@@ -1,14 +1,15 @@
-<div class="ebx-select" (clickOutside)="hideOptions()">
+<div class="ebx-select" [class.readonly]="readOnly" (clickOutside)="hideOptions()">
     <div class="input-row">
         <img *ngIf="headIcon" class="head-icon" [src]="headIcon">
         <div class="pills-container">
             <div class="pill" *ngFor="let sOpt of selected; let i = index" [style.background]="pillsColor">
               <span class="pill-label">{{sOpt?.label}}</span>
-              <a class="remove" (click)="removeOption(i)">
+              <a class="remove" (click)="removeOption(i)" *ngIf="!readOnly">
                 <img src="/assets/images/icons/close-white.svg">                
               </a>
             </div>
-            <input #textInput class="text-input" type="text" [placeholder]="placeholder" (focus)="showOptions()" [formControl]="selectCtrl" (blur)="onBlur()"
+            <div class="no-value" *ngIf="readOnly && (!selected || selected.length == 0)">No Value</div>
+            <input *ngIf="!readOnly" #textInput class="text-input" type="text" [placeholder]="placeholder" (focus)="showOptions()" [formControl]="selectCtrl" (blur)="onBlur()"
             (keydown.arrowdown)="highlightOnDownArrow()" (keydown.arrowup)="highlightOnUpArrow()"
             (keydown.enter)="selectHighlighted($event)"> 
         </div>
@@ -19,7 +20,7 @@
             (keydown.enter)="selectHighlighted($event)">
         </ng-container> -->
     </div>
-    <div class="option-rows" [hidden]="!optionsVisible">
+    <div class="option-rows" [hidden]="!optionsVisible || readOnly">
         <div class="option-row" [class.highlighted]="opt == highlightedOpt" *ngFor="let opt of filteredOptions | async" (click)="updateSelection(opt)" [id]="opt.id">
             <div class="option-label">{{opt.label}}</div>
         </div>

@@ -3,7 +3,7 @@
   <div class="header">
     <h1>{{headerLabel}}</h1>
   </div>
-  <div class="form-input compact">
+  <div class="form-input compact" *ngIf="editing">
     <div class="input-control">
       <input type="text" name="name" id="name" [(ngModel)]="userProfile.name" required #name="ngModel" placeholder="Name">
     </div>
@@ -11,27 +11,35 @@
       Please enter name
     </div>
   </div>
-  <div class="form-input">
+  <div *ngIf="!editing" class="form-input compact">
+    <div class="input-label">Name</div>
+    <div class="nonedit-val">{{userProfile.name}}</div>
+  </div>
+  <div class="form-input" *ngIf="editing">
     <div class="input-control"><input type="text" name="email" [(ngModel)]="userProfile.email" #email="ngModel" required email (blur)="checkUserExist()" ngControl="email" placeholder="Email"></div>
     <div class="input-error" [hidden]="email.valid || email.pristine">
       <p [hidden]="!email.errors?.required && !email.errors?.email">Please enter a valid email</p>
       <p [hidden]="!email.errors?.userexist">User email already registered</p>
     </div>
   </div>
+  <div *ngIf="!editing" class="form-input">
+    <div class="input-label">Email</div>
+    <div class="nonedit-val">{{userProfile.email}}</div>
+  </div>
   <div class="input-group">
     <div class="group-header">User Profile</div>
-    <div class="form-input">
+    <div class="form-input" [class.compact]="!editing">
       <div class="input-label">System Roles</div>
       <div class="input-control">
-        <ebx-select [formControl]="systemRoleCtrl"
+        <ebx-select [formControl]="systemRoleCtrl" [readOnly]="!editing"
                   [options]="roleOptions" multi="true"></ebx-select>
       </div>
     </div>
-    <div class="form-input">
+    <div class="form-input" [class.compact]="!editing">
       <div class="input-label">Preferences</div>
       <div class="input-control">
         <div class="pretty p-icon p-round" >
-          <input type="checkbox" name="weeklyDigest" [(ngModel)]="userProfile.systemProfile.sendWeeklyDigest"/>
+          <input type="checkbox" name="weeklyDigest" [(ngModel)]="userProfile.systemProfile.sendWeeklyDigest" [disabled]="!editing" />
           <div class="state p-primary">
             <i class="icon mdi mdi-check"></i>
             <label>Send Weekly Digest</label>
@@ -40,17 +48,21 @@
       </div>
     </div>
     <ng-container *ngIf="userContainer">
-      <div class="form-input" *ngFor="let item of userContainer.contentItem">
+      <div class="form-input" *ngFor="let item of userContainer.contentItem" [class.compact]="!editing">
         <div class="input-label">{{item.label}}</div>
         <div class="input-control">
-          <ebx-bounded-input [record]="userProfile.businessProfile.attributes" [contentItem]="item" [(ngModel)]="userProfile.businessProfile.attributes[item.id]" placeholder=" " name="{{item.id}}"></ebx-bounded-input>
+          <ebx-bounded-input [record]="userProfile.businessProfile.attributes" [contentItem]="item" [(ngModel)]="userProfile.businessProfile.attributes[item.id]" placeholder=" " name="{{item.id}}" [readOnly]="!editing"></ebx-bounded-input>
         </div>
       </div>
     </ng-container>
   </div>
-  <div class="actionBtns">
+  <div class="actionBtns" *ngIf="editing">
     <button class="action" (click)="save()" [disabled]="!memberForm.form.valid">{{saveLabel}}</button>
     <button class="cancel" mat-dialog-close>Cancel</button>
+  </div>
+  <div class="actionBtns" *ngIf="!editing">
+    <button class="action" (click)="editing = true;">Edit</button>
+    <button class="cancel" mat-dialog-close>Close</button>
   </div>
 </div>
 </form>

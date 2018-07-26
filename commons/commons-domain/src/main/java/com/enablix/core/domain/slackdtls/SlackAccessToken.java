@@ -10,12 +10,14 @@ public class SlackAccessToken extends BaseDocumentEntity{
 	String userID;
 	String accessToken;
 	String teamName;
+	String redirectUri;
 	
-	public SlackAccessToken(String userID,String accessToken,String teamName,String slackUserID) {
+	public SlackAccessToken(String userID,String accessToken,String teamName,String slackUserID, String redirectUri) {
 		this.userID=userID;
 		this.accessToken = accessToken;
 		this.teamName=teamName;
 		this.slackUserID=slackUserID;
+		this.redirectUri = redirectUri;
 	}
 	
 	public String getTeamName() {
@@ -49,4 +51,13 @@ public class SlackAccessToken extends BaseDocumentEntity{
 	public void setSlackUserID(String slackUserID) {
 		this.slackUserID = slackUserID;
 	}
+
+	public String getRedirectUri() {
+		return redirectUri;
+	}
+
+	public void setRedirectUri(String redirectUri) {
+		this.redirectUri = redirectUri;
+	}
+	
 }

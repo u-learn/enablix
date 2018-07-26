@@ -363,6 +363,15 @@ public class EnablixUserService implements UserService, UserDetailsService {
 			return false;
 		}
 	}
+	
+	@Override
+	public void checkAndUpdateUserProfile(LoggedInUser user, UserProfile newProfile) {
+		if (newProfile != null) {
+			if (user.getUserProfile().getId().equals(newProfile.getId())) {
+				user.userProfile = newProfile;
+			}
+		}
+	}
 
 	public static class LoggedInUser implements UserDetails {
 

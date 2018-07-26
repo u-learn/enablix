@@ -26,6 +26,7 @@ import com.enablix.app.content.ui.DisplayableContentBuilder;
 import com.enablix.app.template.service.TemplateManager;
 import com.enablix.commons.config.ConfigurationProviderChain;
 import com.enablix.commons.constants.AppConstants;
+import com.enablix.commons.util.StringUtil;
 import com.enablix.commons.util.id.IdentityUtil;
 import com.enablix.commons.util.process.ProcessContext;
 import com.enablix.core.api.ContentDataRecord;
@@ -117,9 +118,9 @@ public class SlackServiceImpl implements SlackService {
 		restTemplate = new RestTemplate();
 	}
 
-	public SlackAccessToken authorize(String _code,String userID) throws Exception {
+	public SlackAccessToken authorize(String _code, String userID, String redirectUri) throws Exception {
 
-		String redirectURI = getRedirectURI();
+		String redirectURI = getRedirectURI(redirectUri);
 		URI targetUrl= UriComponentsBuilder.fromUriString(BASE_URL)
 				.path(OAUTH_ACCESS_API)
 				.queryParam(AppConstants.SLACK_REQUEST_CLIENT_ID, clientId)
@@ -133,7 +134,7 @@ public class SlackServiceImpl implements SlackService {
 
 		if( slackTeamDtls!=null  && slackTeamDtls.getAccessToken() != null && !slackTeamDtls.getAccessToken().isEmpty()) {
 
-			SlackAccessToken slackAccessToken = saveUserSpecificToken(slackTeamDtls, userID);
+			SlackAccessToken slackAccessToken = saveUserSpecificToken(slackTeamDtls, userID, redirectURI);
 			auditUserActivity(ActivityType.SLACK_AUTH);
 			return slackAccessToken;
 
@@ -142,8 +143,8 @@ public class SlackServiceImpl implements SlackService {
 		}
 	}
 
-	private String getRedirectURI() {
-		return redirectDomain + "/app.html";
+	private String getRedirectURI(String redirectUri) {
+		return StringUtil.hasText(redirectUri) ? redirectUri : (redirectDomain + "/app.html");
 	}
 
 	private void auditUserActivity(ActivityType activityType){
@@ -161,7 +162,7 @@ public class SlackServiceImpl implements SlackService {
 	public SlackChannels getChannelDtls(String usrID) throws Exception  {
 
 		SlackAccessToken slackAccessToken = getStoredSlackTeamDtls(usrID) ;
-		String redirectURI = getRedirectURI();
+		String redirectURI = getRedirectURI(slackAccessToken.getRedirectUri());
 		URI targetUrl= UriComponentsBuilder.fromUriString(BASE_URL)
 				.path(CHANNEL_LIST_API)
 				.queryParam(AppConstants.SLACK_REQUEST_TOKEN,slackAccessToken.getAccessToken())
@@ -200,7 +201,7 @@ public class SlackServiceImpl implements SlackService {
 				FALL_BACK_TEXT, FOOTER_ICON,COLOR,FOOTER_TEXT);
 		SlackAccessToken slackAccessToken = getStoredSlackTeamDtls(userID) ;
 
-		String redirectURI = getRedirectURI();
+		String redirectURI = getRedirectURI(slackAccessToken.getRedirectUri());
 		String targetURI = BASE_URL + CHANNEL_POST_TEXTMSG;
 		
 		HttpHeaders headers = new HttpHeaders();
@@ -235,11 +236,11 @@ public class SlackServiceImpl implements SlackService {
 		return resp;
 	}
 
-	public SlackAccessToken saveUserSpecificToken(SlackTeamDtls slackTeamDtls, String userID) throws Exception {
+	public SlackAccessToken saveUserSpecificToken(SlackTeamDtls slackTeamDtls, String userID, String redirectUri) throws Exception {
 
 		try	{
 
-			String redirectURI = getRedirectURI();
+			String redirectURI = getRedirectURI(redirectUri);
 			URI targetUrl= UriComponentsBuilder.fromUriString(BASE_URL)
 					.path(OAUTH_TEST)
 					.queryParam(AppConstants.SLACK_REQUEST_TOKEN,slackTeamDtls.getAccessToken())
@@ -251,7 +252,8 @@ public class SlackServiceImpl implements SlackService {
 			String slackUserID = objNode.get(AppConstants.SLACK_RESPONSE_USER).asText();
 			
 			SlackAccessToken slackAccessToken = new SlackAccessToken(
-					userID, slackTeamDtls.getAccessToken(), slackTeamDtls.getTeamName(),slackUserID);
+					userID, slackTeamDtls.getAccessToken(), slackTeamDtls.getTeamName(),
+					slackUserID, redirectURI);
 
 			slackTokenRepo.save(slackAccessToken);
 			return slackAccessToken;
@@ -271,7 +273,7 @@ public class SlackServiceImpl implements SlackService {
 
 		SlackAccessToken slackAccessToken= slackTokenRepo.findByUserID(userID);
 
-		String redirectURI = getRedirectURI();
+		String redirectURI = getRedirectURI(slackAccessToken.getRedirectUri());
 		URI targetUrl= UriComponentsBuilder.fromUriString(BASE_URL)
 				.path(OAUTH_REVOKE)
 				.queryParam(AppConstants.SLACK_REQUEST_TOKEN, slackAccessToken.getAccessToken())

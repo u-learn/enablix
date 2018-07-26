@@ -25,6 +25,10 @@ export class UserIconComponent implements OnInit {
     this.authService.logoutUser();
   }
 
+  navToSettings() {
+    
+  }
+
   showOptions() {
     this.showOpts = true;
   }

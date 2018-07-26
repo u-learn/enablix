@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.enablix.core.domain.security.authorization.UserProfile;
 import com.enablix.core.domain.user.User;
+import com.enablix.core.security.service.EnablixUserService.LoggedInUser;
 
 public interface UserService {
 	
@@ -22,5 +23,6 @@ public interface UserService {
 	public User changePassword(User user);
 	public UserDetails getGuestUser(HttpServletRequest request);
 	public UserProfile addOrUpdateUser(UserProfile up);
+	public void checkAndUpdateUserProfile(LoggedInUser user, UserProfile newProfile);
 	
 }

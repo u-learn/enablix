@@ -10,6 +10,25 @@
   font-family: $FPLight;
   box-shadow: 0 1px 1px 0 rgba(0,0,0,0.06);
 
+  &.readonly {
+    border: 0px;
+    background: inherit;
+    box-shadow: none;
+
+    .input-row {
+      padding: 0;
+
+      .pills-container {
+        padding: 0;
+
+        .no-value {
+          color: $grey-dark;
+          font-style: italic;
+        }
+      }
+    }
+  }
+
   .input-row {
     min-height: 42px;
     display: flex;

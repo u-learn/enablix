@@ -48,9 +48,10 @@
                       <ebx-data-card [containerQId]="cg.contentQId" [record]="rec"></ebx-data-card>
                     </div>
                   </ng-container>
-                  <div class="card biz-card" *ngIf="!cg.showAll && cg.records.content.length > showCount" (click)="cg.showAll = true;">
+                  <div class="card biz-card" *ngIf="cg.records.content.length > showCount" (click)="cg.showAll = !cg.showAll;">
                     <div class="card-remaining-count">
-                      <p class="ng-binding">+{{cg.records.content.length - showCount + 1}}</p>
+                      <p *ngIf="!cg.showAll">+{{cg.records.content.length - showCount + 1}}</p>
+                      <p *ngIf="cg.showAll" style="font-size: 48px;">‹‹</p>
                     </div>
                   </div>
                 </div>

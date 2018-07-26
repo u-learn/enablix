@@ -1,0 +1,35 @@
+<div class="sub-section-content" >
+  <div class="left">
+    <h3>User Profile</h3>
+    <div class="content-row flex-row" *ngIf="!editing">
+      <div class="param-key">Name</div>
+      <div class="param-value">{{user?.name}}</div>
+    </div>
+    <div class="form-input" *ngIf="editing" style="margin-top: 8px; margin-bottom: 16px;">
+      <div class="input-label">Name</div>
+      <div class="input-control">
+        <input type="text" [(ngModel)]="user.name">
+      </div>
+    </div>
+    <div class="content-row flex-row">
+      <div class="param-key">Email</div>
+      <div class="param-value">{{user?.email}}</div>
+    </div>
+  </div>
+  <div class="right dashboard-buttons small">
+    <div class="action-btn with-border btn-with-text" (click)="initEdit()" *ngIf="!editing">
+      <div class="icon small edit"></div>
+      <p class="show-me">Edit</p>
+    </div>
+    <ng-container *ngIf="editing">
+      <div class="action-btn with-border btn-with-text" (click)="updateUserProfile()">
+        <div class="icon small save-blue"></div>
+        <p class="show-me">Save</p>
+      </div>
+      <div class="action-btn with-border btn-with-text" (click)="cancelEdit()">
+        <div class="icon small cancel-blue"></div>
+        <p class="show-me">Cancel</p>
+      </div>
+    </ng-container>
+  </div>
+</div>

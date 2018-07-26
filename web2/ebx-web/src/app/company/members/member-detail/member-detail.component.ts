@@ -19,6 +19,7 @@ export class MemberDetailComponent implements OnInit {
 
   @ViewChild('memberForm') form;
 
+  editing: boolean = false;
   newUserOper: boolean = false;
   userProfile: UserProfile;
   allRoles: any[];
@@ -43,7 +44,9 @@ export class MemberDetailComponent implements OnInit {
 
   ngOnInit() {
     
+    console.log(this.data);
     this.newUserOper = this.data.newRecord;
+    this.editing = !this.data.readOnly;
     this.userContainer = this.ctService.getContainerByQId('user');
 
     if (this.newUserOper) {

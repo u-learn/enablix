@@ -1,0 +1,19 @@
+<div class="sub-section-content">
+  <div class="left">
+    <h3>Slack Integration</h3>
+    <ng-container *ngIf="slackToken && slackToken.accessToken">
+      <div class="content-row flex-row">
+        <div class="param-key">User Name</div>
+        <div class="param-value">{{slackToken?.slackUserID}}</div>
+      </div>
+      <div class="content-row flex-row">
+        <div class="param-key">Team Name</div>
+        <div class="param-value">{{slackToken?.teamName}}</div>
+      </div>
+    </ng-container>
+    <div class="actionBtns" style="margin-top: 8px;">
+      <button *ngIf="slackToken && slackToken.accessToken" class="negative-action" (click)="unauthorizeSlack()">Unauthorize</button>
+      <button *ngIf="!(slackToken && slackToken.accessToken)" class="action" (click)="authorizeSlack()">Authorize</button>
+    </div>
+  </div>
+</div>

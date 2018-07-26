@@ -41,6 +41,9 @@ export class ApiUrlService {
   static GET_FIRST_CONTENT_CONN_BY_QID = "/contentconn/rf/:contentQId/";
 
   static GET_UI_WIDGET_DATA = "/uiwdg/data/:widgetIdentity/?pageSize=:pageSize&pageNo=:pageNo";
+  static GET_SLACK_STORED_TOKEN = "/slack/getStoredSlackToken";
+  static GET_SLACK_APP_DETAILS = "/slack/getSlackAppDtls";
+  static GET_SLACK_CHANNEL_LIST = "/slack/getChannelsLst";
 
   static POST_FOR_DATA_SEARCH = "/data/search/t/:domainType/";
   static POST_FOR_CONTAINER_DATA_SEARCH = "/data/search/cq/:containerQId/";
@@ -98,7 +101,11 @@ export class ApiUrlService {
 
   static POST_FETCH_QUALITY_ALERTS = "/cq/fetch";
 
-  static POST_FETCH_CONTENT_STACK_DETAILS = "/data/fetchcsgrp?pageSize=:pageSize&pageNo=:pageNo";
+  static POST_FETCH_CONTENT_STACK_DETAILS = "/data/fetchcsgrp";
+
+  static POST_SAVE_SLACK_AUTH_CODE = "/slack/authorizeSlack";
+  static POST_DEL_SLACK_AUTH_CODE = "/slack/unauthSlack";
+  static POST_SLACK_MESSAGE = "/slack/sendMessage";
 
   static DELETE_CONTAINER_DEF = "/template/:templateId/c/:containerQId/";
 
@@ -306,6 +313,18 @@ export class ApiUrlService {
       { widgetIdentity: widgetIdentity, pageSize: String(pageSize), pageNo: String(pageNo) });
   }
 
+  getSlackStoredToken() : string {
+    return this.getAPIUrl(ApiUrlService.GET_SLACK_STORED_TOKEN);
+  }
+
+  getSlackAppDetails() : string {
+    return this.getAPIUrl(ApiUrlService.GET_SLACK_APP_DETAILS);
+  }
+
+  getSlackChannels() : string {
+    return this.getAPIUrl(ApiUrlService.GET_SLACK_CHANNEL_LIST);
+  }
+
   postCheckUserExistUrl() : string {
     return this.getAPIUrl(ApiUrlService.POST_CHECK_USER_EXIST);
   }
@@ -450,9 +469,20 @@ export class ApiUrlService {
     return this.getAPIUrl(ApiUrlService.POST_FETCH_QUALITY_ALERTS);
   }
 
-  postFetchContentStackDetails(pageSize: number, pageNo: number) : string {
-    return this.getAPIUrl(ApiUrlService.POST_FETCH_CONTENT_STACK_DETAILS,
-      { pageSize: String(pageSize), pageNo: String(pageNo) });
+  postFetchContentStackDetails() : string {
+    return this.getAPIUrl(ApiUrlService.POST_FETCH_CONTENT_STACK_DETAILS);
+  }
+
+  postSaveSlackAuthCode() : string {
+    return this.getAPIUrl(ApiUrlService.POST_SAVE_SLACK_AUTH_CODE);
+  }
+
+  postDeleteSlackAuthCode() : string {
+    return this.getAPIUrl(ApiUrlService.POST_DEL_SLACK_AUTH_CODE);
+  }
+
+  postSlackMessage() : string {
+    return this.getAPIUrl(ApiUrlService.POST_SLACK_MESSAGE);
   }
 
   deleteContainerDefUrl(templateId: string, containerQId: string) : string {

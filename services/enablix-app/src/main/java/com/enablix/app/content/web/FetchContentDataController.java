@@ -70,10 +70,6 @@ public class FetchContentDataController {
 		return fetchData(new FetchContentRequest(templateId, contentQId, null, null, pageable), userDataView);
 	}
 	
-	private Pageable createPaginationInfo(String page, String size) {
-		return createPaginationInfo(page, size, null, null);
-	}
-	
 	private Pageable createPaginationInfo(String page, String size, String sortProp, Direction sortDir) {
 		
 		Pageable pageable = null;
@@ -168,6 +164,8 @@ public class FetchContentDataController {
 			@PathVariable String contentIdentity,
 			@RequestParam(required=false) String size,
 			@RequestParam(required=false) String pageNum,
+			@RequestParam(required=false) String sortProp,
+			@RequestParam(required=false) Sort.Direction sortDir,
 			@RequestParam(name="cqid", required=false) List<String> cqIds,
 			@RequestParam(name="tq", required=false) String textQuery) {
 		
@@ -176,7 +174,7 @@ public class FetchContentDataController {
 		Pageable pageable = null;
 		if (StringUtil.hasText(size)) {
 			pageNum = StringUtil.hasText(pageNum) ? pageNum : "0";
-			pageable = createPaginationInfo(pageNum, size);
+			pageable = createPaginationInfo(pageNum, size, sortProp, sortDir);
 		}
 		
 		DataView userDataView = dataSegmentService.getDataViewForUserId(ProcessContext.get().getUserId());

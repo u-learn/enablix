@@ -452,6 +452,8 @@ export class ContainerTemplateComponent implements OnInit {
 
             this.containerList[indx] = swapWith;
             this.containerList[swapWithIndx] = cont;
+
+            this.indexContainerList();
           }
         },
         (err) => {

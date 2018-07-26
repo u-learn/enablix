@@ -28,9 +28,10 @@ public class SlackController {
 	SlackServiceImpl slackServiceImpl;
 
 	@RequestMapping(method = RequestMethod.POST, value = "/authorizeSlack")
-	public SlackAccessToken authorizeSlack(@RequestParam("code") String code) {
+	public SlackAccessToken authorizeSlack(@RequestParam("code") String code,
+			@RequestParam(name = "redirect_uri", required = false) String redirectUri) {
 		try{
-			return slackServiceImpl.authorize(code, ProcessContext.get().getUserId());
+			return slackServiceImpl.authorize(code, ProcessContext.get().getUserId(), redirectUri);
 		}
 		catch(Exception e){
 			LOGGER.error(" Error Authorizing Slack Account ",e);
@@ -44,8 +45,8 @@ public class SlackController {
 			@RequestParam("contentIdentity") String contentIdentity,
 			@RequestParam("slackCustomContent") String slackCustomContent) {
 		try	{
-			return slackServiceImpl.postMessageToChannel(ProcessContext.get().getUserId()
-					, channelIDs, containerQId,contentIdentity,slackCustomContent);
+			return slackServiceImpl.postMessageToChannel(ProcessContext.get().getUserId(),
+					channelIDs, containerQId, contentIdentity, slackCustomContent);
 		}
 		catch(Exception e) {
 			LOGGER.error(" Error Posting message to Slack ",e);

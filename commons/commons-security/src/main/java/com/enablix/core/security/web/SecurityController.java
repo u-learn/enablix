@@ -4,6 +4,7 @@ import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,7 +17,9 @@ import com.enablix.core.domain.security.authorization.Role;
 import com.enablix.core.domain.security.authorization.UserProfile;
 import com.enablix.core.domain.user.User;
 import com.enablix.core.mail.service.MailService;
+import com.enablix.core.security.SecurityUtil;
 import com.enablix.core.security.auth.repo.RoleRepository;
+import com.enablix.core.security.service.EnablixUserService.LoggedInUser;
 import com.enablix.core.security.service.UserService;
 
 @RestController
@@ -118,7 +121,17 @@ public class SecurityController {
 	@RequestMapping(method = RequestMethod.POST, value="/member/update", 
 			produces = "application/json")
 	public UserProfile updateMember(@RequestBody UserProfile up) {
-		return userService.addOrUpdateUser(up);
+		
+		UserProfile updateUser = userService.addOrUpdateUser(up);
+		
+		// update profile in session
+		UserDetails userDetails = SecurityUtil.currentUser();
+		if (userDetails instanceof LoggedInUser) {
+			LoggedInUser user = (LoggedInUser) userDetails;
+			userService.checkAndUpdateUserProfile(user, updateUser);
+		}
+		
+		return updateUser;
 	}
 
 	/*	@RequestMapping(value="/logout", method = RequestMethod.GET)

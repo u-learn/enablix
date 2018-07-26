@@ -423,6 +423,8 @@ enablix.studioApp.factory('StateUpdateService',
 	 			
 	 			if (portal === "v2") {
 	 				_url = _url.replace("app.html", "app2.html");
+	 				// Force to new app
+	 				_url = _url.replace("app1.html", "app2.html");
 	 			} else {
 	 				_url = _url.replace("app.html", "app1.html");
 	 			}

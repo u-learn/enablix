@@ -8,6 +8,16 @@ button.action {
     }
 }
 
+button.negative-action {
+    margin-right: 12px;
+    background: #e74c3c;
+    color: $white;
+
+    &:hover {
+        background: #c0392b;
+    }
+}
+
 button.cancel {
     background: $white;
     color: #808C9B;
@@ -191,6 +201,10 @@ button {
 
             &.openurl {
                 background: url("/assets/images/icons/open-link.svg") no-repeat center;   
+            }
+
+            &.slack {
+                background: url("/assets/images/icons/slack.svg") no-repeat center;   
             }
 
             &.move {

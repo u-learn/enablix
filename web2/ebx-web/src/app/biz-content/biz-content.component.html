@@ -15,7 +15,8 @@
             </ng-container>
             <ebx-content-delete-button *ngIf="enableDelAction" class="button-wrap" [container]="container" [record]="record" contentType="Asset" [crRecord]="contentRequest"></ebx-content-delete-button>
             <div class="btn-set" *ngIf="!contentRequest">
-              <ebx-content-email-button [container]="container" [record]="record" ></ebx-content-email-button>
+              <ebx-content-email-button class="action-btn-wrap" [container]="container" [record]="record" ></ebx-content-email-button>
+              <ebx-slack-share-button *ebxAccess="'SHARE_VIA_SLACK'" class="action-btn-wrap" [container]="container" [record]="record" ></ebx-slack-share-button>
             </div>
             <div class="btn-set" *ngIf="contentRequest && !isDraft && !editing && (enableApproveAction || enableRejectAction)">
               <ebx-content-req-approve-button *ngIf="enableApproveAction" class="action-btn" [container]="container" [crRecord]="contentRequest" (onApprove)="goToContentDetailForRequest($event)"></ebx-content-req-approve-button>

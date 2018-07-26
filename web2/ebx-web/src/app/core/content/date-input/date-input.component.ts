@@ -29,6 +29,9 @@ export class DateInputComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.dateCtrl.valueChanges.subscribe(val => {
+      this.onChange(val);
+    });
   }
 
   onChange = (date: any) => {};
