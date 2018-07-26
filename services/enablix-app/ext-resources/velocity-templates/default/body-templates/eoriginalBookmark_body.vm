@@ -1,0 +1,21 @@
+#@mail_template('Bookmark Enablix URL')
+
+	#spacer_row('15')
+											
+	#mail_opening(${obj.recipientUser.name})										
+	
+	#spacer_row('20')
+	
+	We recently switched all eOriginal users to the new Enablix UI. If you bookmark your commonly visited URLs, here is the Enablix URL to bookmark:
+	
+	#spacer_double_row('20','10')
+
+	<b><a href="https://eoriginal.enablix.com">https://eoriginal.enablix.com</a></b>
+	
+	#spacer_double_row('20','10')
+	
+	We hope you find the new UI easier to use. Feedback is welcome.
+	
+	#mail_closing($obj.tenant.name)
+
+#end

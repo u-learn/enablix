@@ -1,7 +1,7 @@
 <form #memberForm="ngForm" *ngIf="userProfile">
 <div class="company no-sidebar member-popup">
   <div class="header">
-    <h1>{{headerLabel}}</h1>
+    <h1>{{ editing ? headerLabel : 'User Details'}}</h1>
   </div>
   <div class="form-input compact" *ngIf="editing">
     <div class="input-control">
