@@ -1,5 +1,5 @@
 <div class="text-preview">
-  <div class="plaintext" *ngIf="!editing; else editableText" [innerHtml]="getValue()"></div>
+  <div class="plaintext ql-editor" *ngIf="!editing; else editableText" [innerHtml]="getValue()"></div>
   <ng-template #editableText>
     <ng-container *ngIf="container.textItemDef.type == 'RICH_TEXT'; else editablePlainText">
       <ebx-rich-text-input [record]="record" [contentItem]="container.textItemDef" [(ngModel)]="record[container.textItemId + '_rt']"></ebx-rich-text-input>

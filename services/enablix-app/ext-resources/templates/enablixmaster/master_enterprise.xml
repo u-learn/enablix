@@ -22,7 +22,7 @@
             <container single="true" businessCategory="BUSINESS_CONTENT" id="dataSheet" qualifiedId="product.dataSheet" label="Data Sheet" displayOrder="2">
                 <contentItem type="text" id="title" qualifiedId="product.dataSheet.title" label="Title"/>
                 <contentItem type="doc" id="file" qualifiedId="product.dataSheet.file" label="File"/>
-                <contentItem type="text" id="url" qualifiedId="product.dataSheet.url" label="URL"/>
+                <contentItem type="url" id="url" qualifiedId="product.dataSheet.url" label="URL"/>
                 <contentItem type="bounded" id="dataSheetdim16" qualifiedId="product.dataSheet.dataSheetdim16" label="Dimension B">
                     <bounded multivalued="true">
                         <refList>
@@ -240,7 +240,7 @@
                     </bounded>
                 </contentItem>
                 <contentItem type="doc" id="file" qualifiedId="product.productdocs.file" label="File"/>
-                <contentItem type="text" id="url" qualifiedId="product.productdocs.url" label="URL"/>
+                <contentItem type="url" id="url" qualifiedId="product.productdocs.url" label="URL"/>
                 <contentItem type="text" id="desc" qualifiedId="product.productdocs.desc" label="Description"/>
                 <contentItem type="bounded" id="productdocsdim16" qualifiedId="product.productdocs.productdocsdim16" label="Dimension B">
                     <bounded multivalued="true">
@@ -1215,7 +1215,7 @@
             <container id="engagement" qualifiedId="analyst.engagement" label="Other Joint Engagements" displayOrder="144">
                 <contentItem type="text" id="title" qualifiedId="analyst.engagement.title" label="Title" searchBoost="6"/>
                 <contentItem type="doc" id="file" qualifiedId="analyst.engagement.file" label="File"/>
-                <contentItem type="text" id="url" qualifiedId="analyst.engagement.url" label="URL"/>
+                <contentItem type="url" id="url" qualifiedId="analyst.engagement.url" label="URL"/>
                 <contentItem type="text" id="summary" qualifiedId="analyst.engagement.summary" label="Engagement Summary" searchBoost="2"/>
                 <contentItem type="text" id="highlights" qualifiedId="analyst.engagement.highlights" label="Engagement Highlights" searchBoost="3"/>
                 <contentItem type="bounded" id="distributionrights" qualifiedId="analyst.engagement.distributionrights" label="Distribution Rights">
@@ -2090,7 +2090,7 @@
             </qualityConfig>
             <contentItem type="text" id="title" qualifiedId="demoenvironment.title" label="Title"/>
             <contentItem type="richText" id="desc" qualifiedId="demoenvironment.desc" label="Description" searchBoost="2"/>
-            <contentItem type="text" id="url" qualifiedId="demoenvironment.url" label="URL" searchBoost="3"/>
+            <contentItem type="url" id="url" qualifiedId="demoenvironment.url" label="URL" searchBoost="3"/>
             <contentItem type="text" id="credentials" qualifiedId="demoenvironment.credentials" label="Credentials"/>
             <contentItem type="bounded" id="products" qualifiedId="demoenvironment.products" label="Products">
                 <bounded multivalued="true">
@@ -2905,7 +2905,7 @@
         </container>
         <container businessCategory="BUSINESS_CONTENT" id="blog" qualifiedId="blog" label="Blogs" singularLabel="Blog" displayOrder="178">
             <contentItem type="text" id="title" qualifiedId="blog.title" label="Title"/>
-            <contentItem type="text" id="url" qualifiedId="blog.url" label="URL"/>
+            <contentItem type="url" id="url" qualifiedId="blog.url" label="URL"/>
             <contentItem type="bounded" id="blogSource" qualifiedId="blog.blogSource" label="Source">
                 <bounded>
                     <fixedList>
@@ -3105,7 +3105,7 @@
         <container businessCategory="BUSINESS_CONTENT" id="whitepaper" qualifiedId="whitepaper" label="White Papers" displayOrder="180">
             <contentItem type="text" id="title" qualifiedId="whitepaper.title" label="Title"/>
             <contentItem type="doc" id="file" qualifiedId="whitepaper.file" label="File"/>
-            <contentItem type="text" id="url" qualifiedId="whitepaper.url" label="URL"/>
+            <contentItem type="url" id="url" qualifiedId="whitepaper.url" label="URL"/>
             <contentItem type="text" id="summary" qualifiedId="whitepaper.summary" label="Summary"/>
             <contentItem type="bounded" id="wpSource" qualifiedId="whitepaper.wpSource" label="Source">
                 <bounded>
@@ -3294,7 +3294,7 @@
         </container>
         <container businessCategory="BUSINESS_CONTENT" id="multimedia" qualifiedId="multimedia" label="Multimedia" displayOrder="181">
             <contentItem type="text" id="title" qualifiedId="multimedia.title" label="Title"/>
-            <contentItem type="text" id="url" qualifiedId="multimedia.url" label="URL"/>
+            <contentItem type="url" id="url" qualifiedId="multimedia.url" label="URL"/>
             <contentItem type="doc" id="file" qualifiedId="multimedia.file" label="File"/>
             <contentItem type="text" id="summary" qualifiedId="multimedia.summary" label="Summary"/>
             <contentItem type="bounded" id="format" qualifiedId="multimedia.format" label="Format">
@@ -4020,7 +4020,7 @@
             <container id="poccontent" qualifiedId="poc.poccontent" label="POC Content" displayOrder="185">
                 <contentItem type="text" id="title" qualifiedId="poc.poccontent.title" label="Title"/>
                 <contentItem type="doc" id="file" qualifiedId="poc.poccontent.file" label="File"/>
-                <contentItem type="text" id="url" qualifiedId="poc.poccontent.url" label="URL"/>
+                <contentItem type="url" id="url" qualifiedId="poc.poccontent.url" label="URL"/>
                 <contentItem type="text" id="detail" qualifiedId="poc.poccontent.detail" label="Other Details"/>
             </container>
         </container>
@@ -4222,7 +4222,7 @@
         </container>
         <container businessCategory="BUSINESS_CONTENT" id="article" qualifiedId="article" label="News Article" displayOrder="189">
             <contentItem type="text" id="title" qualifiedId="article.title" label="Title"/>
-            <contentItem type="text" id="url" qualifiedId="article.url" label="URL"/>
+            <contentItem type="url" id="url" qualifiedId="article.url" label="URL"/>
             <contentItem type="doc" id="file" qualifiedId="article.file" label="File"/>
             <contentItem type="text" id="importance" qualifiedId="article.importance" label="Importance"/>
             <contentItem type="bounded" id="solutions" qualifiedId="article.solutions" label="Solutions">
@@ -5702,7 +5702,7 @@
         <container businessCategory="BUSINESS_CONTENT" id="corporatecontent" qualifiedId="corporatecontent" label="Corporate Content" displayOrder="202">
             <contentItem type="text" id="title" qualifiedId="corporatecontent.title" label="Title"/>
             <contentItem type="text" id="summary" qualifiedId="corporatecontent.summary" label="Summary"/>
-            <contentItem type="text" id="url" qualifiedId="corporatecontent.url" label="URL"/>
+            <contentItem type="url" id="url" qualifiedId="corporatecontent.url" label="URL"/>
             <contentItem type="doc" id="file" qualifiedId="corporatecontent.file" label="File"/>
             <contentItem type="bounded" id="products" qualifiedId="corporatecontent.products" label="Products" searchBoost="7">
                 <bounded multivalued="true">
@@ -6312,7 +6312,7 @@
         <container referenceable="true" businessCategory="BUSINESS_CONTENT" id="type4" qualifiedId="type4" label="Point of View" singularLabel="Point of View" displayOrder="1004">
             <contentItem type="text" id="title" qualifiedId="type4.title" label="Title" searchBoost="7"/>
             <contentItem type="doc" id="file" qualifiedId="type4.file" label="File"/>
-            <contentItem type="text" id="url" qualifiedId="type4.url" label="URL"/>
+            <contentItem type="url" id="url" qualifiedId="type4.url" label="URL"/>
             <contentItem type="richText" id="desc" qualifiedId="type4.desc" label="Description"/>
             <contentItem type="bounded" id="type4product" qualifiedId="type4.type4product" label="Products">
                 <bounded multivalued="true">
@@ -6494,7 +6494,7 @@
         <container referenceable="true" businessCategory="BUSINESS_CONTENT" id="type5" qualifiedId="type5" label="Email Templates" singularLabel="Email Template" displayOrder="1005">
             <contentItem type="text" id="title" qualifiedId="type5.title" label="Title" searchBoost="7"/>
             <contentItem type="doc" id="file" qualifiedId="type5.file" label="File"/>
-            <contentItem type="text" id="url" qualifiedId="type5.url" label="URL"/>
+            <contentItem type="url" id="url" qualifiedId="type5.url" label="URL"/>
             <contentItem type="richText" id="desc" qualifiedId="type5.desc" label="Description"/>
             <contentItem type="bounded" id="type5product" qualifiedId="type5.type5product" label="Products">
                 <bounded multivalued="true">
@@ -6676,7 +6676,7 @@
         <container referenceable="true" businessCategory="BUSINESS_CONTENT" id="type6" qualifiedId="type6" label="Customer Success Stories" singularLabel="Customer Success Story" displayOrder="1006">
             <contentItem type="text" id="title" qualifiedId="type6.title" label="Title" searchBoost="7"/>
             <contentItem type="doc" id="file" qualifiedId="type6.file" label="File"/>
-            <contentItem type="text" id="url" qualifiedId="type6.url" label="URL"/>
+            <contentItem type="url" id="url" qualifiedId="type6.url" label="URL"/>
             <contentItem type="richText" id="desc" qualifiedId="type6.desc" label="Description"/>
             <contentItem type="bounded" id="type6product" qualifiedId="type6.type6product" label="Products">
                 <bounded multivalued="true">
@@ -6861,7 +6861,7 @@
             </qualityConfig>
             <contentItem type="text" id="title" qualifiedId="type10.title" label="Title" searchBoost="7"/>
             <contentItem type="doc" id="file" qualifiedId="type10.file" label="File"/>
-            <contentItem type="text" id="url" qualifiedId="type10.url" label="URL"/>
+            <contentItem type="url" id="url" qualifiedId="type10.url" label="URL"/>
             <contentItem type="richText" id="desc" qualifiedId="type10.desc" label="Description"/>
             <contentItem type="bounded" id="type10product" qualifiedId="type10.type10product" label="Products">
                 <bounded multivalued="true">
@@ -7043,7 +7043,7 @@
         <container referenceable="true" businessCategory="BUSINESS_CONTENT" id="type12" qualifiedId="type12" label="Other Content" singularLabel="Other Content" displayOrder="1012">
             <contentItem type="text" id="title" qualifiedId="type12.title" label="Title" searchBoost="7"/>
             <contentItem type="doc" id="file" qualifiedId="type12.file" label="File"/>
-            <contentItem type="text" id="url" qualifiedId="type12.url" label="URL"/>
+            <contentItem type="url" id="url" qualifiedId="type12.url" label="URL"/>
             <contentItem type="richText" id="desc" qualifiedId="type12.desc" label="Description"/>
             <contentItem type="bounded" id="type12product" qualifiedId="type12.type12product" label="Products">
                 <bounded multivalued="true">
@@ -7228,7 +7228,7 @@
             </qualityConfig>
             <contentItem type="text" id="title" qualifiedId="type13.title" label="Title" searchBoost="7"/>
             <contentItem type="doc" id="file" qualifiedId="type13.file" label="File"/>
-            <contentItem type="text" id="url" qualifiedId="type13.url" label="URL"/>
+            <contentItem type="url" id="url" qualifiedId="type13.url" label="URL"/>
             <contentItem type="richText" id="desc" qualifiedId="type13.desc" label="Description"/>
             <contentItem type="bounded" id="type13product" qualifiedId="type13.type13product" label="Products">
                 <bounded multivalued="true">

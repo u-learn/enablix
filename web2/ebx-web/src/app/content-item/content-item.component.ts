@@ -3,6 +3,8 @@ import { DatePipe } from '@angular/common';
 
 import { ContentItem } from '../model/content-item.model';
 import { ContentTemplateService } from '../core/content-template.service';
+import { EbxLinkifyPipe } from '../core/pipes/ebx-linkify.pipe';
+import { Utility } from '../util/utility';
 
 @Component({
   selector: 'ebx-content-item',
@@ -19,7 +21,7 @@ export class ContentItemComponent implements OnInit {
   dateFormat: string = "MMM d, y";
 
   constructor(public ctService: ContentTemplateService,
-    public datePipe: DatePipe) { }
+    public datePipe: DatePipe, public linkify: EbxLinkifyPipe) { }
 
   ngOnInit() {
   }
@@ -29,9 +31,22 @@ export class ContentItemComponent implements OnInit {
     switch(this.contentItem.type) {
 
       case 'RICH_TEXT': 
+        
+        var linkifyArgs = {
+          target: '_blank',
+          linkParams: {
+            cQId: Utility.getParentQId(this.contentItem.qualifiedId),
+            cId: this.record.identity
+          }
+        }
+
         let pt = this.record[this.contentItem.id];
         let rt = this.record[this.contentItem.id + '_rt'];
-        return rt ? rt : pt;
+        if (rt) {
+          rt = '<div class="ql-editor rich-text">' + rt + '</div>';
+        }
+
+        return this.linkify.transform(rt ? rt : pt, linkifyArgs);
 
       case 'BOUNDED':
         

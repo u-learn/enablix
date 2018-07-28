@@ -183,8 +183,8 @@ public class TemplateBuilder {
 			// Add file field - doc
 			addDocItem(FILE_ATTR_ID, FILE_ATTR_LBL, container);
 			
-			// Add url field - text
-			addContentItem(URL_ATTR_ID, URL_ATTR_LBL, ContentItemClassType.TEXT, container);
+			// Add url field - url
+			addContentItem(URL_ATTR_ID, URL_ATTR_LBL, ContentItemClassType.URL, container);
 			
 			// Add desc field - richText
 			addRichTextItem(DESC_ATTR_ID, DESC_ATTR_LBL, container);

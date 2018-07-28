@@ -34,12 +34,11 @@ export class NewContentService {
         urlInfo: urlInfo
       }
 
-      let titleFldId = this.contentTemplateService.templateCache
-                           .getContainerLabelAttrId(urlInfo.containerQId);
+      let titleFldId = container.titleItemId;
 
-      let urlFldId = null;
+      let urlFldId = container.urlItemId;
 
-      for (let i = 0; i < container.contentItem.length; i++) {
+      /*for (let i = 0; i < container.contentItem.length; i++) {
       
         let item: ContentItem = container.contentItem[i];
         
@@ -55,7 +54,7 @@ export class NewContentService {
             break;
           }
         }
-      }
+      }*/
 
       if (titleFldId) {
         this.content.data[titleFldId] = urlInfo.title;
@@ -91,9 +90,7 @@ export class NewContentService {
         textInfo: textInfo
       }
 
-      let titleFldId = this.contentTemplateService.templateCache
-                           .getContainerLabelAttrId(textInfo.containerQId);
-
+      let titleFldId = container.titleItemId
       let descFldId = container.textItemId;
 
       if (titleFldId) {
@@ -124,9 +121,7 @@ export class NewContentService {
         fileInfo: fileInfo
       }
 
-      let titleFldId = this.contentTemplateService.templateCache
-                           .getContainerLabelAttrId(fileInfo.containerQId);
-
+      let titleFldId = container.titleItemId;
       let docFldId = null;
 
       for (let i = 0; i < container.contentItem.length; i++) {

@@ -78,6 +78,7 @@ import { LayoutService } from './layout.service';
 import { ContentConnService } from './content-conn.service';
 import { ProgressLineComponent } from './progress-line/progress-line.component';
 import { GlobalSearchControllerService } from './search-bar/global-search-controller.service';
+import { EbxLinkifyPipe } from './pipes/ebx-linkify.pipe';
 
 @NgModule({
   imports: [
@@ -124,6 +125,7 @@ import { GlobalSearchControllerService } from './search-bar/global-search-contro
     LayoutService,
     ContentConnService,
     GlobalSearchControllerService,
+    EbxLinkifyPipe,
   	{
   	  provide: HTTP_INTERCEPTORS,
       useClass: HttpErrorInterceptor,
@@ -189,7 +191,8 @@ import { GlobalSearchControllerService } from './search-bar/global-search-contro
     UserTaskComponent,
     ProgressCircleComponent,
     YoutubeImportComponent,
-    ProgressLineComponent
+    ProgressLineComponent,
+    EbxLinkifyPipe
   ],
   exports: [
     HeaderComponent,
@@ -221,7 +224,8 @@ import { GlobalSearchControllerService } from './search-bar/global-search-contro
     UserTaskComponent,
     ProgressCircleComponent,
     ProgressLineComponent,
-    SearchBarComponent
+    SearchBarComponent,
+    EbxLinkifyPipe
   ]
 })
 export class CoreModule { }

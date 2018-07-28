@@ -178,6 +178,7 @@
 			<xs:enumeration value="numeric" />
 			<xs:enumeration value="contentStack" />
 			<xs:enumeration value="richText" />
+			<xs:enumeration value="url" />
 		</xs:restriction>
 	</xs:simpleType>
 		

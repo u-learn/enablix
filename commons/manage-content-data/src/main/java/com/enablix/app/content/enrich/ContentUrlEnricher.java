@@ -49,8 +49,7 @@ public class ContentUrlEnricher implements ContentEnricher {
 			
 			for (ContentItemType contentItem : containerDef.getContentItem()) {
 				
-				if (contentItem.getType() == ContentItemClassType.TEXT || 
-						contentItem.getType() == ContentItemClassType.RICH_TEXT) {
+				if (contentItem.getType() == ContentItemClassType.URL) {
 				
 					String text = (String) content.get(contentItem.getId());
 					

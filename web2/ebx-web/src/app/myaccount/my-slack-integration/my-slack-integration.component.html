@@ -11,7 +11,9 @@
         <div class="param-value">{{slackToken?.teamName}}</div>
       </div>
     </ng-container>
-    <div class="actionBtns" style="margin-top: 8px;">
+  </div>
+  <div>
+    <div class="actionBtns">
       <button *ngIf="slackToken && slackToken.accessToken" class="negative-action" (click)="unauthorizeSlack()">Unauthorize</button>
       <button *ngIf="!(slackToken && slackToken.accessToken)" class="action" (click)="authorizeSlack()">Authorize</button>
     </div>

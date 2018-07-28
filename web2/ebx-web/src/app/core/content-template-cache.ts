@@ -160,6 +160,10 @@ export class ContentTemplateCache {
         this.contentStackQIdMap[contentItem.qualifiedId] = contentItem;
         container.contentStackItemId = contentItem.id;
       }
+
+      if (contentItem.type == 'URL') {
+        container.urlItemId = contentItem.id;
+      }
     }
 
     container.textItemId = descItemId;
@@ -219,7 +223,8 @@ export class ContentTemplateCache {
 
   getFreeInputContentItems(container: Container) : ContentItem[] {
     let freeInputItems = container.contentItem.filter(item => {
-      return item.type == 'TEXT' || item.type == 'DATE_TIME' || item.type == 'NUMERIC' || item.type == 'RICH_TEXT'
+      return item.type == 'TEXT' || item.type == 'DATE_TIME' || item.type == 'NUMERIC'
+              || item.type == 'RICH_TEXT' || item.type == 'URL'
               || (item.type == 'BOUNDED' && !this.isRelevanceItem(item));
     });
     return freeInputItems;

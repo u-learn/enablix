@@ -5,6 +5,9 @@
     <div *ngSwitchCase="'TEXT'">
       <ebx-text-input [record]="record" [contentItem]="contentItem" [contentTemplate]="ctService.templateCache" [(ngModel)]="record[contentItem.id]"></ebx-text-input>
     </div>
+    <div *ngSwitchCase="'URL'">
+      <ebx-text-input [record]="record" [contentItem]="contentItem" [contentTemplate]="ctService.templateCache" [(ngModel)]="record[contentItem.id]"></ebx-text-input>
+    </div>
     <div *ngSwitchCase="'NUMERIC'">
       <ebx-text-input [record]="record" [contentItem]="contentItem" [contentTemplate]="ctService.templateCache" [(ngModel)]="record[contentItem.id]"></ebx-text-input>
     </div>

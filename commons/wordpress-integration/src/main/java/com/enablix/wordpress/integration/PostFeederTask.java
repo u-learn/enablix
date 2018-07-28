@@ -14,7 +14,9 @@ import com.afrozaar.wordpress.wpapi.v2.Wordpress;
 import com.afrozaar.wordpress.wpapi.v2.api.Contexts;
 import com.afrozaar.wordpress.wpapi.v2.model.Post;
 import com.afrozaar.wordpress.wpapi.v2.request.SearchRequest;
+import com.afrozaar.wordpress.wpapi.v2.request.SearchRequest.Builder;
 import com.enablix.analytics.info.detection.InfoDetector;
+import com.enablix.commons.util.collection.CollectionUtil;
 import com.enablix.commons.util.date.DateUtil;
 import com.enablix.commons.util.id.IdentityUtil;
 import com.enablix.commons.util.tenant.TenantUtil;
@@ -67,13 +69,16 @@ public class PostFeederTask implements Task {
 			
 			LOGGER.debug("Looking for Wordpress post published after: {}", lastRunDate);
 			
-			SearchRequest<Post> searchRequest = 
-					SearchRequest.Builder.aSearchRequest(Post.class)
-								 .withContext(Contexts.VIEW)
-								 .withParam(WordpressConstants.WP_API_PARAM_PUBLISHED_AFTER, 
-										 DateUtil.dateToUTCiso8601String(lastRunDate))
-								 .withOrderAsc()
-								 .build();
+			WPIntegrationProperties wpProps = WPIntegrationProperties.getFromConfiguration();
+			
+			Builder<Post> srBuilder = SearchRequest.Builder.aSearchRequest(Post.class)
+						 .withContext(Contexts.VIEW)
+						 .withParam(WordpressConstants.WP_API_PARAM_PUBLISHED_AFTER, 
+								 DateUtil.dateToUTCiso8601String(lastRunDate));
+			
+			addDefaultFilters(srBuilder, wpProps);
+			
+			SearchRequest<Post> searchRequest = srBuilder.withOrderAsc().build();
 			
 			setActivityTrackingContext();
 			
@@ -93,6 +98,12 @@ public class PostFeederTask implements Task {
 			ActivityTrackingContext.clear();
 		}
 		
+	}
+
+	private void addDefaultFilters(Builder<Post> srBuilder, WPIntegrationProperties wpProps) {
+		if (CollectionUtil.isNotEmpty(wpProps.getTaskDefaultFilters())) {
+			srBuilder.withParams(wpProps.getTaskDefaultFilters());
+		}
 	}
 
 	private void setActivityTrackingContext() {

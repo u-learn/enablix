@@ -39,6 +39,9 @@ public class WPIntegrationProperties implements InfoDetectionConfiguration {
 	// based on the url of the post 
 	private Map<String, String> linkPatternToContQId;
 	
+	// Default filters to use in PostFeederTask
+	private Map<String, List<String>> taskDefaultFilters;
+	
 	private Map<String, List<String>> tagAliasMapping;
 	
 	private boolean saveAsDraft;
@@ -82,6 +85,14 @@ public class WPIntegrationProperties implements InfoDetectionConfiguration {
 		this.linkPatternToContQId = linkPatternToContQId;
 	}
 	
+	public Map<String, List<String>> getTaskDefaultFilters() {
+		return taskDefaultFilters;
+	}
+
+	public void setTaskDefaultFilters(Map<String, List<String>> defaultFilters) {
+		this.taskDefaultFilters = defaultFilters;
+	}
+
 	public Map<String, List<String>> getTagAliasMapping() {
 		return tagAliasMapping;
 	}
