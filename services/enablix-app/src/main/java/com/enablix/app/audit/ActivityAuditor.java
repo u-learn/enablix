@@ -114,8 +114,10 @@ public class ActivityAuditor {
 				ContentDataRef contentRef = ContentDataRef.createContentRef(templateId, containerQId, itemIdentity, null);
 				
 				Map<String, Object> contentRecord = contentDataMgr.getContentRecord(contentRef, template, DataViewUtil.allDataView());
-				String title = (String) contentRecord.get(ContentDataConstants.CONTENT_TITLE_KEY);
-				recordActivity.setItemTitle(title);
+				if (contentRecord != null) {
+					String title = (String) contentRecord.get(ContentDataConstants.CONTENT_TITLE_KEY);
+					recordActivity.setItemTitle(title);
+				}
 			}
 		}
 		

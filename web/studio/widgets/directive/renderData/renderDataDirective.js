@@ -17,6 +17,7 @@ function(ContentTemplateService,   StateUpdateService,   $filter,   $compile) {
 			var contentDataType = scope.contentDef.dataType;
 			
 			if (contentDataType === 'TEXT' 
+				|| contentDataType === 'URL'
 				|| contentDataType === 'DATE_TIME' 
 				|| contentDataType === 'NUMERIC' 
 				|| contentDataType === 'RICH_TEXT') {

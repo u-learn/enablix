@@ -1,6 +1,6 @@
 <div ng-if="containerData" ng-repeat="item in containerDef.contentItem" class="cont">
 	<div ng-hide="item.hide">
-	<div ng-if="item.type == 'TEXT'">
+	<div ng-if="item.type == 'TEXT' || item.type == 'URL'">
 		<eb-text focusValue="{{$first}}" content-def="item" text-value="containerData[item.id]"  content-record="containerData"></eb-text>
 	</div>
 	<div ng-if="item.type == 'NUMERIC'">

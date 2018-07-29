@@ -19,7 +19,7 @@ enablix.studioApp.factory('ContentUtil',
 					
 					if (cntItem.id == labelAttrId) {
 					
-						if (cntItem.type == 'TEXT') {
+						if (cntItem.type == 'TEXT' || cntItem.type == 'URL') {
 							return _instanceData[labelAttrId]; 
 						
 						} else if (cntItem.type == 'BOUNDED') {

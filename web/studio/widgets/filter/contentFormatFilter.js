@@ -68,7 +68,8 @@ function($filter,   $compile) {
 					text = "<div class='ql-editor'>" + richText + "</div>";
 				}
 				break;
-				
+			
+			case "URL":
 			case "TEXT":
 								
 				if (input) {

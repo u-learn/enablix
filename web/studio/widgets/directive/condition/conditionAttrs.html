@@ -1,5 +1,5 @@
 <div class="cont" ng-repeat="condAttr in condAttrs">
-	<div ng-if="condAttr.itemDef.type == 'TEXT' || condAttr.itemDef.type == 'NUMERIC'">
+	<div ng-if="condAttr.itemDef.type == 'TEXT' || condAttr.itemDef.type == 'URL' || condAttr.itemDef.type == 'NUMERIC'">
 		<eb-text content-def="condAttr.itemDef" text-value="condAttr.values"></eb-text>
 	</div>
 	<div ng-if="condAttr.itemDef.type == 'BOUNDED'">
