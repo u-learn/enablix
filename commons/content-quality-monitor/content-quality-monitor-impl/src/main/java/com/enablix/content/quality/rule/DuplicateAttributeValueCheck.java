@@ -28,7 +28,8 @@ public abstract class DuplicateAttributeValueCheck<C extends AttrCheckConfig> ex
 	protected boolean isAttributeQualityGood(Map<String, Object> contentRecord, 
 			String contentQId, TemplateFacade template, ContentItemType attrDef) {
 		
-		if (attrDef.getType() == ContentItemClassType.TEXT) {
+		if (attrDef.getType() == ContentItemClassType.TEXT 
+				|| attrDef.getType() == ContentItemClassType.URL) {
 			
 			String itemValue = (String) contentRecord.get(attrDef.getId());
 			

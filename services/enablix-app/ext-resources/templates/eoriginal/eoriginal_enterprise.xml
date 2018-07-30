@@ -487,7 +487,7 @@
         </container>
         <container businessCategory="BUSINESS_CONTENT" id="blog" qualifiedId="blog" label="Blogs" singularLabel="Blog" displayOrder="189">
             <contentItem type="text" id="title" qualifiedId="blog.title" label="Title"/>
-            <contentItem type="text" id="url" qualifiedId="blog.url" label="URL"/>
+            <contentItem type="url" id="url" qualifiedId="blog.url" label="URL"/>
             <contentItem type="dateTime" id="blogdate" qualifiedId="blog.blogdate" label="Publish Date"/>
             <contentItem type="bounded" id="blogSource" qualifiedId="blog.blogSource" label="Source">
                 <bounded>

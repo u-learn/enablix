@@ -21,7 +21,8 @@ public class TextFieldValueBuilder implements FieldValueBuilder<TextValue, Strin
 
 	@Override
 	public boolean canHandle(ContentItemType fieldDef) {
-		return fieldDef.getType() == ContentItemClassType.TEXT;
+		return fieldDef.getType() == ContentItemClassType.TEXT
+				|| fieldDef.getType() == ContentItemClassType.URL;
 	}
 
 	@Override

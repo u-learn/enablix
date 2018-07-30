@@ -544,7 +544,7 @@ public class TemplateUtil {
 			
 			for (ContentItemType itemType : container.getContentItem()) {
 				
-				if (itemType.getType() == ContentItemClassType.TEXT
+				if (itemType.getType() == ContentItemClassType.URL
 						&& !itemType.getId().equals(labelAttrId)
 						&& !itemType.getId().equals("name")
 						&& !itemType.getId().equals("shortName")) {
