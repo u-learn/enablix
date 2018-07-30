@@ -1,0 +1,45 @@
+@import '~styles/colors.scss';
+
+ebx-content-attribution {
+  
+  .table-content {
+
+    td {
+      &.text-right {
+        padding-right: 40px;
+        color: $blue-med-20;
+        font-weight: 700;
+      }
+    }
+
+    .content-type-col {
+      min-width: 104px;
+    }
+
+    .content-title-col {
+      min-width: 236px;
+    }
+
+    .opp-attr-cnt {
+      width: 140px;
+    }
+
+    .opp-attr-value {
+      width: 140px;
+    }
+
+    .small-font {
+      font-size: 14px;
+      font-weight: 400;
+      color: #808C9B;
+    }
+
+    .nav-link {
+      cursor: pointer;
+      &:hover {
+        color: $blue-med-20;
+      }
+    }
+  }
+
+}

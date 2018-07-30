@@ -1,0 +1,13 @@
+<div class="report-data" *ngIf="metricData">
+ <div class="table-content">
+    <ebx-table *ngIf="metricData" [tableData]="metricData" [tableColumns]="tableColumns">
+      <ng-template #dataRow let-rec>
+        <td class="small-font">{{rec.itemTitle}}</td>
+        <td class="text-right">{{rec.value | currency}}</td>
+        <td class="">{{getStatusName(rec.properties.status)}}</td>
+        <td class="text-right">{{rec.downloads}}</td>
+        <td class="text-right">{{rec.shares}}</td>
+      </ng-template>
+    </ebx-table>
+  </div>
+</div>

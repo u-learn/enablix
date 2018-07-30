@@ -17,6 +17,8 @@ import { HeatmapChartComponent } from './heatmap-chart/heatmap-chart.component';
 import { ActivityAuditComponent } from './activity-audit/activity-audit.component';
 import { ContentEngagementComponent } from './content-engagement/content-engagement.component';
 import { ContentEngagementDistributionComponent } from './content-engagement/content-engagement-distribution/content-engagement-distribution.component';
+import { ContentAttributionComponent } from './content-attribution/content-attribution.component';
+import { OppAttributionComponent } from './content-attribution/opp-attribution/opp-attribution.component';
 
 @NgModule({
   imports: [
@@ -37,13 +39,16 @@ import { ContentEngagementDistributionComponent } from './content-engagement/con
     HeatmapChartComponent,
     ActivityAuditComponent,
     ContentEngagementComponent,
-    ContentEngagementDistributionComponent
+    ContentEngagementDistributionComponent,
+    ContentAttributionComponent,
+    OppAttributionComponent
   ],
   exports: [
     ReportsHomeComponent
   ],
   entryComponents: [
-    ContentEngagementDistributionComponent
+    ContentEngagementDistributionComponent,
+    OppAttributionComponent
   ],
 })
 export class ReportsModule { }

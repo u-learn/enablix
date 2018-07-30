@@ -1,3 +1,4 @@
+
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
@@ -18,17 +19,17 @@ import { OffsetDaysFilterValueTx } from '../model/report-config.model';
 import { Utility } from '../../util/utility';
 import { Constants } from '../../util/constants';
 import { ContentTemplateService } from '../../core/content-template.service';
-import { ContentEngagementDistributionComponent } from './content-engagement-distribution/content-engagement-distribution.component';
+import { OppAttributionComponent } from './opp-attribution/opp-attribution.component';
 import { DataSearchService } from '../../core/data-search/data-search.service';
 import { DataSearchRequest } from '../../core/data-search/data-search-request.model';
 
 @Component({
-  selector: 'ebx-content-engagement',
-  templateUrl: './content-engagement.component.html',
-  styleUrls: ['./content-engagement.component.scss'],
+  selector: 'ebx-content-attribution',
+  templateUrl: './content-attribution.component.html',
+  styleUrls: ['./content-attribution.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class ContentEngagementComponent implements OnInit {
+export class ContentAttributionComponent implements OnInit {
 
   dataPage: DataPage;
   tableColumns: TableColumn[];
@@ -39,6 +40,8 @@ export class ContentEngagementComponent implements OnInit {
   dataFiltersConfig: DataFiltersConfig;
   lastUsedFilters: any;
 
+  oppStatusList: any = {};
+
   constructor(private http: HttpClient, private apiUrlService: ApiUrlService,
     private alert: AlertService, private actvyAuditService: ActivityAuditService,
     private navService: NavigationService, private router: Router,
@@ -47,8 +50,6 @@ export class ContentEngagementComponent implements OnInit {
 
   ngOnInit() {
     
-    let _this = this;
-
     var metricPeriods = [
         { label: 'Last 30 Day', id: 30 },
         { label: 'Last 90 Days', id: 90 },  
@@ -65,6 +66,13 @@ export class ContentEngagementComponent implements OnInit {
     });
     Utility.sortArrayByLabel(bizContentOptions);
 
+    this.oppStatusList = [
+        { label: 'Closed Won', id: 'closed-won' },
+        { label: 'Open', id: 'open' },  
+        { label: 'Closed Lost', id: 'closed-lost' },
+        { label: 'All', id: 'all' }
+      ];
+
     let filters: DataFilter[] = [
       {
         id: "contentQIdIn",
@@ -79,7 +87,7 @@ export class ContentEngagementComponent implements OnInit {
         valueTx: IdPropDataFilterValueTx.theInstance
       },
       {
-        id: "auditEventOcc",
+        id: "timePeriod",
         type: "multi-select",
         options: {
           singleSelect: true
@@ -91,10 +99,24 @@ export class ContentEngagementComponent implements OnInit {
         defaultValue: function() { return null; },
         validator: new AtleastOneValueDataFilterValidator("Please select Time Period"),
         valueTx: OffsetDaysFilterValueTx.theInstance
+      },
+      {
+        id: "oppStatus",
+        type: "multi-select",
+        options: {
+          singleSelect: true
+        },
+        name: "Opportunity Status",
+        masterList: function() {
+          return Observable.of(this.oppStatusList);
+        },
+        defaultValue: function() { return [{ id: 'closed-won', label: 'Closed Won'}]; },
+        validator: new AtleastOneValueDataFilterValidator("Please select Opportunity Status"),
+        valueTx: IdPropDataFilterValueTx.theInstance
       }
     ];
 
-    var prefKey = "report.content-engagement-summary.defaultFilterValues";
+    var prefKey = "report.content-attribution-summary.defaultFilterValues";
     this.dataFiltersConfig = {
       filters: filters,
       options: {
@@ -119,39 +141,18 @@ export class ContentEngagementComponent implements OnInit {
         headerCssClass: "small-font content-type-col"
       },
       {
-        heading: "Internal Access",
-        key: "internalAccess",
-        sortProp: "internalAccess.count",
+        heading: "Opportunity Count",
+        key: "oppCount",
+        sortProp: "oppAttribution.count",
         dataType: DataType.NUMBER,
-        headerCssClass: "small-font"
+        headerCssClass: "small-font opp-attr-cnt"
       },
       {
-        heading: "Internal Downloads",
-        key: "internalDownload",
-        sortProp: "internalDownloads.count",
+        heading: "Attributed Dollars",
+        key: "oppDollars",
+        sortProp: "oppAttribution.value",
         dataType: DataType.NUMBER,
-        headerCssClass: "small-font"
-      },
-      {
-        heading: "External Downloads",
-        key: "externalDownload",
-        sortProp: "externalDownloads.count",
-        dataType: DataType.NUMBER,
-        headerCssClass: "small-font"
-      },
-      {
-        heading: "Internal Shares",
-        key: "internalShares",
-        sortProp: "internalShares.count",
-        dataType: DataType.NUMBER,
-        headerCssClass: "small-font"
-      },
-      {
-        heading: "External Shares",
-        key: "externalShares.count",
-        sortProp: "externalShares.count",
-        dataType: DataType.NUMBER,
-        headerCssClass: "small-font"
+        headerCssClass: "small-font opp-attr-value"
       }
     ];
 
@@ -178,29 +179,30 @@ export class ContentEngagementComponent implements OnInit {
     this.lastUsedFilters = filters;
     Utility.removeNullProperties(filters.dataFilters);
 
-    let CONTENT_ENGAGEMENT_DOMAIN = "com.enablix.core.domain.report.engagement.ContentEngagement";
+    let CONTENT_ATTRIBUTION_DOMAIN = "com.enablix.core.domain.report.attribution.ContentAttribution";
     let searchRequest = new DataSearchRequest();
 
     searchRequest.filterMetadata = {};
     searchRequest.filters = {};
     searchRequest.pagination = this.pagination;
 
-    this.dsService.getDataSearchResult(CONTENT_ENGAGEMENT_DOMAIN, searchRequest).subscribe((data) => {
+    this.dsService.getDataSearchResult(CONTENT_ATTRIBUTION_DOMAIN, searchRequest).subscribe((data) => {
       this.dataPage = data;
     }, error => {
-      this.alert.error("Error fetching content engagement data.", error.statusCode);
+      this.alert.error("Error fetching content attribution data.", error.statusCode);
     });;
   }
 
-  showDistribution(metric: any) {
+  showAttribution(attribution: any) {
 
-    let dialogRef = this.dialog.open(ContentEngagementDistributionComponent, {
-        width: '600px',
-        height: '600px',
+    let dialogRef = this.dialog.open(OppAttributionComponent, {
+        width: '800px',
+        height: '80vh',
         disableClose: false,
         autoFocus: false,
         data: { 
-          metric: metric
+          metric: attribution,
+          statusTx: this.oppStatusList
         }
       });
   }

@@ -8,6 +8,7 @@
           <a *ebxAccess="'VIEW_REPORT-' + rpt.id" [class.tab-active]="rpt.id == selectedRpt?.id" (click)=navToReport(rpt)>{{rpt.name}}</a>
         </ng-container>
         <a routerLink="/portal/reports/content-engagement" routerLinkActive="tab-active"  *ebxAccess="'VIEW_REPORT-content-engagement-summary'">Content Engagement</a>
+        <a routerLink="/portal/reports/content-attribution" routerLinkActive="tab-active"  *ebxAccess="'VIEW_REPORT-content-attribution-summary'">Content Attribution</a>
       </div>
       <div class="tab-content" *ngIf="selectedRpt">
         <ebx-report-detail [reportConfig]="selectedRpt"></ebx-report-detail>

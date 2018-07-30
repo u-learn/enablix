@@ -1,0 +1,27 @@
+@import '~styles/colors.scss';
+
+ebx-opp-attribution {
+  
+  .table-content {
+
+    td {
+      &.text-right {
+        padding-right: 40px;
+      }
+    }
+
+    .oa-download {
+      width: 88px;
+    }
+
+    .oa-share {
+      width: 72px;
+    }
+
+    .oa-dollar-val {
+      width: 100px;
+    }
+
+  }
+
+}
