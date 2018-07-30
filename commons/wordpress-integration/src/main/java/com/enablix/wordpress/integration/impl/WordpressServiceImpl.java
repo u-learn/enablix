@@ -13,7 +13,6 @@ import org.springframework.web.client.HttpClientErrorException;
 import com.afrozaar.wordpress.wpapi.v2.Wordpress;
 import com.afrozaar.wordpress.wpapi.v2.api.Contexts;
 import com.afrozaar.wordpress.wpapi.v2.config.ClientConfig;
-import com.afrozaar.wordpress.wpapi.v2.config.ClientFactory;
 import com.afrozaar.wordpress.wpapi.v2.exception.PostNotFoundException;
 import com.afrozaar.wordpress.wpapi.v2.model.Post;
 import com.afrozaar.wordpress.wpapi.v2.model.Term;
@@ -110,8 +109,13 @@ public class WordpressServiceImpl implements WordpressService {
 	
 	@Override
 	public Wordpress createClient(String baseUrl) {
-		return ClientFactory.fromConfig(ClientConfig.of(baseUrl, null, null, true, true));
+		return clientFromConfig(ClientConfig.of(baseUrl, null, null, true, true));
 	}
+	
+	public static Wordpress clientFromConfig(ClientConfig config) {
+        final ClientConfig.Wordpress wordpress = config.getWordpress();
+        return new WPClient(wordpress.getBaseUrl(), wordpress.getUsername(), wordpress.getPassword(), wordpress.isUsePermalinkEndpoint(), config.isDebug());
+    }
 
 	@Override
 	public List<ContentSuggestion> getContentSuggestion(Wordpress wp, Long postId) throws PostNotFoundException {
