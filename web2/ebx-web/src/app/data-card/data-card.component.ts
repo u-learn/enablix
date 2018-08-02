@@ -84,7 +84,7 @@ export class DataCardComponent implements OnInit {
   }
 
   navToBizContent() {
-    this.navService.goToContentDetail(this.containerQId, this.recordIdentity, this.router.url);
+    this.navService.goToContentDetail(this.containerQId, this.recordIdentity, {}, this.router.url);
   }
 
   navToBizDimension() {

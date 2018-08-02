@@ -245,7 +245,7 @@ export class ActivityAuditComponent implements OnInit {
             || record.activity.activityType === "DOC_DOWNLOAD" 
             || record.activity.activityType === 'DOC_UPLOAD')) {
       
-      this.navService.goToRecordDetail(containerQId, contentIdentity, this.router.url);
+      this.navService.goToRecordDetail(containerQId, contentIdentity, {}, this.router.url);
 
     }
 

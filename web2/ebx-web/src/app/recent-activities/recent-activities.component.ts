@@ -95,7 +95,7 @@ export class RecentActivitiesComponent implements OnInit {
 
   navToContentDetail(containerQId: string, recIdentity: string) {
     if (containerQId && recIdentity) {
-      this.navService.goToContentDetail(containerQId, recIdentity);
+      this.navService.goToContentDetail(containerQId, recIdentity, {});
     }
   }
 }

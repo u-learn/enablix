@@ -32,6 +32,7 @@ public class AppExternalLinkController {
 		}
 		
 		// redirect to the url
+		u = u.startsWith("http") ? u : ("http://" + u);
 		response.sendRedirect(u);
 	}
 	

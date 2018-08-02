@@ -48,7 +48,7 @@ export class EntityPillComponent implements OnInit {
   navToContentDetail() {
     if (this.navigable) {
       if (this.isBizContent) {
-        this.navService.goToContentDetail(this.containerQId, this.identity);
+        this.navService.goToContentDetail(this.containerQId, this.identity, {});
       } else if (this.isBizDim) {
         this.navService.goToDimDetail(this.containerQId, this.identity);
       }

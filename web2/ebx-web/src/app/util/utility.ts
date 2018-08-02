@@ -92,6 +92,16 @@ export class Utility {
     return response;
   }
 
+  static readTrackingCtxInQueryParams(queryParams: any) {
+    var trackingCtx = {};
+    for (let param in queryParams) {
+      if (param.startsWith("at")) {
+        trackingCtx[param] = queryParams[param];
+      }
+    }
+    return trackingCtx;
+  }
+
   static openPopupInCenter(url, title, w, h) {
     // Fixes dual-screen position                         Most browsers      Firefox
     var dualScreenLeft = window.screenLeft != undefined ? window.screenLeft : window.screenX;

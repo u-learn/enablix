@@ -237,7 +237,7 @@ public class FetchContentDataController {
 		if (data != null) {
 			// Audit access activity
 			Channel channel = Channel.parse(atChannel);
-			if (channel != null && !"SEARCH".equals(atContext)) {
+			if (channel != null) {
 				
 				String contentTitle = null;
 				if (data instanceof Map) {

@@ -92,7 +92,7 @@ export class RecentContentListComponent implements OnInit {
   }
 
   navToItemDetail(act: any) {    
-    this.navService.goToRecordDetail(act.data.contentQId, act.data.recordIdentity, this.router.url);
+    this.navService.goToRecordDetail(act.data.contentQId, act.data.recordIdentity, {}, this.router.url);
   }
 
 

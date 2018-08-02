@@ -167,7 +167,13 @@ export class GlobalSearchControllerService implements SearchBarController {
     var contentQId = bizItem.contentQId;
     var recIdentity = bizItem.record.identity;
     if (contentQId && recIdentity) {
-      this.navService.goToRecordDetail(contentQId, recIdentity, this.router.url);
+      var atCtxParams = {
+        atChannel: "WEB",
+        atContext: "SEARCH",
+        atActivityOrigin: "TYPEAHEAD",
+        atContextTerm: this.sbData.freetext
+      }
+      this.navService.goToRecordDetail(contentQId, recIdentity, atCtxParams, this.router.url);
     }
   }
 

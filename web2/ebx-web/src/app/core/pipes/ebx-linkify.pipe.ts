@@ -27,6 +27,7 @@ export class EbxLinkifyPipe implements PipeTransform {
   convertToLink(url, target, linkParams) {
   
     var html: string[] = [];
+    url = url.startsWith("http") ? url : ("http://" + url);
     var xlinkUrl = linkParams && linkParams.cQId && linkParams.cId ? 
       this.apiUrlService.getExtLinkUrl(url, linkParams.cId, linkParams.cQId) : url;
 

@@ -3,26 +3,26 @@
   <div class="header">
     <h1>{{ editing ? headerLabel : 'User Details'}}</h1>
   </div>
-  <div class="form-input compact" *ngIf="editing">
+  <div class="form-input compact" [hidden]="!editing">
     <div class="input-control">
-      <input type="text" name="name" id="name" [(ngModel)]="userProfile.name" required #name="ngModel" placeholder="Name">
+      <input type="text" name="name" id="name" [(ngModel)]="userProfile.name" required #name="ngModel" (blur)="userProfile.name = userProfile.name.trim()" placeholder="Name">
     </div>
     <div class="input-error" [hidden]="name.valid || name.pristine">
-      Please enter name
+      Please enter a Name
     </div>
   </div>
-  <div *ngIf="!editing" class="form-input compact">
+  <div [hidden]="editing" class="form-input compact">
     <div class="input-label">Name</div>
     <div class="nonedit-val">{{userProfile.name}}</div>
   </div>
-  <div class="form-input" *ngIf="editing">
+  <div class="form-input" [hidden]="!editing">
     <div class="input-control"><input type="text" name="email" [(ngModel)]="userProfile.email" #email="ngModel" required email (blur)="checkUserExist()" ngControl="email" placeholder="Email"></div>
     <div class="input-error" [hidden]="email.valid || email.pristine">
       <p [hidden]="!email.errors?.required && !email.errors?.email">Please enter a valid email</p>
       <p [hidden]="!email.errors?.userexist">User email already registered</p>
     </div>
   </div>
-  <div *ngIf="!editing" class="form-input">
+  <div [hidden]="editing" class="form-input">
     <div class="input-label">Email</div>
     <div class="nonedit-val">{{userProfile.email}}</div>
   </div>
@@ -56,7 +56,7 @@
       </div>
     </ng-container>
   </div>
-  <div class="actionBtns" *ngIf="editing">
+  <div class="actionBtns" [hidden]="!editing">
     <button class="action" (click)="save()" [disabled]="!memberForm.form.valid">{{saveLabel}}</button>
     <button class="cancel" mat-dialog-close>Cancel</button>
   </div>

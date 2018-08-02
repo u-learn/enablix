@@ -125,6 +125,10 @@ export class MemberDetailComponent implements OnInit {
 
   save() {
 
+    if (!this.form.valid) {
+      return;
+    }
+
     if (!this.userProfile.systemProfile) {
       this.userProfile.systemProfile = new UserSystemProfile();
     }
@@ -142,8 +146,6 @@ export class MemberDetailComponent implements OnInit {
 
     this.userProfile.systemProfile.roles = roles;
     
-    console.log(this.userProfile);
-
     if (this.newUserOper) {
       
       this.membersService.addMember(this.userProfile).subscribe(res => {

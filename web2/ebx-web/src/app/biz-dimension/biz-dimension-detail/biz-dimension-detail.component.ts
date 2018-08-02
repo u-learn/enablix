@@ -13,6 +13,7 @@ import { EditBizDimensionComponent } from '../../biz-dimension/edit-biz-dimensio
 import { SearchBarService } from '../../core/search-bar/search-bar.service';
 import { GlobalSearchControllerService } from '../../core/search-bar/global-search-controller.service';
 import { Constants } from '../../util/constants';
+import { Utility } from '../../util/utility';
 import { LayoutService } from '../../core/layout.service';
 
 @Component({
@@ -82,9 +83,10 @@ export class BizDimensionDetailComponent implements OnInit, AfterViewInit {
       let filters = this.sbService.buildFiltersFromQueryParams(qParams);
       let childQIds = filters['cqid'];
       this.textQuery = this.sbService.getTextQueryFromQueryParams(qParams);
+      var atCtxParams = Utility.readTrackingCtxInQueryParams(this.route.snapshot.queryParams);
 
       this.contentService.getRecordAndChildData(cQId, recIdentity, '0', cgSize, 
-                Constants.AT_CHANNEL_WEB, childQIds, this.textQuery).subscribe(
+                Constants.AT_CHANNEL_WEB, childQIds, this.textQuery, atCtxParams).subscribe(
         res => {
 
           var childContainerWithData = [];

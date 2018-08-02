@@ -16,3 +16,7 @@ export class FileUploadInfo extends UploadInfo {
 export class TextInfo extends UploadInfo {
   text: string;
 }
+
+export class AssetInfo extends UploadInfo {
+  
+}

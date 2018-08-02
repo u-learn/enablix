@@ -24,8 +24,10 @@ export class NavigationService {
     this.router.navigate(['/portal/content/new', containerQId]);
   }
 
-  goToContentDetail(containerQId: string, identity: string, returnUrl: string = "/") {
-    this.router.navigate(['/portal/content/detail', containerQId, identity], {queryParams : {returnUrl: returnUrl}});
+  goToContentDetail(containerQId: string, identity: string, atCtxParams: any, returnUrl: string = "/") {
+    var queryParams = atCtxParams || {};
+    queryParams.returnUrl = returnUrl;
+    this.router.navigate(['/portal/content/detail', containerQId, identity], {queryParams : queryParams});
   }
 
   goToContentList(containerQId: string, queryParams?: { [key: string] : any }) {
@@ -41,14 +43,14 @@ export class NavigationService {
       { queryParams: queryParams });
   }
 
-  goToRecordDetail(containerQId: string, identity: string, returnUrl: string = "/") {
+  goToRecordDetail(containerQId: string, identity: string, atCtxParams: any, returnUrl: string = "/") {
 
     let container = this.ctService.getContainerByQId(containerQId);
     
     if (container) {
       
       if (this.ctService.isBusinessContent(container)) {
-        this.goToContentDetail(containerQId, identity, returnUrl);
+        this.goToContentDetail(containerQId, identity, atCtxParams, returnUrl);
       }
 
       if (this.ctService.isBusinessDimension(container)) {

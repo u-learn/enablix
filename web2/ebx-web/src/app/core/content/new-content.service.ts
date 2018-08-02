@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { ContentTemplateService } from '../content-template.service';
 import { NewContent } from '../../model/new-content.model';
-import { UrlCaptureInfo, FileUploadInfo, TextInfo } from '../../model/upload-info.model';
+import { UrlCaptureInfo, FileUploadInfo, TextInfo, AssetInfo } from '../../model/upload-info.model';
 import { EmbedInfoService } from '../upload/embed-info.service';
 import { EmbedInfo } from '../../model/embed-info.model';
 import { ContentItem } from '../../model/content-item.model';
@@ -101,6 +101,31 @@ export class NewContentService {
         this.content.data[descFldId] = textInfo.text;
         this.content.data.__decoration.__textContent = textInfo.text;
       }
+    }
+
+    return this.content;
+  }
+
+  captureAsset(assetInfo: AssetInfo) {
+    const container = this.contentTemplateService.getContainerByQId(assetInfo.containerQId);
+    
+    if (container) {
+
+      this.content = {
+        container: container,
+        data: {
+          '__title': assetInfo.title,
+          '__decoration': {}
+        }
+      }
+
+      let titleFldId = container.titleItemId
+      let descFldId = container.textItemId;
+
+      if (titleFldId) {
+        this.content.data[titleFldId] = assetInfo.title;
+      }
+
     }
 
     return this.content;

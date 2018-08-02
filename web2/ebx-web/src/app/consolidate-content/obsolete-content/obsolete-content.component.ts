@@ -85,7 +85,7 @@ export class ObsoleteContentComponent implements OnInit {
 
   navToRecordDetail(rec: any) {
     this.navService.goToRecordDetail(rec.contentQualityAlert.contentQId, 
-      rec.contentQualityAlert.recordIdentity, this.router.url);
+      rec.contentQualityAlert.recordIdentity, {}, this.router.url);
   }
 
   getRecordContainer(rec: any) {

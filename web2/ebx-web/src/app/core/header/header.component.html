@@ -1,6 +1,8 @@
 <ng-template #clientBrand>
   <ng-container *ngIf="tenantLogoExist">
-    <img class="client-logo" src="/assets/img/client-logo.png" (error)="tenantLogoExist = false"/>
+    <div class="logo-container">
+      <img class="client-logo" src="/assets/img/client-logo.png" (error)="tenantLogoExist = false"/>
+    </div>
   </ng-container>
   <ng-container *ngIf="!tenantLogoExist">
     <div class="logo"><div class="logo-placeholder"></div></div>

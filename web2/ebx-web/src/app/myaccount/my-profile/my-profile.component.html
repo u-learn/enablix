@@ -1,3 +1,4 @@
+<form #myProfileForm="ngForm">
 <div class="sub-section-content" >
   <div class="left">
     <h3>User Profile</h3>
@@ -8,7 +9,10 @@
     <div class="form-input" *ngIf="editing" style="margin-top: 8px; margin-bottom: 16px;">
       <div class="input-label">Name</div>
       <div class="input-control">
-        <input type="text" [(ngModel)]="user.name">
+        <input type="text" id="name" name="name" [(ngModel)]="user.name" required #name="ngModel" (blur)="user.name = user.name.trim()">
+      </div>
+      <div class="input-error" [hidden]="name.valid || name.pristine">
+        Please enter a Name
       </div>
     </div>
     <div class="content-row flex-row">
@@ -33,3 +37,4 @@
     </ng-container>
   </div>
 </div>
+</form>

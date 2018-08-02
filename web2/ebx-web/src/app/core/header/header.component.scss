@@ -116,7 +116,7 @@
       background: $white;
       box-shadow: 0 1px 1px 0 rgba(0,0,0,0.06);
       border-radius: 4px;
-      padding-right: 16px;
+      padding-right: 8px;
       cursor: pointer;
 
       .logo {
@@ -130,6 +130,11 @@
           }
       }
 
+      .logo-container {
+        width: 100%;
+        text-align: center;
+      }
+
       .client-logo {
         max-height: 32px;
         margin-left: 8px;
@@ -137,11 +142,15 @@
 
       &.full-width {
         width: 100%;
+        .logo-container {
+          text-align: left;
+        }
       }
     
       h3 {
           // line-height: 20px;
           height: 22px;
+          padding-right: 8px;
           font-family: $FPThin;
           white-space: nowrap;
           overflow: hidden;

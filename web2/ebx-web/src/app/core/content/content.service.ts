@@ -29,13 +29,16 @@ export class ContentService {
               private apiUrlService: ApiUrlService,
               private userPrefs: UserPreferenceService) { }
 
-  getContentRecord(containerQId: string, contentIdentity: string, atChannel?: string) : Observable<any> {
+  getContentRecord(containerQId: string, contentIdentity: string, atChannel?: string, atCtxParams?: any) : Observable<any> {
     let templateId = this.contentTemplateService.contentTemplate.id;
     let apiUrl = this.apiUrlService.getContentRecordUrl(templateId, containerQId, contentIdentity);
+    
     let options: any = {};
-    if (atChannel) {
-      options.headers = { atChannel: atChannel};
+    options.headers = atCtxParams || {};
+    if (atChannel && !options.headers.atChannel) {
+      options.headers.atChannel = atChannel;
     }
+    
     return this.http.get(apiUrl, options)
   }
 
@@ -253,7 +256,9 @@ export class ContentService {
     });
   }
 
-  getRecordAndChildData(contentQId: string, contentIdentity: string, childPageNo: string = '0', childSizeLimit?: string, atChannel?: string, childQIds?: any, textQuery?: string, ): Observable<any> {
+  getRecordAndChildData(contentQId: string, contentIdentity: string, 
+    childPageNo: string = '0', childSizeLimit?: string, atChannel?: string, 
+    childQIds?: any, textQuery?: string, atCtxParams?: any): Observable<any> {
          
     var options: any = {};
     options.params = {
@@ -266,8 +271,9 @@ export class ContentService {
       options.params.size = childSizeLimit;
     }
 
-    if (atChannel) {
-      options.headers = { atChannel: atChannel };
+    options.headers = atCtxParams || {}
+    if (atChannel && !options.headers.atChannel) {
+      options.headers.atChannel = atChannel;
     }
 
     if (childQIds) {

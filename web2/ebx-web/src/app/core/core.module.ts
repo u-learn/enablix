@@ -79,6 +79,7 @@ import { ContentConnService } from './content-conn.service';
 import { ProgressLineComponent } from './progress-line/progress-line.component';
 import { GlobalSearchControllerService } from './search-bar/global-search-controller.service';
 import { EbxLinkifyPipe } from './pipes/ebx-linkify.pipe';
+import { UploadAssetComponent } from './upload/upload-asset/upload-asset.component';
 
 @NgModule({
   imports: [
@@ -141,6 +142,7 @@ import { EbxLinkifyPipe } from './pipes/ebx-linkify.pipe';
     UploadFileComponent,
     UploadUrlComponent,
     UploadTextComponent,
+    UploadAssetComponent,
     AppIntroMsgComponent,
     ConfirmDialogComponent,
     BulkImportComponent,
@@ -160,6 +162,7 @@ import { EbxLinkifyPipe } from './pipes/ebx-linkify.pipe';
     UploadFileComponent,
     UploadUrlComponent,
     UploadTextComponent,
+    UploadAssetComponent,
     AppIntroMsgComponent,
     SearchBarComponent,
     AlertComponent,
@@ -192,7 +195,8 @@ import { EbxLinkifyPipe } from './pipes/ebx-linkify.pipe';
     ProgressCircleComponent,
     YoutubeImportComponent,
     ProgressLineComponent,
-    EbxLinkifyPipe
+    EbxLinkifyPipe,
+    UploadAssetComponent
   ],
   exports: [
     HeaderComponent,

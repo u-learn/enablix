@@ -15,6 +15,7 @@ import { ContentReqApproveButtonComponent } from '../content-action/content-req-
 import { ContentReqRejectButtonComponent } from '../content-action/content-req-reject-button/content-req-reject-button.component';
 import { ContentWorkflowService } from '../services/content-workflow.service';
 import { Constants } from '../util/constants';
+import { Utility } from '../util/utility';
 
 @Component({
   selector: 'ebx-biz-content',
@@ -96,8 +97,9 @@ export class BizContentComponent implements OnInit, AfterViewInit {
           if (containerQId && recordIdentity) {
             
             this.container = this.contentTemplate.getConcreteContainerByQId(containerQId);
+            var atCtxParams = Utility.readTrackingCtxInQueryParams(this.route.snapshot.queryParams);
 
-            this.contentService.getContentRecord(containerQId, recordIdentity, Constants.AT_CHANNEL_WEB)
+            this.contentService.getContentRecord(containerQId, recordIdentity, Constants.AT_CHANNEL_WEB, atCtxParams)
                   .subscribe(
                       result => {
                         
@@ -298,7 +300,7 @@ export class BizContentComponent implements OnInit, AfterViewInit {
                   this.dialogRef.close(this.record);
                 } else {
                   this.navService.goToContentDetail(
-                    this.container.qualifiedId, result.contentRecord.identity);
+                    this.container.qualifiedId, result.contentRecord.identity, {});
                 }
 
               },
@@ -319,7 +321,7 @@ export class BizContentComponent implements OnInit, AfterViewInit {
       this.dialogRef.close(res);
     } else {
       this.navService.goToContentDetail(
-        this.container.qualifiedId, res.objectRef.data.identity);
+        this.container.qualifiedId, res.objectRef.data.identity, {});
     }
   }
 

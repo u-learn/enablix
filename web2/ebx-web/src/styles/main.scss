@@ -1261,4 +1261,63 @@ a.xlink {
   color: $blue-med-20;
 }
 
+.upload-asset-popup {
+  width: calc(624px - 48px - 48px);
+  padding: 8px 24px;
+  background: #F7F9F9;
+  z-index: 10;
+  position: relative;
+  border-radius: 4px;
+
+  .asset-text {
+      font-family: $FPThin;
+      line-height: 38px;
+      font-size: 32px;
+      background: #F7F9F9;
+  }
+
+  input, select, textarea {
+      width: 100%;
+      font-size: 18px;
+  }
+
+  textarea {
+      height: 154px;
+  }
+
+  .preview-tag.margin-top {
+    margin-top: 24px;
+  }
+
+  .preview-text {
+      width: 512px;
+      padding: 8px;
+      background: $white;
+      border: 1px solid #E3EBEF;
+      box-shadow: 0 1px 1px 0 rgba(0,0,0,0.06);
+      margin-top: 24px;
+
+      @include vcenterChildren;
+
+      img {
+          padding-right: 8px;
+      }
+
+      &.align-top {
+          align-items: start;
+
+          > img {
+              padding: 4px 8px 4px 4px;
+          }
+          margin-bottom: 16px;
+      }
+  }
+
+  .actionBtns {
+      margin-top: 24px;
+      button {
+          width: 123px;
+      }
+  }
+}
 //@import '../pages/index.scss';

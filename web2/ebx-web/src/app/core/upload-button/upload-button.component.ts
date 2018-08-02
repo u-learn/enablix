@@ -4,6 +4,7 @@ import { MatDialog, MatDialogRef } from '@angular/material';
 import { UploadFileComponent } from '../upload/upload-file/upload-file.component';
 import { UploadUrlComponent } from '../upload/upload-url/upload-url.component';
 import { UploadTextComponent } from '../upload/upload-text/upload-text.component';
+import { UploadAssetComponent } from '../upload/upload-asset/upload-asset.component';
 import { BulkImportComponent } from '../bulk-import/bulk-import.component';
 import { AppEventService } from '../app-event.service';
 
@@ -72,6 +73,10 @@ export class UploadButtonComponent implements OnInit {
         componentType = UploadTextComponent;
         break;
       
+      case "asset":
+        componentType = UploadAssetComponent;
+        break;
+
       default:
         componentType = UploadFileComponent;
         break;
