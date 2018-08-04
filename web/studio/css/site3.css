@@ -1,0 +1,328 @@
+html {
+   	font-size: 16px;
+}
+
+@media (max-width: 768px) {
+	html {
+		font-size: 12px;
+	}
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+	html {
+		font-size: 14px;
+	}
+}
+
+body {
+	font-family: Roboto;
+	background-color: #FBFBFB;
+	max-width: 1440px;
+   	margin: 0 auto;
+}
+
+.brand-name {
+	font-family: Poppins;
+	font-weight: 500;
+	margin-left: 8px;
+}
+
+.navbar {
+	padding: 2rem 1rem;
+	border-bottom: solid 1px rgba(0,0,0,0.03);
+}
+
+.page-footer .navbar {
+	border-bottom: solid 1px rgba(0,0,0,0.1);
+}
+
+.page-footer, .main {
+	padding: 0 4rem;
+}
+
+.bg-white {
+	background-color: #FFFFFF;
+}
+	
+.page-footer .navbar {
+	padding: 3.5rem 0;
+}
+
+.page-footer .navbar .navbar-nav .nav-item:first-child .nav-link {
+	padding-left: 0;
+}
+
+@media (min-width: 1440px) {
+	.navbar {
+		padding: 2rem 4rem;
+	}
+	
+	.page-footer, .main {
+		padding: 0 7rem;
+	}	
+}
+
+.navbar-light .navbar-nav .nav-link {
+	padding: .75rem 1.5rem;
+    color: #353535;
+    font-weight: bold;
+}
+
+.nav-item .dropdown-menu {
+	left: 1.5rem;
+    background-color: #FBFBFB;
+    border: solid 1px rgba(0,0,0,0.03);
+    border-radius: 0;
+}
+
+.nav-item .dropdown-menu .dropdown-item:hover {
+	background-color: #0071CA;
+	color: #FFFFFF;
+}
+
+.nav-item .dropdown-menu .dropdown-item {
+	padding: .75rem 1.5rem;
+}
+
+a.nav-link {
+	white-space: nowrap;
+}
+
+.nav-btn {
+	background: #FFFFFF;
+	display: flex;
+   	align-items: center;
+   	justify-content: center;
+   	box-shadow: 0 3px 15px 0 rgba(0,0,0,0.05);
+}
+
+.circular-btn-3 {
+	width: 3rem;
+	height: 3rem;
+	border-radius: 50%;
+}
+
+.circular-btn-2 {
+	width: 2rem;
+	height: 2rem;
+	border-radius: 50%;
+}
+
+.round-btn-120-45 {
+	width: 7.5rem;
+	height: 3rem;
+	border-radius: 3rem;
+}
+
+.navbar-brand {
+	display: flex;
+   	align-items: center;
+}
+
+.navbar-brand .logo-img {
+	width: 2.25rem;
+	height: auto;
+}
+
+.blue-text {
+	color: #0071CA !important;
+}
+
+.bold-text {
+	font-weight: bold;
+}
+
+.blue-icon {
+	color: #3BACE5;
+}
+
+.footer-copyright {
+	color: #DDDDDD;
+	font-size: 0.875rem;
+}
+
+.grey-text-1 {
+	color: #9FA3A7;
+}
+
+.footer-bottom {
+	line-height: 2rem;
+}
+
+.btn {
+	font-size: 1rem;
+	font-weight: bold;
+	padding: 1.25rem 2.5rem;
+	border-radius: 0.25rem;
+}
+
+.blue-btn {
+	color: #FFFFFF;
+	background-color: #0071CA;
+}
+
+.blue-btn:hover {
+	color: #FFFFFF;
+	background-color: #3BACE5;
+}
+
+.white-btn {
+	color: #0071CA;
+	background-color: #FFFFFF;
+}
+
+.blue-btn:hover {
+	color: #FFFFFF;
+	background-color: #3BACE5;
+}
+
+.heading-4 {
+	font-size: 3.75rem;
+	font-family: Poppins;
+}
+
+.heading-3-0 {
+	font-size: 3rem;
+	font-family: Poppins;
+}
+
+.heading-3 {
+	font-size: 2.5rem;
+	font-family: Poppins;
+}
+
+.heading-2 {
+	font-size: 1.5rem;
+	font-family: Poppins;
+}
+
+.heading-0 {
+	font-size: .875rem;
+	font-family: Roboto;
+}
+
+.content-1 {
+	font-size: 1rem;
+	font-family: Roboto;
+}
+
+.content-2 {
+	font-size: 1.125rem;
+	font-family: Roboto;
+}
+
+.sub-heading-3 {
+	font-family: Roboto;
+	font-weight: 300;
+	font-size: 1.5rem;
+}
+
+.sub-heading-2 {
+	font-family: Roboto;
+	font-size: 1.125rem;
+}
+
+.box-shadow {
+	box-shadow: 0 2px 4px 0 rgba(0,0,0,0.08);
+}
+
+.white-section {
+	background-color: #FFFFFF;
+	box-shadow: 0 2px 4px 0 rgba(0,0,0,0.08);
+	padding-bottom: 14rem;
+}
+
+.sol-bg-img-section {
+	padding-bottom: 16rem;
+}
+
+.ebx-mb-2 {
+	margin-bottom: 2rem;
+}
+
+@media (max-width: 766px) {
+	.heading-4 {
+		font-size: 3rem;
+	}
+	
+	.heading-3 {
+		font-size: 2rem;
+	}
+	
+	.heading-3-0 {
+		font-size: 2rem;
+	}
+	
+	.heading-0 {
+		font-size: 1rem;
+	}
+	
+	.sub-heading-3 {
+		font-size: 1.375rem;
+	}
+	
+	.content-1, .content-2 {
+		font-size: 1.25rem;
+	}
+	
+	.white-section {
+		padding-bottom: 8rem;
+	}
+	
+	.sol-bg-img-section {
+		padding-bottom: 8rem;
+	}
+}
+
+
+.sales-enable {
+	background-image: url("../assets/sales-enable.png");
+	background-repeat: no-repeat;
+	background-size: 100%;
+	background-position: bottom;
+}
+
+.know-mgmt {
+	background-image: url("../assets/know-mgmt.png");
+	background-repeat: no-repeat;
+	background-size: 100%;
+	background-position: bottom;
+	margin-bottom: 6rem;
+}
+
+.feature-card {
+	min-height: 200px;
+}
+
+.dropup .dropdown-menu {
+    top: auto;
+    bottom: 100%;
+    margin-bottom: .125rem;
+}
+
+.big-image {
+	overflow: hidden;
+}
+
+.big-image img {
+	max-height: 600px;
+}
+
+@media (max-width: 576px) {
+	.big-image img {
+		max-height: 300px;
+	}	
+}
+
+@media (min-width: 577px) and (max-width: 990px) {
+	.big-image img {
+		max-height: 400px;
+	}	
+}
+
+.circular-img {
+	border-radius: 50%;
+	box-shadow: 0 2px 5px 0 rgba(0,0,0,0.1);
+	height: 184px;
+	width: 184px;	
+}

@@ -1,355 +1,73 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>enablix</title>
+	<title>Enablix</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="keywords" content="Sales Enablement,Sales Portal,Marketing Portal,Marketing Content Management">
 	<link rel="icon" type="image/png" href="/favicon.png">
-	<link href="./css/bootstrap.min.css" rel="stylesheet" type="text/css">
 	<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900" rel="stylesheet">
-	<style>
-@font-face {
-	font-family: Circular;
-	src: url("./fonts/CircularAirPro-Book.otf") format("opentype");
-}
-
-@font-face {
-	font-family: FaktPro-Light;
-	src: url("./fonts/FaktPro-Light.ttf") format("truetype");
-}
-
-@font-face {
-	font-family: FaktPro-Blond;
-	src: url("./fonts/FaktPro-Blond.otf") format("opentype");
-}
-
-@font-face {
-	font-family: FaktPro-Medium;
-	src: url("./fonts/FaktPro-Medium.ttf") format("truetype");
-}
-
-.header {
-	/** font-family: FaktPro-Blond;  **/
-	font-family: 'Roboto', sans-serif;
-	/** font-weight: bold; **/
-	padding: 2% 5% 2% 5%;
-	font-size: 1.3em;
-}
-
-.logo {
-	float: left;
-}
-
-.main {
-	padding-left: 5%;
-	padding-top: 5%;
-}
-
-.invite {
-	padding-top: 2%;
-	padding-right: 5%;
-	padding-bottom: 5%;
-}
-
-.invite .heading {
-	/** font-family: Circular;  **/
-	font-family: 'Roboto', sans-serif;
-	font-size: 3em;
-	font-weight: bold;
-	text-align: left;
-}
-
-.invite .caption {
-	font-size: 2em;
-	/** font-family: "FaktPro-Light";  **/
-	font-family: 'Roboto', sans-serif;
-	padding-top: 4%;
-	/** font-weight: bold; **/
-}
-
-.invite .appinfo {
-	font-size: 1em;
-	/** font-family: FaktPro-Blond;  **/
-	font-family: 'Roboto', sans-serif;
-	padding-top: 2%;
-	/** font-weight: bold; **/
-	opacity: 0.5;
-}
-
-.invite .appinfo.small {
-	font-size: 0.8em;
-}
-
-.invite .appinfo div {
-	padding-right: 0;
-}
-
-.invite .inviteform {
-	padding-top: 2%;
-	margin-right: 0;
-	margin-left: 0;
-	font-size: 1.25em;
-}
-
-.inviteform input {
-	border-radius: 4px;
-	background-color: #ffffff;
-	border: 1px solid #e3ebef;
-	padding: 0.75em 1em 0.5em 1em;
-	/** font-family: FaktPro-Blond;  **/
-	font-family: 'Roboto', sans-serif;
-	/** font-weight: bold; **/
-	width: 100%;
-}
-
-.inviteform .btn {
-	padding: 0.65em 0.5em 0.6em 0.5em;
-	background: #1f8aef;
-	/** font-family: FaktPro-Medium;   **/
-	font-size: 1.2em;
-	font-family: 'Roboto', sans-serif;
-	/* font-weight: bold; */
-	color: #fff;
-	border-radius: 4px;
-	border: 1px solid #1f8aef;
-	width: 100%;
-}
-
-.inviteform a.ctaBtnInverse {
-	background: #fff;
-	color: #1f8aef;
-}
-
-.inviteform .formcontrol {
-	padding-left: 0;
-	padding-right: 5px;
-	padding-top: 2%;
-}
-
-.preview {
-	overflow: hidden;
-	text-align: right;
-}
-
-.preview img {
-	max-height: 100vh;
-}
-
-.footer {
-	/** font-family: FaktPro-Blond;   **/
-	font-family: 'Roboto', sans-serif;
-	font-weight: bold;
-	font-size: 0.875em;
-	padding: 40px 5% 2% 5%;
-}
-
-.header a:hover {
-	text-decoration: none;
-}
-
-.header .right {
-	text-align: right;
-	margin-top: 5px;
-}
-
-.header .right a {
-	padding-left: 25px;
-}
-
-.testimonials {
+	<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,700,900" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	
-}
-
-.ttmtext {
-	/** font-family: FaktPro-Light;  **/
-	font-family: 'Roboto', sans-serif;
-	font-size: 1.5em;
-	/** font-weight: bold; **/
-}
-
-.ttmperson {
-	padding-top: 3%;
-}
-
-.ttmperson .ttmname {
-	/** font-family: FaktPro-Medium;   **/
-	font-family: 'Roboto', sans-serif;
-	font-size: 1em;
-	font-weight: bold;
-}
-
-.ttmperson .ttmdesignation {
-	/** font-family: FaktPro-Light;  **/
-	font-family: 'Roboto', sans-serif;
-	font-size: 1em;
-	/** font-weight: bold; **/
-	opacity: 0.5;
-}
-
-.ttmpersonimg img {
-	max-height: 2.6em;
-	border-radius: 50%;
-}
-
-a {
-	color: inherit;
-}
-
-.main .row, .footer.row {
-	margin-right: 0;
-}
-
-.main .row {
-	position: relative;
-}
-
-body {
-	font-size: 10px;
-}
-
-@media ( max-width :992px) {
-	.mobile-align {
-		text-align: center !important;
-	}
-	.ttmperson .ttmpersonimg {
-		padding-bottom: 8px;
-	}
-}
-
-@media ( min-width : 992px) {
-	.testimonials {
-		position: absolute;
-		top: 460px;
-		max-width: 600px;
-	}
-	body {
-		font-size: 14px;
-	}
-	.footer {
-		padding: 1% 5% 2% 5%;
-	}
-	.footer .right {
-		text-align: right;
-	}
-	.ttmperson {
-		padding-top: 4%;
-	}
-	.ttmperson .ttmpersonimg {
-		padding-right: 8px;
-	}
-	.preview img {
-		max-height: 728px;
-	}
-	.inviteform .emailinput {
-		width: 60%;
-	}
-	.inviteform .submitbtn {
-		width: 50%;
-	}
-	.ttmpersondetail {
-		text-align: left;
-	}
-	.ttmperson .ttmpersonimg {
-		float: left;
-	}
-}
-
-.centercontainer {
-	max-width: 1244px;
-	margin-left: auto;
-	margin-right: auto;
-}
-
-.logotext {
-	margin-left: -5px;
-}
-
-.error {
-	margin: 0.5em 0 0;
-	/** font-family: FaktPro-Blond; **/
-	font-family: 'Roboto', sans-serif;
-	font-size: 0.875em;
-	font-weight: 300;
-	text-align: left;
-	color: red;
-}
-
-.ttmpersondetail {
-	display: flex;
-	flex-direction: column;
-}
-</style>
-<script type="text/javascript" src="js/vendor/angular/angular.min.js"></script>
-<script type="text/javascript" src="js/vendor/angular/angular-ui-router.js"></script>
-<script type="text/javascript" src="js/vendor/angular/angular-messages.min.js"></script>
-
-<script type="text/javascript" src="js/ld.js"></script>
-
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+	
+	
+	<script type="text/javascript" src="js/vendor/angular/angular.min.js"></script>
+	<script type="text/javascript" src="js/vendor/angular/angular-ui-router.js"></script>
+	<script type="text/javascript" src="js/vendor/angular/angular-messages.min.js"></script>
+	
+	<link rel="stylesheet" href="./css/site3.css">
+	<script type="text/javascript" src="js/ld.js"></script>
 </head>
-<body ng-app="site" class="mobile-align">
-<div class="centercontainer">
-<div class="header"><!-- header -->
-	<div class="logo"><!-- Logo -->
-		<a href="https://www.enablix.com"><img src="./assets/logo.png"></img></a>
-		<span class="logotext">enablix</span>
-	</div>
-	<div class="right"><!-- top nav -->
-		<div><a href="https://enablix.wordpress.com/" target="_blank" onclick="handleOutboundLinkClicks(event)">Blog</a><a href="/app.html#/portal/home">Sign In</a></div>
-	</div>
-</div>
-<div class="main">
-	<div class="row">
-		<div class="invite col-md-6">
-			<div class="heading mobile-align">Stop content chaos</div>
-			<div class="caption">The easiest way for marketing to enable sales and get results</div>
-			<div class="inviteform row" ng-controller="InviteRequestController">
-				<form name="modalForm">
-					<!-- <div class="formcontrol col-md-7 emailinput">
-						<input  name="email" placeholder="Email address" ng-model="contactUsForm.email" ng-blur="modalForm.email.$valid" ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,5})$/" required>
-						<div ng-messages="modalForm.email.$error" ng-if="modalForm.email.$touched" role="alert">
-							<div ng-message="required" class="error">Please enter email address</div>
-							<div ng-message="pattern" class="error">Please enter a valid email address</div>      
-						</div>
-					</div> -->
-					<div class="formcontrol col-md-5 submitbtn"><a name="signupBtn" class="btn" href="/register.html">Start Free Trial</a><div class="appinfo small">No Credit Card required.</div></div>
-					<div class="formcontrol col-md-5 submitbtn"><a name="inviteBtn" class="btn ctaBtnInverse" href="/reqdemo.html">Request Demo</a></div>
-				</form>
-			</div>
-			<!-- <div class="appinfo row">
-				<div class="col-md-8">We are working with beta customers through our web platform.</div>
-				<div class="col-md-4"></div>
-			</div> -->
-		</div>
-		<div class="preview col-md-6">
-			<img src="./assets/asset.png"></img>
-		</div>
-		<div class="testimonials col-md-6">
-			<div class="testimonial">
-				<div class="ttmtext">"With Enablix, we have built a centralized and trusted source of knowledge for our sales team. Enablix is a critical component of our marketing platform."</div>
-				<div class="mobile-align">
-					<div class="ttmperson">
-						<div class="ttmpersonimg">
-							<img src="./assets/jaffrey.jpg"/>
-						</div>
-						<div class="ttmpersondetail">
-							<div class="ttmname">Jaffrey Ali</div>
-							<div class="ttmdesignation">VP, Products and Marketing, Haystax Technology</div>
-						</div>
-					</div>
+<body ng-app="site" >
+	<ng-include src="'partials/site-header-navbar.html'"></ng-include>
+
+	<div class="main">
+		<div class="row py-5">
+			<div class="col-md-12 py-2">
+				<div class="row d-flex justify-content-center heading-4">Stop content Chaos</div>
+				<div class="row py-4">
+					<div class="col-md-4"></div>
+					<div class="col-md-4 d-flex justify-content-center"><a class="btn blue-btn" href="/reqdemo.html">Request Free Demo</a></div>
+					<div class="col-md-4"></div>
 				</div>
 			</div>
 		</div>
+		<div class="row white-section sales-enable ebx-mb-2">
+			<div class="col-md-12">
+				<div class="row heading-3 blue-text px-5 pt-5 pb-2">Sales Enablement Platform &gt;</div>
+				<div class="row px-5 sub-heading-3 grey-text-1">Sales content hub to maximize revenue</div>
+			</div>
+		</div>
+		<div class="row white-section know-mgmt">
+			<div class="col-md-12">
+				<div class="row heading-3 blue-text px-5 pt-5 pb-2">Knowledge Management Portal &gt;</div>
+				<div class="row px-5 sub-heading-3 grey-text-1">Your team's important digital assets - all in one place</div>
+			</div>
+		</div>
 	</div>
-</div>
-<div class="footer">
-	<div class="left">All rights reserved to Enablix LLC &copy; 2018</div>
-	<div class="right"><a href="/terms" target="_blank">Terms and Conditions</a> | <a href="/privacy" target="_blank">Privacy Policy</a></div>
-</div>
-</div>
-<!-- scripts -->
-<script src="js/vendor/jquery/jquery-2.1.3.min.js"></script>
-<!--/ scripts -->
-<script>
+	
+	<div class="main bg-white">
+		<div class="col-md-12 py-5">
+			<div class="row px-3">
+				<div class="col-md-5 px-5 d-flex flex-column justify-content-center">
+					<div class="row sub-heading-3">Integrate your existing solutions and make them even better.</div>
+					<div class="row blue-text pt-3 pb-4"><div class="py-1 bold-text">Our Features</div><div class="nav-btn circular-btn-2 blue-text ml-3"><i class="fa fa-chevron-right"></i></div></div>
+				</div>
+				<div class="col-md-7"><img class="w-100" src="./assets/integrations.png"></img></div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Footer -->
+	<footer class="page-footer font-small indigo">
+		<ng-include src="'partials/site-footer-navbar.html'"></ng-include>
+    </footer>
+    <!-- Footer -->
+  <script>
     var gaProp = null;
     var intercomAppId = null;
 
@@ -390,10 +108,8 @@ body {
    		}
    		
 	}
-   	
-   
    		
-</script>
+  </script>
    
 </body>
 </html>
