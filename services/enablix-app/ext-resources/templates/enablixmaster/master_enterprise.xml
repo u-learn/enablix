@@ -2751,7 +2751,7 @@
         </container>
         <container refData="true" id="user" qualifiedId="user" label="Users" displayOrder="228">
             <contentItem type="bounded" id="role" qualifiedId="user.role" label="Business Roles">
-                <bounded>
+                <bounded multivalued="true">
                     <refList>
                         <datastore>
                             <storeId>businessRole</storeId>
@@ -2762,7 +2762,7 @@
                 </bounded>
             </contentItem>
             <contentItem type="bounded" id="region" qualifiedId="user.region" label="Region Focus">
-                <bounded>
+                <bounded multivalued="true">
                     <refList>
                         <datastore>
                             <storeId>regions</storeId>
@@ -2773,7 +2773,7 @@
                 </bounded>
             </contentItem>
             <contentItem type="bounded" id="solarea" qualifiedId="user.solarea" label="Solution Area Focus">
-                <bounded>
+                <bounded multivalued="true">
                     <refList>
                         <datastore>
                             <storeId>solutionArea</storeId>

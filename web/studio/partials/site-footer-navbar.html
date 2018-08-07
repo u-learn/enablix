@@ -2,28 +2,30 @@
   <div class="collapse navbar-collapse w-100">
     <ul class="navbar-nav w-100">
       <li class="nav-item">
-        <a class="nav-link" href="#">Features</a>
+        <a class="nav-link" href="./features.html">Features</a>
       </li>
       <li class="nav-item dropup" style="position: relative;">
         <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">Solutions</a>
         <div class="dropdown-menu">
-          <a class="dropdown-item" href="./sol-sep.html">Sales Enablement</a>
-          <a class="dropdown-item" href="./sol-rmp.html">Knowledge Management</a>
+          <a class="dropdown-item" href="./sol-kmp.html">Knowledge Portal</a>
+          <a class="dropdown-item" href="./sol-sep.html">Sales Portal</a>
         </div>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Pricing</a>
+        <a class="nav-link" href="./pricing.html">Pricing</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">About us</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Blog</a>
+        <a class="nav-link" href="https://enablix.wordpress.com/" target="_blank" onclick="handleOutboundLinkClicks(event)">Blog</a>
       </li>
     </ul>
   </div>  
 </nav>
+<script>
+	function scrollToTop() {
+      	window.scrollTo({left: 0, top: 0, behavior: 'smooth'});
+	}
+</script>
 <div class="footer-bottom d-flex flex-row justify-content-between py-4">
-  <div class="footer-copyright">&copy; 2018 Enablix</div>
-  <div class="grey-text-1 d-flex flex-row">Up to Top <div class="nav-btn circular-btn-2 blue-icon ml-3"><i class="fa fa-chevron-up"></i></div></div>
+  <div class="footer-copyright">&copy; 2018 Enablix | <a href="/terms" target="_blank">Terms and Conditions</a> | <a href="/privacy" target="_blank">Privacy</a></div>
+  <div class="grey-text-1 d-flex flex-row">Up to Top <div class="nav-btn circular-btn-2 blue-icon ml-3"><a class="fa fa-chevron-up" onclick="scrollToTop()"></a></div></div>
 </div>
