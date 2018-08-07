@@ -54,6 +54,7 @@ export class MemberDetailComponent implements OnInit {
       this.userProfile.businessProfile = new UserBusinessProfile();
       this.userProfile.businessProfile.attributes = {};
       this.userProfile.systemProfile = new UserSystemProfile();
+      this.userProfile.systemProfile.sendWeeklyDigest = true;
       
       this.headerLabel = "Add User";
       this.saveLabel = "Add";
@@ -91,10 +92,17 @@ export class MemberDetailComponent implements OnInit {
       this.roleOptions = [];
       
       this.allRoles.forEach(role => {
+        
         this.roleOptions.push({
           id: role.identity,
           label: role.roleName
         });
+
+        // default value for new user
+        if (this.newUserOper && role.identity == 'portalUser') {
+          this.userProfile.systemProfile.roles = [role];
+        }
+
       });
 
       this.updateRoleOptions();
@@ -124,10 +132,6 @@ export class MemberDetailComponent implements OnInit {
   }
 
   save() {
-
-    if (!this.form.valid) {
-      return;
-    }
 
     if (!this.userProfile.systemProfile) {
       this.userProfile.systemProfile = new UserSystemProfile();
@@ -173,6 +177,12 @@ export class MemberDetailComponent implements OnInit {
         this.form.form.controls.email.setErrors({userexist: true});
       }
     });
+  }
+
+  trimUserName() {
+    if (this.userProfile.name) {
+      this.userProfile.name = this.userProfile.name.trim();
+    }
   }
 
 }

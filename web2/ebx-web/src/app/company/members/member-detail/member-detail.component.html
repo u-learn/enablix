@@ -5,7 +5,7 @@
   </div>
   <div class="form-input compact" [hidden]="!editing">
     <div class="input-control">
-      <input type="text" name="name" id="name" [(ngModel)]="userProfile.name" required #name="ngModel" (blur)="userProfile.name = userProfile.name.trim()" placeholder="Name">
+      <input type="text" name="name" id="name" [(ngModel)]="userProfile.name" required #name="ngModel" (blur)="trimUserName()" placeholder="Name">
     </div>
     <div class="input-error" [hidden]="name.valid || name.pristine">
       Please enter a Name
