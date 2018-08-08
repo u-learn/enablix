@@ -75,11 +75,19 @@ export class UploadUrlComponent implements OnInit {
           .subscribe(
               result => {
                 
-                this.embedInfo = result;
+                if (result) {
+                  
+                  this.embedInfo = result;
 
-                this.thumbnailUrl = this.embedInfoService.getThumbnailUrl(this.embedInfo);
-                this.urlInfo.title = this.embedInfo.title;
-                this.urlInfo.thumbnailUrl = this.thumbnailUrl;
+                  this.thumbnailUrl = this.embedInfoService.getThumbnailUrl(this.embedInfo);
+                  this.urlInfo.title = this.embedInfo.title;
+
+                  this.urlInfo.thumbnailUrl = this.thumbnailUrl;
+                  
+                } else {
+                  this.thumbnailUrl = "/assets/images/icons/url-icon.svg";
+                  this.defaultImg = true;
+                }
 
                 this.loadingPreview = false;
                 this.previewContent = true;

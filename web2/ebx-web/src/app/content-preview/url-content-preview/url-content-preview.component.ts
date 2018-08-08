@@ -42,16 +42,27 @@ export class UrlContentPreviewComponent implements OnInit {
             .subscribe(
                 result => {
                   
-                  this.embedInfo = result;
-                  this.type = this.embedInfoService.getEmbedInfoType(this.embedInfo);
-                  this.iframeNotSupported = !this.embedInfo.iframeEmbeddable;
+                  if (result) {
+                    
+                    this.embedInfo = result;
+                    this.type = this.embedInfoService.getEmbedInfoType(this.embedInfo);
+                    this.iframeNotSupported = !this.embedInfo.iframeEmbeddable;
 
-                  if (this.type != 'rich' && this.type != 'link' 
-                      && this.embedInfo.oembed && this.embedInfo.oembed.html) {
-                    this.embedHtml = this.embedInfo.oembed.html;
+                    if (this.type != 'rich' && this.type != 'link' 
+                        && this.embedInfo.oembed && this.embedInfo.oembed.html) {
+                      this.embedHtml = this.embedInfo.oembed.html;
+
+                    } else {
+                      this.thumbnailUrl = this.embedInfoService.getThumbnailUrl(this.embedInfo);
+                    }
 
                   } else {
-                    this.thumbnailUrl = this.embedInfoService.getThumbnailUrl(this.embedInfo);
+
+                    if (this.url && this.url.toLowerCase().endsWith(".pdf")) {
+                      this.type = "pdf";
+                    } else {
+                      this.type = "unknown";
+                    }
                   }
                 },
                 error => {
