@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.HttpServerErrorException;
+import org.springframework.web.client.HttpStatusCodeException;
 
 import com.enablix.commons.util.json.JsonUtil;
 
@@ -44,9 +44,12 @@ public class GlobalExceptionHandler {
 				httpErrorCode = be.getHttpErrorCode();
 			}
 			
-		} else if (e instanceof HttpServerErrorException) {
-			
-			httpErrorCode = ((HttpServerErrorException) e).getStatusCode().value();
+		} else if (e instanceof HttpStatusCodeException) {
+
+			HttpStatusCodeException ce = (HttpStatusCodeException) e;
+			LOGGER.error("Nested error: {}", ce.getResponseBodyAsString());
+
+			httpErrorCode = ce.getStatusCode().value();
 		}
 		
 		if (errorJson == null) {

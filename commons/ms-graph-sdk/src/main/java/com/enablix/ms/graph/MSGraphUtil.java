@@ -11,7 +11,6 @@ public class MSGraphUtil {
 		
 		if (e instanceof HttpStatusCodeException) {
 			HttpStatusCodeException ce = (HttpStatusCodeException) e;
-			System.out.println(ce.getResponseBodyAsString());
 			LOGGER.error("Nested error: {}", ce.getResponseBodyAsString());
 		}
 		

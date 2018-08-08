@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.enablix.app.content.ContentDataManager;
@@ -103,6 +104,12 @@ public class DocumentController {
             
             return docMd;
             
+        } catch (HttpStatusCodeException e) {
+        	
+        	HttpStatusCodeException ce = (HttpStatusCodeException) e;
+			LOGGER.error("Nested error: {}", ce.getResponseBodyAsString());
+			throw e;
+			
         } catch (RuntimeException e) {
         	LOGGER.error("Error while uploading.", e);
             throw e;
