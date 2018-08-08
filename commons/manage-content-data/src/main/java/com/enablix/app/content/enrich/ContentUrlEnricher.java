@@ -75,9 +75,7 @@ public class ContentUrlEnricher implements ContentEnricher {
 				eUrl = EmbeddedUrl.unknownUrl(url);
 			}
 			
-			if (eUrl != null) {
-				embedUrls.add(eUrl);
-			}
+			embedUrls.add(eUrl != null ? eUrl : EmbeddedUrl.unknownUrl(url));
 			
 		});
 		

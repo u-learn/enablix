@@ -9,10 +9,10 @@ import java.util.regex.Pattern;
 
 public class TextLinkifier {
 
-	private static String LINK_PATTERN = "((ftp|https?)://|(www\\.)|(mailto:)?[A-Za-z0-9._%+-]+@)\\S*[^\\s.;,(){}<>]";
+	private static String LINK_PATTERN = "((ftp|https?)://|(www[1-9]*\\.)|(mailto:)?[A-Za-z0-9._%+-]+@)\\S*[^\\s.;,(){}<>]";
 	private static Pattern pattern = Pattern.compile(LINK_PATTERN, Pattern.DOTALL | Pattern.UNIX_LINES | Pattern.CASE_INSENSITIVE);
 	
-	private static String URL_PATTERN = "((https?)://|(www\\.)|(mailto:)?[A-Za-z0-9._%+-]+@)\\S*[^\\s.;,(){}<>]";
+	private static String URL_PATTERN = "((https?)://|(www[1-9]*\\.)|(mailto:)?[A-Za-z0-9._%+-]+@)\\S*[^\\s.;,(){}<>]";
 	private static Pattern urlpattern = Pattern.compile(URL_PATTERN, Pattern.DOTALL | Pattern.UNIX_LINES | Pattern.CASE_INSENSITIVE);
 	
 	private static DefaultLinkDecorator defaultLinkDecorator = new DefaultLinkDecorator("Click Here");
