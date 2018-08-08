@@ -193,6 +193,13 @@
 		    box-shadow: none;
 		}
 		
+		.trial-text {
+			font-family: Roboto;
+		    padding-top: 1.2em;
+		    font-weight: 400;
+		    color: #7d7d7d;
+		}
+		
 	</style>
 
 	<script type="text/javascript" src="js/vendor/angular/angular.min.js"></script>
@@ -210,7 +217,7 @@
 	</div>
 	<div class="main" ng-controller="InviteRequestController">
 		<div class="register">
-			<div class="heading mobile-align">Request a personalized demo</div>
+			<div class="heading mobile-align">Request an Enablix demo</div>
 			<div class="signupform row" >
 				<form name="modalForm">
 					<div class="formcontrol col-md-12" ng-if="error">
@@ -229,14 +236,17 @@
 						</div>
 					</div>
 					<div class="formcontrol col-md-12">
-						<input  name="email" placeholder="Email Address" ng-model="contactUsForm.email" ng-blur="modalForm.email.$valid" ng-pattern="/^([_a-z0-9\+])+(\.[_a-z0-9\+]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,5})$/" required>
+						<input  name="email" placeholder="Work Email" ng-model="contactUsForm.email" ng-blur="modalForm.email.$valid" ng-pattern="/^([_a-z0-9\+])+(\.[_a-z0-9\+]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,5})$/" required>
 						<div ng-messages="modalForm.email.$error" ng-if="modalForm.email.$touched" role="alert">
-							<div ng-message="required" class="error">Email address is required</div>
+							<div ng-message="required" class="error">Work Email is required</div>
 							<div ng-message="pattern" class="error">Please enter a valid email address</div>
 						</div>
 					</div>
 					<div class="formcontrol col-md-6"></div>
-					<div class="formcontrol col-md-6 submitbtn"><button name="signupBtn" class="btn" ng-disabled="modalForm.$invalid" ng-click="submitContactUs()">Request Demo</button></div>
+					<div class="formcontrol col-md-6 submitbtn">
+						<button name="signupBtn" class="btn" ng-disabled="modalForm.$invalid" ng-click="submitContactUs()">Request Demo</button>
+						<div class="trial-text">We offer free trials</div>
+					</div>
 				</form>
 			</div>
 		</div>
