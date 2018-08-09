@@ -8,12 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Component;
 
 import com.enablix.app.content.ContentDataManager;
 import com.enablix.app.content.pack.ContentPackDataResolver;
 import com.enablix.app.content.pack.repo.ContentPointerRepository;
 import com.enablix.app.template.service.TemplateManager;
+import com.enablix.commons.constants.AppConstants;
 import com.enablix.commons.util.collection.CollectionUtil;
 import com.enablix.commons.util.process.ProcessContext;
 import com.enablix.core.api.ContentDataRecord;
@@ -42,7 +44,7 @@ public class SelectedContentPackDataResolver implements ContentPackDataResolver<
 	public Page<ContentDataRecord> getData(ContentPack pack, DataView dataView, int pageNo, int pageSize) {
 		
 		MongoDataView mongoDataView = DataViewUtil.getMongoDataView(dataView);
-		PageRequest pageable = new PageRequest(pageNo, pageSize);
+		PageRequest pageable = new PageRequest(pageNo, pageSize, Direction.ASC, AppConstants.ORDER_ATTR_ID);
 		
 		Page<ContentDataRecord> dataPage = null;
 		

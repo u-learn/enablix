@@ -3,10 +3,10 @@ package com.enablix.core.domain.content.pack;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.enablix.core.api.ContentDataRef;
-import com.enablix.core.domain.DataSegmentAwareEntity;
+import com.enablix.core.domain.OrderAndDataSegmentAwareEntity;
 
 @Document(collection = "ebx_content_pointer")
-public class ContentPointer extends DataSegmentAwareEntity {
+public class ContentPointer extends OrderAndDataSegmentAwareEntity {
 
 	private String parentIdentity;
 	

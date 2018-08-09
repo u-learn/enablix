@@ -12,6 +12,7 @@ public class ProcessContext {
 	
 	private static final String LOG_TENANT_ID_KEY = "TENANT_ID";
 	private static final String LOG_PROCESS_ID_KEY = "PROCESS_ID";
+	private static final String LOG_USER_ID_KEY = "USER_ID";
 	
 	public static final ThreadLocal<ProcessContext> THREAD_LOCAL_PROCESS_CONTEXT = new ThreadLocal<ProcessContext>();
 
@@ -52,12 +53,17 @@ public class ProcessContext {
 			if (null != context.getTenantId()) {
 				MDC.put(LOG_TENANT_ID_KEY, context.getTenantId());
 			}
+			
+			if (null != context.getUserId()) {
+				MDC.put(LOG_USER_ID_KEY, context.getUserId());
+			}
 		}
 	}
 	
 	private static void postDestroy() {
 		MDC.put(LOG_PROCESS_ID_KEY, "");
 		MDC.put(LOG_TENANT_ID_KEY, "");
+		MDC.put(LOG_USER_ID_KEY, "");
 	}
 	
 	private String userId;
