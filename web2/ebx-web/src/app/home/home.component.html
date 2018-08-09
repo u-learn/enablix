@@ -16,7 +16,9 @@
       <ebx-ui-widget [widgetId]="wdgId"></ebx-ui-widget>
     </ng-container>
     <!-- <ebx-recent-content></ebx-recent-content> -->
-    <ebx-reco-content></ebx-reco-content>
+    <ng-container *ngIf="!hideRecommendations">
+      <ebx-reco-content></ebx-reco-content>
+    </ng-container>
     <ebx-dimensions></ebx-dimensions>  
   </div>
   <div class="sidebar" ng-click="navigateToRecentActivity()">

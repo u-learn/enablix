@@ -18,6 +18,7 @@ import { UserPreferenceService } from '../core/user-preference.service';
 export class HomeComponent implements OnInit {
 
   widgetIds: string[];
+  hideRecommendations = false;
 
   constructor(private alertService: AlertService, 
     private globalSearchCtrl: GlobalSearchControllerService,
@@ -35,9 +36,17 @@ export class HomeComponent implements OnInit {
     }
 
     var widgets = this.userPrefs.getPrefByKey('dashboard.widgets');
-    if (widgets && widgets.config && widgets.config.widgetIds) {
-      this.widgetIds = widgets.config.widgetIds;
+    if (widgets && widgets.config) {
+
+      if (widgets.config.widgetIds) {
+        this.widgetIds = widgets.config.widgetIds;
+      }
+
+      if (widgets.config.hideRecommendations) {
+        this.hideRecommendations = widgets.config.hideRecommendations;
+      }
     }
+
   }
 
   success(message: string) { 
