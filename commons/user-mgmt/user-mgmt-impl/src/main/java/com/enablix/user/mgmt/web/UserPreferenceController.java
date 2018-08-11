@@ -37,7 +37,8 @@ public class UserPreferenceController {
 		
 		String userId = ProcessContext.get().getUserId();
 		if (StringUtil.hasText(userId)) {
-			prefs = userPrefService.userApplicablePreferences(userId);
+			String clientId = ProcessContext.get().getClientId();
+			prefs = userPrefService.userApplicablePreferences(userId, clientId);
 		}
 		
 		return prefs;

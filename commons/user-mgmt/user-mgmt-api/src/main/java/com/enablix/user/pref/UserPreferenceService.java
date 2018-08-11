@@ -8,7 +8,7 @@ public interface UserPreferenceService {
 
 	Collection<UserPreference> getUserPreferences(String userId);
 	
-	Collection<UserPreference> userApplicablePreferences(String userId);
+	Collection<UserPreference> userApplicablePreferences(String userId, String clientId);
 
 	void saveUserPreference(UserPreference userPref);
 	

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.enablix.commons.constants.AppConstants;
+import com.enablix.commons.util.StringUtil;
 import com.enablix.core.domain.preference.UserPreference;
 import com.enablix.user.pref.UserPreferenceService;
 import com.enablix.user.pref.repo.UserPreferenceRepository;
@@ -27,9 +28,16 @@ public class UserPreferenceServiceImpl implements UserPreferenceService {
 	}
 
 	@Override
-	public Collection<UserPreference> userApplicablePreferences(String userId) {
+	public Collection<UserPreference> userApplicablePreferences(String userId, String clientId) {
+		
 		Collection<UserPreference> userPreferences = getUserPreferences(userId);
 		Collection<UserPreference> systemPreferences = getUserPreferences(AppConstants.SYSTEM_USER_ID);
+		
+		if (StringUtil.hasText(clientId)) {
+			Collection<UserPreference> clientPreference = getUserPreferences(clientId);
+			systemPreferences = merge(systemPreferences, clientPreference);
+		}
+		 
 		return merge(systemPreferences, userPreferences);
 	}
 	
