@@ -30,7 +30,7 @@ enablix.appSelectorApp.controller('AppSelectController',
 
 			var url = $window.location.href;
 			console.log(url);
-			$window.location.href = portal === "v2" ? url.replace('app.html', 'app2.html') : url.replace('app.html', 'app1.html');
+			$window.location.href = portal === "v2" ? url.replace('app.html', 'app2.html') : url.replace('app.html', 'app0.html');
 			
 		}).error(function(data, status) {
 			

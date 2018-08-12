@@ -95,7 +95,7 @@ enablix.studioApp.factory('StateUpdateService',
 	 									 + "/app2.html";
 	 			} else {
 	 				$window.location.href = $location.protocol() + "://" + $location.host() + ":" + $location.port() 
-					 + "/app1.html#/portal/home";
+					 + "/app0.html#/portal/home";
 	 			}
 	 		};
 	 		
@@ -426,7 +426,7 @@ enablix.studioApp.factory('StateUpdateService',
 	 				// Force to new app
 	 				_url = _url.replace("app1.html", "app2.html");
 	 			} else {
-	 				_url = _url.replace("app.html", "app1.html");
+	 				_url = _url.replace("app.html", "app0.html");
 	 			}
 	 			
 	 			// tenant specific url
