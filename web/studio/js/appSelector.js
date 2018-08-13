@@ -25,12 +25,18 @@ enablix.appSelectorApp.controller('AppSelectController',
 			
 		}).success(function(data) {
 			
-			console.log(data);
 			var portal = data.principal ? data.principal.portal : "v1";
 
 			var url = $window.location.href;
-			console.log(url);
-			$window.location.href = portal === "v2" ? url.replace('app.html', 'app2.html') : url.replace('app.html', 'app0.html');
+
+			if (portal === "v2") {
+				url = url.replace('app.html', 'app2.html');
+				url = url.replace('app1.html', 'app2.html')
+			} else {
+				url = url.replace('app.html', 'app0.html')
+			}
+			
+			$window.location.href = url;
 			
 		}).error(function(data, status) {
 			
