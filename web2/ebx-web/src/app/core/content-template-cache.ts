@@ -13,6 +13,7 @@ export class ContentTemplateCache {
   concreteContainers: Container[] = [];
   bizContentContainers: Container[] = [];
   bizDimensionContainers: Container[] = [];
+  refDataContainers: Container[] = [];
 
   contentStackQIdMap = {};
 
@@ -56,12 +57,13 @@ export class ContentTemplateCache {
         } else if (this.isBusinessDimension(container)) {
           this.bizDimensionContainers.push(container);
           if (!container.color) {
-            console.log("Getting color: " + container.qualifiedId + ", index: " + this.index);
             container.color = this.getContainerColor(this.index++);
           }
         }
 
-        
+        if (container.refData && container.qualifiedId != 'user') {
+          this.refDataContainers.push(container);
+        }
 
         if (!container.color) {
           container.color = Constants.defaultTypeColor;
@@ -196,6 +198,19 @@ export class ContentTemplateCache {
           labelFieldId = labelQId;
         }
       } 
+    }
+
+    // if not found, try to find the first text attribute of container
+    if (!labelFieldId) {
+      var container = this.getContainerByQId(containerQId);
+      if (container) {
+        for (var i = 0; i < container.contentItem.length; i++) {
+          if (container.contentItem[i].type == 'TEXT') {
+            labelFieldId = container.contentItem[i].id;
+            break;
+          }
+        }
+      }
     }
     
     return labelFieldId;

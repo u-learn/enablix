@@ -2,7 +2,7 @@
   <div class="active-slide" *ngFor="let s of slides" [hidden]="s.id !== activeSlide.id">
     <img class="slide" [src]="s.url" />
   </div>
-  <div class="all-slides">
+  <div class="all-slides" [hidden]="slides && slides.length == 1">
     <div class="mini-slide" [class.active]="s.id == activeSlide.id" *ngFor="let s of slides; let indx = index" (click)="selectSlide(indx)" >
       <img class="slide-thumbnail" [src]="s.url" />
       <div class="overlay"></div>

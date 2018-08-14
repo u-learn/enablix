@@ -1,5 +1,6 @@
 package com.enablix.core.domain.config;
 
+import com.enablix.commons.util.beans.BeanUtil;
 import com.enablix.core.domain.BaseDocumentEntity;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -12,8 +13,10 @@ public class EmailConfiguration extends BaseDocumentEntity{
 	private String smtp;	
 	private String port;
 	private String personalName;
+	private String replyTo;
 
-	public EmailConfiguration(String emailId, String smtpUsername, String password, String smtp, String port, String personalName) {
+	public EmailConfiguration(String emailId, String smtpUsername, String password, 
+			String smtp, String port, String personalName, String replyTo) {
 		super();
 		this.emailId = emailId;
 		this.smtpUsername = smtpUsername;
@@ -21,6 +24,7 @@ public class EmailConfiguration extends BaseDocumentEntity{
 		this.smtp = smtp;
 		this.port = port;
 		this.personalName = personalName;
+		this.replyTo = replyTo;
 	}
 	
 	public EmailConfiguration() {
@@ -76,15 +80,28 @@ public class EmailConfiguration extends BaseDocumentEntity{
 		this.personalName = personalName;
 	}
 
+	public String getReplyTo() {
+		return replyTo;
+	}
+
+	public void setReplyTo(String replyTo) {
+		this.replyTo = replyTo;
+	}
+
+	
 	@Override
 	public String toString() {
 		return "EmailConfiguration [emailId=" + emailId + ", smtpUsername=" + smtpUsername + ", password=" + password
-				+ ", smtp=" + smtp + ", port=" + port + ", personalName=" + personalName + "]";
+				+ ", smtp=" + smtp + ", port=" + port + ", personalName=" + personalName + ", replyTo=" + replyTo + "]";
 	}
 
 	public static EmailConfiguration createCopy(EmailConfiguration config) {
 		return new EmailConfiguration(config.getEmailId(), config.getSmtpUsername(), config.getPassword(), 
-				config.getSmtp(), config.getPort(), config.getPersonalName());
+				config.getSmtp(), config.getPort(), config.getPersonalName(), config.getReplyTo());
+	}
+
+	public static void merge(EmailConfiguration source, EmailConfiguration target) {
+		BeanUtil.copyNonNullProperties(source, target);
 	}
 	
 }

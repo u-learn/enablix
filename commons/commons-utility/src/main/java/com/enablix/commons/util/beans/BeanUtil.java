@@ -1,13 +1,16 @@
 package com.enablix.commons.util.beans;
 
+import java.beans.FeatureDescriptor;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeanWrapper;
+import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.beans.PropertyAccessorFactory;
 
 import com.enablix.commons.constants.ContentDataConstants;
@@ -63,6 +66,21 @@ public class BeanUtil {
 		
 		BeanUtils.copyProperties(map, newInstance, beanType);
 		return newInstance;
+	}
+	
+	public static void copyNonNullProperties(Object source, Object target) {
+		String[] nullPropertyNames = getNullPropertyNames(source);
+	    BeanUtils.copyProperties(source, target, nullPropertyNames);
+	}
+	
+	public static String[] getNullPropertyNames(Object source) {
+	    
+		BeanWrapper wrappedSource = new BeanWrapperImpl(source);
+	    
+		return Stream.of(wrappedSource.getPropertyDescriptors())
+	            .map(FeatureDescriptor::getName)
+	            .filter(propertyName -> wrappedSource.getPropertyValue(propertyName) == null)
+	            .toArray(String[]::new);
 	}
 		
 }

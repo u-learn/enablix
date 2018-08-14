@@ -19,6 +19,7 @@ export class EntityPillComponent implements OnInit {
   @Input() removable: boolean = false;
 
   @Output() onRemove = new EventEmitter<void>();
+  @Output() onClick = new EventEmitter<void>();
 
   color: string;
   isBizContent: boolean = false;
@@ -45,6 +46,11 @@ export class EntityPillComponent implements OnInit {
     }
   }
 
+  onPillClick() {
+    this.onClick.emit();
+    this.navToContentDetail();
+  }
+
   navToContentDetail() {
     if (this.navigable) {
       if (this.isBizContent) {
@@ -53,6 +59,7 @@ export class EntityPillComponent implements OnInit {
         this.navService.goToDimDetail(this.containerQId, this.identity);
       }
     }
+    
   }
 
   remove() {

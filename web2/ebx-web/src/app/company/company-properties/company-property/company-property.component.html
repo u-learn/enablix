@@ -1,0 +1,20 @@
+<div class="sub-section-content">
+  <div>
+    <div class="type-header">
+      <h3>{{container.label}}</h3>
+    </div>
+    <div class="content-row flex-row" *ngIf="propData">
+      <div class="pills-container">
+        <div *ngFor="let rec of propData.content">
+          <ebx-entity-pill [containerQId]="container.qualifiedId" [label]="rec[container.titleItemId]" [identity]="rec.identity" [navigable]="false" [removable]="true" (onRemove)="deletePrompt(rec)" (onClick)="editPropertyValue(rec)"></ebx-entity-pill>
+        </div>
+        <div class="dashboard-buttons small content-tags" >
+            <div class="action-btn with-border with-text" (click)="addNewPropValue()">
+                <div class="icon small plus"></div>
+                <p class="show-me">Add</p>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

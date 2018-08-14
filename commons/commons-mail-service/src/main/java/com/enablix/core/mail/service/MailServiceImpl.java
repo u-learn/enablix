@@ -18,11 +18,9 @@ import com.enablix.commons.util.DefaultAESParameterProvider;
 import com.enablix.commons.util.EncryptionUtil;
 import com.enablix.commons.util.StringUtil;
 import com.enablix.commons.util.concurrent.Events;
-import com.enablix.commons.util.process.ProcessContext;
 import com.enablix.core.domain.config.EmailConfiguration;
 import com.enablix.core.domain.config.SMTPConfiguration;
 import com.enablix.core.domain.config.TemplateConfiguration;
-import com.enablix.core.domain.tenant.Tenant;
 import com.enablix.core.domain.user.User;
 import com.enablix.core.mail.entities.MailEvent;
 import com.enablix.core.mail.entities.ShareEmailClientDtls;
@@ -33,7 +31,6 @@ import com.enablix.core.mongo.config.repo.EmailConfigRepo;
 import com.enablix.core.mongo.config.repo.SMTPConfigRepo;
 import com.enablix.core.mongo.config.repo.TemplateConfigRepo;
 import com.enablix.core.mq.EventSubscription;
-import com.enablix.core.system.repo.TenantRepository;
 
 @Service
 public class MailServiceImpl implements MailService {
@@ -42,6 +39,9 @@ public class MailServiceImpl implements MailService {
 
 	@Value("${from.mail.address}")
 	private String emailId;
+	
+	@Value("${from.mail.personalName:}")
+	private String fromPersonalName;
 
 	@Value("${smtp.default.username}")
 	private String smtpUser;
@@ -73,9 +73,6 @@ public class MailServiceImpl implements MailService {
 	@Autowired
 	private TemplateConfigRepo templateConfigRepo;
 	
-	@Autowired
-	private TenantRepository tenantRepo;
-
 	// need to move scenario builders into a factory
 	@Autowired
 	private NewUserScenarioInputBuilder newUserScenarioInputBuilder;
@@ -94,7 +91,10 @@ public class MailServiceImpl implements MailService {
 										password, new DefaultAESParameterProvider()));
 		defaultEmailConfig.setSmtp(server);
 		defaultEmailConfig.setPort(port);
-		defaultEmailConfig.setPersonalName(emailId);
+		
+		if (StringUtil.isEmpty(fromPersonalName)) {
+			defaultEmailConfig.setPersonalName(emailId);
+		}
 	}
 	
 	@EventSubscription(eventName = Events.SEND_EMAIL)
@@ -237,24 +237,15 @@ public class MailServiceImpl implements MailService {
 		
 		if (emailConfig == null) {
 			emailConfig = EmailConfiguration.createCopy(defaultEmailConfig);
-		}
-		
-		if (StringUtil.isEmpty(emailConfig.getPersonalName())) {
-			emailConfig.setPersonalName(getTenantName());
+		} else {
+			EmailConfiguration.merge(defaultEmailConfig, emailConfig);
 		}
 		
 		return emailConfig;
 	}
 	
-	private String getTenantName() {
-		Tenant tenant = tenantRepo.findByTenantId(ProcessContext.get().getTenantId());
-		return tenant.getName();
-	}
-	
 	@Override
 	public EmailConfiguration addEmailConfiguration(EmailConfiguration emailConfiguration) {
-		Tenant tenant = tenantRepo.findByTenantId(ProcessContext.get().getTenantId());
-		emailConfiguration.setPersonalName(tenant.getName());
 		return emailConfigRepo.save(emailConfiguration);
 	}
 

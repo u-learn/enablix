@@ -46,6 +46,7 @@ import { ContentEngagementComponent } from '../reports/content-engagement/conten
 import { RecentContentListComponent } from '../recent-content/recent-content-list/recent-content-list.component';
 import { MyaccountComponent } from '../myaccount/myaccount.component';
 import { ContentAttributionComponent } from '../reports/content-attribution/content-attribution.component';
+import { CompanyPropertiesComponent } from '../company/company-properties/company-properties.component';
 
 const routes: Routes = [
   {
@@ -193,6 +194,10 @@ const routes: Routes = [
             {
               path: 'integrations',
               component: IntegrationsComponent
+            },
+            {
+              path: 'props',
+              component: CompanyPropertiesComponent
             },
             {
               path: 'cttemplate/dim',

@@ -14,5 +14,6 @@
   	<module>word-pdf-converter</module>
   	<module>pdf-image-converter</module>
   	<module>doc-converter-impl</module>
+  	<module>image-preview-converter</module>
   </modules>
 </project>

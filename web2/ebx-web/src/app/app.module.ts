@@ -106,6 +106,9 @@ import { SlackShareButtonComponent } from './content-action/slack-share-button/s
 import { SlackSharePopupComponent } from './content-action/slack-share-button/slack-share-popup/slack-share-popup.component';
 import { MyProfileComponent } from './myaccount/my-profile/my-profile.component';
 import { MySlackIntegrationComponent } from './myaccount/my-slack-integration/my-slack-integration.component';
+import { CompanyPropertiesComponent } from './company/company-properties/company-properties.component';
+import { CompanyPropertyComponent } from './company/company-properties/company-property/company-property.component';
+import { EditCompanyPropValueComponent } from './company/company-properties/company-property/edit-company-prop-value/edit-company-prop-value.component';
 
 @NgModule({
   declarations: [
@@ -185,7 +188,10 @@ import { MySlackIntegrationComponent } from './myaccount/my-slack-integration/my
     SlackShareButtonComponent,
     SlackSharePopupComponent,
     MyProfileComponent,
-    MySlackIntegrationComponent
+    MySlackIntegrationComponent,
+    CompanyPropertiesComponent,
+    CompanyPropertyComponent,
+    EditCompanyPropValueComponent
   ],
   imports: [
     BrowserModule,
@@ -231,7 +237,8 @@ import { MySlackIntegrationComponent } from './myaccount/my-slack-integration/my
     EmailSharePopupComponent,
     ContentBrowserComponent,
     BizContentComponent,
-    SlackSharePopupComponent
+    SlackSharePopupComponent,
+    EditCompanyPropValueComponent
   ],
   bootstrap: [AppComponent]
 })

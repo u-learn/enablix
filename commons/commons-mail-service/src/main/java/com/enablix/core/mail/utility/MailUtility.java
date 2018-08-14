@@ -2,14 +2,15 @@ package com.enablix.core.mail.utility;
 
 import java.util.Properties;
 
+import javax.mail.Address;
 import javax.mail.Authenticator;
 import javax.mail.Message;
+import javax.mail.Message.RecipientType;
 import javax.mail.MessagingException;
 import javax.mail.Multipart;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
-import javax.mail.Message.RecipientType;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
@@ -70,6 +71,14 @@ public class MailUtility {
 
             if (StringUtil.hasText(bcc)) {
             	msg.addRecipient(RecipientType.BCC, new InternetAddress(bcc));
+            }
+            
+            String replyTo = emailConfiguration.getReplyTo();
+            
+            if (StringUtil.hasText(replyTo)) {
+            	Address[] replyToAddresses = new Address[1];
+            	replyToAddresses[0] = new InternetAddress(replyTo);
+            	msg.setReplyTo(replyToAddresses);
             }
             
             msg.setSubject(subject);

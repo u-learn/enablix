@@ -3,11 +3,18 @@ package com.enablix.commons.util;
 import java.awt.image.BufferedImage;
 import java.io.Closeable;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.imageio.ImageIO;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import net.coobird.thumbnailator.Thumbnails;
 
 public class IOUtil {
 
@@ -42,6 +49,33 @@ public class IOUtil {
 		imageProp.put("height", height);
 		
 		return imageProp;
+	}
+	
+	public static Map<String, Object> resizeImage(InputStream imageStream, int maxWidth, 
+			String outputFormat, OutputStream imageOutStream) throws IOException {
+		
+		BufferedImage inImage = ImageIO.read(imageStream);
+		
+		int imgWidth = inImage.getWidth();
+		int imgHeight = inImage.getHeight();
+		
+		if (imgWidth > maxWidth) {
+			
+			int scaledWidth = maxWidth;
+	    	double percent = ((double) scaledWidth) / imgWidth;
+	        int scaledHeight = (int) (inImage.getHeight() * percent);
+
+	        Thumbnails.of(inImage).outputFormat(outputFormat)
+				.size(scaledWidth, scaledHeight).toOutputStream(imageOutStream);
+	        
+	        imgWidth = scaledWidth;
+	        imgHeight = scaledHeight;
+	        
+		} else {
+			ImageIO.write(inImage, outputFormat, imageOutStream);
+		}
+		
+        return getImageProperties(imgWidth, imgHeight);
 	}
 	
 }

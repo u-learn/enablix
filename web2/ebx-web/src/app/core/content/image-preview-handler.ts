@@ -5,7 +5,7 @@ import { ContentPreviewHandler } from './content-preview-handler';
 export class ImagePreviewHandler implements ContentPreviewHandler {
   
   smallThumbnailUrl(dataRecord: any) : string {
-    return environment.baseAPIUrl + "/doc/preview/" + dataRecord.__decoration.__docMetadata.identity;
+    return environment.baseAPIUrl + "/doc/previewn/" + dataRecord.__decoration.__docMetadata.identity;
   }
 
   largeThumbnailUrl(dataRecord: any) : string {
@@ -13,9 +13,11 @@ export class ImagePreviewHandler implements ContentPreviewHandler {
   }
 
   canHandle(dataRecord: any) : boolean {
-    return dataRecord.__decoration && dataRecord.__decoration.__docMetadata 
+    return dataRecord.__decoration && dataRecord.__decoration.__docMetadata
+            && dataRecord.__decoration.__docMetadata.previewStatus != 'AVAILABLE' 
             && dataRecord.__decoration.__docMetadata.contentType
-            && dataRecord.__decoration.__docMetadata.contentType.indexOf("image") >= 0;
+            && dataRecord.__decoration.__docMetadata.contentType.indexOf("image") >= 0
+            && dataRecord.__decoration.__docMetadata.contentType.indexOf("tiff") == -1;
   }
 
   type() : string {
@@ -23,7 +25,7 @@ export class ImagePreviewHandler implements ContentPreviewHandler {
   }
 
   getImageUrl(dataRecord: any) {
-    return environment.baseAPIUrl + "/doc/preview/" + dataRecord.__decoration.__docMetadata.identity + "?atChannel=WEB";
+    return environment.baseAPIUrl + "/doc/previewn/" + dataRecord.__decoration.__docMetadata.identity;
   }
 
 }

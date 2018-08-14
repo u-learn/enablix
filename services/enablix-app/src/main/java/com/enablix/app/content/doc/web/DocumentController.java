@@ -209,7 +209,7 @@ public class DocumentController {
     	IDocument part = previewService.getPreviewDataPart(docIdentity, elementIndx);
     	
     	if (part != null) {
-            sendDownloadResponse(response, part);
+            sendDownloadResponse(response, part, true);
     	} else {
     		response.sendError(HttpServletResponse.SC_NOT_FOUND);
     	}
@@ -224,7 +224,7 @@ public class DocumentController {
        	IDocument part = previewService.getDocSmallThumbnail(docIdentity);
        	
        	if (part != null) {
-               sendDownloadResponse(response, part);
+               sendDownloadResponse(response, part, true);
        	} else {
        		response.sendError(HttpServletResponse.SC_NOT_FOUND);
        	}
@@ -261,7 +261,7 @@ public class DocumentController {
 
     				if (part != null) {
         				
-    					sendDownloadResponse(response, part);
+    					sendDownloadResponse(response, part, true);
     					
         			} else if (ContentDataUtil.isDocContentTypeImage(docRecord)) {
 
@@ -309,14 +309,14 @@ public class DocumentController {
 		
 			IDocument part = previewService.getDocSmallThumbnail(docIdentity);
 			if (part != null) {
-				sendDownloadResponse(response, part);
+				sendDownloadResponse(response, part, true);
 				iconFound = true;
 			}
 			
 			if (!iconFound) {
 				Document<DocumentMetadata> doc = docManager.load(docIdentity);
 				if (doc != null && ContentDataUtil.isImageContentType(doc.getMetadata().getContentType())) {
-					sendDownloadResponse(response, doc);
+					sendDownloadResponse(response, doc, true);
 					iconFound = true;
 				}
 			}
@@ -359,7 +359,7 @@ public class DocumentController {
        	IDocument part = previewService.getDocLargeThumbnail(docIdentity);
        	
        	if (part != null) {
-               sendDownloadResponse(response, part);
+               sendDownloadResponse(response, part, true);
        	} else {
        		response.sendError(HttpServletResponse.SC_NOT_FOUND);
        	}
@@ -382,6 +382,18 @@ public class DocumentController {
     			atContextId, atContextTerm, ActivityType.DOC_DOWNLOAD);
     }
     
+    @RequestMapping(value = "/previewn/{docIdentity}", method = {RequestMethod.GET, RequestMethod.HEAD})
+    public void doPreviewNew(HttpServletRequest request,
+            HttpServletResponse response, @PathVariable String docIdentity, 
+            @RequestParam(required=false) String atChannel,
+            @RequestParam(required=false) String atContext,
+            @RequestParam(required=false) String atContextId,
+            @RequestParam(required=false) String atContextTerm) throws IOException {
+    	
+    	Document<DocumentMetadata> doc = docManager.load(docIdentity);
+        sendDownloadResponse(response, doc, true);
+    }
+    
     @RequestMapping(value = "/preview/{docIdentity}", method = {RequestMethod.GET, RequestMethod.HEAD})
     public void doPreview(HttpServletRequest request,
             HttpServletResponse response, @PathVariable String docIdentity, 
@@ -400,7 +412,7 @@ public class DocumentController {
  
     	Document<DocumentMetadata> doc = docManager.load(docIdentity);
     	
-        sendDownloadResponse(response, doc);
+        sendDownloadResponse(response, doc, false);
         
         if (!request.getMethod().equals(RequestMethod.HEAD.toString())) {
         	// Audit download activity
@@ -410,7 +422,7 @@ public class DocumentController {
  
     }
 
-	private void sendDownloadResponse(HttpServletResponse response, IDocument doc) throws IOException {
+	private void sendDownloadResponse(HttpServletResponse response, IDocument doc, boolean showInline) throws IOException {
 		
 		// get MIME type of the file
         String mimeType = doc.getDocInfo().getContentType(); //context.getMimeType(fullPath);
@@ -427,11 +439,13 @@ public class DocumentController {
         }
  
         // set headers for the response
-        String headerKey = "Content-Disposition";
-        String headerValue = String.format("attachment; filename=\"%s\"",
-                doc.getDocInfo().getName());
-        response.setHeader(headerKey, headerValue);
- 
+        if (!showInline) {
+	        String headerKey = "Content-Disposition";
+	        String headerValue = String.format("attachment; filename=\"%s\"",
+	                doc.getDocInfo().getName());
+	        response.setHeader(headerKey, headerValue);
+        }
+        
         // get output stream of the response
         OutputStream outStream = response.getOutputStream();
  
