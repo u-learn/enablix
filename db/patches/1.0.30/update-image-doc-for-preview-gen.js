@@ -3,7 +3,7 @@ Update the previewStatus of image files for preview generation
 
 Execute: use mongo utility to run the script
 
-mongo localhost:27017/admin -u sociorich_app -p <password> <path>/<script-file-name>
+mongo localhost:27017/admin -u enablix_app -p <password> <path>/<script-file-name>
 
 ****************************************************************/
 

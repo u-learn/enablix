@@ -78,7 +78,7 @@
 		<container id="article" label="Articles" singularLabel="Article" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text" searchBoost="7"/>
 			<contentItem id="file" label="File" type="doc"/>			
-			<contentItem id="url" label="URL" type="text"/>
+			<contentItem id="url" label="URL" type="url"/>
 			<contentItem id="desc" label="Description" type="richText" searchBoost="2"/>
 			<contentItem id="solutions" label="Solutions" type="bounded" searchBoost="6">
 				<bounded multivalued="true">
@@ -128,7 +128,7 @@
 		<container id="battlecard" label="Battle Cards" singularLabel="Battle Card" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="file" label="File" type="doc"/>
-			<contentItem id="url" label="URL" type="text"/>			
+			<contentItem id="url" label="URL" type="url"/>			
 			<contentItem id="desc" label="Description" type="richText"/>
 			<contentItem id="solutions" label="Solutions" type="bounded" searchBoost="6">
 				<bounded multivalued="true">
@@ -177,7 +177,7 @@
 		<container id="blog" label="Blogs" singularLabel="Blog" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="file" label="File" type="doc"/>			
-			<contentItem id="url" label="URL" type="text"/>
+			<contentItem id="url" label="URL" type="url"/>
 			<contentItem id="desc" label="Description" type="richText" searchBoost="2"/>			
 			<contentItem id="solutions" label="Solutions" type="bounded" searchBoost="6">
 				<bounded multivalued="true">
@@ -226,7 +226,7 @@
 		<container id="casestudy" label="Case Studies" singularLabel="Case Study" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="file" label="File" type="doc"/>
-			<contentItem id="url" label="URL" type="text"/>			
+			<contentItem id="url" label="URL" type="url"/>			
 			<contentItem id="desc" label="Description" type="richText" searchBoost="2"/>
 			<contentItem id="solutions" label="Solutions" type="bounded" searchBoost="6">
 				<bounded multivalued="true">
@@ -276,7 +276,7 @@
 		<container id="datasheet" label="Data Sheets" singularLabel="Data Sheet" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="file" label="File" type="doc"/>
-			<contentItem id="url" label="URL" type="text"/>	
+			<contentItem id="url" label="URL" type="url"/>	
 			<contentItem id="desc" label="Description" type="richText" searchBoost="2"/>					
 			<contentItem id="solutions" label="Solutions" type="bounded" searchBoost="6">
 				<bounded multivalued="true">
@@ -419,7 +419,7 @@
 		<container id="image" label="Images" singularLabel="Image" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="file" label="File" type="doc"/>
-			<contentItem id="url" label="URL" type="text"/>			
+			<contentItem id="url" label="URL" type="url"/>			
 			<contentItem id="desc" label="Description" type="richText"/>
 			<contentItem id="solutions" label="Solutions" type="bounded" searchBoost="6">
 				<bounded multivalued="true">
@@ -516,7 +516,7 @@
 		<container id="press" label="Press Releases" singularLabel="Press Release" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text" searchBoost="7"/>
 			<contentItem id="file" label="File" type="doc"/>			
-			<contentItem id="url" label="URL" type="text"/>
+			<contentItem id="url" label="URL" type="url"/>
 			<contentItem id="desc" label="Description" type="richText" searchBoost="2"/>						
 			<contentItem id="solutions" label="Solutions" type="bounded" searchBoost="6">
 				<bounded multivalued="true">
@@ -566,7 +566,7 @@
 		<container id="presentation" label="Presentations" singularLabel="Presentation" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text" searchBoost="7"/>
 			<contentItem id="file" label="File" type="doc"/>
-			<contentItem id="url" label="URL" type="text"/>			
+			<contentItem id="url" label="URL" type="url"/>			
 			<contentItem id="desc" label="Description" type="richText" searchBoost="2"/>
 			<contentItem id="solutions" label="Solutions" type="bounded" searchBoost="6">
 				<bounded multivalued="true">
@@ -616,7 +616,7 @@
 		<container id="proposal" label="Proposals" singularLabel="Proposal" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="file" label="File" type="doc"/>	
-			<contentItem id="url" label="URL" type="text"/>								
+			<contentItem id="url" label="URL" type="url"/>								
 			<contentItem id="desc" label="Description" type="richText" searchBoost="2"/>
 			<contentItem id="solutions" label="Solutions" type="bounded" searchBoost="6">
 				<bounded multivalued="true">
@@ -665,7 +665,7 @@
 		<container id="video" label="Videos" singularLabel="Video" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="file" label="File" type="doc"/>	
-			<contentItem id="url" label="URL" type="text"/>
+			<contentItem id="url" label="URL" type="url"/>
 			<contentItem id="desc" label="Description" type="richText"/>
 			<contentItem id="solutions" label="Solutions" type="bounded" searchBoost="6">
 				<bounded multivalued="true">
@@ -714,7 +714,7 @@
 		<container id="whitepaper" label="White Papers" singularLabel="White Paper" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="file" label="File" type="doc"/>
-			<contentItem id="url" label="URL" type="text"/>
+			<contentItem id="url" label="URL" type="url"/>
 			<contentItem id="desc" label="Description" type="richText" searchBoost="2"/>
 			<contentItem id="solutions" label="Solutions" type="bounded" searchBoost="6">
 				<bounded multivalued="true">
@@ -764,7 +764,7 @@
 		<container id="content" label="Other Content" businessCategory="BUSINESS_CONTENT">
 			<contentItem id="title" label="Title" type="text"/>
 			<contentItem id="file" label="File" type="doc"/>
-			<contentItem id="url" label="URL" type="text"/>			
+			<contentItem id="url" label="URL" type="url"/>			
 			<contentItem id="desc" label="Description" type="richText"/>
 			<contentItem id="solutions" label="Solutions" type="bounded" searchBoost="6">
 				<bounded multivalued="true">

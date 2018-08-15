@@ -235,13 +235,13 @@ public class MailServiceImpl implements MailService {
 			emailConfig = getEmailConfiguration();
 		}
 		
-		if (emailConfig == null) {
-			emailConfig = EmailConfiguration.createCopy(defaultEmailConfig);
-		} else {
-			EmailConfiguration.merge(defaultEmailConfig, emailConfig);
+		EmailConfiguration defaultCopy = EmailConfiguration.createCopy(defaultEmailConfig);
+		
+		if (emailConfig != null) {
+			EmailConfiguration.merge(emailConfig, defaultCopy);
 		}
 		
-		return emailConfig;
+		return defaultCopy;
 	}
 	
 	@Override
