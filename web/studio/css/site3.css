@@ -163,6 +163,10 @@ a.nav-link {
 	border-radius: 0.25rem;
 }
 
+.btn-narrow {
+	padding: 1rem 2.5rem;
+}
+
 .blue-btn {
 	color: #FFFFFF;
 	background-color: #0071CA;
@@ -222,6 +226,12 @@ a.nav-link {
 .content-2 {
 	font-size: 1.125rem;
 	font-family: Roboto;
+}
+
+.sub-heading-4 {
+	font-family: Roboto;
+	font-weight: 600;
+	font-size: 1.75rem;
 }
 
 .sub-heading-3 {
@@ -365,25 +375,73 @@ a:hover {
 	text-decoration: none !important;
 }
 
-.typewriter {
-  overflow: hidden; /* Ensures the content is not revealed until the animation */
-  border-right: .15em solid #000000; /* The typwriter cursor */
-  white-space: nowrap; /* Keeps the content on a single line */
-  margin: 0 0; /* Gives that scrolling effect as the typing happens */
-  letter-spacing: .03em; /* Adjust as needed */
-  animation: 
-    typing 3.5s steps(10, end),
-    blink-caret .5s step-end infinite;
+.formcontrol {
+	font-size: 0.875rem;
 }
 
-/* The typing effect */
-@keyframes typing {
-  from { width: 0 }
-  to { width: 100% }
+.register {
+	width: 100%;
+	background: #FFF;
+	border-radius: 4px;
+	padding: 2.5rem;
 }
 
-/* The typewriter cursor effect */
-@keyframes blink-caret {
-  from, to { border-color: transparent }
-  50% { border-color: #000000; }
+.register .processingimg {
+	width: 100%;
+}
+
+.register .signupform {
+	margin-right: 0;
+    margin-left: 0;
+    font-size: 1rem;
+    text-align: center;
+}
+
+.signupform form {
+	width: 100%;
+}
+
+.signupform input {
+	border-radius: 4px;
+    background-color: #ffffff;
+    border: 1px solid #e3ebef;
+    padding: 0.75rem 1rem 0.75rem 1rem;
+	font-family: 'Roboto', sans-serif;
+    width: 100%;
+}
+
+.signupform .formcontrol {
+	padding-left: 0;
+	padding-right: 0;
+	padding-top: 1rem;
+}
+
+.ttmtext {
+	font-family: 'Roboto', sans-serif;
+	font-size: 1rem;
+}
+
+.ttmperson .ttmname {
+	font-family: 'Roboto', sans-serif;
+	font-size: 0.875rem;
+	font-weight: bold;
+}
+
+.ttmperson .ttmdesignation {
+	font-family: 'Roboto', sans-serif;
+	font-size: 0.875rem;
+}
+
+.ttmpersonimg img {
+	max-height: 2.75rem;
+	border-radius: 50%;
+}
+
+.error {
+	margin: 0.5em 0 0;
+	font-family: 'Roboto', sans-serif;
+	font-size: 0.875em;
+	font-weight: 300;
+	text-align: left;
+	color : red;
 }

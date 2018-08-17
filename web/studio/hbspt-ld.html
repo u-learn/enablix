@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Enablix</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="keywords" content="Sales Enablement,Sales Portal,Marketing Portal,Marketing Content Management,Knowledge Management,Knowledge Portal">
+	<link rel="icon" type="image/png" href="/favicon.png">
+	<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,700,900" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+	
+	
+	<script type="text/javascript" src="js/vendor/angular/angular.min.js"></script>
+	<script type="text/javascript" src="js/vendor/angular/angular-ui-router.js"></script>
+	<script type="text/javascript" src="js/vendor/angular/angular-messages.min.js"></script>
+	
+	<link rel="stylesheet" href="./css/site3.css">
+	<script type="text/javascript" src="js/ld.js"></script>
+</head>
+<body ng-app="site">
+	<ng-include src="'partials/site-header-navbar.html'"></ng-include>
+
+	<div class="main">
+		<div class="row py-5">
+			<div class="col-12 text-center">
+				<div class="d-flex justify-content-center flex-row heading-4" id="tw1">Sales Enablement for HubSpot CRM Users</div>
+				<div class="d-flex justify-content-center sub-heading-3 grey-text-1 pt-4">Enable your sales team with trusted content when they need it in HubSpot CRM.</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="d-flex flex-column flex-lg-row align-items-center py-4 pb-lg-5">
+		<div class="col-lg-6 pl-0 py-4">
+			<div class="big-image d-flex justify-content-start">
+				<img src="./assets/hubspot-int-lg.png" class="ebx-mw-100"></img>
+			</div>
+		</div>
+		<div class="col-lg-6 px-3 pt-5 py-lg-5 px-md-5">
+			<div ng-controller="InviteRequestController" class="mx-lg-4">
+				<div class="register">
+					<div class="sub-heading-4 text-center">Enable Sales</div>
+					<div class="signupform row">
+						<form name="modalForm">
+							<div class="formcontrol" ng-if="error">
+								<div class="error">{{error}}</div>
+							</div>
+							<div class="formcontrol">
+								<input  name="name" placeholder="Name" ng-model="contactUsForm.name" ng-blur="modalForm.name.$valid" required>
+								<div ng-messages="modalForm.name.$error" ng-if="modalForm.name.$touched" role="alert">
+									<div ng-message="required" class="error">Name is required</div>
+								</div>
+							</div>
+							<div class="formcontrol">
+								<input name="companyName" placeholder="Company Name" ng-model="contactUsForm.companyName" ng-blur="modalForm.companyName.$valid" required>
+								<div ng-messages="modalForm.companyName.$error" ng-if="modalForm.companyName.$touched" role="alert">
+									<div ng-message="required" class="error">Company name is required</div>
+								</div>
+							</div>
+							<div class="formcontrol">
+								<input  name="email" placeholder="Work Email" ng-model="contactUsForm.email" ng-blur="modalForm.email.$valid" ng-pattern="/^([_a-z0-9\+])+(\.[_a-z0-9\+]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,5})$/" required>
+								<div ng-messages="modalForm.email.$error" ng-if="modalForm.email.$touched" role="alert">
+									<div ng-message="required" class="error">Work Email is required</div>
+									<div ng-message="pattern" class="error">Please enter a valid email address</div>
+								</div>
+							</div>
+							<div class="formcontrol">
+								<button name="signupBtn" class="btn blue-btn btn-narrow" ng-disabled="modalForm.$invalid" ng-click="submitContactUs()" disabled="disabled">Request Demo</button>
+								<div class="pt-2 grey-text-1">We offer free trials</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="col-12 bg-white pt-md-5" style="position: relative;">
+		<div class="row pb-md-5 pb-4">
+			<div class="col-md-4 d-flex flex-column align-items-center py-4" style="z-index: 1000;">
+				<div class="circular-img bg-white p-5 d-flex align-items-center justify-content-center"><img src="./assets/metadata-management.svg"></div>
+				<div class="heading-2 pt-4 pt-md-5">One Place</div>
+				<div class="content-1 grey-text-1 text-center px-lg-5 pt-2">Centralize access to content across multiple systems. Videos, blogs, presentations, etc. all available from one application.</div>
+			</div>
+			<div class="col-md-4 d-flex flex-column align-items-center py-4" style="z-index: 1000;">
+				<div class="circular-img bg-white p-5 d-flex align-items-center justify-content-center"><img src="./assets/crm-integration.svg"></div>
+				<div class="heading-2 pt-4 pt-md-5">Content In HubSpot CRM</div>
+				<div class="content-1 grey-text-1 text-center px-lg-5 pt-2">Enablix pushes content to the sales reps inside HubSpot CRM in the context of their deal.</div>
+			</div>
+			<div class="col-md-4 d-flex flex-column align-items-center py-4" style="z-index: 1000;">
+				<div class="circular-img bg-white p-5 d-flex align-items-center justify-content-center"><img src="./assets/content-coverage.svg"></div>
+				<div class="heading-2 pt-4 pt-md-5">Measure Engagement</div>
+				<div class="content-1 grey-text-1 text-center px-lg-4 pt-2">Identify high-performing content to make informed decisions.</div>
+			</div>
+		</div>
+		<hr class="d-none d-sm-block mt-md-5" style="position: absolute; top: 112px; left: 0; width: 100%;">
+	</div>
+	
+	<!-- Footer -->
+	<footer class="page-footer font-small indigo">
+		<ng-include src="'partials/site-footer-navbar.html'"></ng-include>
+    </footer>
+    <!-- Footer -->
+  <script>
+    var gaProp = null;
+    var intercomAppId = null;
+
+    switch (window.location.hostname) {
+        case 'www.enablix.com':
+            gaProp = 'UA-90499107-1'; // production
+            break;
+        case '52.2.15.106':
+        	gaProp = 'UA-90499107-2'; // test env
+        	break;
+        case 'test.enablix.com':
+        	gaProp = 'UA-90499107-2'; // test env
+        	break;
+        case 'localhost':
+        	gaProp = 'UA-90499107-2'; // test env
+        	break;
+    }
+    
+   	if (gaProp != null) {
+		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+		
+		ga('create', gaProp, 'auto');
+		ga('send', 'pageview');
+	}
+   	
+   	function handleOutboundLinkClicks(event) {
+    	
+   		if (gaProp != null) {
+			ga('send', 'event', {
+				eventCategory : 'Outbound Link',
+				eventAction : 'click',
+				eventLabel : event.target.href,
+				transport: 'beacon'
+			});
+   		}
+   		
+	}
+   		
+  </script>
+  <script>
+	var i = 0;
+	var txt = ' from one place.';
+	var speed = 100;
+	
+	function typeWriter() {
+		if (i < txt.length) {
+	    document.getElementById("tw1").innerHTML += txt.charAt(i);
+	    i++;
+	    setTimeout(typeWriter, speed);
+	  }
+	}
+  </script>
+   
+</body>
+</html>

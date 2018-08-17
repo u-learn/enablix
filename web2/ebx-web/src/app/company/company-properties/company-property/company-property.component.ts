@@ -81,7 +81,7 @@ export class CompanyPropertyComponent implements OnInit {
         width: '624px',
         disableClose: true,
         data: { 
-          title: "Delete Property",
+          title: "Delete Property Value",
           text: promptText,
           confirmLabel: "Delete",
           cancelLabel: "No, keep it."

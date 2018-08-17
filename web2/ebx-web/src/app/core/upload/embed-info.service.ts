@@ -58,7 +58,7 @@ export class EmbedInfoService {
   }
 
   getEmbedInfoType(embedInfo: EmbedInfo) : string {
-    return embedInfo.oembed ? embedInfo.oembed.type : embedInfo.type;
+    return embedInfo && embedInfo.oembed ? embedInfo.oembed.type : embedInfo.type;
   }
 
 }
