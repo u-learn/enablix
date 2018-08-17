@@ -1,4 +1,4 @@
-package com.enablix.app.content.ui.search;
+package com.enablix.analytics.search;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;

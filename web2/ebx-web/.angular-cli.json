@@ -59,6 +59,10 @@
   },
   "defaults": {
     "styleExt": "css",
-    "component": {}
+    "component": {},
+    "serve": {
+      "sslKey": "D:/enablix/local-ssl/ebxlocal.com.key",
+      "sslCert": "D:/enablix/local-ssl/ebxlocal.com.crt"
+    }
   }
 }

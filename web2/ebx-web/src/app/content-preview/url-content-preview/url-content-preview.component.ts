@@ -37,6 +37,7 @@ export class UrlContentPreviewComponent implements OnInit {
       if (this.url) {
     
         this.navUrl = this.apiUrlService.getExtLinkUrl(this.url, this.record.identity, this.container.qualifiedId);
+        var urlProtocolBlocked = this.urlProtocolNotSupported(this.url);
 
         this.embedInfoService.getEmbedInfo(this.url)
             .subscribe(
@@ -46,7 +47,8 @@ export class UrlContentPreviewComponent implements OnInit {
                     
                     this.embedInfo = result;
                     this.type = this.embedInfoService.getEmbedInfoType(this.embedInfo);
-                    this.iframeNotSupported = !this.embedInfo.iframeEmbeddable;
+                    this.iframeNotSupported = !this.embedInfo.iframeEmbeddable
+                          || urlProtocolBlocked;
 
                     if (this.type != 'rich' && this.type != 'link' 
                         && this.embedInfo.oembed && this.embedInfo.oembed.html) {
@@ -58,7 +60,7 @@ export class UrlContentPreviewComponent implements OnInit {
 
                   } else {
 
-                    if (this.url && this.url.toLowerCase().endsWith(".pdf")) {
+                    if (this.url && !urlProtocolBlocked && this.url.toLowerCase().endsWith(".pdf")) {
                       this.type = "pdf";
                     } else {
                       this.type = "unknown";
@@ -71,6 +73,14 @@ export class UrlContentPreviewComponent implements OnInit {
               );
       }
     }
+  }
+
+  urlProtocolNotSupported(url: string) {
+    var windowProtocol = window.location.protocol;
+    if (windowProtocol == 'https:' && url.startsWith('http://')) {
+      return true;
+    }
+    return false;
   }
 
 }
