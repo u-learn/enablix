@@ -236,7 +236,7 @@
 						</div>
 					</div>
 					<div class="formcontrol col-md-12">
-						<input  name="email" placeholder="Work Email" ng-model="contactUsForm.email" ng-blur="modalForm.email.$valid" ng-pattern="/^([_a-z0-9\+])+(\.[_a-z0-9\+]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,5})$/" required>
+						<input  name="email" placeholder="Work Email" ng-model="contactUsForm.email" ng-blur="modalForm.email.$valid" ng-pattern="/^([_a-z0-9-\+])+(\.[_a-z0-9-\+]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,5})$/" required>
 						<div ng-messages="modalForm.email.$error" ng-if="modalForm.email.$touched" role="alert">
 							<div ng-message="required" class="error">Work Email is required</div>
 							<div ng-message="pattern" class="error">Please enter a valid email address</div>

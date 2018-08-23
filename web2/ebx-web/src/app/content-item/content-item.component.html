@@ -1,6 +1,6 @@
 <div class="content-item">
   <p class="label">{{contentItem.label}}</p>
-  <p class="text" *ngIf="!editable" [innerHtml]="getValue()"></p>
+  <p class="text readonly" *ngIf="!editable" [innerHtml]="getValue()"></p>
   <div class="text" *ngIf="editable" [ngSwitch]="contentItem.type">
     <div *ngSwitchCase="'TEXT'">
       <ebx-text-input [record]="record" [contentItem]="contentItem" [contentTemplate]="ctService.templateCache" [(ngModel)]="record[contentItem.id]"></ebx-text-input>

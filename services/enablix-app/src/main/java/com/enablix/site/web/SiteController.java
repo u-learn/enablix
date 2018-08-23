@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -38,6 +39,13 @@ public class SiteController {
 	@RequestMapping(method = RequestMethod.GET, value="/site/captchasitekey", produces="application/json")
 	public CaptchaSiteKeyWrapper captchaSiteKey(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		return new CaptchaSiteKeyWrapper(captchaProp.getClientSiteKey());
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, value="/site/{pagename}")
+	public void htmlPages(HttpServletRequest request, HttpServletResponse response,
+			@PathVariable String pagename) throws ServletException, IOException {
+		String htmlPage = "/" + pagename + ".html";
+		forward(request, response, htmlPage);
 	}
 
 	private void forward(HttpServletRequest request, HttpServletResponse response, String forwardUrl)
