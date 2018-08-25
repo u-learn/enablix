@@ -53,6 +53,8 @@ public class RecentDataCollector implements ContentDataEventListener {
 				RecentData existEntry = recentDataRepo.findByDataInstanceIdentityAndUpdateType(
 											strContentIdentity, UpdateType.UPDATED);
 				
+				TemplateFacade templateWrapper = templateMgr.getTemplateFacade(event.getTemplateId());
+				
 				if (existEntry == null) {
 					
 					createNewRecord(event, recentData, contentIdentity, UpdateType.UPDATED);
@@ -69,6 +71,10 @@ public class RecentDataCollector implements ContentDataEventListener {
 					existEntry.setCreatedAt(null);
 					existEntry.setCreatedBy(null);
 					
+					String contentQId = event.getContainerType().getQualifiedId();
+					String contentTitle = ContentDataUtil.findPortalLabelValue(event.getDataAsMap(), templateWrapper, contentQId);
+					
+					existEntry.getData().setTitle(contentTitle);
 					existEntry.setDataSegmentInfo(dsInfo);
 					recentDataRepo.save(existEntry);
 					

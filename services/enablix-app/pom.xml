@@ -302,5 +302,11 @@
 			<artifactId>image-preview-converter</artifactId>
 			<version>1.0-SNAPSHOT</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/sfdc/sfdc-canvas-sdk -->
+		<dependency>
+		    <groupId>sfdc</groupId>
+		    <artifactId>sfdc-canvas-sdk</artifactId>
+		    <version>1.2-Minimum</version>
+		</dependency>
 	</dependencies>
 </project>

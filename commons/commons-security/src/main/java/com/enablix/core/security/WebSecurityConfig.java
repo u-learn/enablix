@@ -53,7 +53,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.authorizeRequests()
 				.antMatchers("/resetpassword", "/", "/health", "/site-doc/**/*", "/site/*", "/campaign/*", "/terms", "/privacy", "/signup",
 						"/**/*.html", "/**/*.js", "/**/*.json", "/**/*.css", "/**/*.png", "/**/*.jpg", "/**/*.jpeg", "/**/*.map", 
-						"/**/*.gif", "/**/*.svg", "/**/*.ttf", "/**/*.woff", "/**/*.woff2", "/**/*.eot", "/**/*.otf",
+						"/**/*.gif", "/**/*.svg", "/**/*.ttf", "/**/*.woff", "/**/*.woff2", "/**/*.eot", "/**/*.otf", "/sf/canvas/*",
+						"/pricing", "/features", "/sales-enablement-startup", "/sales-enablement-hubspot", "/solution-knowledge-portal", "/solution-sales-portal",
 						"/analytics/**", "/login", "/portal/**").permitAll()
 				.anyRequest().authenticated()
 			//.and().addFilter(new ProcessContextInitFilter()).exceptionHandling()

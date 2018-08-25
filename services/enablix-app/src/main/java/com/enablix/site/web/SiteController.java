@@ -1,6 +1,7 @@
 package com.enablix.site.web;
 
 import java.io.IOException;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -8,16 +9,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.enablix.commons.util.json.JsonUtil;
 import com.enablix.core.security.GoogleNoCaptchValidator;
 import com.enablix.core.security.GoogleNoCaptchaProperties;
+import com.enablix.core.security.SecurityUtil;
+import com.enablix.core.security.service.EnablixUserService;
 import com.enablix.site.contactus.ContactUsManager;
 import com.enablix.website.ContactUsRequest;
+
+import canvas.SignedRequest;
 
 @RestController
 public class SiteController {
@@ -31,6 +38,9 @@ public class SiteController {
 	@Autowired
 	private GoogleNoCaptchaProperties captchaProp;
 	
+	@Autowired
+	private EnablixUserService userService;
+	
 	@RequestMapping(method = RequestMethod.GET, value="/terms")
 	public void termsAndConditions(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		forward(request, response, "/site-doc/TermsConditions.pdf");
@@ -41,11 +51,64 @@ public class SiteController {
 		return new CaptchaSiteKeyWrapper(captchaProp.getClientSiteKey());
 	}
 	
-	@RequestMapping(method = RequestMethod.GET, value="/site/{pagename}")
-	public void htmlPages(HttpServletRequest request, HttpServletResponse response,
-			@PathVariable String pagename) throws ServletException, IOException {
-		String htmlPage = "/" + pagename + ".html";
+	@RequestMapping(method = RequestMethod.GET, value="/features")
+	public void siteFeatures(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String htmlPage = "/site-features.html";
 		forward(request, response, htmlPage);
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, value="/pricing")
+	public void sitePricing(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String htmlPage = "/site-pricing.html";
+		forward(request, response, htmlPage);
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, value="/solution-sales-portal")
+	public void siteSalesPortal(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String htmlPage = "/site-solution-sales-portal.html";
+		forward(request, response, htmlPage);
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, value="/solution-knowledge-portal")
+	public void siteKnowledgePortal(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String htmlPage = "/site-solution-knowledge-portal.html";
+		forward(request, response, htmlPage);
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, value="/sales-enablement-hubspot")
+	public void siteHubspotSales(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String htmlPage = "/site-sales-enablement-hubspot.html";
+		forward(request, response, htmlPage);
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, value="/sales-enablement-startup")
+	public void siteStartupSales(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String htmlPage = "/site-sales-enablement-startup.html";
+		forward(request, response, htmlPage);
+	}
+	
+	@RequestMapping(method = RequestMethod.POST, value="/sf/canvas/{app}")
+	public void salesforceCanvasApp(HttpServletRequest request, HttpServletResponse response,
+			@PathVariable String app) throws ServletException, IOException {
+		
+		// Pull the signed request out of the request body and verify and decode it.
+	    Map<String, String[]> parameters = request.getParameterMap();
+	    String[] signedRequest = parameters.get("signed_request");
+	    String yourConsumerSecret = "3687049815195892632";
+	    String signedRequestJson = SignedRequest.verifyAndDecodeAsJson(signedRequest[0], yourConsumerSecret);
+		System.out.println(signedRequestJson);
+		
+		UserDetails currentUser = SecurityUtil.currentUser();
+		if (currentUser == null) {
+			String userEmail = (String) JsonUtil.getJsonpathValue(signedRequestJson, "context.user.email");
+			UserDetails userDetails = userService.loadUserByUsername(userEmail);
+			if (userDetails != null) {
+				SecurityUtil.loginUser(userDetails);
+			}
+		}
+		
+	    String htmlPage = "/app2.html";
+		response.sendRedirect(htmlPage);
 	}
 
 	private void forward(HttpServletRequest request, HttpServletResponse response, String forwardUrl)
