@@ -114,7 +114,7 @@ public class SiteController {
 			appPage = "/portal";
 		}
 		
-		StringBuilder htmlPage = new StringBuilder("https://www.ebxlocal.com:4200");
+		StringBuilder htmlPage = new StringBuilder();
 		htmlPage.append(appPage).append("?ctx_embedded=true");
 		
 		Object appCtxObj = JsonUtil.getJsonpathValue(signedRequestJson, "context.environment.parameters.appCtx");
