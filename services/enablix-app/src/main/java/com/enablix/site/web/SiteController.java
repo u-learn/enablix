@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.enablix.commons.util.StringUtil;
 import com.enablix.commons.util.json.JsonUtil;
 import com.enablix.core.security.GoogleNoCaptchValidator;
 import com.enablix.core.security.GoogleNoCaptchaProperties;
@@ -87,6 +88,7 @@ public class SiteController {
 		forward(request, response, htmlPage);
 	}
 	
+	@SuppressWarnings("unchecked")
 	@RequestMapping(method = RequestMethod.POST, value="/sf/canvas/{app}")
 	public void salesforceCanvasApp(HttpServletRequest request, HttpServletResponse response,
 			@PathVariable String app) throws ServletException, IOException {
@@ -107,8 +109,30 @@ public class SiteController {
 			}
 		}
 		
-	    String htmlPage = "/app2.html";
-		response.sendRedirect(htmlPage);
+		String appPage = (String) JsonUtil.getJsonpathValue(signedRequestJson, "context.environment.parameters.appPage");
+		if (!StringUtil.hasText(appPage)) {
+			appPage = "/portal";
+		}
+		
+		StringBuilder htmlPage = new StringBuilder("https://www.ebxlocal.com:4200");
+		htmlPage.append(appPage).append("?ctx_embedded=true");
+		
+		Object appCtxObj = JsonUtil.getJsonpathValue(signedRequestJson, "context.environment.parameters.appCtx");
+	    
+		if (appCtxObj instanceof Map) {
+	    
+			Map<String, Object> appCtx = (Map<String, Object>) appCtxObj;
+	    	
+	    	for (Map.Entry<String, Object> entry : appCtx.entrySet()) {
+	    		
+    			htmlPage.append("&")
+	    				.append("ctx_").append(entry.getKey())
+	    				.append("=")
+	    				.append(String.valueOf(entry.getValue()));
+	    	}
+	    }
+
+	    response.sendRedirect(htmlPage.toString());
 	}
 
 	private void forward(HttpServletRequest request, HttpServletResponse response, String forwardUrl)
