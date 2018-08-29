@@ -1,7 +1,10 @@
 package com.enablix.wordpress.integration.impl;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.annotation.PostConstruct;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +20,7 @@ import com.afrozaar.wordpress.wpapi.v2.exception.PostNotFoundException;
 import com.afrozaar.wordpress.wpapi.v2.model.Post;
 import com.afrozaar.wordpress.wpapi.v2.model.Term;
 import com.afrozaar.wordpress.wpapi.v2.request.SearchRequest;
+import com.afrozaar.wordpress.wpapi.v2.response.CustomRenderableParser;
 import com.afrozaar.wordpress.wpapi.v2.response.PagedResponse;
 import com.enablix.analytics.info.detection.ContentSuggestion;
 import com.enablix.analytics.info.detection.InfoDetector;
@@ -29,6 +33,8 @@ import com.enablix.wordpress.integration.WPPostProcessor;
 import com.enablix.wordpress.integration.WordpressConstants;
 import com.enablix.wordpress.integration.WordpressService;
 import com.enablix.wordpress.model.WordpressInfo;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Component
 public class WordpressServiceImpl implements WordpressService {
@@ -39,6 +45,33 @@ public class WordpressServiceImpl implements WordpressService {
 	
 	@Autowired
 	private InfoDetector infoDetector;
+	
+	@PostConstruct
+	public void init() {
+		
+		// update ObjectMapper used to parse json with unknown properties
+		
+		try {
+			
+			Field omField = CustomRenderableParser.class.getDeclaredField("objectMapper");
+			omField.setAccessible(true);
+			
+			Object fieldValue = omField.get(null);
+			if (fieldValue instanceof ObjectMapper) {
+				ObjectMapper objectMapper = (ObjectMapper) fieldValue;
+				objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+			}
+			
+		} catch (IllegalArgumentException e) {
+			throw new RuntimeException(e);
+		} catch (IllegalAccessException e) {
+			throw new RuntimeException(e);
+		} catch (NoSuchFieldException e) {
+			throw new RuntimeException(e);
+		} catch (SecurityException e) {
+			throw new RuntimeException(e);
+		}
+	}
 	
 	@Override
 	public Post getPost(Wordpress wp, Long postId) throws PostNotFoundException {
