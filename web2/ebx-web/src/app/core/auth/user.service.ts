@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 
+import { AppContext } from '../../app-context';
+
 const OR_PERM_SEPARATOR = "|";
 const AND_PERM_SEPARATOR = "+";
 
@@ -18,11 +20,38 @@ export class UserService {
   setUserLoggedIn(user: any) {
   	this.isLoggedIn = true;
     this.user = user;
+    this.setAppContextPermissions();
   }
 
   logoutUser() {
   	this.isLoggedIn = false;
   	this.user = null;
+  }
+
+  setAppContextPermissions() {
+
+    if (AppContext.embedded) {
+    
+      var removePerms: string[] = [
+        "VIEW_STUDIO", "MANAGE_CONTENT_REQUEST", "SHARE_VIA_EMAIL",
+        "SHARE_VIA_SLACK", "COMPANY_DETAILS", "MANAGE_INTEGRATIONS",
+        "VIEW_REPORTS", "BULK_IMPORT", "SUGGEST_CONTENT"
+      ];
+    
+      if (this.user && this.user.authorities) {
+             
+        var permissions = this.user.authorities;
+
+        var k = permissions.length;
+        while (k--) {
+          var userPerm = permissions[k].authority;
+          if (removePerms.indexOf(userPerm) >= 0) {
+            permissions.splice(k, 1);
+          }
+        }
+
+      }
+    }
   }
 
   getUserDisplayName() {
@@ -114,17 +143,17 @@ class SimplePermissionCheck implements PermissionCheck {
 
     if (user && user.authorities) {
              
-       var permissions = user.authorities;
+      var permissions = user.authorities;
 
-       for (var k = 0; k < permissions.length; k++) {
-         var userPerm = permissions[k].authority;
-         if (userPerm === this.perm) {
-           return true;
-         }
-       }
-     }
+      for (var k = 0; k < permissions.length; k++) {
+        var userPerm = permissions[k].authority;
+        if (userPerm === this.perm) {
+          return true;
+        }
+      }
+    }
      
-     return false;
+    return false;
   }
 
 }

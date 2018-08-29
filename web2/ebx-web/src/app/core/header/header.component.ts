@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewEncapsulation, Input } from '@angular/core';
 
+import { AppContext } from '../../app-context';
 import { UserService } from '../auth/user.service';
 import { AuthService } from '../auth/auth.service';
 import { NavigationService } from '../../app-routing/navigation.service';
@@ -19,6 +20,7 @@ export class HeaderComponent implements OnInit {
   username: string;
 
   tenantLogoExist: boolean = true; 
+  appCtx = AppContext;
 
   constructor(private userService: UserService, private authService: AuthService,
               private navService: NavigationService, public tenantService: TenantService,

@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ContentTemplateService } from '../core/content-template.service';
 
+import { AppContext } from '../app-context';
+
 @Injectable()
 export class NavigationService {
 
@@ -9,7 +11,8 @@ export class NavigationService {
               private ctService: ContentTemplateService) { }
 
   goToPortalHome() {
-    this.router.navigate(['/portal']);
+    var homePage = AppContext.homePage || '/portal';
+    this.router.navigate([homePage]);
   }
 
   goToReportsHome() {

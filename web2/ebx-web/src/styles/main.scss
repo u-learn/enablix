@@ -122,7 +122,7 @@ select {
     min-width: 1024px;
     max-width: 1600px;
     min-height: 100vh;
-    margin: auto;
+    margin: 0 16px;
     display: flex;
     flex-direction: column;
     position: relative;
@@ -137,6 +137,10 @@ select {
 
     @include breakpoint(xlg){
         margin: auto;
+    }
+
+    &.subsection {
+        min-width: 0px;
     }
 }
 

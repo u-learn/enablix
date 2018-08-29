@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Location } from '@angular/common';
 
+import { AppContext } from '../app-context';
 import { Container } from '../model/container.model';
 import { ContentItem } from '../model/content-item.model';
 import { ContentService } from '../core/content/content.service';
@@ -28,6 +29,8 @@ export class BizContentComponent implements OnInit, AfterViewInit {
   @ViewChildren(ContentDeleteButtonComponent) deleteButtons: QueryList<ContentDeleteButtonComponent>;
   @ViewChildren(ContentReqApproveButtonComponent) approveBtns: QueryList<ContentReqApproveButtonComponent>;
   @ViewChildren(ContentReqRejectButtonComponent) rejectBtns: QueryList<ContentReqRejectButtonComponent>;
+
+  appCtx = AppContext;
 
   @Input() record?: any;
   @Input() container?: Container;

@@ -29,7 +29,8 @@
         "dev": "environments/environment.ts",
         "prod": "environments/environment.prod.ts",
         "testdebug": "environments/environment.testdebug.ts",
-        "test": "environments/environment.test.ts"
+        "test": "environments/environment.test.ts",
+        "local": "environments/environment.local.ts"
       }
     }
   ],

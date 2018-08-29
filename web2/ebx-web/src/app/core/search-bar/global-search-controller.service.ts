@@ -1,6 +1,7 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
+import { AppContext } from '../../app-context';
 import { SearchBarController } from './search-bar-controller';
 import { NavigationService } from '../../app-routing/navigation.service';
 import { SearchBarData, SearchBarItem, SearchDataset, NavCtxItem, NavContext } from '../../model/search-bar-data.model';
@@ -20,7 +21,7 @@ export class GlobalSearchControllerService implements SearchBarController {
   navStates: NavState[] = [
     {
       navPath: "",
-      routePath: "/portal"
+      routePath: AppContext.homePage || "/portal"
     },
     {
       navPath: ">BIZ_DIM",

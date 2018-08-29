@@ -2,12 +2,14 @@
     <div class="header-container">
         <h2>{{record?.__title}}</h2>
         <div class="dashboard-buttons">
-            <div class="action-btn add-padding" (click)="editState()">
-                <div class="icon small edit"></div>
-                <p class="show-me">Edit</p>
-            </div>
-            <div class="divider"></div>
-            <ebx-content-email-button class="action-btn" [container]="container" [record]="record" ></ebx-content-email-button>
+            <ng-container *ebxAccess="'VIEW_STUDIO|SUGGEST_CONTENT'">
+                <div class="action-btn add-padding" (click)="editState()">
+                    <div class="icon small edit"></div>
+                    <p class="show-me">Edit</p>
+                </div>
+                <div class="divider"></div>
+            </ng-container>
+            <ebx-content-email-button class="action-btn-wrap" [container]="container" [record]="record" ></ebx-content-email-button>
             <ebx-content-delete-button *ebxAccess="'VIEW_STUDIO'" class="action-btn add-padding" [container]="container" [record]="record" contentType="Object"></ebx-content-delete-button>
             <ebx-biz-dim-layout-switch *ngIf="record" [dimQId]="container?.qualifiedId" [recordIdentity]="record?.identity"></ebx-biz-dim-layout-switch>
         </div>

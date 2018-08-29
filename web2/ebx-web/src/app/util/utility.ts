@@ -81,6 +81,33 @@ export class Utility {
     return filters;
   }
 
+  static readAppCtxInQueryParams(queryParams: any) {
+    
+    var appCtx = null;
+    
+    for (let param in  queryParams) {
+      if (param.startsWith("ctx_")) {
+        if (!appCtx) appCtx = {};
+        appCtx[param.substr(4)] = queryParams[param];
+      }
+    }
+
+    return appCtx;
+  }
+
+  /**
+   * Get the value of a querystring
+   * @param  {String} field The field to get the value of
+   * @param  {String} url   The URL to get the value from (optional)
+   * @return {String}       The field value
+   */
+  static getQueryString(field: string, url?: string) : string {
+    var href = url ? url : window.location.href;
+    var reg = new RegExp( '[?&]' + field + '=([^&#]*)', 'i' );
+    var string = reg.exec(href);
+    return string ? string[1] : null;
+  }
+
   static removeFileExtn(filename: string) {
     var response = filename;
     if (filename) {

@@ -109,6 +109,7 @@ import { MySlackIntegrationComponent } from './myaccount/my-slack-integration/my
 import { CompanyPropertiesComponent } from './company/company-properties/company-properties.component';
 import { CompanyPropertyComponent } from './company/company-properties/company-property/company-property.component';
 import { EditCompanyPropValueComponent } from './company/company-properties/company-property/edit-company-prop-value/edit-company-prop-value.component';
+import { SearchHomeComponent } from './search-home/search-home.component';
 
 @NgModule({
   declarations: [
@@ -191,7 +192,8 @@ import { EditCompanyPropValueComponent } from './company/company-properties/comp
     MySlackIntegrationComponent,
     CompanyPropertiesComponent,
     CompanyPropertyComponent,
-    EditCompanyPropValueComponent
+    EditCompanyPropValueComponent,
+    SearchHomeComponent
   ],
   imports: [
     BrowserModule,

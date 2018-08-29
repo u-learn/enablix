@@ -56,7 +56,7 @@
         </div>
     </div>
   </ng-container>
-  <div class="far-right" *ngIf="!dialogRef">
+  <div class="far-right" *ngIf="!dialogRef && !appCtx.embedded">
       <ebx-user-icon></ebx-user-icon>
   </div>
 </div>
