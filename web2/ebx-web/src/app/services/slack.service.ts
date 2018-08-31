@@ -43,7 +43,7 @@ export class SlackService {
       "containerQId" : containerQId,
       "contentIdentity": contentIdentity,
       "channelsSelectd": slackChannelIds,
-      "slackCustomContent" : message
+      "slackCustomContent" : message ? message : ""
     };
 
     let url = this.apiUrlService.postSlackMessage();
