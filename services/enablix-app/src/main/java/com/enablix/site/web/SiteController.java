@@ -121,7 +121,7 @@ public class SiteController {
 			appPage = "/portal";
 		}
 		
-		StringBuilder htmlPage = new StringBuilder(sfCanvasAppDomain);
+		StringBuilder htmlPage = new StringBuilder(StringUtil.hasText(sfCanvasAppDomain) ? sfCanvasAppDomain : "");
 		htmlPage.append(appPage).append("?ctx_embedded=true");
 		
 		Object appCtxObj = JsonUtil.getJsonpathValue(signedRequestJson, "context.environment.parameters.appCtx");
