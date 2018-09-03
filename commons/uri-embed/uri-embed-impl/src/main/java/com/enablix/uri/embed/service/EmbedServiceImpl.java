@@ -40,7 +40,7 @@ public class EmbedServiceImpl implements EmbedService {
 		} else {
 			
 			if (embedInfo.getIframeEmbeddable() == null) {
-				embedInfo.setIframeEmbeddable(iframeTester.checkIFrameEmbeddable(url));
+				embedInfo.setIframeEmbeddable(iframeTester.checkIFrameEmbeddable(embedInfo.getUrl()));
 				localCache.put(url, embedInfo);
 			}
 		}

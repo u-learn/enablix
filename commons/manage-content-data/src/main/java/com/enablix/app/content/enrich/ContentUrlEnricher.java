@@ -67,6 +67,7 @@ public class ContentUrlEnricher implements ContentEnricher {
 			try {
 				
 				EmbedInfo embedInfo = embedService.getEmbedInfo(url);
+				embedInfo.setUrl(url);
 				
 				eUrl = EmbeddedUrl.fromEmbedInfo(embedInfo);
 				
