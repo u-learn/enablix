@@ -111,7 +111,7 @@
 </ng-container>
 <ng-template #loggedInBlock>
   <div class="nav-bar">
-    <div class="left">
+    <div class="left" *ngIf="!(appCtx.embedded && appCtx.fullPage)">
       <img class="enablix-logo" src="/assets/images/company/enablix_logo@2x.png" (click)="navToHome()"/>
     </div>
     <div class="center1">

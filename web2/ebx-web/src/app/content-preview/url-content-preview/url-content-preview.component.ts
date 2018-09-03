@@ -25,6 +25,8 @@ export class UrlContentPreviewComponent implements OnInit {
   navUrl: string;
   iframeNotSupported: boolean;
 
+  iframeLoadDone: boolean;
+
   constructor(private embedInfoService: EmbedInfoService,
               private apiUrlService: ApiUrlService) { }
 
@@ -66,6 +68,7 @@ export class UrlContentPreviewComponent implements OnInit {
                       this.type = "unknown";
                     }
                   }
+
                 },
                 error => {
                   this.type = "unknown";

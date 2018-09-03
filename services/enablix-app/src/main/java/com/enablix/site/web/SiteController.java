@@ -24,6 +24,7 @@ import com.enablix.core.security.SecurityUtil;
 import com.enablix.core.security.service.EnablixUserService;
 import com.enablix.site.contactus.ContactUsManager;
 import com.enablix.website.ContactUsRequest;
+import com.google.api.client.util.Value;
 
 import canvas.SignedRequest;
 
@@ -41,6 +42,12 @@ public class SiteController {
 	
 	@Autowired
 	private EnablixUserService userService;
+	
+	@Value("${salesforce.canvas.app.domain:}")
+	private String sfCanvasAppDomain;
+	
+	@Value("${salesforce.convas.app.secret:3687049815195892632}")
+	private String sfCanvasAppSecret;
 	
 	@RequestMapping(method = RequestMethod.GET, value="/terms")
 	public void termsAndConditions(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -114,7 +121,7 @@ public class SiteController {
 			appPage = "/portal";
 		}
 		
-		StringBuilder htmlPage = new StringBuilder("https://www.ebxlocal.com:4200");
+		StringBuilder htmlPage = new StringBuilder(sfCanvasAppDomain);
 		htmlPage.append(appPage).append("?ctx_embedded=true");
 		
 		Object appCtxObj = JsonUtil.getJsonpathValue(signedRequestJson, "context.environment.parameters.appCtx");

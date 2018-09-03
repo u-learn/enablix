@@ -7,5 +7,5 @@ export const environment = {
   production: false,
   baseAPIUrl: "/api",
   googleAPIClientId: "739257117489-onnueqd94ho3e3gok6tlnn841lmte6sp.apps.googleusercontent.com",
-  domainUrl: "https://localhost:8114"
+  domainUrl: "http://localhost:8114"
 };

@@ -1,0 +1,17 @@
+<ebx-header ></ebx-header>
+<div class="container ebx-ml-0 flex-row">
+  <div class="dashboard no-sidebar">
+    <ng-container *ngIf="linkedContent">
+      <div class="header">
+        <h1>Priority Content</h1>
+      </div>
+      <div class="main featured">
+        <div class="card-container">
+          <div class="data-card" *ngFor="let rec of linkedContent">
+            <ebx-data-card [containerQId]="rec.containerQId" [record]="rec.record"></ebx-data-card>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>  

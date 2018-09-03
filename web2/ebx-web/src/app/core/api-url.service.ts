@@ -48,6 +48,8 @@ export class ApiUrlService {
   static POST_FOR_DATA_SEARCH = "/data/search/t/:domainType/";
   static POST_FOR_CONTAINER_DATA_SEARCH = "/data/search/cq/:containerQId/";
 
+  static POST_FOR_LINKED_MAPPED_DATA = "/data/linked/mapped/";
+
   static POST_INSERT_ROOT_CONTAINER_DATA = "/content/update/t/:templateId/c/:contentQId/";
   static POST_UPDATE_CONTAINER_DATA = "/content/update/t/:templateId/c/:contentQId/";
   static POST_INSERT_CHILD_CONTAINER_DATA = "/content/update/t/:templateId/c/:contentQId/r/:parentIdentity";
@@ -483,6 +485,10 @@ export class ApiUrlService {
 
   postSlackMessage() : string {
     return this.getAPIUrl(ApiUrlService.POST_SLACK_MESSAGE);
+  }
+
+  postFetchLinkedMappedContent() : string {
+    return this.getAPIUrl(ApiUrlService.POST_FOR_LINKED_MAPPED_DATA);
   }
 
   deleteContainerDefUrl(templateId: string, containerQId: string) : string {

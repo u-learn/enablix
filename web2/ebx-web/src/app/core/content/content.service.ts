@@ -308,6 +308,11 @@ export class ContentService {
     });
   }
 
+  getLinkdedAndMappedContent(linkedContentRequest: any) {
+    let apiUrl = this.apiUrlService.postFetchLinkedMappedContent();
+    return this.http.post(apiUrl, linkedContentRequest);
+  }
+
   getAllRecords(containerQId: string, pageSize?: number) {
 
     let searchRequest = new DataSearchRequest();

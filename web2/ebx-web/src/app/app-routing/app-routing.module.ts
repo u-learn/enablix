@@ -47,7 +47,7 @@ import { RecentContentListComponent } from '../recent-content/recent-content-lis
 import { MyaccountComponent } from '../myaccount/myaccount.component';
 import { ContentAttributionComponent } from '../reports/content-attribution/content-attribution.component';
 import { CompanyPropertiesComponent } from '../company/company-properties/company-properties.component';
-import { SearchHomeComponent } from '../search-home/search-home.component';
+import { SalesforceHomeComponent } from '../salesforce-home/salesforce-home.component';
  
 const routes: Routes = [
   {
@@ -85,8 +85,8 @@ const routes: Routes = [
           }
         },
         {
-          path: 'searchhome',
-          component: SearchHomeComponent,
+          path: 'sfhome',
+          component: SalesforceHomeComponent,
           resolve: {
             sbData: SearchBarResolve
           }

@@ -105,6 +105,10 @@ select {
         margin-top: 32px;
     }
 
+    &.ebx-ml-0 {
+        margin-left: 0;
+    }
+
     @include breakpoint(sm){
         margin-right: 36px;
         margin-left: 48px;
@@ -796,6 +800,23 @@ body {
         justify-content: flex-start!important;
     }
 }
+
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+
+  .data-card {
+    margin-right: 24px;
+    /* &:not(:first-child){
+      margin-left: auto;
+    }
+
+    &:not(:last-child){
+      margin-right: auto;
+    } */
+  }
+}
+
 
 .dashboard-sales-funnel.list {
     
