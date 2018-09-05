@@ -77,5 +77,10 @@
 		<artifactId>search-api</artifactId>
 		<version>1.0-SNAPSHOT</version>
 	</dependency>
+	<dependency>
+		<groupId>com.enablix.commons</groupId>
+		<artifactId>data-segment-api</artifactId>
+		<version>1.0-SNAPSHOT</version>
+	</dependency>
   </dependencies>
 </project>

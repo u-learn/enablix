@@ -80,6 +80,7 @@ import { ProgressLineComponent } from './progress-line/progress-line.component';
 import { GlobalSearchControllerService } from './search-bar/global-search-controller.service';
 import { EbxLinkifyPipe } from './pipes/ebx-linkify.pipe';
 import { UploadAssetComponent } from './upload/upload-asset/upload-asset.component';
+import { DndModule } from 'ng2-dnd';
 
 @NgModule({
   imports: [
@@ -93,7 +94,8 @@ import { UploadAssetComponent } from './upload/upload-asset/upload-asset.compone
     MatDatepickerModule,
     MatInputModule,
     MatNativeDateModule,
-    QuillModule
+    QuillModule,
+    DndModule.forRoot()
   ],
   providers: [
     RebootService,
@@ -229,7 +231,8 @@ import { UploadAssetComponent } from './upload/upload-asset/upload-asset.compone
     ProgressCircleComponent,
     ProgressLineComponent,
     SearchBarComponent,
-    EbxLinkifyPipe
+    EbxLinkifyPipe,
+    DndModule
   ]
 })
 export class CoreModule { }

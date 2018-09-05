@@ -8,6 +8,8 @@ import com.enablix.core.domain.OrderAndDataSegmentAwareEntity;
 @Document(collection = "ebx_content_pointer")
 public class ContentPointer extends OrderAndDataSegmentAwareEntity {
 
+	public static final String PARENT_TYPE_CONTENT_PACK = "CONTENT_PACK";
+	
 	private String parentIdentity;
 	
 	private String parentType;

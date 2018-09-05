@@ -16,12 +16,12 @@ export class AppComponent implements OnInit {
 
     let ctxEmbedded: string = Utility.getQueryString("ctx_embedded");
     if (ctxEmbedded != null) {
-      AppContext.embedded = Boolean(ctxEmbedded);
+      AppContext.embedded = Utility.stringToBoolean(ctxEmbedded);
     }
 
     let ctxFullpage: string = Utility.getQueryString("ctx_fullPage");
     if (ctxFullpage != null) {
-      AppContext.fullPage = Boolean(ctxFullpage);
+      AppContext.fullPage = Utility.stringToBoolean(ctxFullpage);
     }
 
     let ctxHomepage: string = Utility.getQueryString("ctx_homePage");

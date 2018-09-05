@@ -13,5 +13,7 @@ public interface ContentPointerRepository extends BaseMongoRepository<ContentPoi
 	List<ContentPointer> findByDataInstanceIdentity(String identity);
 
 	Page<ContentPointer> findByParentIdentity(String identity, Pageable pageable);
+
+	void deleteByParentIdentity(String identity);
 	
 }

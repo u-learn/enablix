@@ -310,7 +310,7 @@ body {
             }            
         }
 
-        div {
+        div.subheader {
             padding-top: 8px;
         }
 
@@ -1383,4 +1383,31 @@ a.xlink {
     }
   }
 }
+
+.title-row {
+    
+    .dashboard-buttons {
+      margin-left: 16px;
+    }
+
+    .show-on-hover {
+      display: none;
+    }
+
+    &:hover .show-on-hover {
+      display: flex;
+    }
+}
+
+.show-on-hover {
+
+    .show-me-on-hover {
+      display: none;
+    }
+
+    &:hover .show-me-on-hover {
+      display: flex;
+    }
+}
+
 //@import '../pages/index.scss';

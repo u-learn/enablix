@@ -98,7 +98,9 @@ var insertUsers = function() {
 		        "VIEW_REPORT-activity-trend-calculator", 
 		        "DOCSTORE_DIRECT_ACCESS",
 		        "BULK_IMPORT",
-		        "BULK_IMPORT-GOOGLEDRIVE"
+		        "BULK_IMPORT-GOOGLEDRIVE",
+		        "BULK_IMPORT-YOUTUBE",
+		        "MANAGE_DASHBOARD"
 		    ]
 		},
 		{ 

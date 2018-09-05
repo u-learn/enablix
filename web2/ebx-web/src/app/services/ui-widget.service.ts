@@ -15,4 +15,9 @@ export class UiWidgetService {
     return this.http.get(apiUrl);
   }
 
+  updateSelectedContentPack(selContentPack: any) {
+    let apiUrl = this.urlService.postSelectedContentPack();
+    return this.http.post(apiUrl, selContentPack);
+  }
+
 }

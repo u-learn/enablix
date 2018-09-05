@@ -95,6 +95,10 @@ export class Utility {
     return appCtx;
   }
 
+  static stringToBoolean(str: string) {
+    return str === 'true';
+  }
+
   /**
    * Get the value of a querystring
    * @param  {String} field The field to get the value of

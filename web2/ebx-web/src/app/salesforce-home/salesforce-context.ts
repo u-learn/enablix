@@ -1,4 +1,3 @@
-
 export class SalesforceCtx {
   
   static initialized: boolean;

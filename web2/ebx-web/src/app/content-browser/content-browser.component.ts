@@ -16,10 +16,12 @@ export class ContentBrowserComponent implements OnInit {
 
   objectKeys = Object.keys;
 
-  selectedItems: any;
   selectedItemGrps: any[];
 
   noData: boolean = false;
+
+  groupByQId?: boolean = true;
+  sortable?: boolean = false;
 
   constructor(
       public browserSearchCtrl: ContentBrowserSearchControllerService,
@@ -29,8 +31,10 @@ export class ContentBrowserComponent implements OnInit {
   ngOnInit() {
     
     this.browserSearchCtrl.initBrowserSearchBar(this.data.scopeContainer);
-    this.selectedItems = {};
     this.selectedItemGrps = [];
+
+    this.groupByQId = this.data.groupByQId;
+    this.sortable = this.data.sortable;
 
     if (this.data.selectedItems) {
       this.data.selectedItems.forEach(item => {
@@ -46,10 +50,12 @@ export class ContentBrowserComponent implements OnInit {
   private addItemToGrp(item: any) {
     
     var grpEntry = null;
-    
+    var groupingId = this.getGroupId(item);
+    var groupLabel = this.getGroupLabel(item);
+
     for(var i = 0; i < this.selectedItemGrps.length; i++) {
       var grp = this.selectedItemGrps[i];
-      if (grp.qId == item.qualifiedId) {
+      if (grp.qId == groupingId) {
         grpEntry = grp;
         break;
       }
@@ -57,14 +63,22 @@ export class ContentBrowserComponent implements OnInit {
 
     if (!grpEntry) {
       grpEntry = {
-        qId: item.qualifiedId,
-        label: item.containerLabel,
+        qId: groupingId,
+        label: groupLabel,
         items: []
       }
       this.selectedItemGrps.push(grpEntry);
     }
 
     grpEntry.items.push(item);
+  }
+
+  getGroupId(item: any) {
+    return this.groupByQId ? item.qualifiedId : "~all~";
+  }
+
+  getGroupLabel(item: any) {
+    return this.groupByQId ? item.containerLabel : null;
   }
 
   done() {
@@ -94,12 +108,13 @@ export class ContentBrowserComponent implements OnInit {
   findItem(item: any) {
     
     var itemLocation = null;
+    var itemGrpId = this.getGroupId(item);
 
     for(var i = 0; i < this.selectedItemGrps.length; i++) {
     
       var grp = this.selectedItemGrps[i];
     
-      if (grp.qId == item.qualifiedId) {
+      if (grp.qId == itemGrpId) {
     
         for (var k = 0; k < grp.items.length; k++) {
     

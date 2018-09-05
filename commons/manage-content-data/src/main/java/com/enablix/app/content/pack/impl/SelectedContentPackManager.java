@@ -13,23 +13,27 @@ import org.springframework.stereotype.Component;
 
 import com.enablix.app.content.ContentDataManager;
 import com.enablix.app.content.pack.ContentPackDataResolver;
+import com.enablix.app.content.pack.ContentPackManager;
 import com.enablix.app.content.pack.repo.ContentPointerRepository;
 import com.enablix.app.template.service.TemplateManager;
 import com.enablix.commons.constants.AppConstants;
 import com.enablix.commons.util.collection.CollectionUtil;
 import com.enablix.commons.util.process.ProcessContext;
 import com.enablix.core.api.ContentDataRecord;
+import com.enablix.core.api.SelectedContentPack;
 import com.enablix.core.api.TemplateFacade;
 import com.enablix.core.domain.content.pack.ContentPack;
 import com.enablix.core.domain.content.pack.ContentPack.Type;
 import com.enablix.core.domain.content.pack.ContentPointer;
+import com.enablix.core.domain.segment.DataSegmentInfo;
 import com.enablix.core.mongo.MongoUtil;
 import com.enablix.core.mongo.view.MongoDataView;
+import com.enablix.data.segment.view.DataSegmentInfoBuilder;
 import com.enablix.data.view.DataView;
 import com.enablix.services.util.DataViewUtil;
 
 @Component
-public class SelectedContentPackDataResolver implements ContentPackDataResolver<ContentPack> {
+public class SelectedContentPackManager implements ContentPackDataResolver<ContentPack> {
 
 	@Autowired
 	private ContentPointerRepository contentPointerRepo;
@@ -39,6 +43,34 @@ public class SelectedContentPackDataResolver implements ContentPackDataResolver<
 	
 	@Autowired
 	private TemplateManager templateMgr;
+	
+	@Autowired
+	private ContentPackManager packManager;
+	
+	@Autowired
+	private DataSegmentInfoBuilder dsInfoBuilder;
+	
+
+	public ContentPack saveOrUpdate(SelectedContentPack request, DataView dataView) {
+		
+		ContentPack updatedPack = packManager.saveOrUpdate(request.getPack());
+
+		contentPointerRepo.deleteByParentIdentity(updatedPack.getIdentity());
+		
+		List<ContentPointer> contentPointers = request.getRecords();
+		
+		for (ContentPointer contentPointer: contentPointers) {
+			
+			contentPointer.setParentIdentity(updatedPack.getIdentity());
+			contentPointer.setParentType(ContentPointer.PARENT_TYPE_CONTENT_PACK);
+			
+			DataSegmentInfo dsInfo = dsInfoBuilder.build(contentPointer.getData());
+			contentPointer.setDataSegmentInfo(dsInfo);
+		}
+		
+		contentPointerRepo.save(contentPointers);
+		return updatedPack;
+	}
 	
 	@Override
 	public Page<ContentDataRecord> getData(ContentPack pack, DataView dataView, int pageNo, int pageSize) {

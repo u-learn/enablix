@@ -31,9 +31,9 @@
     <div class="heading">Selected Assets ({{getTotalSelectedItemCount()}})</div>
     <div class="content">
       <ng-container *ngFor="let grp of selectedItemGrps">
-        <div class="content-grp" *ngIf="grp.items?.length > 0">
-          <div class="grp-label">{{grp.label}} ({{grp.items.length}})</div>
-          <div class="item" *ngFor="let item of grp.items">
+        <div class="content-grp" *ngIf="grp.items?.length > 0" dnd-sortable-container [sortableData]="grp.items">
+          <div class="grp-label" *ngIf="grp.label">{{grp.label}} ({{grp.items.length}})</div>
+          <div class="item" *ngFor="let item of grp.items; let i = index" dnd-sortable [sortableIndex]="i">
             <div class="removeBtn" (click)="removeItem(item)"><span>x</span></div>
             <div class="details">
               <div class="label">{{item.label}}</div>

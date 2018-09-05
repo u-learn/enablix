@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import "~ng2-dnd/bundles/style.css";
 
 .mat-dialog-container {  
   background: #F7F9F9 !important;

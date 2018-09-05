@@ -13,6 +13,9 @@ export class ContentPickerButtonComponent implements OnInit {
 
   @Input() preSelected?: any;
   @Input() scopeContainer?: Container;
+  @Input() groupByQId?: boolean = true;
+  @Input() sortable?:boolean = false;
+
   @Output() onSelectionDone = new EventEmitter<any>();
 
   constructor(private dialog: MatDialog) { }
@@ -29,7 +32,9 @@ export class ContentPickerButtonComponent implements OnInit {
         autoFocus: false,
         data: { 
           selectedItems: this.preSelected,
-          scopeContainer: this.scopeContainer
+          scopeContainer: this.scopeContainer,
+          groupByQId: this.groupByQId,
+          sortable: this.sortable
         }
       });
 

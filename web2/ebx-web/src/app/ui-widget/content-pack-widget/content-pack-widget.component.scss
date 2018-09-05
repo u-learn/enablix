@@ -1,3 +1,11 @@
-ebx-content-pack-widget .card-container .data-card {
+ebx-content-pack-widget {
+  
+  .title-row {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .card-container .data-card {
     margin-right: 24px;
+  }
 }

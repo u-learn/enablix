@@ -1,6 +1,16 @@
 <ng-container *ngIf="details?.data?.records?.numberOfElements > 0">
-  <div class="header">
-    <h1>{{details?.definition?.title}}</h1>
+  <div class="header show-on-hover">
+    <div class="title-row">
+      <h1>{{details?.definition?.title}}</h1>
+      <div class="dashboard-buttons show-me-on-hover" *ngIf="showManageAssets">
+        <div class="action-btn">
+          <div class="btn-with-text" (click)="openContentPicker()">
+              <div class="icon small picker"></div>
+              <p class="show-me">Manage Assets</p>
+          </div>
+        </div>
+      </div>
+    </div>
     <div *ngIf="details.data.records.totalPages > 1"><a class="cta-link" routerLink="/portal/cpwdg/{{details.definition.identity}}">See All</a></div>
   </div>
   <div class="main featured">

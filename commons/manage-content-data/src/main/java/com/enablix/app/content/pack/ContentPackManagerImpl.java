@@ -53,4 +53,10 @@ public class ContentPackManagerImpl implements ContentPackManager {
 		return response;
 	}
 
+	@Override
+	public ContentPack saveOrUpdate(ContentPack pack) {
+		// TODO Auto-generated method stub
+		return pack;
+	}
+
 }

@@ -60,6 +60,8 @@ export class ApiUrlService {
   static POST_BIZ_CONTENT_SEARCH = '/search/bizcontent/';
   static POST_TYPEAHEAD_BIZ_CONTENT_SEARCH = '/search/ta/bizcontent/';
   
+  static POST_SELECTED_CONTENT_PACK = '/contentpack/selcontent/update';
+
   static POST_SAVE_CONTENT_DRAFT = '/contentwf/savedraft/';
   static POST_SUBMIT_CONTENT_REQUEST = "/contentwf/submit/";
   static POST_DISCARD_CONTENT_REQUEST = "/contentwf/discard/";
@@ -489,6 +491,10 @@ export class ApiUrlService {
 
   postFetchLinkedMappedContent() : string {
     return this.getAPIUrl(ApiUrlService.POST_FOR_LINKED_MAPPED_DATA);
+  }
+
+  postSelectedContentPack() : string {
+    return this.getAPIUrl(ApiUrlService.POST_SELECTED_CONTENT_PACK);
   }
 
   deleteContainerDefUrl(templateId: string, containerQId: string) : string {
