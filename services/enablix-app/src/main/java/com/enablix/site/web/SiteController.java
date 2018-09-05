@@ -83,17 +83,17 @@ public class SiteController {
 		forward(request, response, htmlPage);
 	}
 	
-	@RequestMapping(method = RequestMethod.GET, value="/sales-enablement-hubspot")
-	public void siteHubspotSales(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String htmlPage = "/site-sales-enablement-hubspot.html";
+	@RequestMapping(method = RequestMethod.GET, value="/sales-{page}")
+	public void siteHubspotSales(HttpServletRequest request, HttpServletResponse response, @PathVariable String page) throws ServletException, IOException {
+		String htmlPage = "/site-sales-" + page + ".html";
 		forward(request, response, htmlPage);
 	}
 	
-	@RequestMapping(method = RequestMethod.GET, value="/sales-enablement-startup")
+	/*@RequestMapping(method = RequestMethod.GET, value="/sales-enablement-startup")
 	public void siteStartupSales(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String htmlPage = "/site-sales-enablement-startup.html";
 		forward(request, response, htmlPage);
-	}
+	}*/
 	
 	@SuppressWarnings("unchecked")
 	@RequestMapping(method = RequestMethod.POST, value="/sf/canvas/{app}")
