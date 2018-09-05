@@ -348,11 +348,32 @@ a.nav-link {
 	}	
 }
 
+.compact .circular-img {
+	height: 148px;
+	width: 148px;	
+}
+
+.compact .circular-img img {
+	max-height: 75px;
+	max-width: 75px;	
+}
+
 .circular-img {
 	border-radius: 50%;
 	box-shadow: 0 2px 5px 0 rgba(0,0,0,0.1);
 	height: 184px;
 	width: 184px;	
+}
+
+.img-hr {
+	position: absolute; 
+	top: 112px; 
+	left: 0; 
+	width: 100%;
+}
+
+.compact .img-hr {
+	top: 76px;
 }
 
 .ebx-mw-100 {
