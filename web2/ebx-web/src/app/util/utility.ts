@@ -1,3 +1,5 @@
+import { environment } from '../../environments/environment';
+
 export class Utility {
   
   static copyToClipboard(text: string) {
@@ -168,6 +170,14 @@ export class Utility {
     xhttp.open("POST", url, false);
     xhttp.setRequestHeader("Content-type", "application/json");
     xhttp.send(JSON.stringify(data));
+  }
+
+  static redirectToLoginApp(redirectBack: boolean = true) {
+    var previousUrl = window.location.href;
+    var baseUrl = environment.baseAPIUrl.length > 0 ? environment.domainUrl :
+         window.location.protocol + "://" + window.location.host + ":" + window.location.port;
+    var redirectPart = redirectBack ? "#redirect#" + encodeURIComponent(previousUrl) : ""; 
+    window.location.href = baseUrl + "/login.html#/login" + redirectPart;
   }
 
 }

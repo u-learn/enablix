@@ -96,6 +96,10 @@ button {
             box-shadow: none;
         }
 
+        &.circular {
+            border-radius: 16px;
+        }
+
         &.with-border {
             border: 1px solid #E3EBEF;
         }
@@ -265,6 +269,10 @@ button {
 
             &.picker {
                 background: url("/assets/images/icons/kit_icon.svg") no-repeat center;   
+            }
+
+            &.back {
+                background: url("/assets/images/icons/back-grey.svg") no-repeat center; 
             }
         }
     }

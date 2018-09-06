@@ -96,8 +96,20 @@
             justify-content: center;
           }
 
-          .details {
+          .hamburger {
+            margin-left: auto;
+            margin-right: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
 
+          .details {
+            margin-right: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            
             .label {
               font-size: 14px;
               line-height: 18px;

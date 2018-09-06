@@ -7,6 +7,7 @@ import 'rxjs/add/observable/throw';
 import 'rxjs/add/observable/of';
 
 import { RebootService } from '../reboot.service';
+import { Utility } from '../../util/utility';
 
 @Injectable()
 export class HttpErrorInterceptor implements HttpInterceptor {
@@ -28,7 +29,9 @@ export class HttpErrorInterceptor implements HttpInterceptor {
                     this.rebootService.reboot();
                 }
 
-                this.router.navigate(['login'], { queryParams: {returnUrl: this.router.url} });
+                //this.router.navigate(['login'], { queryParams: {returnUrl: this.router.url} });
+                Utility.redirectToLoginApp();
+                
                 return Observable.of(err);
             }
 

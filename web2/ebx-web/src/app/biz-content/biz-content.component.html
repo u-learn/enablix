@@ -1,8 +1,11 @@
 <div class="assets-navbar">
-  <div (click)="goBackHome()" *ngIf="!dialogRef">
-      <button class="circle icon-btn">
-          <div class="icon small back"></div>
-      </button>
+  <div class="dashboard-buttons" (click)="goBackHome()" *ngIf="!dialogRef">
+      <div class="action-btn circular">
+        <div class="btn-with-text" (click)="goBackHome()">
+            <div class="icon small back"></div>
+            <p class="show-me">Go Back</p>
+        </div>
+      </div>
   </div>
   <ng-container *ngIf="record">
     <div *ngIf="!editing">

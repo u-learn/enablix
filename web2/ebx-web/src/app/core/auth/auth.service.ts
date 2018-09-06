@@ -9,6 +9,7 @@ import { BootController } from '../../../boot-control';
 import { ApiUrlService } from '../api-url.service';
 import { UserService } from './user.service';
 import { RebootService } from '../reboot.service';
+import { Utility } from '../../util/utility';
 
 @Injectable()
 export class AuthService {
@@ -89,8 +90,9 @@ export class AuthService {
   }
 
   redirectToLogin() {
-    this.rebootService.reboot();
-    this.router.navigate(['login']);
+    //this.rebootService.reboot();
+    //this.router.navigate(['login']);
+    Utility.redirectToLoginApp();
   }
 
   isAuthenticated() {

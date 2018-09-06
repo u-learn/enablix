@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/Observable';
 
 import { UserService } from '../core/auth/user.service';
 import { AuthService } from '../core/auth/auth.service';
+import { Utility } from '../util/utility';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -22,8 +23,9 @@ export class AuthGuard implements CanActivate {
         if (this.initFromLocalstorage()) {
           return true;
         }
-        this.router.navigate(['login'], { queryParams: {returnUrl: state.url} });
-        return false;
+        //this.router.navigate(['login'], { queryParams: {returnUrl: state.url} });
+        Utility.redirectToLoginApp();
+        return true;
       });
     
   }

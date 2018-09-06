@@ -123,7 +123,7 @@
       </ng-container>
     </div>
     <div class="center2" *ngIf="!appCtx.embedded">
-      <button (click)="navToCConsol()" class="circle icon-btn">
+      <button (click)="navToCConsol()" class="circle icon-btn" title="Content Manager">
         <div class="icon small drafts"></div>
       </button>
       <div class="line"></div>
@@ -137,7 +137,7 @@
       <div class="center-sub center-rt">
         <ng-container *ebxAccess="'VIEW_REPORTS'">
           <div class="line"></div>
-          <button (click)="navToReports()" class="circle icon-btn">
+          <button (click)="navToReports()" class="circle icon-btn" title="Insights">
             <div class="icon small insights"></div>
           </button>
         </ng-container>
