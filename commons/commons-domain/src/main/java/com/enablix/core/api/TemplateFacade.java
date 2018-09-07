@@ -51,4 +51,6 @@ public interface TemplateFacade {
 
 	boolean isContentStackContainer(ContainerType container);
 
+	ContainerType getConcreteContainerByQId(String containerQId);
+
 }

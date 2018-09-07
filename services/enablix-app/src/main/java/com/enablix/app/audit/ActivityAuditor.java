@@ -103,13 +103,22 @@ public class ActivityAuditor {
 			
 			String containerQId = recordActivity.getContainerQId();
 			String itemIdentity = recordActivity.getItemIdentity();
+
+			String templateId = ProcessContext.get().getTemplateId();
+			TemplateFacade template = templateMgr.getTemplateFacade(templateId);
+			
+			if (StringUtil.hasText(containerQId)) {
+				ContainerType container = template.getConcreteContainerByQId(containerQId);
+				if (container != null) {
+					auditActvy.setContainerQId(container.getQualifiedId());
+				}
+			}
 			
 			if (!StringUtil.hasText(recordActivity.getItemTitle())
 					&& StringUtil.hasText(itemIdentity)
 					&& StringUtil.hasText(containerQId)) {
 				
-				String templateId = ProcessContext.get().getTemplateId();
-				TemplateFacade template = templateMgr.getTemplateFacade(templateId);
+
 
 				ContentDataRef contentRef = ContentDataRef.createContentRef(templateId, containerQId, itemIdentity, null);
 				

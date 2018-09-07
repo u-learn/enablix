@@ -368,5 +368,14 @@ public class TemplateWrapper implements TemplateFacade {
 	public boolean isContentStackContainer(ContainerType container) {
 		return container != null && this.contentStackContainers.contains(container.getQualifiedId());
 	}
+
+	@Override
+	public ContainerType getConcreteContainerByQId(String containerQId) {
+		ContainerType container = getContainerDefinition(containerQId);
+		if (TemplateUtil.isLinkedContainer(container)) {
+			container = getContainerDefinition(container.getLinkContainerQId());
+		}
+		return container;
+	}
 	
 }
