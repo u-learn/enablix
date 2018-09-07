@@ -77,22 +77,22 @@ export class AuthService {
           console.log("Logout success...");
           
           this.clearLoginInfo();
-          this.redirectToLogin();
+          this.redirectToLogin(false);
           return resp;
         }, 
         err => {
           console.log("Logout error ...");
           this.loginIn.emit(null);
           this.clearLoginInfo();
-          this.redirectToLogin();
+          this.redirectToLogin(false);
         });
 
   }
 
-  redirectToLogin() {
+  redirectToLogin(redirectBack: boolean = true) {
     //this.rebootService.reboot();
     //this.router.navigate(['login']);
-    Utility.redirectToLoginApp();
+    Utility.redirectToLoginApp(redirectBack);
   }
 
   isAuthenticated() {

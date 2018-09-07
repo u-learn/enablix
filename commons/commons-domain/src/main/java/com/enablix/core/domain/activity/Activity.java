@@ -63,6 +63,12 @@ public abstract class Activity {
 	
 	protected ActivityType activityType; 
 	
+	// required for aggregation to work
+	private String itemIdentity;
+	
+	// required for aggregation to work
+	private String containerQId;
+	
 	protected Activity() {
 		// for ORM
 	}
@@ -86,6 +92,22 @@ public abstract class Activity {
 
 	public void setActivityType(ActivityType activityType) {
 		this.activityType = activityType;
+	}
+
+	public String getItemIdentity() {
+		return itemIdentity;
+	}
+
+	public void setItemIdentity(String itemIdentity) {
+		this.itemIdentity = itemIdentity;
+	}
+
+	public String getContainerQId() {
+		return containerQId;
+	}
+
+	public void setContainerQId(String containerQId) {
+		this.containerQId = containerQId;
 	}
 
 }

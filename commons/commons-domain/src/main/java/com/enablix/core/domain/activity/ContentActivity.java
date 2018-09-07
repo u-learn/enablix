@@ -8,11 +8,7 @@ public class ContentActivity extends ContextAwareActivity implements RecordRefer
 		CONTENT, REF_DATA
 	}
 	
-	private String itemIdentity;
-	
 	private String itemTitle;
-	
-	private String containerQId;
 	
 	private ContainerType containerType;
 	
@@ -25,26 +21,10 @@ public class ContentActivity extends ContextAwareActivity implements RecordRefer
 		
 		super(Category.CONTENT, activityType);
 
-		this.itemIdentity = itemIdentity;
-		this.containerQId = containerQId;
+		setItemIdentity(itemIdentity);
+		setContainerQId(containerQId);
 		this.containerType = containerType;
 		this.itemTitle = itemTitle;
-	}
-
-	public String getItemIdentity() {
-		return itemIdentity;
-	}
-
-	public void setItemIdentity(String itemIdentity) {
-		this.itemIdentity = itemIdentity;
-	}
-
-	public String getContainerQId() {
-		return containerQId;
-	}
-
-	public void setContainerQId(String containerQId) {
-		this.containerQId = containerQId;
 	}
 
 	public ContainerType getContainerType() {

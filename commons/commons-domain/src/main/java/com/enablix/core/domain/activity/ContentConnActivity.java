@@ -4,8 +4,6 @@ public class ContentConnActivity extends Activity {
 
 	private String itemTitle;
 	
-	private String itemIdentity;
-	
 	@SuppressWarnings("unused")
 	private ContentConnActivity() {
 		// for ORM
@@ -21,14 +19,6 @@ public class ContentConnActivity extends Activity {
 
 	public void setItemTitle(String itemTitle) {
 		this.itemTitle = itemTitle;
-	}
-
-	public String getItemIdentity() {
-		return itemIdentity;
-	}
-
-	public void setItemIdentity(String itemIdentity) {
-		this.itemIdentity = itemIdentity;
 	}
 
 }

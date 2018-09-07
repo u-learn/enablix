@@ -36,7 +36,8 @@ export class ContentPackWidgetComponent implements OnInit {
         this.showContentPicker(res);
       },
       err => {
-        this.alert.error("Error fetching widget data", err.statusCode);
+        this.alert.error("Error fetching " + this.details.definition.title 
+          + " data", err.statusCode);
       }
     );
 

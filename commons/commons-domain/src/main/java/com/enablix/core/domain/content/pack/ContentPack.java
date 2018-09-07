@@ -8,7 +8,7 @@ import com.enablix.core.domain.BaseDocumentEntity;
 public class ContentPack extends BaseDocumentEntity {
 
 	public enum Type {
-		SELECTED_CONTENT
+		SELECTED_CONTENT, RECENT_ACCESS_CONTENT
 	}
 	
 	private String title;

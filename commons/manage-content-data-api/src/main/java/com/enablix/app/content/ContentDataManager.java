@@ -3,6 +3,7 @@ package com.enablix.app.content;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 
 import org.springframework.data.domain.Pageable;
 
@@ -11,8 +12,8 @@ import com.enablix.app.content.fetch.FetchContentRequest;
 import com.enablix.app.content.update.UpdateContentRequest;
 import com.enablix.app.content.update.UpdateContentResponse;
 import com.enablix.core.api.ContentDataRecord;
-import com.enablix.core.api.ContentDataRef;
 import com.enablix.core.api.ContentRecordGroup;
+import com.enablix.core.api.ContentRecordRef;
 import com.enablix.core.api.ContentStackItem;
 import com.enablix.core.api.TemplateFacade;
 import com.enablix.data.view.DataView;
@@ -32,7 +33,7 @@ public interface ContentDataManager {
 	Map<String, Object> fetchParentRecord(TemplateFacade template, 
 			String recordQId, Map<String, Object> record, DataView view);
 	
-	Map<String, Object> getContentRecord(ContentDataRef dataRef, TemplateFacade template, DataView view);
+	Map<String, Object> getContentRecord(ContentRecordRef dataRef, TemplateFacade template, DataView view);
 	
 	Map<String, Object> getContentRecordByDocRef(String docIdentity, String docContentQId, DataView view);
 	
@@ -53,5 +54,8 @@ public interface ContentDataManager {
 
 	List<ContentRecordGroup> fetchStackDetails(List<Map<String, String>> stackValue, Pageable pageable,
 			DataView dataView);
+	
+	<T> List<ContentDataRecord> getContentRecords(Iterable<T> itr, 
+			Function<T, ContentRecordRef> dataRefTx, DataView view);
 	
 }

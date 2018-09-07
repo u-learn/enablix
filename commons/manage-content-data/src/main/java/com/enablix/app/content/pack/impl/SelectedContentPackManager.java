@@ -1,8 +1,6 @@
 package com.enablix.app.content.pack.impl;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -15,13 +13,9 @@ import com.enablix.app.content.ContentDataManager;
 import com.enablix.app.content.pack.ContentPackDataResolver;
 import com.enablix.app.content.pack.ContentPackManager;
 import com.enablix.app.content.pack.repo.ContentPointerRepository;
-import com.enablix.app.template.service.TemplateManager;
 import com.enablix.commons.constants.AppConstants;
-import com.enablix.commons.util.collection.CollectionUtil;
-import com.enablix.commons.util.process.ProcessContext;
 import com.enablix.core.api.ContentDataRecord;
 import com.enablix.core.api.SelectedContentPack;
-import com.enablix.core.api.TemplateFacade;
 import com.enablix.core.domain.content.pack.ContentPack;
 import com.enablix.core.domain.content.pack.ContentPack.Type;
 import com.enablix.core.domain.content.pack.ContentPointer;
@@ -40,9 +34,6 @@ public class SelectedContentPackManager implements ContentPackDataResolver<Conte
 	
 	@Autowired
 	private ContentDataManager dataMgr;
-	
-	@Autowired
-	private TemplateManager templateMgr;
 	
 	@Autowired
 	private ContentPackManager packManager;
@@ -84,19 +75,7 @@ public class SelectedContentPackManager implements ContentPackDataResolver<Conte
 				mongoDataView, () -> contentPointerRepo.findByParentIdentity(pack.getIdentity(), pageable));
 		
 		if (pageContent != null && pageContent.hasContent()) {
-		
-			TemplateFacade template = templateMgr.getTemplateFacade(ProcessContext.get().getTemplateId());
-			List<ContentDataRecord> dataRecords = new ArrayList<>();
-			
-			for (ContentPointer content : pageContent) {
-				Map<String, Object> contentRecord = dataMgr.getContentRecord(content.getData(), template, dataView);
-				
-				if (CollectionUtil.isNotEmpty(contentRecord)) {
-					dataRecords.add(new ContentDataRecord(
-						template.getId(), content.getData().getContainerQId(), contentRecord));
-				}
-			}
-			
+			List<ContentDataRecord> dataRecords = dataMgr.getContentRecords(pageContent, (cp) -> cp.getData(), dataView);
 			dataPage = new PageImpl<>(dataRecords, pageable, pageContent.getTotalElements());
 		}
 		

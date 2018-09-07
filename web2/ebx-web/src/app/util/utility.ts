@@ -175,7 +175,8 @@ export class Utility {
   static redirectToLoginApp(redirectBack: boolean = true) {
     var previousUrl = window.location.href;
     var baseUrl = environment.baseAPIUrl.length > 0 ? environment.domainUrl :
-         window.location.protocol + "://" + window.location.host + ":" + window.location.port;
+         (window.location.protocol + "//" + window.location.hostname 
+           + (window.location.port.length != 0 ? (":" + window.location.port) : ""));
     var redirectPart = redirectBack ? "#redirect#" + encodeURIComponent(previousUrl) : ""; 
     window.location.href = baseUrl + "/login.html#/login" + redirectPart;
   }

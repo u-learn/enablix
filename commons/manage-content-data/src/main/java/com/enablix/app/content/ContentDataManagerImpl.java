@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,6 +40,7 @@ import com.enablix.content.quality.QualityRuleSet;
 import com.enablix.core.api.ContentDataRecord;
 import com.enablix.core.api.ContentDataRef;
 import com.enablix.core.api.ContentRecordGroup;
+import com.enablix.core.api.ContentRecordRef;
 import com.enablix.core.api.ContentStackItem;
 import com.enablix.core.api.SearchRequest;
 import com.enablix.core.api.SearchRequest.Pagination;
@@ -343,13 +345,13 @@ public class ContentDataManagerImpl implements ContentDataManager {
 
 
 	@Override
-	public Map<String, Object> getContentRecord(ContentDataRef dataRef, TemplateFacade template, DataView dataView) {
+	public Map<String, Object> getContentRecord(ContentRecordRef dataRef, TemplateFacade template, DataView dataView) {
 		
 		MongoDataView view = DataViewUtil.getMongoDataView(dataView);
-		String collName = template.getCollectionName(dataRef.getContainerQId());
+		String collName = template.getCollectionName(dataRef.getContentQId());
 		
 		Map<String, Object> triggerItemRecord = StringUtil.hasText(collName) ? 
-				crud.findRecord(collName, dataRef.getInstanceIdentity(), view) : null;
+				crud.findRecord(collName, dataRef.getRecordIdentity(), view) : null;
 
 		return triggerItemRecord;
 	}
@@ -725,6 +727,32 @@ public class ContentDataManagerImpl implements ContentDataManager {
 	
 	private static interface DocumentProcessor {
 		DocumentMetadata process(DocumentMetadata docMd) throws IOException;
+	}
+
+	@Override
+	public <T> List<ContentDataRecord> getContentRecords(Iterable<T> itr, 
+			Function<T, ContentRecordRef> dataRefTx, DataView view) {
+		
+		TemplateFacade template = templateMgr.getTemplateFacade(ProcessContext.get().getTemplateId());
+		
+		List<ContentDataRecord> dataRecords = new ArrayList<>();
+		
+		for (T content : itr) {
+			
+			ContentRecordRef dataRef = dataRefTx.apply(content);
+			
+			if (dataRef != null) {
+			
+				Map<String, Object> contentRecord = getContentRecord(dataRef, template, view);
+				
+				if (CollectionUtil.isNotEmpty(contentRecord)) {
+					dataRecords.add(new ContentDataRecord(
+						template.getId(), dataRef.getContentQId(), contentRecord));
+				}
+			}
+		}
+		
+		return dataRecords;
 	}
 	
 }
