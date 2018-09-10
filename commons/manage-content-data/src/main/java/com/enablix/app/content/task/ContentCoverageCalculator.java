@@ -28,6 +28,7 @@ import com.enablix.core.commons.xsdtopojo.ContentItemType;
 import com.enablix.core.domain.content.summary.ContentCoverage;
 import com.enablix.core.mongo.content.ContentCrudService;
 import com.enablix.core.mongo.view.MongoDataView;
+import com.enablix.services.util.ContentDataUtil;
 import com.enablix.services.util.TemplateUtil;
 import com.enablix.services.util.template.walker.ContainerVisitor;
 import com.enablix.services.util.template.walker.TemplateContainerWalker;
@@ -75,6 +76,11 @@ public class ContentCoverageCalculator implements Task {
 		final String templateId = ProcessContext.get().getTemplateId();
 		final TemplateFacade template = templateManager.getTemplateFacade(templateId);
 
+		if (template == null) {
+			LOGGER.error("Template [{}] not found for tenant [{}]", templateId, ProcessContext.get().getTenantId());
+			return;
+		}
+		
 		reportUtil.updateLastestFlagOfOldRecords(ContentCoverage.class);
 		
 		TemplateContainerWalker walker = new TemplateContainerWalker(template.getTemplate(),
@@ -97,10 +103,17 @@ public class ContentCoverageCalculator implements Task {
 					
 					ContentCoverage contentCoverage = new ContentCoverage();
 					contentCoverage.setContentQId(containerQId);
+					contentCoverage.setContainerLabel(container.getLabel());
 					contentCoverage.setAsOfDate(currentDate);
 					contentCoverage.setLatest(true);
 					contentCoverage.setRecordIdentity(identity);
 					contentCoverage.setRecordTitle(title);
+					contentCoverage.setRecordCreatedAt(ContentDataUtil.getContentCreatedAt(record));
+					contentCoverage.setRecordCreatedBy(ContentDataUtil.getContentCreatedBy(record));
+					contentCoverage.setRecordCreatedByName(ContentDataUtil.getContentCreatedByName(record));
+					contentCoverage.setRecordModifiedAt(ContentDataUtil.getContentModifiedAt(record));
+					contentCoverage.setRecordModifiedBy(ContentDataUtil.getContentModifiedBy(record));
+					contentCoverage.setRecordModifiedByName(ContentDataUtil.getContentModifiedByName(record));
 					
 					ContentDataRecord dataRecord = new ContentDataRecord(templateId, containerQId, record);
 					

@@ -54,7 +54,7 @@ public class SimpleTaskExecutor implements TaskExecutor {
 			task.getTaskBean().run(taskContext);
 			taskListenerRegistry.runOnCompletionListeners(taskContext, taskConfig);
 		
-		} catch (Exception e) {
+		} catch (Throwable e) {
 			LOGGER.error("Error while running task [" + taskConfig.getName() + "]", e);
 			taskListenerRegistry.runOnErrorListeners(e, taskContext, taskConfig);
 		}

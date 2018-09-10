@@ -121,6 +121,17 @@ export class UserService {
     return true;
   }
 
+  userHasAtleastOnePermission(permissions: string[]) {
+    if (permissions) {
+      for (var i = 0; i < permissions.length; i++) {
+        if (this.userHasPermission(permissions[i])) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
 }
 
 interface PermissionCheck {

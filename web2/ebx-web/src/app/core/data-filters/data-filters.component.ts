@@ -20,6 +20,7 @@ export class DataFiltersComponent implements OnInit {
 
   _config: DataFiltersConfig;
 
+  @Input() layout?: string = 'top';
   @Output() onSearch = new EventEmitter<any>();
   @Output() onReset = new EventEmitter<void>(); 
 

@@ -36,6 +36,7 @@ export class ContentCoverageReportService implements ReportDataProvider {
     let config : ReportConfig = new ReportConfig();
     
     config.id = "content-coverage-report";
+    config.category = "coverage";
     config.name = "Content Coverage";
     config.heading = "Content Coverage";
     config.type = "HEATMAP";

@@ -22,7 +22,7 @@ public abstract class TaskListenerAdapter implements TaskListener {
 	}
 
 	@Override
-	public void onTaskError(Exception e, TaskContext context, TaskConfig taskConfig) {
+	public void onTaskError(Throwable e, TaskContext context, TaskConfig taskConfig) {
 		// empty method
 	}
 

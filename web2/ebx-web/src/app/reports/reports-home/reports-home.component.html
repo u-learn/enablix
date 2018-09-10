@@ -3,18 +3,29 @@
   <div class="company no-sidebar">
     <div class="main">
       <div class="sub-tabs">
-        <a routerLink="/portal/reports" routerLinkActive="tab-active" [routerLinkActiveOptions]="{ exact: true }">All Activity</a>
-        <ng-container *ngFor="let rpt of reports">
-          <a *ebxAccess="'VIEW_REPORT-' + rpt.id" [class.tab-active]="rpt.id == selectedRpt?.id" (click)=navToReport(rpt)>{{rpt.name}}</a>
+        <ng-container *ngFor="let rptCat of reportCategories">
+          <a [class.tab-active]="selectedRptCategory == rptCat.id" (click)="navToFirstRptOfCategory(rptCat.id)" *ngIf="hasAccess(rptCat.id)">{{rptCat.label}}</a>
         </ng-container>
-        <a routerLink="/portal/reports/content-engagement" routerLinkActive="tab-active"  *ebxAccess="'VIEW_REPORT-content-engagement-summary'">Content Engagement</a>
-        <a routerLink="/portal/reports/content-attribution" routerLinkActive="tab-active"  *ebxAccess="'VIEW_REPORT-content-attribution-summary'">Content Attribution</a>
       </div>
-      <div class="tab-content" *ngIf="selectedRpt">
-        <ebx-report-detail [reportConfig]="selectedRpt"></ebx-report-detail>
-      </div>
-      <div class="tab-content" *ngIf="!selectedRpt">
-        <router-outlet></router-outlet>
+      <div class="tab-content row-data">
+        <div class="tab-left">
+          <ng-container *ngFor="let rpt of getReportsByCategory(selectedRptCategory)">
+            <div class="heading" *ngIf="hasReportPermission(rpt)">
+              <h2><a [class.tab-active]="rpt.id == selectedRpt?.id" (click)=navToReport(rpt)>{{rpt.name}}</a></h2>
+              <p class="sub-heading" [hidden]="!rpt.subheading || rpt.id !== selectedRpt?.id">{{rpt.subheading}}</p>
+            </div>
+          </ng-container>
+        </div>
+        <ng-container *ngIf="selectedRpt && hasReportPermission(selectedRpt)">
+          <div class="tab-right" *ngIf="selectedRpt.type != 'CUSTOM'">
+            <ebx-report-detail [reportConfig]="selectedRpt"></ebx-report-detail>
+          </div>
+          <div class="tab-right" *ngIf="selectedRpt.type == 'CUSTOM'">
+            <ebx-activity-audit *ngIf="selectedRpt.id == 'all-activity'"></ebx-activity-audit>
+            <ebx-content-attribution *ngIf="selectedRpt.id == 'content-attribution-summary'"></ebx-content-attribution>
+            <ebx-content-engagement *ngIf="selectedRpt.id == 'content-engagement-summary'"></ebx-content-engagement>
+          </div>
+        </ng-container>
       </div>
     </div>
   </div>

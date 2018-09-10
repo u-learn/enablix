@@ -3,12 +3,17 @@ import { Observable } from 'rxjs/Observable';
 import { FilterMetadata } from '../../core/data-search/filter-metadata.model';
 import { DataFilter, DataFilterValueTx } from '../../core/data-filters/data-filters.model';
 
-export class ReportConfig {
+export class ReportBaseConfig {
   id: string;
+  category: string;
   name: string;
   heading: string;
-  subheading: string;
-  type: string;
+  subheading?: string;
+  type: string;  
+}
+
+export class ReportConfig extends ReportBaseConfig {
+
   init: () => void;
   options: { [key: string]: any };
   chartOptions: { [key: string]: any };

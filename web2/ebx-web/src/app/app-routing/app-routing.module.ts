@@ -246,28 +246,15 @@ const routes: Routes = [
         },
         {
           path: 'reports',
-          component: ReportsHomeComponent,
-          children: [
-            {
-              path: '',
-              component: ActivityAuditComponent,
-              resolve: {
-                actTypes: AuditActivityResolve
-              }
-            },
-            {
-              path: 'content-engagement',
-              component: ContentEngagementComponent
-            },
-            {
-              path: 'content-attribution',
-              component: ContentAttributionComponent
-            }
-          ]
+          pathMatch: 'full',
+          redirectTo: '/portal/reports/d/all-activity'
         },
         {
           path: 'reports/d/:reportId',
-          component: ReportsHomeComponent
+          component: ReportsHomeComponent,
+          resolve: {
+            actTypes: AuditActivityResolve
+          }
         },
         {
           path: 'myaccount',
@@ -315,7 +302,7 @@ const routes: Routes = [
     RouterModule.forRoot(
         routes, 
         { 
-          /*enableTracing: true,*/
+          enableTracing: true,
           onSameUrlNavigation: 'reload'
         }
       )

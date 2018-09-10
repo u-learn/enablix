@@ -12,7 +12,7 @@ import { UserPreferenceService } from '../core/user-preference.service';
 @Injectable()
 export class ReportService {
 
-  reports: ReportConfig[] = [];
+  reports: ReportBaseConfig[] = [];
   initialized: boolean = false;
 
   passThruValidator = new PassThroughDataFilterValidator();
@@ -26,6 +26,30 @@ export class ReportService {
   init() {
     
     if (!this.initialized) {
+
+      this.reports.push({
+          id: 'all-activity',
+          category: 'activity',
+          name : "All Activity",
+          heading : "All Activity",
+          type : "CUSTOM"
+        });
+
+      this.reports.push({
+          id: 'content-engagement-summary',
+          category: 'engagement',
+          name : "Content Engagement",
+          heading : "Content Engagement",
+          type : "CUSTOM"
+        });
+
+      this.reports.push({
+          id: 'content-attribution-summary',
+          category: 'attribution',
+          name : "Content Attribution",
+          heading : "Content Attribution",
+          type : "CUSTOM"
+        });
 
       this.reports.push(this.contentCoverageRptService.getReportConfig());
       this.reports.push(this.activityTrendRptService.getReportConfig());

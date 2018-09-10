@@ -13,9 +13,23 @@ public class ContentCoverage extends BaseDocumentEntity {
 	
 	private String contentQId;
 	
+	private String containerLabel;
+	
 	private String recordTitle;
 	
 	private String recordIdentity;
+	
+	private Date recordCreatedAt;
+	
+	private String recordCreatedBy;
+	
+	private String recordCreatedByName;
+	
+	private Date recordModifiedAt;
+	
+	private String recordModifiedBy;
+	
+	private String recordModifiedByName;
 	
 	private List<CoverageStat> stats;
 	
@@ -33,6 +47,14 @@ public class ContentCoverage extends BaseDocumentEntity {
 
 	public void setContentQId(String contentQId) {
 		this.contentQId = contentQId;
+	}
+	
+	public String getContainerLabel() {
+		return containerLabel;
+	}
+
+	public void setContainerLabel(String containerLabel) {
+		this.containerLabel = containerLabel;
 	}
 
 	public String getRecordTitle() {
@@ -82,6 +104,54 @@ public class ContentCoverage extends BaseDocumentEntity {
 
 	public void setLatest(boolean latest) {
 		this.latest = latest;
+	}
+	
+	public Date getRecordCreatedAt() {
+		return recordCreatedAt;
+	}
+
+	public void setRecordCreatedAt(Date recordCreatedAt) {
+		this.recordCreatedAt = recordCreatedAt;
+	}
+
+	public String getRecordCreatedBy() {
+		return recordCreatedBy;
+	}
+
+	public void setRecordCreatedBy(String recordCreatedBy) {
+		this.recordCreatedBy = recordCreatedBy;
+	}
+
+	public String getRecordCreatedByName() {
+		return recordCreatedByName;
+	}
+
+	public void setRecordCreatedByName(String recordCreatedByName) {
+		this.recordCreatedByName = recordCreatedByName;
+	}
+
+	public Date getRecordModifiedAt() {
+		return recordModifiedAt;
+	}
+
+	public void setRecordModifiedAt(Date recordModifiedAt) {
+		this.recordModifiedAt = recordModifiedAt;
+	}
+
+	public String getRecordModifiedBy() {
+		return recordModifiedBy;
+	}
+
+	public void setRecordModifiedBy(String recordModifiedBy) {
+		this.recordModifiedBy = recordModifiedBy;
+	}
+
+	public String getRecordModifiedByName() {
+		return recordModifiedByName;
+	}
+
+	public void setRecordModifiedByName(String recordModifiedByName) {
+		this.recordModifiedByName = recordModifiedByName;
 	}
 
 	@Override

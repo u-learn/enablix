@@ -38,7 +38,7 @@ public class DefaultTaskListenerRegistry extends SpringBackedAbstractFactory<Tas
 	}
 
 	@Override
-	public void runOnErrorListeners(Exception e, TaskContext context, TaskConfig taskConfig) {
+	public void runOnErrorListeners(Throwable e, TaskContext context, TaskConfig taskConfig) {
 		for (TaskListener listener : registeredInstances()) {
 			listener.onTaskError(e, context, taskConfig);
 		}

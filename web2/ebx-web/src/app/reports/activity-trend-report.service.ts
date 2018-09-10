@@ -31,6 +31,7 @@ export class ActivityTrendReportService implements ReportDataProvider {
     let config : ReportConfig = new ReportConfig();
     
     config.id = "activity-trend-calculator";
+    config.category = "activity";
     config.name = "Activity Trend";
     config.heading = "Activity Trend";
     config.type = "MULTILINE";

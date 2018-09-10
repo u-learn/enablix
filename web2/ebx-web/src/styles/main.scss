@@ -526,6 +526,53 @@ body {
 
 .tab-content {
   padding-top: 40px;
+
+  &.row-data {
+    display: flex;
+    flex-direction: row;
+
+    .tab-left {
+        flex: 1 1 100%;
+        max-width: 25%;
+        margin-right: 40px;
+
+        .heading {
+
+            font-family: $FPThin;
+            margin-bottom: 24px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.03);
+            padding-bottom: 16px;
+            color: $grey-med;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+
+            h2 {
+                font-size: 20px;
+            }
+
+            a {
+                cursor: pointer;
+            }
+            
+            .tab-active {
+                color: $black;
+            }   
+
+            .sub-heading {
+              font-family: $FPLight;
+              font-size: 14px;
+              color: #808C9B;
+              line-height: 17px;
+              padding-top: 16px;
+            }
+        }
+    }
+
+    .tab-right {
+        width: 100%;
+    }
+  }
 }
 
 .row-select-cbox {

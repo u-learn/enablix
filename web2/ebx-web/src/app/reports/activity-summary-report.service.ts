@@ -28,6 +28,7 @@ export class ActivitySummaryReportService implements ReportDataProvider {
     let config : ReportConfig = new ReportConfig();
     
     config.id = "activity-metric-calculator";
+    config.category = "activity";
     config.name = "Activity Summary";
     config.heading = "Activity Summary";
     config.type = "HORIZONTAL_BAR";

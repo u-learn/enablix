@@ -10,6 +10,6 @@ public interface TaskListener {
 	
 	void onTaskCompletion(TaskContext context, TaskConfig taskConfig);
 	
-	void onTaskError(Exception e, TaskContext context, TaskConfig taskConfig);
+	void onTaskError(Throwable e, TaskContext context, TaskConfig taskConfig);
 	
 }

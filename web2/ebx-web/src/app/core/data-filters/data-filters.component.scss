@@ -6,6 +6,29 @@
 
   width: 100%;
 
+  &.two-col {
+    display: flex;
+    flex-wrap: wrap;
+
+    .header {
+      width: 100%;
+    }
+
+    .form-input {
+      width: 50%;
+
+      .input-control {
+        padding-right: 24px;
+      }
+    }
+
+    .publish-buttons {
+      width: 100%;
+      margin-top: 8px;
+    }
+
+  }
+
   .header {
     font-family: $FPThin;
     margin-bottom: 24px;

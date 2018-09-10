@@ -10,6 +10,6 @@ public interface TaskListenerRegistry {
 	
 	void runOnCompletionListeners(TaskContext context, TaskConfig taskConfig);
 	
-	void runOnErrorListeners(Exception e, TaskContext context, TaskConfig taskConfig);
+	void runOnErrorListeners(Throwable e, TaskContext context, TaskConfig taskConfig);
 
 }
