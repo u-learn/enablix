@@ -13,7 +13,7 @@
   <div>
     <ebx-card-preview *ngIf="record" [record]="record" [container]="container"></ebx-card-preview>
     <div class="content">
-      <p class="content-type" [innerHtml]="containerLabel" (click)="navToContentList()"></p>
+      <p class="content-type"><span [innerHtml]="containerLabel" (click)="navToContentList()"></span></p>
       <p class="card-title" [innerHtml]="title" ellipsis ellipsis-resize-detection="window"></p>
       <p class="company-properties">
         <span>{{record?.modifiedAt | ebxDateOnly}}</span>
