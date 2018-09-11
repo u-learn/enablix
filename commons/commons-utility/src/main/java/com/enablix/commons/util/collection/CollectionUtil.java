@@ -294,6 +294,26 @@ public final class CollectionUtil {
 		return collection.add(value);
 	}
 	
+	public static <T> List<T> getSubList(List<T> input, int fromIndex, int toIndex) {
+		
+		if (fromIndex > input.size() || toIndex <= 0) {
+			return new ArrayList<>();
+		}
+		
+		int startIndex = fromIndex;
+		
+		if (fromIndex < 0) {
+			startIndex = 0;
+		}
+		
+		int endIndex = toIndex;
+		if (toIndex > input.size()) {
+			endIndex = input.size();
+		}
+		
+		return input.subList(startIndex, endIndex);
+	}
+	
 	/**
 	 * Prevent instantiation.
 	 */
