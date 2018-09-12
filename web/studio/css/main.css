@@ -661,6 +661,7 @@ form.block .foot {
 .logo img {
 	margin-right: 0.25em;
 	vertical-align: bottom;
+	max-height: 40px;
 }
 
 

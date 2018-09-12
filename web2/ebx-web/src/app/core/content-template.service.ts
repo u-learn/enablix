@@ -51,10 +51,10 @@ export class ContentTemplateService {
   }
 
   getContainerByQId(containerQId: string) : Container {
-    
+
     let container = this.templateCache.getContainerByQId(containerQId);
 
-    if (!container) {
+    if (!container && containerQId) {
       // check if parent is a content stack
       let stackItemQId = Utility.getParentQId(containerQId);
       if (stackItemQId) {

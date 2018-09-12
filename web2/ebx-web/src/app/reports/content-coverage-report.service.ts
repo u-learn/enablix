@@ -37,8 +37,8 @@ export class ContentCoverageReportService implements ReportDataProvider {
     
     config.id = "content-coverage-report";
     config.category = "coverage";
-    config.name = "Content Coverage";
-    config.heading = "Content Coverage";
+    config.name = "Dimension";
+    config.heading = "Dimension";
     config.type = "HEATMAP";
     config.init = function() {};
 

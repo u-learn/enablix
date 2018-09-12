@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { MatDialog, MatDialogRef } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 
@@ -17,16 +18,17 @@ import { OffsetDaysFilterValueTx } from '../model/report-config.model';
 import { Utility } from '../../util/utility';
 import { Constants } from '../../util/constants';
 import { ContentTemplateService } from '../../core/content-template.service';
+import { ContentEngagementDistributionComponent } from './content-engagement-distribution/content-engagement-distribution.component';
 import { DataSearchService } from '../../core/data-search/data-search.service';
 import { DataSearchRequest } from '../../core/data-search/data-search-request.model';
 
 @Component({
-  selector: 'ebx-content-engagement',
-  templateUrl: './content-engagement.component.html',
-  styleUrls: ['./content-engagement.component.scss'],
+  selector: 'ebx-content-engagement-demo',
+  templateUrl: './content-engagement-demo.component.html',
+  styleUrls: ['./content-engagement-demo.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class ContentEngagementComponent implements OnInit {
+export class ContentEngagementDemoComponent implements OnInit {
 
   dataPage: DataPage;
   tableColumns: TableColumn[];
@@ -40,7 +42,8 @@ export class ContentEngagementComponent implements OnInit {
   constructor(private http: HttpClient, private apiUrlService: ApiUrlService,
     private alert: AlertService, private actvyAuditService: ActivityAuditService,
     private navService: NavigationService, private router: Router,
-    private ctService: ContentTemplateService, private dsService: DataSearchService) { }
+    private ctService: ContentTemplateService, private dsService: DataSearchService,
+    private dialog: MatDialog) { }
 
   ngOnInit() {
     
@@ -72,10 +75,11 @@ export class ContentEngagementComponent implements OnInit {
           return Observable.of(bizContentOptions);
         },
         defaultValue: function() { return null; },
+        validator: new AtleastOneValueDataFilterValidator("Please select one or more Content Type"),
         valueTx: IdPropDataFilterValueTx.theInstance
       },
       {
-        id: "timePeriod",
+        id: "auditEventOcc",
         type: "multi-select",
         options: {
           singleSelect: true
@@ -84,13 +88,13 @@ export class ContentEngagementComponent implements OnInit {
         masterList: function() {
           return Observable.of(metricPeriods);
         },
-        defaultValue: function() { return [metricPeriods[0]]; },
+        defaultValue: function() { return null; },
         validator: new AtleastOneValueDataFilterValidator("Please select Time Period"),
         valueTx: OffsetDaysFilterValueTx.theInstance
       }
     ];
 
-    var prefKey = "report.content-engagement.defaultFilterValues";
+    var prefKey = "report.content-engagement-summary.defaultFilterValues";
     this.dataFiltersConfig = {
       filters: filters,
       options: {
@@ -106,6 +110,7 @@ export class ContentEngagementComponent implements OnInit {
       {
         heading: "Title",
         key: "contentTitle",
+        sortProp: "contentTitle",
         headerCssClass: "small-font content-title-col"
       },
       {
@@ -114,16 +119,37 @@ export class ContentEngagementComponent implements OnInit {
         headerCssClass: "small-font content-type-col"
       },
       {
-        heading: "Access Count",
-        key: "accessCount",
-        sortProp: "accessCount",
+        heading: "Internal Access",
+        key: "internalAccess",
+        sortProp: "internalAccess.count",
         dataType: DataType.NUMBER,
         headerCssClass: "small-font"
       },
       {
-        heading: "Download Count",
-        key: "downloadCount",
-        sortProp: "downloadCount",
+        heading: "Internal Downloads",
+        key: "internalDownload",
+        sortProp: "internalDownloads.count",
+        dataType: DataType.NUMBER,
+        headerCssClass: "small-font"
+      },
+      {
+        heading: "External Downloads",
+        key: "externalDownload",
+        sortProp: "externalDownloads.count",
+        dataType: DataType.NUMBER,
+        headerCssClass: "small-font"
+      },
+      {
+        heading: "Internal Shares",
+        key: "internalShares",
+        sortProp: "internalShares.count",
+        dataType: DataType.NUMBER,
+        headerCssClass: "small-font"
+      },
+      {
+        heading: "External Shares",
+        key: "externalShares.count",
+        sortProp: "externalShares.count",
         dataType: DataType.NUMBER,
         headerCssClass: "small-font"
       }
@@ -133,8 +159,8 @@ export class ContentEngagementComponent implements OnInit {
     this.pagination.pageNum = 0;
     this.pagination.pageSize = 10;
     this.pagination.sort = new SortCriteria();
-    this.pagination.sort.direction = Direction.DESC;
-    this.pagination.sort.field = 'accessCount';
+    this.pagination.sort.direction = Direction.ASC;
+    this.pagination.sort.field = 'contentTitle';
   }
 
   fetchFilteredData(filters: any) {
@@ -151,22 +177,32 @@ export class ContentEngagementComponent implements OnInit {
     
     this.lastUsedFilters = filters;
     Utility.removeNullProperties(filters.dataFilters);
-    console.log(filters.dataFilters);
 
+    let CONTENT_ENGAGEMENT_DOMAIN = "com.enablix.core.domain.report.engagement.ContentEngagementDemo";
+    let searchRequest = new DataSearchRequest();
 
-    let request = {
-      contentQIdIn: filters.dataFilters['contentQIdIn'],
-      timePeriod: filters.dataFilters['timePeriod'],
-      pagination: this.pagination
-    }
+    searchRequest.filterMetadata = {};
+    searchRequest.filters = {};
+    searchRequest.pagination = this.pagination;
 
-    let apiUrl = this.apiUrlService.postFetchContentEngagementReportData();
-    
-    this.http.post<DataPage>(apiUrl, request).subscribe((data) => {
+    this.dsService.getDataSearchResult(CONTENT_ENGAGEMENT_DOMAIN, searchRequest).subscribe((data) => {
       this.dataPage = data;
     }, error => {
       this.alert.error("Error fetching content engagement data.", error.statusCode);
     });;
+  }
+
+  showDistribution(metric: any) {
+
+    let dialogRef = this.dialog.open(ContentEngagementDistributionComponent, {
+        width: '600px',
+        height: '600px',
+        disableClose: false,
+        autoFocus: false,
+        data: { 
+          metric: metric
+        }
+      });
   }
 
 }

@@ -1,0 +1,18 @@
+ebx-content-type-coverage {
+  
+  .table-content {
+
+    td {
+      &.text-right {
+        padding-right: 40px;
+        display: flex;
+        justify-content: space-around;
+
+        p {
+          width: 40px;
+        }
+      }
+    }
+  }
+
+}

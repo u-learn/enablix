@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { cloneDeep } from 'lodash';
 import { Observable } from 'rxjs/Observable';
 
-import { ReportConfig } from './model/report-config.model';
+import { ReportConfig, ReportBaseConfig } from './model/report-config.model';
 import { PassThroughDataFilterValidator, DataFilterValueTx, FixedDataFilterValueProxyTx } from '../core/data-filters/data-filters.model';
 import { ActivitySummaryReportService } from './activity-summary-report.service';
 import { ActivityTrendReportService } from './activity-trend-report.service';
@@ -36,7 +36,15 @@ export class ReportService {
         });
 
       this.reports.push({
-          id: 'content-engagement-summary',
+          id: 'content-engagement',
+          category: 'engagement',
+          name : "Content Engagement",
+          heading : "Content Engagement",
+          type : "CUSTOM"
+        });
+
+      this.reports.push({
+          id: 'content-engagement-demo',
           category: 'engagement',
           name : "Content Engagement",
           heading : "Content Engagement",
@@ -51,7 +59,16 @@ export class ReportService {
           type : "CUSTOM"
         });
 
+      this.reports.push({
+          id: 'biz-content-type-coverage',
+          category: 'coverage',
+          name : "Content",
+          heading : "Content",
+          type : "CUSTOM"
+        });
+
       this.reports.push(this.contentCoverageRptService.getReportConfig());
+
       this.reports.push(this.activityTrendRptService.getReportConfig());
       this.reports.push(this.activitySummaryRptService.getReportConfig());
 
@@ -80,7 +97,7 @@ export class ReportService {
             
             if (cannedRep.baseReportId == baseRptDef.id) {
             
-              var cannedRptDef = cloneDeep(baseRptDef);
+              var cannedRptDef: any = cloneDeep(baseRptDef);
               cannedRptDef.id = cannedRep.id;
               cannedRptDef.name = cannedRep.name;
               cannedRptDef.heading = cannedRep.heading;

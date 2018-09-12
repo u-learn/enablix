@@ -1,0 +1,22 @@
+<div class="report-detail">
+  <div class="report-top">
+    <div class="report-filters">
+      <ebx-data-filters [config]="dataFiltersConfig" (onSearch)="fetchFilteredData($event)"></ebx-data-filters>
+    </div>
+  </div>
+  <div class="report-data" *ngIf="dataPage">
+   <div class="table-content">
+      <ebx-table *ngIf="dataPage" [tableData]="dataPage" [tableColumns]="tableColumns" [(pagination)]="pagination" (onRefreshData)="fetchData(lastUsedFilters)">
+        <ng-template #dataRow let-rec>
+          <td class="small-font">{{rec.contentTitle}}</td>
+          <td class="small-font">{{getContentTypeName(rec.contentQId)}}</td>
+          <td class="text-right nav-link" (click)="showDistribution(rec.internalAccess)">{{rec.internalAccess?.count}}</td>
+          <td class="text-right nav-link" (click)="showDistribution(rec.internalDownloads)">{{rec.internalDownloads?.count}}</td>
+          <td class="text-right nav-link" (click)="showDistribution(rec.externalDownloads)">{{rec.externalDownloads?.count}}</td>
+          <td class="text-right nav-link" (click)="showDistribution(rec.internalShares)">{{rec.internalShares?.count}}</td>
+          <td class="text-right nav-link" (click)="showDistribution(rec.externalShares)">{{rec.externalShares?.count}}</td>
+        </ng-template>
+      </ebx-table>
+    </div>
+  </div>
+</div>

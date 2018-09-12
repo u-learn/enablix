@@ -15,10 +15,12 @@ import { ActivityTrendReportService } from './activity-trend-report.service';
 import { ReportDetailComponent } from './report-detail/report-detail.component';
 import { HeatmapChartComponent } from './heatmap-chart/heatmap-chart.component';
 import { ActivityAuditComponent } from './activity-audit/activity-audit.component';
-import { ContentEngagementComponent } from './content-engagement/content-engagement.component';
-import { ContentEngagementDistributionComponent } from './content-engagement/content-engagement-distribution/content-engagement-distribution.component';
+import { ContentEngagementDemoComponent } from './content-engagement-demo/content-engagement-demo.component';
+import { ContentEngagementDistributionComponent } from './content-engagement-demo/content-engagement-distribution/content-engagement-distribution.component';
 import { ContentAttributionComponent } from './content-attribution/content-attribution.component';
 import { OppAttributionComponent } from './content-attribution/opp-attribution/opp-attribution.component';
+import { ContentTypeCoverageComponent } from './content-type-coverage/content-type-coverage.component';
+import { ContentEngagementComponent } from './content-engagement/content-engagement.component';
 
 @NgModule({
   imports: [
@@ -38,10 +40,12 @@ import { OppAttributionComponent } from './content-attribution/opp-attribution/o
     ReportDetailComponent,
     HeatmapChartComponent,
     ActivityAuditComponent,
-    ContentEngagementComponent,
+    ContentEngagementDemoComponent,
     ContentEngagementDistributionComponent,
     ContentAttributionComponent,
-    OppAttributionComponent
+    OppAttributionComponent,
+    ContentTypeCoverageComponent,
+    ContentEngagementComponent
   ],
   exports: [
     ReportsHomeComponent

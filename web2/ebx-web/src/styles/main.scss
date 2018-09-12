@@ -1467,4 +1467,37 @@ a.xlink {
   cursor: move !important;
 }
 
+// npx-collapsible classes
+
+.header-open {
+    cursor: pointer;
+    padding-right: 8px;
+    .action-img {
+        transform: rotate(90deg);
+        transition: all .3s ease-in;
+    }
+}
+
+.header-collapsed {
+    cursor: pointer;   
+    padding-right: 8px;
+    .action-img {
+        transition: all .3s ease-in;
+    }
+}
+
+.content-open {
+    max-height: 400px;
+    opacity: 1;
+    transition: all .3s ease-in;
+}
+
+.content-collapsed {
+  //display: none !important;
+  max-height: 0 !important;
+  overflow: hidden;
+  opacity: 0;
+  transition: all .3s ease-in;
+}
+
 //@import '../pages/index.scss';

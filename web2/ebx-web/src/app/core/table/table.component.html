@@ -19,10 +19,9 @@
     <tr>
       <th *ngIf="tableActionConfig" class="cbox-cell"></th>
       <th *ngFor="let col of tableColumns" class="{{col.headerCssClass}}">
-        <div class="header-wrapper">
-          <div [ngSwitch]="col.dataType">
-            <span *ngSwitchCase="'NUMBER'" class="text-right">{{col.heading}}</span>
-            <span *ngSwitchDefault>{{col.heading}}</span>
+        <div class="header-wrapper" [class.col-number]="col.dataType == 'NUMBER'">
+          <div>
+            <span>{{col.heading}}</span>
           </div>
           <img *ngIf="col.sortProp" class="icon dropdown {{getDirectionClass(col)}}" [src]="sortIcon(col)" (click)="sortData(col)">
         </div>

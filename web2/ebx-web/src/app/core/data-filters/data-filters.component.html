@@ -1,24 +1,27 @@
-<div class="data-filters" [class.two-col]="layout == 'top'">
+<div ngxCollapsible [selected]="selected" accordion="true" class="data-filters" [class.two-coll]="layout == 'top'">
   <div class="header">
+    <p collapsible-header="data-filters"><img class="action-img" src="/assets/images/icons/right-arrow-grey.svg"></p>
     <h3>{{options.heading}}</h3>
   </div>
-  <div class="form-input compact" *ngFor="let filter of filters" [hidden]="filter.type == 'pre-defined'">
-    <div class="input-label">{{filter.name}}</div>
-    <div class="input-control">
-      <ebx-select *ngIf="filter.type == 'multi-select'" 
-            [options]="filterOptions[filter.id]" [multi]="!filter.options || !filter.options.singleSelect" [(ngModel)]="filterValues[filter.id]"></ebx-select>
+  <div collapsible-content="data-filters" class="filters">
+    <div class="form-input compact" *ngFor="let filter of filters" [hidden]="filter.type == 'pre-defined'">
+      <div class="input-label">{{filter.name}}</div>
+      <div class="input-control">
+        <ebx-select *ngIf="filter.type == 'multi-select'" 
+              [options]="filterOptions[filter.id]" [multi]="!filter.options || !filter.options.singleSelect" [(ngModel)]="filterValues[filter.id]"></ebx-select>
+      </div>
+      <div class="input-error" [hidden]="!filterErrMessages[filter.id]">{{filterErrMessages[filter.id]}}</div>
     </div>
-    <div class="input-error" [hidden]="!filterErrMessages[filter.id]">{{filterErrMessages[filter.id]}}</div>
-  </div>
-  <div class="publish-buttons">
-      <button *ngIf="options.prefValuesKey" class="publish-btn white" (click)="saveAsSystemDefault()">
-          <p class="btn-text">Save Default</p>
-      </button>
-      <button class="publish-btn white" (click)="resetAction()">
-          <p class="btn-text">Reset</p>
-      </button>
-      <button class="publish-btn" (click)="searchAction()">
-          <p class="btn-text">Go</p>
-      </button>
+    <div class="publish-buttons">
+        <button *ngIf="options.prefValuesKey" class="publish-btn white" (click)="saveAsSystemDefault()">
+            <p class="btn-text">Save Default</p>
+        </button>
+        <button class="publish-btn white" (click)="resetAction()">
+            <p class="btn-text">Reset</p>
+        </button>
+        <button class="publish-btn" (click)="searchAction()">
+            <p class="btn-text">Go</p>
+        </button>
+    </div>
   </div>
 </div>

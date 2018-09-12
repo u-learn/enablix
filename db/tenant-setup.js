@@ -98,6 +98,7 @@ var insertUsers = function() {
 		        "VIEW_REPORT-activity-trend-calculator", 
 		        "VIEW_REPORT-all-activity",
 		        "VIEW_REPORT-biz-content-type-coverage",
+		        "VIEW_REPORT-content-engagement",
 		        "DOCSTORE_DIRECT_ACCESS",
 		        "BULK_IMPORT",
 		        "BULK_IMPORT-GOOGLEDRIVE",

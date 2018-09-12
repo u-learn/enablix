@@ -23,7 +23,9 @@
           <div class="tab-right" *ngIf="selectedRpt.type == 'CUSTOM'">
             <ebx-activity-audit *ngIf="selectedRpt.id == 'all-activity'"></ebx-activity-audit>
             <ebx-content-attribution *ngIf="selectedRpt.id == 'content-attribution-summary'"></ebx-content-attribution>
-            <ebx-content-engagement *ngIf="selectedRpt.id == 'content-engagement-summary'"></ebx-content-engagement>
+            <ebx-content-engagement-demo *ngIf="selectedRpt.id == 'content-engagement-demo'"></ebx-content-engagement-demo>
+            <ebx-content-engagement *ngIf="selectedRpt.id == 'content-engagement'"></ebx-content-engagement>
+            <ebx-content-type-coverage [reportConfig]="selectedRpt" *ngIf="selectedRpt.id == 'biz-content-type-coverage'"></ebx-content-type-coverage>
           </div>
         </ng-container>
       </div>

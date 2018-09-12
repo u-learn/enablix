@@ -30,6 +30,8 @@ export class DataFiltersComponent implements OnInit {
   filterErrMessages: any = {};
   filterValuesBackup: any = {};
 
+  selected = ['data-filters'];
+
   constructor(private userPrefService: UserPreferenceService,
     private alert: AlertService) { }
 

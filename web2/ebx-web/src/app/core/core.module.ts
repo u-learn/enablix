@@ -81,6 +81,7 @@ import { GlobalSearchControllerService } from './search-bar/global-search-contro
 import { EbxLinkifyPipe } from './pipes/ebx-linkify.pipe';
 import { UploadAssetComponent } from './upload/upload-asset/upload-asset.component';
 import { DndModule } from 'ng2-dnd';
+import { CollapsibleModule } from 'ngx-collapsible';
 
 @NgModule({
   imports: [
@@ -95,7 +96,8 @@ import { DndModule } from 'ng2-dnd';
     MatInputModule,
     MatNativeDateModule,
     QuillModule,
-    DndModule.forRoot()
+    DndModule.forRoot(),
+    CollapsibleModule
   ],
   providers: [
     RebootService,
@@ -232,7 +234,8 @@ import { DndModule } from 'ng2-dnd';
     ProgressLineComponent,
     SearchBarComponent,
     EbxLinkifyPipe,
-    DndModule
+    DndModule,
+    CollapsibleModule
   ]
 })
 export class CoreModule { }

@@ -111,6 +111,9 @@ export class ApiUrlService {
   static POST_DEL_SLACK_AUTH_CODE = "/slack/unauthSlack";
   static POST_SLACK_MESSAGE = "/slack/sendMessage";
 
+  static POST_FETCH_CONTENT_TYPE_COVERAGE_REPORT = "/contentcoverage/content";
+  static POST_FETCH_CONTENT_ENGAGEMENT_REPORT = "/enggrpt/content";
+
   static DELETE_CONTAINER_DEF = "/template/:templateId/c/:containerQId/";
 
   static GET_LOGOUT = "/logout";
@@ -495,6 +498,14 @@ export class ApiUrlService {
 
   postSelectedContentPack() : string {
     return this.getAPIUrl(ApiUrlService.POST_SELECTED_CONTENT_PACK);
+  }
+
+  postFetchContentTypeCoverageReportData() : string {
+    return this.getAPIUrl(ApiUrlService.POST_FETCH_CONTENT_TYPE_COVERAGE_REPORT); 
+  }
+
+  postFetchContentEngagementReportData() : string {
+    return this.getAPIUrl(ApiUrlService.POST_FETCH_CONTENT_ENGAGEMENT_REPORT);
   }
 
   deleteContainerDefUrl(templateId: string, containerQId: string) : string {

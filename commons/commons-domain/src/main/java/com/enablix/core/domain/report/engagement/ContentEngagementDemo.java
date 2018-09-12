@@ -5,7 +5,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import com.enablix.core.domain.BaseDocumentEntity;
 
 @Document(collection = "ebx_content_engagement_demo")
-public class ContentEngagement extends BaseDocumentEntity {
+public class ContentEngagementDemo extends BaseDocumentEntity {
 
 	private String contentTitle;
 	

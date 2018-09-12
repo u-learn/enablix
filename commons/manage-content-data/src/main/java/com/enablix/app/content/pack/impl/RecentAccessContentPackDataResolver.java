@@ -63,11 +63,12 @@ public class RecentAccessContentPackDataResolver implements ContentPackDataResol
 			);
 		
 		AggregationResults<AuditCountResult> countAggResult = mongoTemplate.aggregate(countAgg, ActivityAudit.class, AuditCountResult.class);
-		AuditCountResult count = countAggResult.getUniqueMappedResult();
+		AuditCountResult countResult = countAggResult.getUniqueMappedResult();
 		
 		Page<ContentDataRecord> dataPage = null;
+		long count = countResult != null ? countResult.getTotal() : 0;
 		
-		if (count.getTotal() > 0) {
+		if (count > 0) {
 			
 			Aggregation agg = Aggregation.newAggregation(
 						Aggregation.match(criteria),
@@ -87,7 +88,7 @@ public class RecentAccessContentPackDataResolver implements ContentPackDataResol
 				List<ContentDataRecord> dataRecords = dataMgr.getContentRecords(mappedResults, 
 					(actAuditItem) -> actAuditItem, dataView);
 				
-				dataPage = new PageImpl<>(dataRecords, pageable, count.getTotal());
+				dataPage = new PageImpl<>(dataRecords, pageable, count);
 			}
 		}
 		

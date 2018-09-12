@@ -49,6 +49,10 @@ ebx-table {
                 display: flex;
                 align-items: center;
 
+                &.col-number {
+                    justify-content: flex-end;
+                }
+                
                 >div {
                     text-align: right;
                 }
