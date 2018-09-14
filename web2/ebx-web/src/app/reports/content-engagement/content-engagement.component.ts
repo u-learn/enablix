@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
@@ -19,6 +19,7 @@ import { Constants } from '../../util/constants';
 import { ContentTemplateService } from '../../core/content-template.service';
 import { DataSearchService } from '../../core/data-search/data-search.service';
 import { DataSearchRequest } from '../../core/data-search/data-search-request.model';
+import { ReportBaseConfig } from '../model/report-config.model';
 
 @Component({
   selector: 'ebx-content-engagement',
@@ -36,6 +37,8 @@ export class ContentEngagementComponent implements OnInit {
 
   dataFiltersConfig: DataFiltersConfig;
   lastUsedFilters: any;
+
+  @Input() reportConfig : ReportBaseConfig;
 
   constructor(private http: HttpClient, private apiUrlService: ApiUrlService,
     private alert: AlertService, private actvyAuditService: ActivityAuditService,
@@ -105,27 +108,23 @@ export class ContentEngagementComponent implements OnInit {
     this.tableColumns = [
       {
         heading: "Title",
-        key: "contentTitle",
-        headerCssClass: "small-font content-title-col"
+        key: "contentTitle"
       },
       {
         heading: "Type",
-        key: "contentType",
-        headerCssClass: "small-font content-type-col"
+        key: "contentType"
       },
       {
         heading: "Access Count",
         key: "accessCount",
         sortProp: "accessCount",
         dataType: DataType.NUMBER,
-        headerCssClass: "small-font"
       },
       {
         heading: "Download Count",
         key: "downloadCount",
         sortProp: "downloadCount",
-        dataType: DataType.NUMBER,
-        headerCssClass: "small-font"
+        dataType: DataType.NUMBER
       }
     ];
 

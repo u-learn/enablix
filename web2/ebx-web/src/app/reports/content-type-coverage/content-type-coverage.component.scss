@@ -4,14 +4,14 @@ ebx-content-type-coverage {
 
     td {
       &.text-right {
-        padding-right: 40px;
+        padding-right: 160px;
         display: flex;
-        justify-content: space-around;
-
-        p {
-          width: 40px;
-        }
+        justify-content: flex-end;
       }
+    }
+
+    .mr-100 {
+      padding-right: 120px;
     }
   }
 

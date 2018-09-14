@@ -58,12 +58,14 @@ export class ReportsHomeComponent implements OnInit {
     this.rptsByCategory = new Map();
 
     this.reports.forEach((rpt: ReportConfig) => {
-      var rpts = this.rptsByCategory.get(rpt.category);
-      if (!rpts) {
-        rpts = [];
-        this.rptsByCategory.set(rpt.category, rpts);
+      if (this.hasReportPermission(rpt)) {
+        var rpts = this.rptsByCategory.get(rpt.category);
+        if (!rpts) {
+          rpts = [];
+          this.rptsByCategory.set(rpt.category, rpts);
+        }
+        rpts.push(rpt);
       }
-      rpts.push(rpt);
     });
 
     this.route.params.subscribe(params => {

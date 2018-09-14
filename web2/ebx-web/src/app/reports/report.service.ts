@@ -62,8 +62,8 @@ export class ReportService {
       this.reports.push({
           id: 'biz-content-type-coverage',
           category: 'coverage',
-          name : "Content",
-          heading : "Content",
+          name : "Content Types",
+          heading : "Content Type Coverage",
           type : "CUSTOM"
         });
 

@@ -3,28 +3,25 @@
   <div class="company no-sidebar">
     <div class="main">
       <div class="sub-tabs">
-        <ng-container *ngFor="let rptCat of reportCategories">
-          <a [class.tab-active]="selectedRptCategory == rptCat.id" (click)="navToFirstRptOfCategory(rptCat.id)" *ngIf="hasAccess(rptCat.id)">{{rptCat.label}}</a>
-        </ng-container>
-      </div>
-      <div class="tab-content row-data">
-        <div class="tab-left">
-          <ng-container *ngFor="let rpt of getReportsByCategory(selectedRptCategory)">
-            <div class="heading" *ngIf="hasReportPermission(rpt)">
-              <h2><a [class.tab-active]="rpt.id == selectedRpt?.id" (click)=navToReport(rpt)>{{rpt.name}}</a></h2>
-              <p class="sub-heading" [hidden]="!rpt.subheading || rpt.id !== selectedRpt?.id">{{rpt.subheading}}</p>
-            </div>
-          </ng-container>
+        <div class="sub-tab show-on-hover" *ngFor="let rptCat of reportCategories">
+          <a class="tab-lbl" [class.tab-active]="selectedRptCategory == rptCat.id" *ngIf="hasAccess(rptCat.id)">{{rptCat.label}}</a>
+          <div class="dd-options show-me-on-hover">
+            <ng-container *ngFor="let rpt of getReportsByCategory(rptCat.id)">
+              <a class="dd-opt" [class.dd-opt-active]="rpt.id == selectedRpt?.id" (click)=navToReport(rpt)>{{rpt.name}}</a>
+            </ng-container>  
+          </div>
         </div>
+      </div>
+      <div class="tab-content">
         <ng-container *ngIf="selectedRpt && hasReportPermission(selectedRpt)">
-          <div class="tab-right" *ngIf="selectedRpt.type != 'CUSTOM'">
+          <div *ngIf="selectedRpt.type != 'CUSTOM'">
             <ebx-report-detail [reportConfig]="selectedRpt"></ebx-report-detail>
           </div>
-          <div class="tab-right" *ngIf="selectedRpt.type == 'CUSTOM'">
-            <ebx-activity-audit *ngIf="selectedRpt.id == 'all-activity'"></ebx-activity-audit>
-            <ebx-content-attribution *ngIf="selectedRpt.id == 'content-attribution-summary'"></ebx-content-attribution>
-            <ebx-content-engagement-demo *ngIf="selectedRpt.id == 'content-engagement-demo'"></ebx-content-engagement-demo>
-            <ebx-content-engagement *ngIf="selectedRpt.id == 'content-engagement'"></ebx-content-engagement>
+          <div *ngIf="selectedRpt.type == 'CUSTOM'">
+            <ebx-activity-audit [reportConfig]="selectedRpt" *ngIf="selectedRpt.id == 'all-activity'"></ebx-activity-audit>
+            <ebx-content-attribution [reportConfig]="selectedRpt" *ngIf="selectedRpt.id == 'content-attribution-summary'"></ebx-content-attribution>
+            <ebx-content-engagement-demo [reportConfig]="selectedRpt" *ngIf="selectedRpt.id == 'content-engagement-demo'"></ebx-content-engagement-demo>
+            <ebx-content-engagement [reportConfig]="selectedRpt" *ngIf="selectedRpt.id == 'content-engagement'"></ebx-content-engagement>
             <ebx-content-type-coverage [reportConfig]="selectedRpt" *ngIf="selectedRpt.id == 'biz-content-type-coverage'"></ebx-content-type-coverage>
           </div>
         </ng-container>

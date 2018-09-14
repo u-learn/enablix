@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
@@ -16,6 +16,7 @@ import { DataFilter, DataFiltersOptions, DataFiltersConfig, DataFilterValueTx, I
 import { OffsetDaysFilterValueTx } from '../model/report-config.model';
 import { Utility } from '../../util/utility';
 import { Constants } from '../../util/constants';
+import { ReportBaseConfig } from '../model/report-config.model';
 
 @Component({
   selector: 'ebx-activity-audit',
@@ -35,6 +36,8 @@ export class ActivityAuditComponent implements OnInit {
   lastUsedFilters: any;
 
   activityTypeNameMap: any = {};
+
+  @Input() reportConfig : ReportBaseConfig;
 
   constructor(private http: HttpClient, private apiUrlService: ApiUrlService,
     private alert: AlertService, private actvyAuditService: ActivityAuditService,

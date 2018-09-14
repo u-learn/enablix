@@ -1,12 +1,16 @@
 <div class="report-detail">
   <div class="report-data" *ngIf="dataPage">
+    <div class="heading">
+      <h2>{{reportConfig.heading}}</h2>
+      <p class="sub-heading" [hidden]="!reportConfig.subheading">{{reportConfig.subheading}}</p>
+    </div>
    <div class="table-content">
       <ebx-table *ngIf="dataPage" [tableData]="dataPage" [tableColumns]="tableColumns" [(pagination)]="pagination" (onRefreshData)="fetchData()">
         <ng-template #dataRow let-rec>
           <td>{{rec.containerLabel}}</td>
-          <td class="text-right"><p>{{rec.count}}</p></td>
-          <td>{{rec.lastCreateDt | ebxDate}}</td>
-          <td>{{rec.lastUpdateDt | ebxDate}}</td>
+          <td class="text-right">{{rec.count}}</td>
+          <td>{{rec.lastCreateDt | ebxDateOnly}}</td>
+          <td>{{rec.lastUpdateDt | ebxDateOnly}}</td>
         </ng-template>
       </ebx-table>
     </div>

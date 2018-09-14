@@ -37,8 +37,8 @@ export class ContentCoverageReportService implements ReportDataProvider {
     
     config.id = "content-coverage-report";
     config.category = "coverage";
-    config.name = "Dimension";
-    config.heading = "Dimension";
+    config.name = "Dimensions";
+    config.heading = "Dimensions Coverage";
     config.type = "HEATMAP";
     config.init = function() {};
 
@@ -159,7 +159,6 @@ export class ContentCoverageReportService implements ReportDataProvider {
     
     // change heading
     if (data.length > 0) {
-      this.reportConfig.heading = this.reportConfig.name;
       this.reportConfig.subheading = "As of " + this.dateTimezonePipe.transform(data[0].asOfDate);
     }
     

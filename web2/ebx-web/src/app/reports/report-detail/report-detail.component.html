@@ -1,5 +1,9 @@
 <div class="report-detail">
-  <div class="report-top">
+  <div class="report-left">
+    <div class="heading">
+      <h2>{{reportConfig.heading}}</h2>
+      <p class="sub-heading" [hidden]="!reportConfig.subheading">{{reportConfig.subheading}}</p>
+    </div>
     <div class="report-filters">
       <ebx-data-filters [config]="dataFiltersConfig" (onSearch)="fetchData($event)"></ebx-data-filters>
     </div>

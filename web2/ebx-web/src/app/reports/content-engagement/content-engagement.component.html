@@ -1,5 +1,9 @@
 <div class="report-detail">
-  <div class="report-top">
+  <div class="report-left">
+    <div class="heading">
+      <h2>{{reportConfig.heading}}</h2>
+      <p class="sub-heading" [hidden]="!reportConfig.subheading">{{reportConfig.subheading}}</p>
+    </div>
     <div class="report-filters">
       <ebx-data-filters [config]="dataFiltersConfig" (onSearch)="fetchFilteredData($event)"></ebx-data-filters>
     </div>
@@ -8,8 +12,8 @@
    <div class="table-content">
       <ebx-table *ngIf="dataPage" [tableData]="dataPage" [tableColumns]="tableColumns" [(pagination)]="pagination" (onRefreshData)="fetchData(lastUsedFilters)">
         <ng-template #dataRow let-rec>
-          <td class="small-font">{{rec.contentTitle}}</td>
-          <td class="small-font">{{getContentTypeName(rec.containerQId)}}</td>
+          <td>{{rec.contentTitle}}</td>
+          <td>{{getContentTypeName(rec.containerQId)}}</td>
           <td class="text-right">{{rec.accessCount}}</td>
           <td class="text-right">{{rec.downloadCount}}</td>
         </ng-template>

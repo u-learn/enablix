@@ -507,19 +507,55 @@ body {
 .sub-tabs {
   border-bottom: 1px solid rgba(179,38,38,.03);
   padding-bottom: 16px;
+  display: flex;
 
-  a {
+  .sub-tab a.tab-lbl, a.tab-lbl {
     font-family: $FPThin;
     font-size: 1.17em;
     font-weight: 700;
     padding: 16px 0;
-    margin: 0 24px 0 0;
+    margin-right: 24px;
     color: $grey-med;
     cursor: pointer;
 
     &.tab-active {
       border-bottom: 2px solid $blue-med-20; 
       color: $black; 
+    }
+
+  }
+
+  
+
+  .sub-tab {
+
+    &:hover a.tab-lbl  {
+        border-bottom: 2px solid $grey-med; 
+        color: $black;    
+    }
+
+    .dd-options {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        margin-top: 16px;
+        background-color: $white;
+        z-index: 100;
+        border-top: 1px solid rgba(0,0,0,0.1);
+        border-left: 1px solid rgba(0,0,0,0.1);
+        border-right: 1px solid rgba(0,0,0,0.1);
+
+        .dd-opt {
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+
+        a {
+            font-family: $FPThin;
+            font-size: 1em;
+            font-weight: 700;
+            padding: 16px 24px 16px 16px;
+            cursor: pointer;
+        }
     }
   }
 }
@@ -1449,11 +1485,11 @@ a.xlink {
 .show-on-hover {
 
     .show-me-on-hover {
-      display: none;
+      display: none !important;
     }
 
     &:hover .show-me-on-hover {
-      display: flex;
+      display: flex !important;
     }
 }
 

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { MatDialog, MatDialogRef } from '@angular/material';
@@ -21,6 +21,7 @@ import { ContentTemplateService } from '../../core/content-template.service';
 import { ContentEngagementDistributionComponent } from './content-engagement-distribution/content-engagement-distribution.component';
 import { DataSearchService } from '../../core/data-search/data-search.service';
 import { DataSearchRequest } from '../../core/data-search/data-search-request.model';
+import { ReportBaseConfig } from '../model/report-config.model';
 
 @Component({
   selector: 'ebx-content-engagement-demo',
@@ -38,6 +39,8 @@ export class ContentEngagementDemoComponent implements OnInit {
 
   dataFiltersConfig: DataFiltersConfig;
   lastUsedFilters: any;
+
+  @Input() reportConfig : ReportBaseConfig;
 
   constructor(private http: HttpClient, private apiUrlService: ApiUrlService,
     private alert: AlertService, private actvyAuditService: ActivityAuditService,

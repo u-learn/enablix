@@ -1,9 +1,8 @@
-<div ngxCollapsible [selected]="selected" accordion="true" class="data-filters" [class.two-coll]="layout == 'top'">
+<div class="data-filters" [class.two-coll]="layout == 'top'">
   <div class="header">
-    <p collapsible-header="data-filters"><img class="action-img" src="/assets/images/icons/right-arrow-grey.svg"></p>
     <h3>{{options.heading}}</h3>
   </div>
-  <div collapsible-content="data-filters" class="filters">
+  <div class="filters">
     <div class="form-input compact" *ngFor="let filter of filters" [hidden]="filter.type == 'pre-defined'">
       <div class="input-label">{{filter.name}}</div>
       <div class="input-control">

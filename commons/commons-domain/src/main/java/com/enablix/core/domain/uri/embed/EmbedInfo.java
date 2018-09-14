@@ -32,6 +32,8 @@ public class EmbedInfo extends BaseDocumentEntity {
 	private OEmbed oembed;
 	
 	private Boolean iframeEmbeddable;
+	
+	private String html;
 
 	public String getType() {
 		return type;
@@ -123,6 +125,14 @@ public class EmbedInfo extends BaseDocumentEntity {
 
 	public void setIframeEmbeddable(Boolean iframeEmbeddable) {
 		this.iframeEmbeddable = iframeEmbeddable;
+	}
+
+	public String getHtml() {
+		return html;
+	}
+
+	public void setHtml(String html) {
+		this.html = html;
 	}
 
 	@Override

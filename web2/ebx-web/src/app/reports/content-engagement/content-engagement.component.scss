@@ -7,7 +7,6 @@ ebx-content-engagement {
     td {
       &.text-right {
         padding-right: 40px;
-        color: $blue-med-20;
         font-weight: 700;
       }
     }
@@ -28,6 +27,7 @@ ebx-content-engagement {
 
     .nav-link {
       cursor: pointer;
+      color: $blue-med-20;
       &:hover {
         color: $blue-med-20;
       }

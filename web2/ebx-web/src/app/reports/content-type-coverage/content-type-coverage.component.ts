@@ -38,15 +38,16 @@ export class ContentTypeCoverageComponent implements OnInit {
 
     this.tableColumns = [
       {
-        heading: "Content Type",
+        heading: "ContentType",
         key: "containerLabel",
         sortProp: "containerLabel"
       },
       {
-        heading: "Number of Assets",
+        heading: "Asset Count",
         key: "count",
         sortProp: "count",
-        dataType: DataType.NUMBER
+        dataType: DataType.NUMBER,
+        headerCssClass: "mr-100"
       },
       {
         heading: "Last Added",

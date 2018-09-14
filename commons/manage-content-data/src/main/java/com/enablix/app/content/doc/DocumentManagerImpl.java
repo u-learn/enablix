@@ -142,12 +142,14 @@ public class DocumentManagerImpl implements DocumentManager {
 		
 		docMD.setPreviewStatus(PreviewStatus.PENDING); 
 		
+		String embedHtml = null;
+		
 		DocEmbedHtmlResolver resolver = embedHtmlResolverFactory.getResolver(docMD);
 		if (resolver != null) {
-			String embedHtml = resolver.getEmbedHtml(docMD);
-			docMD.setEmbedHtml(embedHtml);
+			embedHtml = resolver.getEmbedHtml(docMD);
 		}
 		
+		docMD.setEmbedHtml(embedHtml);
 		docMD = docRepo.save(docMD);
 		
 		if (generatePreview) {
