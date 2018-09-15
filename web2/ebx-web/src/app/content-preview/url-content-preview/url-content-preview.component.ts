@@ -22,6 +22,7 @@ export class UrlContentPreviewComponent implements OnInit {
   type: string;
   embedHtml: string;
   thumbnailUrl: string;
+  videoUrl: string;
   navUrl: string;
   iframeNotSupported: boolean;
 
@@ -55,6 +56,15 @@ export class UrlContentPreviewComponent implements OnInit {
                     if (this.type != 'rich' && this.type != 'link' 
                         && this.embedInfo.oembed && this.embedInfo.oembed.html) {
                       this.embedHtml = this.embedInfo.oembed.html;
+                      this.type = 'embed-html';
+                    } else if (this.type == 'video' && this.embedInfo.videos && this.embedInfo.videos[0]) {
+                      this.videoUrl = this.embedInfo.videos[0].url;
+                      if (this.videoUrl.indexOf("vimeo.com") > 0) {
+                        this.embedHtml = "<iframe src=\"" + this.videoUrl + "\" width=\"640\" height=\"360\" frameborder=\"0\" title=\"GovCon Suite User Training - B&amp;P Budgeting Report 2 of 2\" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>";
+                        this.type = "embed-html";
+                      }
+                    } else if (this.embedInfo.html) {
+                      this.embedHtml = this.embedInfo.html;
 
                     } else {
                       this.thumbnailUrl = this.embedInfoService.getThumbnailUrl(this.embedInfo);

@@ -4,7 +4,8 @@
 
 .search-bar {
     position: relative;
-    min-width: 586px;
+    max-width: 586px;
+    width: 100%;
     border-radius: 6px;
     
     background: $white;
@@ -13,6 +14,10 @@
 
     &.sb-active {
         border: 1px solid #E3EBEF;
+    }
+
+    @media only screen and (max-width: 1024px) {
+        min-width: 400px;
     }
 
     .input-row {

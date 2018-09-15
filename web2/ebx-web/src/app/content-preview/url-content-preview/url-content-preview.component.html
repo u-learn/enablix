@@ -16,6 +16,12 @@
       </a>
     </div>
   </div>
+  <div class="embed-video" *ngIf="type == 'video' && videoUrl">
+    <video>
+      <source [src]="videoUrl">
+      Video preview not supported by browser.
+    </video>
+  </div>
   <div class="embed-rich" *ngIf="type == 'pdf'">
     <object [data]="url | safeUrl" type="application/pdf">
     </object>

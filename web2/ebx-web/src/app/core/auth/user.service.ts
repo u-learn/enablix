@@ -33,8 +33,8 @@ export class UserService {
     if (AppContext.embedded) {
     
       var removePerms: string[] = [
-        "VIEW_STUDIO", "MANAGE_CONTENT_REQUEST", "SHARE_VIA_EMAIL",
-        "SHARE_VIA_SLACK", "COMPANY_DETAILS", "MANAGE_INTEGRATIONS",
+        "VIEW_STUDIO", "MANAGE_CONTENT_REQUEST", "COMPANY_DETAILS", 
+        "MANAGE_INTEGRATIONS", "MANAGE_DASHBOARD",
         "VIEW_REPORTS", "BULK_IMPORT", "SUGGEST_CONTENT"
       ];
     

@@ -9,6 +9,7 @@
 
 .upload {
   font-family: $FPBlond;
+  margin-left: 16px;
   > button {
     height: 48px;
     width: 117px;
@@ -22,10 +23,6 @@
     &:hover {
       background: #44A1F8;
     }
-  }
-
-  @media only screen and (max-width: 1260px) {
-    display: none;
   }
 
 }
