@@ -35,7 +35,7 @@ public class SalesforceController {
 	@Value("${salesforce.canvas.app.domain:}")
 	private String sfCanvasAppDomain;
 	
-	@Value("${salesforce.convas.app.secret:3687049815195892632}")
+	@Value("${salesforce.canvas.app.secret}")
 	private String sfCanvasAppSecret;
 	
 	@SuppressWarnings("unchecked")
@@ -46,6 +46,7 @@ public class SalesforceController {
 		// Pull the signed request out of the request body and verify and decode it.
 	    Map<String, String[]> parameters = request.getParameterMap();
 	    String[] signedRequest = parameters.get("signed_request");
+	    LOGGER.debug("Sales force Canvas app secret: ", sfCanvasAppSecret);
 	    String signedRequestJson = SignedRequest.verifyAndDecodeAsJson(signedRequest[0], sfCanvasAppSecret);
 	    LOGGER.debug("Salesforce signed request: {}", signedRequestJson);
 		
