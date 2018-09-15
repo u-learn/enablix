@@ -16,11 +16,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.enablix.commons.util.SalesforceProperties;
 import com.enablix.commons.util.StringUtil;
 import com.enablix.commons.util.json.JsonUtil;
 import com.enablix.core.security.SecurityUtil;
 import com.enablix.core.security.service.EnablixUserService;
-import com.google.api.client.util.Value;
 
 import canvas.SignedRequest;
 
@@ -32,11 +32,8 @@ public class SalesforceController {
 	@Autowired
 	private EnablixUserService userService;
 	
-	@Value("${salesforce.canvas.app.domain:}")
-	private String sfCanvasAppDomain;
-	
-	@Value("${salesforce.canvas.app.secret}")
-	private String sfCanvasAppSecret;
+	@Autowired
+	private SalesforceProperties sfProperties;
 	
 	@SuppressWarnings("unchecked")
 	@RequestMapping(method = RequestMethod.POST, value="/sf/canvas/{app}")
@@ -46,8 +43,8 @@ public class SalesforceController {
 		// Pull the signed request out of the request body and verify and decode it.
 	    Map<String, String[]> parameters = request.getParameterMap();
 	    String[] signedRequest = parameters.get("signed_request");
-	    LOGGER.debug("Sales force Canvas app secret: ", sfCanvasAppSecret);
-	    String signedRequestJson = SignedRequest.verifyAndDecodeAsJson(signedRequest[0], sfCanvasAppSecret);
+	    LOGGER.debug("Sales force Canvas app secret: ", sfProperties.getCanvasAppSecret());
+	    String signedRequestJson = SignedRequest.verifyAndDecodeAsJson(signedRequest[0], sfProperties.getCanvasAppSecret());
 	    LOGGER.debug("Salesforce signed request: {}", signedRequestJson);
 		
 		UserDetails currentUser = SecurityUtil.currentUser();
@@ -64,7 +61,8 @@ public class SalesforceController {
 			appPage = "/portal";
 		}
 		
-		StringBuilder htmlPage = new StringBuilder(StringUtil.hasText(sfCanvasAppDomain) ? sfCanvasAppDomain : "");
+		String canvasAppDomain = sfProperties.getCanvasAppDomain();
+		StringBuilder htmlPage = new StringBuilder(StringUtil.hasText(canvasAppDomain) ? canvasAppDomain : "");
 		htmlPage.append(appPage).append("?ctx_embedded=true");
 		
 		Object appCtxObj = JsonUtil.getJsonpathValue(signedRequestJson, "context.environment.parameters.appCtx");
