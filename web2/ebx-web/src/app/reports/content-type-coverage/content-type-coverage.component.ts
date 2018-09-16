@@ -38,7 +38,7 @@ export class ContentTypeCoverageComponent implements OnInit {
 
     this.tableColumns = [
       {
-        heading: "ContentType",
+        heading: "Content Type",
         key: "containerLabel",
         sortProp: "containerLabel"
       },
