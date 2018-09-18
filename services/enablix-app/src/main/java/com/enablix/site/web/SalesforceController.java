@@ -63,7 +63,7 @@ public class SalesforceController {
 		
 		String canvasAppDomain = sfProperties.getCanvasAppDomain();
 		StringBuilder htmlPage = new StringBuilder(StringUtil.hasText(canvasAppDomain) ? canvasAppDomain : "");
-		htmlPage.append(appPage).append("?ctx_embedded=true");
+		htmlPage.append(appPage).append("?ctx_embedded=true&ctx_channel=SALESFORCE");
 		
 		Object appCtxObj = JsonUtil.getJsonpathValue(signedRequestJson, "context.environment.parameters.appCtx");
 	    
