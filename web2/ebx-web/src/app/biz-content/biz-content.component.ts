@@ -15,6 +15,7 @@ import { ContentDeleteButtonComponent } from '../content-action/content-delete-b
 import { ContentReqApproveButtonComponent } from '../content-action/content-req-approve-button/content-req-approve-button.component';
 import { ContentReqRejectButtonComponent } from '../content-action/content-req-reject-button/content-req-reject-button.component';
 import { ContentWorkflowService } from '../services/content-workflow.service';
+import { ContentPreviewService } from '../core/content/content-preview.service';
 import { Constants } from '../util/constants';
 import { Utility } from '../util/utility';
 
@@ -68,6 +69,7 @@ export class BizContentComponent implements OnInit, AfterViewInit {
   constructor(private route: ActivatedRoute, private contentService: ContentService,
               private alert: AlertService, private contentTemplate: ContentTemplateService,
               private contentWFService: ContentWorkflowService, private loc: Location,
+              private contentPreviewService: ContentPreviewService,
               private navService: NavigationService, private dialog: MatDialog,
               private router: Router, @Optional() @Inject(MAT_DIALOG_DATA) public data?: any,
               @Optional() public dialogRef?: MatDialogRef<BizContentComponent>,) { }
@@ -102,7 +104,7 @@ export class BizContentComponent implements OnInit, AfterViewInit {
             this.container = this.contentTemplate.getConcreteContainerByQId(containerQId);
             var atCtxParams = Utility.readTrackingCtxInQueryParams(this.route.snapshot.queryParams);
 
-            this.contentService.getContentRecord(containerQId, recordIdentity, Constants.AT_CHANNEL_WEB, atCtxParams)
+            this.contentService.getContentRecord(containerQId, recordIdentity, AppContext.channel, atCtxParams)
                   .subscribe(
                       result => {
                         
@@ -118,7 +120,6 @@ export class BizContentComponent implements OnInit, AfterViewInit {
                         
                       }, 
                       error => {
-                        console.error("Error getting record: " + error);
                         this.alert.error("Error fetching record details", error.status);
                       }
                     );
@@ -129,7 +130,7 @@ export class BizContentComponent implements OnInit, AfterViewInit {
             
             if (crIdentity) {
 
-              this.contentWFService.getContentRequest(crIdentity).subscribe((res: any) => {
+              this.contentWFService.getContentRequest(crIdentity, AppContext.channel, atCtxParams).subscribe((res: any) => {
                 this.contentRequest = res;
                 this.container = this.contentTemplate.getConcreteContainerByQId(res.objectRef.contentQId);
                 this.initContentRequest();
@@ -218,10 +219,13 @@ export class BizContentComponent implements OnInit, AfterViewInit {
 
     if (this.container) {
     
+      var previewHandler = this.contentPreviewService.getPreviewHandler(this.record);
+      var previewType = previewHandler ? previewHandler.type() : null;
+
       this.inputItems = 
           this.contentTemplate.templateCache.getFreeInputContentItems(this.container)
               .filter(item => this.container.titleItemId != item.id && 
-                              (this.record.__decoration.__thumbnailUrl || 
+                              (previewType !== 'text' || 
                                 this.container.textItemId != item.id) );
 
       this.boundedItems = this.container.contentItem.filter(item => this.isRelevanceItem(item));

@@ -169,7 +169,7 @@ export class GlobalSearchControllerService implements SearchBarController {
     var recIdentity = bizItem.record.identity;
     if (contentQId && recIdentity) {
       var atCtxParams = {
-        atChannel: "WEB",
+        atChannel: AppContext.channel,
         atContext: "SEARCH",
         atActivityOrigin: "TYPEAHEAD",
         atContextTerm: this.sbData.freetext

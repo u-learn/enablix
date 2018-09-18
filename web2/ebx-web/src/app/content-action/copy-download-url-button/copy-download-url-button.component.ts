@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Container } from '../../model/container.model';
 import { Utility } from '../../util/utility';
 import { ApiUrlService } from '../../core/api-url.service';
+import { AppContext } from '../../app-context';
 
 @Component({
   selector: 'ebx-copy-download-url-button',
@@ -28,7 +29,8 @@ export class CopyDownloadUrlButtonComponent implements OnInit {
     if (this.record.__decoration && this.record.__decoration.__docMetadata) {
     
       let docIdentity = this.record.__decoration.__docMetadata.identity;
-      let navUrl = this.apiUrlService.getShareDocDownloadUrl(docIdentity) + "?atChannel=WEB&atContext=COPYNSHARE";
+      let navUrl = this.apiUrlService.getShareDocDownloadUrl(docIdentity) 
+          + "?atChannel=" + AppContext.channel + "&atContext=COPYNSHARE";
       let apiUrl = this.apiUrlService.postFetchShareDocUrl();
 
       var auditRequest = {

@@ -181,10 +181,14 @@ public class ContentApprovalController {
 		
 		if (channel != null) {
 		
-			ActivityLogger.auditContentActivity(
-					ContentApprovalUtil.createAuditActivityInstance(
-							content, ActivityType.CONTENT_SUGGEST_VIEW), 
-					channel);
+			if (content.getCurrentState().getStateName().equals(
+					ContentApprovalConstants.STATE_PENDING_APPROVAL)) {
+				
+				ActivityLogger.auditContentActivity(
+						ContentApprovalUtil.createAuditActivityInstance(
+								content, ActivityType.CONTENT_SUGGEST_VIEW), 
+						channel);
+			}
 		}
 		
 		return content;

@@ -28,6 +28,11 @@ export class AppComponent implements OnInit {
     if (ctxHomepage) {
       AppContext.homePage = ctxHomepage;
     }
+
+    let ctxChannel: string = Utility.getQueryString("ctx_channel");
+    if (ctxChannel) {
+      AppContext.channel = ctxChannel;
+    }
     
   }
 

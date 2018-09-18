@@ -106,7 +106,7 @@ $a_siteUrl/app.html#/portal/container/$a_containerQId/$a_contentIdentity/c/singl
 						#spacer_row('15')
 						
 						<div class="text2" style="color:#424242; font-family:Arial,sans-serif, 'OS'; font-size:14px; line-height:18px; text-align:left; font-weight:bold">
-							#if($a_displayableContent.title) $a_displayableContent.title #else Content Details #end
+							#if($a_displayableContent.singularContainerLabel) $a_displayableContent.singularContainerLabel - #end #if($a_displayableContent.title) $a_displayableContent.title #else Content Details #end
 						</div>
 						#spacer_row('15')
 						

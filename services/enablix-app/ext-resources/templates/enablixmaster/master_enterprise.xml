@@ -1086,7 +1086,7 @@
                 </bounded>
             </contentItem>
         </container>
-        <container businessCategory="BUSINESS_CONTENT" id="caseStudy" qualifiedId="caseStudy" label="Case Studies" displayOrder="171">
+        <container businessCategory="BUSINESS_CONTENT" id="caseStudy" qualifiedId="caseStudy" label="Case Studies" singularLabel="Case Study" displayOrder="171">
             <qualityConfig>
                 <param name="OBSOLETE_IN_DAYS" value="30"/>
             </qualityConfig>

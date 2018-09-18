@@ -8,6 +8,7 @@ import { AlertService } from '../../core/alert/alert.service';
 import { ApiUrlService } from '../../core/api-url.service';
 import { ConfirmDialogComponent } from '../../core/confirm-dialog/confirm-dialog.component'; 
 import { MessageDialogComponent } from '../../core/message-dialog/message-dialog.component'; 
+import { AppContext } from '../../app-context';
 
 @Component({
   selector: 'ebx-doc-download-button',
@@ -29,7 +30,7 @@ export class DocDownloadButtonComponent implements OnInit {
   set record(rec: any) {
     this._record = rec;
     if (rec) {
-      this.downloadUrl = this.apiUrlService.getDocDownloadUrl(this._record.__decoration.__docMetadata.identity) + "?atChannel=WEB";
+      this.downloadUrl = this.apiUrlService.getDocDownloadUrl(this._record.__decoration.__docMetadata.identity) + "?atChannel=" + AppContext.channel;
     }
   }
 

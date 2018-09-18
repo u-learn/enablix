@@ -51,10 +51,14 @@ public class DisplayableContentBuilderImpl implements DisplayableContentBuilder 
 		if (TemplateUtil.isLinkedContainer(containerDef)) {
 			containerDef = template.getContainerDefinition(containerDef.getLinkContainerQId());
 		}
-		
+
+		String singularContainerLabel = StringUtil.hasText(containerDef.getSingularLabel()) 
+				? containerDef.getSingularLabel() : containerDef.getLabel();
+
 		DisplayableContent dispContent = new DisplayableContent();
 		dispContent.setContainerQId(record.getContainerQId());
 		dispContent.setContainerLabel(containerDef.getLabel());
+		dispContent.setSingularContainerLabel(singularContainerLabel);
 		dispContent.setRecordIdentity((String) record.getRecord().get(ContentDataConstants.IDENTITY_KEY));
 		dispContent.setTitle(ContentDataUtil.findStudioLabelValue(contentRecord, template, containerQId));
 		dispContent.setPortalUrl(getContentInstanceAccessUrl(

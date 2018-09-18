@@ -96,12 +96,33 @@ public class MSGraphSDKImpl implements MSGraphSDK {
 		OneDriveFile file = null;
 		
 		try {
+			
 			file = fileUploadHandler.upload(msSession, uploadSession, dataStream, contentLength);
+			
 		} catch (MSGraphException e) {
+			
+			cleanupUploadSession(msSession, uploadSession, filename, filePath);
 			logAndThrowMSGraphException("Error uploading file chunks for [" + filename + "]", e);
-		}
+		} 
 		
 		return file;
+	}
+
+	private void cleanupUploadSession(MSGraphSession msSession, UploadSession uploadSession, String filename, String filePath) {
+		
+		MultiValueMap<String, String> headers = msSession.commonHeaders();
+		headers.set("Content-Type", "application/json");
+		
+		try {
+			
+			RequestEntity<Void> requestEntity = new RequestEntity<Void>(headers, HttpMethod.DELETE, new URI(uploadSession.getUploadUrl()));
+			restTemplate.exchange(requestEntity, UploadSession.class);
+			
+		} catch (Exception e) {
+			MSGraphUtil.logException(LOGGER, "Error cleaning up upload session [" + uploadSession.getUploadUrl() 
+						+ "] for [" + filename + "] in destination [" + filePath + "]", e);
+		}
+		
 	}
 
 	private UploadSession createUploadSession(MSGraphSession msSession, String filePath, String filename)

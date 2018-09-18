@@ -11,6 +11,7 @@ public class DisplayableContent {
 	
 	private String containerQId;
 	private String containerLabel;
+	private String singularContainerLabel;
 	private String recordIdentity;
 	private String title;
 	private DocRef doc;
@@ -47,6 +48,14 @@ public class DisplayableContent {
 
 	public void setContainerLabel(String containerLabel) {
 		this.containerLabel = containerLabel;
+	}
+
+	public String getSingularContainerLabel() {
+		return singularContainerLabel;
+	}
+
+	public void setSingularContainerLabel(String singularContainerLabel) {
+		this.singularContainerLabel = singularContainerLabel;
 	}
 
 	public String getRecordIdentity() {

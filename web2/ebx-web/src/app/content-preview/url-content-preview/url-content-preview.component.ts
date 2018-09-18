@@ -63,9 +63,6 @@ export class UrlContentPreviewComponent implements OnInit {
                         this.embedHtml = "<iframe src=\"" + this.videoUrl + "\" width=\"640\" height=\"360\" frameborder=\"0\" title=\"GovCon Suite User Training - B&amp;P Budgeting Report 2 of 2\" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>";
                         this.type = "embed-html";
                       }
-                    } else if (this.embedInfo.html) {
-                      this.embedHtml = this.embedInfo.html;
-
                     } else {
                       this.thumbnailUrl = this.embedInfoService.getThumbnailUrl(this.embedInfo);
                     }

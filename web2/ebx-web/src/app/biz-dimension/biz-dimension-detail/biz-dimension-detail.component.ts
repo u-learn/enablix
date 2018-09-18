@@ -15,6 +15,7 @@ import { GlobalSearchControllerService } from '../../core/search-bar/global-sear
 import { Constants } from '../../util/constants';
 import { Utility } from '../../util/utility';
 import { LayoutService } from '../../core/layout.service';
+import { AppContext } from '../../app-context';
 
 @Component({
   selector: 'ebx-biz-dimension-detail',
@@ -86,7 +87,7 @@ export class BizDimensionDetailComponent implements OnInit, AfterViewInit {
       var atCtxParams = Utility.readTrackingCtxInQueryParams(this.route.snapshot.queryParams);
 
       this.contentService.getRecordAndChildData(cQId, recIdentity, '0', cgSize, 
-                Constants.AT_CHANNEL_WEB, childQIds, this.textQuery, atCtxParams).subscribe(
+                AppContext.channel, childQIds, this.textQuery, atCtxParams).subscribe(
         res => {
 
           var childContainerWithData = [];
@@ -132,7 +133,7 @@ export class BizDimensionDetailComponent implements OnInit, AfterViewInit {
     var childQIds = [cg.container.qualifiedId];
 
     this.contentService.getRecordAndChildData(this.container.qualifiedId, this.record.identity, 
-              String(cg.records.number+1), this.pageSize, Constants.AT_CHANNEL_WEB, childQIds, this.textQuery).subscribe(
+              String(cg.records.number+1), this.pageSize, AppContext.channel, childQIds, this.textQuery).subscribe(
       res => {
 
         for (var i = 0; i < res.length; i++) {

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
+import { AppContext } from '../app-context';
 
 @Injectable()
 export class ApiUrlService {
@@ -185,11 +186,17 @@ export class ApiUrlService {
     return this.getAPIUrl(ApiUrlService.GET_EMBED_INFO);
   }
 
-  getExtLinkUrl(url: string, cIdentity: string, cQId: string, atChannel: string = 'WEB') : string {
+  getExtLinkUrl(url: string, cIdentity: string, cQId: string, atChannel?: string) : string {
+    if (!atChannel) {
+      atChannel = AppContext.channel;
+    }
     return this.getAPIUrl(ApiUrlService.GET_EXT_LINK_URL, { url: encodeURIComponent(url), cId: cIdentity, cQId: cQId, atChannel: atChannel});
   }
 
-  getShareExtLinkUrl(url: string, cIdentity: string, cQId: string, atChannel: string = 'WEB') : string {
+  getShareExtLinkUrl(url: string, cIdentity: string, cQId: string, atChannel?: string) : string {
+    if (!atChannel) {
+      atChannel = AppContext.channel;
+    }
     return this.getAPIUrl(ApiUrlService.GET_EXT_LINK_URL, { url: encodeURIComponent(url), cId: cIdentity, cQId: cQId, atChannel: atChannel}, false);
   }
 
