@@ -9,7 +9,7 @@
     </div>
   </div>
   <div class="report-data" *ngIf="dataPage">
-   <div class="table-content">
+    <div class="table-content">
       <ebx-table *ngIf="dataPage" [tableData]="dataPage" [tableColumns]="tableColumns" [(pagination)]="pagination" (onRefreshData)="fetchData(lastUsedFilters)">
         <ng-template #dataRow let-rec>
           <td>{{rec.contentTitle}}</td>

@@ -8,20 +8,26 @@ import { AlertService } from '../core/alert/alert.service';
 import { TableColumn, TableActionConfig, TableAction } from '../core/model/table.model';
 import { DataType } from '../core/data-search/filter-metadata.model';
 import { Pagination, SortCriteria, Direction } from '../core/model/pagination.model';
+import { DataFilter, DataFiltersOptions, DataFiltersConfig, DataFilterValueTx, IdPropDataFilterValueTx, AtleastOneValueDataFilterValidator } from '../core/data-filters/data-filters.model';
 import { ContentRequestDetail, SimpleActionInput } from '../model/content-workflow.model';
 import { Constants } from '../util/constants';
 import { UserService } from '../core/auth/user.service';
 import { NavigationService } from '../app-routing/navigation.service';
 import { ContentWorkflowService } from '../services/content-workflow.service';
 import { ContentTemplateService } from '../../app/core/content-template.service';
+import { Utility } from '../util/utility';
 
 export class ContentRequestListComponent {
   
   dataPage: DataPage;
   tableColumns: TableColumn[];
 
+  dataFiltersConfig: DataFiltersConfig;
+
   filters: {[key: string] : any};
   pagination: Pagination;
+
+  lastSelectedFilters: any;
 
   constructor(public ccService: ConsolidateContentService,
         public contentWFService: ContentWorkflowService,
@@ -70,12 +76,34 @@ export class ContentRequestListComponent {
 
   }
 
-  fetchData() {    
-    this.ccService.getContentRequests(this.filters, this.pagination).subscribe(res => {
+  fetchData(selectedFilters?: any) { 
+    
+    var combinedFilters = {};
+
+    this.lastSelectedFilters = selectedFilters;
+    if (selectedFilters && selectedFilters.dataFilters) {
+      Utility.removeNullProperties(selectedFilters.dataFilters);
+      for (var i in selectedFilters.dataFilters) {
+        combinedFilters[i] = selectedFilters.dataFilters[i];
+      }
+    }
+
+    if (this.filters) {
+      for (var i in this.filters) {
+        combinedFilters[i] = this.filters[i];
+      }
+    }
+
+    this.ccService.getContentRequests(combinedFilters, this.pagination).subscribe(res => {
       this.dataPage = res;
     }, error => {
-      this.alert.error("Error fetching draft content", error.status);
+      this.alert.error("Error fetching content records", error.status);
     });
+  }
+
+  fetchFilteredData(selectedFilters: any) {
+    this.pagination.pageNum = 0;
+    this.fetchData(selectedFilters);
   }
 
   getStateDisplayName(state: string) {

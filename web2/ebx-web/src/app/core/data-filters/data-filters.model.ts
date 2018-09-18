@@ -1,4 +1,5 @@
 import { Observable } from 'rxjs/Observable';
+import { } from ''
 
 export class DataFilter {
   id: string;
@@ -100,6 +101,48 @@ export class IdPropDataFilterValueTx implements DataFilterValueTx {
     }
     
     return null;
+  }
+}
+
+export class AllOptionFilterValueTx implements DataFilterValueTx {
+  
+  filterOptions: any;
+  constructor(filterOptions: any) {
+    this.filterOptions = filterOptions;
+  }
+
+  transform(selectedValues: any) : any {
+
+    if (selectedValues && selectedValues.length > 0) {
+    
+      var returnVal = [];
+
+      for(var i = 0; i < selectedValues.length; i++) {
+      
+        var selOpt = selectedValues[i];
+        if (selOpt.id == '~all~') {
+          returnVal = this.getAllValues();
+          break;
+        } else {
+          returnVal.push(selOpt.id);
+        }
+
+      }
+
+      return returnVal;
+    }
+
+    return null;
+  }
+
+  getAllValues() {
+    var returnVal = [];
+    this.filterOptions.forEach((val) => {
+      if (val.id != '~all~') {
+        returnVal.push(val.id);
+      }
+    });
+    return returnVal;
   }
 }
 

@@ -7,6 +7,7 @@ import { UserService } from '../core/auth/user.service';
 import { Permissions } from '../model/permissions.model';
 import { ContentRequestDetail, SimpleActionInput } from '../model/content-workflow.model';
 import { FilterMetadata, DataType, ConditionOperator } from '../core/data-search/filter-metadata.model';
+import { Utility } from '../util/utility';
 
 @Injectable()
 export class ContentWorkflowService {
@@ -21,6 +22,11 @@ export class ContentWorkflowService {
      "contentQId" : {
        "field" : "objectRef.contentQId",
        "operator" : ConditionOperator.EQ,
+       "dataType" : DataType.STRING
+     },
+     "requestStateIn" : {
+       "field" : "currentState.stateName",
+       "operator" : ConditionOperator.IN,
        "dataType" : DataType.STRING
      },
      "requestState" : {
@@ -107,6 +113,22 @@ export class ContentWorkflowService {
     
   }
 
+  getContentRequestStateOptions() {
+
+    let options: any[] = [
+      { id: ContentWorkflowService.STATE_APPROVED },
+      { id: ContentWorkflowService.STATE_PENDING_APPROVAL},
+      { id: ContentWorkflowService.STATE_REJECTED},
+      { id: ContentWorkflowService.STATE_WITHDRAWN}
+    ];
+
+    options.forEach(opt => { 
+      opt.label = this.stateDisplayText[opt.id];
+    });
+
+    return options;
+  }
+
   submitContent(contentQId: string, rec: any, saveAsDraft: boolean, notes: any) {
     
     let uri = saveAsDraft ? this.apiUrlService.postSaveContentDraft() : 
@@ -128,9 +150,19 @@ export class ContentWorkflowService {
     return this.http.post(uri, contentDetail);
   }
 
-  getContentRequest(refObjIdentity: string) {
+  getContentRequest(refObjIdentity: string, atChannel?: string, atCtxParams?: any) {
+    
     let apiUrl = this.apiUrlService.getContentRequestUrl(refObjIdentity);
-    return this.http.get(apiUrl);
+    
+    let options: any = {
+      headers: atCtxParams  || {}
+    };
+
+    if (atChannel && !options.headers.atChannel) {
+      options.headers.atChannel = atChannel;
+    }
+
+    return this.http.get(apiUrl, options);
   }
 
   deleteContentRequest(refObjIdentity: string) {
