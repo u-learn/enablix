@@ -17,6 +17,7 @@ import com.enablix.analytics.info.detection.InfoDetectionContext;
 import com.enablix.analytics.info.detection.LinkOpinion;
 import com.enablix.analytics.info.detection.TypeAttrOpinion;
 import com.enablix.analytics.info.detection.TypeOpinion;
+import com.enablix.app.content.ContentChangeEvaluator;
 import com.enablix.app.template.service.TemplateManager;
 import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.commons.util.collection.CollectionUtil;
@@ -27,6 +28,7 @@ import com.enablix.core.commons.xsdtopojo.BoundedListDatastoreType;
 import com.enablix.core.commons.xsdtopojo.ContainerType;
 import com.enablix.core.commons.xsdtopojo.ContentItemType;
 import com.enablix.core.commons.xsdtopojo.DatastoreLocationType;
+import com.enablix.core.domain.content.ContentChangeDelta;
 import com.enablix.services.util.ContentDataUtil;
 import com.enablix.services.util.TemplateUtil;
 
@@ -38,6 +40,9 @@ public class ContentSuggestionBuilderImpl implements ContentSuggestionBuilder {
 	
 	@Autowired
 	private TemplateManager templateMgr;
+	
+	@Autowired
+	private ContentChangeEvaluator changeEvaluator;
 
 	@Override
 	public List<ContentSuggestion> build(InfoDetectionContext ctx) {
@@ -84,10 +89,10 @@ public class ContentSuggestionBuilderImpl implements ContentSuggestionBuilder {
 					}
 				}
 				
-				checkAndRetainExistingAttributes(data, typeOp, ctx);
-				
-				ContentDataRecord record = new ContentDataRecord(templateId, containerQId, data);
-				contentSuggestions.add(new ContentSuggestion(record, CONTENT_SUGGESTION_BUILDER, typeOp.getConfidence()));
+				if (checkIfRecordNotExistOrUpdateRequired(data, typeOp, ctx, containerDef)) {
+					ContentDataRecord record = new ContentDataRecord(templateId, containerQId, data);
+					contentSuggestions.add(new ContentSuggestion(record, CONTENT_SUGGESTION_BUILDER, typeOp.getConfidence()));
+				}
 				
 			} else {
 				LOGGER.warn("Container definition not found for container [{}]", containerQId);
@@ -97,26 +102,39 @@ public class ContentSuggestionBuilderImpl implements ContentSuggestionBuilder {
 		return contentSuggestions;
 	}
 	
-	private void checkAndRetainExistingAttributes(Map<String, Object> data, TypeOpinion typeOp, 
-			InfoDetectionContext ctx) {
+	private boolean checkIfRecordNotExistOrUpdateRequired(Map<String, Object> data, TypeOpinion typeOp, 
+			InfoDetectionContext ctx, ContainerType containerDef) {
 		
 		Map<String, Object> existingRecord = typeOp.getExistingRecord();
 		
 		if (CollectionUtil.isNotEmpty(existingRecord)) {
 			
-			data.put(ContentDataConstants.IDENTITY_KEY, ContentDataUtil.getRecordIdentity(existingRecord));
-			data.put(ContentDataConstants.CREATED_AT_KEY, ContentDataUtil.getContentCreatedAt(existingRecord));
-			data.put(ContentDataConstants.CREATED_BY_KEY, ContentDataUtil.getContentCreatedBy(existingRecord));
-			data.put(ContentDataConstants.CREATED_BY_NAME_KEY, ContentDataUtil.getContentCreatedByName(existingRecord));
-			data.put(ContentDataConstants.MODIFIED_AT_KEY, ContentDataUtil.getContentModifiedAt(existingRecord));
-			data.put(ContentDataConstants.MODIFIED_BY_KEY, ContentDataUtil.getContentModifiedBy(existingRecord));
-			data.put(ContentDataConstants.MODIFIED_BY_NAME_KEY, ContentDataUtil.getContentModifiedByName(existingRecord));
+			ContentChangeDelta delta = changeEvaluator.findDelta(existingRecord, data, containerDef);
+			LOGGER.debug("Delta: {}", delta);
 			
-			List<String> attrs = ctx.getInfoDetectionConfig().retainExistingAttrOnUpdate(typeOp.getContainerQId());
-			if (CollectionUtil.isNotEmpty(attrs)) {
-				attrs.forEach((attr) -> data.put(attr, existingRecord.get(attr)));
+			if (!delta.isEmpty()) {
+			
+				data.put(ContentDataConstants.IDENTITY_KEY, ContentDataUtil.getRecordIdentity(existingRecord));
+				data.put(ContentDataConstants.CREATED_AT_KEY, ContentDataUtil.getContentCreatedAt(existingRecord));
+				data.put(ContentDataConstants.CREATED_BY_KEY, ContentDataUtil.getContentCreatedBy(existingRecord));
+				data.put(ContentDataConstants.CREATED_BY_NAME_KEY, ContentDataUtil.getContentCreatedByName(existingRecord));
+				data.put(ContentDataConstants.MODIFIED_AT_KEY, ContentDataUtil.getContentModifiedAt(existingRecord));
+				data.put(ContentDataConstants.MODIFIED_BY_KEY, ContentDataUtil.getContentModifiedBy(existingRecord));
+				data.put(ContentDataConstants.MODIFIED_BY_NAME_KEY, ContentDataUtil.getContentModifiedByName(existingRecord));
+				
+				List<String> attrs = ctx.getInfoDetectionConfig().retainExistingAttrOnUpdate(typeOp.getContainerQId());
+				if (CollectionUtil.isNotEmpty(attrs)) {
+					attrs.forEach((attr) -> data.put(attr, existingRecord.get(attr)));
+				}
+				
+				return true;
+				
+			} else {
+				return false;
 			}
 		}
+		
+		return true;
 	}
 
 	private Object createLinkedOpinionAttrValue(List<LinkOpinion> linkOpinions) {

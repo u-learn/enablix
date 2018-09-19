@@ -3,6 +3,8 @@ package com.enablix.core.domain.content;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.enablix.commons.util.collection.CollectionUtil;
+
 public class ContentChangeDelta {
 
 	private Map<String, AttributeChange> changedAttributes;
@@ -27,6 +29,15 @@ public class ContentChangeDelta {
 		return changedAttributes.containsKey(attributeId);
 	}
 	
+	public boolean isEmpty() {
+		return CollectionUtil.isEmpty(changedAttributes);
+	}
+	
+	@Override
+	public String toString() {
+		return "ContentChangeDelta [changedAttributes=" + changedAttributes + "]";
+	}
+
 	public static class AttributeChange {
 		
 		private String attributeId;
@@ -62,6 +73,12 @@ public class ContentChangeDelta {
 
 		public void setOldValue(Object oldValue) {
 			this.oldValue = oldValue;
+		}
+
+		@Override
+		public String toString() {
+			return "AttributeChange [attributeId=" + attributeId + ", newValue=" + newValue + ", oldValue=" + oldValue
+					+ "]";
 		}
 		
 	}

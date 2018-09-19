@@ -1,4 +1,4 @@
-<div class="ebx-select" [class.readonly]="readOnly" (clickOutside)="hideOptions()">
+<div class="ebx-select" [class.readonly]="readOnly" (click)="showOptions(); focusTextInput();" (clickOutside)="hideOptions()">
     <div class="input-row">
         <img *ngIf="headIcon" class="head-icon" [src]="headIcon">
         <div class="pills-container">
@@ -9,9 +9,9 @@
               </a>
             </div>
             <div class="no-value" *ngIf="readOnly && (!selected || selected.length == 0)">No Value</div>
-            <input *ngIf="!readOnly" #textInput class="text-input" type="text" [placeholder]="placeholder" (focus)="showOptions()" [formControl]="selectCtrl" (blur)="onBlur()"
+            <input *ngIf="!readOnly" #textInput class="text-input" type="text" [placeholder]="placeholder" [formControl]="selectCtrl" (blur)="onBlur()"
             (keydown.arrowdown)="highlightOnDownArrow()" (keydown.arrowup)="highlightOnUpArrow()"
-            (keydown.enter)="selectHighlighted($event)"> 
+            (keydown.enter)="selectHighlighted($event)" [hidden]="!optionsVisible"> 
         </div>
         <!-- <ng-container *ngIf="!multi">
             <input #textInput class="text-input" type="text" [placeholder]="placeholder" 

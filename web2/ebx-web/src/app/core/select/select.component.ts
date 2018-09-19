@@ -282,6 +282,12 @@ export class SelectComponent implements OnInit, ControlValueAccessor, AfterViewI
       opt.label.toLowerCase().indexOf(ct.toLowerCase()) >= 0);
   }
 
+  focusTextInput() {
+    setTimeout(() => {
+      this.textInput.nativeElement.focus();
+    }, 300);
+  }
+
 }
 
 export class SelectOption {

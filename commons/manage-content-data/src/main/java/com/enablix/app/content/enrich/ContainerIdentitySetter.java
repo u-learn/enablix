@@ -44,12 +44,13 @@ public class ContainerIdentitySetter extends AbstractMongoEventListener<BaseEnti
 		});
 		
 		// populate identity in hierarchy
-		for (Map.Entry<String, Object> entry : containerData.entrySet()) {
+		/* Obsolete code.. we don't support child containers
+		 * for (Map.Entry<String, Object> entry : containerData.entrySet()) {
 			setIdentityIfContainer(entry.getValue());
-		}
+		}*/
 	}
 	
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "unused" })
 	private void setIdentityIfContainer(Object obj) {
 		
 		if (obj instanceof Map<?,?>) {
