@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.enablix.analytics.info.detection.Assessment;
 import com.enablix.analytics.info.detection.ContentSuggestion;
 import com.enablix.analytics.info.detection.ContentSuggestionBuilder;
+import com.enablix.analytics.info.detection.InfoDetectionContext;
 import com.enablix.analytics.info.detection.LinkOpinion;
 import com.enablix.analytics.info.detection.TypeAttrOpinion;
 import com.enablix.analytics.info.detection.TypeOpinion;
@@ -26,6 +27,7 @@ import com.enablix.core.commons.xsdtopojo.BoundedListDatastoreType;
 import com.enablix.core.commons.xsdtopojo.ContainerType;
 import com.enablix.core.commons.xsdtopojo.ContentItemType;
 import com.enablix.core.commons.xsdtopojo.DatastoreLocationType;
+import com.enablix.services.util.ContentDataUtil;
 import com.enablix.services.util.TemplateUtil;
 
 public class ContentSuggestionBuilderImpl implements ContentSuggestionBuilder {
@@ -38,7 +40,9 @@ public class ContentSuggestionBuilderImpl implements ContentSuggestionBuilder {
 	private TemplateManager templateMgr;
 
 	@Override
-	public List<ContentSuggestion> build(Assessment assessment) {
+	public List<ContentSuggestion> build(InfoDetectionContext ctx) {
+		
+		Assessment assessment = ctx.getAssessment();
 		
 		String templateId = ProcessContext.get().getTemplateId();
 		TemplateFacade template = templateMgr.getTemplateFacade(templateId);
@@ -80,6 +84,7 @@ public class ContentSuggestionBuilderImpl implements ContentSuggestionBuilder {
 					}
 				}
 				
+				checkAndRetainExistingAttributes(data, typeOp, ctx);
 				
 				ContentDataRecord record = new ContentDataRecord(templateId, containerQId, data);
 				contentSuggestions.add(new ContentSuggestion(record, CONTENT_SUGGESTION_BUILDER, typeOp.getConfidence()));
@@ -92,6 +97,22 @@ public class ContentSuggestionBuilderImpl implements ContentSuggestionBuilder {
 		return contentSuggestions;
 	}
 	
+	private void checkAndRetainExistingAttributes(Map<String, Object> data, TypeOpinion typeOp, 
+			InfoDetectionContext ctx) {
+		
+		Map<String, Object> existingRecord = typeOp.getExistingRecord();
+		
+		if (CollectionUtil.isNotEmpty(existingRecord)) {
+			
+			data.put(ContentDataConstants.IDENTITY_KEY, ContentDataUtil.getRecordIdentity(existingRecord));
+			
+			List<String> attrs = ctx.getInfoDetectionConfig().retainExistingAttrOnUpdate(typeOp.getContainerQId());
+			if (CollectionUtil.isNotEmpty(attrs)) {
+				attrs.forEach((attr) -> data.put(attr, existingRecord.get(attr)));
+			}
+		}
+	}
+
 	private Object createLinkedOpinionAttrValue(List<LinkOpinion> linkOpinions) {
 		
 		List<Map<String, Object>> attrValue = null;

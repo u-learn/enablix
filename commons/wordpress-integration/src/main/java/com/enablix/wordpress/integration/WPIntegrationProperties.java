@@ -42,6 +42,8 @@ public class WPIntegrationProperties implements InfoDetectionConfiguration {
 	// Default filters to use in PostFeederTask
 	private Map<String, List<String>> taskDefaultFilters;
 	
+	private Map<String, List<String>> retainAttributesOnUpdate;
+	
 	private Map<String, List<String>> tagAliasMapping;
 	
 	private boolean saveAsDraft;
@@ -92,6 +94,14 @@ public class WPIntegrationProperties implements InfoDetectionConfiguration {
 	public void setTaskDefaultFilters(Map<String, List<String>> defaultFilters) {
 		this.taskDefaultFilters = defaultFilters;
 	}
+	
+	public Map<String, List<String>> getRetainAttributesOnUpdate() {
+		return retainAttributesOnUpdate;
+	}
+
+	public void setRetainAttributesOnUpdate(Map<String, List<String>> retainAttributesOnUpdate) {
+		this.retainAttributesOnUpdate = retainAttributesOnUpdate;
+	}
 
 	public Map<String, List<String>> getTagAliasMapping() {
 		return tagAliasMapping;
@@ -101,6 +111,14 @@ public class WPIntegrationProperties implements InfoDetectionConfiguration {
 		this.tagAliasMapping = tagAliasMapping;
 	}
 
+	@Override
+	public List<String> retainExistingAttrOnUpdate(String forContainerQId) {
+		if (CollectionUtil.isNotEmpty(retainAttributesOnUpdate)) {
+			return retainAttributesOnUpdate.get(forContainerQId);
+		}
+		return null;
+	}
+	
 	@Override
 	public Map<String, List<InfoTag>> getTagAliases() {
 		return tagAliases;

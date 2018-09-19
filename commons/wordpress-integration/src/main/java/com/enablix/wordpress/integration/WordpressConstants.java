@@ -17,6 +17,8 @@ public class WordpressConstants {
 	public static final String WP_POST_FEEDER_TASK_LAST_RUN_PARAM = "lastrun";
 	public static final String WP_IMPORT_POST_MAILER_TASK_LAST_RUN_PARAM = "lastrun";
 
+	public static final String WP_POST_FEEDER_TASK_UPDATE_EXISTING = "updateExisting";
+	
 	public static final String WP_API_PARAM_SLUG = "slug";
 
 	public static final String WP_API_PARAM_PUBLISHED_AFTER = "after";

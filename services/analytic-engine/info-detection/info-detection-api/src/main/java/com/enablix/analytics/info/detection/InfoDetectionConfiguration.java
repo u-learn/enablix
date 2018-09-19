@@ -26,5 +26,9 @@ public interface InfoDetectionConfiguration {
 	}
 	
 	InfoDetectionConfiguration NO_CONFIG = new InfoDetectionConfiguration() { };
+
+	default public List<String> retainExistingAttrOnUpdate(String forContainerQId) {
+		return null;
+	}
 	
 }

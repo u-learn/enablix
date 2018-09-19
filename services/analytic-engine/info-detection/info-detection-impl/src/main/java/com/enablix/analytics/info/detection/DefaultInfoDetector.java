@@ -46,12 +46,13 @@ public class DefaultInfoDetector implements InfoDetector {
 	}
 
 	@Override
-	public void analyseAndSaveContentRecord(Information info) {
+	public void analyseAndSaveContentRecord(Information info, boolean updateExisting) {
 		
 		InfoDetectionConfiguration config = getInfoDetectionConfig(info);
 
 		InfoDetectionContext ctx = new InfoDetectionContext(info, new Assessment(), config);
 		ctx.setSaveContentRecord(true);
+		ctx.setUpdateExistingRecord(updateExisting);
 		
 		siGateway.analyse(ctx);
 	}

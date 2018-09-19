@@ -6,6 +6,6 @@ public interface InfoDetector {
 
 	List<ContentSuggestion> analyse(Information info);
 	
-	void analyseAndSaveContentRecord(Information info);
+	void analyseAndSaveContentRecord(Information info, boolean updateExistingRecord);
 	
 }

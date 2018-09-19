@@ -12,6 +12,8 @@ public class TypeOpinion extends Opinion {
 
 	private String containerQId; // opinion type
 	
+	private Map<String, Object> existingRecord;
+	
 	private Map<String, List<TypeAttrOpinion>> attributes;
 	
 	protected TypeOpinion() {
@@ -26,6 +28,14 @@ public class TypeOpinion extends Opinion {
 
 	public String getContainerQId() {
 		return containerQId;
+	}
+	
+	public Map<String, Object> getExistingRecord() {
+		return existingRecord;
+	}
+
+	public void setExistingRecord(Map<String, Object> existingRecord) {
+		this.existingRecord = existingRecord;
 	}
 
 	public Collection<TypeAttrOpinion> getAttributeOpinions(String attrId) {

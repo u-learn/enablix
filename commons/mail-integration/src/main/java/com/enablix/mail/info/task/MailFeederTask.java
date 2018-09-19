@@ -203,7 +203,7 @@ public class MailFeederTask implements Task {
 		public void process(Message mail) throws MessagingException, IOException {
 			
 			MailInfo mailInfo = MailInfo.build(mail, mailboxUser);
-			infoDetector.analyseAndSaveContentRecord(mailInfo);
+			infoDetector.analyseAndSaveContentRecord(mailInfo, false);
 			
 			if (lastReceivedMailDate == null) {
 				lastReceivedMailDate = mail.getReceivedDate();

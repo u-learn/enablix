@@ -93,7 +93,7 @@
 						   
 	<int:transformer input-channel="analysed-info-channel"
 					 output-channel="content-suggest-builder-channel"
-					 expression="payload.getAssessment()"/>
+					 expression="payload"/>
 	
 	<int:service-activator id="contentSuggestBuilderActivator" 
 						   input-channel="content-suggest-builder-channel"

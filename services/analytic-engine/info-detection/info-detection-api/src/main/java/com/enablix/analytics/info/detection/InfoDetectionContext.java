@@ -8,6 +8,8 @@ public class InfoDetectionContext {
 	
 	private boolean saveContentRecord;
 	
+	private boolean updateExistingRecord;
+	
 	private InfoDetectionConfiguration infoDetectionConfig;
 
 	public InfoDetectionContext(Information information, Assessment assessment, InfoDetectionConfiguration infoDetectionConfig) {
@@ -22,6 +24,14 @@ public class InfoDetectionContext {
 
 	public Assessment getAssessment() {
 		return assessment;
+	}
+
+	public boolean isUpdateExistingRecord() {
+		return updateExistingRecord;
+	}
+
+	public void setUpdateExistingRecord(boolean updateExistingRecord) {
+		this.updateExistingRecord = updateExistingRecord;
 	}
 
 	public boolean isSaveContentRecord() {

@@ -4,6 +4,6 @@ import java.util.List;
 
 public interface ContentSuggestionBuilder {
 
-	List<ContentSuggestion> build(Assessment assessment);
+	List<ContentSuggestion> build(InfoDetectionContext ctx);
 	
 }

@@ -82,7 +82,8 @@ public class PostFeederTask implements Task {
 			
 			setActivityTrackingContext();
 			
-			WPInfoDetector wpInfoDetector = new WPInfoDetector(wp);
+			Boolean updateExisting = (Boolean) context.getTaskParameter(WordpressConstants.WP_POST_FEEDER_TASK_LAST_RUN_PARAM);
+			WPInfoDetector wpInfoDetector = new WPInfoDetector(wp, updateExisting != null ? updateExisting.booleanValue() : false);
 			wpService.processPosts(wp, wpInfoDetector, searchRequest);
 			
 			LOGGER.info("Total posts processed: " + wpInfoDetector.postCount);
@@ -129,16 +130,19 @@ public class PostFeederTask implements Task {
 		
 		private int postCount;
 		
-		private WPInfoDetector(Wordpress wp) {
+		private boolean updateExisting;
+		
+		private WPInfoDetector(Wordpress wp, boolean updateExisting) {
 			super();
 			this.wp = wp;
+			this.updateExisting = updateExisting;
 		}
 
 
 		@Override
 		public void process(Post post) {
 			WordpressInfo wpInfo = new WordpressInfo(post, wpService.getPostTagsAndCategories(wp, post));
-			infoDetector.analyseAndSaveContentRecord(wpInfo);
+			infoDetector.analyseAndSaveContentRecord(wpInfo, this.updateExisting);
 			postCount++;
 		}
 		

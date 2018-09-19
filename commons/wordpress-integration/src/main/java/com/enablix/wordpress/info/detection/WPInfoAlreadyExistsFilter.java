@@ -1,6 +1,7 @@
 package com.enablix.wordpress.info.detection;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
@@ -9,6 +10,7 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.integration.core.MessageSelector;
 import org.springframework.messaging.Message;
 
+import com.enablix.analytics.info.detection.InfoDetectionConfiguration;
 import com.enablix.analytics.info.detection.InfoDetectionContext;
 import com.enablix.analytics.info.detection.Information;
 import com.enablix.analytics.info.detection.TypeOpinion;
@@ -48,15 +50,22 @@ public class WPInfoAlreadyExistsFilter implements MessageSelector {
 				
 				if (CollectionUtil.isNotEmpty(typeOpinions)) {
 					
-					WPIntegrationProperties wpIntProps = WPIntegrationProperties.getFromConfiguration();
-				
+					WPIntegrationProperties wpIntProps = null;
+					InfoDetectionConfiguration config = ctx.getInfoDetectionConfig();
+					
+					if (config instanceof WPIntegrationProperties) {
+						wpIntProps = (WPIntegrationProperties) config;
+					} else {
+						wpIntProps = WPIntegrationProperties.getFromConfiguration();
+					}
+					
 					if (wpIntProps != null) {
 					
 						TemplateFacade template = 
 								templateMgr.getTemplateFacade(ProcessContext.get().getTemplateId());
 						
 						for (TypeOpinion typeOp : typeOpinions) {
-							if (checkInfoExists(wpInfo, wpIntProps, typeOp, template)) {
+							if (checkLatestInfoExists(ctx, wpInfo, wpIntProps, typeOp, template)) {
 								return false;
 							}
 						}
@@ -68,8 +77,9 @@ public class WPInfoAlreadyExistsFilter implements MessageSelector {
 		return true;
 	}
 
-	private boolean checkInfoExists(WordpressInfo wpInfo, WPIntegrationProperties wpIntProps, 
-			TypeOpinion typeOp, TemplateFacade template) {
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	private boolean checkLatestInfoExists(InfoDetectionContext ctx, WordpressInfo wpInfo, 
+			WPIntegrationProperties wpIntProps, TypeOpinion typeOp, TemplateFacade template) {
 		
 		String containerQId = typeOp.getContainerQId();
 		String collectionName = template.getCollectionName(containerQId);
@@ -81,9 +91,17 @@ public class WPInfoAlreadyExistsFilter implements MessageSelector {
 			Criteria criteria = Criteria.where(matchAttrId).regex(
 					Pattern.compile(wpInfo.getPost().getSlug(), Pattern.CASE_INSENSITIVE));
 			
-			Long existingCnt = genericDao.countByCriteria(criteria, collectionName, Map.class, MongoDataView.ALL_DATA);
+			List<Map> records = genericDao.findByCriteria(criteria, collectionName, Map.class, MongoDataView.ALL_DATA);
 			
-			return existingCnt > 0;
+			if (CollectionUtil.isNotEmpty(records)) {
+				
+				Map record = records.get(0);
+				typeOp.setExistingRecord(record);
+				
+				// the record exists. Check if update is required.
+				return !ctx.isUpdateExistingRecord();
+			}
+			
 		}
 		
 		return false;
