@@ -105,6 +105,12 @@ public class ContentSuggestionBuilderImpl implements ContentSuggestionBuilder {
 		if (CollectionUtil.isNotEmpty(existingRecord)) {
 			
 			data.put(ContentDataConstants.IDENTITY_KEY, ContentDataUtil.getRecordIdentity(existingRecord));
+			data.put(ContentDataConstants.CREATED_AT_KEY, ContentDataUtil.getContentCreatedAt(existingRecord));
+			data.put(ContentDataConstants.CREATED_BY_KEY, ContentDataUtil.getContentCreatedBy(existingRecord));
+			data.put(ContentDataConstants.CREATED_BY_NAME_KEY, ContentDataUtil.getContentCreatedByName(existingRecord));
+			data.put(ContentDataConstants.MODIFIED_AT_KEY, ContentDataUtil.getContentModifiedAt(existingRecord));
+			data.put(ContentDataConstants.MODIFIED_BY_KEY, ContentDataUtil.getContentModifiedBy(existingRecord));
+			data.put(ContentDataConstants.MODIFIED_BY_NAME_KEY, ContentDataUtil.getContentModifiedByName(existingRecord));
 			
 			List<String> attrs = ctx.getInfoDetectionConfig().retainExistingAttrOnUpdate(typeOp.getContainerQId());
 			if (CollectionUtil.isNotEmpty(attrs)) {
