@@ -82,7 +82,7 @@ public class PostFeederTask implements Task {
 			
 			setActivityTrackingContext();
 			
-			Boolean updateExisting = (Boolean) context.getTaskParameter(WordpressConstants.WP_POST_FEEDER_TASK_LAST_RUN_PARAM);
+			Boolean updateExisting = (Boolean) context.getTaskParameter(WordpressConstants.WP_POST_FEEDER_TASK_UPDATE_EXISTING);
 			WPInfoDetector wpInfoDetector = new WPInfoDetector(wp, updateExisting != null ? updateExisting.booleanValue() : false);
 			wpService.processPosts(wp, wpInfoDetector, searchRequest);
 			
