@@ -24,6 +24,7 @@ import com.enablix.app.content.doc.DocumentManager;
 import com.enablix.app.content.event.ContentDataEventListener;
 import com.enablix.app.content.event.ContentDataEventListenerRegistry;
 import com.enablix.app.content.fetch.FetchContentRequest;
+import com.enablix.app.content.update.ContentIdentifier;
 import com.enablix.app.content.update.UpdateContentRequest;
 import com.enablix.app.content.update.UpdateContentResponse;
 import com.enablix.app.template.service.TemplateManager;
@@ -50,6 +51,7 @@ import com.enablix.core.commons.xsdtopojo.ContainerType;
 import com.enablix.core.commons.xsdtopojo.ContentItemClassType;
 import com.enablix.core.commons.xsdtopojo.ContentItemType;
 import com.enablix.core.commons.xsdtopojo.ContentTemplate;
+import com.enablix.core.content.event.ContentDataArchiveEvent;
 import com.enablix.core.content.event.ContentDataDelEvent;
 import com.enablix.core.domain.content.quality.AlertLevel;
 import com.enablix.core.domain.content.quality.QualityAnalysis;
@@ -754,5 +756,44 @@ public class ContentDataManagerImpl implements ContentDataManager {
 		
 		return dataRecords;
 	}
-	
+
+	@Override
+	public boolean archiveContent(ContentIdentifier request) {
+		return updateArchiveStatus(request, true);
+	}
+
+	@Override
+	public boolean unarchiveContent(ContentIdentifier request) {
+		return updateArchiveStatus(request, false);
+	}
+
+	private boolean updateArchiveStatus(ContentIdentifier request, boolean archiveStatus) {
+		
+		TemplateFacade template = templateMgr.getTemplateFacade(ProcessContext.get().getTemplateId());
+		String collectionName = template.getCollectionName(request.getContentQId());
+		
+		boolean success = false;
+		
+		
+		if (StringUtil.hasText(collectionName)) {
+			
+			success = archiveStatus ? crud.archiveRecord(collectionName, request.getRecordIdentity())
+					: crud.unarchiveRecord(collectionName, request.getRecordIdentity());
+			
+			if (success) {
+			
+				publishContentArchiveEvent(new ContentDataArchiveEvent(ProcessContext.get().getTemplateId(), 
+					request.getContentQId(), request.getRecordIdentity(), 
+					com.enablix.core.domain.activity.ContentActivity.ContainerType.CONTENT, archiveStatus));
+			}
+		}
+		
+		return success;
+	}
+
+	private void publishContentArchiveEvent(ContentDataArchiveEvent event) {
+		for (ContentDataEventListener listener : listenerRegistry.getListeners()) {
+			listener.onContentDataArchive(event);
+		}
+	}
 }

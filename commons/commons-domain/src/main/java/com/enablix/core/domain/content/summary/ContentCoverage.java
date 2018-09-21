@@ -31,6 +31,14 @@ public class ContentCoverage extends BaseDocumentEntity {
 	
 	private String recordModifiedByName;
 	
+	private boolean archived;
+	
+	private Date recordArchivedAt;
+	
+	private String recordArchivedBy;
+	
+	private String recordArchivedByName;
+	
 	private List<CoverageStat> stats;
 	
 	private Date asOfDate;
@@ -152,6 +160,38 @@ public class ContentCoverage extends BaseDocumentEntity {
 
 	public void setRecordModifiedByName(String recordModifiedByName) {
 		this.recordModifiedByName = recordModifiedByName;
+	}
+	
+	public boolean isArchived() {
+		return archived;
+	}
+
+	public void setArchived(boolean archived) {
+		this.archived = archived;
+	}
+
+	public Date getRecordArchivedAt() {
+		return recordArchivedAt;
+	}
+
+	public void setRecordArchivedAt(Date recordArchivedAt) {
+		this.recordArchivedAt = recordArchivedAt;
+	}
+
+	public String getRecordArchivedBy() {
+		return recordArchivedBy;
+	}
+
+	public void setRecordArchivedBy(String recordArchivedBy) {
+		this.recordArchivedBy = recordArchivedBy;
+	}
+
+	public String getRecordArchivedByName() {
+		return recordArchivedByName;
+	}
+
+	public void setRecordArchivedByName(String recordArchivedByName) {
+		this.recordArchivedByName = recordArchivedByName;
 	}
 
 	@Override

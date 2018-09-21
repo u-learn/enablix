@@ -1,6 +1,7 @@
 package com.enablix.core.mongo.content;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -22,10 +23,12 @@ import com.enablix.commons.util.QIdUtil;
 import com.enablix.commons.util.StringUtil;
 import com.enablix.commons.util.collection.CollectionUtil;
 import com.enablix.commons.util.json.JsonUtil;
+import com.enablix.commons.util.process.ProcessContext;
 import com.enablix.core.mongo.search.SearchFilter;
 import com.enablix.core.mongo.view.MongoDataView;
 import com.enablix.core.mongo.view.MongoDataViewOperations;
 import com.mongodb.BasicDBObject;
+import com.mongodb.WriteResult;
 
 @Component
 public class ContentCrudServiceImpl implements ContentCrudService {
@@ -468,6 +471,29 @@ public class ContentCrudServiceImpl implements ContentCrudService {
 	@Override
 	public Long getRecordCount(String collectionName) {
 		return mongoTemplate.count(Query.query(new Criteria()), collectionName);
+	}
+
+	@Override
+	public boolean archiveRecord(String collName, String recordIdentity) {
+		return setArchiveFlag(collName, recordIdentity, true);
+	}
+
+	private boolean setArchiveFlag(String collName, String recordIdentity, boolean archiveFlag) {
+		Update update = new Update();
+		update.set(ContentDataConstants.ARCHIVED_KEY, archiveFlag);
+		update.set(ContentDataConstants.ARCHIVED_AT_KEY, Calendar.getInstance().getTime());
+		update.set(ContentDataConstants.ARCHIVED_BY_KEY, ProcessContext.get().getUserId());
+		update.set(ContentDataConstants.ARCHIVED_BY_NAME_KEY, ProcessContext.get().getUserDisplayName());
+		
+		Criteria criteria = Criteria.where(ContentDataConstants.IDENTITY_KEY).is(recordIdentity);
+		
+		WriteResult writeResult = mongoTemplate.updateFirst(Query.query(criteria), update, collName);
+		return writeResult.isUpdateOfExisting();
+	}
+
+	@Override
+	public boolean unarchiveRecord(String collName, String recordIdentity) {
+		return setArchiveFlag(collName, recordIdentity, false);
 	}
 	
 }

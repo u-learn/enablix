@@ -12,6 +12,11 @@ public class ContentDataConstants {
 	public static final String MODIFIED_AT_KEY = "modifiedAt";
 	public static final String MODIFIED_BY_KEY = "modifiedBy";
 	public static final String MODIFIED_BY_NAME_KEY = "modifiedByName";
+	public static final String ARCHIVED_KEY = "archived";
+	public static final String ARCHIVED_AT_KEY = "archiveUpdatedAt";
+	public static final String ARCHIVED_BY_KEY = "archiveUpdatedBy";
+	public static final String ARCHIVED_BY_NAME_KEY = "archiveUpdatedByName";
+
 	
 	public static final String RECORD_ID_KEY = "_id";
 

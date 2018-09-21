@@ -12,9 +12,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.enablix.app.content.ContentDataManager;
 import com.enablix.app.content.bulkimport.ImportManager;
 import com.enablix.app.content.delete.DeleteContentRequest;
+import com.enablix.app.content.update.ContentIdentifier;
 import com.enablix.app.content.update.UpdateContentRequest;
 import com.enablix.app.content.update.UpdateContentResponse;
 import com.enablix.commons.exception.ValidationException;
+import com.enablix.core.api.RestResponse;
 import com.enablix.core.domain.content.ImportRequest;
 
 @RestController
@@ -61,11 +63,24 @@ public class ContentDataController {
 		return "{\"status\": \"success\"}";
 	}
 	
-	@RequestMapping(method = RequestMethod.POST, 
-			value="/import/request", 
+	@RequestMapping(method = RequestMethod.POST, value="/import/request", 
 			consumes = "application/json", produces = "application/json")
 	public void importRecords(@RequestBody ImportRequest request) throws ValidationException {
 		importMgr.acceptRequest(request);
+	}
+	
+	@RequestMapping(method = RequestMethod.POST, value="/archive", 
+			consumes = "application/json", produces = "application/json")
+	public RestResponse archiveRecord(@RequestBody ContentIdentifier request) throws ValidationException {
+		boolean success = dataMgr.archiveContent(request);
+		return success ? RestResponse.success() : RestResponse.failure();
+	}
+	
+	@RequestMapping(method = RequestMethod.POST, value="/unarchive", 
+			consumes = "application/json", produces = "application/json")
+	public RestResponse unarchiveRecord(@RequestBody ContentIdentifier request) throws ValidationException {
+		boolean success = dataMgr.unarchiveContent(request);
+		return success ? RestResponse.success() : RestResponse.failure();
 	}
 	
 }

@@ -14,6 +14,7 @@ public final class ContentApprovalConstants {
 	
 	public static final String STATE_DRAFT = "DRAFT";
 	public static final String STATE_PUBLISHED = "PUBLISHED";
+	
 	public static final String STATE_PENDING_APPROVAL = "PENDING_APPROVAL";
 	public static final String STATE_REJECTED = "REJECTED";
 	public static final String STATE_APPROVED = "APPROVED";

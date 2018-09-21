@@ -9,6 +9,7 @@ import com.enablix.app.content.event.ContentDataEventListener;
 import com.enablix.app.template.service.TemplateManager;
 import com.enablix.core.api.ContentDataRef;
 import com.enablix.core.api.TemplateFacade;
+import com.enablix.core.content.event.ContentDataArchiveEvent;
 import com.enablix.core.content.event.ContentDataDelEvent;
 import com.enablix.core.content.event.ContentDataSaveEvent;
 import com.enablix.core.domain.activity.Activity.ActivityType;
@@ -47,6 +48,18 @@ public class ContentSaveAuditor implements ContentDataEventListener {
 		ActivityLogger.auditContentActivity(
 				ActivityType.CONTENT_DELETE, dataRef, 
 				event.getContainerType().isRefData() ? ContainerType.REF_DATA : ContainerType.CONTENT, null);
+	}
+
+
+	@Override
+	public void onContentDataArchive(ContentDataArchiveEvent event) {
+		
+		ContentDataRef dataRef = ContentDataRef.createContentRef(event.getTemplateId(), 
+				event.getContainerQId(), event.getContentIdentity(), null);
+		
+		ActivityLogger.auditContentActivity(
+				event.isArchived() ? ActivityType.CONTENT_ARCHIVED : ActivityType.CONTENT_UNARCHIVED, 
+				dataRef, event.getContainerType(), null);
 	}
 
 }

@@ -88,4 +88,8 @@ public interface ContentCrudService {
 
 	Long getRecordCount(String collectionName);
 
+	boolean archiveRecord(String contentQId, String recordIdentity);
+
+	boolean unarchiveRecord(String contentQId, String recordIdentity);
+
 }

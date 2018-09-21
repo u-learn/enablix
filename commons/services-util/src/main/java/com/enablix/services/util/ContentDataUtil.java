@@ -196,6 +196,10 @@ public class ContentDataUtil {
 		return (Date) contentData.get(ContentDataConstants.MODIFIED_AT_KEY);
 	}
 	
+	public static Date getContentArchivedAt(Map<String, Object> contentData) {
+		return (Date) contentData.get(ContentDataConstants.ARCHIVED_AT_KEY);
+	}
+	
 	public static String getRecordIdentity(Map<String, Object> contentData) {
 		return (String) contentData.get(ContentDataConstants.IDENTITY_KEY);
 	}
@@ -310,6 +314,18 @@ public class ContentDataUtil {
 		return (String) contentData.get(ContentDataConstants.MODIFIED_BY_NAME_KEY);
 	}
 
+	public static String getContentArchivedBy(Map<String, Object> contentData) {
+		return (String) contentData.get(ContentDataConstants.ARCHIVED_BY_KEY);
+	}
+	
+	public static String getContentArchivedByName(Map<String, Object> contentData) {
+		return (String) contentData.get(ContentDataConstants.ARCHIVED_BY_NAME_KEY);
+	}
+
+	public static boolean getArchivedStatus(Map<String, Object> contentData) {
+		Boolean archived = (Boolean) contentData.get(ContentDataConstants.ARCHIVED_KEY);
+		return archived != null ? archived.booleanValue() : false;
+	}
 
 	public static String getRecordTitle(Map<String, Object> contentData) {
 		return (String) contentData.get(ContentDataConstants.CONTENT_TITLE_KEY);

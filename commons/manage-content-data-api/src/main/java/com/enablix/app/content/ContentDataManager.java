@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 
 import com.enablix.app.content.delete.DeleteContentRequest;
 import com.enablix.app.content.fetch.FetchContentRequest;
+import com.enablix.app.content.update.ContentIdentifier;
 import com.enablix.app.content.update.UpdateContentRequest;
 import com.enablix.app.content.update.UpdateContentResponse;
 import com.enablix.core.api.ContentDataRecord;
@@ -57,5 +58,9 @@ public interface ContentDataManager {
 	
 	<T> List<ContentDataRecord> getContentRecords(Iterable<T> itr, 
 			Function<T, ContentRecordRef> dataRefTx, DataView view);
+
+	boolean archiveContent(ContentIdentifier request);
+
+	boolean unarchiveContent(ContentIdentifier request);
 	
 }

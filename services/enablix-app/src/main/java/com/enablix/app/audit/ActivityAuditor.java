@@ -117,8 +117,6 @@ public class ActivityAuditor {
 			if (!StringUtil.hasText(recordActivity.getItemTitle())
 					&& StringUtil.hasText(itemIdentity)
 					&& StringUtil.hasText(containerQId)) {
-				
-
 
 				ContentDataRef contentRef = ContentDataRef.createContentRef(templateId, containerQId, itemIdentity, null);
 				
