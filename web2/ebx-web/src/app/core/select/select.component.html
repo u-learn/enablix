@@ -1,7 +1,7 @@
-<div class="ebx-select" [class.readonly]="readOnly" (click)="showOptions(); focusTextInput();" (clickOutside)="hideOptions()">
+<div class="ebx-select" [class.readonly]="readOnly" (clickOutside)="hideOptions()">
     <div class="input-row">
         <img *ngIf="headIcon" class="head-icon" [src]="headIcon">
-        <div class="pills-container">
+        <div class="pills-container" (click)="showOptions(); focusTextInput()">
             <div class="pill" *ngFor="let sOpt of selected; let i = index" [style.background]="pillsColor">
               <span class="pill-label">{{sOpt?.label}}</span>
               <a class="remove" (click)="removeOption(i)" *ngIf="!readOnly">
@@ -9,9 +9,9 @@
               </a>
             </div>
             <div class="no-value" *ngIf="readOnly && (!selected || selected.length == 0)">No Value</div>
-            <input *ngIf="!readOnly" #textInput class="text-input" type="text" [placeholder]="placeholder" [formControl]="selectCtrl" (blur)="onBlur()"
+            <input *ngIf="!readOnly" #textInput class="text-input" type="text" [placeholder]="placeholder" (focus)="showOptions()" [formControl]="selectCtrl" (blur)="onBlur()"
             (keydown.arrowdown)="highlightOnDownArrow()" (keydown.arrowup)="highlightOnUpArrow()"
-            (keydown.enter)="selectHighlighted($event)" [hidden]="!optionsVisible"> 
+            (keydown.enter)="selectHighlighted($event)" [class.min-text-input]="!optionsVisible && (placeholder == '')"> 
         </div>
         <!-- <ng-container *ngIf="!multi">
             <input #textInput class="text-input" type="text" [placeholder]="placeholder" 

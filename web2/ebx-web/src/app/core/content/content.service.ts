@@ -336,6 +336,22 @@ export class ContentService {
     return this.http.post(apiUrl, request);
   }
 
+  archiveRecord(recordIdentity: string, contentQId: string) {
+    let apiUrl = this.apiUrlService.postArchiveContentRecord();
+    return this.http.post(apiUrl, { 
+        recordIdentity: recordIdentity,
+        contentQId: contentQId
+      });
+  }
+
+  unarchiveRecord(recordIdentity: string, contentQId: string) {
+    let apiUrl = this.apiUrlService.postUnarchiveContentRecord();
+    return this.http.post(apiUrl, {
+        recordIdentity: recordIdentity,
+        contentQId: contentQId
+      });
+  }
+
   getFilteredRecords(containerQId: string, searchRequest: DataSearchRequest) {
     return this.dsService.getContainerDataSearchResult(containerQId, searchRequest); 
   }

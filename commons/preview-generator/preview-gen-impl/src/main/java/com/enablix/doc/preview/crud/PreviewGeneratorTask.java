@@ -7,6 +7,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.enablix.app.content.doc.DocReferenceSupervisor;
+import com.enablix.app.content.doc.DocReferenceSupervisorFactory;
 import com.enablix.app.content.doc.DocumentManager;
 import com.enablix.commons.dms.api.DocumentMetadata;
 import com.enablix.commons.dms.api.DocumentMetadata.PreviewStatus;
@@ -31,6 +33,9 @@ public class PreviewGeneratorTask implements Task {
 	@Autowired
 	private DocumentManager docManager;
 	
+	@Autowired
+	private DocReferenceSupervisorFactory docRefSupervisorFactory;
+	
 	@Override
 	public void run(TaskContext context) {
 		
@@ -41,7 +46,18 @@ public class PreviewGeneratorTask implements Task {
 			
 			try {
 				
-				if (docManager.checkReferenceRecordExists(docMd)) {
+				Collection<DocReferenceSupervisor> supervisors = docRefSupervisorFactory.getSupervisors();
+				
+				boolean refExist = false;
+				
+				for (DocReferenceSupervisor supervisor : supervisors) {
+					if (supervisor.checkReferenceRecordExists(docMd)) {
+						refExist = true;
+						break;
+					}
+				}
+				
+				if (refExist) {
 					previewService.createPreview(docMd);
 				}
 				

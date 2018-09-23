@@ -302,7 +302,7 @@ const routes: Routes = [
     RouterModule.forRoot(
         routes, 
         { 
-          enableTracing: true,
+          /*enableTracing: true,*/
           onSameUrlNavigation: 'reload'
         }
       )

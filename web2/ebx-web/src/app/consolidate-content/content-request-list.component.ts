@@ -216,7 +216,7 @@ export class ContentRequestListComponent {
   }
 
   navToContentRequest(rec: any) {
-    let cntnr = this.ctService.getContainerByQId(rec.objectRef.contentQId);
+    let cntnr = this.ctService.getConcreteContainerByQId(rec.objectRef.contentQId);
     if (this.ctService.isBusinessContent(cntnr)) {
       this.navService.goToContentRequestDetail(rec.objectRef.identity, this.router.url);
     }

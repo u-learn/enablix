@@ -1,0 +1,10 @@
+<div class="action-btn">
+  <div *ngIf="archiveAction" class="btn-with-text" (click)="archiveContent()">
+      <div class="icon small archive"></div>
+      <p class="show-me">Archive</p>
+  </div>
+  <div *ngIf="!archiveAction" class="btn-with-text" (click)="unarchiveContent()">
+      <div class="icon small unarchive"></div>
+      <p class="show-me">Unarchive</p>
+  </div>
+</div>

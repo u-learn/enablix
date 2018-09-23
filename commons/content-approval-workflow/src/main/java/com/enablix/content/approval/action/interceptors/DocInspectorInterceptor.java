@@ -16,6 +16,8 @@ import com.enablix.app.content.doc.DocumentManager;
 import com.enablix.app.template.service.TemplateManager;
 import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.commons.dms.api.DocumentMetadata;
+import com.enablix.commons.dms.api.DocumentMetadata.PreviewStatus;
+import com.enablix.commons.util.concurrent.Events;
 import com.enablix.commons.util.process.ProcessContext;
 import com.enablix.content.approval.ContentApprovalConstants;
 import com.enablix.content.approval.model.ContentApproval;
@@ -24,6 +26,8 @@ import com.enablix.core.api.TemplateFacade;
 import com.enablix.core.commons.xsdtopojo.ContainerType;
 import com.enablix.core.commons.xsdtopojo.ContentItemClassType;
 import com.enablix.core.commons.xsdtopojo.ContentItemType;
+import com.enablix.core.mq.Event;
+import com.enablix.core.mq.util.EventUtil;
 import com.enablix.state.change.impl.ActionInterceptorAdapter;
 import com.enablix.state.change.model.ActionInput;
 
@@ -43,12 +47,21 @@ public class DocInspectorInterceptor extends ActionInterceptorAdapter<ContentDet
 		if (actionIn instanceof ContentDetail) {
 			TemplateFacade template = templateMgr.getTemplateFacade(ProcessContext.get().getTemplateId());
 			ContentDetail detail = (ContentDetail) actionIn;
-			processDoc(detail.getContentQId(), detail.getData(), template);
+			preProcessDoc(detail.getContentQId(), detail.getData(), template);
 		}
 	}
 	
-	@SuppressWarnings("rawtypes")
-	private void processDoc(String contentQId, Map<String, Object> content, TemplateFacade template) {
+	@Override
+	public void onActionComplete(String actionName, ActionInput actionIn, ContentApproval recording) {
+		if (actionIn instanceof ContentDetail) {
+			TemplateFacade template = templateMgr.getTemplateFacade(ProcessContext.get().getTemplateId());
+			ContentDetail detail = (ContentDetail) actionIn;
+			generatePreview(detail.getContentQId(), detail.getData(), template);
+		}
+	}
+	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	private void preProcessDoc(String contentQId, Map<String, Object> content, TemplateFacade template) {
 		
 		ContainerType containerDef = template.getContainerDefinition(contentQId);
 		
@@ -80,6 +93,45 @@ public class DocInspectorInterceptor extends ActionInterceptorAdapter<ContentDet
 							throw new RuntimeException("Unable to delete document", e);
 						}
 							
+					} else {
+						
+						String docContentQId = (String) docMap.get(ContentDataConstants.CONTENT_QID_KEY);
+						
+						if (!itemDef.getQualifiedId().equals(docContentQId)) {
+						
+							docMap.put(ContentDataConstants.CONTENT_QID_KEY, itemDef.getQualifiedId());
+							
+							String docIdentity = (String) docMap.get(ContentDataConstants.IDENTITY_KEY);
+							docManager.updateContentQId(docIdentity, itemDef.getQualifiedId());
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	@SuppressWarnings("rawtypes")
+	private void generatePreview(String contentQId, Map<String, Object> content, TemplateFacade template) {
+		
+		ContainerType containerDef = template.getContainerDefinition(contentQId);
+		
+		for (ContentItemType itemDef : containerDef.getContentItem()) {
+
+			if (itemDef.getType() == ContentItemClassType.DOC) {
+			
+				Object object = content.get(itemDef.getId());
+				
+				if (object != null && object instanceof Map) {
+				
+					Map docMap = (Map) object;
+					Object previewStatus = docMap.get(ContentDataConstants.DOC_PREVIEW_STATUS_ATTR);
+					
+					if (PreviewStatus.PENDING.name().equals(previewStatus)) {
+						
+						String docIdentity = (String) docMap.get(ContentDataConstants.IDENTITY_KEY);
+						DocumentMetadata docMd = docManager.getDocumentMetadata(docIdentity);
+							
+						EventUtil.publishEvent(new Event<DocumentMetadata>(Events.GENERATE_DOC_PREVIEW, docMd));
 					}
 				}
 			}

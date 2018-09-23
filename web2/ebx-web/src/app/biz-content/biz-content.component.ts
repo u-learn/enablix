@@ -85,7 +85,6 @@ export class BizContentComponent implements OnInit, AfterViewInit {
 
     this.approvalWFRequired = this.contentWFService.isApprovalWFRequired();
 
-    console.log(this.data);
     if (this.data) {
       this.record = this.data.record;
       this.container = this.data.container;
@@ -171,6 +170,13 @@ export class BizContentComponent implements OnInit, AfterViewInit {
     
   }
 
+  reloadContentRecord(success: boolean) {
+    if (success && !this.contentRequest) {
+      this.navService.goToContentDetail(
+          this.container.qualifiedId, this.record.identity, {});
+    }
+  }
+  
   updateRecordLocalCopy(rec: any) {
     this.record = rec;
     this.recordBackup = JSON.parse(JSON.stringify(this.record));
@@ -234,6 +240,9 @@ export class BizContentComponent implements OnInit, AfterViewInit {
     if (this.record) {
       this.isNewRec = !this.record.identity && (!this.contentRequest);
       this.updateRecordLocalCopy(this.record);
+      if (this.record.archived) {
+        this.enableEditAction = this.enableDelAction = false;
+      }
     }
   }
 
@@ -328,7 +337,7 @@ export class BizContentComponent implements OnInit, AfterViewInit {
       this.dialogRef.close(res);
     } else {
       this.navService.goToContentDetail(
-        this.container.qualifiedId, res.objectRef.data.identity, {});
+        this.container.qualifiedId, res.objectRef.data.identity, {}, this.returnUrl);
     }
   }
 

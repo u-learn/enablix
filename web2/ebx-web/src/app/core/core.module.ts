@@ -83,6 +83,11 @@ import { UploadAssetComponent } from './upload/upload-asset/upload-asset.compone
 import { DndModule } from 'ng2-dnd';
 import { CollapsibleModule } from 'ngx-collapsible';
 
+import Quill from 'quill';
+
+const Clipboard = Quill.import('modules/clipboard')
+const Delta = Quill.import('delta')
+
 @NgModule({
   imports: [
     CommonModule,
@@ -238,4 +243,20 @@ import { CollapsibleModule } from 'ngx-collapsible';
     CollapsibleModule
   ]
 })
-export class CoreModule { }
+export class CoreModule { 
+    constructor() {
+        console.log("Core Module initializing...");
+        Quill.register('modules/clipboard', PlainClipboard, true);
+    }
+}
+
+class PlainClipboard extends Clipboard {
+  convert(html = null) {
+    if (typeof html === 'string') {
+      this.container.innerHTML = html;
+    }
+    let text = this.container.innerText;
+    this.container.innerHTML = '';
+    return new Delta().insert(text);
+  }
+}

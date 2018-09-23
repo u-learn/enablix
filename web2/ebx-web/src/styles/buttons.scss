@@ -166,6 +166,14 @@ button {
             &.edit {
                 background: url("/assets/images/icons/pencil.svg") no-repeat center;
             }
+
+            &.archive {
+                background: url("/assets/images/icons/archive.svg") no-repeat center;
+            }
+
+            &.unarchive {
+                background: url("/assets/images/icons/unarchive.svg") no-repeat center;
+            }
     
             &.attach {
                 background: url("/assets/images/icons/attach.svg") no-repeat center;

@@ -43,10 +43,10 @@ public interface DocumentManager {
 	
 	DocumentMetadata updatePreviewStatus(String docIdentity, PreviewStatus status);
 
-	boolean checkReferenceRecordExists(DocumentMetadata docMetadata);
-
 	Map<String, Object> getReferenceRecord(String docQId, String docIdentity);
 
 	DocumentMetadata updateEmbedHtml(String docIdentity, String embedHtml);
+
+	DocumentMetadata updateContentQId(String docIdentity, String contentQId);
 	
 }

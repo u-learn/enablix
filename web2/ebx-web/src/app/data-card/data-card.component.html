@@ -10,7 +10,7 @@
 </div>
 
 <div class="card biz-card with-flex" *ngIf="isBizContent" (click)="navToBizContent()">
-  <div>
+  <div [class.archived]="record?.archived">
     <ebx-card-preview *ngIf="record" [record]="record" [container]="container"></ebx-card-preview>
     <div class="content">
       <p class="content-type"><span [innerHtml]="containerLabel" (click)="navToContentList()"></span></p>

@@ -110,6 +110,7 @@ import { CompanyPropertiesComponent } from './company/company-properties/company
 import { CompanyPropertyComponent } from './company/company-properties/company-property/company-property.component';
 import { EditCompanyPropValueComponent } from './company/company-properties/company-property/edit-company-prop-value/edit-company-prop-value.component';
 import { SalesforceHomeComponent } from './salesforce-home/salesforce-home.component';
+import { ArchiveContentButtonComponent } from './content-action/archive-content-button/archive-content-button.component';
 
 @NgModule({
   declarations: [
@@ -193,7 +194,8 @@ import { SalesforceHomeComponent } from './salesforce-home/salesforce-home.compo
     CompanyPropertiesComponent,
     CompanyPropertyComponent,
     EditCompanyPropValueComponent,
-    SalesforceHomeComponent
+    SalesforceHomeComponent,
+    ArchiveContentButtonComponent
   ],
   imports: [
     BrowserModule,

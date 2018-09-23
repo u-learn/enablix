@@ -8,6 +8,16 @@
     text-align: center;
     margin-bottom: 24px;
     cursor: pointer;
+    border-radius: 4px;
+
+    .archived {
+        background: #000;
+        border-radius: 4px;
+
+        .card-preview, .content {
+            opacity: 0.8;
+        }
+    }
 
     &.with-flex {
         flex-grow: 1;

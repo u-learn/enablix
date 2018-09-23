@@ -51,6 +51,7 @@ export class RichTextInputComponent implements OnInit, ControlValueAccessor {
         //['link', 'image', 'video']                         // link and image, video
       ]
     };
+
   }
 
   ngOnInit() {

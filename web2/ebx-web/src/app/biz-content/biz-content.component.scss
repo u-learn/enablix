@@ -84,6 +84,15 @@
             line-height: 17px;
             padding-bottom: 8px;
             padding-top: 16px;
+
+            &.warn {
+                color: $red;
+                font-weight: 600;
+            }
+
+            &.pt-0 {
+                padding-top: 0;
+            }
         }
 
         .text {

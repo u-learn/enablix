@@ -2,14 +2,13 @@ package com.enablix.app.content.doc;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Component;
 
 import com.enablix.app.content.ContentDataPathResolver;
@@ -26,12 +25,10 @@ import com.enablix.commons.util.StringUtil;
 import com.enablix.commons.util.collection.CollectionUtil;
 import com.enablix.commons.util.concurrent.Events;
 import com.enablix.commons.util.process.ProcessContext;
-import com.enablix.core.api.ConditionOperator;
 import com.enablix.core.api.DocInfo;
 import com.enablix.core.api.IDocument;
 import com.enablix.core.api.TemplateFacade;
 import com.enablix.core.mongo.dao.GenericDao;
-import com.enablix.core.mongo.search.StringFilter;
 import com.enablix.core.mongo.view.MongoDataView;
 import com.enablix.core.mq.Event;
 import com.enablix.core.mq.util.EventUtil;
@@ -62,6 +59,9 @@ public class DocumentManagerImpl implements DocumentManager {
 	
 	@Autowired
 	private DocEmbedHtmlResolverFactory embedHtmlResolverFactory;
+	
+	@Autowired
+	private DocReferenceSupervisorFactory docRefSupervisorFactory;
 	
 	@Override
 	public DocumentMetadata saveUsingParentInfo(Document<?> doc, String docContainerQId, 
@@ -273,61 +273,14 @@ public class DocumentManagerImpl implements DocumentManager {
 			updater.accept(docMetadata);
 			docMetadata = docRepo.save(docMetadata);
 			
-			if (!StringUtil.isEmpty(docMetadata.getContentQId())) {
-				
-				TemplateFacade template = templateMgr.getTemplateFacade(ProcessContext.get().getTemplateId());
-				
-				// update in content collection as well
-				String docQId = docMetadata.getContentQId();
-				String parentQId = QIdUtil.getParentQId(docQId);
-				String parentCollName = template.getCollectionName(parentQId);
-				
-				if (StringUtil.hasText(parentCollName)) {
-				
-					String docAttrId = QIdUtil.getElementId(docQId);
-					String docIdentityAttr = docAttrId + "." + ContentDataConstants.IDENTITY_KEY;
-					String updateAttr = docAttrId + "." + attrId;
-					
-					StringFilter docIdentitFilter = new StringFilter(docIdentityAttr, docIdentity, ConditionOperator.EQ);
-					Query query = new Query(docIdentitFilter.toPredicate(new Criteria()));
-		
-					Update update = new Update();
-					update.set(updateAttr, attrValue);
-		
-					genericDao.updateMulti(query, update, parentCollName);
-				}
+			Collection<DocReferenceSupervisor> supervisors = docRefSupervisorFactory.getSupervisors();
+			for (DocReferenceSupervisor supervisor : supervisors) {
+				supervisor.updateDocMetadataAttr(docMetadata, attrId, attrValue);
 			}
+			
 		}
 		
 		return docMetadata;
-	}
-	
-	@Override
-	public boolean checkReferenceRecordExists(DocumentMetadata docMetadata) {
-
-		boolean exists = false;
-		
-		TemplateFacade template = templateMgr.getTemplateFacade(ProcessContext.get().getTemplateId());
-
-		String docIdentity = docMetadata.getIdentity();
-		String docQId = docMetadata.getContentQId();
-		String parentQId = QIdUtil.getParentQId(docQId);
-		String parentCollName = template.getCollectionName(parentQId);
-		
-		if (StringUtil.hasText(parentCollName)) {
-		
-			String docAttrId = QIdUtil.getElementId(docQId);
-			String docIdentityAttr = docAttrId + "." + ContentDataConstants.IDENTITY_KEY;
-			
-			StringFilter docIdentitFilter = new StringFilter(docIdentityAttr , docIdentity, ConditionOperator.EQ);
-			Criteria criteria = docIdentitFilter.toPredicate(new Criteria());
-
-			Long recordCnt = genericDao.countByCriteria(criteria, parentCollName, Map.class, MongoDataView.ALL_DATA);
-
-			exists = recordCnt > 0;
-		}
-		
-		return exists;
 	}
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
@@ -359,6 +312,14 @@ public class DocumentManagerImpl implements DocumentManager {
 		}
 		
 		return record;
+	}
+
+	@Override
+	public DocumentMetadata updateContentQId(String docIdentity, String contentQId) {
+
+		return updateDocMetadataAttr(
+				docIdentity, ContentDataConstants.CONTENT_QID_KEY, 
+				(docMd) -> docMd.setContentQId(contentQId), contentQId);
 	}
 
 }

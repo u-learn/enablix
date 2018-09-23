@@ -17,6 +17,7 @@
               </div>
             </ng-container>
             <ebx-content-delete-button *ngIf="enableDelAction" class="button-wrap" [container]="container" [record]="record" contentType="Asset" [crRecord]="contentRequest"></ebx-content-delete-button>
+            <ebx-archive-content-button *ebxAccess="'ARCHIVE_CONTENT'" class="button-wrap" [container]="container" [record]="record" (onArchive)="reloadContentRecord($event)" (onUnarchive)="reloadContentRecord($event)"></ebx-archive-content-button>
             <div class="btn-set" *ngIf="!contentRequest">
               <ebx-content-email-button class="action-btn-wrap" [container]="container" [record]="record" ></ebx-content-email-button>
               <ebx-slack-share-button *ebxAccess="'SHARE_VIA_SLACK'" class="action-btn-wrap" [container]="container" [record]="record" ></ebx-slack-share-button>
@@ -75,6 +76,7 @@
           Please enter a title
         </div>
         <p class="label" *ngIf="!contentRequest">Last updated {{record.modifiedAt | ebxDate}}</p>
+        <p class="label warn pt-0" *ngIf="record?.archived">Archived On {{record.archiveUpdatedAt | ebxDate}}</p>
         <p class="label" *ngIf="contentRequest">{{getContentRequestStatusText()}} on {{contentRequest.modifiedAt | ebxDate}}</p>
         <div class="row" *ngIf="(record?.__decoration?.__docMetadata?.name) || (container.docItemId && editing)">
             <p class="label">File</p>

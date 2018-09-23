@@ -41,7 +41,6 @@
 
     .text-input {
       font-size: 18px;
-      flex-grow: 1; 
     }
 
     input[type="text"] {
@@ -73,6 +72,10 @@
 
       input[type="text"] {
         padding-bottom: 4px;
+
+        &.min-text-input {
+          width: 10px;
+        }
       }
     }
 

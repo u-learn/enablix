@@ -1,5 +1,6 @@
 package com.enablix.app.content.task;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -11,6 +12,8 @@ import org.springframework.stereotype.Component;
 
 import com.enablix.app.content.doc.DocEmbedHtmlResolver;
 import com.enablix.app.content.doc.DocEmbedHtmlResolverFactory;
+import com.enablix.app.content.doc.DocReferenceSupervisor;
+import com.enablix.app.content.doc.DocReferenceSupervisorFactory;
 import com.enablix.app.content.doc.DocumentManager;
 import com.enablix.commons.dms.api.DocumentMetadata;
 import com.enablix.commons.util.StringUtil;
@@ -38,6 +41,9 @@ public class DocEmbedHtmlTask implements Task {
 	@Autowired
 	private DocEmbedHtmlResolverFactory embedHtmlResolverFactory;
 	
+	@Autowired
+	private DocReferenceSupervisorFactory docRefSupervisorFactory;
+	
 	@Override
 	public void run(TaskContext context) {
 		
@@ -51,7 +57,18 @@ public class DocEmbedHtmlTask implements Task {
 			
 			try {
 				
-				if (docManager.checkReferenceRecordExists(docMd)) {
+				Collection<DocReferenceSupervisor> supervisors = docRefSupervisorFactory.getSupervisors();
+				
+				boolean refExist = false;
+				
+				for (DocReferenceSupervisor supervisor : supervisors) {
+					if (supervisor.checkReferenceRecordExists(docMd)) {
+						refExist = true;
+						break;
+					}
+				}
+				
+				if (refExist) {
 
 					DocEmbedHtmlResolver resolver = embedHtmlResolverFactory.getResolver(docMd);
 					

@@ -57,6 +57,8 @@ export class ApiUrlService {
   static POST_BOUNDED_DEF_REF_LIST = "/bounded/d/list/";
   static POST_FILE_UPLOAD = '/doc/upload';
   static POST_IMPORT_REQUEST = '/content/import/request';
+  static POST_ARCHIVE_RECORD = '/content/archive';
+  static POST_UNARCHIVE_RECORD = '/content/unarchive';
 
   static POST_BIZ_CONTENT_SEARCH = '/search/bizcontent/';
   static POST_TYPEAHEAD_BIZ_CONTENT_SEARCH = '/search/ta/bizcontent/';
@@ -513,6 +515,14 @@ export class ApiUrlService {
 
   postFetchContentEngagementReportData() : string {
     return this.getAPIUrl(ApiUrlService.POST_FETCH_CONTENT_ENGAGEMENT_REPORT);
+  }
+
+  postArchiveContentRecord() : string {
+    return this.getAPIUrl(ApiUrlService.POST_ARCHIVE_RECORD);
+  }
+
+  postUnarchiveContentRecord() : string {
+    return this.getAPIUrl(ApiUrlService.POST_UNARCHIVE_RECORD);
   }
 
   deleteContainerDefUrl(templateId: string, containerQId: string) : string {
