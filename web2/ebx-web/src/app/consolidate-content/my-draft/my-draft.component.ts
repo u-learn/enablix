@@ -40,6 +40,8 @@ export class MyDraftComponent extends ContentRequestListComponent implements OnI
                 ContentWorkflowService.ACTION_PUBLISH, 
                 ContentWorkflowService.ACTION_DISCARD
               ]);
+
+    this.showRequestType = false;
   }
 
   ngOnInit() {

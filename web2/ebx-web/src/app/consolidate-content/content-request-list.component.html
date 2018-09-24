@@ -10,6 +10,7 @@
         <ng-template #dataRow let-rec>
           <td><div class="asset" (click)="navToContentRequest(rec)"><ebx-card-preview [record]="getDecoratedContentRecord(rec)" [container]="getRecordContainer(rec)" size="small"></ebx-card-preview><div class="title">{{rec.objectRef.contentTitle}}</div></div></td>
           <td><div class="center-content"><ebx-type-pill [containerQId]="rec.objectRef.contentQId"></ebx-type-pill></div></td>
+          <td *ngIf="showRequestType">{{getRequestTypeDisplayName(rec.objectRef.requestType)}}</td>
           <td>{{getStateDisplayName(rec.currentState.stateName)}}</td>
           <td>{{rec.modifiedAt | ebxDate }}</td>
           <td>{{rec.createdByName}}</td>

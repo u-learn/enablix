@@ -37,6 +37,11 @@ export class ConsolidateContentService {
     return name ? name : state;
   }
 
+  getRequestTypeDisplayName(requestType: string) {
+    let name = this.cwService.requestTypeDisplayText[requestType];
+    return name ? name : requestType;
+  }
+
   getRecordContainer(rec: any) {
     return this.ctService.getConcreteContainerByQId(rec.objectRef.contentQId);
   }

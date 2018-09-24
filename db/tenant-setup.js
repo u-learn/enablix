@@ -116,7 +116,20 @@ var insertUsers = function() {
 		        "VIEW_RECENT_CONTENT", 
 		        "SUGGEST_CONTENT", 
 		        "SHARE_VIA_EMAIL", 
-		        "SHARE_VIA_SLACK"
+		        "SHARE_VIA_SLACK",
+		        "ARCHIVE_CONTENT"
+		    ]
+		},
+		{ 
+		    "_id" : "contentCreator", 
+		    "_class" : "com.enablix.core.domain.security.authorization.Role", 
+		    "identity" : "contentCreator", 
+		    "roleName" : "Approved Contributor", 
+		    "permissions" : [
+		        "VIEW_STUDIO", 
+		        "VIEW_REF_DATA", 
+		        "VIEW_PORTAL", 
+		        "VIEW_RECENT_CONTENT"
 		    ]
 		}];
 	

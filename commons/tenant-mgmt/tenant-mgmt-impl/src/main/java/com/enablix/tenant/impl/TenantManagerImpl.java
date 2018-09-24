@@ -157,7 +157,7 @@ public class TenantManagerImpl implements TenantManager {
 		return tenantCreator.tenant;
 	}
 	
-	private class TenantCreator implements SudoExecutor.Task {
+	private class TenantCreator implements SudoExecutor.Task<Void> {
 
 		private Tenant tenant;
 		
@@ -173,9 +173,9 @@ public class TenantManagerImpl implements TenantManager {
 		}
 		
 		@Override
-		public void execute() {
+		public Void execute() {
 			tenant = tenantRepo.save(tenant); 
-			
+			return null;
 		}
 		
 	}

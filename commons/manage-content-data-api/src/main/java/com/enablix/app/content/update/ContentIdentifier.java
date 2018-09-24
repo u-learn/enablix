@@ -6,6 +6,16 @@ public class ContentIdentifier {
 	
 	private String contentQId;
 
+	public ContentIdentifier() {
+		super();
+	}
+
+	public ContentIdentifier(String recordIdentity, String contentQId) {
+		super();
+		this.recordIdentity = recordIdentity;
+		this.contentQId = contentQId;
+	}
+
 	public String getRecordIdentity() {
 		return recordIdentity;
 	}

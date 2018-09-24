@@ -20,6 +20,7 @@ import com.enablix.commons.util.beans.BeanUtil;
 import com.enablix.commons.util.process.ProcessContext;
 import com.enablix.content.approval.ContentApprovalConstants;
 import com.enablix.content.approval.model.ContentDetail;
+import com.enablix.content.approval.model.ContentDetail.RequestType;
 import com.enablix.core.api.ContentDataRecord;
 import com.enablix.core.api.ContentRecord;
 import com.enablix.core.api.DocAttachment;
@@ -59,7 +60,7 @@ public class ContentRecordPersister {
 			if (saveAsDraft != null && saveAsDraft) {
 				
 				ContentDetail contentDetails = new ContentDetail();
-				contentDetails.setAddRequest(!StringUtil.hasText(recIdentity));
+				contentDetails.setRequestType(!StringUtil.hasText(recIdentity) ? RequestType.ADD : RequestType.UPDATE);
 				contentDetails.setContentQId(contentRec.getContentQId());
 				contentDetails.setData(contentRec.getRecord());
 				

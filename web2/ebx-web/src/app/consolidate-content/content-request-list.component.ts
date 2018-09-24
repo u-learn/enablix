@@ -29,6 +29,8 @@ export class ContentRequestListComponent {
 
   lastSelectedFilters: any;
 
+  showRequestType: boolean = true;
+
   constructor(public ccService: ConsolidateContentService,
         public contentWFService: ContentWorkflowService,
         public ctService: ContentTemplateService,
@@ -51,6 +53,10 @@ export class ContentRequestListComponent {
         sortProp: "objectRef.contentQId"
       },
       {
+        heading: "Request Type",
+        key: "requestType"
+      },
+      {
         heading: "Status",
         key: "status",
         sortProp: "currentState.stateName"
@@ -66,6 +72,10 @@ export class ContentRequestListComponent {
         sortProp: "createdByName"
       }
     ];
+
+    if (!this.showRequestType) {
+      this.tableColumns.splice(2, 1);
+    }
 
     this.pagination = new Pagination();
     this.pagination.pageNum = 0;
@@ -110,6 +120,10 @@ export class ContentRequestListComponent {
     return this.ccService.getStateDisplayName(state);
   }
 
+  getRequestTypeDisplayName(requestType: string) {
+    return this.ccService.getRequestTypeDisplayName(requestType);
+  }
+
   getRecordContainer(rec: any) {
     return this.ccService.getRecordContainer(rec);
   }
@@ -125,7 +139,7 @@ export class ContentRequestListComponent {
     let response = this.contentWFService.publishContentRequestList(requestList).share();
     response.subscribe(res => {
         this.alert.success("Content Asset published successfully.");
-        this.fetchData();
+        this.fetchData(this.lastSelectedFilters);
       }, err => {
         this.alert.error("Unable to publish. Please try later.", err.status);
       });
@@ -140,7 +154,7 @@ export class ContentRequestListComponent {
     let response = this.contentWFService.deleteContentRequestList(requestList).share();
     response.subscribe(res => {
         this.alert.success("Content deleted.");
-        this.fetchData();
+        this.fetchData(this.lastSelectedFilters);
       }, err => {
         this.alert.error("Unable to delete. Please try later.", err.status);
       });
@@ -155,7 +169,7 @@ export class ContentRequestListComponent {
     let response = this.contentWFService.approveContentRequestList(requestList).share();
     response.subscribe(res => {
         this.alert.success("Content approved.");
-        this.fetchData();
+        this.fetchData(this.lastSelectedFilters);
       }, err => {
         this.alert.error("Unable to approve. Please try later.", err.status);
       })
@@ -170,7 +184,7 @@ export class ContentRequestListComponent {
     let response = this.contentWFService.rejectContentRequestList(requestList).share();
     response.subscribe(res => {
         this.alert.success("Content rejected.");
-        this.fetchData();
+        this.fetchData(this.lastSelectedFilters);
         return res;
       }, err => {
         this.alert.error("Unable to reject. Please try later.", err.status);
@@ -186,7 +200,7 @@ export class ContentRequestListComponent {
     let response = this.contentWFService.withdrawContentRequestList(requestList).share();
     response.subscribe(res => {
         this.alert.success("Content request withdrawn.");
-        this.fetchData();
+        this.fetchData(this.lastSelectedFilters);
         return res;
       }, err => {
         this.alert.error("Unable to withdraw requests. Please try later.", err.status);

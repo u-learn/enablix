@@ -8,6 +8,10 @@ import com.enablix.state.change.model.RefObject;
 
 public class ContentDetail extends RefObject implements ActionInput, ContentRecord {
 
+	public enum RequestType {
+		ADD, UPDATE, ARCHIVE, UNARCHIVE
+	}
+	
 	private String contentQId;
 	
 	private String parentIdentity;
@@ -18,7 +22,7 @@ public class ContentDetail extends RefObject implements ActionInput, ContentReco
 	
 	private String notes;
 	
-	private boolean addRequest;
+	private RequestType requestType;
 	
 	public String getContentQId() {
 		return contentQId;
@@ -60,12 +64,12 @@ public class ContentDetail extends RefObject implements ActionInput, ContentReco
 		this.notes = notes;
 	}
 
-	public boolean isAddRequest() {
-		return addRequest;
+	public RequestType getRequestType() {
+		return requestType;
 	}
 
-	public void setAddRequest(boolean addRequest) {
-		this.addRequest = addRequest;
+	public void setRequestType(RequestType requestType) {
+		this.requestType = requestType;
 	}
 
 	@Override

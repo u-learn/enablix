@@ -53,15 +53,17 @@ public class ContentApprovalDocRefSupervisor implements DocReferenceSupervisor {
 		String docIdentity = docMetadata.getIdentity();
 		String docQId = docMetadata.getContentQId();
 	
-		String docAttrId = "objectRef.data." + QIdUtil.getElementId(docQId);
-		String docIdentityAttr = docAttrId + "." + ContentDataConstants.IDENTITY_KEY;
-		
-		StringFilter docIdentitFilter = new StringFilter(docIdentityAttr , docIdentity, ConditionOperator.EQ);
-		Criteria criteria = docIdentitFilter.toPredicate(new Criteria());
-
-		Long recordCnt = genericDao.countByCriteria(criteria, "ebx_content_approval", ContentApproval.class, MongoDataView.ALL_DATA);
-
-		exists = recordCnt > 0;
+		if (!StringUtil.isEmpty(docQId)) {
+			String docAttrId = "objectRef.data." + QIdUtil.getElementId(docQId);
+			String docIdentityAttr = docAttrId + "." + ContentDataConstants.IDENTITY_KEY;
+			
+			StringFilter docIdentitFilter = new StringFilter(docIdentityAttr , docIdentity, ConditionOperator.EQ);
+			Criteria criteria = docIdentitFilter.toPredicate(new Criteria());
+	
+			Long recordCnt = genericDao.countByCriteria(criteria, "ebx_content_approval", ContentApproval.class, MongoDataView.ALL_DATA);
+	
+			exists = recordCnt > 0;
+		}
 		
 		return exists;
 	}

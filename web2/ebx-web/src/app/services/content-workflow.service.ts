@@ -73,8 +73,14 @@ export class ContentWorkflowService {
   static STATE_APPROVED = "APPROVED";
   static STATE_REJECTED = "REJECTED";
 
+  static REQ_TYPE_ADD = "ADD";
+  static REQ_TYPE_UPDATE = "UPDATE";
+  static REQ_TYPE_ARCHIVE = "ARCHIVE";
+  static REQ_TYPE_UNARCHIVE = "UNARCHIVE";
+
   stateDisplayText = {};
   actionDisplayText = {};
+  requestTypeDisplayText = {};
   stateActionMap: any;
 
   constructor(private http: HttpClient, private apiUrlService: ApiUrlService,
@@ -95,6 +101,11 @@ export class ContentWorkflowService {
     this.actionDisplayText[ContentWorkflowService.ACTION_EDIT] = "Edited";
     this.actionDisplayText[ContentWorkflowService.ACTION_DISCARD] = "Discarded";
     this.actionDisplayText[ContentWorkflowService.ACTION_PUBLISH] = "Published";
+
+    this.requestTypeDisplayText[ContentWorkflowService.REQ_TYPE_ADD] = "Add";
+    this.requestTypeDisplayText[ContentWorkflowService.REQ_TYPE_UPDATE] = "Update";
+    this.requestTypeDisplayText[ContentWorkflowService.REQ_TYPE_ARCHIVE] = "Archive";
+    this.requestTypeDisplayText[ContentWorkflowService.REQ_TYPE_UNARCHIVE] = "Un-archive";
   }
 
   init() : Observable<any> {
@@ -129,22 +140,24 @@ export class ContentWorkflowService {
     return options;
   }
 
-  submitContent(contentQId: string, rec: any, saveAsDraft: boolean, notes: any) {
+  submitContent(contentQId: string, rec: any, requestType: string, saveAsDraft: boolean, notes: any) {
     
     let uri = saveAsDraft ? this.apiUrlService.postSaveContentDraft() : 
                 this.apiUrlService.postSubmitContentRequestUrl();
                 
-    let addRequest = !rec.identity;
-
     if (rec.__decoration) {
       delete rec['__decoration'];
+    }
+
+    if (!requestType) {
+      requestType = rec.identity ? "ADD": "UPDATE";
     }
 
     let contentDetail: any = {
       "contentQId": contentQId,
       "notes": notes,
       "data": rec,
-      "addRequest": addRequest
+      "requestType": requestType
     }
 
     return this.http.post(uri, contentDetail);
@@ -297,6 +310,12 @@ export class ContentWorkflowService {
         
           let nextAction =  nextActions[i];
           if (nextAction.actionName == actionName) {
+            
+            if (actionName == ContentWorkflowService.ACTION_EDIT
+                  && ( crRecord.objectRef.requestType != ContentWorkflowService.REQ_TYPE_UPDATE
+                        || crRecord.objectRef.requestType != ContentWorkflowService.REQ_TYPE_ADD)) {
+              return false;
+            }
             
             if (actionName == ContentWorkflowService.ACTION_EDIT 
                 && this.user.getUserIdentity() == crRecord.createdBy) {

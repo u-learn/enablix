@@ -6,7 +6,7 @@
 	
 	#spacer_row('15')
 	
-	#if(${obj.loggedInUser.name}) ${obj.loggedInUser.name}#else Someone #end has approved your request to #if($obj.contentRequest.objectRef.addRequest) add #else update #end 
+	#if(${obj.loggedInUser.name}) ${obj.loggedInUser.name}#else Someone #end has approved your request to #content_request_type_display_text(${obj.contentRequest.objectRef.requestType} false) 
 	
 	#if(${obj.contentRequest.objectRef.contentTitle}) 
 	<a href="#content_portal_url(${obj.url} $obj.contentData.containerQId $obj.contentData.recordIdentity)">

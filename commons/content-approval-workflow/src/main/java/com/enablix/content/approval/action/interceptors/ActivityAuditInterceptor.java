@@ -15,6 +15,7 @@ import com.enablix.content.approval.ContentApprovalConstants;
 import com.enablix.content.approval.ContentApprovalUtil;
 import com.enablix.content.approval.model.ContentApproval;
 import com.enablix.content.approval.model.ContentDetail;
+import com.enablix.content.approval.model.ContentDetail.RequestType;
 import com.enablix.core.activity.audit.ActivityTrackingContext;
 import com.enablix.core.domain.activity.Activity.ActivityType;
 import com.enablix.core.domain.activity.ActivityChannel.Channel;
@@ -27,13 +28,21 @@ import com.enablix.state.change.model.ActionInput;
 public class ActivityAuditInterceptor extends ActionInterceptorAdapter<ContentDetail, ContentApproval> {
 
 	private static final Map<String, ActivityType> actionToActivityMap = new HashMap<>();
+	private static final Map<RequestType, ActivityType> requestTypeToUpdateActivityMap = new HashMap<>();
 	
 	static {
 		actionToActivityMap.put(ACTION_APPROVE, ActivityType.CONTENT_SUGGEST_APPROVED);
 		actionToActivityMap.put(ACTION_EDIT, ActivityType.CONTENT_SUGGEST_EDIT);
 		actionToActivityMap.put(ACTION_REJECT, ActivityType.CONTENT_SUGGEST_REJECT);
 		actionToActivityMap.put(ACTION_WITHDRAW, ActivityType.CONTENT_SUGGEST_WITHDRAW);
+		
+		requestTypeToUpdateActivityMap.put(RequestType.ADD, ActivityType.CONTENT_ADD_SUGGEST);
+		requestTypeToUpdateActivityMap.put(RequestType.UPDATE, ActivityType.CONTENT_UPDATE_SUGGEST);
+		requestTypeToUpdateActivityMap.put(RequestType.ARCHIVE, ActivityType.CONTENT_ARCHIVE_SUGGEST);
+		requestTypeToUpdateActivityMap.put(RequestType.UNARCHIVE, ActivityType.CONTENT_UNARCHIVE_SUGGEST);
 	}
+	
+	
 	
 	
 	@Override
@@ -50,8 +59,8 @@ public class ActivityAuditInterceptor extends ActionInterceptorAdapter<ContentDe
 		
 		switch (actionName) {
 			case ACTION_SUBMIT:
-				return recording.getObjectRef().isAddRequest() ? 
-						ActivityType.CONTENT_ADD_SUGGEST : ActivityType.CONTENT_UPDATE_SUGGEST;
+				ActivityType activityType = requestTypeToUpdateActivityMap.get(recording.getObjectRef().getRequestType());
+				return activityType == null ? ActivityType.CONTENT_ADD_SUGGEST : activityType;
 			default:
 				return actionToActivityMap.get(actionName);
 		}

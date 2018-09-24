@@ -291,6 +291,11 @@ const routes: Routes = [
     redirectTo: "portal/content/request/:contentRequestId/:action"
   },
   {
+    // mapping from old application
+    path: "account/contentrequest/a/view/:contentRequestId",
+    redirectTo: "portal/content/request/:contentRequestId"
+  },
+  {
     path: '**',
     component: PageNotFoundComponent
   }

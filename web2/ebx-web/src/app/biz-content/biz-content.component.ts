@@ -9,6 +9,7 @@ import { ContentItem } from '../model/content-item.model';
 import { ContentService } from '../core/content/content.service';
 import { ContentTemplateService } from '../core/content-template.service'; 
 import { AlertService } from '../core/alert/alert.service';
+import { UserService } from '../core/auth/user.service';
 import { NavigationService } from '../app-routing/navigation.service';
 import { ConfirmDialogComponent } from '../core/confirm-dialog/confirm-dialog.component'; 
 import { ContentDeleteButtonComponent } from '../content-action/content-delete-button/content-delete-button.component';
@@ -18,6 +19,7 @@ import { ContentWorkflowService } from '../services/content-workflow.service';
 import { ContentPreviewService } from '../core/content/content-preview.service';
 import { Constants } from '../util/constants';
 import { Utility } from '../util/utility';
+import { Permissions } from '../model/permissions.model';
 
 @Component({
   selector: 'ebx-biz-content',
@@ -70,6 +72,7 @@ export class BizContentComponent implements OnInit, AfterViewInit {
               private alert: AlertService, private contentTemplate: ContentTemplateService,
               private contentWFService: ContentWorkflowService, private loc: Location,
               private contentPreviewService: ContentPreviewService,
+              private user: UserService,
               private navService: NavigationService, private dialog: MatDialog,
               private router: Router, @Optional() @Inject(MAT_DIALOG_DATA) public data?: any,
               @Optional() public dialogRef?: MatDialogRef<BizContentComponent>,) { }
@@ -240,8 +243,9 @@ export class BizContentComponent implements OnInit, AfterViewInit {
     if (this.record) {
       this.isNewRec = !this.record.identity && (!this.contentRequest);
       this.updateRecordLocalCopy(this.record);
-      if (this.record.archived) {
-        this.enableEditAction = this.enableDelAction = false;
+      if (this.record.archived && !this.contentRequest) {
+        this.enableEditAction = false;
+        this.enableDelAction = false || this.user.userHasPermission(Permissions.DELETE_ARCHIVED_CONTENT);
       }
     }
   }
@@ -359,7 +363,7 @@ export class BizContentComponent implements OnInit, AfterViewInit {
 
     } else {
 
-      this.contentWFService.submitContent(this.container.qualifiedId, this.record, draftSave, null).subscribe((res: any) => {
+      this.contentWFService.submitContent(this.container.qualifiedId, this.record, null, draftSave, null).subscribe((res: any) => {
         let alertMsg = draftSave ? "Saved successfully." :
             "Content Asset Add/Update request has been submitted for approval. The asset will be published once approved. And you will receive notification on approval.";
         this.alert.success(alertMsg, true);
@@ -475,12 +479,26 @@ export class BizContentComponent implements OnInit, AfterViewInit {
     return '';
   }
 
+  getContentRequestTypeText() {
+    if (this.contentRequest) {
+      if (this.contentRequest.objectRef.requestType) {
+        var text = this.contentWFService.requestTypeDisplayText[this.contentRequest.objectRef.requestType];
+        return text || this.contentRequest.objectRef.requestType;
+      }
+    }
+    return '';
+  }
+
   deleteDoc() {
     if (this.record && this.record.__decoration.__docMetadata) {
       delete this.record.__decoration.__docMetadata;
       var docFld = this.record[this.container.docItemId];
       docFld.deleted = true;
     }
+  }
+
+  navToHome() {
+    this.navService.goToPortalHome();
   }
 
   ngOnDestroy() {

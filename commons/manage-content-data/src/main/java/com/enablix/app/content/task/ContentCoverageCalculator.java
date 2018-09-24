@@ -118,9 +118,9 @@ public class ContentCoverageCalculator implements Task {
 					contentCoverage.setRecordModifiedByName(ContentDataUtil.getContentModifiedByName(record));
 					
 					contentCoverage.setArchived(ContentDataUtil.getArchivedStatus(record));
-					contentCoverage.setRecordModifiedAt(ContentDataUtil.getContentArchivedAt(record));
-					contentCoverage.setRecordModifiedBy(ContentDataUtil.getContentArchivedBy(record));
-					contentCoverage.setRecordModifiedByName(ContentDataUtil.getContentArchivedByName(record));
+					contentCoverage.setRecordArchivedAt(ContentDataUtil.getContentArchivedAt(record));
+					contentCoverage.setRecordArchivedBy(ContentDataUtil.getContentArchivedBy(record));
+					contentCoverage.setRecordArchivedByName(ContentDataUtil.getContentArchivedByName(record));
 					
 					ContentDataRecord dataRecord = new ContentDataRecord(templateId, containerQId, record);
 					

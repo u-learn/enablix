@@ -43,6 +43,17 @@
             text-overflow: ellipsis;
         }
 
+        .subtitle {
+            color: $grey-dark;
+            font-family: $FPThin;
+            padding-top: 16px;
+            
+            h2 {
+                font-size: 18px;
+                padding-bottom: 8px;
+            }
+        }
+
         .row:not(:last-child) {
             padding-bottom: 20px;
             border-bottom: 1px solid rgba(0,0,0,0.03);
@@ -126,7 +137,6 @@
 .assets-navbar {
     height: 80px;
     margin-bottom: 40px;
-    margin-left: 44px;
     margin-right: 44px;
     @include vcenterChildren;
 
@@ -134,11 +144,17 @@
         display: flex;
     }
 
-    >div:first-child {
+    .left {
         width: 370px;
         img {
             cursor: pointer;
         }
+    }
+
+    .enablix-logo {
+        height: 16px;
+        margin-right: 24px;
+        cursor: pointer;
     }
 
     .share-container {

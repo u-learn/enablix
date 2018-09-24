@@ -54,7 +54,7 @@ export class EditBizDimensionComponent implements OnInit {
 
     if (this.approvalWFRequired) {
 
-      this.cwService.submitContent(this.container.qualifiedId, this.record, false, null).subscribe(
+      this.cwService.submitContent(this.container.qualifiedId, this.record, null, false, null).subscribe(
         res => {
           var msg = this.record.identity ? "Object update request accepted." :
                       "Object add request accepted.";

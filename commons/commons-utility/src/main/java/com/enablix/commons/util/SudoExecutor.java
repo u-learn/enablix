@@ -5,8 +5,9 @@ import com.enablix.commons.util.process.ProcessContext;
 
 public class SudoExecutor {
 
-	public static void runAsUser(String userId, String userDisplayName, Task task) {
+	public static <T> T runAsUser(String userId, String userDisplayName, Task<T> task) {
 		
+		T result = null;
 		ProcessContext origCtx = ProcessContext.get();
 		
 		try {
@@ -15,7 +16,7 @@ public class SudoExecutor {
 			ProcessContext.initialize(userId, userDisplayName, 
 					origCtx.getTenantId(), origCtx.getTemplateId(), origCtx.getClientId());
 			
-			task.execute();
+			result = task.execute();
 			
 		} finally {
 
@@ -24,11 +25,15 @@ public class SudoExecutor {
 			ProcessContext.initialize(origCtx.getUserId(), origCtx.getUserDisplayName(), 
 					origCtx.getTenantId(), origCtx.getTemplateId(), origCtx.getClientId());
 		}
+		
+		return result;
 	}
 	
-	public static void runAsSystem(Task task) {
+	public static <T> T runAsSystem(Task<T> task) {
 		
 		ProcessContext origCtx = ProcessContext.get();
+		
+		T result = null;
 		
 		try {
 			
@@ -39,7 +44,7 @@ public class SudoExecutor {
 					origCtx != null ? origCtx.getTemplateId() : null, 
 					origCtx != null ? origCtx.getClientId() : null);
 			
-			task.execute();
+			result = task.execute();
 			
 		} finally {
 
@@ -51,10 +56,11 @@ public class SudoExecutor {
 			}
 		}
 		
+		return result;
 	}
 	
-	public interface Task {
-		void execute();
+	public interface Task<R> {
+		R execute();
 	}
 	
 }
