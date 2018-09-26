@@ -79,11 +79,12 @@ public class FetchContentDataController {
 			int pageInt = Integer.parseInt(page);
 			int sizeInt = StringUtil.isEmpty(size) ? AppConstants.DEFAULT_PAGE_SIZE : Integer.parseInt(size);
 			
+			Sort sort = new Sort(Direction.ASC, ContentDataConstants.ARCHIVED_KEY);
 			if (StringUtil.hasText(sortProp)) {
-				pageable = new PageRequest(pageInt, sizeInt, sortDir == null ? Direction.ASC : sortDir, sortProp);
-			} else {
-				pageable = new PageRequest(pageInt, sizeInt);
+				sort = sort.and(new Sort(sortDir == null ? Direction.ASC : sortDir, sortProp));
 			}
+			
+			pageable = new PageRequest(pageInt, sizeInt, sort);
 		}
 		
 		return pageable;

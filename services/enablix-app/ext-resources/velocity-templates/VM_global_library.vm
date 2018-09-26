@@ -72,7 +72,7 @@ $a_siteUrl/app.html#/portal/container/$a_containerQId/$a_contentIdentity/c/singl
 
 
 #macro( content_request_type_display_text $a_requestType $a_pastTense )
-#if($a_requestType == 'ADD') #if($a_pastTense) added #else add #end #elseif($a_requestType == 'ARCHIVE') #if($a_pastTense) archived #else archive #end #elseif($a_requestType == 'UNARCHIVE') #if($a_pastTense) un-archived #else un-archive #end #else #if($a_pastTense) updated #else update #end #end 
+#if($a_requestType == 'ADD') #if($a_pastTense) added #else add #end #elseif($a_requestType == 'ARCHIVE') #if($a_pastTense) archived #else archive #end #elseif($a_requestType == 'UNARCHIVE') #if($a_pastTense) unarchived #else unarchive #end #else #if($a_pastTense) updated #else update #end #end 
 #end
 
 #macro( top_header_bar $a_headerTitle )

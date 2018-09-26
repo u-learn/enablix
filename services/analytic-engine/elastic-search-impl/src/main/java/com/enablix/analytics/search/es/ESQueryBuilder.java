@@ -7,13 +7,16 @@ import java.util.List;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchType;
 import org.elasticsearch.client.Requests;
+import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
+import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.aggregations.AbstractAggregationBuilder;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.elasticsearch.search.highlight.HighlightBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.core.api.TemplateFacade;
 import com.enablix.es.view.ESDataView;
 import com.enablix.es.view.ESDataViewOperation;
@@ -108,10 +111,17 @@ public class ESQueryBuilder {
 		String[] searchFields = fieldBuilder.getContentSearchFields(fieldFilter, template);
 		QueryBuilder multiMatchQuery = matchQueryBuilder.buildQuery(searchFields, queryOptimizer, fuzzyMatchOption);
 		
-		QueryBuilder searchQuery = multiMatchQuery;
+		BoolQueryBuilder archivedQueryBuilder = QueryBuilders.boolQuery().must(
+				QueryBuilders.matchQuery(ContentDataConstants.ARCHIVED_KEY, false).boost(10));
+		
+		BoolQueryBuilder baseQuery = QueryBuilders.boolQuery()
+				.must(multiMatchQuery)
+				.should(archivedQueryBuilder);
+		
+		QueryBuilder searchQuery = baseQuery;
 		if (view != null) {
 			ESDataViewOperation viewOperation = new ESDataViewOperation(view);
-			searchQuery = viewOperation.createViewScopedQuery(multiMatchQuery, types);
+			searchQuery = viewOperation.createViewScopedQuery(baseQuery, types);
 		}
 		
 		//MatchQueryBuilder matchQuery = QueryBuilders.matchQuery("_all", searchText);

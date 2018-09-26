@@ -17,7 +17,7 @@ public abstract class Activity {
 		CONTENT_ADD_SUGGEST(Category.CONTENT, "Content Add Request"), 
 		CONTENT_UPDATE_SUGGEST(Category.CONTENT, "Content Update Request"),
 		CONTENT_ARCHIVE_SUGGEST(Category.CONTENT, "Content Archive Request"), 
-		CONTENT_UNARCHIVE_SUGGEST(Category.CONTENT, "Content Un-archive Request"),
+		CONTENT_UNARCHIVE_SUGGEST(Category.CONTENT, "Content Unarchive Request"),
 		CONTENT_SUGGEST_APPROVED(Category.CONTENT, "Content Request Approved"), 
 		CONTENT_SUGGEST_REJECT(Category.CONTENT, "Content Request Rejected"), 
 		CONTENT_SUGGEST_WITHDRAW(Category.CONTENT, "Content Request Withdrawn"), 

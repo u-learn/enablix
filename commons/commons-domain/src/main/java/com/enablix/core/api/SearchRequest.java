@@ -9,6 +9,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 
+import com.enablix.commons.util.collection.CollectionUtil;
+
 public class SearchRequest {
 	
 	private Map<String, Object> filters = new HashMap<>();
@@ -155,7 +157,8 @@ public class SearchRequest {
 		
 		private int pageSize;
 		private int pageNum;
-		private SortCriteria sort;
+		private SortCriteria sort; // for backward compatibility
+		private List<SortCriteria> sorts; // multiple sorts, will ignore sort
 
 		public int getPageSize() {
 			return pageSize;
@@ -181,8 +184,27 @@ public class SearchRequest {
 			this.sort = sort;
 		}
 		
+		public List<SortCriteria> getSorts() {
+			return sorts;
+		}
+
+		public void setSorts(List<SortCriteria> sorts) {
+			this.sorts = sorts;
+		}
+
 		public Pageable toPageableObject() {
-			return new PageRequest(pageNum, pageSize, sort == null ? null : sort.toSortObject()); 
+			
+			Sort dataSort = null;
+			
+			if (CollectionUtil.isNotEmpty(sorts)) {
+				for (SortCriteria sc : sorts) {
+					dataSort = dataSort == null ? sc.toSortObject() : dataSort.and(sc.toSortObject());
+				}
+			} else if (sort != null) {
+				dataSort = sort.toSortObject();
+			}
+			
+			return new PageRequest(pageNum, pageSize, dataSort); 
 		}
 		
 	}
