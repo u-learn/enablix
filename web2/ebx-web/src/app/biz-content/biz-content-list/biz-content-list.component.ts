@@ -76,10 +76,17 @@ export class BizContentListComponent implements OnInit {
     searchRequest.pagination.pageNum = 0;
     searchRequest.pagination.pageSize = 40;
     
-    searchRequest.pagination.sort = new SortCriteria();
-    searchRequest.pagination.sort.field = Constants.FLD_MODIFIED_AT
-    searchRequest.pagination.sort.direction = Direction.DESC;
-
+    searchRequest.pagination.sorts = [
+      {
+        field: Constants.FLD_ARCHIVED,
+        direction: Direction.ASC
+      },
+      {
+        field: Constants.FLD_MODIFIED_AT,
+        direction: Direction.DESC
+      }
+    ];
+    
     searchRequest.textQuery = this.textFilter;
 
     this.contentService.getFilteredRecords(this.container.qualifiedId, searchRequest).subscribe(

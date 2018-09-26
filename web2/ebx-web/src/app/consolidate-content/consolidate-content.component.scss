@@ -7,7 +7,12 @@
   cursor: pointer;
 
   .title {
-    
+    .ctype {
+      text-transform: uppercase;
+      font-family: $FPMedium;
+      font-size: 10px;
+      color: #2CA6E3;
+    }
   }
 
   ebx-card-preview {

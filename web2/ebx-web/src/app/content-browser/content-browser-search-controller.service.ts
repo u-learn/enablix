@@ -219,9 +219,16 @@ export class ContentBrowserSearchControllerService implements SearchBarControlle
       searchRequest.pagination.pageNum = this.pageNum;
       searchRequest.pagination.pageSize = this.pageSize;
       
-      searchRequest.pagination.sort = new SortCriteria();
-      searchRequest.pagination.sort.field = Constants.FLD_MODIFIED_AT
-      searchRequest.pagination.sort.direction = Direction.DESC;
+      searchRequest.pagination.sorts = [
+        {
+          field: Constants.FLD_ARCHIVED,
+          direction: Direction.ASC
+        },
+        {
+          field: Constants.FLD_MODIFIED_AT,
+          direction: Direction.DESC
+        }
+      ];
 
       this.contentService.getFilteredRecords(containerQId, searchRequest).subscribe(
         result => {

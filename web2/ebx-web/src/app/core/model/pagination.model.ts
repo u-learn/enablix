@@ -2,6 +2,7 @@ export class Pagination {
   pageSize: number;
   pageNum: number;
   sort: SortCriteria;
+  sorts?: SortCriteria[];
 }
 
 export class SortCriteria {

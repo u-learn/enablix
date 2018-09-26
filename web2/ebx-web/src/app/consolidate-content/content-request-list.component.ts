@@ -47,11 +47,11 @@ export class ContentRequestListComponent {
         key: "asset",
         sortProp: "objectRef.contentTitle"
       },
-      {
+      /*{
         heading: "Content Type",
         key: "contentType",
         sortProp: "objectRef.contentQId"
-      },
+      },*/
       {
         heading: "Request Type",
         key: "requestType"
@@ -74,7 +74,7 @@ export class ContentRequestListComponent {
     ];
 
     if (!this.showRequestType) {
-      this.tableColumns.splice(2, 1);
+      this.tableColumns.splice(1, 1);
     }
 
     this.pagination = new Pagination();
@@ -122,6 +122,11 @@ export class ContentRequestListComponent {
 
   getRequestTypeDisplayName(requestType: string) {
     return this.ccService.getRequestTypeDisplayName(requestType);
+  }
+
+  getContentTypeLabel(rec: any) {
+    var typeContainer = this.getRecordContainer(rec);
+    return typeContainer ? typeContainer.singularLabel : "";
   }
 
   getRecordContainer(rec: any) {

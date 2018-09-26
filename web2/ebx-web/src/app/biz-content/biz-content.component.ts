@@ -176,7 +176,7 @@ export class BizContentComponent implements OnInit, AfterViewInit {
   reloadContentRecord(success: boolean) {
     if (success && !this.contentRequest) {
       this.navService.goToContentDetail(
-          this.container.qualifiedId, this.record.identity, {});
+          this.container.qualifiedId, this.record.identity, {}, this.returnUrl);
     }
   }
   

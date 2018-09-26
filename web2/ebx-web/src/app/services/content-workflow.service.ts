@@ -105,7 +105,7 @@ export class ContentWorkflowService {
     this.requestTypeDisplayText[ContentWorkflowService.REQ_TYPE_ADD] = "Add";
     this.requestTypeDisplayText[ContentWorkflowService.REQ_TYPE_UPDATE] = "Update";
     this.requestTypeDisplayText[ContentWorkflowService.REQ_TYPE_ARCHIVE] = "Archive";
-    this.requestTypeDisplayText[ContentWorkflowService.REQ_TYPE_UNARCHIVE] = "Un-archive";
+    this.requestTypeDisplayText[ContentWorkflowService.REQ_TYPE_UNARCHIVE] = "Unarchive";
   }
 
   init() : Observable<any> {
@@ -316,7 +316,7 @@ export class ContentWorkflowService {
                         || crRecord.objectRef.requestType != ContentWorkflowService.REQ_TYPE_ADD)) {
               return false;
             }
-            
+
             if (actionName == ContentWorkflowService.ACTION_EDIT 
                 && this.user.getUserIdentity() == crRecord.createdBy) {
               return true;
