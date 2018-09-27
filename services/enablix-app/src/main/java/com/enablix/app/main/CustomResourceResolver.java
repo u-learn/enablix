@@ -20,7 +20,7 @@ public class CustomResourceResolver extends EnablixPathResourceResolver {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(CustomResourceResolver.class);
 	
-	@Value("${ui.resource.custom.pattern:**/messages/**,**/img/**,**/portal-home.html}")
+	@Value("${ui.resource.custom.pattern:**/messages/**,**/img/**,**/theme.css}")
 	private final String[] customResourcePatternArr = new String[0];
 	private final PathMatcher pathMatcher = new AntPathMatcher();
 	

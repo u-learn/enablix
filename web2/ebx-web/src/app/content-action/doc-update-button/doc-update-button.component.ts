@@ -24,8 +24,6 @@ export class DocUpdateButtonComponent implements OnInit {
 
   @Output() onDocUpdate = new EventEmitter<void>();
 
-  downloadUrl: string;
-
   constructor(private alert: AlertService, private dialog: MatDialog) { }
 
   @Input()

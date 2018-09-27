@@ -108,6 +108,17 @@
               <ebx-type-pill [containerQId]="container?.qualifiedId" [navigable]="true"></ebx-type-pill>
             </div>
         </div>
+        <div class="row" *ngIf="(record?.__thumbnailDoc?.name) || (container.allowThumbnail && editing)">
+            <p class="label">Thumbnail</p>
+            <div class="text">{{record?.__thumbnailDoc?.name}}</div>
+            <div class="dashboard-buttons margin-top" *ngIf="editing">
+              <ebx-thumbnail-update-button class="action-btn" [container]="container" [record]="record" (onDocUpdate)="onContentUpdate()"></ebx-thumbnail-update-button>
+              <div class="action-btn" *ngIf="record?.__thumbnailDoc" (click)="deleteThumbnail()">
+                  <div class="icon small trash"></div>
+                  <p class="show-me">Delete</p>
+              </div>
+            </div>
+        </div>
         <ebx-content-tags label="Relevance" [record]="record" [tagItems]="boundedItems" [editing]="editing"></ebx-content-tags>
         <!-- <div class="row with-height">
             <p class="label">Properties</p>

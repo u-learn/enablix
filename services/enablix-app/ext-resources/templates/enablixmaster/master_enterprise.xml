@@ -2784,7 +2784,7 @@
                 </bounded>
             </contentItem>
         </container>
-        <container businessCategory="BUSINESS_CONTENT" id="salesKit" qualifiedId="salesKit" label="Sales Kits" displayOrder="229">
+        <container businessCategory="BUSINESS_CONTENT" id="salesKit" qualifiedId="salesKit" label="Sales Kits" displayOrder="229" allowThumbnail="true">
             <contentItem type="text" id="kitName" qualifiedId="salesKit.kitName" label="Name" searchBoost="7"/>
             <contentItem type="richText" id="kitDesc" qualifiedId="salesKit.kitDesc" label="Description" searchBoost="2"/>
             <contentItem type="bounded" id="products" qualifiedId="salesKit.products" label="Products" searchBoost="7">
@@ -4160,6 +4160,9 @@
                     <headingContentItem id="title"/>
                 </portalConfig>
             </container>
+        </contentUIDef>
+        <contentUIDef qualifiedId="salesKit.kitContent">
+            <contentStack layout="FLAT"/>
         </contentUIDef>
     </uiDefinition>
     <portalUIDefinition>

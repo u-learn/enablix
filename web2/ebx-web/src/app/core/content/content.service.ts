@@ -136,9 +136,9 @@ export class ContentService {
     }
     
     // find the preview handler and set thumbnail url for the record
-    let previewHandler = this.contentPreviewService.getPreviewHandler(dataRecord);
-    if (previewHandler != null) {
-      decoration.__thumbnailUrl = previewHandler.smallThumbnailUrl(dataRecord);
+    let thumbnailProvider = this.contentPreviewService.getThumbnailProvider(dataRecord);
+    if (thumbnailProvider != null) {
+      decoration.__thumbnailUrl = thumbnailProvider.smallThumbnailUrl(dataRecord);
     }
 
     if (!decoration.__thumbnailUrl) {

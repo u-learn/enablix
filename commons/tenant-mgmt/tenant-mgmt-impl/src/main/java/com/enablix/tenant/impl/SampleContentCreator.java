@@ -135,7 +135,7 @@ public class SampleContentCreator implements TenantSetupTask {
 		        
 				Document<DocumentMetadata> document = 
 		        		docManager.buildDocument(fis, file.getName(),
-		        				contentType, docQId, file.length(), null, false);
+		        				contentType, docQId, file.length(), null, false, false);
 		        
 		        DocumentMetadata docMd = docManager.saveUsingContainerInfo(
 		        		document, container.getQualifiedId(), null, generatePreview, true);

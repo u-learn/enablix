@@ -31,9 +31,9 @@
 <div class="main" *ngIf="heading">
     <div class="content-stack-container">
         <div class="heading">
-          <div class="label">{{heading}}</div>
+          <div class="label">{{heading}} <span *ngIf="totalFlatContentCount">({{totalFlatContentCount}})</span></div>
           <div class="dashboard-buttons" *ngIf="editing">
-            <ebx-content-picker-button [preSelected]="stackArr" (onSelectionDone)="selectionDone($event)"></ebx-content-picker-button>
+            <ebx-content-picker-button [preSelected]="stackArr" [groupByQId]="!flatLayout" [sortable]="flatLayout" (onSelectionDone)="selectionDone($event)"></ebx-content-picker-button>
           </div>
         </div>
         <div class="content-type-msg" *ngIf="!stackArr">
@@ -41,11 +41,11 @@
         </div>
         <div class="content-types-container" *ngIf="stackArr">
             <div class="full-width-container" *ngFor="let cg of contentStack">
-                <h2>{{cg?.container?.label}} ({{cg.records.numberOfElements}})</h2>
+                <h2 *ngIf="cg?.container">{{cg?.container?.label}} ({{cg.records.numberOfElements}})</h2>
                 <div class="cards card-container">
                   <ng-container *ngFor="let rec of cg.records.content; let i = index;">
                     <div class="data-card" *ngIf="cg.showAll || cg.records.content.length <= showCount || (i < (showCount - 1))">
-                      <ebx-data-card [containerQId]="cg.contentQId" [record]="rec"></ebx-data-card>
+                      <ebx-data-card [containerQId]="getRecordContainerQId(cg, rec)" [record]="rec"></ebx-data-card>
                     </div>
                   </ng-container>
                   <div class="card biz-card" *ngIf="cg.records.content.length > showCount" (click)="cg.showAll = !cg.showAll;">

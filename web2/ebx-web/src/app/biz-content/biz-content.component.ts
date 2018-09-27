@@ -497,6 +497,12 @@ export class BizContentComponent implements OnInit, AfterViewInit {
     }
   }
 
+  deleteThumbnail() {
+    if (this.record && this.record.__thumbnailDoc) {
+      this.record.__thumbnailDoc.deleted = true;
+    }
+  }
+
   navToHome() {
     this.navService.goToPortalHome();
   }

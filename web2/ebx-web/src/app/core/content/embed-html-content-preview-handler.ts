@@ -1,11 +1,12 @@
 import { ContentPreviewHandler } from './content-preview-handler';
-import { PreviewDataBasedHandler } from './preview-data-based-handler';
+import { ContentDocMetadataResolver, PreviewDataBasedHandler } from './preview-data-based-handler';
 import { UserPreferenceService } from '../user-preference.service';
 import { NoPreviewHandler } from './no-preview-handler';
 
 export class EmbedHtmlContentPreviewHandler implements ContentPreviewHandler {
   
-  previewDataBasedHandler: PreviewDataBasedHandler = new PreviewDataBasedHandler();
+  previewDataBasedHandler: PreviewDataBasedHandler = 
+    new PreviewDataBasedHandler(new ContentDocMetadataResolver());
   noPreviewHandler: NoPreviewHandler = new NoPreviewHandler();
 
   constructor(private userPref: UserPreferenceService) {

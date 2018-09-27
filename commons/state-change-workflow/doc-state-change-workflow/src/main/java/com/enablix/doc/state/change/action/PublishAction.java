@@ -31,12 +31,12 @@ public class PublishAction implements StateChangeAction<DocInfo, PublishInfo, Bo
 			if (!StringUtil.isEmpty(pubInfo.getParentIdentity())) {
 				
 				docManager.attachUsingParentInfo(objectRef.getMetadata(), 
-						pubInfo.getDocIdentity(), pubInfo.getParentIdentity());
+						pubInfo.getDocIdentity(), pubInfo.getParentIdentity(), false);
 				
 			} else {
 				
 				docManager.attachUsingContainerInfo(objectRef.getMetadata(), 
-						pubInfo.getDocQId(), pubInfo.getDocContainerIdentity());
+						pubInfo.getDocQId(), pubInfo.getDocContainerIdentity(), false);
 			}
 		
 		} catch (Throwable t) {

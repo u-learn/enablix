@@ -13,6 +13,7 @@ import com.enablix.app.content.update.ContentUpdateContext;
 import com.enablix.commons.constants.ContentDataConstants;
 import com.enablix.commons.dms.api.DocumentMetadata;
 import com.enablix.commons.dms.api.DocumentMetadata.PreviewStatus;
+import com.enablix.commons.util.QIdUtil;
 import com.enablix.commons.util.StringUtil;
 import com.enablix.commons.util.beans.BeanUtil;
 import com.enablix.core.api.TemplateFacade;
@@ -31,7 +32,7 @@ public class TemporaryDocConfimation implements ContentEnricher {
 	@Autowired
 	private AuditInfoDateFormatter dateFormatter;
 	
-	@SuppressWarnings({ "unchecked", "rawtypes" })
+	
 	@Override
 	public void enrich(ContentUpdateContext updateCtx, Map<String, Object> content, TemplateFacade contentTemplate) {
 		
@@ -45,61 +46,71 @@ public class TemporaryDocConfimation implements ContentEnricher {
 
 			if (itemDef.getType() == ContentItemClassType.DOC) {
 			
-				Object object = content.get(itemDef.getId());
+				processDoc(content, parentIdentity, contentQId, contentIdentity, itemDef.getId(), false);
+			}
+		}
+		
+		processDoc(content, parentIdentity, contentQId, contentIdentity, ContentDataConstants.THUMBNAIL_DOC_FLD, true);
+	}
+
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	private void processDoc(Map<String, Object> content, String parentIdentity, String contentQId,
+			String contentIdentity, String docFldId, boolean thumbnailDoc) {
+		
+		Object object = content.get(docFldId);
+		String docContentQId = QIdUtil.createQualifiedId(contentQId, docFldId);
+		
+		if (object != null && object instanceof Map) {
+		
+			Map docMap = (Map) object;
+			Object tempDoc = docMap.get(ContentDataConstants.DOC_TEMPORARY_ATTR);
+			Object delDoc = docMap.get(ContentDataConstants.DOC_DELETED_ATTR);
+			String previewStatus = (String) docMap.get(ContentDataConstants.DOC_PREVIEW_STATUS_ATTR);
+			
+			boolean deleteDoc = delDoc != null && delDoc instanceof Boolean && ((Boolean) delDoc);
+			boolean tempDocBool = tempDoc != null && tempDoc instanceof Boolean && ((Boolean) tempDoc);
+			boolean psPending = PreviewStatus.PENDING.equals(previewStatus);
+			
+			if (tempDocBool || psPending || deleteDoc) {
 				
-				if (object != null && object instanceof Map) {
+				String docIdentity = (String) docMap.get(ContentDataConstants.IDENTITY_KEY);
+				DocumentMetadata docMd = docManager.getDocumentMetadata(docIdentity);
 				
-					Map docMap = (Map) object;
-					Object tempDoc = docMap.get(ContentDataConstants.DOC_TEMPORARY_ATTR);
-					Object delDoc = docMap.get(ContentDataConstants.DOC_DELETED_ATTR);
-					String previewStatus = (String) docMap.get(ContentDataConstants.DOC_PREVIEW_STATUS_ATTR);
+				if (deleteDoc) {
 					
-					boolean deleteDoc = delDoc != null && delDoc instanceof Boolean && ((Boolean) delDoc);
-					boolean tempDocBool = tempDoc != null && tempDoc instanceof Boolean && ((Boolean) tempDoc);
-					boolean psPending = PreviewStatus.PENDING.equals(previewStatus);
-					
-					if (tempDocBool || psPending || deleteDoc) {
+					try {
 						
-						String docIdentity = (String) docMap.get(ContentDataConstants.IDENTITY_KEY);
-						DocumentMetadata docMd = docManager.getDocumentMetadata(docIdentity);
+						docManager.delete(docMd);
+						content.put(docFldId, null);
 						
-						if (deleteDoc) {
-							
-							try {
-								
-								docManager.delete(docMd);
-								content.put(itemDef.getId(), null);
-								
-							} catch (IOException e) {
-								LOGGER.debug("Failed to delete document", e);
-								throw new RuntimeException("Unable to delete document", e);
-							}
-							
-						} else if (tempDocBool) {
-							
-							docMd.setContentQId(itemDef.getQualifiedId());
-							
-							try {
-								
-								if (!StringUtil.isEmpty(parentIdentity)) {
-									docMd = docManager.attachUsingContainerInfo(docMd, contentQId, parentIdentity);
-								} else {
-									docMd = docManager.attachUsingContainerInfo(docMd, contentQId, contentIdentity);
-								}
-								
-								Map<?, ?> beanToMap = BeanUtil.beanToMap(docMd);
-								dateFormatter.formatAuditDates(beanToMap);
-								content.put(itemDef.getId(), beanToMap);
-								
-							} catch (IOException e) {
-								LOGGER.debug("Unable to attach document", e);
-								throw new RuntimeException("Unable to attach document", e);
-							}
-							
-						} else if (psPending) {
-							docMap.put(ContentDataConstants.DOC_PREVIEW_STATUS_ATTR, docMd.getPreviewStatus().toString());
-						}
+					} catch (IOException e) {
+						LOGGER.debug("Failed to delete document", e);
+						throw new RuntimeException("Unable to delete document", e);
 					}
+					
+				} else if (tempDocBool) {
+					
+					docMd.setContentQId(docContentQId);
+					
+					try {
+						
+						if (!StringUtil.isEmpty(parentIdentity)) {
+							docMd = docManager.attachUsingContainerInfo(docMd, contentQId, parentIdentity, thumbnailDoc);
+						} else {
+							docMd = docManager.attachUsingContainerInfo(docMd, contentQId, contentIdentity, thumbnailDoc);
+						}
+						
+						Map<?, ?> beanToMap = BeanUtil.beanToMap(docMd);
+						dateFormatter.formatAuditDates(beanToMap);
+						content.put(docFldId, beanToMap);
+						
+					} catch (IOException e) {
+						LOGGER.debug("Unable to attach document", e);
+						throw new RuntimeException("Unable to attach document", e);
+					}
+					
+				} else if (psPending) {
+					docMap.put(ContentDataConstants.DOC_PREVIEW_STATUS_ATTR, docMd.getPreviewStatus().toString());
 				}
 			}
 		}

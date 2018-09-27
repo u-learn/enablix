@@ -37,6 +37,7 @@ public class ContentDataConstants {
 	
 	public static final String CONTAINER_NAME_METADATA_FLD = "__container";
 	public static final String RECORD_TAGS_ATTR = "__tags";
+	public static final String THUMBNAIL_DOC_FLD = "__thumbnailDoc";
 	
 	public static final String TAG_NAME_ATTR = "name";
 	

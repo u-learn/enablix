@@ -1161,6 +1161,8 @@ body {
                 overflow-y: hidden;
                 overflow-x: hidden;
                 padding-left: 8px;
+                display: flex;
+                align-items: center;
 
                 .img-cont {
                     width: 64px;

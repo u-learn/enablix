@@ -331,4 +331,17 @@ public class ContentDataUtil {
 		return (String) contentData.get(ContentDataConstants.CONTENT_TITLE_KEY);
 	}
 
+
+	@SuppressWarnings("unchecked")
+	public static Map<String, Object> findThumbnailDocRecord(Map<String, Object> record) {
+		Map<String, Object> docDetails = null;
+		
+		Object doc = record.get(ContentDataConstants.THUMBNAIL_DOC_FLD);
+		if (doc != null && doc instanceof Map<?,?>) {
+			docDetails = (Map<String, Object>) doc;
+		}
+				
+		return docDetails;
+	}
+
 }

@@ -200,7 +200,7 @@ public class ImportManagerImpl implements ImportManager {
 						String docQId = docItemType.getQualifiedId();
 						Document<DocumentMetadata> document = 
 				        		docMgr.buildDocument(importDoc.getInputStream(), importDoc.getFilename(), 
-				        				importDoc.getMimeType(), docQId, -1, null, false);
+				        				importDoc.getMimeType(), docQId, -1, null, false, false);
 				        
 				        DocumentMetadata docMd = docMgr.saveUsingContainerInfo(
 				        		document, container.getQualifiedId(), null, false, false);

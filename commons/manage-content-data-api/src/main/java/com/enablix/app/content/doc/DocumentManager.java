@@ -27,15 +27,15 @@ public interface DocumentManager {
 			String docContainerInstanceIdentity, boolean generatePreview, boolean generatePreviewAsync) throws IOException;
 	
 	Document<DocumentMetadata> buildDocument(InputStream dataStream, String name, String contentType, 
-			String contentQId, long fileSize, String docIdentity, boolean temporaryDoc);
+			String contentQId, long fileSize, String docIdentity, boolean temporaryDoc, boolean thumbnailUpload);
 
 	DocumentMetadata loadDocMetadata(String docIdentity);
 	
 	DocumentMetadata attachUsingContainerInfo(DocumentMetadata docMd, 
-			String docContainerQId, String docContainerInstanceIdentity) throws IOException;
+			String docContainerQId, String docContainerInstanceIdentity, boolean thumbnailDoc) throws IOException;
 	
-	DocumentMetadata attachUsingParentInfo(DocumentMetadata docMd, 
-			String docContainerQId, String docContainerParentInstanceIdentity) throws IOException;
+	DocumentMetadata attachUsingParentInfo(DocumentMetadata docMd, String docContainerQId, 
+			String docContainerParentInstanceIdentity, boolean thumbnailDoc) throws IOException;
 
 	DocumentMetadata delete(DocumentMetadata docMd) throws IOException;
 
@@ -48,5 +48,8 @@ public interface DocumentManager {
 	DocumentMetadata updateEmbedHtml(String docIdentity, String embedHtml);
 
 	DocumentMetadata updateContentQId(String docIdentity, String contentQId);
-	
+
+	DocumentMetadata saveThumnailDoc(Document<?> document, String containerQId, String docContainerParentInstanceIdentity,
+			boolean generatePreview, boolean generatePreviewAsync) throws IOException;
+
 }

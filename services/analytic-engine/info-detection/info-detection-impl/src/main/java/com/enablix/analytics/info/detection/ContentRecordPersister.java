@@ -106,7 +106,7 @@ public class ContentRecordPersister {
 	            		docManager.buildDocument(docAttach.getInputStream(), 
 	            				docAttach.getFilename(), docAttach.getContentType(), 
 	            				contentQId + "." + entry.getKey(), 
-	            				docAttach.getFilesize(), null, temporaryDoc);
+	            				docAttach.getFilesize(), null, temporaryDoc, false);
 				
 				DocumentMetadata docMd = docManager.saveUsingContainerInfo(document, contentQId, null, false, false);
 				

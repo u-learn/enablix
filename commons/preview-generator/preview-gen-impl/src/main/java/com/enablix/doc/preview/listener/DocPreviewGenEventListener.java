@@ -43,41 +43,46 @@ public class DocPreviewGenEventListener {
 	@Autowired
 	private GenericDao genericDao;
 	
-	@SuppressWarnings("rawtypes")
 	@EventSubscription(eventName = Events.CONTENT_CHANGE_EVENT)
 	public void generatePreview(ContentDataSaveEvent event) throws IOException {
 		
 		for (ContentItemType contentItem : event.getContainerType().getContentItem()) {
-		
 			if (contentItem.getType() == ContentItemClassType.DOC) {
-				
-				Object fileMetadata = event.getDataAsMap().get(contentItem.getId());
-				
-				if (fileMetadata instanceof Map) {
-				
-					Map fileMdMap = (Map) fileMetadata;
-					
-					String previewStatus = (String) fileMdMap.get("previewStatus");
-					String docIdentity = (String) fileMdMap.get(ContentDataConstants.IDENTITY_KEY);
-					
-					DocumentMetadata docMetadata = docManager.getDocumentMetadata(docIdentity);
-					
-					if (docMetadata != null) {
-						
-						if (docMetadata.getPreviewStatus() != PreviewStatus.AVAILABLE
-							&& docMetadata.getPreviewStatus() != PreviewStatus.NOT_SUPPORTED) {
-							
-							previewService.createPreview(docMetadata);
-							
-						} else if (PreviewStatus.PENDING.equals(previewStatus)) {
-							// update status in content record
-							updateStatusInRecord(docMetadata);
-						}
-					} 
-				}
+				checkAndGeneratePreview(event, contentItem.getId());
 			}
 		}
 		
+		checkAndGeneratePreview(event, ContentDataConstants.THUMBNAIL_DOC_FLD);
+		
+	}
+
+	@SuppressWarnings("rawtypes")
+	private void checkAndGeneratePreview(ContentDataSaveEvent event, String docFldId) throws IOException {
+		
+		Object fileMetadata = event.getDataAsMap().get(docFldId);
+		
+		if (fileMetadata instanceof Map) {
+		
+			Map fileMdMap = (Map) fileMetadata;
+			
+			String previewStatus = (String) fileMdMap.get("previewStatus");
+			String docIdentity = (String) fileMdMap.get(ContentDataConstants.IDENTITY_KEY);
+			
+			DocumentMetadata docMetadata = docManager.getDocumentMetadata(docIdentity);
+			
+			if (docMetadata != null) {
+				
+				if (docMetadata.getPreviewStatus() != PreviewStatus.AVAILABLE
+					&& docMetadata.getPreviewStatus() != PreviewStatus.NOT_SUPPORTED) {
+					
+					previewService.createPreview(docMetadata);
+					
+				} else if (PreviewStatus.PENDING.equals(previewStatus)) {
+					// update status in content record
+					updateStatusInRecord(docMetadata);
+				}
+			} 
+		}
 	}
 	
 	@EventSubscription(eventName = Events.GENERATE_DOC_PREVIEW)

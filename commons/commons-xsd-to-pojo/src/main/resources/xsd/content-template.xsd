@@ -141,6 +141,7 @@
 				<xs:attribute name="linkContentItemId" type="xs:string"/>
 				<xs:attribute name="businessCategory" type="containerBusinessCategoryType"/>
 				<xs:attribute name="color" type="xs:string"/>
+				<xs:attribute name="allowThumbnail" type="xs:boolean" default="false"/>
 			</xs:extension>
 		</xs:complexContent>
 	</xs:complexType>
@@ -285,6 +286,7 @@
 			<xs:element name="doc" type="docUIDefType"/>
 			<xs:element name="dateTime" type="dateTimeUIDefType"/>
 			<xs:element name="numeric" type="numericUIDefType"/>
+			<xs:element name="contentStack" type="contentStackUIDefType"/>
 		</xs:choice>
 		<xs:attribute name="qualifiedId" type="xs:string" use="required"/>
 	</xs:complexType>
@@ -390,6 +392,10 @@
 	
 	<xs:complexType name="numericUIDefType">
 		<!-- no definition as of now -->
+	</xs:complexType>
+	
+	<xs:complexType name="contentStackUIDefType">
+		<xs:attribute name="layout" type="xs:string" default="GROUPED"/>
 	</xs:complexType>
 	
 	<!-- Portal UI definition -->

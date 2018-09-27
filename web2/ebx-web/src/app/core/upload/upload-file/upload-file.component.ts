@@ -33,6 +33,7 @@ export class UploadFileComponent implements OnInit {
   fileInfo: FileUploadInfo;
 
   newContent: boolean = true;
+  thumbnailUpload: boolean = false;
 
   errors: any = {};
 
@@ -53,6 +54,7 @@ export class UploadFileComponent implements OnInit {
     } else {
       
       this.newContent = !this.data.updateOperation;
+      this.thumbnailUpload = this.data.thumbnailUpload;
 
       this.fileInfo = new FileUploadInfo();
       this.fileInfo.title = Utility.removeFileExtn(this.data.file.name);
@@ -91,24 +93,13 @@ export class UploadFileComponent implements OnInit {
     formData.append("temporary", "true");
     formData.append("generatePreview", "false");
     formData.append("generatePreviewAsync", "false");
+    formData.append("thumbnailUpload", "" + this.thumbnailUpload);
     
     this.fileService.uploadFile(formData).subscribe(
       res => {
+
         this.fileInfo.docMetadata = res;
-        
-        let decoration: any = {};
-        let record = {
-          '__decoration': decoration
-        }
-
-        record.__decoration.__docMetadata = this.fileInfo.docMetadata;
         this.filename = this.fileInfo.docMetadata.name;
-
-        /*let previewHandler = this.contentPreviewService.getPreviewHandler(record);
-        if (previewHandler != null) {
-          this.previewImageUrl = previewHandler.largeThumbnailUrl(record);
-          this.fileInfo.thumbnailUrl = this.previewImageUrl;
-        }*/
         this.previewImageUrl = "/assets/images/icons/file.svg";
 
         this.loading = false;

@@ -18,6 +18,7 @@ export class ContentTemplateCache {
   contentStackQIdMap = {};
 
   autoPopulateDependents: any = {};
+  uiDefinitionMap = {};
 
   private index = 0;
   colors = [];
@@ -85,10 +86,10 @@ export class ContentTemplateCache {
     this.bizDimensionContainers.sort(
       (a: Container, b: Container) => { return a.displayOrder - b.displayOrder; });
 
-    this.initAutoPopulateDependents();
+    this.preProcessUIDefs();
   }
 
-  initAutoPopulateDependents() {
+  preProcessUIDefs() {
     
     var uiDefinitions = this.contentTemplate.uiDefinition.contentUIDef;
     
@@ -96,6 +97,7 @@ export class ContentTemplateCache {
     for (var i = 0; i < uiDefinitions.length; i++) {
 
       var uiDef = uiDefinitions[i]; 
+      this.uiDefinitionMap[uiDef.qualifiedId] = uiDef;
       
       if (uiDef.text && uiDef.text.autoPopulate) {
         

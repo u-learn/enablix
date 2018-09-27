@@ -89,18 +89,21 @@ public class DocumentController {
     		@RequestParam(value = "temporary", required = false) boolean temporary,
     		@RequestParam(value = "generatePreview", required = false) boolean generatePreview,
     		@RequestParam(value = "generatePreviewAsync", required = false) boolean generatePreviewAsync,
+    		@RequestParam(value = "thumbnailUpload", required = false) boolean thumbnailUpload,
             @RequestParam(value="file", required = true) MultipartFile file) {
         
         try {
             Document<DocumentMetadata> document = 
-            		docManager.buildDocument(file.getInputStream(), file.getOriginalFilename(), 
-            				file.getContentType(), contentQId, fileSize, docIdentity, temporary);
+            	docManager.buildDocument(file.getInputStream(), file.getOriginalFilename(), 
+            		file.getContentType(), contentQId, fileSize, docIdentity, temporary, thumbnailUpload);
             
             DocumentMetadata docMd = saveDocument(contentQId, parentIdentity, containerIdentity, 
-            		document, generatePreview, generatePreviewAsync);
+            		document, generatePreview, generatePreviewAsync, thumbnailUpload);
 			
-            auditActivity(ActivityType.DOC_UPLOAD, docMd.getIdentity(), docMd, 
+            if (!thumbnailUpload) {
+            	auditActivity(ActivityType.DOC_UPLOAD, docMd.getIdentity(), docMd, 
             				Channel.WEB.toString(), null, null, null);
+            }
             
             return docMd;
             
@@ -123,12 +126,14 @@ public class DocumentController {
 	private DocumentMetadata saveDocument(String contentQId, 
 			String parentIdentity, String containerIdentity,
 			Document<?> document, boolean generatePreview,
-			boolean generatePreviewAsync) throws IOException {
+			boolean generatePreviewAsync, boolean thumbnailUpload) throws IOException {
 		
 		String containerQId = getContainerQId(contentQId);
 		DocumentMetadata docMd = null;
 		
-		if (!StringUtil.isEmpty(parentIdentity)) {
+		if (thumbnailUpload) {
+			docMd = docManager.saveThumnailDoc(document, containerQId, containerIdentity, generatePreview, generatePreviewAsync);
+		} else if (!StringUtil.isEmpty(parentIdentity)) {
 			docMd = docManager.saveUsingParentInfo(document, containerQId, parentIdentity, generatePreview, generatePreviewAsync);
 		} else {
 			docMd = docManager.saveUsingContainerInfo(document, containerQId, containerIdentity, generatePreview, generatePreviewAsync);
@@ -248,30 +253,50 @@ public class DocumentController {
 
     	if (CollectionUtil.isNotEmpty(contentRecord) && container != null) {
     		
-    		Map<String, Object> docRecord = ContentDataUtil.findDocRecord(contentRecord, container, template);
+    		Map<String, Object> tnDocRecord = ContentDataUtil.findThumbnailDocRecord(contentRecord);
     		
-    		if (docRecord != null) {
-    			
-    			String docIdentity = (String) docRecord.get(ContentDataConstants.IDENTITY_KEY);
+    		if (tnDocRecord != null) {
+    		
+    			String docIdentity = (String) tnDocRecord.get(ContentDataConstants.IDENTITY_KEY);
     			
     			if (StringUtil.hasText(docIdentity)) {
     				
-    				iconFound = true;
     				IDocument part = previewService.getDocIcon(docIdentity);
 
     				if (part != null) {
-        				
     					sendDownloadResponse(response, part, true);
-    					
-        			} else if (ContentDataUtil.isDocContentTypeImage(docRecord)) {
-
-        				downloadAction(request, response, docIdentity, null, null, null, null, null);
-        				
-        			} else {
-        				sendRedirect(FILE_ICON_IMG, request, response);
-        			}
+    					iconFound = true;
+        			} 
     			}
+    		}
+    		
+    		if (!iconFound) {
     			
+	    		Map<String, Object> docRecord = ContentDataUtil.findDocRecord(contentRecord, container, template);
+	    		
+	    		if (docRecord != null) {
+	    			
+	    			String docIdentity = (String) docRecord.get(ContentDataConstants.IDENTITY_KEY);
+	    			
+	    			if (StringUtil.hasText(docIdentity)) {
+	    				
+	    				iconFound = true;
+	    				IDocument part = previewService.getDocIcon(docIdentity);
+	
+	    				if (part != null) {
+	        				
+	    					sendDownloadResponse(response, part, true);
+	    					
+	        			} else if (ContentDataUtil.isDocContentTypeImage(docRecord)) {
+	
+	        				downloadAction(request, response, docIdentity, null, null, null, null, null);
+	        				
+	        			} else {
+	        				sendRedirect(FILE_ICON_IMG, request, response);
+	        			}
+	    			}
+	    			
+	    		}
     		}
     		
 			if (!iconFound) {

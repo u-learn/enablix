@@ -38,6 +38,7 @@ import com.enablix.doc.preview.DocPreviewService;
 public class DocumentManagerImpl implements DocumentManager {
 
 	private static final String TEMP_SUB_FOLDER = "tmp";
+	private static final String THUMBNAIL_SUB_FOLDER = "thumbnails";
 	
 	@Autowired
 	private DocumentStoreFactory storeFactory;
@@ -69,15 +70,19 @@ public class DocumentManagerImpl implements DocumentManager {
 			boolean generatePreviewAsync) throws IOException {
 		
 		String contentPath = createContentPathUsingParentInfo(docContainerQId, 
-				docContainerParentInstanceIdentity, doc.getMetadata().isTemporary());
+				docContainerParentInstanceIdentity, doc.getMetadata().isTemporary(), false);
 		return save(doc, contentPath, generatePreview, generatePreviewAsync);
 	}
 
 	private String createContentPathUsingParentInfo(String docContainerQId, 
-			String docContainerParentInstanceIdentity, boolean temporaryDoc) {
+			String docContainerParentInstanceIdentity, boolean temporaryDoc, boolean thumbnailDoc) {
 		
 		String templateId = ProcessContext.get().getTemplateId();
 		String contentDataPath = pathResolver.resolveContainerPath(templateId, docContainerQId);
+		
+		if (thumbnailDoc) {
+			contentDataPath = pathResolver.appendPath(contentDataPath, THUMBNAIL_SUB_FOLDER);
+		}
 		
 		if (temporaryDoc) {
 			contentDataPath = pathResolver.appendPath(contentDataPath, TEMP_SUB_FOLDER);
@@ -92,15 +97,19 @@ public class DocumentManagerImpl implements DocumentManager {
 			boolean generatePreviewAsync) throws IOException {
 		
 		String contentPath = createContentPathUsingContainerInfo(docContainerQId, 
-				docContainerInstanceIdentity, doc.getMetadata().isTemporary());
+				docContainerInstanceIdentity, doc.getMetadata().isTemporary(), false);
 		return save(doc, contentPath, generatePreview, generatePreviewAsync);
 	}
 
 	private String createContentPathUsingContainerInfo(String docContainerQId, 
-			String docContainerInstanceIdentity, boolean temporaryDoc) {
+			String docContainerInstanceIdentity, boolean temporaryDoc, boolean thumbnailDoc) {
 		
 		String templateId = ProcessContext.get().getTemplateId();
 		String contentDataPath = pathResolver.resolveContainerPath(templateId, docContainerQId);
+		
+		if (thumbnailDoc) {
+			contentDataPath = pathResolver.appendPath(contentDataPath, THUMBNAIL_SUB_FOLDER);
+		}
 		
 		if (temporaryDoc) {
 			contentDataPath = pathResolver.appendPath(contentDataPath, TEMP_SUB_FOLDER);
@@ -176,20 +185,22 @@ public class DocumentManagerImpl implements DocumentManager {
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public Document<DocumentMetadata> buildDocument(InputStream dataStream, String name, 
-			String contentType, String contentQId, long contentLength, String docIdentity, boolean tmpDoc) {
+			String contentType, String contentQId, long contentLength, String docIdentity, 
+			boolean tmpDoc, boolean thumbnailUpload) {
 		
-		String storeType = storeFactory.getStoreType(DocumentStoreConstants.DEFAULT_DOC_STORE_CONFIG_PROP);
+		String storeType = thumbnailUpload ? storeFactory.defaultStoreType() : 
+			storeFactory.getStoreType(DocumentStoreConstants.DEFAULT_DOC_STORE_CONFIG_PROP);
 		
 		DocumentStore ds = storeFactory.getDocumentStore(storeType);
 		return ds.getDocumentBuilder().build(dataStream, name, contentType, contentQId, contentLength, docIdentity, tmpDoc);
 	}
-
+	
 	@Override
 	public DocumentMetadata attachUsingContainerInfo(DocumentMetadata docMd, String docContainerQId,
-			String docContainerInstanceIdentity) throws IOException {
+			String docContainerInstanceIdentity, boolean thumbnailDoc) throws IOException {
 		
 		String contentPath = createContentPathUsingContainerInfo(docContainerQId, 
-				docContainerInstanceIdentity, false);
+				docContainerInstanceIdentity, false, thumbnailDoc);
 		
 		docMd.setTemporary(false);
 		
@@ -198,10 +209,10 @@ public class DocumentManagerImpl implements DocumentManager {
 
 	@Override
 	public DocumentMetadata attachUsingParentInfo(DocumentMetadata docMd, String docContainerQId,
-			String docContainerParentInstanceIdentity) throws IOException {
+			String docContainerParentInstanceIdentity, boolean thumbnailDoc) throws IOException {
 		
 		String contentPath = createContentPathUsingParentInfo(docContainerQId, 
-				docContainerParentInstanceIdentity, false);
+				docContainerParentInstanceIdentity, false, thumbnailDoc);
 		
 		docMd.setTemporary(false);
 		
@@ -320,6 +331,16 @@ public class DocumentManagerImpl implements DocumentManager {
 		return updateDocMetadataAttr(
 				docIdentity, ContentDataConstants.CONTENT_QID_KEY, 
 				(docMd) -> docMd.setContentQId(contentQId), contentQId);
+	}
+
+	@Override
+	public DocumentMetadata saveThumnailDoc(Document<?> document, String containerQId, 
+			String docContainerParentInstanceIdentity,
+			boolean generatePreview, boolean generatePreviewAsync) throws IOException {
+		
+		String contentPath = createContentPathUsingParentInfo(containerQId, 
+				docContainerParentInstanceIdentity, document.getMetadata().isTemporary(), true);
+		return save(document, contentPath, generatePreview, generatePreviewAsync);
 	}
 
 }

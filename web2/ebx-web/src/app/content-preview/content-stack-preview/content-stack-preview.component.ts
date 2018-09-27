@@ -31,6 +31,10 @@ export class ContentStackPreviewComponent implements OnInit {
   lnkContainerContent: any[];
 
   linkageChange: any = {};
+  contentStackLayout: string;
+
+  flatLayout: boolean = false;
+  totalFlatContentCount: number;
 
   @Input() set record(rec: any) {
     this._record = rec;
@@ -53,6 +57,15 @@ export class ContentStackPreviewComponent implements OnInit {
       var cItem = this.ctService.templateCache.contentStackQIdMap[stackQId];  
       if (cItem) {
         this.heading = cItem.label;
+        let uiDef = this.ctService.templateCache.uiDefinitionMap[cItem.qualifiedId];
+        if (uiDef && uiDef.contentStack) {
+          this.contentStackLayout = uiDef.contentStack.layout || 'GROUPED';
+        }
+
+        if (this.contentStackLayout === 'FLAT') {
+          this.flatLayout = true;
+          this.showCount = 20;
+        }
       }
     }
     
@@ -80,11 +93,7 @@ export class ContentStackPreviewComponent implements OnInit {
 
                   let contentGrp = res[i];
 
-                  let container = this.ctService.getContainerByQId(contentGrp.contentQId);
-                  if (container.linkContainerQId) {
-                    contentGrp.linkContainer = container;
-                    container = this.ctService.getContainerByQId(container.linkContainerQId);
-                  }
+                  let container = this.ctService.getConcreteContainerByQId(contentGrp.contentQId);
 
                   if (contentGrp.contentQId !== this.container.qualifiedId) {
                     contentGrp.container = container;
@@ -217,12 +226,63 @@ export class ContentStackPreviewComponent implements OnInit {
         (result: any) => {
           this.contentService.decorateContentGroup(result);
           this.contentStack = result;
+          this.checkAndFlattenContentStack();
         }, 
         (error: any) => {
           this.alert.error("Error fetch asset details", error.statusCode);
         }
       );
     }
+  }
+
+  checkAndFlattenContentStack() {
+    
+    if (this.contentStackLayout === 'FLAT' && this.contentStack) {
+
+      var flatContentStack = {
+        contentQId: '~all~',
+        recContentQId: {},
+        records: {
+          content: [],
+          totalElements: this.stackArr.length,
+          numberOfElements: this.stackArr.length,
+          size: this.stackArr.length,
+          totalPages: 1,
+          first: true,
+          last: true
+        }
+      }
+
+      var contentIdToRecordMap = {};
+      this.contentStack.forEach((cg) => {
+        if (cg.records && cg.records.content) {
+          cg.records.content.forEach((c) => {
+            contentIdToRecordMap[c.identity] = c;
+            flatContentStack.recContentQId[c.identity] = cg.contentQId;
+          });
+        }
+      });
+
+      this.stackArr.forEach((si) => {
+        var stackItemRecord = contentIdToRecordMap[si.identity];
+        if (stackItemRecord) {
+          flatContentStack.records.content.push(stackItemRecord);
+        }
+      });
+
+      let recordCnt = flatContentStack.records.content.length;
+      flatContentStack.records.totalElements = recordCnt;
+      flatContentStack.records.numberOfElements = recordCnt;
+      flatContentStack.records.size = recordCnt;
+
+      this.totalFlatContentCount = recordCnt;
+
+      this.contentStack = [flatContentStack];
+    }
+  }
+
+  getRecordContainerQId(contentGroup: any, dataRecord: any) {
+    return contentGroup.recContentQId ? contentGroup.recContentQId[dataRecord.identity] : contentGroup.contentQId;
   }
 
   selectionDone(stackSelection: any) {
