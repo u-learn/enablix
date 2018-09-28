@@ -18,6 +18,7 @@ public class AuditInfoDateFormatter {
 	public void formatAuditDates(FieldCollection fieldSet) {
 		checkAndFormatDateField(fieldSet, ContentDataConstants.CREATED_AT_KEY);
 		checkAndFormatDateField(fieldSet, ContentDataConstants.MODIFIED_AT_KEY);
+		checkAndFormatDateField(fieldSet, ContentDataConstants.ARCHIVED_AT_KEY);
 	}
 	
 	private void checkAndFormatDateField(FieldCollection fieldSet, String fieldName) {
