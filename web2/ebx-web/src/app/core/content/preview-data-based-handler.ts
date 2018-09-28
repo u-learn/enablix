@@ -41,6 +41,6 @@ export class ContentDocMetadataResolver implements DocMetadataResolver {
 
 export class ThumbnailDocMetadataResolver implements DocMetadataResolver {
   getDocMetadata(dataRecord: any) : any {
-    return dataRecord.__thumbnailDoc;
+    return dataRecord.__decoration? dataRecord.__decoration.__thumbnailDoc : null;
   }
 }

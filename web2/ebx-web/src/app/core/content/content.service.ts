@@ -125,6 +125,9 @@ export class ContentService {
       }
     }
 
+    // set thumbnail doc in decoration object
+    decoration.__thumbnailDoc = dataRecord.__thumbnailDoc;
+
     // set linked items for linked containers as well
     if (container.container) {
       for (let i = 0; i < container.container.length; i++) {

@@ -8,8 +8,9 @@ ebx-card-preview {
         height: 108px;
         width: 192px;
         // padding: 0 16px;
-        
-        @include vcenterChildren;
+        display:flex;
+        align-items: start;
+
         border-radius: 4px 4px 0 0;
         overflow-y: hidden;
     }
@@ -17,7 +18,7 @@ ebx-card-preview {
     .cardDefaultImg, .cardImg.no-thmbnl {
         justify-content: center;
         background: $blue-med-5;
-
+        align-items: center;
         img {
             max-width: 48px;
             min-width: 48px;
@@ -33,7 +34,7 @@ ebx-card-preview {
         width: 144px; /* 192px - 24px - 24px */
         height: 60px; /* line */
         background: #2C4290;
-
+        
         p {
             width: 144px; /* 192px - 24px - 24px */
             height: 60px; /* 108px - 24px - 24px */
