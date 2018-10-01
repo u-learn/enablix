@@ -54,7 +54,7 @@ export class UploadFileComponent implements OnInit {
     } else {
       
       this.newContent = !this.data.updateOperation;
-      this.thumbnailUpload = this.data.thumbnailUpload;
+      this.thumbnailUpload = this.data.thumbnailUpload || false;
 
       this.fileInfo = new FileUploadInfo();
       this.fileInfo.title = Utility.removeFileExtn(this.data.file.name);

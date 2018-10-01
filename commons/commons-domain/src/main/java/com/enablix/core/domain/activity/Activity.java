@@ -12,7 +12,7 @@ public abstract class Activity {
 		CONTENT_ADD(Category.CONTENT, "Added"), CONTENT_UPDATE(Category.CONTENT, "Updated"), 
 		CONTENT_DELETE(Category.CONTENT, "Deleted"), CONTENT_SHARE(Category.CONTENT, "Shared"), 
 		CONTENT_ACCESS(Category.CONTENT, "Accessed"), DOC_DOWNLOAD(Category.CONTENT, "Downloaded"),
-		CONTENT_ARCHIVED(Category.CONTENT, "Archived"), CONTENT_UNARCHIVED(Category.CONTENT, "Un-archived"), 
+		CONTENT_ARCHIVED(Category.CONTENT, "Archived"), CONTENT_UNARCHIVED(Category.CONTENT, "Unarchived"), 
 		DOC_UPLOAD(Category.CONTENT, "Uploaded"), DOC_PREVIEW(Category.CONTENT, "Previewed"), 
 		CONTENT_ADD_SUGGEST(Category.CONTENT, "Content Add Request"), 
 		CONTENT_UPDATE_SUGGEST(Category.CONTENT, "Content Update Request"),
